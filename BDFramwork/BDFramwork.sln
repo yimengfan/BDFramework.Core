@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BDFramwork", "BDFramwork.csproj", "{7AC4AA24-279D-10A0-7EE0-95118E6A0C05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BDFramwork.Editor", "BDFramwork.Editor.csproj", "{69106151-029B-8509-8FF2-9972CD14420D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7AC4AA24-279D-10A0-7EE0-95118E6A0C05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AC4AA24-279D-10A0-7EE0-95118E6A0C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AC4AA24-279D-10A0-7EE0-95118E6A0C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AC4AA24-279D-10A0-7EE0-95118E6A0C05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69106151-029B-8509-8FF2-9972CD14420D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69106151-029B-8509-8FF2-9972CD14420D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69106151-029B-8509-8FF2-9972CD14420D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69106151-029B-8509-8FF2-9972CD14420D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
