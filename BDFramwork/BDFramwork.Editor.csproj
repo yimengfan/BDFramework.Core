@@ -123,6 +123,7 @@
     <Compile Include="Assets\Script\ILRuntime\ILRuntime\Runtime\Adaptors\Editor\ILRuntimeCLRBinding.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Script\ILRuntime\ILRuntime_2017_3_24.txt" />
     <None Include="Assets\link.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

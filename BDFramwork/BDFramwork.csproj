@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Script\ClientMain.cs" />
     <Compile Include="Assets\Script\ILRuntime\ILRuntime\CLR\Method\CLRMethod.cs" />
     <Compile Include="Assets\Script\ILRuntime\ILRuntime\CLR\Method\ExceptionHandler.cs" />
     <Compile Include="Assets\Script\ILRuntime\ILRuntime\CLR\Method\ILMethod.cs" />
@@ -317,8 +318,12 @@
     <Compile Include="Assets\Script\ILRuntime\Mono.Cecil.Pdb\pdb\Mono.Cecil.Pdb\PdbWriter.cs" />
     <Compile Include="Assets\Script\ILRuntime\Mono.Cecil.Pdb\pdb\Mono.Cecil.Pdb\SymDocumentWriter.cs" />
     <Compile Include="Assets\Script\ILRuntime\Mono.Cecil.Pdb\pdb\Mono.Cecil.Pdb\SymWriter.cs" />
+    <Compile Include="Assets\Script\Screenview\lib\IScreenView.cs" />
+    <Compile Include="Assets\Script\Screenview\lib\ScreenViewCenter.cs" />
+    <Compile Include="Assets\Script\Screenview\lib\ScreenView_HotFix_Wrapper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Script\ILRuntime\ILRuntime_2017_3_24.txt" />
     <None Include="Assets\link.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
