@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 
 using ILRuntime.Runtime.Stack;
-
 namespace ILRuntime.Runtime
 {
     static class Extensions
