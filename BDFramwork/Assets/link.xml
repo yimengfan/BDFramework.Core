@@ -1,4 +1,0 @@
-﻿<linker>  
-  <assembly fullname="Assembly-CSharp" preserve="all"/>
-  <assembly fullname="UnityEngine" preserve="all"/>
-</linker>
