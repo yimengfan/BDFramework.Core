@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BDFramework.ScreenView;
 using System;
 
 public class ScreenView_Test
@@ -36,7 +35,7 @@ public void BeginExit(Action<Exception> onExit)
         Debug.LogFormat("{0}:on BeginExit", this.name);
     }
 
-    public void BeginInit(Action<Exception> onInit, ScreenViewLayer layer)
+    public void BeginInit(Action<Exception> onInit)
     {
         Debug.LogFormat("{0}:on Init", this.name);
     }

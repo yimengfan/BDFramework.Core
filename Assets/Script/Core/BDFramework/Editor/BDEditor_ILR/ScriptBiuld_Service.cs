@@ -34,16 +34,16 @@ public class ScriptBiuld_Service
         List<string> filelist = new List<string>();
         foreach (var rootpath in rootpaths)
         {
-            var files = Directory.GetFiles(rootpath, "*.cs");
+            var files = Directory.GetFiles(rootpath, "*.cs", SearchOption.AllDirectories);
 
             for (int i = 0; i < files.Length; i++)
             {
                 //编辑器和插件下的代码不进行编译
                 if (files[i].IndexOf("Editor") == -1 && files[i].IndexOf("Resources") == -1&& files[i].IndexOf("Plugins") == -1)
                 {
-                    continue;
+                    filelist.Add(files[i].Replace("\\", "/"));
                 }
-                filelist.Add(files[i].Replace("\\", "/"));
+              
             }
         }
         CompilerResults cr = provider.CompileAssemblyFromFile(cplist, filelist.ToArray());
