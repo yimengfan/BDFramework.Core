@@ -8,12 +8,10 @@ using System;
 public class ScriptBiuldDll_Windows: EditorWindow
 {
 
-    public void Show() {
+    private void OnGUI()
+    {
 
-        base.Show();
-       
     }
 
 
-  
 }
