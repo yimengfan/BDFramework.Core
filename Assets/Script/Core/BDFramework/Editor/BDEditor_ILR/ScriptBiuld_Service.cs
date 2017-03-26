@@ -12,21 +12,24 @@ public class ScriptBiuld_Service
     public static void BuildDll(string[] rootpaths, string outputpath)
     {
         // 设定编译参数,DLL代表需要引入的Assemblies
-        CompilerParameters cplist = new CompilerParameters();
+        CompilerParameters cp = new CompilerParameters();
         //
-        cplist.GenerateExecutable = false;
+        cp.GenerateExecutable = false;
         //在内存中生成
-        cplist.GenerateInMemory = true;
+        cp.GenerateInMemory = true;
         //生成调试信息
-        cplist.IncludeDebugInformation = true;
-        cplist.ReferencedAssemblies.Add("System.dll");
-        cplist.ReferencedAssemblies.Add("System.Core.dll");
-        cplist.ReferencedAssemblies.Add("System.XML.dll");
-        cplist.ReferencedAssemblies.Add("System.Data.dll");
-        cplist.ReferencedAssemblies.Add(Application.dataPath+ "/../Library/UnityAssemblies/UnityEngine.dll");
-        cplist.ReferencedAssemblies.Add(Application.dataPath + "/../Library/UnityAssemblies/UnityEngine.UI.dll");
+        cp.IncludeDebugInformation = true;
+        cp.CompilerOptions = "";
+        cp.ReferencedAssemblies.Add("System.dll");
+        cp.ReferencedAssemblies.Add("System.Core.dll");
+        cp.ReferencedAssemblies.Add("System.XML.dll");
+        cp.ReferencedAssemblies.Add("System.Data.dll");
+        cp.ReferencedAssemblies.Add(Application.dataPath+ "/../Library/UnityAssemblies/UnityEngine.dll");
+        cp.ReferencedAssemblies.Add(Application.dataPath + "/../Library/UnityAssemblies/UnityEngine.UI.dll");
         //输出path
-        cplist.OutputAssembly = outputpath;
+        cp.OutputAssembly = outputpath;
+        //编译选项
+        cp.CompilerOptions = "/unsafe";
         // 编译代理类，C# CSharp都可以
         CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
 
@@ -46,7 +49,7 @@ public class ScriptBiuld_Service
               
             }
         }
-        CompilerResults cr = provider.CompileAssemblyFromFile(cplist, filelist.ToArray());
+        CompilerResults cr = provider.CompileAssemblyFromFile(cp, filelist.ToArray());
         if (true == cr.Errors.HasErrors)
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
