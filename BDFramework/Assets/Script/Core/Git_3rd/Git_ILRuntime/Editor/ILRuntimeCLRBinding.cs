@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class ILRuntimeCLRBinding
 {
     
-    [MenuItem("ILRuntime/Generate CLR Binding Code")]
+    [MenuItem("BDFrameWork工具箱/ILRuntime/Generate CLR Binding Code")]
     static void GenerateCLRBinding()
     {
         List<Type> types = new List<Type>();
