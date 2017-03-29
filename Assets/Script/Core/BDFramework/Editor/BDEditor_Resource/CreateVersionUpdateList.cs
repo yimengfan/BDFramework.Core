@@ -4,7 +4,7 @@ using System.IO;
 using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
-using com.putao.hotpudate;
+using BDFramework.ResourceMgr;
 
 public class CreateVersionUpdateList
 {

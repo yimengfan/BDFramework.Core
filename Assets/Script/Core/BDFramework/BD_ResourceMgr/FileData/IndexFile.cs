@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-namespace com.putao.hotpudate
+namespace BDFramework.ResourceMgr
 {
     public class IndexData
     {

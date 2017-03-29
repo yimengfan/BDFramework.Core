@@ -1,0 +1,6 @@
+E:\BDFramework-Unity3d\BuildDll_Service\BuildService\BuildService\bin\Debug\BuildService.exe.config
+E:\BDFramework-Unity3d\BuildDll_Service\BuildService\BuildService\bin\Debug\BuildService.exe
+E:\BDFramework-Unity3d\BuildDll_Service\BuildService\BuildService\bin\Debug\BuildService.pdb
+E:\BDFramework-Unity3d\BuildDll_Service\BuildService\BuildService\obj\Debug\BuildService.csprojResolveAssemblyReference.cache
+E:\BDFramework-Unity3d\BuildDll_Service\BuildService\BuildService\obj\Debug\BuildService.exe
+E:\BDFramework-Unity3d\BuildDll_Service\BuildService\BuildService\obj\Debug\BuildService.pdb

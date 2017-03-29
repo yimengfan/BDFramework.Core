@@ -40,7 +40,6 @@ public class ClientMain : MonoBehaviour
         }
         //加载热更模块
         StartCoroutine(LoadHotFixAssembly("hot_fix"));
-
     }
 
     

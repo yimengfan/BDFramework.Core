@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System;
@@ -9,7 +8,12 @@ public class ScriptBiuld_Service
 {
 
 
-    public static void BuildDll(string[] rootpaths, string outputpath)
+    /// <summary>
+    /// 编译dll
+    /// </summary>
+    /// <param name="rootpaths"></param>
+    /// <param name="outputpath"></param>
+    public void BuildDll(string[] rootpaths, string outputpath)
     {
         // 设定编译参数,DLL代表需要引入的Assemblies
         CompilerParameters cp = new CompilerParameters();
@@ -31,12 +35,10 @@ public class ScriptBiuld_Service
         cp.ReferencedAssemblies.Add("System.Core.dll");
         cp.ReferencedAssemblies.Add("System.XML.dll");
         cp.ReferencedAssemblies.Add("System.Data.dll");
-        cp.ReferencedAssemblies.Add(Application.dataPath+ "/../Library/UnityAssemblies/UnityEngine.dll");
-        cp.ReferencedAssemblies.Add(Application.dataPath + "/../Library/UnityAssemblies/UnityEngine.UI.dll");
-        
+
         // 编译代理类，C# CSharp都可以
         CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
-      
+
         //文件数组
         List<string> filelist = new List<string>();
         foreach (var rootpath in rootpaths)
@@ -51,10 +53,15 @@ public class ScriptBiuld_Service
                 {
                     filelist.Add(files[i].Replace("\\", "/"));
                 }
-              
+
             }
         }
-        CompilerResults cr = provider.CompileAssemblyFromFile(cp, filelist.ToArray());
+        var array = filelist.ToArray();
+        CompilerResults cr = provider.CompileAssemblyFromFile(cp, array);
+        foreach (var a in array)
+        {
+            Console.WriteLine(string.Format("==>{0}", a));
+        }
         if (true == cr.Errors.HasErrors)
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
@@ -63,11 +70,11 @@ public class ScriptBiuld_Service
                 sb.Append(ce.ToString());
                 sb.Append(System.Environment.NewLine);
             }
-            Debug.LogError(sb.ToString());
-            
+            Console.WriteLine(sb.ToString());
+
         }
 
-        
+
 
     }
 }

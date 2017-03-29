@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace com.putao.hotpudate
+namespace BDFramework.ResourceMgr
 {
     public interface IResMgr
     {

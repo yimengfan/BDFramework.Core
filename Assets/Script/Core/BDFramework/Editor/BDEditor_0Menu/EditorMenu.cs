@@ -12,8 +12,9 @@ public class BDEditorMenu
         //var  window = (ScriptBiuldDll_Windows)EditorWindow.GetWindow(typeof(ScriptBiuldDll_Windows),false,"dll打包工具");   
         //window.Show();
         var inpath = Application.dataPath + "/Script/Core";
+        var inpath2 = Application.dataPath + "/Script/MainSceneScript";
      //  var inpath = Application.dataPath + "/Script/LogicModule";
         //var inpath2 = Application.dataPath + "/Script/Core/BDFramework/BD_Screenview";
-        ScriptBiuld_Service.BuildDll(new string[] { inpath  }, "D:/Core.dll");
+        ScriptBiuld_Service.BuildDll(new string[] { inpath,inpath2 }, "D:/Core.dll");
     }
 }

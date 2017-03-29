@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using com.putao.hotpudate;
+using BDFramework.ResourceMgr;
 using UnityEngine.UI;
 using System.Collections.Generic;
 public class Test : MonoBehaviour

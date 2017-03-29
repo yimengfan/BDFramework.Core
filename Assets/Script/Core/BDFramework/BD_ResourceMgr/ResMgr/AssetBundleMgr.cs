@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections;
 using UnityEngine.UI;
-namespace com.putao.hotpudate
+namespace BDFramework.ResourceMgr
 {
     /// <summary>
     /// manifest 

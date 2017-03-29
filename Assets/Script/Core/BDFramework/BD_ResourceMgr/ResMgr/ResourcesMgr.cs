@@ -6,7 +6,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections;
 
-namespace com.putao.hotpudate
+namespace BDFramework.ResourceMgr
 {
 
   /// <summary>

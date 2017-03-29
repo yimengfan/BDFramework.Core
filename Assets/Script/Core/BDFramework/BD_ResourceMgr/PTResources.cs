@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using com.putao.hotpudate;
+using BDFramework.ResourceMgr;
 using System;
 using System.Collections.Generic;
 public class PTResources : MonoBehaviour 

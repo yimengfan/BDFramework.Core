@@ -46,14 +46,7 @@ public class MainThreadCallTools : MonoBehaviour
         m_coroutineQueue.Enqueue(ie);
     }
 
-    static Queue<string> m_stopCoroutineQueue = new Queue<string>();
-    /// <summary>
-    /// 关闭协程
-    /// </summary>
-    static public void StopCoroutine(string ie)
-    {
-        m_stopCoroutineQueue.Enqueue(ie);
-    }
+    
     /// <summary>
     /// 主循环
     /// </summary>
@@ -65,12 +58,7 @@ public class MainThreadCallTools : MonoBehaviour
             var ie = m_coroutineQueue.Dequeue();
             base.StartCoroutine(ie);
         }
-        //停止协程
-        while (m_stopCoroutineQueue.Count > 0)
-        {
-            var cr = m_stopCoroutineQueue.Dequeue();
-            base.StopCoroutine(cr);
-        }
+
         //主线程循环
         if (m_actionTaskQueue.Count > 0)
         {

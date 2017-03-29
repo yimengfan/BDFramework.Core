@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using com.putao.hotpudate;
+using BDFramework.ResourceMgr;
 using BDFramework.net;
 
 /// <summary>
