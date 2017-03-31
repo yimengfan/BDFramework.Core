@@ -3,7 +3,7 @@ using System.Collections;
 using BDFramework.ResourceMgr;
 using System;
 using System.Collections.Generic;
-public class PTResources : MonoBehaviour 
+public class BDResources : MonoBehaviour 
 {
     static bool _isAssetBundleModel =true;
 
@@ -17,12 +17,12 @@ public class PTResources : MonoBehaviour
             {
                 mResMgr = mAssetBundleMgr;
              
-                Debug.Log("切换为AB加载模式");
+                Debug.Log("切换到:热更新加载模式");
             }
             else
             {
                 mResMgr = mRousourcesMgr;
-                Debug.Log("切换为Res加载模式");
+                Debug.Log("切换到:正常加载模式");
             }
         }
     }
@@ -33,8 +33,6 @@ public class PTResources : MonoBehaviour
     static private IResMgr mRousourcesMgr = new ResourcesMgr(); 
     void Awake()
     {
-        //加入协程转发器
-        this.gameObject.AddComponent<IEnumeratorLaunch>();
         //
         DontDestroyOnLoad(this.gameObject);
 

@@ -175,7 +175,7 @@ namespace BDFramework.ResourceMgr
           path = "File:///" + path;
 #endif
           path = path.Replace("\\", "/");
-          IEnumeratorLaunch.Instance.Enqueue(IELoadAssetBundles(path, callback, true));
+            MainThreadCallTools.StartCoroutine(IELoadAssetBundles(path, callback, true));
       }
 
       //委托协程
@@ -265,10 +265,10 @@ namespace BDFramework.ResourceMgr
                 resQue.Enqueue(path);
             }
 
-   
+
 
             //开始加载队列
-            IEnumeratorLaunch.Instance.Enqueue(IELoadAssetBundles(resQue, sucessCallback));
+            MainThreadCallTools.StartCoroutine(IELoadAssetBundles(resQue, sucessCallback));
 
 
         }
@@ -301,7 +301,7 @@ namespace BDFramework.ResourceMgr
                 {
                     UseAssetBunle(path, www.assetBundle);
                     //递归刷出
-                    IEnumeratorLaunch.Instance.Enqueue(IELoadAssetBundles(resQue, callback));
+                    MainThreadCallTools.StartCoroutine(IELoadAssetBundles(resQue, callback));
                     yield break;
                 }
             }

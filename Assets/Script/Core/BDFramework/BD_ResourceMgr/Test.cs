@@ -23,7 +23,7 @@ public class Test : MonoBehaviour
         * 资源管理设置
         * 
         */
-        PTResources.SetLocalPath(versionControl.mLocalHotUpdateResPath); //step.1 设置本地目录 如不设置，以后全部传入绝对路径
+        BDResources.SetLocalPath(versionControl.mLocalHotUpdateResPath); //step.1 设置本地目录 如不设置，以后全部传入绝对路径
     }
     bool isLoadCanvas = false;
     void OnGUI()
@@ -52,9 +52,9 @@ public class Test : MonoBehaviour
 
         if (GUILayout.Button("editor模式:[异步]加载依测试", GUILayout.Height(50), GUILayout.Width(300)))
         {
-            PTResources.IsAssetBundleModel = false; //切换为 resource.load加载模式
+            BDResources.IsAssetBundleModel = false; //切换为 resource.load加载模式
             //单层目录
-            PTResources.LoadAsync<GameObject>("Canvas", (bool issuccess, GameObject o) =>
+            BDResources.LoadAsync<GameObject>("Canvas", (bool issuccess, GameObject o) =>
             {
                 if (issuccess)
                     GameObject.Instantiate(o);
@@ -63,8 +63,8 @@ public class Test : MonoBehaviour
 
 		if (GUILayout.Button ("ab模式:加载依赖文件",  GUILayout.Height(50),GUILayout.Width(300)))
 		{
-            PTResources.IsAssetBundleModel = true; //切换为 ab加载模式
-			PTResources.LoadManifestAsync("AllResources", (bool _issuccess) => //step.2 全局加载依赖 只需加载一次。
+            BDResources.IsAssetBundleModel = true; //切换为 ab加载模式
+			BDResources.LoadManifestAsync("AllResources", (bool _issuccess) => //step.2 全局加载依赖 只需加载一次。
 				{
 					if (_issuccess)
 					{
@@ -74,10 +74,10 @@ public class Test : MonoBehaviour
 		}
 		if (GUILayout.Button("ab模式:[异步]加载1级目录", GUILayout.Height(50),GUILayout.Width(300)))
         {
-            PTResources.IsAssetBundleModel = true; //切换为 ab加载模式
+            BDResources.IsAssetBundleModel = true; //切换为 ab加载模式
 
             //单层目录
-            PTResources.LoadAsync<GameObject>("Canvas", (bool issuccess, GameObject o) =>
+            BDResources.LoadAsync<GameObject>("Canvas", (bool issuccess, GameObject o) =>
             {
                 if (issuccess)
                 {
@@ -91,14 +91,14 @@ public class Test : MonoBehaviour
         {
             if (GUILayout.Button("ab模式:卸载canvas", GUILayout.Height(50), GUILayout.Width(300)))
             {
-                PTResources.UnloadAsset("Canvas");
+                BDResources.UnloadAsset("Canvas");
             }
         }
 		if (GUILayout.Button("ab模式:[异步]加载多级目录",  GUILayout.Height(50),GUILayout.Width(300)))
         {
-            PTResources.IsAssetBundleModel = true; //切换为 ab加载模式
+            BDResources.IsAssetBundleModel = true; //切换为 ab加载模式
             //多层目录
-            PTResources.LoadAsync<GameObject>("test1/test", (bool issuccess, GameObject o) =>
+            BDResources.LoadAsync<GameObject>("test1/test", (bool issuccess, GameObject o) =>
             {
                 if (issuccess)
                 {
@@ -110,11 +110,11 @@ public class Test : MonoBehaviour
 
         if (GUILayout.Button("ab模式:[异步]加载一组", GUILayout.Height(50), GUILayout.Width(300)))
         {
-            PTResources.IsAssetBundleModel = true; //切换为 ab加载模式
+            BDResources.IsAssetBundleModel = true; //切换为 ab加载模式
 
             IList<string> list = new List<string>() { "Canvas", "test1/test" };
             //多层目录
-            var task =   PTResources.LoadAsync(list, (IDictionary<string, UnityEngine.Object> resmap) =>
+            var task =   BDResources.LoadAsync(list, (IDictionary<string, UnityEngine.Object> resmap) =>
             {
 
                 var o1 = GameObject.Instantiate(resmap["Canvas"]);
@@ -122,20 +122,20 @@ public class Test : MonoBehaviour
 
             });
 
-            PTResources.LoadCancel(task);
+            BDResources.LoadCancel(task);
         }
 
         if (GUILayout.Button("ab模式:[异步]取消加载请求", GUILayout.Height(50), GUILayout.Width(300)))
         {
-            PTResources.IsAssetBundleModel = true; //切换为 ab加载模式
+            BDResources.IsAssetBundleModel = true; //切换为 ab加载模式
             //多层目录
-           var taskid =  PTResources.LoadAsync<GameObject>("test1/test", (bool issuccess, GameObject o) =>
+           var taskid =  BDResources.LoadAsync<GameObject>("test1/test", (bool issuccess, GameObject o) =>
             {
                 if (issuccess)
                     GameObject.Instantiate(o);
             });
 
-           PTResources.LoadCancel(taskid);
+           BDResources.LoadCancel(taskid);
         }
 
     }

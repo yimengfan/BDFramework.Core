@@ -284,7 +284,7 @@ public class IncrementalVersionControl :IVersionControl
                 return "IOS/AllResources";        
         #elif UNITY_ANDROID        
                 return "Android/AllResources";
-        #elif UNITY_EDITOR
+        #else
                 return "Windows32/AllResources";
         #endif
     }
