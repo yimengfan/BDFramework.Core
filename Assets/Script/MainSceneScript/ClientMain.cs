@@ -27,6 +27,9 @@ public class ClientMain : MonoBehaviour
     
     void Awake()
     {
+        //加载模块脚本
+        this.gameObject.AddComponent<MainThreadCallTools>();
+        //选择热更模式
         switch (m_enumHotFixDataPath)
         {
             case HotFixDataPath.PersistentPath:
