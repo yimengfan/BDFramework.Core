@@ -14,7 +14,6 @@ public enum HotFixDataPath
 public class ClientMain : MonoBehaviour
 {
     public HotFixDataPath m_enumHotFixDataPath = HotFixDataPath.StreammingAsset;
-
     private string m_strHotFixDataPath;
     //全局的调度中心
     private ScreenViewCenter m_layerCenter;

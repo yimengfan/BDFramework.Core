@@ -28,7 +28,7 @@ public class CreateHashList
     static IEnumerator StartLoadManifest(UnityEditor.BuildTarget target)
     {
       
-        string platform = AssetBundleController.GetPlatformName(target);
+        string platform = AssetBundleCtrl_Windows.GetPlatformName(target);
         string dir = "file:///" + System.IO.Path.Combine(Application.dataPath, "AssetBundle/" + platform) + "AllResources";
 
         WWW www = new WWW(dir);

@@ -10,7 +10,7 @@ public class CreateVersionUpdateList
 {
     public static void Execute(UnityEditor.BuildTarget target)
 	{
-        string platform = AssetBundleController.GetPlatformName(target);
+        string platform = AssetBundleCtrl_Windows.GetPlatformName(target);
         string newVersionHash = System.IO.Path.Combine(Application.dataPath, "AssetBundle/" + platform + "/VersionNum/VersionHash.xml");
         string oldVersionHash = System.IO.Path.Combine(Application.dataPath, "AssetBundle/" + platform + "/VersionNum/VersionHash-old.xml");
 
@@ -56,7 +56,7 @@ public class CreateVersionUpdateList
 
     public static void ExportFile(UnityEditor.BuildTarget target,string copyto)
     {
-        string platform = AssetBundleController.GetPlatformName(target);
+        string platform = AssetBundleCtrl_Windows.GetPlatformName(target);
         string file = System.IO.Path.Combine(Application.dataPath, "AssetBundle/" + platform );
         var updatalist = file + "/VersionNum/VersionUpdateList.bytes";
         if (File.Exists(updatalist) == false)

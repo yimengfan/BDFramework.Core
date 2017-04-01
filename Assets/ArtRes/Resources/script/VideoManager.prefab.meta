@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 238abe125b0d6ef4aafa8ce495c50225
+labels:
+- Video
+- Movie
+- Texture
+- Android
+- movie
+- video
+- texture
+- android
+NativeFormatImporter:
+  mainObjectFileID: -1
+  userData: 
+  assetBundleName: script_videomanager@prefab
+  assetBundleVariant: 
