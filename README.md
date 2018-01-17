@@ -21,5 +21,10 @@
 
 # 框架主要梳理
 
-1.框架主要包括BDFramework.Common 和 BDFramework.Logic
 
+1.框架主要包括BDFramework.Common 和 BDFramework.Logic。
+Common是通用开发模块，logic是基于框架已经开发了的内容。
+ 框架内，每个具体模块都有文件，每个模块都会提供Readme 和demo。
+    ## UI模块：
+	## 资源加载:
+	## 数据层:
