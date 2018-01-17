@@ -25,7 +25,7 @@ abstract public class ADataDrive
 
     }
     /// <summary>
-    /// 设置玩家数据
+    /// 设置数据
     /// </summary>
     /// <param name="name"></param>
     /// <param name="value"></param>

@@ -15,11 +15,7 @@ namespace BDFramework.UI
         Center,
         Top
     }
-    public class WindowData
-    {
-        public Type type;
-        public string path;
-    }
+    
     /// <summary>
     /// UI管理类
     /// </summary>
@@ -70,17 +66,7 @@ namespace BDFramework.UI
             }
 
         }
-        #region 静态工具
-        /// <summary>
-        /// 创建uidata容器
-        /// </summary>
-        /// <returns></returns>
-        public static Dictionary<string, object> CreateData()
-        {
-            return new Dictionary<string, object>();
-        }
-
-        #endregion
+        //
         private AWindow CreateWindow(WinEnum uiEnum)
         {
             var classData = this.GetCalssData(uiEnum.ToString());
@@ -109,7 +95,7 @@ namespace BDFramework.UI
                     var uvalue = windowMap[we];
                     if (uvalue.IsLoad)
                     {
-                        Debug.LogError("已经加载过并未卸载" + we);
+                        Debug.LogWarning("已经加载过并未卸载" + we);
                     }
                 }
                 else
@@ -196,7 +182,7 @@ namespace BDFramework.UI
         {
             // return;
             //检查ui数据缓存
-            List<IDictionary<string, object>> cacheList = null;
+            List<WinData> cacheList = null;
             uiDataCacheMap.TryGetValue(we, out cacheList);
             if (cacheList != null)
             {
@@ -208,7 +194,7 @@ namespace BDFramework.UI
                     BDeBug.I.Log("push cache data " + we);
                 }
                 cacheList.Clear();
-                // JDeBug.I.LogFormat("推送数据：{0} ,{1}条", we, cacheList.Count);
+                BDeBug.I.LogFormat("推送数据：{0} ,{1}条", we, cacheList.Count);
             }
         }
         /// <summary>
@@ -320,36 +306,35 @@ namespace BDFramework.UI
             }
         }
 
-        private Dictionary<WinEnum, List<IDictionary<string, object>>> uiDataCacheMap = new Dictionary<WinEnum, List<IDictionary<string, object>>>();
+        private Dictionary<WinEnum, List<WinData>> uiDataCacheMap = new Dictionary<WinEnum, List<WinData>>();
         /// <summary>
         /// 外部推送ui数据
         /// </summary>
-        /// <param name="uienum"></param>
-        /// <param name="dataMap"></param>
-        public void PushData(WinEnum uienum, IDictionary<string, object> dataMap)
+        /// <param name="uiEnum"></param>
+        /// <param name="data"></param>
+        public void PushData(WinEnum uiEnum, WinData data)
         {
-            if (windowMap.ContainsKey(uienum))
+            if (windowMap.ContainsKey(uiEnum))
             {
-                var ui = windowMap[uienum];
+                var ui = windowMap[uiEnum];
 
                 if (ui.IsLoad)
                 {
-                    ui.PushData(dataMap);
+                    ui.PushData(data);
                     return;
                 }
             }
 
             //存入缓存
-
-            List<IDictionary<string, object>> list = null;
-            uiDataCacheMap.TryGetValue(uienum, out list);
-
+            List<WinData> list = null;
+            uiDataCacheMap.TryGetValue(uiEnum, out list);
+            //
             if (list == null)
             {
-                list = new List<IDictionary<string, object>>();
-                uiDataCacheMap[uienum] = list;
+                list = new List<WinData>();
+                uiDataCacheMap[uiEnum] = list;
             }
-            list.Add(dataMap);
+            list.Add(data);
 
         }
 

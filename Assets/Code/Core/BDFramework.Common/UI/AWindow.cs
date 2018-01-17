@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using BDFramework.UI;
 
 /// <summary>
 /// 窗口基类
@@ -117,7 +118,7 @@ public abstract class AWindow
     virtual public void Close()
     {
         IsClose = true;
-
+        this.Transform.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -128,6 +129,7 @@ public abstract class AWindow
         //判断是否有锁
         if (IsLock) return;
         IsClose = false;
+        this.Transform.gameObject.SetActive(true);
      //   UIEffectMgr.ShowWindow_Scale(Transform);
     }
 
@@ -136,13 +138,19 @@ public abstract class AWindow
     /// </summary>
     virtual public void Destroy()
     {
+        //卸载
+        if (Transform)
+        {
+            BResources.Destroy(this.Transform);
+        }
+        //
         foreach (var subwin in  this.subWindowsDictionary.Values)
         {
             subwin.Destroy();
         }
+        
         IsLoad = false;
         //卸载窗口
-        
         BResources.UnloadAsset(resourcePath);
     }
 
@@ -150,17 +158,15 @@ public abstract class AWindow
     /// 更新UI使用的数据
     /// </summary>
     /// <param name="data">数据</param>
-    virtual public void PushData(IDictionary<string ,object> data)
+    public void PushData(WinData data)
     {
-       foreach(var key in data.Keys)
+       foreach(var key in data.GetDataKeys())
        {
             Action<object> action = null;
             callbackMap.TryGetValue(key, out action);
             if(action!= null)
             {
-                // JDeBug.I.Log("sdfdsf:" + data[key].ToDict<string,object>().Keys.ToList()[0]);
-
-                action( data[key] );
+              action( data.GetData<object>(key) );
             }
        }
     }

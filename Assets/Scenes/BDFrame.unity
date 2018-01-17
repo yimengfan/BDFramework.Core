@@ -328,6 +328,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 223392036037630622, guid: dcc948b1cb7b5634b96df21ed4a67606,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1060009207}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dcc948b1cb7b5634b96df21ed4a67606, type: 2}
   m_IsPrefabParent: 0
@@ -343,7 +348,7 @@ GameObject:
   - component: {fileID: 1060009206}
   - component: {fileID: 1060009205}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: UICamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -371,8 +376,8 @@ Camera:
   m_GameObject: {fileID: 1060009204}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.09007351, g: 0.0950776, b: 0.102941155, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

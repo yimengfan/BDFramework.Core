@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using BDFramework.Mgr;
+using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace BDFramework.ScreenView
@@ -34,7 +35,7 @@ namespace BDFramework.ScreenView
                 sv.GetType().GetProperty("Name").SetValue(sv, attr.Name, null);
                 mainLayer.RegScreen(sv);
                 //
-                BDeBug.I.Log("创建screen:" + attr.Name);
+                BDeBug.I.Log("创建screen:" + attr.Name , Styles.Color.Green);
                 //
                 if (attr.isDefault)
                 {

@@ -7,6 +7,9 @@ using BDFramework.Logic.GameLife;
 using BDFramework.Mgr;
 using BDFramework.UI;
 using BDFramework.Logic.Item;
+using BDFramework.ResourceMgr;
+using UnityEditor.Graphs;
+
 public class BDFrameWork : MonoBehaviour
 {
     private IGameStart gameStart;
@@ -15,6 +18,7 @@ public class BDFrameWork : MonoBehaviour
     {
         //组件加载
         this.gameObject.AddComponent<IEnumeratorTool>();
+        this.gameObject.AddComponent<BResources>();
         
         var types = Assembly.GetExecutingAssembly().GetTypes();
         mgrList = new List<IMgr>();
@@ -23,15 +27,15 @@ public class BDFrameWork : MonoBehaviour
         {
             if (t.BaseType!= null  && t.BaseType.GetInterface("IMgr") != null )
             {
-                var xxx = t.BaseType.GetProperties();
-                foreach (var x in xxx)
-                {
-                    Debug.Log(x.Name);
-                }
-                Debug.Log("加载管理器-" +  t);
+                BDeBug.I.Log("加载管理器-" +  t , Styles.Color.Green);
                 var i = t.BaseType.GetProperty("I").GetValue(null, null) as  IMgr;
                 mgrList.Add(i);
             }
+            //游戏启动器
+            else if (this.gameStart == null && t.GetInterface("IGameStart") != null)
+            {
+                gameStart =  Activator.CreateInstance(t) as IGameStart;
+            }         
         }
         
         //类型注册
@@ -48,11 +52,19 @@ public class BDFrameWork : MonoBehaviour
         {
             _imgr.Awake();
         }
+
+        if (gameStart != null)
+        {
+            gameStart.Awake();
+        }
 	}
 
     private void Start()
     {
-        
+        if (gameStart != null)
+        {
+            gameStart.Start();
+        }
     }
 
 
@@ -64,6 +76,11 @@ public class BDFrameWork : MonoBehaviour
             {
                 iMgr.Update();
             }
+        }
+        //
+        if (gameStart != null)
+        {
+            gameStart.Update();
         }
     }
 }
