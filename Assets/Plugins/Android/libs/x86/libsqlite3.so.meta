@@ -3,14 +3,30 @@ guid: fa9cbdc3a67e5fd4baeb5d0dd3f4cf71
 timeCreated: 1445131383
 licenseType: Free
 PluginImporter:
-  serializedVersion: 1
+  externalObjects: {}
+  serializedVersion: 2
   iconMap: {}
   executionOrder: {}
   isPreloaded: 0
+  isOverridable: 0
   platformData:
-    Any:
+  - first:
+      Android: Android
+    second:
       enabled: 1
+      settings:
+        CPU: x86
+  - first:
+      Any: 
+    second:
+      enabled: 0
       settings: {}
+  - first:
+      Editor: Editor
+    second:
+      enabled: 0
+      settings:
+        DefaultValueInitialized: true
   userData: 
   assetBundleName: 
   assetBundleVariant: 

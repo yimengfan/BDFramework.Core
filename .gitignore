@@ -29,3 +29,10 @@
 /Assets/StreamingAssets/Base.dll.mdb.meta
 /Assets/StreamingAssets/Base.dll.meta
 /.vs/BDFramwork/v14
+/Assembly-CSharp.csproj
+/Assembly-CSharp-Editor.csproj
+/Assembly-CSharp-Editor-firstpass.csproj
+/.idea
+/.vs
+/obj
+/UnityPackageManager
