@@ -1,7 +1,7 @@
 ﻿{
   "id": 1.0,
-  "EditorArtPath": "Art/Resources",
+  "EditorArtPath": "Resource/Resources",
   "EditorCodePath": "Code",
-  "EditorTablePath": "Table/Resources",
+  "EditorTablePath": "Resource/Table",
   "VersionSettingPath": "VersionDataSetting.json"
 }

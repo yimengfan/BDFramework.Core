@@ -382,6 +382,18 @@ namespace SQLite4Unity3d
 			return Execute (query);
 		}
 		
+		
+		/// <summary>
+		/// Executes a "drop table" on the database.  This is non-recoverable.
+		/// </summary>
+		public int DropTableByType(Type type)
+		{
+			var map = GetMapping (type);
+
+			var query = string.Format("drop table if exists \"{0}\"", map.TableName);
+
+			return Execute (query);
+		}
 		/// <summary>
 		/// Executes a "create table if not exists" on the database. It also
 		/// creates any specified indexes on the columns of the table. It uses
@@ -396,6 +408,20 @@ namespace SQLite4Unity3d
 			return CreateTable(typeof (T), createFlags);
 		}
 
+		/// <summary>
+		/// Executes a "create table if not exists" on the database. It also
+		/// creates any specified indexes on the columns of the table. It uses
+		/// a schema automatically generated from the specified type. You can
+		/// later access this schema by calling GetMapping.
+		/// </summary>
+		/// <returns>
+		/// The number of entries added to the database schema.
+		/// </returns>
+		public int CreateTableByType(Type type, CreateFlags createFlags = CreateFlags.None)
+		{
+			return CreateTable(type, createFlags);
+		}
+		
 		/// <summary>
 		/// Executes a "create table if not exists" on the database. It also
 		/// creates any specified indexes on the columns of the table. It uses
