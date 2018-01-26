@@ -35,7 +35,8 @@ public class BDFrameWork : MonoBehaviour
             else if (this.gameStart == null && t.GetInterface("IGameStart") != null)
             {
                 gameStart =  Activator.CreateInstance(t) as IGameStart;
-            }         
+            }
+
         }
         
         //类型注册

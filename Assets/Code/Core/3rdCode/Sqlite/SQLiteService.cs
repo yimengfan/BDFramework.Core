@@ -1,4 +1,5 @@
-﻿using SQLite4Unity3d;
+﻿using System;
+using SQLite4Unity3d;
 using UnityEngine;
 #if !UNITY_EDITOR
 using System.Collections;
@@ -73,50 +74,73 @@ Application.dataPath + "/StreamingAssets/" + DatabaseName;  // this is the path 
 
     public void Close()
     {
-        
+        DB.Close();
     }
+
     public void CreateDB<T>()
     {
         DB.DropTable<T>();
         DB.CreateTable<T>();
-
-        DB.InsertAll(new[]
-        {
-            new Person
-            {
-                Id = 1,
-                Name = "Tom",
-                Surname = "Perez",
-                Age = 56
-            },
-            new Person
-            {
-                Id = 2,
-                Name = "Fred",
-                Surname = "Arthurson",
-                Age = 16
-            },
-            new Person
-            {
-                Id = 3,
-                Name = "John",
-                Surname = "Doe",
-                Age = 25
-            },
-            new Person
-            {
-                Id = 4,
-                Name = "Roberto",
-                Surname = "Huertas",
-                Age = 37
-            }
-        });
     }
 
-    public IEnumerable<Person> GetPersons()
+    public void CreateDBByType(Type t)
     {
-        return DB.Table<Person>();
+        
+        DB.DropTableByType(t);
+        DB.CreateTableByType(t);
     }
+    
+    public void InsertTable(System.Collections.IEnumerable objects)
+    {
+        DB.InsertAll(objects);
+    }
+    
+//    public void CreateDB<T>()
+//    {
+//        DB.DropTable<T>();
+//        DB.CreateTable<T>();
+//
+//        DB.InsertAll(new[]
+//        {
+//            new Person
+//            {
+//                Id = 1,
+//                Name = "Tom",
+//                Surname = "Perez",
+//                Age = 56
+//            },
+//            new Person
+//            {
+//                Id = 2,
+//                Name = "Fred",
+//                Surname = "Arthurson",
+//                Age = 16
+//            },
+//            new Person
+//            {
+//                Id = 3,
+//                Name = "John",
+//                Surname = "Doe",
+//                Age = 25
+//            },
+//            new Person
+//            {
+//                Id = 4,
+//                Name = "Roberto",
+//                Surname = "Huertas",
+//                Age = 37
+//            }
+//        });
+//    }
+
+    public TableQuery<T> GetTable<T>() where T : new()
+    {
+        return DB.Table<T>();
+    }
+//    public IEnumerable<Person> GetPersons()
+//    {
+//        return DB.Table<Person>();
+//    }
 
     public IEnumerable<Person> GetPersonsNamedRoberto()
     {

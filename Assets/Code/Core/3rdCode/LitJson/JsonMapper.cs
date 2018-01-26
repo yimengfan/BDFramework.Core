@@ -378,7 +378,7 @@ namespace LitJson
                 if (conv_op != null)
                     return conv_op.Invoke (null,
                                            new object[] { reader.Value });
-                //ĞŞ¸Ä by @Ğ¡·² : ¶ªÊ§¾«¶ÈµÄ×ª»»
+                //ï¿½Ş¸ï¿½ by @Ğ¡ï¿½ï¿½ : ï¿½ï¿½Ê§ï¿½ï¿½ï¿½Èµï¿½×ªï¿½ï¿½
                 if ((json_type.ToString() == "System.Double"))
                 {
                     var _doubleValue = (System.Double)reader.Value;
@@ -400,7 +400,7 @@ namespace LitJson
                         return (System.Int64)_doubleValue;
                     }
                 }
-                //ĞŞ¸Ä by @Ğ¡·² : Ç¿ÖÆ×ª»»string
+                //ï¿½Ş¸ï¿½ by @Ğ¡ï¿½ï¿½ : Ç¿ï¿½ï¿½×ªï¿½ï¿½string
                 if (inst_type.ToString() == "System.String")
                 {
                     return reader.Value.ToString();
@@ -917,6 +917,19 @@ namespace LitJson
             return (T) ReadValue (typeof (T), reader);
         }
 
+        /// <summary>
+        /// é‡è½½ä¸€ä¸ª typeä¼ å…¥ï¼Œåå°„éœ€è¦ç”¨
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static object ToObject(Type t,string json)
+        {
+            JsonReader reader = new JsonReader (json);
+
+            return  ReadValue (t, reader);
+        }
+        
         public static IJsonWrapper ToWrapper (WrapperFactory factory,
                                               JsonReader reader)
         {

@@ -31,7 +31,8 @@ using System.Reflection;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
-
+using LitJson;
+using Debug = UnityEngine.Debug;
 #if USE_CSHARP_SQLITE
 using Sqlite3 = Community.CsharpSqlite.Sqlite3;
 using Sqlite3DatabaseHandle = Community.CsharpSqlite.Sqlite3.sqlite3;
@@ -494,6 +495,7 @@ namespace SQLite4Unity3d
 					for (int i = 0, end = index.Columns.Count; i < end; ++i) {
 						columnNames[i] = index.Columns[i].ColumnName;
 					}
+					
 				}
 				count += CreateIndex(indexName, index.TableName, columnNames, index.Unique);
 			}
@@ -2007,7 +2009,15 @@ namespace SQLite4Unity3d
 				return "blob";
 			} else if (clrType == typeof(Guid)) {
 				return "varchar(36)";
-			} else {
+			} 
+			//判断是否是list 或者array
+			else if (clrType.FullName.Contains("System.Collections.Generic.List")  || clrType.IsArray)
+			{
+				Debug.Log("数组将以json形式保存:" + clrType.Name );
+				return "varchar(4000)" ;
+			}
+			else
+			{
 				throw new NotSupportedException ("Don't know about " + clrType);
 			}
 		}
@@ -2308,7 +2318,15 @@ namespace SQLite4Unity3d
 					SQLite3.BindBlob(stmt, index, (byte[]) value, ((byte[]) value).Length, NegativePointer);
 				} else if (value is Guid) {
 					SQLite3.BindText(stmt, index, ((Guid)value).ToString(), 72, NegativePointer);
-				} else {
+				}
+				//数组当成json串存储,文档存储
+				else if (value.GetType().FullName.Contains(".List") || value.GetType().IsArray)
+				{
+					var v = JsonMapper.ToJson(value);
+					SQLite3.BindText (stmt, index, v , -1, NegativePointer);
+				}	
+				else
+				{
 					throw new NotSupportedException("Cannot store type: " + value.GetType());
 				}
 			}
@@ -2375,7 +2393,14 @@ namespace SQLite4Unity3d
 				} else if (clrType == typeof(Guid)) {
 				  var text = SQLite3.ColumnString(stmt, index);
 				  return new Guid(text);
-				} else{
+				}
+				else if ( clrType.FullName.Contains(".List") || clrType.IsArray)
+				{
+					var text =  SQLite3.ColumnString(stmt, index);
+					return JsonMapper.ToObject(clrType, text);
+				}
+				else
+				{
 					throw new NotSupportedException ("Don't know how to read " + clrType);
 				}
 			}
@@ -2503,6 +2528,7 @@ namespace SQLite4Unity3d
 			Table = table;
 		}
 
+		
 		public TableQuery (SQLiteConnection conn)
 		{
 			Connection = conn;
