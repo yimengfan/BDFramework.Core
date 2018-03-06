@@ -6,7 +6,7 @@ using BDFramework.UI;
 using DG.Tweening;
 using UnityEngine.UI;
 using BDFramework;
-using UnityEditor.Graphs;
+//using UnityEditor.Graphs;
 
 /// <summary>
 /// 这个是ui的标签，
@@ -53,7 +53,7 @@ public class Window_Test2 : AWindow
     public void OnRecive_Rotation(object o)
     {
         float value = (int)o;
-        BDeBug.I.Log("监听到rotation ：" +  value , Styles.Color.Yellow);
+        BDeBug.I.Log("监听到rotation ：" +  value , "yellow");
         var trans = this.Transform.Find("Image");
         trans.DOKill();
 

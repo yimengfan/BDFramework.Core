@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Graphs;
+//using UnityEditor.Graphs;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -24,11 +24,11 @@ public class BDeBug : MonoBehaviour
     }
     
     //
-    public void Log(object s, Styles.Color  color)
+    public void Log(object s, string  color)
     {
         if (IsLog)
         {
-            s = string.Format("<color={0}>{1}</color>", color.ToString(), s);
+            s = string.Format("<color={0}>{1}</color>", color, s);
             UnityEngine.Debug.Log(s);
         }
 

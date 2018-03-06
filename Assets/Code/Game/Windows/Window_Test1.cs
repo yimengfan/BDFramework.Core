@@ -13,6 +13,7 @@ using UnityEngine.UI;
 [UI((int)WinEnum.Win_Test1,"Windows/window_test1") ]
 public class Window_Test1 : AWindow 
 {
+    //[]
     public Window_Test1(string path) : base(path)
     {
     }

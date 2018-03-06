@@ -8,7 +8,7 @@ using BDFramework.Mgr;
 using BDFramework.UI;
 using BDFramework.Logic.Item;
 using BDFramework.ResourceMgr;
-using UnityEditor.Graphs;
+//using UnityEditor.Graphs;
 
 public class BDFrameWork : MonoBehaviour
 {
@@ -21,13 +21,14 @@ public class BDFrameWork : MonoBehaviour
         this.gameObject.AddComponent<BResources>();
         
         var types = Assembly.GetExecutingAssembly().GetTypes();
+        //
         mgrList = new List<IMgr>();
         //寻找所有的管理器
         foreach (var t in types)
         {
             if (t.BaseType!= null  && t.BaseType.GetInterface("IMgr") != null )
             {
-                BDeBug.I.Log("加载管理器-" +  t , Styles.Color.Green);
+                BDeBug.I.Log("加载管理器-" +  t , "green");
                 var i = t.BaseType.GetProperty("I").GetValue(null, null) as  IMgr;
                 mgrList.Add(i);
             }

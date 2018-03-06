@@ -144,7 +144,7 @@ Application.dataPath + "/StreamingAssets/" + DatabaseName;  // this is the path 
 
     public IEnumerable<Person> GetPersonsNamedRoberto()
     {
-        return DB.Table<Person>().Where(x => x.Name == "Roberto");
+        return DB.Table<Person>().Where(x => x.Name == "Roberto" && x.Age == 11);
     }
 
     public Person GetJohnny()
