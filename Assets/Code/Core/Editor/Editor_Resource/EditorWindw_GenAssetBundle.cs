@@ -85,9 +85,9 @@ public class EditorWindw_GenAssetBundle : EditorWindow
 		case BuildTarget.iOS:
 			SavePath = "AssetBundle/IOS/";
 			break;
-		case BuildTarget.StandaloneOSX:
-			SavePath = "AssetBundle/Mac/";
-			break;
+		//case BuildTarget.StandaloneOSX:
+		//	SavePath = "AssetBundle/Mac/";
+			//break;
 		case BuildTarget.Android:
 			SavePath = "AssetBundle/Android/";
 			break;
@@ -116,9 +116,9 @@ public class EditorWindw_GenAssetBundle : EditorWindow
 		    case BuildTarget.iOS:
 			    platform = "IOS/AllResources/";
 			    break;
-		    case BuildTarget.StandaloneOSX:
-			    platform = "Mac/AllResources/";
-			    break;
+		    //case BuildTarget.StandaloneOSX:
+			   // platform = "Mac/AllResources/";
+			   // break;
 		    case BuildTarget.Android:
 			    platform = "Android/AllResources/";
 			    break;

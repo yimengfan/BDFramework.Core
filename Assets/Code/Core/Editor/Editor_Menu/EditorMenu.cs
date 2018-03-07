@@ -44,5 +44,11 @@ namespace BDFramework.Editor
         {
             //Editor_VersionCtrl.GenTableCofig();
         }
+        [MenuItem("BDFrameWork工具箱/资源打包/图片压缩",false,6)]
+        public static void ChangeTexture()
+        {
+            var window =(Editor_2ChangeTextureImporter)EditorWindow.GetWindow(typeof(Editor_2ChangeTextureImporter), false, "图片格式设置");
+            window.Show();
+        }
     }
 }
