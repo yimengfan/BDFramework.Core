@@ -20,7 +20,7 @@ public class ScreenView_Test : IScreenView
 		 this.IsLoad = true;
 		 
 		 //加载窗口, 0是窗口id,建议自行换成枚举
-		 UIMgr.I.LoadWindows(WinEnum.Win_Test1, WinEnum.Win_Test2);
+		 UIMgr.I.LoadWindows(WinEnum.Win_Test1, WinEnum.Win_Test2 , WinEnum.Win_XVC );
 		 UIMgr.I.ShowWindow(WinEnum.Win_Test1);
 		 
 		 Debug.Log("进入Test Screen 1");

@@ -4,5 +4,6 @@
     {
         Win_Test1 =0,
         Win_Test2 ,
+        Win_XVC ,
     }
 }

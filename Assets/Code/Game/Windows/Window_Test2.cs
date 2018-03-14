@@ -27,7 +27,7 @@ public class Window_Test2 : AWindow
         this.Transform.Find("Button").GetComponent<Button>().onClick.AddListener(() =>
         {
            this.Close();
-           ScreenViewMgr.I.BeginNav("sv_test1");
+            UIMgr.I.ShowWindow( WinEnum.Win_XVC);
         });
         
         //注册消息监听

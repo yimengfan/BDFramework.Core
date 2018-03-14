@@ -39,4 +39,11 @@ public class BDeBug : MonoBehaviour
         if (IsLog)
           UnityEngine.Debug.LogFormat(format, args);
     }
+
+
+    public void LogError(object s)
+    {
+        if (IsLog)
+            UnityEngine.Debug.LogError(s);
+    }
 }
