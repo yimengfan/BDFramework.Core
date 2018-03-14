@@ -32,7 +32,7 @@ public class ScreenView_Test2 : IScreenView
 		 onExit(null);
 		 
 		 Destory();
-		 Debug.Log("退出 Test Screen 2");
+		// Debug.Log("退出 Test Screen 2");
 	 }
 
 	 public void Destory()
@@ -42,7 +42,7 @@ public class ScreenView_Test2 : IScreenView
 
 	 public void Update(float delta)
 	 {
-		 Debug.Log("sv2 update");
+		// Debug.Log("sv2 update");
 	 }
 
 	 public void UpdateTask(float delta)

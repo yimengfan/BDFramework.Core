@@ -6,17 +6,18 @@ using System.Text;
 
 abstract public class ADataDrive
 {
+    public delegate void CallBack(object o);
     /// <summary>
     /// 
     /// </summary>
     protected Dictionary<string, object> dataMap;
     //注册数据变动事件刷新
-    protected Dictionary<string, Action<object>> whenDataChangeCallbackMap;
+    protected Dictionary<string,CallBack> callbackMap;
 
     public ADataDrive()
     {
         dataMap = new Dictionary<string, object>();
-        whenDataChangeCallbackMap = new Dictionary<string, Action<object>>();
+        callbackMap = new Dictionary<string,CallBack>();
     }
 
     virtual public void InitData()
@@ -29,13 +30,13 @@ abstract public class ADataDrive
     /// </summary>
     /// <param name="name"></param>
     /// <param name="value"></param>
-    virtual public void SetData(string name, object value)
+    virtual public void SetData(string name, object value ,bool isUseCallback = true)
     {
         dataMap[name] = value;
         //调用数据改变
-        if (whenDataChangeCallbackMap.ContainsKey(name))
+        if (isUseCallback && callbackMap.ContainsKey(name))
         {
-            whenDataChangeCallbackMap[name](value);
+            callbackMap[name](value);
         }
     }
 
@@ -52,6 +53,10 @@ abstract public class ADataDrive
         {
             t = (T)dataMap[name];
         }
+        else
+        {
+            dataMap[name] = t;
+        }
         return t;
     }
 
@@ -60,20 +65,44 @@ abstract public class ADataDrive
     /// </summary>
     /// <param name="name"></param>
     /// <param name="callback"></param>
-    virtual  public void RegAction_WhenDataChange(string name, Action<object> callback)
+    virtual  public void RegAction(string name, CallBack callback)
     {
-        whenDataChangeCallbackMap[name] = callback;
+        CallBack cal = null;
+        callbackMap.TryGetValue(name, out cal);
+        if (cal == null)
+        {
+            callbackMap[name] = callback;
+        }
+        else
+        {
+            cal += callback;
+        }
     }
-
+    
     /// <summary>
     /// 移除属性变动事件注册
     /// </summary>
     /// <param name="name"></param>
-    virtual public void RemoveAction_WhenPlayerDataChange(string name)
+    virtual public void RemoveAction(string name)
     {
-        if (whenDataChangeCallbackMap.ContainsKey(name))
+        if (callbackMap.ContainsKey(name))
         {
-            whenDataChangeCallbackMap.Remove(name);
+            callbackMap.Remove(name);
+        }
+    }
+    
+    
+    /// <summary>
+    /// 移除属性变动事件注册
+    /// </summary>
+    /// <param name="name"></param>
+    virtual public void RemoveAction(string name , CallBack callback)
+    {
+        CallBack cal = null;
+        callbackMap.TryGetValue(name, out cal);
+        if (cal != null)
+        {
+            cal -= callback;
         }
     }
 }

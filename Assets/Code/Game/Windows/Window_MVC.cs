@@ -17,9 +17,9 @@ using Code.Game.Windows.MCX;
 /// resource 目录
 /// </summary>
 [UI((int)WinEnum.Win_XVC,"Windows/window_xvc") ]
-public class Window_XVC : AWindow 
+public class Window_MVC : AWindow 
 {
-    public Window_XVC(string path) : base(path)
+    public Window_MVC(string path) : base(path)
     {
         
     }
@@ -27,9 +27,9 @@ public class Window_XVC : AWindow
     public override void Init()
     {
         base.Init();
-        var dataDriver = DataDriveServer.Create("XVCTest");
         //绑定一个
-        var vc =  VCContainer.Create("XVCTest", new ViewContrl_XVCTest(dataDriver), new View_XVCTest(Transform, dataDriver));
+        var dataDriver = DataDriveServer.Create("XVCTest");
+        var mvc =  MVCBind.Create("XVCTest", new ViewContrl_MVCTest(dataDriver), new View_MVCTest(Transform, dataDriver));
      
     }
 

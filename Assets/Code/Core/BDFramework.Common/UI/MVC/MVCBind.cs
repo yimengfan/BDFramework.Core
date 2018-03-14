@@ -5,20 +5,20 @@ using UnityEngine.UI;
 
 namespace BDFramework.UI
 {
-    public class BindContextWarpper
+    public class MvcWarpper
     {
         public string Name;
         public IViewControl ViewControl;
         public IView view;
     }
-   static public class VCContainer
+   static public class MVCBind
     {
         /// <summary>
-        /// 创建一个mvx模块
+        /// 创建一个mvc模块
         /// </summary>
         /// <param name="viewControl"></param>
         /// <param name="view"></param>
-        static public BindContextWarpper Create(string name, IViewControl viewControl, IView view)
+        static public MvcWarpper Create(string name, IViewControl viewControl, IView view)
         {
             ViewAutoSet(view);
             BindEvnet(viewControl, view);
@@ -26,7 +26,7 @@ namespace BDFramework.UI
             viewControl.BindData();
             view.BindData();
             //
-            var bind = new BindContextWarpper()
+            var bind = new MvcWarpper()
             {
                 Name = name,
                 ViewControl = viewControl,
@@ -51,6 +51,10 @@ namespace BDFramework.UI
             
             foreach (var f in fields)
             {
+                if (!f.FieldType.IsSubclassOf(typeof( UnityEngine.Object)))
+                {
+                   continue;   
+                }
                 //1.自动获取节点
                 var attr = f.GetCustomAttribute<BSetTransform>();
                 if (attr != null)
@@ -71,6 +75,40 @@ namespace BDFramework.UI
                 }
                 
                 //2.自动绑定数据驱动
+                var bAttr = f.GetCustomAttribute<BBindData>();
+                if (bAttr != null)
+                {
+                    var name = bAttr.Name;
+                    var BindData = vt.GetProperty("DataBinder").GetValue(view) as DataDrive_Service;
+                    BindData.RegAction(bAttr.Name , (v) =>
+                    {
+                        if (f.FieldType == typeof(Text))
+                        {
+                            var c = f.GetValue(view) as Text;
+                            c.text = v.ToString();
+                        }
+                        
+                        else if (f.FieldType == typeof(Slider))
+                        {
+                            var c = f.GetValue(view) as Slider;
+                            c.value = (float)v;
+                        }
+                        else if (f.FieldType == typeof(Scrollbar))
+                        {
+                            var c = f.GetValue(view) as Scrollbar;
+                            c.value = (float)v;
+                        }
+                        else if (f.FieldType == typeof(Toggle))
+                        {
+                            var c = f.GetValue(view) as Toggle;
+                            c.isOn = (bool)v;
+                        }
+                        else
+                        {
+                            BDeBug.I.LogError("不支持类型,请扩展：" + f.Name  + "-"+ vt.FullName);
+                        }
+                    });
+                }
             }
         }
         
@@ -83,12 +121,16 @@ namespace BDFramework.UI
         /// <param name="view"></param>
        static private void BindEvnet(IViewControl viewControl, IView view)
         {
-            //开始反射所有的UI组件,自动注册Ctrl下面 OnEvent_+字段名
+            //开始反射所有的UI组件,自动注册Ctrl下面 OnEvent_+ 字段名
             var viewType = view.GetType();
             var controlType = viewControl.GetType();
             var vfields = viewType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance |BindingFlags.Public);
             foreach (var f in vfields)
             {
+                if (!f.FieldType.IsSubclassOf(typeof( UnityEngine.Object)))
+                {
+                    continue;   
+                }
                 //所有ui组件
                 if (f.FieldType == typeof(Button))//主动注册OnClick、
                 {

@@ -50,7 +50,7 @@ public class ScreenView_Test : IScreenView
 
 	 public void Update(float delta)
 	 {
-		Debug.Log("sv1 update");
+	   //	Debug.Log("sv1 update");
 	 }
 
 	 public void UpdateTask(float delta)

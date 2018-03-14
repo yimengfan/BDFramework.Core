@@ -4,11 +4,11 @@ namespace BDFramework.UI
 {
     public class BBindData : Attribute
     {
-        public string Path;
+        public string Name;
 
-        public BBindData(string path)
+        public BBindData(string name)
         {
-            this.Path = path;
+            this.Name = name;
         }
     }
 }

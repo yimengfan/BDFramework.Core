@@ -98,7 +98,7 @@ public abstract class AWindow
         var go = GameObject.Instantiate(o);
         Transform = go.transform;
         Transform.gameObject.SetActive(false);
-//        ClientMain.AddToUIRoot(Transform);
+//      ClientMain.AddToUIRoot(Transform);
         IsLoad = true;
         Init();
     }

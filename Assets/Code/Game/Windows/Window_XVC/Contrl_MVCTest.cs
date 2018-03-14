@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Code.Game.Windows.MCX
 {
-    public class ViewContrl_XVCTest : AViewContrlBase
+    public class ViewContrl_MVCTest : AViewContrlBase
     {
-        public ViewContrl_XVCTest(DataDrive_Service data) : base(data)
+        public ViewContrl_MVCTest(DataDrive_Service data) : base(data)
         {
             
         }      
@@ -15,7 +15,7 @@ namespace Code.Game.Windows.MCX
         private void OnClick_testButton()
         {
             var clickCount = this.DataBinder.GetData<int>("ClickCount");            
-            this.DataBinder.SetData("ClickCount" ,clickCount++);
+            this.DataBinder.SetData("ClickCount" , ++clickCount);
             
             Debug.Log("--");
         }
@@ -43,13 +43,13 @@ namespace Code.Game.Windows.MCX
         /// </summary>
         private void OnClick_testButtonAutoSetValue()
         {     
-            var test = new View_XVCTest.AutoSetData()
+            var test = new View_MVCTest.AutoSetData()
             {
                 test1 = "获得值：test1",
                 test2 = "获得值：test2",
                 test3 = "获得值：test3"
             };
-            this.DataBinder.SetData("AutoSetValue" , test );
+            this.DataBinder.SetData("AutoSetValue" , test);
             Debug.Log("-..-");
         }
         

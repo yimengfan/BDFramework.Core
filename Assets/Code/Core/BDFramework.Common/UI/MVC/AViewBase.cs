@@ -38,7 +38,7 @@ namespace BDFramework.UI
 
 
         /// <summary>
-        /// 根据数据结构自动填充Transform
+        /// 根据数据结构自动给Transform赋值
         /// </summary>
         /// <param name="t"></param>
         /// <param name="o"></param>
@@ -61,18 +61,33 @@ namespace BDFramework.UI
                         if (fAttr.Type == typeof(Text))
                         {
                             var c = component as Text;
-                            c.text = f.GetValue(o) as string;
+                            c.text = f.GetValue(o).ToString();
                         }
                         else if (fAttr.Type == typeof(Image))
                         {
-                            var c = component as Image;
-                            var path = f.GetValue(o) as string;
-                            //c.sprite =  ;
+                            var c     = component as Image;
+                            var path  = f.GetValue(o).ToString();                           
+                            c.sprite  = BResources.Load<Sprite>(path);
                         }
-                        else if (fAttr.Type == typeof(Slider) || fAttr.Type == typeof(Scrollbar))
+                        else if (fAttr.Type == typeof(Slider))
                         {
-
+                            var c      = component as Slider;
+                            var value  = (float)f.GetValue(o);
+                            c.value = value;
                         }
+                        else if (fAttr.Type == typeof(Scrollbar))
+                        {
+                            var c      = component as Scrollbar;
+                            var value  = (float)f.GetValue(o);
+                            c.value = value;
+                        }
+                        else if (fAttr.Type == typeof(Toggle))
+                        {
+                            var c      = component as Toggle;
+                            var value  = (bool)f.GetValue(o);
+                            c.isOn = value;
+                        }
+                        //                     
                         else
                         {
                             BDeBug.I.LogError("不支持类型,请扩展：" + f.Name  + "-"+ type.FullName);

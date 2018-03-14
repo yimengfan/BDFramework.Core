@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Code.Game.Windows
 {
-    public class View_XVCTest : AViewBase
+    public class View_MVCTest : AViewBase
     {
         [BSetTransform("testButton")]
         private Button testButton;
@@ -25,10 +25,10 @@ namespace Code.Game.Windows
         private Text text_sliderValue;
         //
         [BSetTransform("text_scrollBarValue")]
-        [BBindData("test")]
+        [BBindData("ScrollBarValue")]
         private Text text_ScrollBarValue;
         
-        public View_XVCTest(Transform t, DataDrive_Service service) : base(t, service)
+        public View_MVCTest(Transform t, DataDrive_Service service) : base(t, service)
         {
             
         }
@@ -37,26 +37,26 @@ namespace Code.Game.Windows
         {
             base.BindData();
 
-            this.DataBinder.RegAction_WhenDataChange("ClickCount",
+            this.DataBinder.RegAction("ClickCount",
             (value) =>
             {
                 this.text_click.text = "点 击 次 数：" + value;
             });
 
-            this.DataBinder.RegAction_WhenDataChange("SliderValue",
+            this.DataBinder.RegAction("SliderValue",
             (value) =>
             {
                 this.text_sliderValue.text = "Slider Value：" + value;
             });
-            
-            this.DataBinder.RegAction_WhenDataChange("ScrollBarValue",
-            (value) =>
-            {
-                this.text_ScrollBarValue.text = "ScrollBarValue ：" + value;
-            });
+//            
+//            this.DataBinder.RegAction("ScrollBarValue",
+//            (value) =>
+//            {
+//                this.text_ScrollBarValue.text = "ScrollBarValue ：" + value;
+//            });
             
             //自动设置值测试
-            this.DataBinder.RegAction_WhenDataChange("AutoSetValue", AutoSetDataTest);
+            this.DataBinder.RegAction("AutoSetValue", AutoSetDataTest);
         }
 
         public class AutoSetData
