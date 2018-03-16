@@ -16,7 +16,7 @@ using Code.Game.Windows.MCX;
 /// index 
 /// resource 目录
 /// </summary>
-[UI((int)WinEnum.Win_XVC,"Windows/window_xvc") ]
+[UI((int)WinEnum.Win_XVC,"Windows/window_mvc") ]
 public class Window_MVC : AWindow 
 {
     public Window_MVC(string path) : base(path)

@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 222782654377792372}
   - component: {fileID: 114647367037222424}
   m_Layer: 5
-  m_Name: window_xvc
+  m_Name: window_mvc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
