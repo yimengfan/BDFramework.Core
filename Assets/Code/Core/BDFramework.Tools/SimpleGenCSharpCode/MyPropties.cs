@@ -2,23 +2,23 @@
 
 namespace Code.Core.BDFramework.SimpleGenCSharpCode
 {
-    public class MyField
+    public class MyPropties
     {
-        private string CodeContent = "public [type] [field name];";
+        private string CodeContent = "public [type] [field name]{get;set;}";
 
         public void SetType(Type type)
         {
             this.CodeContent=    this.CodeContent.Replace("[type]", type.FullName);
         }
 
-        public void SetFieldName(string name)
+        public void SetProptiesName(string name)
         {
             this.CodeContent=   this.CodeContent.Replace("[field name]", name);
         }
 
-        public void SetContent(string Content)
+        public void OverwriteContent(string Content)
         {
-            this.CodeContent=    this.CodeContent = Content;
+            this.CodeContent=   this.CodeContent = Content;
         }
 
         override public string ToString()

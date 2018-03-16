@@ -19,7 +19,10 @@ namespace Code.Game.Windows
         private Button testButtonAutoSetValue;
         //
         [BSetTransform("text_click")]
+        [BBindData("ClickCount")]
         private Text text_click;
+        
+        
         //
         [BSetTransform("text_sliderValue")]
         private Text text_sliderValue;
@@ -37,11 +40,11 @@ namespace Code.Game.Windows
         {
             base.BindData();
 
-            this.DataBinder.RegAction("ClickCount",
-            (value) =>
-            {
-                this.text_click.text = "点 击 次 数：" + value;
-            });
+//            this.DataBinder.RegAction("ClickCount",
+//            (value) =>
+//            {
+//                this.text_click.text = "点 击 次 数：" + value;
+//            });
 
             this.DataBinder.RegAction("SliderValue",
             (value) =>
@@ -66,7 +69,8 @@ namespace Code.Game.Windows
             [BValueType(typeof(Text))]
             public string test2;
             [BValueType(typeof(Text))]
-            public string test3;
+            public string name;
+            
         }
         
         /// <summary>

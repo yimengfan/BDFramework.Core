@@ -14,7 +14,8 @@ namespace Code.Game.Windows.MCX
         /// </summary>
         private void OnClick_testButton()
         {
-            var clickCount = this.DataBinder.GetData<int>("ClickCount");            
+            var clickCount = this.DataBinder.GetData<int>("ClickCount");    
+            
             this.DataBinder.SetData("ClickCount" , ++clickCount);
             
             Debug.Log("--");
@@ -47,7 +48,7 @@ namespace Code.Game.Windows.MCX
             {
                 test1 = "获得值：test1",
                 test2 = "获得值：test2",
-                test3 = "获得值：test3"
+                name  = "获得值：张三"
             };
             this.DataBinder.SetData("AutoSetValue" , test);
             Debug.Log("-..-");
