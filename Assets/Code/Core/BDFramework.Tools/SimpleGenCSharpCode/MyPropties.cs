@@ -18,7 +18,7 @@ namespace Code.Core.BDFramework.SimpleGenCSharpCode
 
         public void OverwriteContent(string Content)
         {
-            this.CodeContent=   this.CodeContent = Content;
+            this.CodeContent= Content;
         }
 
         override public string ToString()

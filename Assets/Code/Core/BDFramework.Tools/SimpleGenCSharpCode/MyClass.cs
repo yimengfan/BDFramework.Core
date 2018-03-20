@@ -6,16 +6,18 @@ namespace Code.Core.BDFramework.SimpleGenCSharpCode
     {
         private string CodeContent =@"
 //工具生成代码,请勿删除标签，否则无法进行添加操作
-[namespace]
+//[namespace]
 //[Note]
 public class [ClassName]
 {
+   //------[class end]------
    //------[Field end]------
    //------[Propties end]------
    //------[Method end]------
 }
 ";
 
+        private List<MyClass> ClassesList;
         private List<MyField> FieldsList;
         private List<MyMethod> MethodList;
         private List<MyPropties> ProptiesList;
@@ -27,6 +29,7 @@ public class [ClassName]
             this.MethodList = new List<MyMethod>();
             this.ProptiesList =  new List<MyPropties>();
             this.NamespaceList = new List<string>();
+            this.ClassesList =  new List<MyClass>();
             //
             this.CodeContent =  this.CodeContent.Replace("[ClassName]", className);
         }
@@ -39,6 +42,10 @@ public class [ClassName]
             }
         }
 
+        public void AddClass(MyClass c)
+        {
+            this.AddClass(c);
+        }
         public void AddField(MyField f)
         {
             FieldsList.Add(f);
@@ -57,6 +64,11 @@ public class [ClassName]
         //
         override public string ToString()
         {
+            string classes = "";
+            foreach (var c in this.ClassesList)
+            {
+                classes += (c.ToString() + " \n");
+            }
             string fields = "";
             foreach (var f in FieldsList)
             {
@@ -81,9 +93,12 @@ public class [ClassName]
             
             
             //
-            this.CodeContent=  this.CodeContent.Replace("[namespace]", namespaces);
+            this.CodeContent=  this.CodeContent.Replace("//[namespace]", namespaces);
             
-            var index = this.CodeContent.IndexOf("//------[Field end]------");
+            var index = this.CodeContent.IndexOf("//------[class end]------");
+            this.CodeContent=   this.CodeContent.Insert( index, classes);
+            
+             index = this.CodeContent.IndexOf("//------[Field end]------");
             this.CodeContent=   this.CodeContent.Insert( index, fields);
             
             index = this.CodeContent.IndexOf("//------[Propties end]------");

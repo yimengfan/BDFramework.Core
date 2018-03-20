@@ -13,12 +13,14 @@ namespace Code.Core.BDFramework.SimpleGenCSharpCode
         public void DO()
         {
            MyClass c = new MyClass("TestForGenCode");
+            
            c.AddNameSpace("System");
             
             //添加一个field
             var f = new MyField();
             f.SetType(typeof(int));
             f.SetFieldName("testField");
+            f.SetContent("public int xxx = 0;");
             c.AddField(f);
             
             //添加propty

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections;
 using UnityEngine.UI;
+
 namespace BDFramework.ResourceMgr
 {
     /// <summary>
@@ -11,17 +12,14 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     public class AssetBundleManifestReference
     {
-       AssetBundleManifest asset;
-       public AssetBundleManifest Manifest
+        AssetBundleManifest asset;
+
+        public AssetBundleManifest Manifest
         {
-            get
-            {
-                return asset;
-            }
+            get { return asset; }
 
             set
             {
-
                 asset = value;
                 allAssetBundlesMap = new Dictionary<string, int>();
                 var list = asset.GetAllAssetBundles();
@@ -31,8 +29,10 @@ namespace BDFramework.ResourceMgr
                 }
             }
         }
+
         public Dictionary<string, int> allAssetBundlesMap;
     }
+
     /// <summary>
     ///ab包引用计数类
     /// </summary>
@@ -45,6 +45,7 @@ namespace BDFramework.ResourceMgr
         {
             referenceCount++;
         }
+
         public void Unuse()
         {
             referenceCount--;
@@ -72,17 +73,22 @@ namespace BDFramework.ResourceMgr
         {
             mCurState = state.Waiting;
         }
+
         //任务id
         public int id;
+
         //当前状态
         public state mCurState;
+
         //任务
         Action dotask;
+
         //注册task
         public void RegTask(Action task)
         {
             dotask = task;
         }
+
         //dotask
         public void DoTask()
         {
@@ -92,143 +98,134 @@ namespace BDFramework.ResourceMgr
                 dotask();
             }
         }
+
         //任务结束
         public void EndTask()
         {
             mCurState = state.End;
         }
     }
-  /// <summary>
-  /// ab包管理器
-  /// </summary>
-  public class AssetBundleMgr :IResMgr
+
+    /// <summary>
+    /// ab包管理器
+    /// </summary>
+    public class AssetBundleMgr : IResMgr
     {
-      /// <summary>
-      /// 全局的任务id
-      /// </summary>
-      private int id;
-      /// <summary>
-      /// 任务表
-      /// </summary>
-      private HashSet<int> taskHashSet;
+        /// <summary>
+        /// 全局的任务id
+        /// </summary>
+        private int id;
 
-      /// <summary>
-      /// 异步回调表
-      /// </summary>
-      private List<AsyncTask> asyncTaskList;
+        /// <summary>
+        /// 任务表
+        /// </summary>
+        private HashSet<int> taskHashSet;
 
-      /// <summary>
-      /// 全局唯一的依赖
-      /// </summary>
-      private AssetBundleManifestReference manifest;
+        /// <summary>
+        /// 异步回调表
+        /// </summary>
+        private List<AsyncTask> asyncTaskList;
 
-      public AssetBundleMgr()
-      {
-          this.manifest       = new AssetBundleManifestReference();
-          this.AssetbundleMap = new Dictionary<string, AssetBundleReference>();
-          this.taskHashSet = new HashSet<int>();
-          this.asyncTaskList  = new List<AsyncTask>();
+        /// <summary>
+        /// 全局唯一的依赖
+        /// </summary>
+        private AssetBundleManifestReference manifest;
 
-      }
-      public Dictionary<string, AssetBundleReference> AssetbundleMap
-      {
-          get;
-          set;
-      }
+        public AssetBundleMgr()
+        {
+            this.manifest = new AssetBundleManifestReference();
+            this.AssetbundleMap = new Dictionary<string, AssetBundleReference>();
+            this.taskHashSet = new HashSet<int>();
+            this.asyncTaskList = new List<AsyncTask>();
+        }
 
-      public string LocalHotUpdateResPath
-      {
-          get;
-          set;
-      }
+        public Dictionary<string, AssetBundleReference> AssetbundleMap { get; set; }
 
-      /// <summary>
-      /// 加入ab包
-      /// </summary>
-      /// <param name="name"></param>
-      /// <param name="ab"></param>
-      private void UseAssetBunle(string name , AssetBundle ab)
-      {
-          name = Path.GetFileName(name);
-          if (AssetbundleMap.ContainsKey(name) ==false)
-          {
-              AssetBundleReference abr = new AssetBundleReference() { assetBundle = ab};
-              AssetbundleMap[name] = abr;
-          }
+        public string LocalHotUpdateResPath { get; set; }
 
-          AssetbundleMap[name].Use();
+        /// <summary>
+        /// 加入ab包
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="ab"></param>
+        private void UseAssetBunle(string name, AssetBundle ab)
+        {
+            name = Path.GetFileName(name);
+            if (AssetbundleMap.ContainsKey(name) == false)
+            {
+                AssetBundleReference abr = new AssetBundleReference() {assetBundle = ab};
+                AssetbundleMap[name] = abr;
+            }
 
-          
-      }
+            AssetbundleMap[name].Use();
+        }
 
-      #region 异步加载Manifest
-      public void LoadManifestAsync(string path,Action<bool> callback)
-      {
-          //如果存在 不让加载
-          //if (manifest != null)
-          //{
-          //    callback(true);
-          //    return;
-          //}
-          path = Path.Combine(LocalHotUpdateResPath, path);
+        #region 异步加载Manifest
+
+        public void LoadManifestAsync(string path, Action<bool> callback)
+        {
+            //如果存在 不让加载
+            //if (manifest != null)
+            //{
+            //    callback(true);
+            //    return;
+            //}
+            path = Path.Combine(LocalHotUpdateResPath, path);
 #if UNITY_EDITOR || UNITY_IPHONE
-          path = "File:///" + path;
+            path = "File:///" + path;
 #endif
-          path = path.Replace("\\", "/");
+            path = path.Replace("\\", "/");
             IEnumeratorTool.StartCoroutine(IELoadAssetBundles(path, callback, true));
-      }
+        }
 
-      //委托协程
-      IEnumerator IELoadAssetBundles(string path, Action<bool> sucessCallback, bool isManiFest = false)
-      {
+        //委托协程
+        IEnumerator IELoadAssetBundles(string path, Action<bool> sucessCallback, bool isManiFest = false)
+        {
+            BDeBug.I.Log("加载依赖");
+            WWW www = new WWW(path);
+            yield return www;
+            if (www.error == null)
+            {
+                if (www.isDone)
+                {
+                    if (isManiFest)
+                    {
+                        manifest.Manifest = www.assetBundle.LoadAsset("AssetBundleManifest") as AssetBundleManifest;
 
-			if (File.Exists (path)) {
-			
-				Debug.Log (" file is exists!");
-			} else {
-				Debug.Log ("file  is not exists!");
-			}
-          BDeBug.I.Log("加载依赖");
-          WWW www = new WWW(path);
-          yield return www;
-          if (www.error == null)
-          {
-				if (www.isDone) {
-					if (isManiFest) {
+                        if (manifest != null)
+                        {
+                            sucessCallback(true);
+                        }
+                        else
+                        {
+                            sucessCallback(false);
+                            Debug.LogError("加载依赖失败!");
+                        }
+                    }
 
-						manifest.Manifest = www.assetBundle.LoadAsset ("AssetBundleManifest") as AssetBundleManifest;
-						var xx = manifest.Manifest.GetAllAssetBundles ();
+                    yield break;
+                }
+                else
+                {
+                    Debug.Log("loading ...");
+                }
+            }
+            else
+            {
+                Debug.LogError("错误：" + www.error);
+                sucessCallback(false);
+            }
+        }
 
-						if (manifest != null) {
-							sucessCallback (true);
+        #endregion
 
-						} else {
-							sucessCallback (false);
-							Debug.LogError ("加载依赖失败!");
-						}
+        #region 异步加载ab
 
-					}
-					yield break;
-				} else {
-					Debug.Log ("loading ...");
-				}
-
-          }
-          else
-          {
-              Debug.LogError("错误："+www.error);
-              sucessCallback(false);
-          }
-
-      }
-      #endregion
-
-      #region 异步加载ab
-      /// <summary>
-      /// 加载ab
-      /// </summary>
-      /// <param name="path"></param>
-      /// <param name="sucessCallback"></param>
+        /// <summary>
+        /// 加载ab
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="sucessCallback"></param>
         public void LoadAssetBundleAsync(string path, Action<bool> sucessCallback)
         {
             path = Path.Combine(LocalHotUpdateResPath, path);
@@ -246,7 +243,7 @@ namespace BDFramework.ResourceMgr
             Queue<string> resQue = new Queue<string>();
             foreach (var r in res)
             {
-                string _path = Path.GetDirectoryName(path) +"/"+Path.GetFileName(r);
+                string _path = Path.GetDirectoryName(path) + "/" + Path.GetFileName(r);
                 _path = _path.Replace("\\", "/");
                 var key = Path.GetFileName(_path);
                 if (AssetbundleMap.ContainsKey(key) == false)
@@ -265,11 +262,8 @@ namespace BDFramework.ResourceMgr
             }
 
 
-
             //开始加载队列
             IEnumeratorTool.StartCoroutine(IELoadAssetBundles(resQue, sucessCallback));
-
-
         }
 
         /// <summary>
@@ -290,7 +284,8 @@ namespace BDFramework.ResourceMgr
             {
                 path = resQue.Dequeue();
             }
-             BDeBug.I.Log("加载依赖：" + path);
+
+            BDeBug.I.Log("加载依赖：" + path);
 
             WWW www = new WWW(path);
             yield return www;
@@ -308,10 +303,9 @@ namespace BDFramework.ResourceMgr
             {
                 Debug.LogError("加载失败：" + path);
             }
-
         }
 
-#endregion
+        #endregion
 
         /// <summary>
         /// 加载资源
@@ -328,6 +322,7 @@ namespace BDFramework.ResourceMgr
             {
                 o = AssetbundleMap[abName].assetBundle.LoadAsset<T>(objName);
             }
+
             return o;
         }
 
@@ -335,7 +330,7 @@ namespace BDFramework.ResourceMgr
         /// 卸载
         /// </summary>
         /// <param name="name"></param>
-        public void UnloadAsset(string name,bool isUnloadIsUsing = false)
+        public void UnloadAsset(string name, bool isUnloadIsUsing = false)
         {
             var path = GetExistPath(name);
 
@@ -355,7 +350,6 @@ namespace BDFramework.ResourceMgr
                 resQue.Enqueue(path);
                 foreach (var r in resQue)
                 {
-
                     if (AssetbundleMap.ContainsKey(r))
                     {
                         if (isUnloadIsUsing)
@@ -367,7 +361,6 @@ namespace BDFramework.ResourceMgr
                         {
                             AssetbundleMap[r].Unuse();
                         }
-
                     }
                 }
 
@@ -380,13 +373,11 @@ namespace BDFramework.ResourceMgr
                         AssetbundleMap.Remove(k);
                     }
                 }
-
             }
             else
             {
-                 BDeBug.I.Log("路径不存在");
+                BDeBug.I.Log("路径不存在");
             }
-           
         }
 
 
@@ -404,22 +395,18 @@ namespace BDFramework.ResourceMgr
         }
 
 
-     
-
-
-
-      /// <summary>
-      /// 异步加载接口
-      /// </summary>
-      /// <typeparam name="T"></typeparam>
-      /// <param name="objName"></param>
-      /// <returns></returns>
-       public int LoadAsync<T>(string objName,Action<bool,T> aciton,bool isCreateTaskid = true) where T : UnityEngine.Object
+        /// <summary>
+        /// 异步加载接口
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objName"></param>
+        /// <returns></returns>
+        public int LoadAsync<T>(string objName, Action<bool, T> aciton, bool isCreateTaskid = true)
+            where T : UnityEngine.Object
         {
-
             //创建任务序列
-            int taskid =-1;
-            
+            int taskid = -1;
+
             if (isCreateTaskid)
             {
                 taskid = CreateTaskHash();
@@ -433,7 +420,6 @@ namespace BDFramework.ResourceMgr
                 var path = GetExistPath<T>(objName);
                 if (path != null)
                 {
-
                     var sourceName = Path.GetFileName(objName);
                     //assetbundle 
                     LoadAssetBundleAsync(path, (bool issuccess) =>
@@ -443,18 +429,18 @@ namespace BDFramework.ResourceMgr
                         {
                             _t = LoadResFormAssetBundle<T>(path, sourceName);
                         }
+
                         //判断任务结束
                         task.EndTask();
                         //有创建taskid的，判断段taskid是否存在
                         if (isCreateTaskid == true && taskHashSet.Contains(taskid) == false)
                         {
-
                             BDeBug.I.Log("没发现任务id,不执行回调");
                             return;
                         }
+
                         aciton(issuccess, _t);
                     });
-
                 }
                 else
                 {
@@ -463,13 +449,12 @@ namespace BDFramework.ResourceMgr
                     //有创建taskid的，判断段taskid是否存在
                     if (isCreateTaskid == true && taskHashSet.Contains(taskid) == false)
                     {
-                            BDeBug.I.Log("没发现任务id,不执行回调");
+                        BDeBug.I.Log("没发现任务id,不执行回调");
                         return;
                     }
+
                     aciton(false, null);
-                        
                 }
-                
             });
 
             asyncTaskList.Add(task);
@@ -481,7 +466,6 @@ namespace BDFramework.ResourceMgr
         {
             return null;
         }
-
 
 
         public void LoadAssetBundle(string path)
@@ -500,6 +484,7 @@ namespace BDFramework.ResourceMgr
 
 
         #region 获取资源路径
+
         /// <summary>
         /// 根据路径获取正确存在的资源路径
         /// </summary>
@@ -507,24 +492,24 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         private string GetExistPath<T>(string objName)
         {
-               if (manifest.Manifest == null)
+            if (manifest.Manifest == null)
             {
                 Debug.LogError("请先加载依赖文件！");
-                return  null;
+                return null;
             }
 
             List<string> canbeResource = new List<string>();
             //变换成ab名
             var abName = objName.Replace("\\", "/");
             abName = abName.Replace("/", "_");
-             abName = abName.ToLower();
+            abName = abName.ToLower();
 
-             var t =  typeof(T);
-             if (t == typeof(UnityEngine.Object))
-             {
-                 return GetExistPath(objName);
-             }
-             else if (t == typeof(GameObject))
+            var t = typeof(T);
+            if (t == typeof(UnityEngine.Object))
+            {
+                return GetExistPath(objName);
+            }
+            else if (t == typeof(GameObject))
             {
                 canbeResource.Add(abName + "@prefab");
             }
@@ -535,13 +520,12 @@ namespace BDFramework.ResourceMgr
                 canbeResource.Add(abName + "@png");
                 canbeResource.Add(abName + "@tga");
             }
-            else if (t == typeof(Text)|| t==(typeof(TextAsset)))
+            else if (t == typeof(Text) || t == (typeof(TextAsset)))
             {
                 canbeResource.Add(abName + "@txt");
                 canbeResource.Add(abName + "@json");
                 canbeResource.Add(abName + "@xml");
                 canbeResource.Add(abName + "@bytes");
- 
             }
             else if (t == typeof(AudioClip))
             {
@@ -559,9 +543,9 @@ namespace BDFramework.ResourceMgr
                     return r;
                 }
             }
+
             return null;
         }
-
 
 
         /// <summary>
@@ -602,8 +586,10 @@ namespace BDFramework.ResourceMgr
                     return r;
                 }
             }
+
             return null;
         }
+
         #endregion
 
 
@@ -613,7 +599,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="objlist"></param>
         /// <param name="action"></param>
         /// <returns>taskid</returns>
-        public int LoadAsync( IList<string> objlist, Action< IDictionary< string,UnityEngine.Object>> action)
+        public int LoadAsync(IList<string> objlist, Action<IDictionary<string, UnityEngine.Object>> action)
         {
             //task id
             var taskid = CreateTaskHash();
@@ -621,15 +607,15 @@ namespace BDFramework.ResourceMgr
             IDictionary<string, UnityEngine.Object> resmap = new Dictionary<string, UnityEngine.Object>();
             //
             List<int> ids = new List<int>();
-            foreach(var obj in objlist)
+            foreach (var obj in objlist)
             {
                 string curtask = obj;
                 var id = LoadAsync<UnityEngine.Object>(curtask, (bool b, UnityEngine.Object o) =>
                 {
                     resmap[curtask] = o;
-                     BDeBug.I.Log(string.Format("rescount:{0} listcount:{1}", curtask, curtask));
+                    BDeBug.I.Log(string.Format("rescount:{0} listcount:{1}", curtask, curtask));
                     //查询是否可以继续
-                    if( taskHashSet.Contains(taskid) == false)
+                    if (taskHashSet.Contains(taskid) == false)
                     {
                         foreach (var _id in ids)
                         {
@@ -639,18 +625,17 @@ namespace BDFramework.ResourceMgr
                             }
                         }
                     }
-             
+
                     //判断是否加载完
                     else if (resmap.Count == objlist.Count)
                     {
                         action(resmap);
                     }
-
                 });
 
                 ids.Add(id);
             }
-                     
+
             return taskid;
         }
 
@@ -672,7 +657,6 @@ namespace BDFramework.ResourceMgr
             int count = objNames.Count;
             foreach (var obj in objNames)
             {
-
                 var curtask = obj;
                 var id = LoadAsync<UnityEngine.Object>(curtask, (bool b, UnityEngine.Object o) =>
                 {
@@ -687,13 +671,11 @@ namespace BDFramework.ResourceMgr
                                 taskHashSet.Remove(_id);
                             }
                         }
-
                     }
 
                     taskIndex++;
                     //判断是否加载完
                     processAction(curtask, o);
-
                 });
 
                 ids.Add(id);
@@ -704,15 +686,15 @@ namespace BDFramework.ResourceMgr
 
         private int CreateTaskHash()
         {
-           return id++;
+            return id++;
         }
 
         public void LoadCancel(int taskid)
         {
             if (taskHashSet.Contains(taskid))
             {
-                 taskHashSet.Remove(taskid);
-                 BDeBug.I.Log("PTResource 移除task:" + taskid);
+                taskHashSet.Remove(taskid);
+                BDeBug.I.Log("PTResource 移除task:" + taskid);
             }
         }
 
@@ -730,7 +712,7 @@ namespace BDFramework.ResourceMgr
                     var curtask = asyncTaskList[0];
 
                     //刷出一个正在执行的任务
-                    while(curtask.mCurState == AsyncTask.state.End)
+                    while (curtask.mCurState == AsyncTask.state.End)
                     {
                         asyncTaskList.RemoveAt(0);
                         //移除表
@@ -738,21 +720,24 @@ namespace BDFramework.ResourceMgr
                         {
                             taskHashSet.Remove(curtask.id);
                         }
+
                         //
                         if (asyncTaskList.Count > 0)
                             curtask = asyncTaskList[0];
                         else return;
                     }
+
                     switch (curtask.mCurState)
                     {
                         case AsyncTask.state.Waiting:
                             //有id的task需要判断是否存在task列表中
-                            if (curtask.id != -1 && taskHashSet.Contains(curtask.id) ==false)
+                            if (curtask.id != -1 && taskHashSet.Contains(curtask.id) == false)
                             {
-                                 BDeBug.I.Log(string.Format("当前任务：{0}，已经被移除，不执行!", curtask.id));
+                                BDeBug.I.Log(string.Format("当前任务：{0}，已经被移除，不执行!", curtask.id));
                                 asyncTaskList.RemoveAt(0);
                                 return;
                             }
+
                             curtask.DoTask();
                             break;
                         case AsyncTask.state.Loading:
@@ -763,8 +748,5 @@ namespace BDFramework.ResourceMgr
                 }
             }
         }
-
-
     }
-
 }
