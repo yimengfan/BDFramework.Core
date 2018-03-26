@@ -14,6 +14,7 @@ namespace Code.Core.BDFramework.SimpleGenCSharpCode
         {
            MyClass c = new MyClass("TestForGenCode");
             
+           c.SetSelfNameSpace("xxx.xxx.xxx");
            c.AddNameSpace("System");
             
             //添加一个field
@@ -21,6 +22,7 @@ namespace Code.Core.BDFramework.SimpleGenCSharpCode
             f.SetType(typeof(int));
             f.SetFieldName("testField");
             f.SetContent("public int xxx = 0;");
+            f.AddAttribute("test()");
             c.AddField(f);
             
             //添加propty
@@ -32,9 +34,9 @@ namespace Code.Core.BDFramework.SimpleGenCSharpCode
             
             var m = new MyMethod();
             m.SetMethSign(null , "TestMethod" , null);
-            m.SetMethodContent(@"
-            int i = 0;
-            var xx =i++;");
+            m.SetMethodContent(
+@"int i = 0;
+var xx =i++;");
             
             c.AddMethod(m);
 

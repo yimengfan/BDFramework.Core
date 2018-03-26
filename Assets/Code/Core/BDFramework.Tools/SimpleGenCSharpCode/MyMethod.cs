@@ -7,7 +7,7 @@ namespace Code.Core.BDFramework.SimpleGenCSharpCode
     {
         private string CodeContent =@"
 //[Note]
-public [return type] [method name] ([params])
+public static [return type] [method name] ([params])
 {
    [method content]
 }

@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Web;
 
 namespace Code.Core.BDFramework.SimpleGenCSharpCode
 {
     public class MyClass
     {
-        private string CodeContent =@"
+        private string CodeContent =
+@"
+namespace [namespace]{
 //工具生成代码,请勿删除标签，否则无法进行添加操作
-//[namespace]
+//[using namespace]
 //[Note]
 public class [ClassName]
 {
@@ -15,14 +18,18 @@ public class [ClassName]
    //------[Propties end]------
    //------[Method end]------
 }
+}//[namespace]
 ";
 
+        public string Name { get; private set; }
+        private string SelfNameSpace { get; set;}
         private List<MyClass> ClassesList;
         private List<MyField> FieldsList;
         private List<MyMethod> MethodList;
         private List<MyPropties> ProptiesList;
         private List<string> NamespaceList;
 
+        
         public MyClass(string className)
         {
             this.FieldsList = new List<MyField>();
@@ -32,8 +39,13 @@ public class [ClassName]
             this.ClassesList =  new List<MyClass>();
             //
             this.CodeContent =  this.CodeContent.Replace("[ClassName]", className);
+            this.Name = className;
         }
 
+        public void SetSelfNameSpace(string nameSpace)
+        {
+            this.SelfNameSpace = nameSpace;
+        }
         public void AddNameSpace(params string[] names)
         {
             foreach (var n in names)
@@ -44,7 +56,7 @@ public class [ClassName]
 
         public void AddClass(MyClass c)
         {
-            this.AddClass(c);
+            this.ClassesList.Add(c);
         }
         public void AddField(MyField f)
         {
@@ -67,8 +79,14 @@ public class [ClassName]
             string classes = "";
             foreach (var c in this.ClassesList)
             {
-                classes += (c.ToString() + " \n");
+                var tempC = c.ToString().Replace(" //------[class end]------", " //------[subClass end]------");
+                tempC = tempC.Replace("//------[Field end]------", "//------[subField end]------");
+                tempC = tempC.Replace("//------[Propties end]------", "//------[subPropties end]------");
+                tempC = tempC.Replace("//------[Method end]------", "//------[subMethod end]------");
+                tempC = tempC.Replace("//工具生成代码,请勿删除标签，否则无法进行添加操作", "//SubClass " + c.Name);
+                classes += (tempC+ " \n");
             }
+           
             string fields = "";
             foreach (var f in FieldsList)
             {
@@ -91,20 +109,31 @@ public class [ClassName]
                 namespaces += ("using " + n.ToString() + ";\n");
             }
             
+            //self namespace
+
+            if (string.IsNullOrEmpty(SelfNameSpace))
+            {
+                this.CodeContent = this.CodeContent.Replace("namespace [namespace]{", "").Replace("}//[namespace]", "");
+            }
+            else
+            {
+                this.CodeContent = this.CodeContent.Replace("[namespace]", SelfNameSpace);
+            }
             
             //
-            this.CodeContent=  this.CodeContent.Replace("//[namespace]", namespaces);
+            var index = this.CodeContent.LastIndexOf("//[using namespace]");
+            this.CodeContent=   this.CodeContent.Insert( index, namespaces);
             
-            var index = this.CodeContent.IndexOf("//------[class end]------");
+             index = this.CodeContent.LastIndexOf("//------[class end]------");
             this.CodeContent=   this.CodeContent.Insert( index, classes);
             
-             index = this.CodeContent.IndexOf("//------[Field end]------");
+             index = this.CodeContent.LastIndexOf("//------[Field end]------");
             this.CodeContent=   this.CodeContent.Insert( index, fields);
             
-            index = this.CodeContent.IndexOf("//------[Propties end]------");
+            index = this.CodeContent.LastIndexOf("//------[Propties end]------");
             this.CodeContent=   this.CodeContent.Insert( index, propties);
             
-            index = this.CodeContent.IndexOf("//------[Method end]------");
+            index = this.CodeContent.LastIndexOf("//------[Method end]------");
             this.CodeContent=   this.CodeContent.Insert( index, methods);
 
             
