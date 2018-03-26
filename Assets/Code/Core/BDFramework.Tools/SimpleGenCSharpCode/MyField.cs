@@ -28,6 +28,8 @@ namespace Code.Core.BDFramework.SimpleGenCSharpCode
 
         public void SetContent(string Content)
         {
+            
+          
             if (Content.Contains("//[Attribute]") == false)
             {
                 this.CodeContent ="      //[Attribute] \n" + Content;
