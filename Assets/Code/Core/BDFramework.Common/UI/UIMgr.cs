@@ -190,7 +190,7 @@ namespace BDFramework.UI
                 {
                     var data = cacheList[i];
 
-                    windowMap[we].PushData(data);
+                    windowMap[we].SendMessage(data);
                     BDeBug.I.Log("push cache data " + we);
                 }
                 cacheList.Clear();
@@ -312,7 +312,7 @@ namespace BDFramework.UI
         /// </summary>
         /// <param name="uiEnum"></param>
         /// <param name="data"></param>
-        public void PushData(WinEnum uiEnum, WinData data)
+        public void SendMessage(WinEnum uiEnum, WinData data)
         {
             if (windowMap.ContainsKey(uiEnum))
             {
@@ -320,7 +320,7 @@ namespace BDFramework.UI
 
                 if (ui.IsLoad)
                 {
-                    ui.PushData(data);
+                    ui.SendMessage(data);
                     return;
                 }
             }

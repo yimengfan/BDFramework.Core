@@ -158,15 +158,15 @@ public abstract class AWindow
     /// 更新UI使用的数据
     /// </summary>
     /// <param name="data">数据</param>
-    public void PushData(WinData data)
+    public void SendMessage(WinData data)
     {
-       foreach(var key in data.GetDataKeys())
+       foreach(var key in data.DataMap.Keys)
        {
             Action<object> action = null;
             callbackMap.TryGetValue(key, out action);
             if(action!= null)
             {
-              action( data.GetData<object>(key) );
+              action( data.DataMap[key] );
             }
        }
     }

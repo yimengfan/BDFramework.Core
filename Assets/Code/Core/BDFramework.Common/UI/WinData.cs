@@ -4,22 +4,28 @@ using NUnit.Framework;
 
 namespace BDFramework.UI
 {
-    public class WinData : ADataDrive
+    public class WinData
     {
 
+        public Dictionary<string, object> DataMap { get; private set; }
         private WinData()
         {
-            
+            this.DataMap = new Dictionary<string, object>();
         }
 
         static public WinData Create()
         {
             return new WinData();
         }
-        //获取数据的所有键
-        public List<string> GetDataKeys()
+
+        public void AddData(string name , object value)
         {
-            return new List<string>(this.dataMap.Keys.ToArray()) ;
+            this.DataMap[name] = value;
+        }
+
+        public void AddEvnet(string name)
+        {
+            this.DataMap[name] = null;
         }
     }
 }

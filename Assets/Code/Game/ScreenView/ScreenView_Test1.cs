@@ -36,8 +36,8 @@ public class ScreenView_Test : IScreenView
 		 
 		 //1..退出时候 向win test2 发消息
 		 var d = WinData.Create();
-		 d.SetData("rotation", UnityEngine.Random.Range(-359, 359));
-		 UIMgr.I.PushData(WinEnum.Win_Test2, d);
+		 d.AddData("rotation", UnityEngine.Random.Range(-359, 359));
+		 UIMgr.I.SendMessage(WinEnum.Win_Test2, d);
 		 
 		 //
 		 Debug.Log("退出Test Screen 1");
