@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using BDFramework.ResourceMgr;
-using Game.Data;
 using LitJson;
 using UnityEditor;
 using UnityEditor.Graphs;
@@ -21,15 +20,22 @@ namespace BDFramework.Editor
             var tableDir = Path.GetDirectoryName(tablePath);
             var xlslFiles = Directory.GetFiles(tableDir, "*.xlsx", SearchOption.AllDirectories);
 
+            if (xlslFiles.Length == 0)
+            {
+                EditorUtility.DisplayDialog("提示","未发现xlsx文件，请注意不是xls" ,"确定");
+                return;
+            }
             foreach (var f in xlslFiles)
             {
                 var excel = new ExcelUtility(f);
                 var json = excel.GetJson();
                 var statements = excel.GetLine(0);
                 Json2Class(f, json, statements);
+                Debug.Log("导出：" + f);
                 //Json2Class(f, json, statements , true);
             }
 
+            EditorUtility.DisplayDialog("提示","生成完成!" ,"确定");
             AssetDatabase.Refresh();
         }
 
@@ -124,10 +130,10 @@ namespace BDFramework.Editor
                 
                  //字段
                 field.Type = type;
-                field.Name = "_" + key;
+                field.Name = "_" + key.Trim();
                 //属性
                 property.Type = type;
-                property.Name = key;
+                property.Name = key.Trim();
                 property.HasGet = true;
                 property.HasSet = true;
                 

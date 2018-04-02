@@ -3,7 +3,6 @@ using System.Reflection;
 using LitJson;
 using  UnityEditor;
 using  UnityEngine;
-using Game.Data;
 namespace BDFramework.Editor
 {
    
@@ -54,26 +53,26 @@ namespace BDFramework.Editor
             {
                 var j = jsonObj[i];
                 var jo = JsonMapper.ToObject(t,j.ToJson());
-               EditorUtility.DisplayProgressBar("Excel2Sqlite" , "正在导出:"+ i + "-" + jsonObj.Count , i / jsonObj.Count );
+                EditorUtility.DisplayProgressBar("Excel2Sqlite" , "正在导出:"+ i + "-" + jsonObj.Count , i / jsonObj.Count );
                 sql.DB.Insert(jo);
                 
             }
             
 
-            TestSql();
+           // TestSql();
             //
             sql.Close();
 
             EditorUtility.DisplayDialog("提示" , "导出Sqlite完成!" ,"确定");
         }
 
-        static private void TestSql()
-        {
-            //测试查询
-            var result = sql.DB.Table<achievetable>().Where(a => a.Id == 607).First();
-            
-            Debug.Log(result.IconPath[0]);
-        }
+//        static private void TestSql()
+//        {
+//            //测试查询
+//            var result = sql.DB.Table<achievetable>().Where(a => a.Id == 607).First();
+//            
+//            Debug.Log(result.IconPath[0]);
+//        }
     }
     
 

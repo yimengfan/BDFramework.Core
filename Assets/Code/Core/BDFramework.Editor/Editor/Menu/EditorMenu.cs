@@ -10,8 +10,13 @@ namespace BDFramework.Editor
     public class BDEditorMenu
     {
         
+        [MenuItem("BDFrameWork工具箱/初始化", false, 1)]
+        public static void BDInit()
+        {
+           BDFrameInit.Init();
+        }
         
-        [MenuItem("BDFrameWork工具箱/UI工作流/创建窗口", false, 0)]
+        [MenuItem("BDFrameWork工具箱/UI工作流/创建窗口", false, 51)]
         public static void OpenEditorWindow_CreateUI()
         {
             var window = (EditorWindows_UIWorker) EditorWindow.GetWindow(typeof(EditorWindows_UIWorker), false, "UI创建工具");
@@ -19,7 +24,7 @@ namespace BDFramework.Editor
         }
         //
 
-        [MenuItem("BDFrameWork工具箱/资源打包/DLL打包", false, 1)]
+        [MenuItem("BDFrameWork工具箱/资源打包/DLL打包", false, 52)]
         public static void ExecuteBuildDLL()
         {
             var window =
@@ -27,7 +32,7 @@ namespace BDFramework.Editor
             window.Show();
         }
 
-        [MenuItem("BDFrameWork工具箱/资源打包/AssetBundle打包", false, 2)]
+        [MenuItem("BDFrameWork工具箱/资源打包/AssetBundle打包", false, 53)]
         public static void ExecuteAssetBundle()
         {
             var window =
@@ -36,25 +41,25 @@ namespace BDFramework.Editor
             window.Show();
         }
 
-        [MenuItem("BDFrameWork工具箱/资源打包/表格->生成Class", false, 3)]
+        [MenuItem("BDFrameWork工具箱/资源打包/表格->生成Class", false, 54)]
         public static void ExecuteGenTableCalss()
         {
             Excel2Code.GenCode();
         }
 
-        [MenuItem("BDFrameWork工具箱/资源打包/表格->生成SQLite", false, 4)]
+        [MenuItem("BDFrameWork工具箱/资源打包/表格->生成SQLite", false, 55)]
         public static void ExecuteGenTable()
         {
             Excel2SQLite.GenSQLite();
         }
 
 
-        [MenuItem("BDFrameWork工具箱/资源打包/一键打包", false, 51)]
+        [MenuItem("BDFrameWork工具箱/资源打包/一键打包", false, 101)]
         public static void GenResouceall()
         {
             //Editor_VersionCtrl.GenTableCofig();
         }
-        [MenuItem("BDFrameWork工具箱/资源打包/图片压缩",false,6)]
+        [MenuItem("BDFrameWork工具箱/资源打包/图片压缩",false,56)]
         public static void ChangeTexture()
         {
             var window =(Editor_2ChangeTextureImporter)EditorWindow.GetWindow(typeof(Editor_2ChangeTextureImporter), false, "图片格式设置");
