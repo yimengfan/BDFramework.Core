@@ -11,11 +11,10 @@ namespace BDFramework.Editor
     {
         
         
-        [MenuItem("BDFrameWork工具箱/UI工作流/创建窗口", false, 1)]
+        [MenuItem("BDFrameWork工具箱/UI工作流/创建窗口", false, 0)]
         public static void OpenEditorWindow_CreateUI()
         {
-            var window =
-                (EditorWindows_CreateUI) EditorWindow.GetWindow(typeof(EditorWindows_CreateUI), false, "UI创建工具");
+            var window = (EditorWindows_UIWorker) EditorWindow.GetWindow(typeof(EditorWindows_UIWorker), false, "UI创建工具");
             window.Show();
         }
         //
