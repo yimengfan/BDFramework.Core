@@ -37,3 +37,9 @@
 /obj
 /UnityPackageManager
 /BDFramework-Unity3d.Editor.Plugins.csproj
+/BDFrameWork/BDFrameWork.Core/Properties
+/BDFrameWork/BDFrameWork.Core/bin
+/BDFrameWork/BDFrameWork.Core/obj
+/BDFrameWork/BDFrameWork.Editor/Properties
+/BDFrameWork/BDFrameWork.Editor/bin
+/BDFrameWork/BDFrameWork.Editor/obj
