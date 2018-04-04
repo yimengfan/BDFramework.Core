@@ -2,10 +2,12 @@
 一个基于unity3d的开发框架。
 框架力致于打造一个简单、高效的开发流，更注重于基于数据驱动的工具开发（个人以为工具才是第一生产力，框架只是辅助而已）。
 作者QQ：755737878 欢迎有问题,共同探讨.
- 
-Example ：https://github.com/yimengfan/BDFrameWork-Example
-
 ***
+##工程结构：
+<br>BDFrameWork-Quick.DLL  0.5.1  快速集成BDFrame的DLL库
+<br>BDFrameWork  -> BDFrameWork核心库，用于生成 BDFrameWork.Core.dll 和 BDFrameWork.Editor.dll
+<br>BDFrameWork-QuickExample   ->不带BDFrame的代码，集成dll的例子集合（楼上的工程默认是生成dll到这个项目哦~）
+<br>BDFrameWork-UnityFull      ->带BDFrame源码，集成dll的例子集合
 ## 框架特点：
  <br>**不开发工具的架构都是耍流氓!!!!**<br>
  <br>**不开发工具的架构都是耍流氓!!!!**<br>
