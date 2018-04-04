@@ -8,6 +8,7 @@ using BDFramework.Mgr;
 using BDFramework.UI;
 using BDFramework.Logic.Item;
 using BDFramework.ResourceMgr;
+using System.IO;
 //using UnityEditor.Graphs;
 
 public class BDFrameWork : MonoBehaviour
@@ -16,21 +17,39 @@ public class BDFrameWork : MonoBehaviour
     private List<IMgr> mgrList;
     private void Awake()
     {
+        Debug.Log("start bdframe");
+      
         //组件加载
         this.gameObject.AddComponent<IEnumeratorTool>();
         this.gameObject.AddComponent<BResources>();
+        Type[] frameTypes = Assembly.GetExecutingAssembly().GetTypes(); ;
+        Type[] logicTypes = null;
+        List<Type> allTypes = new List<Type>();
         
-        var types = Assembly.GetExecutingAssembly().GetTypes();
+        //编辑器环境下 寻找dll
+        if (Application.isEditor)
+        {
+            Debug.Log("Edidor Get Types...");
+            var assmblies = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
+            var logicAssmbly = assmblies.Find((a) => a.GetName().Name == "Assembly-CSharp");
+            logicTypes = logicAssmbly.GetTypes();
+        }
+
+        allTypes.AddRange(frameTypes);
+        allTypes.AddRange(logicTypes);
+   //其他环境用热更模型进行加载
+
         //
         mgrList = new List<IMgr>();
         //寻找所有的管理器
-        foreach (var t in types)
+        foreach (var t in allTypes)
         {
             if (t.BaseType!= null  && t.BaseType.GetInterface("IMgr") != null )
             {
                 BDeBug.I.Log("加载管理器-" +  t , "green");
                 var i = t.BaseType.GetProperty("I").GetValue(null, null) as  IMgr;
                 mgrList.Add(i);
+             
             }
             //游戏启动器
             else if (this.gameStart == null && t.GetInterface("IGameStart") != null)
@@ -41,10 +60,11 @@ public class BDFrameWork : MonoBehaviour
         }
         
         //类型注册
-        foreach (var t in types)
+        foreach (var t in allTypes)
         {
             foreach (var iMgr in mgrList)
             {
+               
                 iMgr.CheckType(t);
             }
         }

@@ -44,3 +44,10 @@
 /BDFrameWork/BDFrameWork.Editor/bin
 /BDFrameWork/BDFrameWork.Editor/obj
 /BDFrameWork/.idea
+/BDFrameWork-QuickExample/Assembly-CSharp.csproj
+/BDFrameWork-QuickExample/Assembly-CSharp-Editor.csproj
+/BDFrameWork-QuickExample/Assembly-CSharp-Editor-firstpass.csproj
+/BDFrameWork-QuickExample/BDFrameWork-QuickExample.sln
+/BDFrameWork-QuickExample/Library
+/BDFrameWork-QuickExample/Temp
+/BDFrameWork-QuickExample/UnityPackageManager
