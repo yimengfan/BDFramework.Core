@@ -9,7 +9,25 @@ namespace BDFramework.UI
     {
         public string Name;
         public IViewControl ViewControl;
-        public IView view;
+        public IView View;
+
+        /// <summary>
+        /// 进入
+        /// </summary>
+        public void Enter()
+        {
+            this.View.Show();
+            this.ViewControl.Enter();
+        }
+
+        /// <summary>
+        /// 退出
+        /// </summary>
+        public void Exit()
+        {
+            this.View.Hide();
+            this.ViewControl.Exit();
+        }
     }
    static public class MVCBind
     {
@@ -30,7 +48,7 @@ namespace BDFramework.UI
             {
                 Name = name,
                 ViewControl = viewControl,
-                view = view
+                View = view
             };
             //
             return bind;
@@ -63,12 +81,12 @@ namespace BDFramework.UI
                     var trans = vTransform.Find(attr.Path);
                     if (trans == null)
                     {
-                        BDeBug.I.LogError(string.Format("自动设置节点失败：{0} - {1}", vt.FullName , attr.Path));
+                        BDebug.LogError(string.Format("自动设置节点失败：{0} - {1}", vt.FullName , attr.Path));
                     }
                     var comp = trans.GetComponent(f.FieldType);
                     if (comp == null)
                     {
-                        BDeBug.I.LogError(string.Format("节点没有对应组件：type【{0}】 - {1}",  f.FieldType , attr.Path));
+                        BDebug.LogError(string.Format("节点没有对应组件：type【{0}】 - {1}",  f.FieldType , attr.Path));
                     }
                     //设置属性
                     f.SetValue(view,comp);
@@ -105,7 +123,7 @@ namespace BDFramework.UI
                         }
                         else
                         {
-                            BDeBug.I.LogError("不支持类型,请扩展：" + f.Name  + "-"+ vt.FullName);
+                            BDebug.LogError("不支持类型,请扩展：" + f.Name  + "-"+ vt.FullName);
                         }
                     });
                 }
@@ -146,7 +164,7 @@ namespace BDFramework.UI
                     }
                     else
                     {
-                        BDeBug.I.Log(string.Format("ui事件未实现:{0} - {1}" ,viewType.FullName , f.Name )  , "yellow");
+                        BDebug.Log(string.Format("ui事件未实现:{0} - {1}" ,viewType.FullName , f.Name )  , "yellow");
                     }
                 }
                 else if (f.FieldType == typeof(Scrollbar))//主动注册OnValueChange
@@ -163,7 +181,7 @@ namespace BDFramework.UI
                     }
                     else
                     {
-                        BDeBug.I.Log(string.Format("ui事件未实现:{0} - {1}" ,viewType.FullName , f.Name )  , "yellow");
+                        BDebug.Log(string.Format("ui事件未实现:{0} - {1}" ,viewType.FullName , f.Name )  , "yellow");
                     }
                 }
                 else if (f.FieldType == typeof(Slider)) //自动注册OnValueChange
@@ -180,7 +198,7 @@ namespace BDFramework.UI
                     }
                     else
                     {
-                        BDeBug.I.Log(string.Format("ui事件未实现:{0} - {1}" ,viewType.FullName , f.Name )  , "yellow");
+                        BDebug.Log(string.Format("ui事件未实现:{0} - {1}" ,viewType.FullName , f.Name )  , "yellow");
                     }
                 }            
             }

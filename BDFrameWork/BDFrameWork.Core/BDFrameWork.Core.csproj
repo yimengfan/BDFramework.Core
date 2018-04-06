@@ -321,7 +321,6 @@
     <Compile Include="Core\BDFramework.Common\DataDevice\DataDrive.cs" />
     <Compile Include="Core\BDFramework.Common\DataDevice\DataDriveServer.cs" />
     <Compile Include="Core\BDFramework.Common\DataDevice\DataDrive_Service.cs" />
-    <Compile Include="Core\BDFramework.Common\DataDevice\GameDataMgr.cs" />
     <Compile Include="Core\BDFramework.Common\DataDevice\IData.cs" />
     <Compile Include="Core\BDFramework.Common\Event\EventType.cs" />
     <Compile Include="Core\BDFramework.Common\Event\IEvent.cs" />
@@ -329,8 +328,12 @@
     <Compile Include="Core\BDFramework.Common\FrameData\FrameWorkSetting.cs" />
     <Compile Include="Core\BDFramework.Common\FrameData\VersionData.cs" />
     <Compile Include="Core\BDFramework.Common\FrameData\VersionDataSetting.cs" />
-    <Compile Include="Core\BDFramework.Common\HttpMgr\HttpData.cs" />
+    <Compile Include="Core\BDFramework.Common\HttpMgr\HttpClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\BDFramework.Common\HttpMgr\HttpLayer.cs" />
     <Compile Include="Core\BDFramework.Common\HttpMgr\HttpMgr.cs" />
+    <Compile Include="Core\BDFramework.Common\HttpMgr\HttpTask.cs" />
     <Compile Include="Core\BDFramework.Common\Interface\IMgr.cs" />
     <Compile Include="Core\BDFramework.Common\Interface\MgrBase.cs" />
     <Compile Include="Core\BDFramework.Common\Massage\IReceiver.cs" />
@@ -344,8 +347,6 @@
     <Compile Include="Core\BDFramework.Common\ResourceMgr\ResourceLoadMgr\IResMgr.cs" />
     <Compile Include="Core\BDFramework.Common\ResourceMgr\ResourceLoadMgr\ResourcesMgr.cs" />
     <Compile Include="Core\BDFramework.Common\ResourceMgr\Test.cs" />
-    <Compile Include="Core\BDFramework.Common\ResourceMgr\VersionControl\IVersionControl.cs" />
-    <Compile Include="Core\BDFramework.Common\ResourceMgr\VersionControl\VersionControl.cs" />
     <Compile Include="Core\BDFramework.Common\Screenview\IScreenView.cs" />
     <Compile Include="Core\BDFramework.Common\Screenview\ScreenViewAttribute.cs" />
     <Compile Include="Core\BDFramework.Common\Screenview\ScreenViewCenter.cs" />
@@ -380,13 +381,13 @@
     <Compile Include="Core\BDFramework.Tools\SimpleGenCSharpCode\MyPropties.cs" />
     <Compile Include="Core\BDFramework.Tools\SimpleGenCSharpCode\TestMyClass.cs" />
     <Compile Include="Core\ExternCSharp\File.cs" />
+    <Compile Include="Core\ExternUnity3D\AIEnumeratorMgr.cs" />
     <Compile Include="Core\ExternUnity3D\BDeBug.cs" />
     <Compile Include="Core\ExternUnity3D\IEnumeratorTool.cs" />
     <Compile Include="Core\ExternUnity3D\Image.cs" />
     <Compile Include="Core\ExternUnity3D\Texture2D.cs" />
     <Compile Include="Core\ExternUnity3D\TextureTools.cs" />
     <Compile Include="Core\ExternUnity3D\UnityTools.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\3rdPlugin\ILRuntime\ILRuntime\ILRuntime.csproj" />
@@ -398,7 +399,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\3rdPlugin\LitJson\AssemblyInfo.cs.in" />
-    <None Include="Core\BDFramework.Common\HttpMgr\example.unity" />
     <None Include="Core\BDFramework.Common\ResourceMgr\example.unity" />
     <None Include="Core\BDFramework.Tools\SimpleGenCSharpCode\example.unity" />
     <None Include="Core\Resources\FrameWork\FrameSetting.json" />
@@ -407,10 +407,9 @@
     <None Include="Core\Resources\FrameWork\VersionDataSetting.xlsx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\BDFramework.Common\Plugins\" />
-    <Folder Include="Core\BDFramework.Common\UI\CVX\" />
     <Folder Include="Core\BDFramework.Logic\Buff\" />
     <Folder Include="Core\BDFramework.Logic\LocalData\Editor\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

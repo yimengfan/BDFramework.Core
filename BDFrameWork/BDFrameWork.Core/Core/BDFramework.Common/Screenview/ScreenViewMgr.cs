@@ -35,7 +35,7 @@ namespace BDFramework.ScreenView
                 sv.GetType().GetProperty("Name").SetValue(sv, attr.Name, null);
                 mainLayer.RegScreen(sv);
                 //
-                BDeBug.I.Log("创建screen:" + attr.Name , "green"  );
+                BDebug.Log("创建screen:" + attr.Name , "green"  );
                 //
                 if (attr.isDefault)
                 {
@@ -49,7 +49,7 @@ namespace BDFramework.ScreenView
             }
             else
             {
-                BDeBug.I.Log("没有默认导航的ScreenView");
+                BDebug.Log("没有默认导航的ScreenView");
             }
         }
 

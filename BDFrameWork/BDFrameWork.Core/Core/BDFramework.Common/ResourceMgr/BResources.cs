@@ -17,12 +17,12 @@ public class BResources : MonoBehaviour
             {
                 mResMgr = mAssetBundleMgr;
              
-                 BDeBug.I.Log("切换到:热更新加载模式");
+                 BDebug.Log("切换到:热更新加载模式");
             }
             else
             {
                 mResMgr = mRousourcesMgr;
-                 BDeBug.I.Log("切换到:正常加载模式");
+                 BDebug.Log("切换到:正常加载模式");
             }
         }
     }
@@ -54,7 +54,7 @@ public class BResources : MonoBehaviour
     static string mLoadPath;
     public static void SetLocalPath(string path)
     {
-         BDeBug.I.Log(string.Format("设置加载路径为：{0}", path));
+         BDebug.Log(string.Format("设置加载路径为：{0}", path));
         mAssetBundleMgr.LocalHotUpdateResPath = path;
     }
     /// <summary>

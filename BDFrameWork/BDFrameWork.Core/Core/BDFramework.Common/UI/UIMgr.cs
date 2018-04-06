@@ -114,7 +114,7 @@ namespace BDFramework.UI
                         window.Load();
                         window.Transform.SetParent(this.Bottom, false);
                         watch.Stop();
-                        BDeBug.I.LogFormat("加载{0},耗时: {1}ms", we, watch.ElapsedMilliseconds);
+                        BDebug.LogFormat("加载{0},耗时: {1}ms", we, watch.ElapsedMilliseconds);
                         PushCaheData(we);
                     }
 
@@ -165,7 +165,7 @@ namespace BDFramework.UI
                         win.AsyncLoad(() =>
                         {
                             watch.Stop();
-                            BDeBug.I.LogFormat("加载{0},耗时: {1}ms", we, watch.ElapsedMilliseconds);
+                            BDebug.LogFormat("加载{0},耗时: {1}ms", we, watch.ElapsedMilliseconds);
                             curTaskCount++;
                             loadProcessAction(allCount, curTaskCount);
 
@@ -191,10 +191,10 @@ namespace BDFramework.UI
                     var data = cacheList[i];
 
                     windowMap[we].SendMessage(data);
-                    BDeBug.I.Log("push cache data " + we);
+                    BDebug.Log("push cache data " + we);
                 }
                 cacheList.Clear();
-                BDeBug.I.LogFormat("推送数据：{0} ,{1}条", we, cacheList.Count);
+                BDebug.LogFormat("推送数据：{0} ,{1}条", we, cacheList.Count);
             }
         }
         /// <summary>

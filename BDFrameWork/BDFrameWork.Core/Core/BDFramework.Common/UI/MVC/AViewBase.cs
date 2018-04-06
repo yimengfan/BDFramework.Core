@@ -2,10 +2,10 @@
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
-
+using BDFramework;
 namespace BDFramework.UI
 {
-    public class AViewBase : IView
+    public class AViewBase :AIEnumeratorTaskMgr,IView
     {
         public DataDrive_Service DataBinder { get; private set; }
         public Transform Transform { get; private set; }
@@ -90,17 +90,17 @@ namespace BDFramework.UI
                         //                     
                         else
                         {
-                            BDeBug.I.LogError("不支持类型,请扩展：" + f.Name  + "-"+ type.FullName);
+                            BDebug.LogError("不支持类型,请扩展：" + f.Name  + "-"+ type.FullName);
                         }
                     }
                     else
                     {
-                        BDeBug.I.LogError("字段标签错误：" + f.Name  + "-"+ type.FullName);
+                        BDebug.LogError("字段标签错误：" + f.Name  + "-"+ type.FullName);
                     }
                 }
                 else
                 {
-                    BDeBug.I.LogError("无同名节点 或者无标签：" + f.Name  + "-" +type.FullName);
+                    BDebug.LogError("无同名节点 或者无标签：" + f.Name  + "-" +type.FullName);
                 }
             }
         }

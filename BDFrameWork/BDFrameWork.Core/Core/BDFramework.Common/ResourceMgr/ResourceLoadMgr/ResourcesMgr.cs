@@ -59,7 +59,7 @@ namespace BDFramework.ResourceMgr
 
         public void LoadManifestAsync(string path, Action<bool> callback)
         {
-            BDeBug.I.Log("res 模式不需要加载依赖");
+            BDebug.Log("res 模式不需要加载依赖");
         }
 
         public void LoadAssetBundleAsync(string path, Action<bool> sucessCallback)
@@ -149,7 +149,7 @@ namespace BDFramework.ResourceMgr
                     //有创建taskid的，判断段taskid是否存在
                     if (isCreateTaskid == true && taskHashSet.Contains(taskid) == false)
                     {
-                        BDeBug.I.Log("没发现任务id,不执行回调");
+                        BDebug.Log("没发现任务id,不执行回调");
                         return;
                     }
                     action(true, objsMap[objName] as T);
@@ -163,7 +163,7 @@ namespace BDFramework.ResourceMgr
                         //有创建taskid的，判断段taskid是否存在
                         if (isCreateTaskid == true && taskHashSet.Contains(taskid) == false)
                          {
-                             BDeBug.I.Log("没发现任务id,不执行回调");
+                             BDebug.Log("没发现任务id,不执行回调");
                              return;
                          }
                          action(b, t);
@@ -310,7 +310,7 @@ namespace BDFramework.ResourceMgr
                         //有id的task需要判断是否存在task列表中
                         if (curtask.id != -1 && taskHashSet.Contains(curtask.id) == false)
                         {
-                            BDeBug.I.Log(string.Format("当前任务：{0}，已经被移除，不执行!", curtask.id));
+                            BDebug.Log(string.Format("当前任务：{0}，已经被移除，不执行!", curtask.id));
                             asyncTaskList.RemoveAt(0);
                             return;
                         }
@@ -335,7 +335,7 @@ namespace BDFramework.ResourceMgr
             if (taskHashSet.Contains(taskid))
             {
                 taskHashSet.Remove(taskid);
-                BDeBug.I.Log("PTResource 移除task:" + taskid);
+                BDebug.Log("PTResource 移除task:" + taskid);
             }
         }
 

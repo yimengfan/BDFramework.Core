@@ -1,6 +1,6 @@
 ﻿namespace BDFramework.UI
 {
-    public class AViewContrlBase : IViewControl
+    public class AViewContrlBase : AIEnumeratorTaskMgr, IViewControl
     {
         public AViewContrlBase(DataDrive_Service  data)
         {
@@ -9,9 +9,24 @@
 
         public DataDrive_Service DataBinder { get; private set; }
         
-        public void BindData()
+        virtual public void BindData()
         {
-            //throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// 进入模块
+        /// </summary>
+       virtual  public void Enter()
+       {
+
+       }
+
+        /// <summary>
+        /// 退出
+        /// </summary>
+        virtual public void Exit()
+        {
+            this.StopAllCroutine();
         }
     }
 }
