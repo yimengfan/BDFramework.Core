@@ -149,7 +149,7 @@ namespace BDFramework.Editor.UI
         {
             GUILayout.BeginHorizontal();
             string tpName = tpNameList[index];
-            GUILayout.Label("BBindData:", GUILayout.Width(70));
+            GUILayout.Label("绑定数据:", GUILayout.Width(70));
             tpBindNameList[index] = GUILayout.TextField(tpBindNameList[index], GUILayout.Width(180));
             if (GUILayout.Button("保存", GUILayout.Width(70)))
             {
@@ -162,9 +162,13 @@ namespace BDFramework.Editor.UI
         private void OnGUI_EditorItemIsBindPath(RegistViewItem item, int index)
         {
             GUILayout.BeginHorizontal();
+            string tp = string.Format("  自动设置节点:{0}", item.GetPath(tpIsBindList[index]));
+            
             tpIsBindList[index] = GUILayout.Toggle(tpIsBindList[index], "", GUILayout.Width(10));
-            string tp = string.Format("BSetTransform:{0}", item.GetPath(tpIsBindList[index]));
-            GUILayout.Label(tp);
+            var oc = GUI.color;
+            GUI.color = Color.green;
+            GUILayout.Label(tp );
+            GUI.color = oc;
             if (GUILayout.Button("保存", GUILayout.Width(70)))
             {
                 item.isBindPath = tpIsBindList[index];

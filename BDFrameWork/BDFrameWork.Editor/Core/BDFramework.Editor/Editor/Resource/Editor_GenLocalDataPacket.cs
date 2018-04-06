@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using BDFramework.ResourceMgr;
-using BDFramework.Net;
 using UnityEditor;
 /// <summary>
 /// 增量的版本更新下载

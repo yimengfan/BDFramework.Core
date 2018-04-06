@@ -21,7 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -94,12 +94,14 @@
     <Compile Include="Core\BDFramework.Editor\Editor\UI\Editor_UITool.cs" />
     <Compile Include="Core\BDFramework.Editor\Editor\UI\Editor_UIWorker.cs" />
     <Compile Include="Core\BDFramework.Editor\Editor\UI\RegistViewItem.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\BDFramework.Editor\Editor\ExcelTools\Plugins\Excel.dll" />
     <Content Include="Core\BDFramework.Editor\Editor\ExcelTools\Plugins\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Core\BDFramework.Editor\Editor\ExcelTools\Plugins\System.Data.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,7 +10,7 @@ namespace BDFramework.Mgr
     {
 
         static T i;
-        static public T I
+        static public T Inst
         {
             get
             {

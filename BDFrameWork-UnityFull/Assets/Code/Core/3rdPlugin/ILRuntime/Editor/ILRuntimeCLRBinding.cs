@@ -32,7 +32,7 @@ public class ILRuntimeCLRBinding
         //所有DLL内的类型的真实C#类型都是ILTypeInstance
         types.Add(typeof(List<ILRuntime.Runtime.Intepreter.ILTypeInstance>));
 
-        BDeBug.I.Log(System.IO.Path.GetFullPath(Application.dataPath+"/Script/GeneratedCode/"));
+        BDebug.Log(System.IO.Path.GetFullPath(Application.dataPath+"/Script/GeneratedCode/"));
         ILRuntime.Runtime.CLRBinding.BindingCodeGenerator.GenerateBindingCode(types, "/Script/GeneratedCode/");
     }
 }

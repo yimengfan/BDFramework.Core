@@ -181,7 +181,7 @@ namespace BDFramework.ResourceMgr
         //委托协程
         IEnumerator IELoadAssetBundles(string path, Action<bool> sucessCallback, bool isManiFest = false)
         {
-            BDeBug.I.Log("加载依赖");
+            BDebug.Log("加载依赖");
             WWW www = new WWW(path);
             yield return www;
             if (www.error == null)
@@ -285,7 +285,7 @@ namespace BDFramework.ResourceMgr
                 path = resQue.Dequeue();
             }
 
-            BDeBug.I.Log("加载依赖：" + path);
+            BDebug.Log("加载依赖：" + path);
 
             WWW www = new WWW(path);
             yield return www;
@@ -376,7 +376,7 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                BDeBug.I.Log("路径不存在");
+                BDebug.Log("路径不存在");
             }
         }
 
@@ -435,7 +435,7 @@ namespace BDFramework.ResourceMgr
                         //有创建taskid的，判断段taskid是否存在
                         if (isCreateTaskid == true && taskHashSet.Contains(taskid) == false)
                         {
-                            BDeBug.I.Log("没发现任务id,不执行回调");
+                            BDebug.Log("没发现任务id,不执行回调");
                             return;
                         }
 
@@ -449,7 +449,7 @@ namespace BDFramework.ResourceMgr
                     //有创建taskid的，判断段taskid是否存在
                     if (isCreateTaskid == true && taskHashSet.Contains(taskid) == false)
                     {
-                        BDeBug.I.Log("没发现任务id,不执行回调");
+                        BDebug.Log("没发现任务id,不执行回调");
                         return;
                     }
 
@@ -613,7 +613,7 @@ namespace BDFramework.ResourceMgr
                 var id = LoadAsync<UnityEngine.Object>(curtask, (bool b, UnityEngine.Object o) =>
                 {
                     resmap[curtask] = o;
-                    BDeBug.I.Log(string.Format("rescount:{0} listcount:{1}", curtask, curtask));
+                    BDebug.Log(string.Format("rescount:{0} listcount:{1}", curtask, curtask));
                     //查询是否可以继续
                     if (taskHashSet.Contains(taskid) == false)
                     {
@@ -694,7 +694,7 @@ namespace BDFramework.ResourceMgr
             if (taskHashSet.Contains(taskid))
             {
                 taskHashSet.Remove(taskid);
-                BDeBug.I.Log("PTResource 移除task:" + taskid);
+                BDebug.Log("PTResource 移除task:" + taskid);
             }
         }
 
@@ -733,7 +733,7 @@ namespace BDFramework.ResourceMgr
                             //有id的task需要判断是否存在task列表中
                             if (curtask.id != -1 && taskHashSet.Contains(curtask.id) == false)
                             {
-                                BDeBug.I.Log(string.Format("当前任务：{0}，已经被移除，不执行!", curtask.id));
+                                BDebug.Log(string.Format("当前任务：{0}，已经被移除，不执行!", curtask.id));
                                 asyncTaskList.RemoveAt(0);
                                 return;
                             }

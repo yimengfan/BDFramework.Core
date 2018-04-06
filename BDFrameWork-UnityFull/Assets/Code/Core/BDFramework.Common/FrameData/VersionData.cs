@@ -48,7 +48,7 @@ public class VersionDataBase : IVersionData
                 list.Add(v.Key);
             }
         }
-        BDeBug.I.Log("需要更新个数:" + list.Count);
+        BDebug.Log("需要更新个数:" + list.Count);
         return list;
     }
 }

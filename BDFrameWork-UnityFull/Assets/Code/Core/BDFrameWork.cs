@@ -46,8 +46,8 @@ public class BDFrameWork : MonoBehaviour
         {
             if (t.BaseType!= null  && t.BaseType.GetInterface("IMgr") != null )
             {
-                BDeBug.I.Log("加载管理器-" +  t , "green");
-                var i = t.BaseType.GetProperty("I").GetValue(null, null) as  IMgr;
+                BDebug.Log("加载管理器-" +  t , "green");
+                var i = t.BaseType.GetProperty("Inst").GetValue(null, null) as  IMgr;
                 mgrList.Add(i);
              
             }

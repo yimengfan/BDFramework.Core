@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 public class Test : MonoBehaviour
 {
-    IVersionControl versionControl;
     void Start()
     {
         ///*
@@ -68,7 +67,7 @@ public class Test : MonoBehaviour
 				{
 					if (_issuccess)
 					{
-						 BDeBug.I.Log("依赖加载成功!");
+						 BDebug.Log("依赖加载成功!");
 					}
 				});
 		}

@@ -24,7 +24,7 @@ namespace BDFramework.UI
         /// <summary>
         /// UI窗口字典
         /// </summary>
-        private Dictionary<WinEnum, AWindow> windowMap = null;
+        private Dictionary<int, AWindow> windowMap = null;
         
         /// <summary>
         /// ui的三个层级
@@ -42,7 +42,7 @@ namespace BDFramework.UI
         {
             base.Awake();
             //初始化
-            windowMap  = new Dictionary<WinEnum, AWindow>();
+            windowMap  = new Dictionary<int, AWindow>();
             Bottom = GameObject.Find("UIRoot/Bottom").transform;
             Center = GameObject.Find("UIRoot/Center").transform;
             Top    = GameObject.Find("UIRoot/Top").transform;
@@ -60,19 +60,19 @@ namespace BDFramework.UI
                 foreach (var attr in attrs)
                 {
                     var _attr = (UIAttribute)attr;
-                    var name = ((WinEnum)_attr.Type).ToString();
+                    var name = _attr.Index.ToString();
                     SaveAttribute(name, new ClassData() { Attribute = _attr, Type = type });
                 }
             }
 
         }
         //
-        private AWindow CreateWindow(WinEnum uiEnum)
+        private AWindow CreateWindow(int uiIndex)
         {
-            var classData = this.GetCalssData(uiEnum.ToString());
+            var classData = this.GetCalssData(uiIndex.ToString());
             if (classData == null)
             {
-                Debug.LogError("未注册窗口，无法加载:" + uiEnum);
+                Debug.LogError("未注册窗口，无法加载:" + uiIndex);
                 return null;
             }
             //
@@ -85,37 +85,38 @@ namespace BDFramework.UI
         /// <summary>
         /// 加载窗口
         /// </summary>
-        /// <param name="winEnums">窗口枚举</param>
-        public void LoadWindows(params WinEnum[] winEnums)
+        /// <param name="uiIndexs">窗口枚举</param>
+        public void LoadWindows(params int[] uiIndexs)
         {
-            foreach (var we in winEnums)
+            foreach (var index in uiIndexs)
             {
-                if (windowMap.ContainsKey(we))
+         
+                if (windowMap.ContainsKey(index))
                 {
-                    var uvalue = windowMap[we];
+                    var uvalue = windowMap[index];
                     if (uvalue.IsLoad)
                     {
-                        Debug.LogWarning("已经加载过并未卸载" + we);
+                        BDebug.Log("已经加载过并未卸载" +  index, "red");
                     }
                 }
                 else
                 {
                     //创建ui
-                    var window = CreateWindow(we);
+                    var window = CreateWindow(index);
                     if (window == null)
                     {
-                        Debug.LogErrorFormat("不存在UI:{0}", we);
+                        BDebug.Log("不存在UI:" + index , "red" );
                     }
                     else
                     {
-                        windowMap[we] = window;
+                        windowMap[index] = window;
                         System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
                         watch.Start();
                         window.Load();
                         window.Transform.SetParent(this.Bottom, false);
                         watch.Stop();
-                        BDeBug.I.LogFormat("加载{0},耗时: {1}ms", we, watch.ElapsedMilliseconds);
-                        PushCaheData(we);
+                        BDebug.LogFormat("加载{0},耗时: {1}ms", index, watch.ElapsedMilliseconds);
+                        PushCaheData(index);
                     }
 
 
@@ -125,20 +126,20 @@ namespace BDFramework.UI
         /// <summary>
         /// 异步加载窗口
         /// </summary>
-        /// <param name="winEnums"></param>
+        /// <param name="uiIndexs"></param>
         /// <param name="loadProcessAction"></param>
-        public void AsyncLoadWindows(List<WinEnum> winEnums, Action<int, int> loadProcessAction)
+        public void AsyncLoadWindows(List<int> uiIndexs, Action<int, int> loadProcessAction)
         {
-            int allCount = winEnums.Count;
+            int allCount = uiIndexs.Count;
             int curTaskCount = 0;
-            foreach (var we in winEnums)
+            foreach (var index in uiIndexs)
             {
-                if (windowMap.ContainsKey(we))
+                if (windowMap.ContainsKey(index))
                 {
-                    var uvalue = windowMap[we];
+                    var uvalue = windowMap[index];
                     if (uvalue.IsLoad)
                     {
-                        Debug.LogError("已经加载过并未卸载" + we);
+                        Debug.LogError("已经加载过并未卸载" + index);
                         //任务直接完成
                         {
                             curTaskCount++;
@@ -150,14 +151,14 @@ namespace BDFramework.UI
                 else
                 {
                     //创建窗口
-                    var win = CreateWindow(we);
+                    var win = CreateWindow(index);
                     if (win == null)
                     {
-                        Debug.LogErrorFormat("不存在UI:{0}", we);
+                        Debug.LogErrorFormat("不存在UI:{0}", index);
                     }
                     else
                     {
-                        windowMap[we] = win;
+                        windowMap[index] = win;
                         //开始窗口加载
 
                         System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
@@ -165,56 +166,56 @@ namespace BDFramework.UI
                         win.AsyncLoad(() =>
                         {
                             watch.Stop();
-                            BDeBug.I.LogFormat("加载{0},耗时: {1}ms", we, watch.ElapsedMilliseconds);
+                            BDebug.LogFormat("加载{0},耗时: {1}ms", index, watch.ElapsedMilliseconds);
                             curTaskCount++;
                             loadProcessAction(allCount, curTaskCount);
 
                             win.Transform.SetParent(this.Bottom, false);
                         //推送缓存的数据
-                        PushCaheData(we);
+                        PushCaheData(index);
                         });
                     }
                 }
             }
         }
 
-        private void PushCaheData(WinEnum we)
+        private void PushCaheData(int uiIndex)
         {
             // return;
             //检查ui数据缓存
             List<WinData> cacheList = null;
-            uiDataCacheMap.TryGetValue(we, out cacheList);
+            uiDataCacheMap.TryGetValue(uiIndex, out cacheList);
             if (cacheList != null)
             {
                 for (int i = 0; i < cacheList.Count; i++)
                 {
                     var data = cacheList[i];
 
-                    windowMap[we].SendMessage(data);
-                    BDeBug.I.Log("push cache data " + we);
+                    windowMap[uiIndex].SendMessage(data);
+                    BDebug.Log("push cache data " + uiIndex);
                 }
                 cacheList.Clear();
-                BDeBug.I.LogFormat("推送数据：{0} ,{1}条", we, cacheList.Count);
+                BDebug.LogFormat("推送数据：{0} ,{1}条", uiIndex, cacheList.Count);
             }
         }
         /// <summary>
         /// 卸载窗口
         /// </summary>
-        /// <param name="uiEnums">窗口枚举</param>
-        public void UnLoadWindows(params WinEnum[] uiEnums)
+        /// <param name="uiIndexs">窗口枚举</param>
+        public void UnLoadWindows(params int[] uiIndexs)
         {
-            foreach (var ue in uiEnums)
+            foreach (var index in uiIndexs)
             {
-                if (windowMap.ContainsKey(ue))
+                if (windowMap.ContainsKey(index))
                 {
-                    var uvalue = windowMap[ue];
+                    var uvalue = windowMap[index];
                     uvalue.Close();
                     uvalue.Destroy();
-                    windowMap.Remove(ue);
+                    windowMap.Remove(index);
                 }
                 else
                 {
-                    Debug.LogErrorFormat("不存在UI：{0}", uiEnums);
+                    Debug.LogErrorFormat("不存在UI：{0}", uiIndexs);
                 }
             }
         }
@@ -225,7 +226,7 @@ namespace BDFramework.UI
         /// </summary>
         public void UnLoadALLWindows()
         {
-            var keys = new List<WinEnum>(this.windowMap.Keys);
+            var keys = new List<int>(this.windowMap.Keys);
             foreach (var v in this.windowMap.Values)
             {
                 v.Close();
@@ -240,12 +241,12 @@ namespace BDFramework.UI
         /// <summary>
         /// 显示窗口
         /// </summary>
-        /// <param name="winEnum">窗口枚举</param>
-        public void ShowWindow(WinEnum winEnum, bool ReSetMask = true, UILayer layer = UILayer.Bottom)
+        /// <param name="uiIndex">窗口枚举</param>
+        public void ShowWindow(int uiIndex, bool ReSetMask = true, UILayer layer = UILayer.Bottom)
         {
-            if (windowMap.ContainsKey(winEnum))
+            if (windowMap.ContainsKey(uiIndex))
             {
-                var v = windowMap[winEnum];
+                var v = windowMap[uiIndex];
                 if (v.IsClose && v.IsLoad && v.IsLock == false)
                 {
                     switch (layer)
@@ -272,51 +273,60 @@ namespace BDFramework.UI
                 }
                 else
                 {
-                    Debug.LogErrorFormat("UI处于[unload,lock,open]状态之一：{0}", winEnum);
+                    Debug.LogErrorFormat("UI处于[unload,lock,open]状态之一：{0}", uiIndex);
                 }
             }
             else
             {
-                Debug.LogErrorFormat("不存在UI：{0}", winEnum);
+                Debug.LogErrorFormat("不存在UI：{0}", uiIndex);
             }
         }
 
+
+        public AWindow GetWindow(int uiIndex)
+        {
+            AWindow win = null;
+
+            this.windowMap.TryGetValue(uiIndex, out win);
+
+            return win;
+        }
         /// <summary>
         /// 关闭窗口
         /// </summary>
-        /// <param name="uiEnum">窗口枚举</param>
-        public void CloseWindow(WinEnum uiEnum, bool isMask = true)
+        /// <param name="uiIndex">窗口枚举</param>
+        public void CloseWindow(int uiIndex, bool isMask = true)
         {
-            if (windowMap.ContainsKey(uiEnum))
+            if (windowMap.ContainsKey(uiIndex))
             {
-                var v = windowMap[uiEnum];
+                var v = windowMap[uiIndex];
                 if (!v.IsClose && v.IsLoad)
                 {
                     v.Close();
                 }
                 else
                 {
-                    Debug.LogErrorFormat("UI未加载或已经处于close状态：{0}", uiEnum);
+                    Debug.LogErrorFormat("UI未加载或已经处于close状态：{0}", uiIndex);
                 }
             }
             else
             {
-                Debug.LogErrorFormat("不存在UI：{0}", uiEnum);
+                Debug.LogErrorFormat("不存在UI：{0}", uiIndex);
 
             }
         }
 
-        private Dictionary<WinEnum, List<WinData>> uiDataCacheMap = new Dictionary<WinEnum, List<WinData>>();
+        private Dictionary<int, List<WinData>> uiDataCacheMap = new Dictionary<int, List<WinData>>();
         /// <summary>
         /// 外部推送ui数据
         /// </summary>
-        /// <param name="uiEnum"></param>
+        /// <param name="uiIndex"></param>
         /// <param name="data"></param>
-        public void SendMessage(WinEnum uiEnum, WinData data)
+        public void SendMessage(int uiIndex, WinData data)
         {
-            if (windowMap.ContainsKey(uiEnum))
+            if (windowMap.ContainsKey(uiIndex))
             {
-                var ui = windowMap[uiEnum];
+                var ui = windowMap[uiIndex];
 
                 if (ui.IsLoad)
                 {
@@ -327,12 +337,12 @@ namespace BDFramework.UI
 
             //存入缓存
             List<WinData> list = null;
-            uiDataCacheMap.TryGetValue(uiEnum, out list);
+            uiDataCacheMap.TryGetValue(uiIndex, out list);
             //
             if (list == null)
             {
                 list = new List<WinData>();
-                uiDataCacheMap[uiEnum] = list;
+                uiDataCacheMap[uiIndex] = list;
             }
             list.Add(data);
 
@@ -341,37 +351,37 @@ namespace BDFramework.UI
         /// <summary>
         /// 获取窗口状态
         /// </summary>
-        /// <param name="win"></param>
+        /// <param name="uiIndex"></param>
         /// <returns></returns>
-        public bool GetWindowStatus(WinEnum win)
+        public bool GetWindowStatus(int uiIndex)
         {
             bool isClose = false;
 
-            if (windowMap.ContainsKey(win))
+            if (windowMap.ContainsKey(uiIndex))
             {
-                isClose = windowMap[win].IsClose;
+                isClose = windowMap[uiIndex].IsClose;
             }
             else
             {
-                Debug.LogError("不存在ui:" + win);
+                Debug.LogError("不存在ui:" + uiIndex);
             }
             return isClose;
         }
 
-        public void Lock(WinEnum we)
+        public void Lock(int uiIndex)
         {
             AWindow win = null;
-            this.windowMap.TryGetValue(we, out win);
+            this.windowMap.TryGetValue(uiIndex, out win);
             if (win != null)
             {
                 win.Lock();
             }
         }
 
-        public void UnLock(WinEnum we)
+        public void UnLock(int uiIndex)
         {
             AWindow win = null;
-            this.windowMap.TryGetValue(we, out win);
+            this.windowMap.TryGetValue(uiIndex, out win);
             if (win != null)
             {
                 win.UnLock();

@@ -12,7 +12,7 @@ namespace BDFramework.Editor.UI
     public class Editor_UITool
     {
         private static string windowPath = "/Code/Game/Windows/";
-        private static string createPath = "/Code/Game/Windows/Window_MVC/";
+        private static string createPath = "/Code/Game/Windows/";
 
 
         public static void CreateViewCS(List<RegistViewItem> itemList, string goName)
@@ -26,7 +26,8 @@ namespace BDFramework.Editor.UI
                 f.SetType(item.GetUIType());
                 f.SetFieldName(item.gameObject.name);
                 string tp = item.GetBindPath();
-                if (!string.IsNullOrEmpty(tp)) f.AddAttribute(tp);
+                if (!string.IsNullOrEmpty(tp))
+                    f.AddAttribute(tp);
                 tp = item.GetBindDataName();
                 if (!string.IsNullOrEmpty(tp)) f.AddAttribute(tp);
                 mc.AddField(f);
@@ -112,8 +113,12 @@ namespace BDFramework.Editor.UI
                 string className = file.Name.Substring(0, file.Name.LastIndexOf('.'));
                 Assembly assembly = Assembly.Load("Assembly-CSharp");
                 Type type = assembly.GetType(className);
-                object[] records = type.GetCustomAttributes(typeof(UIAttribute), false);
-                pbPaths.Add(className, (records[0] as UIAttribute).ResourcePath);
+                if (type != null)
+                {
+                    object[] records = type.GetCustomAttributes(typeof(UIAttribute), false);
+                    if (records.Length > 0)
+                        pbPaths.Add(className, (records[0] as UIAttribute).ResourcePath);
+                }
             }
         }
 

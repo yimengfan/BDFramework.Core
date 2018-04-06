@@ -96,7 +96,7 @@ public class ScriptBiuld_Service
         }
         else
         {
-             BDeBug.I.Log(string.Format("编译{0}成功!", outputpath));
+            BDebug.Log(string.Format("编译{0}成功!", outputpath));
             return BuildStatus.Success;
         }
 

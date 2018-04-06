@@ -9,7 +9,14 @@ namespace BDFramework.Editor
 {
     public class BDEditorMenu
     {
-        
+
+
+        [MenuItem("BDFrameWork工具箱/TTTTTTTT", false, 1)]
+        public static void BDInit2()
+        {
+            BDFrameInit.Init();
+        }
+
         [MenuItem("BDFrameWork工具箱/初始化", false, 1)]
         public static void BDInit()
         {

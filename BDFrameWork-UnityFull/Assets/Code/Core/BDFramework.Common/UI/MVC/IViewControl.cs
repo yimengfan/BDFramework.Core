@@ -5,5 +5,7 @@
         DataDrive_Service DataBinder { get; }
 
         void BindData();
+        void Enter();
+        void Exit();
     }
 }

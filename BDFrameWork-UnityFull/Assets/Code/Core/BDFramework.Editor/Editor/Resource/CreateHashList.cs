@@ -100,7 +100,7 @@ public class CreateHashList
                 fileHaskList.Add(curABName, ai);
             }
             else
-                 BDeBug.I.Log("<Two File has the same name> name = " + curABName);
+                BDebug.Log("<Two File has the same name> name = " + curABName);
         }
 
         string savePath = System.IO.Path.Combine(Application.dataPath, "AssetBundle/") + platform + "/VersionNum";

@@ -111,20 +111,20 @@ public class ECreateAssetBundle
             EditorUtility.DisplayProgressBar("Updating", "Packaging, " + Path.GetFileNameWithoutExtension(_path) + "please wait..." + val * 100 + "%", val);
             m_curIndex++;
             var dependsource = "Assets" + _path.Replace(Application.dataPath, "");
-             BDeBug.I.Log("-----------------------------------------");
-             BDeBug.I.Log("source:" + dependsource);
-             BDeBug.I.Log("path:" + _path);
+            BDebug.Log("-----------------------------------------");
+            BDebug.Log("source:" + dependsource);
+            BDebug.Log("path:" + _path);
 
             string[] allDependObjectPaths = AssetDatabase.GetDependencies(dependsource);
             for (int i = 0; i < allDependObjectPaths.Length; i++)
             {
                 var dependPath = allDependObjectPaths[i];
-                 BDeBug.I.Log("depend on:" + dependPath);
+                BDebug.Log("depend on:" + dependPath);
 
                 AssetImporter ai = AssetImporter.GetAtPath(dependPath);
                 if (ai == null)
                 {
-                    BDeBug.I.Log("not find Resource " + dependPath);
+                   BDebug.Log("not find Resource " + dependPath);
                     continue;
                 }
 

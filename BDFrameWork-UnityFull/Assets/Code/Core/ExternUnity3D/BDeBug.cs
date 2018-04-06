@@ -4,29 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class BDeBug : MonoBehaviour
+public class BDebug : MonoBehaviour
 {
-    static public BDeBug  I
-    {
-        get;
-        private set;
-    }
-    private void Awake()
-    {
-        I = this;
-    }
     public bool IsLog = false;
+
+   static private bool isLog = false;
     
-    public void Log(object s)
+   static public void Log(object s)
     {
-        if(IsLog)
+        if(isLog)
             UnityEngine.Debug.Log(s);
     }
     
     //
-    public void Log(object s, string  color)
+   static public void Log(object s, string  color)
     {
-        if (IsLog)
+        if (isLog)
         {
             s = string.Format("<color={0}>{1}</color>", color, s);
             UnityEngine.Debug.Log(s);
@@ -34,16 +27,21 @@ public class BDeBug : MonoBehaviour
 
     }
 
-    public void LogFormat(string format, params object[] args)
+   static public void LogFormat(string format, params object[] args)
     {
-        if (IsLog)
+        if (isLog)
           UnityEngine.Debug.LogFormat(format, args);
     }
 
 
-    public void LogError(object s)
+   static public void LogError(object s)
     {
-        if (IsLog)
+        if (isLog)
             UnityEngine.Debug.LogError(s);
+    }
+
+    void UpDate()
+    {
+        isLog = IsLog;
     }
 }

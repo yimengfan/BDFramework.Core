@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class RegistViewItem : MonoBehaviour
 {
 
-    public bool isBindPath;
+    public bool isBindPath = true;
     public string bindDataName;
     private string _root;
     public string Root { set { this._root = value; } get { return this._root; } }
