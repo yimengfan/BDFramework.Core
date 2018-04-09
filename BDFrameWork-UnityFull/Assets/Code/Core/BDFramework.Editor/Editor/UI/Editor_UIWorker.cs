@@ -13,6 +13,7 @@ namespace BDFramework.Editor.UI
         private GameObject m_target;
         private string createName = "";
         private List<RegistViewItem> itemList = new List<RegistViewItem>();
+        private string _root;
 
         //临时存储修改的数据 没有这层 改数据会直接更新
         private List<string> tpNameList = new List<string>();
@@ -21,10 +22,29 @@ namespace BDFramework.Editor.UI
         private string targetName;
 
         private Dictionary<string, string> pbPaths = new Dictionary<string, string>();
-        private string createPath = "/Test/";
+
+
+        private void CheckPath()
+        {
+            string path = Application.dataPath + "/Code/Game/Windows/";
+            if (!Directory.Exists(path))
+            {
+                EditorUtility.DisplayDialog("失败", string.Format("文件夹不存在:{0}", path), "ok");
+                this.Close();
+                return;
+            }
+            path = Application.dataPath + "/Code/Game/Windows/Window_MVC/";
+            if (!Directory.Exists(path))
+            {
+                EditorUtility.DisplayDialog("失败", string.Format("文件夹不存在:{0}", path), "ok");
+                this.Close();
+                return;
+            }
+        }
 
         private void OnGUI()
         {
+            CheckPath();
             CheckTarget();
             GUILayout.BeginHorizontal(GUILayout.Width(1070));
             OnGUI_WindowSelect();
@@ -42,7 +62,8 @@ namespace BDFramework.Editor.UI
             //强刷避免增加item 数组越界 缺点修改的内容必须保存不然会重置 没办法TT
             if (!m_target) return;
             itemList.Clear();
-            GetRegistViewItems(m_target.transform, ref itemList, m_target.name);
+            GetRegistViewItems(m_target.transform, ref itemList);
+            _root = m_target.name;
             Editor_UITool.CloneValues(itemList, ref tpNameList, ref tpIsBindList, ref tpBindNameList);
         }
 
@@ -71,7 +92,7 @@ namespace BDFramework.Editor.UI
             if (targetName == m_target.name) return;
             targetName = m_target.name;
             itemList.Clear();
-            GetRegistViewItems(m_target.transform, ref itemList, m_target.name);
+            GetRegistViewItems(m_target.transform, ref itemList);
             Editor_UITool.CloneValues(itemList, ref tpNameList, ref tpIsBindList, ref tpBindNameList);
         }
 
@@ -93,6 +114,10 @@ namespace BDFramework.Editor.UI
                     if (GUILayout.Button(kv.Key, GUILayout.Width(110)))
                     {
                         GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resource/Resources/" + kv.Value + ".prefab");
+                        if (!prefab)
+                        {
+                            EditorUtility.DisplayDialog("警告", string.Format("未能在路径{0}下找到{1}prefab", "Assets/Resource/Resources/", kv.Value), "ok");
+                        }
                         m_target = prefab;
                         //强制刷新
                         targetName = "";
@@ -116,7 +141,7 @@ namespace BDFramework.Editor.UI
                 GUILayout.EndVertical();
                 return;
             }
-            GetRegistViewItems(m_target.transform, ref itemList, m_target.name);
+            GetRegistViewItems(m_target.transform, ref itemList);
             //开始滚动列表
             editorTransformPosition = GUILayout.BeginScrollView(editorTransformPosition, GUILayout.Width(600), GUILayout.Height(500));
             //竖列排版
@@ -150,6 +175,7 @@ namespace BDFramework.Editor.UI
             GUILayout.BeginHorizontal();
             string tpName = tpNameList[index];
             GUILayout.Label("绑定数据:", GUILayout.Width(70));
+            GUI.color = item.bindDataName == tpBindNameList[index] ? Color.white : Color.yellow;
             tpBindNameList[index] = GUILayout.TextField(tpBindNameList[index], GUILayout.Width(180));
             if (GUILayout.Button("保存", GUILayout.Width(70)))
             {
@@ -162,13 +188,14 @@ namespace BDFramework.Editor.UI
         private void OnGUI_EditorItemIsBindPath(RegistViewItem item, int index)
         {
             GUILayout.BeginHorizontal();
-            string tp = string.Format("  自动设置节点:{0}", item.GetPath(tpIsBindList[index]));
-            
+            GUI.color = item.isBindPath == tpIsBindList[index] ? Color.white : Color.yellow;
+            string tp = string.Format("  自动设置节点:{0}", tpIsBindList[index] ? Editor_UITool.GetBindPath(item.gameObject, targetName) : "");
+
             tpIsBindList[index] = GUILayout.Toggle(tpIsBindList[index], "", GUILayout.Width(10));
-            var oc = GUI.color;
-            GUI.color = Color.green;
-            GUILayout.Label(tp );
-            GUI.color = oc;
+            //var oc = GUI.color;
+            //GUI.color = Color.green;
+            GUILayout.Label(tp);
+            //GUI.color = oc;
             if (GUILayout.Button("保存", GUILayout.Width(70)))
             {
                 item.isBindPath = tpIsBindList[index];
@@ -183,6 +210,10 @@ namespace BDFramework.Editor.UI
             string tpName = tpNameList[index];
             int count = (tpNameList.GroupBy(x => x).Where(x => x.Count() > 1)).Where(x => x.Key == tpName).ToList().Count();
             GUI.color = count > 0 ? Color.red : Color.white;
+            if (GUI.color != Color.red)
+            {
+                GUI.color = item.name == tpNameList[index] ? Color.white : Color.yellow;
+            }
             GUILayout.Label("Name:", GUILayout.Width(50));
             tpNameList[index] = GUILayout.TextField(tpNameList[index], GUILayout.Width(200));
             if (GUILayout.Button("保存", GUILayout.Width(70)))
@@ -202,12 +233,29 @@ namespace BDFramework.Editor.UI
             m_target = (GameObject)EditorGUILayout.ObjectField(m_target, typeof(GameObject), true, GUILayout.Width(350));
             GUILayout.Label("生成cs");
             createName = EditorGUILayout.TextField(createName, GUILayout.Height(15), GUILayout.Width(100));
-            if (GUILayout.Button("创建view", GUILayout.Width(100)))
+            if (GUILayout.Button("创建mvc", GUILayout.Width(100)))
             {
                 OnCreateButtonClick();
             }
+
+            if (GUILayout.Button("全部保存", GUILayout.Width(100)))
+            {
+                OnSaveButtonClick();
+            }
             GUILayout.EndVertical();
         }
+
+        private void OnSaveButtonClick()
+        {
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                RegistViewItem item = itemList[i];
+                item.name = tpNameList[i];
+                item.isBindPath = tpIsBindList[i];
+                item.bindDataName = tpBindNameList[i];
+            }
+        }
+
 
         private void OnCreateButtonClick()
         {
@@ -224,17 +272,17 @@ namespace BDFramework.Editor.UI
                 return;
             }
 
-            Editor_UITool.CreateViewCS(itemList, goName);
+            Editor_UITool.CreateViewCS(itemList, goName, targetName);
             Editor_UITool.CreateContrlCS(itemList, goName);
+            Editor_UITool.CreateWindowCS(goName, targetName);
             AssetDatabase.Refresh();
         }
 
-        private void GetRegistViewItems(Transform ts, ref List<RegistViewItem> itemList, string targetName)
+        private void GetRegistViewItems(Transform ts, ref List<RegistViewItem> itemList)
         {
             RegistViewItem item = ts.GetComponent<RegistViewItem>();
             if (item)
             {
-                item.Root = targetName;
                 itemList.Add(item);
             }
 
@@ -242,7 +290,7 @@ namespace BDFramework.Editor.UI
             {
                 for (int i = 0; i < ts.childCount; i++)
                 {
-                    GetRegistViewItems(ts.GetChild(i), ref itemList, targetName);
+                    GetRegistViewItems(ts.GetChild(i), ref itemList);
                 }
             }
         }

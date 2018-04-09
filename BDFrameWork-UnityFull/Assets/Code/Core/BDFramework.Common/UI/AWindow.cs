@@ -71,7 +71,7 @@ public abstract class AWindow
     }
     public void AsyncLoad(Action callback)
     {
-       //  JDeBug.I.Log("开始任务:" + resourcePath);
+       //  JDeBug.Inst.Log("开始任务:" + resourcePath);
         BResources.LoadAsync<GameObject>(resourcePath,(bool result,GameObject o)=>
         {
             var go = GameObject.Instantiate(o);

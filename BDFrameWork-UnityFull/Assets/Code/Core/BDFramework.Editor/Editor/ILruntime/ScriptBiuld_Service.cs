@@ -79,7 +79,7 @@ public class ScriptBiuld_Service
         CompilerResults cr = provider.CompileAssemblyFromFile(cp, array);
         //foreach (var a in array)
         //{
-        //     JDeBug.I.Log(string.Format("==>{0}", a));
+        //     JDeBug.Inst.Log(string.Format("==>{0}", a));
         //}
 
 

@@ -15,7 +15,7 @@ public class Editor_GenLocalDataPacket
         var path = FrameDataHelper.FrameWorkSetting.EditorTablePath;
         path = Path.Combine(Application.dataPath, path);
 
-       //  JDeBug.I.Log(path);
+       //  JDeBug.Inst.Log(path);
 
         var dir = Path.Combine(Application.streamingAssetsPath, "Table");
         if(Directory.Exists(dir) == false)

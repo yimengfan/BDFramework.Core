@@ -178,13 +178,13 @@ namespace BDFramework.ResourceMgr
 
         IEnumerator IELoadAsync<T>(string objName, Action<bool, T> action) where T : UnityEngine.Object
         {
-            // JDeBug.I.Log("执行：" + objName);
+            // JDeBug.Inst.Log("执行：" + objName);
             var res = Resources.LoadAsync<T>(objName);
             yield return res;
             if (res.isDone)
             {
 
-                //JDeBug.I.LogFormat("耗时:{0}  创建:{1}", watch.ElapsedMilliseconds, objName);
+                //JDeBug.Inst.LogFormat("耗时:{0}  创建:{1}", watch.ElapsedMilliseconds, objName);
                 objsMap[objName] = res.asset;
                 action(true, res.asset as T);
             }

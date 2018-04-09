@@ -49,7 +49,7 @@ public class CreateHashList
         {
             successCallback(true);
         }
-        // JDeBug.I.Log("Create Hash File Success");
+        // JDeBug.Inst.Log("Create Hash File Success");
        // EditorUtility.DisplayDialog("", "生成资源Hash文件完成", "OK");
     }
 

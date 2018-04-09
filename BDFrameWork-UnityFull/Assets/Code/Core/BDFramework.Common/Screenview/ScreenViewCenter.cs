@@ -151,19 +151,19 @@ namespace BDFramework.ScreenView
             //获取IScreenView名称
             string _name = name.ToString();
             curName = _name;
-            // My JDeBug.I.Log("name:" + name);
+            // My JDeBug.Inst.Log("name:" + name);
             IScreenView view = null;
             //如果在未使用的IScreenView列表中找到
             if (unuseViews.TryGetValue(_name, out view))
             {
-                //My JDeBug.I.Log("unuseViews: " + name);
+                //My JDeBug.Inst.Log("unuseViews: " + name);
 
                 BeginNavForward(_name, onLoad);
                 return;
             }
             else
             {
-                //My JDeBug.I.Log("using : " + name);
+                //My JDeBug.Inst.Log("using : " + name);
                 //有可能在队列中
                 bool bNeedBack = false;
                 int navtoindex = -1;
@@ -183,7 +183,7 @@ namespace BDFramework.ScreenView
                         else
                         {
                             //在队列中,NavBack直到达成目标
-                            //My JDeBug.I.Log("在队列中,NavBack直到达成目标");
+                            //My JDeBug.Inst.Log("在队列中,NavBack直到达成目标");
                             bNeedBack = true;
                             navtobeginindex = navtoindex = i;
                             break;
@@ -285,7 +285,7 @@ namespace BDFramework.ScreenView
                     //        onLoad(err);
                     //    }
                     //    var vlast = views[views.Count - 1];
-                    //    My JDeBug.I.Log("vlast:" + vlast + ",now:" + name);
+                    //    My JDeBug.Inst.Log("vlast:" + vlast + ",now:" + name);
                     //    if (vlast.name == name)
                     //    {
                     //        if (onLoad != null)
@@ -591,7 +591,7 @@ namespace BDFramework.ScreenView
                 {
 
                     taskq--;
-                    //                        My JDeBug.I.Log("taskq=" + taskq);
+                    //                        My JDeBug.Inst.Log("taskq=" + taskq);
                     if (taskq == 0 && !bwait)
                     {
                         CallBackTask(_err);
@@ -602,7 +602,7 @@ namespace BDFramework.ScreenView
                 if (type == NavTaskType.Init || type == NavTaskType.InitAndAdd)
                 {
                     taskq++;
-                    //                  My JDeBug.I.Log("init taskq=" + taskq);
+                    //                  My JDeBug.Inst.Log("init taskq=" + taskq);
                     //初始化相关联的IScreenView
                     view.BeginInit(_callback, layer);
                     //任务完成
@@ -639,7 +639,7 @@ namespace BDFramework.ScreenView
                     //如果相关联的IScreenView 不是透明的
                     if (view.IsTransparent == false)
                     {
-                        //                        My JDeBug.I.Log("Trans and Hide");
+                        //                        My JDeBug.Inst.Log("Trans and Hide");
 
                         for (int i = layer.views.Count - 2; i >= 0; i--)
                         {
@@ -648,7 +648,7 @@ namespace BDFramework.ScreenView
                             {
 
                                 taskq++;
-                                //                            My JDeBug.I.Log("exitaa taskq=" + taskq);
+                                //                            My JDeBug.Inst.Log("exitaa taskq=" + taskq);
                                 layer.tasks.Enqueue(new NavTask(NavTaskType.Exit, v, _callback, layer));
                             }
                         }
@@ -661,7 +661,7 @@ namespace BDFramework.ScreenView
                     //如果相关联的IScreenView 不是透明的
                     if (view.IsTransparent == false)
                     {
-                        // My JDeBug.I.Log("Trans and Show");
+                        // My JDeBug.Inst.Log("Trans and Show");
                         //从相关联的ScreenViewLayer中的最后一个显示中的IScreenView开始倒序遍历
                         for (int i = layer.views.Count - 1; i >= 0; i--)
                         {
@@ -671,7 +671,7 @@ namespace BDFramework.ScreenView
                             if (!v.IsLoad)
                             {
                                 taskq++;
-                                // My JDeBug.I.Log("initaa taskq=" + taskq);
+                                // My JDeBug.Inst.Log("initaa taskq=" + taskq);
 
                                 layer.tasks.Enqueue(new NavTask(NavTaskType.Init, v, _callback, layer));
                             }
@@ -683,7 +683,7 @@ namespace BDFramework.ScreenView
                         }
                     }
                 }
-                //                My JDeBug.I.Log("finish taskq=" + taskq);
+                //                My JDeBug.Inst.Log("finish taskq=" + taskq);
 
                 if (taskq == 0 && bwait)
                 {
@@ -757,7 +757,7 @@ namespace BDFramework.ScreenView
                 v.Update(delta);
                 //float end = Time.realtimeSinceStartup;
 
-                //My JDeBug.I.Log( "[" + v.name + "] - " + "View Update execution time:" + (end - start));
+                //My JDeBug.Inst.Log( "[" + v.name + "] - " + "View Update execution time:" + (end - start));
 
                 //如果IScreenView不透明,直接break,不处理后面的IScreenView
                 if (!v.IsTransparent)
@@ -798,7 +798,7 @@ namespace BDFramework.ScreenView
             {
                 //将当前任务置空
                 taskCurrect = null;
-                //                My JDeBug.I.Log("TaskFinish");
+                //                My JDeBug.Inst.Log("TaskFinish");
             }
 
         }

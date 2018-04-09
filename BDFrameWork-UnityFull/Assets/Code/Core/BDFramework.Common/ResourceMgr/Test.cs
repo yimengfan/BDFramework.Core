@@ -34,7 +34,7 @@ public class Test : MonoBehaviour
             //versionControl.CopyStreamingAsset(1.8f, () =>
             //{
 
-            //     JDeBug.I.Log("拷贝完成!");
+            //     JDeBug.Inst.Log("拷贝完成!");
             //});
         }
 
@@ -44,8 +44,8 @@ public class Test : MonoBehaviour
             //versionControl.Start("3", "100", "V0uFhE2GRNnRipS0hery9OhY", (float state, string info, bool issuccess) =>
             //{
 
-            //     JDeBug.I.Log("业务逻辑层通知：" + "下载完成");
-            //     JDeBug.I.Log("本地目录：" + versionControl.LocalHotUpdateResPath);
+            //     JDeBug.Inst.Log("业务逻辑层通知：" + "下载完成");
+            //     JDeBug.Inst.Log("本地目录：" + versionControl.LocalHotUpdateResPath);
             //});
         }
 

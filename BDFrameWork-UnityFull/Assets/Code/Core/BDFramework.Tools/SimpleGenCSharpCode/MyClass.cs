@@ -11,6 +11,7 @@ namespace [namespace]{
 //工具生成代码,请勿删除标签，否则无法进行添加操作
 //[using namespace]
 //[Note]
+//[Attribute]
 public class [ClassName]
 {
    //------[class end]------
@@ -22,23 +23,24 @@ public class [ClassName]
 ";
 
         public string Name { get; private set; }
-        private string SelfNameSpace { get; set;}
+        private string SelfNameSpace { get; set; }
         private List<MyClass> ClassesList;
         private List<MyField> FieldsList;
         private List<MyMethod> MethodList;
         private List<MyPropties> ProptiesList;
         private List<string> NamespaceList;
+        private List<string> AtrributeList = new List<string>();
 
-        
+
         public MyClass(string className)
         {
             this.FieldsList = new List<MyField>();
             this.MethodList = new List<MyMethod>();
-            this.ProptiesList =  new List<MyPropties>();
+            this.ProptiesList = new List<MyPropties>();
             this.NamespaceList = new List<string>();
-            this.ClassesList =  new List<MyClass>();
+            this.ClassesList = new List<MyClass>();
             //
-            this.CodeContent =  this.CodeContent.Replace("[ClassName]", className);
+            this.CodeContent = this.CodeContent.Replace("[ClassName]", className);
             this.Name = className;
         }
 
@@ -70,9 +72,14 @@ public class [ClassName]
 
         public void AddMethod(MyMethod m)
         {
-           MethodList.Add(m);
+            MethodList.Add(m);
         }
-        
+
+        public void AddAttribute(string Attribute)
+        {
+            AtrributeList.Add(Attribute);
+        }
+
         //
         override public string ToString()
         {
@@ -84,9 +91,9 @@ public class [ClassName]
                 tempC = tempC.Replace("//------[Propties end]------", "//------[subPropties end]------");
                 tempC = tempC.Replace("//------[Method end]------", "//------[subMethod end]------");
                 tempC = tempC.Replace("//工具生成代码,请勿删除标签，否则无法进行添加操作", "//SubClass " + c.Name);
-                classes += (tempC+ " \n");
+                classes += (tempC + " \n");
             }
-           
+
             string fields = "";
             foreach (var f in FieldsList)
             {
@@ -108,7 +115,7 @@ public class [ClassName]
             {
                 namespaces += ("using " + n.ToString() + ";\n");
             }
-            
+
             //self namespace
 
             if (string.IsNullOrEmpty(SelfNameSpace))
@@ -119,24 +126,36 @@ public class [ClassName]
             {
                 this.CodeContent = this.CodeContent.Replace("[namespace]", SelfNameSpace);
             }
-            
+
+            string attributes = "";
+            if (this.AtrributeList.Count > 0)
+            {
+                foreach (var f in this.AtrributeList)
+                {
+                    attributes += ("[" + f.ToString() + "]\n");
+                }
+            }
+
+
             //
             var index = this.CodeContent.LastIndexOf("//[using namespace]");
-            this.CodeContent=   this.CodeContent.Insert( index, namespaces);
-            
-             index = this.CodeContent.LastIndexOf("//------[class end]------");
-            this.CodeContent=   this.CodeContent.Insert( index, classes);
-            
-             index = this.CodeContent.LastIndexOf("//------[Field end]------");
-            this.CodeContent=   this.CodeContent.Insert( index, fields);
-            
-            index = this.CodeContent.LastIndexOf("//------[Propties end]------");
-            this.CodeContent=   this.CodeContent.Insert( index, propties);
-            
-            index = this.CodeContent.LastIndexOf("//------[Method end]------");
-            this.CodeContent=   this.CodeContent.Insert( index, methods);
+            this.CodeContent = this.CodeContent.Insert(index, namespaces);
 
-            
+            index = this.CodeContent.LastIndexOf("//------[class end]------");
+            this.CodeContent = this.CodeContent.Insert(index, classes);
+
+            index = this.CodeContent.LastIndexOf("//------[Field end]------");
+            this.CodeContent = this.CodeContent.Insert(index, fields);
+
+            index = this.CodeContent.LastIndexOf("//------[Propties end]------");
+            this.CodeContent = this.CodeContent.Insert(index, propties);
+
+            index = this.CodeContent.LastIndexOf("//------[Method end]------");
+            this.CodeContent = this.CodeContent.Insert(index, methods);
+
+            index = this.CodeContent.LastIndexOf("//[Attribute]");
+            this.CodeContent = this.CodeContent.Insert(index, attributes);
+
             return this.CodeContent;
         }
     }

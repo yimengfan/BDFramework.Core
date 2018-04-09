@@ -19,7 +19,7 @@ public class ScreenView_Test2 : IScreenView
 		 //一定要设置为true，否则当前是未加载状态
 		 this.IsLoad = true;
 		 //打开 window 2
-		 UIMgr.I.ShowWindow(WinEnum.Win_Test2);
+		 UIMgr.Inst.ShowWindow((int)WinEnum.Win_Test2);
 		 //
 		 Debug.Log("进入 Test Screen 2");
 	 }
