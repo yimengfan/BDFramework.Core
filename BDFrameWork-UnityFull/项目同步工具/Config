@@ -1,0 +1,14 @@
+[
+{
+"Source":"E:/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/BDFramework.Core",
+"Target":"E:/BDFramework-Unity3d/BDFrameWork/BDFrameWork.Core"
+},
+{
+"Source":"E:/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/BDFramework.Editor",
+"Target":"E:/BDFramework-Unity3d/BDFrameWork/BDFrameWork.Editor"
+},
+{
+"Source":"E:/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/BDFramework.Logic",
+"Target":"E:/BDFramework-Unity3d/BDFrameWork/BDFrameWork.Logic"
+}
+]

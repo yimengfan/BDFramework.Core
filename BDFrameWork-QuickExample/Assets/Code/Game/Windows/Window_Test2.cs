@@ -27,7 +27,7 @@ public class Window_Test2 : AWindow
         this.Transform.Find("Button").GetComponent<Button>().onClick.AddListener(() =>
         {
            this.Close();
-            UIMgr.I.ShowWindow( WinEnum.Win_XVC);
+            UIMgr.Inst.ShowWindow((int)WinEnum.Win_XVC);
         });
         
         //注册消息监听
@@ -53,7 +53,7 @@ public class Window_Test2 : AWindow
     public void OnRecive_Rotation(object o)
     {
         float value = (int)o;
-        BDeBug.I.Log("监听到rotation ：" +  value , "yellow");
+        //BDeBug.Inst.Log("监听到rotation ：" +  value , "yellow");
         var trans = this.Transform.Find("Image");
         trans.DOKill();
 

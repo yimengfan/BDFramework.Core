@@ -1,4 +1,4 @@
-﻿using BDFramework.Logic.GameLife;
+﻿using BDFramework.GameLife;
 using UnityEngine;
 
 namespace Code.Game

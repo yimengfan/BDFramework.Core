@@ -7,59 +7,59 @@ using BDFramework.UI;
 
 [ScreenView("sv_test1", true)]
 public class ScreenView_Test : IScreenView
- {
+{
 
-	 public string Name { get; private set; }
-	 public bool IsLoad { get; private set; }
-	 public bool IsBusy { get; private set; }
-	 public bool IsTransparent { get; private set; }
-	 
-	 public void BeginInit(Action<Exception> onInit, ScreenViewLayer layer)
-	 {
-		 //一定要设置为true，否则当前是未加载状态
-		 this.IsLoad = true;
-		 
-		 //加载窗口, 0是窗口id,建议自行换成枚举
-		 UIMgr.I.LoadWindows(WinEnum.Win_Test1, WinEnum.Win_Test2 , WinEnum.Win_XVC );
-		 UIMgr.I.ShowWindow(WinEnum.Win_Test1);
-		 
-		 Debug.Log("进入Test Screen 1");
-	 }
+    public string Name { get; private set; }
+    public bool IsLoad { get; private set; }
+    public bool IsBusy { get; private set; }
+    public bool IsTransparent { get; private set; }
 
-	 public void BeginExit(Action<Exception> onExit)
-	 {
-		 //退出设置为false，否则下次进入不会调用begininit
-		 this.IsLoad = false;
-		 Destory();
-		 onExit(null);
-		 
-		 
-		 //1..退出时候 向win test2 发消息
-		 var d = WinData.Create();
-		 d.AddData("rotation", UnityEngine.Random.Range(-359, 359));
-		 UIMgr.I.SendMessage(WinEnum.Win_Test2, d);
-		 
-		 //
-		 Debug.Log("退出Test Screen 1");
-	 }
+    public void BeginInit(Action<Exception> onInit, ScreenViewLayer layer)
+    {
+        //一定要设置为true，否则当前是未加载状态
+        this.IsLoad = true;
 
-	 public void Destory()
-	 {
-		 
-	 }
+        //加载窗口, 0是窗口id,建议自行换成枚举
+        UIMgr.Inst.LoadWindows((int)WinEnum.Win_Test1, (int)WinEnum.Win_Test2, (int)WinEnum.Win_XVC);
+        UIMgr.Inst.ShowWindow((int)WinEnum.Win_Test1);
 
-	 public void Update(float delta)
-	 {
-	   //	Debug.Log("sv1 update");
-	 }
+        Debug.Log("进入Test Screen 1");
+    }
 
-	 public void UpdateTask(float delta)
-	 {
-		 
-	 }
+    public void BeginExit(Action<Exception> onExit)
+    {
+        //退出设置为false，否则下次进入不会调用begininit
+        this.IsLoad = false;
+        Destory();
+        onExit(null);
 
-	 public void FixedUpdate(float delta)
-	 {
-		
-	 }
- }
+
+        //1..退出时候 向win test2 发消息
+        var d = WinData.Create();
+        d.AddData("rotation", UnityEngine.Random.Range(-359, 359));
+        UIMgr.Inst.SendMessage((int)WinEnum.Win_Test2, d);
+
+        //
+        Debug.Log("退出Test Screen 1");
+    }
+
+    public void Destory()
+    {
+
+    }
+
+    public void Update(float delta)
+    {
+        //	Debug.Log("sv1 update");
+    }
+
+    public void UpdateTask(float delta)
+    {
+
+    }
+
+    public void FixedUpdate(float delta)
+    {
+
+    }
+}

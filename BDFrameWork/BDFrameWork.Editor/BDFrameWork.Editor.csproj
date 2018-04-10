@@ -77,31 +77,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\BDFramework.Editor\Editor\ExcelTools\ExcelTools.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\ExcelTools\ExcelUtility.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\ILruntime\ScriptBiuldDll_Windows.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\ILruntime\ScriptBiuld_Service.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\InitFrame\BDFrameInit.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\Menu\EditorMenu.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\Resource\CreateHashList.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\Resource\CreateVersionUpdateList.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\Resource\ECreateAssetBundle.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\Resource\EditorWindw_GenAssetBundle.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\Resource\Editor_GenLocalDataPacket.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\Resource\Excel2Code.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\Resource\Excel2SQLite.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\UI\Editor_ToChangeTextureImporter.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\UI\Editor_UITool.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\UI\Editor_UIWorker.cs" />
-    <Compile Include="Core\BDFramework.Editor\Editor\UI\RegistViewItem.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Core\BDFramework.Editor\Editor\ExcelTools\Plugins\Excel.dll" />
-    <Content Include="Core\BDFramework.Editor\Editor\ExcelTools\Plugins\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="Core\BDFramework.Editor\Editor\ExcelTools\Plugins\System.Data.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Editor\ExcelTools\ExcelTools.cs" />
+    <Compile Include="Editor\ExcelTools\ExcelUtility.cs" />
+    <Compile Include="Editor\ILruntime\ScriptBiuldDll_Windows.cs" />
+    <Compile Include="Editor\ILruntime\ScriptBiuld_Service.cs" />
+    <Compile Include="Editor\InitFrame\BDFrameInit.cs" />
+    <Compile Include="Editor\Menu\EditorMenu.cs" />
+    <Compile Include="Editor\Resource\CreateHashList.cs" />
+    <Compile Include="Editor\Resource\CreateVersionUpdateList.cs" />
+    <Compile Include="Editor\Resource\ECreateAssetBundle.cs" />
+    <Compile Include="Editor\Resource\EditorWindw_GenAssetBundle.cs" />
+    <Compile Include="Editor\Resource\Editor_GenLocalDataPacket.cs" />
+    <Compile Include="Editor\Resource\Excel2Code.cs" />
+    <Compile Include="Editor\Resource\Excel2SQLite.cs" />
+    <Compile Include="Editor\UI\Editor_ToChangeTextureImporter.cs" />
+    <Compile Include="Editor\UI\Editor_UITool.cs" />
+    <Compile Include="Editor\UI\Editor_UIWorker.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Editor\ExcelTools\Plugins\Excel.dll" />
+    <Content Include="Editor\ExcelTools\Plugins\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="Editor\ExcelTools\Plugins\System.Data.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

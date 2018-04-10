@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Administrator\.Rider2017.3\system\resharper-host\local\Transient\ReSharperHost\v11\SolutionCaches\_BDFrameWork-QuickExample.296580264.00" t="ExcludeRecursive" />
+    <e p="E:\BDFramework-Unity3d\BDFrameWork-QuickExample" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="3rdPlugins" t="Include">
+          <e p="Dotween" t="Include">
+            <e p="DemiLib" t="Include">
+              <e p="Core" t="Include">
+                <e p="DemiLib.xml" t="Include" />
+                <e p="Editor" t="Include">
+                  <e p="DemiEditor.xml" t="Include" />
+                </e>
+              </e>
+            </e>
+            <e p="Dotween" t="Include">
+              <e p="DOTween43.xml" t="Include" />
+              <e p="DOTween46.xml" t="Include" />
+              <e p="DOTween50.xml" t="Include" />
+              <e p="readme.txt" t="Include" />
+            </e>
+            <e p="DOTweenPro" t="Include">
+              <e p="DOTweenAnimation.cs" t="Include" />
+              <e p="Editor" t="Include">
+                <e p="DOTweenAnimationInspector.cs" t="Include" />
+              </e>
+              <e p="readme.txt" t="Include" />
+            </e>
+            <e p="readme_DOTweenPro.txt" t="Include" />
+          </e>
+        </e>
+        <e p="Code" t="Include">
+          <e p="Game" t="Include">
+            <e p="Data" t="Include">
+              <e p="LocalDataBase.cs" t="Include" />
+            </e>
+            <e p="GameStartTest.cs" t="Include" />
+            <e p="ScreenView" t="Include">
+              <e p="ScreenView_Test1.cs" t="Include" />
+              <e p="ScreenView_Test2.cs" t="Include" />
+            </e>
+            <e p="Windows" t="Include">
+              <e p="Window_MVC" t="Include">
+                <e p="Contrl_MVCTest.cs" t="Include" />
+                <e p="View_MVCTest.cs" t="Include" />
+              </e>
+              <e p="Window_MVC.cs" t="Include" />
+              <e p="Window_Test1.cs" t="Include" />
+              <e p="Window_Test2.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Plugins" t="Include">
+          <e p="Editor" t="Include">
+            <e p="JetBrains" t="Include">
+              <e p="Unity3DRider.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Resource" t="Include">
+          <e p="Table" t="Include">
+            <e p="Buff.cs" t="Include" />
+            <e p="Hero.cs" t="Include" />
+            <e p="Skill.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="BDFrameWork-QuickExample.sln" t="IncludeFlat" />
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+  </component>
+</project>
