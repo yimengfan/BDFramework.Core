@@ -4,12 +4,12 @@
     {
         public AViewContrlBase(DataDrive_Service  data)
         {
-            this.DataBinder = data;
+            this.Model = data;
         }
 
-        public DataDrive_Service DataBinder { get; private set; }
+        public DataDrive_Service Model { get; private set; }
         
-        virtual public void BindData()
+        virtual public void BindModel()
         {
         }
 

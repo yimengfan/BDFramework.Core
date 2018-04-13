@@ -7,7 +7,7 @@ namespace BDFramework.UI
 {
     public class AViewBase :AIEnumeratorTaskMgr,IView
     {
-        public DataDrive_Service DataBinder { get; private set; }
+        public DataDrive_Service Model { get; private set; }
         public Transform Transform { get; private set; }
         public void Show()
         {
@@ -21,7 +21,7 @@ namespace BDFramework.UI
 
         public AViewBase(Transform t ,DataDrive_Service service)
         {
-            this.DataBinder = service;
+            this.Model = service;
             this.Transform = t;
         }
         //
@@ -44,7 +44,7 @@ namespace BDFramework.UI
         /// <param name="o"></param>
         protected void AutoSetTranFormData(Transform t, object o)
         {
-            var setList = new List<BMAutoSetValue>(t.GetComponentsInChildren<BMAutoSetValue>());
+            var setList = new List<AutoSetValue>(t.GetComponentsInChildren<AutoSetValue>());
             
             var type = o.GetType();
             var fields =   type.GetFields();
@@ -52,7 +52,7 @@ namespace BDFramework.UI
             {
                 //获取字段一致的节点 和属性名
                 var trans = setList.Find(s => s.name == f.Name);
-                var fAttr = f.GetCustomAttribute<BValueType>();
+                var fAttr = f.GetCustomAttribute<ValueType>();
                 if (trans!= null && fAttr != null)
                 {
                     var component = trans.transform.GetComponent(fAttr.Type);

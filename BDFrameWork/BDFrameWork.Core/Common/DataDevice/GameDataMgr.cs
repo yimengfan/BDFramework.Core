@@ -13,18 +13,18 @@ public class GameDataMgr
     {
     }
 
-    private static GameDataMgr _instance = null;
+    private static GameDataMgr instance = null;
 
-    public static GameDataMgr I
+    public static GameDataMgr Inst
     {
        get
         {
-            if(_instance == null)
+            if(instance == null)
             {
-                _instance = new GameDataMgr();
+                instance = new GameDataMgr();
             }
 
-            return _instance;
+            return instance;
         }
     }
 }

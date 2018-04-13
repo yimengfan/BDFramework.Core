@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace BDFramework.UI
 {
-    public class BValueType: Attribute
+    public class ValueType: Attribute
     {
         public Type Type;
 
-        public BValueType(Type t)
+        public ValueType(Type t)
         {
             this.Type = t;
         }

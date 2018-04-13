@@ -37,7 +37,7 @@ public class BDFrameWork : MonoBehaviour
 
         allTypes.AddRange(frameTypes);
         allTypes.AddRange(logicTypes);
-   //其他环境用热更模型进行加载
+        //其他环境用热更模型进行加载
 
         //
         mgrList = new List<IMgr>();

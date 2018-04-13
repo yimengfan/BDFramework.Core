@@ -34,7 +34,7 @@ public override [return type] [method name] ([params])
                 MyField f = new MyField();
                 f.SetType(GetUIType(item.gameObject));
                 f.SetFieldName(item.gameObject.name);
-                if (item.isBindPath) f.AddAttribute(GetBindPath(item.gameObject, root));
+                if (item.IsBindPath) f.AddAttribute(GetBindPath(item.gameObject, root));
                 string tp = GetBindDataName(item);
                 if (!string.IsNullOrEmpty(tp)) f.AddAttribute(tp);
                 mc.AddField(f);
@@ -51,9 +51,9 @@ public override [return type] [method name] ([params])
 
             MyMethod bindData = new MyMethod();
             bindData.OverwriteContent(@"//[Note]
-        public override void BindData()
+        public override void BindModel()
         {
-            base.BindData();
+            base.BindModel();
         }");
             mc.AddMethod(bindData);
             string path = Application.dataPath + createPath;
@@ -81,7 +81,7 @@ public override [return type] [method name] ([params])
             mc.AddMethod(construct);
             foreach (RegistViewItem item in itemList)
             {
-                if (string.IsNullOrEmpty(item.bindDataName)) continue;
+                if (string.IsNullOrEmpty(item.BindDataName)) continue;
                 Type t = GetUIType(item.gameObject);
                 MyMethod bindData = new MyMethod();
                 string methodName = ""; string methodParams = "";
@@ -203,8 +203,8 @@ public override [return type] [method name] ([params])
             foreach (RegistViewItem item in itemlist)
             {
                 nameList.Add(item.name);
-                isBindPathList.Add(item.isBindPath);
-                bindNameList.Add(item.bindDataName);
+                isBindPathList.Add(item.IsBindPath);
+                bindNameList.Add(item.BindDataName);
             }
         }
 
@@ -234,7 +234,7 @@ public override [return type] [method name] ([params])
                 path = path.Insert(0, tsTp.parent.name + "/");
                 tsTp = tsTp.parent;
             }
-            return "BSetTransform(\"" + path + "\")";
+            return "SetTransform(\"" + path + "\")";
         }
 
         //public string GetPath(bool isGet)
@@ -248,16 +248,16 @@ public override [return type] [method name] ([params])
         //            path = path.Insert(0, tsTp.parent.name + "/");
         //            tsTp = tsTp.parent;
         //        }
-        //        return "BSetTransform(\"" + path + "\")";
+        //        return "SetTransform(\"" + path + "\")";
         //    }
         //    return "";
         //}
 
         public static string GetBindDataName(RegistViewItem item)
         {
-            if (!string.IsNullOrEmpty(item.bindDataName))
+            if (!string.IsNullOrEmpty(item.BindDataName))
             {
-                return "BBindData(\"" + item.bindDataName.Trim() + "\")";
+                return "BindData(\"" + item.BindDataName.Trim() + "\")";
             }
             return null;
         }

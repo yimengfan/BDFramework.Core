@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\BDFrameWork-QuickExample\Assets\Plugins\BDFramWork\</OutputPath>
+    <OutputPath>..\..\BDFrameWork-Quick.DLL\Plugins\BDFramWork\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -65,20 +65,10 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="3rdPlugin\ILRuntime\ILRuntime\ILRuntime.csproj" />
-    <Content Include="3rdPlugin\ILRuntime\ILRuntime_2017_3_24.txt" />
-    <Content Include="3rdPlugin\ILRuntime\Mono.Cecil.Pdb\Mono.Cecil.Pdb.csproj" />
-    <Content Include="3rdPlugin\JsonDotNet20\license.txt" />
-    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.dll" />
-    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.dll.mdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.pdb" />
-    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.xml" />
-    <Content Include="3rdPlugin\JsonDotNet20\readme.txt" />
-    <Content Include="3rdPlugin\Reademe.txt" />
-    <Content Include="Common\DataDevice\readme.txt" />
-    <Content Include="Common\ResourceMgr\reademe.txt" />
+    <None Include="3rdPlugin\LitJson\AssemblyInfo.cs.in" />
+    <None Include="Common\HttpMgr\example.unity" />
+    <None Include="Common\ResourceMgr\example.unity" />
+    <None Include="Tools\SimpleGenCSharpCode\example.unity" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3rdPlugin\ILRuntime\Editor\ILRuntimeCLRBinding.cs" />
@@ -375,16 +365,16 @@
     <Compile Include="Common\Screenview\ScreenViewEnum.cs" />
     <Compile Include="Common\Screenview\ScreenViewMgr.cs" />
     <Compile Include="Common\Screenview\ScreenView_HotFix_Wrapper.cs" />
+    <Compile Include="Common\UI\Attribute\AutoSetValue.cs" />
+    <Compile Include="Common\UI\Attribute\BindData.cs" />
+    <Compile Include="Common\UI\Attribute\ValueType.cs" />
     <Compile Include="Common\UI\AWindow.cs" />
     <Compile Include="Common\UI\MVC\AViewBase.cs" />
     <Compile Include="Common\UI\MVC\AViewContrlBase.cs" />
-    <Compile Include="Common\UI\MVC\BBindData.cs" />
-    <Compile Include="Common\UI\MVC\BMAutoSetValue.cs" />
-    <Compile Include="Common\UI\MVC\BSetTransform.cs" />
-    <Compile Include="Common\UI\MVC\BValueType.cs" />
     <Compile Include="Common\UI\MVC\IView.cs" />
     <Compile Include="Common\UI\MVC\IViewControl.cs" />
     <Compile Include="Common\UI\MVC\MVCBind.cs" />
+    <Compile Include="Common\UI\MVC\SetTransform.cs" />
     <Compile Include="Common\UI\RegistViewItem.cs" />
     <Compile Include="Common\UI\SubWindow.cs" />
     <Compile Include="Common\UI\UIAttribute.cs" />
@@ -409,10 +399,20 @@
     <Compile Include="Tools\SimpleGenCSharpCode\TestMyClass.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="3rdPlugin\LitJson\AssemblyInfo.cs.in" />
-    <None Include="Common\HttpMgr\example.unity" />
-    <None Include="Common\ResourceMgr\example.unity" />
-    <None Include="Tools\SimpleGenCSharpCode\example.unity" />
+    <Content Include="3rdPlugin\ILRuntime\ILRuntime\ILRuntime.csproj" />
+    <Content Include="3rdPlugin\ILRuntime\ILRuntime_2017_3_24.txt" />
+    <Content Include="3rdPlugin\ILRuntime\Mono.Cecil.Pdb\Mono.Cecil.Pdb.csproj" />
+    <Content Include="3rdPlugin\JsonDotNet20\license.txt" />
+    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.dll" />
+    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.dll.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.pdb" />
+    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.xml" />
+    <Content Include="3rdPlugin\JsonDotNet20\readme.txt" />
+    <Content Include="3rdPlugin\Reademe.txt" />
+    <Content Include="Common\DataDevice\readme.txt" />
+    <Content Include="Common\ResourceMgr\reademe.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

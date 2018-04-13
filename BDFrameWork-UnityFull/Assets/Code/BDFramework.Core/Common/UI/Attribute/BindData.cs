@@ -2,11 +2,11 @@
 
 namespace BDFramework.UI
 {
-    public class BBindData : Attribute
+    public class BindData : Attribute
     {
         public string Name;
 
-        public BBindData(string name)
+        public BindData(string name)
         {
             this.Name = name;
         }

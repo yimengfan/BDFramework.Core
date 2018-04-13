@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\BDFrameWork-QuickExample\Assets\Plugins\BDFramWork\</OutputPath>
+    <OutputPath>..\..\BDFrameWork-Quick.DLL\Plugins\BDFramWork\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

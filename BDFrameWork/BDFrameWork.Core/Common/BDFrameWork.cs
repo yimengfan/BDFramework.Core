@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 using System;
-using BDFramework.GameLife;
+using BDFramework.Logic.GameLife;
 using BDFramework.Mgr;
 using BDFramework.UI;
 using BDFramework.ResourceMgr;
@@ -36,7 +36,7 @@ public class BDFrameWork : MonoBehaviour
 
         allTypes.AddRange(frameTypes);
         allTypes.AddRange(logicTypes);
-       //其他环境用热更模型进行加载
+        //其他环境用热更模型进行加载
 
         //
         mgrList = new List<IMgr>();

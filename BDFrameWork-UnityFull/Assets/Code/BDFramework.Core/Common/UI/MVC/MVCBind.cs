@@ -29,7 +29,7 @@ namespace BDFramework.UI
             this.ViewControl.Exit();
         }
     }
-   static public class MVCBind
+    static public class MVCBind
     {
         /// <summary>
         /// 创建一个mvc模块
@@ -41,7 +41,7 @@ namespace BDFramework.UI
             ViewAutoSet(view);
             BindEvnet(viewControl, view);
             //
-            viewControl.BindData();
+            viewControl.BindModel();
             view.BindData();
             //
             var bind = new MvcWarpper()
@@ -74,7 +74,7 @@ namespace BDFramework.UI
                    continue;   
                 }
                 //1.自动获取节点
-                var attr = f.GetCustomAttribute<BSetTransform>();
+                var attr = f.GetCustomAttribute<SetTransform>();
                 if (attr != null)
                 {
                     //获取节点,并且获取组件
@@ -93,12 +93,12 @@ namespace BDFramework.UI
                 }
                 
                 //2.自动绑定数据驱动
-                var bAttr = f.GetCustomAttribute<BBindData>();
+                var bAttr = f.GetCustomAttribute<BindData>();
                 if (bAttr != null)
                 {
                     var name = bAttr.Name;
-                    var BindData = vt.GetProperty("DataBinder").GetValue(view) as DataDrive_Service;
-                    BindData.RegAction(bAttr.Name , (v) =>
+                    var _Model = vt.GetProperty("Model").GetValue(view) as DataDrive_Service;
+                    _Model.RegAction(bAttr.Name , (v) =>
                     {
                         if (f.FieldType == typeof(Text))
                         {

@@ -12,7 +12,9 @@ using BDFramework.UI;
 /// </summary>
 public abstract class AWindow 
 {
-    //
+    /// <summary>
+    /// 资源路径
+    /// </summary>
     private string resourcePath = null;
     public AWindow(string path)
     {
@@ -69,6 +71,11 @@ public abstract class AWindow
     {
         this.subWindowsDictionary[name] = win;
     }
+    
+    /// <summary>
+    /// 异步加载
+    /// </summary>
+    /// <param name="callback"></param>
     public void AsyncLoad(Action callback)
     {
        //  JDeBug.Inst.Log("开始任务:" + resourcePath);
@@ -87,6 +94,9 @@ public abstract class AWindow
             
         });       
     }
+    /// <summary>
+    /// 同步加载
+    /// </summary>
     public void Load()
     {
         var o = BResources.Load<GameObject>(resourcePath);

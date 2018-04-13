@@ -2,7 +2,7 @@
 
 namespace BDFramework.UI
 {
-    public class BMAutoSetValue: MonoBehaviour
+    public class AutoSetValue: MonoBehaviour
     {
         public string name;
     }

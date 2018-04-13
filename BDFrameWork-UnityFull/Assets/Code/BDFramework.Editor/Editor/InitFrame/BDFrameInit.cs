@@ -13,6 +13,7 @@ namespace BDFramework.Editor
 
         static private List<string> PathList = new List<string>()
         {
+            "3rdPlugins",
             "Code",
             "Code/Game",
             "Code/Game/Data",
@@ -25,7 +26,7 @@ namespace BDFramework.Editor
             "Resource/Resources",
             "Resource/Table",
             "Scene",
-            "StreamingAssets",
+            "StreammingAssets",
         };
    
         static public void Init()
@@ -38,7 +39,8 @@ namespace BDFramework.Editor
                     Directory.CreateDirectory(_p);
                 }
             }
-            
+
+            EditorUtility.DisplayDialog("提示", "目录生成完毕,请放心食用~", "OK");
             AssetDatabase.Refresh();
         }
     }

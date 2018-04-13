@@ -2,11 +2,11 @@
 
 namespace BDFramework.UI
 {
-    public class BSetTransform : Attribute
+    public class SetTransform : Attribute
     {
         public string Path;
 
-        public BSetTransform(string path)
+        public SetTransform(string path)
         {
             this.Path = path;
         }

@@ -14,9 +14,9 @@ namespace Code.Game.Windows.MCX
         /// </summary>
         private void OnClick_testButton()
         {
-            var clickCount = this.DataBinder.GetData<int>("ClickCount");    
+            var clickCount = this.Model.GetData<int>("ClickCount");    
             
-            this.DataBinder.SetData("ClickCount" , ++clickCount);
+            this.Model.SetData("ClickCount" , ++clickCount);
             
             Debug.Log("--");
         }
@@ -26,7 +26,7 @@ namespace Code.Game.Windows.MCX
         /// </summary>
         private void OnValueChange_testSlider(float value)
         {          
-            this.DataBinder.SetData("SliderValue" ,value);
+            this.Model.SetData("SliderValue" ,value);
             Debug.Log("--");
         }
         
@@ -35,7 +35,7 @@ namespace Code.Game.Windows.MCX
         /// </summary>
         private void OnValueChange_testScrollBar(float value)
         {          
-            this.DataBinder.SetData("ScrollBarValue" ,value);
+            this.Model.SetData("ScrollBarValue" ,value);
             Debug.Log("--");
         }
         
@@ -50,7 +50,7 @@ namespace Code.Game.Windows.MCX
                 test2 = "获得值：test2",
                 name  = "获得值：张三"
             };
-            this.DataBinder.SetData("AutoSetValue" , test);
+            this.Model.SetData("AutoSetValue" , test);
             Debug.Log("-..-");
         }
         

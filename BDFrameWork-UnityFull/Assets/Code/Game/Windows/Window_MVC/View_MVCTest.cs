@@ -6,29 +6,29 @@ namespace Code.Game.Windows
 {
     public class View_MVCTest : AViewBase
     {
-        [BSetTransform("testButton")]
+        [SetTransform("testButton")]
         private Button testButton;
         //
-        [BSetTransform("testSlider")]
+        [SetTransform("testSlider")]
         private Slider testSlider;
         //
-        [BSetTransform("testScrollbar")]
+        [SetTransform("testScrollbar")]
         private Scrollbar testScrollBar;
                 
-        [BSetTransform("testButtonAutoSetValue")]
+        [SetTransform("testButtonAutoSetValue")]
         private Button testButtonAutoSetValue;
         //
-        [BSetTransform("text_click")]
-        [BBindData("ClickCount")]
+        [SetTransform("text_click")]
+        [BindData("ClickCount")]
         private Text text_click;
         
         
         //
-        [BSetTransform("text_sliderValue")]
+        [SetTransform("text_sliderValue")]
         private Text text_sliderValue;
         //
-        [BSetTransform("text_scrollBarValue")]
-        [BBindData("ScrollBarValue")]
+        [SetTransform("text_scrollBarValue")]
+        [BindData("ScrollBarValue")]
         private Text text_ScrollBarValue;
         
         public View_MVCTest(Transform t, DataDrive_Service service) : base(t, service)
@@ -40,35 +40,35 @@ namespace Code.Game.Windows
         {
             base.BindData();
 
-//            this.DataBinder.RegAction("ClickCount",
+//            this.Model.RegAction("ClickCount",
 //            (value) =>
 //            {
 //                this.text_click.text = "点 击 次 数：" + value;
 //            });
 
-            this.DataBinder.RegAction("SliderValue",
+            this.Model.RegAction("SliderValue",
             (value) =>
             {
                 this.text_sliderValue.text = "Slider Value：" + value;
             });
 //            
-//            this.DataBinder.RegAction("ScrollBarValue",
+//            this.Model.RegAction("ScrollBarValue",
 //            (value) =>
 //            {
 //                this.text_ScrollBarValue.text = "ScrollBarValue ：" + value;
 //            });
             
             //自动设置值测试
-            this.DataBinder.RegAction("AutoSetValue", AutoSetDataTest);
+            this.Model.RegAction("AutoSetValue", AutoSetDataTest);
         }
 
         public class AutoSetData
         {
-            [BValueType(typeof(Text))]
+            [ValueType(typeof(Text))]
             public string test1;
-            [BValueType(typeof(Text))]
+            [ValueType(typeof(Text))]
             public string test2;
-            [BValueType(typeof(Text))]
+            [ValueType(typeof(Text))]
             public string name;
             
         }

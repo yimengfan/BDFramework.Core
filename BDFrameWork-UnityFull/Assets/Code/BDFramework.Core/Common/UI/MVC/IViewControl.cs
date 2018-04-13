@@ -2,9 +2,9 @@
 {
     public interface IViewControl
     {
-        DataDrive_Service DataBinder { get; }
+        DataDrive_Service Model { get; }
 
-        void BindData();
+        void BindModel();
         void Enter();
         void Exit();
     }

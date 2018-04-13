@@ -7,6 +7,6 @@ using UnityEngine.EventSystems;
 public class RegistViewItem : MonoBehaviour
 {
 
-    public bool isBindPath = true;
-    public string bindDataName;
+    public bool IsBindPath = true;
+    public string BindDataName;
 }
