@@ -19,6 +19,7 @@ namespace BDFramework.Editor
             "Code/Game/Data",
             "Code/Game/ScreenView",
             "Code/Game/Windows",
+            "Code/Game/Window_MVC",
             "Resource/AssetBundle",
             "Resource/Effect",
             "Resource/Img",

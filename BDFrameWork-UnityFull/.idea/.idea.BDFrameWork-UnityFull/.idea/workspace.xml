@@ -197,33 +197,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BDFrameInit.cs" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BDFrameInit.cs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/InitFrame/BDFrameInit.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="39" column="16" lean-forward="false" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
+            <state relative-caret-position="592">
+              <caret line="43" column="48" lean-forward="true" selection-start-line="43" selection-start-column="48" selection-end-line="43" selection-end-column="48" />
               <folding>
-                <marker date="1523586166222" expanded="false" signature="6:177" ph="..." />
-                <marker date="1523586166222" expanded="true" signature="207:1196" ph="{...}" />
-                <marker date="1523586166222" expanded="true" signature="245:1193" ph="{...}" />
-                <marker date="1523586166222" expanded="true" signature="327:750" ph="{...}" />
-                <marker date="1523586166222" expanded="true" signature="789:1187" ph="{...}" />
-                <marker date="1523586166222" expanded="true" signature="839:1069" ph="{...}" />
-                <marker date="1523586166222" expanded="true" signature="968:1055" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BindData.cs" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/BindData.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="4" column="21" lean-forward="false" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-              <folding>
-                <marker date="1523600177551" expanded="true" signature="39:209" ph="{...}" />
-                <marker date="1523600177551" expanded="true" signature="79:207" ph="{...}" />
-                <marker date="1523600177551" expanded="true" signature="151:201" ph="{...}" />
+                <marker date="1523601143555" expanded="false" signature="6:177" ph="..." />
+                <marker date="1523601143555" expanded="true" signature="207:1232" ph="{...}" />
+                <marker date="1523601143555" expanded="true" signature="245:1229" ph="{...}" />
+                <marker date="1523601143555" expanded="true" signature="327:786" ph="{...}" />
+                <marker date="1523601143555" expanded="true" signature="825:1223" ph="{...}" />
+                <marker date="1523601143555" expanded="true" signature="875:1105" ph="{...}" />
+                <marker date="1523601143555" expanded="true" signature="1004:1091" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -243,7 +229,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/InitFrame/BDFrameInit.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/SetTransform.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IView.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/BindData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/BDFrameWork.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IViewControl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/MVCBind.cs" root0="FORCE_HIGHLIGHTING" />
@@ -265,8 +250,8 @@
         <option value="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/RegistViewItem.cs" />
         <option value="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/SetTransform.cs" />
         <option value="$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/Menu/EditorMenu.cs" />
-        <option value="$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/InitFrame/BDFrameInit.cs" />
         <option value="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/BindData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/InitFrame/BDFrameInit.cs" />
       </list>
     </option>
   </component>
@@ -440,12 +425,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1523584578729</updated>
-      <workItem from="1523584625147" duration="3157000" />
+      <workItem from="1523584625147" duration="4856000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3157000" />
+    <option name="totallyTimeSpent" value="4856000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -458,7 +443,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="391" y="11" width="1487" height="935" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -951,30 +935,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/InitFrame/BDFrameInit.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="39" column="16" lean-forward="false" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
-          <folding>
-            <marker date="1523586166222" expanded="false" signature="6:177" ph="..." />
-            <marker date="1523586166222" expanded="true" signature="207:1196" ph="{...}" />
-            <marker date="1523586166222" expanded="true" signature="245:1193" ph="{...}" />
-            <marker date="1523586166222" expanded="true" signature="327:750" ph="{...}" />
-            <marker date="1523586166222" expanded="true" signature="789:1187" ph="{...}" />
-            <marker date="1523586166222" expanded="true" signature="839:1069" ph="{...}" />
-            <marker date="1523586166222" expanded="true" signature="968:1055" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/BindData.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
           <caret line="4" column="21" lean-forward="false" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/InitFrame/BDFrameInit.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="592">
+          <caret line="43" column="48" lean-forward="true" selection-start-line="43" selection-start-column="48" selection-end-line="43" selection-end-column="48" />
           <folding>
-            <marker date="1523600177551" expanded="true" signature="39:209" ph="{...}" />
-            <marker date="1523600177551" expanded="true" signature="79:207" ph="{...}" />
-            <marker date="1523600177551" expanded="true" signature="151:201" ph="{...}" />
+            <marker date="1523601143555" expanded="false" signature="6:177" ph="..." />
+            <marker date="1523601143555" expanded="true" signature="207:1232" ph="{...}" />
+            <marker date="1523601143555" expanded="true" signature="245:1229" ph="{...}" />
+            <marker date="1523601143555" expanded="true" signature="327:786" ph="{...}" />
+            <marker date="1523601143555" expanded="true" signature="825:1223" ph="{...}" />
+            <marker date="1523601143555" expanded="true" signature="875:1105" ph="{...}" />
+            <marker date="1523601143555" expanded="true" signature="1004:1091" ph="{...}" />
           </folding>
         </state>
       </provider>

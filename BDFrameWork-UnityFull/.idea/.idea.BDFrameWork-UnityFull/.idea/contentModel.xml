@@ -436,13 +436,13 @@
               <e p="UI" t="Include">
                 <e p="Attribute" t="Include">
                   <e p="AutoSetValue.cs" t="Include" />
+                  <e p="BindData.cs" t="Include" />
                   <e p="ValueType.cs" t="Include" />
                 </e>
                 <e p="AWindow.cs" t="Include" />
                 <e p="MVC" t="Include">
                   <e p="AViewBase.cs" t="Include" />
                   <e p="AViewContrlBase.cs" t="Include" />
-                  <e p="BBindData.cs" t="Include" />
                   <e p="IView.cs" t="Include" />
                   <e p="IViewControl.cs" t="Include" />
                   <e p="MVCBind.cs" t="Include" />
