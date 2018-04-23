@@ -38,11 +38,13 @@ namespace BDFramework.UI
         /// <param name="view"></param>
         static public MvcWarpper Create(string name, IViewControl viewControl, IView view)
         {
+            //1.自动设置节点
             ViewAutoSet(view);
-            BindEvnet(viewControl, view);
-            //
+            //2.绑定数据model
             viewControl.BindModel();
-            view.BindData();
+            view.BindModel();
+            //3.自动绑定事件
+            BindEvnet(viewControl, view);
             //
             var bind = new MvcWarpper()
             {

@@ -257,7 +257,7 @@ public override [return type] [method name] ([params])
         {
             if (!string.IsNullOrEmpty(item.BindDataName))
             {
-                return "BindData(\"" + item.BindDataName.Trim() + "\")";
+                return "BindModel(\"" + item.BindDataName.Trim() + "\")";
             }
             return null;
         }

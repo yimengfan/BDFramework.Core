@@ -11,7 +11,7 @@ namespace BDFramework.UI
 
         void Show();
         void Hide();
-        void BindData();
+        void BindModel();
 
         void Destory();
     }

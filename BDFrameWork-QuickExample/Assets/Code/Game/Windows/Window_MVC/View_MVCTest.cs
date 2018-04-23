@@ -69,8 +69,7 @@ namespace Code.Game.Windows
             [BValueType(typeof(Text))]
             public string test2;
             [BValueType(typeof(Text))]
-            public string name;
-            
+            public string name;      
         }
         
         /// <summary>

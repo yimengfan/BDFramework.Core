@@ -36,9 +36,9 @@ namespace Code.Game.Windows
             
         }
         
-        public override void BindData()
+        public override void BindModel()
         {
-            base.BindData();
+            base.BindModel();
 
 //            this.Model.RegAction("ClickCount",
 //            (value) =>

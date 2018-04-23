@@ -25,7 +25,7 @@ namespace BDFramework.UI
             this.Transform = t;
         }
         //
-        virtual public void BindData()
+        virtual public void BindModel()
         {
             
         }
