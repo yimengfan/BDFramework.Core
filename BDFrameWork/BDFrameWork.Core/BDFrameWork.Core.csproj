@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\BDFrameWork-Quick.DLL\Plugins\BDFramWork\</OutputPath>
+    <OutputPath>..\..\BDFrameWork-Quick.DLL\Plugins\BDFrameWork\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,6 +36,12 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Excel">
+      <HintPath>..\Lib\Excel\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\Lib\Excel\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="sqlite3">
       <HintPath>..\Lib\Sqlite\x64\sqlite3.dll</HintPath>
       <Private>False</Private>
