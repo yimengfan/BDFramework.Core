@@ -6,18 +6,27 @@ using System.Text;
 
 abstract public class ADataDrive
 {
+    public class CallBackCache
+    {
+        public CallBack CallBack;
+        public object Param;
+    }
     public delegate void CallBack(object o);
     /// <summary>
-    /// 
+    /// 所有的数据
     /// </summary>
     protected Dictionary<string, object> dataMap;
     //注册数据变动事件刷新
     protected Dictionary<string,CallBack> callbackMap;
-
+    /// <summary>
+    /// 注册事件缓存
+    /// </summary>
+    protected Dictionary<string,List<object>> valueCacheMap;
     public ADataDrive()
     {
         dataMap = new Dictionary<string, object>();
         callbackMap = new Dictionary<string,CallBack>();
+        valueCacheMap=  new Dictionary<string,List<object>>();
     }
 
     virtual public void InitData()
@@ -34,12 +43,40 @@ abstract public class ADataDrive
     {
         dataMap[name] = value;
         //调用数据改变
-        if (isUseCallback && callbackMap.ContainsKey(name))
+        if (isUseCallback )
         {
-            callbackMap[name](value);
+            if (callbackMap.ContainsKey(name))
+            {
+                callbackMap[name](value);
+            }
+            else
+            {
+                List<object> list =null;
+                valueCacheMap.TryGetValue(name, out list);
+                if (list == null)
+                {
+                    list =  new List<object>();
+                    list.Add(value);
+                    valueCacheMap[name] = list;
+                }
+                else
+                {
+                    list.Add(value);
+                }
+            }
         }
     }
 
+    /// <summary>
+    /// 触发事件
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
+    /// <param name="isUseCallback"></param>
+    virtual public void TriggerEvent(string name, object value = null ,bool isUseCallback = true)
+    {
+        SetData(name, value, isUseCallback);
+    }
     /// <summary>
     /// 获取玩家数据
     /// </summary>
@@ -65,17 +102,33 @@ abstract public class ADataDrive
     /// </summary>
     /// <param name="name"></param>
     /// <param name="callback"></param>
-    virtual  public void RegAction(string name, CallBack callback)
+    virtual  public void RegAction(string name, CallBack callback , bool isTriggerCacheData = false)
     {
         CallBack cal = null;
         callbackMap.TryGetValue(name, out cal);
         if (cal == null)
         {
             callbackMap[name] = callback;
+            
         }
         else
         {
             cal += callback;
+        }
+
+        if (isTriggerCacheData)
+        {
+            List<object> list = null;
+            this.valueCacheMap.TryGetValue(name, out list);
+            if (list != null)
+            {
+                foreach (var value in list)
+                {
+                    callback(value);
+                }
+                //置空
+                this.valueCacheMap[name] =  new List<object>();
+            }
         }
     }
     
