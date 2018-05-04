@@ -38,7 +38,6 @@
             <e p="Data" t="Include">
               <e p="LocalDataBase.cs" t="Include" />
             </e>
-            <e p="GameStartTest.cs" t="Include" />
             <e p="ScreenView" t="Include">
               <e p="ScreenView_Test1.cs" t="Include" />
               <e p="ScreenView_Test2.cs" t="Include" />
@@ -55,6 +54,15 @@
           </e>
         </e>
         <e p="Plugins" t="Include">
+          <e p="BDFrameWork" t="Include">
+            <e p="DLL" t="Include">
+              <e p="JsonDotNet20" t="Include">
+                <e p="license.txt" t="Include" />
+                <e p="Newtonsoft.Json.xml" t="Include" />
+                <e p="readme.txt" t="Include" />
+              </e>
+            </e>
+          </e>
           <e p="Editor" t="Include">
             <e p="JetBrains" t="Include">
               <e p="Unity3DRider.cs" t="Include" />

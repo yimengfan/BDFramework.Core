@@ -38,9 +38,11 @@
   <ItemGroup>
     <Reference Include="Excel">
       <HintPath>..\Lib\Excel\Excel.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\Lib\Excel\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="sqlite3">
       <HintPath>..\Lib\Sqlite\x64\sqlite3.dll</HintPath>

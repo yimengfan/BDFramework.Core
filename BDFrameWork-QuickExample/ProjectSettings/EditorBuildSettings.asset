@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Plugins/BDFrameWork/Scenes/BDFrame.unity
+    guid: 8230003217d1e554da76c9d6d864ded0

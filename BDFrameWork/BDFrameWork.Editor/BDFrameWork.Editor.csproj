@@ -35,6 +35,7 @@
     <Reference Include="BDFrameWork.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BDFrameWork-QuickExample\Assets\Plugins\BDFramWork\BDFrameWork.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Excel, Version=2.1.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
