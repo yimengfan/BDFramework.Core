@@ -332,9 +332,9 @@
     <Compile Include="3rdPlugin\LitJson\ParserToken.cs" />
     <Compile Include="3rdPlugin\Myjson\MyJson.cs" />
     <Compile Include="3rdPlugin\Myjson\MyJsonCompress.cs" />
-    <Compile Include="3rdPlugin\Sqlite\Person.cs" />
-    <Compile Include="3rdPlugin\Sqlite\SQLite.cs" />
-    <Compile Include="3rdPlugin\Sqlite\SQLiteService.cs" />
+    <Compile Include="Common\DataDevice\Sqlite\Person.cs" />
+    <Compile Include="Common\DataDevice\Sqlite\SQLite.cs" />
+    <Compile Include="Common\DataDevice\Sqlite\SQLiteService.cs" />
     <Compile Include="Common\BDFrameWork.cs" />
     <Compile Include="Common\DataDevice\DataDrive.cs" />
     <Compile Include="Common\DataDevice\DataDriveServer.cs" />

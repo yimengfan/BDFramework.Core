@@ -55,20 +55,20 @@ Application.dataPath + "/Resources/Data/StreamingAssets/" + DatabaseName;  // th
 		// then save to Application.persistentDataPath
 		File.Copy(loadDb, filepath);
 #else
-	var loadDb =
-Application.dataPath + "/StreamingAssets/" + DatabaseName;  // this is the path to your StreamingAssets in iOS
+	var loadDb = Application.dataPath + "/StreamingAssets/" + DatabaseName;  
+            // this is the path to your StreamingAssets in iOS
 	// then save to Application.persistentDataPath
 	File.Copy(loadDb, filepath);
 
 #endif
 
-            Debug.Log("Database written");
+          // Debug.Log("Database written");
         }
 
         var dbPath = filepath;
 #endif
         DB = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-        Debug.Log("Final PATH: " + dbPath);
+      //  Debug.Log("Final PATH: " + dbPath);
     }
 
 

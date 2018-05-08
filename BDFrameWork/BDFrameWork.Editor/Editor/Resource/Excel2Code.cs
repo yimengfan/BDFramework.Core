@@ -41,15 +41,17 @@ namespace BDFramework.Editor
 
         private static void Json2Class(string fileName, string json, List<object> statements , bool isForSql =false)
         {
-            string className = "";
+            string structName = "";
             if (isForSql)
             {
-              className =   Path.GetFileName(fileName).ToLower().Replace(".xlsx", "_SQL");
+              structName =   Path.GetFileName(fileName).ToLower().Replace(".xlsx", "_SQL");
             }
             else
             {
-              className =    Path.GetFileName(fileName).ToLower().Replace(".xlsx", "");
+              structName =    Path.GetFileName(fileName).ToLower().Replace(".xlsx", "");
             }
+            //首字母大写
+            structName = structName.Substring(0, 1).ToUpper() + structName.Substring(1);
             string outputFile = "";
             if (isForSql)
             {
@@ -69,10 +71,14 @@ namespace BDFramework.Editor
             sample.Imports.Add(new CodeNamespaceImport("System.Collections.Generic"));
             sample.Imports.Add(new CodeNamespaceImport("Game.Data"));
             //在命名空间下添加一个类
-            CodeTypeDeclaration wrapProxyClass = new CodeTypeDeclaration(className);
+            CodeTypeDeclaration wrapProxyStruct = new CodeTypeDeclaration(structName);
+            wrapProxyStruct.IsClass = false;
+            wrapProxyStruct.IsEnum = false;
+            wrapProxyStruct.IsInterface = false;
+            wrapProxyStruct.IsPartial = false;
+            wrapProxyStruct.IsStruct = true;
             //把这个类添加到命名空间 
-            sample.Types.Add(wrapProxyClass);
-            wrapProxyClass.BaseTypes.Add(new CodeTypeReference("LocalDataBase"));
+            sample.Types.Add(wrapProxyStruct);
 
             //
             var jsonData = JsonMapper.ToObject(json)[0];
@@ -80,25 +86,25 @@ namespace BDFramework.Editor
             int i = 0;
             foreach (var key in jsonData.Keys)
             {
+                //字段
+                CodeMemberField field = new CodeMemberField();
+                field.Attributes = MemberAttributes.Public;
+
                 if (key.ToLower() == "id"  &&  key != "Id")
                 {
                     
-                    Debug.LogErrorFormat("<color=yellow>表格{0}字段必须为Id[大小写],请修改后生成</color>" , className);
+                    Debug.LogErrorFormat("<color=yellow>表格{0}字段必须为Id[大小写],请修改后生成</color>" , structName);
                     break;
                 }
                 else if (key == "Id")
                 {
                     i++;
-                    continue;
+                    //增加一个sqlite主键
+                    field.CustomAttributes.Add(new CodeAttributeDeclaration("PrimaryKey"));
                 }
                 var value = jsonData[key];
 
-                //字段
-                CodeMemberField field = new CodeMemberField();
-                field.Attributes = MemberAttributes.Private;
-                //属性
-                CodeMemberProperty property = new CodeMemberProperty();
-                property.Attributes = MemberAttributes.Public | MemberAttributes.Final;;
+
                 
                 CodeTypeReference type = null;
                 if (value.IsArray)
@@ -126,24 +132,15 @@ namespace BDFramework.Editor
                 else if (value.IsDouble || value.IsLong) type = new CodeTypeReference(typeof(double));
                 else if (value.IsBoolean) type = new CodeTypeReference(typeof(bool));
                 else if (value.IsString) type = new CodeTypeReference(typeof(string));
-                
-                 //字段
+
+                //注释
+                field.Comments.Add(new CodeCommentStatement(statements[i].ToString()));
+                //字段
                 field.Type = type;
-                field.Name = "_" + key.Trim();
-                //属性
-                property.Type = type;
-                property.Name = key.Trim();
-                property.HasGet = true;
-                property.HasSet = true;
-                
-                property.GetStatements.Add(new CodeMethodReturnStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(),  field.Name)));
-                property.SetStatements.Add(new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), field.Name), new CodePropertySetValueReferenceExpression()));
+                field.Name = key.Trim();
 
-                property.Comments.Add(new CodeCommentStatement(statements[i].ToString()));
+                wrapProxyStruct.Members.Add(field);
 
-                //
-                wrapProxyClass.Members.Add(field);
-                wrapProxyClass.Members.Add(property);
                 i++;
             }
 
