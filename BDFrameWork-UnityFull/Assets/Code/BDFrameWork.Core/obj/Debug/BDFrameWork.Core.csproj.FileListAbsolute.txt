@@ -1,0 +1,13 @@
+E:\BDFramework-Unity3d\BDFrameWork\BDFrameWork.Core\obj\Debug\BDFrameWork.Core.csproj.CoreCompileInputs.cache
+E:\BDFramework-Unity3d\BDFrameWork-QuickExample\Assets\Plugins\BDFramWork\3rdPlugin\JsonDotNet20\Newtonsoft.Json.dll.mdb
+E:\BDFramework-Unity3d\BDFrameWork-QuickExample\Assets\Plugins\BDFramWork\BDFrameWork.Core.dll
+E:\BDFramework-Unity3d\BDFrameWork-QuickExample\Assets\Plugins\BDFramWork\BDFrameWork.Core.pdb
+E:\BDFramework-Unity3d\BDFrameWork\BDFrameWork.Core\obj\Debug\BDFrameWork.Core.dll
+E:\BDFramework-Unity3d\BDFrameWork\BDFrameWork.Core\obj\Debug\BDFrameWork.Core.pdb
+E:\BDFramework-Unity3d\BDFrameWork-Quick.DLL\Plugins\BDFramWork\3rdPlugin\JsonDotNet20\Newtonsoft.Json.dll.mdb
+E:\BDFramework-Unity3d\BDFrameWork-Quick.DLL\Plugins\BDFramWork\BDFrameWork.Core.dll
+E:\BDFramework-Unity3d\BDFrameWork-Quick.DLL\Plugins\BDFramWork\BDFrameWork.Core.pdb
+E:\BDFramework-Unity3d\BDFrameWork-Quick.DLL\Plugins\BDFrameWork\3rdPlugin\JsonDotNet20\Newtonsoft.Json.dll.mdb
+E:\BDFramework-Unity3d\BDFrameWork-Quick.DLL\Plugins\BDFrameWork\BDFrameWork.Core.dll
+E:\BDFramework-Unity3d\BDFrameWork-Quick.DLL\Plugins\BDFrameWork\BDFrameWork.Core.pdb
+E:\BDFramework-Unity3d\BDFrameWork\BDFrameWork.Core\obj\Debug\BDFrameWork.Core.csprojResolveAssemblyReference.cache

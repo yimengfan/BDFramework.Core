@@ -1,0 +1,10 @@
+E:\BDFramework-Unity3d\BDFrameWork-QuickExample\Assets\Plugins\BDFramWork\BDFrameWork.Editor.dll
+E:\BDFramework-Unity3d\BDFrameWork-QuickExample\Assets\Plugins\BDFramWork\BDFrameWork.Editor.pdb
+E:\BDFramework-Unity3d\BDFrameWork\BDFrameWork.Editor\obj\Debug\BDFrameWork.Editor.csprojResolveAssemblyReference.cache
+E:\BDFramework-Unity3d\BDFrameWork\BDFrameWork.Editor\obj\Debug\BDFrameWork.Editor.csproj.CoreCompileInputs.cache
+E:\BDFramework-Unity3d\BDFrameWork\BDFrameWork.Editor\obj\Debug\BDFrameWork.Editor.dll
+E:\BDFramework-Unity3d\BDFrameWork\BDFrameWork.Editor\obj\Debug\BDFrameWork.Editor.pdb
+E:\BDFramework-Unity3d\BDFrameWork-Quick.DLL\Plugins\BDFramWork\BDFrameWork.Editor.dll
+E:\BDFramework-Unity3d\BDFrameWork-Quick.DLL\Plugins\BDFramWork\BDFrameWork.Editor.pdb
+E:\BDFramework-Unity3d\BDFrameWork-Quick.DLL\Plugins\BDFrameWork\BDFrameWork.Editor.dll
+E:\BDFramework-Unity3d\BDFrameWork-Quick.DLL\Plugins\BDFrameWork\BDFrameWork.Editor.pdb

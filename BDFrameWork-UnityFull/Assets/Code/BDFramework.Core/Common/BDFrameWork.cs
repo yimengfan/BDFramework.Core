@@ -6,13 +6,13 @@ using System;
 using BDFramework.Logic.GameLife;
 using BDFramework.Mgr;
 using BDFramework.UI;
-using BDFramework.Logic.Item;
 using BDFramework.ResourceMgr;
 using System.IO;
 //using UnityEditor.Graphs;
 
 public class BDFrameWork : MonoBehaviour
 {
+    public bool IsHotUpdate = false;
     private IGameStart gameStart;
     private List<IMgr> mgrList;
     private void Awake()
@@ -27,12 +27,16 @@ public class BDFrameWork : MonoBehaviour
         List<Type> allTypes = new List<Type>();
         
         //编辑器环境下 寻找dll
-        if (Application.isEditor)
+        if (IsHotUpdate ==false)
         {
-            Debug.Log("Edidor Get Types...");
+            Debug.Log("非热更模式");
             var assmblies = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
             var logicAssmbly = assmblies.Find((a) => a.GetName().Name == "Assembly-CSharp");
             logicTypes = logicAssmbly.GetTypes();
+        }
+        else
+        {
+
         }
 
         allTypes.AddRange(frameTypes);

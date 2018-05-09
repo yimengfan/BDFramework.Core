@@ -7,7 +7,7 @@ using BDFramework.ResourceMgr;
 using LitJson;
 using UnityEditor;
 using UnityEngine;
-
+using System;
 namespace BDFramework.Editor
 {
     static public class Excel2Code
@@ -70,6 +70,8 @@ namespace BDFramework.Editor
             sample.Imports.Add(new CodeNamespaceImport("System"));
             sample.Imports.Add(new CodeNamespaceImport("System.Collections.Generic"));
             sample.Imports.Add(new CodeNamespaceImport("Game.Data"));
+            sample.Imports.Add(new CodeNamespaceImport("SQLite4Unity3d"));
+            
             //在命名空间下添加一个类
             CodeTypeDeclaration wrapProxyStruct = new CodeTypeDeclaration(structName);
             wrapProxyStruct.IsClass = false;
@@ -87,9 +89,10 @@ namespace BDFramework.Editor
             foreach (var key in jsonData.Keys)
             {
                 //字段
-                CodeMemberField field = new CodeMemberField();
-                field.Attributes = MemberAttributes.Public;
 
+                string memberContent = 
+@"       public [type] [Name] {get;set;}";
+                CodeSnippetTypeMember member = new CodeSnippetTypeMember();
                 if (key.ToLower() == "id"  &&  key != "Id")
                 {
                     
@@ -98,49 +101,50 @@ namespace BDFramework.Editor
                 }
                 else if (key == "Id")
                 {
-                    i++;
                     //增加一个sqlite主键
-                    field.CustomAttributes.Add(new CodeAttributeDeclaration("PrimaryKey"));
+                    //member.CustomAttributes.Add(new CodeAttributeDeclaration("PrimaryKey"));
+                    memberContent =
+@"      [PrimaryKey] 
+        public [type] [Name] {get;set;}";
                 }
                 var value = jsonData[key];
-
-
                 
-                CodeTypeReference type = null;
+
+
+                string type = null;
                 if (value.IsArray)
                 {
                     if (isForSql)
                     {
-                       type = new CodeTypeReference(typeof(string)); 
+                       type ="string"; 
                     }
                     else
                     {
                         var str = value.ToJson();
                         if (str.IndexOf("\"") > 0)
                         {
-                            type = new CodeTypeReference(typeof(List<string>));
+                            type = "List<string>";
                         }
                         else
                         {
-                            type = new CodeTypeReference(typeof(List<double>));
+                            type = "List<double>";
                         }
                     }
 
 
                 }
-                else if (value.IsInt) type = new CodeTypeReference(typeof(int));
-                else if (value.IsDouble || value.IsLong) type = new CodeTypeReference(typeof(double));
-                else if (value.IsBoolean) type = new CodeTypeReference(typeof(bool));
-                else if (value.IsString) type = new CodeTypeReference(typeof(string));
+                else if (value.IsInt) type = "int";
+                else if (value.IsDouble || value.IsLong) type = "double";
+                else if (value.IsBoolean) type = "bool";
+                else if (value.IsString) type = "string";
 
                 //注释
-                field.Comments.Add(new CodeCommentStatement(statements[i].ToString()));
-                //字段
-                field.Type = type;
-                field.Name = key.Trim();
+                member.Comments.Add(new CodeCommentStatement(statements[i].ToString()));
+                
+                member.Text = memberContent.Replace("[type]", type).Replace("[Name]", key);
 
-                wrapProxyStruct.Members.Add(field);
 
+                wrapProxyStruct.Members.Add(member);
                 i++;
             }
 
