@@ -34,6 +34,15 @@ abstract public class ADataDrive
 
 
     }
+
+    /// <summary>
+    /// 注册数据
+    /// </summary>
+    /// <param name="name"></param>
+    virtual public void RegisterData(string name)
+    {
+        dataMap[name] = null;
+    }
     /// <summary>
     /// 设置数据
     /// </summary>
@@ -41,7 +50,15 @@ abstract public class ADataDrive
     /// <param name="value"></param>
     virtual public void SetData(string name, object value ,bool isUseCallback = true)
     {
-        dataMap[name] = value;
+        if (dataMap.ContainsKey(name))
+        {
+            dataMap[name] = value;
+        }
+        else
+        {
+            BDebug.LogError("设置无效,无该数据:" + name);
+            return;
+        }
         //调用数据改变
         if (isUseCallback )
         {
@@ -104,6 +121,13 @@ abstract public class ADataDrive
     /// <param name="callback"></param>
     virtual  public void RegAction(string name, CallBack callback , bool isTriggerCacheData = false)
     {
+        if (dataMap.ContainsKey(name) == false)
+        {
+            BDebug.LogError("监听无效,无该数据:" + name);
+            return;
+        }
+
+        //
         CallBack cal = null;
         callbackMap.TryGetValue(name, out cal);
         if (cal == null)
