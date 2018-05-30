@@ -128,16 +128,17 @@ abstract public class ADataDrive
         }
 
         //
-        CallBack cal = null;
-        callbackMap.TryGetValue(name, out cal);
-        if (cal == null)
+        CallBack call = null;
+        callbackMap.TryGetValue(name, out call);
+        if (call == null)
         {
             callbackMap[name] = callback;
             
         }
         else
         {
-            cal += callback;
+            call += callback;
+            callbackMap[name] = call;
         }
 
         if (isTriggerCacheData)
@@ -175,11 +176,12 @@ abstract public class ADataDrive
     /// <param name="name"></param>
     virtual public void RemoveAction(string name , CallBack callback)
     {
-        CallBack cal = null;
-        callbackMap.TryGetValue(name, out cal);
-        if (cal != null)
+        CallBack call = null;
+        callbackMap.TryGetValue(name, out call);
+        if (call != null)
         {
-            cal -= callback;
+            call -= callback;
+            callbackMap[name] = call;
         }
     }
 }
