@@ -19,7 +19,6 @@ namespace Code.Game.Windows
         private Button testButtonAutoSetValue;
         //
         [SetTransform("text_click")]
-        [BindData("ClickCount")]
         private Text text_click;
         
         
@@ -40,23 +39,28 @@ namespace Code.Game.Windows
         {
             base.BindModel();
 
-//            this.Model.RegAction("ClickCount",
-//            (value) =>
-//            {
-//                this.text_click.text = "点 击 次 数：" + value;
-//            });
+            //手动注册
+            this.Model.RegisterData("ClickCount");
+            this.Model.RegAction("ClickCount",
+            (value) =>
+            {
+                this.text_click.text = "点 击 次 数：" + value;
+            });
 
+            //手动注册
+            this.Model.RegisterData("SliderValue");
             this.Model.RegAction("SliderValue",
             (value) =>
             {
                 this.text_sliderValue.text = "Slider Value：" + value;
             });
-//            
-//            this.Model.RegAction("ScrollBarValue",
-//            (value) =>
-//            {
-//                this.text_ScrollBarValue.text = "ScrollBarValue ：" + value;
-//            });
+            
+            //已用标签自动注册
+            this.Model.RegAction("ScrollBarValue",
+            (value) =>
+            {
+                this.text_ScrollBarValue.text = "ScrollBarValue ：" + value;
+            });
             
             //自动设置值测试
             this.Model.RegAction("AutoSetValue", AutoSetDataTest);

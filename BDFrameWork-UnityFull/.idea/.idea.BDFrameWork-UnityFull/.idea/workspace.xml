@@ -11,59 +11,206 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DataDrive.cs" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDrive.cs">
+      <file leaf-file-name="DataDriveServer.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDriveServer.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="56" column="17" lean-forward="false" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
+            <state relative-caret-position="-57">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <marker date="1524798070764" expanded="true" signature="6:85" ph="..." />
-                <marker date="1524798070764" expanded="true" signature="120:3923" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="153:228" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="278:324" ph="/// 所有的数据 ... " />
-                <marker date="1524798070764" expanded="true" signature="451:498" ph="/// 注册事件缓存 ... " />
-                <marker date="1524798070764" expanded="true" signature="583:767" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="803:817" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="822:940" ph="/// 设置数据 ... " />
-                <marker date="1524798070764" expanded="true" signature="1026:1693" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="1108:1687" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="1165:1235" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="1252:1677" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="1400:1569" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="1590:1663" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="1699:1862" ph="/// 触发事件 ... " />
-                <marker date="1524798070764" expanded="true" signature="1960:2017" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="2022:2174" ph="/// 获取玩家数据 ... " />
-                <marker date="1524798070764" expanded="true" signature="2219:2432" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="2290:2344" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="2357:2408" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="2438:2563" ph="/// 属性变动事件注册 ... " />
-                <marker date="1524798070764" expanded="true" signature="2664:3326" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="2772:2847" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="2860:2909" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="2942:3320" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="3080:3310" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="3138:3211" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="3336:3423" ph="/// 移除属性变动事件注册 ... " />
-                <marker date="1524798070764" expanded="true" signature="3473:3586" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="3522:3580" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="3601:3688" ph="/// 移除属性变动事件注册 ... " />
-                <marker date="1524798070764" expanded="true" signature="3758:3921" ph="{...}" />
-                <marker date="1524798070764" expanded="true" signature="3866:3915" ph="{...}" />
+                <marker date="1529312205919" expanded="false" signature="6:104" ph="..." />
+                <marker date="1529312205919" expanded="true" signature="105:145" ph="/// 做数据驱动服务 ... " />
+                <marker date="1529312205919" expanded="true" signature="174:1543" ph="{...}" />
+                <marker date="1529312205919" expanded="true" signature="297:413" ph="/// 创建一个service ... " />
+                <marker date="1529312205919" expanded="true" signature="469:767" ph="{...}" />
+                <marker date="1529312205919" expanded="true" signature="571:628" ph="{...}" />
+                <marker date="1529312205919" expanded="true" signature="641:740" ph="{...}" />
+                <marker date="1529312205919" expanded="true" signature="772:888" ph="/// 获取一个service ... " />
+                <marker date="1529312205919" expanded="true" signature="948:1069" ph="{...}" />
+                <marker date="1529312205919" expanded="true" signature="1073:1158" ph="/// 删除一个service ... " />
+                <marker date="1529312205919" expanded="true" signature="1204:1368" ph="{...}" />
+                <marker date="1529312205919" expanded="true" signature="1374:1462" ph="/// 删除一个service ... " />
+                <marker date="1529312205919" expanded="true" signature="1501:1541" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataDrive_Service.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDrive_Service.cs">
+      <file leaf-file-name="GameDataMgr.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/GameDataMgr.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+            <state relative-caret-position="387">
+              <caret line="26" column="28" lean-forward="false" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
               <folding>
-                <marker date="1516102083766" expanded="false" signature="6:85" ph="..." />
-                <marker date="1516102083766" expanded="true" signature="87:127" ph="/// 做数据驱动服务 ... " />
-                <marker date="1516102083766" expanded="true" signature="171:176" ph="{...}" />
+                <marker date="1529312205920" expanded="false" signature="6:85" ph="..." />
+                <marker date="1529312205920" expanded="true" signature="88:127" ph="/// 游戏数据管理 ... " />
+                <marker date="1529312205920" expanded="true" signature="152:459" ph="{...}" />
+                <marker date="1529312205920" expanded="true" signature="180:192" ph="{...}" />
+                <marker date="1529312205920" expanded="true" signature="277:457" ph="{...}" />
+                <marker date="1529312205920" expanded="true" signature="294:451" ph="{...}" />
+                <marker date="1529312205920" expanded="true" signature="337:411" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Contrl_MVCTest.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/Contrl_MVCTest.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="437">
+              <caret line="24" column="16" lean-forward="false" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
+              <folding>
+                <marker date="1529312205689" expanded="false" signature="6:40" ph="..." />
+                <marker date="1529312205689" expanded="true" signature="73:1514" ph="{...}" />
+                <marker date="1529312205689" expanded="true" signature="129:1512" ph="{...}" />
+                <marker date="1529312205689" expanded="true" signature="206:239" ph="{...}" />
+                <marker date="1529312205689" expanded="true" signature="254:329" ph="/// 自动绑定到button这个组件的 onclick事件 ... " />
+                <marker date="1529312205689" expanded="true" signature="371:579" ph="{...}" />
+                <marker date="1529312205689" expanded="true" signature="597:650" ph="/// 自动绑定 ... " />
+                <marker date="1529312205689" expanded="true" signature="709:822" ph="{...}" />
+                <marker date="1529312205689" expanded="true" signature="840:893" ph="/// 自动绑定 ... " />
+                <marker date="1529312205689" expanded="true" signature="955:1071" ph="{...}" />
+                <marker date="1529312205689" expanded="true" signature="1089:1142" ph="/// 自动绑定 ... " />
+                <marker date="1529312205689" expanded="true" signature="1196:1497" ph="{...}" />
+                <marker date="1529312205689" expanded="true" signature="1278:1400" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Window_Test1.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_Test1.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="513">
+              <caret line="27" column="48" lean-forward="false" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="48" />
+              <folding>
+                <marker date="1529315226442" expanded="true" signature="6:152" ph="..." />
+                <marker date="1529315226442" expanded="true" signature="154:223" ph="/// 这个是ui的标签， ... " />
+                <marker date="1529315226442" expanded="true" signature="313:861" ph="{...}" />
+                <marker date="1529315226442" expanded="true" signature="374:386" ph="{...}" />
+                <marker date="1529315226442" expanded="true" signature="419:653" ph="{...}" />
+                <marker date="1529315226442" expanded="true" signature="542:636" ph="{...}" />
+                <marker date="1529315226442" expanded="true" signature="687:721" ph="{...}" />
+                <marker date="1529315226442" expanded="true" signature="754:787" ph="{...}" />
+                <marker date="1529315226442" expanded="true" signature="823:859" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Window_Test2.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_Test2.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="29" column="46" lean-forward="false" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
+              <folding>
+                <marker date="1529315239166" expanded="false" signature="6:190" ph="..." />
+                <marker date="1529315239166" expanded="true" signature="220:289" ph="/// 这个是ui的标签， ... " />
+                <marker date="1529315239166" expanded="true" signature="379:1362" ph="{...}" />
+                <marker date="1529315239166" expanded="true" signature="431:443" ph="{...}" />
+                <marker date="1529315239166" expanded="true" signature="476:784" ph="{...}" />
+                <marker date="1529315239166" expanded="true" signature="599:695" ph="{...}" />
+                <marker date="1529315239166" expanded="true" signature="818:852" ph="{...}" />
+                <marker date="1529315239166" expanded="true" signature="885:918" ph="{...}" />
+                <marker date="1529315239166" expanded="true" signature="954:990" ph="{...}" />
+                <marker date="1529315239166" expanded="true" signature="1036:1360" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Window_MVC.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="276">
+              <caret line="31" column="42" lean-forward="false" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="42" />
+              <folding>
+                <marker date="1529312205688" expanded="false" signature="6:244" ph="..." />
+                <marker date="1529312205688" expanded="true" signature="275:344" ph="/// 这个是ui的标签， ... " />
+                <marker date="1529312205688" expanded="true" signature="428:980" ph="{...}" />
+                <marker date="1529312205688" expanded="true" signature="478:499" ph="{...}" />
+                <marker date="1529312205688" expanded="true" signature="532:769" ph="{...}" />
+                <marker date="1529312205688" expanded="true" signature="803:839" ph="{...}" />
+                <marker date="1529312205688" expanded="true" signature="872:905" ph="{...}" />
+                <marker date="1529312205688" expanded="true" signature="941:977" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScreenView_Demo1_Screenview.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo1_Screenview.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-221">
+              <caret line="28" column="46" lean-forward="true" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="46" />
+              <folding>
+                <marker date="1529315001780" expanded="false" signature="6:144" ph="..." />
+                <marker date="1529315001780" expanded="true" signature="228:1399" ph="{...}" />
+                <marker date="1529315001780" expanded="true" signature="494:741" ph="{...}" />
+                <marker date="1529315001780" expanded="true" signature="794:1163" ph="{...}" />
+                <marker date="1529315001780" expanded="true" signature="1190:1203" ph="{...}" />
+                <marker date="1529315001780" expanded="true" signature="1240:1288" ph="{...}" />
+                <marker date="1529315001780" expanded="true" signature="1329:1342" ph="{...}" />
+                <marker date="1529315001780" expanded="true" signature="1384:1397" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScreenView_Demo2_Windows.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo2_Windows.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="361">
+              <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
+              <folding>
+                <marker date="1529314995853" expanded="false" signature="6:144" ph="..." />
+                <marker date="1529314995853" expanded="true" signature="219:1108" ph="{...}" />
+                <marker date="1529314995853" expanded="true" signature="478:686" ph="{...}" />
+                <marker date="1529314995853" expanded="true" signature="737:893" ph="{...}" />
+                <marker date="1529314995853" expanded="true" signature="918:930" ph="{...}" />
+                <marker date="1529314995853" expanded="true" signature="965:1003" ph="{...}" />
+                <marker date="1529314995853" expanded="true" signature="1042:1054" ph="{...}" />
+                <marker date="1529314995853" expanded="true" signature="1094:1105" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScreenView_Demo3_WindowsMvc.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo3_WindowsMvc.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-164">
+              <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
+              <folding>
+                <marker date="1529314985136" expanded="false" signature="6:144" ph="..." />
+                <marker date="1529314985136" expanded="true" signature="222:1107" ph="{...}" />
+                <marker date="1529314985136" expanded="true" signature="481:685" ph="{...}" />
+                <marker date="1529314985136" expanded="true" signature="736:892" ph="{...}" />
+                <marker date="1529314985136" expanded="true" signature="917:929" ph="{...}" />
+                <marker date="1529314985136" expanded="true" signature="964:1002" ph="{...}" />
+                <marker date="1529314985136" expanded="true" signature="1041:1053" ph="{...}" />
+                <marker date="1529314985136" expanded="true" signature="1093:1104" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="View_MVCTest.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/View_MVCTest.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="56" column="12" lean-forward="false" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="12" />
+              <folding>
+                <marker date="1529315788720" expanded="false" signature="6:62" ph="..." />
+                <marker date="1529315788720" expanded="true" signature="91:2354" ph="{...}" />
+                <marker date="1529315788720" expanded="true" signature="135:2352" ph="{...}" />
+                <marker date="1529315788720" expanded="true" signature="925:958" ph="{...}" />
+                <marker date="1529315788720" expanded="true" signature="1008:1849" ph="{...}" />
+                <marker date="1529315788720" expanded="true" signature="1189:1276" ph="{...}" />
+                <marker date="1529315788720" expanded="true" signature="1421:1519" ph="{...}" />
+                <marker date="1529315788720" expanded="true" signature="1631:1735" ph="{...}" />
+                <marker date="1529315788720" expanded="true" signature="1883:2128" ph="{...}" />
+                <marker date="1529315788720" expanded="true" signature="2146:2200" ph="/// 自动测试值 ... " />
+                <marker date="1529315788720" expanded="true" signature="2247:2346" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -77,32 +224,45 @@
     </findStrings>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/SubWindow.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDrive.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDrive_Service.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/AWindow.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/GameDataMgr.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/UIAttribute.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/InitFrame/BDFrameInit.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/Attribute/BindData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/ILruntime/ScriptBiuldDll_Windows.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/BDFrameWork.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/Game/GameStartTest.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/Menu/EditorMenu.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/Event/EventType.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/AViewBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/SetTransform.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IView.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IViewControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/BDFrameWork.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/IData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDriveServer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Logic/LocalData/LocalDataMgr.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDrive_Service.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDrive.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Logic/Item/ItemEventAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/GameDataMgr.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Event/EventType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/3rdPlugins/Dotween/DOTweenPro/Editor/DOTweenAnimationInspector.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Logic/LocalData/LocalDataMgr.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Logic/Item/ItemEventAttribute.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/MVCBind.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/3rdPlugin/LitJson/Lexer.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/IData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/RegistViewItem.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDriveServer.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/UIMgr.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/Attribute/BindData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/AViewBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/SetTransform.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo1_Screenview.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/IView.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo2_Windows.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo3_WindowsMvc.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/IViewControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/View_MVCTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/MVCBind.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/Contrl_MVCTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/WinData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_Test2.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_Test1.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3FE6F28A-F1C7-4F4A-976E-AD4CC6DDB21C/ce/f6725477/ExecuteEvents.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/RegistViewItem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/UIMgr.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/UIRecord.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/Game/Data/LocalDataBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/SubWindow.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/Game/GameStartTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Editor/Editor/Menu/EditorMenu.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/WinEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/AWindow.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/UIAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Editor/Editor/InitFrame/BDFrameInit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Editor/Editor/ILruntime/ScriptBiuldDll_Windows.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/3rdPlugin/LitJson/Lexer.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -120,6 +280,17 @@
         <option value="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IView.cs" />
         <option value="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/MVCBind.cs" />
         <option value="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDrive.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/MVCBind.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Test1.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_UIWindowsDemo.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_ScreenviewDemo.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo3_WindowsMvc.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo2_Windows.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo1_Screenview.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/Game/Windows/Window_Test1.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/Game/Windows/Window_Test2.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDrive.cs" />
+        <option value="$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/View_MVCTest.cs" />
       </list>
     </option>
   </component>
@@ -129,11 +300,11 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="83" />
-    <option name="y" value="78" />
-    <option name="width" value="1487" />
-    <option name="height" value="935" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="208" />
+    <option name="y" value="121" />
+    <option name="width" value="2016" />
+    <option name="height" value="1241" />
   </component>
   <component name="ProjectView">
     <navigator currentView="SolutionExplorer" proportions="" version="1">
@@ -150,7 +321,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="SolutionExplorer">
         <subPane>
           <expand>
@@ -182,7 +352,7 @@
               <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="Code" type="977d5f41:SolutionExplorerNodeRider" />
-              <item name="BDFramework.Core" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="BDFrameWork.Core" type="977d5f41:SolutionExplorerNodeRider" />
             </path>
             <path>
               <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
@@ -190,7 +360,7 @@
               <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="Code" type="977d5f41:SolutionExplorerNodeRider" />
-              <item name="BDFramework.Core" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="BDFrameWork.Core" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="Common" type="977d5f41:SolutionExplorerNodeRider" />
             </path>
             <path>
@@ -199,9 +369,44 @@
               <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="Code" type="977d5f41:SolutionExplorerNodeRider" />
-              <item name="BDFramework.Core" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="BDFrameWork.Core" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="Common" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="DataDevice" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="BDFrameWork-UnityFull (3 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Code" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Game" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="BDFrameWork-UnityFull (3 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Code" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Game" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Data" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="BDFrameWork-UnityFull (3 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Code" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Game" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="ScreenView" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="BDFrameWork-UnityFull (3 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assembly-CSharp" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Assets" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Code" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Game" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Windows" type="977d5f41:SolutionExplorerNodeRider" />
             </path>
           </expand>
           <select />
@@ -209,10 +414,12 @@
         <option name="show-file-system" value="false" />
         <option name="show-all-items" value="false" />
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="contrl&#9;FILE&#9;file://G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/Code/Game/Windows/Window_MVC/Contrl_MVCTest.cs" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -227,7 +434,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" />
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" pid="9080" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -246,11 +453,12 @@
       <workItem from="1523861302748" duration="52000" />
       <workItem from="1524478374381" duration="257000" />
       <workItem from="1524795794819" duration="2435000" />
+      <workItem from="1529312840548" duration="3214000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7600000" />
+    <option name="totallyTimeSpent" value="10814000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -262,7 +470,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="83" y="78" width="1487" height="935" extended-state="1" />
+    <frame x="208" y="121" width="2016" height="1241" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -272,34 +481,19 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25367904" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29557157" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23246878" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39961576" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25367904" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -309,301 +503,235 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/Contrl_MVCTest.cs</url>
+          <line>16</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/Contrl_MVCTest.cs" initialLine="16">
+            <startOffsets>
+              <startOffset value="394" />
+            </startOffsets>
+            <endOffsets>
+              <endOffset value="449" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/MVCBind.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1524478628408" expanded="false" signature="6:88" ph="..." />
-            <marker date="1524478628408" expanded="true" signature="144:604" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="256:307" ph="/// 进入 ... " />
-            <marker date="1524478628408" expanded="true" signature="335:423" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="433:484" ph="/// 退出 ... " />
-            <marker date="1524478628408" expanded="true" signature="511:598" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="636:7538" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="651:796" ph="/// 创建一个mvc模块 ... " />
-            <marker date="1524478628408" expanded="true" signature="887:1343" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1177:1292" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1353:7531" ph="vc的操作" />
-            <marker date="1524478628408" expanded="true" signature="1376:1474" ph="/// view层自动设置 ... " />
-            <marker date="1524478628408" expanded="true" signature="1526:4291" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1818:4281" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1908:1976" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2102:2744" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2253:2400" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2502:2656" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2887:4267" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3099:4247" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3178:3343" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3432:3596" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3663:3830" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3894:4056" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4085:4225" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4326:4470" ph="/// VC进行数据绑定 ... " />
-            <marker date="1524478628408" expanded="true" signature="4545:7502" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4856:7492" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4946:5015" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5105:5808" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5326:5608" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5460:5584" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5633:5790" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5886:6632" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6162:6432" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6272:6408" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6457:6614" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6708:7466" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6996:7266" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="7106:7242" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="7291:7448" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/AWindow.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="17" column="39" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/UIAttribute.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/SubWindow.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/RegistViewItem.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/RegistViewItem.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/SetTransform.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/SetTransform.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
           <caret line="4" column="26" lean-forward="false" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/Menu/EditorMenu.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Editor/Editor/Menu/EditorMenu.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/InitFrame/BDFrameInit.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Editor/Editor/InitFrame/BDFrameInit.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="592">
           <caret line="43" column="48" lean-forward="false" selection-start-line="43" selection-start-column="48" selection-end-line="43" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/MVCBind.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/MVCBind.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1088">
           <caret line="71" column="65" lean-forward="false" selection-start-line="71" selection-start-column="54" selection-end-line="71" selection-end-column="65" />
           <folding>
-            <marker date="1524478628408" expanded="false" signature="6:88" ph="..." />
-            <marker date="1524478628408" expanded="true" signature="144:604" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="256:307" ph="/// 进入 ... " />
-            <marker date="1524478628408" expanded="true" signature="335:423" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="433:484" ph="/// 退出 ... " />
-            <marker date="1524478628408" expanded="true" signature="511:598" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="636:7538" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="651:796" ph="/// 创建一个mvc模块 ... " />
-            <marker date="1524478628408" expanded="true" signature="887:1343" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1177:1292" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1353:7531" ph="vc的操作" />
-            <marker date="1524478628408" expanded="true" signature="1376:1474" ph="/// view层自动设置 ... " />
-            <marker date="1524478628408" expanded="true" signature="1526:4291" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1818:4281" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1908:1976" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2102:2744" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2253:2400" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2502:2656" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2887:4267" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3099:4247" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3178:3343" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3432:3596" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3663:3830" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3894:4056" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4085:4225" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4326:4470" ph="/// VC进行数据绑定 ... " />
-            <marker date="1524478628408" expanded="true" signature="4545:7502" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4856:7492" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4946:5015" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5105:5808" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5326:5608" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5460:5584" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5633:5790" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5886:6632" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6162:6432" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6272:6408" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6457:6614" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6708:7466" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6996:7266" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="7106:7242" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="7291:7448" ph="{...}" />
+            <marker date="1529313999029" expanded="false" signature="6:88" ph="..." />
+            <marker date="1529313999029" expanded="true" signature="114:7601" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="144:604" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="256:307" ph="/// 进入 ... " />
+            <marker date="1529313999029" expanded="true" signature="335:423" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="433:484" ph="/// 退出 ... " />
+            <marker date="1529313999029" expanded="true" signature="511:598" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="636:7599" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="651:796" ph="/// 创建一个mvc模块 ... " />
+            <marker date="1529313999029" expanded="true" signature="887:1343" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1177:1292" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1353:7592" ph="vc的操作" />
+            <marker date="1529313999029" expanded="true" signature="1376:1474" ph="/// view层自动设置 ... " />
+            <marker date="1529313999029" expanded="true" signature="1526:4352" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1818:4342" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1908:1976" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2102:2744" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2253:2400" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2502:2656" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2887:4328" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3160:4308" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3239:3404" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3493:3657" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3724:3891" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3955:4117" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="4146:4286" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="4387:4531" ph="/// VC进行数据绑定 ... " />
+            <marker date="1529313999029" expanded="true" signature="4606:7563" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="4917:7553" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5007:5076" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5166:5869" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5387:5669" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5521:5645" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5694:5851" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5947:6693" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6223:6493" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6333:6469" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6518:6675" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6769:7527" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="7057:7327" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="7167:7303" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="7352:7509" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IView.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/IView.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
           <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/Attribute/BindData.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/Attribute/BindData.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/AWindow.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/AWindow.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
           <caret line="17" column="39" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/MVCBind.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/MVCBind.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1088">
           <caret line="71" column="65" lean-forward="false" selection-start-line="71" selection-start-column="54" selection-end-line="71" selection-end-column="65" />
           <folding>
-            <marker date="1524478628408" expanded="false" signature="6:88" ph="..." />
-            <marker date="1524478628408" expanded="true" signature="144:604" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="256:307" ph="/// 进入 ... " />
-            <marker date="1524478628408" expanded="true" signature="335:423" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="433:484" ph="/// 退出 ... " />
-            <marker date="1524478628408" expanded="true" signature="511:598" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="636:7538" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="651:796" ph="/// 创建一个mvc模块 ... " />
-            <marker date="1524478628408" expanded="true" signature="887:1343" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1177:1292" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1353:7531" ph="vc的操作" />
-            <marker date="1524478628408" expanded="true" signature="1376:1474" ph="/// view层自动设置 ... " />
-            <marker date="1524478628408" expanded="true" signature="1526:4291" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1818:4281" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1908:1976" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2102:2744" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2253:2400" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2502:2656" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2887:4267" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3099:4247" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3178:3343" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3432:3596" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3663:3830" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3894:4056" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4085:4225" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4326:4470" ph="/// VC进行数据绑定 ... " />
-            <marker date="1524478628408" expanded="true" signature="4545:7502" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4856:7492" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4946:5015" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5105:5808" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5326:5608" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5460:5584" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5633:5790" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5886:6632" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6162:6432" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6272:6408" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6457:6614" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6708:7466" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6996:7266" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="7106:7242" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="7291:7448" ph="{...}" />
+            <marker date="1529313999029" expanded="false" signature="6:88" ph="..." />
+            <marker date="1529313999029" expanded="true" signature="114:7601" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="144:604" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="256:307" ph="/// 进入 ... " />
+            <marker date="1529313999029" expanded="true" signature="335:423" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="433:484" ph="/// 退出 ... " />
+            <marker date="1529313999029" expanded="true" signature="511:598" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="636:7599" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="651:796" ph="/// 创建一个mvc模块 ... " />
+            <marker date="1529313999029" expanded="true" signature="887:1343" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1177:1292" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1353:7592" ph="vc的操作" />
+            <marker date="1529313999029" expanded="true" signature="1376:1474" ph="/// view层自动设置 ... " />
+            <marker date="1529313999029" expanded="true" signature="1526:4352" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1818:4342" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1908:1976" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2102:2744" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2253:2400" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2502:2656" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2887:4328" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3160:4308" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3239:3404" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3493:3657" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3724:3891" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3955:4117" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="4146:4286" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="4387:4531" ph="/// VC进行数据绑定 ... " />
+            <marker date="1529313999029" expanded="true" signature="4606:7563" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="4917:7553" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5007:5076" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5166:5869" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5387:5669" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5521:5645" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5694:5851" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5947:6693" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6223:6493" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6333:6469" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6518:6675" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6769:7527" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="7057:7327" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="7167:7303" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="7352:7509" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/UIAttribute.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/UIAttribute.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/SubWindow.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/SubWindow.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/RegistViewItem.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/RegistViewItem.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/SetTransform.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/SetTransform.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
           <caret line="4" column="26" lean-forward="false" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/Menu/EditorMenu.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Editor/Editor/Menu/EditorMenu.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/InitFrame/BDFrameInit.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Editor/Editor/InitFrame/BDFrameInit.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="592">
           <caret line="43" column="48" lean-forward="true" selection-start-line="43" selection-start-column="48" selection-end-line="43" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDriveServer.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/IData.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/IData.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Event/EventType.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/GameDataMgr.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="26" column="28" lean-forward="false" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/Event/EventType.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/BDFrameWork.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/BDFrameWork.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-435">
           <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
@@ -611,49 +739,28 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/ValueType.cs" />
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IViewControl.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/IViewControl.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
           <caret line="10" column="1" lean-forward="false" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/AViewBase.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/AViewBase.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="509">
           <caret line="54" column="58" lean-forward="false" selection-start-line="54" selection-start-column="49" selection-end-line="54" selection-end-column="58" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/UIMgr.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5763">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/UIAttribute.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/SubWindow.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/SubWindow.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/AWindow.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="17" column="39" lean-forward="false" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/RegistViewItem.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/RegistViewItem.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
@@ -661,14 +768,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/AutoSetValue.cs" />
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/SetTransform.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/SetTransform.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
           <caret line="4" column="26" lean-forward="false" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/Menu/EditorMenu.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Editor/Editor/Menu/EditorMenu.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
@@ -676,127 +783,537 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/BindData.cs" />
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/InitFrame/BDFrameInit.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Editor/Editor/InitFrame/BDFrameInit.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="592">
           <caret line="43" column="48" lean-forward="false" selection-start-line="43" selection-start-column="48" selection-end-line="43" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IView.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/Attribute/BindData.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="15" column="23" lean-forward="false" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+        <state relative-caret-position="247">
+          <caret line="13" column="1" lean-forward="false" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+          <folding>
+            <marker date="1529312205936" expanded="true" signature="39:209" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="79:207" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="151:201" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/Attribute/BindData.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/UIAttribute.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/MVCBind.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="44" column="29" lean-forward="false" selection-start-line="44" selection-start-column="29" selection-end-line="44" selection-end-column="29" />
           <folding>
-            <marker date="1524478628408" expanded="false" signature="6:88" ph="..." />
-            <marker date="1524478628408" expanded="true" signature="144:604" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="256:307" ph="/// 进入 ... " />
-            <marker date="1524478628408" expanded="true" signature="335:423" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="433:484" ph="/// 退出 ... " />
-            <marker date="1524478628408" expanded="true" signature="511:598" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="636:7538" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="651:796" ph="/// 创建一个mvc模块 ... " />
-            <marker date="1524478628408" expanded="true" signature="887:1343" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1177:1292" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1353:7531" ph="vc的操作" />
-            <marker date="1524478628408" expanded="true" signature="1376:1474" ph="/// view层自动设置 ... " />
-            <marker date="1524478628408" expanded="true" signature="1526:4291" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1818:4281" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="1908:1976" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2102:2744" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2253:2400" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2502:2656" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="2887:4267" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3099:4247" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3178:3343" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3432:3596" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3663:3830" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="3894:4056" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4085:4225" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4326:4470" ph="/// VC进行数据绑定 ... " />
-            <marker date="1524478628408" expanded="true" signature="4545:7502" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4856:7492" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="4946:5015" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5105:5808" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5326:5608" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5460:5584" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5633:5790" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="5886:6632" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6162:6432" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6272:6408" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6457:6614" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6708:7466" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="6996:7266" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="7106:7242" ph="{...}" />
-            <marker date="1524478628408" expanded="true" signature="7291:7448" ph="{...}" />
+            <marker date="1529312205939" expanded="false" signature="6:85" ph="..." />
+            <marker date="1529312205939" expanded="true" signature="111:443" ph="{...}" />
+            <marker date="1529312205939" expanded="true" signature="154:441" ph="{...}" />
+            <marker date="1529312205939" expanded="true" signature="334:435" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDrive_Service.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/UIMgr.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1529312205940" expanded="false" signature="6:169" ph="..." />
+            <marker date="1529312205940" expanded="true" signature="194:12159" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="221:281" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="291:337" ph="/// UI管理类 ... " />
+            <marker date="1529312205940" expanded="true" signature="378:12157" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="393:448" ph="/// UI窗口字典 ... " />
+            <marker date="1529312205940" expanded="true" signature="525:581" ph="/// ui的三个层级 ... " />
+            <marker date="1529312205940" expanded="true" signature="654:687" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="725:1038" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="1048:1152" ph="/// 重写mgr checktype ... " />
+            <marker date="1529312205940" expanded="true" signature="1202:1642" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="1324:1631" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="1382:1617" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="1703:2169" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="1815:1929" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="2179:2280" ph="/// 加载窗口 ... " />
+            <marker date="1529312205940" expanded="true" signature="2335:3554" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="2389:3544" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="2463:2698" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="2571:2680" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="2719:3530" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="2858:2965" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="2990:3510" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="3563:3715" ph="/// 异步加载窗口 ... " />
+            <marker date="1529312205940" expanded="true" signature="3808:5568" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="3939:5558" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="4003:4468" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="4111:4450" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="4489:5544" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="4622:4732" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="4757:5526" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="5041:5502" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="5616:6226" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="5639:5672" ph="/* return; ... */" />
+            <marker date="1529312205940" expanded="true" signature="5815:6216" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="5887:6089" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="6235:6336" ph="/// 卸载窗口 ... " />
+            <marker date="1529312205940" expanded="true" signature="6393:6863" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="6447:6853" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="6511:6717" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="6738:6839" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="6874:6927" ph="/// 卸载窗口 ... " />
+            <marker date="1529312205940" expanded="true" signature="6966:7259" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="7088:7172" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="7279:7379" ph="/// 显示窗口 ... " />
+            <marker date="1529312205940" expanded="true" signature="7478:8986" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="7536:8871" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="7658:8715" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="7711:8567" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="8736:8857" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="8888:8976" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="9034:9170" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="9179:9279" ph="/// 关闭窗口 ... " />
+            <marker date="1529312205940" expanded="true" signature="9344:9834" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="9402:9718" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="9504:9571" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="9592:9704" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="9735:9824" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="9946:10086" ph="/// 外部推送ui数据 ... " />
+            <marker date="1529312205940" expanded="true" signature="10145:10736" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="10203:10414" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="10294:10400" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="10577:10697" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="10746:10876" ph="/// 获取窗口状态 ... " />
+            <marker date="1529312205940" expanded="true" signature="10925:11235" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="11018:11100" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="11117:11197" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="11274:11469" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="11403:11459" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="11510:11707" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="11639:11697" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="11716:11767" ph="/// 更新 ... " />
+            <marker date="1529312205940" expanded="true" signature="11806:12150" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="11853:12140" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="11912:12126" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="11990:12108" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/UIRecord.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1529312205940" expanded="false" signature="6:78" ph="..." />
+            <marker date="1529312205940" expanded="true" signature="117:194" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/WinEnum.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1529312205941" expanded="true" signature="24:124" ph="{...}" />
+            <marker date="1529312205941" expanded="true" signature="50:122" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/WinData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1529312205940" expanded="true" signature="6:52" ph="..." />
+            <marker date="1529312205940" expanded="true" signature="78:612" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="105:610" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="210:291" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="331:385" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="442:502" ph="{...}" />
+            <marker date="1529312205940" expanded="true" signature="545:604" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/AWindow.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="839">
+          <caret line="75" column="12" lean-forward="false" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="12" />
+          <folding>
+            <marker date="1529312205936" expanded="false" signature="6:174" ph="..." />
+            <marker date="1529312205936" expanded="true" signature="176:213" ph="/// 窗口基类 ... " />
+            <marker date="1529312205936" expanded="true" signature="244:4611" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="251:296" ph="/// 资源路径 ... " />
+            <marker date="1529312205936" expanded="true" signature="368:473" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="514:628" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="633:680" ph="/// 窗口是否关闭 ... " />
+            <marker date="1529312205936" expanded="true" signature="733:782" ph="/// 窗口是否已经加载 ... " />
+            <marker date="1529312205936" expanded="true" signature="833:884" ph="/// 窗口是否需要刷新数据 ... " />
+            <marker date="1529312205936" expanded="true" signature="993:1043" ph="/// transform ... " />
+            <marker date="1529312205936" expanded="true" signature="1104:1150" ph="/// 子窗口列表 ... " />
+            <marker date="1529312205936" expanded="true" signature="1296:1358" ph="/// 注册回调 当数据传回时候,执行action ... " />
+            <marker date="1529312205936" expanded="true" signature="1430:1480" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="1486:1603" ph="/// 添加子窗口 ... " />
+            <marker date="1529312205936" expanded="true" signature="1661:1720" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="1730:1815" ph="/// 异步加载 ... " />
+            <marker date="1529312205936" expanded="true" signature="1858:2370" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="1999:2355" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="2276:2332" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="2375:2420" ph="/// 同步加载 ... " />
+            <marker date="1529312205936" expanded="true" signature="2443:2838" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="2530:2625" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="2844:2890" ph="/// 初始化窗口 ... " />
+            <marker date="1529312205936" expanded="true" signature="2921:3021" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="3028:3073" ph="/// 关闭窗口 ... " />
+            <marker date="1529312205936" expanded="true" signature="3105:3193" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="3199:3244" ph="/// 打开窗口 ... " />
+            <marker date="1529312205936" expanded="true" signature="3275:3459" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="3465:3510" ph="/// 销毁窗口 ... " />
+            <marker date="1529312205936" expanded="true" signature="3544:3881" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="3586:3654" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="3731:3781" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="3887:3975" ph="/// 更新UI使用的数据 ... " />
+            <marker date="1529312205936" expanded="true" signature="4017:4289" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="4068:4283" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="4203:4274" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="4295:4340" ph="/// 更新窗口 ... " />
+            <marker date="1529312205936" expanded="true" signature="4373:4386" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="4392:4437" ph="/// 重置窗口 ... " />
+            <marker date="1529312205936" expanded="true" signature="4470:4483" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="4509:4546" ph="{...}" />
+            <marker date="1529312205936" expanded="true" signature="4572:4608" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/IView.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="5" column="21" lean-forward="false" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+          <folding>
+            <marker date="1529312205938" expanded="false" signature="6:65" ph="..." />
+            <marker date="1529312205938" expanded="true" signature="91:308" ph="{...}" />
+            <marker date="1529312205938" expanded="true" signature="120:306" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/UI/MVC/MVCBind.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="103" column="45" lean-forward="false" selection-start-line="103" selection-start-column="40" selection-end-line="103" selection-end-column="45" />
+          <folding>
+            <marker date="1529313999029" expanded="false" signature="6:88" ph="..." />
+            <marker date="1529313999029" expanded="true" signature="114:7601" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="144:604" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="256:307" ph="/// 进入 ... " />
+            <marker date="1529313999029" expanded="true" signature="335:423" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="433:484" ph="/// 退出 ... " />
+            <marker date="1529313999029" expanded="true" signature="511:598" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="636:7599" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="651:796" ph="/// 创建一个mvc模块 ... " />
+            <marker date="1529313999029" expanded="true" signature="887:1343" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1177:1292" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1353:7592" ph="vc的操作" />
+            <marker date="1529313999029" expanded="true" signature="1376:1474" ph="/// view层自动设置 ... " />
+            <marker date="1529313999029" expanded="true" signature="1526:4352" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1818:4342" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="1908:1976" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2102:2744" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2253:2400" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2502:2656" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="2887:4328" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3160:4308" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3239:3404" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3493:3657" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3724:3891" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="3955:4117" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="4146:4286" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="4387:4531" ph="/// VC进行数据绑定 ... " />
+            <marker date="1529313999029" expanded="true" signature="4606:7563" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="4917:7553" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5007:5076" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5166:5869" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5387:5669" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5521:5645" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5694:5851" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="5947:6693" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6223:6493" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6333:6469" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6518:6675" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="6769:7527" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="7057:7327" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="7167:7303" ph="{...}" />
+            <marker date="1529313999029" expanded="true" signature="7352:7509" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/Game/Data/LocalDataBase.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1529312205684" expanded="false" signature="6:100" ph="..." />
+            <marker date="1529312205684" expanded="true" signature="121:234" ph="{...}" />
+            <marker date="1529312205684" expanded="true" signature="163:232" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3FE6F28A-F1C7-4F4A-976E-AD4CC6DDB21C/ce/f6725477/ExecuteEvents.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="346" column="8" lean-forward="false" selection-start-line="346" selection-start-column="8" selection-end-line="346" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDrive.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-57">
+          <caret line="111" column="34" lean-forward="false" selection-start-line="111" selection-start-column="34" selection-end-line="111" selection-end-column="34" />
+          <folding>
+            <marker date="1529315539774" expanded="false" signature="6:85" ph="..." />
+            <marker date="1529315539774" expanded="true" signature="120:4723" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="153:228" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="278:324" ph="/// 所有的数据 ... " />
+            <marker date="1529315539774" expanded="true" signature="451:498" ph="/// 注册事件缓存 ... " />
+            <marker date="1529315539774" expanded="true" signature="583:767" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="803:817" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="823:904" ph="/// 注册数据 ... " />
+            <marker date="1529315539774" expanded="true" signature="954:996" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="1001:1119" ph="/// 设置数据 ... " />
+            <marker date="1529315539774" expanded="true" signature="1205:2038" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="1250:1305" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="1318:1408" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="1453:2032" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="1510:1580" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="1597:2022" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="1745:1914" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="1935:2008" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="2044:2207" ph="/// 触发事件 ... " />
+            <marker date="1529315539774" expanded="true" signature="2305:2362" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="2367:2519" ph="/// 获取玩家数据 ... " />
+            <marker date="1529315539774" expanded="true" signature="2564:2998" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="2635:2910" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="2717:2812" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="2829:2888" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="2923:2974" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="3004:3129" ph="/// 属性变动事件注册 ... " />
+            <marker date="1529315539774" expanded="true" signature="3230:4084" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="3284:3374" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="3491:3566" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="3579:3667" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="3700:4078" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="3838:4068" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="3896:3969" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="4094:4181" ph="/// 移除属性变动事件注册 ... " />
+            <marker date="1529315539774" expanded="true" signature="4231:4344" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="4280:4338" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="4359:4446" ph="/// 移除属性变动事件注册 ... " />
+            <marker date="1529315539774" expanded="true" signature="4516:4721" ph="{...}" />
+            <marker date="1529315539774" expanded="true" signature="4627:4715" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDrive_Service.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
           <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding>
-            <marker date="1516102083766" expanded="false" signature="6:85" ph="..." />
-            <marker date="1516102083766" expanded="true" signature="87:127" ph="/// 做数据驱动服务 ... " />
-            <marker date="1516102083766" expanded="true" signature="171:176" ph="{...}" />
+            <marker date="1529312205919" expanded="false" signature="6:85" ph="..." />
+            <marker date="1529312205919" expanded="true" signature="87:127" ph="/// 做数据驱动服务 ... " />
+            <marker date="1529312205919" expanded="true" signature="171:176" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDrive.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDriveServer.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="56" column="17" lean-forward="false" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
+        <state relative-caret-position="-57">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1524798070764" expanded="true" signature="6:85" ph="..." />
-            <marker date="1524798070764" expanded="true" signature="120:3923" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="153:228" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="278:324" ph="/// 所有的数据 ... " />
-            <marker date="1524798070764" expanded="true" signature="451:498" ph="/// 注册事件缓存 ... " />
-            <marker date="1524798070764" expanded="true" signature="583:767" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="803:817" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="822:940" ph="/// 设置数据 ... " />
-            <marker date="1524798070764" expanded="true" signature="1026:1693" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="1108:1687" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="1165:1235" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="1252:1677" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="1400:1569" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="1590:1663" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="1699:1862" ph="/// 触发事件 ... " />
-            <marker date="1524798070764" expanded="true" signature="1960:2017" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="2022:2174" ph="/// 获取玩家数据 ... " />
-            <marker date="1524798070764" expanded="true" signature="2219:2432" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="2290:2344" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="2357:2408" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="2438:2563" ph="/// 属性变动事件注册 ... " />
-            <marker date="1524798070764" expanded="true" signature="2664:3326" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="2772:2847" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="2860:2909" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="2942:3320" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="3080:3310" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="3138:3211" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="3336:3423" ph="/// 移除属性变动事件注册 ... " />
-            <marker date="1524798070764" expanded="true" signature="3473:3586" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="3522:3580" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="3601:3688" ph="/// 移除属性变动事件注册 ... " />
-            <marker date="1524798070764" expanded="true" signature="3758:3921" ph="{...}" />
-            <marker date="1524798070764" expanded="true" signature="3866:3915" ph="{...}" />
+            <marker date="1529312205919" expanded="false" signature="6:104" ph="..." />
+            <marker date="1529312205919" expanded="true" signature="105:145" ph="/// 做数据驱动服务 ... " />
+            <marker date="1529312205919" expanded="true" signature="174:1543" ph="{...}" />
+            <marker date="1529312205919" expanded="true" signature="297:413" ph="/// 创建一个service ... " />
+            <marker date="1529312205919" expanded="true" signature="469:767" ph="{...}" />
+            <marker date="1529312205919" expanded="true" signature="571:628" ph="{...}" />
+            <marker date="1529312205919" expanded="true" signature="641:740" ph="{...}" />
+            <marker date="1529312205919" expanded="true" signature="772:888" ph="/// 获取一个service ... " />
+            <marker date="1529312205919" expanded="true" signature="948:1069" ph="{...}" />
+            <marker date="1529312205919" expanded="true" signature="1073:1158" ph="/// 删除一个service ... " />
+            <marker date="1529312205919" expanded="true" signature="1204:1368" ph="{...}" />
+            <marker date="1529312205919" expanded="true" signature="1374:1462" ph="/// 删除一个service ... " />
+            <marker date="1529312205919" expanded="true" signature="1501:1541" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/GameDataMgr.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="26" column="28" lean-forward="false" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
+          <folding>
+            <marker date="1529312205920" expanded="false" signature="6:85" ph="..." />
+            <marker date="1529312205920" expanded="true" signature="88:127" ph="/// 游戏数据管理 ... " />
+            <marker date="1529312205920" expanded="true" signature="152:459" ph="{...}" />
+            <marker date="1529312205920" expanded="true" signature="180:192" ph="{...}" />
+            <marker date="1529312205920" expanded="true" signature="277:457" ph="{...}" />
+            <marker date="1529312205920" expanded="true" signature="294:451" ph="{...}" />
+            <marker date="1529312205920" expanded="true" signature="337:411" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/Contrl_MVCTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="24" column="16" lean-forward="false" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
+          <folding>
+            <marker date="1529312205689" expanded="false" signature="6:40" ph="..." />
+            <marker date="1529312205689" expanded="true" signature="73:1514" ph="{...}" />
+            <marker date="1529312205689" expanded="true" signature="129:1512" ph="{...}" />
+            <marker date="1529312205689" expanded="true" signature="206:239" ph="{...}" />
+            <marker date="1529312205689" expanded="true" signature="254:329" ph="/// 自动绑定到button这个组件的 onclick事件 ... " />
+            <marker date="1529312205689" expanded="true" signature="371:579" ph="{...}" />
+            <marker date="1529312205689" expanded="true" signature="597:650" ph="/// 自动绑定 ... " />
+            <marker date="1529312205689" expanded="true" signature="709:822" ph="{...}" />
+            <marker date="1529312205689" expanded="true" signature="840:893" ph="/// 自动绑定 ... " />
+            <marker date="1529312205689" expanded="true" signature="955:1071" ph="{...}" />
+            <marker date="1529312205689" expanded="true" signature="1089:1142" ph="/// 自动绑定 ... " />
+            <marker date="1529312205689" expanded="true" signature="1196:1497" ph="{...}" />
+            <marker date="1529312205689" expanded="true" signature="1278:1400" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/View_MVCTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="56" column="12" lean-forward="false" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="12" />
+          <folding>
+            <marker date="1529315788720" expanded="false" signature="6:62" ph="..." />
+            <marker date="1529315788720" expanded="true" signature="91:2354" ph="{...}" />
+            <marker date="1529315788720" expanded="true" signature="135:2352" ph="{...}" />
+            <marker date="1529315788720" expanded="true" signature="925:958" ph="{...}" />
+            <marker date="1529315788720" expanded="true" signature="1008:1849" ph="{...}" />
+            <marker date="1529315788720" expanded="true" signature="1189:1276" ph="{...}" />
+            <marker date="1529315788720" expanded="true" signature="1421:1519" ph="{...}" />
+            <marker date="1529315788720" expanded="true" signature="1631:1735" ph="{...}" />
+            <marker date="1529315788720" expanded="true" signature="1883:2128" ph="{...}" />
+            <marker date="1529315788720" expanded="true" signature="2146:2200" ph="/// 自动测试值 ... " />
+            <marker date="1529315788720" expanded="true" signature="2247:2346" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_Test1.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="27" column="48" lean-forward="false" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="48" />
+          <folding>
+            <marker date="1529315226442" expanded="true" signature="6:152" ph="..." />
+            <marker date="1529315226442" expanded="true" signature="154:223" ph="/// 这个是ui的标签， ... " />
+            <marker date="1529315226442" expanded="true" signature="313:861" ph="{...}" />
+            <marker date="1529315226442" expanded="true" signature="374:386" ph="{...}" />
+            <marker date="1529315226442" expanded="true" signature="419:653" ph="{...}" />
+            <marker date="1529315226442" expanded="true" signature="542:636" ph="{...}" />
+            <marker date="1529315226442" expanded="true" signature="687:721" ph="{...}" />
+            <marker date="1529315226442" expanded="true" signature="754:787" ph="{...}" />
+            <marker date="1529315226442" expanded="true" signature="823:859" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_Test2.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="29" column="46" lean-forward="false" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
+          <folding>
+            <marker date="1529315239166" expanded="false" signature="6:190" ph="..." />
+            <marker date="1529315239166" expanded="true" signature="220:289" ph="/// 这个是ui的标签， ... " />
+            <marker date="1529315239166" expanded="true" signature="379:1362" ph="{...}" />
+            <marker date="1529315239166" expanded="true" signature="431:443" ph="{...}" />
+            <marker date="1529315239166" expanded="true" signature="476:784" ph="{...}" />
+            <marker date="1529315239166" expanded="true" signature="599:695" ph="{...}" />
+            <marker date="1529315239166" expanded="true" signature="818:852" ph="{...}" />
+            <marker date="1529315239166" expanded="true" signature="885:918" ph="{...}" />
+            <marker date="1529315239166" expanded="true" signature="954:990" ph="{...}" />
+            <marker date="1529315239166" expanded="true" signature="1036:1360" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="31" column="42" lean-forward="false" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="42" />
+          <folding>
+            <marker date="1529312205688" expanded="false" signature="6:244" ph="..." />
+            <marker date="1529312205688" expanded="true" signature="275:344" ph="/// 这个是ui的标签， ... " />
+            <marker date="1529312205688" expanded="true" signature="428:980" ph="{...}" />
+            <marker date="1529312205688" expanded="true" signature="478:499" ph="{...}" />
+            <marker date="1529312205688" expanded="true" signature="532:769" ph="{...}" />
+            <marker date="1529312205688" expanded="true" signature="803:839" ph="{...}" />
+            <marker date="1529312205688" expanded="true" signature="872:905" ph="{...}" />
+            <marker date="1529312205688" expanded="true" signature="941:977" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo3_WindowsMvc.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-164">
+          <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
+          <folding>
+            <marker date="1529314985136" expanded="false" signature="6:144" ph="..." />
+            <marker date="1529314985136" expanded="true" signature="222:1107" ph="{...}" />
+            <marker date="1529314985136" expanded="true" signature="481:685" ph="{...}" />
+            <marker date="1529314985136" expanded="true" signature="736:892" ph="{...}" />
+            <marker date="1529314985136" expanded="true" signature="917:929" ph="{...}" />
+            <marker date="1529314985136" expanded="true" signature="964:1002" ph="{...}" />
+            <marker date="1529314985136" expanded="true" signature="1041:1053" ph="{...}" />
+            <marker date="1529314985136" expanded="true" signature="1093:1104" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo2_Windows.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
+          <folding>
+            <marker date="1529314995853" expanded="false" signature="6:144" ph="..." />
+            <marker date="1529314995853" expanded="true" signature="219:1108" ph="{...}" />
+            <marker date="1529314995853" expanded="true" signature="478:686" ph="{...}" />
+            <marker date="1529314995853" expanded="true" signature="737:893" ph="{...}" />
+            <marker date="1529314995853" expanded="true" signature="918:930" ph="{...}" />
+            <marker date="1529314995853" expanded="true" signature="965:1003" ph="{...}" />
+            <marker date="1529314995853" expanded="true" signature="1042:1054" ph="{...}" />
+            <marker date="1529314995853" expanded="true" signature="1094:1105" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Code/Game/ScreenView/ScreenView_Demo1_Screenview.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-221">
+          <caret line="28" column="46" lean-forward="true" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="46" />
+          <folding>
+            <marker date="1529315001780" expanded="false" signature="6:144" ph="..." />
+            <marker date="1529315001780" expanded="true" signature="228:1399" ph="{...}" />
+            <marker date="1529315001780" expanded="true" signature="494:741" ph="{...}" />
+            <marker date="1529315001780" expanded="true" signature="794:1163" ph="{...}" />
+            <marker date="1529315001780" expanded="true" signature="1190:1203" ph="{...}" />
+            <marker date="1529315001780" expanded="true" signature="1240:1288" ph="{...}" />
+            <marker date="1529315001780" expanded="true" signature="1329:1342" ph="{...}" />
+            <marker date="1529315001780" expanded="true" signature="1384:1397" ph="{...}" />
           </folding>
         </state>
       </provider>

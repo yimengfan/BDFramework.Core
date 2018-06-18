@@ -99,7 +99,10 @@ namespace BDFramework.UI
                 if (bAttr != null)
                 {
                     var name = bAttr.Name;
-                    var _Model = vt.GetProperty("Model").GetValue(view) as DataDrive_Service;
+                    var _Model = view.Model;
+                    //注册属性名
+                    _Model.RegisterData(bAttr.Name);
+                    //注册事件监听
                     _Model.RegAction(bAttr.Name , (v) =>
                     {
                         if (f.FieldType == typeof(Text))

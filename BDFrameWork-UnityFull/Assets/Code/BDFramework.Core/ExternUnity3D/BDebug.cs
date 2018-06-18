@@ -40,7 +40,7 @@ public class BDebug : MonoBehaviour
             UnityEngine.Debug.LogError(s);
     }
 
-    void UpDate()
+    void Update()
     {
         isLog = IsLog;
     }

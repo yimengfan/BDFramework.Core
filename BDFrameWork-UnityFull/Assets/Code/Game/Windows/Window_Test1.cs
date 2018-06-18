@@ -25,7 +25,7 @@ public class Window_Test1 : AWindow
         this.Transform.Find("Button").GetComponent<Button>().onClick.AddListener(() =>
         {
            this.Close();
-           ScreenViewMgr.Inst.BeginNav("sv_test2");
+           ScreenViewMgr.Inst.BeginNav("demo2");
         });
         
     }

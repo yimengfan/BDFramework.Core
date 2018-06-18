@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\Administrator\.Rider2017.3\system\resharper-host\local\Transient\ReSharperHost\v11\SolutionCaches\_BDFrameWork-UnityFull.-835177450.00" t="ExcludeRecursive" />
-    <e p="E:\BDFramework-Unity3d\BDFrameWork-UnityFull" t="IncludeRecursive">
+    <e p="C:\Users\Administrator\.Rider2017.3\system\resharper-host\local\Transient\ReSharperHost\v11\SolutionCaches\_BDFrameWork-UnityFull.633950620.00" t="ExcludeRecursive" />
+    <e p="G:\BDFramework.Core\BDFrameWork-UnityFull" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
@@ -366,11 +366,6 @@
                 <e p="MyJsonCompress.cs" t="Include" />
               </e>
               <e p="Reademe.txt" t="Include" />
-              <e p="Sqlite" t="Include">
-                <e p="Person.cs" t="Include" />
-                <e p="SQLite.cs" t="Include" />
-                <e p="SQLiteService.cs" t="Include" />
-              </e>
             </e>
             <e p="Common" t="Include">
               <e p="BDFrameWork.cs" t="Include" />
@@ -381,6 +376,11 @@
                 <e p="GameDataMgr.cs" t="Include" />
                 <e p="IData.cs" t="Include" />
                 <e p="readme.txt" t="Include" />
+                <e p="Sqlite" t="Include">
+                  <e p="Person.cs" t="Include" />
+                  <e p="SQLite.cs" t="Include" />
+                  <e p="SQLiteService.cs" t="Include" />
+                </e>
               </e>
               <e p="Event" t="Include">
                 <e p="EventType.cs" t="Include" />
@@ -465,7 +465,6 @@
               <e p="BDebug.cs" t="Include" />
               <e p="IEnumeratorTool.cs" t="Include" />
               <e p="Image.cs" t="Include" />
-              <e p="Texture2D.cs" t="Include" />
               <e p="TextureTools.cs" t="Include" />
               <e p="UnityTools.cs" t="Include" />
             </e>
@@ -561,14 +560,22 @@
               </e>
             </e>
           </e>
+          <e p="DLL" t="Include">
+            <e p="JsonDotNet20" t="Include">
+              <e p="license.txt" t="Include" />
+              <e p="Newtonsoft.Json.xml" t="Include" />
+              <e p="readme.txt" t="Include" />
+            </e>
+          </e>
           <e p="Game" t="Include">
             <e p="Data" t="Include">
               <e p="LocalDataBase.cs" t="Include" />
             </e>
             <e p="GameStartTest.cs" t="Include" />
             <e p="Screenview" t="Include">
-              <e p="ScreenView_Test1.cs" t="Include" />
-              <e p="ScreenView_Test2.cs" t="Include" />
+              <e p="ScreenView_Demo1_Screenview.cs" t="Include" />
+              <e p="ScreenView_Demo2_Windows.cs" t="Include" />
+              <e p="ScreenView_Demo3_WindowsMvc.cs" t="Include" />
             </e>
             <e p="Windows" t="Include">
               <e p="Window_MVC" t="Include">
