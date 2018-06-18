@@ -6,8 +6,12 @@
 ##工程结构：
 <br>BDFrameWork-Quick.DLL  0.5.1  快速集成BDFrame的DLL库
 <br>BDFrameWork  -> BDFrameWork核心库，用于生成 BDFrameWork.Core.dll 和 BDFrameWork.Editor.dll
-<br>BDFrameWork-QuickExample   ->不带BDFrame的代码，集成dll的例子集合（楼上的工程默认是生成dll到这个项目哦~）
 <br>BDFrameWork-UnityFull      ->带BDFrame源码，集成dll的例子集合
+## 版本计划：
+   2018.6 UI使用的文档加入 并配合上视频录制
+   2018.7 热更新工具整合：资源更新
+   2018.8 热更新工具整合：代码更新
+   注：开源流程根据我们项目进度来，可能略慢保证bug等较少，而且后续的开发不会让前面开发工作返工。
 ## 框架特点：
  <br>**不开发工具的架构都是耍流氓!!!!**<br>
  <br>**不开发工具的架构都是耍流氓!!!!**<br>
