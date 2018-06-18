@@ -6,13 +6,13 @@
 ##工程结构：
 <br>BDFrameWork-Quick.DLL  0.5.1  快速集成BDFrame的DLL库
 <br>BDFrameWork  -> BDFrameWork核心库，用于生成 BDFrameWork.Core.dll 和 BDFrameWork.Editor.dll
-<br>BDFrameWork-UnityFull      ->带BDFrame源码，集成dll的例子集合
+<br>BDFrameWork-UnityFull      ->带BDFrame源码 demo版
 ## 版本计划：
   <br> 2018.6 UI使用的文档加入 并配合上视频录制
   <br> 2018.7 热更新工具整合：资源更新
   <br> 2018.8 热更新工具整合：代码更新
   <br> 注：开源流程根据我们项目进度来，可能略慢保证bug等较少，而且后续的开发不会让前面开发工作返工。
- ### <br> 已完成：
+  ## 已完成：
   <br> 1.业务模块状态机
   <br> 2.ui工作流：包括事件系统、消息分发、数据驱动、资源管理等
   <br> 具体可见bdframe.core/common
