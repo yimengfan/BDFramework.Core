@@ -19,8 +19,8 @@ public class ScreenView_Demo3_WindowsMvc : IScreenView
 		 //一定要设置为true，否则当前是未加载状态
 		 this.IsLoad = true;
 		 //打开 window 3
-		 UIMgr.Inst.LoadWindows((int) WinEnum.Win_XVC);
-		 UIMgr.Inst.ShowWindow((int)WinEnum.Win_XVC);
+		 UIMgr.Inst.LoadWindows(WinEnum.Win_XVC);
+		 UIMgr.Inst.ShowWindow(WinEnum.Win_XVC);
 		 //
 		 Debug.Log("进入demo3");
 	 }

@@ -10,13 +10,13 @@ public class IEnumeratorTool : MonoBehaviour
     /// </summary>
     public class ActionTask
     {
-        public Action WillDoAction;
-        public Action CallBackAction;
+        public Action willDoAction;
+        public Action callBackAction;
     }
     /// <summary>
     /// 任务队列
     /// </summary>
-    static Queue<ActionTask> actionTaskQueue = new Queue<ActionTask>();
+    static Queue<ActionTask> m_actionTaskQueue = new Queue<ActionTask>();
 
     /// <summary>
     /// 执行任务
@@ -27,12 +27,12 @@ public class IEnumeratorTool : MonoBehaviour
     {
         var task = new ActionTask()
         {
-            WillDoAction = action,
-            CallBackAction = callBack
+            willDoAction = action,
+            callBackAction = callBack
         };
 
         
-        actionTaskQueue.Enqueue(task);
+        m_actionTaskQueue.Enqueue(task);
     }
 
 
@@ -48,8 +48,8 @@ public class IEnumeratorTool : MonoBehaviour
     {
         var task = new ActionTask()
         {
-            WillDoAction = action,
-            CallBackAction = callBack
+            willDoAction = action,
+            callBackAction = callBack
         };
 
 
@@ -57,31 +57,31 @@ public class IEnumeratorTool : MonoBehaviour
     }
 
     //
-    static Dictionary<int, IEnumerator> m_IEnumeratorDictionary = new Dictionary<int, IEnumerator>();
-    static Dictionary<int, Coroutine> CoroutineDictionary = new Dictionary<int, Coroutine>();
+    static Dictionary<int, IEnumerator> iEnumeratorDictionary = new Dictionary<int, IEnumerator>();
+    static Dictionary<int, Coroutine> coroutineDictionary = new Dictionary<int, Coroutine>();
     static Queue<int> m_IEnumeratorQueue = new Queue<int>();
     static int counter = -1;
     static public new int StartCoroutine (IEnumerator ie)
     {
         counter++;
         m_IEnumeratorQueue.Enqueue(counter);
-        m_IEnumeratorDictionary[counter] = ie;
+        iEnumeratorDictionary[counter] = ie;
         return counter;
     }
 
-    static Queue<int> StopIEIdQueue = new Queue<int>();
+    static Queue<int> stopIEIdQueue = new Queue<int>();
     static public void StopCoroutine(int id)
     {
-        StopIEIdQueue.Enqueue(id);
+        stopIEIdQueue.Enqueue(id);
     }
        
-   static private bool isStopAllCoroutine = false;
+   static private bool isStopAllCroutine = false;
    /// <summary>
    /// 停止携程
    /// </summary>
     static public void StopAllCroutine()
     {
-        isStopAllCoroutine = true;
+        isStopAllCroutine = true;
     }
 
 #region Tools
@@ -110,20 +110,19 @@ public class IEnumeratorTool : MonoBehaviour
     void Update()
     {
         //停止所有携程
-        if (isStopAllCoroutine) {
+        if (isStopAllCroutine) {
              BDebug.Log("停止所有携程");
             StopAllCoroutines();
-            isStopAllCoroutine = false;
+            isStopAllCroutine = false;
         }
         //优先停止携程
-        while (StopIEIdQueue.Count > 0) {
-
-            var id = StopIEIdQueue.Dequeue();
-            if (CoroutineDictionary.ContainsKey(id)) {
-                var coroutine = CoroutineDictionary[id];
+        while (stopIEIdQueue.Count > 0) {
+            var id = stopIEIdQueue.Dequeue();
+            if (coroutineDictionary.ContainsKey(id)) {
+                var coroutine = coroutineDictionary[id];
                 base.StopCoroutine(coroutine);
                 //
-                CoroutineDictionary.Remove(id);
+                coroutineDictionary.Remove(id);
             } else {
                 Debug.LogErrorFormat("此id协程不存在,无法停止:{0}", id);
             }
@@ -133,32 +132,32 @@ public class IEnumeratorTool : MonoBehaviour
         if (m_IEnumeratorQueue.Count > 0) {
             var id = m_IEnumeratorQueue.Dequeue();
             //取出携程
-            var ie = m_IEnumeratorDictionary[id];
-            m_IEnumeratorDictionary.Remove(id);
+            var ie = iEnumeratorDictionary[id];
+            iEnumeratorDictionary.Remove(id);
             //执行携程
             var coroutine = base.StartCoroutine(ie);
 
             //存入coroutine
-            CoroutineDictionary[id] = coroutine;
+            coroutineDictionary[id] = coroutine;
         }
 
         //主线程循环 立即执行
         while (actionTaskQueueImmediately.Count > 0) {
 
             var task = actionTaskQueueImmediately.Dequeue();
-            task.WillDoAction();
-            if (task.CallBackAction != null) {
-                task.CallBackAction();
+            task.willDoAction();
+            if (task.callBackAction != null) {
+                task.callBackAction();
             }
         }
 
         //主线程循环
-        if (actionTaskQueue.Count > 0) {
+        if (m_actionTaskQueue.Count > 0) {
 
-            var task = actionTaskQueue.Dequeue();
-            task.WillDoAction();
-            if (task.CallBackAction != null) {
-                task.CallBackAction();
+            var task = m_actionTaskQueue.Dequeue();
+            task.willDoAction();
+            if (task.callBackAction != null) {
+                task.callBackAction();
             }
         }
     }

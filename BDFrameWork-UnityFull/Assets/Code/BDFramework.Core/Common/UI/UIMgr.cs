@@ -31,16 +31,14 @@ namespace BDFramework.UI
         /// </summary>
         private Transform Bottom, Center, Top;
 
-
-
+        //
         public UIMgr()
         {
             
         }
 
-        public override void Awake()
+        override public  void Awake()
         {
-            base.Awake();
             //初始化
             windowMap  = new Dictionary<int, AWindow>();
             Bottom = GameObject.Find("UIRoot/Bottom").transform;
@@ -86,10 +84,11 @@ namespace BDFramework.UI
         /// 加载窗口
         /// </summary>
         /// <param name="uiIndexs">窗口枚举</param>
-        public void LoadWindows(params int[] uiIndexs)
+        public void LoadWindows(params Enum[] uiIndexs)
         {
-            foreach (var index in uiIndexs)
+            foreach (var i in uiIndexs)
             {
+                var index = i.GetHashCode();
          
                 if (windowMap.ContainsKey(index))
                 {
@@ -126,14 +125,15 @@ namespace BDFramework.UI
         /// <summary>
         /// 异步加载窗口
         /// </summary>
-        /// <param name="uiIndexs"></param>
+        /// <param name="indexes"></param>
         /// <param name="loadProcessAction"></param>
-        public void AsyncLoadWindows(List<int> uiIndexs, Action<int, int> loadProcessAction)
+        public void AsyncLoadWindows(List<Enum> indexes, Action<int, int> loadProcessAction)
         {
-            int allCount = uiIndexs.Count;
+            int allCount = indexes.Count;
             int curTaskCount = 0;
-            foreach (var index in uiIndexs)
+            foreach (var i in indexes)
             {
+                var index = i.GetHashCode();
                 if (windowMap.ContainsKey(index))
                 {
                     var uvalue = windowMap[index];
@@ -201,11 +201,12 @@ namespace BDFramework.UI
         /// <summary>
         /// 卸载窗口
         /// </summary>
-        /// <param name="uiIndexs">窗口枚举</param>
-        public void UnLoadWindows(params int[] uiIndexs)
+        /// <param name="indexs">窗口枚举</param>
+        public void UnLoadWindows(params Enum[] indexs)
         {
-            foreach (var index in uiIndexs)
+            foreach (var i in indexs)
             {
+                var index = i.GetHashCode();
                 if (windowMap.ContainsKey(index))
                 {
                     var uvalue = windowMap[index];
@@ -215,7 +216,7 @@ namespace BDFramework.UI
                 }
                 else
                 {
-                    Debug.LogErrorFormat("不存在UI：{0}", uiIndexs);
+                    Debug.LogErrorFormat("不存在UI：{0}", indexs);
                 }
             }
         }
@@ -242,8 +243,9 @@ namespace BDFramework.UI
         /// 显示窗口
         /// </summary>
         /// <param name="uiIndex">窗口枚举</param>
-        public void ShowWindow(int uiIndex, bool ReSetMask = true, UILayer layer = UILayer.Bottom)
+        public void ShowWindow(Enum index, bool resetMask = true, UILayer layer = UILayer.Bottom)
         {
+            int uiIndex = index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
             {
                 var v = windowMap[uiIndex];
@@ -295,8 +297,9 @@ namespace BDFramework.UI
         /// 关闭窗口
         /// </summary>
         /// <param name="uiIndex">窗口枚举</param>
-        public void CloseWindow(int uiIndex, bool isMask = true)
+        public void CloseWindow(Enum index, bool isMask = true)
         {
+            var uiIndex = index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
             {
                 var v = windowMap[uiIndex];
@@ -322,8 +325,9 @@ namespace BDFramework.UI
         /// </summary>
         /// <param name="uiIndex"></param>
         /// <param name="data"></param>
-        public void SendMessage(int uiIndex, WinData data)
+        public void SendMessage(Enum Index, WinData data)
         {
+            var uiIndex = Index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
             {
                 var ui = windowMap[uiIndex];
@@ -348,13 +352,15 @@ namespace BDFramework.UI
 
         }
 
+
         /// <summary>
         /// 获取窗口状态
         /// </summary>
         /// <param name="uiIndex"></param>
         /// <returns></returns>
-        public bool GetWindowStatus(int uiIndex)
+        public bool GetWindowStatus(Enum index)
         {
+            var uiIndex = index.GetHashCode();
             bool isClose = false;
 
             if (windowMap.ContainsKey(uiIndex))
@@ -368,8 +374,10 @@ namespace BDFramework.UI
             return isClose;
         }
 
-        public void Lock(int uiIndex)
+        public void Lock(Enum index)
         {
+            var uiIndex = index.GetHashCode();
+            
             AWindow win = null;
             this.windowMap.TryGetValue(uiIndex, out win);
             if (win != null)
@@ -378,8 +386,9 @@ namespace BDFramework.UI
             }
         }
 
-        public void UnLock(int uiIndex)
+        public void UnLock(Enum index)
         {
+            var uiIndex = index.GetHashCode();
             AWindow win = null;
             this.windowMap.TryGetValue(uiIndex, out win);
             if (win != null)
@@ -390,7 +399,7 @@ namespace BDFramework.UI
         /// <summary>
         /// 更新
         /// </summary>
-        override  public void Update()
+        public void Update()
         {
             if (windowMap.Count > 0)
             {

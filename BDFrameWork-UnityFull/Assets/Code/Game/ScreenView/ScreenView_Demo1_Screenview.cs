@@ -20,8 +20,8 @@ public class ScreenView_Demo1_Screenview : IScreenView
         this.IsLoad = true;
 
         //加载窗口, 0是窗口id,建议自行换成枚举
-        UIMgr.Inst.LoadWindows((int)WinEnum.Win_Test1);
-        UIMgr.Inst.ShowWindow((int)WinEnum.Win_Test1);
+        UIMgr.Inst.LoadWindows(WinEnum.Win_Test1);
+        UIMgr.Inst.ShowWindow(WinEnum.Win_Test1);
 
         Debug.Log("进入demo1");
     }
@@ -37,7 +37,7 @@ public class ScreenView_Demo1_Screenview : IScreenView
         //1..退出时候 向win test2 发消息
         var d = WinData.Create();
         d.AddData("rotation", UnityEngine.Random.Range(-359, 359));
-        UIMgr.Inst.SendMessage((int)WinEnum.Win_Test2, d);
+        UIMgr.Inst.SendMessage(WinEnum.Win_Test2, d);
 
         //
         Debug.Log("退出Test Screen 1");
