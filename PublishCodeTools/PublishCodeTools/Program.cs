@@ -12,7 +12,7 @@ namespace PublishCodeTools
             //1.先复制目录
             CopyCodeTools.Exec();
             //2.修改csproj 并编译
-
+            Console.WriteLine("------------拷贝完毕---------------");
             Console.ReadLine();
         }
     }

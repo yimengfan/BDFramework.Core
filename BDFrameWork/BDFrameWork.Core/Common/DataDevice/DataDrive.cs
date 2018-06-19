@@ -105,7 +105,17 @@ abstract public class ADataDrive
         T t = default(T);
         if (dataMap.ContainsKey(name))
         {
-            t = (T)dataMap[name];
+           var _value =  dataMap[name];
+            if (_value == null)
+            {
+                t = default(T);
+                dataMap[name] = t;
+            }
+            else
+            {
+                t = (T)_value;
+            }
+           
         }
         else
         {

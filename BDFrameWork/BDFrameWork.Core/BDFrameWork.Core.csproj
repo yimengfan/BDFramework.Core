@@ -73,10 +73,20 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="3rdPlugin\LitJson\AssemblyInfo.cs.in" />
-    <None Include="Common\HttpMgr\example.unity" />
-    <None Include="Common\ResourceMgr\example.unity" />
-    <None Include="Tools\SimpleGenCSharpCode\example.unity" />
+    <Content Include="3rdPlugin\ILRuntime\ILRuntime\ILRuntime.csproj" />
+    <Content Include="3rdPlugin\ILRuntime\ILRuntime_2017_3_24.txt" />
+    <Content Include="3rdPlugin\ILRuntime\Mono.Cecil.Pdb\Mono.Cecil.Pdb.csproj" />
+    <Content Include="3rdPlugin\JsonDotNet20\license.txt" />
+    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.dll" />
+    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.dll.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.pdb" />
+    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.xml" />
+    <Content Include="3rdPlugin\JsonDotNet20\readme.txt" />
+    <Content Include="3rdPlugin\Reademe.txt" />
+    <Content Include="Common\DataDevice\readme.txt" />
+    <Content Include="Common\ResourceMgr\reademe.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3rdPlugin\ILRuntime\Editor\ILRuntimeCLRBinding.cs" />
@@ -332,15 +342,15 @@
     <Compile Include="3rdPlugin\LitJson\ParserToken.cs" />
     <Compile Include="3rdPlugin\Myjson\MyJson.cs" />
     <Compile Include="3rdPlugin\Myjson\MyJsonCompress.cs" />
-    <Compile Include="Common\DataDevice\Sqlite\Person.cs" />
-    <Compile Include="Common\DataDevice\Sqlite\SQLite.cs" />
-    <Compile Include="Common\DataDevice\Sqlite\SQLiteService.cs" />
     <Compile Include="Common\BDFrameWork.cs" />
     <Compile Include="Common\DataDevice\DataDrive.cs" />
     <Compile Include="Common\DataDevice\DataDriveServer.cs" />
     <Compile Include="Common\DataDevice\DataDrive_Service.cs" />
     <Compile Include="Common\DataDevice\GameDataMgr.cs" />
     <Compile Include="Common\DataDevice\IData.cs" />
+    <Compile Include="Common\DataDevice\Sqlite\Person.cs" />
+    <Compile Include="Common\DataDevice\Sqlite\SQLite.cs" />
+    <Compile Include="Common\DataDevice\Sqlite\SQLiteService.cs" />
     <Compile Include="Common\Event\EventType.cs" />
     <Compile Include="Common\Event\IEvent.cs" />
     <Compile Include="Common\FrameData\FrameDataHelper.cs" />
@@ -395,7 +405,6 @@
     <Compile Include="ExternUnity3D\BDeBug.cs" />
     <Compile Include="ExternUnity3D\IEnumeratorTool.cs" />
     <Compile Include="ExternUnity3D\Image.cs" />
-    <Compile Include="ExternUnity3D\Texture2D.cs" />
     <Compile Include="ExternUnity3D\TextureTools.cs" />
     <Compile Include="ExternUnity3D\UnityTools.cs" />
     <Compile Include="GameLife\GameStartAtrribute.cs" />
@@ -407,20 +416,10 @@
     <Compile Include="Tools\SimpleGenCSharpCode\TestMyClass.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="3rdPlugin\ILRuntime\ILRuntime\ILRuntime.csproj" />
-    <Content Include="3rdPlugin\ILRuntime\ILRuntime_2017_3_24.txt" />
-    <Content Include="3rdPlugin\ILRuntime\Mono.Cecil.Pdb\Mono.Cecil.Pdb.csproj" />
-    <Content Include="3rdPlugin\JsonDotNet20\license.txt" />
-    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.dll" />
-    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.dll.mdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.pdb" />
-    <Content Include="3rdPlugin\JsonDotNet20\Newtonsoft.Json.xml" />
-    <Content Include="3rdPlugin\JsonDotNet20\readme.txt" />
-    <Content Include="3rdPlugin\Reademe.txt" />
-    <Content Include="Common\DataDevice\readme.txt" />
-    <Content Include="Common\ResourceMgr\reademe.txt" />
+    <None Include="3rdPlugin\LitJson\AssemblyInfo.cs.in" />
+    <None Include="Common\HttpMgr\example.unity" />
+    <None Include="Common\ResourceMgr\example.unity" />
+    <None Include="Tools\SimpleGenCSharpCode\example.unity" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

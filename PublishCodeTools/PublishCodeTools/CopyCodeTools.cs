@@ -66,8 +66,9 @@ namespace PublishCodeTools
                 foreach (var file in files)
                 {
                     if (Path.GetExtension(file) == ".meta") continue;
-
-                    var fileName = file.Replace(d.Source, "").Replace("\\", "/");
+                    //
+                    var _source = file.Replace("\\", "/");
+                    var fileName = _source.Replace(d.Source, "");
                     var targetFileName = d.Target+"/"+ fileName;
                     //复制
                     var dir = Path.GetDirectoryName(targetFileName);
@@ -76,8 +77,9 @@ namespace PublishCodeTools
                         Directory.CreateDirectory(dir);
                     }
 
-                    Console.WriteLine(string.Format("拷贝:\n{0} \n到:\n{1}", file, targetFileName));
-                    File.Copy(file, targetFileName);
+                    
+                    Console.WriteLine(string.Format("拷贝:\n{0} \n到:\n{1}", _source, targetFileName));
+                    File.Copy(_source, targetFileName,true);
                 }                
             }
 
