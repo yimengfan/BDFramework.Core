@@ -5,8 +5,6 @@ using System.Text;
 using UnityEngine;
 using System.IO;
 using System.Collections;
-using Mono.Cecil;
-using Mono.Cecil.PE;
 using Image = UnityEngine.UI.Image;
 
 namespace BDFramework.ResourceMgr

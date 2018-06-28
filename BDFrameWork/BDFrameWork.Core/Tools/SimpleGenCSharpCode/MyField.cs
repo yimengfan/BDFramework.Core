@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mono.CompilerServices.SymbolWriter;
-
 namespace Code.Core.BDFramework.SimpleGenCSharpCode
 {
     public class MyField

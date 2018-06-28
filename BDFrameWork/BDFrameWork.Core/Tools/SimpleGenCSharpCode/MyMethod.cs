@@ -1,5 +1,4 @@
 ﻿using System;
-using Mono.CompilerServices.SymbolWriter;
 
 namespace Code.Core.BDFramework.SimpleGenCSharpCode
 {
