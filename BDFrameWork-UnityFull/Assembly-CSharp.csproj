@@ -342,6 +342,7 @@
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\Screenview\ScreenViewMgr.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\Sql\Sqlite\Person.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\Sql\Sqlite\SQLite.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\Sql\Sqlite\SqliteHelper.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\Sql\Sqlite\SQLiteService.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\UI\Attribute\AutoSetValue.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\UI\Attribute\BindData.cs" />
@@ -417,7 +418,6 @@
     <None Include="Assets\3rdPlugins\Dotween\DOTween\DOTween43.xml" />
     <None Include="Assets\Code\Lib\JsonDotNet20\Newtonsoft.Json.xml" />
     <None Include="Assets\Code\Lib\JsonDotNet20\license.txt" />
-    <None Include="Assets\Code\BDFrameWork.Core\Common\DataDrive\新建文本文档.txt" />
     <None Include="Assets\Code\DLL\JsonDotNet20\license.txt" />
     <None Include="Assets\3rdPlugins\Dotween\DemiLib\Core\Editor\DemiEditor.xml" />
     <None Include="Assets\Code\DLL\JsonDotNet20\Newtonsoft.Json.xml" />

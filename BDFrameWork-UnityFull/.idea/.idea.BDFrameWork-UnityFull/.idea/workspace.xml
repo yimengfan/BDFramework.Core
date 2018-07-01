@@ -2,87 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="647e2069-d332-45c1-ba9a-fe98aa462327" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDriven/DataDriven.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDriven/DataDriven.cs.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDriven/DataDrivenServer.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDriven/DataDrivenServer.cs.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDriven/DataDriven_Service.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDriven/DataDriven_Service.cs.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDriven/GameDataMgr.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDriven/GameDataMgr.cs.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDriven/readme.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDriven/readme.txt.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameworkData/FrameDataHelper.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameworkData/FrameWorkSetting.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameworkData/VersionData.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameworkData/VersionDataSetting.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Sql.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Sql/Sqlite/Person.cs.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Sql/Sqlite/SQLite.cs.meta" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Sql/Sqlite/SQLiteService.cs.meta" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BDFrameWork-UnityFull/.idea/contentModel.xml" afterPath="$PROJECT_DIR$/.idea/.idea.BDFrameWork-UnityFull/.idea/contentModel.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.BDFrameWork-UnityFull/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/.idea.BDFrameWork-UnityFull/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp-Editor-firstpass.csproj" afterPath="$PROJECT_DIR$/Assembly-CSharp-Editor-firstpass.csproj" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" afterPath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art.meta" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDriven.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDrive.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDrive.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDriveServer.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDriveServer.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDrive_Service.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/DataDrive_Service.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/GameDataMgr.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/GameDataMgr.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/IData.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/IData.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/Sqlite.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/Sqlite.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/Sqlite/Person.cs" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Sql/Sqlite/Person.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/Sqlite/Person.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/Sqlite/Person.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/Sqlite/SQLite.cs" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Sql/Sqlite/SQLite.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/Sqlite/SQLite.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/Sqlite/SQLite.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/Sqlite/SQLiteService.cs" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Sql/Sqlite/SQLiteService.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/Sqlite/SQLiteService.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/Sqlite/SQLiteService.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/readme.txt.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/DataDevice/readme.txt.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameData.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameworkData.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameData/FrameDataHelper.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameworkData/FrameDataHelper.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameData/FrameWorkSetting.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameworkData/FrameWorkSetting.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameData/VersionData.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameworkData/VersionData.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameData/VersionDataSetting.cs.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/FrameworkData/VersionDataSetting.cs.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDrive.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDriveServer.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/DataDrive_Service.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/GameDataMgr.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/IData.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/DataDevice/readme.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/FrameData/FrameDataHelper.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/FrameData/FrameWorkSetting.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/FrameData/VersionData.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/FrameData/VersionDataSetting.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/ResourceMgr/BGameObjectPools.cs" afterPath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/ResourceMgr/BGameObjectPools.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/ResourceMgr/BResources.cs" afterPath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/ResourceMgr/BResources.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/AViewBase.cs" afterPath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/AViewBase.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/AViewContrlBase.cs" afterPath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/AViewContrlBase.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IView.cs" afterPath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IView.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IViewControl.cs" afterPath="$PROJECT_DIR$/Assets/Code/BDFramework.Core/Common/UI/MVC/IViewControl.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/UI/Editor_UITool.cs" afterPath="$PROJECT_DIR$/Assets/Code/BDFramework.Editor/Editor/UI/Editor_UITool.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/Game/Data.meta" afterPath="$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Sql/Sqlite.meta" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/Game/Data/LocalDataBase.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/Game/Data/LocalDataBase.cs.meta" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC.cs" afterPath="$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/Contrl_MVCTest.cs" afterPath="$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/Contrl_MVCTest.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/View_MVCTest.cs" afterPath="$PROJECT_DIR$/Assets/Code/Game/Windows/Window_MVC/View_MVCTest.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Code/Game/Windows/Window_XVC.meta" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resource/AssetBundle.meta" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resource/Effect.meta" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resource/Img.meta" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resource/Model.meta" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resource/Table/Buff.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resource/Table/Buff.cs.meta" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resource/Table/Hero.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resource/Table/Hero.cs.meta" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resource/Table/Skill.cs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resource/Table/Skill.cs.meta" afterPath="" />
       <change beforePath="$PROJECT_DIR$/BDFrameWork-UnityFull.sln" afterPath="$PROJECT_DIR$/BDFrameWork-UnityFull.sln" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp-Editor-firstpass.csprojResolveAssemblyReference.cache" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp-Editor-firstpass.csprojResolveAssemblyReference.cache" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csprojResolveAssemblyReference.cache" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csprojResolveAssemblyReference.cache" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -220,7 +144,7 @@
         <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Screenview/ScreenView_HotFix_Wrapper.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="589">
-              <caret line="31" column="45" lean-forward="true" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
+              <caret line="31" column="45" lean-forward="false" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
               <folding>
                 <marker date="1529312205935" expanded="true" signature="6:231" ph="..." />
                 <marker date="1529312205935" expanded="true" signature="265:3695" ph="{...}" />
@@ -583,9 +507,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="1004" />
-    <option name="y" value="652" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="-108" />
+    <option name="y" value="687" />
     <option name="width" value="1940" />
     <option name="height" value="1100" />
   </component>
@@ -700,12 +624,12 @@
       <workItem from="1529312840548" duration="3214000" />
       <workItem from="1529391226526" duration="948000" />
       <workItem from="1530416079238" duration="374000" />
-      <workItem from="1530416469876" duration="698000" />
+      <workItem from="1530416469876" duration="1896000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12834000" />
+    <option name="totallyTimeSpent" value="14032000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -717,7 +641,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1004" y="652" width="1940" height="1100" extended-state="0" />
+    <frame x="-108" y="687" width="1940" height="1100" extended-state="1" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2137,7 +2061,7 @@
     <entry file="file://$PROJECT_DIR$/Assets/Code/BDFrameWork.Core/Common/Screenview/ScreenView_HotFix_Wrapper.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="589">
-          <caret line="31" column="45" lean-forward="true" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
+          <caret line="31" column="45" lean-forward="false" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
           <folding>
             <marker date="1529312205935" expanded="true" signature="6:231" ph="..." />
             <marker date="1529312205935" expanded="true" signature="265:3695" ph="{...}" />

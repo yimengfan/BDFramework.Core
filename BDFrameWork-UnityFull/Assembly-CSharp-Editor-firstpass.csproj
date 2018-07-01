@@ -70,7 +70,6 @@
     <None Include="Assets\3rdPlugins\Dotween\DOTween\DOTween43.xml" />
     <None Include="Assets\Code\Lib\JsonDotNet20\Newtonsoft.Json.xml" />
     <None Include="Assets\Code\Lib\JsonDotNet20\license.txt" />
-    <None Include="Assets\Code\BDFrameWork.Core\Common\DataDrive\新建文本文档.txt" />
     <None Include="Assets\Code\DLL\JsonDotNet20\license.txt" />
     <None Include="Assets\3rdPlugins\Dotween\DemiLib\Core\Editor\DemiEditor.xml" />
     <None Include="Assets\Code\DLL\JsonDotNet20\Newtonsoft.Json.xml" />

@@ -601,7 +601,11 @@
           </e>
         </e>
         <e p="Resource" t="Include">
-          <e p="Table" t="Include" />
+          <e p="Table" t="Include">
+            <e p="Buff.cs" t="Include" />
+            <e p="Hero.cs" t="Include" />
+            <e p="Skill.cs" t="Include" />
+          </e>
         </e>
       </e>
       <e p="BDFrameWork-UnityFull.sln" t="IncludeFlat" />
