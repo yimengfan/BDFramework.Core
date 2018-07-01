@@ -30,7 +30,7 @@ namespace Code.Game.Windows
         [BindData("ScrollBarValue")]
         private Text text_ScrollBarValue;
         
-        public View_MVCTest(Transform t, DataDrive_Service service) : base(t, service)
+        public View_MVCTest(Transform t, DataDriven_Service service) : base(t, service)
         {
             
         }

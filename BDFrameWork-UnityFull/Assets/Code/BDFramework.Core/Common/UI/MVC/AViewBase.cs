@@ -7,7 +7,7 @@ namespace BDFramework.UI
 {
     public class AViewBase :AIEnumeratorTaskMgr,IView
     {
-        public DataDrive_Service Model { get; private set; }
+        public DataDriven_Service Model { get; private set; }
         public Transform Transform { get; private set; }
         public void Show()
         {
@@ -19,7 +19,7 @@ namespace BDFramework.UI
             Transform.gameObject.SetActive(false);
         }
 
-        public AViewBase(Transform t ,DataDrive_Service service)
+        public AViewBase(Transform t ,DataDriven_Service service)
         {
             this.Model = service;
             this.Transform = t;

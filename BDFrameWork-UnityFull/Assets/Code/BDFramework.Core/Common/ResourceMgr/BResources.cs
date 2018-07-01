@@ -5,28 +5,28 @@ using System;
 using System.Collections.Generic;
 public class BResources : MonoBehaviour 
 {
-    static bool _isAssetBundleModel =true;
+    static bool isAssetBundleModel =true;
 
     public static bool IsAssetBundleModel
     {
-        get { return _isAssetBundleModel; }
+        get { return isAssetBundleModel; }
         set
         {
-            _isAssetBundleModel = value;
-            if (_isAssetBundleModel)
+            isAssetBundleModel = value;
+            if (isAssetBundleModel)
             {
-                mResMgr = mAssetBundleMgr;
+                ResMgr = mAssetBundleMgr;
              
                  BDebug.Log("切换到:热更新加载模式");
             }
             else
             {
-                mResMgr = mRousourcesMgr;
+                ResMgr = mRousourcesMgr;
                  BDebug.Log("切换到:正常加载模式");
             }
         }
     }
-    static public IResMgr mResMgr {get;set;}
+    static public IResMgr ResMgr {get;set;}
 
 
     static private IResMgr mAssetBundleMgr = new AssetBundleMgr();
@@ -40,18 +40,18 @@ public class BResources : MonoBehaviour
         if (IsAssetBundleModel)
         {
             //实例化为ab加载管理
-            mResMgr = mRousourcesMgr;
+            ResMgr = mRousourcesMgr;
         }
         else
         {
             //实例化为封装系统实例化接口
-            mResMgr = mAssetBundleMgr;
+            ResMgr = mAssetBundleMgr;
         }
        
 
 
     }
-    static string mLoadPath;
+    static string loadPath;
     public static void SetLocalPath(string path)
     {
          BDebug.Log(string.Format("设置加载路径为：{0}", path));
@@ -65,7 +65,7 @@ public class BResources : MonoBehaviour
 
    public static  void LoadManifestAsync(string path, Action<bool> callback)
     {
-        mResMgr.LoadManifestAsync(path, callback);
+        ResMgr.LoadManifestAsync(path, callback);
     }
     /// <summary>
     /// 同步加载
@@ -75,7 +75,7 @@ public class BResources : MonoBehaviour
     /// <returns></returns>
     public static T Load<T>(string name) where T : UnityEngine.Object
     {
-        return mResMgr.Load<T>(name);
+        return ResMgr.Load<T>(name);
     }
     /// <summary>
     /// 异步加载
@@ -86,7 +86,7 @@ public class BResources : MonoBehaviour
     public  static int LoadAsync<T>(string objName, Action<bool, T> action) where T : UnityEngine.Object
     {
 
-       return  mResMgr.LoadAsync<T>(objName, action);
+       return  ResMgr.LoadAsync<T>(objName, action);
     }
 
     /// <summary>
@@ -96,7 +96,7 @@ public class BResources : MonoBehaviour
     /// <param name="action"></param>
     public static int LoadAsync(IList<string> objlist, Action<IDictionary<string, UnityEngine.Object>> action)
     {
-        return mResMgr.LoadAsync(objlist,action);
+        return ResMgr.LoadAsync(objlist,action);
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ public class BResources : MonoBehaviour
     /// <param name="action"></param>
     public static int LoadAsync(IList<string> objlist, Action<string, UnityEngine.Object> action)
     {
-        return mResMgr.LoadAsync(objlist, action);
+        return ResMgr.LoadAsync(objlist, action);
     }
     /// <summary>
     /// 卸载某个gameobj
@@ -116,14 +116,14 @@ public class BResources : MonoBehaviour
     {
         if(string.IsNullOrEmpty(path))
             return;
-        mResMgr.UnloadAsset(path, isUnloadIsUsing);
+        ResMgr.UnloadAsset(path, isUnloadIsUsing);
     }
     /// <summary>
     /// 卸载所有的
     /// </summary>
     public static void UnloadAll()
     {
-        mResMgr.UnloadAllAsset();
+        ResMgr.UnloadAllAsset();
  
     }
 
@@ -138,7 +138,7 @@ public class BResources : MonoBehaviour
     /// </summary>
     public static void LoadCancel(int id )
     {
-        mResMgr.LoadCancel(id);
+        ResMgr.LoadCancel(id);
     }
     
 
@@ -147,14 +147,14 @@ public class BResources : MonoBehaviour
     /// </summary>
     public static void LoadCancel()
     {
-        mResMgr.LoadAllCalcel();
+        ResMgr.LoadAllCalcel();
     }
 
     void Update()
     {
-        if (mResMgr != null)
+        if (ResMgr != null)
         {
-            mResMgr.Update();
+            ResMgr.Update();
         }
     }
 

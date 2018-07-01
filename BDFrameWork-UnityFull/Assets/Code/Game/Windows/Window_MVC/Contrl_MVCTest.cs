@@ -5,7 +5,7 @@ namespace Code.Game.Windows.MCX
 {
     public class ViewContrl_MVCTest : AViewContrlBase
     {
-        public ViewContrl_MVCTest(DataDrive_Service data) : base(data)
+        public ViewContrl_MVCTest(DataDriven_Service data) : base(data)
         {
             
         }      

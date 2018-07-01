@@ -9,7 +9,7 @@ public class BGameObjectPools
     public class GameObjectRecord
     {
         private GameObject source = null;
-        List<int> unUseList = new List<int>();
+        List<int> unuseList = new List<int>();
         List<GameObject> gameobjList = new List<GameObject>();
 
         public GameObjectRecord(string name )
@@ -19,12 +19,12 @@ public class BGameObjectPools
         //
         public void GetObject(Action<int,GameObject> callback)
         {
-            if(unUseList.Count <= 0)
+            if(unuseList.Count <= 0)
             {
                 AddObject();
             }
-            var id = unUseList[0];
-            unUseList.RemoveAt(0);
+            var id = unuseList[0];
+            unuseList.RemoveAt(0);
             callback(id, gameobjList[id]);
         }
         //
@@ -34,12 +34,12 @@ public class BGameObjectPools
             gameobj.SetActive(false);
             //GameObject.Destroy(gameobj.GetComponent<EntityBase>());
           
-            unUseList.Add(id);
+            unuseList.Add(id);
         }
         //
         public void AddObject()
         {
-            unUseList.Add(gameobjList.Count);
+            unuseList.Add(gameobjList.Count);
             gameobjList.Add(GameObject.Instantiate(source));
         }
 

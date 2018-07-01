@@ -14,7 +14,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_2_1;UNITY_2017_2;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_SPATIALTRACKING;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_2_2;UNITY_2017_2;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_SPATIALTRACKING;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -45,10 +45,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>D:\Program Files\Unity 2017.2.1 p4\Editor\Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>D:\Program Files\Unity 2017 2.2\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>D:/Program Files/Unity 2017.2.1 p4/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>D:/Program Files/Unity 2017 2.2/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -306,20 +306,16 @@
     <Compile Include="Assets\Code\BDFrameWork.Core\3rdPlugin\Myjson\MyJson.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\3rdPlugin\Myjson\MyJsonCompress.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\BDFrameWork.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDevice\DataDrive.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDevice\DataDrive_Service.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDevice\DataDriveServer.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDevice\GameDataMgr.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDevice\IData.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDevice\Sqlite\Person.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDevice\Sqlite\SQLite.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDevice\Sqlite\SQLiteService.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDriven\DataDriven.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDriven\DataDriven_Service.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDriven\DataDrivenServer.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\DataDriven\GameDataMgr.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\Event\EventType.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\Event\IEvent.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\FrameData\FrameDataHelper.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\FrameData\FrameWorkSetting.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\FrameData\VersionData.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\Common\FrameData\VersionDataSetting.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\FrameworkData\FrameDataHelper.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\FrameworkData\FrameWorkSetting.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\FrameworkData\VersionData.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\FrameworkData\VersionDataSetting.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\HttpMgr\HttpClient.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\HttpMgr\HttpData.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\HttpMgr\HttpLayer.cs" />
@@ -344,6 +340,9 @@
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\Screenview\ScreenViewCenter.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\Screenview\ScreenViewEnum.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\Screenview\ScreenViewMgr.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\Sql\Sqlite\Person.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\Sql\Sqlite\SQLite.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\Common\Sql\Sqlite\SQLiteService.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\UI\Attribute\AutoSetValue.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\UI\Attribute\BindData.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\UI\Attribute\ValueType.cs" />
@@ -363,7 +362,7 @@
     <Compile Include="Assets\Code\BDFrameWork.Core\Common\UI\WinEnum.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\ExternCSharp\File.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\ExternUnity3D\AIEnumeratorMgr.cs" />
-    <Compile Include="Assets\Code\BDFrameWork.Core\ExternUnity3D\BDebug.cs" />
+    <Compile Include="Assets\Code\BDFrameWork.Core\ExternUnity3D\BDeBug.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\ExternUnity3D\IEnumeratorTool.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\ExternUnity3D\Image.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Core\ExternUnity3D\TextureTools.cs" />
@@ -389,7 +388,6 @@
     <Compile Include="Assets\Code\BDFrameWork.Logic\UIWidget\LoopScrollView\Code\LoopVerticalScrollRect.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Logic\UIWidget\LoopScrollView\Demo\Test\LoopScrollTest.cs" />
     <Compile Include="Assets\Code\BDFrameWork.Logic\UIWidget\Paginator\Widget_Paginator.cs" />
-    <Compile Include="Assets\Code\Game\Data\LocalDataBase.cs" />
     <Compile Include="Assets\Code\Game\GameStartTest.cs" />
     <Compile Include="Assets\Code\Game\ScreenView\ScreenView_Demo1_Screenview.cs" />
     <Compile Include="Assets\Code\Game\ScreenView\ScreenView_Demo2_Windows.cs" />
@@ -402,7 +400,7 @@
     <Compile Include="Assets\Resource\Table\Buff.cs" />
     <Compile Include="Assets\Resource\Table\Hero.cs" />
     <Compile Include="Assets\Resource\Table\Skill.cs" />
-    <None Include="Assets\Code\BDFrameWork.Core\Common\DataDevice\readme.txt" />
+    <None Include="Assets\Code\BDFrameWork.Core\Common\DataDriven\readme.txt" />
     <None Include="Assets\3rdPlugins\Dotween\DOTweenPro\readme.txt" />
     <None Include="Assets\Code\BDFrameWork.Core\3rdPlugin\JsonDotNet20\readme.txt" />
     <None Include="Assets\3rdPlugins\Dotween\DemiLib\Core\DemiLib.xml" />
@@ -419,87 +417,88 @@
     <None Include="Assets\3rdPlugins\Dotween\DOTween\DOTween43.xml" />
     <None Include="Assets\Code\Lib\JsonDotNet20\Newtonsoft.Json.xml" />
     <None Include="Assets\Code\Lib\JsonDotNet20\license.txt" />
+    <None Include="Assets\Code\BDFrameWork.Core\Common\DataDrive\新建文本文档.txt" />
     <None Include="Assets\Code\DLL\JsonDotNet20\license.txt" />
     <None Include="Assets\3rdPlugins\Dotween\DemiLib\Core\Editor\DemiEditor.xml" />
     <None Include="Assets\Code\DLL\JsonDotNet20\Newtonsoft.Json.xml" />
     <None Include="Assets\3rdPlugins\Dotween\readme_DOTweenPro.txt" />
     <Reference Include="UnityEngine.UI">
-      <HintPath>D:/Program Files/Unity 2017.2.1 p4/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+      <HintPath>D:/Program Files/Unity 2017 2.2/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
-      <HintPath>D:/Program Files/Unity 2017.2.1 p4/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+      <HintPath>D:/Program Files/Unity 2017 2.2/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
-      <HintPath>D:/Program Files/Unity 2017.2.1 p4/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+      <HintPath>D:/Program Files/Unity 2017 2.2/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>D:/Program Files/Unity 2017.2.1 p4/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>G:\BDFramework.Core\BDFrameWork-UnityFull\Library\resharper-unity-libs\nunit3.5.0\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Timeline">
-      <HintPath>D:/Program Files/Unity 2017.2.1 p4/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
+      <HintPath>D:/Program Files/Unity 2017 2.2/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIAutomation">
-      <HintPath>D:/Program Files/Unity 2017.2.1 p4/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
+      <HintPath>D:/Program Files/Unity 2017 2.2/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.GoogleAudioSpatializer">
-      <HintPath>D:/Program Files/Unity 2017.2.1 p4/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
+      <HintPath>D:/Program Files/Unity 2017 2.2/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
-      <HintPath>D:/Program Files/Unity 2017.2.1 p4/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+      <HintPath>D:/Program Files/Unity 2017 2.2/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>D:/Program Files/Unity 2017.2.1 p4/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+      <HintPath>D:/Program Files/Unity 2017 2.2/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="DemiLib">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DemiLib/Core/DemiLib.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DemiLib/Core/DemiLib.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DOTween/DOTween.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DOTween43">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DOTween/DOTween43.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DOTween/DOTween43.dll</HintPath>
     </Reference>
     <Reference Include="DOTween46">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DOTween/DOTween46.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DOTween/DOTween46.dll</HintPath>
     </Reference>
     <Reference Include="DOTween50">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DOTween/DOTween50.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DOTween/DOTween50.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DOTweenPro/DOTweenPro.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/3rdPlugins/Dotween/DOTweenPro/DOTweenPro.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/BDFrameWork.Core/3rdPlugin/JsonDotNet20/Newtonsoft.Json.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/Code/BDFrameWork.Core/3rdPlugin/JsonDotNet20/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Excel">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/DLL/Excel/Excel.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/Code/DLL/Excel/Excel.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/DLL/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/Code/DLL/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="System.Data">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/DLL/Excel/System.Data.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/Code/DLL/Excel/System.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/DLL/JsonDotNet20/Newtonsoft.Json.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/Code/DLL/JsonDotNet20/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Excel">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/Lib/Excel/Excel.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/Code/Lib/Excel/Excel.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/Lib/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/Code/Lib/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="System.Data">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/Lib/Excel/System.Data.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/Code/Lib/Excel/System.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>E:/github/BDFramework-Unity3d/BDFrameWork-UnityFull/Assets/Code/Lib/JsonDotNet20/Newtonsoft.Json.dll</HintPath>
+      <HintPath>G:/BDFramework.Core/BDFrameWork-UnityFull/Assets/Code/Lib/JsonDotNet20/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/Administrator/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
-      <HintPath>C:/Users/Administrator/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

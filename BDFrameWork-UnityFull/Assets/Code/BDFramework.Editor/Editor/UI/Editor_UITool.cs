@@ -42,7 +42,7 @@ public override [return type] [method name] ([params])
 
             MyMethod construct = new MyMethod();
             construct.OverwriteContent(@"//[Note]
-        public  [method name](Transform t, DataDrive_Service service) : base(t, service)
+        public  [method name](Transform t, DataDriven_Service service) : base(t, service)
         {
             
         }");
@@ -73,7 +73,7 @@ public override [return type] [method name] ([params])
             mc.AddNameSpace(new string[2] { "BDFramework.UI", "UnityEngine" });
             mc.SetSelfNameSpace("Code.Game.Windows.MCX"); MyMethod construct = new MyMethod();
             construct.OverwriteContent(@"//[Note]
-        public [method name](DataDrive_Service data) : base(data)
+        public [method name](DataDriven_Service data) : base(data)
         {
             
         } ");

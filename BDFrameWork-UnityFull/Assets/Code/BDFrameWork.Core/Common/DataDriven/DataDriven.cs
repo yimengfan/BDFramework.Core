@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 
-abstract public class ADataDrive
+abstract public class ADataDriven
 {
     public class CallBackCache
     {
@@ -22,7 +22,7 @@ abstract public class ADataDrive
     /// 注册事件缓存
     /// </summary>
     protected Dictionary<string,List<object>> valueCacheMap;
-    public ADataDrive()
+    public ADataDriven()
     {
         dataMap = new Dictionary<string, object>();
         callbackMap = new Dictionary<string,CallBack>();

@@ -77,9 +77,8 @@ public class SQLiteService
         }
 
 
-        Debug.Log("open db:" + dbName);
+        BDebug.Log("open db:" + dbName);
         DB = new SQLiteConnection(dbName, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-      //  Debug.Log("Final PATH: " + dbPath);
     }
 
 
@@ -105,72 +104,9 @@ public class SQLiteService
         DB.InsertAll(objects);
     }
     
-//    public void CreateDB<T>()
-//    {
-//        DB.DropTable<T>();
-//        DB.CreateTable<T>();
-//
-//        DB.InsertAll(new[]
-//        {
-//            new Person
-//            {
-//                Id = 1,
-//                Name = "Tom",
-//                Surname = "Perez",
-//                Age = 56
-//            },
-//            new Person
-//            {
-//                Id = 2,
-//                Name = "Fred",
-//                Surname = "Arthurson",
-//                Age = 16
-//            },
-//            new Person
-//            {
-//                Id = 3,
-//                Name = "John",
-//                Surname = "Doe",
-//                Age = 25
-//            },
-//            new Person
-//            {
-//                Id = 4,
-//                Name = "Roberto",
-//                Surname = "Huertas",
-//                Age = 37
-//            }
-//        });
-//    }
 
     public TableQuery<T> GetTable<T>() where T : new()
     {
         return DB.Table<T>();
-    }
-//    public IEnumerable<Person> GetPersons()
-//    {
-//        return DB.Table<Person>();
-//    }
-
-    public IEnumerable<Person> GetPersonsNamedRoberto()
-    {
-        return DB.Table<Person>().Where(x => x.Name == "Roberto" && x.Age == 11);
-    }
-
-    public Person GetJohnny()
-    {
-        return DB.Table<Person>().Where(x => x.Name == "Johnny").FirstOrDefault();
-    }
-
-    public Person CreatePerson()
-    {
-        var p = new Person
-        {
-            Name = "Johnny",
-            Surname = "Mnemonic",
-            Age = 21
-        };
-        DB.Insert(p);
-        return p;
     }
 }

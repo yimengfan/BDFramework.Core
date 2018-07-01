@@ -5,7 +5,7 @@ namespace BDFramework.UI
 {
     public interface IView
     {
-        DataDrive_Service Model { get; }
+        DataDriven_Service Model { get; }
  
         Transform Transform { get; }
 

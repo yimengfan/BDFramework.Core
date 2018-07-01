@@ -28,7 +28,7 @@ public class Window_MVC : AWindow
     {
         base.Init();
         //绑定一个
-        var dataDriver = DataDriveServer.Create("XVCTest");
+        var dataDriver = DataDrivenServer.Create("XVCTest");
         var mvc =  MVCBind.Create("XVCTest", new ViewContrl_MVCTest(dataDriver), new View_MVCTest(Transform, dataDriver));
      
     }

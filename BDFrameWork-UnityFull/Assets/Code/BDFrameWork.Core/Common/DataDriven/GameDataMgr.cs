@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BDFramework.Mgr;
+
 
 /// <summary>
-/// 做数据驱动服务
+/// 游戏数据管理
 /// </summary>
-public class DataDrive_Service : ADataDrive
+public class GameDataMgr: MgrBase<GameDataMgr>
 {
-
 }
 
