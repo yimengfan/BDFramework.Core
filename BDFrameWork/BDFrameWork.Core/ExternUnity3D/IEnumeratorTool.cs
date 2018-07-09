@@ -37,7 +37,7 @@ public class IEnumeratorTool : MonoBehaviour
 
 
     /// <summary>
-    /// 任务队列
+    /// 立即执行 任务队列
     /// </summary>
     static Queue<ActionTask> actionTaskQueueImmediately = new Queue<ActionTask>();
     /// <summary>
@@ -57,20 +57,20 @@ public class IEnumeratorTool : MonoBehaviour
     }
 
     //
-    static Dictionary<int, IEnumerator> m_IEnumeratorDictionary = new Dictionary<int, IEnumerator>();
+    static Dictionary<int, IEnumerator> IEnumeratorDictionary = new Dictionary<int, IEnumerator>();
     static Dictionary<int, Coroutine> CoroutineDictionary = new Dictionary<int, Coroutine>();
-    static Queue<int> m_IEnumeratorQueue = new Queue<int>();
+    static Queue<int> IEnumeratorQueue = new Queue<int>();
     static int counter = -1;
-    static public new int StartCoroutine (IEnumerator ie)
+    static public  int IStartCoroutine (IEnumerator ie)
     {
         counter++;
-        m_IEnumeratorQueue.Enqueue(counter);
-        m_IEnumeratorDictionary[counter] = ie;
+        IEnumeratorQueue.Enqueue(counter);
+        IEnumeratorDictionary[counter] = ie;
         return counter;
     }
 
     static Queue<int> StopIEIdQueue = new Queue<int>();
-    static public void StopCoroutine(int id)
+    static public void IStopCoroutine(int id)
     {
         StopIEIdQueue.Enqueue(id);
     }
@@ -93,7 +93,7 @@ public class IEnumeratorTool : MonoBehaviour
     /// <param name="action"></param>
    static public void WaitingForExec(float f, Action action)
     {
-        StartCoroutine(IE_WaitingForExec(f, action));
+        IStartCoroutine(IE_WaitingForExec(f, action));
     }
 
   static  private IEnumerator IE_WaitingForExec(float f, Action action)
@@ -130,11 +130,11 @@ public class IEnumeratorTool : MonoBehaviour
         }
 
         //携程循环
-        if (m_IEnumeratorQueue.Count > 0) {
-            var id = m_IEnumeratorQueue.Dequeue();
+        if (IEnumeratorQueue.Count > 0) {
+            var id = IEnumeratorQueue.Dequeue();
             //取出携程
-            var ie = m_IEnumeratorDictionary[id];
-            m_IEnumeratorDictionary.Remove(id);
+            var ie = IEnumeratorDictionary[id];
+            IEnumeratorDictionary.Remove(id);
             //执行携程
             var coroutine = base.StartCoroutine(ie);
 

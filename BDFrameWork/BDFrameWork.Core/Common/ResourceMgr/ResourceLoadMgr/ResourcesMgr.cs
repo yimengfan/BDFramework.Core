@@ -154,7 +154,7 @@ namespace BDFramework.ResourceMgr
                 }
                 else
                 {
-                    IEnumeratorTool.StartCoroutine(IELoadAsync<T>(objName, (bool b, T t) =>
+                    IEnumeratorTool.IStartCoroutine(IELoadAsync<T>(objName, (bool b, T t) =>
                      {
                         //判断任务结束
                         task.EndTask();

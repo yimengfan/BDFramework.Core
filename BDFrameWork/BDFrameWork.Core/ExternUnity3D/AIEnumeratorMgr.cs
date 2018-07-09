@@ -21,19 +21,19 @@ namespace BDFramework
 
         public int StartCroutine(IEnumerator ie)
         {
-            return IEnumeratorTool.StartCoroutine(ie);
+            return IEnumeratorTool.IStartCoroutine(ie);
         }
 
         public void StopCoroutine(int id)
         {
-            IEnumeratorTool.StopCoroutine(id);
+            IEnumeratorTool.IStopCoroutine(id);
         }
 
         public void StopAllCroutine()
         {
             foreach (var id in this.curExecTaskIds)
             {
-                IEnumeratorTool.StopCoroutine(id);
+                IEnumeratorTool.IStopCoroutine(id);
             }
         }
    }
