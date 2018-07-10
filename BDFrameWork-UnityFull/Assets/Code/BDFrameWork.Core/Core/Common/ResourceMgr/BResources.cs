@@ -3,6 +3,8 @@ using System.Collections;
 using BDFramework.ResourceMgr;
 using System;
 using System.Collections.Generic;
+using Object = UnityEngine.Object;
+
 public class BResources : MonoBehaviour 
 {
     static bool isAssetBundleModel =true;
@@ -65,7 +67,7 @@ public class BResources : MonoBehaviour
 
    public static  void LoadManifestAsync(string path, Action<bool> callback)
     {
-        ResMgr.LoadManifestAsync(path, callback);
+        ResMgr.AsyncLoadManifest(path, callback);
     }
     /// <summary>
     /// 同步加载
@@ -77,37 +79,28 @@ public class BResources : MonoBehaviour
     {
         return ResMgr.Load<T>(name);
     }
+    
     /// <summary>
     /// 异步加载
     /// </summary>
     /// <typeparam name="T">类型</typeparam>
     /// <param name="objName">名称</param>
     /// <param name="action">回调函数</param>
-    public  static int LoadAsync<T>(string objName, Action<bool, T> action) where T : UnityEngine.Object
+    public  static int AsyncLoadSource<T>(string objName, Action<bool, T> action) where T : UnityEngine.Object
     {
-
-       return  ResMgr.LoadAsync<T>(objName, action);
+       return  ResMgr.AsyncLoadSource<T>(objName, action);
     }
 
     /// <summary>
     /// 批量加载
     /// </summary>
     /// <param name="objlist"></param>
-    /// <param name="action"></param>
-    public static int LoadAsync(IList<string> objlist, Action<IDictionary<string, UnityEngine.Object>> action)
+    /// <param name="onLoadEnd"></param>
+    public static int AsyncLoadSources(IList<string> objlist, Action<int,int> onProcess= null, Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null )
     {
-        return ResMgr.LoadAsync(objlist,action);
+        return ResMgr.AsyncLoadSources(objlist,onLoadEnd ,onProcess);
     }
 
-    /// <summary>
-    /// 批量加载
-    /// </summary>
-    /// <param name="objlist"></param>
-    /// <param name="action"></param>
-    public static int LoadAsync(IList<string> objlist, Action<string, UnityEngine.Object> action)
-    {
-        return ResMgr.LoadAsync(objlist, action);
-    }
     /// <summary>
     /// 卸载某个gameobj
     /// </summary>

@@ -8,6 +8,7 @@ using System.Collections;
 using Mono.Cecil;
 using Mono.Cecil.PE;
 using Image = UnityEngine.UI.Image;
+using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr
 {
@@ -57,12 +58,12 @@ namespace BDFramework.ResourceMgr
             set;
         }
 
-        public void LoadManifestAsync(string path, Action<bool> callback)
+        public void AsyncLoadManifest(string path, Action<bool> callback)
         {
             BDebug.Log("res 模式不需要加载依赖");
         }
 
-        public void LoadAssetBundleAsync(string path, Action<bool> sucessCallback)
+        public void AsyncLoadAssetBundle(string path, Action<bool> sucessCallback)
         {
 
         }
@@ -80,14 +81,8 @@ namespace BDFramework.ResourceMgr
                 {
 
                     var obj = objsMap[name];
-
-//                    if (obj is GameObject)
-//                    {
-//                        GameObject.DestroyImmediate(obj);
-//                    }
-//                    //
+                   //
                     objsMap.Remove(name);
-                    // GC.Collect();
                     Resources.UnloadUnusedAssets();
                 }
             }
@@ -107,7 +102,7 @@ namespace BDFramework.ResourceMgr
             GC.Collect();
         }
 
-        public T LoadResFormAssetBundle<T>(string abName, string objName) where T : UnityEngine.Object
+        public T LoadFormAssetBundle<T>(string abName, string objName) where T : UnityEngine.Object
         {
             return null;
         }
@@ -127,7 +122,7 @@ namespace BDFramework.ResourceMgr
 
         }
 
-        public int LoadAsync<T>(string objName, Action<bool, T> action, bool isCreateTaskid = true) where T : UnityEngine.Object
+        public int AsyncLoadSource<T>(string objName, Action<bool, T> action, bool isCreateTaskid = true) where T : UnityEngine.Object
         {
             //创建任务序列
             int taskid = -1;
@@ -178,20 +173,20 @@ namespace BDFramework.ResourceMgr
 
         IEnumerator IELoadAsync<T>(string objName, Action<bool, T> action) where T : UnityEngine.Object
         {
-            // JDeBug.Inst.Log("执行：" + objName);
+            // JDeBug.Inst.Log("执行：" + sources);
             var res = Resources.LoadAsync<T>(objName);
             yield return res;
             if (res.isDone)
             {
 
-                //JDeBug.Inst.LogFormat("耗时:{0}  创建:{1}", watch.ElapsedMilliseconds, objName);
                 objsMap[objName] = res.asset;
                 action(true, res.asset as T);
             }
         }
 
 
-        public int LoadAsync(IList<string> objNames, Action<IDictionary<string, UnityEngine.Object>> action)
+        public int AsyncLoadSources(IList<string> sources, Action<IDictionary<string, Object>> onLoadEnd,
+            Action<int, int> onProcess)
         {
             var taskid = CreateTaskHash();
             taskHashSet.Add(taskid);
@@ -200,67 +195,18 @@ namespace BDFramework.ResourceMgr
             //
             List<int> ids = new List<int>();
             //标记任务回调
-            int taskIndex = 0;
-            int count = objNames.Count;
-            foreach (var obj in objNames)
+            int curTaskCount = 0;
+            foreach (var obj in sources)
             {
-
                 var curtask = obj;
-                var id = LoadAsync<UnityEngine.Object>(curtask, (bool b, UnityEngine.Object o) =>
+                var id = AsyncLoadSource<Object>(curtask, (b, o) =>
                 {
-                      //加入列表
-                      resmap[curtask] = o;
-                      //查询是否可以继续
-                      if (taskHashSet.Contains(taskid) == false)
-                      {
-                        foreach (var _id in ids)
-                        {
-                            if (taskHashSet.Contains(_id))
-                            {
-                                taskHashSet.Remove(_id);
-                            }
-                        }
-                      }
-
-                    taskIndex++;
-                  //判断是否加载完
-                    if (taskIndex == count)
-                    {
-                        action(resmap);
-                    }
-
-                });
-
-                ids.Add(id);
-            }
-
-            return taskid;
-        }
-        /// <summary>
-        /// 实时返回进度
-        /// </summary>
-        /// <param name="objName"></param>
-        /// <param name="processAction"></param>
-        /// <returns></returns>
-        public int LoadAsync(IList<string> objNames, Action<string, UnityEngine.Object> processAction)
-        {
-            var taskid = CreateTaskHash();
-            taskHashSet.Add(taskid);
-            //所有任务的id
-            List<int> ids = new List<int>();
-            //标记任务回调
-            int taskIndex = 0;
-            int count = objNames.Count;
-            foreach (var obj in objNames)
-            {
-
-                var curtask = obj;
-                var id = LoadAsync<UnityEngine.Object>(curtask, (bool b, UnityEngine.Object o) =>
-                {
+                    curTaskCount++;
+                    //加入列表
+                    resmap[curtask] = o;
                     //查询是否可以继续
                     if (taskHashSet.Contains(taskid) == false)
                     {
-                        //移除所有任务的id
                         foreach (var _id in ids)
                         {
                             if (taskHashSet.Contains(_id))
@@ -268,13 +214,17 @@ namespace BDFramework.ResourceMgr
                                 taskHashSet.Remove(_id);
                             }
                         }
-
+                    }              
+                    //进度通知
+                    else if (onProcess != null)
+                    {
+                        onProcess(curTaskCount, sources.Count);
                     }
-
-                    taskIndex++;
                     //判断是否加载完
-                    processAction(curtask, o);
-
+                    if (onLoadEnd!= null && curTaskCount >=  ids.Count)
+                    {
+                      onLoadEnd(resmap);
+                    }
                 });
 
                 ids.Add(id);
@@ -282,6 +232,8 @@ namespace BDFramework.ResourceMgr
 
             return taskid;
         }
+
+        
         public void Update()
         {
             //异步回调表处理
@@ -290,7 +242,7 @@ namespace BDFramework.ResourceMgr
                 var curtask = asyncTaskList[0];
 
                 //刷出一个正在执行的任务
-                while (curtask.mCurState == AsyncTask.state.End)
+                while (curtask.CurState == AsyncTask.state.End)
                 {
                     asyncTaskList.RemoveAt(0);
                     //移除表
@@ -304,7 +256,7 @@ namespace BDFramework.ResourceMgr
                     else return;
                 }
                 //
-                switch (curtask.mCurState)
+                switch (curtask.CurState)
                 {
                     case AsyncTask.state.Waiting:
                         //有id的task需要判断是否存在task列表中

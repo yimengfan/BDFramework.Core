@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr
 {
@@ -23,13 +24,13 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        void LoadManifestAsync(string path,Action<bool> callback);
+        void AsyncLoadManifest(string path,Action<bool> callback);
         /// <summary>
         /// 加载ab
         /// </summary>
         /// <param name="path"></param>
         /// <param name="sucessCallback"></param>
-        void LoadAssetBundleAsync(string path,Action<bool>sucessCallback);
+        void AsyncLoadAssetBundle(string path,Action<bool>sucessCallback);
         /// <summary>
         /// 同步加载ab
         /// </summary>
@@ -53,7 +54,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="abName"></param>
         /// <param name="objName"></param>
         /// <returns></returns>
-        T LoadResFormAssetBundle<T>(string abName, string objName) where T : UnityEngine.Object;
+        T LoadFormAssetBundle<T>(string abName, string objName) where T : UnityEngine.Object;
         /// <summary>
         /// 加载资源
         /// </summary>
@@ -69,23 +70,19 @@ namespace BDFramework.ResourceMgr
         /// <param name="objName"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        int LoadAsync<T>(string objName, Action<bool, T> action, bool isCreateTaskid = true) where T : UnityEngine.Object;
+        int AsyncLoadSource<T>(string objName, Action<bool, T> action, bool isCreateTaskid = true) where T : UnityEngine.Object;
 
         /// <summary>
         /// 异步加载资源表
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="objName"></param>
-        /// <param name="action"></param>
+        /// <param name="sources"></param>
+        /// <param name="onLoadEnd"></param>
+        /// <param name="onProcess"></param>
         /// <returns></returns>
-        int LoadAsync(IList<string> objName, Action<IDictionary<string, UnityEngine.Object>> action);
-        /// <summary>
-        /// 实时返回进度
-        /// </summary>
-        /// <param name="objName"></param>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        int LoadAsync(IList<string> objName, Action<string, UnityEngine.Object> processAction);
+        int AsyncLoadSources(IList<string> sources, Action<IDictionary<string, Object>> onLoadEnd,
+            Action<int, int> onProcess);
+
         /// <summary>
         /// 取消一个加载任务
         /// </summary>
