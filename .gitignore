@@ -60,3 +60,8 @@
 /PublishCodeTools/.vs/PublishCodeTools/v15/.suo
 /PublishCodeTools/.vs/PublishCodeTools/v15/Server/sqlite3/db.lock
 /PublishCodeTools/.vs/PublishCodeTools/v15/Server/sqlite3/storage.ide
+/BDFrameWork-UnityFull/*.cmdline
+/BDFrameWork-UnityFull/*.err
+/BDFrameWork-UnityFull/*.out
+/BDFrameWork-UnityFull/*.tmp
+/BDFrameWork-UnityFull/*.csproj
