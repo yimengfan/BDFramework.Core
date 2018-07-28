@@ -22,7 +22,7 @@ unity版本：2018.2f3
 ### 游戏Timeline:
 1.ScreenView状态机：[点击](http://) （未完成）
 ### UI工作流:
-1.psd2ugui：prefab生成方式自行选择 [点击](http://) 未完成
+1.psd2ugui：prefab生成方式自行选择
 <br>2.ui编辑器:数据、事件自动绑定[点击](http://) （未完成）
 <br>3.数据编辑器: excel自动一键生成脚本，自动转存SqlLite，本地数据完全使用sql查询 [点击](http://) （未完成）
 ### 热更新:
