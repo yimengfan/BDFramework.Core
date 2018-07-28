@@ -20,7 +20,7 @@ unity版本：2018.2f3
 ### 管理器:
 1.管理器与自动注册：业务自动注册到管理器. [点击](https://zhuanlan.zhihu.com/p/40751037)
 ### 游戏Timeline:
-1.ScreenView状态机：[点击](http://) （未完成）
+1.ScreenView状态机：[点击](https://zhuanlan.zhihu.com/p/40755348)
 ### UI工作流:
 1.psd2ugui：prefab生成方式自行选择
 <br>2.ui编辑器:数据、事件自动绑定[点击](http://) （未完成）
