@@ -18,13 +18,14 @@ unity版本：2018.2f3
 # 文档 
 预计2018.8.10号前完成文档
 ### 管理器:
-1.管理器与自动注册：业务自动注册到管理器. [点击](https://zhuanlan.zhihu.com/p/40751037)
+1.管理器与业务自动.            [点击](https://zhuanlan.zhihu.com/p/40751037)
 ### 游戏Timeline:
-1.ScreenView状态机：[点击](https://zhuanlan.zhihu.com/p/40755348)
+1.ScreenView模块管理和状态机   [点击](https://zhuanlan.zhihu.com/p/40755348)
 ### UI工作流:
 1.psd2ugui：prefab生成方式自行选择
-<br>2.ui编辑器:数据、事件自动绑定[点击](http://) （未完成）
-<br>3.数据编辑器: excel自动一键生成脚本，自动转存SqlLite，本地数据完全使用sql查询 [点击](http://) （未完成）
+<br>2.UIManager和UI基础操作.   [点击](https://zhuanlan.zhihu.com/p/40766519)
+<br>3.MVC模式和UI编辑器        [点击](http://) （未完成）
+<br>4.数据处理                 [点击](http://) （未完成）
 ### 热更新:
 1.C#脚本热更及编辑器：开发跟普通一样,只需标记热更代码即可.[点击](http://) （未完成）
 <br>2.资源热更及编辑器：热更和日常开发一套API，无需来回切换.[点击](http://) （未完成）
