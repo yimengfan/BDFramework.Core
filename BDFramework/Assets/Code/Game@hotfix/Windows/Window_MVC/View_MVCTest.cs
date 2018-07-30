@@ -64,7 +64,8 @@ namespace Code.Game.Windows
             });
             
             //自动设置值测试
-            this.Model.RegAction("AutoSetValue", AutoSetDataTest);
+            this.Model.RegisterData("AutoSetValueTest");
+            this.Model.RegAction("AutoSetValueTest", AutoSetDataTest);
         }
 
         public class AutoSetData

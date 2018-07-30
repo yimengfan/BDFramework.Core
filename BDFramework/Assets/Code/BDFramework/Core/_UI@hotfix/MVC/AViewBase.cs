@@ -44,14 +44,14 @@ namespace BDFramework.UI
         /// <param name="o"></param>
         protected void AutoSetTranFormData(Transform t, object o)
         {
-            var setList = new List<AutoSetValue>(t.GetComponentsInChildren<AutoSetValue>());
+            var setList = new List<UITool_Attribute>(t.GetComponentsInChildren<UITool_Attribute>());
             
             var type = o.GetType();
             var fields =   type.GetFields();
             foreach (var f in fields)
             {
                 //获取字段一致的节点 和属性名
-                var trans = setList.Find(s => s.name == f.Name);
+                var trans = setList.Find(s => s.AutoSetValueField == f.Name);
                 var fAttr = f.GetCustomAttribute<ValueType>();
                 if (trans!= null && fAttr != null)
                 {

@@ -28,8 +28,11 @@ public class Window_MVC : AWindow
     {
         base.Init();
         //绑定一个
-        var dataDriver = DataDrivenServer.Create("XVCTest");
-        var mvc =  MVCBind.Create("XVCTest", new ViewContrl_MVCTest(dataDriver), new View_MVCTest(Transform, dataDriver));
+        var dataDriven = DataDrivenServer.Create("MVCTest");
+        //创建一个mvc模式的窗口
+        var control = new ViewContrl_MVCTest(dataDriven);
+        var view = new View_MVCTest(Transform, dataDriven);
+        var mvc =  MVCBind.Create("MVCTest",control ,view);
      
     }
 

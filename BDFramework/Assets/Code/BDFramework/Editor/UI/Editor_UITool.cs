@@ -24,17 +24,17 @@ public override [return type] [method name] ([params])
 ";
 
 
-        public static void CreateViewCS(List<RegistViewItem> itemList, string goName, string root)
+        public static void CreateViewCS(List<UITool_Attribute> itemList, string goName, string root)
         {
             MyClass mc = new MyClass("View_" + goName + ":AViewBase");
             mc.AddNameSpace(new string[2] { "BDFramework.UI", "UnityEngine" });
             mc.SetSelfNameSpace("Code.Game.Windows");
-            foreach (RegistViewItem item in itemList)
+            foreach (UITool_Attribute item in itemList)
             {
                 MyField f = new MyField();
                 f.SetType(GetUIType(item.gameObject));
                 f.SetFieldName(item.gameObject.name);
-                if (item.IsBindPath) f.AddAttribute(GetBindPath(item.gameObject, root));
+                if (item.IsAutoSetTransform) f.AddAttribute(GetBindPath(item.gameObject, root));
                 string tp = GetBindDataName(item);
                 if (!string.IsNullOrEmpty(tp)) f.AddAttribute(tp);
                 mc.AddField(f);
@@ -67,7 +67,7 @@ public override [return type] [method name] ([params])
             Debug.Log(string.Format("生成成功！路径:{0}", path));
         }
 
-        public static void CreateContrlCS(List<RegistViewItem> itemList, string goName)
+        public static void CreateContrlCS(List<UITool_Attribute> itemList, string goName)
         {
             MyClass mc = new MyClass("Contrl_" + goName + ":AViewContrlBase");
             mc.AddNameSpace(new string[2] { "BDFramework.UI", "UnityEngine" });
@@ -79,9 +79,9 @@ public override [return type] [method name] ([params])
         } ");
             construct.SetMethSign(null, "Contrl_" + goName, null);
             mc.AddMethod(construct);
-            foreach (RegistViewItem item in itemList)
+            foreach (UITool_Attribute item in itemList)
             {
-                if (string.IsNullOrEmpty(item.BindDataName)) continue;
+                if (string.IsNullOrEmpty(item.AutoBindModelData)) continue;
                 Type t = GetUIType(item.gameObject);
                 MyMethod bindData = new MyMethod();
                 string methodName = ""; string methodParams = "";
@@ -195,20 +195,20 @@ public override [return type] [method name] ([params])
             }
         }
 
-        public static void CloneValues(List<RegistViewItem> itemlist, ref List<string> nameList, ref List<bool> isBindPathList, ref List<string> bindNameList)
+        public static void CloneValues(List<UITool_Attribute> itemlist, ref List<string> nameList, ref List<bool> isBindPathList, ref List<string> bindNameList)
         {
             nameList.Clear();
             isBindPathList.Clear();
             bindNameList.Clear();
-            foreach (RegistViewItem item in itemlist)
+            foreach (UITool_Attribute item in itemlist)
             {
                 nameList.Add(item.name);
-                isBindPathList.Add(item.IsBindPath);
-                bindNameList.Add(item.BindDataName);
+                isBindPathList.Add(item.IsAutoSetTransform);
+                bindNameList.Add(item.AutoBindModelData);
             }
         }
 
-        public static bool CheckRepeatName(List<RegistViewItem> itemlist)
+        public static bool CheckRepeatName(List<UITool_Attribute> itemlist)
         {
             return itemlist.GroupBy(x => x.name).Where(x => x.Count() > 1).ToList().Count() > 0;
         }
@@ -253,11 +253,11 @@ public override [return type] [method name] ([params])
         //    return "";
         //}
 
-        public static string GetBindDataName(RegistViewItem item)
+        public static string GetBindDataName(UITool_Attribute item)
         {
-            if (!string.IsNullOrEmpty(item.BindDataName))
+            if (!string.IsNullOrEmpty(item.AutoBindModelData))
             {
-                return "BindModel(\"" + item.BindDataName.Trim() + "\")";
+                return "BindModel(\"" + item.AutoBindModelData.Trim() + "\")";
             }
             return null;
         }

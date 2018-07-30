@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.CodeDom;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace BDFramework.Editor.UI
     {
         private GameObject m_target;
         private string createName = "";
-        private List<RegistViewItem> itemList = new List<RegistViewItem>();
+        private List<UITool_Attribute> itemList = new List<UITool_Attribute>();
         private string _root;
 
         //临时存储修改的数据 没有这层 改数据会直接更新
@@ -30,15 +31,13 @@ namespace BDFramework.Editor.UI
             if (!Directory.Exists(path))
             {
                 EditorUtility.DisplayDialog("失败", string.Format("文件夹不存在:{0}", path), "ok");
-                this.Close();
-                return;
+                Directory.CreateDirectory(path);
             }
             path = Application.dataPath + "/Code/Game/Windows/Window_MVC/";
             if (!Directory.Exists(path))
             {
                 EditorUtility.DisplayDialog("失败", string.Format("文件夹不存在:{0}", path), "ok");
-                this.Close();
-                return;
+                Directory.CreateDirectory(path);
             }
         }
 
@@ -46,15 +45,15 @@ namespace BDFramework.Editor.UI
         {
             CheckPath();
             CheckTarget();
-            GUILayout.BeginHorizontal(GUILayout.Width(1070));
+            GUILayout.BeginHorizontal();
             OnGUI_WindowSelect();
-            Layout_DrawSeparatorV(Color.gray, 2);
+            Layout_DrawSeparatorV(Color.white, 2);
             OnGUI_EditorTransform();
-            Layout_DrawSeparatorV(Color.gray, 2);
+            Layout_DrawSeparatorV(Color.white, 2);
             OnGUI_EditorButton();
-            Layout_DrawSeparatorV(Color.gray, 2);
+            Layout_DrawSeparatorV(Color.white, 2);
             GUILayout.EndHorizontal();
-            Layout_DrawSeparator(Color.gray, 2);
+            Layout_DrawSeparator(Color.white, 2);
         }
 
         private void ReGetLists()
@@ -100,18 +99,21 @@ namespace BDFramework.Editor.UI
         Vector2 editorTransformPosition = Vector2.zero;
         private void OnGUI_WindowSelect()
         {
-            GUILayout.BeginVertical(GUILayout.Height(520), GUILayout.Width(120));
-            GUILayout.Label("窗口");
+           
+            GUILayout.BeginVertical();
+            GUILayout.Label("已有窗口");
             Layout_DrawSeparator(Color.gray, 2);
             pbPaths.Clear();
             Editor_UITool.FindWindows(ref pbPaths);
-            windowSelectPosition = GUILayout.BeginScrollView(windowSelectPosition, GUILayout.Width(120), GUILayout.Height(500));
             //竖列排版
+            windowSelectPosition = GUILayout.BeginScrollView(windowSelectPosition,GUILayout.Width(220));
             {
-                GUILayout.BeginVertical();
+                int count = 1;
                 foreach (KeyValuePair<string, string> kv in pbPaths)
                 {
-                    if (GUILayout.Button(kv.Key, GUILayout.Width(110)))
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(string.Format( "{0}.{1}",count,kv.Key),GUILayout.Width(150));
+                    if (GUILayout.Button("加载", GUILayout.Width(50)))
                     {
                         GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resource/Resources/" + kv.Value + ".prefab");
                         if (!prefab)
@@ -123,17 +125,20 @@ namespace BDFramework.Editor.UI
                         targetName = "";
                         CheckTarget();
                     }
+                    GUILayout.EndHorizontal();
+
                 }
-                GUILayout.EndVertical();
+               
             }
             GUILayout.EndScrollView();
+            
             GUILayout.EndVertical();
         }
 
         private void OnGUI_EditorTransform()
         {
-            GUILayout.BeginVertical(GUILayout.Height(520), GUILayout.Width(600));
-            GUILayout.Label("注册组件");
+            GUILayout.BeginVertical( GUILayout.Width(600));
+            GUILayout.Label("组件列表");
             Layout_DrawSeparator(Color.gray, 2);
             itemList.Clear();
             if (!m_target)
@@ -143,7 +148,7 @@ namespace BDFramework.Editor.UI
             }
             GetRegistViewItems(m_target.transform, ref itemList);
             //开始滚动列表
-            editorTransformPosition = GUILayout.BeginScrollView(editorTransformPosition, GUILayout.Width(600), GUILayout.Height(500));
+            editorTransformPosition = GUILayout.BeginScrollView(editorTransformPosition, GUILayout.Width(600));
             //竖列排版
             {
                 GUILayout.BeginVertical();
@@ -152,43 +157,45 @@ namespace BDFramework.Editor.UI
                 {
                     OnGUI_EditorRegistViewItem(itemList[i], i);
                 }
+                
                 GUILayout.EndVertical();
             }
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
         }
 
-        private void OnGUI_EditorRegistViewItem(RegistViewItem item, int index)
+        private void OnGUI_EditorRegistViewItem(UITool_Attribute item, int index)
         {
             GUILayout.BeginVertical();
             OnGUI_EditorItemName(item, index);
             GUI.color = Color.white;
             OnGUI_EditorItemIsBindPath(item, index);
             OnGUI_EditorItemBindData(item, index);
+            OnGUI_EditorItemAutoSetvalue(item, index);
             GUILayout.EndVertical();
             Layout_DrawSeparator(Color.gray, 2);
 
         }
 
-        private void OnGUI_EditorItemBindData(RegistViewItem item, int index)
+        private void OnGUI_EditorItemBindData(UITool_Attribute item, int index)
         {
             GUILayout.BeginHorizontal();
             string tpName = tpNameList[index];
             GUILayout.Label("绑定数据:", GUILayout.Width(70));
-            GUI.color = item.BindDataName == tpBindNameList[index] ? Color.white : Color.yellow;
+            GUI.color = item.AutoBindModelData == tpBindNameList[index] ? Color.white : Color.yellow;
             tpBindNameList[index] = GUILayout.TextField(tpBindNameList[index], GUILayout.Width(180));
             if (GUILayout.Button("保存", GUILayout.Width(70)))
             {
-                item.BindDataName = tpBindNameList[index];
+                item.AutoBindModelData = tpBindNameList[index];
                 AssetDatabase.SaveAssets();
             }
             GUILayout.EndHorizontal();
         }
 
-        private void OnGUI_EditorItemIsBindPath(RegistViewItem item, int index)
+        private void OnGUI_EditorItemIsBindPath(UITool_Attribute item, int index)
         {
             GUILayout.BeginHorizontal();
-            GUI.color = item.IsBindPath == tpIsBindList[index] ? Color.white : Color.yellow;
+            GUI.color = item.IsAutoSetTransform == tpIsBindList[index] ? Color.white : Color.yellow;
             string tp = string.Format("  自动设置节点:{0}", tpIsBindList[index] ? Editor_UITool.GetBindPath(item.gameObject, targetName) : "");
 
             tpIsBindList[index] = GUILayout.Toggle(tpIsBindList[index], "", GUILayout.Width(10));
@@ -198,13 +205,23 @@ namespace BDFramework.Editor.UI
             //GUI.color = oc;
             if (GUILayout.Button("保存", GUILayout.Width(70)))
             {
-                item.IsBindPath = tpIsBindList[index];
+                item.IsAutoSetTransform = tpIsBindList[index];
                 AssetDatabase.SaveAssets();
             }
             GUILayout.EndHorizontal();
         }
+        
+        private void OnGUI_EditorItemAutoSetvalue(UITool_Attribute item, int index)
+        {
+            GUILayout.BeginHorizontal();
+            //var oc = GUI.color;
+            //GUI.color = Color.green;
+            GUILayout.Label("自动赋值,字段名:" + item.AutoSetValueField);
+         
+            GUILayout.EndHorizontal();
+        }
 
-        private void OnGUI_EditorItemName(RegistViewItem item, int index)
+        private void OnGUI_EditorItemName(UITool_Attribute item, int index)
         {
             GUILayout.BeginHorizontal();
             string tpName = tpNameList[index];
@@ -229,11 +246,12 @@ namespace BDFramework.Editor.UI
             GUILayout.BeginVertical(GUILayout.Height(520), GUILayout.Width(350));
             GUILayout.Label("操作");
             Layout_DrawSeparator(Color.gray, 2);
-            GUILayout.Label("当前窗口GO");
+            GUILayout.Label("当前窗口Prefab:");
             m_target = (GameObject)EditorGUILayout.ObjectField(m_target, typeof(GameObject), true, GUILayout.Width(350));
-            GUILayout.Label("生成cs");
+            GUILayout.Space(10);
+            GUILayout.Label("生成窗口代码:");
             createName = EditorGUILayout.TextField(createName, GUILayout.Height(15), GUILayout.Width(100));
-            if (GUILayout.Button("创建mvc", GUILayout.Width(100)))
+            if (GUILayout.Button("创建mvc窗口代码"))
             {
                 OnCreateButtonClick();
             }
@@ -249,10 +267,10 @@ namespace BDFramework.Editor.UI
         {
             for (int i = 0; i < itemList.Count; i++)
             {
-                RegistViewItem item = itemList[i];
+                UITool_Attribute item = itemList[i];
                 item.name = tpNameList[i];
-                item.IsBindPath = tpIsBindList[i];
-                item.BindDataName = tpBindNameList[i];
+                item.IsAutoSetTransform = tpIsBindList[i];
+                item.AutoBindModelData = tpBindNameList[i];
             }
         }
 
@@ -278,9 +296,9 @@ namespace BDFramework.Editor.UI
             AssetDatabase.Refresh();
         }
 
-        private void GetRegistViewItems(Transform ts, ref List<RegistViewItem> itemList)
+        private void GetRegistViewItems(Transform ts, ref List<UITool_Attribute> itemList)
         {
-            RegistViewItem item = ts.GetComponent<RegistViewItem>();
+            UITool_Attribute item = ts.GetComponent<UITool_Attribute>();
             if (item)
             {
                 itemList.Add(item);

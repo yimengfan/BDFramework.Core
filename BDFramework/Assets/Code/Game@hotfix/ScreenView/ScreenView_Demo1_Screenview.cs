@@ -19,7 +19,6 @@ public class ScreenView_Demo1_Screenview : IScreenView
         //加载窗口, 0是窗口id,建议自行换成枚举
         UIManager.Inst.LoadWindows((int) WinEnum.Win_Test1);
         UIManager.Inst.ShowWindow((int) WinEnum.Win_Test1);
-
         Debug.Log("进入demo1");
     }
 

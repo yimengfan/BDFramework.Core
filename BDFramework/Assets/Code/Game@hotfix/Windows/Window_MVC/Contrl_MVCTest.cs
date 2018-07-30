@@ -49,8 +49,7 @@ namespace Code.Game.Windows.MCX
                 test2 = "获得值：test2",
                 name  = "获得值：张三"
             };
-            this.Model.SetData("AutoSetValue" , test);
-            Debug.Log("-..-");
+            this.Model.SetData("AutoSetValueTest" , test);
         }
         
     }
