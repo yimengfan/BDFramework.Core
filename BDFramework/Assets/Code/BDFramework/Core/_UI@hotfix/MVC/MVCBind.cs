@@ -85,7 +85,6 @@ namespace BDFramework.UI
                 {
                     var attr = _attrs.ToList().Find((a)=> a is SetTransform) as SetTransform;
                     if(attr==null) continue;
-                    Debug.Log("** :" +attr.Path);
                     //获取节点,并且获取组件
                     var trans = vTransform.Find(attr.Path);
                     if (trans == null)

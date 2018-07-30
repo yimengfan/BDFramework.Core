@@ -68,13 +68,14 @@ namespace Code.Game.Windows
             this.Model.RegAction("AutoSetValueTest", AutoSetDataTest);
         }
 
+        //
         public class AutoSetData
         {
-            [ValueType(typeof(Text))]
+            [UIComponentType("Text")]
             public string test1;
-            [ValueType(typeof(Text))]
+            [UIComponentType("Text")]
             public string test2;
-            [ValueType(typeof(Text))]
+            [UIComponentType("Text")]
             public string name;
             
         }
@@ -84,7 +85,7 @@ namespace Code.Game.Windows
         /// </summary>
         private void AutoSetDataTest(object o)
         {
-            this.AutoSetTranFormData(this.Transform.Find("AutoSetValue") , o);
+            UITools.AutoSetValue(this.Transform.Find("AutoSetValue") , o);
         }
     }
 }

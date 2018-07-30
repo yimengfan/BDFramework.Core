@@ -55,7 +55,7 @@ namespace BDFramework
 
           //绑定的初始化
           AdapterRegister.RegisterCrossBindingAdaptor(AppDomain);
-          //ILRuntime.Runtime.Generated.CLRBindings.Initialize(AppDomain);
+          ILRuntime.Runtime.Generated.CLRBindings.Initialize(AppDomain);
           ILRuntime.Runtime.Generated.CLRManualBindings.Initialize(AppDomain);
           //
           ILRuntimeDelegateHelper.Register(AppDomain);
