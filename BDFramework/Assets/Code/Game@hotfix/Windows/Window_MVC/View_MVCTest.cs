@@ -71,11 +71,11 @@ namespace Code.Game.Windows
         //
         public class AutoSetData
         {
-            [UIComponentType("Text")]
+            [UIComponentType( UIComponentEnum.Text)]
             public string test1;
-            [UIComponentType("Text")]
+            [UIComponentType(UIComponentEnum.Text)]
             public string test2;
-            [UIComponentType("Text")]
+            [UIComponentType(UIComponentEnum.Text)]
             public string name;
             
         }

@@ -69,3 +69,7 @@
 /BDFramework/tw0vylmu.err
 /BDFramework/tw0vylmu.out
 /BDFramework/tw0vylmu.tmp
+/BDFramework/*.cmdline
+/BDFramework/*.err
+/BDFramework/*.out
+/BDFramework/*.tmp
