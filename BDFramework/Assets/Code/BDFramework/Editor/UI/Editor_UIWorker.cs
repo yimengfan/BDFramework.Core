@@ -182,11 +182,11 @@ namespace BDFramework.Editor.UI
             GUILayout.BeginHorizontal();
             string tpName = tpNameList[index];
             GUILayout.Label("绑定数据:", GUILayout.Width(70));
-            GUI.color = item.AutoBindModelData == tpBindNameList[index] ? Color.white : Color.yellow;
+            GUI.color = item.GenAttitude_BindData == tpBindNameList[index] ? Color.white : Color.yellow;
             tpBindNameList[index] = GUILayout.TextField(tpBindNameList[index], GUILayout.Width(180));
             if (GUILayout.Button("保存", GUILayout.Width(70)))
             {
-                item.AutoBindModelData = tpBindNameList[index];
+                item.GenAttitude_BindData = tpBindNameList[index];
                 AssetDatabase.SaveAssets();
             }
             GUILayout.EndHorizontal();
@@ -195,7 +195,7 @@ namespace BDFramework.Editor.UI
         private void OnGUI_EditorItemIsBindPath(UITool_Attribute item, int index)
         {
             GUILayout.BeginHorizontal();
-            GUI.color = item.IsAutoSetTransform == tpIsBindList[index] ? Color.white : Color.yellow;
+            GUI.color = item.GenAttibute_TranformPath == tpIsBindList[index] ? Color.white : Color.yellow;
             string tp = string.Format("  自动设置节点:{0}", tpIsBindList[index] ? Editor_UITool.GetBindPath(item.gameObject, targetName) : "");
 
             tpIsBindList[index] = GUILayout.Toggle(tpIsBindList[index], "", GUILayout.Width(10));
@@ -205,7 +205,7 @@ namespace BDFramework.Editor.UI
             //GUI.color = oc;
             if (GUILayout.Button("保存", GUILayout.Width(70)))
             {
-                item.IsAutoSetTransform = tpIsBindList[index];
+                item.GenAttibute_TranformPath = tpIsBindList[index];
                 AssetDatabase.SaveAssets();
             }
             GUILayout.EndHorizontal();
@@ -216,7 +216,7 @@ namespace BDFramework.Editor.UI
             GUILayout.BeginHorizontal();
             //var oc = GUI.color;
             //GUI.color = Color.green;
-            GUILayout.Label("自动赋值,字段名:" + item.AutoSetValueField);
+            GUILayout.Label("自动赋值,字段名:" + item.ClassFieldName);
          
             GUILayout.EndHorizontal();
         }
@@ -269,8 +269,8 @@ namespace BDFramework.Editor.UI
             {
                 UITool_Attribute item = itemList[i];
                 item.name = tpNameList[i];
-                item.IsAutoSetTransform = tpIsBindList[i];
-                item.AutoBindModelData = tpBindNameList[i];
+                item.GenAttibute_TranformPath = tpIsBindList[i];
+                item.GenAttitude_BindData = tpBindNameList[i];
             }
         }
 

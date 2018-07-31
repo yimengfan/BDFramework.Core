@@ -34,11 +34,11 @@ namespace ILRuntime.Runtime.Generated
 
         static object get_AutoSetValueField_0(ref object o)
         {
-            return ((UITool_Attribute)o).AutoSetValueField;
+            return ((UITool_Attribute)o).ClassFieldName;
         }
         static void set_AutoSetValueField_0(ref object o, object v)
         {
-            ((UITool_Attribute)o).AutoSetValueField = (System.String)v;
+            ((UITool_Attribute)o).ClassFieldName = (System.String)v;
         }
 
 

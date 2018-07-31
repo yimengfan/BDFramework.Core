@@ -6,28 +6,28 @@ namespace Code.Game.Windows
 {
     public class View_MVCTest : AViewBase
     {
-        [SetTransform("testButton")]
+        [TransformPath("testButton")]
         private Button testButton;
         //
-        [SetTransform("testSlider")]
+        [TransformPath("testSlider")]
         private Slider testSlider;
         //
-        [SetTransform("testScrollbar")]
+        [TransformPath("testScrollbar")]
         private Scrollbar testScrollBar;
                 
-        [SetTransform("testButtonAutoSetValue")]
+        [TransformPath("testButtonAutoSetValue")]
         private Button testButtonAutoSetValue;
         //
-        [SetTransform("text_click")]
+        [TransformPath("text_click")]
         private Text text_click;
         
         
         //
-        [SetTransform("text_sliderValue")]
+        [TransformPath("text_sliderValue")]
         private Text text_sliderValue;
         //
-        [SetTransform("text_scrollBarValue")]
-        [BindData("ScrollBarValue")]
+        [TransformPath("text_scrollBarValue")]
+        [BindModel("ScrollBarValue")]
         private Text text_ScrollBarValue;
         
         
@@ -78,6 +78,18 @@ namespace Code.Game.Windows
             [UIComponentType(UIComponentEnum.Text)]
             public string name;
             
+        }
+        
+        public class Item
+        {
+            [UIComponentType(UIComponentEnum.Image)]
+            public string Icon = "xxxx.png";
+            [UIComponentType(UIComponentEnum.Text)]
+            public string ItemName = "体力丹";
+            [UIComponentType(UIComponentEnum.Text)]
+            public string ItemDes = "使用后可增加xx体力";
+            [UIComponentType(UIComponentEnum.Text)]
+            public string ItemCount = "2";
         }
         
         /// <summary>

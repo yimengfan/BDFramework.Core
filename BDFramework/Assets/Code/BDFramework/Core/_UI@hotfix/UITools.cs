@@ -42,7 +42,7 @@ static public class UITools
         foreach (var f in fields)
         {
             //获取字段一致的节点 和属性名
-            var uiAttribute = setList.Find(s => s.AutoSetValueField == f.Name);
+            var uiAttribute = setList.Find(s => s.ClassFieldName == f.Name);
             //TODO: ILRuntime里面只能这样获取，而且属性里面存的type会有问题
             var attrs = f.GetCustomAttributes(typeof(UIComponentType), false);
             var fAttr = attrs.ToList().Find(a => a is UIComponentType) as UIComponentType;

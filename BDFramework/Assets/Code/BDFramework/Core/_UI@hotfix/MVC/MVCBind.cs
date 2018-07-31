@@ -80,10 +80,10 @@ namespace BDFramework.UI
                 }
                 //1.自动获取节点
                 //TODO 热更层必须这样获取属性
-                var _attrs = f.GetCustomAttributes(typeof(SetTransform), false); //as Attribute[];
+                var _attrs = f.GetCustomAttributes(typeof(TransformPath), false); //as Attribute[];
                 if (_attrs!=null && _attrs.Length>0 )
                 {
-                    var attr = _attrs.ToList().Find((a)=> a is SetTransform) as SetTransform;
+                    var attr = _attrs.ToList().Find((a)=> a is TransformPath) as TransformPath;
                     if(attr==null) continue;
                     //获取节点,并且获取组件
                     var trans = vTransform.Find(attr.Path);
@@ -106,10 +106,10 @@ namespace BDFramework.UI
                 }
                 
                 //2.自动绑定数据驱动
-                 _attrs = f.GetCustomAttributes(typeof(BindData), false); //as Attribute[];
+                 _attrs = f.GetCustomAttributes(typeof(BindModel), false); //as Attribute[];
                 if (_attrs!=null && _attrs.Length>0 )
                 {
-                    var bAttr = _attrs.ToList().Find((a)=> a is BindData) as BindData;
+                    var bAttr = _attrs.ToList().Find((a)=> a is BindModel) as BindModel;
                     if(bAttr==null) continue;
                     var name = bAttr.Name;
                     var _Model = view.Model;
