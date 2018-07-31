@@ -25,7 +25,8 @@ unity版本：2018.2f3
 1.psd2ugui：prefab生成方式自行选择
 <br>2.UIManager和UI基础操作.   [点击](https://zhuanlan.zhihu.com/p/40766519)
 <br>3.MVC模式初探              [点击](https://zhuanlan.zhihu.com/p/40772076)
-<br>4.UI工作流工具的使用        [点击](http://) （未完成）
+<br>4.UI工作流工具的使用        [点击](https://zhuanlan.zhihu.com/p/40941129)
+<br>5.UI开发利器：UITools      [点击](https://zhuanlan.zhihu.com/p/40968876)
 <br>5.数据处理                 [点击](http://) （未完成）
 ### 热更新:
 1.C#脚本热更及编辑器：开发跟普通一样,只需标记热更代码即可.[点击](http://) （未完成）
