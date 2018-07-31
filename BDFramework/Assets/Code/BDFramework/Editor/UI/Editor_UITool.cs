@@ -34,7 +34,7 @@ public override [return type] [method name] ([params])
                 MyField f = new MyField();
                 f.SetType(GetUIType(item.gameObject));
                 f.SetFieldName(item.gameObject.name);
-                if (item.GenAttibute_TranformPath) f.AddAttribute(GetBindPath(item.gameObject, root));
+                if (item.GenAttribute_TranformPath) f.AddAttribute(GetBindPath(item.gameObject, root));
                 string tp = GetBindDataName(item);
                 if (!string.IsNullOrEmpty(tp)) f.AddAttribute(tp);
                 mc.AddField(f);
@@ -81,7 +81,7 @@ public override [return type] [method name] ([params])
             mc.AddMethod(construct);
             foreach (UITool_Attribute item in itemList)
             {
-                if (string.IsNullOrEmpty(item.GenAttitude_BindData)) continue;
+                if (string.IsNullOrEmpty(item.GenAttribute_BindData)) continue;
                 Type t = GetUIType(item.gameObject);
                 MyMethod bindData = new MyMethod();
                 string methodName = ""; string methodParams = "";
@@ -203,8 +203,8 @@ public override [return type] [method name] ([params])
             foreach (UITool_Attribute item in itemlist)
             {
                 nameList.Add(item.name);
-                isBindPathList.Add(item.GenAttibute_TranformPath);
-                bindNameList.Add(item.GenAttitude_BindData);
+                isBindPathList.Add(item.GenAttribute_TranformPath);
+                bindNameList.Add(item.GenAttribute_BindData);
             }
         }
 
@@ -255,9 +255,9 @@ public override [return type] [method name] ([params])
 
         public static string GetBindDataName(UITool_Attribute item)
         {
-            if (!string.IsNullOrEmpty(item.GenAttitude_BindData))
+            if (!string.IsNullOrEmpty(item.GenAttribute_BindData))
             {
-                return "BindModel(\"" + item.GenAttitude_BindData.Trim() + "\")";
+                return "BindModel(\"" + item.GenAttribute_BindData.Trim() + "\")";
             }
             return null;
         }

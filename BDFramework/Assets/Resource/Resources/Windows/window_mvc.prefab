@@ -445,9 +445,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165b7ac26a269114eb6d5319fb3ca403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAutoSetTransform: 1
-  AutoBindModelData: 
-  AutoSetValueField: 
+  GenAttribute_TranformPath: 0
+  GenAttribute_BindData: 
+  ToolTag_FieldName: 
 --- !u!114 &114095241336200582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -459,9 +459,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165b7ac26a269114eb6d5319fb3ca403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAutoSetTransform: 1
-  AutoBindModelData: 
-  AutoSetValueField: 
+  GenAttribute_TranformPath: 0
+  GenAttribute_BindData: 
+  ToolTag_FieldName: 
 --- !u!114 &114105238191710078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -667,9 +667,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165b7ac26a269114eb6d5319fb3ca403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAutoSetTransform: 0
-  AutoBindModelData: 
-  AutoSetValueField: name
+  GenAttribute_TranformPath: 0
+  GenAttribute_BindData: 
+  ToolTag_FieldName: name
 --- !u!114 &114394330695631012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -816,9 +816,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165b7ac26a269114eb6d5319fb3ca403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAutoSetTransform: 0
-  AutoBindModelData: 
-  AutoSetValueField: test1
+  GenAttribute_TranformPath: 0
+  GenAttribute_BindData: 
+  ToolTag_FieldName: test1
 --- !u!114 &114618234745220680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -884,9 +884,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165b7ac26a269114eb6d5319fb3ca403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAutoSetTransform: 0
-  AutoBindModelData: 
-  AutoSetValueField: test2
+  GenAttribute_TranformPath: 0
+  GenAttribute_BindData: 
+  ToolTag_FieldName: test2
 --- !u!114 &114708736388892752
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -931,9 +931,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165b7ac26a269114eb6d5319fb3ca403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAutoSetTransform: 1
-  AutoBindModelData: 
-  AutoSetValueField: 
+  GenAttribute_TranformPath: 0
+  GenAttribute_BindData: 
+  ToolTag_FieldName: 
 --- !u!114 &114826307172887010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1131,9 +1131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165b7ac26a269114eb6d5319fb3ca403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAutoSetTransform: 1
-  AutoBindModelData: 
-  AutoSetValueField: 
+  GenAttribute_TranformPath: 0
+  GenAttribute_BindData: 
+  ToolTag_FieldName: 
 --- !u!114 &114959828223894680
 MonoBehaviour:
   m_ObjectHideFlags: 1

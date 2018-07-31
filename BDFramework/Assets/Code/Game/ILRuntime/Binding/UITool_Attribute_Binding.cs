@@ -23,22 +23,22 @@ namespace ILRuntime.Runtime.Generated
             Type[] args;
             Type type = typeof(UITool_Attribute);
 
-            field = type.GetField("AutoSetValueField", flag);
-            app.RegisterCLRFieldGetter(field, get_AutoSetValueField_0);
-            app.RegisterCLRFieldSetter(field, set_AutoSetValueField_0);
+            field = type.GetField("ToolTag_FieldName", flag);
+            app.RegisterCLRFieldGetter(field, get_ToolTag_FieldName_0);
+            app.RegisterCLRFieldSetter(field, set_ToolTag_FieldName_0);
 
 
         }
 
 
 
-        static object get_AutoSetValueField_0(ref object o)
+        static object get_ToolTag_FieldName_0(ref object o)
         {
-            return ((UITool_Attribute)o).ClassFieldName;
+            return ((UITool_Attribute)o).ToolTag_FieldName;
         }
-        static void set_AutoSetValueField_0(ref object o, object v)
+        static void set_ToolTag_FieldName_0(ref object o, object v)
         {
-            ((UITool_Attribute)o).ClassFieldName = (System.String)v;
+            ((UITool_Attribute)o).ToolTag_FieldName = (System.String)v;
         }
 
 
