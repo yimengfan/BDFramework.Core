@@ -14,6 +14,8 @@ namespace BDFramework.Editor.UI
     {
         private static string windowPath = "/Code/Game/Windows/";
         private static string createPath = "/Code/Game/Windows/Window_MVC/";
+        private static string createPath_hotfix = "/Code/Game@hotfix/Windows/Window_MVC/";
+        private static string windowPath_hotfix = "/Code/Game@hotfix/Windows/";
 
         private static string overrideContent = @"
 //[Note]
@@ -24,7 +26,7 @@ public override [return type] [method name] ([params])
 ";
 
 
-        public static void CreateViewCS(List<UITool_Attribute> itemList, string goName, string root)
+        public static void CreateViewCS(List<UITool_Attribute> itemList, string goName, string root,bool isGenHotfixDir)
         {
             MyClass mc = new MyClass("View_" + goName + ":AViewBase");
             mc.AddNameSpace(new string[2] { "BDFramework.UI", "UnityEngine" });
@@ -56,18 +58,17 @@ public override [return type] [method name] ([params])
             base.BindModel();
         }");
             mc.AddMethod(bindData);
-            string path = Application.dataPath + createPath;
+            string path = Application.dataPath + (isGenHotfixDir?createPath_hotfix:createPath);
             if (!Directory.Exists(path))
             {
-                Debug.LogError(string.Format("文件夹不存在！路径:{0}", path));
-                return;
+                Directory.CreateDirectory(path);
             }
             path = path + "View_" + goName + ".cs";
             File.WriteAllText(path, mc.ToString());
             Debug.Log(string.Format("生成成功！路径:{0}", path));
         }
 
-        public static void CreateContrlCS(List<UITool_Attribute> itemList, string goName)
+        public static void CreateContrlCS(List<UITool_Attribute> itemList, string goName,bool isGenHotfixDir)
         {
             MyClass mc = new MyClass("Contrl_" + goName + ":AViewContrlBase");
             mc.AddNameSpace(new string[2] { "BDFramework.UI", "UnityEngine" });
@@ -117,18 +118,18 @@ public override [return type] [method name] ([params])
             }
 
 
-            string path = Application.dataPath + createPath;
+            string path = Application.dataPath + (isGenHotfixDir?createPath_hotfix:createPath);
+            
             if (!Directory.Exists(path))
             {
-                Debug.LogError(string.Format("文件夹不存在！路径:{0}", path));
-                return;
+                Directory.CreateDirectory(path);
             }
             path = path + "Contrl_" + goName + ".cs";
             File.WriteAllText(path, mc.ToString());
             Debug.Log(string.Format("生成成功！路径:{0}", path));
         }
 
-        public static void CreateWindowCS(string goName, string prefabName)
+        public static void CreateWindowCS(string goName, string prefabName,bool isGenHotfixDir)
         {
             MyClass mc = new MyClass("Window_" + goName + ": AWindow ");
             mc.AddAttribute(string.Format("UI(0,\"{0}\")", "Windows/" + prefabName));
@@ -164,11 +165,11 @@ public override [return type] [method name] ([params])
             destroy.SetMethodContent("base.Destroy();");
             mc.AddMethod(destroy);
 
-            string path = Application.dataPath + windowPath;
+            string path = Application.dataPath + (isGenHotfixDir?windowPath_hotfix:windowPath);
+            
             if (!Directory.Exists(path))
             {
-                Debug.LogError(string.Format("文件夹不存在！路径:{0}", path));
-                return;
+                Directory.CreateDirectory(path);
             }
             path = path + "Window_" + goName + ".cs";
             File.WriteAllText(path, mc.ToString());
@@ -181,6 +182,20 @@ public override [return type] [method name] ([params])
         {
             string path = Application.dataPath + windowPath;
             DirectoryInfo folder = new DirectoryInfo(path);
+            foreach (FileInfo file in folder.GetFiles("*.cs"))
+            {
+                string className = file.Name.Substring(0, file.Name.LastIndexOf('.'));
+                Assembly assembly = Assembly.Load("Assembly-CSharp");
+                Type type = assembly.GetType(className);
+                if (type != null)
+                {
+                    object[] records = type.GetCustomAttributes(typeof(UIAttribute), false);
+                    if (records != null && records.Length > 0)
+                        pbPaths.Add(className, (records[0] as UIAttribute).ResourcePath);
+                }
+            }
+            path = Application.dataPath + windowPath_hotfix;
+            folder = new DirectoryInfo(path);
             foreach (FileInfo file in folder.GetFiles("*.cs"))
             {
                 string className = file.Name.Substring(0, file.Name.LastIndexOf('.'));
@@ -234,7 +249,7 @@ public override [return type] [method name] ([params])
                 path = path.Insert(0, tsTp.parent.name + "/");
                 tsTp = tsTp.parent;
             }
-            return "SetTransform(\"" + path + "\")";
+            return "TransformPath(\"" + path + "\")";
         }
 
         //public string GetPath(bool isGet)
