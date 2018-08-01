@@ -45,9 +45,9 @@ namespace Code.Game.Windows.MCX
         {     
             var test = new View_MVCTest.AutoSetData()
             {
-                test1 = "获得值：test1",
-                test2 = "获得值：test2",
-                name  = "获得值：张三"
+                test12 = "获得值：test1",
+                test23 = "获得值：test2",
+                name1213  = "获得值：张三"
             };
             this.Model.SetData("AutoSetValueTest" , test);
         }

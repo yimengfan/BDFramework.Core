@@ -1,26 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters;
+using System.Web;
 using BDFramework.UI;
 using ILRuntime.Runtime.Generated;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BDFramework.Core
 {
     public class UITools_AutoSetTranformValueByData
     {
-
         public UITools_AutoSetTranformValueByData()
         {
             IEnumeratorTool.StartCoroutine(this.IE_AutoClearCaheMap());
         }
+
         /// <summary>
         /// fullname缓存表
         /// </summary>
         Dictionary<int, object> UIComponentValue = new Dictionary<int, object>();
 
-        Dictionary<Transform, Dictionary<string, ComponentValueCache>> ComponentCacheMap = new Dictionary<Transform, Dictionary<string, ComponentValueCache>>();
+        Dictionary<Transform, Dictionary<string, ComponentValueCache>> ComponentCacheMap =
+            new Dictionary<Transform, Dictionary<string, ComponentValueCache>>();
 
         /// <summary>
         /// 根据数据结构自动给Transform赋值
@@ -34,7 +42,7 @@ namespace BDFramework.Core
             bool isFirstFindComponent = false;
             if (ComponentCacheMap.TryGetValue(t, out coms) == false)
             {
-                FirstFindComponent(t, data,out coms);
+                FirstFindComponent(t, data, out coms);
 
                 this.ComponentCacheMap[t] = coms;
             }
@@ -43,65 +51,53 @@ namespace BDFramework.Core
             var fields = data.GetType().GetFields();
             foreach (var f in fields)
             {
-                coms[f.Name].SetValue(f.GetValue(data));
+                ComponentValueCache cc = null;
+                if (coms.TryGetValue(f.Name, out cc))
+                {
+                    cc.SetValue(f.GetValue(data));
+                }
+                else
+                {
+                    BDebug.Log("该字段配置无节点:" + f.Name);
+                }
+             
             }
-
         }
 
 
-        void FirstFindComponent(Transform t, object data, out Dictionary<string,ComponentValueCache> coms)
+        void FirstFindComponent(Transform t, object data, out Dictionary<string, ComponentValueCache> coms)
         {
-             coms = new Dictionary<string, ComponentValueCache>();
-             var setList = new List<UITool_Attribute>(t.GetComponentsInChildren<UITool_Attribute>());
+            coms = new Dictionary<string, ComponentValueCache>();
+            var setList = new List<UITool_Attribute>(t.GetComponentsInChildren<UITool_Attribute>());
 
             var type = data.GetType();
             var fields = type.GetFields();
             foreach (var f in fields)
             {
-                //获取字段一致的节点 和属性名
-                var trans = setList.Find(s => s.ToolTag_FieldName == f.Name);
+             
                 //TODO: ILRuntime里面只能这样获取，而且属性里面存的type会有问题
-                var attrs = f.GetCustomAttributes(typeof(UIComponentType), false);
-                var fAttr = attrs.ToList().Find(a => a is UIComponentType) as UIComponentType;
-
-                if (trans != null && fAttr != null && fAttr.ComponentName != null)
+                var attrs = f.GetCustomAttributes(typeof(ComponentAttribute), false);
+                var fAttr = attrs.ToList().Find(a => a is ComponentAttribute) as ComponentAttribute;
+               
+                //
+                if (fAttr != null && fAttr.ComponentType != null)
                 {
-                    Component c = null;
-                    if (fAttr.ComponentName == "Text")
+                    //获取uitools name一致的节点
+                    var trans = setList.Find(s => s.ToolTag_FieldName == fAttr.ToolTag_FieldName);
+                    if (trans != null)
                     {
-                         c = trans.transform.GetComponent<Text>();
+                        //存入
+                        coms[f.Name] = new ComponentValueCache(fAttr,trans.transform);
                     }
-                    else if (fAttr.ComponentName == "Image")
-                    {
-                         c = trans.transform.GetComponent<Image>();
-                    }
-                    else if (fAttr.ComponentName == "Slider")
-                    {
-                         c = trans.transform.GetComponent<Slider>();
-                    }
-                    else if (fAttr.ComponentName == "Scrollbar")
-                    {
-                         c = trans.transform.GetComponent<Scrollbar>();
-                    }
-                    else if (fAttr.ComponentName == "Toggle")
-                    {
-                         c = trans.transform.GetComponent<Toggle>();
-                    }
-                    //                     
-                    else
-                    {
-                        BDebug.LogError("不支持类型,请扩展：" + f.Name + "-" + type.FullName);
-                    }
-                    //存入
-                    coms[f.Name] = new ComponentValueCache(c,fAttr.ComponentName);            
+                    
                 }
                 else
                 {
-                    BDebug.LogError("无同名节点或者某些数据为null：" + f.Name + " - " + fAttr.ComponentName + " - " + type.FullName);
+                    BDebug.LogError("无同名节点或者某些数据为null：" + f.Name + " - " + fAttr.ComponentType + " - " + type.FullName);
                 }
             }
         }
-       
+
 
         /// <summary>
         /// 每隔一段时间 清理该表
@@ -128,71 +124,128 @@ namespace BDFramework.Core
 
     public class ComponentValueCache
     {
-        private Component component;
-        private string type;
+        private UIBehaviour component;
         private object value;
-
-        public ComponentValueCache(Component c, string t)
+        private ComponentAttribute componentAttr;
+        Dictionary<ComponentType,Type> typesMap = new Dictionary<ComponentType, Type>();
+        public ComponentValueCache(ComponentAttribute componentAttr,Transform transform)
         {
-            this.component = c;
-            this.type = t;
+          
+            this.componentAttr = componentAttr;
+            typesMap[ComponentType.Image] = typeof(Image);
+            typesMap[ComponentType.Text] = typeof(Text);
+            typesMap[ComponentType.Slider] = typeof(Slider);
+            typesMap[ComponentType.ScrollBar] = typeof(Scrollbar);
+            typesMap[ComponentType.Toggle] = typeof(Toggle);
+            var c = transform.GetComponent(typesMap[componentAttr.ComponentType]);
+            this.component = c as UIBehaviour;
         }
 
-        public void SetValue(object newObj)
+        public void SetValue( object newObj)
         {
-            if (type == "Text")
+            if (newObj ==null) return;
+           
+            if (componentAttr.CustomField != CustomField.Null) //先处理自定义的值
             {
-                if (newObj!=null )
+                switch (componentAttr.CustomField)
                 {
-                    if(value!= null && value.ToString() == newObj.ToString())return;        
-                    var c = component as Text;
-                    c.text = newObj.ToString();
-
-                    this.value = newObj;
-                }            
-            }
-            else if (type == "Image")
-            {
-                if (newObj!=null )
-                {
-                    if(value!= null && value.ToString() == newObj.ToString())return;    
-                    var c =  component as Image;
-                    c.sprite = BResources.Load<Sprite>(newObj.ToString());
-                    this.value = newObj;
-                }
-                
-            }
-            else if (type == "Slider")
-            {
-                if (newObj != null)
-                {
-                    if(value!= null && (float)value == (float)newObj)return;    
-                    var c = component as Slider;
-                    c.value =  (float)newObj;
-                    this.value = newObj;
+                    case CustomField.ResourcePath:
+                        if (componentAttr.ComponentType == ComponentType.Image)
+                        {
+                            if (value != null && value.ToString() == newObj.ToString()) 
+                                break;
+                            var c = component as Image;
+                            c.sprite = BResources.Load<Sprite>(newObj.ToString());
+                            this.value = newObj;
+                        }
+                        break;
+                    case CustomField.GameObjectActive:
+                    {
+                        component.gameObject.SetActive((bool) newObj);
+                        this.value = newObj;
+                    }
+                        break;
+                    case CustomField.ComponentEnable:
+                    {
+                        component.enabled = ((bool) newObj);
+                        this.value = newObj;
+                    }
+                    break;
                 }
             }
-            else if (type == "Scrollbar")
-            {
-                if (newObj != null )
-                {
-                    if(value!= null && (float)value == (float)newObj)return;    
-                    var c = component as Scrollbar;
-                    c.value =  (float)newObj;
-                    this.value = newObj;
-                }
+            else
+            {            
+                SetComponentValue(typesMap[componentAttr.ComponentType],componentAttr.ComponentField, this.component,newObj);
             }
-            else if (type == "Toggle")
-            {
-                if (newObj != null )
-                {
-                    if(value!= null && (bool)value == (bool)newObj)return;    
-                    var c = component as Toggle;
-                    c.isOn =  (bool)newObj;
-                    this.value = newObj;
-                }
-            }
-            
         }
+
+        /// <summary>
+        /// 设置组件的值
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="behavior"></param>
+        /// <param name="value"></param>
+        /// <typeparam name="T"></typeparam>
+        private void SetComponentValue(Type t , string field, UIBehaviour behavior, object value)
+        {
+            MemberInfo info = null;
+            info  = t.GetField(field);
+            if (info == null)
+            {
+                info = t.GetProperty(field);
+            }
+
+            if (info == null)
+            {
+                BDebug.Log("不存在字段||属性：" + field);
+                return;
+            }
+
+            if (info.MemberType  == MemberTypes.Field)
+            {
+                ((FieldInfo)info).SetValue(behavior,value);
+            }
+            else if(info.MemberType == MemberTypes.Property)
+            {
+                ((PropertyInfo)info).SetValue(behavior,value);
+            }
+        }
+
+
+        /// <summary>
+        /// 比较值
+        /// </summary>
+        /// <param name="newobjet"></param>
+        /// <returns></returns>
+        private bool CompareValue(object newobjet)
+        {
+            if (this.value == null)
+            {
+                return false;
+            }
+            else if (this.value is double && newobjet is double)
+            {
+                return (double) value == (double) newobjet;
+            }
+            else if (this.value is float && newobjet is float)
+            {
+                return (float) value == (float) newobjet;
+            }
+            else if (this.value is int && newobjet is int)
+            {
+                return (int) value == (int) newobjet;
+            }
+            else if (this.value is string && newobjet is string)
+            {
+                return (string) value == (string) newobjet;
+            }
+            else if (this.value is bool && newobjet is bool)
+            {
+                return (bool) value == (bool) newobjet;
+            }
+
+            return false;
+        }
+        
     }
 }

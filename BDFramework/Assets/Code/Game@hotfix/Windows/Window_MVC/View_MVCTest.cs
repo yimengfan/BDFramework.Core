@@ -71,24 +71,27 @@ namespace Code.Game.Windows
         //
         public class AutoSetData
         {
-            [UIComponentType( UIComponentEnum.Text)]
-            public string test1;
-            [UIComponentType(UIComponentEnum.Text)]
-            public string test2;
-            [UIComponentType(UIComponentEnum.Text)]
-            public string name;
-            
+            [Component("test1",ComponentType.Text,"text")]
+            public string test12;
+            [Component("test2",ComponentType.Text,"text")]
+            public string test23;
+            [Component("name",ComponentType.Text,"text")]
+            public string name1213;
+            [Component("name2",ComponentType.Text,CustomField.GameObjectActive)]
+            public string name1;
+            [Component("test001", ComponentType.Text, CustomField.ComponentEnable)]
+            public string name2;
         }
         
         public class Item
         {
-            [UIComponentType(UIComponentEnum.Image)]
+            [Component("Icon",ComponentType.Image,CustomField.ResourcePath)]
             public string Icon = "xxxx.png";
-            [UIComponentType(UIComponentEnum.Text)]
+            [Component("ItemName",ComponentType.Text,"text")]
             public string ItemName = "体力丹";
-            [UIComponentType(UIComponentEnum.Text)]
+            [Component("ItemDes",ComponentType.Text,"text")]
             public string ItemDes = "使用后可增加xx体力";
-            [UIComponentType(UIComponentEnum.Text)]
+            [Component("ItemDes",ComponentType.Text,"text")]
             public string ItemCount = "2";
         }
         
