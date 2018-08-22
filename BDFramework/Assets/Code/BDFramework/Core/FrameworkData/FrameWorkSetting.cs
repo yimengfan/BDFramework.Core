@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FrameWorkSetting
 {
-    public int id; 
+    public double id; 
     public string EditorArtPath;
     public string EditorCodePath;
     public string EditorTablePath;

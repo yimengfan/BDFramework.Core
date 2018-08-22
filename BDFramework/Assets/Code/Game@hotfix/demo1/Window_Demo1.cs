@@ -10,22 +10,29 @@ using UnityEngine.UI;
 /// index 
 /// resource 目录
 /// </summary>
-[UI((int)WinEnum.Win_Test1,"Windows/window_test1") ]
-public class Window_Test1 : AWindow 
+[UI((int)WinEnum.Win_Demo1,"Windows/window_demo1") ]
+public class Window_Demo1 : AWindow
 {
+    [TransformPath("Button")]
+    private Button btn_01;
+
+
+    
     //[]
-    public Window_Test1(string path) : base(path)
+    public Window_Demo1(string path) : base(path)
     {
     }
 
     public override void Init()
     {
         base.Init();
-        
-        this.Transform.Find("Button").GetComponent<Button>().onClick.AddListener(() =>
+
+
+        //
+        btn_01.onClick.AddListener(() =>
         {
            this.Close();
-           ScreenViewManager.Inst.MainLayer.BeginNavTo("demo2");
+           ScreenViewManager.Inst.MainLayer.BeginNavTo("main");
         });
         
     }
@@ -35,7 +42,7 @@ public class Window_Test1 : AWindow
         base.Close();
     }
 
-    public override void Open()
+    public override void Open(WindowData data = null)
     {
         base.Open();
     }

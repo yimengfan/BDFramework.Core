@@ -5,7 +5,7 @@ using UnityEngine;
 using BDFramework.ScreenView;
 using BDFramework.UI;
 
-[ScreenView("demo1", true)]
+[ScreenView("demo1")]
 public class ScreenView_Demo1_Screenview : IScreenView
 {
     public string Name { get; private set; }
@@ -17,8 +17,8 @@ public class ScreenView_Demo1_Screenview : IScreenView
         this.IsLoad = true;
 
         //加载窗口, 0是窗口id,建议自行换成枚举
-        UIManager.Inst.LoadWindows((int) WinEnum.Win_Test1);
-        UIManager.Inst.ShowWindow((int) WinEnum.Win_Test1);
+        UIManager.Inst.LoadWindows((int) WinEnum.Win_Demo1);
+        UIManager.Inst.ShowWindow((int) WinEnum.Win_Demo1);
         Debug.Log("进入demo1");
     }
 
@@ -27,10 +27,6 @@ public class ScreenView_Demo1_Screenview : IScreenView
         //退出设置为false，否则下次进入不会调用begininit
         this.IsLoad = false;
         
-        //1..退出时候 向win test2 发消息
-        var d = WinData.Create();
-        d.AddData("rotation", UnityEngine.Random.Range(-359, 359));
-        UIManager.Inst.SendMessage((int) WinEnum.Win_Test2, d);
 
         //
         Debug.Log("退出Test Screen 1");

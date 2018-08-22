@@ -1,4 +1,5 @@
-﻿using BDFramework.UI;
+﻿using BDFramework.ScreenView;
+using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,9 +16,6 @@ namespace Code.Game.Windows
         [TransformPath("testScrollbar")]
         private Scrollbar testScrollBar;
                 
-        [TransformPath("testButtonAutoSetValue")]
-        private Button testButtonAutoSetValue;
-        //
         [TransformPath("text_click")]
         private Text text_click;
         
@@ -29,8 +27,10 @@ namespace Code.Game.Windows
         [TransformPath("text_scrollBarValue")]
         [BindModel("ScrollBarValue")]
         private Text text_ScrollBarValue;
-        
-        
+
+
+        [TransformPath("Button")]
+        private Button btn_back;
         public View_MVCTest(Transform t, DataDriven_Service service) : base(t, service)
         {
             
@@ -63,44 +63,11 @@ namespace Code.Game.Windows
                 this.text_ScrollBarValue.text = "ScrollBarValue ：" + value;
             });
             
-            //自动设置值测试
-            this.Model.RegisterData("AutoSetValueTest");
-            this.Model.RegAction("AutoSetValueTest", AutoSetDataTest);
-        }
-
-        //
-        public class AutoSetData
-        {
-            [Component("test1",ComponentType.Text,"text")]
-            public string test12;
-            [Component("test2",ComponentType.Text,"text")]
-            public string test23;
-            [Component("name",ComponentType.Text,"text")]
-            public string name1213;
-            [Component("name2",ComponentType.Text,CustomField.GameObjectActive)]
-            public string name1;
-            [Component("test001", ComponentType.Text, CustomField.ComponentEnable)]
-            public string name2;
-        }
-        
-        public class Item
-        {
-            [Component("Icon",ComponentType.Image,CustomField.ResourcePath)]
-            public string Icon = "xxxx.png";
-            [Component("ItemName",ComponentType.Text,"text")]
-            public string ItemName = "体力丹";
-            [Component("ItemDes",ComponentType.Text,"text")]
-            public string ItemDes = "使用后可增加xx体力";
-            [Component("ItemDes",ComponentType.Text,"text")]
-            public string ItemCount = "2";
-        }
-        
-        /// <summary>
-        /// 自动测试值
-        /// </summary>
-        private void AutoSetDataTest(object o)
-        {
-            UITools.AutoSetValue(this.Transform.Find("AutoSetValue") , o);
+            //
+            btn_back.onClick.AddListener(() =>
+            {
+                ScreenViewManager.Inst.MainLayer.BeginNavTo("main");
+            });
         }
     }
 }

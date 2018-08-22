@@ -5,7 +5,7 @@ using UnityEngine;
 using BDFramework.ScreenView;
 using BDFramework.UI;
 
-[ScreenView("demo2")]
+[ScreenView("demo3")]
 public class ScreenView_Demo3_WindowsMvc : IScreenView
  {
 
@@ -17,8 +17,8 @@ public class ScreenView_Demo3_WindowsMvc : IScreenView
 		 //一定要设置为true，否则当前是未加载状态
 		 this.IsLoad = true;
 		 //打开 window 3
-		 UIManager.Inst.LoadWindows((int)WinEnum.Win_XVC);
-		 UIManager.Inst.ShowWindow((int)WinEnum.Win_XVC);
+		 UIManager.Inst.LoadWindows((int)WinEnum.Win_Demo3);
+		 UIManager.Inst.ShowWindow((int)WinEnum.Win_Demo3);
 		 //
 		 Debug.Log("进入demo3");
 	 }

@@ -165,7 +165,7 @@ namespace BDFramework.UI
         {
             // return;
             //检查ui数据缓存
-            List<WinData> cacheList = null;
+            List<WindowData> cacheList = null;
             uiDataCacheMap.TryGetValue(uiIndex, out cacheList);
             if (cacheList != null)
             {
@@ -301,13 +301,13 @@ namespace BDFramework.UI
             }
         }
 
-        private Dictionary<int, List<WinData>> uiDataCacheMap = new Dictionary<int, List<WinData>>();
+        private Dictionary<int, List<WindowData>> uiDataCacheMap = new Dictionary<int, List<WindowData>>();
         /// <summary>
         /// 外部推送ui数据
         /// </summary>
         /// <param name="uiIndex"></param>
         /// <param name="data"></param>
-        public void SendMessage(int Index, WinData data)
+        public void SendMessage(int Index, WindowData data)
         {
             var uiIndex = Index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
@@ -322,12 +322,12 @@ namespace BDFramework.UI
             }
 
             //存入缓存
-            List<WinData> list = null;
+            List<WindowData> list = null;
             uiDataCacheMap.TryGetValue(uiIndex, out list);
             //
             if (list == null)
             {
-                list = new List<WinData>();
+                list = new List<WindowData>();
                 uiDataCacheMap[uiIndex] = list;
             }
             list.Add(data);
@@ -356,28 +356,7 @@ namespace BDFramework.UI
             return isClose;
         }
 
-        public void Lock(int index)
-        {
-            var uiIndex = index.GetHashCode();
-            
-            AWindow win = null;
-            this.windowMap.TryGetValue(uiIndex, out win);
-            if (win != null)
-            {
-                win.Lock();
-            }
-        }
 
-        public void UnLock(int index)
-        {
-            var uiIndex = index.GetHashCode();
-            AWindow win = null;
-            this.windowMap.TryGetValue(uiIndex, out win);
-            if (win != null)
-            {
-                win.UnLock();
-            }
-        }
         /// <summary>
         /// 更新
         /// </summary>

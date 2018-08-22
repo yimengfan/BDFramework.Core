@@ -36,7 +36,6 @@ public class BDLauncherBridge
             //非源码形式 需要取game type
             if (Assembly.GetExecutingAssembly().GetName().Name != "Assembly-CSharp")
             {
-
                 var assmblies = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
                 var logicAssmbly = assmblies.Find((a) => a.GetName().Name == "Assembly-CSharp");
                 

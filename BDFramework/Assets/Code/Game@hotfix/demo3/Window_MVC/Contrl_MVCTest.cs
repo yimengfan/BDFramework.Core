@@ -38,19 +38,6 @@ namespace Code.Game.Windows.MCX
            
         }
         
-        /// <summary>
-        /// 自动绑定
-        /// </summary>
-        private void OnClick_testButtonAutoSetValue()
-        {     
-            var test = new View_MVCTest.AutoSetData()
-            {
-                test12 = "获得值：test1",
-                test23 = "获得值：test2",
-                name1213  = "获得值：张三"
-            };
-            this.Model.SetData("AutoSetValueTest" , test);
-        }
         
     }
 }

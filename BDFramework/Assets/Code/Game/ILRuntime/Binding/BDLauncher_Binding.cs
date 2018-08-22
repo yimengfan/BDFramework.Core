@@ -20,6 +20,7 @@ namespace ILRuntime.Runtime.Generated
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
+            FieldInfo field;
             Type[] args;
             Type type = typeof(BDLauncher);
             args = new Type[]{typeof(System.Action)};
@@ -31,6 +32,10 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Action)};
             method = type.GetMethod("set_OnLateUpdate", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, set_OnLateUpdate_2);
+
+            field = type.GetField("IsCodeHotfix", flag);
+            app.RegisterCLRFieldGetter(field, get_IsCodeHotfix_0);
+            app.RegisterCLRFieldSetter(field, set_IsCodeHotfix_0);
 
 
         }
@@ -84,6 +89,15 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
+
+        static object get_IsCodeHotfix_0(ref object o)
+        {
+            return ((BDLauncher)o).IsCodeHotfix;
+        }
+        static void set_IsCodeHotfix_0(ref object o, object v)
+        {
+            ((BDLauncher)o).IsCodeHotfix = (System.Boolean)v;
+        }
 
 
     }

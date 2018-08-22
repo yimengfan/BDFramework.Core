@@ -15,10 +15,11 @@ namespace BDFramework.UI
             this.Transform.gameObject.SetActive(false);
         }
 
-        public override void Open()
+        public override void Open(WindowData data = null)
         {
             base.Open();           
             this.Transform.gameObject.SetActive(true);
         }
+
     }
 }

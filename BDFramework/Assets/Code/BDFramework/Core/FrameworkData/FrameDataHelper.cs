@@ -14,7 +14,7 @@ public class FrameDataHelper
         {
             if (fws == null)
             {
-                var content = Resources.Load<TextAsset>("FrameWork/FrameSetting").text;
+                var content = Resources.Load<TextAsset>("FrameSetting").text;
                 fws = LitJson.JsonMapper.ToObject<FrameWorkSetting>(content);
                
             }
@@ -36,7 +36,7 @@ public class FrameDataHelper
                 //编辑器环境下需要用
                 if(Application.isEditor)
                 {
-                    var content = Resources.Load<TextAsset> ("FrameWork/VersionDataSetting").text;
+                    var content = Resources.Load<TextAsset> ("VersionDataSetting").text;
                     vds = LitJson.JsonMapper.ToObject<VersionDataSetting>(content);
                   
                 }

@@ -16,7 +16,7 @@ using Code.Game.Windows.MCX;
 /// index 
 /// resource 目录
 /// </summary>
-[UI((int)WinEnum.Win_XVC,"Windows/window_mvc") ]
+[UI((int)WinEnum.Win_Demo3,"Windows/window_demo3") ]
 public class Window_MVC : AWindow 
 {
     public Window_MVC(string path) : base(path)
@@ -41,7 +41,7 @@ public class Window_MVC : AWindow
         base.Close();
     }
 
-    public override void Open()
+    public override void Open(WindowData data = null)
     {
         base.Open();
     }

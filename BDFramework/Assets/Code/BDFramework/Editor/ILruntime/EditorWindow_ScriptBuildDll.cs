@@ -34,8 +34,8 @@ public class EditorWindow_ScriptBuildDll: EditorWindow
                     }
 
                     //命令行内 路径不允许有空格，所以用引号引起来
-                    var u3dUI = @"""D:\Program Files\Unity2018.2.0f2\Editor\Data\UnityExtensions\Unity\GUISystem""";
-                    var u3dEngine = @"""D:\Program Files\Unity2018.2.0f2\Editor\Data\Managed\UnityEngine""";
+                    var u3dUI = @"""D:\Program Files\Unity 2018.2.4f2\Editor\Data\UnityExtensions\Unity\GUISystem""";
+                    var u3dEngine = @"""D:\Program Files\Unity 2018.2.4f2\Editor\Data\Managed\UnityEngine""";
 
                     if (Directory.Exists(u3dUI.Replace(@"""","")) == false || Directory.Exists(u3dEngine.Replace(@"""","")) == false)
                     {
@@ -51,8 +51,8 @@ public class EditorWindow_ScriptBuildDll: EditorWindow
                 if (GUILayout.Button("[mono版]", GUILayout.Width(100), GUILayout.Height(30)))
                 {
                     //u3d的 各种dll
-                    var u3dUI = @"D:\Program Files\Unity2018.2.0f2\Editor\Data\UnityExtensions\Unity\GUISystem";
-                    var u3dEngine = @"D:\Program Files\Unity2018.2.0f2\Editor\Data\Managed\UnityEngine";
+                    var u3dUI = @"D:\Program Files\Unity 2018.2.4f2\Editor\Data\UnityExtensions\Unity\GUISystem";
+                    var u3dEngine = @"D:\Program Files\Unity 2018.2.4f2\Editor\Data\Managed\UnityEngine";
                     if (Directory.Exists(u3dUI) == false || Directory.Exists(u3dEngine) == false)
                     {
                         EditorUtility.DisplayDialog("提示", "请修改u3dui 和u3dengine 的dll目录", "OK");

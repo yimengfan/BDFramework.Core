@@ -17,8 +17,8 @@ public class ScreenView_Demo2_Windows : IScreenView
 		 //一定要设置为true，否则当前是未加载状态
 		 this.IsLoad = true;
 		 //打开 window 2
-		 UIManager.Inst.LoadWindows((int)WinEnum.Win_Test2);
-		 UIManager.Inst.ShowWindow((int)WinEnum.Win_Test2);
+		 UIManager.Inst.LoadWindows((int)WinEnum.Win_Demo2);
+		 UIManager.Inst.ShowWindow((int)WinEnum.Win_Demo2);
 		 //
 		 Debug.Log("进入demo2");
 	 }

@@ -21,22 +21,7 @@ namespace BDFramework.Sql
            private set;
        }
        
-       
-//        static public SQLiteService DB 
-//        {
-//            get
-//            {
-//                if (db == null)
-//                {
-//                    db = new SQLiteService("LocalDB");
-//                }
-//
-//                return db;
-//            }
-//        }
-//
-//       static private SQLiteService db;
-
+      
        /// <summary>
        /// 创建db
        /// </summary>
