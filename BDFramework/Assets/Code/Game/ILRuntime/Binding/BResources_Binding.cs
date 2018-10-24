@@ -101,9 +101,6 @@ namespace ILRuntime.Runtime.Generated
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Boolean @value = ptr_of_this_method->Value == 1;
 
-
-            BResources.IsAssetBundleModel = value;
-
             return __ret;
         }
 

@@ -114,9 +114,9 @@ namespace BDFramework.UI
                     var name = bAttr.Name;
                     var _Model = view.Model;
                     //注册属性名
-                    _Model.RegisterData(bAttr.Name);
+                    _Model.AddData(bAttr.Name);
                     //注册事件监听
-                    _Model.RegAction(bAttr.Name , (v) =>
+                    _Model.AddListener(bAttr.Name , (v) =>
                     {
                         if (f.FieldType == typeof(Text))
                         {

@@ -41,23 +41,23 @@ namespace Code.Game.Windows
             base.BindModel();
 
             //手动注册
-            this.Model.RegisterData("ClickCount");
-            this.Model.RegAction("ClickCount",
+            this.Model.AddData("ClickCount");
+            this.Model.AddListener("ClickCount",
             (value) =>
             {
                 this.text_click.text = "点 击 次 数：" + value;
             });
 
             //手动注册
-            this.Model.RegisterData("SliderValue");
-            this.Model.RegAction("SliderValue",
+            this.Model.AddData("SliderValue");
+            this.Model.AddListener("SliderValue",
             (value) =>
             {
                 this.text_sliderValue.text = "Slider Value：" + value;
             });
             
             //已用标签自动注册
-            this.Model.RegAction("ScrollBarValue",
+            this.Model.AddListener("ScrollBarValue",
             (value) =>
             {
                 this.text_ScrollBarValue.text = "ScrollBarValue ：" + value;

@@ -32,14 +32,12 @@ abstract public class ADataDriven
 
 
     }
-
-    
-    
+   
     /// <summary>
     /// 注册数据
     /// </summary>
     /// <param name="name"></param>
-    virtual public void RegisterData(string name)
+    virtual public void AddData(string name)
     {
         dataMap[name] = null;
     }
@@ -133,7 +131,7 @@ abstract public class ADataDriven
     /// </summary>
     /// <param name="name"></param>
     /// <param name="callback"></param>
-    virtual  public void RegAction(string name, Action<object> callback , bool isTriggerCacheData = false)
+    virtual  public void AddListener(string name, Action<object> callback , bool isTriggerCacheData = false)
     {
         if (dataMap.ContainsKey(name) == false)
         {
@@ -176,7 +174,7 @@ abstract public class ADataDriven
     /// 移除属性变动事件注册
     /// </summary>
     /// <param name="name"></param>
-    virtual public void RemoveAction(string name)
+    virtual public void ClearListener(string name)
     {
         if (callbackMap.ContainsKey(name))
         {
@@ -189,7 +187,7 @@ abstract public class ADataDriven
     /// 移除属性变动事件注册
     /// </summary>
     /// <param name="name"></param>
-    virtual public void RemoveAction(string name , Action<object> callback)
+    virtual public void RemoveListener(string name , Action<object> callback)
     {
         List<Action<object>>  actions = null;
         if  (callbackMap.TryGetValue(name, out actions))

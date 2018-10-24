@@ -13,7 +13,7 @@ using UnityEngine.UI;
 /// index 
 /// resource 目录
 /// </summary>
-[UI((int)WinEnum.Win_Main,"Windows/window_DemoMain") ]
+[UI((int)WinEnum.Win_Main,"Windows/window_demoMain") ]
 public class Window_DemoMain : AWindow
 {
     [TransformPath("text_hotfixState")]

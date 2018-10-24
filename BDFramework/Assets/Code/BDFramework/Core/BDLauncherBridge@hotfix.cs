@@ -26,7 +26,6 @@ public class BDLauncherBridge
         BDebug.Log("代码热更:" + isCodeHotfix,"yellow");
         //组件加载
         List<Type> allTypes = new List<Type>();
-        BResources.IsAssetBundleModel = isResourceHotfix;
         //编辑器环境下 寻找dll
         if (isCodeHotfix ==false)
         {

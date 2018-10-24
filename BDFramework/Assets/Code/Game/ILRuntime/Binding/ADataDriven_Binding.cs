@@ -78,7 +78,7 @@ namespace ILRuntime.Runtime.Generated
             ADataDriven instance_of_this_method = (ADataDriven)typeof(ADataDriven).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
-            instance_of_this_method.RegisterData(@name);
+            instance_of_this_method.AddData(@name);
 
             return __ret;
         }
@@ -104,7 +104,7 @@ namespace ILRuntime.Runtime.Generated
             ADataDriven instance_of_this_method = (ADataDriven)typeof(ADataDriven).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
-            instance_of_this_method.RegAction(@name, @callback, @isTriggerCacheData);
+            instance_of_this_method.AddListener(@name, @callback, @isTriggerCacheData);
 
             return __ret;
         }
