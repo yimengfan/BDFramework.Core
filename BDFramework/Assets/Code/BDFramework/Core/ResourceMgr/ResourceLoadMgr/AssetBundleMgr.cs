@@ -59,7 +59,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 全局的assetbundle字典
         /// </summary>
-        public Dictionary<string, AssetBundleReference> AssetbundleMap { get; set; }
+        public Dictionary<string, AssetBundleReference> assetbundleMap { get; set; }
 
         /// <summary>
         /// 资源加载路径
@@ -68,7 +68,7 @@ namespace BDFramework.ResourceMgr
 
         public AssetBundleMgr()
         {
-            this.AssetbundleMap = new Dictionary<string, AssetBundleReference>();
+            this.assetbundleMap = new Dictionary<string, AssetBundleReference>();
             this.willdoTaskSet = new HashSet<int>();
             this.allTaskList = new List<LoadTask>();
             //1.设置加载路径
@@ -76,15 +76,15 @@ namespace BDFramework.ResourceMgr
             if (Application.platform == RuntimePlatform.WindowsEditor ||
                 Application.platform == RuntimePlatform.WindowsPlayer)
             {
-                path = "Resources/Windows/Art";
+                path = "Windows/Art";
             }
             else if (Application.platform == RuntimePlatform.Android)
             {
-                path = "Resources/Android/Art";
+                path = "Android/Art";
             }
             else if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
-                path = "Resources/iOS/Art";
+                path = "iOS/Art";
             }
 
             var persistent = Path.Combine(Application.persistentDataPath, path).Replace("\\", "/");
@@ -99,11 +99,7 @@ namespace BDFramework.ResourceMgr
             this.manifest = new AssetBundleManifestReference(resourcePath + "/Art");
         }
 
-
-
-
         #region 异步加载ab
-
         /// <summary>
         /// 加载ab
         /// </summary>
@@ -123,22 +119,21 @@ namespace BDFramework.ResourceMgr
                 _path = _path.Replace("\\", "/");
                 var key = Path.GetFileName(_path);
                 //判断是否已经加载过
-                if (AssetbundleMap.ContainsKey(key) == false)
+                if (assetbundleMap.ContainsKey(key) == false)
                 {
                     resQue.Enqueue(_path);
                 }
                 else
                 {
-                    AssetbundleMap[key].Use();
+                    assetbundleMap[key].Use();
                 }
             }
 
-            if (AssetbundleMap.ContainsKey(Path.GetFileName(path)) == false)
+            if (assetbundleMap.ContainsKey(Path.GetFileName(path)) == false)
             {
                 resQue.Enqueue(path);
             }
-
-
+            
             //开始加载队列
             IEnumeratorTool.StartCoroutine(IELoadAssetbundle(resQue, callback));
         }
@@ -163,14 +158,14 @@ namespace BDFramework.ResourceMgr
                 yield return result;
                 if (result.isDone)
                 {
-                    AssetBundleCounter(path, result.assetBundle);
+                    AddAssetBundle(path, result.assetBundle);
                     //开始下个任务
                     IEnumeratorTool.StartCoroutine(IELoadAssetbundle(resQue, callback));
                     yield break;          
                 }
                 else
                 {
-                    Debug.LogError("加载失败：" + path);
+                    Debug.LogError("加载失败:"+ path);
                 }
             }
         }
@@ -181,16 +176,15 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="name"></param>
         /// <param name="ab"></param>
-        private void AssetBundleCounter(string name, AssetBundle ab)
+        private void AddAssetBundle(string name, AssetBundle ab)
         {
-            name = Path.GetFileName(name);
-            if (AssetbundleMap.ContainsKey(name) == false)
+            if (assetbundleMap.ContainsKey(name) == false)
             {
                 AssetBundleReference abr = new AssetBundleReference() {assetBundle = ab};
-                AssetbundleMap[name] = abr;
+                assetbundleMap[name] = abr;
             }
 
-            AssetbundleMap[name].Use();
+            assetbundleMap[name].Use();
         }
         #endregion
 
@@ -201,13 +195,14 @@ namespace BDFramework.ResourceMgr
         /// <param name="abName"></param>
         /// <param name="objName"></param>
         /// <returns></returns>
-        public T LoadFormAssetBundle<T>(string abName, string objName) where T : UnityEngine.Object
+        private T LoadFormAssetBundle<T>(string abName, string objName) where T : UnityEngine.Object
         {
             T o = default(T);
             AssetBundleReference abr = null;         
-            if (AssetbundleMap.TryGetValue(abName, out abr))
+            if (assetbundleMap.TryGetValue(abName, out abr))
             {
-                o = AssetbundleMap[abName].assetBundle.LoadAsset<T>(objName);
+                o = abr.assetBundle.LoadAsset<T>(objName);
+                var names = abr.assetBundle.GetAllAssetNames();
             }
             return o;
         }
@@ -227,7 +222,7 @@ namespace BDFramework.ResourceMgr
                 Queue<string> resQue = new Queue<string>();
                 foreach (var r in res)
                 {
-                    if (AssetbundleMap.ContainsKey(r))
+                    if (assetbundleMap.ContainsKey(r))
                     {
                         resQue.Enqueue(r);
                     }
@@ -238,27 +233,27 @@ namespace BDFramework.ResourceMgr
                 //判断是否有已经加载过的资源
                 foreach (var r in resQue)
                 {
-                    if (AssetbundleMap.ContainsKey(r))
+                    if (assetbundleMap.ContainsKey(r))
                     {
                         if (isUnloadIsUsing)
                         {
-                            AssetbundleMap[r].assetBundle.Unload(true);
-                            AssetbundleMap.Remove(r);
+                            assetbundleMap[r].assetBundle.Unload(true);
+                            assetbundleMap.Remove(r);
                         }
                         else
                         {
-                            AssetbundleMap[r].Unuse();
+                            assetbundleMap[r].Unuse();
                         }
                     }
                 }
 
                 //移除无用的assetbundle
-                var keys = new List<string>(AssetbundleMap.Keys);
+                var keys = new List<string>(assetbundleMap.Keys);
                 foreach (var k in keys)
                 {
-                    if (AssetbundleMap[k].referenceCount <= 0)
+                    if (assetbundleMap[k].referenceCount <= 0)
                     {
-                        AssetbundleMap.Remove(k);
+                        assetbundleMap.Remove(k);
                     }
                 }
             }
@@ -274,12 +269,12 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public void UnloadAllAsset()
         {
-            foreach (var v in AssetbundleMap)
+            foreach (var v in assetbundleMap)
             {
                 UnloadAsset(v.Key);
             }
 
-            AssetbundleMap.Clear();
+            assetbundleMap.Clear();
         }
 
 
@@ -310,8 +305,8 @@ namespace BDFramework.ResourceMgr
                         T _t = null;
                         if (issuccess)
                         {
-                            var sourceName = Path.GetFileName(objName);
-                            _t = LoadFormAssetBundle<T>(path, sourceName);
+                            var fileName = Path.GetFileName(path);
+                            _t = LoadFormAssetBundle<T>(path, fileName);
                         }
 
                         //判断任务结束
@@ -325,7 +320,6 @@ namespace BDFramework.ResourceMgr
                         {                        
                             aciton(issuccess, _t);
                         }
-
                     });
                 }
                 else
@@ -349,9 +343,53 @@ namespace BDFramework.ResourceMgr
         }
 
 
+        /// <summary>
+        /// 同步加载
+        /// </summary>
+        /// <param name="objName"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T Load<T>(string objName) where T : UnityEngine.Object
         {
-            return null;
+            var path = GetExistPath(objName);
+            path = Path.Combine(resourcePath, path);
+            path = path.Replace("\\", "/");
+
+            var fn = Path.GetFileName(path);
+            var res = manifest.Manifest.GetDirectDependencies(fn);
+            //创建一个队列
+            List<string> loadList = new List<string>();
+            foreach (var r in res)
+            {
+                string _path = Path.GetDirectoryName(path) + "/" + Path.GetFileName(r);
+                _path = _path.Replace("\\", "/");
+                var key = Path.GetFileName(_path);
+                //判断是否已经加载过
+                if (assetbundleMap.ContainsKey(key) == false)
+                {
+                    loadList.Add(_path);
+                }
+                else
+                {
+                    assetbundleMap[key].Use();
+                }
+            }
+
+            //加载列表
+            foreach (var l in loadList)
+            {
+                AddAssetBundle(l, AssetBundle.LoadFromFile(l));
+            }
+            
+            //加载主体
+            if (assetbundleMap.ContainsKey(Path.GetFileName(path)) == false)
+            {
+                var ab = AssetBundle.LoadFromFile(path);
+                AddAssetBundle(path, ab);
+            }
+            //加载ab
+            var fileName = Path.GetFileName(path);
+            return LoadFormAssetBundle<T>(path, fileName);
         }
 
 
@@ -368,9 +406,6 @@ namespace BDFramework.ResourceMgr
             List<string> canbeResource = new List<string>();
             //变换成ab名
             var abName = objName.Replace("\\", "/");
-            abName = abName.Replace("/", "#");
-            abName = abName.ToLower()+".";
-
             foreach (var ab in this.manifest.AssetBundlesSet)
             {
                 if (ab.Contains(abName))

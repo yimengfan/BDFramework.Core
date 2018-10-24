@@ -77,7 +77,7 @@ static public class AssetBundleEditorTools
             return;
         }
 
-        saveDir = Path.Combine(Application.streamingAssetsPath, "Resources/" + saveDir+"/Art");
+        saveDir = Path.Combine(Application.streamingAssetsPath,saveDir+"/Art");
         if (Directory.Exists(saveDir) == false)
         {
             Directory.CreateDirectory(saveDir);
@@ -120,60 +120,8 @@ static public class AssetBundleEditorTools
                 //重新组建ab名字，带上路径名
                 dependPath = Path.GetFullPath(dependPath);
                 dependPath = dependPath.Replace("\\", "/");
-                var temp = dependPath.Split('/');
-                string derictory = "";
-                //下面整个流程是将路径 /替换成# 
-                bool isAdd = false;
-                if (dependPath.Contains("Runtime")) //资源主体
-                {
-                    foreach (var s in temp)
-                    {
-                        if (isAdd)
-                        {
-                            if (derictory == "")
-                            {
-                                derictory = s;
-                            }
-                            else
-                            {
-                                derictory = derictory + "#" + s;
-                            }
-                        }
-                        else if (s.Equals("Runtime"))
-                        {
-                            isAdd = true;
-                        }
-                    }
-                }
-                else   //被依赖的部分
-                {
-                    foreach (var s in temp)
-                    {
-                        if (isAdd)
-                        {
-                            if (derictory == "")
-                            {
-                                derictory = s;
-                            }
-                            else
-                            {
-                                derictory = derictory + "#" + s;
-                            }
-                        }
-                        else if (s.ToLower().Equals("resource"))
-                        {
-                            isAdd = true;
-                        }
-                    }
-                }     
-                //不在资源目录内部
-                if (isAdd == false)
-                {
-                   BDebug.LogError(string.Format("有依赖资源路径错误!\n 分析资源:{0} \n 被依赖资源:{1}",dependsource,dependPath));
-                }
-
-                //derictory = derictory.Replace(".", "+");
-                ai.assetBundleName = derictory;
+                string derictory = "assets"+ dependPath.Replace(Application.dataPath,"");
+                ai.assetBundleName = derictory.ToLower();
                 ai.assetBundleVariant = "";
             }
         }
