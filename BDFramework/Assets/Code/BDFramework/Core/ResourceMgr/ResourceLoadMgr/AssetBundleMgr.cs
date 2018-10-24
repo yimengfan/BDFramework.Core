@@ -202,7 +202,6 @@ namespace BDFramework.ResourceMgr
             if (assetbundleMap.TryGetValue(abName, out abr))
             {
                 o = abr.assetBundle.LoadAsset<T>(objName);
-                var names = abr.assetBundle.GetAllAssetNames();
             }
             return o;
         }
@@ -351,27 +350,26 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public T Load<T>(string objName) where T : UnityEngine.Object
         {
-            var path = GetExistPath(objName);
-            path = Path.Combine(resourcePath, path);
-            path = path.Replace("\\", "/");
-
-            var fn = Path.GetFileName(path);
-            var res = manifest.Manifest.GetDirectDependencies(fn);
-            //创建一个队列
+            //ab存储的是asset下的相对目录
+            objName = "assets/resource/runtime/" + objName.ToLower();
+            //寻找ab的全目录
+            objName = GetExistPath(objName);
+            
+            var res = manifest.Manifest.GetDirectDependencies(objName);
+            //1.创建依赖加载队列
             List<string> loadList = new List<string>();
             foreach (var r in res)
             {
-                string _path = Path.GetDirectoryName(path) + "/" + Path.GetFileName(r);
-                _path = _path.Replace("\\", "/");
-                var key = Path.GetFileName(_path);
+                //依赖队列需要加上resourcepath
+                var dir = Path.Combine(this.resourcePath, r);
                 //判断是否已经加载过
-                if (assetbundleMap.ContainsKey(key) == false)
+                if (assetbundleMap.ContainsKey(dir) == false)
                 {
-                    loadList.Add(_path);
+                    loadList.Add(dir);
                 }
                 else
                 {
-                    assetbundleMap[key].Use();
+                    assetbundleMap[dir].Use();
                 }
             }
 
@@ -380,16 +378,16 @@ namespace BDFramework.ResourceMgr
             {
                 AddAssetBundle(l, AssetBundle.LoadFromFile(l));
             }
-            
-            //加载主体
-            if (assetbundleMap.ContainsKey(Path.GetFileName(path)) == false)
+                      
+            //2.加载主体
+            var fullname = Path.Combine(resourcePath, objName);
+            if (assetbundleMap.ContainsKey(Path.GetFileName(fullname)) == false)
             {
-                var ab = AssetBundle.LoadFromFile(path);
-                AddAssetBundle(path, ab);
+                var ab = AssetBundle.LoadFromFile(fullname);
+                AddAssetBundle(fullname, ab);
             }
-            //加载ab
-            var fileName = Path.GetFileName(path);
-            return LoadFormAssetBundle<T>(path, fileName);
+            //3.加载具体资源
+            return LoadFormAssetBundle<T>(fullname, objName);
         }
 
 
@@ -402,13 +400,10 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         private string GetExistPath(string objName)
         {
-
-            List<string> canbeResource = new List<string>();
             //变换成ab名
-            var abName = objName.Replace("\\", "/");
             foreach (var ab in this.manifest.AssetBundlesSet)
             {
-                if (ab.Contains(abName))
+                if (ab.Contains(objName))
                 {
                     return ab;
                 }
