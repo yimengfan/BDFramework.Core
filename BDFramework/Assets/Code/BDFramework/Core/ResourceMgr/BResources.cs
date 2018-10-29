@@ -52,7 +52,7 @@ public class BResources
     /// <typeparam name="T">类型</typeparam>
     /// <param name="objName">名称</param>
     /// <param name="action">回调函数</param>
-    public static int AsyncLoadSource<T>(string objName, Action<bool, T> action) where T : UnityEngine.Object
+    public static int AsyncLoad<T>(string objName, Action<bool, T> action) where T : UnityEngine.Object
     {
         return resLoader.AsyncLoad<T>(objName, action);
     }
@@ -62,7 +62,7 @@ public class BResources
     /// </summary>
     /// <param name="objlist"></param>
     /// <param name="onLoadEnd"></param>
-    public static List<int> AsyncLoadSources(IList<string> objlist, Action<int, int> onProcess = null,
+    public static List<int> AsyncLoad(IList<string> objlist, Action<int, int> onProcess = null,
         Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
     {
         return resLoader.AsyncLoad(objlist, onLoadEnd, onProcess);

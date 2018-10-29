@@ -130,7 +130,7 @@ public abstract class AWindow
     public void AsyncLoad(Action callback)
     {
         //  JDeBug.Inst.Log("开始任务:" + resourcePath);
-        BResources.AsyncLoadSource<GameObject>(resourcePath, (bool result, GameObject o) =>
+        BResources.AsyncLoad<GameObject>(resourcePath, (bool result, GameObject o) =>
         {
             var go = GameObject.Instantiate(o);
             Transform = go.transform;
@@ -146,7 +146,7 @@ public abstract class AWindow
 
         });
     }
-
+//
     /// <summary>
     /// 同步加载
     /// </summary>

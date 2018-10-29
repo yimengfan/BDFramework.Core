@@ -119,7 +119,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = BResources.AsyncLoadSource<UnityEngine.GameObject>(@objName, @action);
+            var result_of_this_method = BResources.AsyncLoad<UnityEngine.GameObject>(@objName, @action);
 
             __ret->ObjectType = ObjectTypes.Integer;
             __ret->Value = result_of_this_method;

@@ -147,6 +147,7 @@ namespace BDFramework.ResourceMgr
         {
 
             IDictionary<string ,UnityEngine.Object> map =new Dictionary<string, Object>();
+            //每帧加载5个
             IEnumeratorTool.StartCoroutine(TaskUpdate( 5,sources, (s, o) =>
             {
                 map[s] = o;
@@ -194,6 +195,13 @@ namespace BDFramework.ResourceMgr
         }
 
 
+        /// <summary>
+        /// 任务帧
+        /// </summary>
+        /// <param name="loadNumPerFrame"></param>
+        /// <param name="loads"></param>
+        /// <param name="callback"></param>
+        /// <returns></returns>
         private IEnumerator TaskUpdate(int loadNumPerFrame,IList<string> loads ,Action<string,Object> callback)
         {
             int count = 0;

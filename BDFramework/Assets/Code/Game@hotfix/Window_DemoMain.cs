@@ -91,7 +91,7 @@ public class Window_DemoMain : AWindow
             var go = BResources.Load<GameObject>("Windows/window_demo1");
             
             //2.异步加载单个
-            var id = BResources.AsyncLoadSource<GameObject>("Windows/window_demo1", (b, o) =>
+            var id = BResources.AsyncLoad<GameObject>("Windows/window_demo1", (b, o) =>
             {
                 
             });
@@ -99,7 +99,7 @@ public class Window_DemoMain : AWindow
 //            BResources.LoadCancel(id);6
 //            
 //            //3.异步加载多个
-            BResources.AsyncLoadSources(new List<string>() {"Windows/window_demo1", "Windows/window_demo2"}, (i, i2) =>
+            BResources.AsyncLoad(new List<string>() {"Windows/window_demo1", "Windows/window_demo2"}, (i, i2) =>
             {
                Debug.Log(string.Format("进度 {0} / {1}",i ,i2));
                 
