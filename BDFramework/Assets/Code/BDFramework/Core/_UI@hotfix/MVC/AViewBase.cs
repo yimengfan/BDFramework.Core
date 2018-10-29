@@ -12,12 +12,12 @@ namespace BDFramework.UI
     {
         public DataListenerService Model { get; private set; }
         public Transform Transform { get; private set; }
-        public void Show()
+       virtual public void Show()
         {
             Transform.gameObject.SetActive(true);
         }
 
-        public void Hide()
+      virtual  public void Hide()
         {
             Transform.gameObject.SetActive(false);
         }
