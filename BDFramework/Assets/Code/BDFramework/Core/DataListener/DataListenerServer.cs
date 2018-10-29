@@ -6,18 +6,18 @@ using UnityEngine;
 /// <summary>
 /// 做数据驱动服务
 /// </summary>
-public class DataDrivenServer
+public class DataListenerServer
 {
 
-    static private Dictionary<string, DataDriven_Service> serviceMap = new Dictionary<string, DataDriven_Service>();
+    static private Dictionary<string, DataListenerService> serviceMap = new Dictionary<string, DataListenerService>();
     /// <summary>
     /// 创建一个service
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public static DataDriven_Service Create(string name)
+    public static DataListenerService Create(string name)
     {
-        var data = new DataDriven_Service();
+        var data = new DataListenerService();
 
         if( serviceMap.ContainsKey(name) == false)
         {
@@ -35,9 +35,9 @@ public class DataDrivenServer
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public static DataDriven_Service GetService(string name)
+    public static DataListenerService GetService(string name)
     {
-        DataDriven_Service data = null;
+        DataListenerService data = null;
 
         serviceMap.TryGetValue(name, out data);
         return data;
@@ -48,7 +48,7 @@ public class DataDrivenServer
    /// <param name="name"></param>
    static public void DelService(string name)
     {
-        DataDriven_Service data = null;
+        DataListenerService data = null;
         serviceMap.TryGetValue(name, out data);
         data = null;
         //

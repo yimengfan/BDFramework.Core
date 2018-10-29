@@ -31,7 +31,7 @@ namespace Code.Game.Windows
 
         [TransformPath("Button")]
         private Button btn_back;
-        public View_MVCTest(Transform t, DataDriven_Service service) : base(t, service)
+        public View_MVCTest(Transform t, DataListenerService service) : base(t, service)
         {
             
         }

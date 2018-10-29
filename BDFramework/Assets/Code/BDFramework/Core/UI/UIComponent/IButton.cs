@@ -35,7 +35,7 @@ namespace BDFramework.UI
         }
     }
 
-    public class IButton : MonoBehaviour,IPointerDownHandler 
+    public class IButton : UIBehaviour,IPointerDownHandler 
 #if !UNITY_EDITOR
          ,IPointerExitHandler ,IPointerUpHandler 
 #else
@@ -45,7 +45,6 @@ namespace BDFramework.UI
         private Color normalColor = Color.white;
         public Color OnClickColor = new Color(195f / 255f, 195f / 255f, 195f / 255f);
         public IComponentOnClick onClick = new IComponentOnClick();
-
         private Image img;
 
         private void Awake()

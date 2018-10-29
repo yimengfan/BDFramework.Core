@@ -19,13 +19,13 @@ public class BDLauncher : MonoBehaviour
     private void Awake()
     {
         this.gameObject.AddComponent<IEnumeratorTool>();
-        var resmgr = this.gameObject.AddComponent<BResources>();
-        resmgr.Init(IsAssetBundleModel);
+        
+        BResources.Init(IsAssetBundleModel);
         //热更资源模式
         if (IsAssetBundleModel)
         {           
             //开始启动逻辑  
-            var dd = DataDrivenServer.Create("BDFrameLife");
+            var dd = DataListenerServer.Create("BDFrameLife");
             dd.AddData("OnAssetBundleOever");
             dd.AddListener("OnAssetBundleOever", (o) =>
             {

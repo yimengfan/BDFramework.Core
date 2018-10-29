@@ -86,6 +86,7 @@ static public class AssetBundleEditorTools
         //使用lz4压缩
         BuildPipeline.BuildAssetBundles(saveDir, BuildAssetBundleOptions.ChunkBasedCompression,target);
         EditorUtility.ClearProgressBar();
+        AssetDatabase.Refresh();
     }
 
 
@@ -97,8 +98,8 @@ static public class AssetBundleEditorTools
         foreach (var path in paths)
         {
             var _path = path.Replace("\\", "/");
-            float val = curIndex / paths.Length;
-            EditorUtility.DisplayProgressBar("分析资源","执行..., " + Path.GetFileNameWithoutExtension(_path) + "please wait..." + val * 100 + "%", val);
+                       
+            EditorUtility.DisplayProgressBar("分析资源","打包:" + Path.GetFileNameWithoutExtension(_path) +"   进度：" +  curIndex +"/" +paths.Length,  curIndex / paths.Length);
             curIndex++;
             //获取被依赖的路径
             var dependsource = "Assets" + _path.Replace(Application.dataPath, "");
@@ -108,21 +109,27 @@ static public class AssetBundleEditorTools
             for (int i = 0; i < allDependObjectPaths.Length; i++)
             {
                 var dependPath = allDependObjectPaths[i];
-                BDebug.Log("depend on:" + dependPath);
-
-                AssetImporter ai = AssetImporter.GetAtPath(dependPath);
-                if (ai == null)
+                var ext = Path.GetExtension(dependPath).ToLower();
+                //默认不打包cs代码
+                if (ext!= ".cs")
                 {
-                    BDebug.Log("not find Resource " + dependPath);
-                    continue;
-                }
+                    BDebug.Log("depend on:" + dependPath);
 
-                //重新组建ab名字，带上路径名
-                dependPath = Path.GetFullPath(dependPath);
-                dependPath = dependPath.Replace("\\", "/");
-                string derictory = "assets"+ dependPath.Replace(Application.dataPath,"");
-                ai.assetBundleName = derictory.ToLower();
-                ai.assetBundleVariant = "";
+                    AssetImporter ai = AssetImporter.GetAtPath(dependPath);
+                    if (ai == null)
+                    {
+                        BDebug.Log("not find Resource " + dependPath);
+                        continue;
+                    }
+
+                    //重新组建ab名字，带上路径名
+                    dependPath = Path.GetFullPath(dependPath);
+                    dependPath = dependPath.Replace("\\", "/");
+                    string derictory = "assets"+ dependPath.Replace(Application.dataPath,"");
+                    ai.assetBundleName = derictory.ToLower();
+                    ai.assetBundleVariant = "";
+                }
+               
             }
         }
     }

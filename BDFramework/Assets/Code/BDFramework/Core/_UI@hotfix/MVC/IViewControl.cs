@@ -2,7 +2,7 @@
 {
     public interface IViewControl
     {
-        DataDriven_Service Model { get; }
+        DataListenerService Model { get; }
 
         void BindModel();
         void Enter();

@@ -46,7 +46,7 @@ namespace BDFramework.ResourceMgr
                 }
 
                 //通知到BDFrameLife
-                var dd = DataDrivenServer.GetService("BDFrameLife");
+                var dd = DataListenerServer.GetService("BDFrameLife");
                 dd.TriggerEvent("OnAssetBundleOever");
             }));
         }

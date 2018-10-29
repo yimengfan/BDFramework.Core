@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-abstract public class ADataDriven
+abstract public class ADataListener
 {
     
     public class CallBackCache
@@ -20,7 +20,7 @@ abstract public class ADataDriven
     /// 注册事件缓存
     /// </summary>
     protected Dictionary<string,List<object>> valueCacheMap;
-    public ADataDriven()
+    public ADataListener()
     {
         dataMap = new Dictionary<string, object>();
         callbackMap = new Dictionary<string, List<Action<object>>>();

@@ -28,7 +28,7 @@ public class Window_MVC : AWindow
     {
         base.Init();
         //绑定一个
-        var dataDriven = DataDrivenServer.Create("MVCTest");
+        var dataDriven = DataListenerServer.Create("MVCTest");
         //创建一个mvc模式的窗口
         var control = new ViewContrl_MVCTest(dataDriven);
         var view = new View_MVCTest(Transform, dataDriven);

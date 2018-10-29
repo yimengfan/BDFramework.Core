@@ -16,6 +16,7 @@ public class ScreenView_Main : IScreenView
         //一定要设置为true，否则当前是未加载状态
         this.IsLoad = true;
 
+
         //加载窗口, 0是窗口id,建议自行换成枚举
         UIManager.Inst.LoadWindows((int) WinEnum.Win_Main);
         UIManager.Inst.ShowWindow((int) WinEnum.Win_Main);

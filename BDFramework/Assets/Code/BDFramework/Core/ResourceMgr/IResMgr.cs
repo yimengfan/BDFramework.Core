@@ -29,17 +29,17 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="abName"></param>
-        /// <param name="objName"></param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        T Load<T>(string objName) where T : UnityEngine.Object;
+        T Load<T>(string path) where T : UnityEngine.Object;
         /// <summary>
         /// 异步加载资源
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="objName"></param>
-        /// <param name="action"></param>
+        /// <param name="callback"></param>
         /// <returns></returns>
-        int AsyncLoad<T>(string objName, Action<bool, T> action) where T : UnityEngine.Object;
+        int AsyncLoad<T>(string objName, Action<bool, T> callback) where T : UnityEngine.Object;
 
         /// <summary>
         /// 异步加载资源表
@@ -47,10 +47,10 @@ namespace BDFramework.ResourceMgr
         /// <typeparam name="T"></typeparam>
         /// <param name="sources"></param>
         /// <param name="onLoadEnd"></param>
-        /// <param name="onProcess"></param>
+        /// <param name="onLoadProcess"></param>
         /// <returns></returns>
-        int AsyncLoad(IList<string> sources, Action<IDictionary<string, Object>> onLoadEnd,
-            Action<int, int> onProcess);
+        List<int> AsyncLoad(IList<string> sources, Action<IDictionary<string, Object>> onLoadEnd,
+            Action<int, int> onLoadProcess);
 
         /// <summary>
         /// 取消一个加载任务
@@ -60,12 +60,10 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 取消所有加载任务
         /// </summary>
-        void LoadAllCalcel();
+        void LoadCalcelAll();
 
-        /// <summary>
-        /// 帧循环
-        /// </summary>
-        void Update();
-         
+
+
+
     }
 }

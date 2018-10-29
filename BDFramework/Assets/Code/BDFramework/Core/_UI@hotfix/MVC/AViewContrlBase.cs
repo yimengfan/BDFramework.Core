@@ -2,12 +2,12 @@
 {
     public class AViewContrlBase : AIEnumeratorTaskMgr, IViewControl
     {
-        public AViewContrlBase(DataDriven_Service  data)
+        public AViewContrlBase(DataListenerService  data)
         {
             this.Model = data;
         }
 
-        public DataDriven_Service Model { get; private set; }
+        public DataListenerService Model { get; private set; }
         
         virtual public void BindModel()
         {

@@ -15,7 +15,6 @@ public class ScreenView_Demo1_Screenview : IScreenView
     {
         //一定要设置为true，否则当前是未加载状态
         this.IsLoad = true;
-
         //加载窗口, 0是窗口id,建议自行换成枚举
         UIManager.Inst.LoadWindows((int) WinEnum.Win_Demo1);
         UIManager.Inst.ShowWindow((int) WinEnum.Win_Demo1);
@@ -26,8 +25,6 @@ public class ScreenView_Demo1_Screenview : IScreenView
     {
         //退出设置为false，否则下次进入不会调用begininit
         this.IsLoad = false;
-        
-
         //
         Debug.Log("退出Test Screen 1");
     }

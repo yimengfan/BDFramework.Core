@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 
 /// <summary>
-/// 做数据驱动服务
+/// 这个是基本数据的服务
 /// </summary>
-public class DataDriven_Service : ADataDriven
+public class DataListenerService : ADataListener
 {
 
 }

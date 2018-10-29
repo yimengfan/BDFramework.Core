@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Object = UnityEngine.Object;
 
-public class BResources : MonoBehaviour
+public class BResources
 {
 
     /// <summary>
@@ -13,7 +13,7 @@ public class BResources : MonoBehaviour
     /// </summary>
     /// <param name="abModel"></param>
     /// <param name="callback"></param>
-    public void  Init(bool abModel ) 
+    static  public void  Init(bool abModel ) 
     {
         #if UNITY_EDITOR
         if (abModel)
@@ -32,7 +32,7 @@ public class BResources : MonoBehaviour
         #endif
     }
 
-    static public IResMgr resLoader { get; set; }
+    static private IResMgr resLoader { get; set; }
 
 
     /// <summary>
@@ -62,7 +62,7 @@ public class BResources : MonoBehaviour
     /// </summary>
     /// <param name="objlist"></param>
     /// <param name="onLoadEnd"></param>
-    public static int AsyncLoadSources(IList<string> objlist, Action<int, int> onProcess = null,
+    public static List<int> AsyncLoadSources(IList<string> objlist, Action<int, int> onProcess = null,
         Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
     {
         return resLoader.AsyncLoad(objlist, onLoadEnd, onProcess);
@@ -108,14 +108,7 @@ public class BResources : MonoBehaviour
     /// </summary>
     public static void LoadCancel()
     {
-        resLoader.LoadAllCalcel();
+        resLoader.LoadCalcelAll();
     }
 
-    void Update()
-    {
-        if (resLoader != null)
-        {
-            resLoader.Update();
-        }
-    }
 }
