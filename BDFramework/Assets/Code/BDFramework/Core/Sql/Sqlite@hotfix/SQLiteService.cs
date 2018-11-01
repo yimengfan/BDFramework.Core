@@ -13,23 +13,10 @@ namespace BDFramework.Sql
         //db connect
         public SQLiteConnection DB { get; private set; }
 
-        public SQLiteService(string dbName)
+        public SQLiteService(string path)
         {
-
-            if (Application.isEditor)
-            {
-                dbName = Path.Combine(Application.streamingAssetsPath, dbName);
-            }
-            else
-            {
-                //非editor下在persistent目录下
-                dbName = Path.Combine(Application.persistentDataPath, dbName);
-            }
-
-
-         
-            DB = new SQLiteConnection(dbName, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-            BDebug.Log("open db:" + dbName);
+            DB = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+            BDebug.Log("open db:" + path);
         }
 
 

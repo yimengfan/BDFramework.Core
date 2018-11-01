@@ -6,29 +6,27 @@ namespace BDFramework.Sql
 {
    static public class SqliteHelper
    {
-
-       static SqliteHelper()
-       {
-           if (DB == null)
-           {
-               DB = new SQLiteService("LocalDB");
-           }
-       }
-
        static public SQLiteService DB
        {
            get;
            private set;
        }
-       
+
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="str"></param>
+       static public void InitDB(string str)
+       {
+           
+       }
       
        /// <summary>
        /// 创建db
        /// </summary>
-       /// <param name="dbName"></param>
-       static public void CreateDBInAsset(string dbName)
+       /// <param name="pathme"></param>
+       static public void CreateDB(string path)
        {
-           var path = Path.Combine(Application.streamingAssetsPath, dbName);
            var _db = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, false);
            _db.Dispose();
        }

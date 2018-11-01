@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using BDFramework.Core.Helper;
 using BDFramework.Editor.UI;
 
 namespace BDFramework.Editor
@@ -26,7 +27,7 @@ namespace BDFramework.Editor
         }
         //
 
-        [MenuItem("BDFrameWork工具箱/DLL打包", false, 52)]
+        [MenuItem("BDFrameWork工具箱/1.DLL打包", false, 52)]
         public static void ExecuteBuildDLL()
         {
             var window =
@@ -34,25 +35,25 @@ namespace BDFramework.Editor
             window.Show();
         }
 
-        [MenuItem("BDFrameWork工具箱/AssetBundle打包", false, 53)]
+        [MenuItem("BDFrameWork工具箱/2.AssetBundle打包", false, 53)]
         public static void ExecuteAssetBundle()
         {
             var window =
-                (EditorWindw_GenAssetBundle) EditorWindow.GetWindow(typeof(EditorWindw_GenAssetBundle), false,
+                (EditorWindow_GenAssetBundle) EditorWindow.GetWindow(typeof(EditorWindow_GenAssetBundle), false,
                     "AB打包工具");
             window.Show();
         }
 
-        [MenuItem("BDFrameWork工具箱/表格/表格->生成Class", false, 54)]
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class", false, 54)]
         public static void ExecuteGenTableCalss()
         {
             Excel2Code.GenCode();
         }
 
-        [MenuItem("BDFrameWork工具箱/表格/表格->生成SQLite", false, 55)]
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, 55)]
         public static void ExecuteGenTable()
         {
-            Excel2SQLite.GenSQLite();
+            Excel2SQLite.GenSQLite(Path.Combine(Application.streamingAssetsPath,Config.ResourcePlatformPath));
         }
 
 
@@ -66,7 +67,8 @@ namespace BDFramework.Editor
         [MenuItem("BDFrameWork工具箱/资源一键打包", false, 101)]
         public static void GenResouceall()
         {
-            //Editor_VersionCtrl.GenTableCofig();
+            var window =(EditorWindow_OnkeyBuildAsset)EditorWindow.GetWindow(typeof(EditorWindow_OnkeyBuildAsset), false, "一键打包");
+            window.Show();
         }
     }
 }

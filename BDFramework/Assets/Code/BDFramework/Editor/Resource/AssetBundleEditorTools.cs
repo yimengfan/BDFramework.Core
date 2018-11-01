@@ -6,13 +6,13 @@ using UnityEditor;
 
 static public class AssetBundleEditorTools
 {
-    public static void Start(string resRootPath, BuildTarget target)
+    public static void GenAssetBundle(string resRootPath,string outPath, BuildTarget target )
     {
         //1.生成ab名
         string rootPath = Path.Combine(Application.dataPath, resRootPath);
-        CreateAbName(rootPath);
+        CreateAbName(rootPath,target);
         //2.打包
-        BuildAssetBundle(target);
+        BuildAssetBundle(target,outPath);
     }
 
 
@@ -20,7 +20,7 @@ static public class AssetBundleEditorTools
     /// 创建ab名
     /// </summary>
     /// <param name="rootPath"></param>
-    public static void CreateAbName(string rootPath)
+    public static void CreateAbName(string rootPath,BuildTarget target)
     {
         //扫描所有文件
         var allFiles = Directory.GetFiles(rootPath, "*.*", SearchOption.AllDirectories);
@@ -37,7 +37,7 @@ static public class AssetBundleEditorTools
             }
         }
 
-        AnalyzeResource(fileList.ToArray());
+        AnalyzeResource(fileList.ToArray(),target);
         //
         AssetDatabase.Refresh();
     }
@@ -45,46 +45,18 @@ static public class AssetBundleEditorTools
     /// <summary>
     /// 创建assetbundle
     /// </summary>
-    private static void BuildAssetBundle(BuildTarget target)
+    private static void BuildAssetBundle(BuildTarget target ,string outPath)
     {
         AssetDatabase.RemoveUnusedAssetBundleNames();
         AssetDatabase.Refresh();
-        string saveDir = "";
-        switch (target)
+        string platform  = Path.Combine(outPath,"Art");
+        if (Directory.Exists(platform) == false)
         {
-            case BuildTarget.Android:
-                saveDir = "Android";
-                break;
-            case BuildTarget.iOS:
-                saveDir = "iOS";
-                break;
-            case BuildTarget.StandaloneWindows:
-            case BuildTarget.StandaloneWindows64:
-                saveDir = "Windows";
-                break;
-            case BuildTarget.StandaloneOSX:
-            case BuildTarget.StandaloneOSXIntel:
-            case BuildTarget.StandaloneOSXIntel64:
-                saveDir = "OSX";
-                break;
-            default:
-                break;
-        }
-
-        //
-        if (saveDir == "")
-        {
-            return;
-        }
-
-        saveDir = Path.Combine(Application.streamingAssetsPath,saveDir+"/Art");
-        if (Directory.Exists(saveDir) == false)
-        {
-            Directory.CreateDirectory(saveDir);
+            Directory.CreateDirectory(platform);
         }
 
         //使用lz4压缩
-        BuildPipeline.BuildAssetBundles(saveDir, BuildAssetBundleOptions.ChunkBasedCompression,target);
+        BuildPipeline.BuildAssetBundles(platform, BuildAssetBundleOptions.ChunkBasedCompression,target);
         EditorUtility.ClearProgressBar();
         AssetDatabase.Refresh();
     }
@@ -92,14 +64,15 @@ static public class AssetBundleEditorTools
 
    
 
-    private static void AnalyzeResource(string[] paths)
+    private static void AnalyzeResource(string[] paths,BuildTarget target)
     {
         float curIndex = 0;
         foreach (var path in paths)
         {
             var _path = path.Replace("\\", "/");
                        
-            EditorUtility.DisplayProgressBar("分析资源","打包:" + Path.GetFileNameWithoutExtension(_path) +"   进度：" +  curIndex +"/" +paths.Length,  curIndex / paths.Length);
+            EditorUtility.DisplayProgressBar("分析资源 -" +target.ToString(),
+                "打包:" + Path.GetFileNameWithoutExtension(_path) +"   进度：" +  curIndex +"/" +paths.Length,  curIndex / paths.Length);
             curIndex++;
             //获取被依赖的路径
             var dependsource = "Assets" + _path.Replace(Application.dataPath, "");
