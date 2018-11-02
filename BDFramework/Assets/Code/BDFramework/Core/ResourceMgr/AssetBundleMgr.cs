@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Collections;
-using System.Linq;
-using System.Threading.Tasks;
-using UnityEngine.UI;
 using Object = UnityEngine.Object;
+using Utils = BDFramework.Helper.Utils;
 
 namespace BDFramework.ResourceMgr
 {
@@ -66,39 +64,18 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 资源加载路径
         /// </summary>
-        private string resourcePath = "";
+        private string path = "";
 
         public AssetBundleMgr()
         {
             this.assetbundleMap = new Dictionary<string, AssetBundleReference>();
             this.willDoTaskSet = new HashSet<int>();
             this.allTaskList = new List<LoadTaskGroup>();
-            //1.设置加载路径
-            string path = "";
-            if (Application.platform == RuntimePlatform.WindowsEditor ||
-                Application.platform == RuntimePlatform.WindowsPlayer)
-            {
-                path = "Windows/Art";
-            }
-            else if (Application.platform == RuntimePlatform.Android)
-            {
-                path = "Android/Art";
-            }
-            else if (Application.platform == RuntimePlatform.IPhonePlayer)
-            {
-                path = "iOS/Art";
-            }
-
-            var persistent = Path.Combine(Application.persistentDataPath, path).Replace("\\", "/");
-            var streamingAsset = Path.Combine(Application.streamingAssetsPath, path).Replace("\\", "/");
-            //
-            resourcePath = File.Exists(persistent) ? persistent : streamingAsset;
-
-            //2.加载menifest
+            //1.设置加载路径  
             //persistent 和 streaming同时只能存在一个，
-            //streaming是给appstore审核用,
-            //过审后开始下载,则切回persistent模式
-            this.manifest = new AssetBundleManifestReference(resourcePath + "/Art");
+            path = Path.Combine(Application.persistentDataPath, Utils.ResourcePlatformPath+"/Art").Replace("\\", "/");
+            this.path = File.Exists(path) ? path : Path.Combine(Application.streamingAssetsPath, Utils.ResourcePlatformPath+"/Art").Replace("\\", "/");
+            this.manifest = new AssetBundleManifestReference(Path.Combine(this.path , "Art"));
         }
 
         #region 异步加载单个ab
@@ -123,7 +100,7 @@ namespace BDFramework.ResourceMgr
                 foreach (var asset in res)
                 {
                     //依赖队列需要加上resourcepath
-                    var fullPath = Path.Combine(this.resourcePath, asset);
+                    var fullPath = Path.Combine(this.path, asset);
                     //判断是否已经加载过
                     if (assetbundleMap.ContainsKey(asset) == false)
                     {
@@ -138,7 +115,7 @@ namespace BDFramework.ResourceMgr
                 //2.加载主体
                 if (assetbundleMap.ContainsKey(assetPath) == false)
                 {
-                    var fullPath = Path.Combine(this.resourcePath, assetPath);
+                    var fullPath = Path.Combine(this.path, assetPath);
                     loadQueue.Enqueue(fullPath);
                 }
 
@@ -248,7 +225,7 @@ namespace BDFramework.ResourceMgr
             foreach (var r in res)
             {
                 //依赖队列需要加上resourcepath
-                var dir = Path.Combine(this.resourcePath, r);
+                var dir = Path.Combine(this.path, r);
                 //判断是否已经加载过
                 if (assetbundleMap.ContainsKey(r) == false)
                 {
@@ -270,7 +247,7 @@ namespace BDFramework.ResourceMgr
             //2.加载主体
             if (assetbundleMap.ContainsKey(assetPath) == false)
             {
-                var fullname = Path.Combine(this.resourcePath, assetPath);
+                var fullname = Path.Combine(this.path, assetPath);
                 var ab = AssetBundle.LoadFromFile(fullname);
                 AddAssetBundle(ab.name, ab);
             }

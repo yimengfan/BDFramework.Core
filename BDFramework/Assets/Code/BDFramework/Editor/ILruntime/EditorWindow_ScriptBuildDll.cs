@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using BDFramework;
 using BDFramework.Editor.Tools;
+using BDFramework.Helper;
 using ILRuntime.Runtime.CLRBinding;
 using Debug = UnityEngine.Debug;
 
@@ -38,7 +39,8 @@ public class EditorWindow_ScriptBuildDll: EditorWindow
                 {
                     //
                     //u3d的 各种dll
-                    ScriptBiuldTools.GenDllByMono(Application.dataPath, Application.streamingAssetsPath);
+                    ScriptBiuldTools.GenDllByMono(Application.dataPath, Application.streamingAssetsPath+"/"+Utils.ResourcePlatformPath);
+                    Debug.Log("脚本打包完毕");
                 }
             }
             GUILayout.EndHorizontal();

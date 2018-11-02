@@ -2,12 +2,13 @@
 using System.Reflection;
 using LitJson;
 using BDFramework.Sql;
+using SQLite4Unity3d;
 using  UnityEditor;
 using  UnityEngine;
 namespace BDFramework.Editor
 {
    
-   static public class Excel2SQLite
+   static public class Excel2SQLiteTools
     {
         public static void GenSQLite(string outPath)
         {
@@ -20,7 +21,8 @@ namespace BDFramework.Editor
                 Directory.CreateDirectory(outPath);
             }
             var _path = Path.Combine(outPath, "LocalDB");
-            sql = new SQLiteService(_path);
+            //
+            sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
             foreach (var f in xlslFiles)
             {
                 var excel = new ExcelUtility(f);
@@ -40,7 +42,7 @@ namespace BDFramework.Editor
             //
             var table = Path.GetFileName(f).Replace(Path.GetExtension(f), "");
             var classname = "Game.Data." + table;
-            Debug.Log("class name：" + classname);
+//            Debug.Log("class name：" + classname);
             var jsonObj = JsonMapper.ToObject(json);
 
             var assPath = Path.Combine(Application.dataPath.Replace("Assets", "") , "Library/ScriptAssemblies/Assembly-CSharp.dll");

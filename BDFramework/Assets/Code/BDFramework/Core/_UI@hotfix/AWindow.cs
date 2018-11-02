@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using BDFramework.UI;
-
+using BDFramework.ResourceMgr;
 /// <summary>
 /// 窗口基类
 /// </summary>

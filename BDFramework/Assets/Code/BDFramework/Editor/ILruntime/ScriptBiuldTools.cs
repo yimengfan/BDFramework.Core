@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Debug = UnityEngine.Debug;
+using BDFramework.ResourceMgr;
 #if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
@@ -149,7 +150,7 @@ public class ScriptBiuldTools
             }
 
             File.Copy(baseCs[i], copyto);
-            baseCs[i] = copyto;
+            baseCs[i] = copyto.Replace("\\","/");
         }
 
         //建立目标目录
@@ -179,7 +180,7 @@ public class ScriptBiuldTools
         var dependent = outDirectory + "/dependent";
         Directory.CreateDirectory(dependent);
 
-        //将base.dll加入
+        //将base.dll加入 
         refDlls.Add(baseDllPath);
         //编译hotfix.dll
         var outHotfixDirectory = outPath + "/hotfix/hotfix.dll";
@@ -195,16 +196,16 @@ public class ScriptBiuldTools
             throw;
         }
         //拷贝依赖的dll
-//        foreach (var f in refDlls)
-//        {
-//            if (File.Exists(f) ==false)
-//            {
-//                continue;
-//            }
-//            var fn = Path.GetFileName(f);
-//            var outpath = Path.Combine(dependent, fn);
-//            File.Copy(f,outpath,true);
-//        }
+        foreach (var f in refDlls)
+        {
+            if (File.Exists(f) ==false)
+            {
+                continue;
+            }
+            var fn = Path.GetFileName(f);
+            var outpath = Path.Combine(dependent, fn);
+            File.Copy(f,outpath,true);
+        }
 
         EditorUtility.DisplayProgressBar("编译服务", "清理临时文件", 0.9f);
         Directory.Delete(tempDirect, true);

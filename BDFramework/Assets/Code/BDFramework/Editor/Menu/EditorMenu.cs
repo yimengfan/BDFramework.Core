@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
-using BDFramework.Core.Helper;
+using BDFramework.Helper;
 using BDFramework.Editor.UI;
 
 namespace BDFramework.Editor
@@ -53,7 +53,8 @@ namespace BDFramework.Editor
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, 55)]
         public static void ExecuteGenTable()
         {
-            Excel2SQLite.GenSQLite(Path.Combine(Application.streamingAssetsPath,Config.ResourcePlatformPath));
+            Excel2SQLiteTools.GenSQLite(Path.Combine(Application.streamingAssetsPath,Utils.ResourcePlatformPath));
+            Debug.Log("表格导出完毕");
         }
 
 

@@ -7,7 +7,8 @@ using BDFramework.UI;
 using Game.Data;
 using LitJson;
 using UnityEngine.UI;
-
+using BDFramework;
+using BDFramework.ResourceMgr;
 /// <summary>
 /// 这个是ui的标签，
 /// index 

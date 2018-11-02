@@ -1,4 +1,6 @@
-﻿using SQLite4Unity3d;
+﻿using System.IO;
+using BDFramework.Helper;
+using SQLite4Unity3d;
 using UnityEngine;
 using Path = System.IO.Path;
 
@@ -6,30 +8,23 @@ namespace BDFramework.Sql
 {
    static public class SqliteHelper
    {
+       static private SQLiteService db;
+       //现在是热更层不负责加载,只负责使用
        static public SQLiteService DB
        {
-           get;
-           private set;
+           get
+           {
+               if (db == null)
+               {
+                   db = new SQLiteService(SqliteLoder.Connection);
+               }
+
+               return db;
+           }
        }
 
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="str"></param>
-       static public void InitDB(string str)
-       {
-           
-       }
-      
-       /// <summary>
-       /// 创建db
-       /// </summary>
-       /// <param name="pathme"></param>
-       static public void CreateDB(string path)
-       {
-           var _db = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, false);
-           _db.Dispose();
-       }
+
+
          
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
 using SQLite4Unity3d;
-using UnityEngine;
-using System.Collections;
-using System.IO;
-using System.Collections.Generic;
 
 namespace BDFramework.Sql
 {
@@ -13,10 +9,9 @@ namespace BDFramework.Sql
         //db connect
         public SQLiteConnection DB { get; private set; }
 
-        public SQLiteService(string path)
+        public SQLiteService(SQLiteConnection con)
         {
-            DB = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-            BDebug.Log("open db:" + path);
+            this.DB = con;
         }
 
 

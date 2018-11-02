@@ -70,11 +70,13 @@ public class EditorWindow_GenAssetBundle : EditorWindow
         {
             //开始打包
             if (isSelectWindows)
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,Application.streamingAssetsPath, BuildTarget.StandaloneWindows);
+                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,Application.streamingAssetsPath+"/Windows", BuildTarget.StandaloneWindows);
             if (isSelectAndroid)
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,Application.streamingAssetsPath, BuildTarget.Android);
+                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,Application.streamingAssetsPath+"/Android", BuildTarget.Android);
             if (isSelectIOS)
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,Application.streamingAssetsPath, BuildTarget.iOS);
+                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,Application.streamingAssetsPath+"/iOS", BuildTarget.iOS);
+            
+            Debug.Log("资源打包完毕");
         }
 
         GUILayout.EndHorizontal();

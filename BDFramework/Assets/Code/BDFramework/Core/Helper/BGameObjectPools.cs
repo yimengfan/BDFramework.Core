@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-
+using BDFramework.ResourceMgr;
 /// <summary>
 /// 对象池类
 /// </summary>

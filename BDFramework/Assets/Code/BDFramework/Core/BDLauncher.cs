@@ -1,92 +1,103 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 using BDFramework;
+using SQLite4Unity3d;
 using UnityEngine;
-using UnityEngine.Serialization;
+using BDFramework.ResourceMgr;
 
-public class BDLauncher : MonoBehaviour
+namespace BDFramework
 {
-   public bool IsCodeHotfix = false;
-   public bool IsLoadPdb = false;
-   public bool IsAssetBundleModel = false;
-   static public Action OnStart      { get; set; }
-   static public Action OnUpdate     { get; set; }
-   static public Action OnLateUpdate { get; set; }
-
-    // Use this for initialization
-    private void Awake()
+    public class BDLauncher : MonoBehaviour
     {
-        this.gameObject.AddComponent<IEnumeratorTool>();
+        public bool IsCodeHotfix = false;
+        public bool IsLoadPdb = false;
+        public bool IsAssetBundleModel = false;
+        static public Action OnStart { get; set; }
+        static public Action OnUpdate { get; set; }
+        static public Action OnLateUpdate { get; set; }
+
         
-        BResources.Init(IsAssetBundleModel);
-        //热更资源模式
-        if (IsAssetBundleModel)
-        {           
-            //开始启动逻辑  
-            var dd = DataListenerServer.Create("BDFrameLife");
-            dd.AddData("OnAssetBundleOever");
-            dd.AddListener("OnAssetBundleOever", (o) =>
+        // Use this for initialization
+        private void Awake()
+        {
+            this.gameObject.AddComponent<IEnumeratorTool>();
+        }
+        
+
+        
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="scriptPath"></param>
+        /// <param name="artPath"></param>
+        /// <param name="???"></param>
+        public void Init()
+        {
+            //初始化资源加载
+            BResources.Init(IsAssetBundleModel);
+            SqliteLoder.Init();
+            //热更资源模式
+            if (IsAssetBundleModel)
             {
-                //等待ab完成
-                OnLaunch();               
-            });
+                //开始启动逻辑  
+                var dd = DataListenerServer.Create("BDFrameLife");
+                dd.AddData("OnAssetBundleOever");
+                dd.AddListener("OnAssetBundleOever", (o) =>
+                {
+                    //等待ab完成
+                    OnLaunch();
+                });
+            }
+            else
+            {
+                OnLaunch();
+            }
+            
         }
-        else
-        {
-            OnLaunch();
-        }
-       
+        
+
+        
         
        
-    }
 
-    private void Start()
-    {
-        if (OnStart != null)
+        // Update is called once per frame
+        private void Update()
         {
-            OnStart();
+            if (OnUpdate != null)
+            {
+                OnUpdate();
+            }
         }
-    }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        if (OnUpdate != null)
+        private void LateUpdate()
         {
-            OnUpdate();
+            if (OnLateUpdate != null)
+            {
+                OnLateUpdate();
+            }
         }
-    }
-
-    private void LateUpdate()
-    {
-        if (OnLateUpdate != null)
-        {
-            OnLateUpdate();
-        }
-    }
 
 
-    /// <summary>
-    /// 开始启动游戏
-    /// </summary>
-    private void OnLaunch()
-    {
-        if (IsCodeHotfix) //热更代码模式
+        /// <summary>
+        /// 开始启动游戏
+        /// </summary>
+        private void OnLaunch()
         {
-            ILRuntimeHelper.LoadHotfix(IsLoadPdb);
-           
-            ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start",null ,new object[]{IsCodeHotfix ,IsAssetBundleModel});
-        }
-        else
-        {
-            //这里用反射是为了 不访问逻辑模块的具体类，防止编译失败
-            var assembly = Assembly.GetExecutingAssembly();
-            var type = assembly.GetType("BDLauncherBridge");
-            var method = type.GetMethod("Start", BindingFlags.Public| BindingFlags.Static);
-            method.Invoke(null , new object[]{IsCodeHotfix ,IsAssetBundleModel});
+            if (IsCodeHotfix) //热更代码模式
+            {
+                ILRuntimeHelper.LoadHotfix(IsLoadPdb);
+
+                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null,
+                    new object[] {IsCodeHotfix, IsAssetBundleModel});
+            }
+            else
+            {
+                //这里用反射是为了 不访问逻辑模块的具体类，防止编译失败
+                var assembly = Assembly.GetExecutingAssembly();
+                var type = assembly.GetType("BDLauncherBridge");
+                var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
+                method.Invoke(null, new object[] {IsCodeHotfix, IsAssetBundleModel});
+            }
         }
     }
-    
 }

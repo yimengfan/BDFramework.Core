@@ -387,6 +387,7 @@ GameObject:
   - component: {fileID: 617214994}
   - component: {fileID: 617214995}
   - component: {fileID: 617214993}
+  - component: {fileID: 617214996}
   m_Layer: 0
   m_Name: BDFrame
   m_TagString: Untagged
@@ -436,6 +437,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsLog: 1
+--- !u!114 &617214996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617214992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06859f9eb9c0314f9ac2aeff618298c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CdnConfigUrl: 
 --- !u!1 &878416750
 GameObject:
   m_ObjectHideFlags: 0

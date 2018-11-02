@@ -1,11 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using BDFramework.Helper;
 using ILRuntime.Reflection;
-using ILRuntime.Runtime.Enviorment;
 using LitJson;
 //;
 using Mono.Cecil.Mdb;
 using Mono.Cecil.Pdb;
 using UnityEngine;
+using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
 
 namespace BDFramework
@@ -16,23 +18,18 @@ namespace BDFramework
       public static bool IsRunning { get; private set; }
       public static void LoadHotfix(bool isLoadPdb)
       {
-          string dllPath = "hotfix/hotfix.dll";
-          string pdbPath = "hotfix/hotfix.pdb";
-
           IsRunning = true;
-          #if UNITY_EDITOR
-          dllPath =  Path.Combine(Application.streamingAssetsPath, dllPath);
-          pdbPath =  Path.Combine(Application.streamingAssetsPath, pdbPath);
-          #elif UNITY_IPHONE || UNITY_ANDROID
+          string dllPath = Utils.ResourcePlatformPath  + "/hotfix/hotfix.dll";
+          string pdbPath =  Utils.ResourcePlatformPath + "/hotfix/hotfix.pdb";
           dllPath =  Path.Combine(Application.persistentDataPath, dllPath);
-          pdbPath =  Path.Combine(Application.persistentDataPath, pdbPath);           
-          #endif
-
-        
-      
+          pdbPath =  Path.Combine(Application.persistentDataPath, pdbPath);
           
+          //加载路径
+          dllPath = File.Exists(dllPath)? dllPath:  Path.Combine(Application.streamingAssetsPath, dllPath);
+          pdbPath = File.Exists(dllPath)? pdbPath:  Path.Combine(Application.streamingAssetsPath, pdbPath);
+          //
           AppDomain = new AppDomain();
-          if (isLoadPdb)
+          if (isLoadPdb && File.Exists(pdbPath))
           {
               var dllfs = File.ReadAllBytes(dllPath);
               var pdbfs = File.ReadAllBytes(pdbPath);

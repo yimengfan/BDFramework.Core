@@ -2,9 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using BDFramework.Core.Helper;
+using BDFramework.Helper;
 using BDFramework.Editor;
-using DG.DOTweenEditor.Core;
 using UnityEditor;
 using UnityEngine;
 
@@ -67,30 +66,30 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
 
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Label("导出地址:" + exportPath, GUILayout.Width(350));
-                if (GUILayout.Button("..", GUILayout.Width(20)))
-                {
-                    exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath.Replace("Assets",""), "");
-                }
+                GUILayout.Label("导出地址:" + exportPath, GUILayout.Width(500));
             }
             GUILayout.EndHorizontal();
             //
             if (GUILayout.Button("一键导出", GUILayout.Width(350), GUILayout.Height(30)))
             {
+                //选择目录
+                exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath.Replace("Assets",""), "");
 
-                if (string.IsNullOrEmpty(exportPath) || Directory.Exists(exportPath) == false)
+                var files = Directory.GetFiles(exportPath, "*.*", SearchOption.AllDirectories);
+                //
+                if (string.IsNullOrEmpty(exportPath) || Directory.Exists(exportPath) == false || files.Length>0)
                 {
-                    EditorUtility.DisplayDialog("错误!", "你TMD选正确目录好伐？", "滚,劳资就不选!");
+                    EditorUtility.DisplayDialog("错误!", "文件夹不存在,或者文件夹不为空", "爱咋咋地!");
                 }
                 else
-                {
-                    var outPath = exportPath+"/"+Config.ResourcePlatformPath;
+                {                 
+                    var outPath = exportPath+"/"+Utils.ResourcePlatformPath;
                     //1.编译脚本
                     ScriptBiuldTools.GenDllByMono(Application.dataPath,outPath);
                     //2.打包资源
                     AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/",outPath, BuildTarget.StandaloneWindows );
                     //3.打包表格
-                    Excel2SQLite.GenSQLite(outPath);
+                    Excel2SQLiteTools.GenSQLite(outPath);
                 }
                    
             }

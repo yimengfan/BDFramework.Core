@@ -1883,7 +1883,7 @@ namespace SQLite4Unity3d
             //判断是否是list 或者array
             else if (clrType.FullName.Contains("System.Collections.Generic.List") || clrType.IsArray)
             {
-                Debug.Log("数组将以json形式保存:" + clrType.Name);
+//                Debug.Log("数组将以json形式保存:" + clrType.Name);
                 return "varchar(4000)";
             }
             else

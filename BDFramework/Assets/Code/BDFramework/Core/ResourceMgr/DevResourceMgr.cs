@@ -2,15 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using System.IO;
 using System.Collections;
-using Mono.Cecil;
-using Mono.Cecil.PE;
+
 using UnityEditor;
-using UnityEditor.VersionControl;
-using Image = UnityEngine.UI.Image;
+
 using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr
@@ -18,7 +15,7 @@ namespace BDFramework.ResourceMgr
     /// <summary>
     /// ab包管理器
     /// </summary>
-    public class ResourcesMgr : IResMgr
+    public class DevResourceMgr : IResMgr
     {
         /// <summary>
         /// 资源的根目录
@@ -50,10 +47,10 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         private List<string> allResourceList;
 
-        public ResourcesMgr()
+        public DevResourceMgr()
         {
             willdoTaskSet = new HashSet<int>();
-            allTaskList = new List<LoadTaskGroup>();
+            allTaskList   = new List<LoadTaskGroup>();
             objsMap = new Dictionary<string, UnityEngine.Object>();
             //搜索所有资源
             var root = Application.dataPath + "/" + ResourceRootPath;

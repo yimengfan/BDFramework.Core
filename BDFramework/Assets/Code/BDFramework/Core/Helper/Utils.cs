@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace BDFramework.Core.Helper
+namespace BDFramework.Helper
 {
-   static public class Config
+   static public class Utils
     {
         /// <summary>
         /// 平台资源的父路径

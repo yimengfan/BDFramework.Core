@@ -12,7 +12,7 @@ using ILRuntime.Runtime.Generated;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+using BDFramework.ResourceMgr;
 namespace BDFramework.Core
 {
     public class UITools_AutoSetTranformValueByData
