@@ -21,7 +21,7 @@ namespace ILRuntime.Runtime.Generated
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(BDebug);
+            Type type = typeof(global::BDebug);
             args = new Type[]{typeof(System.Object), typeof(System.String)};
             method = type.GetMethod("Log", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Log_0);
@@ -54,7 +54,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDebug.Log(@s, @color);
+            global::BDebug.Log(@s, @color);
 
             return __ret;
         }
@@ -70,7 +70,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDebug.Log(@s);
+            global::BDebug.Log(@s);
 
             return __ret;
         }
@@ -86,7 +86,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDebug.LogError(@s);
+            global::BDebug.LogError(@s);
 
             return __ret;
         }
@@ -106,7 +106,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDebug.LogFormat(@format, @args);
+            global::BDebug.LogFormat(@format, @args);
 
             return __ret;
         }

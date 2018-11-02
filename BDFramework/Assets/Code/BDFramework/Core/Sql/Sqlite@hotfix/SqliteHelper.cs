@@ -14,17 +14,19 @@ namespace BDFramework.Sql
        {
            get
            {
-               if (db == null)
-               {
-                   db = new SQLiteService(SqliteLoder.Connection);
-               }
-
                return db;
            }
        }
 
-
-
-         
+       /// <summary>
+       /// 初始化
+       /// </summary>
+       static public void Init()
+       {
+           if (db == null)
+           {
+               db = new SQLiteService(SqliteLoder.Connection);
+           } 
+       }   
     }
 }

@@ -42,7 +42,7 @@ namespace ILRuntime.Runtime.Generated
                     lst.Add(m);
                 }
             }
-            args = new Type[]{typeof(UITool_Attribute)};
+            args = new Type[]{typeof(global::UITool_Attribute)};
             if (genericMethods.TryGetValue("GetComponentsInChildren", out lst))
             {
                 foreach(var m in lst)
@@ -113,7 +113,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine.Component instance_of_this_method = (UnityEngine.Component)typeof(UnityEngine.Component).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
-            var result_of_this_method = instance_of_this_method.GetComponentsInChildren<UITool_Attribute>();
+            var result_of_this_method = instance_of_this_method.GetComponentsInChildren<global::UITool_Attribute>();
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }

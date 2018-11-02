@@ -21,7 +21,7 @@ namespace ILRuntime.Runtime.Generated
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             FieldInfo field;
             Type[] args;
-            Type type = typeof(UITool_Attribute);
+            Type type = typeof(global::UITool_Attribute);
 
             field = type.GetField("ToolTag_FieldName", flag);
             app.RegisterCLRFieldGetter(field, get_ToolTag_FieldName_0);
@@ -34,11 +34,11 @@ namespace ILRuntime.Runtime.Generated
 
         static object get_ToolTag_FieldName_0(ref object o)
         {
-            return ((UITool_Attribute)o).ToolTag_FieldName;
+            return ((global::UITool_Attribute)o).ToolTag_FieldName;
         }
         static void set_ToolTag_FieldName_0(ref object o, object v)
         {
-            ((UITool_Attribute)o).ToolTag_FieldName = (System.String)v;
+            ((global::UITool_Attribute)o).ToolTag_FieldName = (System.String)v;
         }
 
 

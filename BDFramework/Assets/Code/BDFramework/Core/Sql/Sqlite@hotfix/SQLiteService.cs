@@ -7,34 +7,34 @@ namespace BDFramework.Sql
     public class SQLiteService
     {
         //db connect
-        public SQLiteConnection DB { get; private set; }
+        public SQLiteConnection Connection { get; private set; }
 
         public SQLiteService(SQLiteConnection con)
         {
-            this.DB = con;
+            this.Connection = con;
         }
 
 
         public void Close()
         {
-            DB.Close();
+            Connection.Close();
         }
 
         public void CreateDB<T>()
         {
-            DB.DropTable<T>();
-            DB.CreateTable<T>();
+            Connection.DropTable<T>();
+            Connection.CreateTable<T>();
         }
 
         public void CreateDBByType(Type t)
         {
-            DB.DropTableByType(t);
-            DB.CreateTableByType(t);
+            Connection.DropTableByType(t);
+            Connection.CreateTableByType(t);
         }
 
         public void InsertTable(System.Collections.IEnumerable objects)
         {
-            DB.InsertAll(objects);
+            Connection.InsertAll(objects);
         }
 
 
@@ -45,7 +45,7 @@ namespace BDFramework.Sql
         /// <returns></returns>
         public TableQuery<T> GetTable<T>() where T : new()
         {
-            return new TableQuery<T>(DB);
+            return new TableQuery<T>(Connection);
         }
 
 
@@ -54,9 +54,10 @@ namespace BDFramework.Sql
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public TableQueryILRuntime<T> GetTableRuntime<T>() where T : new()
+        public TableQueryILRuntime GetTableRuntime() 
         {
-            return new TableQueryILRuntime<T>(DB);
+            var table = new TableQueryILRuntime(this.Connection);
+            return table;
         }
     }
 }

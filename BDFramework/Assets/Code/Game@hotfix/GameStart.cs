@@ -1,10 +1,11 @@
 ﻿using BDFramework.Logic.GameLife;
+using BDFramework.Sql;
 using UnityEngine;
 
 namespace Code.Game
 {
     [GameStartAtrribute(0)]
-    public class GameStartTest : IGameStart
+    public class GameStart : IGameStart
     {
 
 

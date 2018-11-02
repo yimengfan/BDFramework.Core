@@ -21,12 +21,12 @@ namespace ILRuntime.Runtime.Generated
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(System.Collections.Generic.List<UITool_Attribute>);
-            args = new Type[]{typeof(System.Predicate<UITool_Attribute>)};
+            Type type = typeof(System.Collections.Generic.List<global::UITool_Attribute>);
+            args = new Type[]{typeof(System.Predicate<global::UITool_Attribute>)};
             method = type.GetMethod("Find", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Find_0);
 
-            args = new Type[]{typeof(System.Collections.Generic.IEnumerable<UITool_Attribute>)};
+            args = new Type[]{typeof(System.Collections.Generic.IEnumerable<global::UITool_Attribute>)};
             method = type.GetConstructor(flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Ctor_0);
 
@@ -40,11 +40,11 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Predicate<UITool_Attribute> @match = (System.Predicate<UITool_Attribute>)typeof(System.Predicate<UITool_Attribute>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Predicate<global::UITool_Attribute> @match = (System.Predicate<global::UITool_Attribute>)typeof(System.Predicate<global::UITool_Attribute>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.Collections.Generic.List<UITool_Attribute> instance_of_this_method = (System.Collections.Generic.List<UITool_Attribute>)typeof(System.Collections.Generic.List<UITool_Attribute>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Collections.Generic.List<global::UITool_Attribute> instance_of_this_method = (System.Collections.Generic.List<global::UITool_Attribute>)typeof(System.Collections.Generic.List<global::UITool_Attribute>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.Find(@match);
@@ -64,11 +64,11 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Collections.Generic.IEnumerable<UITool_Attribute> @collection = (System.Collections.Generic.IEnumerable<UITool_Attribute>)typeof(System.Collections.Generic.IEnumerable<UITool_Attribute>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Collections.Generic.IEnumerable<global::UITool_Attribute> @collection = (System.Collections.Generic.IEnumerable<global::UITool_Attribute>)typeof(System.Collections.Generic.IEnumerable<global::UITool_Attribute>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = new System.Collections.Generic.List<UITool_Attribute>(@collection);
+            var result_of_this_method = new System.Collections.Generic.List<global::UITool_Attribute>(@collection);
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }

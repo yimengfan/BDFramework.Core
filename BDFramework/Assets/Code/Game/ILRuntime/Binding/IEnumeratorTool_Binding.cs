@@ -21,7 +21,7 @@ namespace ILRuntime.Runtime.Generated
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(IEnumeratorTool);
+            Type type = typeof(global::IEnumeratorTool);
             args = new Type[]{typeof(System.Collections.IEnumerator)};
             method = type.GetMethod("StartCoroutine", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, StartCoroutine_0);
@@ -44,7 +44,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = IEnumeratorTool.StartCoroutine(@ie);
+            var result_of_this_method = global::IEnumeratorTool.StartCoroutine(@ie);
 
             __ret->ObjectType = ObjectTypes.Integer;
             __ret->Value = result_of_this_method;
@@ -61,7 +61,7 @@ namespace ILRuntime.Runtime.Generated
             System.Int32 @id = ptr_of_this_method->Value;
 
 
-            IEnumeratorTool.StopCoroutine(@id);
+            global::IEnumeratorTool.StopCoroutine(@id);
 
             return __ret;
         }

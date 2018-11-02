@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BDFramework.ScreenView;
+using BDFramework.Sql;
 using BDFramework.UI;
 
 [ScreenView("demo1")]

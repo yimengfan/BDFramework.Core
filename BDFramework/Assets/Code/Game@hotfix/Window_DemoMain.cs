@@ -78,7 +78,7 @@ public class Window_DemoMain : AWindow
         //demo5： sqlite 查询
         this.btn_05.onClick.AddListener(() =>
         {
-            var ds = SqliteHelper.DB.GetTableRuntime<Hero>().Where("id > 1").ToSearch();
+            var ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").ToSearch<Hero>();
             
             foreach (var d in ds)
             {

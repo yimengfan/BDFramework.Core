@@ -5115,6 +5115,7 @@ namespace ILRuntime.Runtime.Intepreter
         {
             if (obj != null)
             {
+               
                 if (!isBox)
                 {
                     var typeFlags = obj.GetType().GetTypeFlags();

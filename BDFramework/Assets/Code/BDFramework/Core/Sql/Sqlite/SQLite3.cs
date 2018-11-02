@@ -2134,9 +2134,7 @@ namespace SQLite4Unity3d
                             var colType = SQLite3.ColumnType(stmt, i);
                             var val = ReadCol(stmt, i, colType, cols[i].ColumnType);
                             cols[i].SetValue(obj, val);
-                        }
-
-                       
+                        }                   
                         yield return obj;
                     }
                 }

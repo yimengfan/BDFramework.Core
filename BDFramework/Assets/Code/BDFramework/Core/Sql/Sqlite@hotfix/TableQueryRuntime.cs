@@ -28,37 +28,34 @@ using Sqlite3Statement = System.IntPtr;
 namespace SQLite4Unity3d
 {
    
-    public class TableQueryILRuntime<T> : BaseTableQuery
+    public class TableQueryILRuntime : BaseTableQuery
     {
         public SQLiteConnection Connection { get; private set; }
 
-        public TableMapping Table { get; private set; }
 
         private string @where = "";
         private string like   = "";
         private string limit  = "";
        
-        public TableQueryILRuntime(SQLiteConnection conn)
+        public TableQueryILRuntime( SQLiteConnection connection)
         {
-            Connection = conn;
-            var t = typeof(T);
-            Table = Connection.GetMapping(t);
+            this.Connection = connection;
         }
 
 
 
         #region 数据库直接操作
 
-        private SQLiteCommand GenerateCommand(string selectionList)
+        private SQLiteCommand GenerateCommand(string selection , string tablename)
         {
             //0表名
-            string cmdText = "select * from {0} {1}";
+            string cmdText = "select "+selection+" from {0} {1}";
             if (string.IsNullOrEmpty(@where) == false)
             {
                 @where = "where " + @where;
             }
             
-            cmdText= string.Format(cmdText, Table.TableName, @where);
+            cmdText= string.Format(cmdText,tablename, @where);
             
             BDebug.Log("sql:" + cmdText);
             return Connection.CreateCommand(cmdText);
@@ -77,7 +74,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime<T> Where(string where ,params object[] formats)
+        public TableQueryILRuntime Where(string where ,params object[] formats)
         {
             if (formats.Length > 0)
             {
@@ -95,7 +92,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime<T> WhereOr(string field,string operation ,List<object> objs)
+        public TableQueryILRuntime WhereOr(string field,string operation ,List<object> objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Count; i++)
@@ -120,7 +117,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime<T> WhereAnd(string field,string operation,List<object> objs)
+        public TableQueryILRuntime WhereAnd(string field,string operation,List<object> objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Count; i++)
@@ -143,11 +140,12 @@ namespace SQLite4Unity3d
         /// forilruntime
         /// </summary>
         /// <returns></returns>
-        public List<T> ToSearch(string sql = "*")
+        public List<T> ToSearch<T>(string selection = "*") where T : new()
         {  
             var DataCache = new List<T>();
             //查询所有数据
-            var list = GenerateCommand(sql).ExecuteQuery(typeof(T));
+            var cmd = GenerateCommand(selection, typeof(T).Name.ToLower());
+            var list = cmd.ExecuteQuery(typeof(T));
             foreach (var o in list)
             {
                 var _t = (T) o;

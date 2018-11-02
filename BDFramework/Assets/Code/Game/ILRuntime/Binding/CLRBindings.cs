@@ -39,13 +39,16 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_BDLauncher_Binding.Register(app);
             SQLite4Unity3d_SqliteLoder_Binding.Register(app);
             SQLite4Unity3d_SQLiteConnection_Binding.Register(app);
+            SQLite4Unity3d_TableMapping_Binding.Register(app);
+            System_Object_Binding.Register(app);
+            System_Collections_Generic_List_1_Object_Binding.Register(app);
+            SQLite4Unity3d_SQLiteCommand_Binding.Register(app);
+            System_Collections_Generic_List_1_Object_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_String_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
-            System_Array_Binding.Register(app);
-            System_Object_Binding.Register(app);
             IEnumeratorTool_Binding.Register(app);
             System_Collections_Generic_List_1_Int32_Binding.Register(app);
             System_Collections_Generic_List_1_Int32_Binding_Enumerator_Binding.Register(app);
@@ -59,6 +62,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_String_Object_Binding_KeyCollection_Binding_Enumerator_Binding.Register(app);
             System_Action_1_Object_Binding.Register(app);
             System_Action_Binding.Register(app);
+            System_Int32_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding.Register(app);
             System_Diagnostics_Stopwatch_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
@@ -70,7 +74,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_KeyValuePair_2_Int32_ILTypeInstance_Binding.Register(app);
             System_Reflection_FieldInfo_Binding.Register(app);
             System_Reflection_MemberInfo_Binding.Register(app);
-            System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Transform_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_UITool_Attribute_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_Object_Binding.Register(app);
@@ -95,7 +98,6 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_Toggle_Binding.Register(app);
             System_Reflection_MethodBase_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
-            System_Int32_Binding.Register(app);
             UnityEngine_Random_Binding.Register(app);
             LitJson_JsonMapper_Binding.Register(app);
             System_Collections_Generic_List_1_String_Binding.Register(app);

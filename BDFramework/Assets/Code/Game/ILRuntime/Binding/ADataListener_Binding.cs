@@ -21,7 +21,7 @@ namespace ILRuntime.Runtime.Generated
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(ADataListener);
+            Type type = typeof(global::ADataListener);
             args = new Type[]{typeof(System.String)};
             method = type.GetMethod("AddData", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, AddData_0);
@@ -75,7 +75,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            ADataListener instance_of_this_method = (ADataListener)typeof(ADataListener).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            global::ADataListener instance_of_this_method = (global::ADataListener)typeof(global::ADataListener).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.AddData(@name);
@@ -101,7 +101,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
-            ADataListener instance_of_this_method = (ADataListener)typeof(ADataListener).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            global::ADataListener instance_of_this_method = (global::ADataListener)typeof(global::ADataListener).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.AddListener(@name, @callback, @isTriggerCacheData);
@@ -120,7 +120,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            ADataListener instance_of_this_method = (ADataListener)typeof(ADataListener).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            global::ADataListener instance_of_this_method = (global::ADataListener)typeof(global::ADataListener).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.GetData<System.Int32>(@name);
@@ -148,7 +148,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
-            ADataListener instance_of_this_method = (ADataListener)typeof(ADataListener).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            global::ADataListener instance_of_this_method = (global::ADataListener)typeof(global::ADataListener).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.SetData(@name, @value, @isTriggerCallback);

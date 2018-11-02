@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BDFramework.ScreenView;
+using BDFramework.Sql;
 using BDFramework.UI;
 
 [ScreenView("main",true)]
@@ -15,7 +16,8 @@ public class ScreenView_Main : IScreenView
     {
         //一定要设置为true，否则当前是未加载状态
         this.IsLoad = true;
-
+        //初始化一下db
+        SqliteHelper.Init();
 
         //加载窗口, 0是窗口id,建议自行换成枚举
         UIManager.Inst.LoadWindows((int) WinEnum.Win_Main);

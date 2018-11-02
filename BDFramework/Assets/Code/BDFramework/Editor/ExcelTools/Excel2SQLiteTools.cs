@@ -57,8 +57,8 @@ namespace BDFramework.Editor
             }
             //数据库创建表
              //sql.DB.Delete<>()
-            sql.DB.DropTableByType(t);
-            sql.DB.CreateTableByType(t);
+            sql.Connection.DropTableByType(t);
+            sql.Connection.CreateTableByType(t);
             
             EditorUtility.ClearProgressBar();
             //
@@ -69,7 +69,7 @@ namespace BDFramework.Editor
                 EditorUtility.DisplayProgressBar("Excel2Sqlite" , "正在导出:" + classname + " " + i + "-" + jsonObj.Count , i / jsonObj.Count );
                 try
                 {
-                    sql.DB.Insert(jo);
+                    sql.Connection.Insert(jo);
                 }
                 catch
                 {
