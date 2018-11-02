@@ -27,7 +27,7 @@ unity版本：2018.2f3
 <br>3.MVC模式初探              [点击](https://zhuanlan.zhihu.com/p/40772076)
 <br>4.UI工作流工具的使用        [点击](https://zhuanlan.zhihu.com/p/40941129)
 <br>5.UI开发利器：UITools      [点击](https://zhuanlan.zhihu.com/p/40968876)
-<br>5.数据处理                 [点击](http://) （未完成）
+<br>6.数据处理                 [点击](http://)
 ### 热更新:
 1.C#脚本热更及编辑器：开发跟普通一样,只需标记热更代码即可.[点击](https://zhuanlan.zhihu.com/p/41070384)
-<br>2.资源热更及编辑器：热更和日常开发一套API，无需来回切换.[点击](http://) （未完成）
+<br>2.资源热更及编辑器：热更和日常开发一套API，无需来回切换.[点击](http://) （文档待书写）
