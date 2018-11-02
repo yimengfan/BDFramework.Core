@@ -23,6 +23,13 @@ namespace ILRuntime.Runtime.Enviorment
     public delegate object CLRCreateDefaultInstanceDelegate();
     public delegate object CLRCreateArrayInstanceDelegate(int size);
 
+    public struct TypeSizeInfo
+    {
+        public ILType Type;
+        public int StaticFieldSize;
+        public int MethodBodySize;
+        public int TotalSize;
+    }
     public class AppDomain
     {
         Queue<ILIntepreter> freeIntepreters = new Queue<ILIntepreter>();
@@ -430,6 +437,8 @@ namespace ILRuntime.Runtime.Enviorment
 
         public void RegisterCLRMethodRedirection(MethodBase mi, CLRRedirectionDelegate func)
         {
+            if (mi == null)
+                return;
             if (!redirectMap.ContainsKey(mi))
                 redirectMap[mi] = func;
         }
@@ -738,12 +747,19 @@ namespace ILRuntime.Runtime.Enviorment
                     if (t != null)
                     {
                         res = t.MakeArrayType(at.Rank);
-                        if (res is ILType)
+                        if (!_ref.ContainsGenericParameter)
                         {
-                            ///Unify the TypeReference
-                            ((ILType)res).TypeReference = _ref;
+                            if (res is ILType)
+                            {
+                                ///Unify the TypeReference
+                                ((ILType)res).TypeReference = _ref;
+                            }
+                            mapTypeToken[hash] = res;
                         }
-                        mapTypeToken[hash] = res;
+                        else
+                        {
+                            mapTypeToken[res.GetHashCode()] = res;
+                        }
                         if (!string.IsNullOrEmpty(res.FullName))
                             mapType[res.FullName] = res;
                         return res;
@@ -784,6 +800,8 @@ namespace ILRuntime.Runtime.Enviorment
                             genericArguments[i] = new KeyValuePair<string, IType>(key, val);
                         else
                         {
+                            if (!dummyGenericInstance)
+                                return null;
                             genericArguments = null;
                             break;
                         }
@@ -1108,7 +1126,6 @@ namespace ILRuntime.Runtime.Enviorment
                 }
                 methodname = _ref.Name;
                 var typeDef = _ref.DeclaringType;
-
                 type = GetType(typeDef, contextType, contextMethod);
                 if (type == null)
                     throw new KeyNotFoundException("Cannot find type:" + typename);
@@ -1319,6 +1336,29 @@ namespace ILRuntime.Runtime.Enviorment
                         throw new Exception("Crossbinding Adapter for " + i.FullName + " is already added.");
                 }
             }
+        }
+
+        public unsafe int GetSizeInMemory(out List<TypeSizeInfo> detail)
+        {
+            int size = RuntimeStack.MAXIMAL_STACK_OBJECTS * sizeof(StackObject) * (intepreters.Count);
+            detail = new List<TypeSizeInfo>();
+            HashSet<object> traversed = new HashSet<object>();
+            foreach(var i in LoadedTypes)
+            {
+                ILType type = i.Value as ILType;
+                if(type != null)
+                {
+                    TypeSizeInfo info = new TypeSizeInfo();
+                    info.Type = type;
+                    info.StaticFieldSize = type.GetStaticFieldSizeInMemory(traversed);
+                    info.MethodBodySize = type.GetMethodBodySizeInMemory();
+                    info.TotalSize = info.StaticFieldSize + info.MethodBodySize;
+                    size += info.TotalSize;
+                    detail.Add(info);
+                }
+            }
+            detail.Sort((a, b) => b.TotalSize - a.TotalSize);
+            return size;
         }
     }
 }

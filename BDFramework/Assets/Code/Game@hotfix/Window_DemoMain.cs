@@ -79,6 +79,7 @@ public class Window_DemoMain : AWindow
         this.btn_05.onClick.AddListener(() =>
         {
             var ds = SqliteHelper.DB.GetTableRuntime<Hero>().Where("id > 1").ToSearch();
+            
             foreach (var d in ds)
             {
              Debug.Log( JsonMapper.ToJson(d) );

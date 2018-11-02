@@ -83,7 +83,7 @@ namespace ILRuntime.Runtime.Enviorment
 
         public static StackObject* CreateInstance3(ILIntepreter intp, StackObject* esp, IList<object> mStack, CLRMethod method, bool isNewObj)
         {
-            var p = esp - 2;
+            var p = esp - 1 - 1;
             var t = mStack[p->Value] as Type;
             var p2 = esp - 1;
             var t2 = mStack[p2->Value] as Object[];
@@ -1059,14 +1059,14 @@ namespace ILRuntime.Runtime.Enviorment
 
         public static StackObject* EnumGetName(ILIntepreter intp, StackObject* esp, IList<object> mStack, CLRMethod method, bool isNewObj)
         {
-            var ret = esp - 2;
+            var ret = esp - 1 - 1;
             AppDomain domain = intp.AppDomain;
 
             var p = esp - 1;
             object val = StackObject.ToObject(p, domain, mStack);
             intp.Free(p);
 
-            p = esp - 2;
+            p = esp - 1 - 1;
             Type t = (Type)StackObject.ToObject(p, domain, mStack);
             intp.Free(p);
 

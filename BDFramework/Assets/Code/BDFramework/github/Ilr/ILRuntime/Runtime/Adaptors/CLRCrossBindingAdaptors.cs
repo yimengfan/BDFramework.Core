@@ -32,7 +32,7 @@ namespace ILRuntime.Runtime.Adaptors
             return new Adaptor(appdomain, instance);
         }
 
-        public  class Adaptor : Attribute, CrossBindingAdaptorType
+        class Adaptor : Attribute, CrossBindingAdaptorType
         {
             ILTypeInstance instance;
             ILRuntime.Runtime.Enviorment.AppDomain appdomain;

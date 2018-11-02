@@ -157,11 +157,27 @@ namespace ILRuntime.Runtime.Stack
                     esp.Value = idx;
                     if (fieldType is CLRType)
                     {
-                        mStack[idx] = ((CLRType)fieldType).CreateDefaultInstance();
+                        if (fieldType.TypeForCLR.IsEnum)
+                        {
+                            esp.ObjectType = ObjectTypes.Integer;
+                            esp.Value = 0;
+                            esp.ValueLow = 0;
+                            mStack[idx] = null;
+                        }
+                        else
+                            mStack[idx] = ((CLRType)fieldType).CreateDefaultInstance();
                     }
                     else
                     {
-                        mStack[idx] = ((ILType)fieldType).Instantiate();
+                        if (((ILType)fieldType).IsEnum)
+                        {
+                            esp.ObjectType = ObjectTypes.Integer;
+                            esp.Value = 0;
+                            esp.ValueLow = 0;
+                            mStack[idx] = null;
+                        }
+                        else
+                            mStack[idx] = ((ILType)fieldType).Instantiate();
                     }
                 }
                 else
@@ -173,7 +189,7 @@ namespace ILRuntime.Runtime.Stack
         public unsafe static void Initialized(StackObject* esp, IType type)
         {
             var t = type.TypeForCLR;
-            if (type.IsPrimitive)
+            if (type.IsPrimitive || type.IsEnum)
             {
                 if (t == typeof(int) || t == typeof(uint) || t == typeof(short) || t == typeof(ushort) || t == typeof(byte) || t == typeof(sbyte) || t == typeof(char) || t == typeof(bool))
                 {

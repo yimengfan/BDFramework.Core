@@ -12,11 +12,6 @@ using Debug = UnityEngine.Debug;
 
 public class EditorWindow_ScriptBuildDll: EditorWindow
 {
-
-    
-   
-
-
     public void OnGUI()
     {
         GUILayout.BeginVertical();

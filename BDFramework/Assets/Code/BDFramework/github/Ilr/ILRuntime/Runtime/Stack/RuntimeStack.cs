@@ -25,7 +25,7 @@ namespace ILRuntime.Runtime.Stack
 #endif
 
         Stack<StackFrame> frames = new Stack<StackFrame>();
-        const int MAXIMAL_STACK_OBJECTS = 1024 * 16;
+        public const int MAXIMAL_STACK_OBJECTS = 1024 * 16;
 
         public Stack<StackFrame> Frames { get { return frames; } }
         public RuntimeStack(ILIntepreter intepreter)
@@ -212,7 +212,7 @@ namespace ILRuntime.Runtime.Stack
                 {
                     var ft = t.FieldTypes[i];
                     StackObject* val = ILIntepreter.Minus(ptr, t.FieldStartIndex + i + 1);
-                    if (ft.IsPrimitive)
+                    if (ft.IsPrimitive || ft.IsEnum)
                         StackObject.Initialized(val, ft);
                     else
                     {
@@ -281,7 +281,7 @@ namespace ILRuntime.Runtime.Stack
                 {
                     var ft = t.FieldTypes[i];
                     StackObject* val = ILIntepreter.Minus(ptr, t.FieldStartIndex + i + 1);
-                    if (ft.IsPrimitive)
+                    if (ft.IsPrimitive || ft.IsEnum)
                         StackObject.Initialized(val, ft);
                     else
                     {
