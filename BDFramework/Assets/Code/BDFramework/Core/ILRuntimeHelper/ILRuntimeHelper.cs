@@ -21,12 +21,12 @@ namespace BDFramework
           IsRunning = true;
           string dllPath = Utils.ResourcePlatformPath  + "/hotfix/hotfix.dll";
           string pdbPath =  Utils.ResourcePlatformPath + "/hotfix/hotfix.pdb";
-          dllPath =  Path.Combine(Application.persistentDataPath, dllPath);
-          pdbPath =  Path.Combine(Application.persistentDataPath, pdbPath);
+          var _dllPath =  Path.Combine(Application.persistentDataPath, dllPath);
           
           //加载路径
-          dllPath = File.Exists(dllPath)? dllPath:  Path.Combine(Application.streamingAssetsPath, dllPath);
-          pdbPath = File.Exists(dllPath)? pdbPath:  Path.Combine(Application.streamingAssetsPath, pdbPath);
+          dllPath = File.Exists(_dllPath)? _dllPath:  Path.Combine(Application.streamingAssetsPath, dllPath);
+          pdbPath = File.Exists(_dllPath)?   Path.Combine(Application.streamingAssetsPath,pdbPath)
+                                         :   Path.Combine(Application.streamingAssetsPath, pdbPath);
           //
           AppDomain = new AppDomain();
           if (isLoadPdb && File.Exists(pdbPath))

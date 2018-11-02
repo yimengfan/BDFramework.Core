@@ -54,6 +54,17 @@ public class EditorWindow_ScriptBuildDll: EditorWindow
                 GenCrossBindAdapter();
             }
 
+            GUI.color = Color.green;
+            GUILayout.Label(
+@"注意事项:
+     1.编译服务使用codedom,请放心使用
+     2.如编译出现报错，请仔细看报错信息,和报错的代码行列,
+       一般均为语法错
+     3.语法报错原因可能有:主工程访问hotfix中的类, 使用宏
+       编译时代码结构发生变化..等等，需要细心的你去发现
+"
+                );
+            GUI.color = GUI.backgroundColor;
         }
         GUILayout.EndVertical();
     }

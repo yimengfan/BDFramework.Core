@@ -407,9 +407,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76df6a7acb4be174683f07772a347e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsCodeHotfix: 0
-  IsLoadPdb: 0
-  IsAssetBundleModel: 0
+  IsCodeHotfix: 1
+  IsLoadPdb: 1
+  IsAssetBundleModel: 1
 --- !u!4 &617214994
 Transform:
   m_ObjectHideFlags: 0
@@ -449,7 +449,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d06859f9eb9c0314f9ac2aeff618298c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CdnConfigUrl: 
+  CDNConfigUrl: 
+  UploadCDNAccount: 
+  UploadCDNPassword: 
 --- !u!1 &878416750
 GameObject:
   m_ObjectHideFlags: 0

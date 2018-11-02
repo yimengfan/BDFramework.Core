@@ -48,7 +48,9 @@ public class ILRuntimeDelegateHelper
             });
         });
 
-
+        appdomain.DelegateManager.RegisterMethodDelegate<System.Boolean, UnityEngine.GameObject>();
+        
+        appdomain.DelegateManager.RegisterMethodDelegate<System.Int32, System.Int32>();
     }
 
 }

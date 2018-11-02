@@ -38,8 +38,6 @@ static public class AssetBundleEditorTools
         }
 
         AnalyzeResource(fileList.ToArray(),target);
-        //
-        AssetDatabase.Refresh();
     }
 
     /// <summary>
@@ -58,7 +56,6 @@ static public class AssetBundleEditorTools
         //使用lz4压缩
         BuildPipeline.BuildAssetBundles(platform, BuildAssetBundleOptions.ChunkBasedCompression,target);
         EditorUtility.ClearProgressBar();
-        AssetDatabase.Refresh();
     }
 
 

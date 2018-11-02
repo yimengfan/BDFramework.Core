@@ -21,6 +21,7 @@ namespace BDFramework
         private void Awake()
         {
             this.gameObject.AddComponent<IEnumeratorTool>();
+            Init();
         }
         
 
@@ -44,7 +45,7 @@ namespace BDFramework
                 dd.AddData("OnAssetBundleOever");
                 dd.AddListener("OnAssetBundleOever", (o) =>
                 {
-                    //等待ab完成
+                    //等待ab完成后，开始脚本逻辑
                     OnLaunch();
                 });
             }

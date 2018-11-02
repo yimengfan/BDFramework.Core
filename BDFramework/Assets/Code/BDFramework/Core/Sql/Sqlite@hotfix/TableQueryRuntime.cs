@@ -34,19 +34,10 @@ namespace SQLite4Unity3d
 
         public TableMapping Table { get; private set; }
 
-        public string _Where = "";
-        public string _Like = "";
-        public string _Limit = "";
+        private string @where = "";
+        private string like   = "";
+        private string limit  = "";
        
-
-          
-        TableQueryILRuntime(SQLiteConnection conn, TableMapping table)
-        {
-            Connection = conn;
-            Table = table;
-        }
-
-
         public TableQueryILRuntime(SQLiteConnection conn)
         {
             Connection = conn;
@@ -54,15 +45,6 @@ namespace SQLite4Unity3d
             Table = Connection.GetMapping(t);
         }
 
-        public TableQueryILRuntime<U> Clone<U>()
-        {
-            var q = new TableQueryILRuntime<U>(Connection, Table);
-            q._Where = this._Where;
-            q._Like  = this._Like;
-            q._Limit = this._Limit;
-            
-            return q;
-        }
 
 
         #region 数据库直接操作
@@ -71,12 +53,12 @@ namespace SQLite4Unity3d
         {
             //0表名
             string cmdText = "select * from {0} {1}";
-            if (string.IsNullOrEmpty(_Where) == false)
+            if (string.IsNullOrEmpty(@where) == false)
             {
-                _Where = "where " + _Where;
+                @where = "where " + @where;
             }
             
-            cmdText= string.Format(cmdText, Table.TableName, _Where);
+            cmdText= string.Format(cmdText, Table.TableName, @where);
             
             BDebug.Log("sql:" + cmdText);
             return Connection.CreateCommand(cmdText);
@@ -95,17 +77,17 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime<T> Where(string where ,params  object[] formats)
+        public TableQueryILRuntime<T> Where(string where ,params object[] formats)
         {
             if (formats.Length > 0)
             {
-                this._Where = string.Format(where, formats);
+                this.@where = string.Format(where, formats);
             }
             else
             {
-                this._Where = where;
+                this.@where = where;
             }
-            return  Clone<T>();
+            return this;
         }
         
         /// <summary>
@@ -113,7 +95,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime<T> WhereOr<V>(string field,string operation ,List<V> objs)
+        public TableQueryILRuntime<T> WhereOr(string field,string operation ,List<object> objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Count; i++)
@@ -129,8 +111,8 @@ namespace SQLite4Unity3d
                 } 
             }
 
-            this._Where = sql;
-            return  Clone<T>();
+            this.@where = sql;
+            return this;
         }
         
         /// <summary>
@@ -138,7 +120,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime<T> WhereAnd<V>(string field,string operation ,List<V> objs)
+        public TableQueryILRuntime<T> WhereAnd(string field,string operation,List<object> objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Count; i++)
@@ -152,8 +134,10 @@ namespace SQLite4Unity3d
                 {
                     sql += string.Format(" and {0} {1} {2}", field,operation,value);
                 } 
-            }      
-            return  Clone<T>();
+            }
+
+            this.@where = sql;
+            return  this;
         }
         /// <summary>
         /// forilruntime
