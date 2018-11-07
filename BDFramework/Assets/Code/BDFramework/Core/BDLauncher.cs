@@ -55,11 +55,16 @@ namespace BDFramework
             }
             
         }
-        
 
-        
-        
-       
+
+        private void Start()
+        {
+            if (OnStart != null)
+            {
+                OnStart();
+            }
+        }
+
 
         // Update is called once per frame
         private void Update()
