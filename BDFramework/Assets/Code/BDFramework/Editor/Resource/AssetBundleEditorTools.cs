@@ -1,18 +1,21 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using BDFramework.ResourceMgr;
 using UnityEngine;
 using UnityEditor;
 
 static public class AssetBundleEditorTools
 {
-    public static void GenAssetBundle(string resRootPath,string outPath, BuildTarget target )
+    public static void GenAssetBundle(string resRootPath, string outPath, BuildTarget target)
     {
         //1.生成ab名
         string rootPath = Path.Combine(Application.dataPath, resRootPath);
-        CreateAbName(rootPath,target);
+        CreateAbName(rootPath, target, outPath);
         //2.打包
-        BuildAssetBundle(target,outPath);
+        BuildAssetBundle(target, outPath);
     }
 
 
@@ -20,7 +23,7 @@ static public class AssetBundleEditorTools
     /// 创建ab名
     /// </summary>
     /// <param name="rootPath"></param>
-    public static void CreateAbName(string rootPath,BuildTarget target)
+    public static void CreateAbName(string rootPath, BuildTarget target, string outpath)
     {
         //扫描所有文件
         var allFiles = Directory.GetFiles(rootPath, "*.*", SearchOption.AllDirectories);
@@ -37,70 +40,135 @@ static public class AssetBundleEditorTools
             }
         }
 
-        AnalyzeResource(fileList.ToArray(),target);
+        AnalyzeResource(fileList.ToArray(), target, outpath);
     }
 
     /// <summary>
     /// 创建assetbundle
     /// </summary>
-    private static void BuildAssetBundle(BuildTarget target ,string outPath)
+    private static void BuildAssetBundle(BuildTarget target, string outPath)
     {
         AssetDatabase.RemoveUnusedAssetBundleNames();
-        AssetDatabase.Refresh();
-        string platform  = Path.Combine(outPath,"Art");
-        if (Directory.Exists(platform) == false)
+        string path = Path.Combine(outPath, "Art");
+        if (Directory.Exists(path) == false)
         {
-            Directory.CreateDirectory(platform);
+            Directory.CreateDirectory(path);
         }
 
         //使用lz4压缩
-        BuildPipeline.BuildAssetBundles(platform, BuildAssetBundleOptions.ChunkBasedCompression,target);
+        BuildPipeline.BuildAssetBundles(path, BuildAssetBundleOptions.ChunkBasedCompression, target);
         EditorUtility.ClearProgressBar();
     }
 
 
-   
-
-    private static void AnalyzeResource(string[] paths,BuildTarget target)
+    private static void AnalyzeResource(string[] paths, BuildTarget target, string outpath)
     {
+        ManifestConfig manifestConfig = null;
+        var configPath = Path.Combine(outpath, "Art/Config.json");
+        if (File.Exists(configPath))
+        {
+            var content = File.ReadAllText(configPath);
+            manifestConfig = new ManifestConfig(content);
+        }
+        else
+        {
+            manifestConfig = new ManifestConfig();
+        }
+
+        int counter = 0;
         float curIndex = 0;
         foreach (var path in paths)
         {
             var _path = path.Replace("\\", "/");
-                       
-            EditorUtility.DisplayProgressBar("分析资源 -" +target.ToString(),
-                "打包:" + Path.GetFileNameWithoutExtension(_path) +"   进度：" +  curIndex +"/" +paths.Length,  curIndex / paths.Length);
+
+            EditorUtility.DisplayProgressBar("分析资源 -" + target.ToString(),
+                "打包:" + Path.GetFileNameWithoutExtension(_path) + "   进度：" + curIndex + "/" + paths.Length,
+                curIndex / paths.Length);
             curIndex++;
             //获取被依赖的路径
             var dependsource = "Assets" + _path.Replace(Application.dataPath, "");
-            
-            BDebug.Log("分析:" + dependsource);
-            string[] allDependObjectPaths = AssetDatabase.GetDependencies(dependsource);
-            for (int i = 0; i < allDependObjectPaths.Length; i++)
+            var allDependObjectPaths = AssetDatabase.GetDependencies(dependsource).ToList();
+
+            var manifestItem = manifestConfig.GetManifestItem(dependsource.ToLower());
+            var Uiid = GetMD5HashFromFile(_path);
+            // 
+            var isEquals = manifestItem != null && Uiid == manifestItem.UIID;
+            List<string> newAssets = new List<string>();
+            //处理依赖资源是否打包
+            for (int i = 0; i < allDependObjectPaths.Count; i++)
             {
+                //
                 var dependPath = allDependObjectPaths[i];
                 var ext = Path.GetExtension(dependPath).ToLower();
-                //默认不打包cs代码
-                if (ext!= ".cs")
+                if (ext == ".cs" || ext == ".js")
                 {
-                    BDebug.Log("depend on:" + dependPath);
+                    continue;
+                }
 
-                    AssetImporter ai = AssetImporter.GetAtPath(dependPath);
-                    if (ai == null)
-                    {
-                        BDebug.Log("not find Resource " + dependPath);
-                        continue;
-                    }
+                //
+                AssetImporter ai = AssetImporter.GetAtPath(dependPath);
+                if (ai == null)
+                {
+                    BDebug.Log("not find Resource " + dependPath);
+                    continue;
+                }
 
-                    //重新组建ab名字，带上路径名
-                    dependPath = Path.GetFullPath(dependPath);
-                    dependPath = dependPath.Replace("\\", "/");
-                    string derictory = "assets"+ dependPath.Replace(Application.dataPath,"");
+
+                //重新组建ab名字，带上路径名
+                dependPath = Path.GetFullPath(dependPath);
+                dependPath = dependPath.Replace("\\", "/");
+                //根据是否相等,判断是否打包
+                if (isEquals)
+                {
+                    //本次不打包
+                    ai.assetBundleName = null;
+                }
+                else
+                {
+                    //本次打包
+                    string derictory = "assets" + dependPath.Replace(Application.dataPath, "");
                     ai.assetBundleName = derictory.ToLower();
+
+                    newAssets.Add(ai.assetBundleName);
                     ai.assetBundleVariant = "";
                 }
-               
             }
+
+
+            //将现在的目录结构替换配置中的
+            if (newAssets.Count > 0)
+            {
+                manifestConfig.AddDepend(dependsource.ToLower(), Uiid, newAssets);
+                counter++;
+            }
+        }
+
+        Debug.Log("本地需要打包资源:" + counter);
+        //写入本地
+        File.WriteAllText(configPath, manifestConfig.ToString());
+    }
+
+
+    private static string GetMD5HashFromFile(string fileName)
+    {
+        try
+        {
+            FileStream file = new FileStream(fileName, FileMode.Open);
+            System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            byte[] retVal = md5.ComputeHash(file);
+            file.Close();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < retVal.Length; i++)
+            {
+                sb.Append(retVal[i].ToString("x2"));
+            }
+
+            return sb.ToString();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("GetMD5HashFromFile() fail,error:" + ex.Message);
         }
     }
 }

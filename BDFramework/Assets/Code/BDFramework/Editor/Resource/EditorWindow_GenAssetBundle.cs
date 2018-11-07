@@ -76,6 +76,7 @@ public class EditorWindow_GenAssetBundle : EditorWindow
             if (isSelectIOS)
                 AssetBundleEditorTools.GenAssetBundle(rootResourceDir,Application.streamingAssetsPath+"/iOS", BuildTarget.iOS);
             
+            AssetDatabase.Refresh();
             Debug.Log("资源打包完毕");
         }
 

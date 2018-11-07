@@ -75,7 +75,7 @@ namespace BDFramework.ResourceMgr
             //persistent 和 streaming同时只能存在一个，
             path = Path.Combine(Application.persistentDataPath, Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
             this.path = File.Exists(path) ? path : Path.Combine(Application.streamingAssetsPath, Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
-            this.manifest = new AssetBundleManifestReference(Path.Combine(this.path , "Art"));
+            this.manifest = new AssetBundleManifestReference(Path.Combine(this.path , "Config.json"));
         }
 
         #region 异步加载单个ab
