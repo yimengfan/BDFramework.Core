@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,7 +8,7 @@ using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-static public class UITools
+ static  public partial class UITools
 {
     static private UITools_AutoSetTranformValueByData UITools_AutoSetTranformValueByData;
 
@@ -29,6 +30,7 @@ static public class UITools
         UITools_AutoSetTranformValueByData.AutoSetValue(t, data);
     }
 
+    private static Type checkType = typeof(Behaviour);
     /// <summary>
     /// 绑定Windows的值
     /// </summary>
@@ -42,7 +44,7 @@ static public class UITools
 
         foreach (var f in fields)
         {
-            if (f.FieldType.FullName.Contains("UnityEngine.") == false)
+            if (f.FieldType.IsSubclassOf(checkType) == false)
             {
                 continue;
             }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
 using LitJson;
+using Microsoft.Cci.Pdb;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,6 +62,7 @@ namespace BDFramework.UI
 
         #region vc的操作
 
+        private static Type checkType = typeof(Behaviour);
         /// <summary>
         /// view层自动设置
         /// </summary>
@@ -74,7 +76,7 @@ namespace BDFramework.UI
                 
             foreach (var f in fields)
             {
-                if (f.FieldType.FullName.Contains("UnityEngine.") == false)
+                if (f.FieldType.IsSubclassOf(checkType) == false)
                 {
                     continue;
                 }

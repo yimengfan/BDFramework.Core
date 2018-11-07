@@ -195,5 +195,15 @@ abstract public class ADataListener
             actions.Remove(callback);
         }
     }
+    
+    
+    /// <summary>
+    /// 移除属性变动事件注册
+    /// </summary>
+    /// <param name="name"></param>
+    virtual public void RemoveListener(string name )
+    {
+        callbackMap.Remove(name);
+    }
 }
 

@@ -89,8 +89,14 @@ namespace BDFramework.ResourceMgr
 
         public static void Destroy(Transform trans)
         {
-            if (trans != null)
+            if (trans)
                 GameObject.DestroyObject(trans.gameObject);
+        }
+        
+        public static void Destroy(GameObject go)
+        {
+            if (go)
+                GameObject.DestroyObject(go);
         }
 
         /// <summary>
