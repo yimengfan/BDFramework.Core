@@ -19,8 +19,8 @@ namespace BDFramework
       public static void LoadHotfix(bool isLoadPdb)
       {
           IsRunning = true;
-          string dllPath = Utils.ResourcePlatformPath  + "/hotfix/hotfix.dll";
-          string pdbPath =  Utils.ResourcePlatformPath + "/hotfix/hotfix.pdb";
+          string dllPath = Utils.GetPlatformPath(Application.platform)  + "/hotfix/hotfix.dll";
+          string pdbPath =  Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.pdb";
           var _dllPath =  Path.Combine(Application.persistentDataPath, dllPath);
           
           //加载路径

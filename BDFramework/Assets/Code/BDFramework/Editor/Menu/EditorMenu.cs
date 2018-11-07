@@ -53,7 +53,7 @@ namespace BDFramework.Editor
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, 55)]
         public static void ExecuteGenTable()
         {
-            Excel2SQLiteTools.GenSQLite(Path.Combine(Application.streamingAssetsPath,Utils.ResourcePlatformPath));
+            Excel2SQLiteTools.GenSQLite(Path.Combine(Application.streamingAssetsPath,Utils.GetPlatformPath(Application.platform)));
             Debug.Log("表格导出完毕");
         }
 

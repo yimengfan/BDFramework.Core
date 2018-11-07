@@ -461,8 +461,8 @@ public class ScriptBiuldTools
 
 #if !UNITY_EDITOR
             Console.WriteLine(sb);
-#else
-            Debug.LogError(sb);
+            Debug.LogError(sb);#else      
+
 #endif
         }
         else

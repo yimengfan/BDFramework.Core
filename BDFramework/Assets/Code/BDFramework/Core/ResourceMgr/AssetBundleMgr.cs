@@ -73,8 +73,8 @@ namespace BDFramework.ResourceMgr
             this.allTaskList = new List<LoadTaskGroup>();
             //1.设置加载路径  
             //persistent 和 streaming同时只能存在一个，
-            path = Path.Combine(Application.persistentDataPath, Utils.ResourcePlatformPath+"/Art").Replace("\\", "/");
-            this.path = File.Exists(path) ? path : Path.Combine(Application.streamingAssetsPath, Utils.ResourcePlatformPath+"/Art").Replace("\\", "/");
+            path = Path.Combine(Application.persistentDataPath, Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
+            this.path = File.Exists(path) ? path : Path.Combine(Application.streamingAssetsPath, Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
             this.manifest = new AssetBundleManifestReference(Path.Combine(this.path , "Art"));
         }
 

@@ -58,17 +58,19 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
 
 
     public string exportPath;
+    private bool isGenWindowsAssets = true;
+    private bool isGenIosAssets     = true;
+    private bool isGenAndroidAssets = true;
     public void OnGUI_OneKeyExprot()
     {
         GUILayout.BeginVertical();
         {
             GUILayout.Label("注:上面按钮操作,会默认生成到StreamingAssets", GUILayout.Width(500), GUILayout.Height(30));
-
-            GUILayout.BeginHorizontal();
-            {
-                GUILayout.Label("导出地址:" + exportPath, GUILayout.Width(500));
-            }
-            GUILayout.EndHorizontal();
+            isGenWindowsAssets = GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
+            isGenIosAssets     = GUILayout.Toggle(isGenIosAssets, "生成Ios资源");
+            isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源");
+            //
+            GUILayout.Label("导出地址:" + exportPath, GUILayout.Width(500));
             //
             if (GUILayout.Button("一键导出", GUILayout.Width(350), GUILayout.Height(30)))
             {
@@ -82,14 +84,43 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
                     EditorUtility.DisplayDialog("错误!", "文件夹不存在,或者文件夹不为空", "爱咋咋地!");
                 }
                 else
-                {                 
-                    var outPath = exportPath+"/"+Utils.ResourcePlatformPath;
-                    //1.编译脚本
-                    ScriptBiuldTools.GenDllByMono(Application.dataPath,outPath);
-                    //2.打包资源
-                    AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/",outPath, BuildTarget.StandaloneWindows);
-                    //3.打包表格
-                    Excel2SQLiteTools.GenSQLite(outPath);
+                {
+                    //生成windows资源
+                    if (isGenWindowsAssets)
+                    {
+                        var outPath = exportPath+"/"+Utils.GetPlatformPath(RuntimePlatform.WindowsPlayer);
+                        //1.编译脚本
+                        ScriptBiuldTools.GenDllByMono(Application.dataPath,outPath);
+                        //2.打包资源
+                        AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/",outPath, BuildTarget.StandaloneWindows);
+                        //3.打包表格
+                        Excel2SQLiteTools.GenSQLite(outPath);                       
+                    }
+
+                    //生成android资源
+                    if (isGenAndroidAssets)
+                    {
+                        
+                        var outPath = exportPath+"/"+Utils.GetPlatformPath(RuntimePlatform.Android);
+                        //1.编译脚本
+                        ScriptBiuldTools.GenDllByMono(Application.dataPath,outPath);
+                        //2.打包资源
+                        AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/",outPath, BuildTarget.Android);
+                        //3.打包表格
+                        Excel2SQLiteTools.GenSQLite(outPath);
+                    }
+
+                    //生成ios资源
+                    if (isGenIosAssets)
+                    {                 
+                        var outPath = exportPath+"/"+Utils.GetPlatformPath(RuntimePlatform.IPhonePlayer);
+                        //1.编译脚本
+                        ScriptBiuldTools.GenDllByMono(Application.dataPath,outPath);
+                        //2.打包资源
+                        AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/",outPath, BuildTarget.Android);
+                        //3.打包表格
+                        Excel2SQLiteTools.GenSQLite(outPath);
+                    }
                 }
                    
             }

@@ -15,10 +15,8 @@ namespace SQLite4Unity3d
         static public void Init()
         {
             //persistent和streaming中,必须有存在一个
-            var path = "";
-            var temp1 = Path.Combine(Application.persistentDataPath, Utils.ResourcePlatformPath + "/LocalDB");
-            var temp2 = Path.Combine(Application.streamingAssetsPath, Utils.ResourcePlatformPath + "/LocalDB");
-            path = File.Exists(temp1) ? temp1 : temp2;
+            var path = Path.Combine(Application.persistentDataPath, Utils.GetPlatformPath(Application.platform) + "/LocalDB");
+            path = File.Exists(path) ? path :  Path.Combine(Application.streamingAssetsPath, Utils.GetPlatformPath(Application.platform) + "/LocalDB");
             //
             Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
             BDebug.Log("open db:" + path);

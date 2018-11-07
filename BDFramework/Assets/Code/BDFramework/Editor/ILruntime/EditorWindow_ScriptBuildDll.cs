@@ -34,7 +34,7 @@ public class EditorWindow_ScriptBuildDll: EditorWindow
                 {
                     //
                     //u3d的 各种dll
-                    ScriptBiuldTools.GenDllByMono(Application.dataPath, Application.streamingAssetsPath+"/"+Utils.ResourcePlatformPath);
+                    ScriptBiuldTools.GenDllByMono(Application.dataPath, Application.streamingAssetsPath+"/"+Utils.GetPlatformPath(Application.platform));
                     Debug.Log("脚本打包完毕");
                 }
             }
