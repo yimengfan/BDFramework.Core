@@ -82,7 +82,7 @@ static public class AssetBundleEditorTools
             var _path = path.Replace("\\", "/");
 
             EditorUtility.DisplayProgressBar("分析资源 -" + target.ToString(),
-                "打包:" + Path.GetFileNameWithoutExtension(_path) + "   进度：" + curIndex + "/" + paths.Length,
+                "分析:" + Path.GetFileNameWithoutExtension(_path) + "   进度：" + curIndex + "/" + paths.Length,
                 curIndex / paths.Length);
             curIndex++;
             //获取被依赖的路径
@@ -144,6 +144,11 @@ static public class AssetBundleEditorTools
         }
 
         Debug.Log("本地需要打包资源:" + counter);
+        var direct = Path.GetDirectoryName(configPath);
+        if (Directory.Exists(direct) == false)
+        {
+            Directory.CreateDirectory(direct);
+        }
         //写入本地
         File.WriteAllText(configPath, manifestConfig.ToString());
     }
