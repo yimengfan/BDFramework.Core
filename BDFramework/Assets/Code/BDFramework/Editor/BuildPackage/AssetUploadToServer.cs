@@ -1,0 +1,124 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using BDFramework.VersionContrller;
+using LitJson;
+using NUnit.Framework.Constraints;
+using UnityEditor;
+using UnityEngine;
+
+namespace BDFramework.Editor.BuildPackage
+{
+   static  public class AssetUploadToServer
+    {
+
+        static public void Start(string path, string uploadHttpApi)
+        {
+            var ios = Path.Combine(path, "iOS");
+            var android = Path.Combine(path, "Android");
+            var windows = Path.Combine(path, "Windows");
+
+            if (Directory.Exists(ios))
+            {
+                File2Hash("iOS", 1.0d, ios);
+            }
+            
+            if (Directory.Exists(android))
+            {
+                File2Hash("Android", 1.0d, android);
+            }
+            
+            if (Directory.Exists(windows))
+            {
+                File2Hash("Windows", 1.0d, windows);
+            }
+            
+            EditorUtility.ClearProgressBar();
+        }
+
+
+        static public string File2Hash(string Platform,double version, string path)
+        {
+            path = path.Replace("\\", "/");
+            //
+            var files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
+            var tempDirect = path + "_temp";
+
+            //文件准备
+            if (Directory.Exists(tempDirect))
+            {
+              Directory.Delete(tempDirect,true);  
+            }
+            Directory.CreateDirectory(tempDirect);
+            //生成配置
+            var config = new AssetConfig();
+            config.Platfrom = Platform;
+            config.Version = version;
+            float count = 0;
+            foreach (var f in files)
+            {
+                count++;
+                EditorUtility.DisplayProgressBar(Platform+" 资源处理",string.Format("生成文件hash:{0}/{1}",count,files.Length) ,count /files.Length);
+                var ext = Path.GetExtension(f).ToLower();
+                if (ext == ".manifest")
+                {
+                    continue;
+                }
+                //
+                var hash = GetMD5HashFromFile(f);
+                
+                var localPath = f.Replace("\\", "/").Replace(path+"/","");
+
+                var item = new AssetItem()
+                {
+                    HashName = hash,
+                    LocalPath = localPath
+                };
+                
+                config.Assets.Add(item);
+
+                //开始拷贝
+                try
+                {
+                  File.Copy(f,Path.Combine(tempDirect,hash));
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("error file:" + f);
+                    Debug.LogError(e);
+                    throw;
+                }
+
+            }
+            //生成配置
+            File.WriteAllText(Path.Combine(tempDirect,Platform+ "_VersionConfig.json"), JsonMapper.ToJson(config));
+            //
+            return tempDirect;
+        }
+        
+        
+        private static string GetMD5HashFromFile(string fileName)
+        {
+            try
+            {
+                FileStream file = new FileStream(fileName, FileMode.Open);
+                System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+                byte[] retVal = md5.ComputeHash(file);
+                file.Close();
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < retVal.Length; i++)
+                {
+                    sb.Append(retVal[i].ToString("x2"));
+                }
+
+                return sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetMD5HashFromFile() fail,error:" + ex.Message);
+            }
+        }
+    }
+}

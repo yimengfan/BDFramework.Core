@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using BDFramework.Helper;
 using BDFramework.Editor;
+using BDFramework.Editor.BuildPackage;
 using UnityEditor;
 using UnityEngine;
 
@@ -124,11 +125,17 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
                 }
                    
             }
-
             //
-            if (GUILayout.Button("上传到CDN", GUILayout.Width(350), GUILayout.Height(30)))
+            if (GUILayout.Button("资源转hash格式", GUILayout.Width(350), GUILayout.Height(30)))
             {
-
+                if (Directory.Exists(exportPath))
+                {
+                    AssetUploadToServer.Start(exportPath,"");
+                }
+            }
+            //
+            if (GUILayout.Button("上传到文件服务器[内网测试]", GUILayout.Width(350), GUILayout.Height(30)))
+            {
             }
         }
         GUILayout.EndVertical();

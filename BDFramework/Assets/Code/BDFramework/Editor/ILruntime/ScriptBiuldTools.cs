@@ -171,7 +171,7 @@ public class ScriptBiuldTools
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Debug.LogError(e.Message);
             EditorUtility.ClearProgressBar();
             throw;
         }
@@ -191,21 +191,21 @@ public class ScriptBiuldTools
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Debug.LogError(e.Message);
             EditorUtility.ClearProgressBar();
             throw;
         }
         //拷贝依赖的dll
-        foreach (var f in refDlls)
-        {
-            if (File.Exists(f) ==false)
-            {
-                continue;
-            }
-            var fn = Path.GetFileName(f);
-            var outpath = Path.Combine(dependent, fn);
-            File.Copy(f,outpath,true);
-        }
+//        foreach (var f in refDlls)
+//        {
+//            if (File.Exists(f) ==false)
+//            {
+//                continue;
+//            }
+//            var fn = Path.GetFileName(f);
+//            var outpath = Path.Combine(dependent, fn);
+//            File.Copy(f,outpath,true);
+//        }
 
         EditorUtility.DisplayProgressBar("编译服务", "清理临时文件", 0.9f);
         Directory.Delete(tempDirect, true);
@@ -461,8 +461,9 @@ public class ScriptBiuldTools
 
 #if !UNITY_EDITOR
             Console.WriteLine(sb);
-            Debug.LogError(sb);#else      
 
+#else      
+            Debug.LogError(sb);
 #endif
         }
         else
