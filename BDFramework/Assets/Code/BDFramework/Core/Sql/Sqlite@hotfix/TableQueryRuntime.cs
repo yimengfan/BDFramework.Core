@@ -2,6 +2,7 @@
 #define USE_CSHARP_SQLITE
 #endif
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
@@ -117,7 +118,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime WhereAnd(string field,string operation,List<object> objs)
+        public TableQueryILRuntime WhereAnd(string field,string operation,IList objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Count; i++)
