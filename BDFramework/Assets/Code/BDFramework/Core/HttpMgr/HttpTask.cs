@@ -4,12 +4,10 @@ using System.Text;
 using LitJson;
 namespace BDFramework.Http
 {
-    public delegate void HttpCallBack();
     public interface IHttpTask
     {
         string Url { get; }
 
-        event HttpCallBack CallBack ;
         /// <summary>
         /// 是否获取cookie
         /// </summary>
@@ -23,13 +21,13 @@ namespace BDFramework.Http
     public class GetTask : IHttpTask
     {
         public string Url { get; private set; }
+        public Action<byte[]> CallBack;
 
         public bool IsGetCookie { get; private set; }
 
         public int RetryCount { get; private set; }
 
-        public event HttpCallBack CallBack;
-        public GetTask(string Url , HttpCallBack callback ,int retryCount = 5,  bool IsGetCookie =false)
+        public GetTask(string Url , Action<byte[]> callback ,int retryCount = 5,  bool IsGetCookie =false)
         {
             this.Url = Url;
             this.CallBack = callback;
@@ -45,10 +43,10 @@ namespace BDFramework.Http
         public bool IsGetCookie { get; private set; }
         public int RetryCount { get; private set; }
 
-        public event HttpCallBack CallBack;
+        public event Action<byte[]> CallBack;
 
         public string UpLoadData;
-        public PostTask(string Url, HttpCallBack callback ,object o ,  int retryCount = 5,  bool IsGetCookie = false)
+        public PostTask(string Url, Action<byte[]> callback ,object o ,  int retryCount = 5,  bool IsGetCookie = false)
         {
             this.Url = Url;
             this.CallBack = callback;
@@ -65,6 +63,18 @@ namespace BDFramework.Http
         }
     }
 
+    public class GetFileTask : IHttpTask
+    {
+        public string Url { get; private set; }
+        
+        public string FileSavePath { get; set; }
+
+        public bool IsGetCookie { get; private set; }
+
+        public int RetryCount { get; private set; }
+
+        public  Action<byte[]> CallBack;
+    }
     public class PostFileTask : IHttpTask
     {
         public string Url { get; private set; }
@@ -73,6 +83,6 @@ namespace BDFramework.Http
 
         public int RetryCount { get; private set; }
 
-        public event HttpCallBack CallBack;
+        public  Action<byte[]> CallBack;
     }
 }

@@ -407,9 +407,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76df6a7acb4be174683f07772a347e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsCodeHotfix: 1
+  IsCodeHotfix: 0
   IsLoadPdb: 0
-  IsAssetBundleModel: 1
+  IsAssetBundleModel: 0
 --- !u!4 &617214994
 Transform:
   m_ObjectHideFlags: 0

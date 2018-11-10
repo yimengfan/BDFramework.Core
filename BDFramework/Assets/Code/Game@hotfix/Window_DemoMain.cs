@@ -9,6 +9,8 @@ using LitJson;
 using UnityEngine.UI;
 using BDFramework;
 using BDFramework.ResourceMgr;
+using BDFramework.VersionContrller;
+
 /// <summary>
 /// 这个是ui的标签，
 /// index 
@@ -33,6 +35,8 @@ public class Window_DemoMain : AWindow
     private Button btn_05;
     [TransformPath("btn_6")]
     private Button btn_06;
+    [TransformPath("btn_7")]
+    private Button btn_07;
     //[]
     public Window_DemoMain(string path) : base(path)
     {
@@ -116,6 +120,17 @@ public class Window_DemoMain : AWindow
             });
             
             
+        });
+        
+        this.btn_07.onClick.AddListener(() =>
+        {
+            VersionContorller.Start("http://127.0.0.1",Application.persistentDataPath, (i, j) =>
+            {
+                Debug.LogFormat("资源更新进度：{0}/{1}",i,j);
+            }, (error) =>
+            {
+                Debug.LogError("错误:" + error);
+            });
         });
     }
 

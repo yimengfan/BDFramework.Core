@@ -168,7 +168,7 @@ namespace BDFramework.ResourceMgr
                 path = "file:///" + path;
             }
 
-            BDebug.Log("加载依赖");
+            BDebug.Log("加载依赖:" +path);
             WWW www = new WWW(path);
             yield return www;
             if (www.error == null)

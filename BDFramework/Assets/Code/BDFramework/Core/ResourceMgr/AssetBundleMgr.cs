@@ -74,8 +74,9 @@ namespace BDFramework.ResourceMgr
             //1.设置加载路径  
             //persistent 和 streaming同时只能存在一个，
             path = Path.Combine(Application.persistentDataPath, Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
-            this.path = File.Exists(path) ? path : Path.Combine(Application.streamingAssetsPath, Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
-            this.manifest = new AssetBundleManifestReference(Path.Combine(this.path , "Config.json"));
+            var configPath = Path.Combine(this.path, "Config.json");
+            this.path = File.Exists(configPath) ? path : Path.Combine(Application.streamingAssetsPath, Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
+            this.manifest = new AssetBundleManifestReference(configPath);
         }
 
         #region 异步加载单个ab

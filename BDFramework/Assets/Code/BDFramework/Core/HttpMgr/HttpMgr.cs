@@ -4,6 +4,9 @@ using System.Text;
 
 namespace BDFramework.Http
 {
+    /// <summary>
+    /// http的管理器
+    /// </summary>
     public class HttpMgr
     {
         private HttpMgr()
@@ -12,7 +15,7 @@ namespace BDFramework.Http
         }
         static private HttpMgr i;
 
-        static public HttpMgr I
+        static public HttpMgr Inst
         {
             get
             {
@@ -27,6 +30,11 @@ namespace BDFramework.Http
 
         private Dictionary<int , HttpLayer> layerMap;
 
+        /// <summary>
+        /// 以分层 队列形式进行http操作
+        /// </summary>
+        /// <param name="layerid"></param>
+        /// <returns></returns>
         public  HttpLayer GetLayer( int layerid)
         {
 
@@ -40,6 +48,25 @@ namespace BDFramework.Http
             }
             
             return layer;
+        }
+
+        private List<HttpClient> httpClients = new List<HttpClient>();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>     
+        public HttpClient GetFreeHttpClient()
+        {
+            HttpClient client = null;
+
+            //寻找一个不在忙的client
+            client = httpClients.Find((c) => c.IsBusy == false);
+            if (client == null)
+            {
+                client =  new HttpClient();
+            }
+            httpClients.Add(client);
+            return client;
         }
 
     }
