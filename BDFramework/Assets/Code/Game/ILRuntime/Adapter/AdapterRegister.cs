@@ -20,5 +20,7 @@ public class AdapterRegister
             domain.RegisterCrossBindingAdaptor(new ExceptionAdapter());
 
             domain.RegisterCrossBindingAdaptor(new IEnumerableAdapter());
+
+            domain.RegisterCrossBindingAdaptor(new IAsyncStateMachineAdapter());
       }
         }

@@ -107,7 +107,7 @@ namespace BDFramework.Core
         {
             while (true)
             {
-                yield return new WaitForSecondsRealtime(1);
+                yield return new WaitForSecondsRealtime(30);
                 var keys = this.ComponentCacheMap.Keys.ToList();
 
                 foreach (var k in keys)

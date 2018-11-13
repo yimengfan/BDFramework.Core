@@ -12,6 +12,7 @@ namespace Code.Game
         public void Awake()
         {        
             Application.targetFrameRate = 24;
+
         }
 
         public void Start()

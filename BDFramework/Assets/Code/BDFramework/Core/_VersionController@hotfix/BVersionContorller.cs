@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using BDFramework.Helper;
 using BDFramework.Http;
+using ILRuntime.Runtime.Intepreter;
 using Mono.Cecil;
 using UnityEngine;
 
-namespace BDFramework.VersionContrller
+namespace BDFramework
 {
     public class AssetConfig
     {
@@ -53,6 +54,7 @@ namespace BDFramework.VersionContrller
                 return;
             }
 
+            
             var serverconf = LitJson.JsonMapper.ToObject<AssetConfig>(serverConfig);
             AssetConfig localconf = null;
             var localPath = localConfigPath + "/" + platform + "/" + platform + "_VersionConfig.json";

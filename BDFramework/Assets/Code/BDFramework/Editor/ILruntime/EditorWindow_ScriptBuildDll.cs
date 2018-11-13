@@ -78,6 +78,7 @@ public class EditorWindow_ScriptBuildDll: EditorWindow
         types.Add((typeof(UnityEngine.ScriptableObject)));
         types.Add((typeof(System.Exception)));
         types.Add(typeof(System.Collections.IEnumerable));
+        types.Add(typeof(System.Runtime.CompilerServices.IAsyncStateMachine));
         GenAdapter.CreateAdapter(types,"Assets/Code/Game/ILRuntime/Adapter");   
     }    
     

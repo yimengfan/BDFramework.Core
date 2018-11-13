@@ -24,8 +24,12 @@ namespace BDFramework
         {
             this.gameObject.AddComponent<IEnumeratorTool>();
             Launch();
+            
+            
         }
-        
+
+
+
 
         
         /// <summary>
