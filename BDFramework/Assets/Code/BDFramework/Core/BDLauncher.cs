@@ -4,6 +4,7 @@ using BDFramework;
 using SQLite4Unity3d;
 using UnityEngine;
 using BDFramework.ResourceMgr;
+using UnityEngine.Serialization;
 
 namespace BDFramework
 {
@@ -11,7 +12,8 @@ namespace BDFramework
     {
         public bool IsCodeHotfix = false;
         public bool IsLoadPdb = false;
-        public bool IsAssetBundleModel = false;
+        public bool IsAssetbundleModel = false;
+        public string FileServerUrl = "127.0.0.1";
         static public Action OnStart { get; set; }
         static public Action OnUpdate { get; set; }
         static public Action OnLateUpdate { get; set; }
@@ -21,24 +23,25 @@ namespace BDFramework
         private void Awake()
         {
             this.gameObject.AddComponent<IEnumeratorTool>();
-            Init();
+            Launch();
         }
         
 
         
         /// <summary>
         /// 初始化
+        /// 修改版本,让这个启动逻辑由使用者自行处理
         /// </summary>
         /// <param name="scriptPath"></param>
         /// <param name="artPath"></param>
-        /// <param name="???"></param>
-        public void Init()
+        /// <param name=""></param>
+        public void Launch()
         {
             //初始化资源加载
-            BResources.Init(IsAssetBundleModel);
+            BResources.Init(IsAssetbundleModel);
             SqliteLoder.Init();
             //热更资源模式
-            if (IsAssetBundleModel)
+            if (IsAssetbundleModel)
             {
                 //开始启动逻辑  
                 var dd = DataListenerServer.Create("BDFrameLife");
@@ -46,16 +49,37 @@ namespace BDFramework
                 dd.AddListener("OnAssetBundleOever", (o) =>
                 {
                     //等待ab完成后，开始脚本逻辑
-                    OnLaunch();
+                    StartHotfixScrpitLogic();
                 });
             }
             else
             {
-                OnLaunch();
+                StartHotfixScrpitLogic();
             }
             
         }
 
+        /// <summary>
+        /// 开始热更脚本逻辑
+        /// </summary>
+        private void StartHotfixScrpitLogic()
+        {
+            if (IsCodeHotfix) //热更代码模式
+            {
+                ILRuntimeHelper.LoadHotfix(IsLoadPdb);
+
+                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null,
+                    new object[] {IsCodeHotfix, IsAssetbundleModel});
+            }
+            else
+            {
+                //这里用反射是为了 不访问逻辑模块的具体类，防止编译失败
+                var assembly = Assembly.GetExecutingAssembly();
+                var type = assembly.GetType("BDLauncherBridge");
+                var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
+                method.Invoke(null, new object[] {IsCodeHotfix, IsAssetbundleModel});
+            }
+        }
 
         private void Start()
         {
@@ -84,26 +108,6 @@ namespace BDFramework
         }
 
 
-        /// <summary>
-        /// 开始启动游戏
-        /// </summary>
-        private void OnLaunch()
-        {
-            if (IsCodeHotfix) //热更代码模式
-            {
-                ILRuntimeHelper.LoadHotfix(IsLoadPdb);
 
-                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null,
-                    new object[] {IsCodeHotfix, IsAssetBundleModel});
-            }
-            else
-            {
-                //这里用反射是为了 不访问逻辑模块的具体类，防止编译失败
-                var assembly = Assembly.GetExecutingAssembly();
-                var type = assembly.GetType("BDLauncherBridge");
-                var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                method.Invoke(null, new object[] {IsCodeHotfix, IsAssetBundleModel});
-            }
-        }
     }
 }

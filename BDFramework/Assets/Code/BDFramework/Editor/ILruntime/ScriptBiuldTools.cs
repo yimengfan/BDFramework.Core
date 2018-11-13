@@ -26,9 +26,10 @@ public class ScriptBiuldTools
     static public void GenDllByMono(string dataPath, string outPath)
     {
         
+    
         //这里是引入unity所有引用的dll
-        var u3dUI = @"D:\Program Files\Unity 2018.3.0b6\Editor\Data\UnityExtensions\Unity\GUISystem";
-        var u3dEngine = @"D:\Program Files\Unity 2018.3.0b6\Editor\Data\Managed\UnityEngine";
+        var u3dUI =  EditorApplication.applicationContentsPath+@"\UnityExtensions\Unity\GUISystem";
+        var u3dEngine = EditorApplication.applicationContentsPath+@"\Managed\UnityEngine";
 
         if (Directory.Exists(u3dUI) == false || Directory.Exists(u3dEngine) == false)
         {

@@ -7,6 +7,7 @@ using LitJson;
 using Mono.Cecil.Mdb;
 using Mono.Cecil.Pdb;
 using UnityEngine;
+using UnityEngine.Networking;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
 
@@ -43,6 +44,8 @@ namespace BDFramework
           }
           else
           {
+             
+              UnityWebRequest request;
               using (System.IO.FileStream fs = new System.IO.FileStream(dllPath, FileMode.Open,FileAccess.Read))
               {
                   AppDomain.LoadAssembly(fs);

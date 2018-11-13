@@ -104,7 +104,7 @@ public class Window_DemoMain : AWindow
 //            //取消任务
 //            BResources.LoadCancel(id);6
 //            
-//            //3.异步加载多个
+//          //3.异步加载多个
             BResources.AsyncLoad(new List<string>() {"Windows/window_demo1", "Windows/window_demo2"}, (i, i2) =>
             {
                Debug.Log(string.Format("进度 {0} / {1}",i ,i2));
@@ -124,10 +124,13 @@ public class Window_DemoMain : AWindow
         
         this.btn_07.onClick.AddListener(() =>
         {
-            VersionContorller.Start("http://127.0.0.1",Application.persistentDataPath, (i, j) =>
+            var path = Application.persistentDataPath;
+            VersionContorller.Start("http://127.0.0.1",path, 
+            (i, j) =>
             {
                 Debug.LogFormat("资源更新进度：{0}/{1}",i,j);
-            }, (error) =>
+            }, 
+            (error) =>
             {
                 Debug.LogError("错误:" + error);
             });

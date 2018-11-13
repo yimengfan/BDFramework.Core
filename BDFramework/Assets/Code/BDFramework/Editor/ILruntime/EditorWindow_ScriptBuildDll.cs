@@ -8,6 +8,7 @@ using BDFramework;
 using BDFramework.Editor.Tools;
 using BDFramework.Helper;
 using ILRuntime.Runtime.CLRBinding;
+using Tool;
 using Debug = UnityEngine.Debug;
 
 public class EditorWindow_ScriptBuildDll: EditorWindow
@@ -40,7 +41,7 @@ public class EditorWindow_ScriptBuildDll: EditorWindow
             }
             GUILayout.EndHorizontal();
             
-            if (GUILayout.Button("2.生成CLRBinding", GUILayout.Width(305), GUILayout.Height(30)))
+            if (GUILayout.Button("2.生成CLRBinding · one for all", GUILayout.Width(305), GUILayout.Height(30)))
             {
                 GenCLRBindingByAnalysis();
             }
@@ -48,7 +49,11 @@ public class EditorWindow_ScriptBuildDll: EditorWindow
             {
                 GenCrossBindAdapter();
             }
-
+            if (GUILayout.Button("4.生成Link.xml", GUILayout.Width(305), GUILayout.Height(30)))
+            {
+               StripCode.GenLinkXml();
+            }
+            
             GUI.color = Color.green;
             GUILayout.Label(
 @"注意事项:

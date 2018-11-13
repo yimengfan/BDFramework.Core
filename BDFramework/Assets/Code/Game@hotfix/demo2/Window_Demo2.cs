@@ -13,7 +13,7 @@ using BDFramework;
 /// index 
 /// resource 目录
 /// </summary>
-[UI((int)WinEnum.Win_Demo2,"Windows/window_Demo2") ]
+[UI((int)WinEnum.Win_Demo2,"Windows/window_demo2") ]
 public class Window_Demo2 : AWindow
 {
 

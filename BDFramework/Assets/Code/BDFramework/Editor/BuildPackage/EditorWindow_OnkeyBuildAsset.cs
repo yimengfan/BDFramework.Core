@@ -128,14 +128,21 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
             //
             if (GUILayout.Button("资源转hash格式", GUILayout.Width(350), GUILayout.Height(30)))
             {
+                exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath.Replace("Assets",""), "");
                 if (Directory.Exists(exportPath))
                 {
                     AssetUploadToServer.Start(exportPath,"");
+                }
+                else
+                {
+                    EditorUtility.DisplayDialog("错误!", "你选择的文件夹有点问题哦~", "爱咋咋地!");
                 }
             }
             //
             if (GUILayout.Button("上传到文件服务器[内网测试]", GUILayout.Width(350), GUILayout.Height(30)))
             {
+                
+                //先不实现,暂时没空
             }
         }
         GUILayout.EndVertical();

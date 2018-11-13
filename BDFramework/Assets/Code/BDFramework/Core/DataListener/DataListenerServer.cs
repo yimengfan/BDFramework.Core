@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
 /// <summary>
@@ -26,7 +27,7 @@ public class DataListenerServer
         else
         {
             Debug.LogError("已存在同名DataDrive_Service");
-            return null;
+            return GetService(name);
         }
         return data;
     }
