@@ -10,28 +10,39 @@ namespace BDFramework
 {
     public class BDLauncher : MonoBehaviour
     {
+        public  delegate void OnLife();
         public bool IsCodeHotfix = false;
         public bool IsLoadPdb = false;
         public bool IsAssetbundleModel = false;
         public string FileServerUrl = "127.0.0.1";
-        static public Action OnStart { get; set; }
-        static public Action OnUpdate { get; set; }
-        static public Action OnLateUpdate { get; set; }
+        static public OnLife OnStart { get; set; }
+        static public OnLife OnUpdate { get; set; }
+        static public OnLife OnLateUpdate { get; set; }
 
         
         // Use this for initialization
         private void Awake()
         {
             this.gameObject.AddComponent<IEnumeratorTool>();
-            Launch();
-            
-            
+            LaunchHotFix();
         }
 
+        #region 启动非热更逻辑
 
 
-
+        /// <summary>
+        /// 启动本地代码
+        /// </summary>
+        public void LaunchLocal()
+        {
+            
+        }
         
+        
+
+        #endregion
+
+        #region 启动热更逻辑
         /// <summary>
         /// 初始化
         /// 修改版本,让这个启动逻辑由使用者自行处理
@@ -39,7 +50,7 @@ namespace BDFramework
         /// <param name="scriptPath"></param>
         /// <param name="artPath"></param>
         /// <param name=""></param>
-        public void Launch()
+        public void LaunchHotFix()
         {
             //初始化资源加载
             BResources.Init(IsAssetbundleModel);
@@ -53,12 +64,12 @@ namespace BDFramework
                 dd.AddListener("OnAssetBundleOever", (o) =>
                 {
                     //等待ab完成后，开始脚本逻辑
-                    StartHotfixScrpitLogic();
+                    StartHotfixScrpit();
                 });
             }
             else
             {
-                StartHotfixScrpitLogic();
+                StartHotfixScrpit();
             }
             
         }
@@ -66,14 +77,12 @@ namespace BDFramework
         /// <summary>
         /// 开始热更脚本逻辑
         /// </summary>
-        private void StartHotfixScrpitLogic()
+        private void StartHotfixScrpit()
         {
             if (IsCodeHotfix) //热更代码模式
             {
                 ILRuntimeHelper.LoadHotfix(IsLoadPdb);
-
-                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null,
-                    new object[] {IsCodeHotfix, IsAssetbundleModel});
+                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null,new object[] {IsCodeHotfix, IsAssetbundleModel});
             }
             else
             {
@@ -85,16 +94,11 @@ namespace BDFramework
             }
         }
 
-        private void Start()
-        {
-            if (OnStart != null)
-            {
-                OnStart();
-            }
-        }
+        #endregion
 
 
-        // Update is called once per frame
+        
+        //普通帧循环
         private void Update()
         {
             if (OnUpdate != null)
@@ -103,6 +107,7 @@ namespace BDFramework
             }
         }
 
+        //更快的帧循环
         private void LateUpdate()
         {
             if (OnLateUpdate != null)
@@ -110,8 +115,5 @@ namespace BDFramework
                 OnLateUpdate();
             }
         }
-
-
-
     }
 }

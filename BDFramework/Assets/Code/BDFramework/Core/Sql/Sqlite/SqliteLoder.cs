@@ -19,7 +19,7 @@ namespace SQLite4Unity3d
             path = File.Exists(path) ? path :  Path.Combine(Application.streamingAssetsPath, Utils.GetPlatformPath(Application.platform) + "/LocalDB");
             //
             Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-            BDebug.Log("open db:" + path);
+            BDebug.Log("DB加载路径:" + path ,"red");
         }
 
 

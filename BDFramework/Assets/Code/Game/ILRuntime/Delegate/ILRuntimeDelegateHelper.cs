@@ -51,6 +51,15 @@ public class ILRuntimeDelegateHelper
         appdomain.DelegateManager.RegisterMethodDelegate<System.Boolean, UnityEngine.GameObject>();
         
         appdomain.DelegateManager.RegisterMethodDelegate<System.Int32, System.Int32>();
+        
+        appdomain.DelegateManager.RegisterDelegateConvertor<BDFramework.BDLauncher.OnLife>((act) =>
+        {
+            return new BDFramework.BDLauncher.OnLife(() =>
+            {
+                ((Action)act)();
+            });
+        });
+
     }
 
 }

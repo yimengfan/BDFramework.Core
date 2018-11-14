@@ -1,17 +1,12 @@
 ﻿using BDFramework;
-using BDFramework.Sql;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 using System;
-using BDFramework.Logic.GameLife;
 using BDFramework.Mgr;
-using BDFramework.UI;
-using BDFramework.ResourceMgr;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using BDFramework.GameStart;
+
 public class BDLauncherBridge 
 {
     static private IGameStart gameStart;
@@ -43,7 +38,6 @@ public class BDLauncherBridge
         }
         else
         {
-            
             var values = ILRuntimeHelper.AppDomain.LoadedTypes.Values.ToList();
             foreach (var v in values)
             {
@@ -53,7 +47,10 @@ public class BDLauncherBridge
         
         //
         var mgrs =new List<IMgr>();
+
+        var gsaType = typeof(GameStartAtrribute);
         //寻找所有的管理器
+        allTypes =  allTypes.Distinct().ToList();
         foreach (var t in allTypes)
         {
             try
@@ -63,22 +60,31 @@ public class BDLauncherBridge
                     BDebug.Log("加载管理器-" +  t , "green");
                     var i = t.BaseType.GetProperty("Inst").GetValue(null, null) as  IMgr;
                     mgrs.Add(i);
-             
+                    continue;
                 }
                 //游戏启动器
-                else if (gameStart == null && t.GetInterface("IGameStart") != null)
+                if (gameStart == null)
                 {
-                    gameStart =  Activator.CreateInstance(t) as IGameStart;
+                    var attrs = t.GetCustomAttributes(gsaType,false);
+                    if (attrs.Length > 0 )
+                    {
+                        if (attrs[0] is GameStartAtrribute)
+                        {
+                            gameStart =  Activator.CreateInstance(t) as IGameStart;
+                            BDebug.Log("找到启动器" + t.FullName,"red");
+                        }
+                    }
                 }
             }
             catch (Exception e)
             {
-               Debug.LogError(e.Message);
+                Debug.LogError(e.Message);
             }
+
 
         }
 
-        BDebug.Log("管理器数量：" +  mgrs.Count);
+        BDebug.Log("管理器数量 =" +  mgrs.Count);
         //类型注册
         foreach (var t in allTypes)
         {
@@ -93,27 +99,22 @@ public class BDLauncherBridge
         {
             m.Init();
         }
-
-        //game生命注册s
+        BDebug.Log("管理器注册完成!");
+        
+        //game生命注册
         if (gameStart != null)
         {
-            BDLauncher.OnStart = gameStart.Start;
-            BDLauncher.OnUpdate =()=>
-            {
-                // TODO 后期干掉管理类的 update
-                foreach (var v in mgrs)
-                {
-                    v.Update();
-                }        
-                gameStart.Update();
-            };
-            BDLauncher.OnLateUpdate = gameStart.LateUpdate;
+            gameStart.Start();
+            //
+            BDLauncher.OnUpdate += gameStart.Update;
+            BDLauncher.OnLateUpdate += gameStart.LateUpdate;
         }
-        
+        BDebug.Log("游戏生命周期准备完毕!");
         //所有管理器开始工作
         foreach (var m in mgrs)
         {
             m.Start();
         }
+        BDebug.Log("管理器开始工作!");
 	}
 }

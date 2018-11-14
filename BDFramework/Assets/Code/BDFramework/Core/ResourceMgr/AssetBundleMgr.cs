@@ -77,6 +77,8 @@ namespace BDFramework.ResourceMgr
             var configPath = Path.Combine(this.path, "Config.json");
             this.path = File.Exists(configPath) ? path : Path.Combine(Application.streamingAssetsPath, Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
             this.manifest = new AssetBundleManifestReference(configPath);
+            
+            BDebug.Log("Art加载路径:" + path,"red");
         }
 
         #region 异步加载单个ab

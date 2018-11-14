@@ -28,6 +28,8 @@ namespace BDFramework
           dllPath = File.Exists(_dllPath)? _dllPath:  Path.Combine(Application.streamingAssetsPath, dllPath);
           pdbPath = File.Exists(_dllPath)?   Path.Combine(Application.streamingAssetsPath,pdbPath)
                                          :   Path.Combine(Application.streamingAssetsPath, pdbPath);
+          
+          BDebug.Log("DLL加载路径:" + dllPath,"red");
           //
           AppDomain = new AppDomain();
           if (isLoadPdb && File.Exists(pdbPath))
@@ -57,6 +59,7 @@ namespace BDFramework
           AdapterRegister.RegisterCrossBindingAdaptor(AppDomain);
           ILRuntime.Runtime.Generated.CLRBindings.Initialize(AppDomain);
           ILRuntime.Runtime.Generated.CLRManualBindings.Initialize(AppDomain);
+          ILRuntime.Runtime.Generated.PreCLRBuilding.Initialize(AppDomain);
           //
           ILRuntimeDelegateHelper.Register(AppDomain);
           JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);

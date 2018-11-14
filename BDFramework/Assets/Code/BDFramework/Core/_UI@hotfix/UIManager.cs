@@ -362,17 +362,7 @@ namespace BDFramework.UI
         /// </summary>
         public void Update()
         {
-            if (windowMap.Count > 0)
-            {
-                foreach (var v in windowMap)
-                {
-                    if (!v.Value.IsClose && v.Value.IsLoad)
-                    {
-                        //执行帧逻辑
-                        v.Value.Update();
-                    }
-                }
-            }
+           
         }
 
     }

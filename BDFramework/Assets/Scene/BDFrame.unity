@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsCodeHotfix: 1
-  IsLoadPdb: 0
+  IsLoadPdb: 1
   IsAssetbundleModel: 0
   FileServerUrl: 127.0.0.1
 --- !u!4 &617214994

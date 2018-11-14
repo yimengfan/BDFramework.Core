@@ -160,9 +160,18 @@ public class ScriptBiuldTools
         {
             Directory.Delete(outDirectory, true);
         }
+        //
+        try
+        {
+            Directory.CreateDirectory(outDirectory);
+        }
+        catch (Exception e)
+        {
+            EditorUtility.ClearProgressBar();
+            EditorUtility.DisplayDialog("提示", "Unity拒绝创建文件夹,请重试!", "OK");
+            return;
+        }
 
-
-        Directory.CreateDirectory(outDirectory);
         EditorUtility.DisplayProgressBar("编译服务", "[1/2]开始编译base.dll", 0.4f);
         //编译 base.dll
         try

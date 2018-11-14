@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Text.RegularExpressions;
 using ILRuntime.Runtime.Enviorment;
 using ILRuntime.Other;
 using UnityEngine;
+using UnityEngine.Windows;
 
 namespace ILRuntime.Runtime.CLRBinding
 {
@@ -24,22 +26,45 @@ namespace ILRuntime.Runtime.CLRBinding
                 System.IO.File.Delete(i);
             }
 
+            //收集其他的文件名
+            var otherFiles = System.IO.Directory.GetFiles(outputPath + "/../", "*.cs", SearchOption.AllDirectories);
+            List<string> otherFilesName = new List<string>();
+            foreach (var f in otherFiles)
+            {
+                otherFilesName.Add(Path.GetFileName(f));
+            }
+            
+            //
             List<string> clsNames = new List<string>();
-
-
             foreach (var i in types)
             {
                 try
                 {
                     #region 处理一个type
-
-                    string clsName, realClsName;
+                    
+                    //1.一些类型不处理
+                    if(  i.IsClass ==false  || i.IsPointer ||i.IsPublic==false
+                      || i.IsInterface      || i.IsNestedAssembly)
+                     continue;
+                    
+                    string clsName = "", realClsName = "";
                     bool isByRef;
                     if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
                         continue;
-                    i.GetClassName(out clsName, out realClsName, out isByRef);
-                    clsNames.Add(clsName);
+                    //生成类名和 真实类名
+                   i.GetClassName(out clsName, out realClsName, out isByRef);
 
+                    /*一系列退出条件*/
+                   
+                    //重名文件跳出
+                    if (otherFilesName.Contains(clsName+".cs"))
+                    {
+                        Debug.Log("有重名文件,跳出!" + i.Name);
+                        continue;
+                    }
+                    if(clsName.Contains(".<") || clsName.Contains("<")) continue;
+                    //
+                    clsNames.Add(clsName);
                     using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputPath + "/" + clsName + ".cs",
                         false, new UTF8Encoding(false)))
                     {
@@ -134,16 +159,17 @@ namespace ILRuntime.Runtime.Generated
                 }
                 catch (Exception e)
                 {
-                    types.Remove(i);
+                   // types.Remove(i);
                     Debug.LogError("无法处理:" + i.FullName);
                     Debug.LogError(e.Message);
+                    continue;
                 }
             }
 
             var delegateClsNames = GenerateDelegateBinding(delegateTypes, outputPath);
             clsNames.AddRange(delegateClsNames);
 
-            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath);
+            GenerateBindingInitializeScript("PreCLRBuilding",clsNames,  valueTypeBinders, outputPath);
         }
 
         internal class CLRBindingGenerateInfo
@@ -377,7 +403,7 @@ namespace ILRuntime.Runtime.Generated
             var delegateClsNames = GenerateDelegateBinding(delegateTypes, outputPath);
             clsNames.AddRange(delegateClsNames);
 
-            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath);
+            GenerateBindingInitializeScript("AnalysisCLRBuilding",clsNames, valueTypeBinders, outputPath);
         }
 
         internal static void CrawlAppdomain(ILRuntime.Runtime.Enviorment.AppDomain domain,
@@ -796,14 +822,14 @@ namespace ILRuntime.Runtime.Generated
             return clsNames;
         }
 
-        internal static void GenerateBindingInitializeScript(List<string> clsNames, List<Type> valueTypeBinders,
+        internal static void GenerateBindingInitializeScript(string csname,List<string> contentNames, List<Type> valueTypeBinders,
             string outputPath)
         {
             if (!System.IO.Directory.Exists(outputPath))
                 System.IO.Directory.CreateDirectory(outputPath);
 
             using (System.IO.StreamWriter sw =
-                new System.IO.StreamWriter(outputPath + "/CLRBindings.cs", false, new UTF8Encoding(false)))
+                new System.IO.StreamWriter(outputPath + "/"+csname+".cs", false, new UTF8Encoding(false)))
             {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine(@"using System;
@@ -812,9 +838,10 @@ using System.Reflection;
 
 namespace ILRuntime.Runtime.Generated
 {
-    class CLRBindings
+    class xxx
     {");
-
+                sb.Replace("xxx",csname);
+                //
                 if (valueTypeBinders != null)
                 {
                     sb.AppendLine();
@@ -838,9 +865,9 @@ namespace ILRuntime.Runtime.Generated
         /// </summary>
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
         {");
-                if (clsNames != null)
+                if (contentNames != null)
                 {
-                    foreach (var i in clsNames)
+                    foreach (var i in contentNames)
                     {
                         sb.Append("            ");
                         sb.Append(i);

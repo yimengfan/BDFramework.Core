@@ -1,4 +1,4 @@
-﻿namespace BDFramework.Logic.GameLife
+﻿namespace BDFramework.GameStart
 {
     public interface IGameStart
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BDFramework.Logic.GameLife
+namespace BDFramework.GameStart
 {
     public class GameStartAtrribute : Attribute
     {
