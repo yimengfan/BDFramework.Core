@@ -12,7 +12,7 @@ namespace Game
             BDebug.Log("本地代码启动!");
             BDebug.Log("准备启动热更逻辑!");
             //
-            GameObject.Find("BDFrame").GetComponent<BDLauncher>().LaunchHotFix();
+            GameObject.Find("BDFrame").GetComponent<BDLauncher>().Launch();
         }
 
         public void Update()

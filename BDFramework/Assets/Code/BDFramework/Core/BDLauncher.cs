@@ -78,7 +78,7 @@ namespace BDFramework
         /// <param name="scriptPath"></param>
         /// <param name="artPath"></param>
         /// <param name=""></param>
-        public void LaunchHotFix()
+        public void Launch()
         {
             //初始化资源加载
             BResources.Init(IsAssetbundleModel);
@@ -92,12 +92,12 @@ namespace BDFramework
                 dd.AddListener("OnAssetBundleOever", (o) =>
                 {
                     //等待ab完成后，开始脚本逻辑
-                    StartHotfixScrpit();
+                    LaunchScrpit();
                 });
             }
             else
             {
-                StartHotfixScrpit();
+                LaunchScrpit();
             }
             
         }
@@ -105,7 +105,7 @@ namespace BDFramework
         /// <summary>
         /// 开始热更脚本逻辑
         /// </summary>
-        private void StartHotfixScrpit()
+        private void LaunchScrpit()
         {
             if (IsCodeHotfix) //热更代码模式
             {
