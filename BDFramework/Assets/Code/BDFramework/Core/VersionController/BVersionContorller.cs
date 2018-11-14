@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using BDFramework.Helper;
 using BDFramework.Http;
 using ILRuntime.Runtime.Intepreter;
@@ -34,10 +35,9 @@ namespace BDFramework
         /// <param name="localConfigPath">本地根目录</param>
         /// <param name="onProcess"></param>
         /// <param name="onError"></param>
-        static async public void Start(string serverConfigPath, string localConfigPath, Action<int, int> onProcess,
-            Action<string> onError)
+        /// 返回码: -1：error  0：success
+        static async public Task<int> Start(string serverConfigPath, string localConfigPath, Action<int, int> onProcess,Action<string> onError)
         {
-            BDebug.Log("");
             var client = HttpMgr.Inst.GetFreeHttpClient();
             var platform = Utils.GetPlatformPath(Application.platform);
             //开始下载服务器配置
@@ -51,7 +51,7 @@ namespace BDFramework
             catch (Exception e)
             {
                 onError(e.Message);
-                return;
+                return -1;
             }
 
             
@@ -93,8 +93,9 @@ namespace BDFramework
                 }
                 catch (Exception e)
                 {
-                    onError(e.Message);
-                    return;
+                    BDebug.LogError(sp);
+                    onError( e.Message);
+                    return -1;
                 }
 
                 BDebug.Log("下载成功：" + sp);
@@ -106,6 +107,12 @@ namespace BDFramework
             {
                 File.WriteAllText(localPath, serverConfig);
             }
+            else
+            {
+                BDebug.Log("可更新数量为0");
+            }
+            
+            return 0;
         }
 
 

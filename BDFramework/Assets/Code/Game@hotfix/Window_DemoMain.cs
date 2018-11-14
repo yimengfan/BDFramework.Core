@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using BDFramework.ScreenView;
 using BDFramework.Sql;
 using UnityEngine;
@@ -103,26 +105,19 @@ public class Window_DemoMain : AWindow
 
         this.btn_07.onClick.AddListener(() =>
         {
-            var path = Application.persistentDataPath;
-            // 这个没问题
-            HotfixCheck.TestAction("http://127.0.0.1", path,
-                (m, n) =>
+            var path = Application.streamingAssetsPath;
+            
+            var t = VersionContorller.Start("http://127.0.0.1", path,
+                (i, j) =>
                 {
-                    BDebug.Log(m);
-                    BDebug.Log(n);
-                }, (i) => { BDebug.Log(i); }
-            );
-
-            //这个error
-            VersionContorller.Start("http://127.0.0.1", path,
-            (i, j) =>
-            {
-                Debug.LogFormat("资源更新进度：{0}/{1}", i, j);
-            },
-            (error) =>
-            {
-                Debug.LogError("错误:" + error);
-            });
+                    Debug.LogFormat("资源更新进度：{0}/{1}", i, j);
+                },
+                (error) =>
+                {
+                    Debug.LogError("错误:" + error);
+                });
+            //var result = t.Result;
+            Debug.Log("下载状态返回:" );
         });
     }
 
