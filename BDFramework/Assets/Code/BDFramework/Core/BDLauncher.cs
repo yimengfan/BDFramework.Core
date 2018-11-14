@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using BDFramework;
+using BDFramework.GameStart;
 using SQLite4Unity3d;
 using UnityEngine;
 using BDFramework.ResourceMgr;
@@ -24,7 +25,7 @@ namespace BDFramework
         private void Awake()
         {
             this.gameObject.AddComponent<IEnumeratorTool>();
-            LaunchHotFix();
+            LaunchLocal();
         }
 
         #region 启动非热更逻辑
@@ -35,7 +36,34 @@ namespace BDFramework
         /// </summary>
         public void LaunchLocal()
         {
+
+            var types = Assembly.GetExecutingAssembly().GetTypes();
+
             
+            var istartType = typeof(IGameStart);
+            IGameStart gs = null;
+            foreach (var t in types)
+            {
+                if (t.IsClass && t.GetInterface("IGameStart")!= null)
+                {
+                    var attr = t.GetCustomAttribute(typeof(GameStartAtrribute), false);
+                    if (attr != null && (attr as GameStartAtrribute).Index == 0)
+                    {                       
+                        gs = Activator.CreateInstance(t) as IGameStart;
+                        break;
+                    }
+                }
+            }
+
+            //注册update
+            if (gs != null)
+            {
+                gs.Start();
+
+                BDLauncher.OnUpdate += gs.Update;
+                BDLauncher.OnLateUpdate += gs.LateUpdate;
+            }
+
         }
         
         

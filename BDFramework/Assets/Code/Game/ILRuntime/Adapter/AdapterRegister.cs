@@ -22,5 +22,7 @@ public class AdapterRegister
             domain.RegisterCrossBindingAdaptor(new IEnumerableAdapter());
 
             domain.RegisterCrossBindingAdaptor(new IAsyncStateMachineAdapter());
+
+            domain.RegisterCrossBindingAdaptor(new IGameStartAdapter());
       }
         }

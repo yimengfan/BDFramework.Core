@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using BDFramework;
 using BDFramework.Editor.Tools;
+using BDFramework.GameStart;
 using BDFramework.Helper;
 using ILRuntime.Runtime.CLRBinding;
 using Tool;
@@ -85,6 +86,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         types.Add((typeof(System.Exception)));
         types.Add(typeof(System.Collections.IEnumerable));
         types.Add(typeof(System.Runtime.CompilerServices.IAsyncStateMachine));
+        types.Add(typeof(IGameStart));
         GenAdapter.CreateAdapter(types, "Assets/Code/Game/ILRuntime/Adapter");
     }
 

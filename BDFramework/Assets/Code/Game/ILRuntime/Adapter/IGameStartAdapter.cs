@@ -6,13 +6,13 @@ using ILRuntime.CLR.Method;
 using ILRuntime.Runtime.Enviorment;
 using ILRuntime.Runtime.Intepreter;
 
-public class IAsyncStateMachineAdapter:CrossBindingAdaptor
+public class IGameStartAdapter:CrossBindingAdaptor
 {
 public override Type BaseCLRType
 {
     get
     {
-        return typeof(System.Runtime.CompilerServices.IAsyncStateMachine);//这是你想继承的那个类
+        return typeof(BDFramework.GameStart.IGameStart);//这是你想继承的那个类
     }
 }
 public override Type AdaptorType
@@ -27,7 +27,7 @@ public override object CreateCLRInstance(ILRuntime.Runtime.Enviorment.AppDomain 
     return new Adaptor(appdomain, instance);//创建一个新的实例
 }
 //实际的适配器类需要继承你想继承的那个类，并且实现CrossBindingAdaptorType接口
-public class Adaptor : System.Runtime.CompilerServices.IAsyncStateMachine, CrossBindingAdaptorType
+public class Adaptor : BDFramework.GameStart.IGameStart, CrossBindingAdaptorType
 {
     ILTypeInstance instance;
     ILRuntime.Runtime.Enviorment.AppDomain appdomain;
@@ -43,36 +43,54 @@ public class Adaptor : System.Runtime.CompilerServices.IAsyncStateMachine, Cross
         this.instance = instance;
     }
     public ILTypeInstance ILInstance { get { return instance; } }
-bool m_bMoveNextGot = false;
-IMethod m_MoveNext = null;
-public  void MoveNext ()
+bool m_bStartGot = false;
+IMethod m_Start = null;
+public  void Start ()
 {
-   if(!m_bMoveNextGot)
+   if(!m_bStartGot)
    {
-       m_MoveNext = instance.Type.GetMethod("MoveNext",0);
-       m_bMoveNextGot = true;
+       m_Start = instance.Type.GetMethod("Start",0);
+       m_bStartGot = true;
    }
-          if(m_MoveNext != null)
+          if(m_Start != null)
        {
-            appdomain.Invoke(m_MoveNext, instance,null);
+            appdomain.Invoke(m_Start, instance,null);
         }
        else
        {
            
        } 
 }
-bool m_bSetStateMachineGot = false;
-IMethod m_SetStateMachine = null;
-public  void SetStateMachine (System.Runtime.CompilerServices.IAsyncStateMachine arg0)
+bool m_bUpdateGot = false;
+IMethod m_Update = null;
+public  void Update ()
 {
-   if(!m_bSetStateMachineGot)
+   if(!m_bUpdateGot)
    {
-       m_SetStateMachine = instance.Type.GetMethod("SetStateMachine",1);
-       m_bSetStateMachineGot = true;
+       m_Update = instance.Type.GetMethod("Update",0);
+       m_bUpdateGot = true;
    }
-          if(m_SetStateMachine != null)
+          if(m_Update != null)
        {
-            appdomain.Invoke(m_SetStateMachine, instance,arg0);
+            appdomain.Invoke(m_Update, instance,null);
+        }
+       else
+       {
+           
+       } 
+}
+bool m_bLateUpdateGot = false;
+IMethod m_LateUpdate = null;
+public  void LateUpdate ()
+{
+   if(!m_bLateUpdateGot)
+   {
+       m_LateUpdate = instance.Type.GetMethod("LateUpdate",0);
+       m_bLateUpdateGot = true;
+   }
+          if(m_LateUpdate != null)
+       {
+            appdomain.Invoke(m_LateUpdate, instance,null);
         }
        else
        {
