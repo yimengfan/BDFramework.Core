@@ -11,7 +11,7 @@ namespace Code.Game
         public void Start()
         {
            Application.targetFrameRate = 24;
-           Debug.Log("热更代码准备完毕!");
+           BDebug.Log("hotfix代码 启动器连接成功!" ,"red");
         }
         
         public void Update()
