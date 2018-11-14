@@ -9,7 +9,7 @@ using BDFramework.GameStart;
 
 public class BDLauncherBridge 
 {
-    static private IGameStart gameStart;
+    static private IGameStart gameStart = null;
  
     /// <summary>
     /// 这里注册整个游戏类型
@@ -63,7 +63,8 @@ public class BDLauncherBridge
                     continue;
                 }
                 //游戏启动器
-                if (gameStart == null)
+                //这里主要寻找
+                if (isCodeHotfix && gameStart == null)
                 {
                     var attrs = t.GetCustomAttributes(gsaType,false);
                     if (attrs.Length > 0 )
