@@ -99,7 +99,7 @@ namespace BDFramework.ResourceMgr
             {
                 var res = manifest.Manifest.GetDirectDependencies(assetPath);
                 //1.创建依赖加载队列
-                Queue<string> loadQueue = new Queue<string>();
+                Stack<string> loadQueue = new Stack<string>();
                 foreach (var asset in res)
                 {
                     //依赖队列需要加上resourcepath
@@ -107,7 +107,7 @@ namespace BDFramework.ResourceMgr
                     //判断是否已经加载过
                     if (assetbundleMap.ContainsKey(asset) == false)
                     {
-                        loadQueue.Enqueue(fullPath);
+                        loadQueue.Push(fullPath);
                     }
                     else
                     {
@@ -116,11 +116,11 @@ namespace BDFramework.ResourceMgr
                 }
 
                 //2.加载主体
-                if (assetbundleMap.ContainsKey(assetPath) == false)
-                {
-                    var fullPath = Path.Combine(this.path, assetPath);
-                    loadQueue.Enqueue(fullPath);
-                }
+//                if (assetbundleMap.ContainsKey(assetPath) == false)
+//                {
+//                    var fullPath = Path.Combine(this.path, assetPath);
+//                    loadQueue.Enqueue(fullPath);
+//                }
 
                 //开始加载队列
                 IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(loadQueue, callback));
@@ -139,7 +139,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="path"></param>
         /// <param name="sucessCallback"></param>
         /// <returns></returns>
-        IEnumerator IEAsyncLoadAssetbundle(Queue<string> loadQueue, Action<bool> callback)
+        IEnumerator IEAsyncLoadAssetbundle(Stack<string> loadQueue, Action<bool> callback)
         {
             if (loadQueue.Count <= 0)
             {
@@ -148,7 +148,7 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                var path = loadQueue.Dequeue();
+                var path = loadQueue.Pop();
                 var result = AssetBundle.LoadFromFileAsync(path);
                 yield return result;
                 if (result.isDone)
