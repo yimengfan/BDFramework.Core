@@ -26,6 +26,11 @@ namespace BDFramework
         {
             this.gameObject.AddComponent<IEnumeratorTool>();
             LaunchLocal();
+            //非runtime下 全部使用assetbundle
+            if (!Application.isEditor)
+            {
+                this.IsAssetbundleModel = true;
+            }
         }
 
         #region 启动非热更逻辑
