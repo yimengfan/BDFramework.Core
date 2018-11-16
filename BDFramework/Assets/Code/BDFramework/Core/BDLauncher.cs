@@ -15,7 +15,7 @@ namespace BDFramework
         public bool IsCodeHotfix = false;
         public bool IsLoadPdb = false;
         public bool IsAssetbundleModel = false;
-        public string FileServerUrl = "127.0.0.1";
+        public string FileServerUrl = "192.168.8.68";
         static public OnLife OnStart { get; set; }
         static public OnLife OnUpdate { get; set; }
         static public OnLife OnLateUpdate { get; set; }
@@ -26,10 +26,10 @@ namespace BDFramework
         {
             this.gameObject.AddComponent<IEnumeratorTool>();
             LaunchLocal();
-            //非runtime下 全部使用assetbundle
-            if (!Application.isEditor)
+            //真机环境
+            if (Application.isEditor == false)
             {
-                this.IsAssetbundleModel = true;
+                IsAssetbundleModel = true;
             }
         }
 
@@ -46,29 +46,23 @@ namespace BDFramework
 
             
             var istartType = typeof(IGameStart);
-            IGameStart gs = null;
             foreach (var t in types)
             {
                 if (t.IsClass && t.GetInterface("IGameStart")!= null)
                 {
                     var attr = t.GetCustomAttribute(typeof(GameStartAtrribute), false);
-                    if (attr != null && (attr as GameStartAtrribute).Index == 0)
+                    if (attr != null)
                     {                       
-                        gs = Activator.CreateInstance(t) as IGameStart;
-                        break;
+                       var gs = Activator.CreateInstance(t) as IGameStart;
+  
+                        //注册
+                        gs.Start();
+
+                        BDLauncher.OnUpdate += gs.Update;
+                        BDLauncher.OnLateUpdate += gs.LateUpdate;
                     }
                 }
             }
-
-            //注册update
-            if (gs != null)
-            {
-                gs.Start();
-
-                BDLauncher.OnUpdate += gs.Update;
-                BDLauncher.OnLateUpdate += gs.LateUpdate;
-            }
-
         }
         
         
@@ -88,8 +82,9 @@ namespace BDFramework
             //初始化资源加载
             BResources.Init(IsAssetbundleModel);
             SqliteLoder.Init();
-            //热更资源模式
-            if (IsAssetbundleModel)
+            
+            
+            if (IsAssetbundleModel )
             {
                 //开始启动逻辑  
                 var dd = DataListenerServer.Create("BDFrameLife");
