@@ -118,7 +118,7 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
                         //1.编译脚本
                         ScriptBiuldTools.GenDllByMono(Application.dataPath,outPath);
                         //2.打包资源
-                        AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/",outPath, BuildTarget.Android);
+                        AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/",outPath, BuildTarget.iOS);
                         //3.打包表格
                         Excel2SQLiteTools.GenSQLite(outPath);
                     }
