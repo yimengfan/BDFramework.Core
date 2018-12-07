@@ -58,7 +58,17 @@ namespace BDFramework.ResourceMgr
             allResourceList = Directory.GetFiles(root, "*.*", SearchOption.AllDirectories).ToList();
             for (int i = 0; i < allResourceList.Count; i++)
             {
-                allResourceList[i] = allResourceList[i].Replace(root + "\\", "").Replace("\\", "/");
+                if (Application.platform == RuntimePlatform.WindowsEditor)
+                {
+                    allResourceList[i] = allResourceList[i].Replace(root + "\\", "").Replace("\\", "/");
+                }
+
+                else if(Application.platform == RuntimePlatform.OSXEditor)
+                {
+                    allResourceList[i] = allResourceList[i].Replace(root + "/", "");
+                }
+
+                
             }
         }
 

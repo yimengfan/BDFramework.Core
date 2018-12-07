@@ -42,6 +42,8 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public static T Load<T>(string name) where T : UnityEngine.Object
         {
+            if (string.IsNullOrEmpty(name))
+                return null;
             return resLoader.Load<T>(name);
         }
 
@@ -83,7 +85,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public static void UnloadAll()
         {
-            resLoader.UnloadAllAsset();
+          
         }
 
 

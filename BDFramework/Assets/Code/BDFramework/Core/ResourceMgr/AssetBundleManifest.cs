@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using LitJson;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace BDFramework.ResourceMgr
 {
@@ -162,19 +164,29 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         IEnumerator IELoadManifest(string path, Action<bool> callback)
         {
+            var content = File.ReadAllText(path);
+            //Debug.Log("content:"+content);
+            this.Manifest = new ManifestConfig(content);
+            callback(true);
+            
+            yield break;
             if (Application.platform == RuntimePlatform.WindowsEditor ||
                 Application.platform == RuntimePlatform.WindowsPlayer)
             {
                 path = "file:///" + path;
+            }else if (Application.platform == RuntimePlatform.Android)
+            {
+                path = "jar:file://" + path;
             }
 
             BDebug.Log("加载依赖:" +path);
-            WWW www = new WWW(path);
-            yield return www;
+            //
+            UnityWebRequest www =  UnityWebRequest.Get(path);
+            yield return www.SendWebRequest();
             if (www.error == null)
             {
                 //配置文件
-                this.Manifest = new ManifestConfig(www.text);
+                this.Manifest = new ManifestConfig(www.downloadHandler.text);
                 if (Manifest != null)
                 {
                     callback(true);
