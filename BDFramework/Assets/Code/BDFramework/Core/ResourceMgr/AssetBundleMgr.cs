@@ -73,9 +73,9 @@ namespace BDFramework.ResourceMgr
             this.allTaskList = new List<LoadTaskGroup>();
             //1.设置加载路径  
             //persistent 和 streaming同时只能存在一个，
-            path = Path.Combine(Application.persistentDataPath, Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
-            var configPath = Path.Combine(this.path, "Config.json");
-            this.path = File.Exists(configPath) ? path : Path.Combine(Application.streamingAssetsPath, Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
+            path =(Application.persistentDataPath+"/"+Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
+            var configPath = this.path+ "/Config.json";
+            this.path = File.Exists(configPath) ? path : Application.streamingAssetsPath+"/"+ Utils.GetPlatformPath(Application.platform)+"/Art".Replace("\\", "/");
             this.manifest = new AssetBundleManifestReference(configPath);
             
             BDebug.Log("Art加载路径:" + path,"red");
@@ -91,7 +91,7 @@ namespace BDFramework.ResourceMgr
         private void AsyncLoadAssetBundle(string path, Action<bool> callback)
         {
             //ab存储的是asset下的相对目录
-            path = "assets/resource/runtime/" + path.ToLower();
+            path = "assets/resource/runtime/" + path.ToLower()+".";
             //寻找ab的后缀名
             var assetPath = GetExistPath(path);
 
@@ -103,7 +103,7 @@ namespace BDFramework.ResourceMgr
                 foreach (var asset in res)
                 {
                     //依赖队列需要加上resourcepath
-                    var fullPath = Path.Combine(this.path, asset);
+                    var fullPath = this.path+"/" +asset;
                     //判断是否已经加载过
                     if (assetbundleMap.ContainsKey(asset) == false)
                     {
@@ -228,7 +228,7 @@ namespace BDFramework.ResourceMgr
             foreach (var r in res)
             {
                 //依赖队列需要加上resourcepath
-                var dir = Path.Combine(this.path, r);
+                var dir = this.path+"/"+ r;
                 //判断是否已经加载过
                 if (assetbundleMap.ContainsKey(r) == false)
                 {
@@ -250,7 +250,7 @@ namespace BDFramework.ResourceMgr
             //2.加载主体
             if (assetbundleMap.ContainsKey(assetPath) == false)
             {
-                var fullname = Path.Combine(this.path, assetPath);
+                var fullname =this.path+"/"+ assetPath;
                 var ab = AssetBundle.LoadFromFile(fullname);
                 AddAssetBundle(ab.name, ab);
             }
@@ -448,6 +448,7 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
+                //
                 BDebug.Log("执行任务组中task:" + task.Id + " - " + task.ResourcePath);
                 isDoing = true;
                 //执行任务
@@ -456,7 +457,7 @@ namespace BDFramework.ResourceMgr
                     //移除任务
                     this.willDoTaskSet.Remove(task.Id);
                     //
-                    var path = "assets/resource/runtime/" + task.ResourcePath.ToLower();
+                    var path = "assets/resource/runtime/" + task.ResourcePath.ToLower()+".";
                     path = GetExistPath(path);
                     var obj = LoadFormAssetBundle<Object>(path, path);
                     //任务完成
