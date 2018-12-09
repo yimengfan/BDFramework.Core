@@ -66,18 +66,16 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         private string path = "";
 
-        public AssetBundleMgr()
+        public AssetBundleMgr(string root)
         {
             this.assetbundleMap = new Dictionary<string, AssetBundleReference>();
             this.willDoTaskSet = new HashSet<int>();
             this.allTaskList = new List<LoadTaskGroup>();
             //1.设置加载路径  
             //persistent 和 streaming同时只能存在一个，
-            path =(Application.persistentDataPath+"/"+Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
+            path =(root+"/"+Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
             var configPath = this.path+ "/Config.json";
-            this.path = File.Exists(configPath) ? path : Application.streamingAssetsPath+"/"+ Utils.GetPlatformPath(Application.platform)+"/Art".Replace("\\", "/");
             this.manifest = new AssetBundleManifestReference(configPath);
-            
             BDebug.Log("Art加载路径:" + path,"red");
         }
 

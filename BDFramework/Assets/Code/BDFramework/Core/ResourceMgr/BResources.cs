@@ -2,6 +2,7 @@
 using BDFramework.ResourceMgr;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 
 namespace BDFramework.ResourceMgr
 
@@ -13,22 +14,17 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="abModel"></param>
         /// <param name="callback"></param>
-        static public void Init(bool isAssetBundle)
+        static public void Load(string root = "")
         {
-            #if UNITY_EDITOR
-            if (isAssetBundle)
+            if (root != "")
             {
-                resLoader = new AssetBundleMgr();
-                BDebug.Log("资源加载:AssetBundle");
+                resLoader = new AssetBundleMgr(root);
             }
             else
             {
                 resLoader = new DevResourceMgr();
                 BDebug.Log("资源加载:AssetDataBase editor only");
             }
-            #else
-            resLoader = new AssetBundleMgr();
-            #endif
         }
 
         static private IResMgr resLoader { get; set; }

@@ -9,52 +9,52 @@ using UnityEngine.Serialization;
 
 namespace BDFramework
 {
+    public enum AssetLoadPath
+    {
+        Editor,
+        Persistent,
+        StreamingAsset
+    }
+
     public class BDLauncher : MonoBehaviour
     {
-        public  delegate void OnLife();
-        public bool IsCodeHotfix = false;
-        public bool IsLoadPdb = false;
-        public bool IsAssetbundleModel = false;
+        public delegate void OnLife();
+        public AssetLoadPath CodeRoot = AssetLoadPath.Editor;
+        public AssetLoadPath SQLRoot = AssetLoadPath.Editor;
+        public AssetLoadPath ArtRoot = AssetLoadPath.Editor;
         public string FileServerUrl = "192.168.8.68";
         static public OnLife OnStart { get; set; }
         static public OnLife OnUpdate { get; set; }
         static public OnLife OnLateUpdate { get; set; }
 
-        
+
         // Use this for initialization
         private void Awake()
         {
             this.gameObject.AddComponent<IEnumeratorTool>();
             LaunchLocal();
-            //真机环境
-            if (Application.isEditor == false)
-            {
-                IsAssetbundleModel = true;
-            }
         }
 
         #region 启动非热更逻辑
-
 
         /// <summary>
         /// 启动本地代码
         /// </summary>
         public void LaunchLocal()
         {
-
             var types = Assembly.GetExecutingAssembly().GetTypes();
 
-            
+
             var istartType = typeof(IGameStart);
             foreach (var t in types)
             {
-                if (t.IsClass && t.GetInterface("IGameStart")!= null)
+                if (t.IsClass && t.GetInterface("IGameStart") != null)
                 {
                     var attr = t.GetCustomAttribute(typeof(GameStartAtrribute), false);
                     if (attr != null)
-                    {                       
-                       var gs = Activator.CreateInstance(t) as IGameStart;
-  
+                    {
+                        var gs = Activator.CreateInstance(t) as IGameStart;
+
                         //注册
                         gs.Start();
 
@@ -64,27 +64,97 @@ namespace BDFramework
                 }
             }
         }
-        
-        
 
         #endregion
 
         #region 启动热更逻辑
+
+        
         /// <summary>
         /// 初始化
         /// 修改版本,让这个启动逻辑由使用者自行处理
         /// </summary>
-        /// <param name="scriptPath"></param>
-        /// <param name="artPath"></param>
-        /// <param name=""></param>
-        public void Launch()
+        /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
+        public void Launch(string GameId ="")
         {
             //初始化资源加载
-            BResources.Init(IsAssetbundleModel);
-            SqliteLoder.Init();
+            string coderoot = "";
+            string sqlroot = "";
+            string artroot = "";
+            
+            //各自的路径
+            //art
+            if (ArtRoot == AssetLoadPath.Editor)
+            {
+                if (Application.isEditor)
+                {
+                    //默认不走AssetBundle
+                    artroot = "";
+                }
+                else
+                {
+                    //手机默认直接读取Assetbundle
+                    artroot = Application.persistentDataPath;
+                }
+            }
+            else if (ArtRoot == AssetLoadPath.Persistent)
+            {
+                artroot = Application.persistentDataPath;
+            }
+
+            else if (ArtRoot == AssetLoadPath.StreamingAsset)
+            {
+                artroot = Application.streamingAssetsPath;
+            }
+            //sql
+            if (SQLRoot == AssetLoadPath.Editor)
+            {
+                //sql 默认读streaming
+                sqlroot = Application.streamingAssetsPath;
+            }
+
+            else if (SQLRoot == AssetLoadPath.Persistent)
+            {
+                sqlroot = Application.persistentDataPath;
+            }
+            else if (SQLRoot == AssetLoadPath.StreamingAsset)
+            {
+               sqlroot = Application.streamingAssetsPath;
+            }
+
+            //code
+            if (CodeRoot == AssetLoadPath.Editor)
+            {
+                //sql 默认读streaming
+                coderoot = "";
+            }
+
+            else if (CodeRoot == AssetLoadPath.Persistent)
+            {
+                coderoot = Application.persistentDataPath;
+            }
+            else if (CodeRoot == AssetLoadPath.StreamingAsset)
+            {
+                coderoot = Application.streamingAssetsPath;
+            }
+            
+            //多游戏更新逻辑
+            if (Application.isEditor == false)
+            {
+                if (GameId != "")
+                {
+                    artroot = artroot + "/" + GameId;
+                    coderoot = coderoot + "/" + GameId;
+                    sqlroot = sqlroot + "/" + GameId;
+                }
+            }
             
             
-            if (IsAssetbundleModel )
+            //开始初始化
+            BResources.Load(artroot);
+            SqliteLoder.Load(sqlroot);
+            //非内部加载
+            if (artroot != "")
             {
                 //开始启动逻辑  
                 var dd = DataListenerServer.Create("BDFrameLife");
@@ -92,25 +162,25 @@ namespace BDFramework
                 dd.AddListener("OnAssetBundleOever", (o) =>
                 {
                     //等待ab完成后，开始脚本逻辑
-                    LaunchScrpit();
+                    LoadScrpit(coderoot);
                 });
             }
             else
             {
-                LaunchScrpit();
+                LoadScrpit(coderoot);
             }
-            
         }
 
         /// <summary>
         /// 开始热更脚本逻辑
         /// </summary>
-        private void LaunchScrpit()
+        private void LoadScrpit(string root)
         {
-            if (IsCodeHotfix) //热更代码模式
+            if (root != "") //热更代码模式
             {
-                ILRuntimeHelper.LoadHotfix(IsLoadPdb);
-                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null,new object[] {IsCodeHotfix, IsAssetbundleModel});
+                ILRuntimeHelper.LoadHotfix(root);
+                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null,
+                    new object[] {true});
             }
             else
             {
@@ -118,14 +188,13 @@ namespace BDFramework
                 var assembly = Assembly.GetExecutingAssembly();
                 var type = assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                method.Invoke(null, new object[] {IsCodeHotfix, IsAssetbundleModel});
+                method.Invoke(null, new object[] {false});
             }
         }
 
         #endregion
 
 
-        
         //普通帧循环
         private void Update()
         {

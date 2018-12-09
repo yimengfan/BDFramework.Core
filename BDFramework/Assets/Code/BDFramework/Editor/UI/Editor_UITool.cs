@@ -144,8 +144,8 @@ public override [return type] [method name] ([params])
             mc.AddMethod(construct);
             MyMethod init = new MyMethod();
             init.OverwriteContent(overrideContent);
-            init.SetMethSign(null, "Init", null);
-            init.SetMethodContent("base.Init();");
+            init.SetMethSign(null, "Load", null);
+            init.SetMethodContent("base.Load();");
             mc.AddMethod(init);
 
             MyMethod close = new MyMethod();

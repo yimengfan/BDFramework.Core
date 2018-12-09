@@ -94,8 +94,11 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     static void GenCLRBindingByAnalysis()
     {
         //用新的分析热更dll调用引用来生成绑定代码
-        ILRuntimeHelper.LoadHotfix(false);
+        ILRuntimeHelper.LoadHotfix(Application.streamingAssetsPath);
         BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain, "Assets/Code/Game/ILRuntime/Binding/Analysis");
+        AssetDatabase.Refresh();
+        return;
+        //暂时先不处理
         //预先绑定所有的
         var assemblies = new List<Assembly>()
         {
@@ -128,7 +131,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         }
 
         types = types.Distinct().ToList();
-        //
+        //PreBinding 
         BindingCodeGenerator.GenerateBindingCode(types, "Assets/Code/Game/ILRuntime/Binding/PreBinding");
         AssetDatabase.Refresh();
     }

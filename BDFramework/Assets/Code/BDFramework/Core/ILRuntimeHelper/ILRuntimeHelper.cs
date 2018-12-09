@@ -17,22 +17,16 @@ namespace BDFramework
   {
       public static AppDomain AppDomain { get; private set; }
       public static bool IsRunning { get; private set; }
-      public static void LoadHotfix(bool isLoadPdb)
+      public static void LoadHotfix(string root)
       {
           IsRunning = true;
-          string dllPath = Utils.GetPlatformPath(Application.platform)  + "/hotfix/hotfix.dll";
-          string pdbPath =  Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.pdb";
-          var _dllPath =  Path.Combine(Application.persistentDataPath, dllPath);
-          
-          //加载路径
-          dllPath = File.Exists(_dllPath)? _dllPath:  Path.Combine(Application.streamingAssetsPath, dllPath);
-          pdbPath = File.Exists(_dllPath)?   Path.Combine(Application.streamingAssetsPath,pdbPath)
-                                         :   Path.Combine(Application.streamingAssetsPath, pdbPath);
+          string dllPath = root +"/" + Utils.GetPlatformPath(Application.platform)  + "/hotfix/hotfix.dll";
+          string pdbPath = root +"/" + Utils.GetPlatformPath(Application.platform)  + "/hotfix/hotfix.pdb";
           
           BDebug.Log("DLL加载路径:" + dllPath,"red");
           //
           AppDomain = new AppDomain();
-          if (isLoadPdb && File.Exists(pdbPath))
+          if ( File.Exists(pdbPath))
           {
               var dllfs = File.ReadAllBytes(dllPath);
               var pdbfs = File.ReadAllBytes(pdbPath);
@@ -59,7 +53,7 @@ namespace BDFramework
           AdapterRegister.RegisterCrossBindingAdaptor(AppDomain);
           ILRuntime.Runtime.Generated.CLRBindings.Initialize(AppDomain);
           ILRuntime.Runtime.Generated.CLRManualBindings.Initialize(AppDomain);
-          ILRuntime.Runtime.Generated.PreCLRBuilding.Initialize(AppDomain);
+//          ILRuntime.Runtime.Generated.PreCLRBuilding.Initialize(AppDomain);
           //
           ILRuntimeDelegateHelper.Register(AppDomain);
           JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);

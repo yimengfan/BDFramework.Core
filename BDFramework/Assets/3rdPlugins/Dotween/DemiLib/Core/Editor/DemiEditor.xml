@@ -488,10 +488,10 @@
             Stores a GUIStyle palette, which can be passed to default DeGUI layouts when calling <code>DeGUI.BeginGUI</code>,
             and changed at any time by calling <code>DeGUI.ChangePalette</code>.
             You can inherit from this class to create custom GUIStyle palettes with more options.
-            Each of the sub-options require a public Init method to initialize the styles, which will be called via Reflection.
+            Each of the sub-options require a public Load method to initialize the styles, which will be called via Reflection.
             </summary>
         </member>
-        <member name="M:DG.DemiEditor.DeStylePalette.Init">
+        <member name="M:DG.DemiEditor.DeStylePalette.Load">
             <summary>
             Called automatically by <code>DeGUI.BeginGUI</code>.
             Override when adding new style subclasses.

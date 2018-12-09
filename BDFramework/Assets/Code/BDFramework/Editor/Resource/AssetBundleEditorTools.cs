@@ -16,6 +16,15 @@ static public class AssetBundleEditorTools
         CreateAbName(rootPath, target, outPath);
         //2.打包
         BuildAssetBundle(target, outPath);
+        
+        //配置写入本地
+        var configPath = Path.Combine(outPath, "Art/Config.json");
+        var direct = Path.GetDirectoryName(configPath);
+        if (Directory.Exists(direct) == false)
+        {
+            Directory.CreateDirectory(direct);
+        }
+        File.WriteAllText(configPath, manifestConfig.ToString());
     }
 
 
@@ -60,10 +69,10 @@ static public class AssetBundleEditorTools
         EditorUtility.ClearProgressBar();
     }
 
-
+   static ManifestConfig manifestConfig = null;
     private static void AnalyzeResource(string[] paths, BuildTarget target, string outpath)
     {
-        ManifestConfig manifestConfig = null;
+
         var configPath = Path.Combine(outpath, "Art/Config.json");
         if (File.Exists(configPath))
         {
@@ -144,13 +153,6 @@ static public class AssetBundleEditorTools
         }
 
         Debug.Log("本地需要打包资源:" + counter);
-        var direct = Path.GetDirectoryName(configPath);
-        if (Directory.Exists(direct) == false)
-        {
-            Directory.CreateDirectory(direct);
-        }
-        //写入本地
-        File.WriteAllText(configPath, manifestConfig.ToString());
     }
 
 

@@ -43,8 +43,8 @@ public class Window_DemoMain : AWindow
         base.Init();
 
         //提示
-        var isCodeHotfix = GameObject.Find("BDFrame").GetComponent<BDLauncher>().IsCodeHotfix;
-        text_hotfixState.text = isCodeHotfix ? "热更模式:开" : "热更模式:关";
+//        var isCodeHotfix = GameObject.Find("BDFrame").GetComponent<BDLauncher>().IsCodeHotfix;
+//        text_hotfixState.text = isCodeHotfix ? "热更模式:开" : "热更模式:关";
 
         //demo1： screenview 切换
         this.btn_01.onClick.AddListener(() => { ScreenViewManager.Inst.MainLayer.BeginNavTo("demo1"); });

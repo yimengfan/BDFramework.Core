@@ -15,9 +15,8 @@ public class BDLauncherBridge
     /// 这里注册整个游戏类型
     /// </summary>
     /// <param name="isCodeHotfix"></param>
-    static  public void Start(bool isCodeHotfix = false ,bool isResourceHotfix =false)
+    static  public void Start(bool isCodeHotfix = false)
     {   
-        BDebug.Log("资源热更:" + isResourceHotfix,"yellow");
         BDebug.Log("代码热更:" + isCodeHotfix,"yellow");
         //组件加载
         List<Type> allTypes = new List<Type>();

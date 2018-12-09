@@ -12,10 +12,15 @@ namespace SQLite4Unity3d
         /// 初始化DB
         /// </summary>
         /// <param name="str"></param>
-        static public void Init()
+        static public void Load(string root)
         {
+            if (Connection != null)
+            {
+               Connection.Dispose();
+            }
+            
             //persistent和streaming中,必须有存在一个
-            var path = Path.Combine(Application.persistentDataPath, Utils.GetPlatformPath(Application.platform) + "/LocalDB");
+            var path = Path.Combine(root, Utils.GetPlatformPath(Application.platform) + "/LocalDB");
             path = File.Exists(path) ? path :  Path.Combine(Application.streamingAssetsPath, Utils.GetPlatformPath(Application.platform) + "/LocalDB");
             //
             Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
