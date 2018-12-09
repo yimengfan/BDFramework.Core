@@ -30,7 +30,7 @@ namespace Game.Data
        public double LifeTime {get;set;}
         // 描述
        public string Des {get;set;}
-        // 参数列表，字符串类型
+        // 参数列表 | 字符串类型
        public List<string> Params_StrValue {get;set;}
         // 公式
        public List<string> Params_Expression {get;set;}

@@ -7,8 +7,9 @@ using BDFramework.Core;
 using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
- static  public partial class UITools
+static  public partial class UITools
 {
     static private UITools_AutoSetTranformValueByData UITools_AutoSetTranformValueByData;
 
@@ -30,7 +31,7 @@ using UnityEngine.UI;
         UITools_AutoSetTranformValueByData.AutoSetValue(t, data);
     }
 
-    private static Type checkType = typeof(Behaviour);
+    private static Type checkType = typeof(Object);
     /// <summary>
     /// 绑定Windows的值
     /// </summary>
