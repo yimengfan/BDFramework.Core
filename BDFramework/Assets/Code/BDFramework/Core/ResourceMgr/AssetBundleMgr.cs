@@ -68,14 +68,19 @@ namespace BDFramework.ResourceMgr
 
         public AssetBundleMgr(string root)
         {
+            //多热更切换,需要卸载
+            if (this.manifest != null)
+            {
+                this.UnloadAllAsset();
+                GC.Collect();
+            }
+            
             this.assetbundleMap = new Dictionary<string, AssetBundleReference>();
             this.willDoTaskSet = new HashSet<int>();
             this.allTaskList = new List<LoadTaskGroup>();
             //1.设置加载路径  
-            //persistent 和 streaming同时只能存在一个，
             path =(root+"/"+Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
-            var configPath = this.path+ "/Config.json";
-            this.manifest = new AssetBundleManifestReference(configPath);
+            this.manifest = new AssetBundleManifestReference(path+ "/Config.json");
             BDebug.Log("Art加载路径:" + path,"red");
         }
 

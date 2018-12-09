@@ -18,14 +18,13 @@ namespace BDFramework
 
     public class BDLauncher : MonoBehaviour
     {
-        public delegate void OnLife();
         public AssetLoadPath CodeRoot = AssetLoadPath.Editor;
         public AssetLoadPath SQLRoot = AssetLoadPath.Editor;
         public AssetLoadPath ArtRoot = AssetLoadPath.Editor;
         public string FileServerUrl = "192.168.8.68";
-        static public OnLife OnStart { get; set; }
-        static public OnLife OnUpdate { get; set; }
-        static public OnLife OnLateUpdate { get; set; }
+        static public Action OnStart { get; set; }
+        static public Action OnUpdate { get; set; }
+        static public Action OnLateUpdate { get; set; }
 
 
         // Use this for initialization
@@ -58,8 +57,9 @@ namespace BDFramework
                         //注册
                         gs.Start();
 
-                        BDLauncher.OnUpdate += gs.Update;
-                        BDLauncher.OnLateUpdate += gs.LateUpdate;
+                        //
+                        BDLauncher.OnUpdate = gs.Update;
+                        BDLauncher.OnLateUpdate = gs.LateUpdate;
                     }
                 }
             }

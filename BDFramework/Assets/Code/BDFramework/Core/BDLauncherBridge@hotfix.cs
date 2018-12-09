@@ -106,8 +106,8 @@ public class BDLauncherBridge
         {
             gameStart.Start();
             //
-            BDLauncher.OnUpdate += gameStart.Update;
-            BDLauncher.OnLateUpdate += gameStart.LateUpdate;
+            BDLauncher.OnUpdate = gameStart.Update;
+            BDLauncher.OnLateUpdate = gameStart.LateUpdate;
         }
         BDebug.Log("游戏生命周期准备完毕!");
         //所有管理器开始工作

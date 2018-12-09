@@ -22,8 +22,11 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
+#if UNITY_EDITOR
+                
                 resLoader = new DevResourceMgr();
                 BDebug.Log("资源加载:AssetDataBase editor only");
+#endif
             }
         }
 

@@ -19,6 +19,12 @@ namespace BDFramework
       public static bool IsRunning { get; private set; }
       public static void LoadHotfix(string root)
       {
+          if (AppDomain != null)
+          {
+              //AppDomain.FreeILIntepreter(AppDomain.);
+          }
+       
+          //
           IsRunning = true;
           string dllPath = root +"/" + Utils.GetPlatformPath(Application.platform)  + "/hotfix/hotfix.dll";
           string pdbPath = root +"/" + Utils.GetPlatformPath(Application.platform)  + "/hotfix/hotfix.pdb";
