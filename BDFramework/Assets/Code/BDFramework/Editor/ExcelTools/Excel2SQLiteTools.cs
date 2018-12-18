@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using BDFramework.Helper;
 using LitJson;
 using BDFramework.Sql;
 using SQLite4Unity3d;
@@ -37,8 +39,62 @@ namespace BDFramework.Editor
             AssetDatabase.Refresh();
         }
 
+        public static void GenJsonToSQLite(string outPath)
+        {
+            var tablePath = Path.Combine(Application.dataPath, "Resource/Table");
+            var tableDir = Path.GetDirectoryName(tablePath);
+            var jsonFiles = Directory.GetFiles(tableDir, "*.json", SearchOption.AllDirectories);
+            var _path = Path.Combine(outPath, "LocalDB");
+            sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
+            foreach (var f in jsonFiles)
+            {
+                string content = File.ReadAllText(f);
+                Json2Sqlite(f, content);
+            }
+
+            sql.Close();
+            EditorUtility.ClearProgressBar();
+            Debug.Log("导出Sqlite完成!");
+            AssetDatabase.Refresh();
+        }
+
         //数据库准备
         static private SQLiteService sql;
+
+        public static void GenxslxOrJsonToSQlite(IDictionary<string ,string> path)
+        {
+            var outPath = Path.Combine(Application.streamingAssetsPath,
+                Utils.GetPlatformPath(Application.platform));
+            var _path = Path.Combine(outPath, "LocalDB");
+            sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
+            foreach (var f in path)
+            {
+                Json2Sqlite(f.Key, f.Value);
+            }
+
+            sql.Close();
+            EditorUtility.ClearProgressBar();
+            Debug.Log("导出Sqlite完成!");
+            AssetDatabase.Refresh();
+        }
+
+        public static void GenJsonToSQLite(List<string> paths)
+        {
+            var outPath = Path.Combine(Application.streamingAssetsPath,
+                Utils.GetPlatformPath(Application.platform));
+            var _path = Path.Combine(outPath, "LocalDB");
+            sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
+            foreach (var f in paths)
+            {
+                string content = File.ReadAllText(f);
+                Json2Sqlite(f, content);
+            }
+
+            sql.Close();
+            EditorUtility.ClearProgressBar();
+            Debug.Log("导出Sqlite完成!");
+            AssetDatabase.Refresh();
+        }
 
         static private void Json2Sqlite(string f, string json)
         {
@@ -63,6 +119,7 @@ namespace BDFramework.Editor
             //数据库创建表
             //sql.DB.Delete<>()
             sql.Connection.DropTableByType(t);
+            Debug.Log(t.FullName);
             sql.Connection.CreateTableByType(t);
 
             EditorUtility.ClearProgressBar();

@@ -56,7 +56,13 @@ namespace BDFramework.Editor
             Excel2SQLiteTools.GenSQLite(Path.Combine(Application.streamingAssetsPath,Utils.GetPlatformPath(Application.platform)));
             Debug.Log("表格导出完毕");
         }
-
+        
+        [MenuItem("BDFrameWork工具箱/3.表格/json->生成SQLite", false, 58)]
+        public static void ExecuteJsonToSqlite()
+        {
+            Excel2SQLiteTools.GenJsonToSQLite(Path.Combine(Application.streamingAssetsPath,Utils.GetPlatformPath(Application.platform)));
+            Debug.Log("表格导出完毕");
+        }
 
        
         [MenuItem("BDFrameWork工具箱/资源压缩/图片压缩",false,56)]

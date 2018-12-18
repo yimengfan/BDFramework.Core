@@ -5,10 +5,8 @@ using System.Reflection;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using ILRuntime.Runtime.Enviorment;
 using ILRuntime.Other;
 using UnityEngine;
-using UnityEngine.Windows;
 
 namespace ILRuntime.Runtime.CLRBinding
 {

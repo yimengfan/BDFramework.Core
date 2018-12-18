@@ -93,7 +93,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime WhereOr(string field,string operation ,List<object> objs)
+        public TableQueryILRuntime WhereOr(string field,string operation  , IList objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Count; i++)

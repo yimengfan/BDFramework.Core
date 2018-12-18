@@ -29,9 +29,16 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 //
                 if (GUILayout.Button("1.编译dll (.net版)", GUILayout.Width(200), GUILayout.Height(30)))
                 {
-                    string str1 = Application.dataPath;
-                    string str2 = Application.streamingAssetsPath;
-                    ScriptBiuldTools.BuildDLL_DotNet(str1, str2);
+                    string source = Application.dataPath;
+                    string outpath = Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform);
+                    //
+                    var hotfix = outpath + "/hotfix";
+                    if (Directory.Exists(hotfix))
+                    {
+                        Directory.Delete(hotfix,true);
+                    }
+                    //
+                    ScriptBiuldTools.BuildDLL_DotNet(source, outpath);
                     AssetDatabase.Refresh();
                 }
 

@@ -14,6 +14,8 @@ namespace BDFramework.Helper
                 case RuntimePlatform.Android:
                     return "Android";
                 case RuntimePlatform.IPhonePlayer:
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
                     return "iOS";
                 case RuntimePlatform.WindowsEditor:
                 case RuntimePlatform.WindowsPlayer:

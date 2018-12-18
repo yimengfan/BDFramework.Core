@@ -20,8 +20,11 @@ namespace SQLite4Unity3d
             }
             
             //persistent和streaming中,必须有存在一个
+            #if UNITY_EDITOR_OSX
+            var path = root+"/"+ Utils.GetPlatformPath(Application.platform) + "/LocalDB";
+            #else
             var path = Path.Combine(root, Utils.GetPlatformPath(Application.platform) + "/LocalDB");
-            path = File.Exists(path) ? path :  Path.Combine(Application.streamingAssetsPath, Utils.GetPlatformPath(Application.platform) + "/LocalDB");
+            #endif
             //
             Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
             BDebug.Log("DB加载路径:" + path ,"red");

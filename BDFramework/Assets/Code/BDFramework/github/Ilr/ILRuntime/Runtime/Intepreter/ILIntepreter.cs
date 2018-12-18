@@ -12,6 +12,7 @@ using ILRuntime.Runtime.Intepreter.OpCodes;
 using ILRuntime.Runtime.Debugger;
 using ILRuntime.CLR.Utils;
 using ILRuntime.Other;
+using UnityEngine;
 
 namespace ILRuntime.Runtime.Intepreter
 {
@@ -4123,6 +4124,7 @@ namespace ILRuntime.Runtime.Intepreter
                         }
                         if (unhandledException)
                         {
+                            Debug.LogError(ex.Message);
                             throw ex;
                         }
 

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using Debug = UnityEngine.Debug;
 using BDFramework.ResourceMgr;
+using Tool;
 #if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
@@ -176,6 +177,14 @@ public class ScriptBiuldTools
         //编译 base.dll
         try
         {
+
+            //转换shortname
+            for (int i = 0; i < baseCs.Count; i++)
+            {
+                var cs = baseCs[i];
+                baseCs[i] = FileHelper.GetShortPath(cs);
+            }
+            
             Build(refDlls.ToArray(), baseCs.ToArray(), baseDllPath);
             AssetDatabase.Refresh();
         }
@@ -186,6 +195,8 @@ public class ScriptBiuldTools
             throw;
         }
 
+        //
+        
         EditorUtility.DisplayProgressBar("编译服务", "[2/2]开始编译hotfix.dll", 0.7f);
         var dependent = outDirectory + "/dependent";
         Directory.CreateDirectory(dependent);
@@ -196,6 +207,13 @@ public class ScriptBiuldTools
         var outHotfixDirectory = outPath + "/hotfix/hotfix.dll";
         try
         {
+            //转换shortname
+            for (int i = 0; i < hotfixCs.Count; i++)
+            {
+                var cs = hotfixCs[i];
+                hotfixCs[i] = FileHelper.GetShortPath(cs);
+            }
+            
             Build(refDlls.ToArray(), hotfixCs.ToArray(), outHotfixDirectory);
             AssetDatabase.Refresh();
         }
@@ -234,8 +252,8 @@ public class ScriptBiuldTools
         }
 
         //这里是引入unity所有引用的dll
-        var u3dUI = @"""D:\Program Files\Unity 2018.3.0b6\Editor\Data\UnityExtensions\Unity\GUISystem""";
-        var u3dEngine = @"""D:\Program Files\Unity 2018.3.0b6\Editor\Data\Managed\UnityEngine""";
+        var u3dUI =  string.Format(  @"""{0}\UnityExtensions\Unity\GUISystem""",EditorApplication.applicationContentsPath);
+        var u3dEngine = string.Format( @"""{0}\Managed\UnityEngine""",EditorApplication.applicationContentsPath);
 
         if (Directory.Exists(u3dUI.Replace(@"""","")) == false || Directory.Exists(u3dEngine.Replace(@"""","")) == false)
         {
