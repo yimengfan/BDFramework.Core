@@ -77,5 +77,6 @@ namespace BDFramework.Editor
             var window =(EditorWindow_OnkeyBuildAsset)EditorWindow.GetWindow(typeof(EditorWindow_OnkeyBuildAsset), false, "一键打包");
             window.Show();
         }
+      
     }
 }

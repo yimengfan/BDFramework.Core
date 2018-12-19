@@ -117,7 +117,7 @@ namespace BDFramework.ResourceMgr
                         assetbundleMap[asset].Use();
                     }
                 }
-
+                
                 //2.加载主体
 //                if (assetbundleMap.ContainsKey(assetPath) == false)
 //                {
@@ -221,10 +221,15 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public T Load<T>(string path) where T : UnityEngine.Object
         {
-            path = "assets/resource/runtime/" + path.ToLower();
+            path = "assets/resource/runtime/" + path.ToLower()+".";
             //寻找ab的后缀名
             var assetPath = GetExistPath(path);
 
+            if (assetPath == null)
+            {
+                BDebug.LogError("资源不存在:"+ path);
+                return null;
+            }
             var res = manifest.Manifest.GetDirectDependencies(assetPath);
             //1.创建依赖加载队列
             List<string> loadList = new List<string>();
@@ -485,7 +490,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="name"></param>
         public void UnloadAsset(string name, bool isUnloadIsUsing = false)
         {
-            name = "assets/resource/runtime/" + name.ToLower();
+            name = "assets/resource/runtime/" + name.ToLower()+".";
             var path = GetExistPath(name);
 
             if (path != null)

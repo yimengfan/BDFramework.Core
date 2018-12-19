@@ -53,6 +53,10 @@ namespace BDFramework.ResourceMgr
             ManifestItem item = null;
             if (this.manifestMap.TryGetValue(manifestName, out item))
             {
+                if (item == null)
+                {
+                    BDebug.LogError("资源为null:" + manifestName);
+                }
                 return item.Dependencies.ToArray();
             }
 

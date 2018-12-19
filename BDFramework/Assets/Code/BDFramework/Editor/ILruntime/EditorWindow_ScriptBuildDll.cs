@@ -94,6 +94,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         types.Add(typeof(System.Collections.IEnumerable));
         types.Add(typeof(System.Runtime.CompilerServices.IAsyncStateMachine));
         types.Add(typeof(IGameStart));
+        types.Add(typeof(ADataListener));
         GenAdapter.CreateAdapter(types, "Assets/Code/Game/ILRuntime/Adapter");
     }
 
