@@ -11,11 +11,11 @@ namespace Game.UI
 
     static public partial class M_UITools
     {
-        static private M_UITools_AutoSetTranformValueByData _mUiToolsAutoSetTranformValueByData;
+        static private M_UITools_AutoSetTranformValueByData M_UIToolsAutoSetTranformValueByData;
 
         static M_UITools()
         {
-            _mUiToolsAutoSetTranformValueByData = new M_UITools_AutoSetTranformValueByData();
+            M_UIToolsAutoSetTranformValueByData = new M_UITools_AutoSetTranformValueByData();
         }
 
 
@@ -28,7 +28,7 @@ namespace Game.UI
         /// <param name="data"></param>
         static public void AutoSetComValue(Transform t, object data)
         {
-            _mUiToolsAutoSetTranformValueByData.AutoSetValue(t, data);
+            M_UIToolsAutoSetTranformValueByData.AutoSetValue(t, data);
         }
 
         private static Type checkType = typeof(Object);
@@ -72,6 +72,7 @@ namespace Game.UI
                         BDebug.LogError(string.Format("节点没有对应组件：type【{0}】 - {1}", f.FieldType, attr.Path));
                     }
 
+                    
                     //设置属性
                     f.SetValue(win, com);
                     //Debug.LogFormat("字段{0}获取到setTransform ，path：{1}" , f.Name , attr.Path);
