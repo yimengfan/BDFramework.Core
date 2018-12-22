@@ -32,7 +32,7 @@ using System.IO;
 using System.Text;
 
 using Mono.Collections.Generic;
-
+using BDFramework;
 namespace Mono.Cecil {
 
 	public delegate AssemblyDefinition AssemblyResolveEventHandler (object sender, AssemblyNameReference reference);
@@ -154,7 +154,7 @@ namespace Mono.Cecil {
 			var extensions = new [] { ".exe", ".dll" };
 			foreach (var directory in directories) {
 				foreach (var extension in extensions) {
-					string file = Path.Combine (directory, name.Name + extension);
+					string file = IPath.Combine (directory, name.Name + extension);
 					if (File.Exists (file))
 						return GetAssembly (file, parameters);
 				}

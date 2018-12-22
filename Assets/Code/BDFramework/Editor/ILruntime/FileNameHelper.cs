@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Tool
 {
-    public class FileHelper
+    public class FileNameHelper
     {
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]

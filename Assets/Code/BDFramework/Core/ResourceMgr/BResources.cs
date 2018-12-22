@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 namespace BDFramework.ResourceMgr
 
 {
-    public class BResources
+    static public class BResources
     {
         /// <summary>
         /// 初始化

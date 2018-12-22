@@ -82,7 +82,7 @@ namespace Tool
 
             xmlDoc.AppendChild(rootElement);
 
-            var path = Path.Combine(Application.dataPath, "link.xml");
+            var path = IPath.Combine(Application.dataPath, "link.xml");
             if (File.Exists(path))
             {
                 File.Delete(path);

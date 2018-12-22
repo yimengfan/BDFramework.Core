@@ -14,7 +14,7 @@ namespace BDFramework.Editor
     {
         public static void GenSQLite(string outPath)
         {
-            var tablePath = Path.Combine(Application.dataPath, "Resource/Table");
+            var tablePath = IPath.Combine(Application.dataPath, "Resource/Table");
             var tableDir = Path.GetDirectoryName(tablePath);
             var xlslFiles = Directory.GetFiles(tableDir, "*.xlsx", SearchOption.AllDirectories);
             //
@@ -23,7 +23,7 @@ namespace BDFramework.Editor
                 Directory.CreateDirectory(outPath);
             }
 
-            var _path = Path.Combine(outPath, "LocalDB");
+            var _path = IPath.Combine(outPath, "Local.db");
             //
             sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
             foreach (var f in xlslFiles)
@@ -41,10 +41,10 @@ namespace BDFramework.Editor
 
         public static void GenJsonToSQLite(string outPath)
         {
-            var tablePath = Path.Combine(Application.dataPath, "Resource/Table");
+            var tablePath = IPath.Combine(Application.dataPath, "Resource/Table");
             var tableDir = Path.GetDirectoryName(tablePath);
             var jsonFiles = Directory.GetFiles(tableDir, "*.json", SearchOption.AllDirectories);
-            var _path = Path.Combine(outPath, "LocalDB");
+            var _path = IPath.Combine(outPath,  "Local.db");
             sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
             foreach (var f in jsonFiles)
             {
@@ -63,9 +63,9 @@ namespace BDFramework.Editor
 
         public static void GenxslxOrJsonToSQlite(IDictionary<string ,string> path)
         {
-            var outPath = Path.Combine(Application.streamingAssetsPath,
+            var outPath = IPath.Combine(Application.streamingAssetsPath,
                 Utils.GetPlatformPath(Application.platform));
-            var _path = Path.Combine(outPath, "LocalDB");
+            var _path = IPath.Combine(outPath,  "Local.db");
             sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
             foreach (var f in path)
             {
@@ -80,9 +80,9 @@ namespace BDFramework.Editor
 
         public static void GenJsonToSQLite(List<string> paths)
         {
-            var outPath = Path.Combine(Application.streamingAssetsPath,
+            var outPath = IPath.Combine(Application.streamingAssetsPath,
                 Utils.GetPlatformPath(Application.platform));
-            var _path = Path.Combine(outPath, "LocalDB");
+            var _path = IPath.Combine(outPath,  "Local.db");
             sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
             foreach (var f in paths)
             {
@@ -104,7 +104,7 @@ namespace BDFramework.Editor
 //            Debug.Log("class name：" + classname);
             var jsonObj = JsonMapper.ToObject(json);
 
-            var assPath = Path.Combine(Application.dataPath.Replace("Assets", ""),
+            var assPath = IPath.Combine(Application.dataPath.Replace("Assets", ""),
                 "Library/ScriptAssemblies/Assembly-CSharp.dll");
             var ass = Assembly.LoadFile("file:///" + assPath);
             //
@@ -119,7 +119,7 @@ namespace BDFramework.Editor
             //数据库创建表
             //sql.DB.Delete<>()
             sql.Connection.DropTableByType(t);
-            Debug.Log(t.FullName);
+         //   Debug.Log(t.FullName);
             sql.Connection.CreateTableByType(t);
 
             EditorUtility.ClearProgressBar();

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using BDFramework.ResourceMgr;
 using BDFramework.VersionContrller;
 using LitJson;
 using NUnit.Framework.Constraints;
@@ -16,9 +17,9 @@ namespace BDFramework.Editor.BuildPackage
 
         static public void Start(string path, string uploadHttpApi)
         {
-            var ios = Path.Combine(path, "iOS");
-            var android = Path.Combine(path, "Android");
-            var windows = Path.Combine(path, "Windows");
+            var ios =IPath.Combine(path, "iOS");
+            var android =IPath.Combine(path, "Android");
+            var windows =IPath.Combine(path, "Windows");
 
             if (Directory.Exists(ios))
             {
@@ -44,7 +45,7 @@ namespace BDFramework.Editor.BuildPackage
             path = path.Replace("\\", "/");
             //
             var files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
-            var tempDirect = path + "_temp";
+            var tempDirect = path + "_Server";
 
             //文件准备
             if (Directory.Exists(tempDirect))
@@ -62,7 +63,7 @@ namespace BDFramework.Editor.BuildPackage
                 count++;
                 EditorUtility.DisplayProgressBar(Platform+" 资源处理",string.Format("生成文件hash:{0}/{1}",count,files.Length) ,count /files.Length);
                 var ext = Path.GetExtension(f).ToLower();
-                if (ext == ".manifest")
+                if (ext == ".manifest" || ext == ".meta")
                 {
                     continue;
                 }
@@ -82,7 +83,7 @@ namespace BDFramework.Editor.BuildPackage
                 //开始拷贝
                 try
                 {
-                  File.Copy(f,Path.Combine(tempDirect,hash));
+                  File.Copy(f,IPath.Combine(tempDirect,hash));
                 }
                 catch (Exception e)
                 {
@@ -93,7 +94,7 @@ namespace BDFramework.Editor.BuildPackage
 
             }
             //生成配置
-            File.WriteAllText(Path.Combine(tempDirect,Platform+ "_VersionConfig.json"), JsonMapper.ToJson(config));
+            File.WriteAllText(IPath.Combine(tempDirect,Platform+ "_VersionConfig.json"), JsonMapper.ToJson(config));
             //
             return tempDirect;
         }

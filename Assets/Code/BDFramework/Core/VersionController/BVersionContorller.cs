@@ -38,6 +38,8 @@ namespace BDFramework
         /// 返回码: -1：error  0：success
         static async public Task<int> Start(string serverConfigPath, string localConfigPath, Action<int, int> onProcess,Action<string> onError)
         {
+
+            IPath.Combine("", "");
             var client = HttpMgr.Inst.GetFreeHttpClient();
             var platform = Utils.GetPlatformPath(Application.platform);
             //开始下载服务器配置
@@ -127,32 +129,17 @@ namespace BDFramework
             }
 
             var list = new List<AssetItem>();
-            if (local.Platfrom == server.Platfrom && local.Version < server.Version)
+            //比对平台
+            if (local.Platfrom == server.Platfrom ) 
             {
-                var assetRoot = root + "/" + Utils.GetPlatformPath(Application.platform);
-
-                var files = Directory.GetFiles(assetRoot, "*.*", SearchOption.AllDirectories);
-
-                HashSet<string> filesSet = new HashSet<string>();
-                foreach (var f in files)
+                foreach (var serverAsset in server.Assets)
                 {
-                    string _f = f;
-                    //windows下路径经常\
-                    if (Application.platform == RuntimePlatform.WindowsEditor ||
-                        Application.platform == RuntimePlatform.WindowsPlayer)
+                    //比较本地是否有 hash、文件名一致的资源
+                    var result = local.Assets.Find((a) => a.HashName == serverAsset.HashName && a.LocalPath == serverAsset.LocalPath);
+                    
+                    if (result == null)
                     {
-                        _f = f.Replace("\\", "/");
-                    }
-
-                    filesSet.Add(_f.Replace(assetRoot, ""));
-                }
-
-                foreach (var item in server.Assets)
-                {
-                    //本地没有
-                    if (filesSet.Contains(item.LocalPath) == false)
-                    {
-                        list.Add(item);
+                        list.Add(serverAsset);
                     }
                 }
             }

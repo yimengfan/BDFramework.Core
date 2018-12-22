@@ -77,14 +77,6 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
             {
                 //选择目录
                 exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath.Replace("Assets",""), "");
-
-                var files = Directory.GetFiles(exportPath, "*.*", SearchOption.AllDirectories);
-                //
-                if (string.IsNullOrEmpty(exportPath) || Directory.Exists(exportPath) == false || files.Length>0)
-                {
-                    EditorUtility.DisplayDialog("错误!", "文件夹不存在,或者文件夹不为空", "爱咋咋地!");
-                }
-                else
                 {
                     //生成windows资源
                     if (isGenWindowsAssets)

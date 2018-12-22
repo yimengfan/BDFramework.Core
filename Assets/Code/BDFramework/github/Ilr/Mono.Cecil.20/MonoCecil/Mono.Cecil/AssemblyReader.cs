@@ -37,7 +37,7 @@ using Mono.Cecil.Metadata;
 using Mono.Cecil.PE;
 
 using RVA = System.UInt32;
-
+using BDFramework;
 namespace Mono.Cecil
 {
 
@@ -588,7 +588,7 @@ namespace Mono.Cecil
                 throw new NotSupportedException();
 
             var path = Path.GetDirectoryName(module.FullyQualifiedName);
-            return Path.Combine(path, name);
+            return IPath.Combine(path, name);
         }
 
         void InitializeModuleReferences()

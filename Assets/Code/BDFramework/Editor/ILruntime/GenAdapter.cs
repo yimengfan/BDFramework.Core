@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEditor;
-
+using BDFramework;
  static public class GenAdapter
 {
     private static List<Type> adapterList = new List<Type>();
@@ -67,7 +67,7 @@ public class AdapterRegister
         FileStream file = null;
         StreamWriter sw = null;
         //有什么错误，就直接让系统去抛吧。
-        file = new FileStream(Path.Combine( dir ,"AdapterRegister.cs"), FileMode.Create);
+        file = new FileStream(IPath.Combine( dir ,"AdapterRegister.cs"), FileMode.Create);
         sw = new StreamWriter(file);
         sw.Write(outputString);
         sw.Flush();
@@ -147,7 +147,7 @@ using ILRuntime.Runtime.Intepreter;
         FileStream file = null;
         StreamWriter sw = null;
         //有什么错误，就直接让系统去抛吧。
-        file = new FileStream(Path.Combine(dir , className+ "Adapter.cs"), FileMode.Create);
+        file = new FileStream(IPath.Combine(dir , className+ "Adapter.cs"), FileMode.Create);
         sw = new StreamWriter(file);
         sw.Write(outputString);
         sw.Flush();

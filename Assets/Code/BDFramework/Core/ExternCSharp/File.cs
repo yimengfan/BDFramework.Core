@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Runtime.InteropServices.ComTypes;
-
-namespace BDFramework
+﻿namespace System.IO
 {
    static public class FileHelper
     {
@@ -16,6 +13,7 @@ namespace BDFramework
             {
                 Directory.CreateDirectory(path);
             }
+            
             
         }
         /// <summary>

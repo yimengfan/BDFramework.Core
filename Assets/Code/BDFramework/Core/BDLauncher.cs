@@ -149,26 +149,15 @@ namespace BDFramework
                 }
             }
             
-            
-            //开始初始化
-            BResources.Load(artroot);
+            //sql
             SqliteLoder.Load(sqlroot);
-            //非内部加载
-            if (artroot != "")
-            {
-                //开始启动逻辑  
-                var dd = DataListenerServer.Create("BDFrameLife");
-                dd.AddData("OnAssetBundleOever");
-                dd.AddListener("OnAssetBundleOever", (o) =>
-                {
-                    //等待ab完成后，开始脚本逻辑
-                    LoadScrpit(coderoot);
-                });
-            }
-            else
-            {
-                LoadScrpit(coderoot);
-            }
+            //art
+            BResources.Load(artroot);
+            //code
+            LoadScrpit(coderoot);
+    
+            
+
         }
 
         /// <summary>

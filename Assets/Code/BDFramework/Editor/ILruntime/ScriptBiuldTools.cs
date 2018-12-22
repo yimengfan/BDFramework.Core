@@ -55,7 +55,7 @@ public class ScriptBiuldTools
 
         for (int i = 0; i < searchPath.Length; i++)
         {
-            searchPath[i] = Path.Combine(dataPath, searchPath[i]);
+            searchPath[i] = IPath.Combine(dataPath, searchPath[i]);
         }
 
         List<string> files = new List<string>();
@@ -110,7 +110,7 @@ public class ScriptBiuldTools
         //去除同名 重复的dll
         for (int i = 0; i < refDlls.Count; i++)
         {
-            var copyto = Path.Combine(tempDirect, Path.GetFileName(refDlls[i]));
+            var copyto = IPath.Combine(tempDirect, Path.GetFileName(refDlls[i]));
             File.Copy(refDlls[i], copyto, true);
             refDlls[i] = copyto;
         }
@@ -143,7 +143,7 @@ public class ScriptBiuldTools
         tempDirect = "c:/bd_temp";
         for (int i = 0; i < baseCs.Count; i++)
         {
-            var copyto = Path.Combine(tempDirect, Path.GetFileName(baseCs[i]));
+            var copyto = IPath.Combine(tempDirect, Path.GetFileName(baseCs[i]));
             int count = 1;
             while (File.Exists(copyto))
             {
@@ -182,7 +182,7 @@ public class ScriptBiuldTools
             for (int i = 0; i < baseCs.Count; i++)
             {
                 var cs = baseCs[i];
-                baseCs[i] = FileHelper.GetShortPath(cs);
+                baseCs[i] = FileNameHelper.GetShortPath(cs);
             }
             
             Build(refDlls.ToArray(), baseCs.ToArray(), baseDllPath);
@@ -211,7 +211,7 @@ public class ScriptBiuldTools
             for (int i = 0; i < hotfixCs.Count; i++)
             {
                 var cs = hotfixCs[i];
-                hotfixCs[i] = FileHelper.GetShortPath(cs);
+                hotfixCs[i] = FileNameHelper.GetShortPath(cs);
             }
             
             Build(refDlls.ToArray(), hotfixCs.ToArray(), outHotfixDirectory);
@@ -231,7 +231,7 @@ public class ScriptBiuldTools
 //                continue;
 //            }
 //            var fn = Path.GetFileName(f);
-//            var outpath = Path.Combine(dependent, fn);
+//            var outpath = IPath.Combine(dependent, fn);
 //            File.Copy(f,outpath,true);
 //        }
 
@@ -284,7 +284,7 @@ public class ScriptBiuldTools
 //
 //        for (int i = 0; i < searchPath.Length; i++)
 //        {
-//            searchPath[i] = Path.Combine(dataPath, searchPath[i]);
+//            searchPath[i] = IPath.Combine(dataPath, searchPath[i]);
 //        }
 //
 //        List<string> files = new List<string>();
@@ -341,7 +341,7 @@ public class ScriptBiuldTools
 //        //去除同名 重复的dll
 //        for (int i = 0; i < refDlls.Count; i++)
 //        {
-//            var copyto = Path.Combine(tempDirect, Path.GetFileName(refDlls[i]));
+//            var copyto = IPath.Combine(tempDirect, Path.GetFileName(refDlls[i]));
 //            File.Copy(refDlls[i], copyto, true);
 //            refDlls[i] = copyto;
 //        }
@@ -374,7 +374,7 @@ public class ScriptBiuldTools
 //        tempDirect = "c:/bd_temp";
 //        for (int i = 0; i < baseCs.Count; i++)
 //        {
-//            var copyto = Path.Combine(tempDirect, Path.GetFileName(baseCs[i]));
+//            var copyto = IPath.Combine(tempDirect, Path.GetFileName(baseCs[i]));
 //            int count = 1;
 //            while (File.Exists(copyto))
 //            {
@@ -437,7 +437,7 @@ public class ScriptBiuldTools
 //        //                continue;
 //        //            }
 //        //            var fn = Path.GetFileName(f);
-//        //            var outpath = Path.Combine(dependent, fn);
+//        //            var outpath = IPath.Combine(dependent, fn);
 //        //            File.Copy(f, outpath, true);
 //        //        }
 //    }

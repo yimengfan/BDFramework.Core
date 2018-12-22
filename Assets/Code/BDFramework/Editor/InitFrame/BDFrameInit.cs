@@ -39,7 +39,7 @@ namespace BDFramework.Editor
         {
             foreach (var p in PathList)
             {
-                var _p = Path.Combine(Application.dataPath, p);
+                var _p = IPath.Combine(Application.dataPath, p);
                 if (Directory.Exists(_p) == false)
                 {
                     Directory.CreateDirectory(_p);

@@ -82,6 +82,7 @@ namespace BDFramework.ResourceMgr
             path =(root+"/"+Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
             this.manifest = new AssetBundleManifestReference(path+ "/Config.json");
             BDebug.Log("Art加载路径:" + path,"red");
+            //通知到BDFrameLife
         }
 
         #region 异步加载单个ab
@@ -121,7 +122,7 @@ namespace BDFramework.ResourceMgr
                 //2.加载主体
 //                if (assetbundleMap.ContainsKey(assetPath) == false)
 //                {
-//                    var fullPath = Path.Combine(this.path, assetPath);
+//                    var fullPath = IPath.Combine(this.path, assetPath);
 //                    loadQueue.Enqueue(fullPath);
 //                }
 
@@ -227,7 +228,7 @@ namespace BDFramework.ResourceMgr
 
             if (assetPath == null)
             {
-                BDebug.LogError("资源不存在:"+ path);
+                BDebug.Log("资源不存在:"+ path,"red");
                 return null;
             }
             var res = manifest.Manifest.GetDirectDependencies(assetPath);

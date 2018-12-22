@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using ILRuntime.Runtime.Enviorment;
 using ILRuntime.Other;
-using UnityEngine;
 
 namespace ILRuntime.Runtime.CLRBinding
 {
     public class BindingCodeGenerator
     {
-        public static void GenerateBindingCode(List<Type> types, string outputPath,
-            HashSet<MethodBase> excludeMethods = null, HashSet<FieldInfo> excludeFields = null,
-            List<Type> valueTypeBinders = null, List<Type> delegateTypes = null)
+        
+        public static void GenerateBindingCode(List<Type> types, string outputPath, 
+                                               HashSet<MethodBase> excludeMethods = null, HashSet<FieldInfo> excludeFields = null, 
+                                               List<Type> valueTypeBinders = null, List<Type> delegateTypes = null)
         {
             if (!System.IO.Directory.Exists(outputPath))
                 System.IO.Directory.CreateDirectory(outputPath);
@@ -24,50 +24,21 @@ namespace ILRuntime.Runtime.CLRBinding
                 System.IO.File.Delete(i);
             }
 
-            //收集其他的文件名
-            var otherFiles = System.IO.Directory.GetFiles(outputPath + "/../", "*.cs", SearchOption.AllDirectories);
-            List<string> otherFilesName = new List<string>();
-            foreach (var f in otherFiles)
-            {
-                otherFilesName.Add(Path.GetFileName(f));
-            }
-            
-            //
             List<string> clsNames = new List<string>();
+
             foreach (var i in types)
             {
-                try
+                string clsName, realClsName;
+                bool isByRef;
+                if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
+                    continue;
+                i.GetClassName(out clsName, out realClsName, out isByRef);
+                clsNames.Add(clsName);
+                
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputPath + "/" + clsName + ".cs", false, new UTF8Encoding(false)))
                 {
-                    #region 处理一个type
-                    
-                    //1.一些类型不处理
-                    if(  i.IsClass ==false  || i.IsPointer ||i.IsPublic==false
-                      || i.IsInterface      || i.IsNestedAssembly)
-                     continue;
-                    
-                    string clsName = "", realClsName = "";
-                    bool isByRef;
-                    if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
-                        continue;
-                    //生成类名和 真实类名
-                   i.GetClassName(out clsName, out realClsName, out isByRef);
-
-                    /*一系列退出条件*/
-                   
-                    //重名文件跳出
-                    if (otherFilesName.Contains(clsName+".cs"))
-                    {
-                        Debug.Log("有重名文件,跳出!" + i.Name);
-                        continue;
-                    }
-                    if(clsName.Contains(".<") || clsName.Contains("<")) continue;
-                    //
-                    clsNames.Add(clsName);
-                    using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputPath + "/" + clsName + ".cs",
-                        false, new UTF8Encoding(false)))
-                    {
-                        StringBuilder sb = new StringBuilder();
-                        sb.Append(@"using System;
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(@"using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -83,91 +54,78 @@ using ILRuntime.CLR.Utils;
 namespace ILRuntime.Runtime.Generated
 {
     unsafe class ");
-                        sb.AppendLine(clsName);
-                        sb.Append(@"    {
+                    sb.AppendLine(clsName);
+                    sb.Append(@"    {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
 ");
-                        string flagDef =
-                            "            BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;";
-                        string methodDef = "            MethodBase method;";
-                        string fieldDef = "            FieldInfo field;";
-                        string argsDef = "            Type[] args;";
-                        string typeDef = string.Format("            Type type = typeof({0});", realClsName);
+                    string flagDef = "            BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;";
+                    string methodDef = "            MethodBase method;";
+                    string methodsDef = "            MethodInfo[] methods = type.GetMethods(flag).Where(t => !t.IsGenericMethod).ToArray();";
+                    string fieldDef = "            FieldInfo field;";
+                    string argsDef = "            Type[] args;";
+                    string typeDef = string.Format("            Type type = typeof({0});", realClsName);
 
-                        MethodInfo[] methods = i.GetMethods(BindingFlags.Public | BindingFlags.Instance |
-                                                            BindingFlags.Static | BindingFlags.DeclaredOnly);
-                        FieldInfo[] fields = i.GetFields(BindingFlags.Public | BindingFlags.Instance |
-                                                         BindingFlags.Static | BindingFlags.DeclaredOnly);
-                        string registerMethodCode = i.GenerateMethodRegisterCode(methods, excludeMethods);
-                        string registerFieldCode = i.GenerateFieldRegisterCode(fields, excludeFields);
-                        string registerValueTypeCode = i.GenerateValueTypeRegisterCode(realClsName);
-                        string registerMiscCode = i.GenerateMiscRegisterCode(realClsName, true, true);
-                        string commonCode = i.GenerateCommonCode(realClsName);
-                        ConstructorInfo[] ctors = i.GetConstructors(
-                            BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static |
-                            BindingFlags.DeclaredOnly);
-                        string ctorRegisterCode = i.GenerateConstructorRegisterCode(ctors, excludeMethods);
-                        string methodWraperCode =
-                            i.GenerateMethodWraperCode(methods, realClsName, excludeMethods, valueTypeBinders);
-                        string fieldWraperCode = i.GenerateFieldWraperCode(fields, realClsName, excludeFields);
-                        string cloneWraperCode = i.GenerateCloneWraperCode(fields, realClsName);
-                        string ctorWraperCode =
-                            i.GenerateConstructorWraperCode(ctors, realClsName, excludeMethods, valueTypeBinders);
+                    bool needMethods;
+                    MethodInfo[] methods = i.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly);
+                    FieldInfo[] fields = i.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly);
+                    string registerMethodCode = i.GenerateMethodRegisterCode(methods, excludeMethods, out needMethods);
+                    string registerFieldCode = i.GenerateFieldRegisterCode(fields, excludeFields);
+                    string registerValueTypeCode = i.GenerateValueTypeRegisterCode(realClsName);
+                    string registerMiscCode = i.GenerateMiscRegisterCode(realClsName, true, true);
+                    string commonCode = i.GenerateCommonCode(realClsName);
+                    ConstructorInfo[] ctors = i.GetConstructors(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly);
+                    string ctorRegisterCode = i.GenerateConstructorRegisterCode(ctors, excludeMethods);
+                    string methodWraperCode = i.GenerateMethodWraperCode(methods, realClsName, excludeMethods, valueTypeBinders, null);
+                    string fieldWraperCode = i.GenerateFieldWraperCode(fields, realClsName, excludeFields);
+                    string cloneWraperCode = i.GenerateCloneWraperCode(fields, realClsName);
+                    string ctorWraperCode = i.GenerateConstructorWraperCode(ctors, realClsName, excludeMethods, valueTypeBinders);
 
-                        bool hasMethodCode = !string.IsNullOrEmpty(registerMethodCode);
-                        bool hasFieldCode = !string.IsNullOrEmpty(registerFieldCode);
-                        bool hasValueTypeCode = !string.IsNullOrEmpty(registerValueTypeCode);
-                        bool hasMiscCode = !string.IsNullOrEmpty(registerMiscCode);
-                        bool hasCtorCode = !string.IsNullOrEmpty(ctorRegisterCode);
-                        bool hasNormalMethod = methods.Where(x => !x.IsGenericMethod).Count() != 0;
+                    bool hasMethodCode = !string.IsNullOrEmpty(registerMethodCode);
+                    bool hasFieldCode = !string.IsNullOrEmpty(registerFieldCode);
+                    bool hasValueTypeCode = !string.IsNullOrEmpty(registerValueTypeCode);
+                    bool hasMiscCode = !string.IsNullOrEmpty(registerMiscCode);
+                    bool hasCtorCode = !string.IsNullOrEmpty(ctorRegisterCode);
+                    bool hasNormalMethod = methods.Where(x => !x.IsGenericMethod).Count() != 0;
 
-                        if ((hasMethodCode && hasNormalMethod) || hasFieldCode || hasCtorCode)
-                            sb.AppendLine(flagDef);
-                        if (hasMethodCode || hasCtorCode)
-                            sb.AppendLine(methodDef);
-                        if (hasFieldCode)
-                            sb.AppendLine(fieldDef);
-                        if (hasMethodCode || hasFieldCode || hasCtorCode)
-                            sb.AppendLine(argsDef);
-                        if (hasMethodCode || hasFieldCode || hasValueTypeCode || hasMiscCode || hasCtorCode)
-                            sb.AppendLine(typeDef);
+                    if ((hasMethodCode && hasNormalMethod) || hasFieldCode || hasCtorCode)
+                        sb.AppendLine(flagDef);
+                    if (hasMethodCode || hasCtorCode)
+                        sb.AppendLine(methodDef);
+                    if (hasFieldCode)
+                        sb.AppendLine(fieldDef);
+                    if (hasMethodCode || hasFieldCode || hasCtorCode)
+                        sb.AppendLine(argsDef);
+                    if (hasMethodCode || hasFieldCode || hasValueTypeCode || hasMiscCode || hasCtorCode)
+                        sb.AppendLine(typeDef);
+                    if (needMethods)
+                        sb.AppendLine(methodsDef);
 
 
-                        sb.AppendLine(registerMethodCode);
-                        sb.AppendLine(registerFieldCode);
-                        sb.AppendLine(registerValueTypeCode);
-                        sb.AppendLine(registerMiscCode);
-                        sb.AppendLine(ctorRegisterCode);
-                        sb.AppendLine("        }");
-                        sb.AppendLine();
-                        sb.AppendLine(commonCode);
-                        sb.AppendLine(methodWraperCode);
-                        sb.AppendLine(fieldWraperCode);
-                        sb.AppendLine(cloneWraperCode);
-                        sb.AppendLine(ctorWraperCode);
-                        sb.AppendLine("    }");
-                        sb.AppendLine("}");
+                    sb.AppendLine(registerMethodCode);
+                    sb.AppendLine(registerFieldCode);
+                    sb.AppendLine(registerValueTypeCode);
+                    sb.AppendLine(registerMiscCode);
+                    sb.AppendLine(ctorRegisterCode);
+                    sb.AppendLine("        }");
+                    sb.AppendLine();
+                    sb.AppendLine(commonCode);
+                    sb.AppendLine(methodWraperCode);
+                    sb.AppendLine(fieldWraperCode);
+                    sb.AppendLine(cloneWraperCode);
+                    sb.AppendLine(ctorWraperCode);
+                    sb.AppendLine("    }");
+                    sb.AppendLine("}");
 
-                        sw.Write(Regex.Replace(sb.ToString(), "(?<!\r)\n", "\r\n"));
-                        sw.Flush();
-                    }
-
-                    #endregion
-                }
-                catch (Exception e)
-                {
-                   // types.Remove(i);
-                    Debug.LogError("无法处理:" + i.FullName);
-                    Debug.LogError(e.Message);
-                    continue;
+                    sw.Write(Regex.Replace(sb.ToString(), "(?<!\r)\n", "\r\n"));
+                    sw.Flush();
                 }
             }
 
             var delegateClsNames = GenerateDelegateBinding(delegateTypes, outputPath);
             clsNames.AddRange(delegateClsNames);
 
-            GenerateBindingInitializeScript("PreCLRBuilding",clsNames,  valueTypeBinders, outputPath);
+            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath);
         }
 
         internal class CLRBindingGenerateInfo
@@ -184,8 +142,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 get
                 {
-                    if (Methods.Count == 0 && Constructors.Count == 0 && Fields.Count == 0 && !ArrayNeeded &&
-                        !DefaultInstanceNeeded && !ValueTypeNeeded)
+                    if (Methods.Count == 0 && Constructors.Count == 0 && Fields.Count == 0 && !ArrayNeeded && !DefaultInstanceNeeded && !ValueTypeNeeded)
                         return false;
                     else
                     {
@@ -198,15 +155,14 @@ namespace ILRuntime.Runtime.Generated
             }
         }
 
-        public static void GenerateBindingCode(ILRuntime.Runtime.Enviorment.AppDomain domain, string outputPath,
-            List<Type> valueTypeBinders = null, List<Type> delegateTypes = null)
+        public static void GenerateBindingCode(ILRuntime.Runtime.Enviorment.AppDomain domain, string outputPath, 
+                                               List<Type> valueTypeBinders = null, List<Type> delegateTypes = null)
         {
             if (domain == null)
                 return;
             if (!System.IO.Directory.Exists(outputPath))
                 System.IO.Directory.CreateDirectory(outputPath);
-            Dictionary<Type, CLRBindingGenerateInfo> infos =
-                new Dictionary<Type, CLRBindingGenerateInfo>(new ByReferenceKeyComparer<Type>());
+            Dictionary<Type, CLRBindingGenerateInfo> infos = new Dictionary<Type, CLRBindingGenerateInfo>(new ByReferenceKeyComparer<Type>());
             CrawlAppdomain(domain, infos);
             string[] oldFiles = System.IO.Directory.GetFiles(outputPath, "*.cs");
             foreach (var i in oldFiles)
@@ -240,7 +196,7 @@ namespace ILRuntime.Runtime.Generated
                 if (clsNames.Contains(clsName))
                     clsName = clsName + "_t";
                 clsNames.Add(clsName);
-
+                
                 string oFileName = outputPath + "/" + clsName;
                 int len = Math.Min(oFileName.Length, 100);
                 if (len < oFileName.Length)
@@ -249,17 +205,12 @@ namespace ILRuntime.Runtime.Generated
                     oFileName = oFileName + "_t";
                 files.Add(oFileName);
                 oFileName = oFileName + ".cs";
-                try
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(oFileName, false, new UTF8Encoding(false)))
                 {
-                    #region 创建一个类
-
-                      using (System.IO.StreamWriter sw =
-                        new System.IO.StreamWriter(oFileName, false, new UTF8Encoding(false)))
-                    {
-                        StringBuilder sb = new StringBuilder();
-                        sb.Append(@"
-using System;
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(@"using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -274,105 +225,88 @@ using ILRuntime.CLR.Utils;
 namespace ILRuntime.Runtime.Generated
 {
     unsafe class ");
-                        sb.AppendLine(clsName);
-                        sb.Append(@"    {
+                    sb.AppendLine(clsName);
+                    sb.Append(@"    {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
 ");
-                        string flagDef =
-                            "            BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;";
-                        string methodDef = "            MethodBase method;";
-                        string fieldDef = "            FieldInfo field;";
-                        string argsDef = "            Type[] args;";
-                        string typeDef = string.Format("            Type type = typeof({0});", realClsName);
+                    string flagDef =    "            BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;";
+                    string methodDef =  "            MethodBase method;";
+                    string methodsDef = "            MethodInfo[] methods = type.GetMethods(flag).Where(t => !t.IsGenericMethod).ToArray();";
+                    string fieldDef =   "            FieldInfo field;";
+                    string argsDef =    "            Type[] args;";
+                    string typeDef = string.Format("            Type type = typeof({0});", realClsName);
 
-                        MethodInfo[] methods = info.Value.Methods.ToArray();
-                        FieldInfo[] fields = info.Value.Fields.ToArray();
-                        string registerMethodCode = i.GenerateMethodRegisterCode(methods, excludeMethods);
-                        string registerFieldCode =
-                            fields.Length > 0 ? i.GenerateFieldRegisterCode(fields, excludeFields) : null;
-                        string registerValueTypeCode = info.Value.ValueTypeNeeded
-                            ? i.GenerateValueTypeRegisterCode(realClsName)
-                            : null;
-                        string registerMiscCode = i.GenerateMiscRegisterCode(realClsName,
-                            info.Value.DefaultInstanceNeeded, info.Value.ArrayNeeded);
-                        string commonCode = i.GenerateCommonCode(realClsName);
-                        ConstructorInfo[] ctors = info.Value.Constructors.ToArray();
-                        string ctorRegisterCode = i.GenerateConstructorRegisterCode(ctors, excludeMethods);
-                        string methodWraperCode =
-                            i.GenerateMethodWraperCode(methods, realClsName, excludeMethods, valueTypeBinders);
-                        string fieldWraperCode = fields.Length > 0
-                            ? i.GenerateFieldWraperCode(fields, realClsName, excludeFields)
-                            : null;
-                        string cloneWraperCode = null;
-                        if (info.Value.ValueTypeNeeded)
-                        {
-                            //Memberwise clone should copy all fields
-                            var fs = i.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static |
-                                                 BindingFlags.DeclaredOnly);
-                            cloneWraperCode = i.GenerateCloneWraperCode(fs, realClsName);
-                        }
-
-                        bool hasMethodCode = !string.IsNullOrEmpty(registerMethodCode);
-                        bool hasFieldCode = !string.IsNullOrEmpty(registerFieldCode);
-                        bool hasValueTypeCode = !string.IsNullOrEmpty(registerValueTypeCode);
-                        bool hasMiscCode = !string.IsNullOrEmpty(registerMiscCode);
-                        bool hasCtorCode = !string.IsNullOrEmpty(ctorRegisterCode);
-                        bool hasNormalMethod = methods.Where(x => !x.IsGenericMethod).Count() != 0;
-
-                        if ((hasMethodCode && hasNormalMethod) || hasFieldCode || hasCtorCode)
-                            sb.AppendLine(flagDef);
-                        if (hasMethodCode || hasCtorCode)
-                            sb.AppendLine(methodDef);
-                        if (hasFieldCode)
-                            sb.AppendLine(fieldDef);
-                        if (hasMethodCode || hasFieldCode || hasCtorCode)
-                            sb.AppendLine(argsDef);
-                        if (hasMethodCode || hasFieldCode || hasValueTypeCode || hasMiscCode || hasCtorCode)
-                            sb.AppendLine(typeDef);
-
-                        sb.AppendLine(registerMethodCode);
-                        if (fields.Length > 0)
-                            sb.AppendLine(registerFieldCode);
-                        if (info.Value.ValueTypeNeeded)
-                            sb.AppendLine(registerValueTypeCode);
-                        if (!string.IsNullOrEmpty(registerMiscCode))
-                            sb.AppendLine(registerMiscCode);
-                        sb.AppendLine(ctorRegisterCode);
-                        sb.AppendLine("        }");
-                        sb.AppendLine();
-                        sb.AppendLine(commonCode);
-                        sb.AppendLine(methodWraperCode);
-                        if (fields.Length > 0)
-                            sb.AppendLine(fieldWraperCode);
-                        if (info.Value.ValueTypeNeeded)
-                            sb.AppendLine(cloneWraperCode);
-                        string ctorWraperCode =
-                            i.GenerateConstructorWraperCode(ctors, realClsName, excludeMethods, valueTypeBinders);
-                        sb.AppendLine(ctorWraperCode);
-                        sb.AppendLine("    }");
-                        sb.AppendLine("}");
-
-                        sw.Write(Regex.Replace(sb.ToString(), "(?<!\r)\n", "\r\n"));
-                        sw.Flush();
+                    bool needMethods;
+                    MethodInfo[] methods = info.Value.Methods.ToArray();
+                    FieldInfo[] fields = info.Value.Fields.ToArray();
+                    string registerMethodCode = i.GenerateMethodRegisterCode(methods, excludeMethods, out needMethods);
+                    string registerFieldCode = fields.Length > 0 ? i.GenerateFieldRegisterCode(fields, excludeFields) : null;
+                    string registerValueTypeCode = info.Value.ValueTypeNeeded ? i.GenerateValueTypeRegisterCode(realClsName) : null;
+                    string registerMiscCode = i.GenerateMiscRegisterCode(realClsName, info.Value.DefaultInstanceNeeded, info.Value.ArrayNeeded);
+                    string commonCode = i.GenerateCommonCode(realClsName);
+                    ConstructorInfo[] ctors = info.Value.Constructors.ToArray();
+                    string ctorRegisterCode = i.GenerateConstructorRegisterCode(ctors, excludeMethods);
+                    string methodWraperCode = i.GenerateMethodWraperCode(methods, realClsName, excludeMethods, valueTypeBinders, domain);
+                    string fieldWraperCode = fields.Length > 0 ? i.GenerateFieldWraperCode(fields, realClsName, excludeFields) : null;
+                    string cloneWraperCode = null;
+                    if (info.Value.ValueTypeNeeded)
+                    {
+                        //Memberwise clone should copy all fields
+                        var fs = i.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly);
+                        cloneWraperCode = i.GenerateCloneWraperCode(fs, realClsName);
                     }
 
-                    #endregion
-                  
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
+                    bool hasMethodCode = !string.IsNullOrEmpty(registerMethodCode);
+                    bool hasFieldCode = !string.IsNullOrEmpty(registerFieldCode);
+                    bool hasValueTypeCode = !string.IsNullOrEmpty(registerValueTypeCode);
+                    bool hasMiscCode = !string.IsNullOrEmpty(registerMiscCode);
+                    bool hasCtorCode = !string.IsNullOrEmpty(ctorRegisterCode);
+                    bool hasNormalMethod = methods.Where(x => !x.IsGenericMethod).Count() != 0;
+
+                    if ((hasMethodCode && hasNormalMethod) || hasFieldCode || hasCtorCode)
+                        sb.AppendLine(flagDef);
+                    if (hasMethodCode || hasCtorCode)
+                        sb.AppendLine(methodDef);
+                    if (hasFieldCode)
+                        sb.AppendLine(fieldDef);
+                    if (hasMethodCode || hasFieldCode || hasCtorCode)
+                        sb.AppendLine(argsDef);
+                    if (hasMethodCode || hasFieldCode || hasValueTypeCode || hasMiscCode || hasCtorCode)
+                        sb.AppendLine(typeDef);
+                    if (needMethods)
+                        sb.AppendLine(methodsDef);
+
+                    sb.AppendLine(registerMethodCode);
+                    if (fields.Length > 0)
+                        sb.AppendLine(registerFieldCode);
+                    if (info.Value.ValueTypeNeeded)
+                        sb.AppendLine(registerValueTypeCode);
+                    if (!string.IsNullOrEmpty(registerMiscCode))
+                        sb.AppendLine(registerMiscCode);
+                    sb.AppendLine(ctorRegisterCode);
+                    sb.AppendLine("        }");
+                    sb.AppendLine();
+                    sb.AppendLine(commonCode);
+                    sb.AppendLine(methodWraperCode);
+                    if (fields.Length > 0)
+                        sb.AppendLine(fieldWraperCode);
+                    if (info.Value.ValueTypeNeeded)
+                        sb.AppendLine(cloneWraperCode);
+                    string ctorWraperCode = i.GenerateConstructorWraperCode(ctors, realClsName, excludeMethods, valueTypeBinders);
+                    sb.AppendLine(ctorWraperCode);
+                    sb.AppendLine("    }");
+                    sb.AppendLine("}");
+
+                    sw.Write(Regex.Replace(sb.ToString(), "(?<!\r)\n", "\r\n"));
+                    sw.Flush();
                 }
             }
 
-            using (System.IO.StreamWriter sw =
-                new System.IO.StreamWriter(outputPath + "/CLRBindings.cs", false, new UTF8Encoding(false)))
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputPath + "/CLRBindings.cs", false, new UTF8Encoding(false)))
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine(@"
-#define CLRBindings
-using System;
+                sb.AppendLine(@"using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -401,26 +335,24 @@ namespace ILRuntime.Runtime.Generated
             var delegateClsNames = GenerateDelegateBinding(delegateTypes, outputPath);
             clsNames.AddRange(delegateClsNames);
 
-            GenerateBindingInitializeScript("AnalysisCLRBuilding",clsNames, valueTypeBinders, outputPath);
+            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath);
         }
 
-        internal static void CrawlAppdomain(ILRuntime.Runtime.Enviorment.AppDomain domain,
-            Dictionary<Type, CLRBindingGenerateInfo> infos)
+        internal static void CrawlAppdomain(ILRuntime.Runtime.Enviorment.AppDomain domain, Dictionary<Type, CLRBindingGenerateInfo> infos)
         {
-            var arr = domain.LoadedTypes.Values.ToList();
+            var arr = domain.LoadedTypes.Values.ToArray();
             //Prewarm
-            for (int _i = arr.Count - 1; _i >= 0; _i--)
+            foreach (var type in arr)
             {
-                var type = arr[_i];
                 if (type is CLR.TypeSystem.ILType)
                 {
                     if (type.HasGenericParameter)
                         continue;
                     var methods = type.GetMethods().ToList();
-                    foreach (var i in ((CLR.TypeSystem.ILType) type).GetConstructors())
+                    foreach (var i in ((CLR.TypeSystem.ILType)type).GetConstructors())
                         methods.Add(i);
-                    if (((CLR.TypeSystem.ILType) type).GetStaticConstroctor() != null)
-                        methods.Add(((CLR.TypeSystem.ILType) type).GetStaticConstroctor());
+                    if (((CLR.TypeSystem.ILType)type).GetStaticConstroctor() != null)
+                        methods.Add(((CLR.TypeSystem.ILType)type).GetStaticConstroctor());
                     foreach (var j in methods)
                     {
                         CLR.Method.ILMethod method = j as CLR.Method.ILMethod;
@@ -428,43 +360,23 @@ namespace ILRuntime.Runtime.Generated
                         {
                             if (method.GenericParameterCount > 0 && !method.IsGenericInstance)
                                 continue;
-                            //初始化 方法体
-                            try
-                            {
-                                var body = method.Body;
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e);
-                                arr.RemoveAt(_i);
-                            }
+                            var body = method.Body;
                         }
                     }
                 }
             }
-
-            //arr = domain.LoadedTypes.Values.ToArray();
+            arr = domain.LoadedTypes.Values.ToArray();
             foreach (var type in arr)
             {
                 if (type is CLR.TypeSystem.ILType)
                 {
-                    try
-                    {
-                        if (type.TypeForCLR.IsByRef || type.HasGenericParameter)
-                            continue;
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError(e.Message);
-                        Debug.LogError("Class:" + type.FullName);
+                    if (type.TypeForCLR.IsByRef || type.HasGenericParameter)
                         continue;
-                    }
-
                     var methods = type.GetMethods().ToList();
-                    foreach (var i in ((CLR.TypeSystem.ILType) type).GetConstructors())
+                    foreach (var i in ((CLR.TypeSystem.ILType)type).GetConstructors())
                         methods.Add(i);
-                    if (((CLR.TypeSystem.ILType) type).GetStaticConstroctor() != null)
-                        methods.Add(((CLR.TypeSystem.ILType) type).GetStaticConstroctor());
+                    if (((CLR.TypeSystem.ILType)type).GetStaticConstroctor() != null)
+                        methods.Add(((CLR.TypeSystem.ILType)type).GetStaticConstroctor());
                     foreach (var j in methods)
                     {
                         CLR.Method.ILMethod method = j as CLR.Method.ILMethod;
@@ -478,27 +390,25 @@ namespace ILRuntime.Runtime.Generated
                                 switch (ins.Code)
                                 {
                                     case Intepreter.OpCodes.OpCodeEnum.Newobj:
-                                    {
-                                        CLR.Method.CLRMethod m =
-                                            domain.GetMethod(ins.TokenInteger) as CLR.Method.CLRMethod;
-                                        if (m != null)
                                         {
-                                            if (m.DeclearingType.IsDelegate)
-                                                continue;
-                                            Type t = m.DeclearingType.TypeForCLR;
-                                            CLRBindingGenerateInfo info;
-                                            if (!infos.TryGetValue(t, out info))
+                                            CLR.Method.CLRMethod m = domain.GetMethod(ins.TokenInteger) as CLR.Method.CLRMethod;
+                                            if (m != null)
                                             {
-                                                info = CreateNewBindingInfo(t);
-                                                infos[t] = info;
+                                                if (m.DeclearingType.IsDelegate)
+                                                    continue;
+                                                Type t = m.DeclearingType.TypeForCLR;
+                                                CLRBindingGenerateInfo info;
+                                                if (!infos.TryGetValue(t, out info))
+                                                {
+                                                    info = CreateNewBindingInfo(t);
+                                                    infos[t] = info;
+                                                }
+                                                if (m.IsConstructor)
+                                                    info.Constructors.Add(m.ConstructorInfo);
+                                                else
+                                                    info.Methods.Add(m.MethodInfo);
                                             }
-
-                                            if (m.IsConstructor)
-                                                info.Constructors.Add(m.ConstructorInfo);
-                                            else
-                                                info.Methods.Add(m.MethodInfo);
                                         }
-                                    }
                                         break;
                                     case Intepreter.OpCodes.OpCodeEnum.Ldfld:
                                     case Intepreter.OpCodes.OpCodeEnum.Stfld:
@@ -506,46 +416,12 @@ namespace ILRuntime.Runtime.Generated
                                     case Intepreter.OpCodes.OpCodeEnum.Ldsfld:
                                     case Intepreter.OpCodes.OpCodeEnum.Ldsflda:
                                     case Intepreter.OpCodes.OpCodeEnum.Stsfld:
-                                    {
-                                        var t = domain.GetType((int) (ins.TokenLong >> 32)) as CLR.TypeSystem.CLRType;
-                                        if (t != null)
                                         {
-                                            var fi = t.GetField((int) ins.TokenLong);
-                                            if (fi != null && fi.IsPublic)
+                                            var t = domain.GetType((int)(ins.TokenLong >> 32)) as CLR.TypeSystem.CLRType;
+                                            if(t != null)
                                             {
-                                                CLRBindingGenerateInfo info;
-                                                if (!infos.TryGetValue(t.TypeForCLR, out info))
-                                                {
-                                                    info = CreateNewBindingInfo(t.TypeForCLR);
-                                                    infos[t.TypeForCLR] = info;
-                                                }
-
-                                                if (ins.Code == Intepreter.OpCodes.OpCodeEnum.Stfld ||
-                                                    ins.Code == Intepreter.OpCodes.OpCodeEnum.Stsfld)
-                                                {
-                                                    if (t.IsValueType)
-                                                    {
-                                                        info.ValueTypeNeeded = true;
-                                                        info.DefaultInstanceNeeded = true;
-                                                    }
-                                                }
-
-                                                if (t.TypeForCLR.CheckCanPinn() || !t.IsValueType)
-                                                    info.Fields.Add(fi);
-                                            }
-                                        }
-                                    }
-                                        break;
-                                    case Intepreter.OpCodes.OpCodeEnum.Ldtoken:
-                                    {
-                                        if (ins.TokenInteger == 0)
-                                        {
-                                            var t =
-                                                domain.GetType((int) (ins.TokenLong >> 32)) as CLR.TypeSystem.CLRType;
-                                            if (t != null)
-                                            {
-                                                var fi = t.GetField((int) ins.TokenLong);
-                                                if (fi != null)
+                                                var fi = t.GetField((int)ins.TokenLong);
+                                                if (fi != null && fi.IsPublic)
                                                 {
                                                     CLRBindingGenerateInfo info;
                                                     if (!infos.TryGetValue(t.TypeForCLR, out info))
@@ -553,71 +429,96 @@ namespace ILRuntime.Runtime.Generated
                                                         info = CreateNewBindingInfo(t.TypeForCLR);
                                                         infos[t.TypeForCLR] = info;
                                                     }
-
-                                                    info.Fields.Add(fi);
+                                                    if(ins.Code == Intepreter.OpCodes.OpCodeEnum.Stfld || ins.Code == Intepreter.OpCodes.OpCodeEnum.Stsfld)
+                                                    {
+                                                        if (t.IsValueType)
+                                                        {
+                                                            info.ValueTypeNeeded = true;
+                                                            info.DefaultInstanceNeeded = true;
+                                                        }
+                                                    }
+                                                    if (t.TypeForCLR.CheckCanPinn() || !t.IsValueType)
+                                                        info.Fields.Add(fi);
                                                 }
                                             }
                                         }
-                                    }
+                                        break;
+                                    case Intepreter.OpCodes.OpCodeEnum.Ldtoken:
+                                        {
+                                            if (ins.TokenInteger == 0)
+                                            {
+                                                var t = domain.GetType((int)(ins.TokenLong >> 32)) as CLR.TypeSystem.CLRType;
+                                                if (t != null)
+                                                {
+                                                    var fi = t.GetField((int)ins.TokenLong);
+                                                    if (fi != null)
+                                                    {
+                                                        CLRBindingGenerateInfo info;
+                                                        if (!infos.TryGetValue(t.TypeForCLR, out info))
+                                                        {
+                                                            info = CreateNewBindingInfo(t.TypeForCLR);
+                                                            infos[t.TypeForCLR] = info;
+                                                        }
+                                                        info.Fields.Add(fi);
+                                                    }
+                                                }
+                                            }
+                                        }
                                         break;
                                     case Intepreter.OpCodes.OpCodeEnum.Newarr:
-                                    {
-                                        var t = domain.GetType(ins.TokenInteger) as CLR.TypeSystem.CLRType;
-                                        if (t != null)
                                         {
-                                            CLRBindingGenerateInfo info;
-                                            if (!infos.TryGetValue(t.TypeForCLR, out info))
+                                            var t = domain.GetType(ins.TokenInteger) as CLR.TypeSystem.CLRType;
+                                            if(t != null)
                                             {
-                                                info = CreateNewBindingInfo(t.TypeForCLR);
-                                                infos[t.TypeForCLR] = info;
+                                                CLRBindingGenerateInfo info;
+                                                if (!infos.TryGetValue(t.TypeForCLR, out info))
+                                                {
+                                                    info = CreateNewBindingInfo(t.TypeForCLR);
+                                                    infos[t.TypeForCLR] = info;
+                                                }
+                                                info.ArrayNeeded = true;
                                             }
-
-                                            info.ArrayNeeded = true;
                                         }
-                                    }
                                         break;
                                     case Intepreter.OpCodes.OpCodeEnum.Call:
                                     case Intepreter.OpCodes.OpCodeEnum.Callvirt:
-                                    {
-                                        CLR.Method.CLRMethod m =
-                                            domain.GetMethod(ins.TokenInteger) as CLR.Method.CLRMethod;
-                                        if (m != null)
                                         {
-                                            //Cannot explicit call base class's constructor directly
-                                            if (m.IsConstructor &&
-                                                m.DeclearingType.CanAssignTo(((CLR.TypeSystem.ILType) type)
-                                                    .FirstCLRBaseType))
-                                                continue;
-                                            if (m.IsConstructor)
+                                            CLR.Method.CLRMethod m = domain.GetMethod(ins.TokenInteger) as CLR.Method.CLRMethod;
+                                            if (m != null)
                                             {
-                                                if (!m.ConstructorInfo.IsPublic)
+                                                //Cannot explicit call base class's constructor directly
+                                                if (m.IsConstructor && m.DeclearingType.CanAssignTo(((CLR.TypeSystem.ILType)type).FirstCLRBaseType))
                                                     continue;
-                                                Type t = m.DeclearingType.TypeForCLR;
-                                                CLRBindingGenerateInfo info;
-                                                if (!infos.TryGetValue(t, out info))
+                                                if (m.IsConstructor)
                                                 {
-                                                    info = CreateNewBindingInfo(t);
-                                                    infos[t] = info;
-                                                }
+                                                    if (!m.ConstructorInfo.IsPublic)
+                                                        continue;
+                                                    Type t = m.DeclearingType.TypeForCLR;
+                                                    CLRBindingGenerateInfo info;
+                                                    if (!infos.TryGetValue(t, out info))
+                                                    {
+                                                        info = CreateNewBindingInfo(t);
+                                                        infos[t] = info;
+                                                    }
 
-                                                info.Constructors.Add(m.ConstructorInfo);
-                                            }
-                                            else
-                                            {
-                                                if (!m.MethodInfo.IsPublic)
-                                                    continue;
-                                                Type t = m.DeclearingType.TypeForCLR;
-                                                CLRBindingGenerateInfo info;
-                                                if (!infos.TryGetValue(t, out info))
+                                                    info.Constructors.Add(m.ConstructorInfo);
+                                                }
+                                                else
                                                 {
-                                                    info = CreateNewBindingInfo(t);
-                                                    infos[t] = info;
-                                                }
+                                                    if (!m.MethodInfo.IsPublic)
+                                                        continue;
+                                                    Type t = m.DeclearingType.TypeForCLR;
+                                                    CLRBindingGenerateInfo info;
+                                                    if (!infos.TryGetValue(t, out info))
+                                                    {
+                                                        info = CreateNewBindingInfo(t);
+                                                        infos[t] = info;
+                                                    }
 
-                                                info.Methods.Add(m.MethodInfo);
+                                                    info.Methods.Add(m.MethodInfo);
+                                                }
                                             }
                                         }
-                                    }
                                         break;
                                 }
                             }
@@ -657,8 +558,7 @@ namespace ILRuntime.Runtime.Generated
                 bool isByRef, paramIsByRef;
                 i.GetClassName(out clsName, out realClsName, out isByRef);
                 clsNames.Add(clsName);
-                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputPath + "/" + clsName + ".cs", false,
-                    new UTF8Encoding(false)))
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputPath + "/" + clsName + ".cs", false, new UTF8Encoding(false)))
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.Append(@"using System;
@@ -695,11 +595,9 @@ namespace ILRuntime.Runtime.Generated
                             }
                             else
                                 sb.Append(", ");
-
                             j.ParameterType.GetClassName(out paramClsName, out paramRealClsName, out paramIsByRef);
                             sb.Append(paramRealClsName);
                         }
-
                         if (!first)
                             sb.Append(", ");
                         mi.ReturnType.GetClassName(out paramClsName, out paramRealClsName, out paramIsByRef);
@@ -718,14 +616,11 @@ namespace ILRuntime.Runtime.Generated
                             }
                             else
                                 sb.Append(", ");
-
                             j.ParameterType.GetClassName(out paramClsName, out paramRealClsName, out paramIsByRef);
                             sb.Append(paramRealClsName);
                         }
-
                         sb.AppendLine("> ();");
                     }
-
                     sb.AppendLine();
 
                     sb.Append("            app.DelegateManager.RegisterDelegateConvertor<");
@@ -744,10 +639,8 @@ namespace ILRuntime.Runtime.Generated
                         }
                         else
                             sb.Append(", ");
-
                         sb.Append(j.Name);
                     }
-
                     sb.AppendLine(") =>");
                     sb.AppendLine("                {");
                     if (mi.ReturnType != typeof(void))
@@ -762,11 +655,9 @@ namespace ILRuntime.Runtime.Generated
                             }
                             else
                                 sb.Append(", ");
-
                             j.ParameterType.GetClassName(out paramClsName, out paramRealClsName, out paramIsByRef);
                             sb.Append(paramRealClsName);
                         }
-
                         if (!first)
                             sb.Append(", ");
                         mi.ReturnType.GetClassName(out paramClsName, out paramRealClsName, out paramIsByRef);
@@ -784,12 +675,10 @@ namespace ILRuntime.Runtime.Generated
                             }
                             else
                                 sb.Append(", ");
-
                             j.ParameterType.GetClassName(out paramClsName, out paramRealClsName, out paramIsByRef);
                             sb.Append(paramRealClsName);
                         }
                     }
-
                     sb.Append(">)act)(");
                     first = true;
                     foreach (var j in miParameters)
@@ -800,10 +689,8 @@ namespace ILRuntime.Runtime.Generated
                         }
                         else
                             sb.Append(", ");
-
                         sb.Append(j.Name);
                     }
-
                     sb.AppendLine(");");
                     sb.AppendLine("                });");
                     sb.AppendLine("            });");
@@ -820,14 +707,12 @@ namespace ILRuntime.Runtime.Generated
             return clsNames;
         }
 
-        internal static void GenerateBindingInitializeScript(string csname,List<string> contentNames, List<Type> valueTypeBinders,
-            string outputPath)
+        internal static void GenerateBindingInitializeScript(List<string> clsNames, List<Type> valueTypeBinders, string outputPath)
         {
             if (!System.IO.Directory.Exists(outputPath))
                 System.IO.Directory.CreateDirectory(outputPath);
-
-            using (System.IO.StreamWriter sw =
-                new System.IO.StreamWriter(outputPath + "/"+csname+".cs", false, new UTF8Encoding(false)))
+            
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputPath + "/CLRBindings.cs", false, new UTF8Encoding(false)))
             {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine(@"using System;
@@ -836,10 +721,9 @@ using System.Reflection;
 
 namespace ILRuntime.Runtime.Generated
 {
-    class xxx
+    class CLRBindings
     {");
-                sb.Replace("xxx",csname);
-                //
+
                 if (valueTypeBinders != null)
                 {
                     sb.AppendLine();
@@ -850,9 +734,7 @@ namespace ILRuntime.Runtime.Generated
                         bool isByRef;
                         i.GetClassName(out clsName, out realClsName, out isByRef);
 
-                        sb.AppendLine(string.Format(
-                            "        internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<{0}> s_{1}_Binder = null;",
-                            realClsName, clsName));
+                        sb.AppendLine(string.Format("        internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<{0}> s_{1}_Binder = null;", realClsName, clsName));
                     }
 
                     sb.AppendLine();
@@ -863,9 +745,9 @@ namespace ILRuntime.Runtime.Generated
         /// </summary>
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
         {");
-                if (contentNames != null)
+                if (clsNames != null)
                 {
-                    foreach (var i in contentNames)
+                    foreach (var i in clsNames)
                     {
                         sb.Append("            ");
                         sb.Append(i);
@@ -884,15 +766,10 @@ namespace ILRuntime.Runtime.Generated
                         bool isByRef;
                         i.GetClassName(out clsName, out realClsName, out isByRef);
 
-                        sb.AppendLine(string.Format(
-                            "            __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof({0}));",
-                            realClsName));
-                        sb.AppendLine(string.Format(
-                            "            s_{0}_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<{1}>;",
-                            clsName, realClsName));
+                        sb.AppendLine(string.Format("            __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof({0}));", realClsName));
+                        sb.AppendLine(string.Format("            s_{0}_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<{1}>;", clsName, realClsName));
                     }
                 }
-
                 sb.AppendLine(@"        }");
 
                 sb.AppendLine(@"
@@ -912,7 +789,6 @@ namespace ILRuntime.Runtime.Generated
                         sb.AppendLine(string.Format("            s_{0}_Binder = null;", clsName));
                     }
                 }
-
                 sb.AppendLine(@"        }");
 
                 sb.AppendLine(@"    }
@@ -920,5 +796,6 @@ namespace ILRuntime.Runtime.Generated
                 sw.Write(Regex.Replace(sb.ToString(), "(?<!\r)\n", "\r\n"));
             }
         }
+
     }
 }

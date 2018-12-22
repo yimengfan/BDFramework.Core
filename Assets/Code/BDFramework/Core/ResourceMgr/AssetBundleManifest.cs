@@ -21,6 +21,7 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     public class ManifestConfig
     {
+        private int count;
         private Dictionary<string, ManifestItem> manifestMap;
 
         /// <summary>
@@ -57,6 +58,7 @@ namespace BDFramework.ResourceMgr
                 {
                     BDebug.LogError("资源为null:" + manifestName);
                 }
+
                 return item.Dependencies.ToArray();
             }
 
@@ -104,14 +106,31 @@ namespace BDFramework.ResourceMgr
             {
                 list.AddRange(value.Dependencies);
             }
-            return list;
+
+            return list.Distinct().ToList();
         }
+
         /// <summary>
         /// 转字符串
         /// </summary>
         /// <returns></returns>
         public string ToString()
         {
+            this.count = manifestMap.Values.Count;
+
+            
+#if UNITY_EDITOR
+            int i = 0;
+
+            List<string> list = new List<string>();
+            foreach (var v in manifestMap.Values)
+            {
+                list.AddRange(v.Dependencies);
+            }
+
+            var l = list.Distinct().ToList();
+            Debug.Log(string.Format("<color=red>依赖数量:{0}</color>",l.Count));
+#endif
             var items = manifestMap.Values.ToList();
             return JsonMapper.ToJson(items);
         }
@@ -125,7 +144,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 所有的assetbundle
         /// </summary>
-        public HashSet<string> AssetBundlesSet;
+        public HashSet<string> AssetBundlesSet { get; private set; }
 
         public ManifestConfig Manifest { get; private set; }
 
@@ -135,74 +154,22 @@ namespace BDFramework.ResourceMgr
         /// <param name="path"></param>
         public AssetBundleManifestReference(string path)
         {
-            //加载manifest
-            IEnumeratorTool.StartCoroutine(IELoadManifest(path, b =>
+            if (File.Exists(path) == false)
             {
-                if (b)
-                {
-                    BDebug.Log("manifest加载成功!");
-                    AssetBundlesSet = new HashSet<string>();
-                    var list = this.Manifest.GetAllAssetBundles();
-                    foreach (var l in list)
-                    {
-                        AssetBundlesSet.Add(l);
-                    }
-                }
-                else
-                {
-                    BDebug.LogError("manifest加载失败!");
-                }
+                Debug.LogError("manifest不存在:" + path);
+                return;
+            }
 
-                //通知到BDFrameLife
-                var dd = DataListenerServer.GetService("BDFrameLife");
-                dd.TriggerEvent("OnAssetBundleOever");
-            }));
-        }
-
-        /// <summary>
-        /// 加载menifest 主配置文件
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="callback"></param>
-        /// <param name="isManiFest"></param>
-        /// <returns></returns>
-        IEnumerator IELoadManifest(string path, Action<bool> callback)
-        {
+            //加载manifest
             var content = File.ReadAllText(path);
             //Debug.Log("content:"+content);
             this.Manifest = new ManifestConfig(content);
-            callback(true);
-            
-            yield break;
-            if (Application.platform == RuntimePlatform.WindowsEditor ||
-                Application.platform == RuntimePlatform.WindowsPlayer)
+            BDebug.Log("manifest加载成功!");
+            AssetBundlesSet = new HashSet<string>();
+            var list = this.Manifest.GetAllAssetBundles();
+            foreach (var l in list)
             {
-                path = "file:///" + path;
-            }else if (Application.platform == RuntimePlatform.Android)
-            {
-                path = "jar:file://" + path;
-            }
-
-            BDebug.Log("加载依赖:" +path);
-            //
-            UnityWebRequest www =  UnityWebRequest.Get(path);
-            yield return www.SendWebRequest();
-            if (www.error == null)
-            {
-                //配置文件
-                this.Manifest = new ManifestConfig(www.downloadHandler.text);
-                if (Manifest != null)
-                {
-                    callback(true);
-                }
-                else
-                {
-                    callback(false);
-                }
-            }
-            else
-            {
-                Debug.LogError("错误：" + www.error);
+                AssetBundlesSet.Add(l);
             }
         }
     }

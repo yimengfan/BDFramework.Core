@@ -12,19 +12,31 @@ static public class AssetBundleEditorTools
     public static void GenAssetBundle(string resRootPath, string outPath, BuildTarget target)
     {
         //1.生成ab名
-        string rootPath = Path.Combine(Application.dataPath, resRootPath);
+        string rootPath = IPath.Combine(Application.dataPath, resRootPath);
         CreateAbName(rootPath, target, outPath);
         //2.打包
         BuildAssetBundle(target, outPath);
         
         //配置写入本地
-        var configPath = Path.Combine(outPath, "Art/Config.json");
+        var configPath = IPath.Combine(outPath, "Art/Config.json");
         var direct = Path.GetDirectoryName(configPath);
         if (Directory.Exists(direct) == false)
         {
             Directory.CreateDirectory(direct);
         }
         File.WriteAllText(configPath, manifestConfig.ToString());
+        
+        //删除多余文件
+        var delFiles = Directory.GetFiles(outPath, "*.*", SearchOption.AllDirectories);
+
+        foreach (var df in delFiles)
+        {
+            var ext = Path.GetExtension(df);
+            if (ext == ".meta" || ext == ".manifest")
+            {
+                File.Delete(df);
+            }
+        }
     }
 
 
@@ -58,7 +70,7 @@ static public class AssetBundleEditorTools
     private static void BuildAssetBundle(BuildTarget target, string outPath)
     {
         AssetDatabase.RemoveUnusedAssetBundleNames();
-        string path = Path.Combine(outPath, "Art");
+        string path = IPath.Combine(outPath, "Art");
         if (Directory.Exists(path) == false)
         {
             Directory.CreateDirectory(path);
@@ -73,7 +85,7 @@ static public class AssetBundleEditorTools
     private static void AnalyzeResource(string[] paths, BuildTarget target, string outpath)
     {
 
-        var configPath = Path.Combine(outpath, "Art/Config.json");
+        var configPath = IPath.Combine(outpath, "Art/Config.json");
         if (File.Exists(configPath))
         {
             var content = File.ReadAllText(configPath);

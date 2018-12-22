@@ -15,7 +15,7 @@ namespace BDFramework.Editor
     {
         public static void GenCode()
         {
-            var tablePath = Path.Combine(Application.dataPath, "Resource/Table");
+            var tablePath = IPath.Combine(Application.dataPath, "Resource/Table");
             var tableDir = Path.GetDirectoryName(tablePath);
             var xlslFiles = Directory.GetFiles(tableDir, "*.xlsx", SearchOption.AllDirectories);
 
@@ -48,13 +48,13 @@ namespace BDFramework.Editor
             //首字母大写
             structName = structName.Substring(0, 1).ToUpper() + structName.Substring(1);
             //输出目录控制
-            string outputFile = Path.Combine(Application.dataPath,"Code/Game@hotfix/Table");
+            string outputFile = IPath.Combine(Application.dataPath,"Code/Game@hotfix/Table");
             if (Directory.Exists(outputFile) == false)
             {
                 Directory.CreateDirectory(outputFile);
             }
             //输出目录
-            outputFile = Path.Combine(outputFile,  Path.GetFileName(fileName).Replace(".xlsx", ".cs"));
+            outputFile = IPath.Combine(outputFile,  Path.GetFileName(fileName).Replace(".xlsx", ".cs"));
 
 
             //生成类服务
