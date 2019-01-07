@@ -21,14 +21,14 @@ public abstract class AWindow
     public AWindow(string path)
     {
         resourcePath = path;
-        this.TempData = WindowData.Create();
+       // this.TempData = WindowData.Create();
         subWindowsDictionary = new Dictionary<string, SubWindow>();
     }
 
     public AWindow(Transform transform)
     {
         this.Transform = transform;
-        this.TempData = WindowData.Create();
+       // this.TempData = WindowData.Create();
         subWindowsDictionary = new Dictionary<string, SubWindow>();
         
         UITools.AutoSetTransformPath(this);
@@ -37,7 +37,7 @@ public abstract class AWindow
     /// <summary>
     /// 窗口临时数据
     /// </summary>
-    private WindowData TempData;
+  //  private WindowData TempData;
 
     /// <summary>
     /// 窗口是否关闭
@@ -63,12 +63,12 @@ public abstract class AWindow
     protected Dictionary<string, SubWindow> subWindowsDictionary;
 
     //回调表
-    protected Dictionary<string, Action<object>> callbackMap;
+    protected Dictionary<string, Action<WindowData>> callbackMap;
 
     /// <summary>
     /// 注册回调 当数据传回时候,执行action
     /// </summary>
-    protected void RegisterAction(string name, Action<object> callback)
+    protected void RegisterAction(string name, Action<WindowData> callback)
     {
         callbackMap[name] = callback;
     }
@@ -173,7 +173,7 @@ public abstract class AWindow
     /// </summary>
     virtual public void Init()
     {
-        callbackMap = new Dictionary<string, Action<object>>();
+        callbackMap = new Dictionary<string, Action<WindowData>>();
         IsClose = true;
 
         //自动赋值
@@ -197,7 +197,7 @@ public abstract class AWindow
     virtual public void Open(WindowData data = null)
     {
        
-        this.TempData.MergeData(data);
+        //this.TempData.MergeData(data);
         IsClose = false;
         this.Transform.gameObject.SetActive(true);
     }
@@ -230,15 +230,14 @@ public abstract class AWindow
     /// <param name="data">数据</param>
     public void SendMessage(WindowData data)
     {
-        foreach (var key in data.DataMap.Keys)
+
+        Action<WindowData> action = null;
+        callbackMap.TryGetValue(data.Name, out action);
+        if (action != null)
         {
-            Action<object> action = null;
-            callbackMap.TryGetValue(key, out action);
-            if (action != null)
-            {
-                action(data.DataMap[key]);
-            }
+            action(data);
         }
+        
     }
 
     /// <summary>

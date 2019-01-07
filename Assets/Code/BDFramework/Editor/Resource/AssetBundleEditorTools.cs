@@ -78,7 +78,6 @@ static public class AssetBundleEditorTools
 
         //使用lz4压缩
         BuildPipeline.BuildAssetBundles(path, BuildAssetBundleOptions.ChunkBasedCompression, target);
-        EditorUtility.ClearProgressBar();
     }
 
    static ManifestConfig manifestConfig = null;
@@ -120,6 +119,9 @@ static public class AssetBundleEditorTools
             {
                 //
                 var dependPath = allDependObjectPaths[i];
+
+
+                //脚本不打包
                 var ext = Path.GetExtension(dependPath).ToLower();
                 if (ext == ".cs" || ext == ".js")
                 {
@@ -157,13 +159,17 @@ static public class AssetBundleEditorTools
 
 
             //将现在的目录结构替换配置中的
+
             if (newAssets.Count > 0)
             {
-                manifestConfig.AddDepend(dependsource.ToLower(), Uiid, newAssets);
+                newAssets.Remove(dependsource.ToLower());
+                manifestConfig.AddDepend( dependsource.ToLower(), Uiid, newAssets);
                 counter++;
             }
-        }
 
+            
+        }
+        EditorUtility.ClearProgressBar();
         Debug.Log("本地需要打包资源:" + counter);
     }
 

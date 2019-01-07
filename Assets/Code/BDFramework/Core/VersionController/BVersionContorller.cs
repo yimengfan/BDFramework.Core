@@ -44,6 +44,7 @@ namespace BDFramework
             var platform = Utils.GetPlatformPath(Application.platform);
             //开始下载服务器配置
             var serverPath = serverConfigPath + "/" + platform + "/" + platform + "_VersionConfig.json";
+            Debug.Log("server:" + serverPath);
             string serverConfig = "";
             try
             {

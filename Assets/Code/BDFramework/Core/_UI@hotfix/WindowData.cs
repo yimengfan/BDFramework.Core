@@ -6,15 +6,17 @@ namespace BDFramework.UI
     public class WindowData
     {
 
+        public string Name { get; private set; }
         public Dictionary<string, object> DataMap { get; private set; }
-        private WindowData()
+        private WindowData(string name)
         {
+            this.Name = name;
             this.DataMap = new Dictionary<string, object>();
         }
 
-        static public WindowData Create()
+        static public WindowData Create(string name)
         {
-            return new WindowData();
+            return new WindowData(name);
         }
 
         public void AddData(string name , object value)
@@ -22,6 +24,10 @@ namespace BDFramework.UI
             this.DataMap[name] = value;
         }
 
+        public T GetData<T>(string name)
+        {
+            return (T) this.DataMap[name];
+        }
         public void AddEvnet(string name)
         {
             this.DataMap[name] = null;

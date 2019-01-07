@@ -1,5 +1,3 @@
-
-#define CLRBindings
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -8,6 +6,8 @@ namespace ILRuntime.Runtime.Generated
 {
     class CLRBindings
     {
+
+
         /// <summary>
         /// Initialize the CLR binding, please invoke this AFTER CLR Redirection registration
         /// </summary>
@@ -41,12 +41,11 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_BDLauncher_Binding.Register(app);
             SQLite4Unity3d_SqliteLoder_Binding.Register(app);
             SQLite4Unity3d_SQLiteConnection_Binding.Register(app);
-            System_Array_Binding.Register(app);
-            System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Object_Binding.Register(app);
             System_Collections_IList_Binding.Register(app);
             System_Collections_ICollection_Binding.Register(app);
             SQLite4Unity3d_SQLiteCommand_Binding.Register(app);
+            System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
@@ -56,16 +55,14 @@ namespace ILRuntime.Runtime.Generated
             IEnumeratorTool_Binding.Register(app);
             System_Collections_Generic_List_1_Int32_Binding.Register(app);
             System_Collections_Generic_List_1_Int32_Binding_Enumerator_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_String_Action_1_Object_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_Action_1_ILTypeInstance_Binding.Register(app);
             BDFramework_ResourceMgr_BResources_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
             UnityEngine_GameObject_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_String_Object_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_String_Object_Binding_KeyCollection_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_String_Object_Binding_KeyCollection_Binding_Enumerator_Binding.Register(app);
-            System_Action_1_Object_Binding.Register(app);
+            System_Action_1_ILTypeInstance_Binding.Register(app);
             System_Action_Binding.Register(app);
+            System_Int32_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding.Register(app);
             System_Diagnostics_Stopwatch_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
@@ -85,6 +82,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_Image_Binding.Register(app);
             UnityEngine_Behaviour_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_Type_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_Object_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Object_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_String_Object_Binding.Register(app);
             ADataListener_Binding.Register(app);
@@ -101,7 +99,6 @@ namespace ILRuntime.Runtime.Generated
             LitJson_JsonMapper_Binding.Register(app);
             System_Action_1_String_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
-            System_Int32_Binding.Register(app);
             UnityEngine_Random_Binding.Register(app);
             System_Collections_Generic_List_1_String_Binding.Register(app);
             BDFramework_VersionContorller_Binding.Register(app);
@@ -113,6 +110,15 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Vector3_Binding.Register(app);
             DG_Tweening_TweenSettingsExtensions_Binding.Register(app);
             DataListenerServer_Binding.Register(app);
+
+            ILRuntime.CLR.TypeSystem.CLRType __clrType = null;
+        }
+
+        /// <summary>
+        /// Release the CLR binding, please invoke this BEFORE ILRuntime Appdomain destroy
+        /// </summary>
+        public static void Shutdown(ILRuntime.Runtime.Enviorment.AppDomain app)
+        {
         }
     }
 }

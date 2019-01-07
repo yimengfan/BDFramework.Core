@@ -55,7 +55,7 @@ public class Window_DemoMain : AWindow
             ScreenViewManager.Inst.MainLayer.BeginNavTo("demo2");
 
             //向demo2窗口发消息
-            var d = WindowData.Create();
+            var d = WindowData.Create("rotation");
             d.AddData("rotation", UnityEngine.Random.Range(-359, 359));
             UIManager.Inst.SendMessage((int) WinEnum.Win_Demo2, d);
         });

@@ -1,6 +1,6 @@
-
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -44,7 +44,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.GetParameters().Length == 1)
+                    if(m.MatchGenericParameters(args, typeof(UnityEngine.GameObject), typeof(UnityEngine.GameObject)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, Instantiate_1);
@@ -176,11 +176,6 @@ namespace ILRuntime.Runtime.Generated
 
             var result_of_this_method = UnityEngine.Object.Instantiate(@original);
 
-            object obj_result_of_this_method = result_of_this_method;
-            if(obj_result_of_this_method is CrossBindingAdaptorType)
-            {    
-                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
-            }
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 

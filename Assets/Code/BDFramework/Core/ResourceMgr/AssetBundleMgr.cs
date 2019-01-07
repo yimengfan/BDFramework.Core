@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Collections;
+using System.Linq;
 using Object = UnityEngine.Object;
 using Utils = BDFramework.Helper.Utils;
 
@@ -64,7 +65,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 资源加载路径
         /// </summary>
-        private string path = "";
+        private string artRootPath = "";
 
         public AssetBundleMgr(string root)
         {
@@ -79,9 +80,9 @@ namespace BDFramework.ResourceMgr
             this.willDoTaskSet = new HashSet<int>();
             this.allTaskList = new List<LoadTaskGroup>();
             //1.设置加载路径  
-            path =(root+"/"+Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
-            this.manifest = new AssetBundleManifestReference(path+ "/Config.json");
-            BDebug.Log("Art加载路径:" + path,"red");
+            artRootPath =(root+"/"+Utils.GetPlatformPath(Application.platform)+"/Art").Replace("\\", "/");
+            this.manifest = new AssetBundleManifestReference(artRootPath+ "/Config.json");
+            BDebug.Log("Art加载路径:" + artRootPath,"red");
             //通知到BDFrameLife
         }
 
@@ -97,37 +98,26 @@ namespace BDFramework.ResourceMgr
             //ab存储的是asset下的相对目录
             path = "assets/resource/runtime/" + path.ToLower()+".";
             //寻找ab的后缀名
-            var assetPath = GetExistPath(path);
+            var mainAssetPath = GetExistPath(path);
 
-            if (assetPath != null)
+            if (mainAssetPath != null)
             {
-                var res = manifest.Manifest.GetDirectDependencies(assetPath);
-                //1.创建依赖加载队列
-                Stack<string> loadQueue = new Stack<string>();
-                foreach (var asset in res)
+                //1.依赖资源
+                var res = manifest.Manifest.GetDirectDependencies(mainAssetPath).ToList();
+                //2.主体资源
+                res.Add(mainAssetPath);
+                
+                
+                //补全路径
+                Stack<string> stack = new Stack<string>();
+                foreach (var r in res)
                 {
-                    //依赖队列需要加上resourcepath
-                    var fullPath = this.path+"/" +asset;
-                    //判断是否已经加载过
-                    if (assetbundleMap.ContainsKey(asset) == false)
-                    {
-                        loadQueue.Push(fullPath);
-                    }
-                    else
-                    {
-                        assetbundleMap[asset].Use();
-                    }
+                    var fullPath = IPath.Combine(this.artRootPath,r);
+                    stack.Push(fullPath);
                 }
                 
-                //2.加载主体
-//                if (assetbundleMap.ContainsKey(assetPath) == false)
-//                {
-//                    var fullPath = IPath.Combine(this.path, assetPath);
-//                    loadQueue.Enqueue(fullPath);
-//                }
-
                 //开始加载队列
-                IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(loadQueue, callback));
+                IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(stack, callback));
             }
             else
             {
@@ -137,40 +127,55 @@ namespace BDFramework.ResourceMgr
             }
         }
 
+
         /// <summary>
         /// 递归加载
         /// </summary>
         /// <param name="path"></param>
         /// <param name="sucessCallback"></param>
         /// <returns></returns>
-        IEnumerator IEAsyncLoadAssetbundle(Stack<string> loadQueue, Action<bool> callback)
+        IEnumerator IEAsyncLoadAssetbundle(Stack<string> loadStack, Action<bool> callback)
         {
-            if (loadQueue.Count <= 0)
+            if (loadStack.Count == 0)
             {
                 callback(true);
-                yield break;
             }
             else
             {
-                var path = loadQueue.Pop();
+                //弹出一个任务
+                var path = loadStack.Pop();
+             
+                //如果存在,直接执行下一个
+                if (assetbundleMap.ContainsKey(path))
+                {
+                    IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(loadStack, callback));
+                    assetbundleMap[path].Use();   
+                    yield break;
+                }
+                
+
+                //开始加载
                 var result = AssetBundle.LoadFromFileAsync(path);
                 yield return result;
+                //加载结束
                 if (result.isDone)
                 {
                     //添加assetbundle
                     if (result.assetBundle != null)
                     {
-                        AddAssetBundle(result.assetBundle.name, result.assetBundle);
+                        AddAssetBundle(path, result.assetBundle);
                     }
-
-                    //开始下个任务
-                    IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(loadQueue, callback));
-                    yield break;
+                    else
+                    {
+                        BDebug.LogError("ab资源为空:" +  path);
+                    }
                 }
                 else
                 {
                     BDebug.LogError("加载失败:" + path);
                 }
+                //开始下个任务
+                IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(loadStack, callback));
             }
         }
 
@@ -224,48 +229,44 @@ namespace BDFramework.ResourceMgr
         {
             path = "assets/resource/runtime/" + path.ToLower()+".";
             //寻找ab的后缀名
-            var assetPath = GetExistPath(path);
+            var mainAssetPath = GetExistPath(path);
 
-            if (assetPath == null)
+            if (mainAssetPath == null)
             {
                 BDebug.Log("资源不存在:"+ path,"red");
                 return null;
             }
-            var res = manifest.Manifest.GetDirectDependencies(assetPath);
-            //1.创建依赖加载队列
+            //1.依赖路径
+            var res = manifest.Manifest.GetDirectDependencies(mainAssetPath).ToList();
+            //2.主体路径
+            res.Add(mainAssetPath);
+            
+            //补全路径
             List<string> loadList = new List<string>();
             foreach (var r in res)
             {
                 //依赖队列需要加上resourcepath
-                var dir = this.path+"/"+ r;
-                //判断是否已经加载过
-                if (assetbundleMap.ContainsKey(r) == false)
+                var fullPath = this.artRootPath+"/"+ r;
+                loadList.Add(fullPath);
+            }
+
+            
+            //同步加载
+            foreach (var l in loadList)
+            {
+                if (assetbundleMap.ContainsKey(l) == false)
                 {
-                    loadList.Add(dir);
+                    var ab = AssetBundle.LoadFromFile(l);
+                    AddAssetBundle(l, ab);
                 }
                 else
                 {
-                    assetbundleMap[r].Use();
+                    assetbundleMap[l].Use();
                 }
             }
 
-            //加载列表
-            foreach (var l in loadList)
-            {
-                var ab = AssetBundle.LoadFromFile(l);
-                AddAssetBundle(ab.name, ab);
-            }
-
-            //2.加载主体
-            if (assetbundleMap.ContainsKey(assetPath) == false)
-            {
-                var fullname =this.path+"/"+ assetPath;
-                var ab = AssetBundle.LoadFromFile(fullname);
-                AddAssetBundle(ab.name, ab);
-            }
-
             //3.加载具体资源
-            return LoadFormAssetBundle<T>(assetPath, assetPath);
+            return LoadFormAssetBundle<T>(IPath.Combine(this.artRootPath, mainAssetPath), mainAssetPath);
         }
 
 
@@ -468,7 +469,7 @@ namespace BDFramework.ResourceMgr
                     //
                     var path = "assets/resource/runtime/" + task.ResourcePath.ToLower()+".";
                     path = GetExistPath(path);
-                    var obj = LoadFormAssetBundle<Object>(path, path);
+                    var obj = LoadFormAssetBundle<Object>(IPath.Combine(this.artRootPath, path), path);
                     //任务完成
                     currentTaskGroup.OnOneTaskComplete(task.Id, task.ResourcePath, obj);
                     isDoing = false;

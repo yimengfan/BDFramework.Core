@@ -121,6 +121,7 @@ namespace BDFramework.ResourceMgr
                 result = "Assets/" + this.ResourceRootPath + "/" + result;
                 //
                 objsMap[path] = AssetDatabase.LoadAssetAtPath<T>(result);
+                
                 return objsMap[path] as T;
             }
         }
@@ -153,19 +154,23 @@ namespace BDFramework.ResourceMgr
         public List<int> AsyncLoad(IList<string> sources, Action<IDictionary<string, Object>> onLoadComplete,Action<int, int> onLoadProcess)
         {
 
+            //var list = sources.Distinct().ToList();
+
             IDictionary<string ,UnityEngine.Object> map =new Dictionary<string, Object>();
-            //每帧加载5个
-            IEnumeratorTool.StartCoroutine(TaskUpdate( 5,sources, (s, o) =>
+            int curProcess = 0;
+            //每帧加载1个
+            IEnumeratorTool.StartCoroutine(TaskUpdate( 1,sources, (s, o) =>
             {
+                curProcess++;
                 map[s] = o;
                 //
                 if (onLoadProcess != null)
                 {
-                    onLoadProcess(map.Count, sources.Count);
+                    onLoadProcess(curProcess, sources.Count);
                 }
 
                 //
-                if (map.Count == sources.Count)
+                if (curProcess == sources.Count)
                 {
                     if (onLoadComplete != null)
                     {
@@ -224,7 +229,7 @@ namespace BDFramework.ResourceMgr
                     });
                     count++;
                 }
-                yield return new WaitForEndOfFrame();
+                yield return new  WaitForEndOfFrame();
             }
         }
     }

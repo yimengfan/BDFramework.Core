@@ -69,19 +69,18 @@ namespace BDFramework
 
         #region 启动热更逻辑
 
-        
         /// <summary>
         /// 初始化
         /// 修改版本,让这个启动逻辑由使用者自行处理
         /// </summary>
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
-        public void Launch(string GameId ="")
+        public void Launch(string GameId = "")
         {
             //初始化资源加载
             string coderoot = "";
             string sqlroot = "";
             string artroot = "";
-            
+
             //各自的路径
             //art
             if (ArtRoot == AssetLoadPath.Editor)
@@ -106,6 +105,7 @@ namespace BDFramework
             {
                 artroot = Application.streamingAssetsPath;
             }
+
             //sql
             if (SQLRoot == AssetLoadPath.Editor)
             {
@@ -119,7 +119,7 @@ namespace BDFramework
             }
             else if (SQLRoot == AssetLoadPath.StreamingAsset)
             {
-               sqlroot = Application.streamingAssetsPath;
+                sqlroot = Application.streamingAssetsPath;
             }
 
             //code
@@ -137,7 +137,7 @@ namespace BDFramework
             {
                 coderoot = Application.streamingAssetsPath;
             }
-            
+
             //多游戏更新逻辑
             if (Application.isEditor == false)
             {
@@ -148,16 +148,13 @@ namespace BDFramework
                     sqlroot = sqlroot + "/" + GameId;
                 }
             }
-            
+
             //sql
             SqliteLoder.Load(sqlroot);
             //art
             BResources.Load(artroot);
             //code
             LoadScrpit(coderoot);
-    
-            
-
         }
 
         /// <summary>
@@ -200,6 +197,14 @@ namespace BDFramework
             {
                 OnLateUpdate();
             }
+        }
+
+        void OnApplicationQuit()
+        {
+#if UNITY_EDITOR
+            BDFramework.Sql.SqliteHelper.DB.Close();
+            ILRuntimeHelper.Close();
+#endif
         }
     }
 }

@@ -142,13 +142,8 @@ namespace BDFramework.UI
                     {
                         windowMap[index] = win;
                         //开始窗口加载
-
-                        System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-                        watch.Start();
                         win.AsyncLoad(() =>
                         {
-                            watch.Stop();
-                            BDebug.LogFormat("加载{0},耗时: {1}ms", index, watch.ElapsedMilliseconds);
                             curTaskCount++;
                             loadProcessAction(allCount, curTaskCount);
 

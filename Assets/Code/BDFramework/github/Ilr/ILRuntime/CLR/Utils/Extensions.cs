@@ -29,7 +29,8 @@ namespace ILRuntime.CLR.Utils
                     t = appdomain.GetType(i.ParameterType, dt, null);
                     if ((t == null && def.IsGenericInstance) || (t != null && t.HasGenericParameter))
                     {
-                        GenericInstanceMethod gim = (GenericInstanceMethod)def;
+                        GenericInstanceMethod  gim = (GenericInstanceMethod)def;
+                        
                         string name = i.ParameterType.IsByReference ? i.ParameterType.GetElementType().FullName : i.ParameterType.FullName;
                         
                         for (int j = 0; j < gim.GenericArguments.Count; j++)

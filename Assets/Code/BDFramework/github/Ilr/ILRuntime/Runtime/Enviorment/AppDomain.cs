@@ -364,6 +364,7 @@ namespace ILRuntime.Runtime.Enviorment
         /// <param name="stream">Assembly Stream</param>
         /// <param name="symbol">symbol Stream</param>
         /// <param name="symbolReader">symbol 读取器</param>
+        /// <param name="inMemory">是否完整读入内存</param>
         public void LoadAssembly(System.IO.Stream stream, System.IO.Stream symbol, ISymbolReaderProvider symbolReader)
         {
             var module = ModuleDefinition.ReadModule(stream); //从MONO中加载模块
@@ -409,7 +410,6 @@ namespace ILRuntime.Runtime.Enviorment
                 doubleType = GetType("System.Double");
                 objectType = GetType("System.Object");
             }
-            module.AssemblyResolver.ResolveFailure += AssemblyResolver_ResolveFailure;
 #if DEBUG && !DISABLE_ILRUNTIME_DEBUG
             debugService.NotifyModuleLoaded(module.Name);
 #endif
@@ -423,20 +423,6 @@ namespace ILRuntime.Runtime.Enviorment
         public void AddReferenceBytes(string name, byte[] content)
         {
             references[name] = content;
-        }
-
-        private AssemblyDefinition AssemblyResolver_ResolveFailure(object sender, AssemblyNameReference reference)
-        {
-            byte[] content;
-            if (references.TryGetValue(reference.Name, out content))
-            {
-                using (System.IO.MemoryStream ms = new System.IO.MemoryStream(content))
-                {
-                    return AssemblyDefinition.ReadAssembly(ms);
-                }
-            }
-            else
-                return null;
         }
 
         public void RegisterCLRMethodRedirection(MethodBase mi, CLRRedirectionDelegate func)
@@ -552,9 +538,9 @@ namespace ILRuntime.Runtime.Enviorment
                         {
                             if (i > 0)
                                 sb.Append(",");
-                            if (genericParams[i].Contains(","))
+                            /*if (genericParams[i].Contains(","))
                                 sb.Append(genericParams[i].Substring(0, genericParams[i].IndexOf(',')));
-                            else
+                            else*/
                                 sb.Append(genericParams[i]);
                         }
                         sb.Append('>');
@@ -662,7 +648,7 @@ namespace ILRuntime.Runtime.Enviorment
                                 name = name.Substring(1, name.Length - 2);
                             if (!string.IsNullOrEmpty(name))
                                 genericParams.Add(name);
-                            else
+                            else if (!string.IsNullOrEmpty(name))
                             {
                                 if (!isArray)
                                 {
@@ -672,6 +658,11 @@ namespace ILRuntime.Runtime.Enviorment
                                 {
                                     baseType += "[]";
                                 }
+                            }
+                            else
+                            {
+                                sb.Append("<>");
+                                continue;
                             }
                             sb.Length = 0;
                             continue;
@@ -732,7 +723,7 @@ namespace ILRuntime.Runtime.Enviorment
                 if (_ref.IsByReference)
                 {
                     var et = _ref.GetElementType();
-                    bool valid = !et.IsGenericParameter;
+                    bool valid = !et.ContainsGenericParameter;
                     var t = GetType(et, contextType, contextMethod);
                     if (t != null)
                     {
@@ -743,9 +734,11 @@ namespace ILRuntime.Runtime.Enviorment
                             ((ILType)res).TypeReference = _ref;
                         }
                         if (valid)
+                        {
                             mapTypeToken[hash] = res;
-                        if (!string.IsNullOrEmpty(res.FullName))
-                            mapType[res.FullName] = res;
+                            if (!string.IsNullOrEmpty(res.FullName))
+                                mapType[res.FullName] = res;
+                        }
                         return res;
                     }
                     return null;

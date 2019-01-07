@@ -74,3 +74,5 @@
 /BDFramework/*.out
 /BDFramework/*.tmp
 /BDFramework/obj
+/Logs
+/.gradle

@@ -47,7 +47,7 @@ public class Window_Demo2 : AWindow
         //02按钮
         btn_02.onClick.AddListener(() =>
         {
-            var data = WindowData.Create();
+            var data = WindowData.Create("testkey");
             data.AddData("testkey","testvalue");
             this.OpenSubWindow("subwin1",data);
         });
@@ -69,9 +69,9 @@ public class Window_Demo2 : AWindow
     }
 
 
-    public void OnMsg_Rotation(object o)
+    public void OnMsg_Rotation(WindowData o)
     {
-        float value = (int)o;
+        float value = o.GetData<int>("rotation");
         BDebug.Log("监听到rotation ：" +  value , "yellow");
         var trans = this.Transform.Find("001/Image");
         trans.DOKill();

@@ -91,7 +91,7 @@ namespace ILRuntime.Runtime.Debugger
             return false;
         }
 
-        public string GetStackTrance(ILIntepreter intepreper)
+        public string GetStackTrace(ILIntepreter intepreper)
         {
             StringBuilder sb = new StringBuilder();
             ILRuntime.CLR.Method.ILMethod m;
@@ -110,7 +110,8 @@ namespace ILRuntime.Runtime.Debugger
                 if (f.Address != null)
                 {
                     ins = m.Definition.Body.Instructions[f.Address.Value];
-                    var seq = FindSequencePoint(ins);
+                    
+                    var seq = FindSequencePoint(ins, m.Definition.DebugInformation.GetSequencePointMapping());
                     if (seq != null)
                     {
                         document = string.Format("{0}:Line {1}", seq.Document.Url, seq.StartLine);
@@ -130,7 +131,8 @@ namespace ILRuntime.Runtime.Debugger
                 arg--;
             if (arg->ObjectType == ObjectTypes.StackObjectReference)
             {
-                arg = *(StackObject**)&arg->Value;
+                var addr = *(long*)&arg->Value;
+                arg = (StackObject*)addr;
             }
             ILTypeInstance instance = arg->ObjectType != ObjectTypes.Null ? intepreter.Stack.ManagedStack[arg->Value] as ILTypeInstance : null;
             if (instance == null)
@@ -179,7 +181,9 @@ namespace ILRuntime.Runtime.Debugger
                     var v = StackObject.ToObject(val, intepreter.AppDomain, intepreter.Stack.ManagedStack);
                     if (v == null)
                         v = "null";
-                    string name = string.IsNullOrEmpty(lv.Name) ? "v" + lv.Index : lv.Name;
+                    string vName = null;
+                    m.Definition.DebugInformation.TryGetName(lv, out vName);                    
+                    string name = string.IsNullOrEmpty(vName) ? "v" + lv.Index : vName;
                     sb.AppendFormat("{0} {1} = {2}", lv.VariableType.Name, name, v);
                     if ((i % 3 == 0 && i != 0) || i == m.LocalVariableCount - 1)
                         sb.AppendLine();
@@ -194,13 +198,14 @@ namespace ILRuntime.Runtime.Debugger
             return sb.ToString();
         }
 
-        internal static Mono.Cecil.Cil.SequencePoint FindSequencePoint(Mono.Cecil.Cil.Instruction ins)
+        internal static Mono.Cecil.Cil.SequencePoint FindSequencePoint(Mono.Cecil.Cil.Instruction ins, IDictionary<Mono.Cecil.Cil.Instruction, Mono.Cecil.Cil.SequencePoint> seqMapping)
         {
             Mono.Cecil.Cil.Instruction cur = ins;
-            while (cur.SequencePoint == null && cur.Previous != null)
+            Mono.Cecil.Cil.SequencePoint sp;
+            while (!seqMapping.TryGetValue(cur, out sp) && cur.Previous != null)
                 cur = cur.Previous;
 
-            return cur.SequencePoint;
+            return sp;
         }
 
         unsafe StackObject* Add(StackObject* a, int b)
@@ -304,7 +309,7 @@ namespace ILRuntime.Runtime.Debugger
 
                 if (lst != null)
                 {
-                    var sp = method.Definition.Body.Instructions[ip].SequencePoint;
+                    var sp = method.Definition.DebugInformation.GetSequencePoint(method.Definition.Body.Instructions[ip]);
                     if (sp != null)
                     {
                         foreach (var i in lst)
@@ -321,7 +326,7 @@ namespace ILRuntime.Runtime.Debugger
 
                 if (!bpHit)
                 {
-                    var sp = method.Definition.Body.Instructions[ip].SequencePoint;
+                    var sp = method.Definition.DebugInformation.GetSequencePoint(method.Definition.Body.Instructions[ip]);//.SequencePoint;
                     if (sp != null && IsSequenceValid(sp))
                     {
                         switch (intp.CurrentStepType)
@@ -399,7 +404,8 @@ namespace ILRuntime.Runtime.Debugger
                 if (f.Address != null)
                 {
                     ins = m.Definition.Body.Instructions[f.Address.Value];
-                    var seq = FindSequencePoint(ins);
+
+                    var seq = FindSequencePoint(ins, m.Definition.DebugInformation.GetSequencePointMapping());
                     if (seq != null)
                     {
                         info.DocumentName = seq.Document.Url;
@@ -451,7 +457,9 @@ namespace ILRuntime.Runtime.Debugger
                     var val = Add(topFrame.LocalVarPointer, locIdx);
                     var v = StackObject.ToObject(val, intp.AppDomain, intp.Stack.ManagedStack);
                     var type = intp.AppDomain.GetType(lv.VariableType, m.DeclearingType, m);
-                    string name = string.IsNullOrEmpty(lv.Name) ? "v" + lv.Index : lv.Name;
+                    string vName = null;
+                    m.Definition.DebugInformation.TryGetName(lv, out vName);
+                    string name = string.IsNullOrEmpty(vName) ? "v" + lv.Index : vName;
                     VariableInfo vinfo = VariableInfo.FromObject(v);
                     vinfo.Address = (long)val;
                     vinfo.Name = name;
@@ -1004,7 +1012,7 @@ namespace ILRuntime.Runtime.Debugger
                 if (i < esp)
                 {
                     if (i->ObjectType == ObjectTypes.ValueTypeObjectReference)
-                        VisitValueTypeReference(*(StackObject**)&i->Value, leakVObj);
+                        VisitValueTypeReference(ILIntepreter.ResolveReference(i), leakVObj);
                 }
                 if (isLocal)
                 {
@@ -1061,13 +1069,13 @@ namespace ILRuntime.Runtime.Debugger
             {
                 case ObjectTypes.StackObjectReference:
                     {
-                        sb.Append(string.Format("Value:0x{0:X8}", (long)*(StackObject**)&esp->Value));
+                        sb.Append(string.Format("Value:0x{0:X8}", (long)ILIntepreter.ResolveReference(esp)));
                     }
                     break;
                 case ObjectTypes.ValueTypeObjectReference:
                     {
                         object obj = null;
-                        var dst = *(StackObject**)&esp->Value;
+                        var dst = ILIntepreter.ResolveReference(esp);
                         if (dst > valueTypeEnd)
                             obj = StackObject.ToObject(esp, domain, mStack);
                         if (obj != null)
@@ -1075,7 +1083,7 @@ namespace ILRuntime.Runtime.Debugger
 
                         text += string.Format("({0})", domain.GetType(dst->Value));
                     }
-                    sb.Append(string.Format("Value:0x{0:X8} Text:{1} ", (long)*(StackObject**)&esp->Value, text));
+                    sb.Append(string.Format("Value:0x{0:X8} Text:{1} ", (long)ILIntepreter.ResolveReference(esp), text));
                     break;
                 default:
                     {
@@ -1104,7 +1112,7 @@ namespace ILRuntime.Runtime.Debugger
                 var ptr = Minus(esp, i + 1);
                 if (ptr->ObjectType == ObjectTypes.ValueTypeObjectReference)
                 {
-                    VisitValueTypeReference(*(StackObject**)&ptr->Value, leak);
+                    VisitValueTypeReference(ILIntepreter.ResolveReference(ptr), leak);
                 }
             }
         }

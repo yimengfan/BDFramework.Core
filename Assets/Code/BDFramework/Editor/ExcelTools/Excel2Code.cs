@@ -15,7 +15,7 @@ namespace BDFramework.Editor
     {
         public static void GenCode()
         {
-            var tablePath = IPath.Combine(Application.dataPath, "Resource/Table");
+            var tablePath = Path.Combine(Application.dataPath, "Resource/Table");
             var tableDir = Path.GetDirectoryName(tablePath);
             var xlslFiles = Directory.GetFiles(tableDir, "*.xlsx", SearchOption.AllDirectories);
 
@@ -48,13 +48,13 @@ namespace BDFramework.Editor
             //首字母大写
             structName = structName.Substring(0, 1).ToUpper() + structName.Substring(1);
             //输出目录控制
-            string outputFile = IPath.Combine(Application.dataPath,"Code/Game@hotfix/Table");
+            string outputFile = Path.Combine(Application.dataPath,"Code/Game@hotfix/Table");
             if (Directory.Exists(outputFile) == false)
             {
                 Directory.CreateDirectory(outputFile);
             }
             //输出目录
-            outputFile = IPath.Combine(outputFile,  Path.GetFileName(fileName).Replace(".xlsx", ".cs"));
+            outputFile = Path.Combine(outputFile,  Path.GetFileName(fileName).Replace(".xlsx", ".cs"));
 
 
             //生成类服务
@@ -68,15 +68,17 @@ namespace BDFramework.Editor
             sample.Imports.Add(new CodeNamespaceImport("SQLite4Unity3d"));
 
             //在命名空间下添加一个类
-            CodeTypeDeclaration wrapProxyStruct = new CodeTypeDeclaration(structName);
-            wrapProxyStruct.IsClass = false;
-            wrapProxyStruct.IsEnum = false;
-            wrapProxyStruct.IsInterface = false;
-            wrapProxyStruct.IsPartial = false;
-            wrapProxyStruct.IsStruct = true;
+            CodeTypeDeclaration wrapProxyClass = new CodeTypeDeclaration(structName);
+            wrapProxyClass.IsClass = true;
+            wrapProxyClass.IsEnum = false;
+            wrapProxyClass.IsInterface = false;
+            wrapProxyClass.IsPartial = false;
+            wrapProxyClass.IsStruct = false;
             //把这个类添加到命名空间 
-            sample.Types.Add(wrapProxyStruct);
+            sample.Types.Add(wrapProxyClass);
 
+            CodeAttributeDeclaration attr = new CodeAttributeDeclaration("Serializable");
+            wrapProxyClass.CustomAttributes.Add(attr);
             //
             var jsonData = JsonMapper.ToObject(json)[0];
 
@@ -129,7 +131,7 @@ namespace BDFramework.Editor
                 member.Text = memberContent.Replace("[type]", type).Replace("[Name]", key);
 
 
-                wrapProxyStruct.Members.Add(member);
+                wrapProxyClass.Members.Add(member);
                 i++;
             }
 

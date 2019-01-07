@@ -1,6 +1,6 @@
-
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -41,7 +41,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.GetParameters().Length == 2)
+                    if(m.MatchGenericParameters(args, typeof(System.Int32), typeof(System.String), typeof(System.Action<System.Boolean, UnityEngine.GameObject>)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, AsyncLoad_0);
@@ -55,7 +55,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.GetParameters().Length == 1)
+                    if(m.MatchGenericParameters(args, typeof(UnityEngine.GameObject), typeof(System.String)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, Load_1);
@@ -75,7 +75,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.GetParameters().Length == 1)
+                    if(m.MatchGenericParameters(args, typeof(UnityEngine.Sprite), typeof(System.String)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, Load_4);

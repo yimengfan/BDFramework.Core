@@ -59,12 +59,12 @@ public class IEnumeratorTool : MonoBehaviour
     //
     static Dictionary<int, IEnumerator> iEnumeratorDictionary = new Dictionary<int, IEnumerator>();
     static Dictionary<int, Coroutine> coroutineDictionary = new Dictionary<int, Coroutine>();
-    static Queue<int> m_IEnumeratorQueue = new Queue<int>();
+    static Queue<int> IEnumeratorQueue = new Queue<int>();
     static int counter = -1;
     static public new int StartCoroutine (IEnumerator ie)
     {
         counter++;
-        m_IEnumeratorQueue.Enqueue(counter);
+        IEnumeratorQueue.Enqueue(counter);
         iEnumeratorDictionary[counter] = ie;
         return counter;
     }
@@ -129,8 +129,8 @@ public class IEnumeratorTool : MonoBehaviour
         }
 
         //携程循环
-        if (m_IEnumeratorQueue.Count > 0) {
-            var id = m_IEnumeratorQueue.Dequeue();
+        if (IEnumeratorQueue.Count > 0) {
+            var id = IEnumeratorQueue.Dequeue();
             //取出携程
             var ie = iEnumeratorDictionary[id];
             iEnumeratorDictionary.Remove(id);

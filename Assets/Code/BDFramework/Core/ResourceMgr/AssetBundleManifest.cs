@@ -102,9 +102,12 @@ namespace BDFramework.ResourceMgr
         {
             List<string> list = new List<string>();
             //
-            foreach (var value in this.manifestMap.Values)
+            foreach (var m in this.manifestMap)
             {
-                list.AddRange(value.Dependencies);
+                //添加主体
+                list.Add(m.Key);
+                //添加依赖
+                list.AddRange(m.Value.Dependencies);
             }
 
             return list.Distinct().ToList();

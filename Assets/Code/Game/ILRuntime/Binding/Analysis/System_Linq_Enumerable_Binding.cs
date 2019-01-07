@@ -1,6 +1,6 @@
-
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -40,7 +40,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.GetParameters().Length == 1)
+                    if(m.MatchGenericParameters(args, typeof(System.Collections.Generic.List<System.Type>), typeof(System.Collections.Generic.IEnumerable<System.Type>)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, ToList_0);
@@ -54,7 +54,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.GetParameters().Length == 1)
+                    if(m.MatchGenericParameters(args, typeof(System.Collections.Generic.List<ILRuntime.CLR.TypeSystem.IType>), typeof(System.Collections.Generic.IEnumerable<ILRuntime.CLR.TypeSystem.IType>)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, ToList_1);
@@ -68,7 +68,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.GetParameters().Length == 1)
+                    if(m.MatchGenericParameters(args, typeof(System.Collections.Generic.IEnumerable<System.Type>), typeof(System.Collections.Generic.IEnumerable<System.Type>)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, Distinct_2);
@@ -82,7 +82,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.GetParameters().Length == 1)
+                    if(m.MatchGenericParameters(args, typeof(System.Collections.Generic.List<System.Object>), typeof(System.Collections.Generic.IEnumerable<System.Object>)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, ToList_3);
@@ -96,7 +96,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.GetParameters().Length == 1)
+                    if(m.MatchGenericParameters(args, typeof(System.Collections.Generic.List<UnityEngine.Transform>), typeof(System.Collections.Generic.IEnumerable<UnityEngine.Transform>)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, ToList_4);

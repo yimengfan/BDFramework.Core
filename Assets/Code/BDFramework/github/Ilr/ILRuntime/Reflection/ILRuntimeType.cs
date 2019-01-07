@@ -250,6 +250,17 @@ namespace ILRuntime.Reflection
             return type.CanAssignTo(ILType);
         }
 
+        public override bool IsInstanceOfType(object o)
+        {
+            if (o == null)
+            {
+                return false;
+            }
+
+            var instance = o as ILTypeInstance;
+            return IsAssignableFrom(instance != null ? instance.Type.ReflectionType : o.GetType());
+        }
+
         public override Type GetElementType()
         {
             if (type.IsArray)

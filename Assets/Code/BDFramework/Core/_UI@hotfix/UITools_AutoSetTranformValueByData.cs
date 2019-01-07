@@ -42,8 +42,7 @@ namespace BDFramework.Core
             bool isFirstFindComponent = false;
             if (ComponentCacheMap.TryGetValue(t, out coms) == false)
             {
-                FirstFindComponent(t, data, out coms);
-
+                coms = FirstFindComponent(t, data);
                 this.ComponentCacheMap[t] = coms;
             }
 
@@ -65,9 +64,9 @@ namespace BDFramework.Core
         }
 
 
-        void FirstFindComponent(Transform t, object data, out Dictionary<string, ComponentValueCache> coms)
+        Dictionary<string, ComponentValueCache> FirstFindComponent(Transform t, object data)
         {
-            coms = new Dictionary<string, ComponentValueCache>();
+            Dictionary<string, ComponentValueCache> coms = new Dictionary<string, ComponentValueCache>();
             var setList = new List<UITool_Attribute>(t.GetComponentsInChildren<UITool_Attribute>());
 
             var type = data.GetType();
@@ -96,6 +95,8 @@ namespace BDFramework.Core
                     BDebug.LogError("无同名节点或者某些数据为null：" + f.Name + " - " + fAttr.ComponentType + " - " + type.FullName);
                 }
             }
+
+            return coms;
         }
 
 
