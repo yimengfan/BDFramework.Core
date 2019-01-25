@@ -41,8 +41,9 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_BDLauncher_Binding.Register(app);
             SQLite4Unity3d_SqliteLoder_Binding.Register(app);
             SQLite4Unity3d_SQLiteConnection_Binding.Register(app);
-            System_Object_Binding.Register(app);
+            System_Array_Binding.Register(app);
             System_Collections_IList_Binding.Register(app);
+            System_Object_Binding.Register(app);
             System_Collections_ICollection_Binding.Register(app);
             SQLite4Unity3d_SQLiteCommand_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding.Register(app);
@@ -62,7 +63,6 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Component_Binding.Register(app);
             System_Action_1_ILTypeInstance_Binding.Register(app);
             System_Action_Binding.Register(app);
-            System_Int32_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding.Register(app);
             System_Diagnostics_Stopwatch_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
@@ -99,6 +99,7 @@ namespace ILRuntime.Runtime.Generated
             LitJson_JsonMapper_Binding.Register(app);
             System_Action_1_String_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
+            System_Int32_Binding.Register(app);
             UnityEngine_Random_Binding.Register(app);
             System_Collections_Generic_List_1_String_Binding.Register(app);
             BDFramework_VersionContorller_Binding.Register(app);

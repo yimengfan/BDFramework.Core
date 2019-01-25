@@ -20,6 +20,7 @@ namespace ILRuntime.Runtime.Generated
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
+            FieldInfo field;
             Type[] args;
             Type type = typeof(System.String);
             args = new Type[]{typeof(System.Object), typeof(System.Object)};
@@ -64,6 +65,9 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.String), typeof(System.String), typeof(System.String), typeof(System.String)};
             method = type.GetMethod("Concat", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Concat_13);
+
+            field = type.GetField("Empty", flag);
+            app.RegisterCLRFieldGetter(field, get_Empty_0);
 
 
         }
@@ -367,6 +371,11 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
+
+        static object get_Empty_0(ref object o)
+        {
+            return System.String.Empty;
+        }
 
 
     }

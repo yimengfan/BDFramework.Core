@@ -54,6 +54,7 @@ public class ILRuntimeDelegateHelper
         
         appdomain.DelegateManager.RegisterMethodDelegate<System.String>();
 
+        appdomain.DelegateManager.RegisterMethodDelegate<ILRuntime.Runtime.Intepreter.ILTypeInstance>();
 
     }
 
