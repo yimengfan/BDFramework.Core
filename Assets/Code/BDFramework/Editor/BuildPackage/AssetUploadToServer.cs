@@ -15,7 +15,7 @@ namespace BDFramework.Editor.BuildPackage
    static  public class AssetUploadToServer
     {
 
-        static public void Start(string path, string uploadHttpApi)
+        static public void Assets2Hash(string path, string uploadHttpApi)
         {
             var ios =IPath.Combine(path, "iOS");
             var android =IPath.Combine(path, "Android");
@@ -37,6 +37,8 @@ namespace BDFramework.Editor.BuildPackage
             }
             
             EditorUtility.ClearProgressBar();
+            
+            File.WriteAllText(path+"/_Hash目录提交到服务器(并去除_Hash后缀)","");
         }
 
 
@@ -45,7 +47,7 @@ namespace BDFramework.Editor.BuildPackage
             path = path.Replace("\\", "/");
             //
             var files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
-            var tempDirect = path + "_Server";
+            var tempDirect = path + "_Hash";
 
             //文件准备
             if (Directory.Exists(tempDirect))

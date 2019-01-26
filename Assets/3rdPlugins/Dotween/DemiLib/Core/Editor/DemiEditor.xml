@@ -210,29 +210,29 @@
         </member>
         <member name="P:DG.DemiEditor.DeGUIDrag.draggedItemOriginalIndex">
             <summary>
-            Starting index of current item being dragged, or NULL if there is none
+            Assets2Hashing index of current item being dragged, or NULL if there is none
             </summary>
         </member>
         <member name="P:DG.DemiEditor.DeGUIDrag.optionalDragData">
             <summary>
-            Retrieves the eventual optional data stored via the StartDrag method
+            Retrieves the eventual optional data stored via the Assets2HashDrag method
             </summary>
         </member>
-        <member name="M:DG.DemiEditor.DeGUIDrag.StartDrag(System.Int32,UnityEditor.Editor,System.Collections.IList,System.Int32,System.Object)">
+        <member name="M:DG.DemiEditor.DeGUIDrag.Assets2HashDrag(System.Int32,UnityEditor.Editor,System.Collections.IList,System.Int32,System.Object)">
             <summary>
-            Starts a drag operation on a GUI element.
+            Assets2Hashs a drag operation on a GUI element.
             </summary>
-            <param name="dragId">ID for this drag operation (must be the same for both StartDrag and Drag</param>
+            <param name="dragId">ID for this drag operation (must be the same for both Assets2HashDrag and Drag</param>
             <param name="editor">Reference to the current editor drawing the GUI (used when a Repaint is needed)</param>
             <param name="draggableList">List containing the dragged item and all other relative draggable items</param>
             <param name="draggedItemIndex">DraggableList index of the item being dragged</param>
             <param name="optionalData">Optional data that can be retrieved via the <see cref="P:DG.DemiEditor.DeGUIDrag.optionalDragData"/> static property</param>
         </member>
-        <member name="M:DG.DemiEditor.DeGUIDrag.StartDrag(System.Int32,UnityEditor.EditorWindow,System.Collections.IList,System.Int32,System.Object)">
+        <member name="M:DG.DemiEditor.DeGUIDrag.Assets2HashDrag(System.Int32,UnityEditor.EditorWindow,System.Collections.IList,System.Int32,System.Object)">
             <summary>
-            Starts a drag operation on a GUI element.
+            Assets2Hashs a drag operation on a GUI element.
             </summary>
-            <param name="dragId">ID for this drag operation (must be the same for both StartDrag and Drag</param>
+            <param name="dragId">ID for this drag operation (must be the same for both Assets2HashDrag and Drag</param>
             <param name="editorWindow">Reference to the current editor drawing the GUI (used when a Repaint is needed)</param>
             <param name="draggableList">List containing the dragged item and all other relative draggable items</param>
             <param name="draggedItemIndex">DraggableList index of the item being dragged</param>
@@ -243,7 +243,7 @@
             Call this after each draggable GUI block, to calculate and draw the current drag state
             (or complete it if the mouse was released).
             </summary>
-            <param name="dragId">ID for this drag operation (must be the same for both StartDrag and Drag</param>
+            <param name="dragId">ID for this drag operation (must be the same for both Assets2HashDrag and Drag</param>
             <param name="draggableList">List containing the draggable item and all other relative draggable items</param>
             <param name="currDraggableItemIndex">Current index of the draggable item being drawn</param>
         </member>
@@ -252,7 +252,7 @@
             Call this after each draggable GUI block, to calculate and draw the current drag state
             (or complete it if the mouse was released).
             </summary>
-            <param name="dragId">ID for this drag operation (must be the same for both StartDrag and Drag</param>
+            <param name="dragId">ID for this drag operation (must be the same for both Assets2HashDrag and Drag</param>
             <param name="draggableList">List containing the draggable item and all other relative draggable items</param>
             <param name="currDraggableItemIndex">Current index of the draggable item being drawn</param>
             <param name="dragEvidenceColor">Color to use for drag divider and selection</param>

@@ -1,8 +1,7 @@
 fileFormatVersion: 2
 guid: c10c5f5d9678b3749bced2ea29599e4f
-NativeFormatImporter:
+PrefabImporter:
   externalObjects: {}
-  mainObjectFileID: 0
   userData: 
-  assetBundleName: assets/resource/runtime/windows/window_demo3.prefab
+  assetBundleName: 
   assetBundleVariant: 

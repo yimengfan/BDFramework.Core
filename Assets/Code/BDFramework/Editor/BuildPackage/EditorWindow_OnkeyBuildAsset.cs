@@ -58,7 +58,7 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
     }
 
 
-    public string exportPath;
+    public string exportPath="";
     private bool isGenWindowsAssets = true;
     private bool isGenIosAssets     = true;
     private bool isGenAndroidAssets = true;
@@ -73,10 +73,15 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
             //
             GUILayout.Label("导出地址:" + exportPath, GUILayout.Width(500));
             //
-            if (GUILayout.Button("一键导出", GUILayout.Width(350), GUILayout.Height(30)))
+            if (GUILayout.Button("一键导出[自动转hash]", GUILayout.Width(350), GUILayout.Height(30)))
             {
                 //选择目录
-                exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath.Replace("Assets",""), "");
+                exportPath = EditorUtility.OpenFolderPanel("选择导出目录", exportPath,"");
+                if (string.IsNullOrEmpty(exportPath))
+                {
+                    return;
+                }
+                //开始生成资源
                 {
                     //生成windows资源
                     if (isGenWindowsAssets)
@@ -115,20 +120,12 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
                         Excel2SQLiteTools.GenSQLite(outPath);
                     }
                 }
-                   
-            }
-            //
-            if (GUILayout.Button("资源转hash格式", GUILayout.Width(350), GUILayout.Height(30)))
-            {
-                exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath.Replace("Assets",""), "");
-                if (Directory.Exists(exportPath))
-                {
-                    AssetUploadToServer.Start(exportPath,"");
-                }
-                else
-                {
-                    EditorUtility.DisplayDialog("错误!", "你选择的文件夹有点问题哦~", "爱咋咋地!");
-                }
+                
+                //自动转hash
+                AssetUploadToServer.Assets2Hash(exportPath,"");
+
+                EditorUtility.DisplayDialog("提示", "资源导出完成","OK");
+
             }
             //
             if (GUILayout.Button("上传到文件服务器[内网测试]", GUILayout.Width(350), GUILayout.Height(30)))

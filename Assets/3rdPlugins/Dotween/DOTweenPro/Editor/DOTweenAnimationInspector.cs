@@ -528,7 +528,7 @@ namespace DG.DOTweenEditor
             }
             GUILayout.EndHorizontal();
             if (_src.useTargetAsV3 && _src.endValueTransform != null && _src.target is RectTransform) {
-                EditorGUILayout.HelpBox("NOTE: when using a UI target, the tween will be created during Start instead of Awake", MessageType.Info);
+                EditorGUILayout.HelpBox("NOTE: when using a UI target, the tween will be created during Assets2Hash instead of Awake", MessageType.Info);
             }
         }
 
