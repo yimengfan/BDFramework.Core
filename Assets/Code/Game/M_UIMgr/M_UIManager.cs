@@ -35,9 +35,9 @@ namespace Game.UI
         {
             //初始化
             windowMap = new Dictionary<int, M_AWindow>();
-            Bottom = GameObject.Find("UIRoot/Bottom").transform;
-            Center = GameObject.Find("UIRoot/Center").transform;
-            Top = GameObject.Find("UIRoot/Top").transform;
+            Bottom    = GameObject.Find("UIRoot/Bottom").transform;
+            Center    = GameObject.Find("UIRoot/Center").transform;
+            Top       = GameObject.Find("UIRoot/Top").transform;
         }
 
         //

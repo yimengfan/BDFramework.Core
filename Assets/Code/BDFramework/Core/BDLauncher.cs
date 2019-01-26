@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Reflection;
 using BDFramework;
 using BDFramework.GameStart;
@@ -202,7 +203,11 @@ namespace BDFramework
         void OnApplicationQuit()
         {
 #if UNITY_EDITOR
-            BDFramework.Sql.SqliteHelper.DB.Close();
+            if (BDFramework.Sql.SqliteHelper.DB != null)
+            {
+                BDFramework.Sql.SqliteHelper.DB.Close();
+            }
+
             ILRuntimeHelper.Close();
 #endif
         }

@@ -36,7 +36,8 @@ namespace BDFramework
         /// <param name="onProcess"></param>
         /// <param name="onError"></param>
         /// 返回码: -1：error  0：success
-        static async public Task<int> Start(string serverConfigPath, string localConfigPath, Action<int, int> onProcess,Action<string> onError)
+        static async public Task Start(string serverConfigPath, string localConfigPath, Action<int, int> onProcess,
+            Action<string> onError)
         {
 
             IPath.Combine("", "");
@@ -54,7 +55,6 @@ namespace BDFramework
             catch (Exception e)
             {
                 onError(e.Message);
-                return -1;
             }
 
             
@@ -98,7 +98,6 @@ namespace BDFramework
                 {
                     BDebug.LogError(sp);
                     onError( e.Message);
-                    return -1;
                 }
 
                 BDebug.Log("下载成功：" + sp);
@@ -115,7 +114,6 @@ namespace BDFramework
                 BDebug.Log("可更新数量为0");
             }
             
-            return 0;
         }
 
 

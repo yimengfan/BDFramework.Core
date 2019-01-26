@@ -106,18 +106,16 @@ public class Window_DemoMain : AWindow
         this.btn_07.onClick.AddListener(() =>
         {
             var path = Application.streamingAssetsPath;
-            
-            var t = VersionContorller.Start("http://127.0.0.1", path,
-                (i, j) =>
-                {
-                    Debug.LogFormat("资源更新进度：{0}/{1}", i, j);
-                },
-                (error) =>
-                {
-                    Debug.LogError("错误:" + error);
-                });
-            //var result = t.Result;
-            Debug.Log("下载状态返回:" );
+        
+            VersionContorller.Start("http://127.0.0.1", path,
+            (i, j) =>
+            {
+                Debug.LogFormat("资源更新进度：{0}/{1}", i, j);
+            },
+            (error) =>
+            {
+                Debug.LogError("错误:" + error);
+            });
         });
     }
 

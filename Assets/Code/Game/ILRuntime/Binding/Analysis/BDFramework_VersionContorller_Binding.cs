@@ -53,14 +53,10 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = BDFramework.VersionContorller.Start(@serverConfigPath, @localConfigPath, @onProcess, @onError);
+           BDFramework.VersionContorller.Start(@serverConfigPath, @localConfigPath, @onProcess, @onError);
 
-            object obj_result_of_this_method = result_of_this_method;
-            if(obj_result_of_this_method is CrossBindingAdaptorType)
-            {    
-                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
-            }
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+
+            return ILIntepreter.PushObject(__ret, __mStack, null);
         }
 
 
