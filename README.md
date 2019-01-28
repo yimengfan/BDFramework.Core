@@ -26,7 +26,7 @@ unity版本：2018.3f 2018.2.17f3以上
 ### UI工作流:
 1.psd2ugui：prefab生成方式自行选择
 <br>2.UIManager和UI基础操作.   [点击](https://zhuanlan.zhihu.com/p/40766519)
-<br>3.MVC模式初探[玩具不建议使用，老老实实继承AWindows] [点击](https://zhuanlan.zhihu.com/p/40772076)
+<br>3.MVC模式初探  [玩具不建议使用，老老实实继承AWindows] [点击](https://zhuanlan.zhihu.com/p/40772076)
 <br>4.UI工作流工具的使用        [点击](https://zhuanlan.zhihu.com/p/40941129)
 <br>5.UI开发利器：UITools      [点击](https://zhuanlan.zhihu.com/p/41062357)
 <br>6.数据处理                 (已集成到一键打包,接口较为简单demo有)
