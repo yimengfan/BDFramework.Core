@@ -4,8 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BDFramework.ResourceMgr;
+using LitJson;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Networking.NetworkSystem;
+
+
+public class CacheItem
+{
+    public string Name = "null";
+    public string UIID = "none";
+
+    public CacheItem()
+    {
+    }
+}
 
 static public class AssetBundleEditorTools
 {
@@ -16,7 +29,7 @@ static public class AssetBundleEditorTools
         CreateAbName(rootPath, target, outPath);
         //2.打包
         BuildAssetBundle(target, outPath);
-        
+
         //配置写入本地
         var configPath = IPath.Combine(outPath, "Art/Config.json");
         var direct = Path.GetDirectoryName(configPath);
@@ -24,8 +37,10 @@ static public class AssetBundleEditorTools
         {
             Directory.CreateDirectory(direct);
         }
+
         File.WriteAllText(configPath, manifestConfig.ToString());
-        
+
+
         //删除多余文件
         var delFiles = Directory.GetFiles(outPath, "*.*", SearchOption.AllDirectories);
 
@@ -80,22 +95,18 @@ static public class AssetBundleEditorTools
         BuildPipeline.BuildAssetBundles(path, BuildAssetBundleOptions.ChunkBasedCompression, target);
     }
 
-   static ManifestConfig manifestConfig = null;
+    static ManifestConfig manifestConfig = null;
+
+    private static Dictionary<string, string> abCacheDict;
+
     private static void AnalyzeResource(string[] paths, BuildTarget target, string outpath)
     {
+        manifestConfig = new ManifestConfig();
+        List<string> changeList = new List<string>();
+        //需要保留的ab UID集合
+        Dictionary<string, string> saveCache = new Dictionary<string, string>();
 
-        var configPath = IPath.Combine(outpath, "Art/Config.json");
-        if (File.Exists(configPath))
-        {
-            var content = File.ReadAllText(configPath);
-            manifestConfig = new ManifestConfig(content);
-        }
-        else
-        {
-            manifestConfig = new ManifestConfig();
-        }
-
-        int counter = 0;
+        abCacheDict = GetABCache(outpath);
         float curIndex = 0;
         foreach (var path in paths)
         {
@@ -109,10 +120,8 @@ static public class AssetBundleEditorTools
             var dependsource = "Assets" + _path.Replace(Application.dataPath, "");
             var allDependObjectPaths = AssetDatabase.GetDependencies(dependsource).ToList();
 
-            var manifestItem = manifestConfig.GetManifestItem(dependsource.ToLower());
             var Uiid = GetMD5HashFromFile(_path);
             // 
-            var isEquals = manifestItem != null && Uiid == manifestItem.UIID;
             List<string> newAssets = new List<string>();
             //处理依赖资源是否打包
             for (int i = 0; i < allDependObjectPaths.Count; i++)
@@ -137,43 +146,147 @@ static public class AssetBundleEditorTools
                 }
 
 
-                //重新组建ab名字，带上路径名
-                dependPath = Path.GetFullPath(dependPath);
-                dependPath = dependPath.Replace("\\", "/");
-                //根据是否相等,判断是否打包
-                if (isEquals)
+                var fullpath = Application.dataPath + dependPath.TrimStart("Assets".ToCharArray());
+                var uid = GetMD5HashFromFile(fullpath);
+                string derictory = "assets" + fullpath.Replace(Application.dataPath, "").ToLower();
+
+                string cacheid;
+                if (abCacheDict.TryGetValue(derictory, out cacheid))
                 {
-                    //本次不打包
-                    ai.assetBundleName = null;
+                    if (!cacheid.Equals(uid))
+                    {
+                        ai.assetBundleName = derictory;
+                        ai.assetBundleVariant = "";
+                        abCacheDict[derictory] = uid;
+                        changeList.Add(derictory);
+                    }
+                    else
+                    {
+                        //已经设置过abname的
+                        if (!changeList.Contains(derictory))
+                        {
+                            ai.assetBundleName = "";
+                        }
+                    }
                 }
                 else
                 {
-                    //本次打包
-                    string derictory = "assets" + dependPath.Replace(Application.dataPath, "");
-                    ai.assetBundleName = derictory.ToLower();
-
-                    newAssets.Add(ai.assetBundleName);
+                    ai.assetBundleName = derictory;
                     ai.assetBundleVariant = "";
+                    abCacheDict[derictory] = uid;
+                    changeList.Add(derictory);
                 }
+
+                if (!saveCache.ContainsKey(derictory))
+                {
+                    saveCache.Add(derictory, uid);
+                }
+                else
+                {
+                    saveCache[derictory] = uid;
+                }
+
+
+                newAssets.Add(derictory);
             }
 
 
             //将现在的目录结构替换配置中的
-
             if (newAssets.Count > 0)
             {
                 newAssets.Remove(dependsource.ToLower());
-                manifestConfig.AddDepend( dependsource.ToLower(), Uiid, newAssets);
-                counter++;
+                manifestConfig.AddDepend(dependsource.ToLower(), Uiid, newAssets);
             }
-
-            
         }
+
+        //保存用到的ab
+        abCacheDict = SaveCache(saveCache, outpath);
+        //移除没用到ab
+        RemoveUnuseAb(outpath);
+
         EditorUtility.ClearProgressBar();
-        Debug.Log("本地需要打包资源:" + counter);
+        Debug.Log("本地需要打包资源:" + changeList.Count);
+    }
+
+    private static Dictionary<string, string> SaveCache(Dictionary<string, string> saveCache, string outpath)
+    {
+        List<CacheItem> list = new List<CacheItem>();
+        foreach (KeyValuePair<string, string> kv in saveCache)
+        {
+            var item = new CacheItem();
+            item.Name = kv.Key;
+            item.UIID = kv.Value;
+            list.Add(item);
+        }
+
+        string json = JsonMapper.ToJson(list);
+        //配置写入本地
+        var configPath = IPath.Combine(outpath, "Art/CacheConfig.json");
+        var direct = Path.GetDirectoryName(configPath);
+        if (Directory.Exists(direct) == false)
+        {
+            Directory.CreateDirectory(direct);
+        }
+
+        File.WriteAllText(configPath, json);
+        return saveCache;
+    }
+
+    private static void RemoveUnuseAb(string outpath)
+    {
+        outpath = outpath + "/Art/";
+        //删除多余文件
+        var delFiles = Directory.GetFiles(outpath, "*.*", SearchOption.AllDirectories);
+        int count = delFiles.Length;
+        float index = 0;
+        foreach (string tpfile in delFiles)
+        {
+            index++;
+            EditorUtility.DisplayProgressBar("检查资源",
+                Path.GetFileNameWithoutExtension(tpfile) + "   进度：" + index + "/" + count,
+                index / count);
+            var file = tpfile.Replace(outpath, "").Replace("\\", "/");
+
+            if (!abCacheDict.Keys.Contains(file))
+            {
+                if (!file.EndsWith("CacheConfig.json") || !file.EndsWith("Config.json"))
+                {
+                    File.Delete(tpfile);
+                    Debug.Log("delete unuse file:" + tpfile);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 获取上次打包的配置
+    /// </summary>
+    /// <param name="outpath"></param>
+    /// <returns></returns>
+    private static Dictionary<string, string> GetABCache(string outpath)
+    {
+        var cacheDict = new Dictionary<string, string>();
+        var configPath = IPath.Combine(outpath, "Art/CacheConfig.json");
+        if (File.Exists(configPath))
+        {
+            var content = File.ReadAllText(configPath);
+            var list = JsonMapper.ToObject<List<CacheItem>>(content);
+            foreach (CacheItem item in list)
+            {
+                cacheDict.Add(item.Name, item.UIID);
+            }
+        }
+
+        return cacheDict;
     }
 
 
+    /// <summary>
+    /// 获取文件的md5
+    /// </summary>
+    /// <param name="fileName"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     private static string GetMD5HashFromFile(string fileName)
     {
         try
