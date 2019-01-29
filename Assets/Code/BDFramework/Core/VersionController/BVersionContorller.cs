@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using BDFramework.Helper;
 using BDFramework.Http;
+using Game.Data;
 using ILRuntime.Runtime.Intepreter;
 using Mono.Cecil;
 using UnityEngine;
@@ -30,6 +31,16 @@ namespace BDFramework
     /// </summary>
     static public class VersionContorller
     {
+        private static List<AssetItem> curDownloadList = null;
+        private static int curDonloadIndex = 0;
+        private static string serverConfig = null;
+
+
+        static public void Start(string serverConfigPath, string localConfigPath, Action<int, int> onProcess,Action<string> onError)
+        {
+            IEnumeratorTool.StartCoroutine(IE_Start(serverConfigPath, localConfigPath, onProcess, onError));
+        }
+
         /// <summary>
         /// 开始任务
         /// </summary>
@@ -38,135 +49,57 @@ namespace BDFramework
         /// <param name="onProcess"></param>
         /// <param name="onError"></param>
         /// 返回码: -1：error  0：success
-        static async public Task Start(string serverConfigPath, string localConfigPath, Action<int, int> onProcess,
-            Action<string> onError)
+        static private IEnumerator IE_Start(string serverConfigPath, string localConfigPath, Action<int, int> onProcess, Action<string> onError)
         {
-
-            IPath.Combine("", "");
-            var client = HttpMgr.Inst.GetFreeHttpClient();
             var platform = Utils.GetPlatformPath(Application.platform);
-            //开始下载服务器配置
-            var serverPath = serverConfigPath + "/" + platform + "/" + platform + "_VersionConfig.json";
-            Debug.Log("server:" + serverPath);
-            string serverConfig = "";
-            try
-            {
-                serverConfig = await client.DownloadStringTaskAsync(serverPath);
-                BDebug.Log("服务器资源配置:" + serverConfig);
-            }
-            catch (Exception e)
-            {
-                onError(e.Message);
-            }
-
             
-            var serverconf = LitJson.JsonMapper.ToObject<AssetConfig>(serverConfig);
-            AssetConfig localconf = null;
-            var localPath = localConfigPath + "/" + platform + "/" + platform + "_VersionConfig.json";
-
-            if (File.Exists(localPath))
+            if (curDownloadList == null || curDownloadList.Count == 0)
             {
-                localconf = LitJson.JsonMapper.ToObject<AssetConfig>(File.ReadAllText(localPath));
-            }
-
-            //对比差异列表进行下载
-            var list = CompareConfig(localConfigPath, localconf, serverconf);
-            if (list.Count > 0)
-            {
-                //预通知要进入热更模式
-                onProcess(0, list.Count);
-            }
-
-            int count = 0;
-            foreach (var item in list)
-            {
-                count++;
-                var sp = serverConfigPath + "/" + platform + "/" + item.HashName;
-                var lp = localConfigPath + "/" + platform + "/" + item.LocalPath;
-
-                //创建目录
-                var direct = Path.GetDirectoryName(lp);
-                if (Directory.Exists(direct) == false)
+                //开始下载服务器配置
+                var serverPath = serverConfigPath + "/" + platform + "/" + platform + "_VersionConfig.json";
+                BDebug.Log("server:" + serverPath);
+               
+                //下载config
                 {
-                    Directory.CreateDirectory(direct);
+                    var wr = UnityWebRequest.Get(serverPath);
+                    yield return wr.SendWebRequest();
+                    if (wr.error == null)
+                    {
+                        serverConfig = wr.downloadHandler.text;
+                        BDebug.Log("服务器资源配置:" + serverConfig);
+                    }
+                    else
+                    {
+                        Debug.LogError(wr.error);
+                    }
+
                 }
 
-                //下载
-                try
-                {
-                   await client.DownloadFileTaskAsync(sp, lp);
-                }
-                catch (Exception e)
-                {
-                    BDebug.LogError(sp);
-                    onError( e.Message);
-                }
-                
 
-                BDebug.Log("下载成功：" + sp);
-                onProcess(count, list.Count);
-            }
+                var serverconf = LitJson.JsonMapper.ToObject<AssetConfig>(serverConfig);
+                AssetConfig localconf = null;
+                var localPath = string.Format("{0}/{1}/{2}_VersionConfig.json", localConfigPath, platform, platform);
 
-            //写到本地
-            if (list.Count > 0)
-            {
-                File.WriteAllText(localPath, serverConfig);
-            }
-            else
-            {
-                BDebug.Log("可更新数量为0");
-            }
-            
-        }
-
-        static  public IEnumerator IEStart(string serverConfigPath, string localConfigPath, Action<int, int> onProcess, Action<string> onError)
-        {
-
-            IPath.Combine("", "");
-            var client = HttpMgr.Inst.GetFreeHttpClient();
-            var platform = Utils.GetPlatformPath(Application.platform);
-            //开始下载服务器配置
-            var serverPath = serverConfigPath + "/" + platform + "/" + platform + "_VersionConfig.json";
-            Debug.Log("server:" + serverPath);
-            string serverConfig = "";
-            //下载config
-            {
-                var wr = UnityWebRequest.Get(serverPath);
-                yield return wr.SendWebRequest();
-                if (wr.error == null)
+                if (File.Exists(localPath))
                 {
-                    serverConfig = wr.downloadHandler.text;
-                    BDebug.Log("服务器资源配置:" + serverConfig);
-                }
-                else
-                {
-                    Debug.LogError(wr.error);
+                    localconf = LitJson.JsonMapper.ToObject<AssetConfig>(File.ReadAllText(localPath));
                 }
 
+                //对比差异列表进行下载
+                curDownloadList = CompareConfig(localconf, serverconf);
+                if (curDownloadList.Count > 0)
+                {
+                    //预通知要进入热更模式
+                    onProcess(0, curDownloadList.Count);
+                }
             }
 
 
-            var serverconf = LitJson.JsonMapper.ToObject<AssetConfig>(serverConfig);
-            AssetConfig localconf = null;
-            var localPath = localConfigPath + "/" + platform + "/" + platform + "_VersionConfig.json";
-
-            if (File.Exists(localPath))
+            while (curDonloadIndex< curDownloadList.Count)
             {
-                localconf = LitJson.JsonMapper.ToObject<AssetConfig>(File.ReadAllText(localPath));
-            }
 
-            //对比差异列表进行下载
-            var list = CompareConfig(localConfigPath, localconf, serverconf);
-            if (list.Count > 0)
-            {
-                //预通知要进入热更模式
-                onProcess(0, list.Count);
-            }
+                var item = curDownloadList[curDonloadIndex];
 
-            int count = 0;
-            foreach (var item in list)
-            {
-                count++;
                 var sp = serverConfigPath + "/" + platform + "/" + item.HashName;
                 var lp = localConfigPath + "/" + platform + "/" + item.LocalPath;
 
@@ -184,54 +117,46 @@ namespace BDFramework
                 {
                     File.WriteAllBytes(lp, wr.downloadHandler.data);
                     BDebug.Log("下载成功：" + sp);
-                    onProcess(count, list.Count);
+                    onProcess(curDonloadIndex,  curDownloadList.Count -1);
                 }
                 else
                 {
                     BDebug.LogError("下载失败:" + wr.error);
-                    onError(wr.error);
+                    onError(wr.error);          
+                    yield break;
                 }
-            }
 
-            //写到本地
-            if (list.Count > 0)
-            {
-                File.WriteAllText(localPath, serverConfig);
-            }
-            else
-            {
-                BDebug.Log("可更新数量为0");
+                //自增
+                curDonloadIndex++;
             }
             
-        }
-        
-        
-        
-        
-
-        static IEnumerator  IE_DownloadFile(string serverPath, string localPath, Action<bool> callback)
-        {
-            var wr = UnityWebRequest.Get(serverPath);
-            yield return wr;
-            if (wr.error == null)
+            //写到本地
+            if ( curDownloadList.Count > 0)
             {
-                File.WriteAllBytes(localPath, wr.downloadHandler.data);
-                callback(true);
+                File.WriteAllText( string.Format("{0}/{1}/{2}_VersionConfig.json", localConfigPath, platform, platform), serverConfig);
             }
             else
             {
-                callback(false);
+                BDebug.Log("不用更新");
+                onProcess(1, 1);
             }
-
+            
+            
+            //重置
+            curDownloadList = null;
+            curDonloadIndex = 0;
+            serverConfig = null;
         }
-
+        
+       
         /// <summary>
         /// 对比
         /// </summary>
-        static public List<AssetItem> CompareConfig(string root, AssetConfig local, AssetConfig server)
+        static public List<AssetItem> CompareConfig(AssetConfig local, AssetConfig server)
         {
             if (local == null)
             {
+
                 return server.Assets;
             }
 
