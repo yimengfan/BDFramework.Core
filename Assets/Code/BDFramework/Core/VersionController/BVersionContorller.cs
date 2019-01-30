@@ -5,7 +5,6 @@ using System.IO;
 using System.Threading.Tasks;
 using BDFramework.Helper;
 using BDFramework.Http;
-using Game.Data;
 using ILRuntime.Runtime.Intepreter;
 using Mono.Cecil;
 using UnityEngine;

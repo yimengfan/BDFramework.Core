@@ -29,9 +29,14 @@ public class ScriptBiuldTools
         
     
         //这里是引入unity所有引用的dll
+        #if UNITY_EDITOR_OSX
+        var u3dUI =  EditorApplication.applicationContentsPath+@"/UnityExtensions/Unity/GUISystem";
+        var u3dEngine = EditorApplication.applicationContentsPath+@"/Managed/UnityEngine";
+        #else
         var u3dUI =  EditorApplication.applicationContentsPath+@"\UnityExtensions\Unity\GUISystem";
         var u3dEngine = EditorApplication.applicationContentsPath+@"\Managed\UnityEngine";
-
+        #endif
+        BDebug.Log(EditorApplication.applicationContentsPath);
         if (Directory.Exists(u3dUI) == false || Directory.Exists(u3dEngine) == false)
         {
             EditorUtility.DisplayDialog("提示", "u3d根目录不存在,请修改ScriptBiuld_Service类中,u3dui 和u3dengine 的dll目录", "OK");
@@ -79,7 +84,7 @@ public class ScriptBiuldTools
         files = files.Distinct().ToList();
         for (int i = 0; i < files.Count; i++)
         {
-            files[i] = files[i].Replace('/', '\\').Trim('\\');
+            files[i] = files[i].Replace('\\', '/').Trim();
         }
 
         EditorUtility.DisplayProgressBar("编译服务", "开始整理script", 0.2f);
@@ -89,7 +94,11 @@ public class ScriptBiuldTools
         var hotfixCs = files.FindAll(f => !f.EndsWith(".dll") && f.Contains("@hotfix"));
 
 
+#if UNITY_EDITOR_OSX
+        var tempDirect = Application.persistentDataPath + "/bd_temp";
+#else
         var tempDirect = "c:/bd_temp";
+#endif
         if (Directory.Exists(tempDirect))
         {
             Directory.Delete(tempDirect, true);
@@ -140,7 +149,7 @@ public class ScriptBiuldTools
 
         //为解决mono.exe error: 文件名太长问题
         //全部拷贝到临时目录
-        tempDirect = "c:/bd_temp";
+   
         for (int i = 0; i < baseCs.Count; i++)
         {
             var copyto = IPath.Combine(tempDirect, Path.GetFileName(baseCs[i]));
@@ -179,12 +188,12 @@ public class ScriptBiuldTools
         {
 
             //转换shortname
-            for (int i = 0; i < baseCs.Count; i++)
-            {
-                var cs = baseCs[i];
-                baseCs[i] = FileNameHelper.GetShortPath(cs);
-            }
-            
+//            for (int i = 0; i < baseCs.Count; i++)
+//            {
+//                var cs = baseCs[i];
+//                baseCs[i] = FileNameHelper.GetShortPath(cs);
+//            }
+//            
             Build(refDlls.ToArray(), baseCs.ToArray(), baseDllPath);
             AssetDatabase.Refresh();
         }
@@ -208,11 +217,11 @@ public class ScriptBiuldTools
         try
         {
             //转换shortname
-            for (int i = 0; i < hotfixCs.Count; i++)
-            {
-                var cs = hotfixCs[i];
-                hotfixCs[i] = FileNameHelper.GetShortPath(cs);
-            }
+//            for (int i = 0; i < hotfixCs.Count; i++)
+//            {
+//                var cs = hotfixCs[i];
+//                hotfixCs[i] = FileNameHelper.GetShortPath(cs);
+//            }
             
             Build(refDlls.ToArray(), hotfixCs.ToArray(), outHotfixDirectory);
             AssetDatabase.Refresh();
