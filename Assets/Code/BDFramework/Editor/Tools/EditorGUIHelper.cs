@@ -13,6 +13,16 @@ namespace BDFramework.Editor.Tools
                 textColor = Color.red
             }
         };
+       
+       
+       readonly static public  GUIStyle OnGUITitleStyle =new GUIStyle()
+       {
+           fontSize = 25,
+           normal = new GUIStyleState()
+           {
+               textColor = Color.red
+           }
+       };
         
     }
 }

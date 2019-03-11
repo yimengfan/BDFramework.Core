@@ -44,7 +44,7 @@ namespace BDFramework.Editor
             var tablePath = IPath.Combine(Application.dataPath, "Resource/Table");
             var tableDir = Path.GetDirectoryName(tablePath);
             var jsonFiles = Directory.GetFiles(tableDir, "*.json", SearchOption.AllDirectories);
-            var _path = IPath.Combine(outPath,  "Local.db");
+            var _path = IPath.Combine(outPath, "Local.db");
             sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
             foreach (var f in jsonFiles)
             {
@@ -61,11 +61,11 @@ namespace BDFramework.Editor
         //数据库准备
         static private SQLiteService sql;
 
-        public static void GenxslxOrJsonToSQlite(IDictionary<string ,string> path)
+        public static void GenxslxOrJsonToSQlite(IDictionary<string, string> path)
         {
             var outPath = IPath.Combine(Application.streamingAssetsPath,
                 Utils.GetPlatformPath(Application.platform));
-            var _path = IPath.Combine(outPath,  "Local.db");
+            var _path = IPath.Combine(outPath, "Local.db");
             sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
             foreach (var f in path)
             {
@@ -82,7 +82,7 @@ namespace BDFramework.Editor
         {
             var outPath = IPath.Combine(Application.streamingAssetsPath,
                 Utils.GetPlatformPath(Application.platform));
-            var _path = IPath.Combine(outPath,  "Local.db");
+            var _path = IPath.Combine(outPath, "Local.db");
             sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
             foreach (var f in paths)
             {
@@ -100,7 +100,7 @@ namespace BDFramework.Editor
         {
             //
             var table = Path.GetFileName(f).Replace(Path.GetExtension(f), "");
-            var classname = "Game.Data." + table;
+            var classname = "Game.Data." + table ;
 //            Debug.Log("class name：" + classname);
             var jsonObj = JsonMapper.ToObject(json);
 
@@ -119,7 +119,7 @@ namespace BDFramework.Editor
             //数据库创建表
             //sql.DB.Delete<>()
             sql.Connection.DropTableByType(t);
-         //   Debug.Log(t.FullName);
+            //   Debug.Log(t.FullName);
             sql.Connection.CreateTableByType(t);
 
             EditorUtility.ClearProgressBar();
@@ -139,6 +139,32 @@ namespace BDFramework.Editor
                     Debug.LogError("导出数据有错,跳过! 错误位置:" + classname + ":" + i + "-" + jsonObj.Count);
                 }
             }
+        }
+
+        [MenuItem("Assets/单个json导入到数据库")]
+        public static void Json2SqliteQuick()
+        {
+            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            path = Path.GetFullPath(path);
+            var outPath = IPath.Combine(Application.streamingAssetsPath,
+                Utils.GetPlatformPath(Application.platform));
+            var _path = IPath.Combine(outPath, "Local.db");
+            sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
+            string content = File.ReadAllText(path);
+            Json2Sqlite(path, content);
+            sql.Close();
+            EditorUtility.ClearProgressBar();
+            Debug.Log("导出Sqlite完成!");
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Assets/单个json导入到数据库", true)]
+        //当返回真时启用
+        private static bool NewMenuOptionValidation()
+        {
+            if (Selection.activeObject.GetType() != typeof(TextAsset)) return false;
+            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            return path.EndsWith(".json");
         }
     }
 }

@@ -52,6 +52,7 @@ namespace BDFramework.ResourceMgr
         List<int> AsyncLoad(IList<string> sources, Action<IDictionary<string, Object>> onLoadEnd,
             Action<int, int> onLoadProcess);
 
+
         /// <summary>
         /// 取消一个加载任务
         /// </summary>

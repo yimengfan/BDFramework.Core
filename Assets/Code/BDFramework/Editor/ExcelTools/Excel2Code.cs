@@ -8,6 +8,8 @@ using LitJson;
 using UnityEditor;
 using UnityEngine;
 using System;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 namespace BDFramework.Editor
 {
@@ -16,6 +18,25 @@ namespace BDFramework.Editor
         public static void GenCode()
         {
             var tablePath = Path.Combine(Application.dataPath, "Resource/Table");
+            DirectoryInfo info = new DirectoryInfo(tablePath);
+
+            foreach (var file in info.GetFiles())
+            {
+                if (!file.FullName.ToLower().EndsWith("xlsx") && !file.FullName.ToLower().EndsWith("xls")) continue;
+                string fname = Path.GetFileNameWithoutExtension(file.FullName).ToLower();
+                fname = UpperFirst(fname);
+                string destPath = Path.GetDirectoryName(file.FullName) + "\\" + fname +
+                                  Path.GetExtension(file.FullName);
+//                //判断是否重名
+                string oldPath = "Assets" + file.FullName.Replace('\\', '/').Replace(Application.dataPath, "");
+                string newPath = "Assets" + destPath.Replace('\\', '/').Replace(Application.dataPath, "");
+                if (!oldPath.Equals(newPath))
+                    AssetDatabase.CopyAsset(oldPath, newPath);
+            }
+
+
+            AssetDatabase.Refresh();
+
             var tableDir = Path.GetDirectoryName(tablePath);
             var xlslFiles = Directory.GetFiles(tableDir, "*.xlsx", SearchOption.AllDirectories);
 
@@ -39,6 +60,16 @@ namespace BDFramework.Editor
         }
 
 
+        private static string UpperFirst(string s)
+        {
+            return Regex.Replace(s, @"\b[a-z]\w+", delegate(Match match)
+            {
+                string v = match.ToString();
+                return char.ToUpper(v[0]) + v.Substring(1);
+            });
+        }
+
+
         private static void Json2Class(string fileName, string json, List<object> statements)
         {
             string structName = "";
@@ -48,13 +79,14 @@ namespace BDFramework.Editor
             //首字母大写
             structName = structName.Substring(0, 1).ToUpper() + structName.Substring(1);
             //输出目录控制
-            string outputFile = Path.Combine(Application.dataPath,"Code/Game@hotfix/Table");
+            string outputFile = Path.Combine(Application.dataPath, "Code/Game@hotfix/Table");
             if (Directory.Exists(outputFile) == false)
             {
                 Directory.CreateDirectory(outputFile);
             }
+
             //输出目录
-            outputFile = Path.Combine(outputFile,  Path.GetFileName(fileName).Replace(".xlsx", ".cs"));
+            outputFile = Path.Combine(outputFile, Path.GetFileName(fileName).Replace(".xlsx", ".cs"));
 
 
             //生成类服务
@@ -88,7 +120,7 @@ namespace BDFramework.Editor
                 //字段
 
                 string memberContent =
-@"       public [type] [Name] {get;set;}";
+                    @"       public [type] [Name] {get;set;}";
                 CodeSnippetTypeMember member = new CodeSnippetTypeMember();
                 if (key.ToLower() == "id" && key != "Id")
                 {
@@ -100,7 +132,7 @@ namespace BDFramework.Editor
                     //增加一个sqlite主键
                     //member.CustomAttributes.Add(new CodeAttributeDeclaration("PrimaryKey"));
                     memberContent =
-@"      [PrimaryKey] 
+                        @"      [PrimaryKey] 
         public [type] [Name] {get;set;}";
                 }
 

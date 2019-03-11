@@ -62,11 +62,13 @@ abstract public class ADataListener
         {
             List<Action<object>> actions = null;
             if (callbackMap.TryGetValue(name, out actions))
-            {               
-                foreach (var a in actions )
+            {
+
+                for (int i = actions.Count-1; i >=0 ; i--)
                 {
-                   a(value);
-                } 
+                    var a = actions[i];
+                    a(value);
+                }
             }
             else
             {

@@ -257,7 +257,7 @@ namespace BDFramework.UI
             }
             else
             {
-                Debug.LogErrorFormat("不存在UI：{0}", uiIndex);
+                Debug.LogErrorFormat("未加载UI：{0}", uiIndex);
             }
         }
 

@@ -14,6 +14,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="abModel"></param>
         /// <param name="callback"></param>
+        
         static public void Load(string root = "")
         {
             if (root != "")
@@ -88,12 +89,20 @@ namespace BDFramework.ResourceMgr
         }
 
 
+        /// <summary>
+        /// 删除接口
+        /// </summary>
+        /// <param name="trans"></param>
         public static void Destroy(Transform trans)
         {
             if (trans)
                 GameObject.DestroyObject(trans.gameObject);
         }
         
+        /// <summary>
+        /// 删除接口
+        /// </summary>
+        /// <param name="go"></param>
         public static void Destroy(GameObject go)
         {
             if (go)

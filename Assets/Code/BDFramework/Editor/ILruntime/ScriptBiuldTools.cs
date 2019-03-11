@@ -4,6 +4,8 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Security.AccessControl;
 using Debug = UnityEngine.Debug;
 using BDFramework.ResourceMgr;
 using Tool;
@@ -21,32 +23,18 @@ public class ScriptBiuldTools
     }
 
 #if UNITY_EDITOR
+
+    private static Dictionary<int, string> csFilesMap;
     /// <summary>
     /// 编译DLL
     /// </summary>
     static public void GenDllByMono(string dataPath, string outPath)
     {
-        
-    
-        //这里是引入unity所有引用的dll
-        #if UNITY_EDITOR_OSX
-        var u3dUI =  EditorApplication.applicationContentsPath+@"/UnityExtensions/Unity/GUISystem";
-        var u3dEngine = EditorApplication.applicationContentsPath+@"/Managed/UnityEngine";
-        #else
-        var u3dUI =  EditorApplication.applicationContentsPath+@"\UnityExtensions\Unity\GUISystem";
-        var u3dEngine = EditorApplication.applicationContentsPath+@"\Managed\UnityEngine";
-        #endif
-        BDebug.Log(EditorApplication.applicationContentsPath);
-        if (Directory.Exists(u3dUI) == false || Directory.Exists(u3dEngine) == false)
-        {
-            EditorUtility.DisplayDialog("提示", "u3d根目录不存在,请修改ScriptBiuld_Service类中,u3dui 和u3dengine 的dll目录", "OK");
-            return;
-        }
-        
-        //编译项目的base.dll
-        EditorUtility.DisplayProgressBar("编译服务", "准备编译dll", 0.1f);
+        EditorUtility.DisplayProgressBar("编译服务", "准备编译环境...", 0.1f);
+        //全局变量
+        var baseDllPath = outPath + "/hotfix/base.dll";
 
-        //准备工作
+        //清空输出环境
         var path = outPath + "/Hotfix";
         if (Directory.Exists(path))
         {
@@ -54,50 +42,12 @@ public class ScriptBiuldTools
         }
 
         Directory.CreateDirectory(path);
-        
 
-        string[] searchPath = new string[] {"3rdPlugins", "Code", "Plugins", "Resource"};
-
-        for (int i = 0; i < searchPath.Length; i++)
-        {
-            searchPath[i] = IPath.Combine(dataPath, searchPath[i]);
-        }
-
-        List<string> files = new List<string>();
-        foreach (var s in searchPath)
-        {
-            var fs = Directory.GetFiles(s, "*.*", SearchOption.AllDirectories).ToList();
-            var _fs = fs.FindAll(f =>
-            {
-                var exten = Path.GetExtension(f).ToLower();
-                if ( f.ToLower().Contains("editor")==false && (exten.Equals(".dll")|| exten.Equals(".cs")))
-                {
-                    return true;
-                }
-
-                return false;
-            });
-
-            files.AddRange(_fs);
-        }
-
-        files = files.Distinct().ToList();
-        for (int i = 0; i < files.Count; i++)
-        {
-            files[i] = files[i].Replace('\\', '/').Trim();
-        }
-
-        EditorUtility.DisplayProgressBar("编译服务", "开始整理script", 0.2f);
-
-        var refDlls = files.FindAll(f => f.EndsWith(".dll"));
-        var baseCs = files.FindAll(f => !f.EndsWith(".dll") && !f.Contains("@hotfix"));
-        var hotfixCs = files.FindAll(f => !f.EndsWith(".dll") && f.Contains("@hotfix"));
-
-
+        //创建临时环境
 #if UNITY_EDITOR_OSX
         var tempDirect = Application.persistentDataPath + "/bd_temp";
 #else
-        var tempDirect = "c:/bd_temp";
+        var tempDirect = "d:/bd_temp";
 #endif
         if (Directory.Exists(tempDirect))
         {
@@ -106,73 +56,16 @@ public class ScriptBiuldTools
 
         Directory.CreateDirectory(tempDirect);
 
-        //除去不需要引用的dll
-        for (int i = refDlls.Count - 1; i >= 0; i--)
-        {
-            var str = refDlls[i];
-            if (str.Contains("iOS") || str.Contains("Android"))
-            {
-                refDlls.RemoveAt(i);
-            }
-        }
-
-        //去除同名 重复的dll
-        for (int i = 0; i < refDlls.Count; i++)
-        {
-            var copyto = IPath.Combine(tempDirect, Path.GetFileName(refDlls[i]));
-            File.Copy(refDlls[i], copyto, true);
-            refDlls[i] = copyto;
-        }
-
-        refDlls.Add("System.dll");
-        refDlls.Add("System.Core.dll");
-        refDlls.Add("System.XML.dll");
-        refDlls.Add("System.Data.dll");
-
-        //dll1
-        var u3ddlls1 = Directory.GetFiles(u3dUI, "*.dll", SearchOption.TopDirectoryOnly);
-        foreach (var d in u3ddlls1)
-        {
-            refDlls.Add(d);
-        }
-
-        //dll2
-        var u3ddlls2 = Directory.GetFiles(u3dEngine, "*.dll", SearchOption.AllDirectories);
-        foreach (var d in u3ddlls2)
-        {
-            refDlls.Add(d);
-        }
-
-        //
-        var baseDllPath = outPath + "/hotfix/base.dll";
-        EditorUtility.DisplayProgressBar("编译服务", "复制编译代码", 0.3f);
-
-        //为解决mono.exe error: 文件名太长问题
-        //全部拷贝到临时目录
-   
-        for (int i = 0; i < baseCs.Count; i++)
-        {
-            var copyto = IPath.Combine(tempDirect, Path.GetFileName(baseCs[i]));
-            int count = 1;
-            while (File.Exists(copyto))
-            {
-                copyto = copyto.Replace(".cs", "") + count + ".cs";
-                count++;
-            }
-
-            File.Copy(baseCs[i], copyto);
-            baseCs[i] = copyto.Replace("\\","/");
-        }
-
         //建立目标目录
         var outDirectory = Path.GetDirectoryName(baseDllPath);
-        if (Directory.Exists(outDirectory))
-        {
-            Directory.Delete(outDirectory, true);
-        }
-        //
+        //准备输出环境
         try
         {
+            if (Directory.Exists(outDirectory))
+            {
+                Directory.Delete(path, true);
+            }
+
             Directory.CreateDirectory(outDirectory);
         }
         catch (Exception e)
@@ -182,68 +75,218 @@ public class ScriptBiuldTools
             return;
         }
 
-        EditorUtility.DisplayProgressBar("编译服务", "[1/2]开始编译base.dll", 0.4f);
+
+        #region 创建cs搜索目录
+
+        EditorUtility.DisplayProgressBar("编译服务", "搜索待编译Code...", 0.2f);
+        //
+        List<string> searchPath = new List<string>() {"3rdPlugins", "Code", "Plugins", "Resource"};
+        for (int i = 0; i < searchPath.Count; i++)
+        {
+            searchPath[i] = IPath.Combine(dataPath, searchPath[i]);
+        }
+
+        //2018.3的package目录
+        var pPath = Application.dataPath.Replace("Assets", "") + "Library/PackageCache";
+        searchPath.Add(pPath);
+
+        List<string> csFiles = new List<string>();
+        foreach (var s in searchPath)
+        {
+            var fs = Directory.GetFiles(s, "*.cs*", SearchOption.AllDirectories).ToList();
+            var _fs = fs.FindAll(f =>
+            {
+                if (!f.ToLower().Contains("editor")) //剔除editor
+                {
+                    return true;
+                }
+
+                return false;
+            });
+
+            csFiles.AddRange(_fs);
+        }
+
+        csFiles = csFiles.Distinct().ToList();
+        for (int i = 0; i < csFiles.Count; i++)
+        {
+            csFiles[i] = csFiles[i].Replace('\\', '/').Trim();
+        }
+
+        EditorUtility.DisplayProgressBar("编译服务", "开始整理script", 0.2f);
+
+        var baseCs = csFiles.FindAll(f => !f.Contains("@hotfix") && f.EndsWith(".cs"));
+        var hotfixCs = csFiles.FindAll(f => f.Contains("@hotfix") && f.EndsWith(".cs"));
+
+        #endregion
+
+        //
+
+
+        #region DLL引用搜集处理
+
+        EditorUtility.DisplayProgressBar("编译服务", "收集依赖dll...", 0.3f);
+        //这里是引入unity所有引用的dll
+
+        var u3dExten = EditorApplication.applicationContentsPath + @"/UnityExtensions/Unity";
+        var u3dEngine = EditorApplication.applicationContentsPath + @"/Managed/UnityEngine";
+        //var monoaot = EditorApplication.applicationContentsPath + @"/MonoBleedingEdge/lib/mono/unityjit";
+
+        var dllPathList = new List<string>() {u3dExten, u3dEngine, dataPath};
+        var dllFiles = new List<string>();
+        //
+        foreach (var p in dllPathList)
+        {
+            if (Directory.Exists(p) == false)
+            {
+                EditorUtility.DisplayDialog("提示", "u3d根目录不存在,请修改ScriptBiuld_Service类中,u3dui 和u3dengine 的dll目录", "OK");
+                return;
+            }
+        }
+
+
+        foreach (var dp in dllPathList)
+        {
+            var dlls = Directory.GetFiles(dp, "*.dll", SearchOption.AllDirectories);
+            foreach (var d in dlls)
+            {
+                var dllAbsPath = d.Replace(dp, "");
+                if (dllAbsPath.Contains("Editor")
+                    || dllAbsPath.Contains("iOS")
+                    || dllAbsPath.Contains("Android"))
+                {
+                    continue;
+                }
+
+                dllFiles.Add(d);
+            }
+        }
+
+        var monojit = EditorApplication.applicationContentsPath + @"/MonoBleedingEdge/lib/mono/unityjit";
+
+        var _dlls = Directory.GetFiles(monojit, "*.dll", SearchOption.AllDirectories);
+
+        var results = _dlls.ToList().FindAll((d) => d.Replace(monojit, "").Contains("Editor") == false
+                                                    && d.Contains("System."));
+
+        dllFiles.AddRange(results);
+        //
+        dllFiles = dllFiles.Distinct().ToList();
+        //去除同名 重复的dll
+        for (int i = 0; i < dllFiles.Count; i++)
+        {
+            dllFiles[i] = dllFiles[i].Replace('\\', '/').Trim();
+            //
+            var copyto = IPath.Combine(tempDirect, Path.GetFileName(dllFiles[i]));
+            File.Copy(dllFiles[i], copyto, true);
+            //File.WriteAllBytes(copyto,File.ReadAllBytes(dllFiles[i]));
+            dllFiles[i] = copyto;
+        }
+
+
+        //添加系统依赖
+        dllFiles.Add("mscorlib.dll");
+
+        #endregion
+
+
+        //
+
+        EditorUtility.DisplayProgressBar("编译服务", "复制到临时环境...", 0.4f);
+
+        //
+        //全部拷贝到临时目录
+
+        #region 为解决mono.exe error: 文件名太长问题
+
+        int fileCounter = 1;
+        csFilesMap = new Dictionary<int, string>();
+
+        //拷贝 base cs
+        for (int i = 0; i < baseCs.Count; i++)
+        {
+            var copyto = IPath.Combine(tempDirect, fileCounter + ".cs");
+            //拷贝
+            File.WriteAllText(copyto, File.ReadAllText(baseCs[i]));
+            //保存文件索引
+            csFilesMap[fileCounter] = baseCs[i];
+            baseCs[i] = copyto.Replace("\\", "/");
+            fileCounter++;
+        }
+
+        //拷贝 hotfix cs
+        for (int i = 0; i < hotfixCs.Count; i++)
+        {
+            var copyto = IPath.Combine(tempDirect, fileCounter + ".cs");
+            //拷贝
+            File.WriteAllText(copyto, File.ReadAllText(hotfixCs[i]));
+            //保存文件索引
+            csFilesMap[fileCounter] = hotfixCs[i];
+            //
+            hotfixCs[i] = copyto.Replace("\\", "/");
+            fileCounter++;
+        }
+
+
+        //检测dll
+        for (int i = dllFiles.Count - 1; i >= 0; i--)
+        {
+            var r = dllFiles[i];
+            if (File.Exists(r))
+            {
+                var fs = File.ReadAllBytes(r);
+                try
+                {
+                    var assm = Assembly.Load(fs);
+                }
+                catch (Exception e)
+                {
+                    BDebug.Log("dll无效移除:" + r);
+                    dllFiles.RemoveAt(i);
+                }
+            }
+        }
+
+        #endregion
+
+
+        EditorUtility.DisplayProgressBar("编译服务", "[1/2]开始编译base.dll", 0.5f);
+
         //编译 base.dll
         try
         {
-
-            //转换shortname
-//            for (int i = 0; i < baseCs.Count; i++)
-//            {
-//                var cs = baseCs[i];
-//                baseCs[i] = FileNameHelper.GetShortPath(cs);
-//            }
-//            
-            Build(refDlls.ToArray(), baseCs.ToArray(), baseDllPath);
-            AssetDatabase.Refresh();
+            Build(dllFiles.ToArray(), baseCs.ToArray(), baseDllPath);
         }
         catch (Exception e)
         {
+            //EditorUtility.DisplayDialog("提示", "编译base.dll失败!", "OK");
             Debug.LogError(e.Message);
             EditorUtility.ClearProgressBar();
-            throw;
+            return;
         }
 
         //
-        
+
         EditorUtility.DisplayProgressBar("编译服务", "[2/2]开始编译hotfix.dll", 0.7f);
         var dependent = outDirectory + "/dependent";
         Directory.CreateDirectory(dependent);
 
         //将base.dll加入 
-        refDlls.Add(baseDllPath);
+        dllFiles.Add(baseDllPath);
         //编译hotfix.dll
         var outHotfixDirectory = outPath + "/hotfix/hotfix.dll";
         try
         {
-            //转换shortname
-//            for (int i = 0; i < hotfixCs.Count; i++)
-//            {
-//                var cs = hotfixCs[i];
-//                hotfixCs[i] = FileNameHelper.GetShortPath(cs);
-//            }
-            
-            Build(refDlls.ToArray(), hotfixCs.ToArray(), outHotfixDirectory);
-            AssetDatabase.Refresh();
+            Build(dllFiles.ToArray(), hotfixCs.ToArray(), outHotfixDirectory);
         }
         catch (Exception e)
         {
             Debug.LogError(e.Message);
             EditorUtility.ClearProgressBar();
-            throw;
+            return;
         }
-        //拷贝依赖的dll
-//        foreach (var f in refDlls)
-//        {
-//            if (File.Exists(f) ==false)
-//            {
-//                continue;
-//            }
-//            var fn = Path.GetFileName(f);
-//            var outpath = IPath.Combine(dependent, fn);
-//            File.Copy(f,outpath,true);
-//        }
 
+        AssetDatabase.Refresh();
         EditorUtility.DisplayProgressBar("编译服务", "清理临时文件", 0.9f);
         Directory.Delete(tempDirect, true);
         EditorUtility.ClearProgressBar();
@@ -261,195 +304,21 @@ public class ScriptBiuldTools
         }
 
         //这里是引入unity所有引用的dll
-        var u3dUI =  string.Format(  @"""{0}\UnityExtensions\Unity\GUISystem""",EditorApplication.applicationContentsPath);
-        var u3dEngine = string.Format( @"""{0}\Managed\UnityEngine""",EditorApplication.applicationContentsPath);
+        var u3dUI = string.Format(@"""{0}\UnityExtensions\Unity\GUISystem""",
+            EditorApplication.applicationContentsPath);
+        var u3dEngine = string.Format(@"""{0}\Managed\UnityEngine""", EditorApplication.applicationContentsPath);
 
-        if (Directory.Exists(u3dUI.Replace(@"""","")) == false || Directory.Exists(u3dEngine.Replace(@"""","")) == false)
+        if (Directory.Exists(u3dUI.Replace(@"""", "")) == false ||
+            Directory.Exists(u3dEngine.Replace(@"""", "")) == false)
         {
             EditorUtility.DisplayDialog("提示", "u3d根目录不存在,请修改ScriptBiuld_Service类中,u3dui 和u3dengine 的dll目录", "OK");
             return;
         }
+
         //
         Process.Start(exePath, string.Format("{0} {1} {2} {3}", codeSource, export, u3dUI, u3dEngine));
     }
-    
-    
-//    static public void BuildDLL_DotNet(string dataPath, string streamingAssetsPath,
-//        string u3dDllPath1, string u3dDllPath2)
-//    {
-//        //编译项目的base.dll
-//        Console.WriteLine("准备编译dll 10%");
-//
-//        //准备工作
-//        var path = streamingAssetsPath + "/hotfix";
-//        if (Directory.Exists(path))
-//        {
-//            Directory.Delete(path, true);
-//        }
-//
-//        Directory.CreateDirectory(path);
-//        //
-//        string[] searchPath = new string[] {"3rdPlugins", "Code", "Plugins", "Resource"};
-//
-//        for (int i = 0; i < searchPath.Length; i++)
-//        {
-//            searchPath[i] = IPath.Combine(dataPath, searchPath[i]);
-//        }
-//
-//        List<string> files = new List<string>();
-//        foreach (var s in searchPath)
-//        {
-//            var fs = Directory.GetFiles(s, "*.*", SearchOption.AllDirectories).ToList();
-//            var _fs = fs.FindAll(f =>
-//            {
-//                var _f = f.ToLower();
-//                var exten = Path.GetExtension(_f);
-//                if ((!_f.Contains("editor")) &&
-//                    (exten.Equals(".dll") || exten.Equals(".cs")))
-//                {
-//                    return true;
-//                }
-//
-//                return false;
-//            });
-//
-//            files.AddRange(_fs);
-//        }
-//
-//        files = files.Distinct().ToList();
-//        for (int i = 0; i < files.Count; i++)
-//        {
-//            files[i] = files[i].Replace('/', '\\').Trim('\\');
-//        }
-//
-//        Console.WriteLine("开始整理script 20%");
-//
-//        var refDlls = files.FindAll(f => f.EndsWith(".dll"));
-//        var baseCs = files.FindAll(f => !f.EndsWith(".dll") && !f.Contains("@hotfix"));
-//        var hotfixCs = files.FindAll(f => !f.EndsWith(".dll") && f.Contains("@hotfix"));
-//
-//
-//        var tempDirect = "c:/bd_temp";
-//        if (Directory.Exists(tempDirect))
-//        {
-//            Directory.Delete(tempDirect, true);
-//        }
-//
-//        Directory.CreateDirectory(tempDirect);
-//
-//        //除去不需要引用的dll
-//        for (int i = refDlls.Count - 1; i >= 0; i--)
-//        {
-//            var str = refDlls[i];
-//            if (str.Contains("iOS") || str.Contains("Android"))
-//            {
-//                refDlls.RemoveAt(i);
-//            }
-//        }
-//
-//        //去除同名 重复的dll
-//        for (int i = 0; i < refDlls.Count; i++)
-//        {
-//            var copyto = IPath.Combine(tempDirect, Path.GetFileName(refDlls[i]));
-//            File.Copy(refDlls[i], copyto, true);
-//            refDlls[i] = copyto;
-//        }
-//
-//        refDlls.Add("System.dll");
-//        refDlls.Add("System.Core.dll");
-//        refDlls.Add("System.XML.dll");
-//        refDlls.Add("System.Data.dll");
-//        //dll1
-//        var u3ddlls1 = Directory.GetFiles(u3dDllPath1, "*.dll", SearchOption.TopDirectoryOnly);
-//        foreach (var d in u3ddlls1)
-//        {
-//            refDlls.Add(d);
-//        }
-//
-//        //dll2
-//        var u3ddlls2 = Directory.GetFiles(u3dDllPath2, "*.dll", SearchOption.AllDirectories);
-//        foreach (var d in u3ddlls2)
-//        {
-//            refDlls.Add(d);
-//        }
-//
-//        //
-//        var baseDllPath = streamingAssetsPath + "/hotfix/base.dll";
-//
-//
-//        Console.WriteLine("复制编译代码 30%");
-//
-//        //为解决mono.exe error: 文件名太长问题
-//        tempDirect = "c:/bd_temp";
-//        for (int i = 0; i < baseCs.Count; i++)
-//        {
-//            var copyto = IPath.Combine(tempDirect, Path.GetFileName(baseCs[i]));
-//            int count = 1;
-//            while (File.Exists(copyto))
-//            {
-//                copyto = copyto.Replace(".cs", "") + count + ".cs";
-//                count++;
-//            }
-//
-//            File.Copy(baseCs[i], copyto);
-//            baseCs[i] = copyto;
-//        }
-//
-//        //建立目标目录
-//        var outDirectory = Path.GetDirectoryName(baseDllPath);
-//        if (Directory.Exists(outDirectory))
-//        {
-//            Directory.Delete(outDirectory, true);
-//        }
-//
-//
-//        Directory.CreateDirectory(outDirectory);
-//        Console.WriteLine("[1/2]开始编译base.dll 40%");
-//        //编译 base.dll
-//        try
-//        {
-//            Build(refDlls.ToArray(), baseCs.ToArray(), baseDllPath);
-//        }
-//        catch (Exception e)
-//        {
-//            Console.WriteLine(e);
-//            throw;
-//        }
-//
-//        Console.WriteLine("[2/2]开始编译hotfix.dll 70%");
-//
-//        var dependent = outDirectory + "/dependent";
-//        Directory.CreateDirectory(dependent);
-//
-//        //将base.dll加入
-//        refDlls.Add(baseDllPath);
-//        //编译hotfix.dll
-//        var outHotfixDirectory = streamingAssetsPath + "/hotfix/hotfix.dll";
-//        try
-//        {
-//            Build(refDlls.ToArray(), hotfixCs.ToArray(), outHotfixDirectory);
-//        }
-//        catch (Exception e)
-//        {
-//            Console.WriteLine(e);
-//            throw;
-//        }
-//
-//        Console.WriteLine("清理临时文件 95%");
-//        Directory.Delete(tempDirect, true);
-//        Console.WriteLine("编译成功!位于StreamingAssets下! 100%");
-//        //拷贝依赖的dll
-//        //        foreach (var f in refDlls)
-//        //        {
-//        //            if (File.Exists(f) == false)
-//        //            {
-//        //                continue;
-//        //            }
-//        //            var fn = Path.GetFileName(f);
-//        //            var outpath = IPath.Combine(dependent, fn);
-//        //            File.Copy(f, outpath, true);
-//        //        }
-//    }
+
 
     /// <summary>
     /// 编译dll
@@ -499,8 +368,33 @@ public class ScriptBiuldTools
 #if !UNITY_EDITOR
             Console.WriteLine(sb);
 
-#else      
-            Debug.LogError(sb);
+#else
+
+            try
+            {
+                //log重新打出映射关系
+                var lines = sb.ToString().Split('\n');
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    var l = lines[i];
+                    var lcs = l.Split('(');
+                    if (lcs.Length > 0)
+                    {
+                        var fn = Path.GetFileName(lcs[0]);
+
+                        var findex = int.Parse(fn.Replace(".cs", ""));
+
+                        Debug.LogError(l.Replace(fn, Path.GetFileName(csFilesMap[findex])));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(sb);
+                throw;
+            }
+
+
 #endif
         }
         else

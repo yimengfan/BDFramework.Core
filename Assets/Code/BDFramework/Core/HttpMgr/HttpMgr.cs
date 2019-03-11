@@ -55,8 +55,9 @@ namespace BDFramework.Http
         /// 
         /// </summary>
         /// <returns></returns>     
-        public HttpClient GetFreeHttpClient()
+        public HttpClient GetFreeHttpClient(Dictionary<string ,string> heads =null)
         {
+
             HttpClient client = null;
 
             //寻找一个不在忙的client
@@ -64,6 +65,14 @@ namespace BDFramework.Http
             if (client == null)
             {
                 client =  new HttpClient();
+            }
+            //
+            if (heads != null)
+            {
+                foreach (var item in heads)
+                {
+                    client.Headers[item.Key] = item.Value;
+                }
             }
             httpClients.Add(client);
             return client;

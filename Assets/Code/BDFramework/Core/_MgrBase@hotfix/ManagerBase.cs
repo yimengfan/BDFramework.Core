@@ -90,16 +90,21 @@ namespace BDFramework.Mgr
 
         public T2 CreateInstance<T2>(string typeName , params object[] args) where T2 : class
         {
-            var type = GetCalssData(typeName).Type;
-            if (type != null)
+            var cd = GetCalssData(typeName);
+            if (cd == null)
+            {
+                BDebug.LogError("没有找到:" + typeName + " -"  + typeof(T2).Name);
+                return null;
+            }
+            if (cd.Type != null)
             {
                 if (args.Length == 0)
                 {
-                    return Activator.CreateInstance(type) as T2;
+                    return Activator.CreateInstance(cd.Type) as T2;
                 }
                 else
                 {
-                    return Activator.CreateInstance(type,args) as T2;
+                    return Activator.CreateInstance(cd.Type,args) as T2;
                 }
             }
             else
