@@ -20,9 +20,9 @@
   <br> 致力于“**程序只开发逻辑，体力活交给编辑器**”
 # 文档
  [中文Wiki](https://github.com/yimengfan/BDFramework.Core/wiki)
- [English Wiki](http://www.nekosang.com)
+ <br>[English Wiki](http://www.nekosang.com)
 # 博客
-预计2018.8.10号前完成文档
+不定时更新
 ### 管理器:
 1.管理器与业务自动.            [点击](https://zhuanlan.zhihu.com/p/40751037)
 ### 游戏Timeline:
