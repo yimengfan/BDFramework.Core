@@ -1,6 +1,3 @@
-# unity版本：2018.3.0f  2018.3.0f  2018.3.0f!!!
-<br>注：mac下部分编辑器有bug,大都是一些接口macos和windows下结果不一致所致,因为2018.4最终正式版没发布,所以暂不对其进行修复。
-但最终以适配2018.4正式版本为主。
 # 简介
 一个基于unity3d的开发框架。
 框架力致于打造一个简单、高效的开发流，更注重于基于数据驱动的工具开发（个人以为工具才是第一生产力，框架只是辅助而已）。
@@ -15,11 +12,9 @@
   <br>1.业务逻辑自动注册
   <br>2.热更代码跟非热更开发一样舒爽
   <br>3.ui工作流代码自动生成，数据自动绑定等
-  <br> ...
-  <br> 以工具开发为主，辅助各个工作流提高开发效率。
-  <br> 致力于“**程序只开发逻辑，体力活交给编辑器**”
+  <br>4....
 # 文档
- [中文Wiki](https://github.com/yimengfan/BDFramework.Core/wiki)
+ [中文 Wiki](https://github.com/yimengfan/BDFramework.Core/wiki)
  <br>[English Wiki](http://www.nekosang.com)
 # 博客
 不定时更新
