@@ -53,10 +53,9 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-           BDFramework.VersionContorller.Start(@serverConfigPath, @localConfigPath, @onProcess, @onError);
+            BDFramework.VersionContorller.Start(@serverConfigPath, @localConfigPath, @onProcess, @onError);
 
-
-            return ILIntepreter.PushObject(__ret, __mStack, null);
+            return __ret;
         }
 
 

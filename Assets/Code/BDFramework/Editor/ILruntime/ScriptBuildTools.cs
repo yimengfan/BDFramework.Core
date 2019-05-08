@@ -14,7 +14,7 @@ using UnityEngine;
 using UnityEditor;
 
 #endif
-public class ScriptBiuldTools
+public class ScriptBuildTools
 {
     public enum BuildStatus
     {
@@ -31,28 +31,23 @@ public class ScriptBiuldTools
     static public void GenDllByMono(string dataPath, string outPath)
     {
         EditorUtility.DisplayProgressBar("编译服务", "准备编译环境...", 0.1f);
-        //全局变量
-        var baseDllPath = outPath + "/hotfix/base.dll";
-
-        //清空输出环境
+        //base.dll 修改为 Assembly-CSharp,
+        //为了保证依赖关系,在editor反射模式下能正常执行
+        var baseDllPath = outPath + "/hotfix/Assembly-CSharp.dll";
+        //输出环境
         var path = outPath + "/Hotfix";
-        if (Directory.Exists(path))
-        {
-            Directory.Delete(path, true);
-        }
-
-        Directory.CreateDirectory(path);
 
         //创建临时环境
 #if UNITY_EDITOR_OSX
         var tempDirect = Application.persistentDataPath + "/bd_temp";
 #else
-        var tempDirect = "d:/bd_temp";
+        var tempDirect = "c:/BD_temp";
 #endif
         if (Directory.Exists(tempDirect))
         {
             Directory.Delete(tempDirect, true);
         }
+
 
         Directory.CreateDirectory(tempDirect);
 
@@ -120,9 +115,6 @@ public class ScriptBiuldTools
 
         #endregion
 
-        //
-
-
         #region DLL引用搜集处理
 
         EditorUtility.DisplayProgressBar("编译服务", "收集依赖dll...", 0.3f);
@@ -153,7 +145,8 @@ public class ScriptBiuldTools
                 var dllAbsPath = d.Replace(dp, "");
                 if (dllAbsPath.Contains("Editor")
                     || dllAbsPath.Contains("iOS")
-                    || dllAbsPath.Contains("Android"))
+                    || dllAbsPath.Contains("Android")
+                    || dllAbsPath.Contains("StreamingAssets"))
                 {
                     continue;
                 }
@@ -175,9 +168,23 @@ public class ScriptBiuldTools
         //去除同名 重复的dll
         for (int i = 0; i < dllFiles.Count; i++)
         {
+            var p = Path.GetFileName(dllFiles[i]);
+
+            for (int j = dllFiles.Count - 1; j > i; j--)
+            {
+                if (Path.GetFileName(dllFiles[j]) == p)
+                {
+                    dllFiles.RemoveAt(j);
+                }
+            }
+        }
+
+        //拷贝dll
+        for (int i = 0; i < dllFiles.Count; i++)
+        {
             dllFiles[i] = dllFiles[i].Replace('\\', '/').Trim();
             //
-            var copyto = IPath.Combine(tempDirect, Path.GetFileName(dllFiles[i]));
+            var copyto = IPath.Combine(tempDirect, i + ".dll"); //Path.GetFileName(dllFiles[i]));
             File.Copy(dllFiles[i], copyto, true);
             //File.WriteAllBytes(copyto,File.ReadAllBytes(dllFiles[i]));
             dllFiles[i] = copyto;
@@ -189,14 +196,9 @@ public class ScriptBiuldTools
 
         #endregion
 
-
-        //
-
         EditorUtility.DisplayProgressBar("编译服务", "复制到临时环境...", 0.4f);
-
-        //
+        
         //全部拷贝到临时目录
-
         #region 为解决mono.exe error: 文件名太长问题
 
         int fileCounter = 1;
@@ -249,9 +251,7 @@ public class ScriptBiuldTools
 
         #endregion
 
-
         EditorUtility.DisplayProgressBar("编译服务", "[1/2]开始编译base.dll", 0.5f);
-
         //编译 base.dll
         try
         {
@@ -265,11 +265,8 @@ public class ScriptBiuldTools
             return;
         }
 
-        //
-
+       
         EditorUtility.DisplayProgressBar("编译服务", "[2/2]开始编译hotfix.dll", 0.7f);
-        var dependent = outDirectory + "/dependent";
-        Directory.CreateDirectory(dependent);
 
         //将base.dll加入 
         dllFiles.Add(baseDllPath);
@@ -285,11 +282,15 @@ public class ScriptBiuldTools
             EditorUtility.ClearProgressBar();
             return;
         }
-
-        AssetDatabase.Refresh();
+        
         EditorUtility.DisplayProgressBar("编译服务", "清理临时文件", 0.9f);
+        //删除临时目录
         Directory.Delete(tempDirect, true);
+        //删除base.dll
+        File.Delete(baseDllPath);
         EditorUtility.ClearProgressBar();
+        
+        AssetDatabase.Refresh();
     }
 #endif
 
@@ -340,9 +341,14 @@ public class ScriptBiuldTools
         //warning和 error分开,不然各种warning当成error,改死你
         cp.TreatWarningsAsErrors = false;
         cp.WarningLevel = 1;
-        //编译选项
-        cp.CompilerOptions = "/optimize /unsafe";
 
+        //加载宏定义
+        var define = Resources.Load<TextAsset>("BuildConfig/Define").text;
+        define = define.Trim();
+        //编译选项
+        cp.CompilerOptions +=
+            " -optimize -unsafe" +
+            " -define:"+define;
         if (refAssemblies != null)
         {
             foreach (var d in refAssemblies)

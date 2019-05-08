@@ -2,7 +2,7 @@
 using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
-
+using BDFramework.DataListener;
 namespace Code.Game.Windows
 {
     public class View_MVCTest : AViewBase

@@ -178,5 +178,41 @@ namespace BDFramework.Editor
                 provider.GenerateCodeFromCompileUnit(compunit, sw, options);
             }
         }
+
+        [MenuItem("Assets/单个excel生成class")]
+        public static void SingleExcel2Class()
+        {
+            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            FileInfo file = new FileInfo(path);
+            string fname = Path.GetFileNameWithoutExtension(file.FullName).ToLower();
+            fname = UpperFirst(fname);
+            string destPath = Path.GetDirectoryName(file.FullName) + "\\" + fname +
+                              Path.GetExtension(file.FullName);
+            //                //判断是否重名
+            string oldPath = "Assets" + file.FullName.Replace('\\', '/').Replace(Application.dataPath, "");
+            string newPath = "Assets" + destPath.Replace('\\', '/').Replace(Application.dataPath, "");
+            if (!oldPath.Equals(newPath))
+                AssetDatabase.CopyAsset(oldPath, newPath);
+            AssetDatabase.Refresh();
+
+            string f = file.FullName;
+            var excel = new ExcelUtility(f);
+            var json = excel.GetJson();
+            var statements = excel.GetLine(0);
+            Json2Class(f, json, statements);
+            Debug.Log("导出：" + f);
+            
+            EditorUtility.DisplayDialog("提示", "生成完成!", "确定");
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("Assets/单个excel生成class", true)]
+        private static bool SingleExcel2ClassValidation()
+        {
+            if (Selection.activeObject == null) return false;
+            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            if (!path.StartsWith("Assets/Resource/Table") || !path.EndsWith(".xlsx")) return false;
+            return true;
+        }
     }
 }

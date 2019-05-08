@@ -1,37 +1,29 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Reflection;
-using BDFramework;
 using BDFramework.GameStart;
 using SQLite4Unity3d;
 using UnityEngine;
 using BDFramework.ResourceMgr;
-using UnityEngine.Serialization;
+using Utils = BDFramework.Helper.Utils;
 
 namespace BDFramework
 {
-    public enum AssetLoadPath
-    {
-        Editor,
-        Persistent,
-        StreamingAsset
-    }
-
     public class BDLauncher : MonoBehaviour
     {
-        public AssetLoadPath CodeRoot = AssetLoadPath.Editor;
-        public AssetLoadPath SQLRoot = AssetLoadPath.Editor;
-        public AssetLoadPath ArtRoot = AssetLoadPath.Editor;
-        public string FileServerUrl = "192.168.8.68";
         static public Action OnStart { get; set; }
         static public Action OnUpdate { get; set; }
         static public Action OnLateUpdate { get; set; }
 
 
+        //全局Config
+        [HideInInspector] public Config Config;
+
         // Use this for initialization
         private void Awake()
         {
             this.gameObject.AddComponent<IEnumeratorTool>();
+            this.Config = this.gameObject.GetComponent<Config>();
+            //
             LaunchLocal();
         }
 
@@ -84,7 +76,7 @@ namespace BDFramework
 
             //各自的路径
             //art
-            if (ArtRoot == AssetLoadPath.Editor)
+            if (Config.ArtRoot == AssetLoadPath.Editor)
             {
                 if (Application.isEditor)
                 {
@@ -97,44 +89,53 @@ namespace BDFramework
                     artroot = Application.persistentDataPath;
                 }
             }
-            else if (ArtRoot == AssetLoadPath.Persistent)
+            else if (Config.ArtRoot == AssetLoadPath.Persistent)
             {
                 artroot = Application.persistentDataPath;
             }
 
-            else if (ArtRoot == AssetLoadPath.StreamingAsset)
+            else if (Config.ArtRoot == AssetLoadPath.StreamingAsset)
             {
-                artroot = Application.streamingAssetsPath;
+                
+                
+                if (string.IsNullOrEmpty(Config.CustomArtRoot) == false)
+                {
+                    artroot = Config.CustomArtRoot;
+                }
+                else
+                {
+                    artroot = Application.streamingAssetsPath;
+                }
+              
             }
 
             //sql
-            if (SQLRoot == AssetLoadPath.Editor)
+            if (Config.SQLRoot == AssetLoadPath.Editor)
             {
                 //sql 默认读streaming
                 sqlroot = Application.streamingAssetsPath;
             }
 
-            else if (SQLRoot == AssetLoadPath.Persistent)
+            else if (Config.SQLRoot == AssetLoadPath.Persistent)
             {
                 sqlroot = Application.persistentDataPath;
             }
-            else if (SQLRoot == AssetLoadPath.StreamingAsset)
+            else if (Config.SQLRoot == AssetLoadPath.StreamingAsset)
             {
                 sqlroot = Application.streamingAssetsPath;
             }
 
             //code
-            if (CodeRoot == AssetLoadPath.Editor)
+            if (Config.CodeRoot == AssetLoadPath.Editor)
             {
                 //sql 默认读streaming
                 coderoot = "";
             }
-
-            else if (CodeRoot == AssetLoadPath.Persistent)
+            else if (Config.CodeRoot == AssetLoadPath.Persistent)
             {
                 coderoot = Application.persistentDataPath;
             }
-            else if (CodeRoot == AssetLoadPath.StreamingAsset)
+            else if (Config.CodeRoot == AssetLoadPath.StreamingAsset)
             {
                 coderoot = Application.streamingAssetsPath;
             }
@@ -158,6 +159,12 @@ namespace BDFramework
             LoadScrpit(coderoot);
         }
 
+
+        //
+        /// <summary>
+        /// 游戏逻辑的Assembly
+        /// </summary>
+        //        public static  Assembly GameAssembly { get; private set; }
         /// <summary>
         /// 开始热更脚本逻辑
         /// </summary>
@@ -165,14 +172,31 @@ namespace BDFramework
         {
             if (root != "") //热更代码模式
             {
-                ILRuntimeHelper.LoadHotfix(root);
-                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null,
-                    new object[] {true});
+                if (Config.CodeRunMode == HotfixCodeRunMode.ByILRuntime)
+                {
+                    //解释执行模式
+                    ILRuntimeHelper.LoadHotfix(root);
+                    ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] {true});
+                }
+                else
+                {
+                    //
+                    //反射模式
+                    string dllPath = root + "/" + Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
+                    var assembly = Assembly.LoadFile(dllPath);
+
+                    var type = assembly.GetType("BDLauncherBridge");
+                    var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
+                    method.Invoke(null, new object[] {false});
+                }
             }
             else
             {
+                //PC 模式非热更
+
                 //这里用反射是为了 不访问逻辑模块的具体类，防止编译失败
                 var assembly = Assembly.GetExecutingAssembly();
+                //
                 var type = assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
                 method.Invoke(null, new object[] {false});

@@ -65,7 +65,21 @@ public class EditorWindow_GenAssetBundle : EditorWindow
     /// </summary>
     void LastestGUI()
     {
-        GUILayout.BeginHorizontal();
+        GUILayout.BeginVertical();
+
+        if (GUILayout.Button("检测资源", GUILayout.Width(100)))
+        {
+            if (isSelectWindows)
+                AssetBundleEditorTools.CheackAssets(rootResourceDir,Application.streamingAssetsPath+"/Windows", BuildTarget.StandaloneWindows);
+            if (isSelectAndroid)
+                AssetBundleEditorTools.CheackAssets(rootResourceDir,Application.streamingAssetsPath+"/Android", BuildTarget.Android);
+            if (isSelectIOS)
+                AssetBundleEditorTools.CheackAssets(rootResourceDir,Application.streamingAssetsPath+"/iOS", BuildTarget.iOS);
+            
+            AssetDatabase.Refresh();
+            Debug.Log("资源打包完毕"); 
+        }
+        
         if (GUILayout.Button("一键打包[美术资源]", GUILayout.Width(380), GUILayout.Height(30)))
         {
             //开始打包
@@ -80,6 +94,6 @@ public class EditorWindow_GenAssetBundle : EditorWindow
             Debug.Log("资源打包完毕");
         }
 
-        GUILayout.EndHorizontal();
+        GUILayout.EndVertical();
     }
 }

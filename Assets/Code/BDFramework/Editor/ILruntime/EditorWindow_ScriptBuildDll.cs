@@ -11,10 +11,11 @@ using BDFramework.Editor.Tools;
 using BDFramework.GameStart;
 using BDFramework.Helper;
 using ILRuntime.Runtime.CLRBinding;
+using Mono.Cecil;
 using Tool;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
-
+using  BDFramework.DataListener;
 public class EditorWindow_ScriptBuildDll : EditorWindow
 {
     public void OnGUI()
@@ -30,15 +31,17 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 if (GUILayout.Button("1.编译dll (.net版)", GUILayout.Width(200), GUILayout.Height(30)))
                 {
                     string source = Application.dataPath;
-                    string outpath = Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform);
+                    string outpath = Application.streamingAssetsPath + "/" +
+                                     Utils.GetPlatformPath(Application.platform);
                     //
                     var hotfix = outpath + "/hotfix";
                     if (Directory.Exists(hotfix))
                     {
-                        Directory.Delete(hotfix,true);
+                        Directory.Delete(hotfix, true);
                     }
+
                     //
-                    ScriptBiuldTools.BuildDLL_DotNet(source, outpath);
+                    ScriptBuildTools.BuildDLL_DotNet(source, outpath);
                     AssetDatabase.Refresh();
                 }
 
@@ -46,8 +49,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 {
                     //
                     //u3d的 各种dll
-                    ScriptBiuldTools.GenDllByMono(Application.dataPath,
-                        Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform));
+                    ScriptBuildTools.GenDllByMono(Application.dataPath, Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform));
                     Debug.Log("脚本打包完毕");
                 }
             }
@@ -102,8 +104,9 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     static void GenCLRBindingByAnalysis()
     {
         //用新的分析热更dll调用引用来生成绑定代码
-        ILRuntimeHelper.LoadHotfix(Application.streamingAssetsPath);
-        BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain, "Assets/Code/Game/ILRuntime/Binding/Analysis");
+        ILRuntimeHelper.LoadHotfix(Application.streamingAssetsPath,false);
+        BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain,
+            "Assets/Code/Game/ILRuntime/Binding/Analysis");
         AssetDatabase.Refresh();
         return;
         //暂时先不处理

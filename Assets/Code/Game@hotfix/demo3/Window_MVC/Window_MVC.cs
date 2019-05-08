@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using BDFramework;
 using Code.Game.Windows;
 using Code.Game.Windows.MCX;
-
+using BDFramework.DataListener;
 //using UnityEditor.Graphs;
 
 /// <summary>

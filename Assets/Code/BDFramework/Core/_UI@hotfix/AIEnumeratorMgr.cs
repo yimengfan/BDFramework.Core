@@ -25,7 +25,7 @@ namespace BDFramework
         }
 
         public void StopCoroutine(int id)
-        {
+        { 
             IEnumeratorTool.StopCoroutine(id);
         }
 

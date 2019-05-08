@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using BDFramework.ResourceMgr;
 using LitJson;
@@ -14,53 +15,20 @@ public class CacheItem
 {
     public string Name = "null";
     public string UIID = "none";
-
-    public CacheItem()
-    {
-    }
 }
 
 static public class AssetBundleEditorTools
 {
-    public static void GenAssetBundle(string resRootPath, string outPath, BuildTarget target)
-    {
-        //1.生成ab名
-        string rootPath = IPath.Combine(Application.dataPath, resRootPath);
-        CreateAbName(rootPath, target, outPath);
-        //2.打包
-        BuildAssetBundle(target, outPath);
-
-        //配置写入本地
-        var configPath = IPath.Combine(outPath, "Art/Config.json");
-        var direct = Path.GetDirectoryName(configPath);
-        if (Directory.Exists(direct) == false)
-        {
-            Directory.CreateDirectory(direct);
-        }
-
-        File.WriteAllText(configPath, manifestConfig.ToString());
-
-
-        //删除多余文件
-        var delFiles = Directory.GetFiles(outPath, "*.*", SearchOption.AllDirectories);
-
-        foreach (var df in delFiles)
-        {
-            var ext = Path.GetExtension(df);
-            if (ext == ".meta" || ext == ".manifest")
-            {
-                File.Delete(df);
-            }
-        }
-    }
-
-
     /// <summary>
-    /// 创建ab名
+    /// 检测资源
     /// </summary>
-    /// <param name="rootPath"></param>
-    public static void CreateAbName(string rootPath, BuildTarget target, string outpath)
+    /// <param name="resRootPath"></param>
+    /// <param name="outPath"></param>
+    /// <param name="target"></param>
+    public static void CheackAssets(string resRootPath, string outPath, BuildTarget target)
     {
+        //1.分析资源
+        string rootPath = IPath.Combine(Application.dataPath, resRootPath);
         //扫描所有文件
         var allFiles = Directory.GetFiles(rootPath, "*.*", SearchOption.AllDirectories);
         var fileList = new List<string>(allFiles);
@@ -75,9 +43,89 @@ static public class AssetBundleEditorTools
                 fileList.RemoveAt(i);
             }
         }
+        AnalyzeResource(fileList.ToArray(), target, outPath);
 
-        AnalyzeResource(fileList.ToArray(), target, outpath);
+        //2.配置写入本地
+        var configPath = IPath.Combine(outPath, "Art/Config_Check.json");
+        var direct = Path.GetDirectoryName(configPath);
+        if (Directory.Exists(direct) == false)
+        {
+            Directory.CreateDirectory(direct);
+        }
+
+        File.WriteAllText(configPath, curManifestConfig.ToString());
     }
+
+
+    
+    
+
+    /// <summary>
+    /// 生成AssetBundle
+    /// </summary>
+    /// <param name="resRootPath"></param>
+    /// <param name="outPath"></param>
+    /// <param name="target"></param>
+    public static void GenAssetBundle(string resRootPath, string outPath, BuildTarget target)
+    {
+        //1.生成ab名
+        string rootPath = IPath.Combine(Application.dataPath, resRootPath);
+      
+        //扫描所有文件
+        var allFiles = Directory.GetFiles(rootPath, "*.*", SearchOption.AllDirectories);
+        var fileList = new List<string>(allFiles);
+        //剔除不打包的部分
+        for (int i = fileList.Count - 1; i >= 0; i--)
+        {
+            var fi = allFiles[i];
+            var extension = Path.GetExtension(fi.ToLower());
+            //
+            if (extension.ToLower() == ".meta" || extension.ToLower() == ".cs" || extension.ToLower() == ".js")
+            {
+                fileList.RemoveAt(i);
+            }
+        }
+        AnalyzeResource(fileList.ToArray(), target, outPath);
+
+        //配置写入本地
+        var configPath = IPath.Combine(outPath, "Art/Config.json");
+      
+        //保存last.json
+        if (File.Exists(configPath))
+        {
+            var lastPath = IPath.Combine(outPath, "Art/Config_last.json");
+            File.Copy(configPath,lastPath,true);
+        }
+    
+        var direct = Path.GetDirectoryName(configPath);
+        if (Directory.Exists(direct) == false)
+        {
+            Directory.CreateDirectory(direct);
+        }
+
+        File.WriteAllText(configPath, curManifestConfig.ToString());
+
+        //2.打包
+        BuildAssetBundle(target, outPath);
+
+
+        //清除
+        RemoveUnUseAssets(fileList.ToArray());
+        //
+        var delFiles = Directory.GetFiles(outPath, "*.*", SearchOption.AllDirectories);
+
+        foreach (var df in delFiles)
+        {
+            var ext = Path.GetExtension(df);
+            if (ext == ".meta" || ext == ".manifest")
+            {
+                File.Delete(df);
+            }
+        }
+    }
+
+
+
 
     /// <summary>
     /// 创建assetbundle
@@ -95,19 +143,33 @@ static public class AssetBundleEditorTools
         BuildPipeline.BuildAssetBundles(path, BuildAssetBundleOptions.ChunkBasedCompression, target);
     }
 
-    static ManifestConfig manifestConfig = null;
+    static ManifestConfig curManifestConfig = null;
 
-    private static Dictionary<string, string> abCacheDict;
 
+    /// <summary>
+    /// 分析资源
+    /// </summary>
+    /// <param name="paths"></param>
+    /// <param name="target"></param>
+    /// <param name="outpath"></param>
     private static void AnalyzeResource(string[] paths, BuildTarget target, string outpath)
     {
-        manifestConfig = new ManifestConfig();
+        curManifestConfig = new ManifestConfig();
+        //加载存在的配置
+        ManifestConfig lastManifestConfig = null;
+        var lastConfigPath = IPath.Combine(outpath, "Art/Config.json");
+        if (File.Exists(lastConfigPath))
+        {
+            lastManifestConfig = new ManifestConfig(File.ReadAllText(lastConfigPath));
+        }
+        else
+        {
+            lastManifestConfig = new ManifestConfig();  
+        }
+            
         List<string> changeList = new List<string>();
-        //需要保留的ab UID集合
-        Dictionary<string, string> saveCache = new Dictionary<string, string>();
-
-        abCacheDict = GetABCache(outpath);
         float curIndex = 0;
+        
         foreach (var path in paths)
         {
             var _path = path.Replace("\\", "/");
@@ -120,9 +182,14 @@ static public class AssetBundleEditorTools
             var dependsource = "Assets" + _path.Replace(Application.dataPath, "");
             var allDependObjectPaths = AssetDatabase.GetDependencies(dependsource).ToList();
 
-            var Uiid = GetMD5HashFromFile(_path);
-            // 
-            List<string> newAssets = new List<string>();
+            var UIID = GetMD5HashFromFile(_path);
+            if (string.IsNullOrEmpty(UIID))
+            {
+                continue;
+            }
+
+
+            List<string> dependAssets = new List<string>();
             //处理依赖资源是否打包
             for (int i = 0; i < allDependObjectPaths.Count; i++)
             {
@@ -146,68 +213,61 @@ static public class AssetBundleEditorTools
                 }
 
 
-                var fullpath = Application.dataPath + dependPath.TrimStart("Assets".ToCharArray());
-                var uid = GetMD5HashFromFile(fullpath);
-                string derictory = "assets" + fullpath.Replace(Application.dataPath, "").ToLower();
+                var dependObjPath = Application.dataPath + dependPath.TrimStart("Assets".ToCharArray());
 
-                string cacheid;
-                if (abCacheDict.TryGetValue(derictory, out cacheid))
+                var uiid = GetMD5HashFromFile(dependObjPath);
+                if (string.IsNullOrEmpty(uiid))
                 {
-                    if (!cacheid.Equals(uid))
-                    {
-                        ai.assetBundleName = derictory;
-                        ai.assetBundleVariant = "";
-                        abCacheDict[derictory] = uid;
-                        changeList.Add(derictory);
-                    }
-                    else
-                    {
-                        //已经设置过abname的
-                        if (!changeList.Contains(derictory))
-                        {
-                            ai.assetBundleName = "";
-                        }
-                    }
+                    continue;
                 }
-                else
+
+                string abname = "assets" + dependObjPath.Replace(Application.dataPath, "").ToLower();
+
+                ManifestItem manifestItem = null;
+                lastManifestConfig.Manifest.TryGetValue(abname, out manifestItem);
+                //last没有或者 uiid不一致被改动,
+                if (manifestItem == null || manifestItem.UIID != uiid)
                 {
-                    ai.assetBundleName = derictory;
+                    ai.assetBundleName = abname;
                     ai.assetBundleVariant = "";
-                    abCacheDict[derictory] = uid;
-                    changeList.Add(derictory);
-                }
-
-                if (!saveCache.ContainsKey(derictory))
-                {
-                    saveCache.Add(derictory, uid);
+                    
+                    changeList.Add(abname);
                 }
                 else
                 {
-                    saveCache[derictory] = uid;
+                    ai.assetBundleName = null;
                 }
 
-
-                newAssets.Add(derictory);
+                //被依赖的文件,不保存其依赖信息
+                if (abname != dependsource.ToLower()) //依赖列表中会包含自己
+                {
+                    curManifestConfig.AddDepend(abname, uiid, new List<string>());
+                }
+                
+                dependAssets.Add(abname);
             }
 
 
-            //将现在的目录结构替换配置中的
-            if (newAssets.Count > 0)
+            //保存主文件的依赖
+            if (dependAssets.Count > 0)
             {
-                newAssets.Remove(dependsource.ToLower());
-                manifestConfig.AddDepend(dependsource.ToLower(), Uiid, newAssets);
+                dependAssets.Remove(dependsource.ToLower());
+                curManifestConfig.AddDepend(dependsource.ToLower(), UIID, dependAssets);
             }
         }
 
-        //保存用到的ab
-        abCacheDict = SaveCache(saveCache, outpath);
-        //移除没用到ab
-        RemoveUnuseAb(outpath);
 
+      
         EditorUtility.ClearProgressBar();
         Debug.Log("本地需要打包资源:" + changeList.Count);
     }
 
+    /// <summary>
+    /// 保存每次Cache,与下次做差异对比使用
+    /// </summary>
+    /// <param name="saveCache"></param>
+    /// <param name="outpath"></param>
+    /// <returns></returns>
     private static Dictionary<string, string> SaveCache(Dictionary<string, string> saveCache, string outpath)
     {
         List<CacheItem> list = new List<CacheItem>();
@@ -232,6 +292,44 @@ static public class AssetBundleEditorTools
         return saveCache;
     }
 
+
+    /// <summary>
+    /// 移除无效资源
+    /// </summary>
+    public static void RemoveUnUseAssets(string[] paths)
+    {
+        foreach (var path in paths)
+        {
+            var _path = path.Replace("\\", "/");
+
+
+            //获取被依赖的路径
+            var dependsource = "Assets" + _path.Replace(Application.dataPath, "");
+            var allDependObjectPaths = AssetDatabase.GetDependencies(dependsource).ToList();
+
+            //还原ABname
+            for (int i = 0; i < allDependObjectPaths.Count; i++)
+            {
+                var dependPath = allDependObjectPaths[i];
+                var ext = Path.GetExtension(dependPath).ToLower();
+                if (ext == ".cs" || ext == ".js")
+                {
+                    continue;
+                }
+                //
+                AssetImporter ai = AssetImporter.GetAtPath(dependPath);
+                if (ai == null)
+                {
+                    BDebug.Log("not find Resource " + dependPath);
+                    continue;
+                }
+
+                ai.assetBundleName = null;
+            }
+        }
+    }
+
+
     private static void RemoveUnuseAb(string outpath)
     {
         outpath = outpath + "/Art/";
@@ -247,14 +345,14 @@ static public class AssetBundleEditorTools
                 index / count);
             var file = tpfile.Replace(outpath, "").Replace("\\", "/");
 
-            if (!abCacheDict.Keys.Contains(file))
-            {
-                if (!file.EndsWith("CacheConfig.json") || !file.EndsWith("Config.json"))
-                {
-                    File.Delete(tpfile);
-                    Debug.Log("delete unuse file:" + tpfile);
-                }
-            }
+//            if (!currentAssetBundleCacheDict.Keys.Contains(file))
+//            {
+//                if (!file.EndsWith("CacheConfig.json") || !file.EndsWith("Config.json"))
+//                {
+//                    File.Delete(tpfile);
+//                    Debug.Log("delete unuse file:" + tpfile);
+//                }
+//            }
         }
     }
 
@@ -306,7 +404,8 @@ static public class AssetBundleEditorTools
         }
         catch (Exception ex)
         {
-            throw new Exception("GetMD5HashFromFile() fail,error:" + ex.Message);
+            Debug.LogError("GetMD5HashFromFile() fail,error:" + ex.Message);
+            return "";
         }
     }
 }

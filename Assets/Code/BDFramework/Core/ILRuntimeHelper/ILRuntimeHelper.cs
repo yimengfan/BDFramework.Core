@@ -21,7 +21,7 @@ namespace BDFramework
         static private FileStream fsDll = null;
         static private FileStream fsPdb = null;
 
-        public static void LoadHotfix(string root)
+        public static void LoadHotfix(string root ,bool isRegisterBindings =true)
         {
             //
             IsRunning = true;
@@ -46,14 +46,20 @@ namespace BDFramework
             }
 
 
-            //绑定的初始化
-            AdapterRegister.RegisterCrossBindingAdaptor(AppDomain);
-            ILRuntime.Runtime.Generated.CLRBindings.Initialize(AppDomain);
-            ILRuntime.Runtime.Generated.CLRManualBindings.Initialize(AppDomain);
-//          ILRuntime.Runtime.Generated.PreCLRBuilding.Initialize(AppDomain);
-            //
-            ILRuntimeDelegateHelper.Register(AppDomain);
-            JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);
+           
+                //绑定的初始化
+                AdapterRegister.RegisterCrossBindingAdaptor(AppDomain);
+                ILRuntimeDelegateHelper.Register(AppDomain);
+                //是否注册各种binding
+                if (isRegisterBindings)
+                {
+                    ILRuntime.Runtime.Generated.CLRBindings.Initialize(AppDomain);
+                    ILRuntime.Runtime.Generated.CLRManualBindings.Initialize(AppDomain);
+                    //          ILRuntime.Runtime.Generated.PreCLRBuilding.Initialize(AppDomain);
+                }
+                JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);
+            
+
             if (Application.isEditor)
             {
                 AppDomain.DebugService.StartDebugService(56000);

@@ -22,7 +22,7 @@ namespace BDFramework.ResourceMgr
     public class ManifestConfig
     {
         private int count;
-        private Dictionary<string, ManifestItem> manifestMap;
+        public Dictionary<string, ManifestItem> Manifest { get; private set; }
 
         /// <summary>
         /// json结构
@@ -30,18 +30,18 @@ namespace BDFramework.ResourceMgr
         /// <param name="content"></param>
         public ManifestConfig(string content)
         {
-            this.manifestMap = new Dictionary<string, ManifestItem>();
+            this.Manifest = new Dictionary<string, ManifestItem>();
             var list = JsonMapper.ToObject<List<ManifestItem>>(content);
 
             foreach (var item in list)
             {
-                this.manifestMap[item.Name] = item;
+                this.Manifest[item.Name] = item;
             }
         }
 
         public ManifestConfig()
         {
-            this.manifestMap = new Dictionary<string, ManifestItem>();
+            this.Manifest = new Dictionary<string, ManifestItem>();
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace BDFramework.ResourceMgr
         public string[] GetDirectDependencies(string manifestName)
         {
             ManifestItem item = null;
-            if (this.manifestMap.TryGetValue(manifestName, out item))
+            if (this.Manifest.TryGetValue(manifestName, out item))
             {
                 if (item == null)
                 {
@@ -73,7 +73,7 @@ namespace BDFramework.ResourceMgr
         public ManifestItem GetManifestItem(string manifestName)
         {
             ManifestItem item = new ManifestItem();
-            this.manifestMap.TryGetValue(manifestName, out item);
+            this.Manifest.TryGetValue(manifestName, out item);
             return item;
         }
 
@@ -91,7 +91,7 @@ namespace BDFramework.ResourceMgr
                 Dependencies = dependencies
             };
 
-            this.manifestMap[name] = item;
+            this.Manifest[name] = item;
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace BDFramework.ResourceMgr
         {
             List<string> list = new List<string>();
             //
-            foreach (var m in this.manifestMap)
+            foreach (var m in this.Manifest)
             {
                 //添加主体
                 list.Add(m.Key);
@@ -119,14 +119,14 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public string ToString()
         {
-            this.count = manifestMap.Values.Count;
+            this.count = Manifest.Values.Count;
 
             
 #if UNITY_EDITOR
             int i = 0;
 
             List<string> list = new List<string>();
-            foreach (var v in manifestMap.Values)
+            foreach (var v in Manifest.Values)
             {
                 list.AddRange(v.Dependencies);
             }
@@ -134,7 +134,7 @@ namespace BDFramework.ResourceMgr
             var l = list.Distinct().ToList();
             Debug.Log(string.Format("<color=red>依赖数量:{0}</color>",l.Count));
 #endif
-            var items = manifestMap.Values.ToList();
+            var items = Manifest.Values.ToList();
             return JsonMapper.ToJson(items);
         }
     }

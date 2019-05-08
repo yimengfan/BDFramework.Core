@@ -1,4 +1,5 @@
-﻿namespace Game.UI
+﻿using BDFramework.DataListener;
+namespace Game.UI
 {
     public class M_AIViewContrlBase : AIEnumeratorTaskMgr, M_IViewControl
     {

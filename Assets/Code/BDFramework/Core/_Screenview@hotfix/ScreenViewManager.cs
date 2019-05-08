@@ -7,10 +7,10 @@ using UnityEngine;
 
 namespace BDFramework.ScreenView
 {
-    public class ScreenViewManager : ManagerBase<ScreenViewManager,ScreenViewAttribute >
+    public class ScreenViewManager : ManagerBase<ScreenViewManager, ScreenViewAttribute>
     {
+        public List<ScreenViewLayer> screenViewList = new List<ScreenViewLayer>();
 
-        public List<ScreenViewLayer> screenViewList =new List<ScreenViewLayer>();
         /// <summary>
         /// 主层级
         /// </summary>
@@ -30,30 +30,29 @@ namespace BDFramework.ScreenView
                 Debug.LogError("已经执行过Awake");
                 return;
             }
+
             base.Init();
             //
-           
+
             MainLayer = this.AddLayer();
             //
-            foreach (var  classData in  this.ClassDataMap.Values)
+            foreach (var classData in this.ClassDataMap.Values)
             {
                 var attr = classData.Attribute as ScreenViewAttribute;
 
                 var sv = CreateInstance<IScreenView>(attr.Tag);
                 //设置name属性
-                var t =  sv.GetType();
+                var t = sv.GetType();
                 t.GetProperty("Name").SetValue(sv, attr.Tag, null);
                 MainLayer.RegScreen(sv);
                 //
-                BDebug.Log("创建screen:" + attr.Tag, "green"  );
+                BDebug.Log("创建screen:" + attr.Tag, "green");
                 //
-                if (attr.IsDefault)
+                if (attr.IsDefault && string.IsNullOrEmpty(defaultScreenName) == true)
                 {
                     defaultScreenName = attr.Tag;
                 }
             }
-
-           
         }
 
         public override void Start()
@@ -73,7 +72,6 @@ namespace BDFramework.ScreenView
             base.Update();
         }
 
-
         #endregion
 
 
@@ -82,12 +80,11 @@ namespace BDFramework.ScreenView
         public ScreenViewLayer AddLayer()
         {
             ScreenViewLayer layer = null;
-            layer =  new ScreenViewLayer(this.screenViewList.Count);
+            layer = new ScreenViewLayer(this.screenViewList.Count);
             this.screenViewList.Add(layer);
             return layer;
         }
 
-        #endregion 
-
+        #endregion
     }
 }

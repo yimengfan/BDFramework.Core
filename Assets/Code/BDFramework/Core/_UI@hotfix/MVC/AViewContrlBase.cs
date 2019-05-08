@@ -1,4 +1,5 @@
-﻿namespace BDFramework.UI
+﻿using  BDFramework.DataListener;
+namespace BDFramework.UI
 {
     public class AViewContrlBase : AIEnumeratorTaskMgr, IViewControl
     {

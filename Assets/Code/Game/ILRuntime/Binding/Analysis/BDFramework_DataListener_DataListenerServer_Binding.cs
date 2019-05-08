@@ -14,14 +14,14 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class DataListenerServer_Binding
+    unsafe class BDFramework_DataListener_DataListenerServer_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(global::DataListenerServer);
+            Type type = typeof(BDFramework.DataListener.DataListenerServer);
             args = new Type[]{typeof(System.String)};
             method = type.GetMethod("Create", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Create_0);
@@ -41,7 +41,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = global::DataListenerServer.Create(@name);
+            var result_of_this_method = BDFramework.DataListener.DataListenerServer.Create(@name);
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }

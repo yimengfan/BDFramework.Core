@@ -14,26 +14,23 @@ public class BDLauncherBridge
     /// <summary>
     /// 这里注册整个游戏类型
     /// </summary>
-    /// <param name="isCodeHotfix"></param>
-    static  public void Start(bool isCodeHotfix = false)
+    /// <param name="isILRMode"></param>
+    static  public void Start(bool isILRMode = false)
     {   
-        BDebug.Log("代码热更:" + isCodeHotfix,"yellow");
+        BDebug.Log("解释执行:" + isILRMode,"yellow");
         //组件加载
         List<Type> allTypes = new List<Type>();
         //编辑器环境下 寻找dll
-        if (isCodeHotfix ==false)
+        if (isILRMode ==false)
         {
             //当framework 是dll形式时候需要先获取当前dll里面的所有type
-            allTypes = Assembly.GetExecutingAssembly().GetTypes().ToList();
-            
-            //非源码形式 需要取game type
-            if (Assembly.GetExecutingAssembly().GetName().Name != "Assembly-CSharp")
+            var assembly = Assembly.GetAssembly(typeof(BDLauncherBridge));
+            if (assembly == null)
             {
-                var assmblies = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
-                var logicAssmbly = assmblies.Find((a) => a.GetName().Name == "Assembly-CSharp");
-                
-                allTypes.AddRange(logicAssmbly.GetTypes());
+                Debug.Log("当前dll is null");
             }
+            allTypes = assembly.GetTypes().ToList();
+           
         }
         else
         {
@@ -63,7 +60,7 @@ public class BDLauncherBridge
                 }
                 //游戏启动器
                 //这里主要寻找
-                if (isCodeHotfix && gameStart == null)
+                if (isILRMode && gameStart == null)
                 {
                     var attrs = t.GetCustomAttributes(gsaType,false);
                     if (attrs.Length > 0 )

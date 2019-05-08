@@ -1,6 +1,6 @@
 ﻿using BDFramework.UI;
 using UnityEngine;
-
+using BDFramework.DataListener;
 namespace Code.Game.Windows.MCX
 {
     public class ViewContrl_MVCTest : AViewContrlBase

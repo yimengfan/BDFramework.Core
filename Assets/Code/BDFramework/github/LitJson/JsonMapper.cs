@@ -426,7 +426,6 @@ namespace LitJson
                     list = new ArrayList ();
                     elem_type = inst_type.GetElementType ();
                 }
-
                 while (true) {
                     object item = ReadValue (elem_type, reader);
                     if (item == null && reader.Token == JsonToken.ArrayEnd)

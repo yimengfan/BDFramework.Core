@@ -62,8 +62,11 @@ static  public partial class UITools
                 if (trans == null)
                 {
                     BDebug.LogError(string.Format("自动设置节点失败：{0} - {1}", vt.FullName, attr.Path));
+                    continue;
                 }
 
+                
+                
                 var com = trans.GetComponent(f.FieldType);
 
                 if (com == null)

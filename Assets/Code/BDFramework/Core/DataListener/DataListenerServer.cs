@@ -4,65 +4,74 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
-/// <summary>
-/// 做数据驱动服务
-/// </summary>
-public class DataListenerServer
+
+namespace BDFramework.DataListener
 {
-
-    static private Dictionary<string, DataListenerService> serviceMap = new Dictionary<string, DataListenerService>();
     /// <summary>
-    /// 创建一个service
+    /// 做数据驱动服务
     /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public static DataListenerService Create(string name)
+    public class DataListenerServer
     {
-        var data = new DataListenerService();
 
-        if( serviceMap.ContainsKey(name) == false)
+        static private Dictionary<string, DataListenerService> serviceMap =
+            new Dictionary<string, DataListenerService>();
+
+        /// <summary>
+        /// 创建一个service
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static DataListenerService Create(string name)
         {
-            serviceMap[name] = data;
+            var data = new DataListenerService();
+
+            if (serviceMap.ContainsKey(name) == false)
+            {
+                serviceMap[name] = data;
+            }
+            else
+            {
+                Debug.LogError("已存在同名DataDrive_Service");
+                return GetService(name);
+            }
+
+            return data;
         }
-        else
+
+        /// <summary>
+        /// 获取一个service
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static DataListenerService GetService(string name)
         {
-            Debug.LogError("已存在同名DataDrive_Service");
-            return GetService(name);
+            DataListenerService data = null;
+
+            serviceMap.TryGetValue(name, out data);
+            return data;
         }
-        return data;
-    }
-    /// <summary>
-    /// 获取一个service
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public static DataListenerService GetService(string name)
-    {
-        DataListenerService data = null;
 
-        serviceMap.TryGetValue(name, out data);
-        return data;
-    }
-   /// <summary>
-   /// 删除一个service
-   /// </summary>
-   /// <param name="name"></param>
-   static public void DelService(string name)
-    {
-        DataListenerService data = null;
-        serviceMap.TryGetValue(name, out data);
-        data = null;
-        //
-        serviceMap.Remove(name);
+        /// <summary>
+        /// 删除一个service
+        /// </summary>
+        /// <param name="name"></param>
+        static public void DelService(string name)
+        {
+            DataListenerService data = null;
+            serviceMap.TryGetValue(name, out data);
+            data = null;
+            //
+            serviceMap.Remove(name);
+        }
+
+        /// <summary>
+        /// 删除一个service
+        /// </summary>
+        /// <param name="name"></param>
+        static public void DelALLService()
+        {
+            serviceMap.Clear();
+        }
     }
 
-    /// <summary>
-    /// 删除一个service
-    /// </summary>
-    /// <param name="name"></param>
-    static public void DelALLService()
-    {
-        serviceMap.Clear();
-    }
 }
-

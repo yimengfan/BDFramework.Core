@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using  BDFramework.Mgr;
+using BDFramework.Mgr;
 using BDFramework;
 using BDFramework.UI;
+
 namespace BDFramework.UI
 {
-
     public enum UILayer
     {
         Bottom = 0,
         Center,
         Top
     }
-    
+
     /// <summary>
     /// UI管理类
     /// </summary>
-    public  class UIManager : ManagerBase<UIManager, UIAttribute>
+    public class UIManager : ManagerBase<UIManager, UIAttribute>
     {
         /// <summary>
         /// UI窗口字典
         /// </summary>
         private Dictionary<int, AWindow> windowMap = null;
-        
+
         /// <summary>
         /// ui的三个层级
         /// </summary>
@@ -34,16 +34,15 @@ namespace BDFramework.UI
         //
         public UIManager()
         {
-            
         }
 
-        override public  void Init()
+        override public void Init()
         {
             //初始化
-            windowMap  = new Dictionary<int, AWindow>();
+            windowMap = new Dictionary<int, AWindow>();
             Bottom = GameObject.Find("UIRoot/Bottom").transform;
             Center = GameObject.Find("UIRoot/Center").transform;
-            Top    = GameObject.Find("UIRoot/Top").transform;
+            Top = GameObject.Find("UIRoot/Top").transform;
         }
 
         //
@@ -55,9 +54,10 @@ namespace BDFramework.UI
                 Debug.LogError("未注册窗口，无法加载:" + uiIndex);
                 return null;
             }
+
             //
             var attr = classData.Attribute as UIAttribute;
-            var window = Activator.CreateInstance(classData.Type, new object[] { attr.ResourcePath }) as AWindow;
+            var window = Activator.CreateInstance(classData.Type, new object[] {attr.ResourcePath}) as AWindow;
             //
             return window;
         }
@@ -71,13 +71,13 @@ namespace BDFramework.UI
             foreach (var i in uiIndexs)
             {
                 var index = i.GetHashCode();
-         
+
                 if (windowMap.ContainsKey(index))
                 {
                     var uvalue = windowMap[index];
                     if (uvalue.IsLoad)
                     {
-                        BDebug.Log("已经加载过并未卸载" +  index, "red");
+                        BDebug.Log("已经加载过并未卸载" + index, "red");
                     }
                 }
                 else
@@ -86,7 +86,7 @@ namespace BDFramework.UI
                     var window = CreateWindow(index);
                     if (window == null)
                     {
-                        BDebug.Log("不存在UI:" + index , "red" );
+                        BDebug.Log("不存在UI:" + index, "red");
                     }
                     else
                     {
@@ -99,11 +99,10 @@ namespace BDFramework.UI
                         BDebug.LogFormat("加载{0},耗时: {1}ms", index, watch.ElapsedMilliseconds);
                         PushCaheData(index);
                     }
-
-
                 }
             }
         }
+
         /// <summary>
         /// 异步加载窗口
         /// </summary>
@@ -144,12 +143,15 @@ namespace BDFramework.UI
                         //开始窗口加载
                         win.AsyncLoad(() =>
                         {
-                            curTaskCount++;
-                            loadProcessAction(allCount, curTaskCount);
+                            IEnumeratorTool.WaitingForExec(0.1f, () =>
+                            {
+                                curTaskCount++;
+                                loadProcessAction(allCount, curTaskCount);
 
-                            win.Transform.SetParent(this.Bottom, false);
-                        //推送缓存的数据
-                        PushCaheData(index);
+                                win.Transform.SetParent(this.Bottom, false);
+                                //推送缓存的数据
+                                PushCaheData(index);
+                            });
                         });
                     }
                 }
@@ -171,10 +173,12 @@ namespace BDFramework.UI
                     windowMap[uiIndex].SendMessage(data);
                     BDebug.Log("push cache data " + uiIndex);
                 }
+
                 cacheList.Clear();
                 BDebug.LogFormat("推送数据：{0} ,{1}条", uiIndex, cacheList.Count);
             }
         }
+
         /// <summary>
         /// 卸载窗口
         /// </summary>
@@ -210,11 +214,11 @@ namespace BDFramework.UI
                 v.Close();
                 v.Destroy();
             }
+
             this.windowMap.Clear();
             this.uiDataCacheMap.Clear();
         }
 
-        
 
         /// <summary>
         /// 显示窗口
@@ -231,24 +235,24 @@ namespace BDFramework.UI
                     switch (layer)
                     {
                         case UILayer.Bottom:
-                           // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Bottom, false);
+                            // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Bottom, false);
                             v.Transform.SetParent(this.Bottom, false);
                             break;
                         case UILayer.Center:
-                           // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Center, false);
+                            // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Center, false);
                             v.Transform.SetParent(this.Center, false);
                             break;
                         case UILayer.Top:
-                           // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Top, false);
+                            // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Top, false);
                             v.Transform.SetParent(this.Top, false);
                             break;
                         default:
                             break;
                     }
+
                     v.Transform.SetAsLastSibling();
                     v.Open();
                     //effect
-                  
                 }
                 else
                 {
@@ -270,6 +274,7 @@ namespace BDFramework.UI
 
             return win;
         }
+
         /// <summary>
         /// 关闭窗口
         /// </summary>
@@ -292,11 +297,11 @@ namespace BDFramework.UI
             else
             {
                 Debug.LogErrorFormat("不存在UI：{0}", uiIndex);
-
             }
         }
 
         private Dictionary<int, List<WindowData>> uiDataCacheMap = new Dictionary<int, List<WindowData>>();
+
         /// <summary>
         /// 外部推送ui数据
         /// </summary>
@@ -325,8 +330,8 @@ namespace BDFramework.UI
                 list = new List<WindowData>();
                 uiDataCacheMap[uiIndex] = list;
             }
-            list.Add(data);
 
+            list.Add(data);
         }
 
 
@@ -348,6 +353,7 @@ namespace BDFramework.UI
             {
                 Debug.LogError("不存在ui:" + uiIndex);
             }
+
             return isClose;
         }
 
@@ -357,8 +363,6 @@ namespace BDFramework.UI
         /// </summary>
         public void Update()
         {
-           
         }
-
     }
 }

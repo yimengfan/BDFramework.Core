@@ -1,5 +1,6 @@
 ﻿namespace BDFramework.UI
 {
+    using  BDFramework.DataListener;
     public interface IViewControl
     {
         DataListenerService Model { get; }

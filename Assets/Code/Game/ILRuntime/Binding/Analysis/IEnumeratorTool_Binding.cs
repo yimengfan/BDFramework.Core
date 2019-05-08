@@ -28,6 +28,9 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Int32)};
             method = type.GetMethod("StopCoroutine", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, StopCoroutine_1);
+            args = new Type[]{typeof(System.Single), typeof(System.Action)};
+            method = type.GetMethod("WaitingForExec", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, WaitingForExec_2);
 
 
         }
@@ -62,6 +65,25 @@ namespace ILRuntime.Runtime.Generated
 
 
             global::IEnumeratorTool.StopCoroutine(@id);
+
+            return __ret;
+        }
+
+        static StackObject* WaitingForExec_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Action @action = (System.Action)typeof(System.Action).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            System.Single @f = *(float*)&ptr_of_this_method->Value;
+
+
+            global::IEnumeratorTool.WaitingForExec(@f, @action);
 
             return __ret;
         }

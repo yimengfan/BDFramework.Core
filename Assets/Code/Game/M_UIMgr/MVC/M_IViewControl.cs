@@ -1,4 +1,5 @@
-﻿namespace Game.UI
+﻿using BDFramework.DataListener;
+namespace Game.UI
 {
     public interface M_IViewControl
     {

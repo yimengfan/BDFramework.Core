@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
-
+using BDFramework.DataListener;
 namespace Game.UI
 {
     public interface M_IView

@@ -115,7 +115,7 @@
         </member>
         <member name="M:Newtonsoft.Json.Bson.BsonWriter.Flush">
             <summary>
-            Flushes whatever is in the buffer to the underlying streams and also flushes the underlying stream.
+            Flushes whatever is in the RemoveListenerfer to the underlying streams and also flushes the underlying stream.
             </summary>
         </member>
         <member name="M:Newtonsoft.Json.Bson.BsonWriter.WriteEnd(Newtonsoft.Json.JsonToken)">
@@ -2212,7 +2212,7 @@
         </member>
         <member name="M:Newtonsoft.Json.Linq.JTokenWriter.Flush">
             <summary>
-            Flushes whatever is in the buffer to the underlying streams and also flushes the underlying stream.
+            Flushes whatever is in the RemoveListenerfer to the underlying streams and also flushes the underlying stream.
             </summary>
         </member>
         <member name="M:Newtonsoft.Json.Linq.JTokenWriter.Close">
@@ -6048,7 +6048,7 @@
         </member>
         <member name="T:Newtonsoft.Json.Utilities.StringBuffer">
             <summary>
-            Builds a string. Unlike StringBuilder this class lets you reuse it's internal buffer.
+            Builds a string. Unlike StringBuilder this class lets you reuse it's internal RemoveListenerfer.
             </summary>
         </member>
         <member name="M:Newtonsoft.Json.Utilities.CollectionUtils.IsNullOrEmpty``1(System.Collections.Generic.ICollection{``0})">
@@ -6817,7 +6817,7 @@
         </member>
         <member name="P:Newtonsoft.Json.JsonTextReader.ArrayPool">
             <summary>
-            Gets or sets the reader's character buffer pool.
+            Gets or sets the reader's character RemoveListenerfer pool.
             </summary>
         </member>
         <member name="M:Newtonsoft.Json.JsonTextReader.Read">
@@ -7066,7 +7066,7 @@
         </member>
         <member name="M:Newtonsoft.Json.JsonTextWriter.Flush">
             <summary>
-            Flushes whatever is in the buffer to the underlying streams and also flushes the underlying stream.
+            Flushes whatever is in the RemoveListenerfer to the underlying streams and also flushes the underlying stream.
             </summary>
         </member>
         <member name="M:Newtonsoft.Json.JsonTextWriter.Close">
@@ -9366,7 +9366,7 @@
         </member>
         <member name="M:Newtonsoft.Json.JsonWriter.Flush">
             <summary>
-            Flushes whatever is in the buffer to the underlying streams and also flushes the underlying stream.
+            Flushes whatever is in the RemoveListenerfer to the underlying streams and also flushes the underlying stream.
             </summary>
         </member>
         <member name="M:Newtonsoft.Json.JsonWriter.Close">

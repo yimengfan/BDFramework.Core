@@ -87,6 +87,7 @@ namespace BDFramework.Editor
             foreach (var f in paths)
             {
                 string content = File.ReadAllText(f);
+
                 Json2Sqlite(f, content);
             }
 
@@ -100,7 +101,7 @@ namespace BDFramework.Editor
         {
             //
             var table = Path.GetFileName(f).Replace(Path.GetExtension(f), "");
-            var classname = "Game.Data." + table ;
+            var classname = "Game.Data." + table;
 //            Debug.Log("class name：" + classname);
             var jsonObj = JsonMapper.ToObject(json);
 
@@ -109,11 +110,14 @@ namespace BDFramework.Editor
             var ass = Assembly.LoadFile("file:///" + assPath);
             //
             var t = ass.GetType(classname);
-
-
+            //
+            EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", classname, jsonObj.Count),
+                0);
+            Debug.Log("导出：" + classname);
             if (t == null)
             {
                 Debug.LogError(classname + "类不存在，请检查!");
+                return;
             }
 
             //数据库创建表
@@ -128,8 +132,7 @@ namespace BDFramework.Editor
             {
                 var j = jsonObj[i];
                 var jo = JsonMapper.ToObject(t, j.ToJson());
-                EditorUtility.DisplayProgressBar("Excel2Sqlite", "正在导出:" + classname + " " + i + "-" + jsonObj.Count,
-                    i / jsonObj.Count);
+
                 try
                 {
                     sql.Connection.Insert(jo);
@@ -139,6 +142,9 @@ namespace BDFramework.Editor
                     Debug.LogError("导出数据有错,跳过! 错误位置:" + classname + ":" + i + "-" + jsonObj.Count);
                 }
             }
+
+            EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", classname, jsonObj.Count),
+                1);
         }
 
         [MenuItem("Assets/单个json导入到数据库")]

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using BDFramework;
 using LitJson;
-
+using  BDFramework.DataListener;
 namespace BDFramework.UI
 {
     public class AViewBase :AIEnumeratorTaskMgr,IView
