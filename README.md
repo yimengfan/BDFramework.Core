@@ -14,7 +14,7 @@
   <br>3.ui工作流代码自动生成，数据自动绑定等
   <br>4....
 # 文档
- [中文 Wiki](https://github.com/yimengfan/BDFramework.Core/wiki)
+ [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
  <br>[English Wiki](http://www.nekosang.com)
 # 博客
 不定时更新
