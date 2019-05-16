@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.IO;
 using System.Reflection;
 using BDFramework.GameStart;
 using SQLite4Unity3d;
 using UnityEngine;
 using BDFramework.ResourceMgr;
+using UnityEngine.Networking;
 using Utils = BDFramework.Helper.Utils;
 
 namespace BDFramework
@@ -16,7 +19,8 @@ namespace BDFramework
 
 
         //全局Config
-        [HideInInspector] public Config Config;
+        [HideInInspector]
+        public Config Config;
 
         // Use this for initialization
         private void Awake()
@@ -96,8 +100,6 @@ namespace BDFramework
 
             else if (Config.ArtRoot == AssetLoadPath.StreamingAsset)
             {
-                
-                
                 if (string.IsNullOrEmpty(Config.CustomArtRoot) == false)
                 {
                     artroot = Config.CustomArtRoot;
@@ -106,7 +108,6 @@ namespace BDFramework
                 {
                     artroot = Application.streamingAssetsPath;
                 }
-              
             }
 
             //sql
@@ -183,11 +184,8 @@ namespace BDFramework
                     //
                     //反射模式
                     string dllPath = root + "/" + Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
-                    var assembly = Assembly.LoadFile(dllPath);
 
-                    var type = assembly.GetType("BDLauncherBridge");
-                    var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                    method.Invoke(null, new object[] {false});
+                    IEnumeratorTool.StartCoroutine(this.IE_LoadScript(dllPath));
                 }
             }
             else
@@ -204,6 +202,24 @@ namespace BDFramework
         }
 
         #endregion
+
+
+        IEnumerator IE_LoadScript(string path)
+        {
+            var www = new WWW(path);
+            yield return www;
+            if (www.isDone)
+            {
+#if UNITY_STANDALONE_WIN
+                path = "file:///" + path;
+#endif
+                var assembly = Assembly.Load(www.bytes);
+
+                var type = assembly.GetType("BDLauncherBridge");
+                var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
+                method.Invoke(null, new object[] {false});
+            }
+        }
 
 
         //普通帧循环

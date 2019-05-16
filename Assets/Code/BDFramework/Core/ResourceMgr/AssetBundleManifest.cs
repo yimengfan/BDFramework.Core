@@ -91,7 +91,20 @@ namespace BDFramework.ResourceMgr
                 Dependencies = dependencies
             };
 
-            this.Manifest[name] = item;
+            if (this.Manifest.ContainsKey(name)  )
+            {
+                //prefab 嵌套的情况, 2018新系统
+                //被依赖项 其实也有依赖，
+                //
+                if (this.Manifest[name].Dependencies.Count == 0)
+                {
+                    this.Manifest[name] = item;
+                }
+            }
+            else
+            {
+                this.Manifest[name] = item;
+            }
         }
 
         /// <summary>

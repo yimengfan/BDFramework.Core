@@ -130,15 +130,23 @@ public abstract class AWindow
     public void AsyncLoad(Action callback)
     {
         //  JDeBug.Inst.Log("开始任务:" + resourcePath);
-        BResources.AsyncLoad<GameObject>(resourcePath, (bool result, GameObject o) =>
+        BResources.AsyncLoad<GameObject>(resourcePath, (result,  o) =>
         {
-            var go = GameObject.Instantiate(o);
-            Transform = go.transform;
-            Transform.gameObject.SetActive(false);
-            IsLoad = true;
-            //自动查找节点
-            UITools.AutoSetTransformPath(this);
-            Init();
+            if (o != null)
+            {
+                var go = GameObject.Instantiate(o);
+                Transform = go.transform;
+                Transform.gameObject.SetActive(false);
+                IsLoad = true;
+                //自动查找节点
+                UITools.AutoSetTransformPath(this);
+                Init();
+            }
+            else
+            {
+                BDebug.LogError("窗口资源不存在:" + this.GetType().FullName);
+            }
+
             if (callback != null)
             {
                 callback();
@@ -245,7 +253,7 @@ public abstract class AWindow
     /// </summary>
     virtual public void Update()
     {
-
+        
     }
 
     /// <summary>

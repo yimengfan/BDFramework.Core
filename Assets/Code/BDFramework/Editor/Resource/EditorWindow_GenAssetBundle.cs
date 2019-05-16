@@ -69,12 +69,13 @@ public class EditorWindow_GenAssetBundle : EditorWindow
 
         if (GUILayout.Button("检测资源", GUILayout.Width(100)))
         {
+            var exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath,"");
             if (isSelectWindows)
-                AssetBundleEditorTools.CheackAssets(rootResourceDir,Application.streamingAssetsPath+"/Windows", BuildTarget.StandaloneWindows);
+                AssetBundleEditorTools.CheackAssets(rootResourceDir,exportPath+"/Windows", BuildTarget.StandaloneWindows);
             if (isSelectAndroid)
-                AssetBundleEditorTools.CheackAssets(rootResourceDir,Application.streamingAssetsPath+"/Android", BuildTarget.Android);
+                AssetBundleEditorTools.CheackAssets(rootResourceDir,exportPath+"/Android", BuildTarget.Android);
             if (isSelectIOS)
-                AssetBundleEditorTools.CheackAssets(rootResourceDir,Application.streamingAssetsPath+"/iOS", BuildTarget.iOS);
+                AssetBundleEditorTools.CheackAssets(rootResourceDir,exportPath+"/iOS", BuildTarget.iOS);
             
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕"); 
@@ -82,13 +83,14 @@ public class EditorWindow_GenAssetBundle : EditorWindow
         
         if (GUILayout.Button("一键打包[美术资源]", GUILayout.Width(380), GUILayout.Height(30)))
         {
+            var exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath,"");
             //开始打包
             if (isSelectWindows)
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,Application.streamingAssetsPath+"/Windows", BuildTarget.StandaloneWindows);
+                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,exportPath+"/Windows", BuildTarget.StandaloneWindows);
             if (isSelectAndroid)
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,Application.streamingAssetsPath+"/Android", BuildTarget.Android);
+                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,exportPath+"/Android", BuildTarget.Android);
             if (isSelectIOS)
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,Application.streamingAssetsPath+"/iOS", BuildTarget.iOS);
+                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,exportPath+"/iOS", BuildTarget.iOS);
             
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕");

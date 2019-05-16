@@ -136,6 +136,8 @@ namespace BDFramework.UI
                     if (win == null)
                     {
                         Debug.LogErrorFormat("不存在UI:{0}", index);
+                        curTaskCount++;
+                        loadProcessAction(allCount, curTaskCount);
                     }
                     else
                     {
@@ -148,7 +150,10 @@ namespace BDFramework.UI
                                 curTaskCount++;
                                 loadProcessAction(allCount, curTaskCount);
 
-                                win.Transform.SetParent(this.Bottom, false);
+                                if (win.Transform)
+                                {
+                                    win.Transform.SetParent(this.Bottom, false);
+                                }
                                 //推送缓存的数据
                                 PushCaheData(index);
                             });
