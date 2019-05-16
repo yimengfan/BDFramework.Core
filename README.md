@@ -3,7 +3,7 @@
 框架力致于打造一个简单、高效的开发流，更注重于基于数据驱动的工具开发（个人以为工具才是第一生产力，框架只是辅助而已）。
 <br>有任何问题 直接提issue，1天内必解决
 ## 版本计划
-<br> 2019.6之前 完成新文档的编写
+<br> 2019.6之前 完成新文档的编写 [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
 <br> 2018.7 热更新工具整合：代码更新及工具(已完成)
 <br> 2018.8 热更新工具整合：资源更新（已完成）
 ## 框架特点
@@ -14,7 +14,7 @@
   <br>3.ui工作流代码自动生成，数据自动绑定等
   <br>4....
 # 文档
- [中文 Wiki](https://github.com/yimengfan/BDFramework.Core/wiki)
+ [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
  <br>[English Wiki](http://www.nekosang.com)
 # 博客
 不定时更新
