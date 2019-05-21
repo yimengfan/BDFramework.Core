@@ -1,6 +1,7 @@
 # 简介
 一个基于unity3d的开发框架。
 框架力致于打造一个简单、高效的开发流，更注重于基于数据驱动的工具开发（工具才是第一生产力，框架只是辅助而已）。
+<br> unity2018.4
 <br>有任何问题 直接提issue，1天内必解决
 ## 更新日志
 [  日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
