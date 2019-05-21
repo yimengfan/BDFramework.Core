@@ -14,15 +14,15 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class BDFramework_VersionContorller_Binding
+    unsafe class BDFramework_VersionContrller_VersionContorller_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(BDFramework.VersionContorller);
-            args = new Type[]{typeof(System.String), typeof(System.String), typeof(System.Action<System.Int32, System.Int32>), typeof(System.Action<System.String>)};
+            Type type = typeof(BDFramework.VersionContrller.VersionContorller);
+            args = new Type[]{typeof(BDFramework.VersionContrller.UpdateMode), typeof(System.String), typeof(System.String), typeof(System.Action<System.Int32, System.Int32>), typeof(System.Action<System.String>)};
             method = type.GetMethod("Start", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Start_0);
 
@@ -34,7 +34,7 @@ namespace ILRuntime.Runtime.Generated
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 4);
+            StackObject* __ret = ILIntepreter.Minus(__esp, 5);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.Action<System.String> @onError = (System.Action<System.String>)typeof(System.Action<System.String>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
@@ -52,8 +52,12 @@ namespace ILRuntime.Runtime.Generated
             System.String @serverConfigPath = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 5);
+            BDFramework.VersionContrller.UpdateMode @mode = (BDFramework.VersionContrller.UpdateMode)typeof(BDFramework.VersionContrller.UpdateMode).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
 
-            BDFramework.VersionContorller.Start(@serverConfigPath, @localConfigPath, @onProcess, @onError);
+
+            BDFramework.VersionContrller.VersionContorller.Start(@mode, @serverConfigPath, @localConfigPath, @onProcess, @onError);
 
             return __ret;
         }

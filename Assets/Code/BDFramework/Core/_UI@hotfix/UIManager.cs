@@ -296,7 +296,7 @@ namespace BDFramework.UI
                 }
                 else
                 {
-                    Debug.LogErrorFormat("UI未加载或已经处于close状态：{0}", uiIndex);
+//                    Debug.LogErrorFormat("UI未加载或已经处于close状态：{0}", uiIndex);
                 }
             }
             else

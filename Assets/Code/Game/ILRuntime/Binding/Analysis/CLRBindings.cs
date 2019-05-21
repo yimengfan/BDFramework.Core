@@ -99,7 +99,7 @@ namespace ILRuntime.Runtime.Generated
             System_Int32_Binding.Register(app);
             UnityEngine_Random_Binding.Register(app);
             System_Collections_Generic_List_1_String_Binding.Register(app);
-            BDFramework_VersionContorller_Binding.Register(app);
+            BDFramework_VersionContrller_VersionContorller_Binding.Register(app);
             System_Collections_Generic_IEnumerable_1_KeyValuePair_2_String_Object_Binding.Register(app);
             System_Collections_Generic_IEnumerator_1_KeyValuePair_2_String_Object_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_String_Object_Binding_t.Register(app);
