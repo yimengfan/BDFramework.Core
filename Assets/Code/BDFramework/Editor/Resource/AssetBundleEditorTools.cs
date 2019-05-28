@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using BDFramework.ResourceMgr;
 using LitJson;
+using Pomelo.DotNetClient;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.Networking.NetworkSystem;
@@ -25,7 +26,7 @@ static public class AssetBundleEditorTools
     /// <param name="resRootPath"></param>
     /// <param name="outPath"></param>
     /// <param name="target"></param>
-    public static void CheackAssets(string resRootPath, string outPath, BuildTarget target)
+    public static void CheackAssets(string resRootPath, string outPath, BuildTarget target )
     {
         //1.分析资源
         string rootPath = IPath.Combine(Application.dataPath, resRootPath);
@@ -59,14 +60,14 @@ static public class AssetBundleEditorTools
 
     
     
-
+    //
     /// <summary>
     /// 生成AssetBundle
     /// </summary>
     /// <param name="resRootPath"></param>
     /// <param name="outPath"></param>
     /// <param name="target"></param>
-    public static void GenAssetBundle(string resRootPath, string outPath, BuildTarget target)
+    public static void GenAssetBundle(string resRootPath, string outPath, BuildTarget target,BuildAssetBundleOptions  options = BuildAssetBundleOptions.ChunkBasedCompression)
     {
         //1.生成ab名
         string rootPath = IPath.Combine(Application.dataPath, resRootPath);
@@ -106,12 +107,11 @@ static public class AssetBundleEditorTools
         File.WriteAllText(configPath, curManifestConfig.ToString());
 
         //2.打包
-        BuildAssetBundle(target, outPath);
+        BuildAssetBundle(target, outPath,options);
 
 
-        //清除
-        RemoveUnUseAssets(fileList.ToArray());
-        //
+  
+        //删除无用文件
         var delFiles = Directory.GetFiles(outPath, "*.*", SearchOption.AllDirectories);
 
         foreach (var df in delFiles)
@@ -122,6 +122,9 @@ static public class AssetBundleEditorTools
                 File.Delete(df);
             }
         }
+        
+        //清除AB Name
+        RemoveABName(fileList.ToArray());
     }
 
 
@@ -130,7 +133,7 @@ static public class AssetBundleEditorTools
     /// <summary>
     /// 创建assetbundle
     /// </summary>
-    private static void BuildAssetBundle(BuildTarget target, string outPath)
+    private static void BuildAssetBundle(BuildTarget target, string outPath,BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression)
     {
         AssetDatabase.RemoveUnusedAssetBundleNames();
         string path = IPath.Combine(outPath, "Art");
@@ -139,8 +142,7 @@ static public class AssetBundleEditorTools
             Directory.CreateDirectory(path);
         }
 
-        //使用lz4压缩
-        BuildPipeline.BuildAssetBundles(path, BuildAssetBundleOptions.ChunkBasedCompression, target);
+        BuildPipeline.BuildAssetBundles(path, options, target);
     }
 
     static ManifestConfig curManifestConfig = null;
@@ -296,8 +298,9 @@ static public class AssetBundleEditorTools
     /// <summary>
     /// 移除无效资源
     /// </summary>
-    public static void RemoveUnUseAssets(string[] paths)
+    public static void RemoveABName(string[] paths)
     {
+        EditorUtility.DisplayProgressBar("资源清理","清理AssetBundle Name",0);
         foreach (var path in paths)
         {
             var _path = path.Replace("\\", "/");
@@ -320,13 +323,15 @@ static public class AssetBundleEditorTools
                 AssetImporter ai = AssetImporter.GetAtPath(dependPath);
                 if (ai == null)
                 {
-                    BDebug.Log("not find Resource " + dependPath);
                     continue;
                 }
 
-                ai.assetBundleName = null;
+                ai.assetBundleName = "";
+                EditorUtility.DisplayProgressBar("资源清理","清理:"+dependsource,(float)i / (float)allDependObjectPaths.Count);
             }
         }
+        
+        EditorUtility.ClearProgressBar();
     }
 
 

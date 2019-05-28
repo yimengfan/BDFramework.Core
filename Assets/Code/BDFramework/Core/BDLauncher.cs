@@ -17,18 +17,19 @@ namespace BDFramework
         static public Action OnUpdate { get; set; }
         static public Action OnLateUpdate { get; set; }
 
+        //当BDFrame启动完整后执行
+        static public Action OnBDFrameLaunch { get; set; }
 
         //全局Config
-        [HideInInspector]
-        public Config Config;
+        [HideInInspector] public Config Config;
 
         // Use this for initialization
         private void Awake()
         {
             this.gameObject.AddComponent<IEnumeratorTool>();
             this.Config = this.gameObject.GetComponent<Config>();
-            //
             LaunchLocal();
+            //
         }
 
         #region 启动非热更逻辑
@@ -158,6 +159,12 @@ namespace BDFramework
             BResources.Load(artroot);
             //code
             LoadScrpit(coderoot);
+
+
+            if (OnBDFrameLaunch != null)
+            {
+                OnBDFrameLaunch();
+            }
         }
 
 
@@ -177,7 +184,7 @@ namespace BDFramework
                 {
                     //解释执行模式
                     ILRuntimeHelper.LoadHotfix(root);
-                    ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] {true});
+                    ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] {true,false});
                 }
                 else
                 {
@@ -185,7 +192,7 @@ namespace BDFramework
                     //反射模式
                     string dllPath = root + "/" + Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
 
-                    IEnumeratorTool.StartCoroutine(this.IE_LoadScript(dllPath));
+                    IEnumeratorTool.StartCoroutine(this.IE_LoadDLL_AndroidOrPC(dllPath));
                 }
             }
             else
@@ -197,27 +204,38 @@ namespace BDFramework
                 //
                 var type = assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                method.Invoke(null, new object[] {false});
+                method.Invoke(null, new object[] {false,false});
             }
         }
 
         #endregion
 
 
-        IEnumerator IE_LoadScript(string path)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        IEnumerator IE_LoadDLL_AndroidOrPC(string path)
         {
+            path = "file:///" + path;
+            
             var www = new WWW(path);
+
             yield return www;
-            if (www.isDone)
+            if (www.isDone && www.error==null)
             {
-#if UNITY_STANDALONE_WIN
-                path = "file:///" + path;
-#endif
+
+
                 var assembly = Assembly.Load(www.bytes);
 
                 var type = assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                method.Invoke(null, new object[] {false});
+                method.Invoke(null, new object[] {false , true});
+            }
+            else
+            {
+                BDebug.LogError("DLL加载失败:"+www.error);
             }
         }
 

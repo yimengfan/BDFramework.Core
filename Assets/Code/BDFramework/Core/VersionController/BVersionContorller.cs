@@ -6,7 +6,7 @@ using BDFramework.Helper;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace BDFramework
+namespace BDFramework.VersionContrller
 {
     public class AssetConfig
     {
@@ -21,6 +21,14 @@ namespace BDFramework
         public string LocalPath = "";
     }
 
+
+    public enum UpdateMode
+    {
+        CompareVersionConfig, //对比版本文件
+        Repair,               //修复模式,对比本地文件
+    }
+    
+    
     /// <summary>
     /// 版本控制类
     /// </summary>
@@ -30,28 +38,32 @@ namespace BDFramework
         private static int curDonloadIndex = 0;
         private static string serverConfig = null;
 
+        private static string localConfigRootPath = null;
 
-        static public void Start(string serverConfigPath, string localConfigPath, Action<int, int> onProcess,Action<string> onError)
+        static public void Start(UpdateMode mode ,string serverConfigPath, string localConfigPath, Action<int, int> onProcess,Action<string> onError)
         {
-            IEnumeratorTool.StartCoroutine(IE_Start(serverConfigPath, localConfigPath, onProcess, onError));
+            IEnumeratorTool.StartCoroutine(IE_Start(mode,serverConfigPath, localConfigPath, onProcess, onError));
         }
 
         /// <summary>
         /// 开始任务
         /// </summary>
-        /// <param name="serverConfigPath">服务器配置根目录</param>
+        /// <param name="serverConfigPath">服务器配置根目录,HTTP /HTTPS 由外部指定</param>
         /// <param name="localConfigPath">本地根目录</param>
         /// <param name="onProcess"></param>
         /// <param name="onError"></param>
         /// 返回码: -1：error  0：success
-        static private IEnumerator IE_Start(string serverConfigPath, string localConfigPath, Action<int, int> onProcess, Action<string> onError)
+        static private IEnumerator IE_Start(UpdateMode mode,string serverConfigPath, string localConfigPath, Action<int, int> onProcess, Action<string> onError)
         {
+
+            localConfigRootPath = localConfigPath;
+            
             var platform = Utils.GetPlatformPath(Application.platform);
             
             if (curDownloadList == null || curDownloadList.Count == 0)
             {
                 //开始下载服务器配置
-                var serverPath = serverConfigPath + "/" + platform + "/" + platform + "_VersionConfig.json";
+                var serverPath = string.Format("{0}/{1}/{2}_VersionConfig.json", serverConfigPath, platform,platform);//serverConfigPath + "/" + platform + "/" + platform + "";
                 BDebug.Log("server:" + serverPath);
                
                 //下载config
@@ -65,9 +77,10 @@ namespace BDFramework
                     }
                     else
                     {
-                        Debug.LogError(wr.error);
+                        Debug.LogError("服务器资源配置不存在,跳过~");
+                        onProcess(1, 1);
+                        yield break;
                     }
-
                 }
 
 
@@ -81,7 +94,18 @@ namespace BDFramework
                 }
 
                 //对比差异列表进行下载
-                curDownloadList = CompareConfig(localconf, serverconf);
+                //不同模式生成不同下载列表
+                switch (mode)
+                {
+                    case  UpdateMode.CompareVersionConfig:
+                        curDownloadList = CompareVersionConfig(localconf, serverconf);
+                        break;
+                    case  UpdateMode.Repair:
+
+                        curDownloadList = Repair(localconf, serverconf);
+                        break;
+                }
+            
                 if (curDownloadList.Count > 0)
                 {
                     //预通知要进入热更模式
@@ -116,7 +140,7 @@ namespace BDFramework
                 }
                 else
                 {
-                    BDebug.LogError("下载失败:" + wr.error);
+                    BDebug.LogError("下载失败:" + sp);
                     onError(wr.error);          
                     yield break;
                 }
@@ -145,9 +169,9 @@ namespace BDFramework
         
        
         /// <summary>
-        /// 对比
+        /// 对比版本配置
         /// </summary>
-        static public List<AssetItem> CompareConfig(AssetConfig local, AssetConfig server)
+        static public List<AssetItem> CompareVersionConfig(AssetConfig local, AssetConfig server)
         {
             if (local == null)
             {
@@ -173,5 +197,49 @@ namespace BDFramework
 
             return list;
         }
+        
+        
+        /// <summary>
+        /// 修复模式,是要对比本地文件是否存在
+        /// </summary>
+        static public List<AssetItem> Repair(AssetConfig local, AssetConfig server)
+        {
+            if (local == null)
+            {
+
+                return server.Assets;
+            }
+
+            var list = new List<AssetItem>();
+            //比对平台
+            if (local.Platfrom == server.Platfrom ) 
+            {
+                //平台
+                var platform = Utils.GetPlatformPath(Application.platform);
+                //
+                foreach (var serverAsset in server.Assets)
+                {
+                    //比较本地是否有 hash、文件名一致的资源
+                    var result = local.Assets.Find((a) => a.HashName == serverAsset.HashName && a.LocalPath == serverAsset.LocalPath);
+                    //配置不存在
+                    if (result == null)
+                    {
+                        list.Add(serverAsset);
+                    }
+                    else
+                    {
+                        //配置存在，判断文件存不存在           
+                        var fs =localConfigRootPath + "/" + platform + "/" + serverAsset.LocalPath;
+                        if (!File.Exists(fs))
+                        {
+                            list.Add(serverAsset);
+                        }
+                    }
+                }
+            }
+
+            return list;
+        }
+        
     }
 }

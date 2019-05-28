@@ -51,30 +51,7 @@ namespace Mono.CompilerServices.SymbolWriter
 
 		Hashtable documents = new Hashtable ();
 
-#if !CECIL
-		ModuleBuilder mb;
-		delegate Guid GetGuidFunc (ModuleBuilder mb);
-		GetGuidFunc get_guid_func;
 
-		public SymbolWriterImpl (ModuleBuilder mb)
-		{
-			this.mb = mb;
-		}
-
-		public void Close ()
-		{
-			MethodInfo mi = typeof (ModuleBuilder).GetMethod (
-				"Mono_GetGuid",
-				BindingFlags.Static | BindingFlags.NonPublic);
-			if (mi == null)
-				return;
-
-			get_guid_func = (GetGuidFunc) System.Delegate.CreateDelegate (
-				typeof (GetGuidFunc), mi);
-
-			msw.WriteSymbolFile (get_guid_func (mb));
-		}
-#else
 		Guid guid;
 
 		public SymbolWriterImpl (Guid guid)
@@ -86,7 +63,6 @@ namespace Mono.CompilerServices.SymbolWriter
 		{
 			msw.WriteSymbolFile (guid);
 		}
-#endif
 
 		public void CloseMethod ()
 		{

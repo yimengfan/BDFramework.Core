@@ -15,30 +15,30 @@ public class BDLauncherBridge
     /// 这里注册整个游戏类型
     /// </summary>
     /// <param name="isILRMode"></param>
-    static  public void Start(bool isILRMode = false)
+    static  public void Start(bool isILRMode = false,bool isRefMode =false)
     {   
         BDebug.Log("解释执行:" + isILRMode,"yellow");
         //组件加载
         List<Type> allTypes = new List<Type>();
         //编辑器环境下 寻找dll
-        if (isILRMode ==false)
-        {
-            //当framework 是dll形式时候需要先获取当前dll里面的所有type
-            var assembly = Assembly.GetAssembly(typeof(BDLauncherBridge));
-            if (assembly == null)
-            {
-                Debug.Log("当前dll is null");
-            }
-            allTypes = assembly.GetTypes().ToList();
-           
-        }
-        else
+        if (isILRMode)
         {
             var values = ILRuntimeHelper.AppDomain.LoadedTypes.Values.ToList();
             foreach (var v in values)
             {
                 allTypes.Add(v.ReflectionType);
             }
+
+        }
+        else
+        {
+            //获取DLL ALLtype
+            var assembly = Assembly.GetAssembly(typeof(BDLauncherBridge));
+            if (assembly == null)
+            {
+                Debug.Log("当前dll is null");
+            }
+            allTypes = assembly.GetTypes().ToList();
         }
         
         //
@@ -60,7 +60,7 @@ public class BDLauncherBridge
                 }
                 //游戏启动器
                 //这里主要寻找
-                if (isILRMode && gameStart == null)
+                if ((isILRMode||isRefMode) && gameStart == null)
                 {
                     var attrs = t.GetCustomAttributes(gsaType,false);
                     if (attrs.Length > 0 )
