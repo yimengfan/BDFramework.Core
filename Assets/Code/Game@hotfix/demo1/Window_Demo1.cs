@@ -34,7 +34,35 @@ public class Window_Demo1 : AWindow
            this.Close();
            ScreenViewManager.Inst.MainLayer.BeginNavTo("main");
         });
-        
+
+
+//        var effects = this.Transform.Find("effect");
+//        var shader = Resources.Load<Shader>("builtin/default/PSU");
+//
+//        var renders = effects.GetComponentsInChildren<Renderer>();
+//
+//        foreach (var r in renders)
+//        {
+//            foreach (var m in r.materials)
+//            {
+//                //
+//                Debug.Log(string.Format("{0} - shader:{1}",r.name,m.shader.name));
+//                //
+//                if (m.shader.name == "Particles/Standard Unlit")
+//                {
+////                    m.shader = null;
+////                    m.shader = null;
+// 
+//                     Resources.UnloadAsset(m.shader);
+//                     m.shader = null;
+//                     m.shader = shader;
+//                    
+//                    BDebug.Log("替换材质成功:" + r.name);
+//                }
+//            }
+//          
+//        }
+
     }
 
     public override void Close()

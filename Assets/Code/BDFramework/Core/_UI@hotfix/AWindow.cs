@@ -247,14 +247,7 @@ public abstract class AWindow
         }
         
     }
-
-    /// <summary>
-    /// 更新窗口
-    /// </summary>
-    virtual public void Update()
-    {
-        
-    }
+    
 
     /// <summary>
     /// 重置窗口

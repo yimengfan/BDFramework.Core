@@ -21,7 +21,8 @@ namespace BDFramework
         static public Action OnBDFrameLaunch { get; set; }
 
         //全局Config
-        [HideInInspector] public Config Config;
+        [HideInInspector]
+        public Config Config;
 
         // Use this for initialization
         private void Awake()
@@ -34,6 +35,7 @@ namespace BDFramework
 
         #region 启动非热更逻辑
 
+        private IGameStart mainStart;
         /// <summary>
         /// 启动本地代码
         /// </summary>
@@ -41,8 +43,7 @@ namespace BDFramework
         {
             var types = Assembly.GetExecutingAssembly().GetTypes();
 
-
-            var istartType = typeof(IGameStart);
+            
             foreach (var t in types)
             {
                 if (t.IsClass && t.GetInterface("IGameStart") != null)
@@ -50,14 +51,9 @@ namespace BDFramework
                     var attr = t.GetCustomAttribute(typeof(GameStartAtrribute), false);
                     if (attr != null)
                     {
-                        var gs = Activator.CreateInstance(t) as IGameStart;
-
+                        mainStart = Activator.CreateInstance(t) as IGameStart;
                         //注册
-                        gs.Start();
-
-                        //
-                        BDLauncher.OnUpdate = gs.Update;
-                        BDLauncher.OnLateUpdate = gs.LateUpdate;
+                        mainStart.Start();
                     }
                 }
             }
@@ -153,12 +149,16 @@ namespace BDFramework
                 }
             }
 
-            //sql
-            SqliteLoder.Load(sqlroot);
-            //art
-            BResources.Load(artroot);
-            //code
-            LoadScrpit(coderoot);
+            //异步
+            BResources.Load(artroot, () =>
+            {
+                //sql
+                SqliteLoder.Load(sqlroot);
+                //异步 这里如果代码很早的时候就开始走表格逻辑，有可能报错，
+                //但是大部分游戏应该不会，三层回调太丑，暂时用这个
+
+               ScriptLoder.Load(coderoot,Config.CodeRunMode);
+            });
 
 
             if (OnBDFrameLaunch != null)
@@ -166,92 +166,31 @@ namespace BDFramework
                 OnBDFrameLaunch();
             }
         }
+        
+        
 
-
-        //
-        /// <summary>
-        /// 游戏逻辑的Assembly
-        /// </summary>
-        //        public static  Assembly GameAssembly { get; private set; }
-        /// <summary>
-        /// 开始热更脚本逻辑
-        /// </summary>
-        private void LoadScrpit(string root)
-        {
-            if (root != "") //热更代码模式
-            {
-                if (Config.CodeRunMode == HotfixCodeRunMode.ByILRuntime)
-                {
-                    //解释执行模式
-                    ILRuntimeHelper.LoadHotfix(root);
-                    ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] {true,false});
-                }
-                else
-                {
-                    //
-                    //反射模式
-                    string dllPath = root + "/" + Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
-
-                    IEnumeratorTool.StartCoroutine(this.IE_LoadDLL_AndroidOrPC(dllPath));
-                }
-            }
-            else
-            {
-                //PC 模式非热更
-
-                //这里用反射是为了 不访问逻辑模块的具体类，防止编译失败
-                var assembly = Assembly.GetExecutingAssembly();
-                //
-                var type = assembly.GetType("BDLauncherBridge");
-                var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                method.Invoke(null, new object[] {false,false});
-            }
-        }
 
         #endregion
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        IEnumerator IE_LoadDLL_AndroidOrPC(string path)
-        {
-            path = "file:///" + path;
-            
-            var www = new WWW(path);
-
-            yield return www;
-            if (www.isDone && www.error==null)
-            {
-
-
-                var assembly = Assembly.Load(www.bytes);
-
-                var type = assembly.GetType("BDLauncherBridge");
-                var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                method.Invoke(null, new object[] {false , true});
-            }
-            else
-            {
-                BDebug.LogError("DLL加载失败:"+www.error);
-            }
-        }
 
 
         //普通帧循环
         private void Update()
         {
+            if(mainStart!=null) mainStart.Update();
+            //
             if (OnUpdate != null)
             {
                 OnUpdate();
             }
+         
         }
 
         //更快的帧循环
         private void LateUpdate()
         {
+            if(mainStart!=null) mainStart.LateUpdate();
+            //
             if (OnLateUpdate != null)
             {
                 OnLateUpdate();

@@ -24,8 +24,6 @@ namespace BDFramework.ScreenView
         /// <summary>
         /// IScreenView 退出
         /// </summary>
-        void BeginExit(); 
-        void Update(float delta); 
-        void FixedUpdate(float delta);
+        void BeginExit();
     }
 }

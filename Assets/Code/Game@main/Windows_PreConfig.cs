@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using BDFramework;
 using BDFramework.Helper;
+using BDFramework.VersionContrller;
 using Game.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,6 +46,7 @@ public class Windows_PreConfig : M_AWindow
     {
         //直接启动
         GameObject.Find("BDFrame").GetComponent<BDLauncher>().Launch();
+        this.Close();
     }
 
 
@@ -58,21 +60,21 @@ public class Windows_PreConfig : M_AWindow
         }
 
         var url = "http://" + this.inputField.text;
-        VersionContorller.Start(url, Application.persistentDataPath,
-        (i, j) =>
-        {
-            this.text_DownloadProcess.text = string.Format("{0}/{1}", i, j);
-            //下载完毕
-            if (i == j)
+        VersionContorller.Start(UpdateMode.Repair, url, Application.persistentDataPath,
+            (i, j) =>
             {
-                this.text_DownloadProcess.text = "下载完毕";
-                //启动
-                GameObject.Find("BDFrame").GetComponent<BDLauncher>().Launch();
-            }
-        },
-        (e) =>
-        {
-            this.text_DownloadProcess.text = e; 
-        });
+                this.text_DownloadProcess.text = string.Format("{0}/{1}", i, j);
+                //下载完毕
+                if (i == j)
+                {
+                    this.text_DownloadProcess.text = "下载完毕";
+                    //启动
+                    GameObject.Find("BDFrame").GetComponent<BDLauncher>().Launch();
+                }
+            },
+            (e) =>
+            {
+                this.text_DownloadProcess.text = e;
+            });
     }
 }

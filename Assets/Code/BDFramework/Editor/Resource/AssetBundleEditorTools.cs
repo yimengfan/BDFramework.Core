@@ -6,7 +6,6 @@ using System.Net;
 using System.Text;
 using BDFramework.ResourceMgr;
 using LitJson;
-using Pomelo.DotNetClient;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.Networking.NetworkSystem;

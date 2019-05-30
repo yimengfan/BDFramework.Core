@@ -11,8 +11,6 @@ using BDFramework.Editor.Tools;
 using BDFramework.GameStart;
 using BDFramework.Helper;
 using ILRuntime.Runtime.CLRBinding;
-using Mono.Cecil;
-using Sirenix.OdinInspector;
 using Tool;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
@@ -78,8 +76,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
      2.如编译出现报错，请仔细看报错信息,和报错的代码行列,
        一般均为语法错
      3.语法报错原因可能有:主工程访问hotfix中的类, 使用宏
-       编译时代码结构发生变化..等等，需要细心的你去发现
-"
+       编译时代码结构发生变化..等等，需要细心的你去发现"
             );
             GUI.color = GUI.backgroundColor;
         }
@@ -98,7 +95,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         types.Add(typeof(System.Runtime.CompilerServices.IAsyncStateMachine));
         types.Add(typeof(IGameStart));
         types.Add(typeof(ADataListener));
-        types.Add(typeof(SerializedMonoBehaviour));
+        //types.Add(typeof(SerializedMonoBehaviour));
         GenAdapter.CreateAdapter(types, "Assets/Code/Game/ILRuntime/Adapter");
     }
 
@@ -106,7 +103,8 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     static void GenCLRBindingByAnalysis()
     {
         //用新的分析热更dll调用引用来生成绑定代码
-        ILRuntimeHelper.LoadHotfix(Application.streamingAssetsPath,false);
+        var dllpath =Application.streamingAssetsPath+ "/" + Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.pdb";
+        ILRuntimeHelper.LoadHotfix(dllpath,false);
         BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain,
             "Assets/Code/Game/ILRuntime/Binding/Analysis");
         AssetDatabase.Refresh();

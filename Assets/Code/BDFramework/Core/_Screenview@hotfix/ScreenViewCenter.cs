@@ -171,38 +171,7 @@ namespace BDFramework.ScreenView
             //
             currentView = view;         
         }
-
-        /// <summary>
-        /// 导航层Update
-        /// </summary>
-        /// <param name="delta">deltaTime</param>
-        public void Update(float delta)
-        {
-            //倒序遍历
-            for (int i = navViews.Count - 1; i >= 0; i--)
-            {
-                var v = navViews[i];
-                v.Update(delta);
-            }
-
-        }
-        /// <summary>
-        /// 更高频的帧循环
-        /// <para>固定更新</para>
-        /// </summary>
-        /// <param name="delta">deltaTime</param>
-        public void FixedUpdate(float delta)
-        {
-            //倒序遍历
-            for (int i = navViews.Count - 1; i >= 0; i--)
-            {
-                var v = navViews[i];
-                //当前的帧循环
-                v.FixedUpdate(delta);
-            }
-        }
-
-      
+        
     }
 
 }

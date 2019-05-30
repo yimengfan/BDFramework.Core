@@ -62,7 +62,7 @@ public class EditorWindow_GenAssetBundle : EditorWindow
         options = (BuildAssetBundleOptions) EditorGUILayout.EnumPopup("压缩格式:", options);
     }
 
-    private BuildAssetBundleOptions options = BuildAssetBundleOptions.UncompressedAssetBundle;
+    private BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression;
     private string exportPath = "";
     /// <summary>
     /// 最新包
