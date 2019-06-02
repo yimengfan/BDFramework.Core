@@ -6,7 +6,7 @@
 ## 更新日志
 [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
 ## 版本计划
-<br> 2019.6之前 完成新文档的编写 [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
+<br> 2019.6.30之前 完成新文档的编写 [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
 <br> 2018.7 热更新工具整合：代码更新及工具(已完成)
 <br> 2018.8 热更新工具整合：资源更新（已完成）
 ## 框架特点
