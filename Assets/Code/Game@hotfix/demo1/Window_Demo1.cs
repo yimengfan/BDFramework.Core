@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BDFramework.ScreenView;
 using UnityEngine;
 using BDFramework.UI;
+using UnityEditor.PackageManager;
 using UnityEngine.UI;
 
 /// <summary>
@@ -21,6 +22,7 @@ public class Window_Demo1 : AWindow
     //[]
     public Window_Demo1(string path) : base(path)
     {
+        var c = new Camera();
     }
 
     public override void Init()

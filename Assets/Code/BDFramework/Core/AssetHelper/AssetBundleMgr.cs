@@ -114,8 +114,6 @@ namespace BDFramework.ResourceMgr
                 var res = manifest.Manifest.GetDirectDependencies(mainAssetPath).ToList();
                 //2.主体资源
                 res.Add(mainAssetPath);
-
-
                 //开始加载队列
                 IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(res, callback));
             }
@@ -139,36 +137,43 @@ namespace BDFramework.ResourceMgr
             if (resList.Count == 0)
             {
                 callback(true);
+                yield break;
             }
             else
             {
                 //弹出一个任务
-                var resName = resList[0];
+                var res = resList[0];
                 resList.RemoveAt(0);
 
-                var resPath = FindAsset(resName);
-
-                //开始加载
-                var result = AssetBundle.LoadFromFileAsync(resPath);
-                yield return result;
-                //加载结束
-                if (result.isDone)
+                if (!assetbundleMap.ContainsKey(res))
                 {
-                    //添加assetbundle
-                    if (result.assetBundle != null)
+
+                    var resPath = FindAsset(res);
+
+                    //开始加载
+                    var result = AssetBundle.LoadFromFileAsync(resPath);
+                    yield return result;
+                    //加载结束
+                    if (result.isDone)
                     {
-                        AddAssetBundle(resName, result.assetBundle);
-                    }
-                    else
-                    {
-                        BDebug.LogError("ab资源为空:" + resPath);
+                        //添加assetbundle
+                        if (result.assetBundle != null)
+                        {
+                            AddAssetBundle(res, result.assetBundle);
+                        }
+                        else
+                        {
+                            BDebug.LogError("ab资源为空:" + resPath);
+                        }
                     }
                 }
                 else
                 {
-                    BDebug.LogError("加载失败:" + resPath);
+                    BDebug.Log("已存在,無需加載:" + res);
                 }
 
+                
+                
                 //开始下个任务
                 IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(resList, callback));
             }
@@ -190,9 +195,12 @@ namespace BDFramework.ResourceMgr
             }
 
             //
-            if (assetbundleMap.ContainsKey(name) == false)
+            if (!assetbundleMap.ContainsKey(name))
             {
-                AssetBundleReference abr = new AssetBundleReference() {assetBundle = ab};
+                AssetBundleReference abr = new AssetBundleReference()
+                {
+                    assetBundle = ab
+                };
                 assetbundleMap[name] = abr;
             }
 
@@ -211,15 +219,23 @@ namespace BDFramework.ResourceMgr
         private T LoadFormAssetBundle<T>(string objName) where T : UnityEngine.Object
         {
             //
-            T o = default(T);
-            AssetBundleReference abr = null;
-            if (assetbundleMap.TryGetValue(objName, out abr))
+            if (!string.IsNullOrEmpty(objName))
             {
-                o = abr.assetBundle.LoadAsset<T>(objName);
+                T o = default(T);
+
+                AssetBundleReference abr = null;
+                if (assetbundleMap.TryGetValue(objName, out abr))
+                {
+                    o = abr.assetBundle.LoadAsset<T>(objName);
+                }
+
+                return o;
             }
 
-            return o;
+            return null;
         }
+        
+    
 
 
         /// <summary>
@@ -249,7 +265,7 @@ namespace BDFramework.ResourceMgr
             //同步加载
             foreach (var res in resList)
             {
-                if (assetbundleMap.ContainsKey(res) == false)
+                if (!assetbundleMap.ContainsKey(res))
                 {
                     var r = FindAsset(res);
                     //
@@ -274,7 +290,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         private string FindAsset(string res)
         {
-            //第一地质
+            //第一地址
             var p = IPath.Combine(this.artRootPath, res);
             //寻址到第二路径,第二地址没有就放弃
             if (!File.Exists(p))
@@ -285,6 +301,26 @@ namespace BDFramework.ResourceMgr
             //TODO 第三地址理论上应该是服务器端
             
             return p;
+        }
+
+        /// <summary>
+        /// 检测资源
+        /// </summary>
+        /// <param name="res"></param>
+        /// <returns></returns>
+        private AssetBundle CheckAsset(string res)
+        {
+            AssetBundleReference  abr = null;
+
+            //获取AssetBundle
+            this.assetbundleMap.TryGetValue(res, out abr);
+            if (abr.assetBundle != null)
+            {
+                return abr.assetBundle;
+            }
+
+            return null;
+
         }
         /// <summary>
         /// 异步加载接口
@@ -447,8 +483,13 @@ namespace BDFramework.ResourceMgr
             }
             else if (currentTaskGroup == null && this.allTaskList.Count > 0)
             {
-                BDebug.Log("---------开始执行任务组----------");
+              
                 currentTaskGroup = this.allTaskList[0];
+                BDebug.Log("---------开始执行任务组----------  |"+currentTaskGroup.GetHashCode());
+                foreach (var t in currentTaskGroup.TaskIdList)
+                {
+                    BDebug.Log("--->" + t.ResourcePath);
+                }
             }
 
             LoadTask task = null;
@@ -467,7 +508,7 @@ namespace BDFramework.ResourceMgr
             //当前任务组已经全部完成
             if (task == null)
             {
-                BDebug.Log("---------一组加载任务组已完成----------");
+                BDebug.Log("---------加载任务组已完成---------- |"+currentTaskGroup.GetHashCode());
                 currentTaskGroup = null;
                 this.allTaskList.RemoveAt(0);
 

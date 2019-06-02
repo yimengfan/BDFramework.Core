@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using LitJson;
@@ -91,7 +92,7 @@ namespace BDFramework.ResourceMgr
                 Dependencies = dependencies
             };
 
-            if (this.Manifest.ContainsKey(name)  )
+            if (this.Manifest.ContainsKey(name))
             {
                 //prefab 嵌套的情况, 2018新系统
                 //被依赖项 其实也有依赖，
@@ -134,7 +135,7 @@ namespace BDFramework.ResourceMgr
         {
             this.count = Manifest.Values.Count;
 
-            
+
 #if UNITY_EDITOR
             int i = 0;
 
@@ -145,7 +146,7 @@ namespace BDFramework.ResourceMgr
             }
 
             var l = list.Distinct().ToList();
-            Debug.Log(string.Format("<color=red>依赖数量:{0}</color>",l.Count));
+            Debug.Log(string.Format("<color=red>依赖数量:{0}</color>", l.Count));
 #endif
             var items = Manifest.Values.ToList();
             return JsonMapper.ToJson(items);
@@ -159,6 +160,7 @@ namespace BDFramework.ResourceMgr
     {
         //
         public Action OnLoaded { get; set; }
+
         /// <summary>
         /// 所有的assetbundle
         /// </summary>
@@ -179,24 +181,43 @@ namespace BDFramework.ResourceMgr
 
         private IEnumerator IE_LoadConfig(string path)
         {
-            var www = new WWW(path);
-            yield return www;
-            
-            this.Manifest = new ManifestConfig(www.text);
-            BDebug.Log("manifest加载成功!");
-            AssetBundlesSet = new HashSet<string>();
-            var list = this.Manifest.GetAllAssetBundles();
-            foreach (var l in list)
+
+            string text = "";
+
+            if (File.Exists(path))
             {
-                AssetBundlesSet.Add(l);
+                text = File.ReadAllText(path);
             }
-            //回调
-            if (OnLoaded != null)
+            else
             {
-                OnLoaded();
-                OnLoaded = null;
+                var www = new WWW(path);
+                yield return www;
+                if (www.isDone && www.error == null)
+                {
+                    text = www.text;
+                }
             }
 
+            if (text != "")
+            {
+                this.Manifest = new ManifestConfig(text);
+                BDebug.Log("manifest加载成功!");
+                AssetBundlesSet = new HashSet<string>();
+                var list = this.Manifest.GetAllAssetBundles();
+                foreach (var l in list)
+                {
+                    AssetBundlesSet.Add(l);
+                }
+
+                //回调
+                if (OnLoaded != null)
+                {
+                    OnLoaded();
+                    OnLoaded = null;
+                }
+            }
+
+            yield break;
         }
     }
 }
