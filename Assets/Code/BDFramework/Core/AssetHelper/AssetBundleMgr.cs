@@ -218,6 +218,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         private T LoadFormAssetBundle<T>(string objName) where T : UnityEngine.Object
         {
+         
             //
             if (!string.IsNullOrEmpty(objName))
             {
@@ -227,6 +228,12 @@ namespace BDFramework.ResourceMgr
                 if (assetbundleMap.TryGetValue(objName, out abr))
                 {
                     o = abr.assetBundle.LoadAsset<T>(objName);
+                    BDebug.Log("加载:" +objName);
+                    
+                }
+                else
+                {
+                    BDebug.Log("资源不存在:" +objName);
                 }
 
                 return o;

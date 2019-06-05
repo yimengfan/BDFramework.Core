@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Security.AccessControl;
 using Debug = UnityEngine.Debug;
 using BDFramework.ResourceMgr;
+using LitJson;
 using Tool;
 #if UNITY_EDITOR
 using UnityEngine;
@@ -22,26 +23,31 @@ public class ScriptBuildTools
         Fail
     }
 
+    public enum BuildMode
+    {
+        Mono,
+        DotNet,
+    }
 #if UNITY_EDITOR
 
     private static Dictionary<int, string> csFilesMap;
     /// <summary>
     /// 编译DLL
     /// </summary>
-    static public void GenDllByMono(string dataPath, string outPath)
+    static public void BuildDll(string dataPath, string outPath ,BuildMode mode = BuildMode.Mono)
     {
         EditorUtility.DisplayProgressBar("编译服务", "准备编译环境...", 0.1f);
         //base.dll 修改为 Assembly-CSharp,
         //为了保证依赖关系,在editor反射模式下能正常执行
-        var baseDllPath = outPath + "/hotfix/Assembly-CSharp.dll";
+        var outbaseDllPath = outPath + "/hotfix/Assembly-CSharp.dll";
         //输出环境
         var path = outPath + "/Hotfix";
 
         //创建临时环境
 #if UNITY_EDITOR_OSX
-        var tempDirect = Application.persistentDataPath + "/bd_temp";
+        var tempDirect = Application.persistentDataPath + "/b";
 #else
-        var tempDirect = "c:/BD_temp";
+        var tempDirect = "C:/b";
 #endif
         if (Directory.Exists(tempDirect))
         {
@@ -52,7 +58,7 @@ public class ScriptBuildTools
         Directory.CreateDirectory(tempDirect);
 
         //建立目标目录
-        var outDirectory = Path.GetDirectoryName(baseDllPath);
+        var outDirectory = Path.GetDirectoryName(outbaseDllPath);
         //准备输出环境
         try
         {
@@ -184,9 +190,8 @@ public class ScriptBuildTools
         {
             dllFiles[i] = dllFiles[i].Replace('\\', '/').Trim();
             //
-            var copyto = IPath.Combine(tempDirect, i + ".dll"); //Path.GetFileName(dllFiles[i]));
-            File.Copy(dllFiles[i], copyto, true);
-            //File.WriteAllBytes(copyto,File.ReadAllBytes(dllFiles[i]));
+            var copyto = IPath.Combine(tempDirect, i + ".dll"); 
+            File.WriteAllBytes(copyto,File.ReadAllBytes(dllFiles[i]));
             dllFiles[i] = copyto;
         }
 
@@ -244,18 +249,71 @@ public class ScriptBuildTools
                 catch (Exception e)
                 {
                     BDebug.Log("dll无效移除:" + r);
+                     File.Delete(r);
                     dllFiles.RemoveAt(i);
                 }
             }
         }
 
         #endregion
+        
+        //计算缓存 写入path
 
+        var basecsPath = IPath.Combine(tempDirect, "base.json");
+        var hotfixcsPath =  IPath.Combine(tempDirect, "hotfix.json");
+        
+        File.WriteAllText(basecsPath, LitJson.JsonMapper.ToJson(baseCs));
+        File.WriteAllText(hotfixcsPath, LitJson.JsonMapper.ToJson(hotfixCs));
+        var outHotfixPath = outPath + "/hotfix/hotfix.dll";
+
+        if (mode == BuildMode.Mono)
+        {
+            BuildByMono(tempDirect,outbaseDllPath, outHotfixPath);
+        }
+        else
+        {
+            BuildByDotNet(tempDirect,outbaseDllPath, outHotfixPath);
+        }
+
+    }
+#endif
+
+    
+    static public void BuildByDotNet(string tempDirect,string outbaseDllPath,string outHotfixPath)
+    {
+        string str1 = Application.dataPath;
+        string str2 = Application.streamingAssetsPath;
+        string exePath = Application.dataPath + "/" + "Code/BDFramework/Tools/ILRBuild/build.exe";
+        if (File.Exists(exePath))
+        {
+            Debug.Log(".net编译工具存在!");
+        }
+        
+        //
+        Process.Start(exePath, string.Format("{0} {1} {2}", tempDirect, outbaseDllPath, outHotfixPath));
+    }
+
+
+    /// <summary>
+    /// 用mono编译
+    /// </summary>
+    /// <param name="tempCodePath"></param>
+    /// <param name="outBaseDllPath"></param>
+    /// <param name="outHotfixDllPath"></param>
+    static public void BuildByMono(string tempCodePath, string outBaseDllPath, string outHotfixDllPath)
+    {
+        var basecsPath = IPath.Combine(tempCodePath, "base.json");
+        var hotfixcsPath =  IPath.Combine(tempCodePath, "hotfix.json");
+
+        var baseCs = JsonMapper.ToObject<List<string>>(File.ReadAllText(basecsPath));
+        var hotfixCs = JsonMapper.ToObject<List<string>>(File.ReadAllText(hotfixcsPath));
+        var dllFiles = Directory.GetFiles(tempCodePath, "*.dll", SearchOption.AllDirectories).ToList();
+        
         EditorUtility.DisplayProgressBar("编译服务", "[1/2]开始编译base.dll", 0.5f);
         //编译 base.dll
         try
         {
-            Build(dllFiles.ToArray(), baseCs.ToArray(), baseDllPath);
+            Build(dllFiles.ToArray(), baseCs.ToArray(), outBaseDllPath);
         }
         catch (Exception e)
         {
@@ -269,12 +327,12 @@ public class ScriptBuildTools
         EditorUtility.DisplayProgressBar("编译服务", "[2/2]开始编译hotfix.dll", 0.7f);
 
         //将base.dll加入 
-        dllFiles.Add(baseDllPath);
+        dllFiles.Add(outBaseDllPath);
         //编译hotfix.dll
-        var outHotfixDirectory = outPath + "/hotfix/hotfix.dll";
+      
         try
         {
-            Build(dllFiles.ToArray(), hotfixCs.ToArray(), outHotfixDirectory);
+            Build(dllFiles.ToArray(), hotfixCs.ToArray(), outHotfixDllPath);
         }
         catch (Exception e)
         {
@@ -285,40 +343,16 @@ public class ScriptBuildTools
         
         EditorUtility.DisplayProgressBar("编译服务", "清理临时文件", 0.9f);
         //删除临时目录
-        Directory.Delete(tempDirect, true);
+        Directory.Delete(tempCodePath, true);
         //删除base.dll
-        File.Delete(baseDllPath);
+        File.Delete(outBaseDllPath);
         EditorUtility.ClearProgressBar();
         
         AssetDatabase.Refresh();
     }
-#endif
 
-    static public void BuildDLL_DotNet(string codeSource, string export)
-    {
-        string str1 = Application.dataPath;
-        string str2 = Application.streamingAssetsPath;
-        string exePath = Application.dataPath + "/" + "Code/BDFramework/Tools/ILRBuild/build.exe";
-        if (File.Exists(exePath))
-        {
-            Debug.Log(".net编译工具存在!");
-        }
 
-        //这里是引入unity所有引用的dll
-        var u3dUI = string.Format(@"""{0}\UnityExtensions\Unity\GUISystem""",
-            EditorApplication.applicationContentsPath);
-        var u3dEngine = string.Format(@"""{0}\Managed\UnityEngine""", EditorApplication.applicationContentsPath);
-
-        if (Directory.Exists(u3dUI.Replace(@"""", "")) == false ||
-            Directory.Exists(u3dEngine.Replace(@"""", "")) == false)
-        {
-            EditorUtility.DisplayDialog("提示", "u3d根目录不存在,请修改ScriptBiuld_Service类中,u3dui 和u3dengine 的dll目录", "OK");
-            return;
-        }
-
-        //
-        Process.Start(exePath, string.Format("{0} {1} {2} {3}", codeSource, export, u3dUI, u3dEngine));
-    }
+    
 
 
     /// <summary>

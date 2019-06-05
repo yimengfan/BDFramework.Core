@@ -29,18 +29,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 //
                 if (GUILayout.Button("1.编译dll (.net版)", GUILayout.Width(200), GUILayout.Height(30)))
                 {
-                    string source = Application.dataPath;
-                    string outpath = Application.streamingAssetsPath + "/" +
-                                     Utils.GetPlatformPath(Application.platform);
-                    //
-                    var hotfix = outpath + "/hotfix";
-                    if (Directory.Exists(hotfix))
-                    {
-                        Directory.Delete(hotfix, true);
-                    }
-
-                    //
-                    ScriptBuildTools.BuildDLL_DotNet(source, outpath);
+                    ScriptBuildTools.BuildDll(Application.dataPath, Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform), ScriptBuildTools.BuildMode.DotNet);
                     AssetDatabase.Refresh();
                 }
 
@@ -48,7 +37,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 {
                     //
                     //u3d的 各种dll
-                    ScriptBuildTools.GenDllByMono(Application.dataPath, Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform));
+                    ScriptBuildTools.BuildDll(Application.dataPath, Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform));
                     Debug.Log("脚本打包完毕");
                 }
             }

@@ -196,6 +196,10 @@ namespace BDFramework.ResourceMgr
                 {
                     text = www.text;
                 }
+                else
+                {
+                    BDebug.Log("manifest加载失败!   ->" + path ,"red");
+                }
             }
 
             if (text != "")

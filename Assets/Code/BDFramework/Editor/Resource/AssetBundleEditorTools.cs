@@ -89,7 +89,24 @@ static public class AssetBundleEditorTools
 
         //配置写入本地
         var configPath = IPath.Combine(outPath, "Art/Config.json");
-      
+
+        //2.打包
+        //更新的部分放在另外一个路径
+        //然后再合并
+        var newpath = outPath;
+        if (File.Exists(configPath))
+        {
+            newpath = outPath + "/Art_new";
+            if (Directory.Exists(newpath))
+            {
+                Directory.Delete(newpath);
+            }
+            Directory.CreateDirectory(newpath);
+        }
+        
+        //生成AssetBundle
+        BuildAssetBundle(target, newpath,options);
+        
         //保存last.json
         if (File.Exists(configPath))
         {
@@ -104,11 +121,22 @@ static public class AssetBundleEditorTools
         }
 
         File.WriteAllText(configPath, curManifestConfig.ToString());
-
-        //2.打包
-        BuildAssetBundle(target, outPath,options);
-
-
+        
+        //合并
+//        if (newpath != outPath)
+//        {
+//            var newFs = Directory.GetFiles(newpath, "*.*", SearchOption.AllDirectories);
+//
+//            foreach (var nf in newFs)
+//            {
+//                var filename = nf.Replace(newpath, "");
+//                var copyto = IPath.Combine(outPath, filename);
+//                File.Copy(nf,copyto,true);
+//                Debug.Log("合并新文件:" + nf);
+//            }
+//        }
+        
+      //  Directory.Delete(newpath,true);
   
         //删除无用文件
         var delFiles = Directory.GetFiles(outPath, "*.*", SearchOption.AllDirectories);
@@ -136,7 +164,7 @@ static public class AssetBundleEditorTools
     {
         AssetDatabase.RemoveUnusedAssetBundleNames();
         string path = IPath.Combine(outPath, "Art");
-        if (Directory.Exists(path) == false)
+        if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
         }
@@ -236,7 +264,7 @@ static public class AssetBundleEditorTools
                 }
                 else
                 {
-                    ai.assetBundleName = null;
+                    ai.assetBundleName = "";
                 }
 
                 //被依赖的文件,不保存其依赖信息
@@ -314,7 +342,7 @@ static public class AssetBundleEditorTools
             {
                 var dependPath = allDependObjectPaths[i];
                 var ext = Path.GetExtension(dependPath).ToLower();
-                if (ext == ".cs" || ext == ".js")
+                if (ext == ".cs" || ext == ".js" || ext == ".dll")
                 {
                     continue;
                 }

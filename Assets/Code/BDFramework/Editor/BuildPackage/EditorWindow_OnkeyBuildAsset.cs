@@ -95,7 +95,7 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
                         //1.编译脚本
                         try
                         {
-                            ScriptBuildTools.GenDllByMono(Application.dataPath, outPath);
+                            ScriptBuildTools.BuildDll(Application.dataPath, outPath);
                         }
                         catch (Exception e)
                         {
@@ -134,7 +134,7 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
                         //1.编译脚本
                         try
                         {
-                            ScriptBuildTools.GenDllByMono(Application.dataPath, outPath);
+                            ScriptBuildTools.BuildDll(Application.dataPath, outPath);
                         }
                         catch (Exception e)
                         {
@@ -172,7 +172,7 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
                         //1.编译脚本
                         try
                         {
-                            ScriptBuildTools.GenDllByMono(Application.dataPath, outPath);
+                            ScriptBuildTools.BuildDll(Application.dataPath, outPath);
                         }
                         catch (Exception e)
                         {

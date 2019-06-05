@@ -23,8 +23,11 @@ namespace SQLite4Unity3d
                 Connection.Dispose();
             }
 
-            //persistent和streaming中,必须有存在一个
+            //先以外部传入的 作为 firstpath
             firstPath = IPath.Combine(root, Utils.GetPlatformPath(Application.platform) + "/Local.db");
+            
+            //firstpath不存在 或者 不支持io操作，
+            //则默认情况生效，persistent为firstpath
             if (!File.Exists(firstPath))
             {
                 //这里sqlite 如果不在firstPath下，就到Streamming下面拷贝到第一路径
@@ -44,9 +47,11 @@ namespace SQLite4Unity3d
         /// <returns></returns>
         static private IEnumerator IE_LoadSqlite()
         {
-            //StreamAsset 默认有前缀
-            var secPath = IPath.Combine(Application.streamingAssetsPath,
-                Utils.GetPlatformPath(Application.platform) + "/Local.db");
+            //从StreamingAsset拷贝到Persistent
+            //此时persistent为 firstPath
+            //StreamingAsset 为 SecPath
+            firstPath = IPath.Combine(Application.persistentDataPath,Utils.GetPlatformPath(Application.platform) + "/Local.db");
+            var secPath = IPath.Combine(Application.streamingAssetsPath,Utils.GetPlatformPath(Application.platform) + "/Local.db");
             if (Application.isEditor)
             {
                 secPath = "file://" + secPath;
@@ -57,13 +62,7 @@ namespace SQLite4Unity3d
 
             if (www.isDone && www.error == null)
             {
-                var direct = Path.GetDirectoryName(firstPath);
-                if (!Directory.Exists(direct))
-                {
-                    Directory.CreateDirectory(direct);
-                }
-                //
-                File.WriteAllBytes(firstPath, www.bytes);
+                FileHelper.WriteAllBytes(firstPath, www.bytes);
                 BDebug.Log("DB加载路径:" + firstPath, "red");
                 Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
             }
