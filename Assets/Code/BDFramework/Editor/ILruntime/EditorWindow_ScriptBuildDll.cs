@@ -37,7 +37,17 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 {
                     //
                     //u3d的 各种dll
-                    ScriptBuildTools.BuildDll(Application.dataPath, Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform));
+                    var  outpath_win  = Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform);
+                    ScriptBuildTools.BuildDll(Application.dataPath, outpath_win);
+                    
+                    //同步到其他两个目录
+                    var outpath_android = Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(RuntimePlatform.Android) + "/hotfix/hotfix.dll";
+                    var outpath_ios = Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(RuntimePlatform.IPhonePlayer)+ "/hotfix/hotfix.dll";
+                    var bytes = File.ReadAllBytes(outpath_win + "/hotfix/hotfix.dll");
+                    FileHelper.WriteAllBytes(outpath_android,bytes);
+                    FileHelper.WriteAllBytes(outpath_ios,bytes);
+                    
+                    AssetDatabase.Refresh();
                     Debug.Log("脚本打包完毕");
                 }
             }
@@ -92,7 +102,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     static void GenCLRBindingByAnalysis()
     {
         //用新的分析热更dll调用引用来生成绑定代码
-        var dllpath =Application.streamingAssetsPath+ "/" + Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.pdb";
+        var dllpath =Application.streamingAssetsPath+ "/" + Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
         ILRuntimeHelper.LoadHotfix(dllpath,false);
         BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain,
             "Assets/Code/Game/ILRuntime/Binding/Analysis");

@@ -38,9 +38,7 @@ namespace BDFramework.Editor
         [MenuItem("BDFrameWork工具箱/2.AssetBundle打包", false, 53)]
         public static void ExecuteAssetBundle()
         {
-            var window =
-                (EditorWindow_GenAssetBundle) EditorWindow.GetWindow(typeof(EditorWindow_GenAssetBundle), false,
-                    "AB打包工具");
+            var window =(EditorWindow_GenAssetBundle) EditorWindow.GetWindow(typeof(EditorWindow_GenAssetBundle), false,"AB打包工具");
             window.Show();
         }
 
@@ -53,7 +51,19 @@ namespace BDFramework.Editor
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, 55)]
         public static void ExecuteGenTable()
         {
-            Excel2SQLiteTools.GenSQLite(IPath.Combine(Application.streamingAssetsPath,Utils.GetPlatformPath(Application.platform)));
+            var outpath_win =IPath.Combine(Application.streamingAssetsPath, Utils.GetPlatformPath(Application.platform));
+            Excel2SQLiteTools.GenSQLite(outpath_win);
+            
+            var outpath_android = Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(RuntimePlatform.Android) + "/Local.db";
+            var outpath_ios = Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(RuntimePlatform.IPhonePlayer)+ "/Local.db";
+            var bytes = File.ReadAllBytes(outpath_win + "/Local.db");
+            FileHelper.WriteAllBytes(outpath_android,bytes);
+            FileHelper.WriteAllBytes(outpath_ios,bytes);
+                    
+            AssetDatabase.Refresh();
+            Debug.Log("脚本打包完毕");
+            
+            
             Debug.Log("表格导出完毕");
         }
         

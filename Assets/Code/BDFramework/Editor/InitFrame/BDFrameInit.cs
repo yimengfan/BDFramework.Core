@@ -32,7 +32,7 @@ namespace BDFramework.Editor
             "Resource/Resources",
             "Resource/Table",
             "Scene",
-            "StreammingAssets",
+            "StreamingAssets",
         };
    
         static public void Init()

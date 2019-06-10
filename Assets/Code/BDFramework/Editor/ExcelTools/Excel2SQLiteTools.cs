@@ -15,7 +15,6 @@ namespace BDFramework.Editor
         public static void GenSQLite(string outPath)
         {
             var tablePath = IPath.Combine(Application.dataPath, "Resource/Table/");
-            var tableDir = Path.GetDirectoryName(tablePath);
             var xlslFiles = Directory.GetFiles(tablePath, "*.xlsx", SearchOption.AllDirectories);
             //
             if (Directory.Exists(outPath) == false)

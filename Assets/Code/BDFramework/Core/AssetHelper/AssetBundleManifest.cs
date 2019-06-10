@@ -96,8 +96,7 @@ namespace BDFramework.ResourceMgr
             {
                 //prefab 嵌套的情况, 2018新系统
                 //被依赖项 其实也有依赖，
-                //
-                if (this.Manifest[name].Dependencies.Count == 0)
+                if (dependencies.Count >= this.Manifest[name].Dependencies.Count)
                 {
                     this.Manifest[name] = item;
                 }
