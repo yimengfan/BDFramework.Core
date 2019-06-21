@@ -37,9 +37,9 @@ public class Window_Demo1 : AWindow
            ScreenViewManager.Inst.MainLayer.BeginNavTo("main");
         });
 
-        var o = BResources.Load<GameObject>("effect");
-        var e = GameObject.Instantiate(o);
-        e.transform.SetParent(GameObject.Find("UIRoot/Top").transform,false);
+//        var o = BResources.Load<GameObject>("effect");
+//        var e = GameObject.Instantiate(o);
+//        e.transform.SetParent(GameObject.Find("UIRoot/Top").transform,false);
 
     }
 
