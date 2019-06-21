@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections;
 using System.Linq;
+using UnityEditor;
 using Object = UnityEngine.Object;
 using Utils = BDFramework.Helper.Utils;
 
@@ -144,12 +145,20 @@ namespace BDFramework.ResourceMgr
                 //弹出一个任务
                 var res = resList[0];
                 resList.RemoveAt(0);
+                if (res.EndsWith(".shader"))
+                {
+                    int i = 0;
+                }
+                var mainItem = manifest.Manifest.GetManifestItem(res);
+                //单ab 多资源,加载真正ab名
+                if (mainItem!=null && !string.IsNullOrEmpty(mainItem.PackageName))
+                {
+                    res = mainItem.PackageName;
+                }
 
                 if (!assetbundleMap.ContainsKey(res))
                 {
-
                     var resPath = FindAsset(res);
-
                     //开始加载
                     var result = AssetBundle.LoadFromFileAsync(resPath);
                     yield return result;
@@ -171,8 +180,6 @@ namespace BDFramework.ResourceMgr
                 {
                     BDebug.Log("已存在,無需加載:" + res);
                 }
-
-                
                 
                 //开始下个任务
                 IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(resList, callback));
@@ -208,7 +215,8 @@ namespace BDFramework.ResourceMgr
         }
 
         #endregion
-
+        
+    
         /// <summary>
         /// 加载资源
         /// </summary>
@@ -216,33 +224,37 @@ namespace BDFramework.ResourceMgr
         /// <param name="abName"></param>
         /// <param name="objName"></param>
         /// <returns></returns>
-        private T LoadFormAssetBundle<T>(string objName) where T : UnityEngine.Object
+        private T LoadFormAssetBundle<T>( string objName) where T : UnityEngine.Object
         {
-         
+            //判断资源结构 是单ab-单资源、单ab-多资源
+            var mainItem = manifest.Manifest.GetManifestItem(objName);
+            //单ab 单资源
+            var abName = objName;
+            //单ab 多资源
+            if (mainItem!=null&&!string.IsNullOrEmpty(mainItem.PackageName))
+            {
+                abName = mainItem.PackageName;
+            }
+            
             //
-            if (!string.IsNullOrEmpty(objName))
+            if (!string.IsNullOrEmpty(abName))
             {
                 T o = default(T);
-
                 AssetBundleReference abr = null;
-                if (assetbundleMap.TryGetValue(objName, out abr))
+                if (assetbundleMap.TryGetValue(abName, out abr))
                 {
                     o = abr.assetBundle.LoadAsset<T>(objName);
-                    BDebug.Log("加载:" +objName);
-                    
                 }
                 else
                 {
                     BDebug.Log("资源不存在:" +objName);
                 }
-
                 return o;
             }
 
             return null;
         }
         
-    
 
 
         /// <summary>
@@ -253,6 +265,13 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public T Load<T>(string path) where T : UnityEngine.Object
         {
+
+            if (string.IsNullOrEmpty(path))
+            {
+                BDebug.Log("加载路径为空:");
+                return null;
+            }
+            
             path = "assets/resource/runtime/" + path.ToLower() + ".";
             //寻找ab的后缀名
             var mainAssetPath = GetExistPath(path);
@@ -267,29 +286,41 @@ namespace BDFramework.ResourceMgr
             var resList = manifest.Manifest.GetDirectDependencies(mainAssetPath).ToList();
             //2.主体路径
             resList.Add(mainAssetPath);
-
-
+            
+            BDebug.Log("【加载】:" + mainAssetPath);
             //同步加载
             foreach (var res in resList)
             {
-                if (!assetbundleMap.ContainsKey(res))
-                {
-                    var r = FindAsset(res);
-                    //
-                    var ab = AssetBundle.LoadFromFile(r);
-                    AddAssetBundle(res, ab);
-                }
-                else
-                {
-                    assetbundleMap[res].Use();
-                }
+                 //1.判断是否有多个ab在1个Package中
+                 var item = manifest.Manifest.GetManifestItem(res);
+                 var _res = res;
+                 //如果有package
+                 if (item!=null&&!string.IsNullOrEmpty(item.PackageName))
+                 {
+                     _res = item.PackageName;
+                 }
+                 
+                 if (!assetbundleMap.ContainsKey(_res))
+                 {
+                     var r = FindAsset(_res);
+                     var ab = AssetBundle.LoadFromFile(r);
+                     AddAssetBundle(_res, ab);
+                     
+                     BDebug.Log("----->" + res);
+                 }
+                 else
+                 {
+                     assetbundleMap[_res].Use();
+                     BDebug.Log("无需加载:" + _res);
+                 }
             }
+          
+            
+                return LoadFormAssetBundle<T>(mainAssetPath);
 
-            //3.加载具体资源
-            return LoadFormAssetBundle<T>(mainAssetPath);
         }
 
-
+        
         /// <summary>
         /// 检测
         /// </summary>

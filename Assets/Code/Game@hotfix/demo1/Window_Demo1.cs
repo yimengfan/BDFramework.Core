@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using BDFramework.ResourceMgr;
 using BDFramework.ScreenView;
 using UnityEngine;
 using BDFramework.UI;
-using UnityEditor.PackageManager;
 using UnityEngine.UI;
 
 /// <summary>
@@ -37,33 +37,9 @@ public class Window_Demo1 : AWindow
            ScreenViewManager.Inst.MainLayer.BeginNavTo("main");
         });
 
-
-//        var effects = this.Transform.Find("effect");
-//        var shader = Resources.Load<Shader>("builtin/default/PSU");
-//
-//        var renders = effects.GetComponentsInChildren<Renderer>();
-//
-//        foreach (var r in renders)
-//        {
-//            foreach (var m in r.materials)
-//            {
-//                //
-//                Debug.Log(string.Format("{0} - shader:{1}",r.name,m.shader.name));
-//                //
-//                if (m.shader.name == "Particles/Standard Unlit")
-//                {
-////                    m.shader = null;
-////                    m.shader = null;
-// 
-//                     Resources.UnloadAsset(m.shader);
-//                     m.shader = null;
-//                     m.shader = shader;
-//                    
-//                    BDebug.Log("替换材质成功:" + r.name);
-//                }
-//            }
-//          
-//        }
+        var o = BResources.Load<GameObject>("effect");
+        var e = GameObject.Instantiate(o);
+        e.transform.SetParent(GameObject.Find("UIRoot/Top").transform,false);
 
     }
 

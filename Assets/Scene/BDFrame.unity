@@ -447,9 +447,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd5c6865487ed14f9bfe24a5c88e67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CodeRoot: 1
-  SQLRoot: 1
-  ArtRoot: 1
+  CodeRoot: 0
+  SQLRoot: 0
+  ArtRoot: 2
   CustomArtRoot: 
   CodeRunMode: 0
   FileServerUrl: 192.168.8.68

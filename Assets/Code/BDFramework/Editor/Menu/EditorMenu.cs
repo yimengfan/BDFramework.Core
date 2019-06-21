@@ -75,7 +75,7 @@ namespace BDFramework.Editor
         }
 
        
-        [MenuItem("BDFrameWork工具箱/资源压缩/图片压缩",false,56)]
+        [MenuItem("BDFrameWork工具箱/资源管理/图片压缩",false,56)]
         public static void ChangeTexture()
         {
             var window =(Editor_2ChangeTextureImporter)EditorWindow.GetWindow(typeof(Editor_2ChangeTextureImporter), false, "图片格式设置");

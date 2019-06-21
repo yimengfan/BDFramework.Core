@@ -12,8 +12,15 @@ namespace BDFramework.ResourceMgr
 {
     public class ManifestItem
     {
+        /// <summary>
+        /// 资源名,单ab 单资源情况下. name = ab名
+        /// </summary>
         public string Name = "null";
         public string UIID = "none";
+        /// <summary>
+        /// 单ab 多资源情况下，packagename 就是ab名 
+        /// </summary>
+        public string PackageName = "";
         public List<string> Dependencies = new List<string>();
     }
 
@@ -73,9 +80,14 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public ManifestItem GetManifestItem(string manifestName)
         {
-            ManifestItem item = new ManifestItem();
-            this.Manifest.TryGetValue(manifestName, out item);
-            return item;
+            if (!string.IsNullOrEmpty(manifestName))
+            {
+                ManifestItem item = new ManifestItem();
+                this.Manifest.TryGetValue(manifestName, out item);
+                return item;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -83,13 +95,15 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="name"></param>
         /// <param name="dependencies"></param>
-        public void AddDepend(string name, string UIID, List<string> dependencies)
+        public void AddDepend(string name, string UIID, List<string> dependencies ,string packageName = "")
         {
+
             var item = new ManifestItem()
             {
                 Name = name,
                 UIID = UIID,
-                Dependencies = dependencies
+                Dependencies = dependencies,
+                PackageName =  packageName
             };
 
             if (this.Manifest.ContainsKey(name))

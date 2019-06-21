@@ -374,7 +374,7 @@ public class ScriptBuildTools
         cp.OutputAssembly = output;
         //warning和 error分开,不然各种warning当成error,改死你
         cp.TreatWarningsAsErrors = false;
-        cp.WarningLevel = 1;
+        cp.WarningLevel = 0;
 
         //加载宏定义
         var define = Resources.Load<TextAsset>("BuildConfig/Define").text;

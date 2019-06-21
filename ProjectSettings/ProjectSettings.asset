@@ -245,7 +245,7 @@ PlayerSettings:
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: G:/Jiyu_work/TheGodClient/TheGod/SDK/user.keystore
-  AndroidKeyaliasName: 
+  AndroidKeyaliasName: thegod
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 1
   AndroidIsGame: 1

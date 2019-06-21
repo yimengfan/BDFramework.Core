@@ -88,7 +88,12 @@ public class EditorWindow_GenAssetBundle : EditorWindow
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕"); 
         }
-        
+
+        if (GUILayout.Button("收集Shader keyword", GUILayout.Width(200)))
+        {
+            ShaderCollection.GenShaderVariant();
+        }
+
         if (GUILayout.Button("一键打包[美术资源]", GUILayout.Width(380), GUILayout.Height(30)))
         {
             var exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath,"");

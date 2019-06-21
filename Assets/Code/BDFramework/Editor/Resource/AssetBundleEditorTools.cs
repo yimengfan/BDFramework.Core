@@ -47,7 +47,7 @@ static public class AssetBundleEditorTools
         AnalyzeResource(fileList.ToArray(), target, outPath);
 
         //2.配置写入本地
-        
+
         var configPath = IPath.Combine(outPath, "Art/Config_Check.json");
         var direct = Path.GetDirectoryName(configPath);
         if (Directory.Exists(direct) == false)
@@ -69,9 +69,6 @@ static public class AssetBundleEditorTools
     public static void GenAssetBundle(string resRootPath, string outPath, BuildTarget target,
         BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression)
     {
- 
-
-        
         //1.生成ab名
         string rootPath = IPath.Combine(Application.dataPath, resRootPath);
 
@@ -90,6 +87,7 @@ static public class AssetBundleEditorTools
             }
         }
 
+        //分析ab包
         AnalyzeResource(fileList.ToArray(), target, outPath);
 
         //配置写入本地
@@ -97,21 +95,9 @@ static public class AssetBundleEditorTools
 
         //2.打包
         //更新的部分放在另外一个路径
-        //然后再合并
-        var newpath = outPath;
-        if (File.Exists(configPath))
-        {
-            newpath = outPath + "/Art_new";
-            if (Directory.Exists(newpath))
-            {
-                Directory.Delete(newpath);
-            }
-
-            Directory.CreateDirectory(newpath);
-        }
-
+        
         //3.生成AssetBundle
-        BuildAssetBundle(target, newpath, options);
+        BuildAssetBundle(target, outPath, options);
 
         //保存last.json
         if (File.Exists(configPath))
@@ -128,29 +114,8 @@ static public class AssetBundleEditorTools
 
         File.WriteAllText(configPath, curManifestConfig.ToString());
 
-        //合并
-//        if (newpath != outPath)
-//        {
-//            var newFs = Directory.GetFiles(newpath, "*.*", SearchOption.AllDirectories);
-//
-//            foreach (var nf in newFs)
-//            {
-//                var filename = nf.Replace(newpath, "");
-//                var copyto = IPath.Combine(outPath, filename);
-//                File.Copy(nf,copyto,true);
-//                Debug.Log("合并新文件:" + nf);
-//            }
-//        }
-
-        //  Directory.Delete(newpath,true);
-
-        
-        //4.清除AB Name
-        RemoveAllAbName();
-        
         //删除无用文件
         var delFiles = Directory.GetFiles(outPath, "*.*", SearchOption.AllDirectories);
-
         foreach (var df in delFiles)
         {
             var ext = Path.GetExtension(df);
@@ -158,7 +123,9 @@ static public class AssetBundleEditorTools
             {
                 File.Delete(df);
             }
-        }
+        }        
+        //4.清除AB Name
+        RemoveAllAbName();
     }
 
 
@@ -180,6 +147,22 @@ static public class AssetBundleEditorTools
 
     static ManifestConfig curManifestConfig = null;
 
+
+    //将指定后缀或指定文件,打包到一个AssetBundle
+    public class MakePackage
+    {
+        public List<string> fileExtens = new List<string>();
+        public string AssetBundleName = "noname";
+    }
+
+    static List<MakePackage> PackageConfig = new List<MakePackage>()
+    {
+        new MakePackage()
+        {
+            fileExtens = new List<string>() {".shader", ".shadervariants"},
+            AssetBundleName = "ALLShader.assetbundle"
+        }
+    };
 
     /// <summary>
     /// 分析资源
@@ -206,7 +189,8 @@ static public class AssetBundleEditorTools
         {
             var _path = path.Replace("\\", "/");
 
-            EditorUtility.DisplayProgressBar("分析资源 -" + target,
+            EditorUtility.DisplayProgressBar(
+                "分析资源 -" + target,
                 "分析:" + Path.GetFileNameWithoutExtension(_path) + "   进度：" + curIndex + "/" + paths.Length,
                 curIndex / paths.Length);
             curIndex++;
@@ -217,78 +201,165 @@ static public class AssetBundleEditorTools
             {
                 continue;
             }
-            
+
             //获取被依赖的路径
             var dependsource = "Assets" + _path.Replace(Application.dataPath, "");
             var allDependObjectPaths = AssetDatabase.GetDependencies(dependsource).ToList();
             dependsource = dependsource.ToLower();
-            //
+
+            List<string> dependAssets = new List<string>();
+
+            GetCanBuildAssets(ref allDependObjectPaths);
+
+            //判断是否重新打包
             ManifestItem lastItem = null;
             curManifestConfig.Manifest.TryGetValue(dependsource, out lastItem);
-            //last没有或者 uiid不一致被改动,
-            //TODO 有改动的要把依赖重新打
+            //对比列表
+
             if (lastItem != null && lastItem.UIID == UIID)
             {
                 continue;
             }
-            else
-            {
-                Debug.Log("打包:" +dependsource);
-            }
-            List<string> dependAssets = new List<string>();
+            
             //处理依赖资源打包
             for (int i = 0; i < allDependObjectPaths.Count; i++)
             {
-                //
-                var dependPath = allDependObjectPaths[i];
+                var dp = allDependObjectPaths[i];
                 //脚本不打包
-                var ext = Path.GetExtension(dependPath).ToLower();
-                if (ext == ".cs" || ext == ".js" || ext == ".dll")
-                {
-                    continue;
-                }
-                //
-                AssetImporter ai = AssetImporter.GetAtPath(dependPath);
+                AssetImporter ai = AssetImporter.GetAtPath(dp);
                 if (ai == null)
                 {
-                    BDebug.Log("资源不存在:" + dependPath);
+                    Debug.Log("资源不存在:" + dp);
                     continue;
                 }
-                
-                var dependObjPath = Application.dataPath + dependPath.TrimStart("Assets".ToCharArray());
 
+                var dependObjPath = Application.dataPath + dp.TrimStart("Assets".ToCharArray());
                 var uiid = GetMD5HashFromFile(dependObjPath);
                 if (string.IsNullOrEmpty(uiid))
                 {
                     continue;
                 }
 
-                string abname = "assets" + dependObjPath.Replace(Application.dataPath, "").ToLower();
+                string abname = "Assets" + dependObjPath.Replace(Application.dataPath, "");
                 
-                ai.assetBundleName = abname;
-                ai.assetBundleVariant = "";
+                //判断是否要打在同一个包内
+                string packageName = null;
+                var list = new List<string>();
                 
-                //被依赖的文件,不保存其依赖信息
-                if (abname != dependsource) //依赖列表中会包含自己
+                //嵌套引用prefab
+                if (dp.ToLower()!=dependsource
+                    &&Path.GetExtension(dp).ToLower().Equals(".prefab"))
                 {
-                    curManifestConfig.AddDepend(abname, uiid, new List<string>());
-                }
+                    list =  AssetDatabase.GetDependencies(abname).ToList();
+                    GetCanBuildAssets(ref list);
 
+                    //转换成全小写
+                    for (int j = 0; j < list.Count; j++)
+                    {
+                        list[j] = list[j].ToLower();
+                    }
+                }
+                
+                abname = abname.ToLower();
+                if (IsMakePackage(abname, ref packageName))
+                {
+                    ai.assetBundleName = packageName;
+                    ai.assetBundleVariant = "";
+                    //被依赖的文件,不保存其依赖信息
+                    if (abname != dependsource) //依赖列表中会包含自己
+                    {
+                        curManifestConfig.AddDepend(abname, uiid,list , packageName.ToLower());
+                    }
+                }
+                else
+                {
+                    ai.assetBundleName = abname;
+                    ai.assetBundleVariant = "";
+                    //被依赖的文件,不保存其依赖信息
+                    if (abname != dependsource) //依赖列表中会包含自己
+                    {
+                        curManifestConfig.AddDepend(abname, uiid, list);
+                    }
+                }
                 dependAssets.Add(abname);
             }
 
+            //
             changeList.Add(dependsource);
             //保存主文件的依赖
             if (dependAssets.Count > 0)
             {
                 dependAssets.Remove(dependsource);
-                curManifestConfig.AddDepend(dependsource, UIID, dependAssets);
+                string packageName = null;
+                if (IsMakePackage(dependsource, ref packageName))
+                {
+                    //单ab包 多资源模式
+                    curManifestConfig.AddDepend(dependsource, UIID, dependAssets, packageName.ToLower());
+                }
+                else
+                {
+                    //单ab包  单资源模式
+                    curManifestConfig.AddDepend(dependsource, UIID, dependAssets);
+                }
             }
         }
 
-
         EditorUtility.ClearProgressBar();
+
         Debug.Log("本地需要打包资源:" + changeList.Count);
+        if (changeList.Count < 100)
+        {
+            Debug.Log("本地需要打包资源:" + JsonMapper.ToJson(changeList));
+        }
+    }
+
+
+
+    /// <summary>
+    /// 获取可以打包的资源
+    /// </summary>
+    /// <param name="allDependObjectPaths"></param>
+    static private void GetCanBuildAssets(ref List<string>  list)
+    {
+        if(list.Count==0)  return;
+        
+        for (int i = list.Count-1; i >= 0; i--)
+        {
+            var p = list[i];
+            var ext = Path.GetExtension(p).ToLower();
+            //
+            var fullPath = Application.dataPath + p.TrimStart("Assets".ToCharArray());
+            if (ext != ".cs" && ext != ".js" && ext != ".dll"
+              && File.Exists(fullPath) )
+            {
+                continue;
+            }
+            //
+            list.RemoveAt(i);
+        }
+    }
+    
+    /// <summary>
+    /// 是否需要打包
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="package"></param>
+    /// <returns></returns>
+    static private bool IsMakePackage(string name, ref string package)
+    {
+        foreach (var config in PackageConfig)
+        {
+            foreach (var exten in config.fileExtens)
+            {
+                if (name.EndsWith(exten))
+                {
+                    package = config.AssetBundleName;
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /// <summary>
