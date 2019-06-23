@@ -2,8 +2,8 @@
 一个基于unity3d的开发框架。
 框架力致于打造一个简单、高效的开发工作流.
 <br>版本:Unity2018.4
-<br>有任何问题 直接提issue，1天内必解决
-<br>2019.6.23新开Bug反馈交流群:763141410，伸手党勿扰
+<br>2019.6.23新开Bug反馈交流群:763141410，伸手党勿扰!!!
+<br>任何问题直接提issue,24小时内必解决
 # 文档
  [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
  <br>[English Wiki](http://www.nekosang.com)
