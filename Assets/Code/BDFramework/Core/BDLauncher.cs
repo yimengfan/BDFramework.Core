@@ -13,6 +13,7 @@ namespace BDFramework
 {
     public class BDLauncher : MonoBehaviour
     {
+        static public BDLauncher  Inst { get; private set; }
         static public Action OnStart { get; set; }
         static public Action OnUpdate { get; set; }
         static public Action OnLateUpdate { get; set; }
@@ -27,6 +28,7 @@ namespace BDFramework
         // Use this for initialization
         private void Awake()
         {
+            Inst = this;
             this.gameObject.AddComponent<IEnumeratorTool>();
             this.Config = this.gameObject.GetComponent<Config>();
             LaunchLocal();
