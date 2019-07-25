@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using BDFramework.Editor.Tools;
+using BDFramework.Helper;
 
 public class EditorWindow_GenAssetBundle : EditorWindow
 {
@@ -12,9 +13,8 @@ public class EditorWindow_GenAssetBundle : EditorWindow
     /// 资源下面根节点
     /// </summary>
     public string rootResourceDir = "Resource/Runtime/";
-    private bool isSelectWindows  = true;
     private bool isSelectIOS      = false;
-    private bool isSelectAndroid  = false;
+    private bool isSelectAndroid  = true;
     //
     void DrawToolsBar()
     {
@@ -22,19 +22,13 @@ public class EditorWindow_GenAssetBundle : EditorWindow
         GUILayout.BeginHorizontal();
         {
             GUILayout.Space(30);
-            isSelectWindows = GUILayout.Toggle(isSelectWindows, "生成Windows资源");
+            isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源(Windows公用)");
         }
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
         {
             GUILayout.Space(30);
-            isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源");
-        }
-        GUILayout.EndHorizontal();
-        GUILayout.BeginHorizontal();
-        {
-            GUILayout.Space(30);
-            isSelectIOS = GUILayout.Toggle(isSelectIOS, "生成IOS资源");
+            isSelectIOS = GUILayout.Toggle(isSelectIOS, "生成iOS资源");
         }
         GUILayout.EndHorizontal();
     }
@@ -74,12 +68,13 @@ public class EditorWindow_GenAssetBundle : EditorWindow
         if (GUILayout.Button("检测资源", GUILayout.Width(100)))
         {
             exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath,"");
+
+
+            if (string.IsNullOrEmpty(exportPath))
+            {
+                return;
+            }
             
-            
-            if(string.IsNullOrEmpty(exportPath))return;
-            
-            if (isSelectWindows)
-                AssetBundleEditorTools.CheackAssets(rootResourceDir,exportPath+"/Windows", BuildTarget.StandaloneWindows);
             if (isSelectAndroid)
                 AssetBundleEditorTools.CheackAssets(rootResourceDir,exportPath+"/Android", BuildTarget.Android);
             if (isSelectIOS)
@@ -95,21 +90,28 @@ public class EditorWindow_GenAssetBundle : EditorWindow
         }
 
         if (GUILayout.Button("一键打包[美术资源]", GUILayout.Width(380), GUILayout.Height(30)))
-        {
-            var exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath,"");
-            if(string.IsNullOrEmpty(exportPath))return;
+        { 
+            exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath,"");
+            if (string.IsNullOrEmpty(exportPath))
+            {
+                return;
+            }
             //开始打包
-            if (isSelectWindows)
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,exportPath+"/Windows", BuildTarget.StandaloneWindows ,options);
-            if (isSelectAndroid)
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,exportPath+"/Android", BuildTarget.Android,options);
-            if (isSelectIOS)
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,exportPath+"/iOS", BuildTarget.iOS,options);
-            
-            AssetDatabase.Refresh();
-            Debug.Log("资源打包完毕");
+            BuildAsset();
         }
 
         GUILayout.EndVertical();
+    }
+
+
+    public void BuildAsset()
+    {
+        if (isSelectAndroid)
+            AssetBundleEditorTools.GenAssetBundle(rootResourceDir,exportPath+"/"+ BDUtils.GetPlatformPath(RuntimePlatform.Android), BuildTarget.Android,options);
+        if (isSelectIOS)
+            AssetBundleEditorTools.GenAssetBundle(rootResourceDir,exportPath+"/"+BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer), BuildTarget.iOS,options);
+            
+        AssetDatabase.Refresh();
+        Debug.Log("资源打包完毕");
     }
 }

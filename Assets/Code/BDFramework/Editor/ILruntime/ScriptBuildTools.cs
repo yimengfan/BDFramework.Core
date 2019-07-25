@@ -346,8 +346,8 @@ public class ScriptBuildTools
         Directory.Delete(tempCodePath, true);
         //删除base.dll
         File.Delete(outBaseDllPath);
+        File.Delete(outBaseDllPath+".mdb");
         EditorUtility.ClearProgressBar();
-        
         AssetDatabase.Refresh();
     }
 

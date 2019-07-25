@@ -53,7 +53,7 @@ public class Windows_PreConfig : M_AWindow
     private void Onclick_DownLoad()
     {
         //删除本地的文件
-        var cachedir = IPath.Combine(Application.persistentDataPath, Utils.GetPlatformPath(Application.platform));
+        var cachedir = IPath.Combine(Application.persistentDataPath, BDUtils.GetPlatformPath(Application.platform));
         if (Directory.Exists(cachedir))
         {
             Directory.Delete(cachedir, true);

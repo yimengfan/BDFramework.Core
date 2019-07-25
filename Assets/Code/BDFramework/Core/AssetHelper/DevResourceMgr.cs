@@ -136,8 +136,16 @@ namespace BDFramework.ResourceMgr
         public int AsyncLoad<T>(string objName, Action<bool, T> callback)where T : UnityEngine.Object
         {
             this.TaskCounter++;
-            var res = Load<T>(objName);
-            callback(true, res);
+            if (objsMap.ContainsKey(objName))
+            {
+                callback(true, objsMap[objName] as T);
+            }
+            else
+            {
+                var res = Load<T>(objName);
+                callback(true, res);
+            }
+
             return this.TaskCounter;
         }
 

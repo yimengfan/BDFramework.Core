@@ -8,7 +8,7 @@ using BDFramework.ResourceMgr;
 using LitJson;
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.Networking.NetworkSystem;
+using FileMode = System.IO.FileMode;
 
 
 public class CacheItem
@@ -69,9 +69,11 @@ static public class AssetBundleEditorTools
     public static void GenAssetBundle(string resRootPath, string outPath, BuildTarget target,
         BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression)
     {
-        //1.生成ab名
+        //0.cache path的路径
+        cachePath = IPath.Combine(outPath, "Art/Cache.json");
+        configPath = IPath.Combine(outPath, "Art/Config.json");
+        //1.环境准备
         string rootPath = IPath.Combine(Application.dataPath, resRootPath);
-
         //扫描所有文件
         var allFiles = Directory.GetFiles(rootPath, "*.*", SearchOption.AllDirectories);
         var fileList = new List<string>(allFiles);
@@ -86,33 +88,16 @@ static public class AssetBundleEditorTools
                 fileList.RemoveAt(i);
             }
         }
-
-        //分析ab包
+        //2.分析ab包
         AnalyzeResource(fileList.ToArray(), target, outPath);
-
-        //配置写入本地
-        var configPath = IPath.Combine(outPath, "Art/Config.json");
-
-        //2.打包
-        //更新的部分放在另外一个路径
         
         //3.生成AssetBundle
         BuildAssetBundle(target, outPath, options);
-
-        //保存last.json
-        if (File.Exists(configPath))
-        {
-            var lastPath = IPath.Combine(outPath, "Art/Config_last.json");
-            File.Copy(configPath, lastPath, true);
-        }
-
-        var direct = Path.GetDirectoryName(configPath);
-        if (Directory.Exists(direct) == false)
-        {
-            Directory.CreateDirectory(direct);
-        }
-
-        File.WriteAllText(configPath, curManifestConfig.ToString());
+        
+        //保存配置
+        FileHelper.WriteAllText(configPath, curManifestConfig.ToString());
+        //保存Cache.json
+        FileHelper.WriteAllText(cachePath,AssetCache.ToString());
 
         //删除无用文件
         var delFiles = Directory.GetFiles(outPath, "*.*", SearchOption.AllDirectories);
@@ -145,8 +130,10 @@ static public class AssetBundleEditorTools
         BuildPipeline.BuildAssetBundles(path, options, target);
     }
 
-    static ManifestConfig curManifestConfig = null;
 
+
+
+    #region 包颗粒度配置
 
     //将指定后缀或指定文件,打包到一个AssetBundle
     public class MakePackage
@@ -154,7 +141,6 @@ static public class AssetBundleEditorTools
         public List<string> fileExtens = new List<string>();
         public string AssetBundleName = "noname";
     }
-
     static List<MakePackage> PackageConfig = new List<MakePackage>()
     {
         new MakePackage()
@@ -163,7 +149,14 @@ static public class AssetBundleEditorTools
             AssetBundleName = "ALLShader.assetbundle"
         }
     };
-
+    
+    #endregion
+    //当前保存的配置
+    static ManifestConfig curManifestConfig = null;
+    static  List<string>additionBuildPackageCache = new List<string>();
+    private static ManifestConfig AssetCache;
+    private static string cachePath = "";
+    private static string configPath = "";
     /// <summary>
     /// 分析资源
     /// </summary>
@@ -172,21 +165,41 @@ static public class AssetBundleEditorTools
     /// <param name="outpath"></param>
     private static void AnalyzeResource(string[] paths, BuildTarget target, string outpath)
     {
-        var lastConfigPath = IPath.Combine(outpath, "Art/Config.json");
-        if (File.Exists(lastConfigPath))
+        additionBuildPackageCache = new List<string>();
+        curManifestConfig = new ManifestConfig();
+        //加载
+
+        ManifestConfig lastManifestConfig = null;
+        if (File.Exists(configPath))
         {
-            curManifestConfig = new ManifestConfig(File.ReadAllText(lastConfigPath));
+            lastManifestConfig = new ManifestConfig(File.ReadAllText(configPath));
         }
         else
         {
-            curManifestConfig = new ManifestConfig();
+            lastManifestConfig = new ManifestConfig();
         }
+        
+        //
+        if (File.Exists(cachePath))
+        {
+            AssetCache = new ManifestConfig(File.ReadAllText(cachePath));
+        }
+        else
+        {
+            AssetCache = new ManifestConfig();
+        }
+        
 
+        /***************************************开始分析资源****************************************/
         List<string> changeList = new List<string>();
         float curIndex = 0;
 
-        foreach (var path in paths)
+
+        var allAssetList = paths.ToList();
+        for (int index = 0; index < allAssetList.Count; index++)
         {
+            var path = allAssetList[index];
+            
             var _path = path.Replace("\\", "/");
 
             EditorUtility.DisplayProgressBar(
@@ -194,61 +207,43 @@ static public class AssetBundleEditorTools
                 "分析:" + Path.GetFileNameWithoutExtension(_path) + "   进度：" + curIndex + "/" + paths.Length,
                 curIndex / paths.Length);
             curIndex++;
-
-
-            var UIID = GetMD5HashFromFile(_path);
-            if (string.IsNullOrEmpty(UIID))
-            {
-                continue;
-            }
+            
 
             //获取被依赖的路径
             var dependsource = "Assets" + _path.Replace(Application.dataPath, "");
             var allDependObjectPaths = AssetDatabase.GetDependencies(dependsource).ToList();
             dependsource = dependsource.ToLower();
 
-            List<string> dependAssets = new List<string>();
-
             GetCanBuildAssets(ref allDependObjectPaths);
-
-            //判断是否重新打包
-            ManifestItem lastItem = null;
-            curManifestConfig.Manifest.TryGetValue(dependsource, out lastItem);
-            //对比列表
-
-            if (lastItem != null && lastItem.UIID == UIID)
-            {
-                continue;
-            }
             
             //处理依赖资源打包
             for (int i = 0; i < allDependObjectPaths.Count; i++)
             {
                 var dp = allDependObjectPaths[i];
-                //脚本不打包
-                AssetImporter ai = AssetImporter.GetAtPath(dp);
-                if (ai == null)
-                {
-                    Debug.Log("资源不存在:" + dp);
-                    continue;
-                }
-
                 var dependObjPath = Application.dataPath + dp.TrimStart("Assets".ToCharArray());
                 var uiid = GetMD5HashFromFile(dependObjPath);
-                if (string.IsNullOrEmpty(uiid))
+                //判断是否打包
+                ManifestItem lastItem = null;
+                AssetCache.Manifest.TryGetValue(dp, out lastItem);
+                //已经添加,不用打包
+                if (lastItem !=null && lastItem.UIID == uiid)
                 {
-                    continue;
+                   //不用打包记录缓存
+                   var _last = lastManifestConfig.Manifest.Values.ToList().Find((item) => item.UIID == lastItem.UIID);
+                   curManifestConfig.AddDepend(_last.Name, _last.UIID, _last.Dependencies, _last.PackageName);
+                   continue;
                 }
-
+                changeList.Add(dependsource);
+                //
+                AssetCache.AddDepend(dp, uiid, new List<string>());
+                //开始设置abname  用以打包
+                AssetImporter ai = AssetImporter.GetAtPath(dp);
                 string abname = "Assets" + dependObjPath.Replace(Application.dataPath, "");
-                
-                //判断是否要打在同一个包内
+                //判断是否要打在同一个ab包内
                 string packageName = null;
                 var list = new List<string>();
-                
                 //嵌套引用prefab
-                if (dp.ToLower()!=dependsource
-                    &&Path.GetExtension(dp).ToLower().Equals(".prefab"))
+                if (dp.ToLower()!=dependsource && Path.GetExtension(dp).ToLower().Equals(".prefab"))
                 {
                     list =  AssetDatabase.GetDependencies(abname).ToList();
                     GetCanBuildAssets(ref list);
@@ -263,10 +258,32 @@ static public class AssetBundleEditorTools
                 abname = abname.ToLower();
                 if (IsMakePackage(abname, ref packageName))
                 {
+                    
+                    //增量打包时，如果遇到多包合一时，其中某个变动，剩余的也要一次性打出
+                    if (!additionBuildPackageCache.Contains(packageName))
+                    {
+                        var lowPackgeName = packageName.ToLower();
+                        var oldAsset = lastManifestConfig.Manifest.Values.ToList().FindAll((item) => item.PackageName == lowPackgeName);
+                        foreach (var oa in oldAsset)
+                        {
+                            AssetImporter _ai = AssetImporter.GetAtPath(oa.Name);
+                            if (_ai == null)
+                            {
+                                Debug.LogError("资源不存在:" + oa.Name);
+                                continue;
+                            }
+
+                            _ai.assetBundleName = packageName;
+                            _ai.assetBundleVariant = "";
+                        }
+                        Debug.LogFormat("<color=yellow>重新打包:{0} , 依赖:{1}</color>",packageName,oldAsset.Count);
+                        additionBuildPackageCache.Add(packageName);
+                    }
+                    //
                     ai.assetBundleName = packageName;
                     ai.assetBundleVariant = "";
                     //被依赖的文件,不保存其依赖信息
-                    if (abname != dependsource) //依赖列表中会包含自己
+                    if (abname != dependsource) 
                     {
                         curManifestConfig.AddDepend(abname, uiid,list , packageName.ToLower());
                     }
@@ -281,25 +298,30 @@ static public class AssetBundleEditorTools
                         curManifestConfig.AddDepend(abname, uiid, list);
                     }
                 }
-                dependAssets.Add(abname);
+
             }
 
-            //
-            changeList.Add(dependsource);
+           
             //保存主文件的依赖
-            if (dependAssets.Count > 0)
             {
-                dependAssets.Remove(dependsource);
+                //获取MD5的UIID
+                var UIID = GetMD5HashFromFile(_path);
+                allDependObjectPaths.Remove(dependsource);
+                for (int i = 0; i < allDependObjectPaths.Count; i++)
+                {
+                    allDependObjectPaths[i] = allDependObjectPaths[i].ToLower();
+                }
+                //
                 string packageName = null;
                 if (IsMakePackage(dependsource, ref packageName))
                 {
-                    //单ab包 多资源模式
-                    curManifestConfig.AddDepend(dependsource, UIID, dependAssets, packageName.ToLower());
+                    //单ab包-多资源模式
+                    curManifestConfig.AddDepend(dependsource, UIID, allDependObjectPaths, packageName.ToLower());
                 }
                 else
                 {
-                    //单ab包  单资源模式
-                    curManifestConfig.AddDepend(dependsource, UIID, dependAssets);
+                    //单ab包-单资源模式
+                    curManifestConfig.AddDepend(dependsource, UIID, allDependObjectPaths);
                 }
             }
         }
@@ -419,7 +441,7 @@ static public class AssetBundleEditorTools
             {
                 continue;
             }
-
+            
             ai.assetBundleName = null;
             EditorUtility.DisplayProgressBar("资源清理", "清理:" + p, 1);
         }
@@ -442,6 +464,7 @@ static public class AssetBundleEditorTools
             System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
             byte[] retVal = md5.ComputeHash(file);
             file.Close();
+            file.Dispose();
 
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < retVal.Length; i++)

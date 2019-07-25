@@ -26,7 +26,7 @@ namespace BDFramework.VersionContrller
         /// </summary>
         static public void Load()
         {
-            var platform = Utils.GetPlatformPath(Application.platform);
+            var platform = BDUtils.GetPlatformPath(Application.platform);
             var config = platform+ "_VersionConfig.json";
              
         }

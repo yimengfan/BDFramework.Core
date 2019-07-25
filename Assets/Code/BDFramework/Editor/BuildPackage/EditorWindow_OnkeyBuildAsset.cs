@@ -32,7 +32,6 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
             if (editorScript != null)
             {
                 GUILayout.BeginVertical(GUILayout.Width(350), GUILayout.Height(220));
-
                 editorScript.OnGUI();
                 GUILayout.EndVertical();
                 Layout_DrawLineV(Color.white);
@@ -62,8 +61,7 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
 
 
     public string exportPath = "";
-    private bool isGenWindowsAssets = true;
-    private bool isGenIosAssets = true;
+    private bool isGenIosAssets = false;
     private bool isGenAndroidAssets = true;
 
     public void OnGUI_OneKeyExprot()
@@ -71,9 +69,9 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
         GUILayout.BeginVertical();
         {
             GUILayout.Label("注:上面按钮操作,会默认生成到StreamingAssets", GUILayout.Width(500), GUILayout.Height(30));
-            isGenWindowsAssets = GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
+            isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源(Windows公用)");
             isGenIosAssets = GUILayout.Toggle(isGenIosAssets, "生成Ios资源");
-            isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源");
+
             //
             GUILayout.Label("导出地址:" + exportPath, GUILayout.Width(500));
             //
@@ -88,53 +86,15 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
 
                 //开始生成资源
                 {
-                    //生成windows资源
-                    if (isGenWindowsAssets)
-                    {
-                        var outPath = exportPath + "/" + Utils.GetPlatformPath(RuntimePlatform.WindowsPlayer);
-                        //1.编译脚本
-                        try
-                        {
-                            ScriptBuildTools.BuildDll(Application.dataPath, outPath);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogError(e.Message);
-                            return;
-                        }
-
-                        //2.打包资源
-                        try
-                        {
-                            AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/", outPath,
-                                BuildTarget.StandaloneWindows);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogError(e.Message);
-                            return;
-                        }
-
-                        //3.打包表格
-                        try
-                        {
-                        Excel2SQLiteTools.GenSQLite(outPath);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogError(e.Message);
-                            return;
-                        }
-                    }
-
                     //生成android资源
                     if (isGenAndroidAssets)
                     {
-                        var outPath = exportPath + "/" + Utils.GetPlatformPath(RuntimePlatform.Android);
+                        var outPath = exportPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android);
                         //1.编译脚本
                         try
                         {
                             ScriptBuildTools.BuildDll(Application.dataPath, outPath);
+                            EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis();
                         }
                         catch (Exception e)
                         {
@@ -168,11 +128,12 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
                     //生成ios资源
                     if (isGenIosAssets)
                     {
-                        var outPath = exportPath + "/" + Utils.GetPlatformPath(RuntimePlatform.IPhonePlayer);
+                        var outPath = exportPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer);
                         //1.编译脚本
                         try
                         {
                             ScriptBuildTools.BuildDll(Application.dataPath, outPath);
+                            EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis();
                         }
                         catch (Exception e)
                         {
@@ -203,16 +164,14 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
                         }
                     }
                 }
-
-
-
+                
                 EditorUtility.DisplayDialog("提示", "资源导出完成", "OK");
             }
 
             //
             if (GUILayout.Button("上传到文件服务器[内网测试]", GUILayout.Width(350), GUILayout.Height(30)))
             {
-                //先不实现,暂时没空
+                //先不实现,等待使用者实现
             }
 
             if (GUILayout.Button("热更资源转hash[备用]", GUILayout.Width(350), GUILayout.Height(30)))

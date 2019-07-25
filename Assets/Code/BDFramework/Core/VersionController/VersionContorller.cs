@@ -58,7 +58,7 @@ namespace BDFramework.VersionContrller
 
             localConfigRootPath = localConfigPath;
             
-            var platform = Utils.GetPlatformPath(Application.platform);
+            var platform = BDUtils.GetPlatformPath(Application.platform);
             
             if (curDownloadList == null || curDownloadList.Count == 0)
             {
@@ -214,7 +214,7 @@ namespace BDFramework.VersionContrller
             if (local.Platfrom == server.Platfrom ) 
             {
                 //平台
-                var platform = Utils.GetPlatformPath(Application.platform);
+                var platform = BDUtils.GetPlatformPath(Application.platform);
                 //
                 foreach (var serverAsset in server.Assets)
                 {

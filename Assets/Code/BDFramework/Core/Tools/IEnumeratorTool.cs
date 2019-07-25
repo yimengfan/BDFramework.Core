@@ -18,7 +18,7 @@ public class IEnumeratorTool : MonoBehaviour
     /// <summary>
     /// 任务队列
     /// </summary>
-    static Queue<ActionTask> m_actionTaskQueue = new Queue<ActionTask>();
+    static Queue<ActionTask> actionTaskQueue = new Queue<ActionTask>();
 
     /// <summary>
     /// 执行任务
@@ -34,7 +34,7 @@ public class IEnumeratorTool : MonoBehaviour
         };
 
 
-        m_actionTaskQueue.Enqueue(task);
+        actionTaskQueue.Enqueue(task);
     }
 
 
@@ -133,6 +133,7 @@ public class IEnumeratorTool : MonoBehaviour
             if (coroutineDictionary.ContainsKey(id))
             {
                 var coroutine = coroutineDictionary[id];
+                if(coroutine!=null)
                 base.StopCoroutine(coroutine);
                 //
                 coroutineDictionary.Remove(id);
@@ -169,9 +170,9 @@ public class IEnumeratorTool : MonoBehaviour
         }
 
         //主线程循环
-        if (m_actionTaskQueue.Count > 0)
+        if (actionTaskQueue.Count > 0)
         {
-            var task = m_actionTaskQueue.Dequeue();
+            var task = actionTaskQueue.Dequeue();
             task.willDoAction();
             if (task.callBackAction != null)
             {

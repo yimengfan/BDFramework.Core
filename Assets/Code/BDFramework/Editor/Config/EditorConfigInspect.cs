@@ -16,7 +16,7 @@ public class EditorConfigInspect : Editor
         //base.OnInspectorGUI();
          config = this.target as Config;
         
-        var platform = Utils.GetPlatformPath(Application.platform);
+        var platform = BDUtils.GetPlatformPath(Application.platform);
         var filepath = Application.persistentDataPath + "/" + platform;
 
         GUILayout.Label(string.Format("当前资源路径:{0}", filepath));
@@ -32,7 +32,7 @@ public class EditorConfigInspect : Editor
 
         if (GUILayout.Button("生成Config",GUILayout.Width(100),GUILayout.Height(20)))
         {
-            GenGameConfig(Application.streamingAssetsPath,Utils.GetPlatformPath(RuntimePlatform.WindowsPlayer));
+            GenGameConfig(Application.streamingAssetsPath,BDUtils.GetPlatformPath(RuntimePlatform.WindowsPlayer));
         }
        
     }

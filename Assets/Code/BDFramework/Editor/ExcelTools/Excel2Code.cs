@@ -38,7 +38,7 @@ namespace BDFramework.Editor
             AssetDatabase.Refresh();
 
             var tableDir = Path.GetDirectoryName(tablePath);
-            var xlslFiles = Directory.GetFiles(tableDir, "*.xlsx", SearchOption.AllDirectories);
+            var xlslFiles = Directory.GetFiles(tablePath, "*.xlsx", SearchOption.AllDirectories);
 
             if (xlslFiles.Length == 0)
             {

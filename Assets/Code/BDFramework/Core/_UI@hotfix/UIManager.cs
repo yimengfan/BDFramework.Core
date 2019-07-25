@@ -91,12 +91,8 @@ namespace BDFramework.UI
                     else
                     {
                         windowMap[index] = window;
-                        System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-                        watch.Start();
                         window.Load();
                         window.Transform.SetParent(this.Bottom, false);
-                        watch.Stop();
-                        BDebug.LogFormat("加载{0},耗时: {1}ms", index, watch.ElapsedMilliseconds);
                         PushCaheData(index);
                     }
                 }
@@ -110,6 +106,9 @@ namespace BDFramework.UI
         /// <param name="loadProcessAction"></param>
         public void AsyncLoadWindows(List<int> indexes, Action<int, int> loadProcessAction)
         {
+            //去重操作
+            indexes = indexes.Distinct().ToList();
+            //
             int allCount = indexes.Count;
             int curTaskCount = 0;
             foreach (var i in indexes)
@@ -122,11 +121,8 @@ namespace BDFramework.UI
                     {
                         Debug.LogError("已经加载过并未卸载" + index);
                         //任务直接完成
-                        {
-                            curTaskCount++;
-                            loadProcessAction(allCount, curTaskCount);
-                        }
-                        continue;
+                        curTaskCount++;
+                        loadProcessAction(allCount, curTaskCount);
                     }
                 }
                 else
@@ -145,18 +141,17 @@ namespace BDFramework.UI
                         //开始窗口加载
                         win.AsyncLoad(() =>
                         {
-                            IEnumeratorTool.WaitingForExec(0.1f, () =>
+                            curTaskCount++;
+                            if (loadProcessAction != null)
                             {
-                                curTaskCount++;
                                 loadProcessAction(allCount, curTaskCount);
-
-                                if (win.Transform)
-                                {
-                                    win.Transform.SetParent(this.Bottom, false);
-                                }
-                                //推送缓存的数据
-                                PushCaheData(index);
-                            });
+                            }
+                            if (win.Transform)
+                            {
+                                win.Transform.SetParent(this.Bottom, false);
+                            }
+                            //推送缓存的数据
+                            PushCaheData(index);
                         });
                     }
                 }

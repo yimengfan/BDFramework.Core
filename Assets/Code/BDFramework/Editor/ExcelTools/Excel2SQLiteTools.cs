@@ -63,7 +63,7 @@ namespace BDFramework.Editor
         public static void GenxslxOrJsonToSQlite(IDictionary<string, string> path)
         {
             var outPath = IPath.Combine(Application.streamingAssetsPath,
-                Utils.GetPlatformPath(Application.platform));
+                BDUtils.GetPlatformPath(Application.platform));
             var _path = IPath.Combine(outPath, "Local.db");
             sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
             foreach (var f in path)
@@ -80,7 +80,7 @@ namespace BDFramework.Editor
         public static void GenJsonToSQLite(List<string> paths)
         {
             var outPath = IPath.Combine(Application.streamingAssetsPath,
-                Utils.GetPlatformPath(Application.platform));
+                BDUtils.GetPlatformPath(Application.platform));
             var _path = IPath.Combine(outPath, "Local.db");
             sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
             foreach (var f in paths)
@@ -104,9 +104,9 @@ namespace BDFramework.Editor
 //            Debug.Log("class name：" + classname);
             var jsonObj = JsonMapper.ToObject(json);
 
-            var assPath = IPath.Combine(Application.dataPath.Replace("Assets", ""),
+            var assPath = IPath.Combine(Application.dataPath.Replace("/Assets", ""),
                 "Library/ScriptAssemblies/Assembly-CSharp.dll");
-            var ass = Assembly.LoadFile("file:///" + assPath);
+            var ass = Assembly.LoadFile(assPath);
             //
             var t = ass.GetType(classname);
             //
@@ -152,10 +152,11 @@ namespace BDFramework.Editor
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             path = Path.GetFullPath(path);
             var outPath = IPath.Combine(Application.streamingAssetsPath,
-                Utils.GetPlatformPath(Application.platform));
+                BDUtils.GetPlatformPath(Application.platform));
             var _path = IPath.Combine(outPath, "Local.db");
             sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
             string content = File.ReadAllText(path);
+            Debug.Log(path);
             Json2Sqlite(path, content);
             sql.Close();
             EditorUtility.ClearProgressBar();

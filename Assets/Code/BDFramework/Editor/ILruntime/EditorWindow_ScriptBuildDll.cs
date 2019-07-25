@@ -29,31 +29,35 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 //
                 if (GUILayout.Button("1.编译dll (.net版)", GUILayout.Width(200), GUILayout.Height(30)))
                 {
-                    ScriptBuildTools.BuildDll(Application.dataPath, Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform), ScriptBuildTools.BuildMode.DotNet);
+                    ScriptBuildTools.BuildDll(Application.dataPath, Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform), ScriptBuildTools.BuildMode.DotNet);
                     AssetDatabase.Refresh();
                 }
 
                 if (GUILayout.Button("[mono版]", GUILayout.Width(100), GUILayout.Height(30)))
                 {
-                    //
-                    //u3d的 各种dll
-                    var  outpath_win  = Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform);
+                    //1.build dll
+                    var  outpath_win  = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);
                     ScriptBuildTools.BuildDll(Application.dataPath, outpath_win);
+                    //2.同步到其他两个目录
+                    var outpath_android = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/hotfix/hotfix.dll";
+                    var outpath_ios = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer)+ "/hotfix/hotfix.dll";
+
+                    var source = outpath_win + "/hotfix/hotfix.dll";
+                    if(source!= outpath_android)
+                    File.Copy(source,outpath_android,true);
+                    if(source!= outpath_ios)
+                    File.Copy(source,outpath_ios,true);
+
+                    //3.生成CLRBinding
                     
-                    //同步到其他两个目录
-                    var outpath_android = Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(RuntimePlatform.Android) + "/hotfix/hotfix.dll";
-                    var outpath_ios = Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(RuntimePlatform.IPhonePlayer)+ "/hotfix/hotfix.dll";
-                    var bytes = File.ReadAllBytes(outpath_win + "/hotfix/hotfix.dll");
-                    FileHelper.WriteAllBytes(outpath_android,bytes);
-                    FileHelper.WriteAllBytes(outpath_ios,bytes);
-                    
+                    GenCLRBindingByAnalysis();
                     AssetDatabase.Refresh();
                     Debug.Log("脚本打包完毕");
                 }
             }
             GUILayout.EndHorizontal();
 
-            if (GUILayout.Button("2.生成CLRBinding · one for all", GUILayout.Width(305), GUILayout.Height(30)))
+            if (GUILayout.Button("2.生成CLRBinding · one for all[已集成]", GUILayout.Width(305), GUILayout.Height(30)))
             {
                 GenCLRBindingByAnalysis();
             }
@@ -99,10 +103,10 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     }
 
     //生成clr绑定
-    static void GenCLRBindingByAnalysis()
+    static public void GenCLRBindingByAnalysis()
     {
         //用新的分析热更dll调用引用来生成绑定代码
-        var dllpath =Application.streamingAssetsPath+ "/" + Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
+        var dllpath =Application.streamingAssetsPath+ "/" + BDUtils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
         ILRuntimeHelper.LoadHotfix(dllpath,false);
         BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain,
             "Assets/Code/Game/ILRuntime/Binding/Analysis");

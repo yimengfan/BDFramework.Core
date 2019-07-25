@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BDFramework.Helper
 {
-    static public class Utils
+    static public class BDUtils
     {
         /// <summary>
         /// 平台资源的父路径
@@ -11,15 +11,14 @@ namespace BDFramework.Helper
         {
             switch (platform)
             {
+                case RuntimePlatform.WindowsEditor:
+                case RuntimePlatform.WindowsPlayer:
                 case RuntimePlatform.Android:
                     return "Android";
                 case RuntimePlatform.IPhonePlayer:
                 case RuntimePlatform.OSXEditor:
                 case RuntimePlatform.OSXPlayer:
                     return "iOS";
-                case RuntimePlatform.WindowsEditor:
-                case RuntimePlatform.WindowsPlayer:
-                    return "Windows";
             }
 
             return "";

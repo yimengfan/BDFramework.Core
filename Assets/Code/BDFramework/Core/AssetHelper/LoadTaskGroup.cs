@@ -9,10 +9,18 @@ namespace BDFramework.ResourceMgr
     /// <summary>
     /// 单个任务的数据存储
     /// </summary>
-    public class LoadTask
+    public class LoadTaskData
     {
-        public int Id;
-        public string ResourcePath;
+        public LoadTaskData(int id, string resourcePath, Type t)
+        {
+
+            this.Id = id;
+            this.ResourcePath = resourcePath;
+            this.LoadType = t;
+        }
+        public int Id { get; private set; }
+        public string ResourcePath { get; private set; }
+        public Type LoadType { get; private set; }
     }
 
 
@@ -40,7 +48,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="taskIdList">所有任务组</param>
         /// <param name="onOneTaskComplete">加载进度</param>
-        public LoadTaskGroup(List<LoadTask> taskIdList,  Action<int, int> onOneTaskComplete =null , Action<IDictionary<string, UnityEngine.Object>> onAllTaskComplete = null)
+        public LoadTaskGroup(List<LoadTaskData> taskIdList,  Action<int, int> onOneTaskComplete =null , Action<IDictionary<string, UnityEngine.Object>> onAllTaskComplete = null)
         {
             this.TaskIdList = taskIdList;
             this.onOneTaskComplete = onOneTaskComplete;
@@ -50,14 +58,14 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 任务列表
         /// </summary>
-        public List<LoadTask> TaskIdList = null;
+        public List<LoadTaskData> TaskIdList = null;
         
         /// <summary>
         /// 获取一个task
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public LoadTask GetTask()
+        public LoadTaskData GetTask()
         {
             if (this.TaskIdList.Count > 0)
             {

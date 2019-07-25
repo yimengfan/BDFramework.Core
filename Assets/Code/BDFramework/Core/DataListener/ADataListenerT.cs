@@ -6,38 +6,36 @@ using System.Text;
 namespace BDFramework.DataListener
 {
 
-    abstract public class ADataListener
+    /// <summary>
+    /// 这个可以自定义任意类型，主要用来做值类型
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class ADataListenerT<T> 
     {
-        public class CallBackCache
-        {
-            public Action<object> CallBack;
-            public object Param;
-        }
-
         /// <summary>
         /// 所有的数据
         /// </summary>
-        protected Dictionary<string, object> dataMap;
+        protected Dictionary<string, T> dataMap;
 
         //注册数据变动事件刷新
-        protected Dictionary<string, List<Action<object>>> callbackMap;
+        protected Dictionary<string, List<Action<T>>> callbackMap;
 
         /// <summary>
         /// 一次性监听的回调
         /// </summary>
-        protected Dictionary<string, List<Action<object>>> onceCallbackMap;
+        protected Dictionary<string, List<Action<T>>> onceCallbackMap;
 
         /// <summary>
         /// 注册事件缓存
         /// </summary>
-        protected Dictionary<string, List<object>> valueCacheMap;
+        protected Dictionary<string, List<T>> valueCacheMap;
 
-        public ADataListener()
+        public ADataListenerT()
         {
-            dataMap = new Dictionary<string, object>();
-            callbackMap = new Dictionary<string, List<Action<object>>>();
-            valueCacheMap = new Dictionary<string, List<object>>();
-            onceCallbackMap = new Dictionary<string, List<Action<object>>>();
+            dataMap = new Dictionary<string, T>();
+            callbackMap = new Dictionary<string, List<Action<T>>>();
+            valueCacheMap = new Dictionary<string, List<T>>();
+            onceCallbackMap = new Dictionary<string, List<Action<T>>>();
         }
 
         virtual public void InitData()
@@ -52,7 +50,7 @@ namespace BDFramework.DataListener
         {
             if (!dataMap.ContainsKey(name))
             {
-                dataMap[name] = null;
+                dataMap[name] = default(T);
             }
         }
 
@@ -61,7 +59,7 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        virtual public void SetData(string name, object value, bool isTriggerCallback = true)
+        virtual public void SetData(string name, T value, bool isTriggerCallback = true)
         {
             if (dataMap.ContainsKey(name))
             {
@@ -77,7 +75,7 @@ namespace BDFramework.DataListener
             if (isTriggerCallback)
             {
                 //all
-                List<Action<object>> actions = null;
+                List<Action<T>> actions = null;
 
                 //onece
                 if (onceCallbackMap.TryGetValue(name, out actions))
@@ -101,11 +99,11 @@ namespace BDFramework.DataListener
                 }
                 else
                 {
-                    List<object> list = null;
+                    List<T> list = null;
                     valueCacheMap.TryGetValue(name, out list);
                     if (list == null)
                     {
-                        list = new List<object>();
+                        list = new List<T>();
                         list.Add(value);
                         valueCacheMap[name] = list;
                     }
@@ -126,7 +124,7 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <param name="isUseCallback"></param>
-        virtual public void TriggerEvent(string name, object value = null, bool isUseCallback = true)
+        virtual public void TriggerEvent(string name, T value, bool isUseCallback = true)
         {
             SetData(name, value, isUseCallback);
         }
@@ -137,7 +135,7 @@ namespace BDFramework.DataListener
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
         /// <returns></returns>
-        virtual public T GetData<T>(string name)
+        virtual public T GetData(string name)
         {
             T t = default(T);
             if (dataMap.ContainsKey(name))
@@ -150,7 +148,7 @@ namespace BDFramework.DataListener
                 }
                 else
                 {
-                    t = (T) _value;
+                    t = _value;
                 }
             }
             else
@@ -167,7 +165,7 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        virtual public void AddListener(string name, Action<object> callback = null, bool isTriggerCacheData = false)
+        virtual public void AddListener(string name, Action<T> callback = null, bool isTriggerCacheData = false)
         {
             if (dataMap.ContainsKey(name) == false)
             {
@@ -175,7 +173,7 @@ namespace BDFramework.DataListener
             }
 
             //
-            List<Action<object>> actions = null;
+            List<Action<T>> actions = null;
 
             if (callbackMap.TryGetValue(name, out actions))
             {
@@ -183,14 +181,14 @@ namespace BDFramework.DataListener
             }
             else
             {
-                actions = new List<Action<object>>();
+                actions = new List<Action<T>>();
                 actions.Add(callback);
                 callbackMap[name] = actions;
             }
 
             if (isTriggerCacheData)
             {
-                List<object> list = null;
+                List<T> list = null;
                 this.valueCacheMap.TryGetValue(name, out list);
                 if (list != null)
                 {
@@ -200,7 +198,7 @@ namespace BDFramework.DataListener
                     }
 
                     //置空
-                    this.valueCacheMap[name] = new List<object>();
+                    this.valueCacheMap[name] = new List<T>();
                 }
             }
         }
@@ -211,7 +209,7 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        virtual public void AddListenerOnce(string name, Action<object> callback = null,
+        virtual public void AddListenerOnce(string name, Action<T> callback = null,
             bool isTriggerCacheData = false)
         {
             if (dataMap.ContainsKey(name) == false)
@@ -220,7 +218,7 @@ namespace BDFramework.DataListener
             }
 
             //
-            List<Action<object>> actions = null;
+            List<Action<T>> actions = null;
 
             if (onceCallbackMap.TryGetValue(name, out actions))
             {
@@ -228,14 +226,14 @@ namespace BDFramework.DataListener
             }
             else
             {
-                actions = new List<Action<object>>();
+                actions = new List<Action<T>>();
                 actions.Add(callback);
                 onceCallbackMap[name] = actions;
             }
 
             if (isTriggerCacheData)
             {
-                List<object> list = null;
+                List<T> list = null;
                 this.valueCacheMap.TryGetValue(name, out list);
                 if (list != null)
                 {
@@ -245,7 +243,7 @@ namespace BDFramework.DataListener
                     }
 
                     //置空
-                    this.valueCacheMap[name] = new List<object>();
+                    this.valueCacheMap[name] = new List<T>();
                 }
             }
         }
@@ -268,9 +266,9 @@ namespace BDFramework.DataListener
         /// 移除属性变动事件注册
         /// </summary>
         /// <param name="name"></param>
-        virtual public void RemoveListener(string name, Action<object> callback)
+        virtual public void RemoveListener(string name, Action<T> callback)
         {
-            List<Action<object>> actions = null;
+            List<Action<T>> actions = null;
             if (callbackMap.TryGetValue(name, out actions))
             {
                 actions.Remove(callback);

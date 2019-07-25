@@ -15,7 +15,7 @@ namespace BDFramework
         {
             if (root != "")
             {
-                string dllPath = root + "/" + Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
+                string dllPath = root + "/" + BDUtils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
 
                 //反射
                 if (mode == HotfixCodeRunMode.ByReflection && 
@@ -25,7 +25,8 @@ namespace BDFramework
                     if (File.Exists(dllPath)) //支持File操作 或者存在
                     {
                         var bytes = File.ReadAllBytes(dllPath);
-                        var assembly = Assembly.Load(bytes);
+                        var bytes2 = File.ReadAllBytes(dllPath+".mdb");
+                        var assembly = Assembly.Load(bytes,bytes2);
                         var type = assembly.GetType("BDLauncherBridge");
                         var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
                         method.Invoke(null, new object[] {false, true});
@@ -45,8 +46,8 @@ namespace BDFramework
                     
                     //这里情况比较复杂,Mobile上基本认为Persistent才支持File操作,
                     //可寻址目录也只有 StreamingAsset
-                    var firstPath  = Application.persistentDataPath + "/" + Utils.GetPlatformPath(Application.platform) +"/hotfix/hotfix.dll";
-                    var secondPath = Application.streamingAssetsPath + "/" +Utils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
+                    var firstPath  = Application.persistentDataPath + "/" + BDUtils.GetPlatformPath(Application.platform) +"/hotfix/hotfix.dll";
+                    var secondPath = Application.streamingAssetsPath + "/" +BDUtils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
 
                     if (!File.Exists(dllPath)) //仅当指定的路径不存在(或者不支持File操作)时,再进行可寻址
                     {

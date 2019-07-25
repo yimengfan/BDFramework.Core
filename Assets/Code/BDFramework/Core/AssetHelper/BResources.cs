@@ -117,7 +117,17 @@ namespace BDFramework.ResourceMgr
             resLoader.LoadCancel(id);
         }
 
-
+        /// <summary>
+        /// 取消单个任务
+        /// </summary>
+        public static void LoadCancel(List<int> ids)
+        {
+            foreach (var id in ids)
+            {
+                resLoader.LoadCancel(id);
+            }
+         
+        }
         /// <summary>
         /// 取消所有任务
         /// </summary>

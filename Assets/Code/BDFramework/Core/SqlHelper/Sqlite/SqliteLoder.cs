@@ -24,7 +24,7 @@ namespace SQLite4Unity3d
             }
 
             //先以外部传入的 作为 firstpath
-            firstPath = IPath.Combine(root, Utils.GetPlatformPath(Application.platform) + "/Local.db");
+            firstPath = IPath.Combine(root, BDUtils.GetPlatformPath(Application.platform) + "/Local.db");
             
             //firstpath不存在 或者 不支持io操作，
             //则默认情况生效，persistent为firstpath
@@ -50,8 +50,8 @@ namespace SQLite4Unity3d
             //从StreamingAsset拷贝到Persistent
             //此时persistent为 firstPath
             //StreamingAsset 为 SecPath
-            firstPath = IPath.Combine(Application.persistentDataPath,Utils.GetPlatformPath(Application.platform) + "/Local.db");
-            var secPath = IPath.Combine(Application.streamingAssetsPath,Utils.GetPlatformPath(Application.platform) + "/Local.db");
+            firstPath = IPath.Combine(Application.persistentDataPath,BDUtils.GetPlatformPath(Application.platform) + "/Local.db");
+            var secPath = IPath.Combine(Application.streamingAssetsPath,BDUtils.GetPlatformPath(Application.platform) + "/Local.db");
             if (Application.isEditor)
             {
                 secPath = "file://" + secPath;

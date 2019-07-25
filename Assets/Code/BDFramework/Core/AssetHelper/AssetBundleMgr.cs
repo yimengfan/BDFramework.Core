@@ -4,9 +4,10 @@ using UnityEngine;
 using System.IO;
 using System.Collections;
 using System.Linq;
+using BDFramework.Helper;
 using UnityEditor;
+using UnityEngine.UI;
 using Object = UnityEngine.Object;
-using Utils = BDFramework.Helper.Utils;
 
 namespace BDFramework.ResourceMgr
 {
@@ -84,8 +85,8 @@ namespace BDFramework.ResourceMgr
             this.willDoTaskSet = new HashSet<int>();
             this.allTaskList = new List<LoadTaskGroup>();
             //1.设置加载路径  
-            artRootPath    = (root + "/" + Utils.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
-            secArtRootPath = (Application.streamingAssetsPath + "/" + Utils.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
+            artRootPath    = (root + "/" + BDUtils.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
+            secArtRootPath = (Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
             //
             string configPath = FindAsset("Config.json");
             BDebug.Log("Art加载路径:" + configPath, "red");
@@ -138,7 +139,6 @@ namespace BDFramework.ResourceMgr
             if (resList.Count == 0)
             {
                 callback(true);
-                yield break;
             }
             else
             {
@@ -176,11 +176,7 @@ namespace BDFramework.ResourceMgr
                         }
                     }
                 }
-                else
-                {
-                    BDebug.Log("已存在,無需加載:" + res);
-                }
-                
+
                 //开始下个任务
                 IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(resList, callback));
             }
@@ -256,6 +252,46 @@ namespace BDFramework.ResourceMgr
         }
         
 
+        
+        /// <summary>
+        /// 加载资源
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="abName"></param>
+        /// <param name="objName"></param>
+        /// <returns></returns>
+        private Object LoadFormAssetBundle( string objName,Type t)
+        {
+            //判断资源结构 是单ab-单资源、单ab-多资源
+            var mainItem = manifest.Manifest.GetManifestItem(objName);
+            //单ab 单资源
+            var abName = objName;
+            //单ab 多资源
+            if (mainItem!=null&&!string.IsNullOrEmpty(mainItem.PackageName))
+            {
+                abName = mainItem.PackageName;
+            }
+            
+            //
+            if (!string.IsNullOrEmpty(abName))
+            {
+                Object o = null;
+                AssetBundleReference abr = null;
+                if (assetbundleMap.TryGetValue(abName, out abr))
+                {
+                    o = abr.assetBundle.LoadAsset(objName,t);
+                }
+                else
+                {
+                    BDebug.Log("资源不存在:" +objName);
+                }
+                return o;
+            }
+
+            return null;
+        }
+        
+        
 
         /// <summary>
         /// 同步加载
@@ -368,33 +404,33 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public int AsyncLoad<T>(string path, Action<bool, T> callback) where T : UnityEngine.Object
         {
-            var task = new LoadTask()
+            var id = this.taskIDCounter++;
+            this.willDoTaskSet.Add(id);
+            AsyncLoadAssetBundle(path, b =>
             {
-                Id = this.taskIDCounter++,
-                ResourcePath = path,
-            };
-            //创建任务组
-            LoadTaskGroup taskGroup = new LoadTaskGroup(new List<LoadTask>() {task}, null,
-                (map) =>
+                //异步任务取消
+                if (this.willDoTaskSet.Contains(id))
                 {
-                    if (map.Keys.Count > 0)
-                    {
-                        //只取第一个返回
-                        foreach (var v in map.Values)
-                        {
-                            callback(true, v as T);
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        callback(false, null);
-                    }
-                });
-            AddTaskGroup(taskGroup);
-            //开始任务
-            DoNextTask();
-            return task.Id;
+                    this.willDoTaskSet.Remove(id);
+                }
+                else
+                {
+                    return;
+                }
+                //
+                var p = "assets/resource/runtime/" + path.ToLower() + ".";
+                path = GetExistPath(p);
+                var obj = LoadFormAssetBundle<T>(path);
+                if (obj)
+                {
+                    callback(true, obj);
+                }
+                else
+                {
+                    callback(false, null);
+                }
+            });
+            return id;
         }
 
 
@@ -409,15 +445,10 @@ namespace BDFramework.ResourceMgr
             Action<IDictionary<string, UnityEngine.Object>> onLoadComplete, Action<int, int> onLoadProcess)
         {
             List<int> idList = new List<int>();
-            List<LoadTask> tasks = new List<LoadTask>();
+            List<LoadTaskData> tasks = new List<LoadTaskData>();
             foreach (var s in sources)
             {
-                var task = new LoadTask()
-                {
-                    Id = this.taskIDCounter++,
-                    ResourcePath = s,
-                };
-
+                var task = new LoadTaskData(this.taskIDCounter++, s, typeof(Object));
                 tasks.Add(task);
                 idList.Add(task.Id);
             }
@@ -530,13 +561,13 @@ namespace BDFramework.ResourceMgr
                 }
             }
 
-            LoadTask task = null;
+            LoadTaskData taskData = null;
             //获取一个任务
             while (true)
             {
-                task = currentTaskGroup.GetTask();
+                taskData = currentTaskGroup.GetTask();
                 //task为空，或者任务可以执行，跳出
-                if (task == null || willDoTaskSet.Contains(task.Id))
+                if (taskData == null || willDoTaskSet.Contains(taskData.Id))
                 {
                     break;
                 }
@@ -544,7 +575,7 @@ namespace BDFramework.ResourceMgr
 
 
             //当前任务组已经全部完成
-            if (task == null)
+            if (taskData == null)
             {
                 BDebug.Log("---------加载任务组已完成---------- |"+currentTaskGroup.GetHashCode());
                 currentTaskGroup = null;
@@ -555,19 +586,19 @@ namespace BDFramework.ResourceMgr
             else
             {
                 //
-                BDebug.Log("执行任务组中task:" + task.Id + " - " + task.ResourcePath);
+                BDebug.Log("执行任务组中task:" + taskData.Id + " - " + taskData.ResourcePath);
                 isDoing = true;
                 //执行任务
-                AsyncLoadAssetBundle(task.ResourcePath, b =>
+                AsyncLoadAssetBundle(taskData.ResourcePath, b =>
                 {
                     //移除任务
-                    this.willDoTaskSet.Remove(task.Id);
+                    this.willDoTaskSet.Remove(taskData.Id);
                     //
-                    var path = "assets/resource/runtime/" + task.ResourcePath.ToLower() + ".";
+                    var path = "assets/resource/runtime/" + taskData.ResourcePath.ToLower() + ".";
                     path = GetExistPath(path);
-                    var obj = LoadFormAssetBundle<Object>(path);
+                    var obj = LoadFormAssetBundle(path,taskData.LoadType);
                     //任务完成
-                    currentTaskGroup.OnOneTaskComplete(task.Id, task.ResourcePath, obj);
+                    currentTaskGroup.OnOneTaskComplete(taskData.Id, taskData.ResourcePath, obj);
                     isDoing = false;
                     //继续执行
                     DoNextTask();

@@ -13,8 +13,7 @@ namespace BDFramework.DataListener
     public class DataListenerServer
     {
 
-        static private Dictionary<string, DataListenerService> serviceMap =
-            new Dictionary<string, DataListenerService>();
+        static private Dictionary<string, DataListenerService> serviceMap = new Dictionary<string, DataListenerService>();
 
         /// <summary>
         /// 创建一个service
@@ -31,7 +30,6 @@ namespace BDFramework.DataListener
             }
             else
             {
-                Debug.LogError("已存在同名DataDrive_Service");
                 return GetService(name);
             }
 
@@ -46,8 +44,13 @@ namespace BDFramework.DataListener
         public static DataListenerService GetService(string name)
         {
             DataListenerService data = null;
-
             serviceMap.TryGetValue(name, out data);
+            if (data == null)
+            {
+                data = new DataListenerService();
+
+                serviceMap[name] = data;
+            }
             return data;
         }
 

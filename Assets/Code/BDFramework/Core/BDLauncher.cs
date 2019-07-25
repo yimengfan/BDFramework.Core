@@ -7,13 +7,11 @@ using SQLite4Unity3d;
 using UnityEngine;
 using BDFramework.ResourceMgr;
 using UnityEngine.Networking;
-using Utils = BDFramework.Helper.Utils;
 
 namespace BDFramework
 {
     public class BDLauncher : MonoBehaviour
     {
-        static public BDLauncher  Inst { get; private set; }
         static public Action OnStart { get; set; }
         static public Action OnUpdate { get; set; }
         static public Action OnLateUpdate { get; set; }
@@ -21,6 +19,7 @@ namespace BDFramework
         //当BDFrame启动完整后执行
         static public Action OnBDFrameLaunch { get; set; }
 
+        static  public BDLauncher Inst { get; private set; }
         //全局Config
         [HideInInspector]
         public Config Config;
