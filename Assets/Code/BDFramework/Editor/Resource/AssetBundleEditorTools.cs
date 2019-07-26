@@ -230,6 +230,7 @@ static public class AssetBundleEditorTools
                 {
                    //不用打包记录缓存
                    var _last = lastManifestConfig.Manifest.Values.ToList().Find((item) => item.UIID == lastItem.UIID);
+                   if(_last!=null)
                    curManifestConfig.AddDepend(_last.Name, _last.UIID, _last.Dependencies, _last.PackageName);
                    continue;
                 }
