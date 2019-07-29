@@ -49,6 +49,7 @@ public class BDLauncherBridge
         allTypes = allTypes.Distinct().ToList();
         foreach (var t in allTypes)
         {
+
             if (t != null && t.BaseType != null && t.BaseType.FullName != null &&
                 t.BaseType.FullName.Contains(".ManagerBase`2"))
             {

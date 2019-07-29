@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.IO;
 using System.Reflection;
@@ -8,6 +9,9 @@ namespace BDFramework
 {
     static public class ScriptLoder
     {
+
+        static public bool IsReflectionRunning { get; private set; } = false;
+        static private Assembly Assembly { get;  set; }
         /// <summary>
         /// 开始热更脚本逻辑
         /// </summary>
@@ -26,8 +30,8 @@ namespace BDFramework
                     {
                         var bytes = File.ReadAllBytes(dllPath);
                         var bytes2 = File.ReadAllBytes(dllPath+".mdb");
-                        var assembly = Assembly.Load(bytes,bytes2);
-                        var type = assembly.GetType("BDLauncherBridge");
+                        Assembly = Assembly.Load(bytes,bytes2);
+                        var type = Assembly.GetType("BDLauncherBridge");
                         var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
                         method.Invoke(null, new object[] {false, true});
                     }
@@ -70,9 +74,9 @@ namespace BDFramework
                 //PC模式
 
                 //这里用反射是为了 不访问逻辑模块的具体类，防止编译失败
-                var assembly = Assembly.GetExecutingAssembly();
+                Assembly= Assembly.GetExecutingAssembly();
                 //
-                var type = assembly.GetType("BDLauncherBridge");
+                var type = Assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
                 method.Invoke(null, new object[] {false, false});
             }
@@ -93,9 +97,9 @@ namespace BDFramework
             yield return www;
             if (www.isDone && www.error == null)
             {
-                var assembly = Assembly.Load(www.bytes);
+                Assembly = Assembly.Load(www.bytes);
 
-                var type = assembly.GetType("BDLauncherBridge");
+                var type = Assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
                 method.Invoke(null, new object[] {false, true});
             }
@@ -114,11 +118,7 @@ namespace BDFramework
         /// <returns></returns>
         static IEnumerator IE_CopyDLL_WhithLaunch(string source, string copyto)
         {
-//            if (Application.isEditor)
-//            {
-//                source = "file://" + source;
-//            }
-            
+
             BDebug.Log("复制到第一路径:" + source);
 
             var www = new WWW(source);

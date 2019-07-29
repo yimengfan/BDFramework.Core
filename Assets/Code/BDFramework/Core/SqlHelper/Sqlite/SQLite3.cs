@@ -58,7 +58,8 @@ namespace SQLite4Unity3d
     {
         private bool _open;
         private TimeSpan _busyTimeout;
-        private Dictionary<string, TableMapping> _mappings = null;
+        //assembly -  classfullname,table mapping
+        private Dictionary<int, Dictionary<string, TableMapping>> _mappings = null;
         private Dictionary<string, TableMapping> _tables = null;
         private System.Diagnostics.Stopwatch _sw;
         private TimeSpan _elapsed = default(TimeSpan);
@@ -284,14 +285,23 @@ namespace SQLite4Unity3d
         {
             if (_mappings == null)
             {
-                _mappings = new Dictionary<string, TableMapping>();
+                _mappings = new Dictionary<int, Dictionary<string, TableMapping>>();
             }
 
+            //这里使用2级缓存,防止不同asseembly中，同名对象导致错误类型
+            Dictionary<string, TableMapping> maps = null;
+            var key = type.Assembly.GetHashCode();
+            if (!_mappings.TryGetValue(key, out maps))
+            {
+                maps = new Dictionary<string, TableMapping>();
+                _mappings[key] = maps;
+            }
+            //获取具体map
             TableMapping map;
-            if (!_mappings.TryGetValue(type.FullName, out map))
+            if (!maps.TryGetValue(type.FullName, out map))
             {
                 map = new TableMapping(type, createFlags);
-                _mappings[type.FullName] = map;
+                maps[type.FullName] = map;
             }
 
             return map;
@@ -1639,9 +1649,13 @@ namespace SQLite4Unity3d
                 {
                     if (_mappings != null)
                     {
-                        foreach (var sqlInsertCommand in _mappings.Values)
+                        foreach (var map in _mappings.Values)
                         {
-                            sqlInsertCommand.Dispose();
+                            foreach (var sqlInsertCommand in map.Values)
+                            {
+                                sqlInsertCommand.Dispose();
+                            }
+                            
                         }
                     }
 
@@ -2165,7 +2179,7 @@ namespace SQLite4Unity3d
 
                     while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                     {
-                        var obj = Activator.CreateInstance(map.MappedType);
+                        var obj =  map.MappedType.Assembly.CreateInstance(map.MappedType.FullName);
                         for (int i = 0; i < cols.Length; i++)
                         {
                             if (cols[i] == null)

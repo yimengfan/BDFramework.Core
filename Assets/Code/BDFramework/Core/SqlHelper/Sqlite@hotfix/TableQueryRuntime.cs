@@ -28,37 +28,35 @@ using Sqlite3Statement = System.IntPtr;
 #endif
 namespace SQLite4Unity3d
 {
-   
     public class TableQueryILRuntime : BaseTableQuery
     {
         public SQLiteConnection Connection { get; private set; }
 
 
         private string @where = "";
-        private string like   = "";
-        private string limit  = "";
-       
-        public TableQueryILRuntime( SQLiteConnection connection)
+        private string like = "";
+        private string limit = "";
+
+        public TableQueryILRuntime(SQLiteConnection connection)
         {
             this.Connection = connection;
         }
 
 
-
         #region 数据库直接操作
 
-        private SQLiteCommand GenerateCommand(string selection , string tablename)
+        private SQLiteCommand GenerateCommand(string selection, string tablename)
         {
             //0表名
-            string cmdText = "select "+selection+" from {0} {1}";
+            string cmdText = "select " + selection + " from {0} {1}";
             if (string.IsNullOrEmpty(@where) == false)
             {
                 @where = "where " + @where;
             }
-            
-            cmdText= string.Format(cmdText,tablename, @where);
-            
-            BDebug.Log("sql:" + cmdText);
+
+            cmdText = string.Format(cmdText, tablename, @where);
+
+            // BDebug.Log("sql:" + cmdText);
             return Connection.CreateCommand(cmdText);
         }
 
@@ -66,6 +64,7 @@ namespace SQLite4Unity3d
 
 
         #region 数据库操作  by BDFramework
+
         /// <summary>
         /// 基本语法
         /// 1.ID == 1
@@ -75,7 +74,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime Where(string where ,params object[] formats)
+        public TableQueryILRuntime Where(string where, params object[] formats)
         {
             if (formats.Length > 0)
             {
@@ -85,15 +84,16 @@ namespace SQLite4Unity3d
             {
                 this.@where = where;
             }
+
             return this;
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime WhereOr(string field,string operation  , IList objs)
+        public TableQueryILRuntime WhereOr(string field, string operation, IList objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Count; i++)
@@ -101,24 +101,24 @@ namespace SQLite4Unity3d
                 var value = objs[i].ToString();
                 if (i == 0)
                 {
-                    sql = string.Format("{0} {1} {2}", field,operation,value);
+                    sql = string.Format("{0} {1} {2}", field, operation, value);
                 }
                 else
                 {
-                    sql += string.Format(" or {0} {1} {2}", field,operation,value);
-                } 
+                    sql += string.Format(" or {0} {1} {2}", field, operation, value);
+                }
             }
 
             this.@where = sql;
             return this;
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime WhereAnd(string field,string operation,IList objs)
+        public TableQueryILRuntime WhereAnd(string field, string operation, IList objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Count; i++)
@@ -126,32 +126,36 @@ namespace SQLite4Unity3d
                 var value = objs[i].ToString();
                 if (i == 0)
                 {
-                    sql = string.Format("{0} {1} {2}", field,operation,value);
+                    sql = string.Format("{0} {1} {2}", field, operation, value);
                 }
                 else
                 {
-                    sql += string.Format(" and {0} {1} {2}", field,operation,value);
-                } 
+                    sql += string.Format(" and {0} {1} {2}", field, operation, value);
+                }
             }
 
             this.@where = sql;
-            return  this;
+            return this;
         }
+
         /// <summary>
         /// forilruntime
         /// </summary>
         /// <returns></returns>
         public List<T> ToSearch<T>(string selection = "*") where T : new()
-        {  
+        {
+            var type = typeof(T);
             var DataCache = new List<T>();
             //查询所有数据
-            var cmd = GenerateCommand(selection, typeof(T).Name.ToLower());
+            var cmd = GenerateCommand(selection, type.Name.ToLower());
             var list = cmd.ExecuteQuery(typeof(T));
             foreach (var o in list)
             {
+                var t =o.GetType();
                 var _t = (T) o;
                 DataCache.Add(_t);
-            }      
+            }
+
             return DataCache;
         }
 
