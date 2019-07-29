@@ -59,6 +59,29 @@ namespace BDFramework
                     }
                 }
             }
+            
+            #if UNITY_EDITOR
+            if (Config.CodeRoot == AssetLoadPath.Editor)
+            {
+                foreach (var t in types)
+                {
+                    if (t.IsClass && t.GetInterface("IGameStart") != null)
+                    {
+                        var attr = (GameStartAtrribute)t.GetCustomAttribute(typeof(GameStartAtrribute), false);
+                        if (attr != null && attr.Index==1)
+                        {
+                            mainStart = Activator.CreateInstance(t) as IGameStart;
+                            //注册
+                            mainStart.Start();
+                        
+                            break;
+                        }
+                    }
+                }
+                
+            }
+            
+            #endif
         }
 
         #endregion
