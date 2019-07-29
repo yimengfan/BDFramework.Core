@@ -4,6 +4,7 @@
 <br>版本:Unity2018.4
 ### 7月新开技术交流、艺术鉴赏群:   763141410 
 <br>任何问题直接提issue,24小时内必解决
+<br>鉴于主分支版本已经稳定，所有bug修复和新特性加入，会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。
 # 文档
  [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
  <br>[English Wiki](http://www.nekosang.com)
