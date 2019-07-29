@@ -11,9 +11,8 @@ namespace Game
     {
         public void Start()
         {
-            BDebug.Log("本地代码启动!");
-            BDebug.Log("准备启动热更逻辑!");
-            
+            BDebug.Log("主工程代码启动!","red");
+
             //初始化M_UIMgr
             var types = Assembly.GetExecutingAssembly().GetTypes();
             foreach (var t in types)

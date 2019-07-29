@@ -10,7 +10,7 @@ namespace Code.Game
 
         public void Start()
         {
-           Application.targetFrameRate = 24;
+          // Application.targetFrameRate = 24;
            BDebug.Log("hotfix代码 启动器连接成功!" ,"red");
         }
         

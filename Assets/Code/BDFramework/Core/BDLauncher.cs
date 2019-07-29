@@ -49,12 +49,13 @@ namespace BDFramework
             {
                 if (t.IsClass && t.GetInterface("IGameStart") != null)
                 {
-                    var attr = t.GetCustomAttribute(typeof(GameStartAtrribute), false);
-                    if (attr != null)
+                    var attr = (GameStartAtrribute)t.GetCustomAttribute(typeof(GameStartAtrribute), false);
+                    if (attr != null && attr.Index==0)
                     {
                         mainStart = Activator.CreateInstance(t) as IGameStart;
                         //注册
                         mainStart.Start();
+                        break;
                     }
                 }
             }
