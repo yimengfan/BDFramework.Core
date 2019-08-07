@@ -15,9 +15,9 @@ using UnityEngine.UI;
 using BDFramework.ResourceMgr;
 namespace BDFramework.Core
 {
-    public class UITools_AutoSetTranformValueByData
+    public class UITools_Data2UIValue
     {
-        public UITools_AutoSetTranformValueByData()
+        public UITools_Data2UIValue()
         {
             IEnumeratorTool.StartCoroutine(this.IE_AutoClearCaheMap());
         }
@@ -25,7 +25,6 @@ namespace BDFramework.Core
         /// <summary>
         /// fullname缓存表
         /// </summary>
-        Dictionary<int, object> UIComponentValue = new Dictionary<int, object>();
 
         Dictionary<Transform, Dictionary<string, ComponentValueCache>> ComponentCacheMap =
             new Dictionary<Transform, Dictionary<string, ComponentValueCache>>();
@@ -40,9 +39,9 @@ namespace BDFramework.Core
             //建立缓存
             Dictionary<string, ComponentValueCache> coms = new Dictionary<string, ComponentValueCache>();
             bool isFirstFindComponent = false;
-            if (ComponentCacheMap.TryGetValue(t, out coms) == false)
+            if (!ComponentCacheMap.TryGetValue(t, out coms))
             {
-                coms = FirstFindComponent(t, data);
+                coms = Data2UIMapCache(t, data);
                 this.ComponentCacheMap[t] = coms;
             }
 
@@ -64,25 +63,51 @@ namespace BDFramework.Core
         }
 
 
-        Dictionary<string, ComponentValueCache> FirstFindComponent(Transform t, object data)
+        /// <summary>
+        /// 数据到ui节点进行cache
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        Dictionary<string, ComponentValueCache> Data2UIMapCache(Transform root, object data)
         {
             Dictionary<string, ComponentValueCache> coms = new Dictionary<string, ComponentValueCache>();
-            var setList = new List<UITool_Attribute>(t.GetComponentsInChildren<UITool_Attribute>());
-
+            
+            //要赋值的节点
+            var tagTransList = new List<UITool_Attribute>(root.GetComponentsInChildren<UITool_Attribute>());
             var type = data.GetType();
             var fields = type.GetFields();
             foreach (var f in fields)
             {
              
                 //TODO: ILRuntime里面只能这样获取，而且属性里面存的type会有问题
-                var attrs = f.GetCustomAttributes(typeof(ComponentAttribute), false);
-                var fAttr = attrs.ToList().Find(a => a is ComponentAttribute) as ComponentAttribute;
+                var attrs = f.GetCustomAttributes(typeof(ComponentAttribute), false).ToList();
+                var fAttr = attrs.Find(a => a is ComponentAttribute) as ComponentAttribute;
                
                 //
                 if (fAttr != null && fAttr.ComponentType != null)
                 {
+                    Transform trans =null;
+                    //优先通过Transform节点进行赋值
+                    var _as = f.GetCustomAttributes(typeof(TransformPath), false).ToList();
+                    var tfp = _as.Find(a => a is TransformPath) as TransformPath;
+                    if (tfp != null)
+                    {
+                        trans = root.Find(tfp.Path);
+                    }
+
+                    //其次通过UI节点的Tag进行赋值
+                    if (trans == null)
+                    {
+                        var tag = tagTransList.Find(s => s.ToolTag_FieldName == fAttr.ToolTag_FieldName);
+                        if (tag)
+                        {
+                            trans = tag.transform;
+                        }
+                    }
+                    
                     //获取uitools name一致的节点
-                    var trans = setList.Find(s => s.ToolTag_FieldName == fAttr.ToolTag_FieldName);
+
                     if (trans != null)
                     {
                         //存入

@@ -69,7 +69,6 @@ namespace ILRuntime.Runtime.Generated
             System_Reflection_FieldInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Transform_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_UITool_Attribute_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Int32_Object_Binding.Register(app);
             UITool_Attribute_Binding.Register(app);
             UnityEngine_WaitForSecondsRealtime_Binding.Register(app);
             System_Collections_Generic_List_1_Transform_Binding.Register(app);
