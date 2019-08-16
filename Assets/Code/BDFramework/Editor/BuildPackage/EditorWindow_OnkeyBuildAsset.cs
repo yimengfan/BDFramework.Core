@@ -143,8 +143,7 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
                         //2.打包资源
                         try
                         {
-                            AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/", outPath,
-                                BuildTarget.iOS);
+                            AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/", outPath,BuildTarget.iOS);
                         }
                         catch (Exception e)
                         {
@@ -190,6 +189,29 @@ public class EditorWindow_OnkeyBuildAsset : EditorWindow
         GUILayout.EndVertical();
     }
 
+
+    /// <summary>
+    /// 一键build所有资源
+    /// </summary>
+    public static void OneKeyBuildALLAssets_ForBuildPackage(RuntimePlatform platform, string outpath)
+    {
+        var outPath = outpath + "/" + BDUtils.GetPlatformPath(platform);
+        //1.编译脚本
+        ScriptBuildTools.BuildDll(Application.dataPath, outPath);
+        EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis(platform);
+        //2.打包资源
+        if (platform == RuntimePlatform.IPhonePlayer)
+        {
+            AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/", outPath,BuildTarget.iOS);
+        }
+        else if (platform == RuntimePlatform.Android)
+        {
+            AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/", outPath,BuildTarget.Android);
+        }
+        //3.打包表格
+        Excel2SQLiteTools.GenSQLite(outPath);
+    }
+    
     public static void Layout_DrawLineH(Color color, float height = 4f)
     {
         Rect rect = GUILayoutUtility.GetLastRect();

@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using BDFramework.ResourceMgr;
 using LitJson;
@@ -157,6 +158,7 @@ static public class AssetBundleEditorTools
     private static ManifestConfig AssetCache;
     private static string cachePath = "";
     private static string configPath = "";
+    private  static Dictionary<string,string> fileHashMap =null;
     /// <summary>
     /// 分析资源
     /// </summary>
@@ -167,6 +169,7 @@ static public class AssetBundleEditorTools
     {
         additionBuildPackageCache = new List<string>();
         curManifestConfig = new ManifestConfig();
+        fileHashMap = new Dictionary<string, string>();
         //加载
 
         ManifestConfig lastManifestConfig = null;
@@ -191,10 +194,13 @@ static public class AssetBundleEditorTools
         
 
         /***************************************开始分析资源****************************************/
+
+        //获取图集信息
+        CollectSpriteAtlas();
+        EditorUtility.DisplayProgressBar("分析资源 -" + target,"收集SpriteAtlas",0);
+        //开始分析资源
         List<string> changeList = new List<string>();
         float curIndex = 0;
-
-
         var allAssetList = paths.ToList();
         for (int index = 0; index < allAssetList.Count; index++)
         {
@@ -214,6 +220,27 @@ static public class AssetBundleEditorTools
             var allDependObjectPaths = AssetDatabase.GetDependencies(dependsource).ToList();
             dependsource = dependsource.ToLower();
 
+            //检查依赖是否存在,不存在的依赖需要人为剔除,
+            for (int i = allDependObjectPaths.Count-1; i >= 0; i--)
+            {
+                var dp = allDependObjectPaths[i];
+                //全路径
+                var fullPath = Application.dataPath + dp.TrimStart("Assets".ToCharArray());
+                //
+                if (!File.Exists(fullPath))
+                {
+                    //有可能是文件夹
+                    if (!Directory.Exists(fullPath))
+                    {
+                        Debug.LogError("丢失依赖:" + dp);
+                    }
+                    //即使文件夹也要移除啊,么得办法
+                    allDependObjectPaths.RemoveAt(i);
+                }
+            }
+            
+            
+            
             GetCanBuildAssets(ref allDependObjectPaths);
             
             //处理依赖资源打包
@@ -221,7 +248,22 @@ static public class AssetBundleEditorTools
             {
                 var dp = allDependObjectPaths[i];
                 var dependObjPath = Application.dataPath + dp.TrimStart("Assets".ToCharArray());
-                var uiid = GetMD5HashFromFile(dependObjPath);
+
+                string uiid = null;
+
+                //这里说明文件已经处理过
+                if (fileHashMap.TryGetValue(dependObjPath, out uiid))
+                {
+                    continue;
+                }
+                else
+                {
+                    uiid = GetMD5HashFromFile(dependObjPath);
+                    fileHashMap[dependObjPath] = uiid;
+                }
+
+               
+                
                 //判断是否打包
                 ManifestItem lastItem = null;
                 AssetCache.Manifest.TryGetValue(dp, out lastItem);
@@ -247,6 +289,22 @@ static public class AssetBundleEditorTools
                 if (dp.ToLower()!=dependsource && Path.GetExtension(dp).ToLower().Equals(".prefab"))
                 {
                     list =  AssetDatabase.GetDependencies(abname).ToList();
+                    
+                    
+                    //检查依赖是否存在,不存在的依赖需要人为剔除,
+                    for (int n = list.Count-1; n >= 0; n--)
+                    {
+                        var _dp = list[n];
+                        //全路径
+                        var fullPath = Application.dataPath + _dp.TrimStart("Assets".ToCharArray());
+                        //
+                        if (!File.Exists(fullPath))
+                        {
+                            Debug.LogError("丢失依赖:" + _dp);
+                   
+                            list.RemoveAt(i);
+                        }
+                    }
                     GetCanBuildAssets(ref list);
 
                     //转换成全小写
@@ -257,6 +315,7 @@ static public class AssetBundleEditorTools
                 }
                 
                 abname = abname.ToLower();
+                
                 if (IsMakePackage(abname, ref packageName))
                 {
                     
@@ -277,7 +336,7 @@ static public class AssetBundleEditorTools
                             _ai.assetBundleName = packageName;
                             _ai.assetBundleVariant = "";
                         }
-                        Debug.LogFormat("<color=yellow>重新打包:{0} , 依赖:{1}</color>",packageName,oldAsset.Count);
+                        Debug.LogFormat("<color=yellow>多合一打包:{0} , 依赖:{1}</color>",packageName,oldAsset.Count);
                         additionBuildPackageCache.Add(packageName);
                     }
                     //
@@ -301,8 +360,7 @@ static public class AssetBundleEditorTools
                 }
 
             }
-
-           
+            
             //保存主文件的依赖
             {
                 //获取MD5的UIID
@@ -329,11 +387,13 @@ static public class AssetBundleEditorTools
 
         EditorUtility.ClearProgressBar();
 
-        Debug.Log("本地需要打包资源:" + changeList.Count);
-        if (changeList.Count < 100)
-        {
-            Debug.Log("本地需要打包资源:" + JsonMapper.ToJson(changeList));
-        }
+        Debug.LogFormat("<color=red>本地需要打包数量:{0}</color>" , changeList.Count);
+
+
+        var buidpath = string.Format("{0}/{1}_buid.json", outpath, target.ToString());
+        FileHelper.WriteAllText(buidpath,JsonMapper.ToJson(changeList));
+        Debug.Log("本地打包保存:"  + buidpath);
+        
     }
 
 
@@ -351,9 +411,8 @@ static public class AssetBundleEditorTools
             var p = list[i];
             var ext = Path.GetExtension(p).ToLower();
             //
-            var fullPath = Application.dataPath + p.TrimStart("Assets".ToCharArray());
-            if (ext != ".cs" && ext != ".js" && ext != ".dll"
-              && File.Exists(fullPath) )
+
+            if (ext != ".cs" && ext != ".js" && ext != ".dll")
             {
                 continue;
             }
@@ -361,15 +420,66 @@ static public class AssetBundleEditorTools
             list.RemoveAt(i);
         }
     }
+
+
+    #region 图集相关
+
+    private static Dictionary<string, List<string>> atlasMap = null;
+    private static HashSet<string> atlasHashSet = null;
+    static private void CollectSpriteAtlas()
+    {
+        atlasMap = new Dictionary<string, List<string>>();
+        atlasHashSet = new HashSet<string>();
+        //
+        var path = "Assets/Resource/Runtime";
+        var assets = AssetDatabase.FindAssets("t:spriteatlas", new string[] {path}).ToList();
+        
+        //GUID to assetPath
+        for (int i = 0; i < assets.Count; i++)
+        {
+            var p = AssetDatabase.GUIDToAssetPath(assets[i]).ToLower();
+            //获取依赖中的mat
+            var dps = AssetDatabase.GetDependencies(p, true).ToList();
+            for (int j = 0; j < dps.Count; j++)
+            {
+                dps[j] = dps[j].ToLower();
+                atlasHashSet.Add(Path.GetExtension(dps[j]));
+            }
+
+            atlasMap[p] = dps;
+        }
+
+    }
     
+    
+    #endregion
+   
+
     /// <summary>
-    /// 是否需要打包
+    /// 是否需要多包合一
     /// </summary>
     /// <param name="name"></param>
     /// <param name="package"></param>
     /// <returns></returns>
     static private bool IsMakePackage(string name, ref string package)
     {
+
+        var ext = Path.GetExtension(name);
+        if (atlasHashSet.Contains(ext))
+        {
+            foreach (var item in atlasMap)
+            {
+                //收集图片是否被图集引用
+                if (item.Value.Contains(name))
+                {
+                    package = item.Key;
+
+                    return true;
+                }
+            }
+            
+        }
+
         foreach (var config in PackageConfig)
         {
             foreach (var exten in config.fileExtens)
@@ -383,6 +493,8 @@ static public class AssetBundleEditorTools
         }
 
         return false;
+        
+
     }
 
     /// <summary>

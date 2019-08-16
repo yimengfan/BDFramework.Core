@@ -22,18 +22,35 @@ using Code.Game.demo_Manager_AutoRegister_And_Event;
 [UI((int) WinEnum.Win_Main, "Windows/window_demoMain")]
 public class Window_DemoMain : AWindow
 {
-    [TransformPath("text_hotfixState")] private Text text_hotfixState;
+    [TransformPath("text_hotfixState")]
+    private Text text_hotfixState;
 
-    [TransformPath("btn_1")] private Button btn_01;
-    [TransformPath("btn_2")] private Button btn_02;
+    [TransformPath("btn_1")]
+    private Button btn_01;
 
-    [TransformPath("btn_3")] private Button btn_03;
-    [TransformPath("btn_4")] private Button btn_04;
-    [TransformPath("btn_5")] private Button btn_05;
-    [TransformPath("btn_6")] private Button btn_06;
+    [TransformPath("btn_2")]
+    private Button btn_02;
 
-    [TransformPath("btn_7")] private Button btn_07;
-    [TransformPath("btn_8")] private Button btn_08;
+    [TransformPath("btn_3")]
+    private Button btn_03;
+
+    [TransformPath("btn_4")]
+    private Button btn_04;
+
+    [TransformPath("btn_5")]
+    private Button btn_05;
+
+    [TransformPath("btn_6")]
+    private Button btn_06;
+
+    [TransformPath("btn_7")]
+    private Button btn_07;
+
+    [TransformPath("btn_8")]
+    private Button btn_08;
+
+    [TransformPath("btn_9")]
+    private Button btn_09;
 
     //[]
     public Window_DemoMain(string path) : base(path)
@@ -124,7 +141,17 @@ public class Window_DemoMain : AWindow
 
 
         //发送消息机制
-        this.btn_08.onClick.AddListener(() => { DemoEventManager.Inst.Do(DemoEventEnum.TestEvent2); });
+        this.btn_08.onClick.AddListener(() =>
+        {
+            DemoEventManager.Inst.Do(DemoEventEnum.TestEvent2);
+        });
+        
+        //发送消息机制
+        this.btn_09.onClick.AddListener(() =>
+        {
+            UIManager.Inst.LoadWindows((int) WinEnum.Win_Demo5);
+            UIManager.Inst.ShowWindow((int) WinEnum.Win_Demo5);
+        });
     }
 
     public override void Close()

@@ -2,6 +2,7 @@
 using System.IO;
 using BDFramework.Helper;
 using ILRuntime.Reflection;
+using ILRuntime.Runtime.Generated;
 using LitJson;
 //;
 using Mono.Cecil.Mdb;
@@ -46,8 +47,17 @@ namespace BDFramework
 
 
             //绑定的初始化
+            //ada绑定
             AdapterRegister.RegisterCrossBindingAdaptor(AppDomain);
+            //delegate绑定
             ILRuntimeDelegateHelper.Register(AppDomain);
+            //值类型绑定
+            AppDomain.RegisterValueTypeBinder(typeof(Vector2), new Vector2Binder());
+            AppDomain.RegisterValueTypeBinder(typeof(Vector3), new Vector3Binder());
+            AppDomain.RegisterValueTypeBinder(typeof(Vector4), new Vector4Binder());
+            AppDomain.RegisterValueTypeBinder(typeof(Quaternion), new QuaternionBinder());
+           
+            
             
             
             //是否注册各种binding

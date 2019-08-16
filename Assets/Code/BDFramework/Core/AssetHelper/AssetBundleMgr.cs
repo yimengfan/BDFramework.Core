@@ -6,6 +6,7 @@ using System.Collections;
 using System.Linq;
 using BDFramework.Helper;
 using UnityEditor;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -279,11 +280,22 @@ namespace BDFramework.ResourceMgr
                 AssetBundleReference abr = null;
                 if (assetbundleMap.TryGetValue(abName, out abr))
                 {
-                    o = abr.assetBundle.LoadAsset(objName,t);
+                    
+                    if (abName.EndsWith(".spriteatlas"))
+                    {
+                        var atlas = abr.assetBundle.LoadAsset<SpriteAtlas>(abName);
+                        o = atlas.GetSprite(objName);
+                    }
+                    else
+                    {
+                        o = abr.assetBundle.LoadAsset(objName,t);
+                    }
                 }
                 else
                 {
                     BDebug.Log("资源不存在:" +objName);
+
+                    return null;
                 }
                 return o;
             }
@@ -566,6 +578,13 @@ namespace BDFramework.ResourceMgr
             while (true)
             {
                 taskData = currentTaskGroup.GetTask();
+
+                //任务不存在当前可执行列表中
+                if(taskData!=null &&  !willDoTaskSet.Contains(taskData.Id))
+                {
+                    currentTaskGroup.RemoveTask(taskData.Id);
+                    continue;
+                }
                 //task为空，或者任务可以执行，跳出
                 if (taskData == null || willDoTaskSet.Contains(taskData.Id))
                 {

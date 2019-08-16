@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mime;
 using System.Reflection;
 using BDFramework;
 using BDFramework.Editor.Tools;
@@ -103,48 +104,52 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     }
 
     //生成clr绑定
-    static public void GenCLRBindingByAnalysis()
+    static public void GenCLRBindingByAnalysis(RuntimePlatform platform = RuntimePlatform.Lumin)
     {
+        if (platform == RuntimePlatform.Lumin)
+        {
+            platform = Application.platform;
+        }
         //用新的分析热更dll调用引用来生成绑定代码
-        var dllpath =Application.streamingAssetsPath+ "/" + BDUtils.GetPlatformPath(Application.platform) + "/hotfix/hotfix.dll";
+        var dllpath =Application.streamingAssetsPath+ "/" + BDUtils.GetPlatformPath(platform) + "/hotfix/hotfix.dll";
         ILRuntimeHelper.LoadHotfix(dllpath,false);
         BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain,
             "Assets/Code/Game/ILRuntime/Binding/Analysis");
         AssetDatabase.Refresh();
         return;
         //暂时先不处理
-        //预先绑定所有的
         var assemblies = new List<Assembly>()
         {
             typeof(UnityEngine.UI.Button).Assembly,
         };
         var types = new List<Type>();
+        types.Add(typeof(Vector4));
         //
-        foreach (var assm in assemblies)
-        {
-            var _ts = assm.GetTypes();
-            foreach (var t in _ts)
-            {
-                if (t.Namespace != null)
-                {
-                    if (t.FullName.Contains("UnityEngine.Android")
-                        || t.FullName.Contains("UnityEngine.iPhone")
-                        || t.FullName.Contains("UnityEngine.WSA")
-                        || t.FullName.Contains("UnityEngine.iOS")
-                        || t.FullName.Contains("UnityEngine.Windows")
-                        || t.FullName.Contains("JetBrains")
-                        || t.FullName.Contains("Editor"))
-                    {
-                        continue;
-                    }
-                }
-
-
-                types.Add(t);
-            }
-        }
-
-        types = types.Distinct().ToList();
+//        foreach (var assm in assemblies)
+//        {
+//            var _ts = assm.GetTypes();
+//            foreach (var t in _ts)
+//            {
+//                if (t.Namespace != null)
+//                {
+//                    if (t.FullName.Contains("UnityEngine.Android")
+//                        || t.FullName.Contains("UnityEngine.iPhone")
+//                        || t.FullName.Contains("UnityEngine.WSA")
+//                        || t.FullName.Contains("UnityEngine.iOS")
+//                        || t.FullName.Contains("UnityEngine.Windows")
+//                        || t.FullName.Contains("JetBrains")
+//                        || t.FullName.Contains("Editor"))
+//                    {
+//                        continue;
+//                    }
+//                }
+//
+//
+//                types.Add(t);
+//            }
+//        }
+//
+//        types = types.Distinct().ToList();
         //PreBinding 
         BindingCodeGenerator.GenerateBindingCode(types, "Assets/Code/Game/ILRuntime/Binding/PreBinding");
         AssetDatabase.Refresh();

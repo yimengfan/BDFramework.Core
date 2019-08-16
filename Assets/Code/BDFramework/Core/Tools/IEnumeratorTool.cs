@@ -130,10 +130,10 @@ public class IEnumeratorTool : MonoBehaviour
         while (stopIEIdQueue.Count > 0)
         {
             var id = stopIEIdQueue.Dequeue();
-            if (coroutineDictionary.ContainsKey(id))
+            Coroutine coroutine = null;
+            if (coroutineDictionary.TryGetValue(id,out coroutine))
             {
-                var coroutine = coroutineDictionary[id];
-                if(coroutine!=null)
+
                 base.StopCoroutine(coroutine);
                 //
                 coroutineDictionary.Remove(id);
@@ -145,7 +145,7 @@ public class IEnumeratorTool : MonoBehaviour
         }
 
         //携程循环
-        if (IEnumeratorQueue.Count > 0)
+        while (IEnumeratorQueue.Count > 0)
         {
             var id = IEnumeratorQueue.Dequeue();
             //取出携程
@@ -153,7 +153,6 @@ public class IEnumeratorTool : MonoBehaviour
             iEnumeratorDictionary.Remove(id);
             //执行携程
             var coroutine = base.StartCoroutine(ie);
-
             //存入coroutine
             coroutineDictionary[id] = coroutine;
         }

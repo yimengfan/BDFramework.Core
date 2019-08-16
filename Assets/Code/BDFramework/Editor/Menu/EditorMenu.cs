@@ -99,5 +99,17 @@ namespace BDFramework.Editor
                     "一键打包");
             window.Show();
         }
+        
+        [MenuItem("BDFrameWork工具箱/导出APK(带资源)", false, 102)]
+        public static void GenApk()
+        {
+            BuildPipeline_Jenkins.BuildALLAssetsAndBuildInPackage_APK_Editor();
+        }
+        
+        [MenuItem("BDFrameWork工具箱/导出XCode工程(ipa暂未实现)", false, 103)]
+        public static void GenIpa()
+        {
+            BuildPipeline_Jenkins.BuildALLAssetsAndBuildInPackage_iOS_Editor();
+        }
     }
 }
