@@ -129,6 +129,11 @@ namespace BDFramework.ResourceMgr
         }
 
 
+        
+        /// <summary>
+        /// 当前正在加载的所有AB
+        /// </summary>
+        HashSet<string> currentLoadingABNames =new HashSet<string>();
         /// <summary>
         /// 递归加载
         /// </summary>
@@ -157,8 +162,11 @@ namespace BDFramework.ResourceMgr
                     res = mainItem.PackageName;
                 }
 
-                if (!assetbundleMap.ContainsKey(res))
+                if (!currentLoadingABNames.Contains(res) && !assetbundleMap.ContainsKey(res))
                 {
+                    //加入列表防止同时加载一个
+                    currentLoadingABNames.Add(res);
+                    //
                     var resPath = FindAsset(res);
                     //开始加载
                     var result = AssetBundle.LoadFromFileAsync(resPath);
@@ -166,6 +174,8 @@ namespace BDFramework.ResourceMgr
                     //加载结束
                     if (result.isDone)
                     {
+                        //移除当前列表
+                        currentLoadingABNames.Remove(res);
                         //添加assetbundle
                         if (result.assetBundle != null)
                         {
@@ -180,6 +190,7 @@ namespace BDFramework.ResourceMgr
 
                 //开始下个任务
                 IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(resList, callback));
+                yield break;
             }
         }
 

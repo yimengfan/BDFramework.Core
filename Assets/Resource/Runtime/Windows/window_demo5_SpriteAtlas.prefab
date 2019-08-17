@@ -114,9 +114,9 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
-    m_LineSpacing: 1
+    m_LineSpacing: 1.2
   m_Text: "\u8FD9\u91CCgrid\u4E0B9\u5F20\u56FE\u7247\u53EA\u7528\u4E861\u4E2ABatch\uFF08ab\u6A21\u5F0F\uFF09\uFF0C\n\u5269\u4E0Bbatch
-    1\u4E2A\u662Fgird\u8EAB\u4E0A\u7684image\uFF0C1\u4E2A\u662F\u672C\u5927\u7237\u54AF~\n"
+    1\u4E2A\u662Fgird\u8EAB\u4E0A\u7684image\uFF0C1\u4E2A\u662F\u672C\u5927\u7237\u54AF~\n\u56E0\u4E3A\u56FE\u96C6Editor\u6A21\u5F0F\u4E5F\u751F\u6548\uFF0C\u6240\u4EE5\u4F60\u7684\u5220\u9664\u56FE\u96C6\u518D\u770B\u770B"
 --- !u!1001 &6598874730131937872
 PrefabInstance:
   m_ObjectHideFlags: 0
