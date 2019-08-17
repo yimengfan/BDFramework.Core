@@ -52,23 +52,8 @@ namespace BDFramework.Editor
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, 55)]
         public static void ExecuteGenTable()
         {
-            var outpath_win =
-                IPath.Combine(Application.streamingAssetsPath, BDUtils.GetPlatformPath(Application.platform));
+            var outpath_win = IPath.Combine(Application.streamingAssetsPath, BDUtils.GetPlatformPath(Application.platform));
             Excel2SQLiteTools.GenSQLite(outpath_win);
-
-            var outpath_android = Application.streamingAssetsPath + "/" +
-                                  BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/Local.db";
-            var outpath_ios = Application.streamingAssetsPath + "/" +
-                              BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/Local.db";
-            var source = outpath_win + "/Local.db"; 
-            if(source != outpath_android)
-            File.Copy(source, outpath_android, true);
-            if(source != outpath_ios)
-            File.Copy(source, outpath_ios, true);
-
-            AssetDatabase.Refresh();
-            Debug.Log("脚本打包完毕");
-
 
             Debug.Log("表格导出完毕");
         }

@@ -39,18 +39,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                     //1.build dll
                     var  outpath_win  = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);
                     ScriptBuildTools.BuildDll(Application.dataPath, outpath_win);
-                    //2.同步到其他两个目录
-                    var outpath_android = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/hotfix/hotfix.dll";
-                    var outpath_ios = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer)+ "/hotfix/hotfix.dll";
-
-                    var source = outpath_win + "/hotfix/hotfix.dll";
-                    if(source!= outpath_android)
-                    File.Copy(source,outpath_android,true);
-                    if(source!= outpath_ios)
-                    File.Copy(source,outpath_ios,true);
-
                     //3.生成CLRBinding
-                    
                     GenCLRBindingByAnalysis();
                     AssetDatabase.Refresh();
                     Debug.Log("脚本打包完毕");
