@@ -266,12 +266,12 @@ static public class AssetBundleEditorTools
                 
                 //判断是否打包
                 ManifestItem lastItem = null;
-                AssetCache.Manifest.TryGetValue(dp, out lastItem);
+                AssetCache.ManifestMap.TryGetValue(dp, out lastItem);
                 //已经添加,不用打包
                 if (lastItem !=null && lastItem.UIID == uiid)
                 {
                    //不用打包记录缓存
-                   var _last = lastManifestConfig.Manifest.Values.ToList().Find((item) => item.UIID == lastItem.UIID);
+                   var _last = lastManifestConfig.ManifestMap.Values.ToList().Find((item) => item.UIID == lastItem.UIID);
                    if(_last!=null)
                    curManifestConfig.AddDepend(_last.Name, _last.UIID, _last.Dependencies, _last.PackageName);
                    continue;
@@ -323,7 +323,7 @@ static public class AssetBundleEditorTools
                     if (!additionBuildPackageCache.Contains(packageName))
                     {
                         var lowPackgeName = packageName.ToLower();
-                        var oldAsset = lastManifestConfig.Manifest.Values.ToList().FindAll((item) => item.PackageName == lowPackgeName);
+                        var oldAsset = lastManifestConfig.ManifestMap.Values.ToList().FindAll((item) => item.PackageName == lowPackgeName);
                         foreach (var oa in oldAsset)
                         {
                             AssetImporter _ai = AssetImporter.GetAtPath(oa.Name);

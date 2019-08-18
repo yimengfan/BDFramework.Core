@@ -106,10 +106,9 @@ namespace BDFramework.ResourceMgr
         /// <param name="callback"></param>
         private void AsyncLoadAssetBundle(string path, Action<bool> callback)
         {
-            //ab存储的是asset下的相对目录
-            path = "assets/resource/runtime/" + path.ToLower() + ".";
+           
             //寻找ab的后缀名
-            var mainAssetPath = GetExistPath(path);
+            var mainAssetPath = GetAssetRealPath(path);
 
             if (mainAssetPath != null)
             {
@@ -122,7 +121,7 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                BDebug.LogError("没有该资源:" + path);
+                BDebug.LogError("没有该资源:" + mainAssetPath);
                 //没有该资源
                 callback(false);
             }
@@ -331,9 +330,9 @@ namespace BDFramework.ResourceMgr
                 return null;
             }
             
-            path = "assets/resource/runtime/" + path.ToLower() + ".";
+           
             //寻找ab的后缀名
-            var mainAssetPath = GetExistPath(path);
+            var mainAssetPath = GetAssetRealPath(path);
 
             if (mainAssetPath == null)
             {
@@ -346,7 +345,7 @@ namespace BDFramework.ResourceMgr
             //2.主体路径
             resList.Add(mainAssetPath);
             
-            BDebug.Log("【加载】:" + mainAssetPath);
+            BDebug.Log("加载:" + mainAssetPath);
             //同步加载
             foreach (var res in resList)
             {
@@ -441,8 +440,8 @@ namespace BDFramework.ResourceMgr
                     return;
                 }
                 //
-                var p = "assets/resource/runtime/" + path.ToLower() + ".";
-                path = GetExistPath(p);
+               
+                path = GetAssetRealPath(path);
                 var obj = LoadFormAssetBundle<T>(path);
                 if (obj)
                 {
@@ -532,14 +531,15 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private string GetExistPath(string objName)
+        private string GetAssetRealPath(string objName)
         {
+            objName = "assets/resource/runtime/" + objName.ToLower() + ".";
             //变换成ab名
-            foreach (var ab in this.manifest.AssetBundlesSet)
+            foreach (var item in this.manifest.Manifest.ManifestMap.Values)
             {
-                if (ab.Contains(objName))
+                if (item.Name.Contains(objName))
                 {
-                    return ab;
+                    return item.Name;
                 }
             }
 
@@ -624,8 +624,8 @@ namespace BDFramework.ResourceMgr
                     //移除任务
                     this.willDoTaskSet.Remove(taskData.Id);
                     //
-                    var path = "assets/resource/runtime/" + taskData.ResourcePath.ToLower() + ".";
-                    path = GetExistPath(path);
+     
+                   var path = GetAssetRealPath( taskData.ResourcePath);
                     var obj = LoadFormAssetBundle(path,taskData.LoadType);
                     //任务完成
                     currentTaskGroup.OnOneTaskComplete(taskData.Id, taskData.ResourcePath, obj);
@@ -647,8 +647,8 @@ namespace BDFramework.ResourceMgr
         /// <param name="name"></param>
         public void UnloadAsset(string name, bool isUnloadIsUsing = false)
         {
-            name = "assets/resource/runtime/" + name.ToLower() + ".";
-            var path = GetExistPath(name);
+            
+            var path = GetAssetRealPath(name);
 
             if (path != null)
             {
