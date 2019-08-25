@@ -11,6 +11,15 @@ QQ Group:763141410
  [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
  <br>[English Wiki](http://www.nekosang.com)
  
+## 更新日志(Update record)
+[  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
+## 博客（Blog）
+[ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
+## v1.0版本计划(v1.0 Plan)
+<br> 2019.6.30之前 完成新文档的编写(已完成)
+<br> 2018.7 热更新工具整合：代码更新及工具(已完成)
+<br> 2018.8 热更新工具整合：资源更新（已完成）
+ 
 ## 框架特点(Feature)
   <br>***没有工作流的框架都是玩具<br>
  
@@ -21,13 +30,4 @@ QQ Group:763141410
    <br>**5.完善的热更工作流：代码、资源、表格一键打包,自动下载**<br>
    <br>... <br>
    <br>**n.还有其他的各种实用小工具： 如excel2json、excel2sqlite,图片压缩**<br>
-
-## 更新日志(Update record)
-[  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
-## 博客（Blog）
-[ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
-## 版本计划
-<br> 2019.6.30之前 完成新文档的编写
-<br> 2018.7 热更新工具整合：代码更新及工具(已完成)
-<br> 2018.8 热更新工具整合：资源更新（已完成）
 
