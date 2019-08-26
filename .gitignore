@@ -76,3 +76,5 @@
 /BDFramework/obj
 /Logs
 /.gradle
+/BDFramework.Core.sln
+/BDFramework.Core.sln.DotSettings.user

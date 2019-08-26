@@ -184,9 +184,6 @@ public abstract class AWindow
         callbackMap = new Dictionary<string, Action<WindowData>>();
         IsClose = true;
 
-        //自动赋值
-        var fields = this.GetType();
-
     }
 
     /// <summary>
