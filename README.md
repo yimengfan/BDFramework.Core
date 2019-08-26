@@ -4,6 +4,7 @@ Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a colle
 ## 8月新开技术交流、艺术鉴赏群:763141410
 QQ Group:763141410
 <br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
+
 <br>任何问题直接提issue,24小时内必解决
 <br>注:鉴于主分支版本已经稳定，所有bug修复和新特性加入，会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。
 ## 文档(Document)
