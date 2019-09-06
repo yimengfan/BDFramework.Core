@@ -37,6 +37,7 @@ QQ Group:763141410
    <br>BD抛弃了Resources目录，并且保留的用户Resources的开发习惯.
    <br> 一套API自动切换，兼容AB和Editor模式.
    <br>而且有一套比较完善的AssetBundle管理机制：图集管理、自动搜集Shader、0冗余打包
+   <br>并且bd做了一套精简版可寻址，无论你的Asset再Streaming或者persistent下，都能自动寻找并且加载
    
    <br>**5.热更代码开发:**
    <br>BD中对ILRuntime进行了二次改造，不用分工程、且了一套完善的脚本编译机制,打包工具自动搜集热更代码进行打包。
