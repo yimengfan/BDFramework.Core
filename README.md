@@ -15,6 +15,7 @@ QQ Group:763141410
 ## 博客（Blog）
 [ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
 ## v1.0版本计划(v1.0 Plan)
+<br> 2019.12.30之前 加入后端业务框架
 <br> 2019.6.30之前 完成新文档的编写(已完成)
 <br> 2018.7 热更新工具整合：代码更新及工具(已完成)
 <br> 2018.8 热更新工具整合：资源更新（已完成）
