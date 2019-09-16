@@ -1,5 +1,4 @@
 # 简介(Introduction)
-
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries
 <br>Version:Unity2018.4
 ## 8月新开技术交流、艺术鉴赏群:763141410
@@ -8,8 +7,8 @@ QQ Group:763141410
 <br>任何问题直接提issue,24小时内必解决
 # 依赖的插件(Dpendent plugins)
 使用了以下收费插件,请自行购买下载：  
-The following charging plug-ins are used. Please purchase and download them yourself.
-1. [Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
+The following charging plug-ins are used. Please purchase and download them yourself.  
+<br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
 # 更新日志（Update Note）
 Master version: 1.0.1  
 Debug  version: 1.0.1(already merged)  
