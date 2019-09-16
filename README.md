@@ -8,8 +8,8 @@ QQ Group:763141410
 <br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
 <br>任何问题直接提issue,24小时内必解决
 # 更新日志（Update Note）
-### Master version: 1.0.1
-### Debug  version: 1.0.1(already merged)
+Master version: 1.0.1  
+Debug  version: 1.0.1(already merged)  
 注:所有bug修复和新特性加入会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。  
 [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
 ### Lastest:  
