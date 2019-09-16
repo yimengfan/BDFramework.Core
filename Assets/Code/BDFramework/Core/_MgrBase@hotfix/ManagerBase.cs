@@ -69,11 +69,7 @@ namespace BDFramework.Mgr
         {
             
         }
-
-        virtual public void Update()
-        {
-            
-        }
+        
         
         
         public ClassData GetCalssData(string typeName)

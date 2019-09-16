@@ -3,9 +3,6 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Mime;
 using System.Reflection;
 using BDFramework;
 using BDFramework.Editor.Tools;
@@ -13,11 +10,21 @@ using BDFramework.GameStart;
 using BDFramework.Helper;
 using ILRuntime.Runtime.CLRBinding;
 using Tool;
-using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
-using  BDFramework.DataListener;
+using BDFramework.DataListener;
+using BDFramework.Editor;
+
 public class EditorWindow_ScriptBuildDll : EditorWindow
 {
+    [MenuItem("BDFrameWork工具箱/1.DLL打包", false, (int) BDEditorMenuEnum.BuildPackage_DLL)]
+    public static void Open()
+    {
+        var window =
+            (EditorWindow_ScriptBuildDll) EditorWindow.GetWindow(typeof(EditorWindow_ScriptBuildDll), false,
+                "DLL打包工具");
+        window.Show();
+    }
+
     public void OnGUI()
     {
         GUILayout.BeginVertical();
@@ -30,16 +37,32 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 //
                 if (GUILayout.Button("1.编译dll (.net版)", GUILayout.Width(200), GUILayout.Height(30)))
                 {
-                    ScriptBuildTools.BuildDll(Application.dataPath, Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform), ScriptBuildTools.BuildMode.DotNet);
+                    ScriptBuildTools.BuildDll(Application.dataPath,
+                        Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform),
+                        ScriptBuildTools.BuildMode.DotNet);
                     AssetDatabase.Refresh();
                 }
 
                 if (GUILayout.Button("[mono版]", GUILayout.Width(100), GUILayout.Height(30)))
                 {
                     //1.build dll
-                    var  outpath_win  = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);
+                    var outpath_win = Application.streamingAssetsPath + "/" +
+                                      BDUtils.GetPlatformPath(Application.platform);
                     ScriptBuildTools.BuildDll(Application.dataPath, outpath_win);
+                    //2.同步到其他两个目录
+                    var outpath_android = Application.streamingAssetsPath + "/" +
+                                          BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/hotfix/hotfix.dll";
+                    var outpath_ios = Application.streamingAssetsPath + "/" +
+                                      BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/hotfix/hotfix.dll";
+
+                    var source = outpath_win + "/hotfix/hotfix.dll";
+                    if (source != outpath_android)
+                        File.Copy(source, outpath_android, true);
+                    if (source != outpath_ios)
+                        File.Copy(source, outpath_ios, true);
+
                     //3.生成CLRBinding
+
                     GenCLRBindingByAnalysis();
                     AssetDatabase.Refresh();
                     Debug.Log("脚本打包完毕");
@@ -99,9 +122,10 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         {
             platform = Application.platform;
         }
+
         //用新的分析热更dll调用引用来生成绑定代码
-        var dllpath =Application.streamingAssetsPath+ "/" + BDUtils.GetPlatformPath(platform) + "/hotfix/hotfix.dll";
-        ILRuntimeHelper.LoadHotfix(dllpath,false);
+        var dllpath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(platform) + "/hotfix/hotfix.dll";
+        ILRuntimeHelper.LoadHotfix(dllpath, false);
         BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain,
             "Assets/Code/Game/ILRuntime/Binding/Analysis");
         AssetDatabase.Refresh();

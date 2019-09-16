@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Code/Game/ILRuntime/Binding/ValueType/Vector4Binder.cs.meta
+guid: a458aed30f34bfc4ea99a7697d3064fd
+=======
+guid: 64f0e478e904d284caa16fccd681ee26
+>>>>>>> BDFramework.core.Debug:Assets/Code/BDFramework/Core/Debugger/core/Debugger_NetworkServer.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

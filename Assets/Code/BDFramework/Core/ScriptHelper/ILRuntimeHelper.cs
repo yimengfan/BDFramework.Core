@@ -46,6 +46,10 @@ namespace BDFramework
             }
 
 
+#if UNITY_EDITOR 
+            AppDomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
+#endif
+            
             //绑定的初始化
             //ada绑定
             AdapterRegister.RegisterCrossBindingAdaptor(AppDomain);
@@ -81,6 +85,7 @@ namespace BDFramework
             AppDomain.Invoke("HotfixCheck", "Log", null, null);
         }
 
+        //
 
         public static void Close()
         {

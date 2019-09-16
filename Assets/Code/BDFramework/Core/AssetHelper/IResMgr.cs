@@ -17,7 +17,7 @@ namespace BDFramework.ResourceMgr
         /// 卸载指定ab
         /// </summary>
         /// <param name="name"></param>
-        void UnloadAsset(string name ,bool isUnloadIsUsing =false);
+        void UnloadAsset(string name ,bool isForceUnload =false);
 
         /// <summary>
         /// 卸载所有ab
@@ -32,6 +32,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="path"></param>
         /// <returns></returns>
         T Load<T>(string path) where T : UnityEngine.Object;
+
         /// <summary>
         /// 异步加载资源
         /// </summary>
@@ -39,7 +40,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="objName"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        int AsyncLoad<T>(string objName, Action<bool, T> callback) where T : UnityEngine.Object;
+        int AsyncLoad<T>(string objName, Action<T> callback) where T : UnityEngine.Object;
 
         /// <summary>
         /// 异步加载资源表
@@ -49,7 +50,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="onLoadEnd"></param>
         /// <param name="onLoadProcess"></param>
         /// <returns></returns>
-        List<int> AsyncLoad(IList<string> sources, Action<IDictionary<string, Object>> onLoadEnd,
+        List<int> AsyncLoad(IList<string> assetsPath, Action<IDictionary<string, Object>> onLoadEnd,
             Action<int, int> onLoadProcess);
 
 

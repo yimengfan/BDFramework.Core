@@ -9,7 +9,6 @@ using LitJson;
 using NUnit.Framework.Constraints;
 using UnityEditor;
 using UnityEngine;
-
 namespace BDFramework.Editor.BuildPackage
 {
    static  public class AssetUploadToServer

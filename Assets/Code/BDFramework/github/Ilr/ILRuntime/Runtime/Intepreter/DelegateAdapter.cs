@@ -1051,13 +1051,13 @@ namespace ILRuntime.Runtime.Intepreter
         public static void ThrowAdapterNotFound(IMethod method)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("Cannot find Delegate Adapter for:");
-            sb.Append(method.ToString());
+            //sb.Append("Cannot find Delegate Adapter for:");
+            //sb.Append(method.ToString());
             string clsName, rName;
             bool isByRef;
             if (method.ReturnType.Name != "Void" || method.ParameterCount > 0)
             {
-                sb.AppendLine(", Please add following code:");
+                //sb.AppendLine(", Please add following code:");
                 if (method.ReturnType.Name == "Void")
                 {
                     sb.Append("appdomain.DelegateManager.RegisterMethodDelegate<");
@@ -1101,7 +1101,13 @@ namespace ILRuntime.Runtime.Intepreter
                     sb.AppendLine(">();");
                 }
             }
-            throw new KeyNotFoundException(sb.ToString());
+
+#if UNITY_EDITOR
+            ILREditorExten.InsertDelegate(sb.ToString());
+#endif
+            //
+            throw new KeyNotFoundException("已添加未注册Delegate,请重启游戏");
+            
         }
     }
 

@@ -11,6 +11,13 @@ namespace BDFramework.Editor.UI
 {
     public class EditorWindows_UIWorker : EditorWindow
     {
+       // [MenuItem("BDFrameWork工具箱/UI工作流/创建窗口", false, (int)BDEditorMenuEnum.UIMVCTools)]
+        public static void Open()
+        {
+            var window = (EditorWindows_UIWorker) EditorWindow.GetWindow(typeof(EditorWindows_UIWorker), false, "UI创建工具");
+            window.Show();
+        }
+        
         private GameObject m_target;
         private string createName = "";
         private List<UITool_Attribute> itemList = new List<UITool_Attribute>();

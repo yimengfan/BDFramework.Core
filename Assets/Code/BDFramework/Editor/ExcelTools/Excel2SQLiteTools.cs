@@ -8,10 +8,41 @@ using SQLite4Unity3d;
 using UnityEditor;
 using UnityEngine;
 
-namespace BDFramework.Editor
+namespace BDFramework.Editor.TableData
 {
     static public class Excel2SQLiteTools
     {
+        
+        
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, (int)BDEditorMenuEnum.BuildPackage_Table_GenSqlite)]
+        public static void ExecuteGenSqlite()
+        {
+            var outpath_win =
+                IPath.Combine(Application.streamingAssetsPath, BDUtils.GetPlatformPath(Application.platform));
+            Excel2SQLiteTools.GenSQLite(outpath_win);
+
+            var outpath_android = Application.streamingAssetsPath + "/" +
+                                  BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/Local.db";
+            var outpath_ios = Application.streamingAssetsPath + "/" +
+                              BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/Local.db";
+            var source = outpath_win + "/Local.db"; 
+            if(source != outpath_android)
+                File.Copy(source, outpath_android, true);
+            if(source != outpath_ios)
+                File.Copy(source, outpath_ios, true);
+
+            AssetDatabase.Refresh();
+        }
+        
+        [MenuItem("BDFrameWork工具箱/3.表格/json->生成SQLite", false, (int)BDEditorMenuEnum.BuildPackage_Table_Json2Sqlite)]
+        public static void ExecuteJsonToSqlite()
+        {
+            Excel2SQLiteTools.GenJsonToSQLite(IPath.Combine(Application.streamingAssetsPath,
+                BDUtils.GetPlatformPath(Application.platform)));
+            Debug.Log("表格导出完毕");
+        }
+        
+        
         public static void GenSQLite(string outPath)
         {
             var tablePath = IPath.Combine(Application.dataPath, "Resource/Table/");
@@ -101,9 +132,7 @@ namespace BDFramework.Editor
             //
             var table = Path.GetFileName(f).Replace(Path.GetExtension(f), "");
             var classname = "Game.Data." + table;
-//            Debug.Log("class name：" + classname);
             var jsonObj = JsonMapper.ToObject(json);
-
             var assPath = IPath.Combine(Application.dataPath.Replace("/Assets", ""),
                 "Library/ScriptAssemblies/Assembly-CSharp.dll");
             var ass = Assembly.LoadFile(assPath);
@@ -112,13 +141,16 @@ namespace BDFramework.Editor
             //
             EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", classname, jsonObj.Count),
                 0);
-            Debug.Log("导出：" + classname);
+
             if (t == null)
             {
                 Debug.LogError(classname + "类不存在，请检查!");
                 return;
             }
-
+            else
+            {
+                Debug.Log("导出：" + classname);
+            }
             //数据库创建表
             //sql.DB.Delete<>()
             sql.Connection.DropTableByType(t);
@@ -131,7 +163,6 @@ namespace BDFramework.Editor
             {
                 var j = jsonObj[i];
                 var jo = JsonMapper.ToObject(t, j.ToJson());
-
                 try
                 {
                     sql.Connection.Insert(jo);

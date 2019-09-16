@@ -22,35 +22,18 @@ using Code.Game.demo_Manager_AutoRegister_And_Event;
 [UI((int) WinEnum.Win_Main, "Windows/window_demoMain")]
 public class Window_DemoMain : AWindow
 {
-    [TransformPath("text_hotfixState")]
-    private Text text_hotfixState;
+    [TransformPath("text_hotfixState")] private Text text_hotfixState;
 
-    [TransformPath("btn_1")]
-    private Button btn_01;
+    [TransformPath("btn_1")] private Button btn_01;
+    [TransformPath("btn_2")] private Button btn_02;
 
-    [TransformPath("btn_2")]
-    private Button btn_02;
+    [TransformPath("btn_3")] private Button btn_03;
+    [TransformPath("btn_4")] private Button btn_04;
+    [TransformPath("btn_5")] private Button btn_05;
+    [TransformPath("btn_6")] private Button btn_06;
 
-    [TransformPath("btn_3")]
-    private Button btn_03;
-
-    [TransformPath("btn_4")]
-    private Button btn_04;
-
-    [TransformPath("btn_5")]
-    private Button btn_05;
-
-    [TransformPath("btn_6")]
-    private Button btn_06;
-
-    [TransformPath("btn_7")]
-    private Button btn_07;
-
-    [TransformPath("btn_8")]
-    private Button btn_08;
-
-    [TransformPath("btn_9")]
-    private Button btn_09;
+    [TransformPath("btn_7")] private Button btn_07;
+    [TransformPath("btn_8")]  private Button btn_08;
 
     //[]
     public Window_DemoMain(string path) : base(path)
@@ -113,19 +96,24 @@ public class Window_DemoMain : AWindow
             var go = BResources.Load<GameObject>("Windows/window_demo1");
 
             //2.异步加载单个
-            var id = BResources.AsyncLoad<GameObject>("Windows/window_demo1", (b, o) => { });
-
+            var id = BResources.AsyncLoad<GameObject>("Windows/window_demo1", (o) => { });
+         
             //3.异步加载多个
-            BResources.AsyncLoad(new List<string>() {"Windows/window_demo1", "Windows/window_demo2"},
-                (i, i2) => { Debug.Log(string.Format("进度 {0} / {1}", i, i2)); }, (map) =>
+            var list = new List<string>() {"Windows/window_demo1", "Windows/window_demo2"};
+            BResources.AsyncLoad(list,
+            (i, i2) =>
+            {
+                Debug.Log(string.Format("进度 {0} / {1}", i, i2));
+            }, 
+            (map) =>
+            {
+                BDebug.Log("加载全部完成,资源列表:");
+                foreach (var r in map)
                 {
-                    BDebug.Log("加载全部完成,资源列表:");
-                    foreach (var r in map)
-                    {
-                        BDebug.Log(string.Format("--> {0} ： {1}", r.Key, r.Value.name));
-                        GameObject.Instantiate(r.Value);
-                    }
-                });
+                    BDebug.Log(string.Format("--> {0} ： {1}", r.Key, r.Value.name));
+                    GameObject.Instantiate(r.Value);
+                }
+            });
         });
 
         //代码:
@@ -133,24 +121,23 @@ public class Window_DemoMain : AWindow
         this.btn_07.onClick.AddListener(() =>
         {
             var path = Application.persistentDataPath;
-
-            VersionContorller.Start(UpdateMode.Repair, "http://127.0.0.1", path,
-                (i, j) => { Debug.LogFormat("资源更新进度：{0}/{1}", i, j); },
-                (error) => { Debug.LogError("错误:" + error); });
+        
+            VersionContorller.Start(UpdateMode.Repair,"http://127.0.0.1", path,
+            (i, j) =>
+            {
+                Debug.LogFormat("资源更新进度：{0}/{1}", i, j);
+            },
+            (error) =>
+            {
+                Debug.LogError("错误:" + error);
+            });
         });
-
-
+        
+        
         //发送消息机制
         this.btn_08.onClick.AddListener(() =>
         {
-            DemoEventManager.Inst.Do(DemoEventEnum.TestEvent2);
-        });
-        
-        //发送消息机制
-        this.btn_09.onClick.AddListener(() =>
-        {
-            UIManager.Inst.LoadWindows((int) WinEnum.Win_Demo5);
-            UIManager.Inst.ShowWindow((int) WinEnum.Win_Demo5);
+           DemoEventManager.Inst.Do(DemoEventEnum.TestEvent2);
         });
     }
 

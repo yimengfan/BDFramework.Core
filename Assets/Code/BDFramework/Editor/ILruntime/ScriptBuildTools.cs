@@ -433,8 +433,7 @@ public class ScriptBuildTools
                 Debug.LogError(sb);
                 throw;
             }
-
-
+            
 #endif
         }
         else

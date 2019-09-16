@@ -66,11 +66,7 @@ namespace BDFramework.ScreenView
                 BDebug.Log("没有默认导航的ScreenView");
             }
         }
-
-        public override void Update()
-        {
-            base.Update();
-        }
+        
 
         #endregion
 

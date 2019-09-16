@@ -15,7 +15,6 @@ namespace BDFramework.Mgr
         
         void Init();
         void Start();
-        void Update();
         void CheckType(Type type);
         T2 CreateInstance<T2>(string typeName , params object[] args)  where T2 : class;
         ClassData GetCalssData(string typeName);

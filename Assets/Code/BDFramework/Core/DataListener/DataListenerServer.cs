@@ -35,7 +35,7 @@ namespace BDFramework.DataListener
 
             return data;
         }
-
+        
         /// <summary>
         /// 获取一个service
         /// </summary>
@@ -75,6 +75,55 @@ namespace BDFramework.DataListener
         {
             serviceMap.Clear();
         }
+
+        #region   
+
+        
+        
+        static private Dictionary<string, ABaseDataListenerT> serviceTMap = new Dictionary<string, ABaseDataListenerT>();
+
+        /// <summary>
+        /// 创建一个service
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static ADataListenerT<T> Create<T>(string name)
+        {
+            ABaseDataListenerT data = null;
+            
+            if (!serviceTMap.TryGetValue(name, out data))
+            {
+                data = new ADataListenerT<T>();
+                serviceTMap[name] = data;
+            }
+
+            return data  as  ADataListenerT<T>;
+        }
+        
+        /// <summary>
+        /// 获取一个service
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static  ADataListenerT<T>  GetService<T>(string name)
+        {
+            ABaseDataListenerT data = null;
+            serviceTMap.TryGetValue(name, out data);
+            if (data == null)
+            {
+                data = new ADataListenerT<T>();
+
+                serviceTMap[name] = data;
+            }
+            return data as  ADataListenerT<T>;
+        }
+
+        
+        
+
+        #endregion
+        
+        
     }
 
 }
