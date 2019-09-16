@@ -1,20 +1,34 @@
 # 简介(Introduction)
+
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries
 <br>Version:Unity2018.4
-<br>[  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
-### Master version: 1.0.1
-### Debug  version: 1.0.1(already merged)
-<br>注:鉴于主分支版本已经稳定，所有bug修复和新特性加入，会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。
 
 ## 8月新开技术交流、艺术鉴赏群:763141410
 QQ Group:763141410
 <br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
 <br>任何问题直接提issue,24小时内必解决
-
+# 更新日志（Update Note）
+### Master version: 1.0.1
+### Debug  version: 1.0.1(already merged)
+注:所有bug修复和新特性加入会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。  
+[  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
+### Lastest:  
+2019.9.16 15：00  
+email: 755737878@qq.com
+【change】  
+1.优化Assetbundle模式加载效率  
+2.重新组织目录结构  
+【Feature】  
+1.增加一个网络调试器 *  
+2.增加BDFramewok配置编辑器 *  
+3.增加一键打包选项，并开始兼容Jekins  
+4.增加Odin编辑器的使用（项目中不提供，自行购买下载）  
+【bug】  
+1.修复litjson不能反序列化父类的 private set成员。  
+2.优化若干使用调用不合理地方  
 ## 文档(Document)
  [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
  <br>[English Wiki](http://www.nekosang.com)
-
 ## 博客（Blog）
 [ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
 ## v1.0版本计划(v1.0 Plan)
