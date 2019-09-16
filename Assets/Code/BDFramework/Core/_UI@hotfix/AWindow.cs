@@ -130,7 +130,7 @@ public abstract class AWindow
     public void AsyncLoad(Action callback)
     {
         //  JDeBug.Inst.Log("开始任务:" + resourcePath);
-        BResources.AsyncLoad<GameObject>(resourcePath, (result,  o) =>
+        BResources.AsyncLoad<GameObject>(resourcePath, (o) =>
         {
             if (o != null)
             {
@@ -183,10 +183,6 @@ public abstract class AWindow
     {
         callbackMap = new Dictionary<string, Action<WindowData>>();
         IsClose = true;
-
-        //自动赋值
-        var fields = this.GetType();
-
     }
 
     /// <summary>
@@ -216,11 +212,7 @@ public abstract class AWindow
     virtual public void Destroy()
     {
         //卸载
-        if (Transform)
-        {
-            BResources.Destroy(this.Transform);
-        }
-
+        BResources.Destroy(this.Transform);
         //
         foreach (var subwin in this.subWindowsDictionary.Values)
         {

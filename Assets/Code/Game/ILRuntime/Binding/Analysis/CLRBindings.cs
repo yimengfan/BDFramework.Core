@@ -7,6 +7,10 @@ namespace ILRuntime.Runtime.Generated
     class CLRBindings
     {
 
+        internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2> s_UnityEngine_Vector2_Binding_Binder = null;
+        internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3> s_UnityEngine_Vector3_Binding_Binder = null;
+        internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector4> s_UnityEngine_Vector4_Binding_Binder = null;
+        internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Quaternion> s_UnityEngine_Quaternion_Binding_Binder = null;
 
         /// <summary>
         /// Initialize the CLR binding, please invoke this AFTER CLR Redirection registration
@@ -37,17 +41,19 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_BDLauncher_Binding.Register(app);
             System_Object_Binding.Register(app);
             BDFramework_DataListener_ADataListener_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
+            System_Collections_Generic_KeyValuePair_2_String_ILTypeInstance_Binding.Register(app);
+            System_Array_Binding.Register(app);
+            System_Int32_Binding.Register(app);
+            BDFramework_Core_Debugger_Debugger_NetworkServer_Binding.Register(app);
             SQLite4Unity3d_SqliteLoder_Binding.Register(app);
             SQLite4Unity3d_SQLiteConnection_Binding.Register(app);
-            System_Array_Binding.Register(app);
             System_Collections_IList_Binding.Register(app);
             System_Collections_ICollection_Binding.Register(app);
             SQLite4Unity3d_SQLiteCommand_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding_Enumerator_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
-            System_Collections_Generic_KeyValuePair_2_String_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
             IEnumeratorTool_Binding.Register(app);
@@ -69,7 +75,6 @@ namespace ILRuntime.Runtime.Generated
             System_Reflection_FieldInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Transform_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_UITool_Attribute_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Int32_Object_Binding.Register(app);
             UITool_Attribute_Binding.Register(app);
             UnityEngine_WaitForSecondsRealtime_Binding.Register(app);
             System_Collections_Generic_List_1_Transform_Binding.Register(app);
@@ -93,7 +98,6 @@ namespace ILRuntime.Runtime.Generated
             System_Runtime_CompilerServices_AsyncVoidMethodBuilder_Binding.Register(app);
             LitJson_JsonMapper_Binding.Register(app);
             System_Action_1_String_Binding.Register(app);
-            System_Int32_Binding.Register(app);
             UnityEngine_Random_Binding.Register(app);
             System_Collections_Generic_List_1_String_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
@@ -109,6 +113,14 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_DataListener_DataListenerServer_Binding.Register(app);
 
             ILRuntime.CLR.TypeSystem.CLRType __clrType = null;
+            __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Vector2));
+            s_UnityEngine_Vector2_Binding_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2>;
+            __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Vector3));
+            s_UnityEngine_Vector3_Binding_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3>;
+            __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Vector4));
+            s_UnityEngine_Vector4_Binding_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector4>;
+            __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Quaternion));
+            s_UnityEngine_Quaternion_Binding_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Quaternion>;
         }
 
         /// <summary>
@@ -116,6 +128,10 @@ namespace ILRuntime.Runtime.Generated
         /// </summary>
         public static void Shutdown(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
+            s_UnityEngine_Vector2_Binding_Binder = null;
+            s_UnityEngine_Vector3_Binding_Binder = null;
+            s_UnityEngine_Vector4_Binding_Binder = null;
+            s_UnityEngine_Quaternion_Binding_Binder = null;
         }
     }
 }

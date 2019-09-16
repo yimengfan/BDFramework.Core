@@ -68,12 +68,12 @@ namespace BDFramework.Http
         /// <param name="requestUrl">请求url</param>
         /// <param name="responseText">响应</param>
         /// <returns></returns>
-        async public Task Upload(String url)
+        async public Task<byte[]> Upload(String url)
         {
             WebClient webClient = new WebClient();
             webClient.Headers.Add("Content-Type", "multipart/form-data; boundary=" + boundary);
-
-            await webClient.UploadDataTaskAsync(url, MergeContent());
+            return await webClient.UploadDataTaskAsync(url, MergeContent());
+            
         }
 
         /// <summary>

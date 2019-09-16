@@ -7676,14 +7676,14 @@
         </member>
         <member name="M:Newtonsoft.Json.JsonReader.System#IDisposable#Dispose">
             <summary>
-            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged reassetsPath.
             </summary>
         </member>
         <member name="M:Newtonsoft.Json.JsonReader.Dispose(System.Boolean)">
             <summary>
-            Releases unmanaged and - optionally - managed resources
+            Releases unmanaged and - optionally - managed reassetsPath
             </summary>
-            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged reassetsPath; <c>false</c> to release only unmanaged reassetsPath.</param>
         </member>
         <member name="M:Newtonsoft.Json.JsonReader.Close">
             <summary>
@@ -9726,9 +9726,9 @@
         </member>
         <member name="M:Newtonsoft.Json.JsonWriter.Dispose(System.Boolean)">
             <summary>
-            Releases unmanaged and - optionally - managed resources
+            Releases unmanaged and - optionally - managed reassetsPath
             </summary>
-            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged reassetsPath; <c>false</c> to release only unmanaged reassetsPath.</param>
         </member>
         <member name="M:Newtonsoft.Json.JsonWriter.SetWriteState(Newtonsoft.Json.JsonToken,System.Object)">
             <summary>

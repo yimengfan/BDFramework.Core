@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using LitJson;
@@ -57,7 +56,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="menifestName"></param>
         /// <returns></returns>
-        public string[] GetDirectDependencies(string manifestName)
+        public List<string> GetDirectDependencies(string manifestName)
         {
             ManifestItem item = null;
             if (this.Manifest.TryGetValue(manifestName, out item))
@@ -67,10 +66,13 @@ namespace BDFramework.ResourceMgr
                     BDebug.LogError("资源为null:" + manifestName);
                 }
 
-                return item.Dependencies.ToArray();
+                var list = new List<string>(item.Dependencies);
+                list.Remove(manifestName);
+                list.Add(manifestName);
+                return list;
             }
 
-            return new string[0];
+            return new List<string>();
         }
 
         /// <summary>

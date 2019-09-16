@@ -55,6 +55,7 @@ namespace BDFramework
                         mainStart = Activator.CreateInstance(t) as IGameStart;
                         //注册
                         mainStart.Start();
+                        
                         break;
                     }
                 }
@@ -181,8 +182,7 @@ namespace BDFramework
                 SqliteLoder.Load(sqlroot);
                 //异步 这里如果代码很早的时候就开始走表格逻辑，有可能报错，
                 //但是大部分游戏应该不会，三层回调太丑，暂时用这个
-
-               ScriptLoder.Load(coderoot,Config.CodeRunMode);
+                ScriptLoder.Load(coderoot,Config.CodeRunMode);
             });
 
 

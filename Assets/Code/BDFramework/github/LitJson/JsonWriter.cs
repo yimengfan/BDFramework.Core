@@ -332,6 +332,18 @@ namespace LitJson
             context.ExpectingValue = false;
         }
 
+        public void Write(float number)
+        {
+            DoValidation(Condition.Value);
+            PutNewline();
+ 
+            string str = number.ToString();
+            //Convert.ToString(number, number_format);
+            Put(str);
+ 
+            context.ExpectingValue = false;
+        }
+
         public void Write (int number)
         {
             DoValidation (Condition.Value);

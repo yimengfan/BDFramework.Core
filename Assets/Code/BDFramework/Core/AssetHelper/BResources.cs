@@ -54,7 +54,7 @@ namespace BDFramework.ResourceMgr
         /// <typeparam name="T">类型</typeparam>
         /// <param name="objName">名称</param>
         /// <param name="action">回调函数</param>
-        public static int AsyncLoad<T>(string objName, Action<bool, T> action) where T : UnityEngine.Object
+        public static int AsyncLoad<T>(string objName, Action<T> action) where T : UnityEngine.Object
         {
             return resLoader.AsyncLoad<T>(objName, action);
         }
@@ -74,11 +74,13 @@ namespace BDFramework.ResourceMgr
         /// 卸载某个gameobj
         /// </summary>
         /// <param name="o"></param>
-        public static void UnloadAsset(string path, bool isUnloadIsUsing = false)
+        public static void UnloadAsset(string path, bool isForceUnload = false)
         {
             if (string.IsNullOrEmpty(path))
+            {
                 return;
-            resLoader.UnloadAsset(path, isUnloadIsUsing);
+            }
+            resLoader.UnloadAsset(path, isForceUnload);
         }
 
         /// <summary>

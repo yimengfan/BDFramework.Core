@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using ILRuntime.Runtime.Enviorment;
 
@@ -55,6 +55,9 @@ public class ILRuntimeDelegateHelper
         appdomain.DelegateManager.RegisterMethodDelegate<System.String>();
 
         appdomain.DelegateManager.RegisterMethodDelegate<ILRuntime.Runtime.Intepreter.ILTypeInstance>();
+        appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.GameObject>();
+
+//[insert]
 
     }
 

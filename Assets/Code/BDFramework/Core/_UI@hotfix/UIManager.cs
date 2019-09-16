@@ -91,7 +91,18 @@ namespace BDFramework.UI
                     else
                     {
                         windowMap[index] = window;
-                        window.Load();
+#if UNITY_EDITOR
+                        try
+                        {
+#endif
+                            window.Load();
+#if UNITY_EDITOR
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogError("Init窗口失败:" + window.Transform.name);
+                        }
+#endif
                         window.Transform.SetParent(this.Bottom, false);
                         PushCaheData(index);
                     }
@@ -146,10 +157,12 @@ namespace BDFramework.UI
                             {
                                 loadProcessAction(allCount, curTaskCount);
                             }
+
                             if (win.Transform)
                             {
                                 win.Transform.SetParent(this.Bottom, false);
                             }
+
                             //推送缓存的数据
                             PushCaheData(index);
                         });

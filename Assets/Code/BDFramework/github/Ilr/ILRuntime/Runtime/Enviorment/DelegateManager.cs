@@ -140,8 +140,8 @@ namespace ILRuntime.Runtime.Enviorment
                 string clsName, rName;
                 bool isByRef;
                 clrDelegateType.GetClassName(out clsName, out rName, out isByRef);
-                sb.AppendLine("Cannot find convertor for " + rName);
-                sb.AppendLine("Please add following code:");
+//                sb.AppendLine("Cannot find convertor for " + rName);
+//                sb.AppendLine("Please add following code:");
                 sb.Append("appdomain.DelegateManager.RegisterDelegateConvertor<");
                 sb.Append(rName);
                 sb.AppendLine(">((act) =>");
@@ -214,7 +214,11 @@ namespace ILRuntime.Runtime.Enviorment
                 sb.AppendLine(");");
                 sb.AppendLine("    });");
                 sb.AppendLine("});");
-                throw new KeyNotFoundException(sb.ToString());
+#if UNITY_EDITOR
+                ILREditorExten.InsertDelegate(sb.ToString());
+#endif
+                //
+                throw new KeyNotFoundException("已添加未注册Delegate,请重启游戏");
             }
         }
 

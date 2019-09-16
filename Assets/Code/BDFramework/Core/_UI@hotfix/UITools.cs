@@ -11,11 +11,11 @@ using Object = UnityEngine.Object;
 
 static  public partial class UITools
 {
-    static private UITools_AutoSetTranformValueByData UITools_AutoSetTranformValueByData;
+    static private UITools_Data2UIValue _uiToolsData2UiValue;
 
     static UITools()
     {
-        UITools_AutoSetTranformValueByData = new UITools_AutoSetTranformValueByData();
+        _uiToolsData2UiValue = new UITools_Data2UIValue();
     }
 
 
@@ -28,7 +28,7 @@ static  public partial class UITools
     /// <param name="data"></param>
     static public void AutoSetComValue(Transform t, object data)
     {
-        UITools_AutoSetTranformValueByData.AutoSetValue(t, data);
+        _uiToolsData2UiValue.AutoSetValue(t, data);
     }
 
     private static Type checkType = typeof(Object);

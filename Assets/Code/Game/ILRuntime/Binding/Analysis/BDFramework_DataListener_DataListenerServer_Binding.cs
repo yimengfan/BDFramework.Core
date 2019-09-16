@@ -22,8 +22,9 @@ namespace ILRuntime.Runtime.Generated
             MethodBase method;
             Type[] args;
             Type type = typeof(BDFramework.DataListener.DataListenerServer);
+            MethodInfo[] methods = type.GetMethods(flag).Where(t => !t.IsGenericMethod).ToArray();
             args = new Type[]{typeof(System.String)};
-            method = type.GetMethod("Create", flag, null, args, null);
+            method = methods.Where(t => t.Name.Equals("Create") && t.CheckMethodParams(args)).Single();
             app.RegisterCLRMethodRedirection(method, Create_0);
 
 

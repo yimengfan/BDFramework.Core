@@ -6,19 +6,23 @@ using BDFramework.Helper;
 using UnityEditor;
 using UnityEngine;
 
-public class EditorWindow_Table : EditorWindow
+namespace BDFramework.Editor.TableData
 {
-  public void OnGUI()
-  {
-    GUILayout.BeginVertical();
-    GUILayout.Label("3.表格打包",EditorGUIHelper.TitleStyle);
-    GUILayout.Space(5);
-    if (GUILayout.Button("表格导出成Sqlite" ,GUILayout.Width(300),GUILayout.Height(30)))
+    public class EditorWindow_Table : EditorWindow
     {
-      var outPath = Application.persistentDataPath+"/"+BDUtils.GetPlatformPath(RuntimePlatform.Android);
-      //3.打包表格
-       Excel2SQLiteTools.GenSQLite(outPath);
+        public void OnGUI()
+        {
+            GUILayout.BeginVertical();
+            GUILayout.Label("3.表格打包", EditorGUIHelper.TitleStyle);
+            GUILayout.Space(5);
+            if (GUILayout.Button("表格导出成Sqlite", GUILayout.Width(300), GUILayout.Height(30)))
+            {
+                var outPath = Application.persistentDataPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android);
+                //3.打包表格
+                Excel2SQLiteTools.GenSQLite(outPath);
+            }
+
+            GUILayout.EndVertical();
+        }
     }
-    GUILayout.EndVertical();
-  }
 }

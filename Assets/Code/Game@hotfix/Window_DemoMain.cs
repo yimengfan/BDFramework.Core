@@ -96,11 +96,16 @@ public class Window_DemoMain : AWindow
             var go = BResources.Load<GameObject>("Windows/window_demo1");
 
             //2.异步加载单个
-            var id = BResources.AsyncLoad<GameObject>("Windows/window_demo1", (b, o) => { });
+            var id = BResources.AsyncLoad<GameObject>("Windows/window_demo1", (o) => { });
          
             //3.异步加载多个
-            BResources.AsyncLoad(new List<string>() {"Windows/window_demo1", "Windows/window_demo2"},
-            (i, i2) => { Debug.Log(string.Format("进度 {0} / {1}", i, i2)); }, (map) =>
+            var list = new List<string>() {"Windows/window_demo1", "Windows/window_demo2"};
+            BResources.AsyncLoad(list,
+            (i, i2) =>
+            {
+                Debug.Log(string.Format("进度 {0} / {1}", i, i2));
+            }, 
+            (map) =>
             {
                 BDebug.Log("加载全部完成,资源列表:");
                 foreach (var r in map)

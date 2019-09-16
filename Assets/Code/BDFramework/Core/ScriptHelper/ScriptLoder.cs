@@ -11,7 +11,7 @@ namespace BDFramework
     {
 
         static public bool IsReflectionRunning { get; private set; } = false;
-        static private Assembly Assembly { get;  set; }
+        static public Assembly Assembly { get;  private set; }
         /// <summary>
         /// 开始热更脚本逻辑
         /// </summary>

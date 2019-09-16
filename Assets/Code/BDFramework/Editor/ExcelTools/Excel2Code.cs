@@ -11,10 +11,20 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
-namespace BDFramework.Editor
+
+namespace BDFramework.Editor.TableData
 {
+
     static public class Excel2Code
     {
+        
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class", false,
+            (int)BDEditorMenuEnum.BuildPackage_Table_Table2Class)]
+        public static void Gen()
+        {
+            Excel2Code.GenCode();
+        }
+        
         public static void GenCode()
         {
             var tablePath = Path.Combine(Application.dataPath, "Resource/Table");

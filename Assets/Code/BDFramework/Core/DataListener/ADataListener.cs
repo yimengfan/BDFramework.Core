@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace BDFramework.DataListener
 {
@@ -65,6 +66,20 @@ namespace BDFramework.DataListener
         {
             if (dataMap.ContainsKey(name))
             {
+                #if UNITY_EDITOR
+
+                var lastV = dataMap[name];
+                if (lastV != null)
+                {
+                    var lastT = lastV.GetType();
+                    var nowT = value.GetType();
+                    if (lastT != nowT)
+                    {
+                        Debug.LogErrorFormat("设置失败,类型不匹配:{0}  curType:{1}  setType:{2}", name,lastT.Name, nowT.Name);
+                        return;
+                    }
+                }
+                #endif
                 dataMap[name] = value;
             }
             else
