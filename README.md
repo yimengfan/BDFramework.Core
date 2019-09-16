@@ -7,11 +7,11 @@ QQ Group:763141410
 
 <br>任何问题直接提issue,24小时内必解决
 <br>注:鉴于主分支版本已经稳定，所有bug修复和新特性加入，会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。
+[  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
 ## 文档(Document)
  [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
  <br>[English Wiki](http://www.nekosang.com)
-## 更新日志(Update record)
-[  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
+
 ## 博客（Blog）
 [ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
 ## v1.0版本计划(v1.0 Plan)
