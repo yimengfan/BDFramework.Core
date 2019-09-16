@@ -2,12 +2,14 @@
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries
 <br>Version:Unity2018.4
 <br>[  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
+<br> Master version: 1.0.1
+<br> Debug  version: 1.0.1(already merged)
+<br>注:鉴于主分支版本已经稳定，所有bug修复和新特性加入，会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。
+
 ## 8月新开技术交流、艺术鉴赏群:763141410
 QQ Group:763141410
 <br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
-
 <br>任何问题直接提issue,24小时内必解决
-<br>注:鉴于主分支版本已经稳定，所有bug修复和新特性加入，会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。
 
 ## 文档(Document)
  [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
