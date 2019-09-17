@@ -43,9 +43,14 @@ namespace BDFramework.Mgr
             set;
         }
 
+        private Type vtype = null;
         virtual  public void CheckType(Type type)
         {
-            var attrs = type.GetCustomAttributes(typeof(V), false);
+            if (vtype == null)
+            {
+                vtype = typeof(V);
+            }
+            var attrs = type.GetCustomAttributes(vtype, false);
             if (attrs.Length > 0)
             {
                 var attr = attrs[0];
@@ -65,6 +70,7 @@ namespace BDFramework.Mgr
             
         }
 
+        
         virtual public void Start()
         {
             

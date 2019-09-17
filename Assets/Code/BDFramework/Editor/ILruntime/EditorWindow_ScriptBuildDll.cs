@@ -56,10 +56,11 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                                       BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/hotfix/hotfix.dll";
 
                     var source = outpath_win + "/hotfix/hotfix.dll";
+                    var bytes = File.ReadAllBytes(source);
                     if (source != outpath_android)
-                        File.Copy(source, outpath_android, true);
+                      FileHelper.WriteAllBytes(outpath_android,bytes);
                     if (source != outpath_ios)
-                        File.Copy(source, outpath_ios, true);
+                        FileHelper.WriteAllBytes(outpath_ios,bytes);
 
                     //3.生成CLRBinding
 

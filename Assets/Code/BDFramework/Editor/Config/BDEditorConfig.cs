@@ -57,6 +57,8 @@ namespace Code.BDFramework.Editor
     
     public class AndroidConfig
     {
+        [GUIColor(1,0,0,1)]
+        [InfoBox("请注意检测密码和alias名哦~ mua", InfoMessageType.Info)]
         [LabelText("Keystore路径")]
         [FilePath(Extensions = "keystore")]
         public  string keystoreName;

@@ -158,7 +158,10 @@ namespace BDFramework.Editor
             PlayerSettings.keyaliasPass =  BDEditorHelper.EditorConfig.Android.keyaliasPass;
 
             var outpath =  EditorUtility.OpenFolderPanel("选择导出文件夹", Application.dataPath, "");
-            //
+            if (string.IsNullOrEmpty(outpath))
+            {
+                return;
+            }
             var outputPath = IPath.Combine( outpath ,  Application.productName+".apk");
             Debug.Log(outputPath);
             //清空StreamingAsset

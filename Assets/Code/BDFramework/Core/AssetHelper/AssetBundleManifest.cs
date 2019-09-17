@@ -28,7 +28,8 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     public class ManifestConfig
     {
-        public Dictionary<string, ManifestItem> ManifestMap { get; private set; }
+        private int count;
+        public Dictionary<string, ManifestItem> Manifest { get; private set; }
 
         /// <summary>
         /// json结构
@@ -36,18 +37,18 @@ namespace BDFramework.ResourceMgr
         /// <param name="content"></param>
         public ManifestConfig(string content)
         {
-            this.ManifestMap = new Dictionary<string, ManifestItem>();
+            this.Manifest = new Dictionary<string, ManifestItem>();
             var list = JsonMapper.ToObject<List<ManifestItem>>(content);
 
             foreach (var item in list)
             {
-                this.ManifestMap[item.Name] = item;
+                this.Manifest[item.Name] = item;
             }
         }
 
         public ManifestConfig()
         {
-            this.ManifestMap = new Dictionary<string, ManifestItem>();
+            this.Manifest = new Dictionary<string, ManifestItem>();
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace BDFramework.ResourceMgr
         public List<string> GetDirectDependencies(string manifestName)
         {
             ManifestItem item = null;
-            if (this.ManifestMap.TryGetValue(manifestName, out item))
+            if (this.Manifest.TryGetValue(manifestName, out item))
             {
                 if (item == null)
                 {
@@ -84,7 +85,7 @@ namespace BDFramework.ResourceMgr
             if (!string.IsNullOrEmpty(manifestName))
             {
                 ManifestItem item = new ManifestItem();
-                this.ManifestMap.TryGetValue(manifestName, out item);
+                this.Manifest.TryGetValue(manifestName, out item);
                 return item;
             }
 
@@ -107,18 +108,18 @@ namespace BDFramework.ResourceMgr
                 PackageName =  packageName
             };
 
-            if (this.ManifestMap.ContainsKey(name))
+            if (this.Manifest.ContainsKey(name))
             {
                 //prefab 嵌套的情况, 2018新系统
                 //被依赖项 其实也有依赖，
-                if (dependencies.Count >= this.ManifestMap[name].Dependencies.Count)
+                if (dependencies.Count >= this.Manifest[name].Dependencies.Count)
                 {
-                    this.ManifestMap[name] = item;
+                    this.Manifest[name] = item;
                 }
             }
             else
             {
-                this.ManifestMap[name] = item;
+                this.Manifest[name] = item;
             }
         }
 
@@ -130,7 +131,7 @@ namespace BDFramework.ResourceMgr
         {
             List<string> list = new List<string>();
             //
-            foreach (var m in this.ManifestMap)
+            foreach (var m in this.Manifest)
             {
                 //添加主体
                 list.Add(m.Key);
@@ -147,13 +148,14 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public string ToString()
         {
-          
+            this.count = Manifest.Values.Count;
+
 
 #if UNITY_EDITOR
             int i = 0;
 
             List<string> list = new List<string>();
-            foreach (var v in ManifestMap.Values)
+            foreach (var v in Manifest.Values)
             {
                 list.AddRange(v.Dependencies);
             }
@@ -161,7 +163,7 @@ namespace BDFramework.ResourceMgr
             var l = list.Distinct().ToList();
             Debug.Log(string.Format("<color=red>依赖数量:{0}</color>", l.Count));
 #endif
-            var items = ManifestMap.Values.ToList();
+            var items = Manifest.Values.ToList();
             return JsonMapper.ToJson(items);
         }
     }
@@ -174,7 +176,10 @@ namespace BDFramework.ResourceMgr
         //
         public Action OnLoaded { get; set; }
 
-
+        /// <summary>
+        /// 所有的assetbundle
+        /// </summary>
+        public HashSet<string> AssetBundlesSet { get; private set; }
 
         public ManifestConfig Manifest { get; private set; }
 
@@ -216,6 +221,12 @@ namespace BDFramework.ResourceMgr
             {
                 this.Manifest = new ManifestConfig(text);
                 BDebug.Log("manifest加载成功!");
+                AssetBundlesSet = new HashSet<string>();
+                var list = this.Manifest.GetAllAssetBundles();
+                foreach (var l in list)
+                {
+                    AssetBundlesSet.Add(l);
+                }
 
                 //回调
                 if (OnLoaded != null)
