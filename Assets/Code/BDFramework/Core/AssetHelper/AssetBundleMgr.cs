@@ -391,12 +391,19 @@ namespace BDFramework.ResourceMgr
             assetsPath = assetsPath.Distinct().ToList(); //去重
             int total = assetsPath.Count;
             //source
+            int counter=0;
             foreach (var asset in assetsPath)
             {
                 var _asset = asset;
                 Queue<LoaderTaskData> taskQueue = new Queue<LoaderTaskData>();
                 //获取依赖
                 var path = GetExistPath(_asset);
+                if (string.IsNullOrEmpty(path))
+                {
+                    Debug.LogError("不存在资源:" + _asset);
+                    total--;
+                    continue;
+                }
                 var res = manifest.Manifest.GetDirectDependencies(path);
                 foreach (var r in res)
                 {
@@ -406,7 +413,7 @@ namespace BDFramework.ResourceMgr
 
                 //添加任务组
                 //加载颗粒度10个
-                int counter=0;
+      
                 LoaderTaskGroup taskGroup = new LoaderTaskGroup(10, taskQueue, AsyncLoadAssetBundle,
                 (p, obj) =>
                 {

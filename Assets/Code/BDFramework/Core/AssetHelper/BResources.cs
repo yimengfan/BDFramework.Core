@@ -82,6 +82,18 @@ namespace BDFramework.ResourceMgr
             }
             resLoader.UnloadAsset(path, isForceUnload);
         }
+        
+        /// <summary>
+        /// 卸载资源
+        /// </summary>
+        /// <param name="asset"></param>
+        public static  void UnloadAsset(UnityEngine.Object asset)
+        {
+            
+            if(asset is GameObject ||  asset is Component) return;
+            Resources.UnloadAsset(asset);
+            
+        }
 
         /// <summary>
         /// 卸载所有的
@@ -108,7 +120,10 @@ namespace BDFramework.ResourceMgr
         public static void Destroy(GameObject go)
         {
             if (go)
+            {
                 GameObject.DestroyObject(go);
+                go = null;
+            }
         }
 
         /// <summary>
@@ -124,10 +139,14 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public static void LoadCancel(List<int> ids)
         {
-            foreach (var id in ids)
+            if (ids != null)
             {
-                resLoader.LoadCancel(id);
+                foreach (var id in ids)
+                {
+                    resLoader.LoadCancel(id);
+                }
             }
+
          
         }
         /// <summary>

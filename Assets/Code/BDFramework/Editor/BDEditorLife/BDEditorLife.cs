@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using Code.BDFramework.Editor;
 using UnityEditor;
@@ -68,16 +69,12 @@ namespace BDFramework.Editor.EditorLife
                     mgr.CheckType(t);
                 }
             }
-
-            foreach (var mgr in mgrs)
-            {
-                mgr.Start();
-            }
+            
 
             Debug.Log("BDFrameEditor:管理器注册完成");
-
             #endregion
-
+            
+            DebuggerServerProcessManager.Inst.Start();
             BDEditorHelper.Init();
         }
     }

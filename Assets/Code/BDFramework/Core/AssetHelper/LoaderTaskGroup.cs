@@ -125,7 +125,7 @@ namespace BDFramework.ResourceMgr
                 });
                 curDoTaskNum++;
                 
-               BDebug.Log("加载：" + task.ResourcePath);
+//               BDebug.Log("加载：" + task.ResourcePath);
             }
         }
 
@@ -151,7 +151,7 @@ namespace BDFramework.ResourceMgr
                     onTaskCompleteCallback(MainAsset, this.objectsMap[MainAsset]);
                 }
 
-                BDebug.Log("当前任务组完成----------------------------------------");
+//                BDebug.Log("当前任务组完成----------------------------------------");
             }
         }
 
