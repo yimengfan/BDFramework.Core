@@ -11,6 +11,7 @@ namespace BDFramework.Core.Debugger
             base.Start();
             //这里把所有的对象实例化
             //并注册解析回调
+            if(this.ClassDataMap!=null)
             foreach (var item in this.ClassDataMap)
             {
                 var process = CreateInstance<IDebuggerServerProcess>(item.Key);

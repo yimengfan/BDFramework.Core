@@ -117,10 +117,24 @@ namespace BDFramework.Editor.Asset
                 BuildAsset();
             }
 
+            if (GUILayout.Button("AssetBundle还原目录", GUILayout.Width(380), GUILayout.Height(30)))
+            {
+                exportPath = EditorUtility.OpenFolderPanel("选择资源目录", Application.dataPath, "");
+                if (string.IsNullOrEmpty(exportPath))
+                {
+                    return;
+                }
+                
+                AssetBundleEditorTools.HashName2AssetName(exportPath);
+                
+            }
             GUILayout.EndVertical();
         }
 
 
+        /// <summary>
+        /// 打包资源
+        /// </summary>
         public void BuildAsset()
         {
             if (isSelectAndroid)

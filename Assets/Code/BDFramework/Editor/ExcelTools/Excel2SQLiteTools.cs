@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using BDFramework.Helper;
 using LitJson;
 using BDFramework.Sql;
@@ -12,9 +13,7 @@ namespace BDFramework.Editor.TableData
 {
     static public class Excel2SQLiteTools
     {
-        
-        
-        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, (int)BDEditorMenuEnum.BuildPackage_Table_GenSqlite)]
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, (int) BDEditorMenuEnum.BuildPackage_Table_GenSqlite)]
         public static void ExecuteGenSqlite()
         {
             var outpath_win =
@@ -25,24 +24,26 @@ namespace BDFramework.Editor.TableData
                                   BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/Local.db";
             var outpath_ios = Application.streamingAssetsPath + "/" +
                               BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/Local.db";
-            var source = outpath_win + "/Local.db"; 
-            if(source != outpath_android)
-                File.Copy(source, outpath_android, true);
-            if(source != outpath_ios)
-                File.Copy(source, outpath_ios, true);
+            var source = outpath_win + "/Local.db";
+
+            var bytes = File.ReadAllBytes(source);
+            if (source != outpath_android)
+                FileHelper.WriteAllBytes(outpath_android, bytes);
+            if (source != outpath_ios)
+                FileHelper.WriteAllBytes(outpath_ios, bytes);
 
             AssetDatabase.Refresh();
         }
-        
-        [MenuItem("BDFrameWork工具箱/3.表格/json->生成SQLite", false, (int)BDEditorMenuEnum.BuildPackage_Table_Json2Sqlite)]
+
+        [MenuItem("BDFrameWork工具箱/3.表格/json->生成SQLite", false, (int) BDEditorMenuEnum.BuildPackage_Table_Json2Sqlite)]
         public static void ExecuteJsonToSqlite()
         {
             Excel2SQLiteTools.GenJsonToSQLite(IPath.Combine(Application.streamingAssetsPath,
                 BDUtils.GetPlatformPath(Application.platform)));
             Debug.Log("表格导出完毕");
         }
-        
-        
+
+
         public static void GenSQLite(string outPath)
         {
             var tablePath = IPath.Combine(Application.dataPath, "Resource/Table/");
@@ -52,7 +53,7 @@ namespace BDFramework.Editor.TableData
             {
                 Directory.CreateDirectory(outPath);
             }
-            
+
             var _path = IPath.Combine(outPath, "Local.db");
             //
             sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
@@ -151,6 +152,7 @@ namespace BDFramework.Editor.TableData
             {
                 Debug.Log("导出：" + classname);
             }
+
             //数据库创建表
             //sql.DB.Delete<>()
             sql.Connection.DropTableByType(t);

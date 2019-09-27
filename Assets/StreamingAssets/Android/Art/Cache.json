@@ -1,1 +1,12 @@
-[{"Name":"Assets/Resource/Runtime/Shader/shader.txt","UIID":"d41d8cd98f00b204e9800998ecf8427e","PackageName":"","Dependencies":[]},{"Name":"Assets/Resource/Runtime/Shader/TheShaderVariantForAll.shadervariants","UIID":"eeb21a3ce49915d45fb59f29d638b648","PackageName":"","Dependencies":[]},{"Name":"Assets/Resource/Runtime/Windows/window_demo1.prefab","UIID":"2f1320ce3b67110925b2140ec5b280f5","PackageName":"","Dependencies":[]},{"Name":"Assets/Resource/Imge/Test/timg (1).jpg","UIID":"38d95a9e7cc19a8a8281954bed88ab4b","PackageName":"","Dependencies":[]},{"Name":"Assets/Resource/Runtime/Windows/window_demo2.prefab","UIID":"160199812ee5871350f442f65501b48d","PackageName":"","Dependencies":[]},{"Name":"Assets/Resource/Runtime/Windows/window_demo3.prefab","UIID":"2966029fe16f65d9121bf81d88d9181f","PackageName":"","Dependencies":[]},{"Name":"Assets/Resource/Runtime/Windows/window_demo4.prefab","UIID":"aff8d2b0fe6e849982080e7a16d057db","PackageName":"","Dependencies":[]},{"Name":"Assets/Resource/Runtime/Windows/window_demoMain.prefab","UIID":"401b8cbb587f58a4b8dc9e78a0b4693f","PackageName":"","Dependencies":[]}]
+
+{
+  "E:/BDFramework.Core/Assets/Resource/Runtime/Shader/shader.txt" : "2f7c49f7e54ca5f7e03cc134e2441ace372016cd",
+  "E:/BDFramework.Core/Assets/Resource/Runtime/Shader/TheShaderVariantForAll.shadervariants" : "044f7f1a9e68a5b5b21000c58c201a32d85c716a",
+  "ALLShaders.ab"                                                                            : "70157abce9e2865ad0afab214f9d1e7c855a790e",
+  "E:/BDFramework.Core/Assets/Resource/Runtime/Windows/window_demo1.prefab"                  : "1a440e51d99a71aa8e9d3a044dc6ef4fc05fb4a7",
+  "E:/BDFramework.Core/Assets/Resource/Imge/Test/timg (1).jpg"                               : "305a7a0ff62ac8ac2933a6241b461df24f1ff761",
+  "E:/BDFramework.Core/Assets/Resource/Runtime/Windows/window_demo2.prefab"                  : "3c7c97e3b9870bd63f955309fc6fe1ec907f174b",
+  "E:/BDFramework.Core/Assets/Resource/Runtime/Windows/window_demo3.prefab"                  : "c078988e592072a0612b94fea414640a622d7836",
+  "E:/BDFramework.Core/Assets/Resource/Runtime/Windows/window_demo4.prefab"                  : "11e3456689ea715979016a2608b8e63738d63520",
+  "E:/BDFramework.Core/Assets/Resource/Runtime/Windows/window_demoMain.prefab"               : "271416f50a83c25088e3b7505207d30a8d2407f5"
+}

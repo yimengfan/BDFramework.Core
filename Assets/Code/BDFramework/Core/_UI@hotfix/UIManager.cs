@@ -91,18 +91,9 @@ namespace BDFramework.UI
                     else
                     {
                         windowMap[index] = window;
-#if UNITY_EDITOR
-                        try
-                        {
-#endif
-                            window.Load();
-#if UNITY_EDITOR
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogError("Init窗口失败:" + window.Transform.name);
-                        }
-#endif
+
+                        window.Load();
+
                         window.Transform.SetParent(this.Bottom, false);
                         PushCaheData(index);
                     }
@@ -248,15 +239,12 @@ namespace BDFramework.UI
                     switch (layer)
                     {
                         case UILayer.Bottom:
-                            // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Bottom, false);
                             v.Transform.SetParent(this.Bottom, false);
                             break;
                         case UILayer.Center:
-                            // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Center, false);
                             v.Transform.SetParent(this.Center, false);
                             break;
                         case UILayer.Top:
-                            // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Top, false);
                             v.Transform.SetParent(this.Top, false);
                             break;
                         default:

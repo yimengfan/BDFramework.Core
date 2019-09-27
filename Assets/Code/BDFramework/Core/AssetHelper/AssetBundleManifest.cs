@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using LitJson;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -11,25 +12,66 @@ namespace BDFramework.ResourceMgr
 {
     public class ManifestItem
     {
+        public enum AssetTypeEnum
+        {
+            Others = 0,
+            Prefab,
+            TextAsset,
+            Texture,
+            SpriteAtlas,
+        }
+
+        public ManifestItem(string name, string hash, string package, AssetTypeEnum @enum,
+            List<string> Depend = null)
+        {
+            this.Name = name;
+            this.Hash = hash;
+            this.Package = package;
+            this.Type = (int) @enum;
+            if (Depend == null) Depend = new List<string>();
+            this.Depend = Depend;
+        }
+
+        public ManifestItem()
+        {
+        }
+
         /// <summary>
         /// 资源名,单ab 单资源情况下. name = ab名
         /// </summary>
-        public string Name = "null";
-        public string UIID = "none";
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// hash
+        /// </summary>
+        public string Hash { get; private set; }
+
         /// <summary>
         /// 单ab 多资源情况下，packagename 就是ab名 
         /// </summary>
-        public string PackageName = "";
-        public List<string> Dependencies = new List<string>();
+        public string Package { get; private set; }
+
+        /// <summary>
+        /// asset类型
+        /// </summary>
+        public int Type { get; private set; }
+
+        /// <summary>
+        /// 依赖
+        /// </summary>
+        public List<string> Depend { get; set; } = new List<string>();
     }
 
     /// <summary>
     /// 配置文件
     /// </summary>
     public class ManifestConfig
-    {
-        private int count;
-        public Dictionary<string, ManifestItem> Manifest { get; private set; }
+    { 
+        public Dictionary<string, ManifestItem> Manifest_NameKey { get;  set; } =
+            new Dictionary<string, ManifestItem>();
+
+        public Dictionary<string, ManifestItem> Manifest_HashKey { get;  set; } =
+            new Dictionary<string, ManifestItem>();
 
         /// <summary>
         /// json结构
@@ -37,18 +79,17 @@ namespace BDFramework.ResourceMgr
         /// <param name="content"></param>
         public ManifestConfig(string content)
         {
-            this.Manifest = new Dictionary<string, ManifestItem>();
             var list = JsonMapper.ToObject<List<ManifestItem>>(content);
-
             foreach (var item in list)
             {
-                this.Manifest[item.Name] = item;
+                this.Manifest_NameKey[item.Name] = item;
+                this.Manifest_HashKey[item.Hash] = item;
             }
         }
 
         public ManifestConfig()
         {
-            this.Manifest = new Dictionary<string, ManifestItem>();
+            this.Manifest_NameKey = new Dictionary<string, ManifestItem>();
         }
 
         /// <summary>
@@ -56,23 +97,36 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="menifestName"></param>
         /// <returns></returns>
-        public List<string> GetDirectDependencies(string manifestName)
+        public string[] GetDirectDependenciesByName(string name)
         {
             ManifestItem item = null;
-            if (this.Manifest.TryGetValue(manifestName, out item))
+            if (this.Manifest_NameKey.TryGetValue(name, out item))
             {
-                if (item == null)
-                {
-                    BDebug.LogError("资源为null:" + manifestName);
-                }
-
-                var list = new List<string>(item.Dependencies);
-                list.Remove(manifestName);
-                list.Add(manifestName);
-                return list;
+                var list = new List<string>(item.Depend);
+                list.Add(item.Hash);
+                return list.ToArray();
             }
+            BDebug.LogError("【config】不存在资源:"+name);
+            return null;
+        }
 
-            return new List<string>();
+        /// <summary>
+        /// 获取单个依赖
+        /// </summary>
+        /// <param name="menifestName"></param>
+        /// <returns></returns>
+        public string[] GetDirectDependenciesByHash(string hash)
+        {
+            ManifestItem item = null;
+            if (this.Manifest_HashKey.TryGetValue(hash, out item))
+            {
+                var list = new List<string>(item.Depend);
+                list.Add(item.Hash);
+                return list.ToArray();
+            }
+            
+            BDebug.LogError("【config】不存在资源:"+hash);
+            return null;
         }
 
         /// <summary>
@@ -80,12 +134,12 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="manifestName"></param>
         /// <returns></returns>
-        public ManifestItem GetManifestItem(string manifestName)
+        public ManifestItem GetManifestItemByName(string manifestName)
         {
             if (!string.IsNullOrEmpty(manifestName))
             {
-                ManifestItem item = new ManifestItem();
-                this.Manifest.TryGetValue(manifestName, out item);
+                ManifestItem item = null;
+                this.Manifest_NameKey.TryGetValue(manifestName, out item);
                 return item;
             }
 
@@ -93,36 +147,76 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
-        /// 添加一个依赖
+        /// 获取单个menifestItem
+        /// </summary>
+        /// <param name="manifestName"></param>
+        /// <returns></returns>
+        public ManifestItem GetManifestItemByHash(string hashName)
+        {
+            if (!string.IsNullOrEmpty(hashName))
+            {
+                ManifestItem item = null;
+                this.Manifest_HashKey.TryGetValue(hashName, out item);
+                return item;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 添加一个依赖,这个仅在Editor下调用
         /// </summary>
         /// <param name="name"></param>
         /// <param name="dependencies"></param>
-        public void AddDepend(string name, string UIID, List<string> dependencies ,string packageName = "")
+        public void AddItem(string name, string hash, List<string> dependencies, ManifestItem.AssetTypeEnum @enum, string packageName = "")
         {
-
-            var item = new ManifestItem()
+            
+           
+            ManifestItem item = null;
+            if (this.Manifest_NameKey.TryGetValue(name,out item))
             {
-                Name = name,
-                UIID = UIID,
-                Dependencies = dependencies,
-                PackageName =  packageName
-            };
+                if (item.Hash!=hash)
+                {
+                    Debug.LogError("有重名：" +name+",如无显式BResource.Load加载则无视,隐式会自动根据hash算依赖!" );
+                    name = name + "_r";
+                    item = new ManifestItem(name, hash, packageName, @enum,dependencies);
+                    this.Manifest_NameKey[name] = item;
+                    this.Manifest_HashKey[hash] = item;
+                }
+                else if (dependencies.Count >=  item.Depend.Count)
+                {
+                    item = new ManifestItem(name, hash, packageName, @enum,dependencies);
+                    this.Manifest_NameKey[name] = item;
+                    this.Manifest_HashKey[hash] = item;
+                }
+            }
+            else
+            { 
+                item = new ManifestItem(name, hash, packageName, @enum,dependencies);
+                this.Manifest_NameKey[name] = item;
+                this.Manifest_HashKey[hash] = item;
+            }
+        }
 
-            if (this.Manifest.ContainsKey(name))
+
+        public void AddItem(ManifestItem item)
+        {
+            if (this.Manifest_NameKey.ContainsKey(item.Name))
             {
                 //prefab 嵌套的情况, 2018新系统
                 //被依赖项 其实也有依赖，
-                if (dependencies.Count >= this.Manifest[name].Dependencies.Count)
+                if (item.Depend.Count >= this.Manifest_NameKey[item.Name].Depend.Count)
                 {
-                    this.Manifest[name] = item;
+                    this.Manifest_NameKey[item.Name] = item;
+                    this.Manifest_HashKey[item.Hash] = item;
                 }
             }
             else
             {
-                this.Manifest[name] = item;
+                this.Manifest_NameKey[item.Name] = item;
+                this.Manifest_HashKey[item.Hash] = item;
             }
         }
-
         /// <summary>
         /// 获取所有的ab
         /// </summary>
@@ -131,12 +225,12 @@ namespace BDFramework.ResourceMgr
         {
             List<string> list = new List<string>();
             //
-            foreach (var m in this.Manifest)
+            foreach (var m in this.Manifest_NameKey)
             {
                 //添加主体
                 list.Add(m.Key);
                 //添加依赖
-                list.AddRange(m.Value.Dependencies);
+                list.AddRange(m.Value.Depend);
             }
 
             return list.Distinct().ToList();
@@ -148,22 +242,18 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public string ToString()
         {
-            this.count = Manifest.Values.Count;
-
-
 #if UNITY_EDITOR
             int i = 0;
 
             List<string> list = new List<string>();
-            foreach (var v in Manifest.Values)
+            foreach (var v in Manifest_NameKey.Values)
             {
-                list.AddRange(v.Dependencies);
+                list.AddRange(v.Depend);
             }
 
             var l = list.Distinct().ToList();
-            Debug.Log(string.Format("<color=red>依赖数量:{0}</color>", l.Count));
 #endif
-            var items = Manifest.Values.ToList();
+            var items = Manifest_NameKey.Values.ToList();
             return JsonMapper.ToJson(items);
         }
     }
@@ -176,10 +266,6 @@ namespace BDFramework.ResourceMgr
         //
         public Action OnLoaded { get; set; }
 
-        /// <summary>
-        /// 所有的assetbundle
-        /// </summary>
-        public HashSet<string> AssetBundlesSet { get; private set; }
 
         public ManifestConfig Manifest { get; private set; }
 
@@ -196,7 +282,6 @@ namespace BDFramework.ResourceMgr
 
         private IEnumerator IE_LoadConfig(string path)
         {
-
             string text = "";
 
             if (File.Exists(path))
@@ -213,7 +298,7 @@ namespace BDFramework.ResourceMgr
                 }
                 else
                 {
-                    BDebug.Log("manifest加载失败!   ->" + path ,"red");
+                    BDebug.Log("manifest加载失败!   ->" + path, "red");
                 }
             }
 
@@ -221,12 +306,6 @@ namespace BDFramework.ResourceMgr
             {
                 this.Manifest = new ManifestConfig(text);
                 BDebug.Log("manifest加载成功!");
-                AssetBundlesSet = new HashSet<string>();
-                var list = this.Manifest.GetAllAssetBundles();
-                foreach (var l in list)
-                {
-                    AssetBundlesSet.Add(l);
-                }
 
                 //回调
                 if (OnLoaded != null)

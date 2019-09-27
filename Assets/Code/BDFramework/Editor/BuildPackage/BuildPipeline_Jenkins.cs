@@ -12,7 +12,7 @@ namespace BDFramework.Editor
     static public class BuildPipeline_Jenkins
     {
 
-        [MenuItem("BDFrameWork工具箱/打包/导出APK")]
+        [MenuItem("BDFrameWork工具箱/打包/导出APK(已有资源)")]
         public static void GenEmptyApk()
         {
             BuildPipeline_Jenkins.BuildPackage_APK_Editor();
@@ -20,7 +20,11 @@ namespace BDFramework.Editor
         [MenuItem("BDFrameWork工具箱/打包/导出APK(RebuildAsset)")]
         public static void GenApk_RebuildAsset()
         {
-            BuildPipeline_Jenkins.BuildALLAssetsAndBuildInPackage_APK_Editor();
+
+            if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
+            {
+                BuildPipeline_Jenkins.BuildALLAssetsAndBuildInPackage_APK_Editor();
+            }
         }
         
         [MenuItem("BDFrameWork工具箱/打包/导出XCode工程(ipa暂未实现)")]
@@ -30,106 +34,9 @@ namespace BDFramework.Editor
         }
         
         
-
-        #region 命令行相关操作
-        private static string[] _args;
-        static void _setPass()
-        {
-            var pass = _getArg(_args.Length - 2);
-            Debug.Log("KeyStore Password:" + pass);
-            PlayerSettings.Android.keystorePass = pass;
-            PlayerSettings.Android.keyaliasPass = pass;
-        }
-
-        static string _getOutPath()
-        {
-            return _getArg(_args.Length - 1);
-        }
-
-        static void _initArgs()
-        {
-            _args = Environment.GetCommandLineArgs();
-        }
-
-        static string _getArg(int index)
-        {
-            return _args[index];
-        }
-        #endregion
         
         #region Android
-
-        static void _androidCheck()
-        {
-            var dir = Path.GetDirectoryName(Application.dataPath);
-            var path = Path.Combine(dir, "SDK");
-            path = Path.Combine(path, "user.keystore");
-
-            if (!File.Exists(path))
-            {
-                throw new FileNotFoundException(path);
-            }
-
-            PlayerSettings.Android.keystoreName = path.Replace("\\", "/");
-        }
-
-        /// <summary>
-        /// build apk成为一个空包.
-        ///  需要cmd传参
-        /// </summary>
-        static public void BuildEmpty_APK()
-        {
-            _initArgs();
-            _androidCheck();
-            _setPass();
-            var outputPath = _getOutPath();
-            UnityEditor.BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputPath, BuildTarget.Android,
-                BuildOptions.None);
-        }
-
-        /// <summary>
-        /// 只生成资源,
-        /// 需要cmd传参
-        /// </summary>
-        static public void BuildALLAssets_APK()
-        {
-            _initArgs();
-            _setPass();
-            var outputPath = _getOutPath();
-            EditorWindow_OnekeyBuildAsset.OneKeyBuildALLAssets_ForBuildPackage(RuntimePlatform.Android, outputPath);
-        }
-
-        /// <summary>
-        /// build apk,Assetbunld 位于Streaming下~
-        /// </summary>
-        static public void BuildALLAssetsAndBuildInPackage_APK()
-        {
-            _initArgs();
-
-            _androidCheck();
-
-            _setPass();
-
-            var outputPath = _getOutPath();
-
-            //清空StreamingAsset
-            var ios = IPath.Combine(Application.streamingAssetsPath, "iOS");
-            if (Directory.Exists(ios))
-            {
-                Directory.Delete(ios, true);
-            }
-
-            var win = IPath.Combine(Application.streamingAssetsPath, "Windows");
-            if (Directory.Exists(win))
-            {
-                Directory.Delete(win, true);
-            }
-
-            //开始项目一键打包
-            EditorWindow_OnekeyBuildAsset.OneKeyBuildALLAssets_ForBuildPackage(RuntimePlatform.Android,
-                Application.streamingAssetsPath);
-            BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputPath, BuildTarget.Android, BuildOptions.None);
-        }
+        
 
         /// <summary>
         /// build apk,Assetbunld 位于Streaming下~
@@ -163,6 +70,7 @@ namespace BDFramework.Editor
                 return;
             }
             var outputPath = IPath.Combine( outpath ,  Application.productName+".apk");
+            File.Delete(outputPath);
             Debug.Log(outputPath);
             //清空StreamingAsset
             var ios = IPath.Combine(Application.streamingAssetsPath, "iOS");
@@ -183,59 +91,7 @@ namespace BDFramework.Editor
         #endregion
         
         #region iOS
-
-        /// <summary>
-        /// build apk成为一个空包.
-        ///  需要cmd传参
-        /// </summary>
-        static public void BuildEmpty_iOS()
-        {
-            _initArgs();
-            _setPass();
-            var outputPath = _getOutPath();
-            UnityEditor.BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputPath, BuildTarget.iOS,
-                BuildOptions.None);
-        }
-
-
-
-        /// <summary>
-        /// 只生成资源,
-        /// 需要cmd传参
-        /// </summary>
-        static public void BuildALLAssets_iOS()
-        {
-            _initArgs();
-            var outputPath = _getOutPath();
-            EditorWindow_OnekeyBuildAsset.OneKeyBuildALLAssets_ForBuildPackage(RuntimePlatform.IPhonePlayer, outputPath);
-        }
-
-        /// <summary>
-        /// build apk,Assetbunld 位于Streaming下~
-        /// </summary>
-        static public void BuildALLAssetsAndBuildInPackage_iOS()
-        {
-            _initArgs();
-            var outputPath = _getOutPath();
-
-            //清空StreamingAsset
-            var ios = IPath.Combine(Application.streamingAssetsPath, "Android");
-            if (Directory.Exists(ios))
-            {
-                Directory.Delete(ios, true);
-            }
-
-            var win = IPath.Combine(Application.streamingAssetsPath, "Windows");
-            if (Directory.Exists(win))
-            {
-                Directory.Delete(win, true);
-            }
-
-            //开始项目一键打包
-            EditorWindow_OnekeyBuildAsset.OneKeyBuildALLAssets_ForBuildPackage(RuntimePlatform.IPhonePlayer,
-                Application.streamingAssetsPath);
-            BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputPath, BuildTarget.iOS, BuildOptions.None);
-        }
+        
 
         /// <summary>
         /// build apk,Assetbunld 位于Streaming下~

@@ -89,10 +89,10 @@ namespace BDFramework.ResourceMgr
         /// <param name="asset"></param>
         public static  void UnloadAsset(UnityEngine.Object asset)
         {
-            
             if(asset is GameObject ||  asset is Component) return;
             Resources.UnloadAsset(asset);
-            
+            asset = null;
+
         }
 
         /// <summary>
@@ -110,7 +110,10 @@ namespace BDFramework.ResourceMgr
         public static void Destroy(Transform trans)
         {
             if (trans)
-                GameObject.DestroyObject(trans.gameObject);
+            {
+                
+                Destroy(trans.gameObject);
+            }
         }
 
         /// <summary>
