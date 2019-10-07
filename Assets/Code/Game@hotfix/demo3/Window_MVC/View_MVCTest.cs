@@ -66,7 +66,7 @@ namespace Code.Game.Windows
             //
             btn_back.onClick.AddListener(() =>
             {
-                ScreenViewManager.Inst.MainLayer.BeginNavTo("main");
+                ScreenViewManager.Inst.MainLayer.BeginNavTo(ScreenViewEnum.Main);
             });
         }
     }

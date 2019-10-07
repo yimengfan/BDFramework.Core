@@ -4,6 +4,7 @@ using BDFramework.ResourceMgr;
 using BDFramework.ScreenView;
 using UnityEngine;
 using BDFramework.UI;
+using Code.Game;
 using UnityEngine.UI;
 
 /// <summary>
@@ -34,7 +35,7 @@ public class Window_Demo1 : AWindow
         btn_01.onClick.AddListener(() =>
         {
            this.Close();
-           ScreenViewManager.Inst.MainLayer.BeginNavTo("main");
+           ScreenViewManager.Inst.MainLayer.BeginNavTo(ScreenViewEnum.Main);
         });
 
 //        var o = BResources.Load<GameObject>("effect");

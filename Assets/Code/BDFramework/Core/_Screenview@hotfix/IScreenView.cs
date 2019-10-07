@@ -12,7 +12,7 @@ namespace BDFramework.ScreenView
         /// <summary>
         /// IScreenView名称
         /// </summary>
-        string Name { get; }
+        int Name { get; }
         /// <summary>
         /// IScreenView是否加载
         /// </summary>

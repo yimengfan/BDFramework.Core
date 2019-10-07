@@ -16,7 +16,7 @@ namespace Code.Game.demo_Manager_AutoRegister_And_Event
         {
             //这里是每次创建的一个，
             //实际使用中,使用者可以对创建的对象群体进行管理，如池化 等
-            var _event = CreateInstance<IDemoEvent>(@enum.ToString());
+            var _event = CreateInstance<IDemoEvent>((int)@enum);
 
             if (_event != null)
             {

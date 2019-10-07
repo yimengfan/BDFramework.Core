@@ -6,7 +6,7 @@ namespace Code.Game.demo_Manager_AutoRegister_And_Event
     {
         
         
-        public DemoEventAttribute(DemoEventEnum eventEnum) : base(eventEnum.ToString())
+        public DemoEventAttribute(int eventEnum) : base(eventEnum)
         {
             
         }

@@ -48,7 +48,7 @@ namespace BDFramework.UI
         //
         private AWindow CreateWindow(int uiIndex)
         {
-            var classData = this.GetCalssData(uiIndex.ToString());
+            var classData = this.GetClassData(uiIndex);
             if (classData == null)
             {
                 Debug.LogError("未注册窗口，无法加载:" + uiIndex);

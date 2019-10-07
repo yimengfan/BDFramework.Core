@@ -6,6 +6,8 @@ using BDFramework.UI;
 using DG.Tweening;
 using UnityEngine.UI;
 using BDFramework;
+using Code.Game;
+
 //using UnityEditor.Graphs;
 
 /// <summary>
@@ -41,7 +43,7 @@ public class Window_Demo2 : AWindow
         btn_01.onClick.AddListener(() =>
         {
             this.Close();
-            ScreenViewManager.Inst.MainLayer.BeginNavTo("main");
+            ScreenViewManager.Inst.MainLayer.BeginNavTo(ScreenViewEnum.Main);
         });
         
         //02按钮

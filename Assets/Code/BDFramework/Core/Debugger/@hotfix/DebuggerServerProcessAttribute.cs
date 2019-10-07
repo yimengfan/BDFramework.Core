@@ -9,7 +9,7 @@ namespace BDFramework.Core.Debugger
         /// ID 是协议号
         /// </summary>
         /// <param name="Id"></param>
-        public DebuggerServerProcessAttribute(int Id) : base(Id.ToString())
+        public DebuggerServerProcessAttribute(int Id) : base(Id)
         {
             
         }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using Code.BDFramework.Editor;
 using UnityEditor;
@@ -12,16 +13,35 @@ namespace BDFramework.Editor.EditorLife
     {
         static BDEditorLife()
         {
-            UnityEditor.EditorApplication.delayCall += OnReloadScripts;
+            EditorApplication.delayCall += OnCompileCode;
+            EditorApplication.playModeStateChanged += OnPlayExit;
         }
 
+
+        /// <summary>
+        /// 退出播放模式
+        /// </summary>
+        /// <param name="state"></param>
+        static private void OnPlayExit(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.ExitingPlayMode)
+            {
+                BDEditorInit();
+            }
+        }
+        
         /// <summary>
         /// Editor代码刷新后执行
         /// </summary>
-        static public void OnReloadScripts()
+        static public void OnCompileCode()
         {
-            if (EditorApplication.isPlaying || EditorApplication.isPaused) return;
+            if (EditorApplication.isPlaying) return;
+            BDEditorInit();
+        }
 
+
+        static public void BDEditorInit()
+        {
             #region 注册所以管理器，让管理器在编辑器下生效
 
             //项目所有类
@@ -49,16 +69,12 @@ namespace BDFramework.Editor.EditorLife
                     mgr.CheckType(t);
                 }
             }
-
-            foreach (var mgr in mgrs)
-            {
-                mgr.Start();
-            }
+            
 
             Debug.Log("BDFrameEditor:管理器注册完成");
-
             #endregion
-
+            
+            DebuggerServerProcessManager.Inst.Start();
             BDEditorHelper.Init();
         }
     }

@@ -5,11 +5,12 @@ using UnityEngine;
 using BDFramework.ScreenView;
 using BDFramework.Sql;
 using BDFramework.UI;
+using Code.Game;
 
-[ScreenView("demo1")]
+[ScreenView((int)ScreenViewEnum.Demo1)]
 public class ScreenView_Demo1_Screenview : IScreenView
 {
-    public string Name { get; private set; }
+    public int Name { get; private set; }
     public bool IsLoad { get; private set;     }
 
     public void BeginInit()

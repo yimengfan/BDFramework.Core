@@ -10,7 +10,7 @@ namespace BDFramework.UI
     {
         public string ResourcePath { get; private set; }
        
-        public UIAttribute(int tag, string resPath):base(tag.ToString())
+        public UIAttribute(int intTag, string resPath):base(intTag)
         {
             this.ResourcePath = resPath;
         }

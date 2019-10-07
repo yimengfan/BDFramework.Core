@@ -16,7 +16,7 @@ namespace BDFramework.ScreenView
         /// </summary>
         public ScreenViewLayer MainLayer { get; private set; }
 
-        private string defaultScreenName = null;
+        private int defaultScreenTag =0;
 
         #region Mgr管理
 
@@ -36,37 +36,26 @@ namespace BDFramework.ScreenView
 
             MainLayer = this.AddLayer();
             //
-            foreach (var classData in this.ClassDataMap.Values)
+            foreach (var classData in this.GetAllClassDatas())
             {
                 var attr = classData.Attribute as ScreenViewAttribute;
 
-                var sv = CreateInstance<IScreenView>(attr.Tag);
+                var sv = CreateInstance<IScreenView>(attr.IntTag);
                 //设置name属性
                 var t = sv.GetType();
-                t.GetProperty("Name").SetValue(sv, attr.Tag, null);
-                MainLayer.RegScreen(sv);
+                t.GetProperty("Name").SetValue(sv, attr.IntTag, null);
+                MainLayer.RegisterScreen(sv);
                 //
-                BDebug.Log("创建screen:" + attr.Tag, "green");
-                //
-                if (attr.IsDefault && string.IsNullOrEmpty(defaultScreenName) == true)
-                {
-                    defaultScreenName = attr.Tag;
-                }
+                BDebug.Log("创建screen:" + attr.IntTag, "green");
             }
         }
 
         public override void Start()
         {
-            if (string.IsNullOrEmpty(this.defaultScreenName) == false)
-            {
-                MainLayer.BeginNavTo(this.defaultScreenName);
-            }
-            else
-            {
-                BDebug.Log("没有默认导航的ScreenView");
-            }
+
+            MainLayer.BeginNavTo(this.defaultScreenTag);
         }
-        
+
 
         #endregion
 
