@@ -16,27 +16,20 @@ Debug  version: 1.0.1(already merged)
 Note: All bug fixes and new features will be submitted to the Debug branch first. The period to be audited is one month, and stability will be merged with the main branch.  
 [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
 ### Lastest:  
-2019.9.16 15：00  
+2019.10.8 20.00  
 email: 755737878@qq.com
-【Change】  
-1.优化Assetbundle模式加载效率  
-2.重新组织目录结构  
-【Feature】  
-1.增加一个网络调试器 *  
-2.增加BDFramewok配置编辑器 *  
-3.增加一键打包选项，并开始兼容Jekins  
-4.增加Odin编辑器的使用（项目中不提供，自行购买下载）  
-【bug】  
-1.修复litjson不能反序列化父类的 private set成员。  
-2.优化若干使用调用不合理地方  
+[master]
+1.Assetbundle管理，修改为全hash管理
+[debuger]
+1.增加新UI系统UFlux
 ## 文档(Document)
  [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
  <br>[English Wiki](http://www.nekosang.com)
 ## 博客（Blog）
 [ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
 ## v1.0版本计划(v1.0 Plan)
-<br> 2019.12 加入后端框架基于Web架构,Asp.NetCore
-<br>      其实Web服务器能解决90%的游戏业务(基于分布式架构，部分业务如战斗可以开单独的服务器作计算节点),
+<br> 2019.12 加入后端框架基于Web架构, Asp .Net Core
+<br> 其实Web服务器能解决90%的游戏业务(基于分布式架构，部分业务如战斗可以开单独的服务器作计算节点),
 <br> 更主要是Web服务器工作流更完善、解决方案更多、更省服务器资源（钱),
 <br> 2019.10 完成UI工作流的升级和重构(兼容老版本)
 <br> ~~2019.6.30之前 完成新文档的编写(已完成)
