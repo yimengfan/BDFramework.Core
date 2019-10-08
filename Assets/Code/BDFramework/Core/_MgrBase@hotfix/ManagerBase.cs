@@ -8,14 +8,14 @@ namespace BDFramework.Mgr
     public class ManagerAtrribute : Attribute
     {
         public int IntTag { get; private set; } = -1;
-        public string StringTag { get; private set; } = null;
+        public string Tag { get; private set; } = null;
         public ManagerAtrribute(int intTag)
         {
             this.IntTag = intTag;
         }
         public ManagerAtrribute(string tag)
         {
-            this.StringTag = tag;
+            this.Tag = tag;
         }
     }
 
@@ -68,9 +68,9 @@ namespace BDFramework.Mgr
                     {
                         SaveAttribute(_attr.IntTag, new ClassData() {Attribute = _attr, Type = type});
                     }
-                    else if(_attr.StringTag!=null)
+                    else if(_attr.Tag!=null)
                     {
-                        SaveAttribute(_attr.StringTag, new ClassData() {Attribute = _attr, Type = type});
+                        SaveAttribute(_attr.Tag, new ClassData() {Attribute = _attr, Type = type});
                     }
                 }
             }
@@ -212,6 +212,24 @@ namespace BDFramework.Mgr
         /// <typeparam name="T2"></typeparam>
         /// <returns></returns>
         public T2 CreateInstance<T2>(int tag, params object[] args) where T2 : class
+        {
+            var cd = GetClassData(tag);
+            if (cd == null)
+            {
+                BDebug.LogError("没有找到:" + tag + " -" + typeof(T2).Name);
+                return null;
+            }
+
+            return CreateInstance<T2>(cd, args);
+        }
+        /// <summary>
+        /// 创建实例
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="args"></param>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns></returns>
+        public T2 CreateInstance<T2>(string tag, params object[] args) where T2 : class
         {
             var cd = GetClassData(tag);
             if (cd == null)
