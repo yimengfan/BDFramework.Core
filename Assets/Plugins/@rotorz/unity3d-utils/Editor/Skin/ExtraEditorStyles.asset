@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694e7ff2cc8d680419bad1683981a5de, type: 3}
+  m_Name: ExtraEditorStyles
+  m_EditorClassIdentifier: 
+  darkSkin:
+    windowBackgroundColor: {r: 0.21960784, g: 0.21960784, b: 0.21960784, a: 1}
+    separatorColor: {r: 0.11, g: 0.11, b: 0.11, a: 1}
+    separatorLightColor: {r: 0.16, g: 0.16, b: 0.16, a: 1}
+    groupLabelColor: {r: 0.44313726, g: 0.44313726, b: 0.44313726, a: 1}
+    metaLabelColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
+    linkColor: {r: 0.89411765, g: 1, b: 0, a: 1}
+    selectedHighlightColor: {r: 0.23921569, g: 0.5019608, b: 0.8745098, a: 1}
+    selectedHighlightStrongColor: {r: 0, g: 0.5019608, b: 1, a: 1}
+    texTrailingTipBackground: {fileID: 2800000, guid: 977519d8d10188a40aaa10ce2428793a,
+      type: 3}
+    underlineBackground: {fileID: 2800000, guid: 6e64644c351cbd74b836d58939eca055,
+      type: 3}
+  lightSkin:
+    windowBackgroundColor: {r: 0.7607843, g: 0.7607843, b: 0.7607843, a: 1}
+    separatorColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    separatorLightColor: {r: 0.65, g: 0.65, b: 0.65, a: 1}
+    groupLabelColor: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 1}
+    metaLabelColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
+    linkColor: {r: 0, g: 0.5411765, b: 1, a: 1}
+    selectedHighlightColor: {r: 0.23921569, g: 0.5019608, b: 0.8745098, a: 1}
+    selectedHighlightStrongColor: {r: 0, g: 0.5019608, b: 1, a: 1}
+    texTrailingTipBackground: {fileID: 2800000, guid: eb83234ffb5b22742953bb99b1d56ffa,
+      type: 3}
+    underlineBackground: {fileID: 2800000, guid: 6e64644c351cbd74b836d58939eca055,
+      type: 3}

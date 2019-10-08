@@ -1,0 +1,62 @@
+{
+  "_from": "github:rotorz/unity3d-reorderable-list#semver:^1.0.2",
+  "_id": "@rotorz/unity3d-reorderable-list@1.0.2",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/@rotorz/unity3d-reorderable-list",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "@rotorz/unity3d-reorderable-list@github:rotorz/unity3d-reorderable-list#semver:^1.0.2",
+    "name": "@rotorz/unity3d-reorderable-list",
+    "escapedName": "@rotorz%2funity3d-reorderable-list",
+    "scope": "@rotorz",
+    "rawSpec": "github:rotorz/unity3d-reorderable-list#semver:^1.0.2",
+    "saveSpec": "github:rotorz/unity3d-reorderable-list#semver:^1.0.2",
+    "fetchSpec": null,
+    "gitRange": "^1.0.2",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "github:rotorz/unity3d-reorderable-list#a53c6694ae4e3652b342db78432a7f64a67128ca",
+  "_spec": "@rotorz/unity3d-reorderable-list@github:rotorz/unity3d-reorderable-list#semver:^1.0.2",
+  "_where": "F:\\UnityProj\\Rotrz",
+  "author": {
+    "name": "Rotorz Limited"
+  },
+  "bugs": {
+    "url": "https://github.com/rotorz/unity3d-reorderable-list/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@rotorz/dotnet-exception-utils": "github:rotorz/dotnet-exception-utils#semver:^1.0.3",
+    "@rotorz/dotnet-type-utils": "github:rotorz/dotnet-type-utils#semver:^1.0.2",
+    "@rotorz/unity3d-editor-menu": "github:rotorz/unity3d-editor-menu#semver:^1.0.1",
+    "@rotorz/unity3d-utils": "github:rotorz/unity3d-utils#semver:^1.0.1"
+  },
+  "deprecated": false,
+  "description": "List control for Unity allowing editor developers to add reorderable list controls to their GUIs.",
+  "devDependencies": {
+    "github-wiki-from-markdown-book": "^1.0.0"
+  },
+  "homepage": "https://github.com/rotorz/unity3d-reorderable-list#readme",
+  "keywords": [
+    "unity3d",
+    "unity3d-package"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "@rotorz/unity3d-reorderable-list",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rotorz/unity3d-reorderable-list.git"
+  },
+  "scripts": {
+    "build-wiki-output": "github-wiki-from-markdown-book build",
+    "clean-wiki-output": "github-wiki-from-markdown-book clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.2"
+}
