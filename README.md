@@ -35,7 +35,7 @@ email: 755737878@qq.com
 ## 博客（Blog）
 [ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
 ## v1.0版本计划(v1.0 Plan)
-<br> 2019.12 加入后端框架基于Web架构,Golang Iris
+<br> 2019.12 加入后端框架基于Web架构,Asp.NetCore
 <br>      其实Web服务器能解决90%的游戏业务(基于分布式架构，部分业务如战斗可以开单独的服务器作计算节点),
 <br> 更主要是Web服务器工作流更完善、解决方案更多、更省服务器资源（钱),
 <br> 2019.10 完成UI工作流的升级和重构(兼容老版本)
