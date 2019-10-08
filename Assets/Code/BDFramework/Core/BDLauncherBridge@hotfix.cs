@@ -90,9 +90,7 @@ public class BDLauncherBridge
         {
             m.Init();
         }
-
-        BDebug.Log("管理器注册完成!");
-
+        
         //game生命注册
         if (hotfixStart != null)
         {
@@ -100,9 +98,7 @@ public class BDLauncherBridge
             BDLauncher.OnUpdate = hotfixStart.Update;
             BDLauncher.OnLateUpdate = hotfixStart.LateUpdate;
         }
-
-        BDebug.Log("游戏生命周期准备完毕!");
-
+        
         //所有管理器开始工作
         foreach (var m in mgrs)
         {

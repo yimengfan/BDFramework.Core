@@ -12,7 +12,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 资源管理
         /// </summary>
-        Dictionary<string, AssetBundleReference> assetbundleMap { get; set; }
+        Dictionary<string, AssetBundleWapper> assetbundleMap { get; set; }
         /// <summary>
         /// 卸载指定ab
         /// </summary>

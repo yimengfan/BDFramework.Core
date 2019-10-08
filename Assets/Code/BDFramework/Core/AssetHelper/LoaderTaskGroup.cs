@@ -39,6 +39,8 @@ namespace BDFramework.ResourceMgr
 
         public delegate void OnTaskCompleteCallback(string s, Object o);
 
+        public delegate void LoderFunc(string name, bool isLoadObj, Action<LoadAssetState, Object> callback);
+
         /// <summary>
         /// all  task complete  callback
         /// </summary>
@@ -53,7 +55,7 @@ namespace BDFramework.ResourceMgr
         /// load function
         /// </summary>
         /// <returns></returns>
-        private Action<string, Action<LoadAssetState, Object>> loadAssetAction = null;
+        private LoderFunc loadAssetAction = null;
 
         /// <summary>
         /// the max do task number
@@ -72,14 +74,14 @@ namespace BDFramework.ResourceMgr
         public string MainAsset { get; private set; }
 
 
-        public LoaderTaskGroup(int asyncTaskMaxNum, Queue<LoaderTaskData> taskQueue,
-            Action<string, Action<LoadAssetState, Object>> loadAssetAction,
+        public LoaderTaskGroup(string mainAsset, int asyncTaskMaxNum, List<LoaderTaskData> taskList,
+            LoderFunc loadAssetAction,
             OnTaskCompleteCallback onTaskCompleteCallback)
         {
             this.asyncTaskMaxNum = asyncTaskMaxNum;
-            this.TaskQueue = taskQueue;
-            this.MainAsset = this.TaskQueue.Last().ResourcePath;
-            this.TaskQueueNum = taskQueue.Count;
+            this.taskList = taskList;
+            this.MainAsset = mainAsset;
+            this.TaskQueueNum = taskList.Count;
             this.loadAssetAction = loadAssetAction;
             this.onTaskCompleteCallback += onTaskCompleteCallback;
         }
@@ -87,35 +89,45 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 任务列表
         /// </summary>
-        private Queue<LoaderTaskData> TaskQueue = null;
+        private List<LoaderTaskData> taskList = null;
 
 
         private int curDoTaskNum = 0;
 
+
+        private ManifestConfig config;
+        public void SetDebugManifest(ManifestConfig config)
+        {
+            this.config = config;
+        }
         /// <summary>
         /// 开始执行任务
         /// </summary>
         public void DoNextTask()
         {
             if (isStop) return;
-            if (MainAsset == "assets/resource/runtime/char/026.prefab")
-            {
-                int i = 0;
-            }
-
             //获取一个任务
-            while (TaskQueue.Count > 0 && curDoTaskNum < asyncTaskMaxNum)
+            while (taskList.Count > 0 && curDoTaskNum < asyncTaskMaxNum)
             {
-                var task = TaskQueue.Dequeue();
-                
+                var task = taskList[0];
+                taskList.RemoveAt(0);
+                //这一步确保主资源最后加载,防止资源自动依赖丢失
+                if (task.ResourcePath == MainAsset && objectsMap.Count != this.TaskQueueNum-1)
+                {
+                    taskList.Add(task);
+                    break;
+                }
+                //主资源才加载
+                var isLoadObj = task.ResourcePath == MainAsset;
                 //执行任务
-                loadAssetAction(task.ResourcePath, (state, obj) =>
+                loadAssetAction(task.ResourcePath, isLoadObj, (state, obj) =>
                 {
                     curDoTaskNum--;
                     switch (state)
                     {
-                        case LoadAssetState.IsLoding:  //正在加载，需要重新执行一次task
-                            TaskQueue.Enqueue(task);
+                        case LoadAssetState.IsLoding: //正在加载，需要重新执行一次task
+                            //插入在倒数第二个位置
+                            taskList.Insert(taskList.Count-2,task); 
                             break;
                         case LoadAssetState.Fail:
                         case LoadAssetState.Success:
@@ -124,8 +136,6 @@ namespace BDFramework.ResourceMgr
                     }
                 });
                 curDoTaskNum++;
-                
-//               BDebug.Log("加载：" + task.ResourcePath);
             }
         }
 
@@ -137,6 +147,7 @@ namespace BDFramework.ResourceMgr
         private void OnTaskComplete(string resPath, Object obj)
         {
             this.objectsMap[resPath] = obj;
+            //BDebug.Log("加载：" + this.config.GetManifestItemByHash(resPath).Name);
             if (isStop) return;
             if (this.objectsMap.Count != TaskQueueNum)
             {

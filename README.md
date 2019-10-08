@@ -1,46 +1,78 @@
-# 简介
-一个基于unity3d的开发框架。
-框架力致于打造一个简单、高效的开发工作流.
-<br>版本:Unity2018.4
-### 7月新开技术交流、艺术鉴赏群:   763141410 
+# 简介(Introduction)
+Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries
+<br>Version:Unity2018.4
+## 8月新开技术交流、艺术鉴赏群:763141410
+QQ Group:763141410
+<br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
 <br>任何问题直接提issue,24小时内必解决
-# 文档
+# 依赖的插件(Dpendent plugins)
+使用了以下收费插件,请自行购买下载：  
+The following charging plug-ins are used. Please purchase and download them yourself.  
+<br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
+# 更新日志（Update Note）
+Master version: 1.0.1  
+Debug  version: 1.0.1(already merged)  
+注:所有bug修复和新特性加入会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。    
+Note: All bug fixes and new features will be submitted to the Debug branch first. The period to be audited is one month, and stability will be merged with the main branch.  
+[  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
+### Lastest:  
+2019.9.16 15：00  
+email: 755737878@qq.com
+【Change】  
+1.优化Assetbundle模式加载效率  
+2.重新组织目录结构  
+【Feature】  
+1.增加一个网络调试器 *  
+2.增加BDFramewok配置编辑器 *  
+3.增加一键打包选项，并开始兼容Jekins  
+4.增加Odin编辑器的使用（项目中不提供，自行购买下载）  
+【bug】  
+1.修复litjson不能反序列化父类的 private set成员。  
+2.优化若干使用调用不合理地方  
+## 文档(Document)
  [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
  <br>[English Wiki](http://www.nekosang.com)
-## 更新日志
-[  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
-## 版本计划
-<br> 2019.6.30之前 完成新文档的编写
+## 博客（Blog）
+[ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
+## v1.0版本计划(v1.0 Plan)
+<br> 2019.12 加入后端框架基于Web架构,Asp.NetCore
+<br>      其实Web服务器能解决90%的游戏业务(基于分布式架构，部分业务如战斗可以开单独的服务器作计算节点),
+<br> 更主要是Web服务器工作流更完善、解决方案更多、更省服务器资源（钱),
+<br> 2019.10 完成UI工作流的升级和重构(兼容老版本)
+<br> ~~2019.6.30之前 完成新文档的编写(已完成)
 <br> 2018.7 热更新工具整合：代码更新及工具(已完成)
-<br> 2018.8 热更新工具整合：资源更新（已完成）
-## 框架特点
-  <br>**不开发工具的框架都是耍流氓!!!!**<br>
-  <br>所有方案制作，都致力于开发者0学习成本，跟普通开发一样舒爽。
-   <br>**1.全自动的业务发现、注册、管理**<br>
-   <br>**2.C#开发一键热更,无需考虑其他，剩下工作由框架编辑器解决**<br>
-   <br>**3.完善的UI工作流:自动绑定，赋值，管理等**<br>
-   <br>**4.可寻址的加载系统：一套API应景自动加载，ab包和Editor、resource无需来回切换**<br>
-   <br>**5.完善的热更工作流：代码、资源、表格一键打包,自动下载**<br>
-   <br>... <br>
-   <br>**n.还有其他的各种实用小工具： 如excel2json、excel2sqlite,图片压缩**<br>
-# 博客
-不定时更新
-### 管理器:
-1.管理器与业务自动.            [点击](https://zhuanlan.zhihu.com/p/40751037)
-### 游戏Timeline:
-1.ScreenView模块管理和状态机   [点击](https://zhuanlan.zhihu.com/p/40755348)
-### UI工作流:
-1.psd2ugui：prefab生成方式自行选择
-<br>2.UIManager和UI基础操作.   [点击](https://zhuanlan.zhihu.com/p/40766519)
-<br>3.MVC模式初探  **[玩具不建议使用，老老实实继承AWindows]** [点击](https://zhuanlan.zhihu.com/p/40772076)
-<br>4.UI工作流工具的使用        [点击](https://zhuanlan.zhihu.com/p/40941129)
-<br>5.UI开发利器：UITools      [点击](https://zhuanlan.zhihu.com/p/41062357)
-<br>6.数据监听：DataListener
-### 热更新:
-1.C#脚本热更及编辑器：开发跟普通一样,只需标记热更代码即可.[点击](https://zhuanlan.zhihu.com/p/41070384)
-<br>2.资源热更：热更和日常开发一套API，无需来回切换.[点击](https://zhuanlan.zhihu.com/p/50362920)
+<br> 2018.8 热更新工具整合：资源更新（已完成）~~
+## 框架特点(Feature)
+   <br>**1.发现式业务注册:**
+   <br>BDFrame底层提供了一套发现式的业务注册.无需以前的各种Register,只要定制好自己的标签、管理器就能被自动注册.
+   <br>在此之上BD,实现了ScreenviewManger,UIManager,EventManager...等一些列管理器。
+   <br>这套机制高度可扩展、可定制,使用者根据自己的需求可以实现其他的管理器
+   <br>并且这个在编辑器环境下也生效的哦~ 写工具时候会很有帮助的哦~
+   
+   <br>**2.模块管理、调度**
+   <br>BD给大家带来了一种开发思路，用户使用流程的Timeline（不是unity的那个timeline）,
+   <br>根据用户流程进行切分模块、调度,这里的模块并不是狭义的一个窗口哦~
+   
+   <br>**3.完善的UI工作流:**
+   <br>BD中有一整套完善的UI工作流(这里我们只对UI逻辑进行管理，不考虑ui制作)，无论你是UGUI NGUI还是其他。
+   <br>我们提供了一套UI管理、值绑定、数据监听、数据流等一系列机制.
+   <br>预计2018年Q4我们完成UI系统的进一步升级，希望打造成一套比较先进、科学的工作流。
+   
+   <br>**4.资源管理：**
+   <br>BD抛弃了Resources目录，并且保留的用户Resources的开发习惯.
+   <br> 一套API自动切换，兼容AB和Editor模式.
+   <br>而且有一套比较完善的AssetBundle管理机制：图集管理、自动搜集Shader、0冗余打包
+   <br>并且bd做了一套精简版可寻址，无论你的Asset再Streaming或者persistent下，都能自动寻找并且加载
+   
+   <br>**5.C#热更代码开发:**
+   <br>BD中对ILRuntime进行了二次改造，不用分工程、并且写了一套完善的脚本编译机制,打包工具自动搜集热更代码进行打包。
+   <br>并且对常用库进行了适配.
+   
+   <br>**6.表格管理:** 
+   <br>BD中用Sqlite进行管理表格,并且提供了excel2code，excel2json，excel2sqlite等工具
+   
+   <br>**6.版本发布:**
+   <br>代码、资源、表格一键打包,版本管理自动下载
 
-### 工具类：
-1.Excel系列:excel生成class,excel转json,excel转sqlite
-<br>2.热更资源一键打包：数据、代码、资源 多平台一键打出
-<br>3.Ipa apk一键导出(待开发)
+   <br>还有好多我就觉得都是常用的东西:比如事件系统啊、什么http库啊、什么对象池啊就懒得列举了
+

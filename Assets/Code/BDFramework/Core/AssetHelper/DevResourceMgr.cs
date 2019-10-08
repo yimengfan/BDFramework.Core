@@ -73,7 +73,7 @@ namespace BDFramework.ResourceMgr
         }
 
 
-        public Dictionary<string, AssetBundleReference> assetbundleMap { get; set; }
+        public Dictionary<string, AssetBundleWapper> assetbundleMap { get; set; }
 
        
 
