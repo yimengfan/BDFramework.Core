@@ -17,11 +17,11 @@ Note: All bug fixes and new features will be submitted to the Debug branch first
 [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
 ### Lastest:  
 2019.10.8 20.00  
-email: 755737878@qq.com
-[master]
-1.Assetbundle管理，修改为全hash管理
-[debuger]
-1.增加新UI系统UFlux
+email: 755737878@qq.com  
+[master]  
+1.Assetbundle管理，修改为全hash管理  
+[debuger]  
+1.增加新UI系统UFlux  
 ## 文档(Document)
  [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
  <br>[English Wiki](http://www.nekosang.com)
