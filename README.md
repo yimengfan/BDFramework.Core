@@ -4,7 +4,8 @@ Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a colle
 ## 8月新开技术交流、艺术鉴赏群:763141410
 QQ Group:763141410
 <br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
-<br>任何问题直接提issue,24小时内必解决
+<br>任何问题直接提issue,24小时内必解决  
+ 码云地址，速度慢下这个(顺便讨个赞): https://gitee.com/yimengfan/BDFramework.Core  
 # 依赖的插件(Dpendent plugins)
 使用了以下收费插件,请自行购买下载：  
 The following charging plug-ins are used. Please purchase and download them yourself.  
