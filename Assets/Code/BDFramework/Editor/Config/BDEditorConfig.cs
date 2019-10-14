@@ -14,6 +14,7 @@ namespace Code.BDFramework.Editor
         public BDEditorConfig()
         {}
         [BoxGroup("设置")]
+        [InlinePropertyAttribute]
         [LabelText("Android打包设置")]
         public AndroidConfig Android = new AndroidConfig();
         [DisableInEditorMode]

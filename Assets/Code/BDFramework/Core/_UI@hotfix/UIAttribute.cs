@@ -6,6 +6,7 @@ using BDFramework.Mgr;
 
 namespace BDFramework.UI
 {
+    [Obsolete("please use new uiframe: uflux.")]
     public class UIAttribute : ManagerAtrribute
     {
         public string ResourcePath { get; private set; }

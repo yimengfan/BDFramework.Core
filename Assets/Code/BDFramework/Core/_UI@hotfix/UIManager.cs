@@ -16,9 +16,11 @@ namespace BDFramework.UI
         Top
     }
 
+    
     /// <summary>
     /// UI管理类
     /// </summary>
+    [Obsolete("please use new uiframe: uflux.")]
     public class UIManager : ManagerBase<UIManager, UIAttribute>
     {
         /// <summary>

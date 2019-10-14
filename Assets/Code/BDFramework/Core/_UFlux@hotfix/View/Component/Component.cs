@@ -70,6 +70,13 @@ namespace BDFramework.UFlux
             this.Props = new T();
         }
 
+        public Component(Transform trans)
+        {
+            this.Transform = trans;
+            //创建State
+            this.Props = new T();
+        }
+
         private string resPath = null;
 
         /// <summary>

@@ -14,6 +14,7 @@ namespace BDFramework.UI
     /// <summary>
     /// 窗口基类
     /// </summary>
+    [Obsolete("please use new uiframe: uflux.")]
     public abstract class AWindow
     {
         /// <summary>

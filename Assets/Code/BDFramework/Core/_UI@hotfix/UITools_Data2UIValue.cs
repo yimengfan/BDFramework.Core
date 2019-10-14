@@ -15,6 +15,7 @@ using UnityEngine.UI;
 using BDFramework.ResourceMgr;
 namespace BDFramework.Core
 {
+    [Obsolete("please use new uiframe: uflux.")]
     public class UITools_Data2UIValue
     {
         public UITools_Data2UIValue()

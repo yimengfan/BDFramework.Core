@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
+[Obsolete("please use new uiframe: uflux.")]
 static  public partial class UITools
 {
     static private UITools_Data2UIValue _uiToolsData2UiValue;

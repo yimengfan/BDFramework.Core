@@ -1,5 +1,8 @@
-﻿namespace BDFramework.UI
+﻿using System;
+
+namespace BDFramework.UI
 {
+    [Obsolete("please use new uiframe: uflux.")]
     public enum WinEnum
     {
         Win_Main = 0,
