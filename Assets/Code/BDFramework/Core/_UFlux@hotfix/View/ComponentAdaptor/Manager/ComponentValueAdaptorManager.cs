@@ -123,13 +123,14 @@ namespace BDFramework.UFlux
                 }
                 //再进行值绑定
                 {
+                    ComponentValueCahce cvc = new ComponentValueCahce();
                     var attrs = mi.GetCustomAttributes(typeof(ComponentValueBind), false);
                     if (attrs.Length > 0)
                     {
                         var attr = attrs[0] as ComponentValueBind;
                         if (attr != null)
                         {
-                            ComponentValueCahce cvc = new ComponentValueCahce();
+                          
                             if (attr.Type.IsSubclassOf(typeof(UIBehaviour)))
                             {
                                 cvc.UIBehaviour = transform.GetComponent(attr.Type) as UIBehaviour;
@@ -139,10 +140,10 @@ namespace BDFramework.UFlux
                                 cvc.Transform = transform;
                             }
                             cvc.ValueBind = attr;
-                            //缓存
-                            retMap[mi.Name] = cvc;
                         }
                     }
+                    //缓存
+                    retMap[mi.Name] = cvc;
                 }
             }
 
