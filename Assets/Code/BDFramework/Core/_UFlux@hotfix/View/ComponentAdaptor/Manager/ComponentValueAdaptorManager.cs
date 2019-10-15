@@ -59,10 +59,12 @@ namespace BDFramework.UFlux
                 map = TransformStateBind(t, aState);
                 componentValueCacheMap[key] = map;
             }
+
             while (true)
             {
                 var field = aState.GetPropertyChange();
-                if (field == null) break;
+                if (field == null)
+                    break;
                 //开始
                 ComponentValueCahce cvc = null;
                 if (map.TryGetValue(field, out cvc))
@@ -72,12 +74,13 @@ namespace BDFramework.UFlux
                     //执行赋值操作
                     if (cvc.UIBehaviour) //UI操作
                     {
-                        adaptorMap[cvc.ValueBind.Type].SetData(cvc.UIBehaviour,cvc.ValueBind.FieldName,newValue);
+                        adaptorMap[cvc.ValueBind.Type].SetData(cvc.UIBehaviour, cvc.ValueBind.FieldName, newValue);
                     }
                     else if (cvc.Transform) //自定义逻辑管理
                     {
-                        adaptorMap[cvc.ValueBind.Type].SetData(cvc.Transform,cvc.ValueBind.FieldName,newValue);
+                        adaptorMap[cvc.ValueBind.Type].SetData(cvc.Transform, cvc.ValueBind.FieldName, newValue);
                     }
+
                     cvc.LastValue = newValue;
                 }
                 else
@@ -127,8 +130,11 @@ namespace BDFramework.UFlux
                         if (attr != null)
                         {
                             ComponentValueCahce cvc = new ComponentValueCahce();
-                            cvc.UIBehaviour = transform.GetComponent(attr.Type) as UIBehaviour;
-                            if (!cvc.UIBehaviour)
+                            if (attr.Type.IsSubclassOf(typeof(UIBehaviour)))
+                            {
+                                cvc.UIBehaviour = transform.GetComponent(attr.Type) as UIBehaviour;
+                            }
+                            else
                             {
                                 cvc.Transform = transform;
                             }
@@ -142,7 +148,6 @@ namespace BDFramework.UFlux
 
             return retMap;
         }
-
 
 
         /// <summary>
@@ -167,12 +172,13 @@ namespace BDFramework.UFlux
                             cvcMap.Remove(ckey);
                         }
                     }
+
                     if (cvcMap.Count == 0)
                     {
                         componentValueCacheMap.Remove(key);
                     }
-
                 }
+
                 //每n s 清理一次
                 yield return new WaitForSeconds(time);
             }
