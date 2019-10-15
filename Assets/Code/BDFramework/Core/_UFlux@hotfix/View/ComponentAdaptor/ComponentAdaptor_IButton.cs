@@ -12,12 +12,19 @@ namespace BDFramework.UFlux
     [ComponentAdaptorProcessAttribute(typeof(IButton))]
     public class ComponentAdaptor_IButton : AComponentAdaptor
     {
+        public override void Init()
+        {
+            base.Init();
+            setPropActionMap[nameof(IButton.onClick)] = SetProp_OnClick;
+            setPropActionMap[nameof(IButton.onClick.AddListener)] = SetProp_AddListener;
+        }
+
         /// <summary>
         /// 设置回调
         /// 这里有点潜规则，Onclick代表替换，AddListener 代表注册增加监听
         /// </summary>
         /// <param name="value"></param>
-        [ComponentValueAdaptor(nameof(IButton.onClick))]
+      
         private void SetProp_OnClick(UIBehaviour uiBehaviour, object value)
         {
             var btn = uiBehaviour as IButton;
@@ -35,7 +42,6 @@ namespace BDFramework.UFlux
         /// 这里有点潜规则，Onclick代表替换，AddListener 代表注册增加监听 
         /// </summary>
         /// <param name="value"></param>
-        [ComponentValueAdaptor(nameof(IButton.onClick.AddListener))]
         private void SetProp_AddListener(UIBehaviour uiBehaviour, object value)
         {
             var btn = uiBehaviour as IButton;

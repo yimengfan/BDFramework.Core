@@ -83,8 +83,8 @@ public class Window_DemoMain : AWindow
         //代码:
         this.btn_04.onClick.AddListener(() =>
         {
-            BDFramework.UFlux.UIManager.Inst.LoadWindows((int) UFluxWindowEnum.UFluxDemoMain);
-            BDFramework.UFlux.UIManager.Inst.ShowWindow((int) UFluxWindowEnum.UFluxDemoMain);
+            BDFramework.UFlux.UIManager.Inst.LoadWindows( UFluxWindowEnum.UFluxDemoMain);
+            BDFramework.UFlux.UIManager.Inst.ShowWindow(UFluxWindowEnum.UFluxDemoMain);
         });
 
 

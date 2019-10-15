@@ -15,11 +15,15 @@ namespace BDFramework.UFlux
     [ComponentAdaptorProcessAttribute(typeof(DemoScrollRect))]
     public class ComponentAdaptor_ScrollRect : AComponentAdaptor
     {
+        public override void Init()
+        {
+            base.Init();
+            this.setPropActionMap[nameof(DemoScrollRect.Contents)] = SetProp_Contents;
+        }
         /// <summary>
         /// ScrollView的Content
         /// </summary>
         /// <param name="value">value必须是list[AStateBase] 类型 </param>
-        [ComponentValueAdaptor("Contents")]
         private void SetProp_Contents(UIBehaviour uiBehaviour, object value)
         {
             var sr = uiBehaviour as DemoScrollRect;

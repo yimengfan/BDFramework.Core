@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace BDFramework.UI
+namespace BDFramework.UFlux
 {
     /// <summary>
     /// 点击的接口

@@ -34,7 +34,8 @@ namespace BDFramework.UFlux
         /// </summary>
         public class ComponentValueCahce
         {
-            public UIBehaviour UiBehaviour;
+            public UIBehaviour UIBehaviour;
+            public Transform Transform;
             public ComponentValueBind ValueBind;
             public object LastValue;
         }
@@ -69,7 +70,14 @@ namespace BDFramework.UFlux
                     //考虑 是否二次验证值是否改变
                     var newValue = aState.GetValue(field);
                     //执行赋值操作
-                    adaptorMap[cvc.ValueBind.Type].SetData(cvc.UiBehaviour,cvc.ValueBind.FieldName,newValue);
+                    if (cvc.UIBehaviour) //UI操作
+                    {
+                        adaptorMap[cvc.ValueBind.Type].SetData(cvc.UIBehaviour,cvc.ValueBind.FieldName,newValue);
+                    }
+                    else if (cvc.Transform) //自定义逻辑管理
+                    {
+                        adaptorMap[cvc.ValueBind.Type].SetData(cvc.Transform,cvc.ValueBind.FieldName,newValue);
+                    }
                     cvc.LastValue = newValue;
                 }
                 else
@@ -119,7 +127,11 @@ namespace BDFramework.UFlux
                         if (attr != null)
                         {
                             ComponentValueCahce cvc = new ComponentValueCahce();
-                            cvc.UiBehaviour = transform.GetComponent(attr.Type) as UIBehaviour;
+                            cvc.UIBehaviour = transform.GetComponent(attr.Type) as UIBehaviour;
+                            if (!cvc.UIBehaviour)
+                            {
+                                cvc.Transform = transform;
+                            }
                             cvc.ValueBind = attr;
                             //缓存
                             retMap[mi.Name] = cvc;
@@ -150,7 +162,7 @@ namespace BDFramework.UFlux
                     foreach (var ckey in cvcMapkeys)
                     {
                         var cvc = cvcMap[ckey];
-                        if (!cvc.UiBehaviour)
+                        if (!cvc.UIBehaviour)
                         {
                             cvcMap.Remove(ckey);
                         }

@@ -40,7 +40,7 @@ namespace Code.Game.demo6_UFlux
             btn_02.onClick.AddListener(() =>
             {
                 Debug.Log("Flux demo2,点击这里追踪代码!");
-                UIManager.Inst.LoadWindows((int)UFluxWindowEnum.UFluxTest002);
+                UIManager.Inst.LoadWindows(UFluxWindowEnum.UFluxTest002);
             });
             
         }

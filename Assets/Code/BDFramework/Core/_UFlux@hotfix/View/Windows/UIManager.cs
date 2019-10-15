@@ -65,7 +65,7 @@ namespace BDFramework.UFlux
         /// 加载窗口
         /// </summary>
         /// <param name="uiIndexs">窗口枚举</param>
-        public void LoadWindows(params int[] uiIndexs)
+        public void LoadWindows(params Enum[] uiIndexs)
         {
             foreach (var i in uiIndexs)
             {
@@ -103,7 +103,7 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <param name="indexes"></param>
         /// <param name="loadProcessAction"></param>
-        public void AsyncLoadWindows(List<int> indexes, Action<int, int> loadProcessAction)
+        public void AsyncLoadWindows(List<Enum> indexes, Action<int, int> loadProcessAction)
         {
             //去重操作
             indexes = indexes.Distinct().ToList();
@@ -226,7 +226,7 @@ namespace BDFramework.UFlux
         /// 显示窗口
         /// </summary>
         /// <param name="uiIndex">窗口枚举</param>
-        public void ShowWindow(int index, bool resetMask = true, UILayer layer = UILayer.Bottom)
+        public void ShowWindow(Enum index, bool resetMask = true, UILayer layer = UILayer.Bottom)
         {
             int uiIndex = index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
@@ -277,7 +277,7 @@ namespace BDFramework.UFlux
         /// 关闭窗口
         /// </summary>
         /// <param name="uiIndex">窗口枚举</param>
-        public void CloseWindow(int index, bool isMask = true)
+        public void CloseWindow(Enum index, bool isMask = true)
         {
             var uiIndex = index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
