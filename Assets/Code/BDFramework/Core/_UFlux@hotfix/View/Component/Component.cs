@@ -58,7 +58,16 @@ namespace BDFramework.UFlux
             
         }
         
-
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="trans"></param>
+        public Component(Transform trans)
+        {
+            this.Transform = trans;
+            //创建State
+            this.Props = new T();
+        }
         /// <summary>
         /// 这里重载一个构造函数
         /// </summary>
@@ -70,12 +79,7 @@ namespace BDFramework.UFlux
             this.Props = new T();
         }
 
-        public Component(Transform trans)
-        {
-            this.Transform = trans;
-            //创建State
-            this.Props = new T();
-        }
+   
 
         private string resPath = null;
 

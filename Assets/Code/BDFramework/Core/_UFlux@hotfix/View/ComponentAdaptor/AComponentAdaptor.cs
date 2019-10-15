@@ -11,7 +11,7 @@ namespace BDFramework.UFlux
         protected Dictionary<string, Action<UIBehaviour, object>> setPropActionMap =
             new Dictionary<string, Action<UIBehaviour, object>>();
 
-        protected Dictionary<string, Action<Transform, object>> setPropCustomActionMap =
+        protected Dictionary<string, Action<Transform, object>> setPropCustomAdaptorMap =
             new Dictionary<string, Action<Transform, object>>();
 
         public AComponentAdaptor()
@@ -57,7 +57,7 @@ namespace BDFramework.UFlux
         public virtual void SetData(Transform transform, string propName, object propValue)
         {
             Action<Transform, object> action = null;
-            this.setPropCustomActionMap.TryGetValue(propName, out action);
+            this.setPropCustomAdaptorMap.TryGetValue(propName, out action);
             if (action != null)
             {
                 action(transform, propValue);
