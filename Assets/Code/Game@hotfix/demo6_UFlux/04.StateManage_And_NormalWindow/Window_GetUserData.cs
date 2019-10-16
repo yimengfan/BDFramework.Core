@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace BDFramework.UFlux.Test
 {
-    [UI((int)UFluxWindowEnum.UFluxTest003,"Windows/UFlux/demo003/Window_FluxTest003")]
+    [UI((int)UFluxWindowEnum.UFluxTest003,"Windows/UFlux/demo004/Window_FluxTest003")]
     public class Window_GetUserData : AWindow<Props_UserBag, UserDataState>
     {
         /// <summary>

@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using BDFramework.Mgr;
+using BDFramework.UFlux.View.Props;
 using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -101,8 +102,8 @@ namespace BDFramework.UFlux
         {
             Dictionary<string, ComponentValueCahce> retMap = new Dictionary<string, ComponentValueCahce>();
             //所有的成员信息
-            var map = StateFactory.GetCache(aState.GetType());
-            foreach (var mi in map.Values)
+            var menberInfos = StateFactory.GetCache(aState.GetType());
+            foreach (var mi in menberInfos.Values)
             {
                 //先寻找节点 
                 Transform transform = null;
@@ -125,7 +126,7 @@ namespace BDFramework.UFlux
                 {
                     ComponentValueCahce cvc = new ComponentValueCahce();
                     var attrs = mi.GetCustomAttributes(typeof(ComponentValueBind), false);
-                    if (attrs.Length > 0)
+                    if (attrs.Length > 0)  //寻找ComponentValueBind
                     {
                         var attr = attrs[0] as ComponentValueBind;
                         if (attr != null)
@@ -141,6 +142,22 @@ namespace BDFramework.UFlux
                             }
                             cvc.ValueBind = attr;
                         }
+                    }
+                    else  //如果只有Transform 没有ComponentValueBind标签，处理默认逻辑
+                    {
+
+                        if (mi.ReflectedType.IsSubclassOf(typeof(PropsBase)))
+                        {
+                            //填充 子节点赋值逻辑
+                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic),nameof(UFluxAutoLogic.SetChildValue));
+                        }
+                        else if (mi.ReflectedType.HasElementType && mi.ReflectedType.GetElementType().IsSubclassOf(typeof(PropsBase))) //props 数组
+                        {
+                            //填充 数组子节点赋值逻辑
+                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic),nameof(UFluxAutoLogic.ForeahSetChildValue));
+                        }
+                        
+                        cvc.Transform = transform;
                     }
                     //缓存
                     retMap[mi.Name] = cvc;
