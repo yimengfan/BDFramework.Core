@@ -35,7 +35,6 @@ namespace BDFramework.UFlux
             setPropCustomAdaptorMap[nameof(UFluxAutoLogic.ForeahSetChildValue)] = ForeahSetChildValueFormArray;
         }
 
-
         /// <summary>
         /// 设置属性
         /// </summary>
@@ -44,6 +43,12 @@ namespace BDFramework.UFlux
         private void SetChildValue(Transform transform, object value)
         {
             var props = value as PropsBase;
+            if (props == null)
+            {
+                Debug.LogError("类型不是props:" + value.GetType().Name);
+                return;
+            }
+
             UFlux.SetComponentValue(transform, props);
         }
 
@@ -79,12 +84,12 @@ namespace BDFramework.UFlux
                 count++;
             }
 
-
-            
-                //数据不够的隐藏
-            for (int i = count - 1; i < transform.childCount; i++)
+            for (int i = 0; i < transform.childCount; i++)
             {
-                transform.GetChild(count).gameObject.SetActive(false);
+                if (i > count - 1)
+                    transform.GetChild(i).gameObject.SetActive(false);
+                else
+                    transform.GetChild(i).gameObject.SetActive(true);
             }
         }
     }

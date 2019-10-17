@@ -12,7 +12,8 @@ using UnityEngine.EventSystems;
 
 namespace BDFramework.UFlux
 {
-    public class ComponentValueAdaptorManager : ManagerBase<ComponentValueAdaptorManager, ComponentAdaptorProcessAttribute>
+    public class
+        ComponentValueAdaptorManager : ManagerBase<ComponentValueAdaptorManager, ComponentAdaptorProcessAttribute>
     {
         Dictionary<Type, AComponentAdaptor> adaptorMap = new Dictionary<Type, AComponentAdaptor>();
 
@@ -35,14 +36,15 @@ namespace BDFramework.UFlux
         /// </summary>
         public class ComponentValueCahce
         {
-            public UIBehaviour UIBehaviour;
-            public Transform Transform;
+            public UIBehaviour        UIBehaviour;
+            public Transform          Transform;
             public ComponentValueBind ValueBind;
-            public object LastValue;
+            public object             LastValue;
         }
 
         //
-        Dictionary<int, Dictionary<string, ComponentValueCahce>> componentValueCacheMap = new Dictionary<int, Dictionary<string, ComponentValueCahce>>();
+        Dictionary<int, Dictionary<string, ComponentValueCahce>> componentValueCacheMap =
+            new Dictionary<int, Dictionary<string, ComponentValueCahce>>();
 
         /// <summary>
         /// 设置属性
@@ -54,10 +56,10 @@ namespace BDFramework.UFlux
             //第一次进行缓存绑定后，就不再重新解析了，
             //所以使用者要保证每次的 state尽量是一致的
             Dictionary<string, ComponentValueCahce> map = null;
-            var key = t.GetInstanceID();
+            var                                     key = t.GetInstanceID();
             if (!componentValueCacheMap.TryGetValue(key, out map))
             {
-                map = TransformStateBind(t, aState);
+                map                         = TransformStateBind(t, aState);
                 componentValueCacheMap[key] = map;
             }
 
@@ -102,8 +104,8 @@ namespace BDFramework.UFlux
         {
             Dictionary<string, ComponentValueCahce> retMap = new Dictionary<string, ComponentValueCahce>();
             //所有的成员信息
-            var menberInfos = StateFactory.GetCache(aState.GetType());
-            foreach (var mi in menberInfos.Values)
+            var memberInfos = StateFactory.GetCache(aState.GetType());
+            foreach (var mi in memberInfos.Values)
             {
                 //先寻找节点 
                 Transform transform = null;
@@ -124,14 +126,13 @@ namespace BDFramework.UFlux
                 }
                 //再进行值绑定
                 {
-                    ComponentValueCahce cvc = new ComponentValueCahce();
-                    var attrs = mi.GetCustomAttributes(typeof(ComponentValueBind), false);
-                    if (attrs.Length > 0)  //寻找ComponentValueBind
+                    ComponentValueCahce cvc   = new ComponentValueCahce();
+                    var                 attrs = mi.GetCustomAttributes(typeof(ComponentValueBind), false);
+                    if (attrs.Length > 0) //寻找ComponentValueBind
                     {
                         var attr = attrs[0] as ComponentValueBind;
                         if (attr != null)
                         {
-                          
                             if (attr.Type.IsSubclassOf(typeof(UIBehaviour)))
                             {
                                 cvc.UIBehaviour = transform.GetComponent(attr.Type) as UIBehaviour;
@@ -140,25 +141,55 @@ namespace BDFramework.UFlux
                             {
                                 cvc.Transform = transform;
                             }
+
                             cvc.ValueBind = attr;
                         }
                     }
-                    else  //如果只有Transform 没有ComponentValueBind标签，处理默认逻辑
+                    else //如果只有Transform 没有ComponentValueBind标签，处理默认逻辑
                     {
+                        Type type = null;
 
-                        if (mi.ReflectedType.IsSubclassOf(typeof(PropsBase)))
+                        if (mi is FieldInfo)
+                        {
+                            type = ((FieldInfo) mi).FieldType;
+                        }
+                        else if (mi is PropertyInfo)
+                        {
+                            type = ((PropertyInfo) mi).PropertyType;
+                        }
+
+
+                        if (type.IsSubclassOf(typeof(PropsBase)))
                         {
                             //填充 子节点赋值逻辑
-                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic),nameof(UFluxAutoLogic.SetChildValue));
+                            cvc.ValueBind =
+                                new ComponentValueBind(typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.SetChildValue));
                         }
-                        else if (mi.ReflectedType.HasElementType && mi.ReflectedType.GetElementType().IsSubclassOf(typeof(PropsBase))) //props 数组
+                        else
                         {
+                            //props 数组
+                            if (type.IsArray && 
+                                type.GetElementType().IsSubclassOf(typeof(PropsBase))) //数组
+                            {
+                                cvc.ValueBind =
+                                    new ComponentValueBind(typeof(UFluxAutoLogic),
+                                                           nameof(UFluxAutoLogic.ForeahSetChildValue));
+                            }
+                            //泛型
+                            else if (type.IsGenericType &&
+                                     type.GetGenericArguments()[0].IsSubclassOf(typeof(PropsBase))) //泛型
+                            {
+                                cvc.ValueBind =
+                                    new ComponentValueBind(typeof(UFluxAutoLogic),
+                                                           nameof(UFluxAutoLogic.ForeahSetChildValue));
+                            }
+
                             //填充 数组子节点赋值逻辑
-                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic),nameof(UFluxAutoLogic.ForeahSetChildValue));
                         }
-                        
+
                         cvc.Transform = transform;
                     }
+
                     //缓存
                     retMap[mi.Name] = cvc;
                 }

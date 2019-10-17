@@ -5,5 +5,6 @@
         UFluxDemoMain=0,
         UFluxTest002,
         UFluxTest003,
+        UFluxTest005,
     }
 }
