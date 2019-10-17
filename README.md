@@ -1,6 +1,6 @@
 # 简介(Introduction)
-Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries
-<br>Version:Unity2018.4
+Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries  
+# Version:Unity2018.4.10f1
 ## 8月新开技术交流、艺术鉴赏群:763141410
 QQ Group:763141410
 <br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
