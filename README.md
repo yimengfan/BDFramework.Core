@@ -1,6 +1,11 @@
 # 简介(Introduction)
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries  
 # Version:Unity2018.4.10f1
+## 文档(Document)
+ [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
+ <br>[English Wiki](http://www.nekosang.com)
+## 博客（Blog）
+[ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
 ## 8月新开技术交流、艺术鉴赏群:763141410
 QQ Group:763141410
 <br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
@@ -23,11 +28,7 @@ email: 755737878@qq.com
 1.Assetbundle管理，修改为全hash管理  
 [debuger]  
 1.增加新UI系统UFlux  
-## 文档(Document)
- [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
- <br>[English Wiki](http://www.nekosang.com)
-## 博客（Blog）
-[ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
+
 ## v1.0版本计划(v1.0 Plan)
 <br> 2019.12 加入后端框架基于Web架构, Asp .Net Core
 <br> 其实Web服务器能解决90%的游戏业务(基于分布式架构，部分业务如战斗可以开单独的服务器作计算节点),
