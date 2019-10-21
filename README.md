@@ -5,7 +5,7 @@ Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a colle
  [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
  <br>[English Wiki](http://www.nekosang.com)
 ## 博客（Blog）
-[ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
+[ Blog ](https://zhuanlan.zhihu.com/c_177032018)
 ## 8月新开技术交流、艺术鉴赏群:763141410
 QQ Group:763141410
 <br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
