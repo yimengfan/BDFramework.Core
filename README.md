@@ -1,10 +1,16 @@
 # 简介(Introduction)
-Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries
-<br>Version:Unity2018.4
+Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries  
+# Version:Unity2018.4.10f1
+## 文档(Document)
+ [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
+ <br>[English Wiki](http://www.nekosang.com)
+## 博客（Blog）
+[ Blog ](https://zhuanlan.zhihu.com/c_177032018)
 ## 8月新开技术交流、艺术鉴赏群:763141410
 QQ Group:763141410
 <br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
-<br>任何问题直接提issue,24小时内必解决
+<br>任何问题直接提issue,24小时内必解决  
+ 码云地址: https://gitee.com/yimengfan/BDFramework.Core  ,速度慢下这个(顺便讨个赞)
 # 依赖的插件(Dpendent plugins)
 使用了以下收费插件,请自行购买下载：  
 The following charging plug-ins are used. Please purchase and download them yourself.  
@@ -16,29 +22,18 @@ Debug  version: 1.0.1(already merged)
 Note: All bug fixes and new features will be submitted to the Debug branch first. The period to be audited is one month, and stability will be merged with the main branch.  
 [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
 ### Lastest:  
-2019.9.16 15：00  
-email: 755737878@qq.com
-【Change】  
-1.优化Assetbundle模式加载效率  
-2.重新组织目录结构  
-【Feature】  
-1.增加一个网络调试器 *  
-2.增加BDFramewok配置编辑器 *  
-3.增加一键打包选项，并开始兼容Jekins  
-4.增加Odin编辑器的使用（项目中不提供，自行购买下载）  
-【bug】  
-1.修复litjson不能反序列化父类的 private set成员。  
-2.优化若干使用调用不合理地方  
-## 文档(Document)
- [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
- <br>[English Wiki](http://www.nekosang.com)
-## 博客（Blog）
-[ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
+2019.10.8 20.00  
+email: 755737878@qq.com  
+[master]  
+1.Assetbundle管理，修改为全hash管理  
+[debuger]  
+1.增加新UI系统UFlux  
+
 ## v1.0版本计划(v1.0 Plan)
-<br> 2019.12 加入后端框架基于Web架构,Asp.NetCore
-<br>      其实Web服务器能解决90%的游戏业务(基于分布式架构，部分业务如战斗可以开单独的服务器作计算节点),
+<br> 2019.12 加入后端框架基于Web架构, Asp .Net Core
+<br> 其实Web服务器能解决90%的游戏业务(基于分布式架构，部分业务如战斗可以开单独的服务器作计算节点),
 <br> 更主要是Web服务器工作流更完善、解决方案更多、更省服务器资源（钱),
-<br> 2019.10 完成UI工作流的升级和重构(兼容老版本)
+<br> ~~2019.10 完成UI工作流的升级和重构(兼容老版本)~~
 <br> ~~2019.6.30之前 完成新文档的编写(已完成)
 <br> 2018.7 热更新工具整合：代码更新及工具(已完成)
 <br> 2018.8 热更新工具整合：资源更新（已完成）~~
