@@ -18,8 +18,8 @@ namespace ILRuntime.Runtime.CLRBinding
             {
                 return true;
             }
-            if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
-                return true;
+//            if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
+//                return true;
             return false;
         }
 
@@ -60,12 +60,12 @@ namespace ILRuntime.Runtime.CLRBinding
                     {
                         return true;
                     }
-                    if (prop.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
-                        return true;
+//                    if (prop.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
+//                        return true;
                 }
             }
-            if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
-                return true;
+//            if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
+//                return true;
             foreach (var j in param)
             {
                 if (j.ParameterType.IsPointer)
