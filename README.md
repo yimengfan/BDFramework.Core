@@ -1,3 +1,4 @@
+![image](https://github.com/yimengfan/BDFramework.Core/blob/master/BDTemp/Img/logo.png)
 # 简介(Introduction)
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries  
 ### 热更项目的开发,只需要轻轻一点，一键帮你完成~
