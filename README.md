@@ -1,10 +1,17 @@
 # 简介(Introduction)
-Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries
-<br>Version:Unity2018.4
+Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries  
+### 热更项目的开发,只需要轻轻一点，一键帮你完成~
+### Version:Unity2018.4.10f1
+## 文档(Document)
+ [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
+ <br>[English Wiki](http://www.nekosang.com)
+## 博客（Blog）
+[ Blog ](https://zhuanlan.zhihu.com/c_177032018)
 ## 8月新开技术交流、艺术鉴赏群:763141410
 QQ Group:763141410
 <br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
-<br>任何问题直接提issue,24小时内必解决
+<br>任何问题直接提issue,24小时内必解决  
+ 码云地址: https://gitee.com/yimengfan/BDFramework.Core  ,速度慢下这个(顺便讨个赞)
 # 依赖的插件(Dpendent plugins)
 使用了以下收费插件,请自行购买下载：  
 The following charging plug-ins are used. Please purchase and download them yourself.  
@@ -17,16 +24,12 @@ Note: All bug fixes and new features will be submitted to the Debug branch first
 [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
 ### Lastest:  
 2019.10.8 20.00  
-email: 755737878@qq.com
-[master]
-1.Assetbundle管理，修改为全hash管理
-[debuger]
-1.增加新UI系统UFlux
-## 文档(Document)
- [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
- <br>[English Wiki](http://www.nekosang.com)
-## 博客（Blog）
-[ Blog ](https://github.com/yimengfan/BDFramework.Core/wiki/Blog)
+email: 755737878@qq.com  
+[master]  
+1.Assetbundle管理，修改为全hash管理  
+[debuger]  
+1.增加新UI系统UFlux  
+
 ## v1.0版本计划(v1.0 Plan)
 <br> 2019.12 加入后端框架基于Web架构, Asp .Net Core
 <br> 其实Web服务器能解决90%的游戏业务(基于分布式架构，部分业务如战斗可以开单独的服务器作计算节点),
