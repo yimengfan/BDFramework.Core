@@ -28,8 +28,7 @@ Note: All bug fixes and new features will be submitted to the Debug branch first
 ### Lastest:  
 2019.11.8 20.00  
 email: 755737878@qq.com  
-[debug分支]
-2019.11.8
+[debug分支]   
 1.修复部分机器,roslyn命名空间的额报错  
 2.增加构建dll时候，base.dll检测是否访问hotfix内容   
 3.修复一个修改hash导致的,ab自动依赖失败  
