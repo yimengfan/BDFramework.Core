@@ -1,11 +1,13 @@
-<img src="https://github.com/yimengfan/BDFramework.Core/blob/master/BDTemp/Img/logo.png" width = "280" height = "100" div align=center /> 
-# 简介(Introduction)
+<img src="https://github.com/yimengfan/BDFramework.Core/blob/master/BDTemp/Img/logo.png" width = "280" height = "100" div align=left/>
+
+# 简介(Introduction)  
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries  
-### 热更项目的开发,只需要轻轻一点，一键帮你完成~
-### Version:Unity2018.4.10f1
-## 文档(Document)
- [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)
- <br>[English Wiki](http://www.nekosang.com)
+
+### 热更项目的开发,只需要轻轻一点，一键帮你完成~  
+### Version:Unity2018.4.10f1  
+## 文档(Document)  
+ [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
+ [English Wiki](http://www.nekosang.com)
 ## 博客（Blog）
 [ Blog ](https://zhuanlan.zhihu.com/c_177032018)
 ## 8月新开技术交流、艺术鉴赏群:763141410
