@@ -1,4 +1,4 @@
-<img src="https://github.com/yimengfan/BDFramework.Core/blob/master/BDTemp/Img/logo.png" width = "280" height = "100" div align=right/>
+<img src="https://github.com/yimengfan/BDFramework.Core/blob/master/BDTemp/Img/logo.png" width = "280" height = "100" div align=right />
 
 # 简介(Introduction)
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries  
