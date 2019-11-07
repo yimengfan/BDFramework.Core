@@ -6,8 +6,14 @@ Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a colle
 ### 热更项目的开发,只需要轻轻一点，一键帮你完成~  
 ### Version:Unity2018.4.10f1  
 ## 文档(Document)  
- [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
- [English Wiki](http://www.nekosang.com)
+ #### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
+ #### [English Wiki](http://www.nekosang.com)  
+ ### [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
+### Lastest:  2019.11.8 20.00  
+注:所有bug修复和新特性加入会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。
+Note: All bug fixes and new features will be submitted to the Debug branch first. The period to be audited is one month, and stability will be merged with the main branch.
+### Lastest: 2019.11.8 20.00
+
 ## 博客（Blog）
 [ Blog ](https://zhuanlan.zhihu.com/c_177032018)
 ## 8月新开技术交流、艺术鉴赏群:763141410
@@ -19,12 +25,6 @@ QQ Group:763141410
 使用了以下收费插件,请自行购买下载：  
 The following charging plug-ins are used. Please purchase and download them yourself.  
 <br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
-# 更新日志（Update Note）
-注:所有bug修复和新特性加入会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。    
-Note: All bug fixes and new features will be submitted to the Debug branch first. The period to be audited is one month, and stability will be merged with the main branch.  
-[  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
-
-### Lastest:  2019.11.8 20.00  
 
 ## v1.0版本计划(v1.0 Plan)
 <br> 2019.12 加入后端框架基于Web架构, Asp .Net Core
