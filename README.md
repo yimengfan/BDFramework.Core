@@ -20,18 +20,11 @@ QQ Group:763141410
 The following charging plug-ins are used. Please purchase and download them yourself.  
 <br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
 # 更新日志（Update Note）
-Master version: 1.0.1  
-Debug  version: 1.0.1(already merged)  
 注:所有bug修复和新特性加入会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。    
 Note: All bug fixes and new features will be submitted to the Debug branch first. The period to be audited is one month, and stability will be merged with the main branch.  
 [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
-### Lastest:  
-2019.11.8 20.00  
-email: 755737878@qq.com  
-[debug分支]   
-1.修复部分机器,roslyn命名空间的额报错  
-2.增加构建dll时候，base.dll检测是否访问hotfix内容   
-3.修复一个修改hash导致的,ab自动依赖失败  
+
+### Lastest:  2019.11.8 20.00  
 
 ## v1.0版本计划(v1.0 Plan)
 <br> 2019.12 加入后端框架基于Web架构, Asp .Net Core
