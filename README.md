@@ -6,6 +6,7 @@ Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a colle
 #### 热更项目的开发,只需要轻轻一点，一键帮你完成~  
 
 ## 文档(Document)  
+ #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
  #### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
  #### [English Wiki](http://www.nekosang.com)  
  ### [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
@@ -13,8 +14,7 @@ Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a colle
 注:所有bug修复和新特性加入会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。
 Note: All bug fixes and new features will be submitted to the Debug branch first. The period to be audited is one month, and stability will be merged with the main branch.
 
-## 博客（Blog）
-[ Blog ](https://zhuanlan.zhihu.com/c_177032018)
+
 ## 8月新开技术交流、艺术鉴赏群:763141410
 QQ Group:763141410
 <br>If you find a bug or have some suggestions,please make issue! I'll get back to you!
