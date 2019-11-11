@@ -11,11 +11,14 @@ Properties {
 }
 
 SubShader {
-    Tags {"Queue"="Transparent" }
+    Tags {"RenderType"="Opaque" "Queue"="Geometry" }
     LOD 100
-    ZWrite Off
-
+//    Pass{
+//        ZWrite on
+//        ColorMask 0
+//    }
     Pass {
+        ZWrite Off
         CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag

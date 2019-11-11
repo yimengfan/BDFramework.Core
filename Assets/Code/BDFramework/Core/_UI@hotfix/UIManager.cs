@@ -16,9 +16,11 @@ namespace BDFramework.UI
         Top
     }
 
+    
     /// <summary>
     /// UI管理类
     /// </summary>
+    [Obsolete("please use new uiframe: uflux.")]
     public class UIManager : ManagerBase<UIManager, UIAttribute>
     {
         /// <summary>
@@ -48,7 +50,7 @@ namespace BDFramework.UI
         //
         private AWindow CreateWindow(int uiIndex)
         {
-            var classData = this.GetCalssData(uiIndex.ToString());
+            var classData = this.GetClassData(uiIndex);
             if (classData == null)
             {
                 Debug.LogError("未注册窗口，无法加载:" + uiIndex);
@@ -91,9 +93,18 @@ namespace BDFramework.UI
                     else
                     {
                         windowMap[index] = window;
-
-                        window.Load();
-
+#if UNITY_EDITOR
+                        try
+                        {
+#endif
+                            window.Load();
+#if UNITY_EDITOR
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogError("Init窗口失败:" + window.Transform.name);
+                        }
+#endif
                         window.Transform.SetParent(this.Bottom, false);
                         PushCaheData(index);
                     }
@@ -239,12 +250,15 @@ namespace BDFramework.UI
                     switch (layer)
                     {
                         case UILayer.Bottom:
+                            // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Bottom, false);
                             v.Transform.SetParent(this.Bottom, false);
                             break;
                         case UILayer.Center:
+                            // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Center, false);
                             v.Transform.SetParent(this.Center, false);
                             break;
                         case UILayer.Top:
+                            // UIWidgetMgr.Inst.Widget_Mask.Transform.SetParent(this.Top, false);
                             v.Transform.SetParent(this.Top, false);
                             break;
                         default:
@@ -276,11 +290,16 @@ namespace BDFramework.UI
             return win;
         }
 
+        public void CloseWindow(Enum index)
+        {
+            CloseWindow(index.GetHashCode());
+        }
+
         /// <summary>
         /// 关闭窗口
         /// </summary>
         /// <param name="uiIndex">窗口枚举</param>
-        public void CloseWindow(int index, bool isMask = true)
+        public void CloseWindow(int index)
         {
             var uiIndex = index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
@@ -289,10 +308,6 @@ namespace BDFramework.UI
                 if (!v.IsClose && v.IsLoad)
                 {
                     v.Close();
-                }
-                else
-                {
-//                    Debug.LogErrorFormat("UI未加载或已经处于close状态：{0}", uiIndex);
                 }
             }
             else

@@ -5,11 +5,13 @@ using UnityEngine;
 using BDFramework.ScreenView;
 using BDFramework.Sql;
 using BDFramework.UI;
+using Code.Game;
+using UnityEditor;
 
-[ScreenView("main",true)]
+[ScreenView((int)ScreenViewEnum.Main)]
 public class ScreenView_Main : IScreenView
 {
-    public string Name { get; private set; }
+    public int Name { get; private set; }
     public bool IsLoad { get; private set;     }
 
     public void BeginInit()
@@ -21,6 +23,8 @@ public class ScreenView_Main : IScreenView
         UIManager.Inst.LoadWindows((int) WinEnum.Win_Main);
         UIManager.Inst.ShowWindow((int) WinEnum.Win_Main);
         Debug.Log("进入main");
+        
+        
     }
 
     public void BeginExit()

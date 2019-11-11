@@ -909,6 +909,7 @@ namespace ILRuntime.Runtime.Intepreter
                             #endregion
 
                             #region Althemetics
+                            case OpCodeEnum.Add_Ovf:
                             case OpCodeEnum.Add:
                                 {
                                     b = esp - 1;

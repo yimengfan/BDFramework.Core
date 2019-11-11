@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace BDFramework.UI
 {
+    [Obsolete("please use new uiframe: uflux.")]
     public class SubWindow : AWindow
     {
         public SubWindow(Transform transform) : base(transform)

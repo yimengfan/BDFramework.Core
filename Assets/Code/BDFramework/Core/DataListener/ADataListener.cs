@@ -6,15 +6,8 @@ using UnityEngine;
 
 namespace BDFramework.DataListener
 {
-
     abstract public class ADataListener
     {
-        public class CallBackCache
-        {
-            public Action<object> CallBack;
-            public object Param;
-        }
-
         /// <summary>
         /// 所有的数据
         /// </summary>
@@ -32,6 +25,9 @@ namespace BDFramework.DataListener
         /// 注册事件缓存
         /// </summary>
         protected Dictionary<string, List<object>> valueCacheMap;
+
+        //最大缓存条数
+        private int maxCacheValueCount = 20;
 
         public ADataListener()
         {
@@ -66,7 +62,7 @@ namespace BDFramework.DataListener
         {
             if (dataMap.ContainsKey(name))
             {
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
 
                 var lastV = dataMap[name];
                 if (lastV != null)
@@ -75,11 +71,11 @@ namespace BDFramework.DataListener
                     var nowT = value.GetType();
                     if (lastT != nowT)
                     {
-                        Debug.LogErrorFormat("设置失败,类型不匹配:{0}  curType:{1}  setType:{2}", name,lastT.Name, nowT.Name);
+                        Debug.LogErrorFormat("设置失败,类型不匹配:{0}  curType:{1}  setType:{2}", name, lastT.Name, nowT.Name);
                         return;
                     }
                 }
-                #endif
+#endif
                 dataMap[name] = value;
             }
             else
@@ -103,7 +99,6 @@ namespace BDFramework.DataListener
                         onceCallbackMap[name].Remove(a);
                         a(value);
                     }
-                   
                 }
 
                 if (callbackMap.TryGetValue(name, out actions))
@@ -114,20 +109,22 @@ namespace BDFramework.DataListener
                         a(value);
                     }
                 }
-                else
+                else //cache list
                 {
                     List<object> list = null;
                     valueCacheMap.TryGetValue(name, out list);
                     if (list == null)
                     {
                         list = new List<object>();
-                        list.Add(value);
                         valueCacheMap[name] = list;
                     }
-                    else
+
+                    if (list.Count >= maxCacheValueCount)
                     {
-                        list.Add(value);
+                        list.RemoveAt(0);
                     }
+
+                    list.Add(value);
                 }
 
                 //
@@ -226,7 +223,8 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        virtual public void AddListenerOnce(string name, Action<object> callback = null,
+        virtual public void AddListenerOnce(string name,
+            Action<object> callback = null,
             bool isTriggerCacheData = false)
         {
             if (dataMap.ContainsKey(name) == false)
@@ -321,6 +319,5 @@ namespace BDFramework.DataListener
         {
             return this.dataMap.ContainsKey(name);
         }
-
     }
 }

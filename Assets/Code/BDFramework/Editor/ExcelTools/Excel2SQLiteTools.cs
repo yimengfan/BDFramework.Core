@@ -5,6 +5,7 @@ using System.Runtime.Remoting.Messaging;
 using BDFramework.Helper;
 using LitJson;
 using BDFramework.Sql;
+using Code.BDFramework.Core.Tools;
 using SQLite4Unity3d;
 using UnityEditor;
 using UnityEngine;
@@ -134,7 +135,7 @@ namespace BDFramework.Editor.TableData
             var table = Path.GetFileName(f).Replace(Path.GetExtension(f), "");
             var classname = "Game.Data." + table;
             var jsonObj = JsonMapper.ToObject(json);
-            var assPath = IPath.Combine(Application.dataPath.Replace("/Assets", ""),
+            var assPath = IPath.Combine(BApplication.projroot,
                 "Library/ScriptAssemblies/Assembly-CSharp.dll");
             var ass = Assembly.LoadFile(assPath);
             //

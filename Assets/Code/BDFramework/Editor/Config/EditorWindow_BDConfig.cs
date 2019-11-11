@@ -25,6 +25,7 @@ namespace Code.BDFramework.Editor
             editorConfig.Save();
         }
         
+        [InlinePropertyAttribute]
         [LabelText("框架配置")]
         public BDEditorConfig editorConfig;
 

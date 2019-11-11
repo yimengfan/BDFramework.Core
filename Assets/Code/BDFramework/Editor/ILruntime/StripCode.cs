@@ -24,7 +24,7 @@ namespace Tool
                typeof(UnityEngine.GameObject).Assembly,
                typeof(UnityEngine.UI.Button).Assembly,          
                //添加一个主工程用的类
-               typeof(BDFramework.UI.IButton).Assembly,
+               typeof(BDFramework.UFlux.IButton).Assembly,
                //添加一个系统的类
                typeof(System.Object).Assembly,            
            };

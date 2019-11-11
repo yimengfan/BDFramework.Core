@@ -31,7 +31,7 @@ namespace BDFramework.ScreenView
         /// <summary>
         /// 所有的view
         /// </summary>
-        Dictionary<string, IScreenView> allViews = new Dictionary<string, IScreenView>();
+        Dictionary<int, IScreenView> allViews = new Dictionary<int, IScreenView>();
 
         /// <summary>
         /// 显示中的IScreenView列表
@@ -42,7 +42,7 @@ namespace BDFramework.ScreenView
         /// </summary>
         /// <param name="svName">IScreenView名称</param>
         /// <returns></returns>
-        public IScreenView GetScreenView(string svName)
+        public IScreenView GetScreenView(int svName)
         {
             IScreenView sv = null;
             //遍历显示中的IScreenView列表,找到直接跳出
@@ -77,19 +77,25 @@ namespace BDFramework.ScreenView
         /// <para>注册IScreenView,默认添加到未使用的IScreenView列表</para>
         /// </summary>
         /// <param name="creator"></param>
-        public void RegScreen(IScreenView view)
+        public void RegisterScreen(IScreenView view)
         {
             allViews.Add(view.Name, view);
         }
 
 
         private IScreenView currentView = null;
+
+        public void BeginNavTo(Enum name)
+        {
+            BeginNavTo(name.GetHashCode());
+        }
+
         /// <summary>
         /// 灵魂功能，导航到一个指定名称的ScreenView，可能是向前，也可能是向后
         /// </summary>
         /// <param name="_name"></param>
         /// <param name="onLoad"></param>
-        public void BeginNavTo(string name)
+        public void BeginNavTo(int name)
         {
             //
             if (currentView != null && currentView.Name == name)

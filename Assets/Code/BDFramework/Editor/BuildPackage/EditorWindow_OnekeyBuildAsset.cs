@@ -106,7 +106,7 @@ namespace BDFramework.Editor.BuildPackage
                             //1.编译脚本
                             try
                             {
-                                ScriptBuildTools.BuildDll(Application.dataPath, outPath);
+                                ScriptBuildTools.BuildDll(Application.dataPath, outPath, ScriptBuildTools.BuildMode.Release);
                                 EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis();
                             }
                             catch (Exception e)
@@ -146,7 +146,7 @@ namespace BDFramework.Editor.BuildPackage
                             //1.编译脚本
                             try
                             {
-                                ScriptBuildTools.BuildDll(Application.dataPath, outPath);
+                                ScriptBuildTools.BuildDll(Application.dataPath, outPath, ScriptBuildTools.BuildMode.Release);
                                 EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis();
                             }
                             catch (Exception e)
@@ -212,7 +212,7 @@ namespace BDFramework.Editor.BuildPackage
         {
             var outPath = outpath + "/" + BDUtils.GetPlatformPath(platform);
             //1.编译脚本
-            ScriptBuildTools.BuildDll(Application.dataPath, outPath);
+            ScriptBuildTools.BuildDll(Application.dataPath, outPath, ScriptBuildTools.BuildMode.Release);
             EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis(platform);
             //2.打包资源
             if (platform == RuntimePlatform.IPhonePlayer)

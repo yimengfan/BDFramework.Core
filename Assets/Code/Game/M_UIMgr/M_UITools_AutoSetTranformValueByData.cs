@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters;
-using System.Web;
-using BDFramework.UI;
-using ILRuntime.Runtime.Generated;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -110,9 +104,10 @@ namespace Game.UI
                 yield return new WaitForSecondsRealtime(30);
                 var keys = this.ComponentCacheMap.Keys.ToList();
 
-                foreach (var k in keys)
+                for (int i = 0; i < keys.Count; i++)
                 {
-                    if (k == false)
+                    var k = keys[i];
+                    if (!k)
                     {
                         this.ComponentCacheMap.Remove(k);
                     }

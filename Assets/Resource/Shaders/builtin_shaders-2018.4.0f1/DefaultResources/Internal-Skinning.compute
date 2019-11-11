@@ -1,0 +1,247 @@
+// Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
+
+// Generic compute skinning ... with pos, norm, and tangent skinning
+
+#pragma kernel main SKIN_BONESFORVERT=1
+#pragma kernel main SKIN_BONESFORVERT=1 SKIN_NORM
+#pragma kernel main SKIN_BONESFORVERT=1 SKIN_TANG
+#pragma kernel main SKIN_BONESFORVERT=1 SKIN_NORM SKIN_TANG
+#pragma kernel main SKIN_BONESFORVERT=2
+#pragma kernel main SKIN_BONESFORVERT=2 SKIN_NORM
+#pragma kernel main SKIN_BONESFORVERT=2 SKIN_TANG
+#pragma kernel main SKIN_BONESFORVERT=2 SKIN_NORM SKIN_TANG
+#pragma kernel main SKIN_BONESFORVERT=4
+#pragma kernel main SKIN_BONESFORVERT=4 SKIN_NORM
+#pragma kernel main SKIN_BONESFORVERT=4 SKIN_TANG
+#pragma kernel main SKIN_BONESFORVERT=4 SKIN_NORM SKIN_TANG
+
+#include "HLSLSupport.cginc"
+
+uint g_VertCount;
+
+#if defined(SHADER_API_D3D11) || defined(SHADER_API_XBOXONE) || defined(SHADER_API_PS4) || defined(SHADER_API_GLCORE) || defined(SHADER_API_GLES3) || defined(SHADER_API_VULKAN) || defined(SHADER_API_METAL) || defined(SHADER_API_PSSL) || defined(SHADER_API_SWITCH)
+#define STRUCTURED_BUFFER_SUPPORT 1
+#else
+#define STRUCTURED_BUFFER_SUPPORT 0
+#endif
+
+struct SVertInVBO
+{
+    float3 pos;
+#if SKIN_NORM
+    float3 norm;
+#endif
+#if SKIN_TANG
+    float4 tang;
+#endif
+};
+
+struct SVertInSkin
+{
+#if SKIN_BONESFORVERT==1
+    int index0;
+#elif SKIN_BONESFORVERT==2
+    float weight0,weight1;
+    int index0,index1;
+#elif SKIN_BONESFORVERT==4
+    float weight0,weight1,weight2,weight3;
+    int index0,index1,index2,index3;
+#endif
+};
+
+
+struct SVertOut
+{
+    float3 pos;
+#if SKIN_NORM
+    float3 norm;
+#endif
+#if SKIN_TANG
+    float4 tang;
+#endif
+};
+
+#if !STRUCTURED_BUFFER_SUPPORT
+
+SVertInVBO FetchVerts( SAMPLER_UNIFORM Buffer<float> g_SourceVBO, const uint t)
+{
+    SVertInVBO vert;
+
+
+#if SKIN_NORM && SKIN_TANG
+    const int stride = 10;
+    const int tangOffset = 6;
+#elif SKIN_NORM
+    const int stride = 6;
+#elif SKIN_TANG
+    const int stride = 7;
+    const int tangOffset = 3;
+#else
+    const int stride = 3;
+    const int tangOffset = 0;
+#endif
+
+    vert.pos.x = g_SourceVBO[t * stride];
+    vert.pos.y = g_SourceVBO[t * stride + 1];
+    vert.pos.z = g_SourceVBO[t * stride + 2];
+
+#if SKIN_NORM
+    vert.norm.x = g_SourceVBO[t * stride + 3];
+    vert.norm.y = g_SourceVBO[t * stride + 4];
+    vert.norm.z = g_SourceVBO[t * stride + 5];
+#endif
+
+#if SKIN_TANG
+    vert.tang.x = g_SourceVBO[t * stride + tangOffset];
+    vert.tang.y = g_SourceVBO[t * stride + tangOffset + 1];
+    vert.tang.z = g_SourceVBO[t * stride + tangOffset + 2];
+    vert.tang.w = g_SourceVBO[t * stride + tangOffset + 3];
+#endif
+
+return vert;
+
+}
+
+void StoreVerts( SAMPLER_UNIFORM RWBuffer<float> g_MeshVertsOut, float3 pos, float3 normal, float4 tang, const uint t)
+{
+#if SKIN_NORM && SKIN_TANG
+    const int stride = 10;
+    const int tangOffset = 6;
+#elif SKIN_NORM
+    const int stride = 6;
+#elif SKIN_TANG
+    const int stride = 7;
+    const int tangOffset = 3;
+#else
+    const int stride = 3;
+    const int tangOffset = 0;
+#endif
+
+    g_MeshVertsOut[t * stride]     = pos.x;
+    g_MeshVertsOut[t * stride + 1] = pos.y;
+    g_MeshVertsOut[t * stride + 2] = pos.z;
+
+#if SKIN_NORM
+   g_MeshVertsOut[t * stride + 3]=  normal.x;
+   g_MeshVertsOut[t * stride + 4]=  normal.y;
+   g_MeshVertsOut[t * stride + 5]=  normal.z;
+#endif
+
+#if SKIN_TANG
+    g_MeshVertsOut[t * stride + tangOffset]     = tang.x;
+    g_MeshVertsOut[t * stride + tangOffset + 1] = tang.y;
+    g_MeshVertsOut[t * stride + tangOffset + 2] = tang.z;
+    g_MeshVertsOut[t * stride + tangOffset + 3] = tang.w;
+#endif
+}
+
+#endif
+
+#define NR_THREADS  64
+
+[numthreads(NR_THREADS, 1, 1)]
+#if !STRUCTURED_BUFFER_SUPPORT
+void main(uint3 threadID : SV_DispatchThreadID, SAMPLER_UNIFORM Buffer<float> g_SourceVBO, SAMPLER_UNIFORM StructuredBuffer<SVertInSkin> g_SourceSkin, SAMPLER_UNIFORM RWBuffer<float> g_MeshVertsOut,
+            SAMPLER_UNIFORM StructuredBuffer<float4x4> g_mBones)
+#else
+void main(uint3 threadID : SV_DispatchThreadID, SAMPLER_UNIFORM StructuredBuffer<SVertInVBO> g_SourceVBO, SAMPLER_UNIFORM StructuredBuffer<SVertInSkin> g_SourceSkin, SAMPLER_UNIFORM RWStructuredBuffer<SVertOut> g_MeshVertsOut,
+            SAMPLER_UNIFORM StructuredBuffer<float4x4> g_mBones)
+#endif
+{
+    const uint t = threadID.x;
+
+    if (t >= g_VertCount)
+    {
+        return;
+    }
+
+#if !STRUCTURED_BUFFER_SUPPORT
+    const SVertInVBO vert = FetchVerts(g_SourceVBO, t);
+#else
+    const SVertInVBO vert = g_SourceVBO[t];
+#endif
+    SVertInSkin si = g_SourceSkin[t];           // get skinning info.
+    float3 vP = vert.pos.xyz;
+    float3 vPacc = float3(0,0,0);
+
+    float3 vN = float3(0,0,0);
+#if SKIN_NORM
+    vN = vert.norm.xyz;
+    float3 vNacc = float3(0,0,0);
+#endif
+
+    float3 vT = float3(0,0,0);
+#if SKIN_TANG
+    vT = vert.tang.xyz;
+    float3 vTacc = float3(0,0,0);
+#endif
+
+
+#if SKIN_BONESFORVERT==1
+    vPacc += mul(g_mBones[si.index0], float4(vP,1) ).xyz;
+#elif SKIN_BONESFORVERT==2
+    vPacc += si.weight0*mul( g_mBones[si.index0], float4(vP,1) ).xyz;
+    vPacc += si.weight1*mul( g_mBones[si.index1], float4(vP,1) ).xyz;
+#elif SKIN_BONESFORVERT==4
+    vPacc += si.weight0*mul(  g_mBones[si.index0], float4(vP,1) ).xyz;
+    vPacc += si.weight1*mul(  g_mBones[si.index1], float4(vP,1) ).xyz;
+    vPacc += si.weight2*mul(  g_mBones[si.index2], float4(vP,1) ).xyz;
+    vPacc += si.weight3*mul(  g_mBones[si.index3], float4(vP,1) ).xyz;
+#endif
+
+#if SKIN_NORM
+#if SKIN_BONESFORVERT==1
+    vNacc += mul( g_mBones[si.index0],float4(vN,0) ).xyz;
+#elif SKIN_BONESFORVERT==2
+    vNacc += si.weight0*mul(  g_mBones[si.index0],float4(vN,0) ).xyz;
+    vNacc += si.weight1*mul(  g_mBones[si.index1],float4(vN,0) ).xyz;
+#elif SKIN_BONESFORVERT==4
+    vNacc += si.weight0*mul(  g_mBones[si.index0],float4(vN,0) ).xyz;
+    vNacc += si.weight1*mul(  g_mBones[si.index1],float4(vN,0) ).xyz;
+    vNacc += si.weight2*mul(  g_mBones[si.index2],float4(vN,0) ).xyz;
+    vNacc += si.weight3*mul(  g_mBones[si.index3],float4(vN,0) ).xyz;
+#endif
+#endif
+
+#if SKIN_TANG
+#if SKIN_BONESFORVERT==1
+    vTacc += mul( (float3x3)g_mBones[si.index0], vT ).xyz;
+#elif SKIN_BONESFORVERT==2
+    vTacc += si.weight0*mul( (float3x3)g_mBones[si.index0], vT ).xyz;
+    vTacc += si.weight1*mul( (float3x3)g_mBones[si.index1], vT ).xyz;
+#elif SKIN_BONESFORVERT==4
+    vTacc += si.weight0*mul((float3x3)g_mBones[si.index0], vT  ).xyz;
+    vTacc += si.weight1*mul((float3x3)g_mBones[si.index1], vT  ).xyz;
+    vTacc += si.weight2*mul((float3x3)g_mBones[si.index2], vT  ).xyz;
+    vTacc += si.weight3*mul((float3x3)g_mBones[si.index3], vT  ).xyz;
+#endif
+#endif
+
+    vP = vPacc;
+#if STRUCTURED_BUFFER_SUPPORT
+    g_MeshVertsOut[t].pos.xyz = vP;
+#endif
+
+#if SKIN_NORM
+    vN = vNacc;
+#if STRUCTURED_BUFFER_SUPPORT
+    g_MeshVertsOut[t].norm.xyz = vN;
+#endif
+#endif
+
+#if SKIN_TANG
+    vT = vTacc;
+#if STRUCTURED_BUFFER_SUPPORT
+    g_MeshVertsOut[t].tang = float4(vT.xyz,vert.tang.w);
+#endif
+#endif
+
+#if !STRUCTURED_BUFFER_SUPPORT
+#if SKIN_TANG
+    StoreVerts(g_MeshVertsOut, vP, vN, float4(vT.xyz,vert.tang.w), t);
+#else
+    StoreVerts(g_MeshVertsOut, vP, vN, float4(0.0f, 0.0f, 0.0f, 0.0f), t);
+#endif
+#endif
+
+}

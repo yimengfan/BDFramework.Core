@@ -30,8 +30,8 @@ namespace ILRuntime.Runtime.CLRBinding
             {
                 string clsName, realClsName;
                 bool isByRef;
-                if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
-                    continue;
+//                if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
+//                    continue;
                 i.GetClassName(out clsName, out realClsName, out isByRef);
                 clsNames.Add(clsName);
                 
@@ -190,8 +190,8 @@ namespace ILRuntime.Runtime.Generated
 
                 string clsName, realClsName;
                 bool isByRef;
-                if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
-                    continue;
+//                if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
+//                    continue;
                 i.GetClassName(out clsName, out realClsName, out isByRef);
                 if (clsNames.Contains(clsName))
                     clsName = clsName + "_t";

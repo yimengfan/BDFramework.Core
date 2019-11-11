@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using BDFramework.ScreenView;
 using BDFramework.UI;
+using Code.Game;
 
-[ScreenView("demo3")]
+[ScreenView((int)ScreenViewEnum.Demo3)]
 public class ScreenView_Demo3_WindowsMvc : IScreenView
  {
 
-	 public string Name { get; private set; }
+	 public int Name { get; private set; }
 	 public bool IsLoad { get; private set; }
 	 
 	 public void BeginInit()

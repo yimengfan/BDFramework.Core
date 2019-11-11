@@ -35,38 +35,14 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
             GUILayout.BeginHorizontal();
             {
                 //
-                if (GUILayout.Button("1.编译dll (.net版)", GUILayout.Width(200), GUILayout.Height(30)))
+                if (GUILayout.Button("1.编译dll(Roslyn-Release)", GUILayout.Width(155), GUILayout.Height(30)))
                 {
-                    ScriptBuildTools.BuildDll(Application.dataPath,
-                        Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform),
-                        ScriptBuildTools.BuildMode.DotNet);
-                    AssetDatabase.Refresh();
+                    RoslynBuild(ScriptBuildTools.BuildMode.Release);
                 }
 
-                if (GUILayout.Button("[mono版]", GUILayout.Width(100), GUILayout.Height(30)))
+                if (GUILayout.Button("编译dll(Roslyn-Debug)", GUILayout.Width(150), GUILayout.Height(30)))
                 {
-                    //1.build dll
-                    var outpath_win = Application.streamingAssetsPath + "/" +
-                                      BDUtils.GetPlatformPath(Application.platform);
-                    ScriptBuildTools.BuildDll(Application.dataPath, outpath_win);
-                    //2.同步到其他两个目录
-                    var outpath_android = Application.streamingAssetsPath + "/" +
-                                          BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/hotfix/hotfix.dll";
-                    var outpath_ios = Application.streamingAssetsPath + "/" +
-                                      BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/hotfix/hotfix.dll";
-
-                    var source = outpath_win + "/hotfix/hotfix.dll";
-                    var bytes = File.ReadAllBytes(source);
-                    if (source != outpath_android)
-                      FileHelper.WriteAllBytes(outpath_android,bytes);
-                    if (source != outpath_ios)
-                        FileHelper.WriteAllBytes(outpath_ios,bytes);
-
-                    //3.生成CLRBinding
-
-                    GenCLRBindingByAnalysis();
-                    AssetDatabase.Refresh();
-                    Debug.Log("脚本打包完毕");
+                    RoslynBuild(ScriptBuildTools.BuildMode.Debug);
                 }
             }
             GUILayout.EndHorizontal();
@@ -88,18 +64,47 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
 
             GUI.color = Color.green;
             GUILayout.Label(
-                @"注意事项:
-     1.编译服务使用codedom,请放心使用
+                @"
+注意事项:    
+     1.编译服务使用Roslyn,请放心使用
      2.如编译出现报错，请仔细看报错信息,和报错的代码行列,
        一般均为语法错
-     3.语法报错原因可能有:主工程访问hotfix中的类, 使用宏
-       编译时代码结构发生变化..等等，需要细心的你去发现"
-            );
+     3.语法报错原因可能有:
+       i.主工程访问hotfix中的类,
+       ii.使用宏编译时代码结构发生变化
+       ...
+       等等，需要细心的你去发现");
             GUI.color = GUI.backgroundColor;
         }
         GUILayout.EndVertical();
     }
 
+
+    /// <summary>
+    /// 编译模式
+    /// </summary>
+    /// <param name="mode"></param>
+    static void RoslynBuild(ScriptBuildTools.BuildMode mode)
+    {
+        //1.build dll
+        var outpath_win = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);
+        ScriptBuildTools.BuildDll(Application.dataPath, outpath_win, mode);
+        //2.同步到其他两个目录
+        var outpath_android = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/hotfix/hotfix.dll";
+        var outpath_ios = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/hotfix/hotfix.dll";
+                    
+        var source = outpath_win + "/hotfix/hotfix.dll";
+        var bytes = File.ReadAllBytes(source);
+        if (source != outpath_android)
+            FileHelper.WriteAllBytes(outpath_android,bytes);
+        if (source != outpath_ios)
+            FileHelper.WriteAllBytes(outpath_ios,bytes);
+
+        //3.生成CLRBinding
+        GenCLRBindingByAnalysis();
+        AssetDatabase.Refresh();
+        Debug.Log("脚本打包完毕");
+    }
     /// <summary>
     /// 生成类适配器
     /// </summary>

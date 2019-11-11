@@ -26,7 +26,7 @@ namespace BDFramework
         {
             //
             IsRunning = true;
-            string pdbPath = dllPath.Replace(".dll", ".pdb");
+            string pdbPath = dllPath+".pdb";
 
             BDebug.Log("DLL加载路径:" + dllPath, "red");
             //

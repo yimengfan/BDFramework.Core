@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BDFramework.UI
 {
+    [Obsolete("please use new uiframe: uflux.")]
     public class WindowData
     {
 

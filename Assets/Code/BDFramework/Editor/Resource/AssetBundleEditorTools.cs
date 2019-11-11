@@ -7,7 +7,9 @@ using System.Security.Cryptography;
 using System.Text;
 using BDFramework.Core.Debugger;
 using BDFramework.ResourceMgr;
+using Code.BDFramework.Core.Tools;
 using LitJson;
+using NUnit.Framework.Constraints;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
@@ -65,7 +67,9 @@ namespace BDFramework.Editor.Asset
         /// <param name="resRootPath"></param>
         /// <param name="outPath"></param>
         /// <param name="target"></param>
-        public static void GenAssetBundle(string resRootPath, string outPath, BuildTarget target,
+        public static void GenAssetBundle(string resRootPath,
+            string outPath,
+            BuildTarget target,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression)
         {
             //0.cache path的路径
@@ -88,10 +92,25 @@ namespace BDFramework.Editor.Asset
                 }
             }
 
+
+            var _outpath = IPath.Combine(outPath, "Art");
             //2.分析ab包
-            AnalyzeResource(fileList.ToArray(), target, IPath.Combine(outPath, "Art"));
+            AnalyzeResource(fileList.ToArray(), target, _outpath);
             //3.生成AssetBundle
             BuildAssetBundle(target, outPath, options);
+
+            //assetBundle 转 hash
+            foreach (var item in allfileHashMap)
+            {
+               var sub=  item.Key.Replace(BApplication.projroot + "/", "").ToLower();
+               var source = IPath.Combine(_outpath, sub);
+               var copyto = IPath.Combine(_outpath, item.Value);
+               if (File.Exists(source) && !File.Exists(copyto))
+               {
+                   File.Copy(source,copyto);
+               }
+            }
+             Directory.Delete(IPath.Combine(_outpath,"assets"),true);
 
             //保存配置
             FileHelper.WriteAllText(configPath, CurManifestConfig.ToString());
@@ -100,6 +119,7 @@ namespace BDFramework.Editor.Asset
 
             //4.清除AB Name
             RemoveAllAbName();
+     
             //删除无用文件
             var delFiles = Directory.GetFiles(outPath, "*", SearchOption.AllDirectories);
             foreach (var df in delFiles)
@@ -130,7 +150,8 @@ namespace BDFramework.Editor.Asset
         /// <summary>
         /// 创建assetbundle
         /// </summary>
-        private static void BuildAssetBundle(BuildTarget target, string outPath,
+        private static void BuildAssetBundle(BuildTarget target,
+            string outPath,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression)
         {
             AssetDatabase.RemoveUnusedAssetBundleNames();
@@ -158,7 +179,7 @@ namespace BDFramework.Editor.Asset
             new MakePackage()
             {
                 fileExtens = new List<string>() {".shader", ".shadervariants"},
-                AssetBundleName = "ALLShaders.ab"
+                AssetBundleName = "Assets/ALLShaders.ab"
             }
         };
 
@@ -188,8 +209,10 @@ namespace BDFramework.Editor.Asset
 
             //加载配置
             ManifestConfig lastManifestConfig = null;
-            if (File.Exists(configPath)) lastManifestConfig = new ManifestConfig(File.ReadAllText(configPath));
-            else lastManifestConfig = new ManifestConfig();
+            if (File.Exists(configPath))
+                lastManifestConfig = new ManifestConfig(File.ReadAllText(configPath));
+            else
+                lastManifestConfig = new ManifestConfig();
             //
 
             /***************************************开始分析资源****************************************/
@@ -217,7 +240,7 @@ namespace BDFramework.Editor.Asset
                 for (int i = 0; i < subAssetsPath.Count; i++)
                 {
                     var subAsset = subAssetsPath[i];
-                    var subAssetPath = Application.dataPath + subAsset.Replace("Assets/", "/");
+                    var subAssetPath =subAssetsPath[i];// Application.dataPath + subAsset.Replace("Assets/", "/");
                     string subAssetHash = GetHashFromFile(subAssetPath);
                     subAssetHashList.Add(subAssetHash);
 
@@ -229,7 +252,6 @@ namespace BDFramework.Editor.Asset
                         if (lastItem != null)
                         {
                             CurManifestConfig.AddItem(lastItem);
-                            Debug.Log("跳过:" + subAsset);
                             continue;
                         }
                     }
@@ -237,10 +259,9 @@ namespace BDFramework.Editor.Asset
                     {
                         // 需要对比之前的hash
                         var lastItem = lastManifestConfig.GetManifestItemByHash(subAssetHash);
-                        if (lastItem != null && lastItem.Hash == subAssetHash)
+                        if (lastItem != null && lastItem.Package != "" && lastItem.Hash == subAssetHash)
                         {
                             CurManifestConfig.AddItem(lastItem);
-                            Debug.Log("跳过:" + subAsset);
                             continue;
                         }
                     }
@@ -253,7 +274,7 @@ namespace BDFramework.Editor.Asset
                     {
                         for (int j = 0; j < subAssetDpendList.Count; j++)
                         {
-                            var sbd = Application.dataPath + subAssetDpendList[j].Replace("Assets/", "/");
+                            var sbd = subAssetDpendList[j];// Application.dataPath + subAssetDpendList[j].Replace("Assets/", "/");
                             subAssetDpendList[j] = GetHashFromFile(sbd);
                         }
                     }
@@ -266,7 +287,11 @@ namespace BDFramework.Editor.Asset
 
                     //开始设置abname 
                     var ai = GetAssetImporter(subAsset);
+
+                    ManifestItem.AssetTypeEnum @enum = ManifestItem.AssetTypeEnum.Others;
+                    var savename = CheckAssetSaveInfo(subAsset, ref @enum);
                     string packageHashName = null;
+
 
                     #region 单ab多资源模式
 
@@ -315,37 +340,66 @@ namespace BDFramework.Editor.Asset
 
                         #endregion
 
-                        //
-                        ai.assetBundleName = packageHashName;
-                        ai.assetBundleVariant = "";
+
+                        string packageName = "";
+                        foreach (var item in allfileHashMap)
+                        {
+                            if (item.Value == packageHashName)
+                            {
+                                packageName = item.Key;
+                                packageName = packageName.Replace(BApplication.projroot + "/", "");
+                                break;
+                            }
+                        }
+
+
+                        //保存配置
                         if (subAsset != mainAssetPath)
                         {
-                            ManifestItem.AssetTypeEnum @enum = ManifestItem.AssetTypeEnum.Others;
-                            var savename = CheckAssetSaveInfo(subAsset, ref @enum);
                             CurManifestConfig.AddItem(savename, subAssetHash, subAssetDpendList, @enum,
                                 packageHashName);
                         }
+
+                        ai.assetBundleName = packageName;
+                        ai.assetBundleVariant = "";
+
+//                        ai.assetBundleName = packageHashName;
+//                        ai.assetBundleVariant = "";
                     }
 
                     #endregion
 
+                    #region 单ab单资源模式
+
                     else
                     {
-                        ai.assetBundleName = subAssetHash;
-                        ai.assetBundleVariant = "";
                         if (subAsset != mainAssetPath)
                         {
-                            ManifestItem.AssetTypeEnum @enum = ManifestItem.AssetTypeEnum.Others;
-                            var savename = CheckAssetSaveInfo(subAsset, ref @enum);
                             CurManifestConfig.AddItem(savename, subAssetHash, subAssetDpendList, @enum);
                         }
+
+//                        if (!subAsset.Contains("Assets/"))
+//                        {
+//                            ai.assetBundleName = "Assets/Resource/Runtime/" + savename;
+//                            ai.assetBundleVariant = "";
+//                        }
+//                        else
+//                        {
+                            ai.assetBundleName = subAsset;
+                            ai.assetBundleVariant = "";
+//                        }
+//                        ai.assetBundleName = subAssetHash;
+//                        ai.assetBundleVariant = "";
                     }
+
+                    #endregion
+
 
                     changeList.Add(subAsset);
                 }
 
                 //最后保存主文件
-                var mainHash = GetHashFromFile(mainAssetFullPath);
+                var mainHash = GetHashFromFile(mainAssetPath);
                 string package = null;
                 subAssetHashList.Remove(mainHash);
                 if (IsMakePackage(mainAssetPath, ref package))
@@ -410,8 +464,10 @@ namespace BDFramework.Editor.Asset
             EditorUtility.ClearProgressBar();
             changeList = changeList.Distinct().ToList();
             Debug.LogFormat("<color=red>本地需要打包数量:{0}</color>", changeList.Count);
-            var buidpath = string.Format("{0}/{1}_changelist.json", Application.dataPath, target.ToString());
-            Debug.Log("本地打包保存:" + buidpath);
+            var buildpath = string.Format("{0}/{1}_changelist.json", Application.streamingAssetsPath,
+                target.ToString());
+            File.WriteAllText(buildpath, JsonMapper.ToJson(changeList));
+            Debug.Log("本地打包保存:" + buildpath);
         }
 
 
@@ -421,14 +477,15 @@ namespace BDFramework.Editor.Asset
         /// <param name="allDependObjectPaths"></param>
         static private void CheckAssetsPath(ref List<string> list)
         {
-            if (list.Count == 0) return;
+            if (list.Count == 0)
+                return;
 
 
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 var p = list[i];
 
-                var fullPath = Application.dataPath + p.Replace("Assets/", "/");
+                var fullPath =  list[i];//Application.dataPath + p.Replace("Assets/", "/");
                 //
                 if (!File.Exists(fullPath))
                 {
@@ -745,7 +802,8 @@ namespace BDFramework.Editor.Asset
                     {
                         t = cache.Key;
                     }
-                    var target = IPath.Combine(p, "ArtEditor/" +t);
+
+                    var target = IPath.Combine(p, "ArtEditor/" + t);
                     if (File.Exists(source))
                     {
                         FileHelper.WriteAllBytes(target, File.ReadAllBytes(source));
@@ -755,6 +813,7 @@ namespace BDFramework.Editor.Asset
                     EditorUtility.DisplayProgressBar("进度", i + "/" + cacheDic.Count, i / cacheDic.Count);
                 }
             }
+
             EditorUtility.ClearProgressBar();
             Debug.Log("还原完成!");
         }
