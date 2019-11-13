@@ -56,7 +56,7 @@ static  public partial class UITools
             var _attrs = f.GetCustomAttributes(typeof(TransformPath), false); //as Attribute[];
             if (_attrs != null && _attrs.Length > 0)
             {
-                var attr = _attrs.ToList().Find((a) => a is TransformPath) as TransformPath;
+                var attr = _attrs[0] as TransformPath;
                 if (attr == null) continue;
                 //获取节点,并且获取组件
                 var trans = vTransform.Find(attr.Path);

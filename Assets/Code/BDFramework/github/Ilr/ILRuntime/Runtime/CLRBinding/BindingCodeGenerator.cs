@@ -156,7 +156,8 @@ namespace ILRuntime.Runtime.Generated
         }
 
         public static void GenerateBindingCode(ILRuntime.Runtime.Enviorment.AppDomain domain, string outputPath, 
-                                               List<Type> valueTypeBinders = null, List<Type> delegateTypes = null)
+                                               List<Type> valueTypeBinders = null, List<Type> delegateTypes = null,
+                                               List<Type> notGenTypes =null)
         {
             if (domain == null)
                 return;
@@ -184,6 +185,8 @@ namespace ILRuntime.Runtime.Generated
                     continue;
                 Type i = info.Value.Type;
 
+                //这里不生成
+                if(notGenTypes!=null&& notGenTypes.Contains(i)) continue;
                 //CLR binding for delegate is important for cross domain invocation,so it should be generated
                 //if (i.BaseType == typeof(MulticastDelegate))
                 //    continue;

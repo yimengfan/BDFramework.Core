@@ -82,8 +82,8 @@ namespace BDFramework.Core
             {
              
                 //TODO: ILRuntime里面只能这样获取，而且属性里面存的type会有问题
-                var attrs = f.GetCustomAttributes(typeof(ComponentAttribute), false).ToList();
-                var fAttr = attrs.Find(a => a is ComponentAttribute) as ComponentAttribute;
+                var attrs = f.GetCustomAttributes(typeof(ComponentAttribute), false);
+                var fAttr = attrs[0] as ComponentAttribute;
                
                 //
                 if (fAttr != null && fAttr.ComponentType != null)

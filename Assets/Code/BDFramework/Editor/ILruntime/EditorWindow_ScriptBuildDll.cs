@@ -20,8 +20,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     public static void Open()
     {
         var window =
-            (EditorWindow_ScriptBuildDll) EditorWindow.GetWindow(typeof(EditorWindow_ScriptBuildDll), false,
-                "DLL打包工具");
+            (EditorWindow_ScriptBuildDll) EditorWindow.GetWindow(typeof(EditorWindow_ScriptBuildDll), false, "DLL打包工具");
         window.Show();
     }
 
@@ -47,9 +46,14 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
             }
             GUILayout.EndHorizontal();
 
-            if (GUILayout.Button("2.生成CLRBinding · one for all[已集成]", GUILayout.Width(305), GUILayout.Height(30)))
+            if (GUILayout.Button("2.分析DLL生成绑定", GUILayout.Width(305), GUILayout.Height(30)))
             {
                 GenCLRBindingByAnalysis();
+            }
+
+            if (GUILayout.Button("2.1 手动绑定生成", GUILayout.Width(305), GUILayout.Height(30)))
+            {
+                GenCLRBindingBySelf();
             }
 
             if (GUILayout.Button("3.生成跨域Adapter[没事别瞎点]", GUILayout.Width(305), GUILayout.Height(30)))
@@ -57,14 +61,13 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 GenCrossBindAdapter();
             }
 
-            if (GUILayout.Button("4.生成Link.xml", GUILayout.Width(305), GUILayout.Height(30)))
+            if (GUILayout.Button("4.生成Link.xml[大部分不需要]", GUILayout.Width(305), GUILayout.Height(30)))
             {
                 StripCode.GenLinkXml();
             }
 
             GUI.color = Color.green;
-            GUILayout.Label(
-                @"
+            GUILayout.Label(@"
 注意事项:    
      1.编译服务使用Roslyn,请放心使用
      2.如编译出现报错，请仔细看报错信息,和报错的代码行列,
@@ -90,21 +93,24 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         var outpath_win = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);
         ScriptBuildTools.BuildDll(Application.dataPath, outpath_win, mode);
         //2.同步到其他两个目录
-        var outpath_android = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/hotfix/hotfix.dll";
-        var outpath_ios = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/hotfix/hotfix.dll";
-                    
+        var outpath_android = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android) +
+                              "/hotfix/hotfix.dll";
+        var outpath_ios = Application.streamingAssetsPath                       + "/" +
+                          BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/hotfix/hotfix.dll";
+
         var source = outpath_win + "/hotfix/hotfix.dll";
-        var bytes = File.ReadAllBytes(source);
+        var bytes  = File.ReadAllBytes(source);
         if (source != outpath_android)
-            FileHelper.WriteAllBytes(outpath_android,bytes);
+            FileHelper.WriteAllBytes(outpath_android, bytes);
         if (source != outpath_ios)
-            FileHelper.WriteAllBytes(outpath_ios,bytes);
+            FileHelper.WriteAllBytes(outpath_ios, bytes);
 
         //3.生成CLRBinding
         GenCLRBindingByAnalysis();
         AssetDatabase.Refresh();
         Debug.Log("脚本打包完毕");
     }
+
     /// <summary>
     /// 生成类适配器
     /// </summary>
@@ -128,47 +134,30 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         {
             platform = Application.platform;
         }
+        
+        //不参与自动绑定的
+        List<Type> notGenerateTypes  =new List<Type>()
+        {
+            typeof(MethodBase),typeof(MemberInfo),typeof(FieldInfo),typeof(MethodInfo),typeof(PropertyInfo)
+        };
+        
 
         //用新的分析热更dll调用引用来生成绑定代码
         var dllpath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(platform) + "/hotfix/hotfix.dll";
         ILRuntimeHelper.LoadHotfix(dllpath, false);
-        BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain,
-            "Assets/Code/Game/ILRuntime/Binding/Analysis");
+        
+        BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain, "Assets/Code/Game/ILRuntime/Binding/Analysis",
+                                                 notGenTypes:notGenerateTypes);
         AssetDatabase.Refresh();
-        return;
+      
         //暂时先不处理
-        var assemblies = new List<Assembly>()
-        {
-            typeof(UnityEngine.UI.Button).Assembly,
-        };
+    }
+
+    static public void GenCLRBindingBySelf()
+    {
         var types = new List<Type>();
-        types.Add(typeof(Vector4));
-        //
-//        foreach (var assm in assemblies)
-//        {
-//            var _ts = assm.GetTypes();
-//            foreach (var t in _ts)
-//            {
-//                if (t.Namespace != null)
-//                {
-//                    if (t.FullName.Contains("UnityEngine.Android")
-//                        || t.FullName.Contains("UnityEngine.iPhone")
-//                        || t.FullName.Contains("UnityEngine.WSA")
-//                        || t.FullName.Contains("UnityEngine.iOS")
-//                        || t.FullName.Contains("UnityEngine.Windows")
-//                        || t.FullName.Contains("JetBrains")
-//                        || t.FullName.Contains("Editor"))
-//                    {
-//                        continue;
-//                    }
-//                }
-//
-//
-//                types.Add(t);
-//            }
-//        }
-//
-//        types = types.Distinct().ToList();
+        //反射类优先生成
+        types.Add(typeof(MethodBase));
         //PreBinding 
         BindingCodeGenerator.GenerateBindingCode(types, "Assets/Code/Game/ILRuntime/Binding/PreBinding");
         AssetDatabase.Refresh();

@@ -35,15 +35,11 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding_Enumerator_Binding.Register(app);
             System_Object_Binding.Register(app);
-            System_Reflection_PropertyInfo_Binding.Register(app);
-            System_Reflection_MemberInfo_Binding.Register(app);
             System_Activator_Binding.Register(app);
             System_Int32_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             BDFramework_GameStart_IGameStart_Binding.Register(app);
             BDFramework_BDLauncher_Binding.Register(app);
-            System_Reflection_FieldInfo_Binding.Register(app);
-            System_Collections_Generic_List_1_Object_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
@@ -81,6 +77,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_IList_Binding.Register(app);
             System_Collections_ICollection_Binding.Register(app);
             SQLite4Unity3d_SQLiteCommand_Binding.Register(app);
+            System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_List_1_Int32_Binding.Register(app);
             System_Collections_Generic_List_1_Int32_Binding_Enumerator_Binding.Register(app);
@@ -95,12 +92,10 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_Int32_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
-            System_Reflection_MethodInfo_Binding.Register(app);
             UnityEngine_UI_Scrollbar_Binding.Register(app);
             UnityEngine_Events_UnityEvent_1_Single_Binding.Register(app);
             UnityEngine_UI_Slider_Binding.Register(app);
             UnityEngine_UI_Toggle_Binding.Register(app);
-            System_Reflection_MethodBase_Binding.Register(app);
             UnityEngine_UI_ScrollRect_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding.Register(app);

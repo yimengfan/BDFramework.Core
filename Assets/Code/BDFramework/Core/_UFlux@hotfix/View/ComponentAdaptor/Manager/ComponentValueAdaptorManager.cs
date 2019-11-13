@@ -37,10 +37,10 @@ namespace BDFramework.UFlux
         /// </summary>
         public class ComponentValueCahce
         {
-            public UIBehaviour UIBehaviour;
-            public Transform Transform;
+            public UIBehaviour        UIBehaviour;
+            public Transform          Transform;
             public ComponentValueBind ValueBind;
-            public object LastValue;
+            public object             LastValue;
         }
 
         //
@@ -57,21 +57,20 @@ namespace BDFramework.UFlux
             //第一次进行缓存绑定后，就不再重新解析了，
             //所以使用者要保证每次的 state尽量是一致的
             Dictionary<string, ComponentValueCahce> map = null;
-            var key = t.GetInstanceID();
+            var                                     key = t.GetInstanceID();
             if (!componentValueCacheMap.TryGetValue(key, out map))
             {
-                map = TransformStateBind(t, aState);
+                map                         = TransformStateBind(t, aState);
                 componentValueCacheMap[key] = map;
-               
             }
 
             while (true)
             {
                 var field = aState.GetPropertyChange();
-              
+
                 if (field == null)
                     break;
-   
+
                 //开始
                 ComponentValueCahce cvc = null;
                 if (map.TryGetValue(field, out cvc))
@@ -131,14 +130,17 @@ namespace BDFramework.UFlux
                 //再进行值绑定
                 {
                     ComponentValueCahce cvc = new ComponentValueCahce();
+                    
                     var attrs = mi.GetCustomAttributes(typeof(ComponentValueBind), false);
+                    //
                     if (attrs.Length > 0) //寻找ComponentValueBind
                     {
-                        var attr = attrs[0] as ComponentValueBind;
-                        if (attr != null)
+                        if (attrs[0] is ComponentValueBind)
                         {
-                            var ui  = transform.GetComponent(attr.Type) as UIBehaviour;
-                            if (ui!=null)
+                            var ComponentValueBind = (ComponentValueBind) attrs[0];
+                            
+                            var ui = transform.GetComponent(ComponentValueBind.Type) as UIBehaviour;
+                            if (ui != null)
                             {
                                 cvc.UIBehaviour = ui;
                             }
@@ -147,7 +149,7 @@ namespace BDFramework.UFlux
                                 cvc.Transform = transform;
                             }
 
-                            cvc.ValueBind = attr;
+                            cvc.ValueBind = ComponentValueBind;
                         }
                     }
                     else //如果只有Transform 没有ComponentValueBind标签，处理默认逻辑
@@ -173,12 +175,11 @@ namespace BDFramework.UFlux
                         else
                         {
                             //props 数组
-                            if (type.IsArray &&
-                                type.GetElementType().IsSubclassOf(typeof(PropsBase))) //数组
+                            if (type.IsArray && type.GetElementType().IsSubclassOf(typeof(PropsBase))) //数组
                             {
                                 cvc.ValueBind =
                                     new ComponentValueBind(typeof(UFluxAutoLogic),
-                                        nameof(UFluxAutoLogic.ForeahSetChildValue));
+                                                           nameof(UFluxAutoLogic.ForeahSetChildValue));
                             }
                             //泛型
                             else if (type.IsGenericType &&
@@ -186,7 +187,7 @@ namespace BDFramework.UFlux
                             {
                                 cvc.ValueBind =
                                     new ComponentValueBind(typeof(UFluxAutoLogic),
-                                        nameof(UFluxAutoLogic.ForeahSetChildValue));
+                                                           nameof(UFluxAutoLogic.ForeahSetChildValue));
                             }
 
                             //填充 数组子节点赋值逻辑
@@ -217,7 +218,7 @@ namespace BDFramework.UFlux
 
                 for (int j = 0; j < keys.Count; j++)
                 {
-                    var key = keys[j];
+                    var key    = keys[j];
                     var cvcMap = componentValueCacheMap[key];
                     //遍历cache
                     var cvcMapkeys = cvcMap.Keys.ToList();
