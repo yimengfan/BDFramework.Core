@@ -514,6 +514,13 @@ namespace ILRuntime.Reflection
                 if (i.Name == name)
                     return i;
             }
+            if ((bindingAttr & BindingFlags.DeclaredOnly) != BindingFlags.DeclaredOnly)
+            {
+                if (BaseType != null && BaseType is ILRuntimeWrapperType)
+                {
+                    return BaseType.GetProperty(name, bindingAttr);
+                }
+            }
             return null;
         }
 
@@ -559,6 +566,13 @@ namespace ILRuntime.Reflection
             {
                 return type.HasGenericParameter || type.GenericArguments != null;
             }
+        }
+
+        public override Type GetGenericTypeDefinition()
+        {
+            var def = type.GetGenericDefinition();
+
+            return def != null ? def.ReflectionType : null;
         }
 
         public override bool IsGenericTypeDefinition

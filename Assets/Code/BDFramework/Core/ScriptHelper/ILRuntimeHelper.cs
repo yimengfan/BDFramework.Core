@@ -1,12 +1,10 @@
 ﻿using System;
 using System.IO;
 using BDFramework.Helper;
+using ILRuntime.Mono.Cecil.Pdb;
 using ILRuntime.Reflection;
 using ILRuntime.Runtime.Generated;
 using LitJson;
-//;
-using Mono.Cecil.Mdb;
-using Mono.Cecil.Pdb;
 using UnityEngine;
 using UnityEngine.Networking;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
@@ -36,7 +34,7 @@ namespace BDFramework
                 //这里的流不能释放，头铁的老哥别试了
                 fsDll = new FileStream(dllPath, FileMode.Open, FileAccess.Read);
                 fsPdb = new FileStream(pdbPath, FileMode.Open, FileAccess.Read);
-                AppDomain.LoadAssembly(fsDll, fsPdb, new PdbReaderProvider());
+                AppDomain.LoadAssembly(fsDll, fsPdb,new PdbReaderProvider());
             }
             else
             {

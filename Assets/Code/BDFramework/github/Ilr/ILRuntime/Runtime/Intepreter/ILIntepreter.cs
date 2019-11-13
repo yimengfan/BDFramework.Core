@@ -28,6 +28,7 @@ namespace ILRuntime.Runtime.Intepreter
         public StackObject* LastStepFrameBase { get; set; }
         public int LastStepInstructionIndex { get; set; }
         StackObject* ValueTypeBasePointer;
+        bool mainthreadLock;
         public ILIntepreter(Enviorment.AppDomain domain)
         {
             this.domain = domain;
@@ -44,6 +45,18 @@ namespace ILRuntime.Runtime.Intepreter
         {
             //Clear old debug state
             ClearDebugState();
+#if DEBUG && (UNITY_EDITOR || UNITY_ANDROID || UNITY_IPHONE)
+            if(domain.UnityMainThreadID == Thread.CurrentThread.ManagedThreadId)
+            {
+                mainthreadLock = true;
+                while (mainthreadLock)
+                {
+                    domain.DebugService.ResolvePendingRequests();
+                    Thread.Sleep(10);
+                }
+                return;
+            }
+#endif
             lock (_lockObj)
             {
                 Monitor.Wait(_lockObj);
@@ -52,6 +65,7 @@ namespace ILRuntime.Runtime.Intepreter
 
         public void Resume()
         {
+            mainthreadLock = false;
             lock (_lockObj)
                 Monitor.Pulse(_lockObj);
         }
@@ -163,7 +177,8 @@ namespace ILRuntime.Runtime.Intepreter
             for (int i = 0; i < method.LocalVariableCount; i++)
             {
                 var v = method.Variables[i];
-                if (v.VariableType.IsValueType && !v.VariableType.IsPrimitive)
+                bool isEnum = (v.VariableType is Mono.Cecil.TypeDefinition td) ? td.IsEnum : false;
+                if (v.VariableType.IsValueType && !v.VariableType.IsPrimitive && !isEnum)
                 {
                     var t = AppDomain.GetType(v.VariableType, method.DeclearingType, method);
                     if (t is ILType)
@@ -196,7 +211,7 @@ namespace ILRuntime.Runtime.Intepreter
                 }
                 else
                 {
-                    if (v.VariableType.IsPrimitive)
+                    if (v.VariableType.IsPrimitive || isEnum)
                     {
                         var t = AppDomain.GetType(v.VariableType, method.DeclearingType, method);
                         var loc = Add(v1, i);
@@ -909,7 +924,6 @@ namespace ILRuntime.Runtime.Intepreter
                             #endregion
 
                             #region Althemetics
-                            case OpCodeEnum.Add_Ovf:
                             case OpCodeEnum.Add:
                                 {
                                     b = esp - 1;

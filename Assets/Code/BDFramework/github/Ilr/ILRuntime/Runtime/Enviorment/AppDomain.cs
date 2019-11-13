@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Mono.Cecil;
+using ILRuntime.Mono.Cecil;
 using System.Reflection;
-using Mono.Cecil.Cil;
+using ILRuntime.Mono.Cecil.Cil;
 
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.CLR.Method;
@@ -60,6 +60,10 @@ namespace ILRuntime.Runtime.Enviorment
 
 #if DEBUG && (UNITY_EDITOR || UNITY_ANDROID || UNITY_IPHONE)
         public int UnityMainThreadID { get; set; }
+        public bool IsNotUnityMainThread()
+        {
+            return UnityMainThreadID != 0 && (UnityMainThreadID != System.Threading.Thread.CurrentThread.ManagedThreadId);
+        }
 #endif
         public unsafe AppDomain()
         {
@@ -722,7 +726,7 @@ namespace ILRuntime.Runtime.Enviorment
                 }
                 if (_ref.IsByReference)
                 {
-                    var et = _ref.GetElementType();
+                    var et = ((ByReferenceType)_ref).ElementType;
                     bool valid = !et.ContainsGenericParameter;
                     var t = GetType(et, contextType, contextMethod);
                     if (t != null)
@@ -746,7 +750,7 @@ namespace ILRuntime.Runtime.Enviorment
                 if (_ref.IsArray)
                 {
                     ArrayType at = (ArrayType)_ref;
-                    var t = GetType(_ref.GetElementType(), contextType, contextMethod);
+                    var t = GetType(at.ElementType, contextType, contextMethod);
                     if (t != null)
                     {
                         res = t.MakeArrayType(at.Rank);
