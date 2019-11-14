@@ -123,6 +123,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         types.Add(typeof(System.Runtime.CompilerServices.IAsyncStateMachine));
         types.Add(typeof(IGameStart));
         types.Add(typeof(ADataListener));
+        types.Add(typeof(Attribute));
         //types.Add(typeof(SerializedMonoBehaviour));
         GenAdapter.CreateAdapter(types, "Assets/Code/Game/ILRuntime/Adapter");
     }
@@ -139,6 +140,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         List<Type> notGenerateTypes  =new List<Type>()
         {
             typeof(MethodBase),typeof(MemberInfo),typeof(FieldInfo),typeof(MethodInfo),typeof(PropertyInfo)
+            ,typeof(Component)
         };
         
 
@@ -157,7 +159,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     {
         var types = new List<Type>();
         //反射类优先生成
-        types.Add(typeof(MethodBase));
+        types.Add(typeof(Component));
         //PreBinding 
         BindingCodeGenerator.GenerateBindingCode(types, "Assets/Code/Game/ILRuntime/Binding/PreBinding");
         AssetDatabase.Refresh();
