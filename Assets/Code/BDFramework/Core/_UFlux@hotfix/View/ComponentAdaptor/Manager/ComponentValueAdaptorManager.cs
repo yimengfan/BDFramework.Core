@@ -12,18 +12,19 @@ using UnityEngine.EventSystems;
 
 namespace BDFramework.UFlux
 {
-    public class
-        ComponentValueAdaptorManager : ManagerBase<ComponentValueAdaptorManager, ComponentAdaptorProcessAttribute>
+    public class ComponentValueAdaptorManager : ManagerBase<ComponentValueAdaptorManager, ComponentAdaptorProcessAttribute>
     {
         Dictionary<Type, AComponentAdaptor> adaptorMap = new Dictionary<Type, AComponentAdaptor>();
 
+        
         public override void Start()
         {
             base.Start();
             foreach (var cd in this.GetAllClassDatas())
             {
                 var attr = cd.Attribute as ComponentAdaptorProcessAttribute;
-                adaptorMap[attr.ComponentType] = CreateInstance<AComponentAdaptor>(cd);
+                Debug.Log("----->"+attr.Type.FullName);
+                adaptorMap[attr.Type] = CreateInstance<AComponentAdaptor>(cd);
             }
 
             //执行30s清理一次的cache
@@ -77,7 +78,7 @@ namespace BDFramework.UFlux
                     //考虑 是否二次验证值是否改变
                     var newValue = aState.GetValue(field);
                     //执行赋值操作
-                    if (cvc.UIBehaviour) //UI操作
+                    if (cvc.UIBehaviour!=null) //UI操作
                     {
                         adaptorMap[cvc.ValueBind.Type].SetData(cvc.UIBehaviour, cvc.ValueBind.FieldName, newValue);
                     }
@@ -129,30 +130,33 @@ namespace BDFramework.UFlux
                 //再进行值绑定
                 {
                     ComponentValueCahce cvc = new ComponentValueCahce();
-                    
-                    var attrs = mi.GetCustomAttributes(typeof(ComponentValueBind), false);
+
+                    var attrType = typeof(ComponentValueBind);
+                    var attrs = mi.GetCustomAttributes(attrType, false);
                     //
                     if (attrs.Length > 0) //寻找ComponentValueBind
                     {
+                        Debug.Log("111");
                         if (attrs[0] is ComponentValueBind)
                         {
-                            var ComponentValueBind = (ComponentValueBind) attrs[0];
+                            Debug.Log("222");
+                            var cvb = (ComponentValueBind) attrs[0];
                             
-                            var ui = transform.GetComponent(ComponentValueBind.Type) as UIBehaviour;
-                            if (ui != null)
+                            if ( cvb.Type.IsSubclassOf(typeof(UIBehaviour)))
                             {
-                                cvc.UIBehaviour = ui;
+                                cvc.UIBehaviour = transform.GetComponent(cvb.Type)as UIBehaviour;
                             }
                             else
                             {
                                 cvc.Transform = transform;
                             }
 
-                            cvc.ValueBind = ComponentValueBind;
+                            cvc.ValueBind = cvb;
                         }
                     }
                     else //如果只有Transform 没有ComponentValueBind标签，处理默认逻辑
                     {
+                        Debug.Log("333");
                         Type type = null;
 
                         if (mi is FieldInfo)

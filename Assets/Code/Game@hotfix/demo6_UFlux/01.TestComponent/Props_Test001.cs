@@ -13,7 +13,7 @@ namespace Code.Game.demo6_UFlux
         
         //这里进行数据的绑定
         [TransformPath("chatbox/content")] //节点
-        [ComponentValueBind(Type =typeof(Text),FieldName =  nameof(Text.text))]//数据赋值对象
+        [ComponentValueBind(typeof(Text),nameof(Text.text))]//数据赋值对象
         public string content = "";
 
     }

@@ -57,6 +57,10 @@ public class ILRuntimeDelegateHelper
         appdomain.DelegateManager.RegisterMethodDelegate<ILRuntime.Runtime.Intepreter.ILTypeInstance>();
         appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.GameObject>();
 
+appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.EventSystems.UIBehaviour, System.Object>();
+
+appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.Transform, System.Object>();
+
 //[insert]
 
     }

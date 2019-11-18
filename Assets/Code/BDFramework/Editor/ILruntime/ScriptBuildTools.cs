@@ -57,7 +57,7 @@ public class ScriptBuildTools
         catch (Exception e)
         {
             EditorUtility.ClearProgressBar();
-            EditorUtility.DisplayDialog("提示", "Unity拒绝文件夹操作,请重试!", "OK");
+            EditorUtility.DisplayDialog("提示", "请手动删除hotfix文件后重试!", "OK");
             return;
         }
 

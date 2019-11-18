@@ -201,24 +201,20 @@ namespace ILRuntime.Runtime.Generated
             System.Reflection.MemberInfo instance_of_this_method = (System.Reflection.MemberInfo)typeof(System.Reflection.MemberInfo).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
-            var result_of_this_method = instance_of_this_method.GetCustomAttributes(@attributeType, @inherit);
+            var result_of_this_method = instance_of_this_method.GetCustomAttributes(true);
             
             //这里需要对反射进行改造,使其没那么残疾
-            if (result_of_this_method.Length > 1)
-            {  
-                List<object> ret =new List<object>();
-                foreach (var r in result_of_this_method)
+            List<object> ret =new List<object>();
+            foreach (var r in result_of_this_method)
+            {
+                var iltype = r as ILTypeInstance;
+                if (iltype != null && iltype.Type.FullName == @attributeType.AssemblyQualifiedName)
                 {
-                    var iltype = r as ILTypeInstance;
-                    if (iltype != null && iltype.Type.FullName == @attributeType.AssemblyQualifiedName)
-                    {
-                       ret.Add( r);
-                    }
+                   ret.Add( r);
                 }
-                return ILIntepreter.PushObject(__ret, __mStack, ret.ToArray());
             }
+            return ILIntepreter.PushObject(__ret, __mStack, ret.ToArray());
             
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
         static StackObject* IsDefined_7(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)

@@ -6,6 +6,10 @@ using System;
 using BDFramework.Mgr;
 using System.Linq;
 using BDFramework.GameStart;
+using BDFramework.UFlux;
+using Game.ILRuntime;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class BDLauncherBridge
 {
@@ -49,7 +53,6 @@ public class BDLauncherBridge
         allTypes = allTypes.Distinct().ToList();
         foreach (var t in allTypes)
         {
-
             if (t != null && t.BaseType != null && t.BaseType.FullName != null &&
                 t.BaseType.FullName.Contains(".ManagerBase`2"))
             {
@@ -64,18 +67,17 @@ public class BDLauncherBridge
             if ((isILRMode || isRefMode) && hotfixStart == null)
             {
                 var attrs = t.GetCustomAttributes(gsaType, false);
-                if (attrs.Length > 0)
+                if (attrs.Length > 0 && attrs[0] is GameStartAtrribute)
                 {
-                    if (attrs[0] is GameStartAtrribute)
-                    {
-                        hotfixStart = Activator.CreateInstance(t) as IGameStart;
-                        BDebug.Log("找到hotfix启动器 :" + t.FullName, "red");
-                    }
+                    hotfixStart = Activator.CreateInstance(t) as IGameStart;
+                    BDebug.Log("找到hotfix启动器 :" + t.FullName, "red");
                 }
             }
+            
         }
 
-        BDebug.Log("管理器数量 =" + mgrs.Count);
+        
+  
         //类型注册
         foreach (var t in allTypes)
         {
@@ -98,7 +100,7 @@ public class BDLauncherBridge
             BDLauncher.OnUpdate = hotfixStart.Update;
             BDLauncher.OnLateUpdate = hotfixStart.LateUpdate;
         }
-        
+
         //所有管理器开始工作
         foreach (var m in mgrs)
         {

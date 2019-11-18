@@ -17,6 +17,7 @@ namespace ILRuntime.Runtime.Generated
             System_Reflection_MethodInfo_Binding.Register(app);
             System_Reflection_PropertyInfo_Binding.Register(app);
             System_Reflection_MethodBase_Binding.Register(app);
+            System_Type_Binding.Register(app);
         }
 
         /// <summary>

@@ -951,6 +951,8 @@ namespace ILRuntime.Runtime.Intepreter
                                     esp++;
                                 }
                                 break;
+                            case OpCodeEnum.Sub_Ovf:
+                            case OpCodeEnum.Sub_Ovf_Un:
                             case OpCodeEnum.Sub:
                                 {
                                     b = esp - 1;

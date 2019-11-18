@@ -140,7 +140,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         List<Type> notGenerateTypes  =new List<Type>()
         {
             typeof(MethodBase),typeof(MemberInfo),typeof(FieldInfo),typeof(MethodInfo),typeof(PropertyInfo)
-            ,typeof(Component)
+            ,typeof(Component),typeof(Type)
         };
         
 
@@ -159,7 +159,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     {
         var types = new List<Type>();
         //反射类优先生成
-        types.Add(typeof(Component));
+        types.Add(typeof(Type));
         //PreBinding 
         BindingCodeGenerator.GenerateBindingCode(types, "Assets/Code/Game/ILRuntime/Binding/PreBinding");
         AssetDatabase.Refresh();

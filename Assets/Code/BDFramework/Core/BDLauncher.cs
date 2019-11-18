@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using BDFramework.GameStart;
 using SQLite4Unity3d;
 using UnityEngine;
 using BDFramework.ResourceMgr;
+using BDFramework.UFlux;
+using Game.ILRuntime;
+using UnityEngine.EventSystems;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 namespace BDFramework
 {
@@ -42,10 +47,8 @@ namespace BDFramework
         /// </summary>
         public void LaunchLocal()
         {
-            var types = Assembly.GetExecutingAssembly().GetTypes();
-
-            
-            foreach (var t in types)
+            //寻找iGamestart
+            foreach (var t in  Assembly.GetExecutingAssembly().GetTypes())
             {
                 if (t.IsClass && t.GetInterface("IGameStart") != null)
                 {
@@ -58,6 +61,20 @@ namespace BDFramework
                         
                         break;
                     }
+                }
+            }
+            
+            //类型注册
+            List<Type> types =new List<Type>();
+            types.AddRange(typeof(Button).Assembly.GetTypes());
+            types.AddRange(typeof(IButton).Assembly.GetTypes());
+            var uitype = typeof(UIBehaviour);
+            foreach (var t in types)
+            {
+                //注册所有uiComponent
+                if (t.IsSubclassOf(uitype))
+                {
+                    ILTypeHelper.UIComponentTypes[t.FullName] = t;
                 }
             }
             

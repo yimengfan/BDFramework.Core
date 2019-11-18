@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Game.ILRuntime;
 using ILRuntime.CLR.Method;
 using ILRuntime.Runtime.Enviorment;
 using ILRuntime.Runtime.Intepreter;
@@ -209,16 +210,8 @@ namespace ILRuntime.Runtime.Generated
             
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             var t = typeof(System.Type).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            System.Type @type = null;
-            if (t is TypeReference)
-            {
-                //var fullname =((TypeReference)t).FullName;
-                @type = null;
-            }
-            else
-                @type = (Type) t;
-                
-                
+            System.Type @type =  (Type) t;
+            
        
             __intp.Free(ptr_of_this_method);
 

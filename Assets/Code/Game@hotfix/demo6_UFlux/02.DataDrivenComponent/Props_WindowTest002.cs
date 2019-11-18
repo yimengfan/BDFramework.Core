@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BDFramework.UFlux;
 using BDFramework.UFlux.item;
 using BDFramework.UFlux.View.Props;
@@ -7,6 +8,13 @@ using UnityEngine.UI;
 
 namespace Code.Game.demo6_UFlux
 {
+    public class test : Attribute
+    {
+        public test(Type t)
+        {
+            
+        }
+    }
     public class Props_WindowTest002 : PropsBase
     {
         [TransformPath("ScrollView")]

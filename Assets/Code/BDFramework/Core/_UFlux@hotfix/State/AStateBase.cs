@@ -21,7 +21,7 @@ namespace BDFramework.UFlux
             if (cache == null)
             {
                 List<MemberInfo> list = new List<MemberInfo>();
-                var flag = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+                var flag = BindingFlags.Instance | BindingFlags.Public;
                 list.AddRange(t.GetFields(flag));
                 list.AddRange(t.GetProperties(flag));
                 //缓存所有属性
