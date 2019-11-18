@@ -84,7 +84,6 @@ namespace BDFramework.UFlux
                     }
                     else if (cvc.Transform) //自定义逻辑管理
                     {
-                        Debug.Log("-->" + cvc.ValueBind.Type.FullName);
                         adaptorMap[cvc.ValueBind.Type].SetData(cvc.Transform, cvc.ValueBind.FieldName, newValue);
                     }
 
@@ -175,23 +174,27 @@ namespace BDFramework.UFlux
                         }
                         else
                         {
+                            
+                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.ForeahSetChildValue));
+
+                            #if UNITY_EDITOR
                             //props 数组
-                            if (type.IsArray && type.GetElementType().IsSubclassOf(typeof(PropsBase))) //数组
+                            if (type.IsArray &&  !type.GetElementType().IsSubclassOf(typeof(PropsBase))) //数组
                             {
-                                cvc.ValueBind =
-                                    new ComponentValueBind(typeof(UFluxAutoLogic),
-                                                           nameof(UFluxAutoLogic.ForeahSetChildValue));
+                                Debug.LogError("自动适配节点逻辑失败，类型元素不是Props!!!");
                             }
                             //泛型
-                            else if (type.IsGenericType &&
-                                     type.GetGenericArguments()[0].IsSubclassOf(typeof(PropsBase))) //泛型
+                            else if (type.IsGenericType && !type.GetGenericArguments()[0].IsSubclassOf(typeof(PropsBase))) //泛型
                             {
-                                cvc.ValueBind =
-                                    new ComponentValueBind(typeof(UFluxAutoLogic),
-                                                           nameof(UFluxAutoLogic.ForeahSetChildValue));
+                                Debug.LogError("自动适配节点逻辑失败，类型元素不是Props!!!");
                             }
-
-                            //填充 数组子节点赋值逻辑
+                            #endif
+                            
+                            //list t或者array
+                            if (type.IsArray ||  type.IsGenericType) //数组
+                            {
+                                cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.ForeahSetChildValue));
+                            }
                         }
 
                         cvc.Transform = transform;
