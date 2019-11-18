@@ -84,6 +84,7 @@ namespace BDFramework.UFlux
                     }
                     else if (cvc.Transform) //自定义逻辑管理
                     {
+                        Debug.Log("-->" + cvc.ValueBind.Type.FullName);
                         adaptorMap[cvc.ValueBind.Type].SetData(cvc.Transform, cvc.ValueBind.FieldName, newValue);
                     }
 
@@ -136,10 +137,8 @@ namespace BDFramework.UFlux
                     //
                     if (attrs.Length > 0) //寻找ComponentValueBind
                     {
-                        Debug.Log("111");
                         if (attrs[0] is ComponentValueBind)
                         {
-                            Debug.Log("222");
                             var cvb = (ComponentValueBind) attrs[0];
                             
                             if ( cvb.Type.IsSubclassOf(typeof(UIBehaviour)))
@@ -156,7 +155,6 @@ namespace BDFramework.UFlux
                     }
                     else //如果只有Transform 没有ComponentValueBind标签，处理默认逻辑
                     {
-                        Debug.Log("333");
                         Type type = null;
 
                         if (mi is FieldInfo)

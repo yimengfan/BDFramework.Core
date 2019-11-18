@@ -134,6 +134,7 @@ namespace BDFramework.UFlux
             if (curProptyChangeList.Count == 0 || curGetIndex == curProptyChangeList.Count)
             {
                 curGetIndex=-1;
+                curProptyChangeList.Clear();
                 return null;
             }
             //获取
