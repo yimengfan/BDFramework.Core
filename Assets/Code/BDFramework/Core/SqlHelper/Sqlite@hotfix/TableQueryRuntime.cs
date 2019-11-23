@@ -34,6 +34,7 @@ namespace SQLite4Unity3d
 
 
         private string @where = "";
+        private string @sql = "";
         private string like = "";
         private string limit = "";
 
@@ -48,13 +49,22 @@ namespace SQLite4Unity3d
         private SQLiteCommand GenerateCommand(string selection, string tablename)
         {
             //0表名
-            string cmdText = "select " + selection + " from {0} {1}";
-            if (string.IsNullOrEmpty(@where) == false)
+            string cmdText = ""; 
+            
+            //select where语句
+            if (!string.IsNullOrEmpty(@where))
             {
-                @where = "where " + @where;
+                cmdText = "select " + selection + " from {0} {1}";
+                @sql = "where " + @where;
+                cmdText = string.Format(cmdText, tablename,  @sql);
             }
-
-            cmdText = string.Format(cmdText, tablename, @where);
+            //TODO 其他语句自行实现
+            else
+            {
+                //直接执行sql
+                cmdText =  @sql;
+            }
+           
 
             // BDebug.Log("sql:" + cmdText);
             return Connection.CreateCommand(cmdText);
@@ -62,9 +72,21 @@ namespace SQLite4Unity3d
 
         #endregion
 
+        
+        /// <summary>
+        /// 直接执行sql
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public TableQueryILRuntime Exec(string sql)
+        {
+            this.@sql = sql;
+            return this;
+        }
 
-        #region 数据库操作  by BDFramework
 
+        #region Where数据库操作  by BDFramework
+        
         /// <summary>
         /// 基本语法
         /// 1.ID == 1
@@ -74,34 +96,33 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime Where(string where, params object[] formats)
+        public TableQueryILRuntime Where(string where,  object value =null)
         {
-            if (formats.Length > 0)
+            if (value != null)
             {
-                this.@where = string.Format(where, formats);
+                this.@where += string.Format(where, value);
             }
             else
             {
-                this.@where = where;
+                this.@where += (" " +where);
             }
 
             return this;
         }
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime WhereOr(string field, string operation, IList objs)
+        public TableQueryILRuntime WhereOr(string field, string operation="", params object[] objs)
         {
             string sql = "";
-            for (int i = 0; i < objs.Count; i++)
+            for (int i = 0; i < objs.Length; i++)
             {
                 var value = objs[i].ToString();
-                if (i == 0)
+                if (sql == "")
                 {
-                    sql = string.Format("{0} {1} {2}", field, operation, value);
+                    sql += string.Format(" {0} {1} {2}", field, operation, value);
                 }
                 else
                 {
@@ -118,15 +139,15 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime WhereAnd(string field, string operation, IList objs)
+        public TableQueryILRuntime WhereAnd(string field, string operation="",params object[] objs)
         {
             string sql = "";
-            for (int i = 0; i < objs.Count; i++)
+            for (int i = 0; i < objs.Length; i++)
             {
                 var value = objs[i].ToString();
-                if (i == 0)
+                if (sql == "")
                 {
-                    sql = string.Format("{0} {1} {2}", field, operation, value);
+                    sql += string.Format(" {0} {1} {2}", field, operation, value);
                 }
                 else
                 {
@@ -148,10 +169,10 @@ namespace SQLite4Unity3d
             var DataCache = new List<T>();
             //查询所有数据
             var cmd = GenerateCommand(selection, type.Name.ToLower());
+            BDebug.Log(cmd);
             var list = cmd.ExecuteQuery(typeof(T));
             foreach (var o in list)
             {
-                var t =o.GetType();
                 var _t = (T) o;
                 DataCache.Add(_t);
             }

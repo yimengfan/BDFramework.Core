@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using BDFramework.ScreenView;
 using BDFramework.Sql;
@@ -12,6 +11,7 @@ using UnityEngine.UI;
 using BDFramework;
 using BDFramework.ResourceMgr;
 using BDFramework.VersionContrller;
+using Boo.Lang;
 using Code.Game;
 using Code.Game.demo_EventManager;
 using Code.Game.demo6_UFlux;
@@ -105,12 +105,24 @@ public class Window_DemoMain : AWindow
         //demo5： sqlite 查询
         this.btn_05.onClick.AddListener(() =>
         {
-            var ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").ToSearch<Hero>();
-
-            foreach (var d in ds)
-            {
-                Debug.Log(JsonMapper.ToJson(d));
-            }
+            //单条件查询
+            Debug.Log("普通查询：");
+            var ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").ToSearch<Hero>(); 
+            ds = SqliteHelper.DB.GetTableRuntime().Where("id = {0}",1).ToSearch<Hero>();
+            foreach (var d in ds) Debug.Log(JsonMapper.ToJson(d));
+            //多条件查询
+            Debug.Log("多条件查询：");
+            ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").Where("and id < 3").ToSearch<Hero>();
+            foreach (var d in ds) Debug.Log(JsonMapper.ToJson(d));
+            //批量查询
+            Debug.Log("Where or 批量查询：");
+            ds = SqliteHelper.DB.GetTableRuntime().WhereAnd("id", "=", 1, 2).ToSearch<Hero>();
+            foreach (var d in ds) Debug.Log(JsonMapper.ToJson(d));
+            //批量查询
+            Debug.Log("Where and 批量查询：");
+            ds = SqliteHelper.DB.GetTableRuntime().WhereOr("id", "=", 2, 3).ToSearch<Hero>();
+            foreach (var d in ds) Debug.Log(JsonMapper.ToJson(d));
+            
         });
         //demo6：资源加载
         this.btn_06.onClick.AddListener(() =>
@@ -123,7 +135,7 @@ public class Window_DemoMain : AWindow
             var id = BResources.AsyncLoad<GameObject>("Windows/window_demo1", (o) => { });
 
             //3.异步加载多个
-            var list = new List<string>() {"Windows/window_demo1", "Windows/window_demo2"};
+            var list = new System.Collections.Generic.List<string>() {"Windows/window_demo1", "Windows/window_demo2"};
             BResources.AsyncLoad(list,
                 (i, i2) => { Debug.Log(string.Format("进度 {0} / {1}", i, i2)); },
                 (map) =>
