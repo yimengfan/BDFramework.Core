@@ -4,8 +4,9 @@ using System.IO;
 using BDFramework.Helper;
 using UnityEngine;
 using BDFramework;
+using SQLite4Unity3d;
 
-namespace SQLite4Unity3d
+namespace BDFramework.Sql
 {
     static public class SqliteLoder
     {

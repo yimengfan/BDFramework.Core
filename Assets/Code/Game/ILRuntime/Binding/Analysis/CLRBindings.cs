@@ -48,7 +48,6 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_Button_Binding.Register(app);
             UnityEngine_Events_UnityEvent_Binding.Register(app);
             UnityEngine_Random_Binding.Register(app);
-            System_Array_Binding.Register(app);
             BDFramework_ResourceMgr_BResources_Binding.Register(app);
             System_Collections_Generic_List_1_String_Binding.Register(app);
             System_Collections_Generic_IEnumerable_1_KeyValuePair_2_String_Object_Binding.Register(app);
@@ -67,13 +66,12 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Vector3_Binding.Register(app);
             DG_Tweening_TweenSettingsExtensions_Binding.Register(app);
             BDFramework_DataListener_DataListenerServer_Binding.Register(app);
+            System_Array_Binding.Register(app);
             IEnumeratorTool_Binding.Register(app);
             UnityEngine_WaitForSeconds_Binding.Register(app);
             System_NotSupportedException_Binding.Register(app);
             BDFramework_DataListener_ADataListener_Binding.Register(app);
             SQLite4Unity3d_SQLiteConnection_Binding.Register(app);
-            System_Collections_IList_Binding.Register(app);
-            System_Collections_ICollection_Binding.Register(app);
             SQLite4Unity3d_SQLiteCommand_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding_Enumerator_Binding.Register(app);
@@ -122,11 +120,13 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_String_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_List_1_Enum_Binding.Register(app);
             System_Collections_Generic_List_1_Enum_Binding_Enumerator_Binding.Register(app);
+            System_Collections_ICollection_Binding.Register(app);
             UnityEngine_Mathf_Binding.Register(app);
+            System_Collections_IList_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_Object_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Int32_ILTypeInstance_Binding.Register(app);
-            SQLite4Unity3d_SqliteLoder_Binding.Register(app);
+            BDFramework_Sql_SqliteLoder_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Transform_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_UITool_Attribute_Binding.Register(app);
             UITool_Attribute_Binding.Register(app);

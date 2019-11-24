@@ -14,14 +14,14 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class SQLite4Unity3d_SqliteLoder_Binding
+    unsafe class BDFramework_Sql_SqliteLoder_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(SQLite4Unity3d.SqliteLoder);
+            Type type = typeof(BDFramework.Sql.SqliteLoder);
             args = new Type[]{};
             method = type.GetMethod("get_Connection", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, get_Connection_0);
@@ -36,7 +36,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
 
-            var result_of_this_method = SQLite4Unity3d.SqliteLoder.Connection;
+            var result_of_this_method = BDFramework.Sql.SqliteLoder.Connection;
 
             object obj_result_of_this_method = result_of_this_method;
             if(obj_result_of_this_method is CrossBindingAdaptorType)

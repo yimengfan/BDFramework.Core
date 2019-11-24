@@ -7,6 +7,7 @@ using BDFramework.GameStart;
 using SQLite4Unity3d;
 using UnityEngine;
 using BDFramework.ResourceMgr;
+using BDFramework.Sql;
 using BDFramework.UFlux;
 using Game.ILRuntime;
 using UnityEngine.EventSystems;

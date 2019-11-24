@@ -23,7 +23,6 @@ namespace BDFramework.UFlux
             foreach (var cd in this.GetAllClassDatas())
             {
                 var attr = cd.Attribute as ComponentAdaptorProcessAttribute;
-                Debug.Log("----->"+attr.Type.FullName);
                 adaptorMap[attr.Type] = CreateInstance<AComponentAdaptor>(cd);
             }
 

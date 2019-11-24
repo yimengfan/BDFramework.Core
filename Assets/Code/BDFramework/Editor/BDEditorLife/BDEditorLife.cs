@@ -2,7 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
+using BDFramework.ResourceMgr;
+using BDFramework.Sql;
 using Code.BDFramework.Editor;
+using SQLite4Unity3d;
 using UnityEditor;
 using UnityEngine;
 
@@ -76,6 +79,8 @@ namespace BDFramework.Editor.EditorLife
             
             DebuggerServerProcessManager.Inst.Start();
             BDEditorHelper.Init();
+            BResources.Load("");
+            SqliteLoder.Load(Application.streamingAssetsPath);
         }
     }
 }
