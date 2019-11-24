@@ -9,13 +9,13 @@ using Code.BDFramework.Editor;
 
 namespace BDFramework.Editor
 {
-    static public class BuildPipeline_Jenkins
+    static public class BuildPipeline_CI
     {
 
         [MenuItem("BDFrameWork工具箱/打包/导出APK(已有资源)")]
         public static void GenEmptyApk()
         {
-            BuildPipeline_Jenkins.BuildPackage_APK_Editor();
+            BuildPipeline_CI.BuildPackage_APK();
         }
         [MenuItem("BDFrameWork工具箱/打包/导出APK(RebuildAsset)")]
         public static void GenApk_RebuildAsset()
@@ -23,34 +23,32 @@ namespace BDFramework.Editor
 
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildPipeline_Jenkins.BuildALLAssetsAndBuildInPackage_APK_Editor();
+                BuildPipeline_CI.AndBuildPackage_APK_RebuildAssets();
             }
         }
         
         [MenuItem("BDFrameWork工具箱/打包/导出XCode工程(ipa暂未实现)")]
         public static void GenIpa()
         {
-            BuildPipeline_Jenkins.BuildALLAssetsAndBuildInPackage_iOS_Editor();
+            BuildPipeline_CI.BuildALLAssetsAndBuildInPackage_iOS_Editor();
         }
         
         
         
         #region Android
-        
-
         /// <summary>
         /// build apk,Assetbunld 位于Streaming下~
         /// </summary>
-        static public void BuildALLAssetsAndBuildInPackage_APK_Editor()
+        static public void AndBuildPackage_APK_RebuildAssets()
         {
             //开始项目一键打包
             EditorWindow_OnekeyBuildAsset.OneKeyBuildALLAssets_ForBuildPackage(RuntimePlatform.Android,Application.streamingAssetsPath);
-            BuildPackage_APK_Editor();
+            BuildPackage_APK();
         }
         /// <summary>
         /// build apk,Assetbunld 位于Streaming下~
         /// </summary>
-        static public void BuildPackage_APK_Editor()
+        static public void BuildPackage_APK()
         {
             if (!BDEditorHelper.EditorConfig.IsSetConfig())
             {
