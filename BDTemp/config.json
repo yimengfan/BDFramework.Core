@@ -6,5 +6,5 @@
     "keyaliasName" : "test",
     "keyaliasPass" : "111111"
   },
-  "savepath" : "E:/BDFramework.Core/BDTemp/config.json"
+  "savepath" : "E:/gitee/BDFramework.Core/BDTemp/config.json"
 }
