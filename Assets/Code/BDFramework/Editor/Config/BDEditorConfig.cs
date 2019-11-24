@@ -11,12 +11,34 @@ namespace Code.BDFramework.Editor
         {
             savepath = IPath.Combine(root, "BDTemp/config.json");
         }
+
         public BDEditorConfig()
-        {}
-        [BoxGroup("设置")]
+        {
+            
+        }
+        
+        [BoxGroup("Android设置")]
+        [HideLabel]
         [InlinePropertyAttribute]
-        [LabelText("Android打包设置")]
         public AndroidConfig Android = new AndroidConfig();
+        
+        
+        [BoxGroup("Ios设置")]
+        [HideLabel]
+        [InlinePropertyAttribute]
+        public IosConfig IosConfig =new IosConfig();
+        
+        
+        [BoxGroup("Android设置[debug]")]
+        [HideLabel]
+        [InlinePropertyAttribute]
+        public AndroidConfig AndroidDebug = new AndroidConfig();
+        
+        [BoxGroup("Ios设置[debug]")]
+        [HideLabel]
+        [InlinePropertyAttribute]
+        public IosConfig IosConfigDebug =new IosConfig();
+        //
         [DisableInEditorMode]
         public string savepath = "";
         /// <summary>
@@ -58,8 +80,6 @@ namespace Code.BDFramework.Editor
     
     public class AndroidConfig
     {
-        [GUIColor(1,0,0,1)]
-        [InfoBox("请注意检测密码和alias名哦~ mua", InfoMessageType.Info)]
         [LabelText("Keystore路径")]
         [FilePath(Extensions = "keystore")]
         public  string keystoreName;
@@ -69,5 +89,14 @@ namespace Code.BDFramework.Editor
         public  string keyaliasName;
         [LabelText("keyalias密码")]
         public  string keyaliasPass;
+    }
+
+
+    public class IosConfig
+    {
+        [LabelText("证书")]
+        public string test;
+        [LabelText("密钥")]
+        public string test2;
     }
 }

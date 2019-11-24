@@ -6,5 +6,19 @@
     "keyaliasName" : "test",
     "keyaliasPass" : "111111"
   },
-  "savepath" : "E:/gitee/BDFramework.Core/BDTemp/config.json"
+  "IosConfig" : {
+    "test" : null,
+    "test2" : null
+  },
+  "AndroidDebug" : {
+    "keystoreName" : null,
+    "keystorePass" : null,
+    "keyaliasName" : null,
+    "keyaliasPass" : null
+  },
+  "IosConfigDebug" : {
+    "test" : null,
+    "test2" : null
+  },
+  "savepath"       : "E:/gitee/BDFramework.Core/BDTemp/config.json"
 }
