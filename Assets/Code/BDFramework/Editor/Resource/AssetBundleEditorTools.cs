@@ -93,9 +93,9 @@ namespace BDFramework.Editor.Asset
             }
 
 
-            var _outpath = IPath.Combine(outPath, "Art");
+            var artOutpath = IPath.Combine(outPath, "Art");
             //2.分析ab包
-            AnalyzeResource(fileList.ToArray(), target, _outpath);
+            AnalyzeResource(fileList.ToArray(), target, artOutpath);
             //3.生成AssetBundle
             BuildAssetBundle(target, outPath, options);
 
@@ -103,14 +103,14 @@ namespace BDFramework.Editor.Asset
             foreach (var item in allfileHashMap)
             {
                var sub=  item.Key.Replace(BApplication.projroot + "/", "").ToLower();
-               var source = IPath.Combine(_outpath, sub);
-               var copyto = IPath.Combine(_outpath, item.Value);
+               var source = IPath.Combine(artOutpath, sub);
+               var copyto = IPath.Combine(artOutpath, item.Value);
                if (File.Exists(source) && !File.Exists(copyto))
                {
                    File.Copy(source,copyto);
                }
             }
-             Directory.Delete(IPath.Combine(_outpath,"assets"),true);
+             Directory.Delete(IPath.Combine(artOutpath,"assets"),true);
 
             //保存配置
             FileHelper.WriteAllText(configPath, CurManifestConfig.ToString());
@@ -121,7 +121,7 @@ namespace BDFramework.Editor.Asset
             RemoveAllAbName();
      
             //删除无用文件
-            var delFiles = Directory.GetFiles(outPath, "*", SearchOption.AllDirectories);
+            var delFiles = Directory.GetFiles(artOutpath, "*", SearchOption.AllDirectories);
             foreach (var df in delFiles)
             {
                 var ext = Path.GetExtension(df);

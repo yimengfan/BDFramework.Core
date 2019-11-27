@@ -42,7 +42,7 @@ namespace BDFramework.Editor
         static public void AndBuildPackage_APK_RebuildAssets()
         {
             //开始项目一键打包
-            EditorWindow_OnekeyBuildAsset.OneKeyBuildALLAssets_ForBuildPackage(RuntimePlatform.Android,Application.streamingAssetsPath);
+            EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath,RuntimePlatform.Android, BuildTarget.Android);
             BuildPackage_APK();
         }
         /// <summary>
@@ -111,10 +111,8 @@ namespace BDFramework.Editor
             }
 
             //开始项目一键打包
-            EditorWindow_OnekeyBuildAsset.OneKeyBuildALLAssets_ForBuildPackage(RuntimePlatform.IPhonePlayer,
-                Application.streamingAssetsPath);
-            UnityEditor.BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputPath, BuildTarget.iOS,
-                BuildOptions.None);
+            EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath,RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
+            UnityEditor.BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputPath, BuildTarget.iOS, BuildOptions.None);
 
             //TODO  Build 完之后，需要调用shell 编译xcode
         }

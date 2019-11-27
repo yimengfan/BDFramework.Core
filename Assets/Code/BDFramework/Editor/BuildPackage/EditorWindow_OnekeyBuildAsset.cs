@@ -166,19 +166,23 @@ namespace BDFramework.Editor.BuildPackage
             try
             {
                 ScriptBuildTools.BuildDll(Application.dataPath, outPath, ScriptBuildTools.BuildMode.Release);
-                var targetPath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(platform) +
-                                 "/hotfix/hotfix.dll";
+                var targetPath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(platform) + "/hotfix/hotfix.dll";
                 var hotFix = outPath + "/hotfix/hotfix.dll";
                 //防空
                 if (!Directory.Exists(Path.GetDirectoryName(targetPath)))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(targetPath));
                 }
-
-                if (File.Exists(targetPath))
-                    File.Delete(targetPath);
+               
                 //拷贝
-                File.Copy(hotFix, targetPath, true);
+                if (hotFix != targetPath)
+                {
+                    if (File.Exists(targetPath))
+                    {
+                        File.Delete(targetPath);
+                    }
+                    File.Copy(hotFix, targetPath, true);
+                }
                 //分析
                 EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis(platform);
             }
@@ -199,29 +203,7 @@ namespace BDFramework.Editor.BuildPackage
             }
         }
 
-
-        /// <summary>
-        /// 一键build所有资源
-        /// </summary>
-        public static void OneKeyBuildALLAssets_ForBuildPackage(RuntimePlatform platform, string outpath)
-        {
-            var outPath = outpath + "/" + BDUtils.GetPlatformPath(platform);
-            //1.编译脚本
-            ScriptBuildTools.BuildDll(Application.dataPath, outPath, ScriptBuildTools.BuildMode.Release);
-            EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis(platform);
-            //2.打包资源
-            if (platform == RuntimePlatform.IPhonePlayer)
-            {
-                AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/", outPath, BuildTarget.iOS);
-            }
-            else if (platform == RuntimePlatform.Android)
-            {
-                AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/", outPath, BuildTarget.Android);
-            }
-
-            //3.打包表格
-            Excel2SQLiteTools.GenSQLite(outPath);
-        }
+        
 
         public static void Layout_DrawLineH(Color color, float height = 4f)
         {
