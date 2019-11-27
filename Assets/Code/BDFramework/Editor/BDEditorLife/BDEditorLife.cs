@@ -80,7 +80,6 @@ namespace BDFramework.Editor.EditorLife
             DebuggerServerProcessManager.Inst.Start();
             BDEditorHelper.Init();
             BResources.Load("");
-            SqliteLoder.Load(Application.streamingAssetsPath);
         }
     }
 }

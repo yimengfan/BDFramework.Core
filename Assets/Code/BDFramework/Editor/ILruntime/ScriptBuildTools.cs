@@ -140,7 +140,7 @@ public class ScriptBuildTools
         bool isdebug=false)
     {
         var baseDll = outHotfixDllPath.Replace("hotfix.dll", "Assembly-CSharp.dll");
-        EditorUtility.DisplayProgressBar("编译服务", "[1/2]base.dll", 0.5f);
+        EditorUtility.DisplayProgressBar("编译服务", "[1/2]检测主工程调用base.dll", 0.5f);
         try
         {
             BuildByRoslyn(dllFiles.ToArray(), baseCs.ToArray(), baseDll,false);
@@ -153,7 +153,12 @@ public class ScriptBuildTools
         }
         EditorUtility.DisplayProgressBar("编译服务", "[2/2]开始编译hotfix.dll", 0.7f);
         //将base.dll加入
-        dllFiles.Add(baseDll);
+        var mainDll = BApplication.projroot + "/Library/ScriptAssemblies/Assembly-CSharp.dll";
+        if (!dllFiles.Contains(mainDll))
+        {
+            dllFiles.Add(mainDll);
+        }
+        //build
         try
         {
             BuildByRoslyn(dllFiles.ToArray(), hotfixCS.ToArray(), outHotfixDllPath,isdebug);

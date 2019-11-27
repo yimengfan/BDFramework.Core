@@ -1,50 +1,48 @@
 ﻿using System.Collections;
 using BDFramework.Sql;
+using BDFramework.Test.hotfix;
 using Game.Data;
-using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace Tests
 {
     public class Sqlite
     {
         // A Test behaves as an ordinary method
-        [Test, Order(1)]
-        public void Select()
+        [BDTest]
+        public void Select(TestResult ret)
         {
             //单条件查询
             var ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").ToSearch<Hero>();
 
-            Assert.AreEqual(ds.Count, 1);
-            Assert.AreEqual(ds[0].Id, 1);
+            ret.Equals(ds.Count, 1);
+            ret.Equals(ds[0].Id, 1);
         }
 
-        [Test, Order(2)]
-        public void Select_MultiCondition()
+        [BDTest]
+        public void Select_MultiCondition(TestResult ret)
         {
             var ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").Where("and id < 3").ToSearch<Hero>();
 
-            Assert.AreEqual(ds.Count, 1);
-            Assert.AreEqual(ds[0].Id, 2);
+            ret.Equals(ds.Count, 1);
+            ret.Equals(ds[0].Id, 2);
         }
 
 
-        [Test, Order(3)]
-        public void MultiSelect_WhereAnd()
+        [BDTest]
+        public void MultiSelect_WhereAnd(TestResult ret)
         {
             var ds = SqliteHelper.DB.GetTableRuntime().WhereAnd("id", "=", 1, 2).ToSearch<Hero>();
-            Assert.AreEqual(ds.Count, 0);
+            ret.Equals(ds.Count, 0);
         }
         
-        [Test, Order(4)]
-        public void MultiSelect_WhereOr()
+        [BDTest]
+        public void MultiSelect_WhereOr(TestResult ret)
         {
             var  ds = SqliteHelper.DB.GetTableRuntime().WhereOr("id", "=", 2, 3).ToSearch<Hero>();
-            Assert.AreEqual(ds.Count, 2);
             
-            Assert.AreEqual(ds[0].Id, 2);
-            Assert.AreEqual(ds[1].Id, 3);
+            ret.Equals(ds.Count, 2);
+            ret.Equals(ds[0].Id, 2);
+            ret.Equals(ds[1].Id, 3);
         }
         
     }

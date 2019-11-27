@@ -129,11 +129,16 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     }
 
     //生成clr绑定
-    static public void GenCLRBindingByAnalysis(RuntimePlatform platform = RuntimePlatform.Lumin)
+    static public void GenCLRBindingByAnalysis(RuntimePlatform platform = RuntimePlatform.Lumin,string dllpath ="")
     {
         if (platform == RuntimePlatform.Lumin)
         {
             platform = Application.platform;
+        }
+        //默认读StreammingAssets下面path
+        if (dllpath == "")
+        {
+             dllpath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(platform) + "/hotfix/hotfix.dll";
         }
         
         //不参与自动绑定的
@@ -145,11 +150,10 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         
 
         //用新的分析热更dll调用引用来生成绑定代码
-        var dllpath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(platform) + "/hotfix/hotfix.dll";
+     
         ILRuntimeHelper.LoadHotfix(dllpath, false);
         
-        BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain, "Assets/Code/Game/ILRuntime/Binding/Analysis",
-                                                 notGenTypes:notGenerateTypes);
+        BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain, "Assets/Code/Game/ILRuntime/Binding/Analysis", notGenTypes:notGenerateTypes);
         AssetDatabase.Refresh();
       
         //暂时先不处理
