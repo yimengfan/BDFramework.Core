@@ -17,7 +17,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// foreach 设置子节点value
         /// </summary>
-        public void ForeahSetChildValue()
+        public void ForeachSetChildValue()
         {
         }
     }
@@ -32,7 +32,7 @@ namespace BDFramework.UFlux
         {
             base.Init();
             setPropCustomAdaptorMap[nameof(UFluxAutoLogic.SetChildValue)] = SetChildValue;
-            setPropCustomAdaptorMap[nameof(UFluxAutoLogic.ForeahSetChildValue)] = ForeahSetChildValueFormArray;
+            setPropCustomAdaptorMap[nameof(UFluxAutoLogic.ForeachSetChildValue)] = ForeahSetChildValueFormArray;
         }
 
         /// <summary>

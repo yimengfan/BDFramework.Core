@@ -39,9 +39,9 @@ namespace BDFramework.UFlux
         {
             //初始化
             windowMap = new Dictionary<int, IWindow>();
-            Bottom = GameObject.Find("UIRoot/Bottom").transform;
-            Center = GameObject.Find("UIRoot/Center").transform;
-            Top = GameObject.Find("UIRoot/Top").transform;
+            Bottom    = GameObject.Find("UIRoot/Bottom").transform;
+            Center    = GameObject.Find("UIRoot/Center").transform;
+            Top       = GameObject.Find("UIRoot/Top").transform;
         }
 
         //
@@ -55,7 +55,7 @@ namespace BDFramework.UFlux
             }
 
             //
-            var attr = classData.Attribute as UIAttribute;
+            var attr   = classData.Attribute as UIAttribute;
             var window = Activator.CreateInstance(classData.Type, new object[] {attr.ResourcePath}) as IWindow;
             //
             return window;
@@ -97,6 +97,7 @@ namespace BDFramework.UFlux
                 {
                     windowMap[index] = window as IWindow;
                     window.Load();
+                    window.Transform.gameObject.SetActive(false);
                     window.Transform.SetParent(this.Bottom, false);
                     PushCaheData(index);
                 }
@@ -113,7 +114,7 @@ namespace BDFramework.UFlux
             //去重操作
             indexes = indexes.Distinct().ToList();
             //
-            int allCount = indexes.Count;
+            int allCount     = indexes.Count;
             int curTaskCount = 0;
             foreach (var i in indexes)
             {
@@ -154,6 +155,7 @@ namespace BDFramework.UFlux
 
                             if (com.Transform)
                             {
+                                com.Transform.gameObject.SetActive(false);
                                 com.Transform.SetParent(this.Bottom, false);
                             }
 
@@ -326,7 +328,7 @@ namespace BDFramework.UFlux
             //
             if (list == null)
             {
-                list = new List<UIMessageData>();
+                list                    = new List<UIMessageData>();
                 uiDataCacheMap[uiIndex] = list;
             }
 

@@ -161,7 +161,7 @@ namespace BDFramework.Editor.Asset
                 Directory.CreateDirectory(path);
             }
 
-            BuildPipeline.BuildAssetBundles(path, options, target);
+            UnityEditor.BuildPipeline.BuildAssetBundles(path, options, target);
         }
 
 

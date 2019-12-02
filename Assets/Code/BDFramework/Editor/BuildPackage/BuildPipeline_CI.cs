@@ -5,6 +5,8 @@ using System.IO;
 using UnityEditor.Build.Content;
 using BDFramework.Editor.Asset;
 using BDFramework.Editor.BuildPackage;
+using BDFramework.Editor.EditorLife;
+using Code.BDFramework.Core.Tools;
 using Code.BDFramework.Editor;
 
 namespace BDFramework.Editor
@@ -12,44 +14,95 @@ namespace BDFramework.Editor
     static public class BuildPipeline_CI
     {
 
-        [MenuItem("BDFrameWork工具箱/打包/导出APK(已有资源)")]
-        public static void GenEmptyApk()
+        public enum BuildMode
         {
-            BuildPipeline_CI.BuildPackage_APK();
+            AndroidDebug = 0,
+            AndroidRelease,
+            IosDebug,
+            IosRelease,
         }
-        [MenuItem("BDFrameWork工具箱/打包/导出APK(RebuildAsset)")]
-        public static void GenApk_RebuildAsset()
-        {
 
+        static private string[] Scenes =
+        {
+            "Assets/Scenes/BuildAndroidDebug.unity",
+            "Assets/Scenes/BuildAndroidRelease.unity",
+            "Assets/Scenes/BuildIosDebug.unity",
+            "Assets/Scenes/BuildIosRelease.unity",
+        };
+
+        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(空)")]
+        public static void GenAPKEmpty()
+        {
+            BuildAPK_Empty();
+        }
+
+        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Debug)")]
+        public static void GenAPKDebug()
+        {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildPipeline_CI.AndBuildPackage_APK_RebuildAssets();
+                BuildAPK_Debug();
+            }
+          
+        }
+
+        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Release)")]
+        public static void GenPAK()
+        {
+            if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
+            {
+                BuildAPK_Release();
             }
         }
-        
+
+
+
         [MenuItem("BDFrameWork工具箱/打包/导出XCode工程(ipa暂未实现)")]
         public static void GenIpa()
         {
-            BuildPipeline_CI.BuildALLAssetsAndBuildInPackage_iOS_Editor();
+            BuildPipeline_CI.BuildIpa();
         }
-        
-        
-        
+
+
+
+        /// <summary>
+        /// 初始化BDFrame
+        /// </summary>
+        public static void InitBDFrame()
+        {
+            BDEditorLife.BDEditorInit();
+        }
+
+
         #region Android
-        /// <summary>
-        /// build apk,Assetbunld 位于Streaming下~
-        /// </summary>
-        static public void AndBuildPackage_APK_RebuildAssets()
+
+        static public void BuildAPK_Empty()
         {
-            //开始项目一键打包
-            EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath,RuntimePlatform.Android, BuildTarget.Android);
-            BuildPackage_APK();
+            BuildAPK(Scenes[(int) BuildMode.AndroidDebug]);
         }
+
+        
+        static public void BuildAPK_Debug()
+        {
+            EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath,RuntimePlatform.Android, BuildTarget.Android);
+            BuildAPK(Scenes[(int) BuildMode.AndroidDebug]);
+        }
+        
+        static public void BuildAPK_Release()
+        {
+            EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath,RuntimePlatform.Android, BuildTarget.Android);
+            BuildAPK(Scenes[(int) BuildMode.AndroidRelease]);
+        }
+
+        
         /// <summary>
         /// build apk,Assetbunld 位于Streaming下~
         /// </summary>
-        static public void BuildPackage_APK()
+        static public void BuildAPK(string scene)
         {
+
+            InitBDFrame();
+            
             if (!BDEditorHelper.EditorConfig.IsSetConfig())
             {
                 BDebug.LogError("请注意设置apk keystore账号密码");
@@ -61,15 +114,12 @@ namespace BDFramework.Editor
             PlayerSettings.keystorePass =  BDEditorHelper.EditorConfig.Android.keystorePass;
             PlayerSettings.Android.keyaliasName= BDEditorHelper.EditorConfig.Android.keyaliasName;
             PlayerSettings.keyaliasPass =  BDEditorHelper.EditorConfig.Android.keyaliasPass;
-
-            var outpath =  EditorUtility.OpenFolderPanel("选择导出文件夹", Application.dataPath, "");
-            if (string.IsNullOrEmpty(outpath))
-            {
-                return;
-            }
-            var outputPath = IPath.Combine( outpath ,  Application.productName+".apk");
-            File.Delete(outputPath);
-            Debug.Log(outputPath);
+            //
+            var outdir = BApplication.projroot + "/Build";
+            var outputPath = IPath.Combine(  outdir,  Application.productName+".apk");
+            //文件夹处理
+            if (!Directory.Exists(outdir)) Directory.CreateDirectory(outdir);
+            if(File.Exists(outputPath)) File.Delete(outputPath);
             //清空StreamingAsset
             var ios = IPath.Combine(Application.streamingAssetsPath, "iOS");
             if (Directory.Exists(ios))
@@ -77,14 +127,22 @@ namespace BDFramework.Editor
                 Directory.Delete(ios, true);
             }
             var win = IPath.Combine(Application.streamingAssetsPath, "Windows");
-            if (Directory.Exists(win))
+            if (Directory.Exists(win)) 
             {
                 Directory.Delete(win, true);
             }
             //开始项目一键打包
-            BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputPath, BuildTarget.Android,BuildOptions.None);
-            //
-            EditorUtility.DisplayDialog("提示", "打包完成", "OK");
+            string[] scenes = { scene };
+            UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.Android,BuildOptions.None);
+            if (File.Exists(outputPath))
+            {
+                Debug.Log( "Build Success :" + outputPath);
+            }
+            else
+            {
+
+                Debug.LogException(new Exception("Build Fail! Please Check the log! "));
+            }
         }
         #endregion
         
@@ -94,27 +152,9 @@ namespace BDFramework.Editor
         /// <summary>
         /// build apk,Assetbunld 位于Streaming下~
         /// </summary>
-        static public void BuildALLAssetsAndBuildInPackage_iOS_Editor()
+        static public void BuildIpa()
         {
-            var outputPath = Application.streamingAssetsPath + "/" + DateTime.Now.ToShortTimeString() + ".apk";
-            //清空StreamingAsset
-            var and = IPath.Combine(Application.streamingAssetsPath, "Android");
-            if (Directory.Exists(and))
-            {
-                Directory.Delete(and, true);
-            }
-
-            var win = IPath.Combine(Application.streamingAssetsPath, "Windows");
-            if (Directory.Exists(win))
-            {
-                Directory.Delete(win, true);
-            }
-
-            //开始项目一键打包
-            EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath,RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
-            UnityEditor.BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, outputPath, BuildTarget.iOS, BuildOptions.None);
-
-            //TODO  Build 完之后，需要调用shell 编译xcode
+           
         }
 
         #endregion

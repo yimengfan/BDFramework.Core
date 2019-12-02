@@ -174,7 +174,7 @@ namespace BDFramework.UFlux
                         else
                         {
                             
-                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.ForeahSetChildValue));
+                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.ForeachSetChildValue));
 
                             #if UNITY_EDITOR
                             //props 数组
@@ -192,7 +192,7 @@ namespace BDFramework.UFlux
                             //list t或者array
                             if (type.IsArray ||  type.IsGenericType) //数组
                             {
-                                cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.ForeahSetChildValue));
+                                cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.ForeachSetChildValue));
                             }
                         }
 
