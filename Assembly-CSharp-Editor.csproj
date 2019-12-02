@@ -94,9 +94,6 @@
     <Compile Include="Assets\Code\BDFramework\Editor\UI\Editor_UITool.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\UI\Editor_UIWorker.cs" />
     <None Include="Assets\3rdPlugins\Dotween\DemiLib\Core\Editor\DemiEditor.xml" />
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>E:/gitee/BDFramework.Core/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Program Files/Unity 2018.4.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>

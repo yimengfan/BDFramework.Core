@@ -821,9 +821,6 @@
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Unlit\Unlit-Normal.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\CGIncludes\UnityGlobalIllumination.cginc" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Skybox.shader" />
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>E:/gitee/BDFramework.Core/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Program Files/Unity 2018.4.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>

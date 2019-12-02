@@ -247,7 +247,7 @@ PlayerSettings:
   AndroidTargetArchitectures: 1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: F:/BDFramework.Core/BDTemp/SDK/user.keystore
+  AndroidKeystoreName: E:/gitee/BDFramework.Core/BDTemp/SDK/user.keystore
   AndroidKeyaliasName: test
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 1
