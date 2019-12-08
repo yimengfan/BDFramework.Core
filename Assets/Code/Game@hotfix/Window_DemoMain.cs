@@ -30,12 +30,6 @@ public class Window_DemoMain : AWindow
     [TransformPath("btn_1")]
     private Button btn_01;
 
-    [TransformPath("btn_2")]
-    private Button btn_02;
-
-    [TransformPath("btn_3")]
-    private Button btn_03;
-
     [TransformPath("btn_4")]
     private Button btn_04;
 
@@ -70,29 +64,11 @@ public class Window_DemoMain : AWindow
         //demo1： screenview 切换
         //代码:
         //Game@hotfix/demo1
-        this.btn_01.onClick.AddListener(() => { ScreenViewManager.Inst.MainLayer.BeginNavTo(ScreenViewEnum.Demo1); });
-
-        //demo2： ui window基本操作
-        //代码:
-        //Game@hotfix/demo2
-        this.btn_02.onClick.AddListener(() =>
+        this.btn_01.onClick.AddListener(() =>
         {
-            ScreenViewManager.Inst.MainLayer.BeginNavTo(ScreenViewEnum.Demo2);
-
-            //向demo2窗口发消息
-            var d = WindowData.Create("rotation");
-            d.AddData("rotation", UnityEngine.Random.Range(-359, 359));
-            UIManager.Inst.SendMessage((int) WinEnum.Win_Demo2, d);
+            ScreenViewManager.Inst.MainLayer.BeginNavTo(ScreenViewEnum.Demo1);
         });
-
-        //demo3: uitools使用
-        //代码:
-        //Game@hotfix/demo4
-        this.btn_03.onClick.AddListener(() =>
-        {
-            UIManager.Inst.LoadWindows((int) WinEnum.Win_Demo4);
-            UIManager.Inst.ShowWindow((int) WinEnum.Win_Demo4);
-        });
+        
         //demo4 ： uflux窗口
         //代码:
         this.btn_04.onClick.AddListener(() =>

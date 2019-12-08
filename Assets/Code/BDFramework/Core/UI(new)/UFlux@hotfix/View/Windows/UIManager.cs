@@ -311,14 +311,14 @@ namespace BDFramework.UFlux
         /// 外部推送ui数据
         /// </summary>
         /// <param name="uiIndex"></param>
-        /// <param name="messageData"></param>
-        public void SendMessage(Enum index, UIMessageData messageData)
+        /// <param name="uiMsg"></param>
+        public void SendMessage(Enum index, UIMessageData uiMsg)
         {
             var uiIndex = index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
             {
                 var ui = windowMap[uiIndex];
-                ui.SendMessage(messageData);
+                ui.SendMessage(uiMsg);
                 return;
             }
 
@@ -332,7 +332,7 @@ namespace BDFramework.UFlux
                 uiDataCacheMap[uiIndex] = list;
             }
 
-            list.Add(messageData);
+            list.Add(uiMsg);
         }
     }
 }

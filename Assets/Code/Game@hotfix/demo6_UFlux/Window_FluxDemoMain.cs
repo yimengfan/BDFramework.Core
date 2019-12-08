@@ -22,10 +22,17 @@ namespace Code.Game.demo6_UFlux
         private Button btn_03;
         [TransformPath("btn_04")] 
         private Button btn_04;
+        
+        [TransformPath("btn_close")] 
+        private Button btn_close;
         public override void Init()
         {
             base.Init();
-            
+            //
+            btn_close.onClick.AddListener((() =>
+            {
+                this.Close();
+            }));
             //测试Component同步加载
             btn_01.onClick.AddListener(() =>
             {

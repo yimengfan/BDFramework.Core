@@ -452,7 +452,6 @@
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_BDLauncher_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_Core_Debugger_Debugger_NetworkServer_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_DataListener_ADataListener_Binding.cs" />
-    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_DataListener_DataListenerServer_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_GameStart_IGameStart_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_ILRuntimeHelper_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_ResourceMgr_BResources_Binding.cs" />
@@ -461,8 +460,6 @@
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UFlux_IComponentOnClick_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_VersionContrller_VersionContorller_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\CLRBindings.cs" />
-    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\DG_Tweening_ShortcutExtensions_Binding.cs" />
-    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\DG_Tweening_TweenSettingsExtensions_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\Game_ILRuntime_ILTypeHelper_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\IEnumeratorTool_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\ILRuntime_CLR_TypeSystem_IType_Binding.cs" />
@@ -541,7 +538,6 @@
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Object_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Reflection_Assembly_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Runtime_CompilerServices_AsyncVoidMethodBuilder_B_t.cs" />
-    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Single_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_String_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UITool_Attribute_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Application_Binding.cs" />
@@ -564,7 +560,6 @@
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_UI_Slider_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_UI_Text_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_UI_Toggle_Binding.cs" />
-    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Vector3_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_WaitForSeconds_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_WaitForSecondsRealtime_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\CLRManualBindings.cs" />
@@ -611,13 +606,6 @@
     <Compile Include="Assets\Code\Game@hotfix\demo_EventManager\interface\IDemoEvent.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo1\ScreenView_Demo1_Screenview.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo1\Window_Demo1.cs" />
-    <Compile Include="Assets\Code\Game@hotfix\demo2\ScreenView_Demo2_Windows.cs" />
-    <Compile Include="Assets\Code\Game@hotfix\demo2\Subwindow_Demo2.cs" />
-    <Compile Include="Assets\Code\Game@hotfix\demo2\Window_Demo2.cs" />
-    <Compile Include="Assets\Code\Game@hotfix\demo3\ScreenView_Demo3_WindowsMvc.cs" />
-    <Compile Include="Assets\Code\Game@hotfix\demo3\Window_MVC\Contrl_MVCTest.cs" />
-    <Compile Include="Assets\Code\Game@hotfix\demo3\Window_MVC\View_MVCTest.cs" />
-    <Compile Include="Assets\Code\Game@hotfix\demo3\Window_MVC\Window_MVC.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo4\Window_Demo4.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo5\Window_Demo5.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\01.TestComponent\Component_Test001.cs" />
@@ -630,7 +618,7 @@
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\03.CustomLogicBind\PropsDemo003Window.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\03.CustomLogicBind\Window_CustomLogicBind.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\04.SubWindowAndUIMessage\SubWindow_Demo004.cs" />
-    <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\04.SubWindowAndUIMessage\Window_SubWindowAndUIMessage.cs" />
+    <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\04.SubWindowAndUIMessage\Window_Normal.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\05.State_Props\Props_Hero.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\05.State_Props\State_ServerHero.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\ComponentAdaptor\ScrollRect\ComponentAdaptor_ScrollRect.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.View.Props;
@@ -14,7 +15,7 @@ namespace BDFramework.UFlux
     /// 不带Flux Store
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class AWindow<T> : Component<T>, IWindow ,IUIMessage where T : PropsBase, new()
+    public class AWindow<T> : Component<T>, IWindow, IUIMessage where T : PropsBase, new()
     {
         public AWindow(string path) : base(path)
         {
@@ -41,10 +42,11 @@ namespace BDFramework.UFlux
 
         //
         public delegate void UIMessageDelegate(UIMessageData message);
+
         /// <summary>
         /// Action 回调表
         /// </summary>
-        protected Dictionary<int,MethodInfo> callbackMap = new Dictionary<int, MethodInfo>();
+        protected Dictionary<int, MethodInfo> callbackMap = new Dictionary<int, MethodInfo>();
 
         /// <summary>
         /// 注册回调
@@ -60,7 +62,7 @@ namespace BDFramework.UFlux
                 if (attrs.Length > 0)
                 {
                     var _attr = attrs[0] as UIMessageAttribute;
-                    
+
                     callbackMap[_attr.MessageName] = methodInfo;
                     //很惨，以下 热更中用不了~
 //                    var action = Delegate.CreateDelegate(typeof(UIMessageDelegate), this, methodInfo) as UIMessageDelegate;
@@ -81,28 +83,27 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 更新UI使用的数据
         /// </summary>
-        /// <param name="messageData">数据</param>
-        public void SendMessage(UIMessageData messageData)
+        /// <param name="uiMsg">数据</param>
+        public void SendMessage(UIMessageData uiMsg)
         {
             MethodInfo method = null;
-            var key = messageData.Name.GetHashCode();
-            callbackMap.TryGetValue(key, out method);
-            if (method != null)
+            var key = uiMsg.Name.GetHashCode();
+            if (callbackMap.TryGetValue(key, out method))
             {
-                method.Invoke(this,new object[]{messageData});
+                method.Invoke(this, new object[] {uiMsg});
             }
+
             //所有的消息会被派发给子窗口
-            if (subWindowsMap.Count > 0)
+            //TODO: 这里用foreach会出bug，ILR的堆栈过深的原因
+            var keys = subWindowsMap.Keys.ToList();
+            for (int i = 0; i < keys.Count; i++)
             {
-                foreach (var value in subWindowsMap.Values)
-                {
-                    var uimassage = value as IUIMessage;
-                    if (uimassage != null)
-                    {
-                        uimassage.SendMessage(messageData);
-                    }
-                }
+                subWindowsMap[keys[i]].SendMessage(uiMsg);
             }
+//            foreach (var subWin in subWindowsMap.Values)
+//            {
+//                subWin.SendMessage(uiMsg);
+//            }
             
         }
 
@@ -132,7 +133,7 @@ namespace BDFramework.UFlux
         {
             IWindow win = null;
             subWindowsMap.TryGetValue(index, out win);
-            return (T1)win;
+            return (T1) win;
         }
 
         /// <summary>
@@ -153,6 +154,7 @@ namespace BDFramework.UFlux
 
             return null;
         }
+
         #endregion
     }
 }
