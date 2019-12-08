@@ -134,10 +134,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_Transform_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_Type_Binding.Register(app);
             BDFramework_Core_Debugger_Debugger_NetworkServer_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Int32_Action_1_ILTypeInstance_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Enum_ILTypeInstance_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Enum_ILTypeInstance_Binding_ValueCollection_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Enum_ILTypeInstance_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_Int32_MethodInfo_Binding.Register(app);
 
             ILRuntime.CLR.TypeSystem.CLRType __clrType = null;
             __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Vector2));

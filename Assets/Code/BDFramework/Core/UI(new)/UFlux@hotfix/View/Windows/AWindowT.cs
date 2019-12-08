@@ -5,6 +5,7 @@ using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.View.Props;
 using ILRuntime.Runtime;
 using UnityEngine;
+using Object = System.Object;
 
 namespace BDFramework.UFlux
 {
@@ -38,10 +39,12 @@ namespace BDFramework.UFlux
 
         #region UIMessage 
 
+        //
+        public delegate void UIMessageDelegate(UIMessageData message);
         /// <summary>
         /// Action 回调表
         /// </summary>
-        protected Dictionary<int, Action<UIMessageData>> callbackMap = new Dictionary<int, Action<UIMessageData>>();
+        protected Dictionary<int,MethodInfo> callbackMap = new Dictionary<int, MethodInfo>();
 
         /// <summary>
         /// 注册回调
@@ -57,15 +60,19 @@ namespace BDFramework.UFlux
                 if (attrs.Length > 0)
                 {
                     var _attr = attrs[0] as UIMessageAttribute;
-                    var action = Delegate.CreateDelegate(typeof(Action<UIMessageData>), this, methodInfo) as Action<UIMessageData>;
-                    if (action != null)
-                    {
-                        callbackMap[_attr.MessageName] = action;
-                    }
-                    else
-                    {
-                        BDebug.LogError("uimessage 函数签名错误:" + methodInfo.Name);
-                    }
+                    
+                    callbackMap[_attr.MessageName] = methodInfo;
+                    //很惨，以下 热更中用不了~
+//                    var action = Delegate.CreateDelegate(typeof(UIMessageDelegate), this, methodInfo) as UIMessageDelegate;
+//                    if (action != null)
+//                    {
+//                      
+//                        callbackMap[_attr.MessageName] = action;
+//                    }
+//                    else
+//                    {
+//                        BDebug.LogError("uimessage 函数签名错误:" + methodInfo.Name);
+//                    }
                 }
             }
         }
@@ -77,12 +84,12 @@ namespace BDFramework.UFlux
         /// <param name="messageData">数据</param>
         public void SendMessage(UIMessageData messageData)
         {
-            Action<UIMessageData> action = null;
+            MethodInfo method = null;
             var key = messageData.Name.GetHashCode();
-            callbackMap.TryGetValue(key, out action);
-            if (action != null)
+            callbackMap.TryGetValue(key, out method);
+            if (method != null)
             {
-                action(messageData);
+                method.Invoke(this,new object[]{messageData});
             }
             //所有的消息会被派发给子窗口
             if (subWindowsMap.Count > 0)
@@ -103,16 +110,16 @@ namespace BDFramework.UFlux
 
         #region 子窗口
 
-        protected Dictionary<Enum, IWindow> subWindowsMap = new Dictionary<Enum, IWindow>();
+        protected Dictionary<int, IWindow> subWindowsMap = new Dictionary<int, IWindow>();
 
         /// <summary>
         /// 注册窗口
         /// </summary>
         /// <param name="enum"></param>
         /// <param name="win"></param>
-        protected void RegisterSubWindow(Enum @enum, IWindow win)
+        protected void RegisterSubWindow(int index, IWindow win)
         {
-            subWindowsMap[@enum] = win;
+            subWindowsMap[index] = win;
         }
 
         /// <summary>
@@ -121,10 +128,10 @@ namespace BDFramework.UFlux
         /// <param name="enum"></param>
         /// <typeparam name="T1"></typeparam>
         /// <returns></returns>
-        public T1 GetSubWindow<T1>(Enum @enum)
+        public T1 GetSubWindow<T1>(int index)
         {
             IWindow win = null;
-            subWindowsMap.TryGetValue(@enum, out win);
+            subWindowsMap.TryGetValue(index, out win);
             return (T1)win;
         }
 
