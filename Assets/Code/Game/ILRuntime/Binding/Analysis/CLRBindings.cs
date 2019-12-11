@@ -45,6 +45,7 @@ namespace ILRuntime.Runtime.Generated
             System_Action_1_String_Binding.Register(app);
             System_Action_2_Int32_Int32_Binding.Register(app);
             System_Int32_Binding.Register(app);
+            BDFramework_DataListener_DataListenerServer_Binding.Register(app);
             UnityEngine_UI_Button_Binding.Register(app);
             UnityEngine_Events_UnityEvent_Binding.Register(app);
             BDFramework_ResourceMgr_BResources_Binding.Register(app);

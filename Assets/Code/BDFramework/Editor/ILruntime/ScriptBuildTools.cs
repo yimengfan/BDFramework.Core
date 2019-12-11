@@ -56,6 +56,7 @@ public class ScriptBuildTools
         }
         catch (Exception e)
         {
+            Debug.LogError(e.Message);
             EditorUtility.ClearProgressBar();
             EditorUtility.DisplayDialog("提示", "请手动删除hotfix文件后重试!", "OK");
             return;
@@ -140,7 +141,8 @@ public class ScriptBuildTools
         bool isdebug=false)
     {
         var baseDll = outHotfixDllPath.Replace("hotfix.dll", "Assembly-CSharp.dll");
-        EditorUtility.DisplayProgressBar("编译服务", "[1/2]检测主工程调用base.dll", 0.5f);
+        //开始执行
+        EditorUtility.DisplayProgressBar("编译服务", "[1/2]开始编译base.dll...", 0.5f);
         try
         {
             BuildByRoslyn(dllFiles.ToArray(), baseCs.ToArray(), baseDll,false);
@@ -151,9 +153,14 @@ public class ScriptBuildTools
             EditorUtility.ClearProgressBar();
             return;
         }
-        EditorUtility.DisplayProgressBar("编译服务", "[2/2]开始编译hotfix.dll", 0.7f);
+
+        var assem = Assembly.LoadFile(baseDll);
+        Debug.Log("版本:" + assem.GetName().Version);
+        Debug.Log("版本:" + assem.GetName());
+        EditorUtility.DisplayProgressBar("编译服务", "[2/2]开始编译hotfix.dll...", 0.7f);
         //将base.dll加入
-        var mainDll = BApplication.projroot + "/Library/ScriptAssemblies/Assembly-CSharp.dll";
+        //var mainDll = BApplication.projroot + "/Library/ScriptAssemblies/Assembly-CSharp.dll";
+        var mainDll = baseDll;
         if (!dllFiles.Contains(mainDll))
         {
             dllFiles.Add(mainDll);
@@ -171,8 +178,6 @@ public class ScriptBuildTools
         }
 
         EditorUtility.DisplayProgressBar("编译服务", "清理临时文件", 0.9f);
-        //删除临时目录
-        //删除base.dll
         File.Delete(baseDll);
         EditorUtility.ClearProgressBar();
         AssetDatabase.Refresh();
@@ -273,7 +278,8 @@ public class ScriptBuildTools
         }
 
         //创建编译器代理
-        var compilation = CSharpCompilation.Create(Path.GetFileName(output), codes, assemblies, option);
+        var assemblyname = Path.GetFileNameWithoutExtension(output);
+        var compilation = CSharpCompilation.Create(assemblyname, codes, assemblies, option);
         EmitResult result = null;
         if (!isdebug)
         {

@@ -9,6 +9,7 @@ using Game.Data;
 using LitJson;
 using UnityEngine.UI;
 using BDFramework;
+using BDFramework.DataListener;
 using BDFramework.ResourceMgr;
 using BDFramework.VersionContrller;
 using Boo.Lang;
@@ -53,13 +54,23 @@ public class Window_DemoMain : AWindow
     {
     }
 
+    public enum DataListenerEnum
+    {
+        test,
+    }
+
     public override void Init()
     {
         base.Init();
 
-        //提示
-//        var isCodeHotfix = GameObject.Find("BDFrame").GetComponent<BDLauncher>().IsCodeHotfix;
-//        text_hotfixState.text = isCodeHotfix ? "热更模式:开" : "热更模式:关";
+        //增加覆盖测试
+        var service = DataListenerServer.Create(nameof(DataListenerEnum));
+        service.AddListener(DataListenerEnum.test, (o) =>
+        {
+            Debug.Log(o.ToString());
+        });
+        
+        
 
         //demo1： screenview 切换
         //代码:
