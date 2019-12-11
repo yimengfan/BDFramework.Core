@@ -925,7 +925,6 @@ namespace ILRuntime.Runtime.Intepreter
 
                             #region Althemetics
                             case OpCodeEnum.Add_Ovf:
-                            case OpCodeEnum.Add_Ovf_Un:
                             case OpCodeEnum.Add:
                                 {
                                     b = esp - 1;
@@ -952,7 +951,6 @@ namespace ILRuntime.Runtime.Intepreter
                                 }
                                 break;
                             case OpCodeEnum.Sub_Ovf:
-                            case OpCodeEnum.Sub_Ovf_Un:
                             case OpCodeEnum.Sub:
                                 {
                                     b = esp - 1;
@@ -978,6 +976,7 @@ namespace ILRuntime.Runtime.Intepreter
                                     esp++;
                                 }
                                 break;
+                            case OpCodeEnum.Mul_Ovf:
                             case OpCodeEnum.Mul:
                                 {
                                     b = esp - 1;
