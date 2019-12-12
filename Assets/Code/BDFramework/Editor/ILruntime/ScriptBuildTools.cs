@@ -61,58 +61,16 @@ public class ScriptBuildTools
             EditorUtility.DisplayDialog("提示", "请手动删除hotfix文件后重试!", "OK");
             return;
         }
+        EditorUtility.DisplayProgressBar("编译服务", "开始处理脚本", 0.2f);
+        #region CS DLL引用搜集处理
 
+        List<string> dllFiles =new List<string>();
+        List<string> csFiles  =new List<string>();
+        
+        csFiles = FindDLLByCSPROJ("Assembly-CSharp.csproj", ref  dllFiles);
 
-        #region 创建cs搜索目录
-
-        EditorUtility.DisplayProgressBar("编译服务", "搜索待编译Code...", 0.2f);
-        //
-        List<string> searchPath = new List<string>() {"3rdPlugins", "Code", "Plugins", "Resource"};
-        for (int i = 0; i < searchPath.Count; i++)
-        {
-            searchPath[i] = IPath.Combine(dataPath, searchPath[i]);
-        }
-
-        //unity3d 2018的package目录
-        var pPath = BApplication.projroot + "/Library/PackageCache";
-        searchPath.Add(pPath);
-
-        List<string> csFiles = new List<string>();
-        foreach (var s in searchPath)
-        {
-            var fs = Directory.GetFiles(s, "*.cs*", SearchOption.AllDirectories).ToList();
-            var _fs = fs.FindAll(f =>
-            {
-                if (!f.ToLower().Contains("editor")) //剔除editor
-                {
-                    return true;
-                }
-
-                return false;
-            });
-
-            csFiles.AddRange(_fs);
-        }
-
-        csFiles = csFiles.Distinct().ToList();
-        for (int i = 0; i < csFiles.Count; i++)
-        {
-            csFiles[i] = csFiles[i].Replace('\\', '/').Trim();
-        }
-
-        EditorUtility.DisplayProgressBar("编译服务", "开始整理script", 0.2f);
-
-        var baseCs = csFiles.FindAll(f => !f.Contains("@hotfix") && f.EndsWith(".cs"));
-        var hotfixCs = csFiles.FindAll(f => f.Contains("@hotfix") && f.EndsWith(".cs"));
-
-        #endregion
-
-        #region DLL引用搜集处理
-
-        EditorUtility.DisplayProgressBar("编译服务", "收集依赖dll", 0.3f);
-
-        var dllFiles = FindDLLByCSPROJ();
-
+        var baseCs   = csFiles.FindAll(f => !f.Contains("@hotfix") && f.EndsWith(".cs"));
+        var hotfixCs = csFiles.FindAll(f => f.Contains("@hotfix")  && f.EndsWith(".cs"));
         #endregion
 
         var outHotfixPath = outPath + "/Hotfix/hotfix.dll";
@@ -153,13 +111,10 @@ public class ScriptBuildTools
             EditorUtility.ClearProgressBar();
             return;
         }
-
-        var assem = Assembly.LoadFile(baseDll);
-        Debug.Log("版本:" + assem.GetName().Version);
-        Debug.Log("版本:" + assem.GetName());
+        
         EditorUtility.DisplayProgressBar("编译服务", "[2/2]开始编译hotfix.dll...", 0.7f);
         //将base.dll加入
-        //var mainDll = BApplication.projroot + "/Library/ScriptAssemblies/Assembly-CSharp.dll";
+        //var mainDll = BApplication.ProjectRoot + "/Library/ScriptAssemblies/Assembly-CSharp.dll";
         var mainDll = baseDll;
         if (!dllFiles.Contains(mainDll))
         {
@@ -188,11 +143,13 @@ public class ScriptBuildTools
     /// 解析project中的dll
     /// </summary>
     /// <returns></returns>
-    static List<string> FindDLLByCSPROJ()
+    static List<string> FindDLLByCSPROJ(string projName,ref List<string> dllList)
     {
-        var ret = new List<string>();
-
-        var projpath = BApplication.projroot + "/Assembly-CSharp.csproj";
+        if (dllList ==null) dllList=new List<string>();
+        //cs list
+        List<string> csList =new List<string>();
+        
+        var projpath = BApplication.ProjectRoot + "/" + projName;
         XmlDocument xml = new XmlDocument();
         xml.Load(projpath);
         XmlNode ProjectNode = null;
@@ -205,22 +162,51 @@ public class ScriptBuildTools
                 break;
             }
         }
-
+        List<string> csprojList =new List<string>();
         foreach (XmlNode childNode in ProjectNode.ChildNodes)
         {
             if (childNode.Name == "ItemGroup")
-                foreach (XmlNode item in childNode.ChildNodes)
+            {    foreach (XmlNode item in childNode.ChildNodes)
                 {
-                    if (item.Name == "Reference")
+                    if (item.Name == "Compile")  //cs 引用
+                    {
+                        var csproj = item.Attributes[0].Value;
+                        csList.Add(csproj);
+                    }
+                    else if (item.Name == "Reference") //DLL 引用
                     {
                         var HintPath = item.FirstChild;
                         var dir = HintPath.InnerText.Replace("/", "\\");
-                        ret.Add(dir);
+                        dllList.Add(dir);
+                    }
+                    else if (item.Name == "ProjectReference") //工程引用
+                    {
+                        var csproj = item.Attributes[0].Value;
+                        csprojList.Add(csproj);
                     }
                 }
+            }
+        }
+        //csproj也加入
+        foreach (var csproj in csprojList)
+        {
+            //有editor退出
+            if(csproj.ToLower().Contains("editor")) continue;
+            //添加扫描到的dll
+            FindDLLByCSPROJ(csproj, ref dllList);
+            //
+            var gendll = BApplication.Library+"/ScriptAssemblies/"+ csproj.Replace(".csproj", ".dll");
+            if (!File.Exists(gendll))
+            {
+                Debug.LogError("不存在:" + gendll);
+            }
+            dllList.Add(gendll);
         }
 
-        return ret;
+        //去重
+        dllList = dllList.Distinct().ToList();
+        
+        return csList;
     }
 
 
@@ -265,14 +251,14 @@ public class ScriptBuildTools
         if (isdebug)
         {
             option = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
-                optimizationLevel: OptimizationLevel.Debug, checkOverflow: true,
+                optimizationLevel: OptimizationLevel.Debug,warningLevel:4,
                 allowUnsafe: true
             );
         }
         else
         {
             option = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
-                optimizationLevel: OptimizationLevel.Release, checkOverflow: true,
+                optimizationLevel: OptimizationLevel.Release, warningLevel: 4,
                 allowUnsafe: true
             );
         }

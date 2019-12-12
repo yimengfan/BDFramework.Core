@@ -115,7 +115,7 @@ namespace BDFramework.Editor
             PlayerSettings.Android.keyaliasName= BDEditorHelper.EditorConfig.Android.keyaliasName;
             PlayerSettings.keyaliasPass =  BDEditorHelper.EditorConfig.Android.keyaliasPass;
             //
-            var outdir = BApplication.projroot + "/Build";
+            var outdir = BApplication.ProjectRoot + "/Build";
             var outputPath = IPath.Combine(  outdir,  Application.productName+".apk");
             //文件夹处理
             if (!Directory.Exists(outdir)) Directory.CreateDirectory(outdir);

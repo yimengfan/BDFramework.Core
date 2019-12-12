@@ -102,7 +102,7 @@ namespace BDFramework.Editor.Asset
             //assetBundle 转 hash
             foreach (var item in allfileHashMap)
             {
-               var sub=  item.Key.Replace(BApplication.projroot + "/", "").ToLower();
+               var sub=  item.Key.Replace(BApplication.ProjectRoot + "/", "").ToLower();
                var source = IPath.Combine(artOutpath, sub);
                var copyto = IPath.Combine(artOutpath, item.Value);
                if (File.Exists(source) && !File.Exists(copyto))
@@ -347,7 +347,7 @@ namespace BDFramework.Editor.Asset
                             if (item.Value == packageHashName)
                             {
                                 packageName = item.Key;
-                                packageName = packageName.Replace(BApplication.projroot + "/", "");
+                                packageName = packageName.Replace(BApplication.ProjectRoot + "/", "");
                                 break;
                             }
                         }

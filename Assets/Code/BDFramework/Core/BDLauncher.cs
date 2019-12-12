@@ -18,10 +18,16 @@ namespace BDFramework
 {
     public class BDLauncher : MonoBehaviour
     {
+        /// <summary>
+        /// BDLauncher的版本号
+        /// </summary>
+        static readonly public string Version = "1.0.1";
+        
+        
         static public Action OnStart { get; set; }
         static public Action OnUpdate { get; set; }
         static public Action OnLateUpdate { get; set; }
-
+        
         //当BDFrame启动完整后执行
         static public Action OnBDFrameLaunch { get; set; }
 
@@ -243,9 +249,9 @@ namespace BDFramework
         void OnApplicationQuit()
         {
 #if UNITY_EDITOR
-            if (BDFramework.Sql.SqliteHelper.DB != null)
+            if (SqliteHelper.DB != null)
             {
-                BDFramework.Sql.SqliteHelper.DB.Close();
+               SqliteHelper.DB.Close();
             }
 
             ILRuntimeHelper.Close();

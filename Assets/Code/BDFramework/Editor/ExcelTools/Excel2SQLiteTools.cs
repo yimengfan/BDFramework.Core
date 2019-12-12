@@ -135,7 +135,7 @@ namespace BDFramework.Editor.TableData
             var table = Path.GetFileName(f).Replace(Path.GetExtension(f), "");
             var classname = "Game.Data." + table;
             var jsonObj = JsonMapper.ToObject(json);
-            var assPath = IPath.Combine(BApplication.projroot,
+            var assPath = IPath.Combine(BApplication.ProjectRoot,
                 "Library/ScriptAssemblies/Assembly-CSharp.dll");
             var ass = Assembly.LoadFile(assPath);
             //
