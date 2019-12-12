@@ -115,7 +115,7 @@ public class ScriptBuildTools
 
         #endregion
 
-        var outHotfixPath = outPath + "/hotfix/hotfix.dll";
+        var outHotfixPath = outPath + "/Hotfix/hotfix.dll";
 
         if (mode == BuildMode.Release)
         {

@@ -36,8 +36,9 @@ namespace BDFramework.Sql
             }
             else
             {
-                Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
                 BDebug.Log("DB加载路径:" + firstPath, "red");
+                Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+
             }
         }
 
