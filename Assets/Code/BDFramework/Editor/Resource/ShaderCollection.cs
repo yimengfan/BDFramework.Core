@@ -203,8 +203,9 @@ namespace BDFramework.Editor.Asset
             {
                 int[] passtypes = new int[] { };
                 string[] keywords = new string[] { };
+                string[] none = new string[] { };
                 //一次性取出所有的 passtypes 和  keywords
-                GetShaderKeywords(curMat.shader, ref passtypes, ref keywords);
+                GetShaderKeywords(curMat.shader, ref passtypes, ref keywords,ref  none);
 
                 sd = new ShaderData();
                 //kw2list
@@ -311,19 +312,32 @@ namespace BDFramework.Editor.Asset
         static MethodInfo GetShaderVariantEntries = null;
 
         //获取shader的 keywords
-        public static void GetShaderKeywords(Shader target, ref int[] types, ref string[] keywords)
+        public static void GetShaderKeywords(Shader target, ref int[] types, ref string[] keywords, ref string[] remainingKeywords)
         {
+            
+            //2019.3接口
+//            internal static void GetShaderVariantEntriesFiltered(
+//                Shader                  shader,                     0
+//                int                     maxEntries,                 1
+//                string[]                filterKeywords,             2
+//                ShaderVariantCollection excludeCollection,          3
+//                out int[]               passTypes,                  4
+//                out string[]            keywordLists,               5
+//                out string[]            remainingKeywords)          6
+            
             if (GetShaderVariantEntries == null)
             {
-                GetShaderVariantEntries = typeof(ShaderUtil).GetMethod("GetShaderVariantEntries",
-                    BindingFlags.NonPublic | BindingFlags.Static);
+                GetShaderVariantEntries = typeof(ShaderUtil).GetMethod("GetShaderVariantEntriesFiltered", BindingFlags.NonPublic | BindingFlags.Static);
             }
-
-
-            object[] args = new object[] {target, new ShaderVariantCollection(), types, keywords};
+            
+            
+            
+            object[] args = new object[] {target, 1000,new string[]{}, 
+                                         new ShaderVariantCollection(),
+                                         types,keywords,remainingKeywords};
             GetShaderVariantEntries.Invoke(null, args);
-            keywords = args[3] as string[];
-            types = args[2] as int[];
+            types = args[4] as int[];
+            keywords = args[5] as string[];
         }
 
         #endregion
