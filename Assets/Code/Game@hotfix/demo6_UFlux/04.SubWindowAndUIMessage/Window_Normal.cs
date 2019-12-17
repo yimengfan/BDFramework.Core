@@ -50,7 +50,7 @@ namespace BDFramework.UFlux.UFluxTest004
             //注册子窗口
             var trans = this.Transform.Find("SubWindow");
             var subWin = new SubWindow_Demo004(trans);
-            RegisterSubWindow((int)SubWindow.testSubWindows001,subWin);
+            RegisterSubWindow(SubWindow.testSubWindows001.GetHashCode(),subWin);
 
             btn_close.onClick.AddListener((() => this.Close()));
             //点击测试 

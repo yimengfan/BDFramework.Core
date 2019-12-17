@@ -5,6 +5,7 @@ using System.Reflection;
 using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.View.Props;
 using ILRuntime.Runtime;
+using LitJson;
 using UnityEngine;
 using Object = System.Object;
 
@@ -86,27 +87,27 @@ namespace BDFramework.UFlux
         /// <param name="uiMsg">数据</param>
         public void SendMessage(UIMessageData uiMsg)
         {
+          
+            //所有的消息会被派发给子窗口
+//            var keys = subWindowsMap.Keys.ToList();
+//            for (int i = 0; i < keys.Count; i++)
+//            {
+//                var k = keys[i];
+//                subWindowsMap[k].SendMessage(uiMsg);
+//            }
+
+            foreach (var subWin in subWindowsMap.Values)
+            {
+                subWin.SendMessage(uiMsg);
+            }
+            //TODO: 执行完Invoke会导致 map的堆栈出问题，
             MethodInfo method = null;
-            var key = uiMsg.Name.GetHashCode();
-            if (callbackMap.TryGetValue(key, out method))
+            var        key    = uiMsg.Name.GetHashCode();
+            bool       flag   = this.callbackMap.TryGetValue(key, out method);
+            if (flag)
             {
                 method.Invoke(this, new object[] {uiMsg});
             }
-
-            //所有的消息会被派发给子窗口
-            //TODO: 这里用foreach会出bug，ILR的堆栈过深的原因
-            var keys = subWindowsMap.Keys.ToList();
-            //
-            for (int i = 0; i < keys.Count; i++)
-            {
-                var k = keys[i];
-                subWindowsMap[k].SendMessage(uiMsg);
-            }
-//            foreach (var subWin in subWindowsMap.Values)
-//            {
-//                subWin.SendMessage(uiMsg);
-//            }
-            
         }
 
         #endregion
