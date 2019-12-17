@@ -39,6 +39,10 @@ namespace BDFramework.UFlux
         void Close();
 
         /// <summary>
+        /// 帧更新
+        /// </summary>
+        void Update();
+        /// <summary>
         /// 删除
         /// </summary>
         void Destroy();

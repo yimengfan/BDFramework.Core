@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BDFramework.UFlux
 {
-    public class Component<T> : IComponent where T : PropsBase, new()
+    abstract  public class Component<T> : IComponent where T : PropsBase, new()
     {
         
         /// <summary>
@@ -170,7 +170,16 @@ namespace BDFramework.UFlux
         }
         #endregion
         
+        
         #region 生命周期
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        virtual public void Init()
+        {
+            //初始化所有成员变量
+           
+        }
         /// <summary>
         /// 打开
         /// </summary>
@@ -189,15 +198,17 @@ namespace BDFramework.UFlux
             this.Transform.gameObject.SetActive(false);
         }
 
-
+        
         /// <summary>
-        /// 初始化
+        /// 帧驱动
         /// </summary>
-        virtual public void Init()
+        virtual public void Update()
         {
-            //初始化所有成员变量
-           
+            
         }
+
+
+ 
 
         /// <summary>
         /// 删除
