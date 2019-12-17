@@ -96,9 +96,11 @@ namespace BDFramework.UFlux
             //所有的消息会被派发给子窗口
             //TODO: 这里用foreach会出bug，ILR的堆栈过深的原因
             var keys = subWindowsMap.Keys.ToList();
+            //
             for (int i = 0; i < keys.Count; i++)
             {
-                subWindowsMap[keys[i]].SendMessage(uiMsg);
+                var k = keys[i];
+                subWindowsMap[k].SendMessage(uiMsg);
             }
 //            foreach (var subWin in subWindowsMap.Values)
 //            {

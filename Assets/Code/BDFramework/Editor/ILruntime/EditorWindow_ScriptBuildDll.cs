@@ -154,6 +154,8 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         ILRuntimeHelper.LoadHotfix(dllpath, false);
         
         BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain, "Assets/Code/Game/ILRuntime/Binding/Analysis", notGenTypes:notGenerateTypes);
+        
+        ILRuntimeHelper.Close();
         AssetDatabase.Refresh();
       
         //暂时先不处理

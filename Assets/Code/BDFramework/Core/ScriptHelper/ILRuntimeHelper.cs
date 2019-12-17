@@ -87,13 +87,18 @@ namespace BDFramework
 
         public static void Close()
         {
+            
+            AppDomain = null;
+            
             if (fsDll != null)
             {
+                fsDll.Close();
                 fsDll.Dispose();
             }
 
             if (fsPdb != null)
             {
+                fsPdb.Close();
                 fsPdb.Dispose();
             }
         }
