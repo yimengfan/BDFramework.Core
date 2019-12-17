@@ -155,6 +155,7 @@
     <Compile Include="Assets\Code\BDFramework\Core\UI(new)\UFlux@hotfix\View\Atrribute\Component.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\UI(new)\UFlux@hotfix\View\Atrribute\ComponentValueBind.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\UI(new)\UFlux@hotfix\View\Atrribute\TransformPath.cs" />
+    <Compile Include="Assets\Code\BDFramework\Core\UI(new)\UFlux@hotfix\View\Component\AComponent.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\UI(new)\UFlux@hotfix\View\Component\Component.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\UI(new)\UFlux@hotfix\View\Component\IComponent.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\UI(new)\UFlux@hotfix\View\Component\ISubComponent.cs" />
