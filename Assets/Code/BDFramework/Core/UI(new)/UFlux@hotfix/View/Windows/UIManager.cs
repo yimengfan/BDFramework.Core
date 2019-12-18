@@ -315,10 +315,10 @@ namespace BDFramework.UFlux
         public void SendMessage(Enum index, UIMessageData uiMsg)
         {
             var uiIndex = index.GetHashCode();
-            if (windowMap.ContainsKey(uiIndex))
+            IWindow win ;
+            if (windowMap.TryGetValue(uiIndex,out win))
             {
-                var ui = windowMap[uiIndex];
-                ui.SendMessage(uiMsg);
+                win.SendMessage(uiMsg);
                 return;
             }
 
