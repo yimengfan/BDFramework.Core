@@ -119,10 +119,7 @@ namespace BDFramework.Editor.Asset
         {
             
             //先搜集所有keyword到工具类SVC
-            if (toolSVC == null)
-            {
-                toolSVC = AssetDatabase.LoadAssetAtPath<ShaderVariantCollection>("Assets/Resource/Shaders/Tools.shadervariants");
-            }
+            toolSVC =new ShaderVariantCollection();
             var shaders = AssetDatabase.FindAssets("t:Shader", new string[] {"Assets"}).ToList();
             foreach (var shader in shaders)
             {
@@ -131,14 +128,16 @@ namespace BDFramework.Editor.Asset
                 var shaderPath=AssetDatabase.GUIDToAssetPath(shader);
                 sv.shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
 
-                if (!toolSVC.Contains(sv))
-                {
+               
                     toolSVC.Add(sv);
-                }
-               // toolSVC.Add()
+                
             }
-            AssetDatabase.SaveAssets();
             
+            var toolsSVCpath = "Assets/Resource/Shaders/Tools.shadervariants";
+            AssetDatabase.CreateAsset(toolSVC, toolsSVCpath);
+
+
+            //搜索所有Mat
             var path = "Assets/Resource/Runtime";
             var assets = AssetDatabase.FindAssets("t:Prefab", new string[] {path}).ToList();
             var assets2 = AssetDatabase.FindAssets("t:Material", new string[] {path});

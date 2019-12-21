@@ -48,17 +48,18 @@ namespace BDFramework.Editor.BuildPackage
                     GUILayout.BeginVertical(GUILayout.Width(350), GUILayout.Height(220));
                     editorScript.OnGUI();
                     GUILayout.EndVertical();
-                    Layout_DrawLineV(Color.white);
                 }
-
+                Layout_DrawLineV(Color.white);
+                
                 if (editorAsset != null)
                 {
                     GUILayout.BeginVertical(GUILayout.Width(350), GUILayout.Height(220));
                     editorAsset.OnGUI();
                     GUILayout.EndVertical();
-                    Layout_DrawLineV(Color.white);
+                 
                 }
-
+                
+                Layout_DrawLineV(Color.white);
                 if (editorTable != null)
                 {
                     GUILayout.BeginVertical(GUILayout.Width(350), GUILayout.Height(220));

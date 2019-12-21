@@ -507,22 +507,22 @@ namespace BDFramework.ResourceMgr
                 //添加任务组
                 //加载颗粒度10个
                 LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainAsset, 10, taskQueue, AsyncLoadAssetBundle,
-                                                                (p, obj) =>
-                                                                {
-                                                                    counter++;
-                                                                    //注意返回加载的id，不是具体地址的id
-                                                                    retMap[_asset] = obj;
-                                                                    if (onLoadProcess != null)
-                                                                    {
-                                                                        onLoadProcess(counter, total);
-                                                                    }
+                (p, obj) =>
+                {
+                    counter++;
+                    //注意返回加载的id，不是具体地址的id
+                    retMap[_asset] = obj;
+                    if (onLoadProcess != null)
+                    {
+                        onLoadProcess(counter, total);
+                    }
 
-                                                                    //完成
-                                                                    if (retMap.Count == total)
-                                                                    {
-                                                                        onLoadComplete(retMap);
-                                                                    }
-                                                                });
+                    //完成
+                    if (retMap.Count == total)
+                    {
+                        onLoadComplete(retMap);
+                    }
+                });
                 taskGroup.Id = this.taskIDCounter++;
                 AddTaskGroup(taskGroup);
                 idList.Add(taskGroup.Id);

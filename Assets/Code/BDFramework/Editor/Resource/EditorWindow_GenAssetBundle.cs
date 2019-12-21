@@ -34,27 +34,31 @@ namespace BDFramework.Editor.Asset
         void DrawToolsBar()
         {
             GUILayout.Label("平台选择:");
+            //
             GUILayout.BeginHorizontal();
             {
                 GUILayout.Space(30);
                 isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源(Windows公用)");
             }
             GUILayout.EndHorizontal();
+            //
             GUILayout.BeginHorizontal();
             {
                 GUILayout.Space(30);
                 isSelectIOS = GUILayout.Toggle(isSelectIOS, "生成iOS资源");
             }
             GUILayout.EndHorizontal();
+            //
         }
 
         public void OnGUI()
         {
-            GUILayout.BeginVertical();
+            GUILayout.BeginVertical(GUILayout.Height(220));
             TipsGUI();
             DrawToolsBar();
             GUILayout.Space(10);
             LastestGUI();
+            GUILayout.Space(75);
             GUILayout.EndVertical();
         }
 
