@@ -22,10 +22,8 @@ namespace BDFramework
             }
             else
             {
-#if UNITY_EDITOR
                 BDebug.Log("内置code模式!");
                 BDLauncherBridge.Start();    
-#endif
             }
            
         }
