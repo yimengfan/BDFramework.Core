@@ -123,17 +123,21 @@ namespace BDFramework.Editor.Asset
             {
                 toolSVC = AssetDatabase.LoadAssetAtPath<ShaderVariantCollection>("Assets/Resource/Shaders/Tools.shadervariants");
             }
-            var shaders = AssetDatabase.FindAssets("t:Prefab", new string[] {"Assets"}).ToList();
-
+            var shaders = AssetDatabase.FindAssets("t:Shader", new string[] {"Assets"}).ToList();
             foreach (var shader in shaders)
             {
                 
                 ShaderVariantCollection.ShaderVariant sv=new ShaderVariantCollection.ShaderVariant();
                 var shaderPath=AssetDatabase.GUIDToAssetPath(shader);
                 sv.shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
+
+                if (!toolSVC.Contains(sv))
+                {
+                    toolSVC.Add(sv);
+                }
                // toolSVC.Add()
             }
-            
+            AssetDatabase.SaveAssets();
             
             var path = "Assets/Resource/Runtime";
             var assets = AssetDatabase.FindAssets("t:Prefab", new string[] {path}).ToList();
@@ -217,14 +221,8 @@ namespace BDFramework.Editor.Asset
             ShaderDataDict.TryGetValue(curMat.shader.name, out sd);
             if (sd == null)
             {
-
                 //一次性取出所有的 passtypes 和  keywords
                 sd = GetShaderKeywords(curMat.shader);
-
-                sd = new ShaderData();
-                //kw2list
-
-
                 ShaderDataDict[curMat.shader.name] = sd;
             }
 

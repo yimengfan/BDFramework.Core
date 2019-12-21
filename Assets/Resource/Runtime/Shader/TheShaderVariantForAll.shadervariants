@@ -10,4 +10,17 @@ ShaderVariantCollection:
   m_Shaders:
   - first: {fileID: 4800000, guid: 00218e4f0ba5f5342b9e30a2079bede9, type: 3}
     second:
-      variants: []
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: d5d47a8cc79a16145bb3766c9169f3af, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 4
+      - keywords: 
+        passType: 8
+      - keywords: _ALPHABLEND_ON
+        passType: 8
+      - keywords: 
+        passType: 13
