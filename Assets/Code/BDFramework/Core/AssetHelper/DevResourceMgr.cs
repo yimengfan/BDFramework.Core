@@ -112,12 +112,12 @@ namespace BDFramework.ResourceMgr
         {
             if (objsMap.ContainsKey(path))
             {
-                return objsMap[path] as T;
+                return objsMap[path] as T; 
             }
             else
             {
                 var findTarget = path + ".";
-                var result = this.allResourceList.Find((a) => a.Contains(findTarget));
+                var result = this.allResourceList.Find((a) => a.StartsWith(findTarget));
                 result = "Assets/" + this.ResourceRootPath + "/" + result;
                 //
                 objsMap[path] = AssetDatabase.LoadAssetAtPath<T>(result);

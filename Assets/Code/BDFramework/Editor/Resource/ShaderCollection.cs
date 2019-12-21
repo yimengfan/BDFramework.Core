@@ -57,8 +57,6 @@ namespace BDFramework.Editor.Asset
 
         #region Draw
 
-
-
         #endregion
 
         void DrawShaderEntry(string shaderName, List<KeyValuePair<string, ShaderVariantCollection.ShaderVariant>> list)
@@ -77,7 +75,8 @@ namespace BDFramework.Editor.Asset
             }
         }
 
-        private void ShowShaderVariant(ShaderVariantCollection.ShaderVariant sv, bool isShowShaderName,
+        private void ShowShaderVariant(ShaderVariantCollection.ShaderVariant sv,
+            bool isShowShaderName,
             string expend = "")
         {
             using (new GUILayout.HorizontalScope(new GUILayoutOption[0]))
@@ -118,8 +117,25 @@ namespace BDFramework.Editor.Asset
 
         public static string GenShaderVariant()
         {
-            var path = "Assets/Resource/Runtime";
+            
+            //先搜集所有keyword到工具类SVC
+            if (toolSVC == null)
+            {
+                toolSVC = AssetDatabase.LoadAssetAtPath<ShaderVariantCollection>("Assets/Resource/Shaders/Tools.shadervariants");
+            }
+            var shaders = AssetDatabase.FindAssets("t:Prefab", new string[] {"Assets"}).ToList();
 
+            foreach (var shader in shaders)
+            {
+                
+                ShaderVariantCollection.ShaderVariant sv=new ShaderVariantCollection.ShaderVariant();
+                var shaderPath=AssetDatabase.GUIDToAssetPath(shader);
+                sv.shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
+               // toolSVC.Add()
+            }
+            
+            
+            var path = "Assets/Resource/Runtime";
             var assets = AssetDatabase.FindAssets("t:Prefab", new string[] {path}).ToList();
             var assets2 = AssetDatabase.FindAssets("t:Material", new string[] {path});
             assets.AddRange(assets2);
@@ -193,31 +209,21 @@ namespace BDFramework.Editor.Asset
 
         static void AddToDict(Material curMat)
         {
-            if (!curMat || !curMat.shader) return;
+            if (!curMat || !curMat.shader)
+                return;
 
 
             ShaderData sd = null;
-
             ShaderDataDict.TryGetValue(curMat.shader.name, out sd);
             if (sd == null)
             {
-                int[] passtypes = new int[] { };
-                string[] keywords = new string[] { };
-                string[] none = new string[] { };
+
                 //一次性取出所有的 passtypes 和  keywords
-                GetShaderKeywords(curMat.shader, ref passtypes, ref keywords,ref  none);
+                sd = GetShaderKeywords(curMat.shader);
 
                 sd = new ShaderData();
                 //kw2list
-                var _keywords = new List<List<string>>();
-                foreach (var kw in keywords)
-                {
-                    var _kws = kw.Split(' ');
-                    _keywords.Add(new List<string>(_kws));
-                }
 
-                sd.passtypes = passtypes;
-                sd.keywords = _keywords;
 
                 ShaderDataDict[curMat.shader.name] = sd;
             }
@@ -226,9 +232,7 @@ namespace BDFramework.Editor.Asset
             {
                 if (!passShaderList.Contains(curMat.shader.name))
                 {
-                    EditorUtility.DisplayDialog("警告",
-                        string.Format("Shader【{0}】,变体数量:{1},不建议继续分析,后续也会跳过!", curMat.shader.name, sd.keywords.Count),
-                        "OK");
+                    Debug.LogFormat(string.Format("Shader【{0}】,变体数量:{1},不建议继续分析,后续也会跳过!", curMat.shader.name, sd.keywords.Count));
                     passShaderList.Add(curMat.shader.name);
                 }
                 else
@@ -291,7 +295,6 @@ namespace BDFramework.Editor.Asset
                     var _sv = (ShaderVariantCollection.ShaderVariant) sv;
                     foreach (var val in svlist)
                     {
-
                         if (val.passType == _sv.passType
                             && System.Linq.Enumerable.SequenceEqual(val.keywords, _sv.keywords))
                         {
@@ -311,8 +314,9 @@ namespace BDFramework.Editor.Asset
 
         static MethodInfo GetShaderVariantEntries = null;
 
+        static ShaderVariantCollection toolSVC = null;
         //获取shader的 keywords
-        public static void GetShaderKeywords(Shader target, ref int[] types, ref string[] keywords, ref string[] remainingKeywords)
+        public static ShaderData GetShaderKeywords(Shader shader)
         {
             
             //2019.3接口
@@ -329,18 +333,42 @@ namespace BDFramework.Editor.Asset
             {
                 GetShaderVariantEntries = typeof(ShaderUtil).GetMethod("GetShaderVariantEntriesFiltered", BindingFlags.NonPublic | BindingFlags.Static);
             }
-            
-            
-            
-            object[] args = new object[] {target, 1000,new string[]{}, 
-                                         new ShaderVariantCollection(),
-                                         types,keywords,remainingKeywords};
+
+           
+
+            if (toolSVC == null)
+            {
+                Debug.LogError("不存在svc!");
+                return null;
+            }
+            var _filterKeywords=  new string[]{};
+            var _passtypes=  new int[]{};
+            var _keywords=  new string[]{};
+            var _remainingKeywords= new string[]{};
+            object[] args = new object[] {shader, 
+                                          256,
+                                          _filterKeywords, 
+                                          toolSVC,
+                                         _passtypes,
+                                         _keywords,
+                                         _remainingKeywords};
             GetShaderVariantEntries.Invoke(null, args);
-            types = args[4] as int[];
-            keywords = args[5] as string[];
+            
+            ShaderData  sd =new ShaderData();
+            sd.passtypes = args[4] as int[];
+            var  kws = args[5] as string[];
+            sd.keywords = new List<List<string>>();
+            foreach (var kw in kws)
+            {
+                var _kws = kw.Split(' ');
+                sd.keywords.Add(new List<string>(_kws));
+            }
+
+            return sd;
         }
 
+
+
         #endregion
-        
     }
 }

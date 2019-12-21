@@ -6,7 +6,7 @@ ShaderVariantCollection:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TheShaderVariantForAll
+  m_Name: Tools
   m_Shaders:
   - first: {fileID: 4800000, guid: 00218e4f0ba5f5342b9e30a2079bede9, type: 3}
     second:
