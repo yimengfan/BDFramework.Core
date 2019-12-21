@@ -987,6 +987,9 @@
  <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.AssetBundleBrowser.Editor">
+ <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>D:/Program Files/2019.3.0f3/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
  </Reference>

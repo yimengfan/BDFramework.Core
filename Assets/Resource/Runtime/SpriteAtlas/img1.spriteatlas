@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: img1
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: Android
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 50
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: b8d8daf8162478040919b3cd105b2908, type: 3}
+    totalSpriteSurfaceArea: 1600000
+    bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: 7ee4ae7aae29900513a02a1425ca1a26
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: af8afac1060027d47a8cc75d2fe620f2, type: 3}
+  - {fileID: 21300000, guid: 47288d62745a0de4686ed133ccea974d, type: 3}
+  - {fileID: 21300000, guid: 7c485af2c7b6ef743b74f557ed3a6c78, type: 3}
+  - {fileID: 21300000, guid: 54c56be4b2db31a478162c026395a4bc, type: 3}
+  - {fileID: 21300000, guid: ded86f45cdc94524fbce023e2a5fe6c3, type: 3}
+  - {fileID: 21300000, guid: 43dc9b46d20ad6646ab98251fe2cb5e4, type: 3}
+  - {fileID: 21300000, guid: 44b48269b08f8b14f877d701eb4db5c0, type: 3}
+  - {fileID: 21300000, guid: b2e724e95bc1b2949a0c885ae9ac706c, type: 3}
+  - {fileID: 21300000, guid: 1f433eab888c98b4f89dc81c8a5dbdcf, type: 3}
+  - {fileID: 21300000, guid: d0528a1f2ccc35b47b50d2c86c9f2d81, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - 1
+  - 7
+  - 4
+  - 8
+  - 10
+  - 9
+  - 6
+  - 5
+  - 2
+  - 3
+  m_Tag: img1
+  m_IsVariant: 0
