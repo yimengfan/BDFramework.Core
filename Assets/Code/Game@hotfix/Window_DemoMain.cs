@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BDFramework.ScreenView;
 using BDFramework.Sql;
@@ -12,7 +13,6 @@ using BDFramework;
 using BDFramework.DataListener;
 using BDFramework.ResourceMgr;
 using BDFramework.VersionContrller;
-using Boo.Lang;
 using Code.Game;
 using Code.Game.demo_EventManager;
 using Code.Game.demo6_UFlux;
@@ -114,26 +114,52 @@ public class Window_DemoMain : AWindow
         //demo6：资源加载
         this.btn_06.onClick.AddListener(() =>
         {
+            List<GameObject> golist = new List<GameObject>();
             //1.同步加载
-            var go = BResources.Load<GameObject>("Test/Cube");
-            GameObject.Instantiate(go).name = "load";
+            var go = BResources.Load<GameObject>("AssetTest/Cube");
+             var load1 =GameObject.Instantiate(go);
+             go = BResources.Load<GameObject>("Test/Cube");
+             var load2 =GameObject.Instantiate(go);
+             go = BResources.Load<GameObject>("AssetTest/Particle");
+             var load3 =GameObject.Instantiate(go);
 
+             golist.Add(load1);
+             golist.Add(load2);
+             golist.Add(load3);
+             
             //2.异步加载单个
-            var id = BResources.AsyncLoad<GameObject>("Windows/window_demo1", (o) => { });
+            var id = BResources.AsyncLoad<GameObject>("Test/Cube", (o) =>
+            {
+                var load4 = GameObject.Instantiate(o);
+                golist.Add(load4);
+            });
 
             //3.异步加载多个
-            var list = new System.Collections.Generic.List<string>() {"Windows/window_demo1", "Windows/window_demo2"};
+            var list = new List<string>() {"AssetTest/Cube", "Test/Cube"};
             BResources.AsyncLoad(list,
-                (i, i2) => { Debug.Log(string.Format("进度 {0} / {1}", i, i2)); },
+                (i, i2) =>
+                {
+                    Debug.Log(string.Format("进度 {0} / {1}", i, i2));
+                },
                 (map) =>
                 {
                     BDebug.Log("加载全部完成,资源列表:");
                     foreach (var r in map)
                     {
                         BDebug.Log(string.Format("--> {0} ： {1}", r.Key, r.Value.name));
-                        GameObject.Instantiate(r.Value);
+                        var _go =  GameObject.Instantiate(r.Value) as GameObject;
+                        golist.Add(_go);
                     }
                 });
+            
+            
+            IEnumeratorTool.WaitingForExec(5, () =>
+            {
+                foreach (var _go in golist)
+                {
+                    GameObject.Destroy(_go);
+                }
+            });
         });
 
         //代码:
