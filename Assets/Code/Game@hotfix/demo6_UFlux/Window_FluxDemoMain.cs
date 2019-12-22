@@ -53,22 +53,22 @@ namespace Code.Game.demo6_UFlux
             btn_02.onClick.AddListener(() =>
             {
                 Debug.Log("Flux demo2,点击这里追踪代码!");
-                UIManager.Inst.LoadWindow( WinEnum.win_Demo6_Test002);
-                UIManager.Inst.ShowWindow( WinEnum.win_Demo6_Test002);
+                UIManager.Inst.LoadWindow( WinEnum.Win_Demo6_Test002);
+                UIManager.Inst.ShowWindow( WinEnum.Win_Demo6_Test002);
             });
             //3.自定义逻辑注册
             btn_03.onClick.AddListener(() =>
             {
                 Debug.Log("Flux demo3,点击这里追踪代码!");
-                UIManager.Inst.LoadWindow(WinEnum.win_Demo6_Test003);
-                UIManager.Inst.ShowWindow(WinEnum.win_Demo6_Test003);
+                UIManager.Inst.LoadWindow(WinEnum.Win_Demo6_Test003);
+                UIManager.Inst.ShowWindow(WinEnum.Win_Demo6_Test003);
             });
             //4.窗口,子窗口
             btn_04.onClick.AddListener(() =>
             {
                 Debug.Log("Flux demo4,点击这里追踪代码!");
-                UIManager.Inst.LoadWindow(WinEnum.win_Demo6_Test004);
-                UIManager.Inst.ShowWindow(WinEnum.win_Demo6_Test004);
+                UIManager.Inst.LoadWindow(WinEnum.Win_Demo6_Test004);
+                UIManager.Inst.ShowWindow(WinEnum.Win_Demo6_Test004);
             });
         }
     }

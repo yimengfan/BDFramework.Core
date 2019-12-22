@@ -187,20 +187,14 @@ public class Window_DemoMain : AWindow
             UIManager.Inst.LoadWindow( WinEnum.Win_Demo5_Atlas);
             UIManager.Inst.ShowWindow(WinEnum.Win_Demo5_Atlas);
         });
+        
+        
+        //数据监听
+        this.btn_10.onClick.AddListener(() =>
+        {
+            UIManager.Inst.LoadWindow( WinEnum.Win_Demo_Datalistener);
+            UIManager.Inst.ShowWindow(WinEnum.Win_Demo_Datalistener);
+        });
     }
-
-    public override void Close()
-    {
-        base.Close();
-    }
-
-    public override void Open()
-    {
-        base.Open();
-    }
-
-    public override void Destroy()
-    {
-        base.Destroy();
-    }
+    
 }

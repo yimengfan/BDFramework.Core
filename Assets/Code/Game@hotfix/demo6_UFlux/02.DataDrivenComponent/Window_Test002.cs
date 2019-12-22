@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Code.Game.demo6_UFlux
 {
-    [UI((int)WinEnum.win_Demo6_Test002,"Windows/UFlux/demo002/Window_FluxTest002")]
+    [UI((int)WinEnum.Win_Demo6_Test002,"Windows/UFlux/demo002/Window_FluxTest002")]
     public class Window_Test002 : AWindow<Props_WindowTest002>
     {
         public Window_Test002(string path) : base(path)
