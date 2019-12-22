@@ -8,7 +8,22 @@ ShaderVariantCollection:
   m_PrefabAsset: {fileID: 0}
   m_Name: TheShaderVariantForAll
   m_Shaders:
-  - first: {fileID: 4800000, guid: 62e3547baf2bb1b488ce69baa1dae7bf, type: 3}
+  - first: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 1
+      - keywords: 
+        passType: 2
+      - keywords: 
+        passType: 4
+      - keywords: _ALPHABLEND_ON
+        passType: 4
+      - keywords: 
+        passType: 8
+      - keywords: 
+        passType: 13
+  - first: {fileID: 4800000, guid: 01f1d27e42764b0498bdd06446265852, type: 3}
     second:
       variants:
       - keywords: 

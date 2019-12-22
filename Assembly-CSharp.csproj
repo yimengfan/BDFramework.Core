@@ -506,6 +506,7 @@
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_IEnumerable_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_IEnumerator_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_IList_Binding.cs" />
+    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_DateTime_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_IDisposable_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Int32_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Linq_Enumerable_Binding.cs" />

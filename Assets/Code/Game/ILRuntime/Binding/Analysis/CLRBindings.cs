@@ -40,6 +40,9 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_BDLauncher_Binding.Register(app);
             UnityEngine_UI_Button_Binding.Register(app);
             UnityEngine_Events_UnityEvent_Binding.Register(app);
+            BDFramework_DataListener_DataListenerServer_Binding.Register(app);
+            UnityEngine_UI_Text_Binding.Register(app);
+            System_DateTime_Binding.Register(app);
             UnityEngine_Camera_Binding.Register(app);
             UnityEngine_Random_Binding.Register(app);
             System_Int32_Binding.Register(app);
@@ -47,7 +50,6 @@ namespace ILRuntime.Runtime.Generated
             LitJson_JsonMapper_Binding.Register(app);
             System_Action_1_String_Binding.Register(app);
             System_Action_2_Int32_Int32_Binding.Register(app);
-            BDFramework_DataListener_DataListenerServer_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
             System_Collections_Generic_List_1_GameObject_Binding.Register(app);
             System_Collections_Generic_IEnumerable_1_KeyValuePair_2_String_Object_Binding.Register(app);
@@ -88,7 +90,6 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_UFlux_IComponentOnClick_Binding.Register(app);
             UnityEngine_UI_Image_Binding.Register(app);
             UnityEngine_UI_Graphic_Binding.Register(app);
-            UnityEngine_UI_Text_Binding.Register(app);
             System_Collections_IEnumerable_Binding.Register(app);
             System_Collections_Generic_IEnumerable_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_IEnumerator_1_ILTypeInstance_Binding.Register(app);

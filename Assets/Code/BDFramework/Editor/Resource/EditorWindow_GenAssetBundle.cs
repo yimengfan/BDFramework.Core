@@ -55,6 +55,7 @@ namespace BDFramework.Editor.Asset
             DrawToolsBar();
             GUILayout.Space(10);
             LastestGUI();
+            GUILayout.Space(75);
             GUILayout.EndVertical();
         }
 
