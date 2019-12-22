@@ -23,7 +23,10 @@ namespace BDFramework
             else
             {
                 BDebug.Log("内置code模式!");
-                BDLauncherBridge.Start();    
+                //反射调用，防止编译报错
+                var type = typeof(ScriptLoder).GetType().Assembly.GetType("BDLauncherBridge");
+                var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
+                method.Invoke(null, new object[] {false, true});
             }
            
         }

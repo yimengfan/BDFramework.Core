@@ -62,7 +62,6 @@ namespace Game.UI
         void FirstFindComponent(Transform t, object data, out Dictionary<string, ComponentValueCache> coms)
         {
             coms = new Dictionary<string, ComponentValueCache>();
-            var setList = new List<UITool_Attribute>(t.GetComponentsInChildren<UITool_Attribute>());
 
             var type = data.GetType();
             var fields = type.GetFields();
@@ -73,22 +72,7 @@ namespace Game.UI
                 var attrs = f.GetCustomAttributes(typeof(M_ComponentAttribute), false);
                 var fAttr = attrs.ToList().Find(a => a is M_ComponentAttribute) as M_ComponentAttribute;
                
-                //
-                if (fAttr != null && fAttr.MComponentType != null)
-                {
-                    //获取uitools name一致的节点
-                    var trans = setList.Find(s => s.ToolTag_FieldName == fAttr.ToolTag_FieldName);
-                    if (trans != null)
-                    {
-                        //存入
-                        coms[f.Name] = new ComponentValueCache(fAttr,trans.transform);
-                    }
-                    
-                }
-                else
-                {
-                    BDebug.LogError("无同名节点或者某些数据为null：" + f.Name + " - " + fAttr.MComponentType + " - " + type.FullName);
-                }
+                
             }
         }
 

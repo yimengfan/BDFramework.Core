@@ -1,11 +1,12 @@
 ﻿using BDFramework.UFlux;
 using BDFramework.UFlux.View.Props;
+using BDFramework.UI;
 using Code.Game.demo6_UFlux;
 using Code.Game.demo6_UFlux._05.NodeHelper;
 using UnityEngine;
 using UnityEngine.UI;
 
-[UI((int) UFluxWindowEnum.Test003, "Windows/UFlux/demo003/Window_FluxTest003")]
+[UI((int) WinEnum.win_Demo6_Test003, "Windows/UFlux/demo003/Window_FluxTest003")]
 public class Window_CustomLogicBind : AWindow<PropsDemo003Window>
 {
     public Window_CustomLogicBind(string path) : base(path)

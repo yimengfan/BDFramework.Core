@@ -91,8 +91,6 @@
     <Compile Include="Assets\Code\BDFramework\Editor\Tools\SimpleGenCSharpCode\MyMethod.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Tools\SimpleGenCSharpCode\MyPropties.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Tools\SimpleGenCSharpCode\TestMyClass.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\UI\Editor_UITool.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\UI\Editor_UIWorker.cs" />
     <None Include="Assets\3rdPlugins\Dotween\DemiLib\Core\Editor\DemiEditor.xml" />
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>E:/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>

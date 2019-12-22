@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BDFramework.ScreenView;
 using BDFramework.Sql;
+using BDFramework.UFlux;
 using BDFramework.UI;
 using Code.Game;
 using UnityEditor;
@@ -20,8 +21,8 @@ public class ScreenView_Main : IScreenView
         this.IsLoad = true;
 
         //加载窗口, 0是窗口id,建议自行换成枚举
-        UIManager.Inst.LoadWindows((int) WinEnum.Win_Main);
-        UIManager.Inst.ShowWindow((int) WinEnum.Win_Main);
+        UIManager.Inst.LoadWindow( WinEnum.Win_Main);
+        UIManager.Inst.ShowWindow( WinEnum.Win_Main);
         Debug.Log("进入main");
         
         
@@ -29,7 +30,7 @@ public class ScreenView_Main : IScreenView
 
     public void BeginExit()
     {
-        UIManager.Inst.CloseWindow((int) WinEnum.Win_Main);
+        UIManager.Inst.CloseWindow(WinEnum.Win_Main);
     }
 
     public void Update(float delta)

@@ -65,8 +65,8 @@ namespace BDFramework
             //是否注册各种binding
             if (isRegisterBindings)
             {
-                ILRuntime.Runtime.Generated.CLRBindings.Initialize(AppDomain);
-                ILRuntime.Runtime.Generated.CLRManualBindings.Initialize(AppDomain);
+                CLRBindings.Initialize(AppDomain);
+                CLRManualBindings.Initialize(AppDomain);
                 // ILRuntime.Runtime.Generated.PreCLRBuilding.Initialize(AppDomain);
             }
 

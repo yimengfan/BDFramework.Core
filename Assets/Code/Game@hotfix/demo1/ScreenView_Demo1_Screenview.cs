@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BDFramework.ScreenView;
 using BDFramework.Sql;
+using BDFramework.UFlux;
 using BDFramework.UI;
 using Code.Game;
 
@@ -18,8 +19,8 @@ public class ScreenView_Demo1_Screenview : IScreenView
         //一定要设置为true，否则当前是未加载状态
         this.IsLoad = true;
         //加载窗口, 0是窗口id,建议自行换成枚举
-        UIManager.Inst.LoadWindows((int) WinEnum.Win_Demo1);
-        UIManager.Inst.ShowWindow((int) WinEnum.Win_Demo1);
+        UIManager.Inst.LoadWindow( WinEnum.Win_Demo1);
+        UIManager.Inst.ShowWindow(WinEnum.Win_Demo1);
         Debug.Log("进入demo1");
     }
 

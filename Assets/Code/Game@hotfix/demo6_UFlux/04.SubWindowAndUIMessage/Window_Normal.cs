@@ -2,6 +2,7 @@
 using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.Store;
 using BDFramework.UFlux.View.Props;
+using BDFramework.UI;
 using Code.Game.demo6_UFlux;
 using ILRuntime.Runtime;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace BDFramework.UFlux.UFluxTest004
         testSubWindows001
     }
 
-    [UI((int) UFluxWindowEnum.Test004, "Windows/UFlux/demo004/Window_SubWindowAndUIMessage")]
+    [UI((int)  WinEnum.win_Demo6_Test004, "Windows/UFlux/demo004/Window_SubWindowAndUIMessage")]
     public class Window_Demo004 : AWindow
     {
         public Window_Demo004(string path) : base(path)
@@ -68,7 +69,7 @@ namespace BDFramework.UFlux.UFluxTest004
             {
                 var msg = new UIMessageData(WinMsg.testMsg, "我是一个测试消息");
 
-                UIManager.Inst.SendMessage(UFluxWindowEnum.Test004, msg);
+                UIManager.Inst.SendMessage( WinEnum.win_Demo6_Test004, msg);
                 
             });
         }
