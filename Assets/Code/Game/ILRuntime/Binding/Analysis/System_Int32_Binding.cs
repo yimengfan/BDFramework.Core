@@ -29,8 +29,6 @@ namespace ILRuntime.Runtime.Generated
             method = type.GetMethod("GetHashCode", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, GetHashCode_1);
 
-            app.RegisterCLRCreateArrayInstance(type, s => new System.Int32[s]);
-
 
         }
 

@@ -18,7 +18,7 @@ public class ILRuntimeDelegateHelper
         appdomain.DelegateManager.RegisterMethodDelegate<System.Boolean>();
         appdomain.DelegateManager.RegisterMethodDelegate<System.Single>();
         appdomain.DelegateManager.RegisterFunctionDelegate<System.Object, System.Boolean>();
-        appdomain.DelegateManager.RegisterFunctionDelegate<UITool_Attribute, System.Boolean>();
+
         appdomain.DelegateManager.RegisterDelegateConvertor<UnityEngine.Events.UnityAction>((act) =>
         {
             return new UnityEngine.Events.UnityAction(() =>
@@ -38,13 +38,6 @@ public class ILRuntimeDelegateHelper
             return new System.Predicate<System.Object>((obj) =>
             {
                 return ((Func<System.Object, System.Boolean>)act)(obj);
-            });
-        });
-        appdomain.DelegateManager.RegisterDelegateConvertor<System.Predicate<UITool_Attribute>>((act) =>
-        {
-            return new System.Predicate<UITool_Attribute>((obj) =>
-            {
-                return ((Func<UITool_Attribute, System.Boolean>)act)(obj);
             });
         });
 

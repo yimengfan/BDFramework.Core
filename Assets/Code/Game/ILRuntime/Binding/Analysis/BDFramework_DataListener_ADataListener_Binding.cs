@@ -25,15 +25,15 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.String)};
             method = type.GetMethod("AddData", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, AddData_0);
-            args = new Type[]{typeof(System.String), typeof(System.Action<System.Object>), typeof(System.Boolean)};
-            method = type.GetMethod("AddListener", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, AddListener_1);
             args = new Type[]{typeof(System.String), typeof(System.Object), typeof(System.Boolean)};
             method = type.GetMethod("SetData", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, SetData_2);
+            app.RegisterCLRMethodRedirection(method, SetData_1);
             args = new Type[]{typeof(System.String), typeof(System.Object), typeof(System.Boolean)};
             method = type.GetMethod("TriggerEvent", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, TriggerEvent_3);
+            app.RegisterCLRMethodRedirection(method, TriggerEvent_2);
+            args = new Type[]{typeof(System.String), typeof(System.Action<System.Object>), typeof(System.Boolean)};
+            method = type.GetMethod("AddListener", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, AddListener_3);
             args = new Type[]{typeof(System.String), typeof(System.Action<System.Object>), typeof(System.Boolean)};
             method = type.GetMethod("AddListenerOnce", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, AddListenerOnce_4);
@@ -70,33 +70,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* AddListener_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 4);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Boolean @isTriggerCacheData = ptr_of_this_method->Value == 1;
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.Action<System.Object> @callback = (System.Action<System.Object>)typeof(System.Action<System.Object>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            System.String @name = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
-            BDFramework.DataListener.ADataListener instance_of_this_method = (BDFramework.DataListener.ADataListener)typeof(BDFramework.DataListener.ADataListener).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            instance_of_this_method.AddListener(@name, @callback, @isTriggerCacheData);
-
-            return __ret;
-        }
-
-        static StackObject* SetData_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* SetData_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -122,7 +96,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* TriggerEvent_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* TriggerEvent_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -144,6 +118,32 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.TriggerEvent(@name, @value, @isUseCallback);
+
+            return __ret;
+        }
+
+        static StackObject* AddListener_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 4);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Boolean @isTriggerCacheData = ptr_of_this_method->Value == 1;
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            System.Action<System.Object> @callback = (System.Action<System.Object>)typeof(System.Action<System.Object>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
+            System.String @name = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
+            BDFramework.DataListener.ADataListener instance_of_this_method = (BDFramework.DataListener.ADataListener)typeof(BDFramework.DataListener.ADataListener).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            instance_of_this_method.AddListener(@name, @callback, @isTriggerCacheData);
 
             return __ret;
         }

@@ -6,9 +6,12 @@ namespace BDFramework.UI
     {
         Win_Main = 0,
         Win_Demo1,
-        Win_Demo2 ,
-        Win_Demo3 ,
-        Win_Demo4 , 
-        Win_Demo5_Atlas
+        Win_Demo5_Atlas,
+        Win_Demo6,
+        Win_Demo6_Test002,
+        Win_Demo6_Test003,
+        Win_Demo6_Test004,
+        Win_Demo6_Test005,
+        Win_Demo_Datalistener
     }
 }

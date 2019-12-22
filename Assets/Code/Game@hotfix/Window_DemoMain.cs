@@ -12,6 +12,7 @@ using UnityEngine.UI;
 using BDFramework;
 using BDFramework.DataListener;
 using BDFramework.ResourceMgr;
+using BDFramework.UFlux;
 using BDFramework.VersionContrller;
 using Code.Game;
 using Code.Game.demo_EventManager;
@@ -28,27 +29,29 @@ public class Window_DemoMain : AWindow
     [TransformPath("text_hotfixState")]
     private Text text_hotfixState;
 
-    [TransformPath("btn_1")]
+    [TransformPath("Grid/btn_1")]
     private Button btn_01;
 
-    [TransformPath("btn_4")]
+    [TransformPath("Grid/btn_4")]
     private Button btn_04;
 
-    [TransformPath("btn_5")]
+    [TransformPath("Grid/btn_5")]
     private Button btn_05;
 
-    [TransformPath("btn_6")]
+    [TransformPath("Grid/btn_6")]
     private Button btn_06;
 
-    [TransformPath("btn_7")]
+    [TransformPath("Grid/btn_7")]
     private Button btn_07;
 
-    [TransformPath("btn_8")]
+    [TransformPath("Grid/btn_8")]
     private Button btn_08;
 
-    [TransformPath("btn_9")]
+    [TransformPath("Grid/btn_9")]
     private Button btn_09;
 
+    [TransformPath("Grid/btn_10")]
+    private Button btn_10;
     //[]
     public Window_DemoMain(string path) : base(path)
     {
@@ -84,8 +87,8 @@ public class Window_DemoMain : AWindow
         //代码:
         this.btn_04.onClick.AddListener(() =>
         {
-            BDFramework.UFlux.UIManager.Inst.LoadWindow(UFluxWindowEnum.UFluxDemoMain);
-            BDFramework.UFlux.UIManager.Inst.ShowWindow(UFluxWindowEnum.UFluxDemoMain);
+            UIManager.Inst.LoadWindow(WinEnum.Win_Demo6);
+            UIManager.Inst.ShowWindow(WinEnum.Win_Demo6);
         });
 
 
@@ -181,23 +184,17 @@ public class Window_DemoMain : AWindow
         this.btn_09.onClick.AddListener(() =>
         {
             UIManager.Inst.CloseWindow(WinEnum.Win_Main);
-            UIManager.Inst.LoadWindows((int) WinEnum.Win_Demo5_Atlas);
-            UIManager.Inst.ShowWindow((int) WinEnum.Win_Demo5_Atlas);
+            UIManager.Inst.LoadWindow( WinEnum.Win_Demo5_Atlas);
+            UIManager.Inst.ShowWindow(WinEnum.Win_Demo5_Atlas);
+        });
+        
+        
+        //数据监听
+        this.btn_10.onClick.AddListener(() =>
+        {
+            UIManager.Inst.LoadWindow( WinEnum.Win_Demo_Datalistener);
+            UIManager.Inst.ShowWindow(WinEnum.Win_Demo_Datalistener);
         });
     }
-
-    public override void Close()
-    {
-        base.Close();
-    }
-
-    public override void Open(WindowData data = null)
-    {
-        base.Open();
-    }
-
-    public override void Destroy()
-    {
-        base.Destroy();
-    }
+    
 }

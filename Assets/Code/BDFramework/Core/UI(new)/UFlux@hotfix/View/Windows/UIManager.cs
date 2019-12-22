@@ -61,6 +61,10 @@ namespace BDFramework.UFlux
             return window;
         }
 
+        /// <summary>
+        ///加载窗口
+        /// </summary>
+        /// <param name="uiIndexes"></param>
         public void LoadWindows(List<Enum> uiIndexes)
         {
             foreach (var i in uiIndexes)

@@ -1,12 +1,13 @@
 ﻿using BDFramework.UFlux;
 using BDFramework.UFlux.View.Props;
+using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Code.Game.demo6_UFlux
 {
     
-    [UI((int) UFluxWindowEnum.UFluxDemoMain,"Windows/UFlux/Window_FluxMain")]
+    [UI((int) WinEnum.Win_Demo6,"Windows/UFlux/Window_FluxMain")]
     public class Window_FluxDemoMain : AWindow<PropsBase>
     {
         public Window_FluxDemoMain(string path) : base(path)
@@ -52,22 +53,22 @@ namespace Code.Game.demo6_UFlux
             btn_02.onClick.AddListener(() =>
             {
                 Debug.Log("Flux demo2,点击这里追踪代码!");
-                UIManager.Inst.LoadWindow(UFluxWindowEnum.Test002);
-                UIManager.Inst.ShowWindow(UFluxWindowEnum.Test002);
+                UIManager.Inst.LoadWindow( WinEnum.Win_Demo6_Test002);
+                UIManager.Inst.ShowWindow( WinEnum.Win_Demo6_Test002);
             });
             //3.自定义逻辑注册
             btn_03.onClick.AddListener(() =>
             {
                 Debug.Log("Flux demo3,点击这里追踪代码!");
-                UIManager.Inst.LoadWindow(UFluxWindowEnum.Test003);
-                UIManager.Inst.ShowWindow(UFluxWindowEnum.Test003);
+                UIManager.Inst.LoadWindow(WinEnum.Win_Demo6_Test003);
+                UIManager.Inst.ShowWindow(WinEnum.Win_Demo6_Test003);
             });
             //4.窗口,子窗口
             btn_04.onClick.AddListener(() =>
             {
                 Debug.Log("Flux demo4,点击这里追踪代码!");
-                UIManager.Inst.LoadWindow(UFluxWindowEnum.Test004);
-                UIManager.Inst.ShowWindow(UFluxWindowEnum.Test004);
+                UIManager.Inst.LoadWindow(WinEnum.Win_Demo6_Test004);
+                UIManager.Inst.ShowWindow(WinEnum.Win_Demo6_Test004);
             });
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BDFramework.ResourceMgr;
 using BDFramework.ScreenView;
+using BDFramework.UFlux;
 using UnityEngine;
 using BDFramework.UI;
 using Code.Game;
@@ -37,25 +38,8 @@ public class Window_Demo1 : AWindow
            this.Close();
            ScreenViewManager.Inst.MainLayer.BeginNavTo(ScreenViewEnum.Main);
         });
-
-//        var o = BResources.Load<GameObject>("effect");
-//        var e = GameObject.Instantiate(o);
-//        e.transform.SetParent(GameObject.Find("UIRoot/Top").transform,false);
+        
 
     }
 
-    public override void Close()
-    {
-        base.Close();
-    }
-
-    public override void Open(WindowData data = null)
-    {
-        base.Open();
-    }
-
-    public override void Destroy()
-    {
-        base.Destroy();
-    }
 }

@@ -6,6 +6,8 @@ using BDFramework.UI;
 using DG.Tweening;
 using UnityEngine.UI;
 using BDFramework;
+using BDFramework.UFlux;
+
 //using UnityEditor.Graphs;
 
 /// <summary>
@@ -16,7 +18,9 @@ using BDFramework;
 [UI((int)WinEnum.Win_Demo5_Atlas,"Windows/window_demo5_SpriteAtlas") ]
 public class Window_Demo5 : AWindow
 {
- 
+
+    [TransformPath("btn_Close")]
+    private Button btn_close;
 
     public Window_Demo5(string path) : base(path)
     {
@@ -26,23 +30,14 @@ public class Window_Demo5 : AWindow
     {
         base.Init();
         //01按钮
-       
+        btn_close.onClick.AddListener(() =>
+        {
+            this.Close();
+            UIManager.Inst.ShowWindow(WinEnum.Win_Main);
+        });
     }
 
-    public override void Close()
-    {
-        base.Close();
-    }
 
-    public override void Open(WindowData data = null)
-    {
-        base.Open();
-    }
-
-    public override void Destroy()
-    {
-        base.Destroy();
-    }
 
 
    

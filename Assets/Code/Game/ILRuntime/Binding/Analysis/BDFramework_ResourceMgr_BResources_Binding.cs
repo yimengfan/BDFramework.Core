@@ -87,9 +87,6 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.String), typeof(System.Boolean)};
             method = type.GetMethod("UnloadAsset", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, UnloadAsset_5);
-            args = new Type[]{typeof(UnityEngine.Transform)};
-            method = type.GetMethod("Destroy", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Destroy_6);
 
 
         }
@@ -209,22 +206,6 @@ namespace ILRuntime.Runtime.Generated
 
 
             BDFramework.ResourceMgr.BResources.UnloadAsset(@path, @isForceUnload);
-
-            return __ret;
-        }
-
-        static StackObject* Destroy_6(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Transform @trans = (UnityEngine.Transform)typeof(UnityEngine.Transform).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-
-            BDFramework.ResourceMgr.BResources.Destroy(@trans);
 
             return __ret;
         }
