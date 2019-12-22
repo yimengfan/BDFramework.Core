@@ -155,6 +155,8 @@ namespace BDFramework.Editor.BuildPackage
             //1.打包资源
             try
             {
+                //搜集keywork
+                ShaderCollection.GenShaderVariant();
                 AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/", outPath, target);
             }
             catch (Exception e)

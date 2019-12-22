@@ -15,9 +15,7 @@ namespace BDFramework.Editor.Asset
         [MenuItem("BDFrameWork工具箱/2.AssetBundle打包", false, (int)BDEditorMenuEnum.BuildPackage_Assetbundle)]
         public static void Open()
         {
-            var window =
-                (EditorWindow_GenAssetBundle) EditorWindow.GetWindow(typeof(EditorWindow_GenAssetBundle), false,
-                    "AB打包工具");
+            var window = EditorWindow.GetWindow<EditorWindow_GenAssetBundle>(false, "AB打包工具");
             window.Show();
         }
         
@@ -116,7 +114,9 @@ namespace BDFramework.Editor.Asset
                 {
                     return;
                 }
-
+                
+                //搜集keyword
+                ShaderCollection.GenShaderVariant();
                 //开始打包
                 BuildAsset();
             }

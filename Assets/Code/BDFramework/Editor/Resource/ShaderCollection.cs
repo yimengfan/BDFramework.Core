@@ -12,109 +12,17 @@ namespace BDFramework.Editor.Asset
 {
     public class ShaderCollection : EditorWindow
     {
-        class CollectionType
-        {
-            public PassType passType;
-            public string keywords;
-        }
 
-
-        static private Dictionary<string, List<KeyValuePair<string, ShaderVariantCollection.ShaderVariant>>>
-            shaderName2ShaderVariantDict
-                = new Dictionary<string, List<KeyValuePair<string, ShaderVariantCollection.ShaderVariant>>>();
+        
 
         private ShaderVariantCollection svc;
 
-        public static void Init()
-        {
-            ShaderCollection me;
-            me = GetWindow(typeof(ShaderCollection)) as ShaderCollection;
-            me.minSize = new Vector2(500, 500);
-            me.titleContent = new GUIContent("Shader管理");
-        }
-
-        Vector2 uv;
-
-        private void OnGUI()
-        {
-            using (new GUILayout.HorizontalScope(new GUILayoutOption[0]))
-            {
-                if (GUILayout.Button("生成"))
-                {
-                    GenShaderVariant();
-                }
-            }
-
-            uv = EditorGUILayout.BeginScrollView(uv);
-
-            foreach (var val in shaderName2ShaderVariantDict)
-            {
-                DrawShaderEntry(val.Key, val.Value);
-            }
-
-            EditorGUILayout.EndScrollView();
-        }
-
-        #region Draw
-
-        #endregion
-
-        void DrawShaderEntry(string shaderName, List<KeyValuePair<string, ShaderVariantCollection.ShaderVariant>> list)
-        {
-            EditorGUILayout.Space();
-            using (new GUILayout.VerticalScope(new GUILayoutOption[0]))
-            {
-                Rect rect = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.boldLabel);
-                rect.xMax = 300;
-                GUI.Label(rect, shaderName, EditorStyles.boldLabel);
-
-                for (int i = 0; i < list.Count; i++)
-                {
-                    ShowShaderVariant(list[i].Value, false);
-                }
-            }
-        }
-
-        private void ShowShaderVariant(ShaderVariantCollection.ShaderVariant sv,
-            bool isShowShaderName,
-            string expend = "")
-        {
-            using (new GUILayout.HorizontalScope(new GUILayoutOption[0]))
-            {
-                string passTypeName = sv.passType.ToString();
-                string keysords = "";
-                if (isShowShaderName)
-                {
-                    keysords += sv.shader.name;
-                }
-
-                for (int j = 0; j < sv.keywords.Length; j++)
-                {
-                    if (keysords.Length > 0)
-                    {
-                        keysords += ",";
-                    }
-
-                    keysords += ((keysords.Length > 0) ? "," : "") + sv.keywords[j];
-                }
-
-                if (keysords.Length < 1)
-                {
-                    keysords = @"<no keywards>";
-                }
-
-                if (!string.IsNullOrEmpty(expend))
-                {
-                    keysords += " [" + expend + "]";
-                }
-
-                EditorGUILayout.LabelField(passTypeName, keysords);
-            }
-        }
-
+       
 
         #region FindMaterial
 
+        
+        static List<string> allShaderNameList= new List<string>();
         public static string GenShaderVariant()
         {
             
@@ -123,13 +31,12 @@ namespace BDFramework.Editor.Asset
             var shaders = AssetDatabase.FindAssets("t:Shader", new string[] {"Assets"}).ToList();
             foreach (var shader in shaders)
             {
-                
                 ShaderVariantCollection.ShaderVariant sv=new ShaderVariantCollection.ShaderVariant();
                 var shaderPath=AssetDatabase.GUIDToAssetPath(shader);
                 sv.shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
-
-               
-                    toolSVC.Add(sv);
+                toolSVC.Add(sv);
+                //
+                allShaderNameList.Add(shaderPath);
                 
             }
             
@@ -168,8 +75,7 @@ namespace BDFramework.Editor.Asset
                 if (obj is Material)
                 {
                     var _mat = obj as Material;
-                    EditorUtility.DisplayProgressBar("处理mat",
-                        string.Format("处理:{0} - {1}", Path.GetFileName(mat), _mat.shader.name), _i / allMats.Count);
+                    EditorUtility.DisplayProgressBar("处理mat", string.Format("处理:{0} - {1}", Path.GetFileName(mat), _mat.shader.name), _i / allMats.Count);
                     AddToDict(_mat);
                 }
 
@@ -215,6 +121,14 @@ namespace BDFramework.Editor.Asset
             if (!curMat || !curMat.shader)
                 return;
 
+            var path = AssetDatabase.GetAssetPath(curMat.shader);
+            if (!allShaderNameList.Contains(path))
+            {
+                Debug.LogError("不存在shader:" + curMat.shader.name);
+                Debug.Log(path);
+                return;
+            }
+            
 
             ShaderData sd = null;
             ShaderDataDict.TryGetValue(curMat.shader.name, out sd);
@@ -229,7 +143,7 @@ namespace BDFramework.Editor.Asset
             {
                 if (!passShaderList.Contains(curMat.shader.name))
                 {
-                    Debug.LogFormat(string.Format("Shader【{0}】,变体数量:{1},不建议继续分析,后续也会跳过!", curMat.shader.name, sd.keywords.Count));
+                    Debug.LogFormat("Shader【{0}】,变体数量:{1},不建议继续分析,后续也会跳过!", curMat.shader.name, sd.keywords.Count);
                     passShaderList.Add(curMat.shader.name);
                 }
                 else
