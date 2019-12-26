@@ -196,7 +196,7 @@ namespace BDFramework.UFlux
         /// 卸载窗口
         /// </summary>
         /// <param name="indexs">窗口枚举</param>
-        public void UnLoadWindows(params int[] indexs)
+        public void UnLoadWindows(params Enum[] indexs)
         {
             foreach (var i in indexs)
             {

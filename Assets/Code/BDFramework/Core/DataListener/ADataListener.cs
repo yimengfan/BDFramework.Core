@@ -26,7 +26,9 @@ namespace BDFramework.DataListener
         /// </summary>
         protected Dictionary<string, List<object>> valueCacheMap;
 
-        //最大缓存条数
+        /// <summary>
+        /// 最大缓存条数
+        /// </summary>
         private int maxCacheValueCount = 20;
 
         public ADataListener()
@@ -36,10 +38,7 @@ namespace BDFramework.DataListener
             valueCacheMap = new Dictionary<string, List<object>>();
             onceCallbackMap = new Dictionary<string, List<Action<object>>>();
         }
-
-        virtual public void InitData()
-        {
-        }
+        
 
         /// <summary>
         /// 注册数据
@@ -60,10 +59,21 @@ namespace BDFramework.DataListener
         /// <param name="value"></param>
         virtual public void SetData(string name, object value, bool isTriggerCallback = true)
         {
+            //移除任务 执行
+            while (removeTaskQueue.Count>0)
+            {
+                var removeTask = removeTaskQueue.Dequeue();
+                List<Action<object>> actions = null;
+                if (callbackMap.TryGetValue(removeTask.Name, out actions))
+                {
+                    actions.Remove(removeTask.Action);
+                }
+            }
+            
+            //数据验证
             if (dataMap.ContainsKey(name))
             {
-#if UNITY_EDITOR
-
+                #if UNITY_EDITOR
                 var lastV = dataMap[name];
                 if (lastV != null)
                 {
@@ -75,7 +85,7 @@ namespace BDFramework.DataListener
                         return;
                     }
                 }
-#endif
+                #endif
                 dataMap[name] = value;
             }
             else
@@ -89,24 +99,24 @@ namespace BDFramework.DataListener
             {
                 //all
                 List<Action<object>> actions = null;
-
                 //onece
                 if (onceCallbackMap.TryGetValue(name, out actions))
                 {
-                    for (int i = actions.Count - 1; i >= 0; i--)
+                    for (int i = 0; i <= actions.Count - 1; i++)
                     {
-                        var a = actions[i];
-                        onceCallbackMap[name].Remove(a);
-                        a(value);
+                        var action = actions[i];
+                        action(value);
                     }
+                    onceCallbackMap.Remove(name);
                 }
 
+                //
                 if (callbackMap.TryGetValue(name, out actions))
                 {
-                    for (int i = actions.Count - 1; i >= 0; i--)
+                    for (int i = 0; i <= actions.Count - 1; i++)
                     {
-                        var a = actions[i];
-                        a(value);
+                        var action = actions[i];
+                        action(value);
                     }
                 }
                 else //cache list
@@ -126,8 +136,6 @@ namespace BDFramework.DataListener
 
                     list.Add(value);
                 }
-
-                //
             }
         }
 
@@ -223,9 +231,7 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        virtual public void AddListenerOnce(string name,
-            Action<object> callback = null,
-            bool isTriggerCacheData = false)
+        virtual public void AddListenerOnce(string name, Action<object> callback = null, bool isTriggerCacheData = false)
         {
             if (dataMap.ContainsKey(name) == false)
             {
@@ -277,20 +283,31 @@ namespace BDFramework.DataListener
         }
 
 
+        
+        /// <summary>
+        /// 移除任务
+        /// </summary>
+        public class RemoveTask
+        {
+            public string Name;
+            public Action<object> Action;
+        }
+        
+        Queue<RemoveTask> removeTaskQueue = new Queue<RemoveTask>();
         /// <summary>
         /// 移除属性变动事件注册
         /// </summary>
         /// <param name="name"></param>
         virtual public void RemoveListener(string name, Action<object> callback)
         {
-            List<Action<object>> actions = null;
-            if (callbackMap.TryGetValue(name, out actions))
+            removeTaskQueue.Enqueue(new RemoveTask()
             {
-                actions.Remove(callback);
-            }
+                Name =  name,
+                Action =  callback
+            });
+            
         }
-
-
+        
         /// <summary>
         /// 移除属性变动事件注册
         /// </summary>
