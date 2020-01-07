@@ -60,7 +60,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\3rdPlugins\Dotween\DOTweenPro\DOTweenAnimation.cs" />
     <Compile Include="Assets\Code\BDFramework.Test\Core@hotfix\BDTest.cs" />
     <Compile Include="Assets\Code\BDFramework.Test\Core@hotfix\TestResult.cs" />
     <Compile Include="Assets\Code\BDFramework.Test\Core@hotfix\TestRunner.cs" />
@@ -590,7 +589,6 @@
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Mobile\Mobile-Particle-Add.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\CGIncludes\UnityStandardConfig.cginc" />
     <None Include="Assets\Code\BDFramework\Core\DataListener\readme.txt" />
-    <None Include="Assets\3rdPlugins\Dotween\DOTweenPro\readme.txt" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Standard.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Nature\SoftOcclusion\TreeSoftOcclusionLeavesRendertex.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\CGIncludes\UnityStandardInput.cginc" />
@@ -742,7 +740,6 @@
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\TerrainShaders\Utils\BrushPreview.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\VideoDecodeAndroid.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\CGIncludes\UnityInstancing.cginc" />
-    <None Include="Assets\3rdPlugins\Dotween\readme_DOTweenPro.txt" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Sprites-Default.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Nature\SpeedTree.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeavesRendertex.shader" />
@@ -975,9 +972,6 @@
     </Reference>
     <Reference Include="DOTween50">
       <HintPath>E:/github/BDFramework.Core-2018/Assets/3rdPlugins/Dotween/DOTween/DOTween50.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTweenPro">
-      <HintPath>E:/github/BDFramework.Core-2018/Assets/3rdPlugins/Dotween/DOTweenPro/DOTweenPro.dll</HintPath>
     </Reference>
     <Reference Include="Debug.log">
       <HintPath>E:/github/BDFramework.Core-2018/Assets/Code/BDFramework/Plugins/Debug/Debug.log.dll</HintPath>

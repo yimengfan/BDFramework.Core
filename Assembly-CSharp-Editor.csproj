@@ -60,7 +60,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\3rdPlugins\Dotween\DOTweenPro\Editor\DOTweenAnimationInspector.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\BDEditorLife\BDEditorLife.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\BuildPackage\AssetUploadToServer.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\BuildPackage\BuildPipeline_CI.cs" />
@@ -349,12 +348,6 @@
     </Reference>
     <Reference Include="DOTweenEditor">
       <HintPath>E:/github/BDFramework.Core-2018/Assets/3rdPlugins/Dotween/DOTween/Editor/DOTweenEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTweenPro">
-      <HintPath>E:/github/BDFramework.Core-2018/Assets/3rdPlugins/Dotween/DOTweenPro/DOTweenPro.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTweenProEditor">
-      <HintPath>E:/github/BDFramework.Core-2018/Assets/3rdPlugins/Dotween/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
     </Reference>
     <Reference Include="Debug.log">
       <HintPath>E:/github/BDFramework.Core-2018/Assets/Code/BDFramework/Plugins/Debug/Debug.log.dll</HintPath>
