@@ -23,7 +23,12 @@ namespace Code.Game.demo6_UFlux
         private Button btn_03;
         [TransformPath("btn_04")] 
         private Button btn_04;
-        
+        [TransformPath("btn_05")] 
+        private Button btn_05;
+        [TransformPath("btn_06")] 
+        private Button btn_06;
+        [TransformPath("btn_07")] 
+        private Button btn_07;
         [TransformPath("btn_close")] 
         private Button btn_close;
         public override void Init()
@@ -69,6 +74,14 @@ namespace Code.Game.demo6_UFlux
                 Debug.Log("Flux demo4,点击这里追踪代码!");
                 UIManager.Inst.LoadWindow(WinEnum.Win_Demo6_Test004);
                 UIManager.Inst.ShowWindow(WinEnum.Win_Demo6_Test004);
+            });
+            
+            //5.普通窗口 Props
+            btn_05.onClick.AddListener(() =>
+            {
+                Debug.Log("Flux demo5,点击这里追踪代码!");
+                UIManager.Inst.LoadWindow(WinEnum.Win_Demo6_Test005);
+                UIManager.Inst.ShowWindow(WinEnum.Win_Demo6_Test005);
             });
         }
     }
