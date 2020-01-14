@@ -12,6 +12,7 @@ namespace BDFramework.UI
         Win_Demo6_Test003,
         Win_Demo6_Test004,
         Win_Demo6_Test005,
+        Win_Demo6_Test006,
         Win_Demo_Datalistener
     }
 }

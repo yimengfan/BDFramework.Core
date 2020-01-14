@@ -4,14 +4,14 @@ using UnityEngine.UI;
 
 namespace BDFramework.UFlux.Test
 {
-    [UI((int)  WinEnum.Win_Demo6_Test005, "Windows/UFlux/demo005/Window_SimpleWindow")]
-    public class Window_Hero:  AWindow<Props_Hero>
+    [UI((int)  WinEnum.Win_Demo6_Test005, "Windows/UFlux/demo005/Window_PropsDemo")]
+    public class Window_PropsDemo:  AWindow<Props_Hero>
     {
-        public Window_Hero(string path) : base(path)
+        public Window_PropsDemo(string path) : base(path)
         {
         }
 
-        public Window_Hero(Transform transform) : base(transform)
+        public Window_PropsDemo(Transform transform) : base(transform)
         {
         }
         

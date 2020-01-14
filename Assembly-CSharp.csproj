@@ -567,11 +567,13 @@
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\03.Component_CustomLogicBind\PropsDemo003Window.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\03.Component_CustomLogicBind\Window_CustomLogicBind.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\04.SimpleWindow\SubWindow_Demo004.cs" />
-    <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\04.SimpleWindow\Window_Normal.cs" />
+    <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\04.SimpleWindow\Window_Simple.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\05.Window_Props\Props_Hero.cs" />
-    <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\05.Window_Props\Window_Hero.cs" />
+    <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\05.Window_Props\Window_PropsDemo.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\06.Window_Reducer\Props_Hero.cs" />
+    <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\06.Window_Reducer\ReducerDemo06.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\06.Window_Reducer\State_Hero.cs" />
+    <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\06.Window_Reducer\Window_ReducerDemo.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\ComponentAdaptor\ScrollRect\ComponentAdaptor_ScrollRect.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\ComponentAdaptor\ScrollRect\ScrollRectAdaptor.cs" />
     <Compile Include="Assets\Code\Game@hotfix\demo6_UFlux\UFluxWindowEnum.cs" />

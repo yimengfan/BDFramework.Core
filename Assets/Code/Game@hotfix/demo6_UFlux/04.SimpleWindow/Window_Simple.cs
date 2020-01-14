@@ -20,14 +20,14 @@ namespace BDFramework.UFlux.UFluxTest004
         testSubWindows001
     }
 
-    [UI((int)  WinEnum.Win_Demo6_Test004, "Windows/UFlux/demo004/Window_SubWindowAndUIMessage")]
-    public class Window_Demo004 : AWindow
+    [UI((int)  WinEnum.Win_Demo6_Test004, "Windows/UFlux/demo004/Window_SimpleWindow")]
+    public class Window_Simple : AWindow
     {
-        public Window_Demo004(string path) : base(path)
+        public Window_Simple(string path) : base(path)
         {
         }
 
-        public Window_Demo004(Transform transform) : base(transform)
+        public Window_Simple(Transform transform) : base(transform)
         {
         }
 
