@@ -228,7 +228,7 @@ namespace BDFramework.UFlux
                     foreach (var ckey in cvcMapkeys)
                     {
                         var cvc = cvcMap[ckey];
-                        if (!cvc.UIBehaviour)
+                        if (!cvc.UIBehaviour.transform)
                         {
                             cvcMap.Remove(ckey);
                         }
