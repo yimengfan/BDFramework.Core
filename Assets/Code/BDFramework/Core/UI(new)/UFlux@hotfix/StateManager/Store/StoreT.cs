@@ -106,7 +106,7 @@ namespace BDFramework.UFlux.Store
                 var _newstate = await this.reducers.ExcuteAsync(action.ActionEnum, action.Params, oldState);
                 //再执行普通
                 if (_newstate == null)
-                    this.reducers.Excute(action.ActionEnum, action.Params, oldState);
+                    _newstate = this.reducers.Excute(action.ActionEnum, action.Params, oldState);
 
                 //素质三连
                 CacheCurrentState();
