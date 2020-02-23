@@ -200,6 +200,7 @@ namespace BDFramework.Editor.BuildPackage
             try
             {
                 Excel2SQLiteTools.GenSQLite(outPath);
+                Excel2SQLiteTools.CopyCurrentSqlToOther(outPath);
             }
             catch (Exception e)
             {

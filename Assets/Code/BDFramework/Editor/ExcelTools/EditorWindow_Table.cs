@@ -20,6 +20,7 @@ namespace BDFramework.Editor.TableData
                 var outPath = Application.persistentDataPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android);
                 //3.打包表格
                 Excel2SQLiteTools.GenSQLite(outPath);
+                Excel2SQLiteTools.CopyCurrentSqlToOther(outPath);
             }
 
             GUILayout.EndVertical();

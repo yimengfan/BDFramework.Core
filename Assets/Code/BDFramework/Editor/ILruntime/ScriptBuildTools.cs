@@ -34,7 +34,7 @@ public class ScriptBuildTools
 
 
     private static Dictionary<int, string> csFilesMap;
-
+    private static string DLLPATH = "/Hotfix/hotfix.dll";
     /// <summary>
     /// 编译DLL
     /// </summary>
@@ -73,7 +73,7 @@ public class ScriptBuildTools
         var hotfixCs = csFiles.FindAll(f => f.Contains("@hotfix")  && f.EndsWith(".cs"));
         #endregion
 
-        var outHotfixPath = outPath + "/Hotfix/hotfix.dll";
+        var outHotfixPath = outPath + DLLPATH;
 
         if (mode == BuildMode.Release)
         {

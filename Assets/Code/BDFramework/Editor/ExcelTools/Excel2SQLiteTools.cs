@@ -17,23 +17,11 @@ namespace BDFramework.Editor.TableData
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, (int) BDEditorMenuEnum.BuildPackage_Table_GenSqlite)]
         public static void ExecuteGenSqlite()
         {
-            var outpath_win =
+            var outpath =
                 IPath.Combine(Application.streamingAssetsPath, BDUtils.GetPlatformPath(Application.platform));
-            Excel2SQLiteTools.GenSQLite(outpath_win);
-
-            var outpath_android = Application.streamingAssetsPath + "/" +
-                                  BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/Local.db";
-            var outpath_ios = Application.streamingAssetsPath + "/" +
-                              BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/Local.db";
-            var source = outpath_win + "/Local.db";
-
-            var bytes = File.ReadAllBytes(source);
-            if (source != outpath_android)
-                FileHelper.WriteAllBytes(outpath_android, bytes);
-            if (source != outpath_ios)
-                FileHelper.WriteAllBytes(outpath_ios, bytes);
-
-            AssetDatabase.Refresh();
+            //生成sql
+            GenSQLite(outpath);
+            CopyCurrentSqlToOther(outpath);
         }
 
         [MenuItem("BDFrameWork工具箱/3.表格/json->生成SQLite", false, (int) BDEditorMenuEnum.BuildPackage_Table_Json2Sqlite)]
@@ -45,6 +33,10 @@ namespace BDFramework.Editor.TableData
         }
 
 
+        /// <summary>
+        /// 生成sqlite
+        /// </summary>
+        /// <param name="outPath"></param>
         public static void GenSQLite(string outPath)
         {
             var tablePath = IPath.Combine(Application.dataPath, "Resource/Table/");
@@ -67,7 +59,35 @@ namespace BDFramework.Editor.TableData
 
             sql.Close();
             EditorUtility.ClearProgressBar();
+
+
             Debug.Log("导出Sqlite完成!");
+            AssetDatabase.Refresh();
+        }
+
+        /// <summary>
+        /// 拷贝当前到其他目录
+        /// </summary>
+        /// <param name="outPath"></param>
+        public static void CopyCurrentSqlToOther(string outPath)
+        {
+            //拷贝当前到其他目录
+            var outpath_win = Application.streamingAssetsPath + "/" +
+                              BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/Local.db";
+            var outpath_android = Application.streamingAssetsPath + "/" +
+                                  BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/Local.db";
+            var outpath_ios = Application.streamingAssetsPath + "/" +
+                              BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/Local.db";
+            //
+            var source = outPath + "/Local.db";
+            var bytes = File.ReadAllBytes(source);
+            if (source != outpath_android)
+                FileHelper.WriteAllBytes(outpath_android, bytes);
+            if (source != outpath_ios)
+                FileHelper.WriteAllBytes(outpath_ios, bytes);
+            if (source != outpath_win)
+                FileHelper.WriteAllBytes(outpath_win, bytes);
+            //刷新
             AssetDatabase.Refresh();
         }
 
@@ -129,6 +149,11 @@ namespace BDFramework.Editor.TableData
             AssetDatabase.Refresh();
         }
 
+        /// <summary>
+        /// json转sql
+        /// </summary>
+        /// <param name="f"></param>
+        /// <param name="json"></param>
         static private void Json2Sqlite(string f, string json)
         {
             //
@@ -202,7 +227,8 @@ namespace BDFramework.Editor.TableData
         //当返回真时启用
         private static bool NewMenuOptionValidation()
         {
-            if (Selection.activeObject.GetType() != typeof(TextAsset)) return false;
+            if (Selection.activeObject.GetType() != typeof(TextAsset))
+                return false;
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             return path.EndsWith(".json");
         }

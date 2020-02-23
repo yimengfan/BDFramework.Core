@@ -24,6 +24,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         window.Show();
     }
 
+    private static string DLLPATH = "/Hotfix/hotfix.dll";
     public void OnGUI()
     {
         GUILayout.BeginVertical();
@@ -94,11 +95,11 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         ScriptBuildTools.BuildDll(Application.dataPath, outpath_win, mode);
         //2.同步到其他两个目录
         var outpath_android = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android) +
-                              "/hotfix/hotfix.dll";
+                              DLLPATH;
         var outpath_ios = Application.streamingAssetsPath                       + "/" +
-                          BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + "/hotfix/hotfix.dll";
+                          BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + DLLPATH;
 
-        var source = outpath_win + "/hotfix/hotfix.dll";
+        var source = outpath_win + DLLPATH;
         var bytes  = File.ReadAllBytes(source);
         if (source != outpath_android)
             FileHelper.WriteAllBytes(outpath_android, bytes);
@@ -138,7 +139,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         //默认读StreammingAssets下面path
         if (dllpath == "")
         {
-             dllpath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(platform) + "/hotfix/hotfix.dll";
+             dllpath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(platform) + DLLPATH;
         }
         
         //不参与自动绑定的
