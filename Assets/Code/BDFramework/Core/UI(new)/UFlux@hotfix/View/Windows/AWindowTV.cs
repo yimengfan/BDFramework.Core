@@ -28,7 +28,7 @@ namespace BDFramework.UFlux
         {
             //创建store
             this.store = Store.Store.CreateStore<V>();
-            this.store.RegisterReducers(GetReducers());
+            this.store.RegisterReducers(CreateReducers());
             //创建订阅
             this.store.Subscribe((state) =>
             {
@@ -41,7 +41,7 @@ namespace BDFramework.UFlux
         /// 获取 Reducer
         /// </summary>
         /// <returns></returns>
-        virtual public AReducers<V> GetReducers()
+        virtual public AReducers<V> CreateReducers()
         {
             return null;
         }

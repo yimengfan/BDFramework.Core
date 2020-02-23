@@ -29,9 +29,7 @@ The following charging plug-ins are used. Please purchase and download them your
 <br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
 
 ## v1.0版本计划(v1.0 Plan)
-<br> 2019.12 加入后端框架基于Web架构, Asp .Net Core
-<br> 其实Web服务器能解决90%的游戏业务(基于分布式架构，部分业务如战斗可以开单独的服务器作计算节点),
-<br> 更主要是Web服务器工作流更完善、解决方案更多、更省服务器资源（钱),
+<br> 2020.2 TDD工作流加入
 <br> ~~2019.10 完成UI工作流的升级和重构(兼容老版本)~~
 <br> ~~2019.6.30之前 完成新文档的编写(已完成)
 <br> 2018.7 热更新工具整合：代码更新及工具(已完成)

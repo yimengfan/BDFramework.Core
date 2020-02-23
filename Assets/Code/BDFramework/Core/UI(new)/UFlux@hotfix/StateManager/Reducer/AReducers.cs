@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using BDFramework.UFlux.Store;
 
 namespace BDFramework.UFlux.Reducer
@@ -9,15 +10,22 @@ namespace BDFramework.UFlux.Reducer
     {
         /// <summary>
         /// 当前的Reducermap,同步Reducer，
-        /// await 也适用
         /// </summary>
         protected Dictionary<int, Store<T>.Reducer> ReducersMap = new Dictionary<int, Store<T>.Reducer>();
-
+        protected Dictionary<int, Store<T>.ReducerAsync> AsyncReducersMap = new Dictionary<int, Store<T>.ReducerAsync>();
         /// <summary>
         /// 当前的Reducermap，callback模式
         /// </summary>
-        protected Dictionary<int, Store<T>.AsyncReducer> AsyncReducersMap = new Dictionary<int, Store<T>.AsyncReducer>();
-        
+        protected Dictionary<int, Store<T>.ReducerCallback> CallbackReducersMap = new Dictionary<int, Store<T>.ReducerCallback>();
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public AReducers()
+        {
+            //注册reducer
+            RegisterReducers();
+        }
         /// <summary>
         /// 注册所有的Reducer
         /// </summary>
@@ -64,7 +72,6 @@ namespace BDFramework.UFlux.Reducer
 //                    }
 //                }
 //            }
-            
 
             #endregion
 
@@ -88,18 +95,33 @@ namespace BDFramework.UFlux.Reducer
 
 
         /// <summary>
-        /// 添加异步reducer
+        /// 添加同步 reducer
         /// </summary>
         /// <param name="enum"></param>
-        protected void AddAsyncReducer(Enum @enum,Store<T>.AsyncReducer asyncReducer)
+        protected void AddAsyncRecucer(Enum @enum,Store<T>.ReducerAsync reducer)
         {
             var key = @enum.GetHashCode();
-            if (AsyncReducersMap.ContainsKey(key))
+            if (ReducersMap.ContainsKey(key))
             {
                 BDebug.LogError("重复添加key,请检查" +@enum);
                 return;
             }
-            AsyncReducersMap[key] = asyncReducer;
+            AsyncReducersMap[key] = reducer;
+        }
+
+        /// <summary>
+        /// 添加异步reducer
+        /// </summary>
+        /// <param name="enum"></param>
+        protected void AddCallbackReducer(Enum @enum,Store<T>.ReducerCallback reducerCallback)
+        {
+            var key = @enum.GetHashCode();
+            if (CallbackReducersMap.ContainsKey(key))
+            {
+                BDebug.LogError("重复添加key,请检查" +@enum);
+                return;
+            }
+            CallbackReducersMap[key] = reducerCallback;
         }
         
         /// <summary>
@@ -112,12 +134,13 @@ namespace BDFramework.UFlux.Reducer
         {
             var key = @enum.GetHashCode();
 
-            if (this.ReducersMap.ContainsKey(key))
+            if (this.ReducersMap.ContainsKey(key)
+                ||this.AsyncReducersMap.ContainsKey(key))
             {
                 return false;
             }
 
-            if (this.AsyncReducersMap.ContainsKey(key))
+            if (this.CallbackReducersMap.ContainsKey(key))
             {
                 return true;
             }
@@ -129,10 +152,10 @@ namespace BDFramework.UFlux.Reducer
         /// 执行Reducer
         /// </summary>
         /// <param name="enum"></param>
-        /// <param name="state"></param>
+        /// <param name="oldState"></param>
         /// <param name="callback"></param>
         /// <returns>返回是否为异步模式</returns>
-        public void Excute(Enum @enum, object @params, T state)
+        public T Excute(Enum @enum, object @params, T oldState)
         {
             //同步列表下寻找
             Store<T>.Reducer func = null;
@@ -140,8 +163,31 @@ namespace BDFramework.UFlux.Reducer
             if (this.ReducersMap.TryGetValue(key, out func))
             {
                 //同步接口
-                func(state, @params);
+               return func(oldState, @params);
             }
+
+            return null;
+        }
+        
+        /// <summary>
+        /// 执行Reducer
+        /// </summary>
+        /// <param name="enum"></param>
+        /// <param name="oldState"></param>
+        /// <param name="callback"></param>
+        /// <returns>返回是否为异步模式</returns>
+        async public Task<T> ExcuteAsync(Enum @enum, object @params,  T oldState)
+        {
+            //同步列表下寻找
+            Store<T>.ReducerAsync func = null;
+            var key = @enum.GetHashCode();
+            if (this.AsyncReducersMap.TryGetValue(key, out func))
+            {
+                //同步接口
+                return  await func(oldState, @params);
+            }
+
+            return null;
         }
         
         /// <summary>
@@ -151,15 +197,17 @@ namespace BDFramework.UFlux.Reducer
         /// <param name="params"></param>
         /// <param name="state"></param>
         /// <param name="callback"></param>
-        public void AsyncExcute(Enum @enum, object @params, Store<T>.GetState getStateFunc,Action<T> callback)
+        public void ExcuteByCallback(Enum @enum, object @params, Store<T>.GetState getStateFunc,Action<T> callback)
         {
-            Store<T>.AsyncReducer asyncFunc = null;
+            Store<T>.ReducerCallback func = null;
             var key = @enum.GetHashCode();
-            if (this.AsyncReducersMap.TryGetValue(key, out asyncFunc))
+            if (this.CallbackReducersMap.TryGetValue(key, out func))
             {
                 //异步接口
-                asyncFunc(getStateFunc, @params, callback);
+                func(getStateFunc, @params, callback);
             }
         }
     }
+    
+    
 }

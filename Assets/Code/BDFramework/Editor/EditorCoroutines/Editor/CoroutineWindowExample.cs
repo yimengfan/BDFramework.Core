@@ -6,7 +6,7 @@ namespace marijnz.EditorCoroutines
 {
 	public class CoroutineWindowExample : EditorWindow
 	{
-		[MenuItem("BDFrameWork工具箱/Editor Coroutine Example")]
+		//[MenuItem("BDFrameWork工具箱/Editor Coroutine Example")]
 		public static void ShowWindow()
 		{
 			EditorWindow.GetWindow(typeof(CoroutineWindowExample));
