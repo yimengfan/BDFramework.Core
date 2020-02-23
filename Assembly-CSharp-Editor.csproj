@@ -82,11 +82,6 @@
     <Compile Include="Assets\Code\BDFramework\Editor\Resource\EditorWindow_GenAssetBundle.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Resource\ShaderCollection.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Tools\EditorGUIHelper.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Tools\SimpleGenCSharpCode\MyClass.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Tools\SimpleGenCSharpCode\MyField.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Tools\SimpleGenCSharpCode\MyMethod.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Tools\SimpleGenCSharpCode\MyPropties.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Tools\SimpleGenCSharpCode\TestMyClass.cs" />
     <None Include="Assets\3rdPlugins\Dotween\DemiLib\Core\Editor\DemiEditor.xml" />
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>E:/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
