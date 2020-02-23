@@ -13,7 +13,7 @@ namespace BDFramework.Helper
             {
                 case RuntimePlatform.WindowsEditor:
                 case RuntimePlatform.WindowsPlayer:
-                   // return "Windows";
+                    return "Windows";
                 case RuntimePlatform.Android:
                     return "Android";
                 case RuntimePlatform.IPhonePlayer:

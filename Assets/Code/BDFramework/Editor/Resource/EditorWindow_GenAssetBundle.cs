@@ -27,7 +27,7 @@ namespace BDFramework.Editor.Asset
         public string rootResourceDir = "Resource/Runtime/";
 
         private bool isSelectIOS = false;
-
+        private bool isSelectWindows = false;
         private bool isSelectAndroid = true;
 
         //
@@ -37,7 +37,13 @@ namespace BDFramework.Editor.Asset
             GUILayout.BeginHorizontal();
             {
                 GUILayout.Space(30);
-                isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源(Windows公用)");
+                isSelectWindows = GUILayout.Toggle(isSelectWindows, "生成Windows资源");
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Space(30);
+                isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源");
             }
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
@@ -92,10 +98,28 @@ namespace BDFramework.Editor.Asset
                     return;
                 }
 
+                RuntimePlatform rp= RuntimePlatform.Lumin ;
+                BuildTarget bt= BuildTarget.Lumin;
+                if (isSelectWindows)
+                {
+                    AssetBundleEditorTools.CheackAssets(rootResourceDir, 
+                        exportPath + "/"+ BDUtils.GetPlatformPath(RuntimePlatform.WindowsPlayer), BuildTarget.StandaloneWindows);
+                }
+                   
                 if (isSelectAndroid)
-                    AssetBundleEditorTools.CheackAssets(rootResourceDir, exportPath + "/Android", BuildTarget.Android);
+                {
+                    
+                    AssetBundleEditorTools.CheackAssets(rootResourceDir, 
+                        exportPath + "/"+ BDUtils.GetPlatformPath(RuntimePlatform.Android), BuildTarget.Android);
+                }
                 if (isSelectIOS)
-                    AssetBundleEditorTools.CheackAssets(rootResourceDir, exportPath + "/iOS", BuildTarget.iOS);
+                {
+                    AssetBundleEditorTools.CheackAssets(rootResourceDir, 
+                        exportPath + "/"+ BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer), BuildTarget.iOS);
+                }
+                
+               
+                    
 
                 AssetDatabase.Refresh();
                 Debug.Log("资源打包完毕");
@@ -138,6 +162,12 @@ namespace BDFramework.Editor.Asset
         /// </summary>
         public void BuildAsset()
         {
+            if (isSelectWindows)
+            {
+                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,
+                    exportPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.WindowsPlayer), BuildTarget.StandaloneWindows, options);
+            }
+
             if (isSelectAndroid)
                 AssetBundleEditorTools.GenAssetBundle(rootResourceDir,
                     exportPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android), BuildTarget.Android, options);
