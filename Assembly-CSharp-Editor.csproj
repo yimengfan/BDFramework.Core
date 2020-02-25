@@ -64,7 +64,6 @@
     <Compile Include="Assets\Code\BDFramework\Editor\Config\BDEditorConfig.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Config\BDEditorHelper.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Config\EditorWindow_BDConfig.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Config\Inspect_GameConfig.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\EditorCoroutines\Editor\CoroutineWindowExample.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\EditorCoroutines\Editor\EditorCoroutineExtensions.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\EditorCoroutines\Editor\EditorCoroutines.cs" />

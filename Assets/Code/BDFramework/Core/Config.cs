@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Net.Sockets;
 using BDFramework.Helper;
 using BDFramework.Http;
 using LitJson;
+using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -43,25 +46,42 @@ namespace BDFramework
         public bool IsNeedNet = false;
     }
 
-    public class Config : MonoBehaviour
+    public class Config : SerializedMonoBehaviour
     {
+        [LabelText("代码路径")]
         public AssetLoadPath CodeRoot = AssetLoadPath.Editor;
+        [LabelText("SQLite路径")]
         public AssetLoadPath SQLRoot = AssetLoadPath.Editor;
+        [LabelText("资源路径")]
         public AssetLoadPath ArtRoot = AssetLoadPath.Editor;
-
+        [InfoBox("StreamingAsset下生效")]
+        [LabelText("配置到其他路径")]
         public string CustomArtRoot = "";
 
         //只在非Editor模式下生效
         public HotfixCodeRunMode CodeRunMode = HotfixCodeRunMode.ByILRuntime;
+        
+        [LabelText("文件服务器")]
         public string FileServerUrl = "192.168.8.68";
-
-        //
-        public bool IsHotfix = false;
+        [LabelText("Gate服务器")]
         public string GateServerIp = "";
         public int Port;
+        
+        [LabelText("是否热更")]
+        public bool IsHotfix = false;
+        [LabelText("是否联网")]
         public bool IsNeedNet = false;
+        //本地配置
+        [LabelText("本地配置")]
+        public TextAsset localConfig;
 
+        private void Awake()
+        {
+            ShowFPS();
+        }
 
+        #region Config设置
+        
         /// <summary>
         /// 使用服务器配置 
         /// </summary>
@@ -99,24 +119,7 @@ namespace BDFramework
             }
 
 
-            //TODO 未来改成反射实现,暂时用这一版
-            if (gconfig != null)
-            {
-                this.CodeRoot = (AssetLoadPath) gconfig.CodeRoot;
-                this.SQLRoot = (AssetLoadPath) gconfig.SQLRoot;
-                this.ArtRoot = (AssetLoadPath) gconfig.ArtRoot;
-                //
-                this.CodeRunMode = (HotfixCodeRunMode) gconfig.CodeRunMode;
-                //ip相关
-                this.FileServerUrl = gconfig.FileServerUrl;
-                this.IsHotfix = gconfig.IsHotfix;
-                this.GateServerIp = gconfig.GateServerIp;
-                this.Port = gconfig.Port;
-                if (!Application.isEditor)
-                {
-                    this.IsHotfix = this.IsNeedNet = true;
-                }
-            }
+            SetNewConfig(gconfig);
 
             if (callback != null)
             {
@@ -124,7 +127,34 @@ namespace BDFramework
             }
         }
 
-
+        /// <summary>
+        /// 使用新的配置
+        /// </summary>
+        /// <param name="newConfig"></param>
+        private void SetNewConfig(GameConfig newConfig)
+        {
+            //TODO 未来改成反射实现,暂时用这一版
+            if (newConfig != null)
+            {
+                this.CodeRoot = (AssetLoadPath) newConfig.CodeRoot;
+                this.SQLRoot = (AssetLoadPath) newConfig.SQLRoot;
+                this.ArtRoot = (AssetLoadPath) newConfig.ArtRoot;
+                //
+                this.CodeRunMode = (HotfixCodeRunMode) newConfig.CodeRunMode;
+                //ip相关
+                this.FileServerUrl = newConfig.FileServerUrl;
+                this.IsHotfix = newConfig.IsHotfix;
+                this.GateServerIp = newConfig.GateServerIp;
+                this.Port = newConfig.Port;
+                if (!Application.isEditor)
+                {
+                    this.IsHotfix = this.IsNeedNet = true;
+                }
+            }
+        }
+        #endregion
+        
+        
         #region    FPS计算
 
         float fps;
@@ -133,7 +163,7 @@ namespace BDFramework
         Rect rect;
         GUIStyle style = new GUIStyle();
 
-        void Start()
+        void ShowFPS()
         {
             int w = Screen.width, h = Screen.height;
             rect = new Rect(w - 350, 0, 300, h * 4 / 100);
@@ -156,5 +186,61 @@ namespace BDFramework
         }
 
         #endregion
+
+#if UNITY_EDITOR
+
+
+        [ButtonGroup("1")]
+        [Button("清空Persistent",ButtonSizes.Medium)]
+        public static void DeletePersistent()
+        {
+            Directory.Delete(Application.persistentDataPath, true);
+        }
+
+        [ButtonGroup("1")]
+        [Button("生成Config", ButtonSizes.Medium)]
+        public static void GenConfig()
+        {
+            GenGameConfig(Application.streamingAssetsPath, BDUtils.GetPlatformPath(Application.platform));
+        }
+        
+        
+        static public void GenGameConfig(string str, string platform)
+        {
+            var gameConfig = new GameConfig();
+            var gcType = gameConfig.GetType();
+
+            //config
+            var config = GameObject.Find("BDFrame").GetComponent<Config>();
+            var configType = config.GetType();
+            //
+            foreach (var f in gcType.GetFields())
+            {
+                var ctf = configType.GetField(f.Name);
+                //反射赋值
+                if (f.FieldType == ctf.FieldType)
+                {
+                    f.SetValue(gameConfig, ctf.GetValue(config));
+                }
+                else if (f.FieldType == typeof(int) && ctf.FieldType.IsEnum)
+                {
+                    f.SetValue(gameConfig, (int) ctf.GetValue(config));
+                }
+                else
+                {
+                    BDebug.LogError("类型不匹配:" + f.Name);
+                }
+            }
+
+            var json = JsonMapper.ToJson(gameConfig);
+
+            var fs = string.Format("{0}/{1}/{2}", str, platform, "GameConfig.json");
+
+            FileHelper.WriteAllText(fs, json);
+
+            AssetDatabase.Refresh();
+            Debug.Log("导出成功：" + fs);
+        }
+#endif
     }
 }
