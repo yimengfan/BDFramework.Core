@@ -316,9 +316,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 617214994}
-  - component: {fileID: 617214996}
   - component: {fileID: 617214995}
   - component: {fileID: 617214993}
+  - component: {fileID: 617214996}
   m_Layer: 0
   m_Name: BDFrame
   m_TagString: Untagged
@@ -378,16 +378,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd5c6865487ed14f9bfe24a5c88e67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CodeRoot: 2
-  SQLRoot: 2
-  ArtRoot: 2
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  CodeRoot: 0
+  SQLRoot: 0
+  ArtRoot: 0
   CustomArtRoot: 
-  CodeRunMode: 1
+  CodeRunMode: 0
   FileServerUrl: 192.168.8.68
-  IsHotfix: 0
   GateServerIp: 
   Port: 0
+  IsHotfix: 0
   IsNeedNet: 0
+  localConfig: {fileID: 0}
 --- !u!1 &878416750
 GameObject:
   m_ObjectHideFlags: 0

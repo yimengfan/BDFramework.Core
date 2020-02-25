@@ -78,6 +78,14 @@ namespace BDFramework
         private void Awake()
         {
             ShowFPS();
+
+            if (localConfig != null)
+            {
+                var newconfig= JsonMapper.ToObject<GameConfig>(localConfig.text);
+                SetNewConfig(newconfig);
+            }
+            
+            UseServerConfig(null);
         }
 
         #region Config设置
@@ -117,14 +125,9 @@ namespace BDFramework
             {
                 BDebug.LogError("Game配置无法更新,使用本地");
             }
-
-
+            
             SetNewConfig(gconfig);
-
-            if (callback != null)
-            {
-                callback();
-            }
+            callback?.Invoke();
         }
 
         /// <summary>
@@ -187,6 +190,8 @@ namespace BDFramework
 
         #endregion
 
+        #region 编辑器
+
 #if UNITY_EDITOR
 
 
@@ -242,5 +247,9 @@ namespace BDFramework
             Debug.Log("导出成功：" + fs);
         }
 #endif
+        
+        
+
+        #endregion
     }
 }
