@@ -15,27 +15,24 @@ namespace BDFramework.Editor
 
         public enum BuildMode
         {
-            AndroidDebug = 0,
-            AndroidRelease,
-            IosDebug,
-            IosRelease,
+            Debug = 0,
+            Release,
         }
-
-        static private string[] Scenes =
+        static string SCENEPATH="Assets/Scenes/BDFrame.unity";
+        static string[] SceneConfigs =
         {
-            "Assets/Scenes/BuildAndroidDebug.unity",
-            "Assets/Scenes/Config/AndroidRelease.json",
-            "Assets/Scenes/BuildIosDebug.unity",
-            "Assets/Scenes/Config/IOSRelease.json",
+            "Assets/Scenes/Config/Debug.json",
+            "Assets/Scenes/Config/Release.json",
         };
 
-        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(空)")]
+        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(使用当前配置 )")]
         public static void GenAPKEmpty()
         {
+            LoadConfig();
             BuildAPK_Empty();
         }
 
-        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Debug)")]
+        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Debug-StreamingAsset)")]
         public static void GenAPKDebug()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
@@ -45,7 +42,7 @@ namespace BDFramework.Editor
           
         }
 
-        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Release)")]
+        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Release-Persistent)")]
         public static void GenPAK()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
@@ -64,15 +61,19 @@ namespace BDFramework.Editor
 
 
         
-        static string SCENEPATH="Assets/Scenes/BDFrame.unity";
-        static void LoadConfig()
+       
+        static void LoadConfig(BuildMode? mode=null)
         {
             
             var  scene=  EditorSceneManager.OpenScene(SCENEPATH);
-            var path = "Assets/Scenes/Config/Release.json";
-            var TextAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
+            TextAsset textContent = null;
+            if (mode != null)
+            {
+                string path = SceneConfigs[(int)mode];
+                textContent  = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
+            }
             var config = GameObject.Find("BDFrame").GetComponent<Config>();
-            config.localConfig = TextAsset;
+            config.localConfig = textContent;
           
             EditorSceneManager.SaveScene(scene);
         }
@@ -90,27 +91,30 @@ namespace BDFramework.Editor
 
         static public void BuildAPK_Empty()
         {
-            BuildAPK(Scenes[(int) BuildMode.AndroidDebug]);
+            LoadConfig();
+            BuildAPK();
         }
 
         
         static public void BuildAPK_Debug()
         {
+            LoadConfig(BuildMode.Debug);
             EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath,RuntimePlatform.Android, BuildTarget.Android);
-            BuildAPK(Scenes[(int) BuildMode.AndroidDebug]);
+            BuildAPK();
         }
         
         static public void BuildAPK_Release()
         {
+            LoadConfig(BuildMode.Release);
             EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath,RuntimePlatform.Android, BuildTarget.Android);
-            BuildAPK(Scenes[(int) BuildMode.AndroidRelease]);
+            BuildAPK();
         }
 
         
         /// <summary>
         /// build apk,Assetbunld 位于Streaming下~
         /// </summary>
-        static public void BuildAPK(string scene)
+        static public void BuildAPK()
         {
 
             InitBDFrame();
@@ -144,7 +148,7 @@ namespace BDFramework.Editor
                 Directory.Delete(win, true);
             }
             //开始项目一键打包
-            string[] scenes = { scene };
+            string[] scenes = { SCENEPATH };
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.Android,BuildOptions.None);
             if (File.Exists(outputPath))
             {
