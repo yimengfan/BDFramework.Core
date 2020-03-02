@@ -397,7 +397,7 @@ MonoBehaviour:
   Port: 0
   IsHotfix: 0
   IsNeedNet: 0
-  localConfig: {fileID: 0}
+  localConfig: {fileID: 4900000, guid: 04f1bed7e320d6440a29387c08710452, type: 3}
 --- !u!1 &878416750
 GameObject:
   m_ObjectHideFlags: 0

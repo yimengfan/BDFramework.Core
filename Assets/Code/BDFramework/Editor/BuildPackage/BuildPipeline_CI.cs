@@ -2,12 +2,11 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using System.IO;
-using UnityEditor.Build.Content;
-using BDFramework.Editor.Asset;
 using BDFramework.Editor.BuildPackage;
 using BDFramework.Editor.EditorLife;
 using Code.BDFramework.Core.Tools;
 using Code.BDFramework.Editor;
+using UnityEditor.SceneManagement;
 
 namespace BDFramework.Editor
 {
@@ -25,9 +24,9 @@ namespace BDFramework.Editor
         static private string[] Scenes =
         {
             "Assets/Scenes/BuildAndroidDebug.unity",
-            "Assets/Scenes/BuildAndroidRelease.unity",
+            "Assets/Scenes/Config/AndroidRelease.json",
             "Assets/Scenes/BuildIosDebug.unity",
-            "Assets/Scenes/BuildIosRelease.unity",
+            "Assets/Scenes/Config/IOSRelease.json",
         };
 
         [MenuItem("BDFrameWork工具箱/打包/BuildAPK(空)")]
@@ -60,10 +59,23 @@ namespace BDFramework.Editor
         [MenuItem("BDFrameWork工具箱/打包/导出XCode工程(ipa暂未实现)")]
         public static void GenIpa()
         {
-            BuildPipeline_CI.BuildIpa();
+            BuildIpa();
         }
 
 
+        
+        static string SCENEPATH="Assets/Scenes/BDFrame.unity";
+        static void LoadConfig()
+        {
+            
+            var  scene=  EditorSceneManager.OpenScene(SCENEPATH);
+            var path = "Assets/Scenes/Config/Release.json";
+            var TextAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
+            var config = GameObject.Find("BDFrame").GetComponent<Config>();
+            config.localConfig = TextAsset;
+          
+            EditorSceneManager.SaveScene(scene);
+        }
 
         /// <summary>
         /// 初始化BDFrame
