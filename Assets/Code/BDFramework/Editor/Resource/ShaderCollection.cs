@@ -12,34 +12,28 @@ namespace BDFramework.Editor.Asset
 {
     public class ShaderCollection : EditorWindow
     {
-
-        
-
         private ShaderVariantCollection svc;
 
-       
 
         #region FindMaterial
 
-        
-        static List<string> allShaderNameList= new List<string>();
+        static List<string> allShaderNameList = new List<string>();
+
         public static string GenShaderVariant()
         {
-            
             //先搜集所有keyword到工具类SVC
-            toolSVC =new ShaderVariantCollection();
-            var shaders = AssetDatabase.FindAssets("t:Shader", new string[] {"Assets"}).ToList();
+            toolSVC = new ShaderVariantCollection();
+            var shaders = AssetDatabase.FindAssets("t:Shader", new string[] {"Assets", "Packages"}).ToList();
             foreach (var shader in shaders)
             {
-                ShaderVariantCollection.ShaderVariant sv=new ShaderVariantCollection.ShaderVariant();
-                var shaderPath=AssetDatabase.GUIDToAssetPath(shader);
+                ShaderVariantCollection.ShaderVariant sv = new ShaderVariantCollection.ShaderVariant();
+                var shaderPath = AssetDatabase.GUIDToAssetPath(shader);
                 sv.shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
                 toolSVC.Add(sv);
                 //
                 allShaderNameList.Add(shaderPath);
-                
             }
-            
+
             var toolsSVCpath = "Assets/Resource/Shaders/Tools.shadervariants";
             AssetDatabase.CreateAsset(toolSVC, toolsSVCpath);
 
@@ -75,7 +69,8 @@ namespace BDFramework.Editor.Asset
                 if (obj is Material)
                 {
                     var _mat = obj as Material;
-                    EditorUtility.DisplayProgressBar("处理mat", string.Format("处理:{0} - {1}", Path.GetFileName(mat), _mat.shader.name), _i / allMats.Count);
+                    EditorUtility.DisplayProgressBar("处理mat",
+                        string.Format("处理:{0} - {1}", Path.GetFileName(mat), _mat.shader.name), _i / allMats.Count);
                     AddToDict(_mat);
                 }
 
@@ -128,7 +123,7 @@ namespace BDFramework.Editor.Asset
                 Debug.Log(path);
                 return;
             }
-            
+
 
             ShaderData sd = null;
             ShaderDataDict.TryGetValue(curMat.shader.name, out sd);
@@ -226,10 +221,10 @@ namespace BDFramework.Editor.Asset
         static MethodInfo GetShaderVariantEntries = null;
 
         static ShaderVariantCollection toolSVC = null;
+
         //获取shader的 keywords
         public static ShaderData GetShaderKeywords(Shader shader)
         {
-            
             //2019.3接口
 //            internal static void GetShaderVariantEntriesFiltered(
 //                Shader                  shader,                     0
@@ -239,35 +234,33 @@ namespace BDFramework.Editor.Asset
 //                out int[]               passTypes,                  4
 //                out string[]            keywordLists,               5
 //                out string[]            remainingKeywords)          6
-            
+
             if (GetShaderVariantEntries == null)
             {
-                GetShaderVariantEntries = typeof(ShaderUtil).GetMethod("GetShaderVariantEntriesFiltered", BindingFlags.NonPublic | BindingFlags.Static);
+                GetShaderVariantEntries = typeof(ShaderUtil).GetMethod("GetShaderVariantEntriesFiltered",
+                    BindingFlags.NonPublic | BindingFlags.Static);
             }
 
-           
 
             if (toolSVC == null)
             {
                 Debug.LogError("不存在svc!");
                 return null;
             }
-            var _filterKeywords=  new string[]{};
-            var _passtypes=  new int[]{};
-            var _keywords=  new string[]{};
-            var _remainingKeywords= new string[]{};
-            object[] args = new object[] {shader, 
-                                          256,
-                                          _filterKeywords, 
-                                          toolSVC,
-                                         _passtypes,
-                                         _keywords,
-                                         _remainingKeywords};
+
+            var _filterKeywords = new string[] { };
+            var _passtypes = new int[] { };
+            var _keywords = new string[] { };
+            var _remainingKeywords = new string[] { };
+            object[] args = new object[]
+            {
+                shader, 256, _filterKeywords, toolSVC, _passtypes, _keywords, _remainingKeywords
+            };
             GetShaderVariantEntries.Invoke(null, args);
-            
-            ShaderData  sd =new ShaderData();
+
+            ShaderData sd = new ShaderData();
             sd.passtypes = args[4] as int[];
-            var  kws = args[5] as string[];
+            var kws = args[5] as string[];
             sd.keywords = new List<List<string>>();
             foreach (var kw in kws)
             {
@@ -277,8 +270,6 @@ namespace BDFramework.Editor.Asset
 
             return sd;
         }
-
-
 
         #endregion
     }

@@ -387,9 +387,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd5c6865487ed14f9bfe24a5c88e67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CodeRoot: 0
-  SQLRoot: 0
-  ArtRoot: 0
+  CodeRoot: 2
+  SQLRoot: 2
+  ArtRoot: 2
   CustomArtRoot: 
   CodeRunMode: 0
   FileServerUrl: 192.168.8.68
@@ -741,11 +741,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1440034326}
     m_Modifications:
-    - target: {fileID: 2884646171612803763, guid: 775fad6a3186592448e34c0af68e119c,
-        type: 3}
-      propertyPath: m_Name
-      value: MainLoading
-      objectReference: {fileID: 0}
     - target: {fileID: 2884646171612803760, guid: 775fad6a3186592448e34c0af68e119c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -850,6 +845,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2884646171612803763, guid: 775fad6a3186592448e34c0af68e119c,
+        type: 3}
+      propertyPath: m_Name
+      value: MainLoading
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 775fad6a3186592448e34c0af68e119c, type: 3}
