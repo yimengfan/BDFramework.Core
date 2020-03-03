@@ -84,8 +84,6 @@ namespace BDFramework
                     ILTypeHelper.UIComponentTypes[t.FullName] = t;
                 }
             }
-            
-            #if UNITY_EDITOR
             if (Config.CodeRoot == AssetLoadPath.Editor)
             {
                 foreach (var t in types)
@@ -105,8 +103,7 @@ namespace BDFramework
                 }
                 
             }
-            
-            #endif
+
         }
 
         #endregion

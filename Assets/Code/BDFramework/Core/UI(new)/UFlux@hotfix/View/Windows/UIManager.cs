@@ -29,11 +29,7 @@ namespace BDFramework.UFlux
         /// ui的三个层级
         /// </summary>
         private Transform Bottom, Center, Top;
-
-        //
-        public UIManager()
-        {
-        }
+        
 
         override public void Init()
         {
@@ -192,29 +188,39 @@ namespace BDFramework.UFlux
             }
         }
 
+
+      
         /// <summary>
         /// 卸载窗口
         /// </summary>
         /// <param name="indexs">窗口枚举</param>
-        public void UnLoadWindows(params Enum[] indexs)
+        public void UnLoadWindows( List<Enum> indexs)
         {
             foreach (var i in indexs)
             {
-                var index = i.GetHashCode();
-                if (windowMap.ContainsKey(index))
-                {
-                    var winCom = windowMap[index] as IComponent;
-                    winCom.Close();
-                    winCom.Destroy();
-                    windowMap.Remove(index);
-                }
-                else
-                {
-                    Debug.LogErrorFormat("不存在UI：{0}", indexs);
-                }
+                UnLoadWindow(i);
+
             }
         }
-
+        /// <summary>
+        /// 卸载窗口
+        /// </summary>
+        /// <param name="indexs">窗口枚举</param>
+        public void UnLoadWindow( Enum index)
+        {
+            var _index = index.GetHashCode();
+            if (windowMap.ContainsKey(_index))
+            {
+                var winCom = windowMap[_index] as IComponent;
+                winCom.Close();
+                winCom.Destroy();
+                windowMap.Remove(_index);
+            }
+            else
+            {
+                Debug.LogErrorFormat("不存在UI：{0}", _index);
+            }
+        }
 
         /// <summary>
         /// 卸载窗口

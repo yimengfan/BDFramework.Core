@@ -227,7 +227,7 @@ namespace BDFramework.Editor.TableData
         //当返回真时启用
         private static bool NewMenuOptionValidation()
         {
-            if (Selection.activeObject.GetType() != typeof(TextAsset))
+            if (Selection.activeObject&&Selection.activeObject.GetType() != typeof(TextAsset))
                 return false;
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             return path.EndsWith(".json");
