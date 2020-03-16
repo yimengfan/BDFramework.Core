@@ -17,7 +17,7 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
  #### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
  #### [English Wiki](http://www.nekosang.com)  
  ### [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
-  
+ ## 已经适配LWRP、URP工作流!!! 
 注:所有bug修复和新特性加入会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。  
 Note: All bug fixes and new features will be submitted to the Debug branch first. The period to be audited is one month, and stability will be merged with the main branch.
 
@@ -53,8 +53,8 @@ The following charging plug-ins are used. Please purchase and download them your
    <br>BD抛弃了Resources目录，并且保留的用户Resources的开发习惯.
    <br> 一套API自动切换，兼容AB和Editor模式.
    <br>而且有一套比较完善的AssetBundle管理机制：图集管理、自动搜集Shader、0冗余打包
-   <br>并且bd做了一套精简版可寻址，无论你的Asset再Streaming或者persistent下，都能自动寻找并且加载
-   
+   <br>并且bd做了一套精简版可寻址，无论你的Asset再Streaming或者persistent下，都能自动寻找并且加载  
+    ## 已经适配LWRP、URP工作流!!! 
    <br>**5.C#热更代码开发:**
    <br>BD中对ILRuntime进行了二次改造，不用分工程、并且写了一套完善的脚本编译机制,打包工具自动搜集热更代码进行打包。
    <br>并且对常用库进行了适配.
