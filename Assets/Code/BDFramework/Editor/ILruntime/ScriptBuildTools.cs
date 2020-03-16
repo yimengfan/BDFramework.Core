@@ -220,6 +220,21 @@ public class ScriptBuildTools
     /// <param name="output"></param>
     static public bool BuildByRoslyn(string[] dlls, string[] codefiles, string output, bool isdebug = false)
     {
+
+        if (Application.platform == RuntimePlatform.OSXEditor)
+        {
+            for (int i = 0; i < dlls.Length; i++)
+            {
+                dlls[i] = dlls[i].Replace("\\", "/");
+            }
+            
+            for (int i = 0; i < codefiles.Length; i++)
+            {
+                codefiles[i] = codefiles[i].Replace("\\", "/");
+            }
+            
+            output = output.Replace("\\", "/");
+        }
         //添加语法树
         //宏解析
         var Symbols = define.Split(';');
