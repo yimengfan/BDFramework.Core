@@ -12,7 +12,7 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 国内git地址: https://gitee.com/yimengfan/BDFramework.Core  ,速度慢下这个(顺便讨个赞)
 
 ## 文档(Document)  
- #### [  视屏教程（video）](https://www.bilibili.com/video/av78814115/)
+ #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
  #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
  #### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
  #### [English Wiki](http://www.nekosang.com)  
@@ -22,7 +22,7 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 Note: All bug fixes and new features will be submitted to the Debug branch first. The period to be audited is one month, and stability will be merged with the main branch.
 
 
-# 依赖的插件(Dpendent plugins)
+# 依赖的插件(Dependent plugins)
 使用了以下收费插件,请自行购买下载：  
 The following charging plug-ins are used. Please purchase and download them yourself.  
 <br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
