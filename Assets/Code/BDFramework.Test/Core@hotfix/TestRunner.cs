@@ -1,8 +1,11 @@
-﻿namespace BDFramework.Test.hotfix
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
+
+namespace BDFramework.Test.hotfix
 {
-    //所有的Result
-    public delegate void TestCall(TestResult result);
- 
+
     /// <summary>
     /// 执行所有的runner
     /// </summary>
@@ -13,8 +16,57 @@
         /// </summary>
         static public void RunAll()
         {
+
+            if (ILRuntimeHelper.IsRunning)
+            {
+                //ILR模式
+                TestForILR();
+            }
+            else
+            {
+                //普通模式 
+                TestForMono();
+            }
+        }
+
+        static void TestForMono()
+        {
+            var assembly = typeof(BDLauncherBridge).Assembly;
+            var attribute = typeof(HotfixTest);
+            //测试用例类
+            List<Type> testClassList =new List<Type>();
+            foreach (var type in assembly.GetTypes())
+            {
+                var attrs = type.GetCustomAttributes(attribute,false);
+                if (attrs.Length > 0)
+                {
+                    testClassList.Add(type);
+                }
+            }
+
+            //开始执行
+            foreach (var type in testClassList)
+            {
+                var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public |
+                                              BindingFlags.NonPublic);
+                
+                var attrs = type.GetCustomAttributes(attribute,false);
+                var attr = attrs[0] as HotfixTest;
+                BDebug.Log("执行测试:"+attr.Des+"--------------------","green");
+                //开始执行方法 
+                foreach (var method in methods)
+                {
+                    method.Invoke(null,null);
+                }
+                BDebug.Log("------------------------执行完毕--------------------","green");
+            }
+        }
+
+
+        static void TestForILR()
+        {
             
         }
-        
-    }
+
+}
 }
