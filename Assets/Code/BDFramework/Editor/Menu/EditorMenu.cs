@@ -15,6 +15,10 @@ namespace BDFramework.Editor
         //
         OnekeyBuildAsset =101,
         
+        //测试用例
+        //Testrunner
+        TestRunnerEditor=151,
+        
     }
     
 }

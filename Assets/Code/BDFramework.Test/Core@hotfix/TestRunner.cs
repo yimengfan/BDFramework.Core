@@ -9,7 +9,7 @@ namespace BDFramework.Test.hotfix
     /// <summary>
     /// 执行所有的runner
     /// </summary>
-    public class TestRunner
+   static public class TestRunner
     {
         /// <summary>
         /// 执行所有的TestRunner
@@ -47,18 +47,21 @@ namespace BDFramework.Test.hotfix
             //开始执行
             foreach (var type in testClassList)
             {
-                var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public |
+                var methods = type.GetMethods(  BindingFlags.Static | BindingFlags.Public |
                                               BindingFlags.NonPublic);
                 
                 var attrs = type.GetCustomAttributes(attribute,false);
                 var attr = attrs[0] as HotfixTest;
-                BDebug.Log("执行测试:"+attr.Des+"--------------------","green");
+                Debug.LogFormat("<color=green>-------------------执行测试:{0}--------------------</color>",attr.Des);
                 //开始执行方法 
                 foreach (var method in methods)
                 {
+                    var mattrs = method.GetCustomAttributes(attribute, false);
+                    var mattr = mattrs[0] as HotfixTest;
+                    Debug.LogFormat("<color=green>---->执行:{0} </color>",mattr.Des);
                     method.Invoke(null,null);
                 }
-                BDebug.Log("------------------------执行完毕--------------------","green");
+                Debug.Log("<color=green>------------------------执行完毕--------------------</color>");
             }
         }
 

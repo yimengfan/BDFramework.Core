@@ -202,12 +202,14 @@ namespace BDFramework.DataListener
             /// <param name="value"></param>
             public void Trigger(object value)
             {
-                 if (TriggerNum > 0)
+                if(TriggerNum==0)
+                    return;
+                if (TriggerNum > 0)
                 {
                     TriggerNum--;
-                    Callback.Invoke(value);
+                   
                 }
-
+                 Callback.Invoke(value);
               
             }
         }

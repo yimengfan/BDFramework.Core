@@ -80,13 +80,14 @@
     <Compile Include="Assets\Code\BDFramework\Editor\Resource\AssetBundleEditorTools.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Resource\EditorWindow_GenAssetBundle.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Resource\ShaderCollection.cs" />
+    <Compile Include="Assets\Code\BDFramework\Editor\TestRunner\TestRunnerEditor.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Tools\EditorGUIHelper.cs" />
     <None Include="Assets\3rdPlugins\Dotween\DemiLib\Core\Editor\DemiEditor.xml" />
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>E:/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>E:/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>E:/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>E:/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>

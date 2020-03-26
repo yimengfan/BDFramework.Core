@@ -6,11 +6,11 @@ using Game.Data;
 namespace Tests
 {
     [HotfixTest(Des ="数据库测试")]
-    public class Sqlite
+    static  public class Sqlite
     {
         // A Test behaves as an ordinary method
         [HotfixTest]
-        public void Select()
+       static public void Select()
         {
             //单条件查询
             var ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").ToSearch<Hero>();
@@ -22,7 +22,7 @@ namespace Tests
         }
 
         [HotfixTest]
-        public void Select_MultiCondition()
+        static  public void Select_MultiCondition()
         {
             var ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").Where("and id < 3").ToSearch<Hero>();
 
@@ -32,14 +32,14 @@ namespace Tests
 
 
         [HotfixTest]
-        public void MultiSelect_WhereAnd()
+        static public void MultiSelect_WhereAnd()
         {
             var ds = SqliteHelper.DB.GetTableRuntime().WhereAnd("id", "=", 1, 2).ToSearch<Hero>();
             HotfixAssert.Equals(ds.Count, 0);
         }
         
         [HotfixTest]
-        public void MultiSelect_WhereOr()
+        static public void MultiSelect_WhereOr()
         {
             var  ds = SqliteHelper.DB.GetTableRuntime().WhereOr("id", "=", 2, 3).ToSearch<Hero>();
             

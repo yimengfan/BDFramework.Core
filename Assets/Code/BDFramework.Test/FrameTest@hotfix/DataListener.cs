@@ -13,12 +13,13 @@ namespace Tests
             int count = 0;
             int compareValue = 100;
             var service = DataListenerServer.Create("t");
+            service.AddData("t");
             service.AddListener("t", (o) =>
             {
                 //每次自增
                 count++;
             });
-            service.AddData("t");
+           
             for (int i = 0; i < compareValue; i++)
             {
                 service.TriggerEvent("t");
@@ -33,17 +34,18 @@ namespace Tests
         {
             int count = 0;
             var service = DataListenerServer.Create("t");
+            service.AddData("t");
             service.AddListener("t", triggerNum: 10, callback: (o) =>
             {
                 //每次自增
                 count++;
             });
-            var dataname = "test";
-            service.AddData(dataname);
+
+         
             //次数到了之后不会再执行
             for (int i = 0; i < 20; i++)
             {
-                service.TriggerEvent(dataname);
+                service.TriggerEvent("t");
             }
 
             DataListenerServer.DelService("t");
@@ -56,6 +58,7 @@ namespace Tests
             int count = 0;
             int count2 = 0;
             var service = DataListenerServer.Create("t");
+            service.AddData("t");
             service.AddListener("t", order: 10, callback: (o) =>
             {
                 //每次自增
@@ -69,10 +72,9 @@ namespace Tests
                     count++;
                 }
             });
-            var dataname = "test";
-            service.AddData(dataname);
+
             //次数到了之后不会再执行
-            service.TriggerEvent(dataname);
+            service.TriggerEvent("t");
             DataListenerServer.DelService("t");
             //两个必须等于1
             HotfixAssert.Equals(count, 1);
@@ -85,6 +87,7 @@ namespace Tests
         {
             int count = 0;
             var service = DataListenerServer.Create("t");
+            service.AddData("t");
             Action<object> callback = (o) =>
             {
                 //每次自增
@@ -92,13 +95,12 @@ namespace Tests
             };
             //初始化数据
             service.AddListener("t", triggerNum:10,order: 10, callback: callback);
-            var dataname = "test";
-            service.AddData(dataname);
+
             //测试
             for (int i = 0; i < 10; i++)
             {
-                service.TriggerEvent(dataname);
-                service.RemoveListener(dataname, callback);
+                service.TriggerEvent("t");
+                service.RemoveListener("t", callback);
             }
             DataListenerServer.DelService("t");
             //验证结果

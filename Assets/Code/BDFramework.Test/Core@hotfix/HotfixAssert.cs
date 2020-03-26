@@ -21,11 +21,11 @@ namespace BDFramework.Test.hotfix
            {
                if (ret)
                {
-                   Debug.Log("测试成功!");
+                   Debug.Log("<color=green>测试成功!</color>");
                }
                else
                {
-                   Debug.LogError("测试失败");
+                   Debug.LogErrorFormat("测试失败! value1:{0}  value2:{1}",obj,obj2);
                }
            }
         }
