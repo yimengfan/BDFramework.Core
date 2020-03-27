@@ -34,7 +34,7 @@ namespace Tests
 
             if (HotfixAssert.Equals(ds.Count, 1))
             {
-                HotfixAssert.Equals(ds[0].Id, 1);
+                HotfixAssert.Equals(ds[0].Id, 1d);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Tests
             var ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").Where("and id < 3").ToSearch<Hero>();
 
             HotfixAssert.Equals(ds.Count, 1);
-            HotfixAssert.Equals(ds[0].Id, 2);
+            HotfixAssert.Equals(ds[0].Id, 2d);
         }
 
 
@@ -61,8 +61,8 @@ namespace Tests
             var  ds = SqliteHelper.DB.GetTableRuntime().WhereOr("id", "=", 2, 3).ToSearch<Hero>();
             
             HotfixAssert.Equals(ds.Count, 2);
-            HotfixAssert.Equals(ds[0].Id, 2);
-            HotfixAssert.Equals(ds[1].Id, 3);
+            HotfixAssert.Equals(ds[0].Id, 2d);
+            HotfixAssert.Equals(ds[1].Id, 3d);
         }
         
     }

@@ -646,7 +646,7 @@ namespace SQLite4Unity3d
         public SQLiteCommand CreateCommand(string cmdText, params object[] ps)
         {
             if (!_open)
-                throw SQLiteException.New(SQLite3.Result.Error, "Cannot create commands from unopened database");
+                throw SQLiteException.New(SQLite3.Result.Error, "the database is not open");
 
             var cmd = NewCommand();
             cmd.CommandText = cmdText;

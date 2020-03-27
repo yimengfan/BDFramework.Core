@@ -98,16 +98,16 @@ namespace BDFramework.Test.hotfix
 
                  foreach (var methodData in item.Value)
                  {
-                     // try
-                     // {
+                     try
+                     {
                          methodData.MethodInfo.Invoke(null,null);
-                     //     Debug.LogFormat("<color=green>----->{0} 成功!</color>",methodData.MethodInfo.Name);
-                     // }
-                     // catch (Exception e)
-                     // {
-                     //   
-                     //     Debug.LogErrorFormat("<color=red>----->{0} 失败!</color>",methodData.MethodInfo.Name);
-                     // }
+                         Debug.LogFormat("<color=green>----->{0} 成功!</color>",methodData.MethodInfo.Name);
+                     }
+                     catch (Exception e)
+                     {
+                         Debug.Log(e.StackTrace);
+                         Debug.LogErrorFormat("<color=red>----->{0} 失败!</color>",methodData.MethodInfo.Name);
+                     }
                    
                  }
             }
