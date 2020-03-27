@@ -29,7 +29,7 @@ The following charging plug-ins are used. Please purchase and download them your
 
 ## v1.0版本计划(v1.0 Plan)
 1.DevOps工作流加入，CI、CD更加完整  
-2.逐步完成框架层API测试用例 ，ILR下测试框架整合
+2.逐步完成框架层API测试用例 ，ILR下测试框架整合  
 3.Serverless 后端工作流引入
 <br> ~~2020.2 TDD工作流加入~~
 <br> ~~2019.10 完成UI工作流的升级和重构(兼容老版本)~~
