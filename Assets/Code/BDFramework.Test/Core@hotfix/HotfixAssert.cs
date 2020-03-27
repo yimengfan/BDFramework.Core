@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace BDFramework.Test.hotfix
 {
@@ -10,7 +11,7 @@ namespace BDFramework.Test.hotfix
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="obj2"></param>
-        static public void Equals(object obj, object obj2)
+        static public bool Equals(object obj, object obj2)
         {
            var ret=  obj.Equals(obj2);
            if (ILRuntimeHelper.IsRunning)
@@ -19,15 +20,13 @@ namespace BDFramework.Test.hotfix
            }
            else
            {
-               if (ret)
+               if (!ret)
                {
-                   Debug.Log("<color=green>测试成功!</color>");
-               }
-               else
-               {
-                   Debug.LogErrorFormat("测试失败! value1:{0}  value2:{1}",obj,obj2);
+                   throw new Exception("测试失败");
                }
            }
+
+           return ret;
         }
     }
 }

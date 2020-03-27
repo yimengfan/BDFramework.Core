@@ -2,12 +2,29 @@
 using BDFramework.Sql;
 using BDFramework.Test.hotfix;
 using Game.Data;
+using UnityEngine;
 
 namespace Tests
 {
     [HotfixTest(Des ="数据库测试")]
     static  public class Sqlite
     {
+        /// <summary>
+        /// 打开数据库 
+        /// </summary>
+        [HotfixTest(Order = -100)]
+        static public void OpenSqlite()
+        {
+            SqliteLoder.Load(Application.streamingAssetsPath);
+        }
+        /// <summary>
+        /// 关闭数据库
+        /// </summary>
+        [HotfixTest(Order = 100)]
+        static public void CloseSqlite()
+        {
+            SqliteLoder.Connection.Dispose();
+        }
         // A Test behaves as an ordinary method
         [HotfixTest]
         static public void Select()
@@ -15,8 +32,10 @@ namespace Tests
             //单条件查询
             var ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").ToSearch<Hero>();
 
-            HotfixAssert.Equals(ds.Count, 1);
-            HotfixAssert.Equals(ds[0].Id, 1);
+            if (HotfixAssert.Equals(ds.Count, 1))
+            {
+                HotfixAssert.Equals(ds[0].Id, 1);
+            }
         }
 
         [HotfixTest]

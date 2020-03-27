@@ -7,7 +7,7 @@ namespace BDFramework.Test.hotfix
         /// <summary>
         /// 执行顺序
         /// </summary>
-        public int Order = -1;
+        public int Order = 0;
         /// <summary>
         /// 描述
         /// </summary>

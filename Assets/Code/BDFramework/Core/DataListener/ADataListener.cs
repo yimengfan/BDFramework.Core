@@ -233,36 +233,28 @@ namespace BDFramework.DataListener
             var listenerData = new ListenerData(order, triggerNum, callback);
             //
             List<ListenerData> callbackList = null;
-
             if (!callbackMap.TryGetValue(name, out callbackList))
             {
                 callbackList = new List<ListenerData>();
                 callbackMap[name] = callbackList;
             }
 
-            if (callbackList.Count == 0)
+
+            //触发排序插入
+            bool isadd = false;
+            for (int i = 0; i < callbackList.Count; i++)
+            {
+                var cw = callbackList[i];
+                if (listenerData.Order < cw.Order)
+                {
+                    callbackList.Insert(i, listenerData);
+                    isadd = true;
+                    break;
+                }
+            }
+            if (!isadd)
             {
                 callbackList.Add(listenerData);
-            }
-            else
-            {
-                //触发排序插入
-                bool isadd = false;
-                for (int i = 0; i < callbackList.Count; i++)
-                {
-                    var cw = callbackList[i];
-                    if (listenerData.Order < cw.Order)
-                    {
-                        callbackList.Insert(i, listenerData);
-                        isadd = true;
-                        break;
-                    }
-                }
-                //遍历没添加成功
-                if (!isadd)
-                {
-                    callbackList.Add(listenerData);
-                }
             }
 
 
