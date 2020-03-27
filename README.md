@@ -37,6 +37,12 @@ The following charging plug-ins are used. Please purchase and download them your
 <br> 2018.7 热更新工具整合：代码更新及工具(已完成)
 <br> 2018.8 热更新工具整合：资源更新（已完成）~~
 ## 框架特点(Feature)
+   **·TDD工作流、完整的测试用例:**  
+   什么？没测试用例的框架（库）你也敢用？  
+   
+   **·DevOps工作流:**  
+   这个还得等一小会~
+  
    <br>**1.发现式业务注册:**
    <br>BDFrame底层提供了一套发现式的业务注册.无需以前的各种Register,只要定制好自己的标签、管理器就能被自动注册.
    <br>在此之上BD,实现了ScreenviewManger,UIManager,EventManager...等一些列管理器。
