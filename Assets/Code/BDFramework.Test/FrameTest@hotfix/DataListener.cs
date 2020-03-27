@@ -57,6 +57,7 @@ namespace Tests
         {
             int count = 0;
             int count2 = 0;
+            int count3 = 0;
             var service = DataListenerServer.Create("t");
             service.AddData("t");
             service.AddListener("t", order: 10, callback: (o) =>
@@ -72,6 +73,14 @@ namespace Tests
                     count++;
                 }
             });
+            service.AddListener("t", order: 11, callback: (o) =>
+            {
+                //每次自增
+                if (count == 1 && count2 == 1)
+                {
+                    count3++;
+                }
+            });
 
             //次数到了之后不会再执行
             service.TriggerEvent("t");
@@ -79,6 +88,7 @@ namespace Tests
             //两个必须等于1
             HotfixAssert.Equals(count, 1);
             HotfixAssert.Equals(count2, 1);
+            HotfixAssert.Equals(count3, 1);
         }
         
 

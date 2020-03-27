@@ -202,15 +202,14 @@ namespace BDFramework.DataListener
             /// <param name="value"></param>
             public void Trigger(object value)
             {
-                if(TriggerNum==0)
+                if (TriggerNum == 0)
                     return;
                 if (TriggerNum > 0)
                 {
                     TriggerNum--;
-                   
                 }
-                 Callback.Invoke(value);
-              
+
+                Callback.Invoke(value);
             }
         }
 
@@ -231,7 +230,7 @@ namespace BDFramework.DataListener
             }
 
             //创建监听数据
-            var listenerData = new ListenerData(1, triggerNum, callback);
+            var listenerData = new ListenerData(order, triggerNum, callback);
             //
             List<ListenerData> callbackList = null;
 
@@ -248,14 +247,21 @@ namespace BDFramework.DataListener
             else
             {
                 //触发排序插入
-                for (int i = callbackList.Count - 1; i >= 0; i--)
+                bool isadd = false;
+                for (int i = 0; i < callbackList.Count; i++)
                 {
                     var cw = callbackList[i];
-                    if (listenerData.Order >= cw.Order)
+                    if (listenerData.Order < cw.Order)
                     {
-                        callbackList.Insert(i + 1, cw);
+                        callbackList.Insert(i, listenerData);
+                        isadd = true;
                         break;
                     }
+                }
+                //遍历没添加成功
+                if (!isadd)
+                {
+                    callbackList.Add(listenerData);
                 }
             }
 

@@ -10,15 +10,13 @@ namespace Tests
     {
         // A Test behaves as an ordinary method
         [HotfixTest]
-       static public void Select()
+        static public void Select()
         {
             //单条件查询
             var ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").ToSearch<Hero>();
 
             HotfixAssert.Equals(ds.Count, 1);
             HotfixAssert.Equals(ds[0].Id, 1);
-            
-            
         }
 
         [HotfixTest]
