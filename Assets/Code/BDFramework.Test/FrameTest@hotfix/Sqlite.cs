@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using BDFramework.Sql;
-using BDFramework.Test.hotfix;
+using BDFramework.UnitTest;
 using Game.Data;
 using UnityEngine;
 
@@ -32,9 +32,9 @@ namespace Tests
             //单条件查询
             var ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").ToSearch<Hero>();
 
-            if (HotfixAssert.Equals(ds.Count, 1))
+            if (Assert.Equals(ds.Count, 1))
             {
-                HotfixAssert.Equals(ds[0].Id, 1d);
+                Assert.Equals(ds[0].Id, 1d);
             }
         }
 
@@ -43,8 +43,8 @@ namespace Tests
         {
             var ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").Where("and id < 3").ToSearch<Hero>();
 
-            HotfixAssert.Equals(ds.Count, 1);
-            HotfixAssert.Equals(ds[0].Id, 2d);
+            Assert.Equals(ds.Count, 1);
+            Assert.Equals(ds[0].Id, 2d);
         }
 
 
@@ -52,7 +52,7 @@ namespace Tests
         static public void MultiSelect_WhereAnd()
         {
             var ds = SqliteHelper.DB.GetTableRuntime().WhereAnd("id", "=", 1, 2).ToSearch<Hero>();
-            HotfixAssert.Equals(ds.Count, 0);
+            Assert.Equals(ds.Count, 0);
         }
         
         [HotfixTest]
@@ -60,9 +60,9 @@ namespace Tests
         {
             var  ds = SqliteHelper.DB.GetTableRuntime().WhereOr("id", "=", 2, 3).ToSearch<Hero>();
             
-            HotfixAssert.Equals(ds.Count, 2);
-            HotfixAssert.Equals(ds[0].Id, 2d);
-            HotfixAssert.Equals(ds[1].Id, 3d);
+            Assert.Equals(ds.Count, 2);
+            Assert.Equals(ds[0].Id, 2d);
+            Assert.Equals(ds[1].Id, 3d);
         }
         
     }

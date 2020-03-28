@@ -1,6 +1,6 @@
 ﻿using System;
 using BDFramework.DataListener;
-using BDFramework.Test.hotfix;
+using BDFramework.UnitTest;
 
 namespace Tests
 {
@@ -26,7 +26,7 @@ namespace Tests
             }
 
             DataListenerServer.DelService("t");
-            HotfixAssert.Equals(count, 100);
+            Assert.Equals(count, 100);
         }
 
         [HotfixTest(Des = "触发次数测试")]
@@ -49,7 +49,7 @@ namespace Tests
             }
 
             DataListenerServer.DelService("t");
-            HotfixAssert.Equals(count, 10);
+            Assert.Equals(count, 10);
         }
 
         [HotfixTest(Des = "添加顺序测试")]
@@ -86,9 +86,9 @@ namespace Tests
             service.TriggerEvent("t");
             DataListenerServer.DelService("t");
             //两个必须等于1
-            HotfixAssert.Equals(count, 1);
-            HotfixAssert.Equals(count2, 1);
-            HotfixAssert.Equals(count3, 1);
+            Assert.Equals(count, 1);
+            Assert.Equals(count2, 1);
+            Assert.Equals(count3, 1);
         }
         
 
@@ -114,7 +114,7 @@ namespace Tests
             }
             DataListenerServer.DelService("t");
             //验证结果
-            HotfixAssert.Equals(count, 1);
+            Assert.Equals(count, 1);
         }
     }
 }

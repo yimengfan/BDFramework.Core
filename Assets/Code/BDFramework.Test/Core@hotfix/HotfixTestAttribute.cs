@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BDFramework.Test.hotfix
+namespace BDFramework.UnitTest
 {
-    public class HotfixTest : Attribute
+    public class HotfixTestAttribute : Attribute
     {
         /// <summary>
         /// 执行顺序
