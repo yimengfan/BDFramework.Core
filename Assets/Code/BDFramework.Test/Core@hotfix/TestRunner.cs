@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-namespace BDFramework.Test.hotfix
+namespace BDFramework.UnitTest
 {
     /// <summary>
     /// 执行所有的runner
@@ -32,7 +32,7 @@ namespace BDFramework.Test.hotfix
 
         public class TestMethodData
         {
-            public HotfixTest TestAttribute;
+            public HotfixTestAttribute TestAttributeAttribute;
             public MethodInfo MethodInfo;
         }
 
@@ -41,7 +41,7 @@ namespace BDFramework.Test.hotfix
             testMethodMap = new Dictionary<Type, List<TestMethodData>>();
             //
             var assembly = typeof(BDLauncherBridge).Assembly;
-            var attribute = typeof(HotfixTest);
+            var attribute = typeof(HotfixTestAttribute);
             //测试用例类
             List<Type> testClassList = new List<Type>();
             foreach (var type in assembly.GetTypes())
@@ -65,10 +65,10 @@ namespace BDFramework.Test.hotfix
                 foreach (var method in methods)
                 {
                     var mattrs = method.GetCustomAttributes(attribute, false);
-                    var mattr = mattrs[0] as HotfixTest;
+                    var mattr = mattrs[0] as HotfixTestAttribute;
 
                     //数据
-                    var newMethodData = new TestMethodData() {MethodInfo = method, TestAttribute = mattr,};
+                    var newMethodData = new TestMethodData() {MethodInfo = method, TestAttributeAttribute = mattr,};
 
 
                     //添加整合排序
@@ -77,7 +77,7 @@ namespace BDFramework.Test.hotfix
                     {
                         var tdata = testMethodDataList[i];
 
-                        if (newMethodData.TestAttribute.Order < tdata.TestAttribute.Order)
+                        if (newMethodData.TestAttributeAttribute.Order < tdata.TestAttributeAttribute.Order)
                         {
                             testMethodDataList.Insert(i, newMethodData);
                             isAdd = true;
@@ -101,12 +101,12 @@ namespace BDFramework.Test.hotfix
                      try
                      {
                          methodData.MethodInfo.Invoke(null,null);
-                         Debug.LogFormat("<color=green>----->{0} 成功!</color>",methodData.MethodInfo.Name);
+                         Debug.LogFormat("<color=green>执行:{0}: 成功!</color>",methodData.MethodInfo.Name);
                      }
                      catch (Exception e)
                      {
+                         Debug.LogErrorFormat("<color=red>执行{0}: {1}</color>",methodData.MethodInfo.Name,e.InnerException.Message);
                          Debug.Log(e.StackTrace);
-                         Debug.LogErrorFormat("<color=red>----->{0} 失败!</color>",methodData.MethodInfo.Name);
                      }
                    
                  }

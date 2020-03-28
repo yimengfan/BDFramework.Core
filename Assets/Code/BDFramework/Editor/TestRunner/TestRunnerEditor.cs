@@ -14,7 +14,7 @@ namespace BDFramework.Editor.TestRunner
         [MenuItem("BDFrameWork工具箱/TestRunner", false, (int) BDEditorMenuEnum.TestRunnerEditor)]
         public static void TestAll()
         {
-            Test.hotfix.TestRunner.RunAll();
+            UnitTest.TestRunner.RunAll();
         }
     }
 }
