@@ -14,7 +14,7 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 ## 文档(Document)  
  #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
  #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
- #### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
+ ### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
  #### [English Wiki](http://www.nekosang.com)  
  ### [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
  ## 已经适配LWRP、URP工作流!!! 
@@ -28,12 +28,21 @@ The following charging plug-ins are used. Please purchase and download them your
 <br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
 
 ## v1.0版本计划(v1.0 Plan)
-<br> 2020.2 TDD工作流加入
+1.DevOps工作流加入，CI、CD更加完整  
+2.逐步完成框架层API测试用例 ，ILR下测试框架整合  
+3.Serverless 后端工作流引入
+<br> ~~2020.2 TDD工作流加入~~
 <br> ~~2019.10 完成UI工作流的升级和重构(兼容老版本)~~
 <br> ~~2019.6.30之前 完成新文档的编写(已完成)
 <br> 2018.7 热更新工具整合：代码更新及工具(已完成)
 <br> 2018.8 热更新工具整合：资源更新（已完成）~~
 ## 框架特点(Feature)
+   **·TDD工作流、完整的测试用例:**  
+   什么？没测试用例的框架（库）你也敢用？  
+   
+   **·DevOps工作流:**  
+   这个还得等一小会~
+  
    <br>**1.发现式业务注册:**
    <br>BDFrame底层提供了一套发现式的业务注册.无需以前的各种Register,只要定制好自己的标签、管理器就能被自动注册.
    <br>在此之上BD,实现了ScreenviewManger,UIManager,EventManager...等一些列管理器。
