@@ -58,8 +58,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Code\BDFramework.Test\Core@hotfix\HotfixAssert.cs" />
-     <Compile Include="Assets\Code\BDFramework.Test\Core@hotfix\HotfixTest.cs" />
+     <Compile Include="Assets\Code\BDFramework.Test\Core@hotfix\Assert.cs" />
+     <Compile Include="Assets\Code\BDFramework.Test\Core@hotfix\HotfixTestAttribute.cs" />
      <Compile Include="Assets\Code\BDFramework.Test\Core@hotfix\TestRunner.cs" />
      <Compile Include="Assets\Code\BDFramework.Test\FrameTest@hotfix\DataListener.cs" />
      <Compile Include="Assets\Code\BDFramework.Test\FrameTest@hotfix\Sqlite.cs" />
