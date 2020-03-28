@@ -87,3 +87,5 @@
 /Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj
 /Sirenix.OdinInspector.CompatibilityLayer.csproj
 /*.sln
+/Assets/StreamingAssets/Android/Art
+/Assets/StreamingAssets/Windows/Art

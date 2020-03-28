@@ -71,7 +71,7 @@ namespace BDFramework.DataListener
         /// 删除一个service
         /// </summary>
         /// <param name="name"></param>
-        static public void DelALLService()
+        static public void DeleteALLService()
         {
             serviceMap.Clear();
         }

@@ -119,7 +119,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Int32_ILTypeInstance_Binding.Register(app);
             BDFramework_Core_Debugger_Debugger_NetworkServer_Binding.Register(app);
-            BDFramework_DataListener_ADataListener_Binding.Register(app);
+            //BDFramework_DataListener_ADataListener_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_MethodInfo_Binding.Register(app);
             System_Exception_Binding.Register(app);
             System_Collections_Generic_List_1_Action_1_ILTypeInstance_Binding.Register(app);

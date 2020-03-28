@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/StreamingAssets/Android/Art/3c6bd2d64d06a03c77d475a5d3a45e413f2da374.meta
+guid: e9d1a2fda178bd64d851ee91e88827ba
+=======
 guid: bab2622e9a2534b4fb6bfb0d58971ec1
 folderAsset: yes
+>>>>>>> master:Assets/Code/Game/ILRuntime/Binding/PreBinding.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

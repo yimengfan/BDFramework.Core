@@ -6,7 +6,7 @@ SpriteAtlas:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: img1
+  m_Name: atlas2019
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -20,26 +20,14 @@ SpriteAtlas:
       readable: 0
       crunchedCompression: 0
       sRGB: 1
-    platformSettings:
-    - serializedVersion: 3
-      m_BuildTarget: Android
-      m_MaxTextureSize: 2048
-      m_ResizeAlgorithm: 0
-      m_TextureFormat: 56
-      m_TextureCompression: 1
-      m_CompressionQuality: 50
-      m_CrunchedCompression: 0
-      m_AllowsAlphaSplitting: 0
-      m_Overridden: 1
-      m_AndroidETC2FallbackOverride: 0
-      m_ForceMaximumCompressionQuality_BC6H_BC7: 1
+    platformSettings: []
     packingSettings:
       serializedVersion: 2
       padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
-      enableTightPacking: 0
+      enableTightPacking: 1
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: b8d8daf8162478040919b3cd105b2908, type: 3}
@@ -68,5 +56,5 @@ SpriteAtlas:
   - 5
   - 2
   - 3
-  m_Tag: img1
+  m_Tag: atlas2019
   m_IsVariant: 0

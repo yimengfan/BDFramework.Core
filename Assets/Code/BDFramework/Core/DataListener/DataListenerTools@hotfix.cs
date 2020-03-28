@@ -2,9 +2,6 @@
 
 namespace BDFramework.DataListener
 {
-
-
-
     static public class DataListenerTools
     {
         #region 枚举版本
@@ -27,8 +24,6 @@ namespace BDFramework.DataListener
         static public void SetData(this ADataListener dl, Enum @enum, object value, bool isTriggerCallback = true)
         {
             dl.SetData(@enum.ToString(), value, isTriggerCallback);
-
-
         }
 
         /// <summary>
@@ -48,7 +43,9 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <param name="isUseCallback"></param>
-        static public void TriggerEvent(this ADataListener dl, Enum name, object value = null,
+        static public void TriggerEvent(this ADataListener dl,
+            Enum name,
+            object value = null,
             bool isUseCallback = true)
         {
             dl.TriggerEvent(name.ToString(), value, isUseCallback);
@@ -60,10 +57,14 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <param name="callback"></param>
         /// <param name="isTriggerCacheData"></param>
-        static public void AddListener(this ADataListener dl, Enum name, Action<object> callback = null,
+        static public void AddListener(this ADataListener dl,
+            Enum name,
+            Action<object> callback = null,
+            int order = -1,
+            int triggernum = -1,
             bool isTriggerCacheData = false)
         {
-            dl.AddListener(name.ToString(), callback, isTriggerCacheData);
+            dl.AddListener(name.ToString(), callback, order, triggernum, isTriggerCacheData);
         }
 
         /// <summary>
@@ -72,10 +73,13 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <param name="callback"></param>
         /// <param name="isTriggerCacheData"></param>
-        static public void AddListenerOnce(this ADataListener dl, Enum name, Action<object> callback = null,
+        static public void AddListenerOnce(this ADataListener dl,
+            Enum name,
+            Action<object> callback = null,
+            int triggernum = -1,
             bool isTriggerCacheData = false)
         {
-            dl.AddListenerOnce(name.ToString(), callback, isTriggerCacheData);
+            AddListener(dl, name, callback, 1, triggernum, isTriggerCacheData);
         }
 
         /// <summary>
@@ -105,6 +109,9 @@ namespace BDFramework.DataListener
         {
             dl.RemoveListener(name.ToString());
         }
+        
+        
+ 
 
         #endregion
     }

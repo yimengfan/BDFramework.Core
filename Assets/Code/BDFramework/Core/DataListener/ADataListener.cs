@@ -14,12 +14,8 @@ namespace BDFramework.DataListener
         protected Dictionary<string, object> dataMap;
 
         //注册数据变动事件刷新
-        protected Dictionary<string, List<Action<object>>> callbackMap;
+        protected Dictionary<string, List<ListenerData>> callbackMap;
 
-        /// <summary>
-        /// 一次性监听的回调
-        /// </summary>
-        protected Dictionary<string, List<Action<object>>> onceCallbackMap;
 
         /// <summary>
         /// 注册事件缓存
@@ -34,11 +30,10 @@ namespace BDFramework.DataListener
         public ADataListener()
         {
             dataMap = new Dictionary<string, object>();
-            callbackMap = new Dictionary<string, List<Action<object>>>();
+            callbackMap = new Dictionary<string, List<ListenerData>>();
             valueCacheMap = new Dictionary<string, List<object>>();
-            onceCallbackMap = new Dictionary<string, List<Action<object>>>();
         }
-        
+
 
         /// <summary>
         /// 注册数据
@@ -60,20 +55,27 @@ namespace BDFramework.DataListener
         virtual public void SetData(string name, object value, bool isTriggerCallback = true)
         {
             //移除任务 执行
-            while (removeTaskQueue.Count>0)
+            while (removeTaskQueue.Count > 0)
             {
                 var removeTask = removeTaskQueue.Dequeue();
-                List<Action<object>> actions = null;
-                if (callbackMap.TryGetValue(removeTask.Name, out actions))
+                List<ListenerData> callbackWarppers = null;
+                if (callbackMap.TryGetValue(removeTask.Name, out callbackWarppers))
                 {
-                    actions.Remove(removeTask.Action);
+                    foreach (var callbackWarpper in callbackWarppers)
+                    {
+                        if (callbackWarpper.Callback == removeTask.Action)
+                        {
+                            callbackWarppers.Remove(callbackWarpper);
+                            break;
+                        }
+                    }
                 }
             }
-            
+
             //数据验证
             if (dataMap.ContainsKey(name))
             {
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 var lastV = dataMap[name];
                 if (lastV != null)
                 {
@@ -85,7 +87,7 @@ namespace BDFramework.DataListener
                         return;
                     }
                 }
-                #endif
+#endif
                 dataMap[name] = value;
             }
             else
@@ -98,25 +100,24 @@ namespace BDFramework.DataListener
             if (isTriggerCallback)
             {
                 //all
-                List<Action<object>> actions = null;
-                //onece
-                if (onceCallbackMap.TryGetValue(name, out actions))
-                {
-                    for (int i = 0; i <= actions.Count - 1; i++)
-                    {
-                        var action = actions[i];
-                        action(value);
-                    }
-                    onceCallbackMap.Remove(name);
-                }
-
+                List<ListenerData> listenerDatas = null;
                 //
-                if (callbackMap.TryGetValue(name, out actions))
+                if (callbackMap.TryGetValue(name, out listenerDatas))
                 {
-                    for (int i = 0; i <= actions.Count - 1; i++)
+                    //触发回调
+                    for (int i = 0; i < listenerDatas.Count; i++)
                     {
-                        var action = actions[i];
-                        action(value);
+                        var listenerData = listenerDatas[i];
+                        listenerData.Trigger(value);
+                    }
+
+                    //清理列表
+                    for (int i = listenerDatas.Count - 1; i >= 0; i--)
+                    {
+                        if (listenerDatas[i].TriggerNum == 0)
+                        {
+                            listenerDatas.RemoveAt(i);
+                        }
                     }
                 }
                 else //cache list
@@ -162,15 +163,15 @@ namespace BDFramework.DataListener
             T t = default(T);
             if (dataMap.ContainsKey(name))
             {
-                var _value = dataMap[name];
-                if (_value == null)
+                var value = dataMap[name];
+                if (value == null)
                 {
                     t = default(T);
                     dataMap[name] = t;
                 }
                 else
                 {
-                    t = (T) _value;
+                    t = (T) value;
                 }
             }
             else
@@ -182,31 +183,80 @@ namespace BDFramework.DataListener
         }
 
 
+        public class ListenerData
+        {
+            public int Order { get; private set; } = 1;
+            public int TriggerNum { get; private set; } = 1;
+            public Action<object> Callback { get; private set; }
+
+            public ListenerData(int order, int triggerNum, Action<object> callback)
+            {
+                this.Order = order;
+                this.TriggerNum = triggerNum;
+                this.Callback = callback;
+            }
+
+            /// <summary>
+            /// 触发
+            /// </summary>
+            /// <param name="value"></param>
+            public void Trigger(object value)
+            {
+                if (TriggerNum == 0)
+                    return;
+                if (TriggerNum > 0)
+                {
+                    TriggerNum--;
+                }
+
+                Callback.Invoke(value);
+            }
+        }
+
         /// <summary>
         /// 属性变动事件注册
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        virtual public void AddListener(string name, Action<object> callback = null, bool isTriggerCacheData = false)
+        virtual public void AddListener(string name,
+            Action<object> callback,
+            int order = -1,
+            int triggerNum = -1,
+            bool isTriggerCacheData = false)
         {
-            if (dataMap.ContainsKey(name) == false)
+            if (!dataMap.ContainsKey(name))
             {
                 BDebug.LogError("暂时无数据,提前监听:" + name);
             }
 
+            //创建监听数据
+            var listenerData = new ListenerData(order, triggerNum, callback);
             //
-            List<Action<object>> actions = null;
+            List<ListenerData> callbackList = null;
+            if (!callbackMap.TryGetValue(name, out callbackList))
+            {
+                callbackList = new List<ListenerData>();
+                callbackMap[name] = callbackList;
+            }
 
-            if (callbackMap.TryGetValue(name, out actions))
+
+            //触发排序插入
+            bool isadd = false;
+            for (int i = 0; i < callbackList.Count; i++)
             {
-                actions.Add(callback);
+                var cw = callbackList[i];
+                if (listenerData.Order < cw.Order)
+                {
+                    callbackList.Insert(i, listenerData);
+                    isadd = true;
+                    break;
+                }
             }
-            else
+            if (!isadd)
             {
-                actions = new List<Action<object>>();
-                actions.Add(callback);
-                callbackMap[name] = actions;
+                callbackList.Add(listenerData);
             }
+
 
             if (isTriggerCacheData)
             {
@@ -220,7 +270,7 @@ namespace BDFramework.DataListener
                     }
 
                     //置空
-                    this.valueCacheMap[name] = new List<object>();
+                    this.valueCacheMap[name].Clear();
                 }
             }
         }
@@ -231,42 +281,12 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        virtual public void AddListenerOnce(string name, Action<object> callback = null, bool isTriggerCacheData = false)
+        virtual public void AddListenerOnce(string name,
+            Action<object> callback = null,
+            int order = -1,
+            bool isTriggerCacheData = false)
         {
-            if (dataMap.ContainsKey(name) == false)
-            {
-                BDebug.LogError("无数据,提前监听:" + name);
-            }
-
-            //
-            List<Action<object>> actions = null;
-
-            if (onceCallbackMap.TryGetValue(name, out actions))
-            {
-                actions.Add(callback);
-            }
-            else
-            {
-                actions = new List<Action<object>>();
-                actions.Add(callback);
-                onceCallbackMap[name] = actions;
-            }
-
-            if (isTriggerCacheData)
-            {
-                List<object> list = null;
-                this.valueCacheMap.TryGetValue(name, out list);
-                if (list != null)
-                {
-                    foreach (var value in list)
-                    {
-                        callback(value);
-                    }
-
-                    //置空
-                    this.valueCacheMap[name] = new List<object>();
-                }
-            }
+            this.AddListener(name, callback, order, 1, isTriggerCacheData);
         }
 
 
@@ -283,7 +303,6 @@ namespace BDFramework.DataListener
         }
 
 
-        
         /// <summary>
         /// 移除任务
         /// </summary>
@@ -292,22 +311,18 @@ namespace BDFramework.DataListener
             public string Name;
             public Action<object> Action;
         }
-        
+
         Queue<RemoveTask> removeTaskQueue = new Queue<RemoveTask>();
+
         /// <summary>
         /// 移除属性变动事件注册
         /// </summary>
         /// <param name="name"></param>
         virtual public void RemoveListener(string name, Action<object> callback)
         {
-            removeTaskQueue.Enqueue(new RemoveTask()
-            {
-                Name =  name,
-                Action =  callback
-            });
-            
+            removeTaskQueue.Enqueue(new RemoveTask() {Name = name, Action = callback});
         }
-        
+
         /// <summary>
         /// 移除属性变动事件注册
         /// </summary>
