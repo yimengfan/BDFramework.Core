@@ -70,6 +70,8 @@ namespace ILRuntime.Runtime.Generated
             SQLite4Unity3d_SQLiteCommand_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding_Enumerator_Binding.Register(app);
+            BDFramework_DataListener_ADataListener_Binding.Register(app);
+            BDFramework_Sql_SqliteLoder_Binding.Register(app);
             UnityEngine_UI_ScrollRect_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding.Register(app);
@@ -115,13 +117,14 @@ namespace ILRuntime.Runtime.Generated
             System_Threading_Tasks_Task_1_String_Binding.Register(app);
             System_Runtime_CompilerServices_TaskAwaiter_1_String_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_Object_Binding.Register(app);
-            BDFramework_Sql_SqliteLoder_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Int32_ILTypeInstance_Binding.Register(app);
             BDFramework_Core_Debugger_Debugger_NetworkServer_Binding.Register(app);
-            //BDFramework_DataListener_ADataListener_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Int32_MethodInfo_Binding.Register(app);
             System_Exception_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
+            System_Collections_Generic_KeyValuePair_2_Type_List_1_ILTypeInstance_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_Int32_MethodInfo_Binding.Register(app);
             System_Collections_Generic_List_1_Action_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_Action_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Action_1_ILTypeInstance_Binding.Register(app);
