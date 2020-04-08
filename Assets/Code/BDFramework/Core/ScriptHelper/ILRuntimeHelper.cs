@@ -73,7 +73,8 @@ namespace BDFramework
             JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);
 
 
-            if (Application.isEditor)
+
+            if (BDLauncher.Inst.Config.IsDebuggerILRuntime)
             {
                 AppDomain.DebugService.StartDebugService(56000);
                 Debug.Log("热更调试器 准备待命~");

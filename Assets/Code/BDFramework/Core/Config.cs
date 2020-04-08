@@ -60,7 +60,10 @@ namespace BDFramework
 
         //只在非Editor模式下生效
         public HotfixCodeRunMode CodeRunMode = HotfixCodeRunMode.ByILRuntime;
-        
+
+        [LabelText("是否开启ILRuntime调试")]
+        public bool IsDebuggerILRuntime = false;
+
         [LabelText("文件服务器")]
         public string FileServerUrl = "192.168.8.68";
         [LabelText("Gate服务器")]
@@ -84,7 +87,8 @@ namespace BDFramework
                 var newconfig= JsonMapper.ToObject<GameConfig>(localConfig.text);
                 SetNewConfig(newconfig);
             }
-            
+
+
             UseServerConfig(null);
         }
 
