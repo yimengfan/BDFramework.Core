@@ -57,6 +57,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_KeyValuePair_2_String_Object_Binding.Register(app);
             System_Collections_IEnumerator_Binding.Register(app);
             System_Collections_Generic_List_1_GameObject_Binding_Enumerator_Binding.Register(app);
+            System_Collections_Generic_List_1_Int32_Binding.Register(app);
             BDFramework_ResourceMgr_BResources_Binding.Register(app);
             System_Collections_Generic_List_1_String_Binding.Register(app);
             IEnumeratorTool_Binding.Register(app);
@@ -100,12 +101,12 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
-            System_Collections_Generic_List_1_Int32_Binding.Register(app);
             System_Collections_Generic_List_1_String_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding.Register(app);
+            System_Collections_Generic_List_1_Int32_Binding_Enumerator_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_Int32_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_Enum_Binding.Register(app);
             System_Collections_Generic_List_1_Enum_Binding_Enumerator_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Int32_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
             System_Collections_ICollection_Binding.Register(app);
