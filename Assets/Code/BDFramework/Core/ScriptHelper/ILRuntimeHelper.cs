@@ -74,7 +74,7 @@ namespace BDFramework
 
 
 
-            if (BDLauncher.Inst.Config.IsDebuggerILRuntime)
+            if (BDLauncher.Inst!=null&&BDLauncher.Inst.Config.IsDebuggerILRuntime)
             {
                 AppDomain.DebugService.StartDebugService(56000);
                 Debug.Log("热更调试器 准备待命~");
