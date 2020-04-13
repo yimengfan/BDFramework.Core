@@ -53,8 +53,10 @@ public class BDLauncherBridge
         allTypes = allTypes.Distinct().ToList();
         foreach (var t in allTypes)
         {
-            if (t != null && t.BaseType != null && t.BaseType.FullName != null &&
-                t.BaseType.FullName.Contains(".ManagerBase`2"))
+            if (t != null 
+                && t.BaseType != null 
+                && t.BaseType.FullName != null
+                && t.BaseType.FullName.Contains(".ManagerBase`2"))
             {
                 BDebug.Log("加载管理器-" + t, "green");
                 var i = t.BaseType.GetProperty("Inst").GetValue(null, null) as IMgr;
@@ -66,6 +68,7 @@ public class BDLauncherBridge
             //这里主要寻找
             if ((isILRMode || isRefMode) && hotfixStart == null)
             {
+                
                 var attrs = t.GetCustomAttributes(gsaType, false);
                 if (attrs.Length > 0 && attrs[0] is GameStartAtrribute)
                 {

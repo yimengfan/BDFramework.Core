@@ -207,10 +207,23 @@ namespace ILRuntime.Runtime.Generated
             List<object> ret =new List<object>();
             foreach (var r in result_of_this_method)
             {
+              
                 var iltype = r as ILTypeInstance;
-                if (iltype != null && iltype.Type.FullName == @attributeType.AssemblyQualifiedName)
+                if (iltype != null )
                 {
-                   ret.Add( r);
+                    //ILR中的type
+                    if (iltype.Type.FullName == @attributeType.AssemblyQualifiedName)
+                    {
+                        ret.Add( r);
+                    }
+                }
+                else
+                {
+                    //hotfix的type
+                    if (r.GetType() ==attributeType)
+                    {
+                        ret.Add(r);
+                    }
                 }
             }
             return ILIntepreter.PushObject(__ret, __mStack, ret.ToArray());
