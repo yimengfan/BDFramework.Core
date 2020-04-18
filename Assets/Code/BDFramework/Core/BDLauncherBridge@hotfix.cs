@@ -27,11 +27,7 @@ public class BDLauncherBridge
         //编辑器环境下 寻找dll
         if (isILRMode)
         {
-            var values = ILRuntimeHelper.AppDomain.LoadedTypes.Values.ToList();
-            foreach (var v in values)
-            {
-                allTypes.Add(v.ReflectionType);
-            }
+            allTypes = ILRuntimeHelper.GetHotfixTypes();
         }
         else
         {

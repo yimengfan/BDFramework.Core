@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using Code.Game.demo6_UFlux;
+using ILRuntime.Runtime.Generated;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace BDFramework.UnitTest
 {
@@ -13,38 +19,88 @@ namespace BDFramework.UnitTest
         /// <summary>
         /// 执行所有的TestRunner
         /// </summary>
-        static public void RunAll()
+        static public void RunUnitTest()
         {
             if (ILRuntimeHelper.IsRunning)
             {
-                //ILR模式
-                TestForILR();
+                //启动场景
+                EditorSceneManager.LoadSceneAsync("Assets/Code/BDFramework.Test/BDFrame.UnitTest.ILRuntime.unity", LoadSceneMode.Single);
+                //执行
+                EditorApplication.ExecuteMenuItem("Edit/Play");
+
             }
             else
             {
-                //普通模式 
-                TestForMono();
+                // //热更模式
+                // CollectTestClassData(TestType.ILRuntime);
+                //
+                // //执行普通的测试
+                // ExcuteTest<HotfixTest>();
+                // //执行流程性测试
+                // BDLauncher.OnBDFrameInitialized = () =>
+                // {
+                //     //当框架初始化完成的测试
+                //     ExcuteTest<HotfixTestOnFrameInitialized>();
+                // };
+            
+                //启动场景
+                EditorSceneManager.OpenScene("Assets/Code/BDFramework.Test/BDFrame.UnitTest.Mono.unity");
+                //执行
+                EditorApplication.ExecuteMenuItem("Edit/Play");
             }
+            
+  
+            
         }
 
 
-        private static Dictionary<Type, List<TestMethodData>> testMethodMap;
 
+
+        private static Dictionary<Type, List<TestMethodData>> testMethodDataMap;
+
+        /// <summary>
+        /// Test方法的数据
+        /// </summary>
         public class TestMethodData
         {
-            public HotfixTestAttribute TestAttributeAttribute;
+            public HotfixTestBase TestData;
             public MethodInfo MethodInfo;
         }
 
-        static void TestForMono()
+
+
+        /// <summary>
+        /// 测试类型
+        /// </summary>
+        public enum TestType
         {
-            testMethodMap = new Dictionary<Type, List<TestMethodData>>();
-            //
-            var assembly = typeof(BDLauncherBridge).Assembly;
-            var attribute = typeof(HotfixTestAttribute);
+            MonoOrCLR,
+            ILRuntime
+        }
+
+        /// <summary>
+        /// 收集Test的数据
+        /// </summary>
+        static public void CollectTestClassData(TestType testType)
+        {
+            
+             testMethodDataMap = new Dictionary<Type, List<TestMethodData>>();
+             List<Type> types = new List<Type>();
+             //判断不同的模式
+             if (testType == TestType.MonoOrCLR)
+             {
+                 var assembly = typeof(BDLauncherBridge).Assembly;
+                 types = assembly.GetTypes().ToList();
+             }
+             else    if (testType == TestType.ILRuntime)
+             {
+                 types = ILRuntimeHelper.GetHotfixTypes();
+             }
+          
+            var attribute = typeof(HotfixTestBase);
             //测试用例类
             List<Type> testClassList = new List<Type>();
-            foreach (var type in assembly.GetTypes())
+            foreach (var type in types)
             {
                 var attrs = type.GetCustomAttributes(attribute, false);
                 if (attrs.Length > 0)
@@ -60,16 +116,15 @@ namespace BDFramework.UnitTest
                 // var attrs = type.GetCustomAttributes(attribute,false);
                 // var attr = attrs[0] as HotfixTest;
                 var testMethodDataList = new List<TestMethodData>();
-                testMethodMap[type] = testMethodDataList;
+                testMethodDataMap[type] = testMethodDataList;
                 //获取uit test并排序
                 foreach (var method in methods)
                 {
                     var mattrs = method.GetCustomAttributes(attribute, false);
-                    var mattr = mattrs[0] as HotfixTestAttribute;
+                    var mattr = mattrs[0] as HotfixTestBase;
 
                     //数据
-                    var newMethodData = new TestMethodData() {MethodInfo = method, TestAttributeAttribute = mattr,};
-
+                    var newMethodData = new TestMethodData() {MethodInfo = method, TestData = mattr,};
 
                     //添加整合排序
                     bool isAdd = false;
@@ -77,7 +132,7 @@ namespace BDFramework.UnitTest
                     {
                         var tdata = testMethodDataList[i];
 
-                        if (newMethodData.TestAttributeAttribute.Order < tdata.TestAttributeAttribute.Order)
+                        if (newMethodData.TestData.Order < tdata.TestData.Order)
                         {
                             testMethodDataList.Insert(i, newMethodData);
                             isAdd = true;
@@ -91,32 +146,40 @@ namespace BDFramework.UnitTest
                     }
                 }
             }
-
-            foreach (var item in testMethodMap)
-            {
-                 Debug.LogFormat("<color=yellow>---->执行:{0} </color>",item.Key.FullName);
-
-                 foreach (var methodData in item.Value)
-                 {
-                     try
-                     {
-                         methodData.MethodInfo.Invoke(null,null);
-                         Debug.LogFormat("<color=green>执行:{0}: 成功!</color>",methodData.MethodInfo.Name);
-                     }
-                     catch (Exception e)
-                     {
-                         Debug.LogErrorFormat("<color=red>执行{0}: {1}</color>",methodData.MethodInfo.Name,e.InnerException.Message);
-                         Debug.Log(e.StackTrace);
-                     }
-                   
-                 }
-            }
-            
         }
 
-
-        static void TestForILR()
+        /// <summary>
+        /// 执行正常测试
+        /// </summary>
+        static  public void ExcuteTest<T>() where T: HotfixTestBase
         {
+            foreach (var item in testMethodDataMap)
+            {
+                Debug.LogFormat("<color=yellow>---->执行:{0} </color>",item.Key.FullName);
+
+                foreach (var methodData in item.Value)
+                {
+                    //判断当前执行的测试类型
+                    if (!(methodData.TestData is T))
+                    {
+                        continue;
+                    }
+                    //开始执行测试
+                    try
+                    {
+                        methodData.MethodInfo.Invoke(null,null);
+                        Debug.LogFormat("<color=green>执行:{0}: 成功! - {1}</color>",methodData.TestData.Des,methodData.MethodInfo.Name);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogErrorFormat("<color=red>执行{0}: {1}</color>",methodData.MethodInfo.Name,e.InnerException.Message);
+                        Debug.Log(e.StackTrace);
+                    }
+                   
+                }
+            }
         }
+
+  
     }
 }

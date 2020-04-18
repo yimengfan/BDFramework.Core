@@ -8,10 +8,12 @@ namespace Code.Game
     public class HotfixGameStart : IGameStart
     {
 
+      static  public  bool IsAwake { get; private set; }
         public void Start()
         {
           // Application.targetFrameRate = 24;
            BDebug.Log("hotfix代码 启动器连接成功!" ,"red");
+           IsAwake = false;
         }
         
         public void Update()

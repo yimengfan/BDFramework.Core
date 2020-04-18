@@ -22,14 +22,19 @@ namespace BDFramework
         /// BDLauncher的版本号
         /// </summary>
         static readonly public string Version = "1.0.1";
-        
-        
+
+        #region 对外的生命周期
+
         static public Action OnStart { get; set; }
         static public Action OnUpdate { get; set; }
         static public Action OnLateUpdate { get; set; }
-        
-        //当BDFrame启动完整后执行
-        static public Action OnBDFrameLaunch { get; set; }
+        /// <summary>
+        /// 当框架初始化完成
+        /// </summary>
+        static public Action OnBDFrameInitialized { get; set; }
+
+        #endregion
+
 
         static  public BDLauncher Inst { get; private set; }
         //全局Config
@@ -120,7 +125,7 @@ namespace BDFramework
             //初始化资源加载
             string coderoot = "";
             string sqlroot = "";
-            string artroot = "";
+            string assetroot = "";
 
             //各自的路径
             //art
@@ -129,28 +134,28 @@ namespace BDFramework
                 if (Application.isEditor)
                 {
                     //默认不走AssetBundle
-                    artroot = "";
+                    assetroot = "";
                 }
                 else
                 {
                     //手机默认直接读取Assetbundle
-                    artroot = Application.persistentDataPath;
+                    assetroot = Application.persistentDataPath;
                 }
             }
             else if (Config.ArtRoot == AssetLoadPath.Persistent)
             {
-                artroot = Application.persistentDataPath;
+                assetroot = Application.persistentDataPath;
             }
 
             else if (Config.ArtRoot == AssetLoadPath.StreamingAsset)
             {
                 if (string.IsNullOrEmpty(Config.CustomArtRoot) == false)
                 {
-                    artroot = Config.CustomArtRoot;
+                    assetroot = Config.CustomArtRoot;
                 }
                 else
                 {
-                    artroot = Application.streamingAssetsPath;
+                    assetroot = Application.streamingAssetsPath;
                 }
             }
 
@@ -190,27 +195,29 @@ namespace BDFramework
             {
                 if (GameId != "")
                 {
-                    artroot = artroot + "/" + GameId;
+                    assetroot = assetroot + "/" + GameId;
                     coderoot = coderoot + "/" + GameId;
                     sqlroot = sqlroot + "/" + GameId;
                 }
             }
 
             //异步
-            BResources.Load(artroot, () =>
+            BResources.Load(assetroot, () =>
             {
                 //sql
                 SqliteLoder.Load(sqlroot);
                 //异步 这里如果代码很早的时候就开始走表格逻辑，有可能报错，
                 //但是大部分游戏应该不会，三层回调太丑，暂时用这个
                 ScriptLoder.Load(coderoot,Config.CodeRunMode);
+                
+                //执行框架初始化完成的测试
+                OnBDFrameInitialized?.Invoke();
             });
 
 
-            if (OnBDFrameLaunch != null)
-            {
-                OnBDFrameLaunch();
-            }
+        
+               
+            
         }
         
         

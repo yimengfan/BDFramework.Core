@@ -11,10 +11,12 @@ namespace BDFramework.Editor.TestRunner
         /// <summary>
         /// 测试所有
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/TestRunner", false, (int) BDEditorMenuEnum.TestRunnerEditor)]
-        public static void TestAll()
+        [MenuItem("BDFrameWork工具箱/执行框架UnitTest-API", false, (int) BDEditorMenuEnum.TestRunnerEditor)]
+        public static void UnitTest()
         {
-            UnitTest.TestRunner.RunAll();
+            BDFramework.UnitTest.TestRunner.RunUnitTest();
         }
+        
+
     }
 }

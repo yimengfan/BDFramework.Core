@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using BDFramework.Helper;
 using ILRuntime.Mono.Cecil.Pdb;
 using ILRuntime.Reflection;
@@ -20,6 +22,12 @@ namespace BDFramework
         static private FileStream fsDll = null;
         static private FileStream fsPdb = null;
 
+        
+        /// <summary>
+        /// 加载Hotfix程序集
+        /// </summary>
+        /// <param name="dllPath"></param>
+        /// <param name="isRegisterBindings"></param>
         public static void LoadHotfix(string dllPath, bool isRegisterBindings = true)
         {
             //
@@ -60,8 +68,6 @@ namespace BDFramework
             AppDomain.RegisterValueTypeBinder(typeof(Quaternion), new QuaternionBinder());
            
             
-            
-            
             //是否注册各种binding
             if (isRegisterBindings)
             {
@@ -71,8 +77,7 @@ namespace BDFramework
             }
 
             JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);
-
-
+            
 
             if (BDLauncher.Inst!=null&&BDLauncher.Inst.Config.IsDebuggerILRuntime)
             {
@@ -83,9 +88,10 @@ namespace BDFramework
             //
             AppDomain.Invoke("HotfixCheck", "Log", null, null);
         }
-
-        //
-
+        
+        /// <summary>
+        /// ILRuntime卸载
+        /// </summary>
         public static void Close()
         {
             
@@ -102,6 +108,27 @@ namespace BDFramework
                 fsPdb.Close();
                 fsPdb.Dispose();
             }
+        }
+
+
+        static   private List<Type> hotfixTypeList = null;
+        /// <summary>
+        /// 获取所有的hotfix的类型
+        /// </summary>
+        /// <returns></returns>
+        public static List<Type> GetHotfixTypes()
+        {
+            if (hotfixTypeList == null)
+            {
+                hotfixTypeList = new List<Type>();
+                var values = ILRuntimeHelper.AppDomain.LoadedTypes.Values.ToList();
+                foreach (var v in values)
+                {
+                    hotfixTypeList.Add(v.ReflectionType);
+                }
+            }
+            
+            return hotfixTypeList;
         }
     }
 }

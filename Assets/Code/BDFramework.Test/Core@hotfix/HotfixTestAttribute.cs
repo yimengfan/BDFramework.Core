@@ -2,16 +2,7 @@
 
 namespace BDFramework.UnitTest
 {
-    public class HotfixTestAttribute : Attribute
+    public class HotfixTest : HotfixTestBase
     {
-        /// <summary>
-        /// 执行顺序
-        /// </summary>
-        public int Order = 0;
-        /// <summary>
-        /// 描述
-        /// </summary>
-        public string Des = "";
-        
     }
 }
