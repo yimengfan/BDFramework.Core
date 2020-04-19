@@ -44,6 +44,11 @@ public class Window_DataListener : AWindow
         Msg2
     }
     
+    public class Msg_ParamTest
+    {
+        public int test1 = 1;
+        public int test2 = 2;
+    }
     public override void Init()
     {
         base.Init();
@@ -56,7 +61,29 @@ public class Window_DataListener : AWindow
         
         btn_1.onClick.AddListener(() =>
         {
-            //创建数据监听服务
+            //演示两种方法监听
+            var s2 = DataListenerServer.Create(nameof(Msg_Test001.Msg2));
+            s2.AddData(Msg_Test001.Msg2);
+            //主动传递参数
+            s2.AddListener<Msg_ParamTest>(Msg_Test001.Msg2, triggerNum: 10, action: (o) =>
+            {
+                //每次自增
+                Debug.Log("直接接受类型 p1 :" + o.test1);
+                Debug.Log("直接接受类型 p2 :" + o.test2);
+            });
+            //默认传的都是object
+            s2.AddListener(Msg_Test001.Msg2, triggerNum: 10, action: (o) =>
+            {
+                var _o = o as Msg_ParamTest;
+                //每次自增
+                Debug.Log("param1:" + _o.test1);
+                Debug.Log("param2:" + _o.test2);
+            });
+            
+            s2.TriggerEvent(Msg_Test001.Msg2, new Msg_ParamTest());
+            DataListenerServer.DelService(nameof(Msg_Test001.Msg2));
+            
+            //1.创建数据监听服务
             var service = DataListenerServer.Create(nameof(Msg_Test001));
             text_message.text="创建service成功:" +nameof(Msg_Test001);
         });
@@ -70,7 +97,8 @@ public class Window_DataListener : AWindow
             
             //永久监听
             int count = 0;
-            service.AddListener(Msg_Test001.Msg1, (o) =>
+            //带类型参数监听
+            service.AddListener<string>(Msg_Test001.Msg1, (o) =>
             {
                 count++;
                 text_message.text = string.Format("监听到消息:{0}  次数：{1}" , o,count);
@@ -78,6 +106,7 @@ public class Window_DataListener : AWindow
             });
 
             //监听1次
+            //默认object监听
             service.AddListenerOnce(Msg_Test001.Msg1, (o) =>
             {
                 Debug.Log( "监听消息1次，并移除：" +  o);
