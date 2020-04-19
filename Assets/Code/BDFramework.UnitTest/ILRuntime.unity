@@ -406,7 +406,7 @@ MonoBehaviour:
       Data: 0
     - Name: IsDebuggerILRuntime
       Entry: 5
-      Data: false
+      Data: true
     - Name: IsExcuteHotfixUnitTest
       Entry: 5
       Data: true

@@ -9,7 +9,7 @@ namespace BDFramework.UnitTest
     /// <summary>
     /// 执行所有的runner
     /// </summary>
-    static public class TestRunner
+    static public class ILRuntimeTestRunner
     {
         #region 对外的函数接口
 
@@ -30,6 +30,7 @@ namespace BDFramework.UnitTest
         /// </summary>
         static public void RunHotfixUnitTest()
         {
+            BDebug.Log("-----------------------执行hotfix unitTest------------------------","red");
             //搜集测试用例
             CollectTestClassData(TestType.ILRuntime);
             //1.执行普通的测试
@@ -103,7 +104,6 @@ namespace BDFramework.UnitTest
                 // var attrs = type.GetCustomAttributes(attribute,false);
                 // var attr = attrs[0] as HotfixTest;
                 var testMethodDataList = new List<TestMethodData>();
-                testMethodDataMap[type] = testMethodDataList;
                 //获取uit test并排序
                 foreach (var method in methods)
                 {
@@ -132,6 +132,8 @@ namespace BDFramework.UnitTest
                         testMethodDataList.Add(newMethodData);
                     }
                 }
+
+                testMethodDataMap[type] = testMethodDataList;
             }
         }
 
@@ -161,8 +163,7 @@ namespace BDFramework.UnitTest
                     }
                     catch (Exception e)
                     {
-                        Debug.LogErrorFormat("<color=red>执行{0}: {1}</color>", methodData.MethodInfo.Name,
-                            e.InnerException.Message);
+                        Debug.LogErrorFormat("<color=red>执行{0} 失败!</color>",methodData.MethodInfo.Name);
                         Debug.Log(e.StackTrace);
                     }
                 }

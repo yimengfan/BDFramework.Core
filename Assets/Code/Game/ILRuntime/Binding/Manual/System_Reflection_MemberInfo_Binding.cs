@@ -220,7 +220,7 @@ namespace ILRuntime.Runtime.Generated
                 else
                 {
                     //hotfix的type
-                    if (r.GetType() ==attributeType)
+                    if (r.GetType() ==attributeType || r.GetType().IsSubclassOf(attributeType))
                     {
                         ret.Add(r);
                     }

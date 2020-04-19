@@ -27,8 +27,11 @@ namespace ILRuntime.Runtime.Generated
             method = type.GetMethod("GetHotfixTypes", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, GetHotfixTypes_0);
             args = new Type[]{};
+            method = type.GetMethod("get_IsRunning", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_IsRunning_1);
+            args = new Type[]{};
             method = type.GetMethod("get_AppDomain", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_AppDomain_1);
+            app.RegisterCLRMethodRedirection(method, get_AppDomain_2);
 
             field = type.GetField("UIComponentTypes", flag);
             app.RegisterCLRFieldGetter(field, get_UIComponentTypes_0);
@@ -54,7 +57,20 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* get_AppDomain_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_IsRunning_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
+
+
+            var result_of_this_method = BDFramework.ILRuntimeHelper.IsRunning;
+
+            __ret->ObjectType = ObjectTypes.Integer;
+            __ret->Value = result_of_this_method ? 1 : 0;
+            return __ret + 1;
+        }
+
+        static StackObject* get_AppDomain_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);

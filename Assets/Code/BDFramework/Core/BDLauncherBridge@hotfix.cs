@@ -110,10 +110,14 @@ public class BDLauncherBridge
         }
 
 
-        //执行单元测试
-        if (Config.Inst.Data.IsExcuteHotfixUnitTest)
-        {
-            TestRunner.RunHotfixUnitTest();
-        }
+        IEnumeratorTool.WaitingForExec(10, () =>
+         {
+             //执行单元测试
+             if (Config.Inst.Data.IsExcuteHotfixUnitTest && ILRuntimeHelper.IsRunning)
+             {
+                 ILRuntimeTestRunner.RunHotfixUnitTest();
+             }
+         });
+  
     }
 }
