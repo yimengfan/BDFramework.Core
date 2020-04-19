@@ -61,6 +61,7 @@
      <Compile Include="Assets\Code\BDFramework.UnitTest\Core\HotfixTestRunner.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Core\TestRunner.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_DataListener.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_ILRuntime.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_Sqlite.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\ILRuntimeTestRunner.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\LogicTest_BDFramework.cs" />
