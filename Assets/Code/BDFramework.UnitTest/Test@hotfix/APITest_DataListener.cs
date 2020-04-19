@@ -4,10 +4,10 @@ using BDFramework.UnitTest;
 
 namespace Tests
 {
-    [HotfixTest(Des = "数据监听测试")]
-    static public class DataListener
+    [UnitTest(Des = "数据监听测试")]
+    static public class APITest_DataListener
     {
-        [HotfixTest(Des = "添加监听测试")]
+        [UnitTest(Des = "添加监听测试")]
         public static void AddListener()
         {
             int count = 0;
@@ -29,7 +29,7 @@ namespace Tests
             Assert.Equals(count, 100);
         }
 
-        [HotfixTest(Des = "触发次数测试")]
+        [UnitTest(Des = "触发次数测试")]
         public static void AddListener_TriggerCount()
         {
             int count = 0;
@@ -52,7 +52,7 @@ namespace Tests
             Assert.Equals(count, 10);
         }
 
-        [HotfixTest(Des = "添加顺序测试")]
+        [UnitTest(Des = "添加顺序测试")]
         public static void AddListener_Order()
         {
             int count = 0;
@@ -92,7 +92,7 @@ namespace Tests
         }
         
 
-        [HotfixTest(Des = "删除监听测试")]
+        [UnitTest(Des = "删除监听测试")]
         public static void DeleteListener()
         {
             int count = 0;

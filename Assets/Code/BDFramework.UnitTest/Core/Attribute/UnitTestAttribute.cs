@@ -2,7 +2,7 @@
 
 namespace BDFramework.UnitTest
 {
-    public class HotfixTest : HotfixTestBase
+    public class UnitTestAttribute : UnitTestBaseAttribute
     {
     }
 }

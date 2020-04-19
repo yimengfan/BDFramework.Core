@@ -26,20 +26,17 @@ namespace ILRuntime.Runtime.Generated
             method = type.GetMethod("CreateCommand", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, CreateCommand_0);
             args = new Type[]{};
-            method = type.GetMethod("Dispose", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Dispose_1);
-            args = new Type[]{};
             method = type.GetMethod("Close", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Close_2);
+            app.RegisterCLRMethodRedirection(method, Close_1);
             args = new Type[]{typeof(System.Type)};
             method = type.GetMethod("DropTableByType", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, DropTableByType_3);
+            app.RegisterCLRMethodRedirection(method, DropTableByType_2);
             args = new Type[]{typeof(System.Type), typeof(SQLite4Unity3d.CreateFlags)};
             method = type.GetMethod("CreateTableByType", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, CreateTableByType_4);
+            app.RegisterCLRMethodRedirection(method, CreateTableByType_3);
             args = new Type[]{typeof(System.Collections.IEnumerable)};
             method = type.GetMethod("InsertAll", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, InsertAll_5);
+            app.RegisterCLRMethodRedirection(method, InsertAll_4);
 
 
         }
@@ -68,22 +65,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* Dispose_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            SQLite4Unity3d.SQLiteConnection instance_of_this_method = (SQLite4Unity3d.SQLiteConnection)typeof(SQLite4Unity3d.SQLiteConnection).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            instance_of_this_method.Dispose();
-
-            return __ret;
-        }
-
-        static StackObject* Close_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* Close_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -98,7 +80,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* DropTableByType_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* DropTableByType_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -119,7 +101,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* CreateTableByType_4(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* CreateTableByType_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -144,7 +126,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* InsertAll_5(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* InsertAll_4(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;

@@ -7,6 +7,7 @@ using BDFramework.Mgr;
 using System.Linq;
 using BDFramework.GameStart;
 using BDFramework.UFlux;
+using BDFramework.UnitTest;
 using Game.ILRuntime;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -62,14 +63,14 @@ public class BDLauncherBridge
 
             //游戏启动器
             //这里主要寻找
-            if ((isILRMode || isRefMode) && hotfixStart == null)
+            if (hotfixStart == null)
             {
-                
                 var attrs = t.GetCustomAttributes(gsaType, false);
-                if (attrs.Length > 0 && attrs[0] is GameStartAtrribute)
+                if (attrs.Length > 0 
+                    && attrs[0] is GameStartAtrribute
+                    &&((GameStartAtrribute)attrs[0]).Index==1)
                 {
                     hotfixStart = Activator.CreateInstance(t) as IGameStart;
-                    BDebug.Log("找到hotfix启动器 :" + t.FullName, "red");
                 }
             }
             
@@ -92,20 +93,27 @@ public class BDLauncherBridge
             m.Init();
         }
         
-        //game生命注册
+        //gamestart生命注册
         if (hotfixStart != null)
         {
             hotfixStart.Start();
             BDLauncher.OnUpdate = hotfixStart.Update;
             BDLauncher.OnLateUpdate = hotfixStart.LateUpdate;
         }
-
+        //执行框架初始化完成的测试
+        BDLauncher.OnBDFrameInitialized?.Invoke();
+        BDLauncher.OnBDFrameInitializedForTest?.Invoke();
         //所有管理器开始工作
         foreach (var m in mgrs)
         {
             m.Start();
         }
 
-        BDebug.Log("管理器开始工作!");
+
+        //执行单元测试
+        if (Config.Inst.Data.IsExcuteHotfixUnitTest)
+        {
+            TestRunner.RunHotfixUnitTest();
+        }
     }
 }

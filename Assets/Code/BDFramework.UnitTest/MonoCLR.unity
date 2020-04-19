@@ -338,7 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76df6a7acb4be174683f07772a347e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Config: {fileID: 0}
 --- !u!4 &617214994
 Transform:
   m_ObjectHideFlags: 0
@@ -386,18 +385,46 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  CodeRoot: 0
-  SQLRoot: 0
-  ArtRoot: 0
-  CustomArtRoot: 
-  CodeRunMode: 0
-  IsDebuggerILRuntime: 0
-  FileServerUrl: 192.168.8.68
-  GateServerIp: 
-  Port: 0
-  IsHotfix: 0
-  IsNeedNet: 0
+    SerializationNodes:
+    - Name: Data
+      Entry: 7
+      Data: 0|BDFramework.GameConfig, Assembly-CSharp
+    - Name: CodeRoot
+      Entry: 3
+      Data: 0
+    - Name: SQLRoot
+      Entry: 3
+      Data: 0
+    - Name: ArtRoot
+      Entry: 3
+      Data: 0
+    - Name: CustomArtRoot
+      Entry: 1
+      Data: 
+    - Name: CodeRunMode
+      Entry: 3
+      Data: 0
+    - Name: IsDebuggerILRuntime
+      Entry: 5
+      Data: false
+    - Name: FileServerUrl
+      Entry: 1
+      Data: 192.168.8.68
+    - Name: GateServerIp
+      Entry: 1
+      Data: 
+    - Name: Port
+      Entry: 3
+      Data: 0
+    - Name: IsHotfix
+      Entry: 5
+      Data: false
+    - Name: IsNeedNet
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
   localConfig: {fileID: 0}
 --- !u!1 &878416750
 GameObject:
@@ -678,6 +705,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1776856834}
+  - component: {fileID: 1776856835}
   m_Layer: 0
   m_Name: UnitTest
   m_TagString: Untagged
@@ -699,6 +727,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1776856835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776856833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c4e7604e8452595640f6ad24035b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1882003580
 GameObject:
   m_ObjectHideFlags: 0

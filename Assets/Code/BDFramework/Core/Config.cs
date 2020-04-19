@@ -28,26 +28,6 @@ namespace BDFramework
 
     public class GameConfig
     {
-        public int CodeRoot; // = AssetLoadPath.Editor;
-        public int SQLRoot; //= AssetLoadPath.Editor;
-        public int ArtRoot; //= AssetLoadPath.Editor;
-
-        public string CustomArtRoot = "";
-
-        //只在非Editor模式下生效
-        public int CodeRunMode; //= HotfixCodeRunMode.ByILRuntime;
-
-        public string FileServerUrl = "192.168.8.68";
-
-        //
-        public bool IsHotfix = false;
-        public string GateServerIp = "";
-        public int Port;
-        public bool IsNeedNet = false;
-    }
-
-    public class Config : SerializedMonoBehaviour
-    {
         [LabelText("代码路径")]
         public AssetLoadPath CodeRoot = AssetLoadPath.Editor;
         [LabelText("SQLite路径")]
@@ -63,6 +43,8 @@ namespace BDFramework
 
         [LabelText("是否开启ILRuntime调试")]
         public bool IsDebuggerILRuntime = false;
+        [LabelText("是否执行热更单元测试")]
+        public bool IsExcuteHotfixUnitTest = false;
 
         [LabelText("文件服务器")]
         public string FileServerUrl = "192.168.8.68";
@@ -74,14 +56,27 @@ namespace BDFramework
         public bool IsHotfix = false;
         [LabelText("是否联网")]
         public bool IsNeedNet = false;
+
+    }
+
+    public class Config : SerializedMonoBehaviour
+    {
+        [HideLabel]
+        [InlinePropertyAttribute]
+        public GameConfig Data;
         //本地配置
         [LabelText("本地配置")]
         public TextAsset localConfig;
-
+        
+        /// <summary>
+        /// 全局的单例
+        /// </summary>
+        static public Config Inst { get; private set; }
         private void Awake()
         {
+            Inst = this;
+         
             ShowFPS();
-
             if (localConfig != null)
             {
                 var newconfig= JsonMapper.ToObject<GameConfig>(localConfig.text);
@@ -111,7 +106,7 @@ namespace BDFramework
         /// <returns></returns>
         private IEnumerator UpdateServerConfig(Action callback)
         {
-            var url = string.Format("{0}/{1}/{2}", FileServerUrl,BDUtils.GetPlatformPath(Application.platform) ,"GameConfig.json");
+            var url = string.Format("{0}/{1}/{2}", Data.FileServerUrl,BDUtils.GetPlatformPath(Application.platform) ,"GameConfig.json");
             Debug.Log(url);
             UnityWebRequest uwq = UnityWebRequest.Get(url);
             GameConfig gconfig = null;
@@ -140,24 +135,7 @@ namespace BDFramework
         /// <param name="newConfig"></param>
         private void SetNewConfig(GameConfig newConfig)
         {
-            //TODO 未来改成反射实现,暂时用这一版
-            if (newConfig != null)
-            {
-                this.CodeRoot = (AssetLoadPath) newConfig.CodeRoot;
-                this.SQLRoot = (AssetLoadPath) newConfig.SQLRoot;
-                this.ArtRoot = (AssetLoadPath) newConfig.ArtRoot;
-                //
-                this.CodeRunMode = (HotfixCodeRunMode) newConfig.CodeRunMode;
-                //ip相关
-                this.FileServerUrl = newConfig.FileServerUrl;
-                this.IsHotfix = newConfig.IsHotfix;
-                this.GateServerIp = newConfig.GateServerIp;
-                this.Port = newConfig.Port;
-                if (!Application.isEditor)
-                {
-                    this.IsHotfix = this.IsNeedNet = true;
-                }
-            }
+            this.Data= newConfig;
         }
         #endregion
         
@@ -216,37 +194,12 @@ namespace BDFramework
         
         static public void GenGameConfig(string str, string platform)
         {
-            var gameConfig = new GameConfig();
-            var gcType = gameConfig.GetType();
-
             //config
             var config = GameObject.Find("BDFrame").GetComponent<Config>();
-            var configType = config.GetType();
+            var json = JsonMapper.ToJson(config.Data);
             //
-            foreach (var f in gcType.GetFields())
-            {
-                var ctf = configType.GetField(f.Name);
-                //反射赋值
-                if (f.FieldType == ctf.FieldType)
-                {
-                    f.SetValue(gameConfig, ctf.GetValue(config));
-                }
-                else if (f.FieldType == typeof(int) && ctf.FieldType.IsEnum)
-                {
-                    f.SetValue(gameConfig, (int) ctf.GetValue(config));
-                }
-                else
-                {
-                    BDebug.LogError("类型不匹配:" + f.Name);
-                }
-            }
-
-            var json = JsonMapper.ToJson(gameConfig);
-
             var fs = string.Format("{0}/{1}/{2}", str, platform, "GameConfig.json");
-
             FileHelper.WriteAllText(fs, json);
-
             AssetDatabase.Refresh();
             Debug.Log("导出成功：" + fs);
         }

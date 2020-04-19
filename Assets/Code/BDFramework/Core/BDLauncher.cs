@@ -28,25 +28,30 @@ namespace BDFramework
         static public Action OnStart { get; set; }
         static public Action OnUpdate { get; set; }
         static public Action OnLateUpdate { get; set; }
+
         /// <summary>
         /// 当框架初始化完成
         /// </summary>
         static public Action OnBDFrameInitialized { get; set; }
-
+        /// <summary>
+        /// 当框架初始化完成
+        /// </summary>
+        static public Action OnBDFrameInitializedForTest { get; set; }
         #endregion
 
 
-        static  public BDLauncher Inst { get; private set; }
+        static public BDLauncher Inst { get; private set; }
+
         //全局Config
         [HideInInspector]
-        public Config Config;
+        private GameConfig Config { get; set; }
 
         // Use this for initialization
         private void Awake()
         {
             Inst = this;
             this.gameObject.AddComponent<IEnumeratorTool>();
-            this.Config = this.gameObject.GetComponent<Config>();
+            this.Config = BDFramework.Config.Inst.Data;
             LaunchLocal();
             //
         }
@@ -54,30 +59,31 @@ namespace BDFramework
         #region 启动非热更逻辑
 
         private IGameStart mainStart;
+
         /// <summary>
         /// 启动本地代码
         /// </summary>
         public void LaunchLocal()
         {
             //寻找iGamestart
-            foreach (var t in  Assembly.GetExecutingAssembly().GetTypes())
+            foreach (var t in Assembly.GetExecutingAssembly().GetTypes())
             {
                 if (t.IsClass && t.GetInterface("IGameStart") != null)
                 {
-                    var attr = (GameStartAtrribute)t.GetCustomAttribute(typeof(GameStartAtrribute), false);
-                    if (attr != null && attr.Index==0)
+                    var attr = (GameStartAtrribute) t.GetCustomAttribute(typeof(GameStartAtrribute), false);
+                    if (attr != null && attr.Index == 0)
                     {
                         mainStart = Activator.CreateInstance(t) as IGameStart;
                         //注册
                         mainStart.Start();
-                        
+
                         break;
                     }
                 }
             }
-            
+
             //类型注册
-            List<Type> types =new List<Type>();
+            List<Type> types = new List<Type>();
             types.AddRange(typeof(Button).Assembly.GetTypes());
             types.AddRange(typeof(IButton).Assembly.GetTypes());
             var uitype = typeof(UIBehaviour);
@@ -86,29 +92,28 @@ namespace BDFramework
                 //注册所有uiComponent
                 if (t.IsSubclassOf(uitype))
                 {
-                    ILTypeHelper.UIComponentTypes[t.FullName] = t;
+                    ILRuntimeHelper.UIComponentTypes[t.FullName] = t;
                 }
-            }
-            if (Config.CodeRoot == AssetLoadPath.Editor)
-            {
-                foreach (var t in types)
-                {
-                    if (t.IsClass && t.GetInterface("IGameStart") != null)
-                    {
-                        var attr = (GameStartAtrribute)t.GetCustomAttribute(typeof(GameStartAtrribute), false);
-                        if (attr != null && attr.Index==1)
-                        {
-                            mainStart = Activator.CreateInstance(t) as IGameStart;
-                            //注册
-                            mainStart.Start();
-                        
-                            break;
-                        }
-                    }
-                }
-                
             }
 
+            // if (Config.CodeRoot == AssetLoadPath.Editor)
+            // {
+            //     foreach (var t in types)
+            //     {
+            //         if (t.IsClass && t.GetInterface("IGameStart") != null)
+            //         {
+            //             var attr = (GameStartAtrribute) t.GetCustomAttribute(typeof(GameStartAtrribute), false);
+            //             if (attr != null && attr.Index == 1)
+            //             {
+            //                 mainStart = Activator.CreateInstance(t) as IGameStart;
+            //                 //注册
+            //                 mainStart.Start();
+            //
+            //                 break;
+            //             }
+            //         }
+            //     }
+            // }
         }
 
         #endregion
@@ -208,46 +213,25 @@ namespace BDFramework
                 SqliteLoder.Load(sqlroot);
                 //异步 这里如果代码很早的时候就开始走表格逻辑，有可能报错，
                 //但是大部分游戏应该不会，三层回调太丑，暂时用这个
-                ScriptLoder.Load(coderoot,Config.CodeRunMode);
-                
-                //执行框架初始化完成的测试
-                OnBDFrameInitialized?.Invoke();
+                ScriptLoder.Load(coderoot, Config.CodeRunMode);
             });
-
-
-        
-               
-            
         }
-        
-        
-
 
         #endregion
-
 
 
         //普通帧循环
         private void Update()
         {
-            if(mainStart!=null) mainStart.Update();
-            //
-            if (OnUpdate != null)
-            {
-                OnUpdate();
-            }
-         
+            mainStart?.Update();
+            OnUpdate?.Invoke();
         }
 
         //更快的帧循环
         private void LateUpdate()
         {
-            if(mainStart!=null) mainStart.LateUpdate();
-            //
-            if (OnLateUpdate != null)
-            {
-                OnLateUpdate();
-            }
+            mainStart?.LateUpdate();
+            OnLateUpdate?.Invoke();
         }
 
         void OnApplicationQuit()
@@ -255,7 +239,7 @@ namespace BDFramework
 #if UNITY_EDITOR
             if (SqliteHelper.DB != null)
             {
-               SqliteHelper.DB.Close();
+                SqliteHelper.DB.Close();
             }
 
             ILRuntimeHelper.Close();

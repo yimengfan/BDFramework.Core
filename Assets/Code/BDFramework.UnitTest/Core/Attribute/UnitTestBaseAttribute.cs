@@ -2,7 +2,7 @@
 
 namespace BDFramework.UnitTest
 {
-   abstract public class HotfixTestBase : Attribute
+   abstract public class UnitTestBaseAttribute : Attribute
     {
         /// <summary>
         /// 执行顺序

@@ -22,7 +22,7 @@ namespace BDFramework
         static private FileStream fsDll = null;
         static private FileStream fsPdb = null;
 
-        
+
         /// <summary>
         /// 加载Hotfix程序集
         /// </summary>
@@ -32,7 +32,7 @@ namespace BDFramework
         {
             //
             IsRunning = true;
-            string pdbPath = dllPath+".pdb";
+            string pdbPath = dllPath + ".pdb";
 
             BDebug.Log("DLL加载路径:" + dllPath, "red");
             //
@@ -42,7 +42,7 @@ namespace BDFramework
                 //这里的流不能释放，头铁的老哥别试了
                 fsDll = new FileStream(dllPath, FileMode.Open, FileAccess.Read);
                 fsPdb = new FileStream(pdbPath, FileMode.Open, FileAccess.Read);
-                AppDomain.LoadAssembly(fsDll, fsPdb,new PdbReaderProvider());
+                AppDomain.LoadAssembly(fsDll, fsPdb, new PdbReaderProvider());
             }
             else
             {
@@ -52,10 +52,10 @@ namespace BDFramework
             }
 
 
-#if UNITY_EDITOR 
+#if UNITY_EDITOR
             AppDomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
 #endif
-            
+
             //绑定的初始化
             //ada绑定
             AdapterRegister.RegisterCrossBindingAdaptor(AppDomain);
@@ -66,8 +66,8 @@ namespace BDFramework
             AppDomain.RegisterValueTypeBinder(typeof(Vector3), new Vector3Binder());
             AppDomain.RegisterValueTypeBinder(typeof(Vector4), new Vector4Binder());
             AppDomain.RegisterValueTypeBinder(typeof(Quaternion), new QuaternionBinder());
-           
-            
+
+
             //是否注册各种binding
             if (isRegisterBindings)
             {
@@ -77,9 +77,9 @@ namespace BDFramework
             }
 
             JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);
-            
 
-            if (BDLauncher.Inst!=null&&BDLauncher.Inst.Config.IsDebuggerILRuntime)
+
+            if (BDLauncher.Inst != null && Config.Inst.Data.IsDebuggerILRuntime)
             {
                 AppDomain.DebugService.StartDebugService(56000);
                 Debug.Log("热更调试器 准备待命~");
@@ -88,15 +88,14 @@ namespace BDFramework
             //
             AppDomain.Invoke("HotfixCheck", "Log", null, null);
         }
-        
+
         /// <summary>
         /// ILRuntime卸载
         /// </summary>
         public static void Close()
         {
-            
             AppDomain = null;
-            
+
             if (fsDll != null)
             {
                 fsDll.Close();
@@ -110,8 +109,10 @@ namespace BDFramework
             }
         }
 
+        #region hotfix类型
 
-        static   private List<Type> hotfixTypeList = null;
+        static private List<Type> hotfixTypeList = null;
+
         /// <summary>
         /// 获取所有的hotfix的类型
         /// </summary>
@@ -127,8 +128,16 @@ namespace BDFramework
                     hotfixTypeList.Add(v.ReflectionType);
                 }
             }
-            
+
             return hotfixTypeList;
         }
+
+        #endregion
+
+
+        /// <summary>
+        /// 所有UIComponent的类型
+        /// </summary>
+        public static Dictionary<string, Type> UIComponentTypes = new Dictionary<string, Type>();
     }
 }
