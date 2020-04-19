@@ -76,20 +76,26 @@ namespace BDFramework.DataListener
             //数据验证
             if (dataMap.ContainsKey(name))
             {
-#if UNITY_EDITOR
-                var lastV = dataMap[name];
-                if (lastV != null)
+                //editor抛出这个
+                if (Application.isEditor)
                 {
-                    var lastT = lastV.GetType();
-                    var nowT = value.GetType();
-                    if (lastT != nowT)
+                    var lastV = dataMap[name];
+                    if (lastV != null)
                     {
-                        Debug.LogErrorFormat("设置失败,类型不匹配:{0}  curType:{1}  setType:{2}", name, lastT.Name, nowT.Name);
-                        return;
+                        var lastT = lastV.GetType();
+                        var nowT = value.GetType();
+                        if (lastT != nowT)
+                        {
+                            Debug.LogErrorFormat("设置失败,类型不匹配:{0}  curType:{1}  setType:{2}", name, lastT.Name, nowT.Name);
+                            return;
+                        }
                     }
                 }
-#endif
-                dataMap[name] = value;
+
+                if (value != null)
+                {
+                    dataMap[name] = value;
+                }
             }
             else
             {

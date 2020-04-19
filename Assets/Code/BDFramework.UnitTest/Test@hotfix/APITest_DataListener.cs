@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tests
 {
-    [HotfixTest(Des = "数据监听测试")]
+    [UnitTestAttribute(Des = "数据监听测试")]
     static public class DataListener
     {
         public enum Msg
@@ -13,7 +13,7 @@ namespace Tests
             test,
         }
 
-        [HotfixTest(Des = "添加监听测试")]
+        [UnitTestAttribute(Des = "添加监听测试")]
         public static void AddListener()
         {
             int count        = 0;
@@ -42,8 +42,8 @@ namespace Tests
             public int test2 = 2;
         }
 
-        [HotfixTest(Des = "参数类型测试")]
-        public static void AddListener_ParamType()
+        [UnitTestAttribute(Des = "参数类型测试")]
+        public static void AddListener_CustomTypeParams()
         {
             int count   = 0;
             var service = DataListenerServer.Create(nameof(Msg.test));
@@ -69,7 +69,7 @@ namespace Tests
             Assert.IsPass(true);
         }
 
-        [HotfixTest(Des = "触发次数测试")]
+        [UnitTestAttribute(Des = "触发次数测试")]
         public static void AddListener_TriggerCount()
         {
             int count   = 0;
@@ -92,7 +92,7 @@ namespace Tests
             Assert.Equals(count, 10);
         }
 
-        [HotfixTest(Des = "添加顺序测试")]
+        [UnitTestAttribute(Des = "添加顺序测试")]
         public static void AddListener_Order()
         {
             int count   = 0;
@@ -132,7 +132,7 @@ namespace Tests
         }
 
 
-        [HotfixTest(Des = "删除监听测试")]
+        [UnitTestAttribute(Des = "删除监听测试")]
         public static void DeleteListener()
         {
             int count   = 0;

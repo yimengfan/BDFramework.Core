@@ -110,7 +110,7 @@ public class BDLauncherBridge
         }
 
 
-        IEnumeratorTool.WaitingForExec(10, () =>
+        IEnumeratorTool.WaitingForExec(5, () =>
          {
              //执行单元测试
              if (Config.Inst.Data.IsExcuteHotfixUnitTest && ILRuntimeHelper.IsRunning)

@@ -25,6 +25,9 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Object), typeof(System.Object), typeof(System.String)};
             method = type.GetMethod("Equals", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Equals_0);
+            args = new Type[]{typeof(System.Boolean), typeof(System.String)};
+            method = type.GetMethod("IsPass", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, IsPass_1);
 
 
         }
@@ -50,6 +53,27 @@ namespace ILRuntime.Runtime.Generated
 
 
             var result_of_this_method = BDFramework.UnitTest.Assert.Equals(@obj, @obj2, @failMessage);
+
+            __ret->ObjectType = ObjectTypes.Integer;
+            __ret->Value = result_of_this_method ? 1 : 0;
+            return __ret + 1;
+        }
+
+        static StackObject* IsPass_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.String @failMessage = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            System.Boolean @b = ptr_of_this_method->Value == 1;
+
+
+            var result_of_this_method = BDFramework.UnitTest.Assert.IsPass(@b, @failMessage);
 
             __ret->ObjectType = ObjectTypes.Integer;
             __ret->Value = result_of_this_method ? 1 : 0;

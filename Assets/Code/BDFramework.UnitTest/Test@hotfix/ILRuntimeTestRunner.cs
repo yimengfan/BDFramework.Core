@@ -164,7 +164,7 @@ namespace BDFramework.UnitTest
                     catch (Exception e)
                     {
                         Debug.LogErrorFormat("<color=red>执行{0} 失败!</color>",methodData.MethodInfo.Name);
-                        Debug.Log(e.StackTrace);
+                        Debug.Log(e.Message+"\n"+e.StackTrace);
                     }
                 }
             }
