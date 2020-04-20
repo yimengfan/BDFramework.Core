@@ -20,6 +20,11 @@ namespace BDFramework.UFlux.UFluxTest004
         testSubWindows001
     }
 
+    /// <summary>
+    /// 这个是最简单的窗口模型，
+    /// 可以基于这个做任何逻辑，
+    /// 不强制使用flux
+    /// </summary>
     [UI((int)  WinEnum.Win_Demo6_Test004, "Windows/UFlux/demo004/Window_SimpleWindow")]
     public class Window_Simple : AWindow
     {
