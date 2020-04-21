@@ -16,12 +16,12 @@ namespace BDFramework.UFlux
 
         public ComponentValueBind(Type type, string field)
         {
-            //这里是ILR的bug
+            //这里故意让破坏优化 ilrbug
             var ot = (object) type;
             if (ot is TypeReference)
             {
                 var name = ((TypeReference) ot).FullName;
-                if (!ILTypeHelper.UIComponentTypes.TryGetValue(name, out Type))
+                if (!ILRuntimeHelper.UIComponentTypes.TryGetValue(name, out Type))
                 {
                     IType ilrtype = null;
                     if (ILRuntimeHelper.AppDomain.LoadedTypes.TryGetValue(name, out ilrtype))

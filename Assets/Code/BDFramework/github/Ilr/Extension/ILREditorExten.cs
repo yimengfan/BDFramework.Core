@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 public class ILREditorExten 
@@ -24,6 +25,7 @@ public class ILREditorExten
                  Debug.LogError("请手动添加：" + sb);
              }
 
+             AssetDatabase.Refresh();
          }
     }
     

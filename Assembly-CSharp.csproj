@@ -2,9 +2,8 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <_TargetFrameworkDirectories>non_empty_path_generated_by_unity.rider.package</_TargetFrameworkDirectories>
-    <_FullFrameworkReferenceAssemblyPaths>non_empty_path_generated_by_unity.rider.package</_FullFrameworkReferenceAssemblyPaths>
-    <DisableHandlePackageFileConflicts>true</DisableHandlePackageFileConflicts>
+    <CscToolPath>D:\Program Files\2019.3.2f1\Editor\Data\Tools\RoslynScripts</CscToolPath>
+    <CscToolExe>unity_csc.bat</CscToolExe>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -25,12 +24,11 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2019_3_2;UNITY_2019_3;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;ODIN_INSPECTOR;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2019_3_2;UNITY_2019_3;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;ODIN_INSPECTOR;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,7 +38,6 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -58,11 +55,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Code\BDFramework.Test\Core@hotfix\Assert.cs" />
-     <Compile Include="Assets\Code\BDFramework.Test\Core@hotfix\HotfixTestAttribute.cs" />
-     <Compile Include="Assets\Code\BDFramework.Test\Core@hotfix\TestRunner.cs" />
-     <Compile Include="Assets\Code\BDFramework.Test\FrameTest@hotfix\DataListener.cs" />
-     <Compile Include="Assets\Code\BDFramework.Test\FrameTest@hotfix\Sqlite.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\Attribute\HotfixUnitTestAttribute.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\Attribute\UnitTestAttribute.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\Attribute\UnitTestBaseAttribute.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\EditorTestRunner.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\HotfixTestRunner.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\TestRunner.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_DataListener.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_ILRuntime.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_Sqlite.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_UI.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\Assert.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\ILRuntimeTestRunner.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\LogicTest_BDFramework.cs" />
+     <Compile Include="Assets\Code\BDFramework\Core\Adaptor\@hotfix\ActionAdaptor.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundleManifest.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundleMgr.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\BResources.cs" />
@@ -72,12 +78,12 @@
      <Compile Include="Assets\Code\BDFramework\Core\BDLauncher.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\BDLauncherBridge@hotfix.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Config.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\ABaseDataListenerT.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\ADataListener.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\ADataListenerT.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\DataListenerServer.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\DataListenerService.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\DataListenerTools@hotfix.cs" />
+     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\ABaseDataListenerT.cs" />
+     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\ADataListener.cs" />
+     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\ADataListenerT.cs" />
+     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerServer.cs" />
+     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerService.cs" />
+     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerTools.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Debugger\@hotfix\DebuggerServerProcessAttribute.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Debugger\@hotfix\DebuggerServerProcessManager.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Debugger\@hotfix\IDebuggerServerProcess.cs" />
@@ -431,18 +437,20 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Adapter\Manual\MonoBehaviourAdapter.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Adapter\ScriptableObjectAdapter.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_BDLauncher_Binding.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_Config_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_Core_Debugger_Debugger_NetworkServer_Binding.cs" />
-     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_DataListener_DataListenerServer_Binding.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_GameConfig_Binding.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_GameStart_GameStartAtrribute_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_GameStart_IGameStart_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_ILRuntimeHelper_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_ResourceMgr_BResources_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_Sql_SqliteLoder_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UFlux_IButton_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UFlux_IComponentOnClick_Binding.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UnitTest_UnitTestBaseAttribute_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_VersionContrller_VersionContorller_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDebug_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\CLRBindings.cs" />
-     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\Game_ILRuntime_ILTypeHelper_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\IEnumeratorTool_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\ILRuntime_CLR_TypeSystem_IType_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\ILRuntime_Mono_Cecil_MemberReference_Binding.cs" />
@@ -451,6 +459,7 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\SQLite4Unity3d_SQLiteCommand_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\SQLite4Unity3d_SQLiteConnection_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Action_1_ILTypeInstance_Binding.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Action_1_Single_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Action_1_String_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Action_2_Int32_Int32_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Action_2_Transform_Object_Binding.cs" />
@@ -470,12 +479,23 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_Action_2__t_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_ILTypeIns_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_IType_Bin_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_List_1_Ac_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_List_1_Ac_t_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_List_1_IL_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_List_1_Ob_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_List_1_Si_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_List_1_St_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_MemberInf_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_MemberInf_t_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_MemberInf_t_t_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_Object_Bi_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_Single_Bi_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_String_Bi_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_String_Type_Bind_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_Type_Dictionary__t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_Type_ILTypeInsta_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_Type_List_1_ILTy_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_Type_List_1_ILTy_t_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Dictionary_2_Type_Object_Bind_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_IEnumerable_1_ILTypeInstance__t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_IEnumerable_1_KeyValuePair_2__t.cs" />
@@ -483,25 +503,30 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_IEnumerator_1_KeyValuePair_2__t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_KeyValuePair_2_Int32_ILTypeIn_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_KeyValuePair_2_String_Object__t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_KeyValuePair_2_Type_List_1_IL_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Action_1_ILTypeInstanc_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Action_1_ILTypeInstanc_t_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Action_1_Single_Bindin_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Action_1_String_Bindin_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Enum_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Enum_Binding_Enumerato_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_GameObject_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_GameObject_Binding_Enu_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_ILTypeInstance_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_ILTypeInstance_Binding_t.cs" />
-     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_IType_Binding.cs" />
-     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_IType_Binding_Enumerat_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Int32_Binding.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Int32_Binding_Enumerat_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_MemberInfo_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_MemberInfo_Binding_Enu_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Object_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Object_Binding_Enumera_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Single_Binding.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Single_Binding_Enumera_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_String_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_String_Binding_Enumera_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Type_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Type_Binding_Enumerato_t.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Queue_1_ILTypeInstance_Bindin_t.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_ICollection_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_IEnumerable_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_IEnumerator_Binding.cs" />
@@ -524,7 +549,6 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Behaviour_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Camera_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Color_Binding.cs" />
-     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Debug_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Events_UnityEventBase_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Events_UnityEvent_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_GameObject_Binding.cs" />
@@ -546,7 +570,9 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\System_Reflection_PropertyInfo_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\System_Type_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Component_Binding.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Debug_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Transform_ManualBinding.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\PreBinding\CLRBindings.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Delegate\ILRuntimeDelegateHelper.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\ILTypeHelper.cs" />
      <Compile Include="Assets\Code\Game\LocalGameStart.cs" />

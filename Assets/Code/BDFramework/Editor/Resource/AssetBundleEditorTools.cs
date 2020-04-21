@@ -1,20 +1,14 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using BDFramework.Core.Debugger;
 using BDFramework.ResourceMgr;
 using Code.BDFramework.Core.Tools;
 using LitJson;
-using NUnit.Framework.Constraints;
-using Unity.Collections;
-using Unity.Collections.LowLevel.Unsafe;
-using UnityEngine;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEditor;
-using FileMode = System.IO.FileMode;
+using UnityEngine;
 
 namespace BDFramework.Editor.Asset
 {

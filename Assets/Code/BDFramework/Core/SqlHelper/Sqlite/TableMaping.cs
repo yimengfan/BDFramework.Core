@@ -282,7 +282,7 @@ namespace SQLite4Unity3d
 
             public void SetValue(object obj, object val)
             {
-                _prop.SetValue(obj, val, null);
+                _prop.SetValue(obj, val);
             }
 
             public object GetValue(object obj)

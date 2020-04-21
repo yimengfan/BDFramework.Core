@@ -88,7 +88,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     /// 编译模式
     /// </summary>
     /// <param name="mode"></param>
-    static void RoslynBuild(ScriptBuildTools.BuildMode mode)
+    static public void RoslynBuild(ScriptBuildTools.BuildMode mode)
     {
         //1.build dll
         var outpath_win = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);
@@ -146,7 +146,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         List<Type> notGenerateTypes  =new List<Type>()
         {
             typeof(MethodBase),typeof(MemberInfo),typeof(FieldInfo),typeof(MethodInfo),typeof(PropertyInfo)
-            ,typeof(Component),typeof(Type)
+            ,typeof(Component),typeof(Type),typeof(Debug)
         };
         
 
@@ -166,7 +166,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     {
         var types = new List<Type>();
         //反射类优先生成
-        types.Add(typeof(Type));
+        types.Add(typeof(UnityEngine.Debug));
         //PreBinding 
         BindingCodeGenerator.GenerateBindingCode(types, "Assets/Code/Game/ILRuntime/Binding/PreBinding");
         AssetDatabase.Refresh();

@@ -18,6 +18,7 @@ namespace ILRuntime.Runtime.Generated
             System_Reflection_PropertyInfo_Binding.Register(app);
             System_Reflection_MethodBase_Binding.Register(app);
             System_Type_Binding.Register(app);
+            UnityEngine_Debug_Binding.Register(app);
         }
 
         /// <summary>

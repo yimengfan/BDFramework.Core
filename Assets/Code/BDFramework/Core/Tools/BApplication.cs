@@ -4,6 +4,9 @@ namespace Code.BDFramework.Core.Tools
 {
     static public class BApplication
     {
+
+        #region 路径相关
+
         /// <summary>
         /// 项目根目录
         /// </summary>
@@ -15,6 +18,17 @@ namespace Code.BDFramework.Core.Tools
         /// <summary>
         /// 资源的根目录
         /// </summary>
-        static public string ResourceRoot { get; private set; } = Application.dataPath + "/Resource/Runtime";
+        static public string RuntimeResourceLoadPath { get; private set; } =  "Assets/Resource/Runtime";
+        
+        /// <summary>
+        /// Editor的资源路径
+        /// </summary>
+        public static string EditorResourcePath { get; private set; } = "Assets/Resource_SVN";
+        /// <summary>
+        /// Editor的资源路径
+        /// </summary>
+        public static string EditorResourceLoadPath { get; private set; } = EditorResourcePath + "/Runtime";
+        #endregion
+        
     }
 }

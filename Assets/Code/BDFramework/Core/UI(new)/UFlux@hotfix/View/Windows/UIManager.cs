@@ -61,7 +61,7 @@ namespace BDFramework.UFlux
         ///加载窗口
         /// </summary>
         /// <param name="uiIndexes"></param>
-        public void LoadWindows(List<Enum> uiIndexes)
+        public void LoadWindows<T>(List<T> uiIndexes) where  T: Enum
         {
             foreach (var i in uiIndexes)
             {
@@ -109,7 +109,7 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <param name="indexes"></param>
         /// <param name="loadProcessAction"></param>
-        public void AsyncLoadWindows(List<Enum> indexes, Action<int, int> loadProcessAction)
+        public void AsyncLoadWindows<T>(List<T> indexes, Action<int, int> loadProcessAction) where  T: Enum
         {
             //去重操作
             indexes = indexes.Distinct().ToList();

@@ -2137,7 +2137,7 @@ namespace SQLite4Unity3d
 
                     while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                     {
-                        var obj = ILRuntimeHelper.AppDomain.Instantiate(map.MappedType.FullName);
+                        var obj = ILRuntimeHelper.CreateILRuntimeInstance(map.MappedType); 
                         for (int i = 0; i < cols.Length; i++)
                         {
                             if (cols[i] == null)
@@ -2146,7 +2146,6 @@ namespace SQLite4Unity3d
                             var val = ReadCol(stmt, i, colType, cols[i].ColumnType);
                             cols[i].SetValue(obj, val);
                         }
-
                         yield return obj;
                     }
                 }

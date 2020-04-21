@@ -87,8 +87,12 @@ public class Window_DemoMain : AWindow
         //代码:
         this.btn_04.onClick.AddListener(() =>
         {
-            UIManager.Inst.LoadWindow(WinEnum.Win_Demo6);
+            //测试多个接口
+            var list = new List<WinEnum>(){WinEnum.Win_Demo6};
+            UIManager.Inst.LoadWindows(list);
             UIManager.Inst.ShowWindow(WinEnum.Win_Demo6);
+            BDebug.Log("加载成功!");
+            //
         });
 
 
