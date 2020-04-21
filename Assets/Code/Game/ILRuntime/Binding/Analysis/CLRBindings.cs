@@ -23,7 +23,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_Type_Binding.Register(app);
             BDFramework_ILRuntimeHelper_Binding.Register(app);
             System_Reflection_Assembly_Binding.Register(app);
-            UnityEngine_Debug_Binding.Register(app);
             System_Linq_Enumerable_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding_Enumerator_Binding.Register(app);

@@ -554,7 +554,6 @@
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Behaviour_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Camera_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Color_Binding.cs" />
-    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Debug_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Events_UnityEvent_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_Events_UnityEventBase_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_GameObject_Binding.cs" />
@@ -576,7 +575,9 @@
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\System_Reflection_PropertyInfo_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\System_Type_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Component_Binding.cs" />
+    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Debug_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Transform_ManualBinding.cs" />
+    <Compile Include="Assets\Code\Game\ILRuntime\Binding\PreBinding\CLRBindings.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Delegate\ILRuntimeDelegateHelper.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\ILTypeHelper.cs" />
     <Compile Include="Assets\Code\Game\LocalGameStart.cs" />
