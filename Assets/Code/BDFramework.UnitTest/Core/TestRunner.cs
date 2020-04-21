@@ -42,10 +42,9 @@ namespace BDFramework.UnitTest
             ExcuteTest<HotfixUnitTestAttribute>();
         }
 
-
         #endregion
 
-        
+
         /// <summary>
         /// 测试函数的集合
         /// </summary>
@@ -57,7 +56,7 @@ namespace BDFramework.UnitTest
         public class TestMethodData
         {
             public UnitTestBaseAttribute TestData;
-            public MethodInfo MethodInfo;
+            public MethodInfo            MethodInfo;
         }
 
 
@@ -112,7 +111,7 @@ namespace BDFramework.UnitTest
                 foreach (var method in methods)
                 {
                     var mattrs = method.GetCustomAttributes(attribute, false);
-                    var mattr = mattrs[0] as UnitTestBaseAttribute;
+                    var mattr  = mattrs[0] as UnitTestBaseAttribute;
 
                     //数据
                     var newMethodData = new TestMethodData() {MethodInfo = method, TestData = mattr,};
@@ -146,29 +145,27 @@ namespace BDFramework.UnitTest
         {
             foreach (var item in testMethodDataMap)
             {
-                Debug.LogFormat("<color=yellow>---->执行:{0} </color>", item.Key.FullName);
-
-                foreach (var methodData in item.Value)
+                //判断当前执行的测试类型
+                var md = item.Value.FindAll((_item) => _item.TestData is T);
+                if(md.Count>0)
                 {
-                    //判断当前执行的测试类型
-                    if (!(methodData.TestData is T))
-                    {
-                        continue;
-                    }
-
+                    Debug.LogFormat("<color=yellow>---->执行:{0} </color>", item.Key.FullName);
+                }
+                foreach (var methodData in md)
+                {
                     //开始执行测试
                     try
                     {
                         methodData.MethodInfo.Invoke(null, null);
                         Debug.LogFormat("<color=green>执行 {0}: 成功! - {1}</color>", methodData.TestData.Des,
-                            methodData.MethodInfo.Name);
+                                        methodData.MethodInfo.Name);
                     }
                     catch (Exception e)
                     {
                         Debug.LogErrorFormat("<color=red>执行 {0}: 失败! - {1}</color>", methodData.TestData.Des,
                                              methodData.MethodInfo.Name);
 
-                        if (e.InnerException != null)
+                        if (e.InnerException!=null)
                             Debug.LogError(e.InnerException.Message + "\n" + e.InnerException.StackTrace);
                         else
                             Debug.LogError(e.Message + "\n" + e.StackTrace);

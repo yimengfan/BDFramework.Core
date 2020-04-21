@@ -60,15 +60,13 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_String_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
             BDFramework_VersionContrller_VersionContorller_Binding.Register(app);
-            UnityEngine_WaitForSeconds_Binding.Register(app);
-            System_NotSupportedException_Binding.Register(app);
-            UnityEngine_Transform_Binding.Register(app);
             System_Array_Binding.Register(app);
             SQLite4Unity3d_SQLiteConnection_Binding.Register(app);
             SQLite4Unity3d_SQLiteCommand_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding_Enumerator_Binding.Register(app);
             UnityEngine_UI_ScrollRect_Binding.Register(app);
+            UnityEngine_Transform_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding_Enumerator_Binding.Register(app);
@@ -98,6 +96,8 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_List_1_String_Binding_Enumerator_Binding.Register(app);
+            UnityEngine_WaitForSeconds_Binding.Register(app);
+            System_NotSupportedException_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_Int32_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_List_1_ILTypeInstance_Binding.Register(app);

@@ -145,16 +145,14 @@ namespace BDFramework.UnitTest
         {
             foreach (var item in testMethodDataMap)
             {
-                Debug.LogFormat("<color=yellow>---->执行:{0} </color>", item.Key.FullName);
-
-                foreach (var methodData in item.Value)
+                //判断当前执行的测试类型
+                var md = item.Value.FindAll((_item) => _item.TestData is T);
+                if(md.Count>0)
                 {
-                    //判断当前执行的测试类型
-                    if (!(methodData.TestData is T))
-                    {
-                        continue;
-                    }
-
+                    Debug.LogFormat("<color=yellow>---->执行:{0} </color>", item.Key.FullName);
+                }
+                foreach (var methodData in md)
+                {
                     //开始执行测试
                     try
                     {
