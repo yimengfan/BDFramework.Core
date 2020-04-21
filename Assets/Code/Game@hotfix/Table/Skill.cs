@@ -14,9 +14,8 @@ namespace Game.Data
     using System.Collections.Generic;
     using Game.Data;
     using SQLite4Unity3d;
-    
-    
-    public struct Skill
+ 
+    public class Skill
     {
         
         // 技能
