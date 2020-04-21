@@ -42,11 +42,11 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        /// <param name="isUseCallback"></param>
+        /// <param name="isTriggerCallback"></param>
         static public void TriggerEvent(this ADataListener dl, Enum name, object value = null,
-                                        bool               isUseCallback = true)
+                                        bool               isTriggerCallback = true)
         {
-            dl.TriggerEvent(name.ToString(), value, isUseCallback);
+            dl.TriggerEvent(name.ToString(), value, isTriggerCallback);
         }
 
         /// <summary>

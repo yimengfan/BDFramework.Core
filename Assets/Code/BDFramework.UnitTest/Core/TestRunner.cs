@@ -163,7 +163,15 @@ namespace BDFramework.UnitTest
                     {
                         Debug.LogErrorFormat("<color=red>执行{0}: {1}</color>", methodData.MethodInfo.Name,
                             e.InnerException.Message);
-                        Debug.Log(e.StackTrace);
+                        //打印堆栈
+                        if (!ILRuntimeHelper.IsRunning)
+                        {
+                            Debug.Log(e.InnerException.StackTrace);
+                        }
+                        else
+                        {
+                            ILRuntimeHelper.LogStackTrace();
+                        }
                     }
                 }
             }

@@ -35,6 +35,37 @@ namespace Tests
             Assert.Equals(count, 100);
         }
 
+        [UnitTestAttribute(Des = "值类型测试")]
+        public static void AddListener_ValuetypeParams()
+        {
+            int count   = 0;
+            var service = DataListenerServer.Create(nameof(Msg.test));
+            service.AddData(Msg.test);
+            service.AddListener<int>(Msg.test, triggerNum: 10, action: (o) =>
+            {
+                Debug.Log("收到值:" + o);
+            });
+            service.TriggerEvent(Msg.test, 10086);
+            
+            DataListenerServer.DelService(nameof(Msg.test));
+            Assert.IsPass(true);
+        }
+        
+        [UnitTestAttribute(Des = "引用类型测试")]
+        public static void AddListener_objecttypeParams()
+        {
+            int count   = 0;
+            var service = DataListenerServer.Create(nameof(Msg.test));
+            service.AddData(Msg.test);
+            service.AddListener<object>(Msg.test, triggerNum: 10, action: (o) =>
+            {
+                Debug.Log("收到值:" + o);
+            });
+            service.TriggerEvent(Msg.test, "一零零八六");
+            
+            DataListenerServer.DelService(nameof(Msg.test));
+            Assert.IsPass(true);
+        }
 
         public class Msg_ParamTest
         {

@@ -139,5 +139,19 @@ namespace BDFramework
         /// 所有UIComponent的类型
         /// </summary>
         public static Dictionary<string, Type> UIComponentTypes = new Dictionary<string, Type>();
+
+        #region 辅助工具类
+
+        /// <summary>
+        /// 打印堆栈
+        /// </summary>
+        static public void LogStackTrace()
+        {
+            
+          //  Application.
+        }
+        
+
+        #endregion
     }
 }
