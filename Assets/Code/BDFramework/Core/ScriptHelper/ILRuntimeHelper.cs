@@ -149,7 +149,29 @@ namespace BDFramework
         {
             // ILRuntimeHelper.AppDomain.DebugService.GetStackTrace()
         }
-        
+
+
+        /// <summary>
+        /// 创建实例
+        /// </summary>
+        /// <param name="value_type"></param>
+        /// <returns></returns>
+        static public object CreateILRuntimeInstance(Type value_type)
+        {
+            object instance;
+            if (value_type is ILRuntime.Reflection.ILRuntimeType)
+            {
+                instance = ((ILRuntime.Reflection.ILRuntimeType) value_type).ILType.Instantiate();
+            }
+            else
+            {
+                if (value_type is ILRuntime.Reflection.ILRuntimeWrapperType)
+                    value_type = ((ILRuntime.Reflection.ILRuntimeWrapperType) value_type).RealType;
+                instance = Activator.CreateInstance(value_type);
+            }
+
+            return instance;
+        }
 
         #endregion
     }
