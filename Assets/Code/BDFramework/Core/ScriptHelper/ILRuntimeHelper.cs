@@ -147,8 +147,7 @@ namespace BDFramework
         /// </summary>
         static public void LogStackTrace()
         {
-            
-          //  Application.
+            // ILRuntimeHelper.AppDomain.DebugService.GetStackTrace()
         }
         
 

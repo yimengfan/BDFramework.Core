@@ -18,6 +18,7 @@ namespace BDFramework.UnitTest
         /// </summary>
         static public void RunAPIUnitTest()
         {
+            Debug.Log("<color=red>----------------------开始测试-----------------------</color>");
             //热更模式
             CollectTestClassData(TestType.MonoOrCLR);
             //执行普通的测试
@@ -156,22 +157,15 @@ namespace BDFramework.UnitTest
                     try
                     {
                         methodData.MethodInfo.Invoke(null, null);
-                        Debug.LogFormat("<color=green>执行:{0}: 成功! - {1}</color>", methodData.TestData.Des,
+                        Debug.LogFormat("<color=green>执行 {0}: 成功! - {1}</color>", methodData.TestData.Des,
                             methodData.MethodInfo.Name);
                     }
                     catch (Exception e)
                     {
-                        Debug.LogErrorFormat("<color=red>执行{0}: {1}</color>", methodData.MethodInfo.Name,
-                            e.InnerException.Message);
-                        //打印堆栈
-                        if (!ILRuntimeHelper.IsRunning)
-                        {
-                            Debug.Log(e.InnerException.StackTrace);
-                        }
-                        else
-                        {
-                            ILRuntimeHelper.LogStackTrace();
-                        }
+                        Debug.LogErrorFormat("<color=red>执行 {0}: 失败! - {1}</color>", methodData.TestData.Des,
+                                             methodData.MethodInfo.Name);
+                        if(!ILRuntimeHelper.IsRunning)
+                        Debug.LogError(e.InnerException.Message +"\n" +e.InnerException.StackTrace);
                     }
                 }
             }

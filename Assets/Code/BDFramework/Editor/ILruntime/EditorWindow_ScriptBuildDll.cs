@@ -88,7 +88,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     /// 编译模式
     /// </summary>
     /// <param name="mode"></param>
-    static void RoslynBuild(ScriptBuildTools.BuildMode mode)
+    static public void RoslynBuild(ScriptBuildTools.BuildMode mode)
     {
         //1.build dll
         var outpath_win = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);

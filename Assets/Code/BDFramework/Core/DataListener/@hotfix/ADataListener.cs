@@ -48,14 +48,14 @@ namespace BDFramework.DataListener
             }
         }
 
-       /// <summary>
-       /// 设置数据
-       /// </summary>
-       /// <param name="name">数据名</param>
-       /// <param name="value">数据值</param>
-       /// <param name="isTriggerCallback">是否触发回调</param>
-       /// <param name="isOnlyTriggerEvent">是否只响应事件（不返回值）</param>
-        virtual public void SetData(string name, object value, bool isTriggerCallback = true,bool isOnlyTriggerEvent=false)
+        /// <summary>
+        /// 设置数据
+        /// </summary>
+        /// <param name="name">数据名</param>
+        /// <param name="value">数据值</param>
+        /// <param name="isTriggerCallback">是否触发回调</param>
+        /// <param name="isOnlyTriggerEvent">是否只响应事件（不返回值）</param>
+        virtual public void SetData(string name, object value, bool isTriggerCallback = true)
         {
             //移除任务 执行
             while (removeTaskQueue.Count > 0)
@@ -84,17 +84,17 @@ namespace BDFramework.DataListener
                     var lastV = dataMap[name];
                     if (lastV != null)
                     {
-                        var lastT = lastV.GetType();
-                        var nowT  = value.GetType();
-                        if (lastT != nowT)
+                        var lastT    = lastV.GetType();
+                        var currentT = value.GetType();
+                        if (lastT != currentT)
                         {
                             Debug.LogErrorFormat("设置失败,类型不匹配:{0}  curType:{1}  setType:{2}", name, lastT.Name,
-                                                 nowT.Name);
+                                                 currentT.Name);
                             return;
                         }
                     }
                 }
-                
+
                 dataMap[name] = value;
             }
             else
@@ -115,18 +115,8 @@ namespace BDFramework.DataListener
                     for (int i = 0; i < listenerCallbackDatas.Count; i++)
                     {
                         var listenerCallback = listenerCallbackDatas[i];
-
-                        if (isOnlyTriggerEvent)
-                        {
-                            //触发事件
-                            listenerCallback.TriggerEvent();
-                        }
-                        else
-                        {
-                            //执行回调
-                            listenerCallback.Invoke(value);
-                        }
-                       
+                        //执行回调
+                        listenerCallback.Invoke(value);
                     }
 
                     //清理列表
@@ -232,22 +222,7 @@ namespace BDFramework.DataListener
 
                 ActionAdaptor.Invoke(value);
             }
-
-
-            /// <summary>
-            /// 触发事件
-            /// </summary>
-            public void TriggerEvent()
-            {
-                if (TriggerNum == 0)
-                    return;
-                if (TriggerNum > 0)
-                {
-                    TriggerNum--;
-                }
-                
-                ActionAdaptor.TriggerEvent();
-            }
+            
         }
 
         /// <summary>
@@ -255,9 +230,8 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        virtual public void AddListener<T>(string name, Action<T> callback,
-                                           int order = -1, int triggerNum = -1,
-                                           bool   isTriggerCacheData = false)
+        virtual public void AddListener<T>(string name, Action<T> callback, int order = -1, int triggerNum = -1,
+                                           bool   isTriggerCacheData = false) where T : class
         {
             if (!dataMap.ContainsKey(name))
             {

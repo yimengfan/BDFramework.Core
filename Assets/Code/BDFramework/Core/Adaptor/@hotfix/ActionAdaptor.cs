@@ -32,7 +32,7 @@ namespace BDFramework.Adaptor
     /// Action的适配器
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ActionAdaptor<T> :AActionAdaptor 
+    public class ActionAdaptor<T> :AActionAdaptor  where T : class
     {
         //缓存的action
         public Action<T> Action { get; private set; }
@@ -46,22 +46,17 @@ namespace BDFramework.Adaptor
         /// <param name="o"></param>
         public override void Invoke(object o)
         {
-            // if (o == null)
-            // {
-            //     BDebug.LogError("数据监听返回为null,不执行回调:"+ Action.GetType().FullName);
-            //     return;
-            // }
-            var t = (T)o;
-            Action.Invoke(t);
-        }
+            if (o != null)
+            {
+                var t = (T)o;
+                Action.Invoke(t);
+            }
+            else
+            {
+               
+                Action.Invoke(null);
+            }
 
-        /// <summary>
-        /// 触发事件
-        /// </summary>
-        public override void TriggerEvent()
-        {
-            var t = default(T);
-            Action.Invoke(t);
         }
 
         /// <summary>

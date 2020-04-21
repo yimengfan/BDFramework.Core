@@ -22,6 +22,7 @@ namespace BDFramework.UnitTest
             CollectTestClassData(TestType.MonoOrCLR);
             //执行普通的测试
             ExcuteTest<UnitTestAttribute>();
+            ExcuteTest<HotfixUnitTestAttribute>();
         }
 
 
@@ -30,7 +31,7 @@ namespace BDFramework.UnitTest
         /// </summary>
         static public void RunHotfixUnitTest()
         {
-            BDebug.Log("-----------------------执行hotfix unitTest------------------------","red");
+            Debug.Log("<color=red>----------------------开始测试-----------------------</color>");
             //搜集测试用例
             CollectTestClassData(TestType.ILRuntime);
             //1.执行普通的测试
@@ -39,10 +40,9 @@ namespace BDFramework.UnitTest
             ExcuteTest<HotfixUnitTestAttribute>();
         }
 
-
         #endregion
 
-        
+
         /// <summary>
         /// 测试函数的集合
         /// </summary>
@@ -54,7 +54,7 @@ namespace BDFramework.UnitTest
         public class TestMethodData
         {
             public UnitTestBaseAttribute TestData;
-            public MethodInfo MethodInfo;
+            public MethodInfo            MethodInfo;
         }
 
 
@@ -104,11 +104,12 @@ namespace BDFramework.UnitTest
                 // var attrs = type.GetCustomAttributes(attribute,false);
                 // var attr = attrs[0] as HotfixTest;
                 var testMethodDataList = new List<TestMethodData>();
+                testMethodDataMap[type] = testMethodDataList;
                 //获取uit test并排序
                 foreach (var method in methods)
                 {
                     var mattrs = method.GetCustomAttributes(attribute, false);
-                    var mattr = mattrs[0] as UnitTestBaseAttribute;
+                    var mattr  = mattrs[0] as UnitTestBaseAttribute;
 
                     //数据
                     var newMethodData = new TestMethodData() {MethodInfo = method, TestData = mattr,};
@@ -132,8 +133,6 @@ namespace BDFramework.UnitTest
                         testMethodDataList.Add(newMethodData);
                     }
                 }
-
-                testMethodDataMap[type] = testMethodDataList;
             }
         }
 
@@ -158,13 +157,16 @@ namespace BDFramework.UnitTest
                     try
                     {
                         methodData.MethodInfo.Invoke(null, null);
-                        Debug.LogFormat("<color=green>执行:{0}: 成功! - {1}</color>", methodData.TestData.Des,
-                            methodData.MethodInfo.Name);
+                        Debug.LogFormat("<color=green>执行 {0}: 成功! - {1}</color>", methodData.TestData.Des,
+                                        methodData.MethodInfo.Name);
                     }
                     catch (Exception e)
                     {
-                        Debug.LogErrorFormat("<color=red>执行{0} 失败!</color>",methodData.MethodInfo.Name);
-                        Debug.Log(e.Message+"\n"+e.StackTrace);
+                        Debug.LogErrorFormat("<color=red>执行 {0}: 失败! - {1}</color>", methodData.TestData.Des,
+                                             methodData.MethodInfo.Name);
+
+                        if (!ILRuntimeHelper.IsRunning)
+                            Debug.LogError(e.InnerException.Message + "\n" + e.InnerException.StackTrace);
                     }
                 }
             }

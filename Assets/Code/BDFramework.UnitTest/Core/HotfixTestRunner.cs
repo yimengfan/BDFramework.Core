@@ -18,8 +18,8 @@ namespace BDFramework.UnitTest
         /// </summary>
         public void RunUnitTest()
         {
-            
-           
+       
+
             BDLauncher.Inst.Launch();
        
            

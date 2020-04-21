@@ -35,7 +35,15 @@ namespace BDFramework.Editor.TestRunner
         {
             RunILRuntimeTest();
         }
-
+        /// <summary>
+        /// ilrutnime的逻辑测试
+        /// </summary>
+        [MenuItem("BDFrameWork工具箱/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int)BDEditorMenuEnum.TestRunnerEditor)]
+        public static void UnitTestILRuntimeWithRebuildDll()
+        {
+            EditorWindow_ScriptBuildDll.RoslynBuild( ScriptBuildTools.BuildMode.Debug);
+            RunILRuntimeTest();
+        }
 
         /// <summary>
         /// 执行Clrtest

@@ -70,7 +70,7 @@ namespace BDFramework.DataListener
         /// <param name="isTriggerCacheData"></param>
         static public void AddListener<T>(this ADataListener dl, Enum name, Action<T> action = null,
                                           int                order      = -1,
-                                          int                triggerNum = -1, bool isTriggerCacheData = false)
+                                          int                triggerNum = -1, bool isTriggerCacheData = false)  where T:class
         {
             dl.AddListener<T>(name.ToString(), action, order, triggerNum, isTriggerCacheData);
         }

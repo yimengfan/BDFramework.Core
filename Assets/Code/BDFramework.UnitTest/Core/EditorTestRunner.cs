@@ -19,6 +19,8 @@ namespace BDFramework.UnitTest
         public void RunUnitTest()
         {
 
+           
+
             //提前注册好生命周期 相关测试
             BDLauncher.OnBDFrameInitializedForTest = () =>
             {
