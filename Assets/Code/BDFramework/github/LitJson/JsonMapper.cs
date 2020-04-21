@@ -547,12 +547,13 @@ namespace LitJson
 
                         if (prop_data.IsField)
                         {
-                            ((FieldInfo) prop_data.Info).SetValue(
-                                instance, ReadValue(prop_data.Type, reader));
+                            var p_prop = ((FieldInfo) prop_data.Info);
+                            var value = ReadValue(prop_data.Type, reader);
+                            p_prop.SetValue(instance,value );
                         }
                         else
                         {
-                            PropertyInfo p_info = (PropertyInfo) prop_data.Info;
+                            var p_info = (PropertyInfo) prop_data.Info;
                             var value = ReadValue(prop_data.Type, reader);
                             p_info.SetValue(instance,  value);
                         }
