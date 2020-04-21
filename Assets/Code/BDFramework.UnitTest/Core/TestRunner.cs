@@ -18,6 +18,7 @@ namespace BDFramework.UnitTest
         /// </summary>
         static public void RunAPIUnitTest()
         {
+            Debug.ClearDeveloperConsole();
             Debug.Log("<color=red>----------------------开始测试-----------------------</color>");
             //热更模式
             CollectTestClassData(TestType.MonoOrCLR);
@@ -31,6 +32,8 @@ namespace BDFramework.UnitTest
         /// </summary>
         static public void RunHotfixUnitTest()
         {
+            Debug.ClearDeveloperConsole();
+            Debug.Log("<color=red>----------------------开始测试-----------------------</color>");
             //搜集测试用例
             CollectTestClassData(TestType.ILRuntime);
             //1.执行普通的测试
@@ -164,8 +167,11 @@ namespace BDFramework.UnitTest
                     {
                         Debug.LogErrorFormat("<color=red>执行 {0}: 失败! - {1}</color>", methodData.TestData.Des,
                                              methodData.MethodInfo.Name);
-                        if(!ILRuntimeHelper.IsRunning)
-                        Debug.LogError(e.InnerException.Message +"\n" +e.InnerException.StackTrace);
+
+                        if (e.InnerException != null)
+                            Debug.LogError(e.InnerException.Message + "\n" + e.InnerException.StackTrace);
+                        else
+                            Debug.LogError(e.Message + "\n" + e.StackTrace);
                     }
                 }
             }

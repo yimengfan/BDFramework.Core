@@ -177,7 +177,7 @@ namespace Tests
                 count++;
             };
             //初始化数据
-            service.AddListener(nameof(Msg.test), triggerNum: 10, order: 10, callback: callback);
+            service.AddListener<object>(nameof(Msg.test), triggerNum: 10, order: 10, callback: callback);
 
             //测试
             for (int i = 0; i < 10; i++)

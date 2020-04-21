@@ -24,7 +24,7 @@ namespace Tests
             {
                 int test = 110;
             }
-            Assert.IsTrue(o==null,"map TryGet API Wrong");
+            Assert.IsTrue(o==null,"map TryGet API 失败");
         }
     }
 }

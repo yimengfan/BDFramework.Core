@@ -65,14 +65,7 @@ namespace BDFramework.Adaptor
         /// <param name="o"></param>
         public override bool Equals(object o)
         {
-            var action = o as Action<T>;
-
-            if (this.Action == action)
-            {
-                return true;
-            }
-
-            return false;
+            return this.Action.Equals(o);
         }
     }
 }
