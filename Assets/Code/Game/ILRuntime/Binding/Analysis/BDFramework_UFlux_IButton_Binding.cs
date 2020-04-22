@@ -26,6 +26,7 @@ namespace ILRuntime.Runtime.Generated
             field = type.GetField("onClick", flag);
             app.RegisterCLRFieldGetter(field, get_onClick_0);
             app.RegisterCLRFieldSetter(field, set_onClick_0);
+            app.RegisterCLRFieldBinding(field, CopyToStack_onClick_0, AssignFromStack_onClick_0);
 
 
         }
@@ -36,10 +37,26 @@ namespace ILRuntime.Runtime.Generated
         {
             return ((BDFramework.UFlux.IButton)o).onClick;
         }
+
+        static StackObject* CopyToStack_onClick_0(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
+        {
+            var result_of_this_method = ((BDFramework.UFlux.IButton)o).onClick;
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
         static void set_onClick_0(ref object o, object v)
         {
             ((BDFramework.UFlux.IButton)o).onClick = (BDFramework.UFlux.IComponentOnClick)v;
         }
+
+        static StackObject* AssignFromStack_onClick_0(ref object o, ILIntepreter __intp, StackObject* ptr_of_this_method, IList<object> __mStack)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            BDFramework.UFlux.IComponentOnClick @onClick = (BDFramework.UFlux.IComponentOnClick)typeof(BDFramework.UFlux.IComponentOnClick).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            ((BDFramework.UFlux.IButton)o).onClick = @onClick;
+            return ptr_of_this_method;
+        }
+
 
 
     }

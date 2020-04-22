@@ -30,6 +30,7 @@ namespace ILRuntime.Runtime.Generated
             field = type.GetField("Data", flag);
             app.RegisterCLRFieldGetter(field, get_Data_0);
             app.RegisterCLRFieldSetter(field, set_Data_0);
+            app.RegisterCLRFieldBinding(field, CopyToStack_Data_0, AssignFromStack_Data_0);
 
 
         }
@@ -56,10 +57,26 @@ namespace ILRuntime.Runtime.Generated
         {
             return ((BDFramework.Config)o).Data;
         }
+
+        static StackObject* CopyToStack_Data_0(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
+        {
+            var result_of_this_method = ((BDFramework.Config)o).Data;
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
         static void set_Data_0(ref object o, object v)
         {
             ((BDFramework.Config)o).Data = (BDFramework.GameConfig)v;
         }
+
+        static StackObject* AssignFromStack_Data_0(ref object o, ILIntepreter __intp, StackObject* ptr_of_this_method, IList<object> __mStack)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            BDFramework.GameConfig @Data = (BDFramework.GameConfig)typeof(BDFramework.GameConfig).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            ((BDFramework.Config)o).Data = @Data;
+            return ptr_of_this_method;
+        }
+
 
 
     }

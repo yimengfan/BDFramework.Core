@@ -16,7 +16,7 @@ namespace Game.Data
     using SQLite4Unity3d;
     
     
-    public struct Skill
+    public class Skill
     {
         
         // 技能

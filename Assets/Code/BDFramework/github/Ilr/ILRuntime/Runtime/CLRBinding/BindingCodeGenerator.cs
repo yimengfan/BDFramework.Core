@@ -32,8 +32,8 @@ namespace ILRuntime.Runtime.CLRBinding
             {
                 string clsName, realClsName;
                 bool isByRef;
-//                if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
-//                    continue;
+                if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
+                    continue;
                 i.GetClassName(out clsName, out realClsName, out isByRef);
                 clsNames.Add(clsName);
                 
@@ -202,12 +202,19 @@ namespace ILRuntime.Runtime.Generated
                     clsName = clsName + "_t";
                 clsNames.Add(clsName);
                 
-                string oFileName = outputPath + "/" + clsName;
-                int len = Math.Min(oFileName.Length, 100);
-                if (len < oFileName.Length)
-                    oFileName = oFileName.Substring(0, len) + "_t";
+                //File path length limit
+                string oriFileName = outputPath + "/" + clsName;
+                int len = Math.Min(oriFileName.Length, 100);
+                if (len < oriFileName.Length)
+                    oriFileName = oriFileName.Substring(0, len);
+
+                int extraNameIndex = 0;
+                string oFileName = oriFileName;
                 while (files.Contains(oFileName))
-                    oFileName = oFileName + "_t";
+                {
+                    extraNameIndex++;
+                    oFileName = oriFileName + "_t" + extraNameIndex;
+                }
                 files.Add(oFileName);
                 oFileName = oFileName + ".cs";
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter(oFileName, false, new UTF8Encoding(false)))
@@ -441,8 +448,7 @@ namespace ILRuntime.Runtime.Generated
                                                             info.DefaultInstanceNeeded = true;
                                                         }
                                                     }
-                                                    if (t.TypeForCLR.CheckCanPinn() || !t.IsValueType)
-                                                        info.Fields.Add(fi);
+                                                    info.Fields.Add(fi);
                                                 }
                                             }
                                         }

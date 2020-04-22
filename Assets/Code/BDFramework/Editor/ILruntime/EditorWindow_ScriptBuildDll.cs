@@ -181,8 +181,7 @@ namespace ILRuntime.Runtime.Generated
         BindingCodeGenerator.GenerateBindingCode(preBindingTypes, clrbingdingClassName: "PreCLRBinding",
                                                  outputPath: "Assets/Code/Game/ILRuntime/Binding/PreBinding");
     }
-
-
+    
     static Type[] manualBindingTypes = new Type[]
     {
         typeof(MethodBase), typeof(MemberInfo), typeof(FieldInfo), typeof(MethodInfo),

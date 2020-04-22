@@ -54,6 +54,14 @@ appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.EventSystems.UIBeha
 
 appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.Transform, System.Object>();
 
+appdomain.DelegateManager.RegisterDelegateConvertor<System.Predicate<ILRuntime.Runtime.Intepreter.ILTypeInstance>>((act) =>
+{
+    return new System.Predicate<ILRuntime.Runtime.Intepreter.ILTypeInstance>((obj) =>
+    {
+        return ((Func<ILRuntime.Runtime.Intepreter.ILTypeInstance, System.Boolean>)act)(obj);
+    });
+});
+
 //[insert]
 
     }
