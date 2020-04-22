@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ namespace ILRuntime.Runtime.CLRBinding
         
         public static void GenerateBindingCode(List<Type> types, string outputPath, 
                                                HashSet<MethodBase> excludeMethods = null, HashSet<FieldInfo> excludeFields = null, 
-                                               List<Type> valueTypeBinders = null, List<Type> delegateTypes = null)
+                                               List<Type> valueTypeBinders = null, List<Type> delegateTypes = null,
+                                               string clrbingdingClassName= "CLRBindings")
         {
             if (!System.IO.Directory.Exists(outputPath))
                 System.IO.Directory.CreateDirectory(outputPath);
@@ -30,8 +32,8 @@ namespace ILRuntime.Runtime.CLRBinding
             {
                 string clsName, realClsName;
                 bool isByRef;
-//                if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
-//                    continue;
+                if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
+                    continue;
                 i.GetClassName(out clsName, out realClsName, out isByRef);
                 clsNames.Add(clsName);
                 
@@ -77,7 +79,7 @@ namespace ILRuntime.Runtime.Generated
                     ConstructorInfo[] ctors = i.GetConstructors(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly);
                     string ctorRegisterCode = i.GenerateConstructorRegisterCode(ctors, excludeMethods);
                     string methodWraperCode = i.GenerateMethodWraperCode(methods, realClsName, excludeMethods, valueTypeBinders, null);
-                    string fieldWraperCode = i.GenerateFieldWraperCode(fields, realClsName, excludeFields);
+                    string fieldWraperCode = i.GenerateFieldWraperCode(fields, realClsName, excludeFields,valueTypeBinders,null);
                     string cloneWraperCode = i.GenerateCloneWraperCode(fields, realClsName);
                     string ctorWraperCode = i.GenerateConstructorWraperCode(ctors, realClsName, excludeMethods, valueTypeBinders);
 
@@ -125,7 +127,7 @@ namespace ILRuntime.Runtime.Generated
             var delegateClsNames = GenerateDelegateBinding(delegateTypes, outputPath);
             clsNames.AddRange(delegateClsNames);
 
-            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath);
+            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath,clrbingdingClassName);
         }
 
         internal class CLRBindingGenerateInfo
@@ -155,9 +157,9 @@ namespace ILRuntime.Runtime.Generated
             }
         }
 
-        public static void GenerateBindingCode(ILRuntime.Runtime.Enviorment.AppDomain domain, string outputPath, 
+        public static void GenerateAnalysisBindingCode(ILRuntime.Runtime.Enviorment.AppDomain domain, string outputPath, 
                                                List<Type> valueTypeBinders = null, List<Type> delegateTypes = null,
-                                               List<Type> notGenTypes =null)
+                                               List<Type> excludeType =null,string clrbindingClassName = "CLRBindings")
         {
             if (domain == null)
                 return;
@@ -186,26 +188,33 @@ namespace ILRuntime.Runtime.Generated
                 Type i = info.Value.Type;
 
                 //这里不生成
-                if(notGenTypes!=null&& notGenTypes.Contains(i)) continue;
+                if(excludeType!=null&& excludeType.Contains(i)) continue;
                 //CLR binding for delegate is important for cross domain invocation,so it should be generated
                 //if (i.BaseType == typeof(MulticastDelegate))
                 //    continue;
 
                 string clsName, realClsName;
                 bool isByRef;
-//                if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
-//                    continue;
+                if (i.GetCustomAttributes(typeof(ObsoleteAttribute), true).Length > 0)
+                    continue;
                 i.GetClassName(out clsName, out realClsName, out isByRef);
                 if (clsNames.Contains(clsName))
                     clsName = clsName + "_t";
                 clsNames.Add(clsName);
                 
-                string oFileName = outputPath + "/" + clsName;
-                int len = Math.Min(oFileName.Length, 100);
-                if (len < oFileName.Length)
-                    oFileName = oFileName.Substring(0, len) + "_t";
+                //File path length limit
+                string oriFileName = outputPath + "/" + clsName;
+                int len = Math.Min(oriFileName.Length, 100);
+                if (len < oriFileName.Length)
+                    oriFileName = oriFileName.Substring(0, len);
+
+                int extraNameIndex = 0;
+                string oFileName = oriFileName;
                 while (files.Contains(oFileName))
-                    oFileName = oFileName + "_t";
+                {
+                    extraNameIndex++;
+                    oFileName = oriFileName + "_t" + extraNameIndex;
+                }
                 files.Add(oFileName);
                 oFileName = oFileName + ".cs";
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter(oFileName, false, new UTF8Encoding(false)))
@@ -251,7 +260,7 @@ namespace ILRuntime.Runtime.Generated
                     ConstructorInfo[] ctors = info.Value.Constructors.ToArray();
                     string ctorRegisterCode = i.GenerateConstructorRegisterCode(ctors, excludeMethods);
                     string methodWraperCode = i.GenerateMethodWraperCode(methods, realClsName, excludeMethods, valueTypeBinders, domain);
-                    string fieldWraperCode = fields.Length > 0 ? i.GenerateFieldWraperCode(fields, realClsName, excludeFields) : null;
+                    string fieldWraperCode = fields.Length > 0 ? i.GenerateFieldWraperCode(fields, realClsName, excludeFields, valueTypeBinders, domain) : null;
                     string cloneWraperCode = null;
                     if (info.Value.ValueTypeNeeded)
                     {
@@ -309,19 +318,18 @@ namespace ILRuntime.Runtime.Generated
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputPath + "/CLRBindings.cs", false, new UTF8Encoding(false)))
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine(@"using System;
+                sb.Append(@"using System;
 using System.Collections.Generic;
 using System.Reflection;
-
 namespace ILRuntime.Runtime.Generated
 {
-    class CLRBindings
+    class {0}
     {
         /// <summary>
         /// Initialize the CLR binding, please invoke this AFTER CLR Redirection registration
         /// </summary>
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
-        {");
+        {".Replace("{0}",clrbindingClassName));
                 foreach (var i in clsNames)
                 {
                     sb.Append("            ");
@@ -338,7 +346,7 @@ namespace ILRuntime.Runtime.Generated
             var delegateClsNames = GenerateDelegateBinding(delegateTypes, outputPath);
             clsNames.AddRange(delegateClsNames);
 
-            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath);
+            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath,clrbindingClassName);
         }
 
         internal static void CrawlAppdomain(ILRuntime.Runtime.Enviorment.AppDomain domain, Dictionary<Type, CLRBindingGenerateInfo> infos)
@@ -440,8 +448,7 @@ namespace ILRuntime.Runtime.Generated
                                                             info.DefaultInstanceNeeded = true;
                                                         }
                                                     }
-                                                    if (t.TypeForCLR.CheckCanPinn() || !t.IsValueType)
-                                                        info.Fields.Add(fi);
+                                                    info.Fields.Add(fi);
                                                 }
                                             }
                                         }
@@ -710,22 +717,23 @@ namespace ILRuntime.Runtime.Generated
             return clsNames;
         }
 
-        internal static void GenerateBindingInitializeScript(List<string> clsNames, List<Type> valueTypeBinders, string outputPath)
+        internal static void GenerateBindingInitializeScript(List<string> clsNames, List<Type> valueTypeBinders, string outputPath,string clrbindingClassName = "CLRBindings")
         {
             if (!System.IO.Directory.Exists(outputPath))
                 System.IO.Directory.CreateDirectory(outputPath);
             
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputPath + "/CLRBindings.cs", false, new UTF8Encoding(false)))
             {
+                
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine(@"using System;
+                sb.Append(@"using System;
 using System.Collections.Generic;
 using System.Reflection;
-
 namespace ILRuntime.Runtime.Generated
 {
-    class CLRBindings
-    {");
+    class {0}
+    {".Replace("{0}",clrbindingClassName));
+                
 
                 if (valueTypeBinders != null)
                 {

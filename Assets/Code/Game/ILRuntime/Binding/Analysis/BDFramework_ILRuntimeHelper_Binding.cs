@@ -36,6 +36,7 @@ namespace ILRuntime.Runtime.Generated
             field = type.GetField("UIComponentTypes", flag);
             app.RegisterCLRFieldGetter(field, get_UIComponentTypes_0);
             app.RegisterCLRFieldSetter(field, set_UIComponentTypes_0);
+            app.RegisterCLRFieldBinding(field, CopyToStack_UIComponentTypes_0, AssignFromStack_UIComponentTypes_0);
 
 
         }
@@ -86,10 +87,31 @@ namespace ILRuntime.Runtime.Generated
         {
             return BDFramework.ILRuntimeHelper.UIComponentTypes;
         }
+
+        static StackObject* CopyToStack_UIComponentTypes_0(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
+        {
+            var result_of_this_method = BDFramework.ILRuntimeHelper.UIComponentTypes;
+            object obj_result_of_this_method = result_of_this_method;
+            if(obj_result_of_this_method is CrossBindingAdaptorType)
+            {    
+                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
+            }
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
         static void set_UIComponentTypes_0(ref object o, object v)
         {
             BDFramework.ILRuntimeHelper.UIComponentTypes = (System.Collections.Generic.Dictionary<System.String, System.Type>)v;
         }
+
+        static StackObject* AssignFromStack_UIComponentTypes_0(ref object o, ILIntepreter __intp, StackObject* ptr_of_this_method, IList<object> __mStack)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            System.Collections.Generic.Dictionary<System.String, System.Type> @UIComponentTypes = (System.Collections.Generic.Dictionary<System.String, System.Type>)typeof(System.Collections.Generic.Dictionary<System.String, System.Type>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            BDFramework.ILRuntimeHelper.UIComponentTypes = @UIComponentTypes;
+            return ptr_of_this_method;
+        }
+
 
 
     }

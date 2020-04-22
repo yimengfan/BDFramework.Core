@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-
 namespace ILRuntime.Runtime.Generated
 {
     class CLRBindings
     {
-
         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2> s_UnityEngine_Vector2_Binding_Binder = null;
         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3> s_UnityEngine_Vector3_Binding_Binder = null;
         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector4> s_UnityEngine_Vector4_Binding_Binder = null;
@@ -41,7 +39,6 @@ namespace ILRuntime.Runtime.Generated
             LitJson_JsonMapper_Binding.Register(app);
             System_Action_1_String_Binding.Register(app);
             System_Action_2_Int32_Int32_Binding.Register(app);
-            UnityEngine_UI_Button_Binding.Register(app);
             UnityEngine_Events_UnityEvent_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
             System_Collections_Generic_List_1_GameObject_Binding.Register(app);
@@ -58,14 +55,12 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Camera_Binding.Register(app);
             UnityEngine_Random_Binding.Register(app);
             System_Int32_Binding.Register(app);
-            UnityEngine_UI_Text_Binding.Register(app);
             System_DateTime_Binding.Register(app);
             System_Array_Binding.Register(app);
             SQLite4Unity3d_SQLiteConnection_Binding.Register(app);
             SQLite4Unity3d_SQLiteCommand_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding_Enumerator_Binding.Register(app);
-            UnityEngine_UI_ScrollRect_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding.Register(app);
@@ -85,8 +80,6 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Events_UnityEventBase_Binding.Register(app);
             BDFramework_UFlux_IButton_Binding.Register(app);
             BDFramework_UFlux_IComponentOnClick_Binding.Register(app);
-            UnityEngine_UI_Image_Binding.Register(app);
-            UnityEngine_UI_Graphic_Binding.Register(app);
             System_Collections_IEnumerable_Binding.Register(app);
             System_Collections_Generic_IEnumerable_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_IEnumerator_1_ILTypeInstance_Binding.Register(app);

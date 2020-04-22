@@ -72,8 +72,8 @@ namespace BDFramework
             if (isRegisterBindings)
             {
                 CLRBindings.Initialize(AppDomain);
-                CLRManualBindings.Initialize(AppDomain);
-                // ILRuntime.Runtime.Generated.PreCLRBuilding.Initialize(AppDomain);
+                ManualCLRBindings.Initialize(AppDomain);
+                PreCLRBinding.Initialize(AppDomain);
             }
 
             JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);
