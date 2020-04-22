@@ -268,6 +268,9 @@ public class ScriptBuildTools
         }
         foreach (var cs in codefiles)
         {
+            //判断文件是否存在
+            if (!File.Exists(cs)) continue;
+            //
             var content    = File.ReadAllText(cs);
             var syntaxTree = CSharpSyntaxTree.ParseText(content, opa, cs, Encoding.UTF8);
             codes.Add(syntaxTree);

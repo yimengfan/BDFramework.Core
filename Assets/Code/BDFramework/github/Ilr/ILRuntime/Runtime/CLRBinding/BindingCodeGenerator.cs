@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ namespace ILRuntime.Runtime.CLRBinding
         
         public static void GenerateBindingCode(List<Type> types, string outputPath, 
                                                HashSet<MethodBase> excludeMethods = null, HashSet<FieldInfo> excludeFields = null, 
-                                               List<Type> valueTypeBinders = null, List<Type> delegateTypes = null)
+                                               List<Type> valueTypeBinders = null, List<Type> delegateTypes = null,
+                                               string clrbingdingClassName= "CLRBindings")
         {
             if (!System.IO.Directory.Exists(outputPath))
                 System.IO.Directory.CreateDirectory(outputPath);
@@ -125,7 +127,7 @@ namespace ILRuntime.Runtime.Generated
             var delegateClsNames = GenerateDelegateBinding(delegateTypes, outputPath);
             clsNames.AddRange(delegateClsNames);
 
-            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath);
+            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath,clrbingdingClassName);
         }
 
         internal class CLRBindingGenerateInfo
@@ -155,9 +157,9 @@ namespace ILRuntime.Runtime.Generated
             }
         }
 
-        public static void GenerateBindingCode(ILRuntime.Runtime.Enviorment.AppDomain domain, string outputPath, 
+        public static void GenerateAnalysisBindingCode(ILRuntime.Runtime.Enviorment.AppDomain domain, string outputPath, 
                                                List<Type> valueTypeBinders = null, List<Type> delegateTypes = null,
-                                               List<Type> notGenTypes =null)
+                                               List<Type> excludeType =null,string clrbindingClassName = "CLRBindings")
         {
             if (domain == null)
                 return;
@@ -186,7 +188,7 @@ namespace ILRuntime.Runtime.Generated
                 Type i = info.Value.Type;
 
                 //这里不生成
-                if(notGenTypes!=null&& notGenTypes.Contains(i)) continue;
+                if(excludeType!=null&& excludeType.Contains(i)) continue;
                 //CLR binding for delegate is important for cross domain invocation,so it should be generated
                 //if (i.BaseType == typeof(MulticastDelegate))
                 //    continue;
@@ -309,19 +311,18 @@ namespace ILRuntime.Runtime.Generated
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputPath + "/CLRBindings.cs", false, new UTF8Encoding(false)))
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine(@"using System;
+                sb.Append(@"using System;
 using System.Collections.Generic;
 using System.Reflection;
-
 namespace ILRuntime.Runtime.Generated
 {
-    class CLRBindings
+    class {0}
     {
         /// <summary>
         /// Initialize the CLR binding, please invoke this AFTER CLR Redirection registration
         /// </summary>
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
-        {");
+        {".Replace("{0}",clrbindingClassName));
                 foreach (var i in clsNames)
                 {
                     sb.Append("            ");
@@ -338,7 +339,7 @@ namespace ILRuntime.Runtime.Generated
             var delegateClsNames = GenerateDelegateBinding(delegateTypes, outputPath);
             clsNames.AddRange(delegateClsNames);
 
-            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath);
+            GenerateBindingInitializeScript(clsNames, valueTypeBinders, outputPath,clrbindingClassName);
         }
 
         internal static void CrawlAppdomain(ILRuntime.Runtime.Enviorment.AppDomain domain, Dictionary<Type, CLRBindingGenerateInfo> infos)
@@ -710,22 +711,23 @@ namespace ILRuntime.Runtime.Generated
             return clsNames;
         }
 
-        internal static void GenerateBindingInitializeScript(List<string> clsNames, List<Type> valueTypeBinders, string outputPath)
+        internal static void GenerateBindingInitializeScript(List<string> clsNames, List<Type> valueTypeBinders, string outputPath,string clrbindingClassName = "CLRBindings")
         {
             if (!System.IO.Directory.Exists(outputPath))
                 System.IO.Directory.CreateDirectory(outputPath);
             
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputPath + "/CLRBindings.cs", false, new UTF8Encoding(false)))
             {
+                
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine(@"using System;
+                sb.Append(@"using System;
 using System.Collections.Generic;
 using System.Reflection;
-
 namespace ILRuntime.Runtime.Generated
 {
-    class CLRBindings
-    {");
+    class {0}
+    {".Replace("{0}",clrbindingClassName));
+                
 
                 if (valueTypeBinders != null)
                 {
