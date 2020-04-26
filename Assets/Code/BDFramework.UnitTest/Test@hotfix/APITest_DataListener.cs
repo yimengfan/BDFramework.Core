@@ -106,23 +106,36 @@ namespace Tests
         public static void AddListener_TriggerCount()
         {
             int count   = 0;
+            int triggerNum = 10;
             var service = DataListenerServer.Create(nameof(Msg.test));
             service.AddData(Msg.test);
-            service.AddListener(Msg.test, triggerNum: 10, action: (o) =>
+            service.AddListener(Msg.test, triggerNum: triggerNum, action: (o) =>
             {
                 //每次自增
                 count++;
             });
-
-
             //次数到了之后不会再执行
             for (int i = 0; i < 20; i++)
             {
                 service.TriggerEvent(Msg.test);
             }
-
+            Assert.Equals(count, triggerNum);
+            int count2 = 0;
+            service.AddListenerOnce<object>(Msg.test, (o) =>
+            {
+                //测试
+                count2++;
+            });
+            
+            
+            //测试Once Test
+            for (int i = 0; i < 20; i++)
+            {
+                service.TriggerEvent(Msg.test);
+            }
+            Assert.Equals(count2, 1,"AddOnce 测试失败");
+            
             DataListenerServer.DelService(nameof(Msg.test));
-            Assert.Equals(count, 10);
         }
 
         [UnitTestAttribute(Des = "添加顺序测试")]

@@ -86,11 +86,11 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <param name="callback"></param>
         /// <param name="isTriggerCacheData"></param>
-        static public void AddListenerOnce(this ADataListener dl, Enum name,
+        static public void AddListenerOnce<T>(this ADataListener dl, Enum name,
                                            Action<object>     callback   = null,
-                                           int                triggernum = -1, bool isTriggerCacheData = false)
+                                           int                oder = -1, bool isTriggerCacheData = false)
         {
-            AddListener(dl, name, callback, 1, triggernum, isTriggerCacheData);
+            AddListener(dl, name, callback, oder, 1, isTriggerCacheData);
         }
 
         /// <summary>

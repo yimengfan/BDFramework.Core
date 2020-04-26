@@ -107,7 +107,7 @@ public class Window_DataListener : AWindow
 
             //监听1次
             //默认object监听
-            service.AddListenerOnce(Msg_Test001.Msg1, (o) =>
+            service.AddListenerOnce<object>(Msg_Test001.Msg1, (o) =>
             {
                 Debug.Log( "监听消息1次，并移除：" +  o);
             });
