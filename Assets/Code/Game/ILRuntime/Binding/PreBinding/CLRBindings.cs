@@ -31,9 +31,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_Dropdown_Binding.Register(app);
             UnityEngine_UI_FontData_Binding.Register(app);
             UnityEngine_UI_FontUpdateTracker_Binding.Register(app);
-            UnityEngine_UI_Graphic_Binding.Register(app);
             UnityEngine_UI_GraphicRaycaster_Binding.Register(app);
-            UnityEngine_UI_GraphicRebuildTracker_Binding.Register(app);
             UnityEngine_UI_GraphicRegistry_Binding.Register(app);
             UnityEngine_UI_Image_Binding.Register(app);
             UnityEngine_UI_InputField_Binding.Register(app);
