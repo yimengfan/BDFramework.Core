@@ -97,7 +97,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     /// 编译模式
     /// </summary>
     /// <param name="mode"></param>
-    static public void RoslynBuild(ScriptBuildTools.BuildMode mode)
+    static public void RoslynBuild(ScriptBuildTools.BuildMode mode,string outpath =null)
     {
         var targetPath = "Assets/Code/Game/ILRuntime/Binding/Analysis";
         //分析之前先删除,然后生成临时文件防止报错
@@ -114,22 +114,29 @@ namespace ILRuntime.Runtime.Generated
 }   ";
         FileHelper.WriteAllText(targetPath + "/CLRBindings.cs", fileContent);
         AssetDatabase.Refresh(); //这里必须要刷新
-        //1.build dll
-        var outpath_win = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);
-        ScriptBuildTools.BuildDll(Application.dataPath, outpath_win, mode);
-        //2.同步到其他两个目录
-        var outpath_android = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android) +
-                              DLLPATH;
-        var outpath_ios = Application.streamingAssetsPath                       + "/" +
-                          BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + DLLPATH;
 
-        var source = outpath_win + DLLPATH;
-        var bytes  = File.ReadAllBytes(source);
-        if (source != outpath_android)
-            FileHelper.WriteAllBytes(outpath_android, bytes);
-        if (source != outpath_ios)
-            FileHelper.WriteAllBytes(outpath_ios, bytes);
+        //没指定，走默认模式
+        if (string.IsNullOrEmpty(outpath))
+        {
+            //1.build dll
+            var outpath_win = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);
+            ScriptBuildTools.BuildDll(outpath_win, mode);
+            //2.同步到其他两个目录
+            var outpath_android = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android)      + DLLPATH;
+            var outpath_ios     = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + DLLPATH;
 
+            var source = outpath_win + DLLPATH;
+            var bytes  = File.ReadAllBytes(source);
+            if (source != outpath_android)
+                FileHelper.WriteAllBytes(outpath_android, bytes);
+            if (source != outpath_ios)
+                FileHelper.WriteAllBytes(outpath_ios, bytes);
+        }
+        else
+        {
+            //指定了直接 build
+            ScriptBuildTools.BuildDll(outpath, mode);
+        }
         //3.预绑定
         GenPreCLRBinding();
         //4.生成AnalysisCLRBinding
@@ -169,7 +176,7 @@ namespace ILRuntime.Runtime.Generated
     /// </summary>
     /// <param name="platform"></param>
     /// <param name="dllpath"></param>
-    static public void GenCLRBindingByAnalysis(RuntimePlatform platform = RuntimePlatform.Lumin, string dllpath = "")
+    static private void GenCLRBindingByAnalysis(RuntimePlatform platform = RuntimePlatform.Lumin, string dllpath = "")
     {
         if (platform == RuntimePlatform.Lumin)
         {
@@ -219,7 +226,7 @@ namespace ILRuntime.Runtime.Generated
     /// <summary>
     /// 生成预绑定
     /// </summary>
-    static public void GenPreCLRBinding()
+    static private void GenPreCLRBinding()
     {
         preBindingTypes = new List<Type>();
         var types = typeof(Button).Assembly.GetTypes().ToList(); //所有UI相关接口预绑定
@@ -249,7 +256,7 @@ namespace ILRuntime.Runtime.Generated
     /// <summary>
     /// 生成手动绑定部分
     /// </summary>
-    static public void GenCLRBinding()
+    static private void GenCLRBinding()
     {
         var types = new List<Type>();
         //反射类优先生成

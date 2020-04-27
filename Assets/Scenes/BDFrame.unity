@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.37294164, g: 0.38055754, b: 0.35860202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -407,6 +407,9 @@ MonoBehaviour:
     - Name: IsDebuggerILRuntime
       Entry: 5
       Data: false
+    - Name: IsExcuteHotfixUnitTest
+      Entry: 5
+      Data: false
     - Name: FileServerUrl
       Entry: 1
       Data: 192.168.8.68
@@ -425,7 +428,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  localConfig: {fileID: 0}
+  localConfig: {fileID: 4900000, guid: 23466dea4cded7a4b8350e21ff78477c, type: 3}
 --- !u!1 &878416750
 GameObject:
   m_ObjectHideFlags: 0
