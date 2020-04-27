@@ -13,10 +13,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{D6850640-6A5A-4BD9-5A00-2AD66FF4F23D}</ProjectGuid>
+    <ProjectGuid>{5F4F3FDC-43F8-2A47-55F5-00E66F1587B4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
+    <AssemblyName>Sirenix.OdinInspector.CompatibilityLayer.Editor</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -57,48 +57,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Code\BDFramework\Editor\BDEditorLife\BDEditorLife.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\BuildPackage\AssetUploadToServer.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\BuildPackage\BuildPipeline_CI.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\BuildPackage\EditorWindow_OnekeyBuildAsset.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Config\BDEditorConfig.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Config\BDEditorHelper.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Config\EditorWindow_BDConfig.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\DevOps\DevOps_SVN.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\EditorCoroutines\Editor\CoroutineWindowExample.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\EditorCoroutines\Editor\EditorCoroutineExtensions.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\EditorCoroutines\Editor\EditorCoroutines.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\ExcelTools\EditorWindow_Table.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\ExcelTools\Excel2Code.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\ExcelTools\Excel2SQLiteTools.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\ExcelTools\ExcelTools.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\ExcelTools\ExcelUtility.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\ILruntime\EditorWindow_ScriptBuildDll.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\ILruntime\GenAdapter.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\ILruntime\ScriptBuildTools.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\ILruntime\StripCode.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Menu\EditorMenu.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Resource\AssetBundleEditorTools.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Resource\EditorWindow_GenAssetBundle.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Resource\ShaderCollection.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\TestRunner\TestRunnerEditor.cs" />
-    <Compile Include="Assets\Code\BDFramework\Editor\Tools\EditorGUIHelper.cs" />
-    <None Include="Assets\3rdPlugins\Dotween\DemiLib\Core\Editor\DemiEditor.xml" />
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>E:/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>E:/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>E:/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>E:/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>E:/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
-    </Reference>
+    <Compile Include="Assets\Plugins\Sirenix\Odin Inspector\Scripts\Editor\AssemblyImportSettingsAutomation.cs" />
+    <Compile Include="Assets\Plugins\Sirenix\Odin Inspector\Scripts\Editor\BuildAOTAutomation.cs" />
+    <Compile Include="Assets\Plugins\Sirenix\Odin Inspector\Scripts\Editor\EnsureOdinInspectorDefine.cs" />
+    <Compile Include="Assets\Plugins\Sirenix\Odin Inspector\Scripts\Editor\FixBrokenUnityObjectWrapperDrawer.cs" />
+    <Compile Include="Assets\Plugins\Sirenix\Odin Inspector\Scripts\Editor\SyncListDrawer.cs" />
+    <Compile Include="Assets\Plugins\Sirenix\Odin Inspector\Scripts\Editor\SyncVarAttributeDrawer.cs" />
+    <Compile Include="Assets\Plugins\Sirenix\Odin Inspector\Scripts\Editor\Vector2IntMinMaxAttributeDrawer.cs" />
+    <Compile Include="Assets\Plugins\Sirenix\Odin Inspector\Scripts\Editor\VectorIntDrawers.cs" />
+    <Compile Include="Assets\Plugins\Sirenix\Odin Inspector\Scripts\Editor\VectorIntPropertyResolvers.cs" />
+    <None Include="Assets\Plugins\Sirenix\Odin Inspector\Scripts\Editor\Sirenix.OdinInspector.CompatibilityLayer.Editor.asmdef" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Program Files/2018.4.18f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -822,20 +790,6 @@
     <Reference Include="Boo.Lang">
       <HintPath>D:/Program Files/2018.4.18f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{BF016426-C7F0-D5D6-ACF4-3C6340AB86C3}</Project>
-      <Name>Assembly-CSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj">
-      <Project>{5F4F3FDC-43F8-2A47-55F5-00E66F1587B4}</Project>
-      <Name>Sirenix.OdinInspector.CompatibilityLayer.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.csproj">
-      <Project>{340E62B0-F825-70D7-F27F-06D2670E83C5}</Project>
-      <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
