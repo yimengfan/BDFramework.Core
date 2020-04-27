@@ -9,7 +9,7 @@ Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a colle
 #### 第九第十艺术交流:763141410 （QQ Group:763141410）  
 If you find a bug or have some suggestions,please make issue! I'll get back to you!  
 任何问题直接提issue,24小时内必解决   
-github地址: https://github.com/yimengfan/BDFramework.Core
+github地址: https://github.com/yimengfan/BDFramework.Core  
 gitee地址: https://gitee.com/yimengfan/BDFramework.Core  ,速度慢下这个(顺便讨个赞)
 
 ## 文档(Document)  
