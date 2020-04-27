@@ -207,7 +207,8 @@ namespace ILRuntime.Runtime.Generated
             List<object> ret =new List<object>();
             foreach (var r in result_of_this_method)
             {
-              
+                if(r==null)continue;
+
                 var iltype = r as ILTypeInstance;
                 if (iltype != null )
                 {
@@ -220,10 +221,19 @@ namespace ILRuntime.Runtime.Generated
                 else
                 {
                     //hotfix的type
-                    if (r.GetType() ==attributeType || r.GetType().IsSubclassOf(attributeType))
+                    try
                     {
-                        ret.Add(r);
+                        if (r.GetType() ==attributeType || r.GetType().IsSubclassOf(attributeType))
+                        {
+                            ret.Add(r);
+                        }
                     }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+
                 }
             }
             return ILIntepreter.PushObject(__ret, __mStack, ret.ToArray());
