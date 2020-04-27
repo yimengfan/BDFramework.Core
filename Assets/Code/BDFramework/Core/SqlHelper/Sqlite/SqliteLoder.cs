@@ -49,28 +49,27 @@ namespace BDFramework.Sql
         /// <returns></returns>
         static private IEnumerator IE_LoadSqlite()
         {
-            //从StreamingAsset拷贝到Persistent
-            //此时persistent为 firstPath
-            //StreamingAsset 为 SecPath
+            //这里情况比较复杂,Mobile上基本认为Persistent才支持File操作,
+            //可寻址目录也只有 StreamingAsset
             firstPath = IPath.Combine(Application.persistentDataPath,BDUtils.GetPlatformPath(Application.platform) + "/Local.db");
             var secPath = IPath.Combine(Application.streamingAssetsPath,BDUtils.GetPlatformPath(Application.platform) + "/Local.db");
             if (Application.isEditor)
             {
                 secPath = "file://" + secPath;
             }
+            
             WWW www = new WWW(secPath);
-
             yield return www;
 
             if (www.isDone && www.error == null)
             {
                 FileHelper.WriteAllBytes(firstPath, www.bytes);
-                BDebug.Log("DB加载路径:" + firstPath, "red");
+                BDebug.Log("拷贝DB成功:" + firstPath, "red");
                 Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
             }
             else
             {
-                BDebug.LogError("加载失败DB:" + www.error);
+                BDebug.LogError(www.error+ "\n 拷贝DB失败:" +secPath);
             }
         }
 

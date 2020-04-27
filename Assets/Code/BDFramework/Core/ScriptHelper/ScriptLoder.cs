@@ -25,11 +25,13 @@ namespace BDFramework
                 BDebug.Log("内置code模式!");
                 //反射调用，防止编译报错
                 var assembly = Assembly.GetExecutingAssembly();
-                var type = assembly.GetType("BDLauncherBridge");
-                var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                method.Invoke(null, new object[] { false,false});
+                var type     = assembly.GetType("BDLauncherBridge");
+                var method   = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
+                method.Invoke(null, new object[] {false, false});
             }
         }
+
+        private static string DLLPATH = "/Hotfix/hotfix.dll";
 
         /// <summary>
         /// 加载
@@ -42,16 +44,14 @@ namespace BDFramework
             string dllPath = "";
             if (Application.isEditor)
             {
-                dllPath = root + "/" + BDUtils.GetPlatformPath(Application.platform) + "/Hotfix/hotfix.dll";
+                dllPath = root + "/" + BDUtils.GetPlatformPath(Application.platform) + DLLPATH;
             }
             else
             {
                 //这里情况比较复杂,Mobile上基本认为Persistent才支持File操作,
                 //可寻址目录也只有 StreamingAsset
-                var firstPath = Application.persistentDataPath + "/" + BDUtils.GetPlatformPath(Application.platform) +
-                                "/Hotfix/hotfix.dll";
-                var secondPath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform) +
-                                 "/Hotfix/hotfix.dll";
+                var firstPath = Application.persistentDataPath + "/" + BDUtils.GetPlatformPath(Application.platform) + DLLPATH;
+                var secondPath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform) + DLLPATH;
                 if (!File.Exists(firstPath))
                 {
                     var www = new WWW(secondPath);
@@ -60,6 +60,10 @@ namespace BDFramework
                     {
                         BDebug.Log("拷贝dll成功:" + firstPath);
                         FileHelper.WriteAllBytes(firstPath, www.bytes);
+                    }
+                    else
+                    {
+                        BDebug.Log(www.error + "\n 拷贝dll失败:" + secondPath);
                     }
                 }
 
@@ -72,7 +76,7 @@ namespace BDFramework
             {
                 BDebug.Log("Dll路径:" + dllPath, "red");
                 var bytes = File.ReadAllBytes(dllPath);
-                var mdb = dllPath + ".mdb";
+                var mdb   = dllPath + ".mdb";
                 if (File.Exists(mdb))
                 {
                     var bytes2 = File.ReadAllBytes(mdb);
@@ -84,7 +88,7 @@ namespace BDFramework
                 }
 
                 BDebug.Log("代码加载成功,开始执行Start");
-                var type = Assembly.GetType("BDLauncherBridge");
+                var type   = Assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
                 method.Invoke(null, new object[] {false, true});
             }

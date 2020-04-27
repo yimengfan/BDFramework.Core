@@ -71,10 +71,9 @@ namespace BDFramework.Editor
             {
                 string path = SceneConfigs[(int)mode];
                 textContent  = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
+                var config = GameObject.Find("BDFrame").GetComponent<Config>();
+                config.localConfig = textContent;
             }
-            var config = GameObject.Find("BDFrame").GetComponent<Config>();
-            config.localConfig = textContent;
-          
             EditorSceneManager.SaveScene(scene);
         }
 

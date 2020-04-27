@@ -82,8 +82,6 @@ namespace BDFramework
                 var newconfig= JsonMapper.ToObject<GameConfig>(localConfig.text);
                 SetNewConfig(newconfig);
             }
-
-
             UseServerConfig(null);
         }
 
@@ -107,7 +105,6 @@ namespace BDFramework
         private IEnumerator UpdateServerConfig(Action callback)
         {
             var url = string.Format("{0}/{1}/{2}", Data.FileServerUrl,BDUtils.GetPlatformPath(Application.platform) ,"GameConfig.json");
-            Debug.Log(url);
             UnityWebRequest uwq = UnityWebRequest.Get(url);
             GameConfig gconfig = null;
             yield return uwq.SendWebRequest();
@@ -124,8 +121,11 @@ namespace BDFramework
             {
                 BDebug.LogError("Game配置无法更新,使用本地");
             }
-            
-            SetNewConfig(gconfig);
+
+            if (gconfig != null)
+            {
+                SetNewConfig(gconfig);
+            }
             callback?.Invoke();
         }
 
