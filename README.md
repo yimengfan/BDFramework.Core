@@ -113,5 +113,6 @@ The following charging plug-ins are used. Please purchase and download them your
    
 **7. Version release:**
    One-click packaging of codes, resources, and forms, and automatic download of version management  
-   There are many other things that I think are commonly used: such as the event system, what http library, what object pool is too lazy to list  
+     
+   </br>There are many other things that I think are commonly used: such as the event system, what http library, what object pool is too lazy to list  
 
