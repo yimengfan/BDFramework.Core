@@ -73,7 +73,7 @@ namespace BDFramework.Editor.TableData
         {
             //拷贝当前到其他目录
             var outpath_win = Application.streamingAssetsPath + "/" +
-                              BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/Local.db";
+                              BDUtils.GetPlatformPath(RuntimePlatform.WindowsPlayer) + "/Local.db";
             var outpath_android = Application.streamingAssetsPath + "/" +
                                   BDUtils.GetPlatformPath(RuntimePlatform.Android) + "/Local.db";
             var outpath_ios = Application.streamingAssetsPath + "/" +
