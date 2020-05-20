@@ -18,13 +18,12 @@ namespace BDFramework.ResourceMgr
         {
             if (root != "")
             {
-                resLoader = new AssetBundleMgr(root, onLoaded);
+                ResLoader = new AssetBundleMgr(root, onLoaded);
             }
             else
             {
 #if UNITY_EDITOR
-
-                resLoader = new DevResourceMgr();
+                ResLoader = new DevResourceMgr();
                 if (onLoaded != null)
                     onLoaded();
                 BDebug.Log("资源加载:AssetDataBase editor only");
@@ -32,7 +31,10 @@ namespace BDFramework.ResourceMgr
             }
         }
 
-        static private IResMgr resLoader { get; set; }
+        /// <summary>
+        /// 加载器
+        /// </summary>
+        static public IResMgr ResLoader { get; private set; }
 
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace BDFramework.ResourceMgr
         {
             if (string.IsNullOrEmpty(name))
                 return null;
-            return resLoader.Load<T>(name);
+            return ResLoader.Load<T>(name);
         }
 
         /// <summary>
@@ -56,7 +58,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="action">回调函数</param>
         public static int AsyncLoad<T>(string objName, Action<T> action) where T : UnityEngine.Object
         {
-            return resLoader.AsyncLoad<T>(objName, action);
+            return ResLoader.AsyncLoad<T>(objName, action);
         }
 
         /// <summary>
@@ -67,7 +69,7 @@ namespace BDFramework.ResourceMgr
         public static List<int> AsyncLoad(IList<string> objlist, Action<int, int> onProcess = null,
             Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
         {
-            return resLoader.AsyncLoad(objlist, onLoadEnd, onProcess);
+            return ResLoader.AsyncLoad(objlist, onLoadEnd, onProcess);
         }
 
         /// <summary>
@@ -80,7 +82,7 @@ namespace BDFramework.ResourceMgr
             {
                 return;
             }
-            resLoader.UnloadAsset(path, isForceUnload);
+            ResLoader.UnloadAsset(path, isForceUnload);
         }
         
         /// <summary>
@@ -134,7 +136,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public static void LoadCancel(int id)
         {
-            resLoader.LoadCancel(id);
+            ResLoader.LoadCancel(id);
         }
 
         /// <summary>
@@ -146,7 +148,7 @@ namespace BDFramework.ResourceMgr
             {
                 foreach (var id in ids)
                 {
-                    resLoader.LoadCancel(id);
+                    ResLoader.LoadCancel(id);
                 }
             }
 
@@ -157,7 +159,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public static void LoadCancel()
         {
-            resLoader.LoadCalcelAll();
+            ResLoader.LoadCalcelAll();
         }
     }
 }

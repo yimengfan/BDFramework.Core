@@ -127,7 +127,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 全局的assetbundle字典
         /// </summary>
-        public Dictionary<string, AssetBundleWapper> assetbundleMap { get; set; }
+        public Dictionary<string, AssetBundleWapper> AssetbundleMap { get; set; }
 
         /// <summary>
         /// 资源加载路径
@@ -146,7 +146,7 @@ namespace BDFramework.ResourceMgr
                 GC.Collect();
             }
 
-            this.assetbundleMap   = new Dictionary<string, AssetBundleWapper>();
+            this.AssetbundleMap   = new Dictionary<string, AssetBundleWapper>();
             this.allTaskGroupList = new List<LoaderTaskGroup>();
             //1.设置加载路径  
             artRootPath = (root + "/" + BDUtils.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
@@ -206,7 +206,7 @@ namespace BDFramework.ResourceMgr
             }
 
             //没被加载
-            if (!assetbundleMap.ContainsKey(assetHash))
+            if (!AssetbundleMap.ContainsKey(assetHash))
             {
                 //加锁
                 lockset.Add(assetHash);
@@ -256,16 +256,16 @@ namespace BDFramework.ResourceMgr
         private void AddAssetBundle(string hash, AssetBundle ab)
         {
             //
-            if (!assetbundleMap.ContainsKey(hash))
+            if (!AssetbundleMap.ContainsKey(hash))
             {
                 AssetBundleWapper abr = new AssetBundleWapper()
                 {
                     assetBundle = ab
                 };
-                assetbundleMap[hash] = abr;
+                AssetbundleMap[hash] = abr;
             }
 
-            assetbundleMap[hash].Use();
+            AssetbundleMap[hash].Use();
         }
 
         #endregion
@@ -333,7 +333,7 @@ namespace BDFramework.ResourceMgr
 
             Object            o   = null;
             AssetBundleWapper abr = null;
-            if (assetbundleMap.TryGetValue(item.Hash, out abr))
+            if (AssetbundleMap.TryGetValue(item.Hash, out abr))
             {
                 switch ((ManifestItem.AssetTypeEnum) item.Type)
                 {
@@ -389,7 +389,7 @@ namespace BDFramework.ResourceMgr
                     realPath = item.Package;
                 }
 
-                if (!assetbundleMap.ContainsKey(realPath))
+                if (!AssetbundleMap.ContainsKey(realPath))
                 {
                     var p  = FindAsset(realPath);
                     var ab = AssetBundle.LoadFromFile(p);
@@ -400,7 +400,7 @@ namespace BDFramework.ResourceMgr
                 else
                 {
                     AssetBundleWapper abw = null;
-                    if (assetbundleMap.TryGetValue(realPath, out abw))
+                    if (AssetbundleMap.TryGetValue(realPath, out abw))
                     {
                         abw.Use();
                     }
@@ -576,9 +576,24 @@ namespace BDFramework.ResourceMgr
 
             this.allTaskGroupList.Clear();
         }
-
+        
         #endregion
 
+        #region 工具类
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="floder"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public string[] GetFiles(string floder)
+        {
+            throw new NotImplementedException();
+        }
+        
+
+        #endregion
 
         #region 核心任务驱动
 
@@ -632,7 +647,7 @@ namespace BDFramework.ResourceMgr
                 Queue<string> resQue = new Queue<string>();
                 foreach (var r in res)
                 {
-                    if (assetbundleMap.ContainsKey(r))
+                    if (AssetbundleMap.ContainsKey(r))
                     {
                         resQue.Enqueue(r);
                     }
@@ -641,27 +656,27 @@ namespace BDFramework.ResourceMgr
                 //判断是否有已经加载过的资源
                 foreach (var r in resQue)
                 {
-                    if (assetbundleMap.ContainsKey(r))
+                    if (AssetbundleMap.ContainsKey(r))
                     {
                         if (isForceUnload)
                         {
-                            assetbundleMap[r].assetBundle.Unload(true);
-                            assetbundleMap.Remove(r);
+                            AssetbundleMap[r].assetBundle.Unload(true);
+                            AssetbundleMap.Remove(r);
                         }
                         else
                         {
-                            assetbundleMap[r].Unuse();
+                            AssetbundleMap[r].Unuse();
                         }
                     }
                 }
 
                 //移除无用的assetbundle
-                var keys = new List<string>(assetbundleMap.Keys);
+                var keys = new List<string>(AssetbundleMap.Keys);
                 foreach (var k in keys)
                 {
-                    if (assetbundleMap[k].counter <= 0)
+                    if (AssetbundleMap[k].counter <= 0)
                     {
-                        assetbundleMap.Remove(k);
+                        AssetbundleMap.Remove(k);
                     }
                 }
             }
@@ -677,12 +692,12 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public void UnloadAllAsset()
         {
-            foreach (var v in assetbundleMap)
+            foreach (var v in AssetbundleMap)
             {
                 UnloadAsset(v.Key);
             }
 
-            assetbundleMap.Clear();
+            AssetbundleMap.Clear();
             Resources.UnloadUnusedAssets();
         }
 

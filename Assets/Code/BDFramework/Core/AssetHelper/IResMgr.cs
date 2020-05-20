@@ -12,7 +12,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 资源管理
         /// </summary>
-        Dictionary<string, AssetBundleWapper> assetbundleMap { get; set; }
+        Dictionary<string, AssetBundleWapper> AssetbundleMap { get; }
         /// <summary>
         /// 卸载指定ab
         /// </summary>
@@ -50,10 +50,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="onLoadEnd"></param>
         /// <param name="onLoadProcess"></param>
         /// <returns></returns>
-        List<int> AsyncLoad(IList<string> assetsPath, Action<IDictionary<string, Object>> onLoadEnd,
-            Action<int, int> onLoadProcess);
-
-
+        List<int> AsyncLoad(IList<string> assetsPath, Action<IDictionary<string, Object>> onLoadEnd, Action<int, int> onLoadProcess);
         /// <summary>
         /// 取消一个加载任务
         /// </summary>
@@ -64,7 +61,11 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         void LoadCalcelAll();
 
-
+        /// <summary>
+        /// 获取某个目录下文件
+        /// 以runtime为根目录
+        /// </summary>
+        string[] GetFiles(string floder);
 
 
     }
