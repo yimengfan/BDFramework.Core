@@ -62,12 +62,17 @@ namespace BDFramework.DataListener
             dl.AddListener<object>(name.ToString(), action, order, triggerNum, isTriggerCacheData);
         }
 
+        
         /// <summary>
         /// 枚举版本
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="action"></param>
-        /// <param name="isTriggerCacheData"></param>
+        /// <param name="dl"></param>
+        /// <param name="name">监听数据名</param>
+        /// <param name="action">回调</param>
+        /// <param name="order">顺序</param>
+        /// <param name="triggerNum">触发次数，-1代表一直触发</param>
+        /// <param name="isTriggerCacheData">是否触发回调</param>
+        /// <typeparam name="T"></typeparam>
         static public void AddListener<T>(this ADataListener dl, Enum name, Action<T> action = null,
                                           int                order      = -1,
                                           int                triggerNum = -1, bool isTriggerCacheData = false)  where T:class
@@ -81,11 +86,11 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <param name="callback"></param>
         /// <param name="isTriggerCacheData"></param>
-        static public void AddListenerOnce(this ADataListener dl, Enum name,
+        static public void AddListenerOnce<T>(this ADataListener dl, Enum name,
                                            Action<object>     callback   = null,
-                                           int                triggernum = -1, bool isTriggerCacheData = false)
+                                           int                oder = -1, bool isTriggerCacheData = false)
         {
-            AddListener(dl, name, callback, 1, triggernum, isTriggerCacheData);
+            AddListener(dl, name, callback, oder, 1, isTriggerCacheData);
         }
 
         /// <summary>

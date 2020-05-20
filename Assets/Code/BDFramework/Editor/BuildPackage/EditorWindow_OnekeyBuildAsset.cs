@@ -172,26 +172,8 @@ namespace BDFramework.Editor.BuildPackage
             //2.编译脚本
             try
             {
-                ScriptBuildTools.BuildDll(Application.dataPath, outPath, ScriptBuildTools.BuildMode.Release);
-                var targetPath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(platform) + "/hotfix/hotfix.dll";
-                var hotFix = outPath + "/hotfix/hotfix.dll";
-                //防空
-                if (!Directory.Exists(Path.GetDirectoryName(targetPath)))
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(targetPath));
-                }
-               
-                //拷贝
-                if (hotFix != targetPath)
-                {
-                    if (File.Exists(targetPath))
-                    {
-                        File.Delete(targetPath);
-                    }
-                    File.Copy(hotFix, targetPath, true);
-                }
-                //分析
-                EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis(platform);
+                var targetPath = exportPath + "/" + BDUtils.GetPlatformPath(platform);
+                EditorWindow_ScriptBuildDll.RoslynBuild(ScriptBuildTools.BuildMode.Release,targetPath);
             }
             catch (Exception e)
             {

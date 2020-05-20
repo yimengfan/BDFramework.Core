@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using BDFramework.UnitTest;
 using Code.Game;
 using LitJson;
@@ -63,6 +65,19 @@ namespace Tests
                           && obj.subObj.s == obj2.subObj.s 
                           && obj.subObj.list.Count == obj2.subObj.list.Count && obj.subObj.list[0] == obj2.subObj.list[0],
                           "litjson 测试失败");
+        }
+
+
+        /// <summary>
+        /// 测试litjson
+        /// </summary>
+        [HotfixUnitTest(Des = "测试Await")]
+        public static async void AwaitAsyncTest()
+        {
+            WebClient wc =new WebClient();
+            var ret = await wc.DownloadStringTaskAsync("http://www.baidu.com");
+            Debug.Log("Async Await测试:" + ret);
+            Assert.IsPass(true, "测试Await Async");
         }
     }
 }

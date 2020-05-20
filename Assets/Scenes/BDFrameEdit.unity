@@ -407,6 +407,9 @@ MonoBehaviour:
     - Name: IsDebuggerILRuntime
       Entry: 5
       Data: false
+    - Name: IsExcuteHotfixUnitTest
+      Entry: 5
+      Data: false
     - Name: FileServerUrl
       Entry: 1
       Data: 192.168.8.68

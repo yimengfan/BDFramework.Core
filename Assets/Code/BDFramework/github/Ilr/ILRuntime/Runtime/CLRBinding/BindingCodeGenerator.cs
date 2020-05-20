@@ -159,7 +159,7 @@ namespace ILRuntime.Runtime.Generated
 
         public static void GenerateAnalysisBindingCode(ILRuntime.Runtime.Enviorment.AppDomain domain, string outputPath, 
                                                List<Type> valueTypeBinders = null, List<Type> delegateTypes = null,
-                                               List<Type> excludeType =null,string clrbindingClassName = "CLRBindings")
+                                               List<Type> blackTypes =null,string clrbindingClassName = "CLRBindings")
         {
             if (domain == null)
                 return;
@@ -188,7 +188,7 @@ namespace ILRuntime.Runtime.Generated
                 Type i = info.Value.Type;
 
                 //这里不生成
-                if(excludeType!=null&& excludeType.Contains(i)) continue;
+                if(blackTypes!=null&& blackTypes.Contains(i)) continue;
                 //CLR binding for delegate is important for cross domain invocation,so it should be generated
                 //if (i.BaseType == typeof(MulticastDelegate))
                 //    continue;

@@ -3,6 +3,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using System.Reflection;
 using BDFramework;
 using BDFramework.Editor.Tools;
@@ -56,7 +57,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
 
             if (GUILayout.Button("2.1 手动绑定生成", GUILayout.Width(305), GUILayout.Height(30)))
             {
-                GenCLRBindingBySelf();
+                GenCLRBinding();
             }
 
             if (GUILayout.Button("2.2 生成预绑定（如所有UI组件等）", GUILayout.Width(305), GUILayout.Height(30)))
@@ -96,7 +97,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     /// 编译模式
     /// </summary>
     /// <param name="mode"></param>
-    static public void RoslynBuild(ScriptBuildTools.BuildMode mode)
+    static public void RoslynBuild(ScriptBuildTools.BuildMode mode,string outpath =null)
     {
         var targetPath = "Assets/Code/Game/ILRuntime/Binding/Analysis";
         //分析之前先删除,然后生成临时文件防止报错
@@ -113,22 +114,29 @@ namespace ILRuntime.Runtime.Generated
 }   ";
         FileHelper.WriteAllText(targetPath + "/CLRBindings.cs", fileContent);
         AssetDatabase.Refresh(); //这里必须要刷新
-        //1.build dll
-        var outpath_win = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);
-        ScriptBuildTools.BuildDll(Application.dataPath, outpath_win, mode);
-        //2.同步到其他两个目录
-        var outpath_android = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android) +
-                              DLLPATH;
-        var outpath_ios = Application.streamingAssetsPath                       + "/" +
-                          BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + DLLPATH;
 
-        var source = outpath_win + DLLPATH;
-        var bytes  = File.ReadAllBytes(source);
-        if (source != outpath_android)
-            FileHelper.WriteAllBytes(outpath_android, bytes);
-        if (source != outpath_ios)
-            FileHelper.WriteAllBytes(outpath_ios, bytes);
+        //没指定，走默认模式
+        if (string.IsNullOrEmpty(outpath))
+        {
+            //1.build dll
+            var outpath_win = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);
+            ScriptBuildTools.BuildDll(outpath_win, mode);
+            //2.同步到其他两个目录
+            var outpath_android = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android)      + DLLPATH;
+            var outpath_ios     = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + DLLPATH;
 
+            var source = outpath_win + DLLPATH;
+            var bytes  = File.ReadAllBytes(source);
+            if (source != outpath_android)
+                FileHelper.WriteAllBytes(outpath_android, bytes);
+            if (source != outpath_ios)
+                FileHelper.WriteAllBytes(outpath_ios, bytes);
+        }
+        else
+        {
+            //指定了直接 build
+            ScriptBuildTools.BuildDll(outpath, mode);
+        }
         //3.预绑定
         GenPreCLRBinding();
         //4.生成AnalysisCLRBinding
@@ -155,32 +163,7 @@ namespace ILRuntime.Runtime.Generated
     }
 
 
-    static List<Type> preBindingTypes = new List<Type>();
 
-    /// <summary>
-    /// 生成预绑定
-    /// </summary>
-    static public void GenPreCLRBinding()
-    {
-        preBindingTypes = new List<Type>();
-        var types = typeof(Button).Assembly.GetTypes(); //所有UI相关接口预绑定
-
-        foreach (var t in types)
-        {
-            if (t.IsClass && t.IsPublic && !t.IsEnum)
-            {
-                //除开被弃用的
-                var attrs = t.GetCustomAttributes(typeof(System.ObsoleteAttribute), false);
-                if (attrs.Length == 0)
-                {
-                    preBindingTypes.Add(t);
-                }
-            }
-        }
-
-        BindingCodeGenerator.GenerateBindingCode(preBindingTypes, clrbingdingClassName: "PreCLRBinding",
-                                                 outputPath: "Assets/Code/Game/ILRuntime/Binding/PreBinding");
-    }
     
     static Type[] manualBindingTypes = new Type[]
     {
@@ -188,8 +171,12 @@ namespace ILRuntime.Runtime.Generated
         typeof(PropertyInfo), typeof(Component), typeof(Type), typeof(Debug)
     };
 
-    //生成clr绑定
-    static public void GenCLRBindingByAnalysis(RuntimePlatform platform = RuntimePlatform.Lumin, string dllpath = "")
+    /// <summary>
+    /// 分析dll生成
+    /// </summary>
+    /// <param name="platform"></param>
+    /// <param name="dllpath"></param>
+    static private void GenCLRBindingByAnalysis(RuntimePlatform platform = RuntimePlatform.Lumin, string dllpath = "")
     {
         if (platform == RuntimePlatform.Lumin)
         {
@@ -211,15 +198,65 @@ namespace ILRuntime.Runtime.Generated
         var targetPath = "Assets/Code/Game/ILRuntime/Binding/Analysis";
         ILRuntimeHelper.LoadHotfix(dllpath, false);
         BindingCodeGenerator.GenerateAnalysisBindingCode(ILRuntimeHelper.AppDomain, targetPath,
-                                                         excludeType: excludeTypes);
+                                                         blackTypes: excludeTypes);
 
         ILRuntimeHelper.Close();
         AssetDatabase.Refresh();
-
         //暂时先不处理
     }
+    
+    
+    static List<Type> preBindingTypes = new List<Type>();
+      /// <summary>
+      /// 黑名单
+      /// </summary>
+      static List<Type> blackTypeList =new List<Type>()
+      {
+          typeof(UnityEngine.UI.GraphicRebuildTracker),
+          typeof(UnityEngine.UI.Graphic)
+      };
+      /// <summary>
+      /// 方法黑名单
+      /// </summary>
+      static HashSet<MethodBase> blackMethodList = new HashSet<MethodBase>()
+      { //Text
+        typeof(Text).GetMethod(nameof(Text.OnRebuildRequested)),
+        //TODO Others
+      };
+    /// <summary>
+    /// 生成预绑定
+    /// </summary>
+    static private void GenPreCLRBinding()
+    {
+        preBindingTypes = new List<Type>();
+        var types = typeof(Button).Assembly.GetTypes().ToList(); //所有UI相关接口预绑定
+        //移除黑名单
+        foreach (var blackType in blackTypeList)
+        {
+            types.Remove(blackType);
+        }
+        foreach (var t in types)
+        {
+            if (t.IsClass && t.IsPublic && !t.IsEnum)
+            {
+                //除开被弃用的
+                var attrs = t.GetCustomAttributes(typeof(System.ObsoleteAttribute), false);
+                if (attrs.Length == 0)
+                {
+                    preBindingTypes.Add(t);
+                }
+            }
+        }
 
-    static public void GenCLRBindingBySelf()
+        BindingCodeGenerator.GenerateBindingCode(preBindingTypes, clrbingdingClassName: "PreCLRBinding",
+                                                 outputPath: "Assets/Code/Game/ILRuntime/Binding/PreBinding",
+                                                 excludeMethods: blackMethodList);
+    }
+
+    /// <summary>
+    /// 生成手动绑定部分
+    /// </summary>
+    static private void GenCLRBinding()
     {
         var types = new List<Type>();
         //反射类优先生成

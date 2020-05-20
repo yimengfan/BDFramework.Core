@@ -64,7 +64,8 @@ namespace BDFramework.Editor.Asset
         public static void GenAssetBundle(string resRootPath,
             string outPath,
             BuildTarget target,
-            BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression)
+            BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression,
+            bool isClearAssets =true)
         {
             //0.cache path的路径
             cachePath = IPath.Combine(outPath, "Art/Cache.json");
@@ -112,7 +113,11 @@ namespace BDFramework.Editor.Asset
             FileHelper.WriteAllText(cachePath, JsonMapper.ToJson(allfileHashMap, true));
 
             //4.清除AB Name
-            RemoveAllAbName();
+            if (isClearAssets)
+            {
+                RemoveAllAbName();
+            }
+           
      
             //删除无用文件
             var delFiles = Directory.GetFiles(artOutpath, "*", SearchOption.AllDirectories);

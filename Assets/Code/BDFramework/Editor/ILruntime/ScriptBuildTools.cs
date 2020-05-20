@@ -33,7 +33,7 @@ public class ScriptBuildTools
     /// <summary>
     /// 编译DLL
     /// </summary>
-    static public void BuildDll(string dataPath, string outPath, BuildMode mode)
+    static public void BuildDll(string outPath, BuildMode mode)
     {
         
         EditorUtility.DisplayProgressBar("编译服务", "准备编译环境...", 0.1f);

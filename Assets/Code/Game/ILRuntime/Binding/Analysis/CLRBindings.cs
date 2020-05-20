@@ -80,6 +80,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Events_UnityEventBase_Binding.Register(app);
             BDFramework_UFlux_IButton_Binding.Register(app);
             BDFramework_UFlux_IComponentOnClick_Binding.Register(app);
+            UnityEngine_UI_Graphic_Binding.Register(app);
             System_Collections_IEnumerable_Binding.Register(app);
             System_Collections_Generic_IEnumerable_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_IEnumerator_1_ILTypeInstance_Binding.Register(app);

@@ -5,9 +5,8 @@ using System.Linq;
 using UnityEngine;
 using System.IO;
 using System.Collections;
-
+using Code.BDFramework.Core.Tools;
 using UnityEditor;
-
 using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr
@@ -17,11 +16,6 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     public class DevResourceMgr : IResMgr
     {
-        /// <summary>
-        /// 资源的根目录
-        /// </summary>
-        private string ResourceRootPath = "Resource/Runtime";
-
         /// <summary>
         /// 全局的任务计数器
         /// </summary>
@@ -50,32 +44,45 @@ namespace BDFramework.ResourceMgr
         public DevResourceMgr()
         {
             willdoTaskSet = new HashSet<int>();
-            allTaskList   = new List<LoaderTaskGroup>();
+            allTaskList = new List<LoaderTaskGroup>();
             objsMap = new Dictionary<string, UnityEngine.Object>();
+            allResourceList = new List<string>();
             //搜索所有资源
-            var root = Application.dataPath + "/" + ResourceRootPath;
-            //处理资源列表格式
-            allResourceList = Directory.GetFiles(root, "*.*", SearchOption.AllDirectories).ToList();
+            var root = Application.dataPath;
+
+            //获取根路径所有runtime
+            var directories = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly).ToList();
+            for (int i = directories.Count - 1; i >= 0; i--)
+            {
+                var dir = directories[i].Replace(BApplication.ProjectRoot + "/", "").Replace("\\", "/") + "/Runtime";
+                if (!Directory.Exists(dir))
+                {
+                    directories.RemoveAt(i);
+                }
+                else
+                {
+                    directories[i] = dir;
+                }
+            }
+
+            //所有资源列表
+            foreach (var dir in directories)
+            {
+                var rets = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
+                    .Where((s) => !s.EndsWith(".meta"));
+                allResourceList.AddRange(rets);
+            }
+
             for (int i = 0; i < allResourceList.Count; i++)
             {
-                if (Application.platform == RuntimePlatform.WindowsEditor)
-                {
-                    allResourceList[i] = allResourceList[i].Replace(root + "\\", "").Replace("\\", "/");
-                }
-
-                else if(Application.platform == RuntimePlatform.OSXEditor)
-                {
-                    allResourceList[i] = allResourceList[i].Replace(root + "/", "");
-                }
-
-                
+                var res = allResourceList[i];
+                allResourceList[i] = res.Replace("\\", "/");
             }
         }
 
 
-        public Dictionary<string, AssetBundleWapper> assetbundleMap { get; set; }
+        public Dictionary<string, AssetBundleWapper> AssetbundleMap { get; set; }
 
-       
 
         public void UnloadAsset(string name, bool isForceUnload = false)
         {
@@ -116,12 +123,25 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                var findTarget = path + ".";
-                var result = this.allResourceList.Find((a) => a.StartsWith(findTarget));
-                result = "Assets/" + this.ResourceRootPath + "/" + result;
+                var findTarget = "/Runtime/" + path + ".";
+                var rets = this.allResourceList.FindAll((a) => a.Contains(findTarget));
+
+                if (rets.Count == 0)
+                {
+                    Debug.LogError("未找到资源:" + path);
+                }
+
+                if (rets.Count > 1)
+                {
+                    foreach (var r in rets)
+                    {
+                        Debug.LogError("注意文件同名:" + r);
+                    }
+                }
+
                 //
-                objsMap[path] = AssetDatabase.LoadAssetAtPath<T>(result);
-                
+                var resPath = rets[0];
+                objsMap[path] = AssetDatabase.LoadAssetAtPath<T>(resPath);
                 return objsMap[path] as T;
             }
         }
@@ -133,12 +153,12 @@ namespace BDFramework.ResourceMgr
         /// <param name="callback"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public int AsyncLoad<T>(string objName, Action<T> callback)where T : UnityEngine.Object
+        public int AsyncLoad<T>(string objName, Action<T> callback) where T : UnityEngine.Object
         {
             this.TaskCounter++;
             if (objsMap.ContainsKey(objName))
             {
-                callback( objsMap[objName] as T);
+                callback(objsMap[objName] as T);
             }
             else
             {
@@ -150,8 +170,6 @@ namespace BDFramework.ResourceMgr
         }
 
 
-
-
         /// <summary>
         /// assetdatabase 不支持异步，暂时先做个加载，后期用update模拟异步
         /// </summary>
@@ -159,15 +177,16 @@ namespace BDFramework.ResourceMgr
         /// <param name="onLoadComplete"></param>
         /// <param name="onLoadProcess"></param>
         /// <returns></returns>
-        public List<int> AsyncLoad(IList<string> assetsPath, Action<IDictionary<string, Object>> onLoadComplete,Action<int, int> onLoadProcess)
+        public List<int> AsyncLoad(IList<string> assetsPath,
+            Action<IDictionary<string, Object>> onLoadComplete,
+            Action<int, int> onLoadProcess)
         {
-
             //var list = assetsPath.Distinct().ToList();
 
-            IDictionary<string ,UnityEngine.Object> map =new Dictionary<string, Object>();
+            IDictionary<string, UnityEngine.Object> map = new Dictionary<string, Object>();
             int curProcess = 0;
             //每帧加载1个
-            IEnumeratorTool.StartCoroutine(TaskUpdate( 1,assetsPath, (s, o) =>
+            IEnumeratorTool.StartCoroutine(TaskUpdate(1, assetsPath, (s, o) =>
             {
                 curProcess++;
                 map[s] = o;
@@ -186,11 +205,9 @@ namespace BDFramework.ResourceMgr
                     }
                 }
             }));
-            
+
             return new List<int>();
         }
-
-        
 
 
         /// <summary>
@@ -213,6 +230,48 @@ namespace BDFramework.ResourceMgr
             willdoTaskSet.Clear();
         }
 
+        /// <summary>
+        /// 获取符合条件的资源名
+        /// </summary>
+        /// <param name="floder"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public string[] GetAssets(string floder,string searchPattern=null)
+        {
+
+            //判断是否存在这个目录
+            floder = "/Runtime/" + floder + "/";
+            var rets = allResourceList.FindAll((r) => r.Contains(floder));
+            //
+            var splitStr = "/Runtime/";
+            for (int i = 0; i < rets.Count; i++)
+            {
+                var r =  rets[i];
+                var index = r.IndexOf(splitStr);
+                var rs = r.Substring(index + splitStr.Length).Split('.');
+                rets[i] = rs[0];
+            }
+
+            //寻找符合条件的
+            if (!string.IsNullOrEmpty(searchPattern))
+            {
+                rets = rets.FindAll((r) =>
+                {
+                    var fileName = Path.GetFileName(r);
+
+                    if (fileName.StartsWith(searchPattern))
+                    {
+                        return true;
+                    }
+
+                    return false;
+                });
+            }
+
+
+            return rets.ToArray();
+        }
+
 
         /// <summary>
         /// 任务帧
@@ -221,22 +280,20 @@ namespace BDFramework.ResourceMgr
         /// <param name="loads"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        private IEnumerator TaskUpdate(int loadNumPerFrame,IList<string> loads ,Action<string,Object> callback)
+        private IEnumerator TaskUpdate(int loadNumPerFrame, IList<string> loads, Action<string, Object> callback)
         {
             int count = 0;
             while (count < loads.Count)
             {
-                for (int  i = 0; count< loads.Count && i<loadNumPerFrame ; i++)
+                for (int i = 0; count < loads.Count && i < loadNumPerFrame; i++)
                 {
                     var resPath = loads[count];
 
-                    AsyncLoad<UnityEngine.Object>(resPath, ( o) =>
-                    {
-                        callback(resPath, o);
-                    });
+                    AsyncLoad<UnityEngine.Object>(resPath, (o) => { callback(resPath, o); });
                     count++;
                 }
-                yield return new  WaitForEndOfFrame();
+
+                yield return new WaitForEndOfFrame();
             }
         }
     }
