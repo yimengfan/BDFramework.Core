@@ -121,6 +121,8 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_UnitTest_UnitTestBaseAttribute_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Type_List_1_ILTypeInstance_Binding.Register(app);
+            System_Collections_Generic_List_1_Double_Binding.Register(app);
+            BDFramework_ResourceMgr_IResMgr_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_MethodInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Single_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_Action_1_Single_Binding.Register(app);

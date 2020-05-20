@@ -87,6 +87,12 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.String), typeof(System.Boolean)};
             method = type.GetMethod("UnloadAsset", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, UnloadAsset_5);
+            args = new Type[]{typeof(System.String), typeof(System.Action)};
+            method = type.GetMethod("Load", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, Load_6);
+            args = new Type[]{};
+            method = type.GetMethod("get_ResLoader", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_ResLoader_7);
 
 
         }
@@ -208,6 +214,37 @@ namespace ILRuntime.Runtime.Generated
             BDFramework.ResourceMgr.BResources.UnloadAsset(@path, @isForceUnload);
 
             return __ret;
+        }
+
+        static StackObject* Load_6(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Action @onLoaded = (System.Action)typeof(System.Action).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            System.String @root = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+
+            BDFramework.ResourceMgr.BResources.Load(@root, @onLoaded);
+
+            return __ret;
+        }
+
+        static StackObject* get_ResLoader_7(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
+
+
+            var result_of_this_method = BDFramework.ResourceMgr.BResources.ResLoader;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
 
