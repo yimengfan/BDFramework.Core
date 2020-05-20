@@ -7,7 +7,6 @@ using System.IO;
 using System.Collections;
 using Code.BDFramework.Core.Tools;
 using UnityEditor;
-using UnityEngine.Rendering.Universal;
 using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr
@@ -44,18 +43,18 @@ namespace BDFramework.ResourceMgr
 
         public DevResourceMgr()
         {
-            willdoTaskSet   = new HashSet<int>();
-            allTaskList     = new List<LoaderTaskGroup>();
-            objsMap         = new Dictionary<string, UnityEngine.Object>();
+            willdoTaskSet = new HashSet<int>();
+            allTaskList = new List<LoaderTaskGroup>();
+            objsMap = new Dictionary<string, UnityEngine.Object>();
             allResourceList = new List<string>();
             //搜索所有资源
             var root = Application.dataPath;
 
             //获取根路径所有runtime
             var directories = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly).ToList();
-            for (int i = directories.Count-1; i >=0 ; i--)
+            for (int i = directories.Count - 1; i >= 0; i--)
             {
-                var dir =directories[i].Replace(BApplication.ProjectRoot+"/","").Replace("\\", "/")+"/Runtime";
+                var dir = directories[i].Replace(BApplication.ProjectRoot + "/", "").Replace("\\", "/") + "/Runtime";
                 if (!Directory.Exists(dir))
                 {
                     directories.RemoveAt(i);
@@ -65,6 +64,7 @@ namespace BDFramework.ResourceMgr
                     directories[i] = dir;
                 }
             }
+
             //所有资源列表
             foreach (var dir in directories)
             {
@@ -123,14 +123,14 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                var findTarget = "/Runtime/"+path + ".";
-                var rets       = this.allResourceList.FindAll((a) => a.Contains(findTarget));
+                var findTarget = "/Runtime/" + path + ".";
+                var rets = this.allResourceList.FindAll((a) => a.Contains(findTarget));
 
                 if (rets.Count == 0)
                 {
                     Debug.LogError("未找到资源:" + path);
-                    
                 }
+
                 if (rets.Count > 1)
                 {
                     foreach (var r in rets)
@@ -177,13 +177,14 @@ namespace BDFramework.ResourceMgr
         /// <param name="onLoadComplete"></param>
         /// <param name="onLoadProcess"></param>
         /// <returns></returns>
-        public List<int> AsyncLoad(IList<string>    assetsPath, Action<IDictionary<string, Object>> onLoadComplete,
-                                   Action<int, int> onLoadProcess)
+        public List<int> AsyncLoad(IList<string> assetsPath,
+            Action<IDictionary<string, Object>> onLoadComplete,
+            Action<int, int> onLoadProcess)
         {
             //var list = assetsPath.Distinct().ToList();
 
-            IDictionary<string, UnityEngine.Object> map        = new Dictionary<string, Object>();
-            int                                     curProcess = 0;
+            IDictionary<string, UnityEngine.Object> map = new Dictionary<string, Object>();
+            int curProcess = 0;
             //每帧加载1个
             IEnumeratorTool.StartCoroutine(TaskUpdate(1, assetsPath, (s, o) =>
             {
@@ -230,14 +231,44 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
-        /// 
+        /// 获取符合条件的资源名
         /// </summary>
         /// <param name="floder"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public string[] GetFiles(string floder)
+        public string[] GetAssets(string floder,string searchPattern=null)
         {
-            throw new NotImplementedException();
+
+            //判断是否存在这个目录
+            floder = "/Runtime/" + floder + "/";
+            var rets = allResourceList.FindAll((r) => r.Contains(floder));
+            //
+            var splitStr = "/Runtime/".ToArray();
+            for (int i = 0; i < rets.Count; i++)
+            {
+                var r =  rets[i];
+                var rs = r.Split(splitStr);
+                rets[i] = rs[1];
+            }
+
+            //寻找符合条件的
+            if (!string.IsNullOrEmpty(searchPattern))
+            {
+                rets = rets.FindAll((r) =>
+                {
+                    var fileName = Path.GetFileName(r);
+
+                    if (fileName.StartsWith(searchPattern))
+                    {
+                        return true;
+                    }
+
+                    return false;
+                });
+            }
+
+
+            return rets.ToArray();
         }
 
 

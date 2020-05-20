@@ -127,7 +127,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 全局的assetbundle字典
         /// </summary>
-        public Dictionary<string, AssetBundleWapper> AssetbundleMap { get; set; }
+        public Dictionary<string, AssetBundleWapper> AssetbundleMap { get; private set; }
 
         /// <summary>
         /// 资源加载路径
@@ -281,8 +281,6 @@ namespace BDFramework.ResourceMgr
         private T LoadFormAssetBundle<T>(string assetHash) where T : UnityEngine.Object
         {
             ManifestItem item = this.config.Manifest.GetManifestItemByHash(assetHash);
-            
-
             
             if (item != null)
             {
@@ -576,21 +574,17 @@ namespace BDFramework.ResourceMgr
 
             this.allTaskGroupList.Clear();
         }
-        
+
+        public string[] GetAssets(string floder, string searchPattern = null)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region 工具类
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="floder"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public string[] GetFiles(string floder)
-        {
-            throw new NotImplementedException();
-        }
+
         
 
         #endregion

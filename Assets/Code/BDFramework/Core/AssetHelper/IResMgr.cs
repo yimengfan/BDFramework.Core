@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -65,7 +66,8 @@ namespace BDFramework.ResourceMgr
         /// 获取某个目录下文件
         /// 以runtime为根目录
         /// </summary>
-        string[] GetFiles(string floder);
+        string[] GetAssets(string floder,string searchPattern=null);
+        
 
 
     }
