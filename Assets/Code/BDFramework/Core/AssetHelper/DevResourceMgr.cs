@@ -243,12 +243,13 @@ namespace BDFramework.ResourceMgr
             floder = "/Runtime/" + floder + "/";
             var rets = allResourceList.FindAll((r) => r.Contains(floder));
             //
-            var splitStr = "/Runtime/".ToArray();
+            var splitStr = "/Runtime/";
             for (int i = 0; i < rets.Count; i++)
             {
                 var r =  rets[i];
-                var rs = r.Split(splitStr);
-                rets[i] = rs[1];
+                var index = r.IndexOf(splitStr);
+                var rs = r.Substring(index + splitStr.Length).Split('.');
+                rets[i] = rs[0];
             }
 
             //寻找符合条件的
