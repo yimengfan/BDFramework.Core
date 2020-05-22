@@ -5,7 +5,9 @@ namespace BDFramework.Editor
 
     public enum BDEditorMenuEnum
     {
+        BDHelperURL=0,
         BDSetting = 1,
+        
         UIMVCTools=51,
         BuildPackage_DLL=52,
         BuildPackage_Assetbundle=53,
