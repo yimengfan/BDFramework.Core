@@ -129,6 +129,7 @@ namespace BDFramework.ResourceMgr
                 if (rets.Count == 0)
                 {
                     Debug.LogError("未找到资源:" + path);
+                    return null;
                 }
 
                 if (rets.Count > 1)
