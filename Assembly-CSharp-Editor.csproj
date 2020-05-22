@@ -78,6 +78,7 @@
     <Compile Include="Assets\Code\BDFramework\Editor\ILruntime\ScriptBuildTools.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\ILruntime\StripCode.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Menu\EditorMenu.cs" />
+    <Compile Include="Assets\Code\BDFramework\Editor\Menu\Menu.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Resource\AssetBundleEditorTools.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Resource\EditorWindow_GenAssetBundle.cs" />
     <Compile Include="Assets\Code\BDFramework\Editor\Resource\ShaderCollection.cs" />
