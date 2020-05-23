@@ -161,7 +161,35 @@ namespace BDFramework.ResourceMgr
             this.config.OnLoaded = onLoded;
         }
 
-        #region 异步加载单个ab
+        #region 加载AssetsBundle
+
+        /// <summary>
+        /// 加载AssetBundle
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private AssetBundle LoadAssetBundle(string path)
+        {
+            if (AssetbundleMap.ContainsKey(path))
+            {
+                AssetBundleWapper abw = null;
+                if (AssetbundleMap.TryGetValue(path, out abw))
+                {
+                    abw.Use();
+                    return abw.AssetBundle;
+                }
+            }
+            else
+            {
+                var p = FindAsset(path);
+                var ab = AssetBundle.LoadFromFile(p);
+                //添加
+                AddAssetBundle(path, ab);
+                return ab;
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// 单个加载ab,会自动刷新依赖
@@ -383,27 +411,7 @@ namespace BDFramework.ResourceMgr
                 //1.判断是否有多个ab在1个Package中
                 var item = config.Manifest.GetManifestItemByHash(res);
                 string realPath = string.IsNullOrEmpty(item.Package) ? item.Hash : item.Package;
-                
-                if (!AssetbundleMap.ContainsKey(realPath))
-                {
-                    var p = FindAsset(realPath);
-                    var ab = AssetBundle.LoadFromFile(p);
-
-                    //添加
-                    AddAssetBundle(realPath, ab);
-                }
-                else
-                {
-                    AssetBundleWapper abw = null;
-                    if (AssetbundleMap.TryGetValue(realPath, out abw))
-                    {
-                        abw.Use();
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
+                LoadAssetBundle(realPath);
             }
 
 
@@ -423,31 +431,17 @@ namespace BDFramework.ResourceMgr
         public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
         {
             var item = config.Manifest.GetManifestItemByName(path);
+            
             string realPath = string.IsNullOrEmpty(item.Package) ? item.Hash : item.Package;
+            
+            AssetBundle ab= LoadAssetBundle(realPath);
 
-            AssetBundle ab;
-            if (!AssetbundleMap.ContainsKey(realPath))
+            if (ab != null)
             {
-                var p = FindAsset(realPath);
-                ab = AssetBundle.LoadFromFile(p);
-
-                //添加
-                AddAssetBundle(realPath, ab);
+                return ab.LoadAssetWithSubAssets<T>(path);
             }
-            else
-            {
-                AssetBundleWapper abw = null;
-                if (AssetbundleMap.TryGetValue(realPath, out abw))
-                {
-                    abw.Use();
-                    ab = abw.AssetBundle;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            return ab.LoadAllAssets<T>();
+            
+            return null;
         }
 
 
