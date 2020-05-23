@@ -47,24 +47,7 @@ namespace BDFramework.ResourceMgr
             allTaskList = new List<LoaderTaskGroup>();
             objsMap = new Dictionary<string, UnityEngine.Object>();
             allResourceList = new List<string>();
-            //搜索所有资源
-            var root = Application.dataPath;
-
-            //获取根路径所有runtime
-            var directories = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly).ToList();
-            for (int i = directories.Count - 1; i >= 0; i--)
-            {
-                var dir = directories[i].Replace(BApplication.ProjectRoot + "/", "").Replace("\\", "/") + "/Runtime";
-                if (!Directory.Exists(dir))
-                {
-                    directories.RemoveAt(i);
-                }
-                else
-                {
-                    directories[i] = dir;
-                }
-            }
-
+            var directories = BApplication.GetAllRuntimePath();
             //所有资源列表
             foreach (var dir in directories)
             {
