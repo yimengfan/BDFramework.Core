@@ -17,7 +17,7 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     public class AssetBundleWapper
     {
-        public AssetBundle assetBundle;
+        public AssetBundle AssetBundle;
 
         #region 各种加载接口
 
@@ -31,8 +31,8 @@ namespace BDFramework.ResourceMgr
         public Object LoadTextureFormAtlas(string texName)
         {
             //默认一个ab中只有一个atlas
-            var fs    = assetBundle.GetAllAssetNames();
-            var atlas = this.assetBundle.LoadAsset<SpriteAtlas>(fs[fs.Length - 1]);
+            var fs    = AssetBundle.GetAllAssetNames();
+            var atlas = this.AssetBundle.LoadAsset<SpriteAtlas>(fs[fs.Length - 1]);
             texName = Path.GetFileName(texName);
             var sp = atlas.GetSprite(texName);
             return sp;
@@ -49,7 +49,7 @@ namespace BDFramework.ResourceMgr
             string realname = "";
             if (!assetNameMap.TryGetValue(name, out realname))
             {
-                var fs = this.assetBundle.GetAllAssetNames().ToList();
+                var fs = this.AssetBundle.GetAllAssetNames().ToList();
                 if (fs.Count == 1)
                 {
                     realname = fs[0];
@@ -65,28 +65,28 @@ namespace BDFramework.ResourceMgr
 
             if (realname == null)
                 return null;
-            return this.assetBundle.LoadAsset(realname, type);
+            return this.AssetBundle.LoadAsset(realname, type);
         }
 
         #endregion
 
         #region 引用计数
 
-        public int counter { get; private set; }
+        public int Counter { get; private set; }
 
         public void Use()
         {
-            counter++;
+            Counter++;
         }
 
         public void Unuse()
         {
-            counter--;
-            if (counter <= 0)
+            Counter--;
+            if (Counter <= 0)
             {
-                if (assetBundle)
+                if (AssetBundle)
                 {
-                    assetBundle.Unload(true);
+                    AssetBundle.Unload(true);
                 }
             }
         }
@@ -260,7 +260,7 @@ namespace BDFramework.ResourceMgr
             {
                 AssetBundleWapper abr = new AssetBundleWapper()
                 {
-                    assetBundle = ab
+                    AssetBundle = ab
                 };
                 AssetbundleMap[hash] = abr;
             }
@@ -666,7 +666,7 @@ namespace BDFramework.ResourceMgr
                     {
                         if (isForceUnload)
                         {
-                            AssetbundleMap[r].assetBundle.Unload(true);
+                            AssetbundleMap[r].AssetBundle.Unload(true);
                             AssetbundleMap.Remove(r);
                         }
                         else
@@ -680,7 +680,7 @@ namespace BDFramework.ResourceMgr
                 var keys = new List<string>(AssetbundleMap.Keys);
                 foreach (var k in keys)
                 {
-                    if (AssetbundleMap[k].counter <= 0)
+                    if (AssetbundleMap[k].Counter <= 0)
                     {
                         AssetbundleMap.Remove(k);
                     }
