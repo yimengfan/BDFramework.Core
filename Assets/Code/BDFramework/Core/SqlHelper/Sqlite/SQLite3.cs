@@ -71,6 +71,11 @@ namespace SQLite4Unity3d
         internal static readonly Sqlite3DatabaseHandle NullHandle = default(Sqlite3DatabaseHandle);
 
         public string DatabasePath { get; private set; }
+        
+        /// <summary>
+        /// is open
+        /// </summary>
+        public bool IsOpen { get { return _open;}}
 
         // Dictionary of synchronization objects.
         //

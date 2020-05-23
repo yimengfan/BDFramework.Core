@@ -52,14 +52,14 @@ namespace Tests
                 SqliteLoder.Load(Application.streamingAssetsPath);
             }
             
-            SqliteHelper.DB.CreateDB<APITestHero>();
-            SqliteHelper.DB.InsertTable(new List<APITestHero>(){h1,h2,h3});
+            SqliteHelper.Dbservice.CreateDB<APITestHero>();
+            SqliteHelper.Dbservice.InsertTable(new List<APITestHero>(){h1,h2,h3});
         }
 
         [UnitTest(Des = "关闭",Order = 10000)]
         static public void Close()
         {
-            SqliteLoder.Connection.Dispose();
+            SqliteLoder.Close();
         }
         
         
@@ -67,7 +67,7 @@ namespace Tests
         static public void Select()
         {
             //单条件查询
-            var ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").ToSearch<APITestHero>();
+            var ds = SqliteHelper.Dbservice.GetTableRuntime().Where("id = 1").ToSearch<APITestHero>();
 
             if (Assert.Equals(ds.Count, 1))
             {
@@ -78,7 +78,7 @@ namespace Tests
         [UnitTest(Des = "多条件查询")]
         static public void Select_MultiCondition()
         {
-            var ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").Where("and id < 3").ToSearch<APITestHero>();
+            var ds = SqliteHelper.Dbservice.GetTableRuntime().Where("id > 1").Where("and id < 3").ToSearch<APITestHero>();
 
             Debug.Log(JsonMapper.ToJson(ds));
             Assert.Equals(ds.Count, 1);
@@ -89,14 +89,14 @@ namespace Tests
         [UnitTest(Des = "Where and查询")]
         static public void MultiSelect_WhereAnd()
         {
-            var ds = SqliteHelper.DB.GetTableRuntime().WhereAnd("id", "=", 1, 2).ToSearch<APITestHero>();
+            var ds = SqliteHelper.Dbservice.GetTableRuntime().WhereAnd("id", "=", 1, 2).ToSearch<APITestHero>();
             Assert.Equals(ds.Count, 0);
         }
 
         [UnitTest(Des = "Where or查询")]
         static public void MultiSelect_WhereOr()
         {
-            var ds = SqliteHelper.DB.GetTableRuntime().WhereOr("id", "=", 2, 3).ToSearch<APITestHero>();
+            var ds = SqliteHelper.Dbservice.GetTableRuntime().WhereOr("id", "=", 2, 3).ToSearch<APITestHero>();
 
             Assert.Equals(ds.Count, 2);
             Assert.Equals(ds[0].Id, 2d);

@@ -5,14 +5,30 @@ namespace BDFramework.Sql
 {
     public class SQLiteService
     {
-        //db connect
-        private SQLiteConnection Connection { get; set; }
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="con"></param>
         public SQLiteService(SQLiteConnection con)
         {
             this.Connection = con;
         }
-        
+
+        //db connect
+        private SQLiteConnection Connection { get; set; }
+
+
+        /// <summary>
+        /// 是否关闭
+        /// </summary>
+        public bool IsClose
+        {
+            get
+            {
+                return Connection == null || !Connection.IsOpen;
+            }
+        }
+
         /// <summary>
         /// 创建db
         /// </summary>
@@ -32,6 +48,7 @@ namespace BDFramework.Sql
             Connection.DropTableByType(t);
             Connection.CreateTableByType(t);
         }
+
         /// <summary>
         /// 插入数据
         /// </summary>
@@ -40,14 +57,14 @@ namespace BDFramework.Sql
         {
             Connection.InsertAll(objects);
         }
-        
+
         /// <summary>
         /// 插入数据
         /// </summary>
         /// <param name="objects"></param>
         public void Insert(object @object)
         {
-            Connection.Insert( @object);
+            Connection.Insert(@object);
         }
 
 

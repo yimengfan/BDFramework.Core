@@ -12,22 +12,22 @@ namespace BDFramework.Sql
     /// </summary>
    static public class SqliteHelper
    {
-       /// <summary>
-       /// 静态构造初始化
-       /// </summary>
-       static SqliteHelper()
-       {
-           if (DB == null)
-           {
-               DB = new SQLiteService(SqliteLoder.Connection);
-           } 
-       }   
+       
+       //
+       static private SQLiteService _dbservice;
        
        //现在是热更层不负责加载,只负责使用
-       static public SQLiteService DB
+       static public SQLiteService Dbservice
        {
-           get;
-           private set;
+           get
+           {
+               if (_dbservice == null|| _dbservice.IsClose)
+               {
+                   _dbservice = new SQLiteService(SqliteLoder.Connection);
+               }
+
+               return _dbservice;
+           }
        }
 
        
