@@ -431,16 +431,16 @@ namespace BDFramework.ResourceMgr
         public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
         {
             var item = config.Manifest.GetManifestItemByName(path);
-            
+
             string realPath = string.IsNullOrEmpty(item.Package) ? item.Hash : item.Package;
-            
-            AssetBundle ab= LoadAssetBundle(realPath);
+
+            AssetBundle ab = LoadAssetBundle(realPath);
 
             if (ab != null)
             {
                 return ab.LoadAssetWithSubAssets<T>(path);
             }
-            
+
             return null;
         }
 
@@ -614,9 +614,40 @@ namespace BDFramework.ResourceMgr
             this.allTaskGroupList.Clear();
         }
 
+        /// <summary>
+        /// 获取路径下所有资源
+        /// </summary>
+        /// <param name="floder"></param>
+        /// <param name="searchPattern"></param>
+        /// <returns></returns>
         public string[] GetAssets(string floder, string searchPattern = null)
         {
-            throw new NotImplementedException();
+            List<string> rets = new List<string>();
+            var str = floder + "/";
+            foreach (var key in this.config.Manifest.Manifest_NameKey.Keys)
+            {
+                if (key.StartsWith(str))
+                {
+                    rets.Add(key);
+                }
+            }
+            //寻找符合条件的
+            if (!string.IsNullOrEmpty(searchPattern))
+            {
+                rets = rets.FindAll((r) =>
+                {
+                    var fileName = Path.GetFileName(r);
+
+                    if (fileName.StartsWith(searchPattern))
+                    {
+                        return true;
+                    }
+
+                    return false;
+                });
+            }
+            
+            return rets.ToArray();
         }
 
         #endregion
@@ -722,12 +753,15 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public void UnloadAllAsset()
         {
-            foreach (var v in AssetbundleMap)
-            {
-                UnloadAsset(v.Key);
-            }
+            
+            AssetBundle.UnloadAllAssetBundles(true);
+            // foreach (var v in AssetbundleMap)
+            // {
+            //     UnloadAsset(v.Key);
+            // }
 
-            AssetbundleMap.Clear();
+            
+            //AssetbundleMap.Clear();
             Resources.UnloadUnusedAssets();
         }
 
