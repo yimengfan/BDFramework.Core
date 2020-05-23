@@ -31,7 +31,7 @@ namespace BDFramework.ResourceMgr
         public Object LoadTextureFormAtlas(string texName)
         {
             //默认一个ab中只有一个atlas
-            var fs    = AssetBundle.GetAllAssetNames();
+            var fs = AssetBundle.GetAllAssetNames();
             var atlas = this.AssetBundle.LoadAsset<SpriteAtlas>(fs[fs.Length - 1]);
             texName = Path.GetFileName(texName);
             var sp = atlas.GetSprite(texName);
@@ -146,7 +146,7 @@ namespace BDFramework.ResourceMgr
                 GC.Collect();
             }
 
-            this.AssetbundleMap   = new Dictionary<string, AssetBundleWapper>();
+            this.AssetbundleMap = new Dictionary<string, AssetBundleWapper>();
             this.allTaskGroupList = new List<LoaderTaskGroup>();
             //1.设置加载路径  
             artRootPath = (root + "/" + BDUtils.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
@@ -157,7 +157,7 @@ namespace BDFramework.ResourceMgr
             string configPath = FindAsset("Config.json");
             BDebug.Log("Art加载路径:" + configPath, "red");
             //
-            this.config          = new AssetBundleManifestReference(configPath);
+            this.config = new AssetBundleManifestReference(configPath);
             this.config.OnLoaded = onLoded;
         }
 
@@ -168,8 +168,9 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="assetHash"></param>
         /// <param name="callback"></param>
-        private void AsyncLoadAssetBundle(string                         assetHash, bool isLoadObj = false,
-                                          Action<LoadAssetState, Object> callback = null)
+        private void AsyncLoadAssetBundle(string assetHash,
+            bool isLoadObj = false,
+            Action<LoadAssetState, Object> callback = null)
         {
             IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(assetHash, isLoadObj, callback));
         }
@@ -177,7 +178,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 当前正在加载的所有AB
         /// </summary>
-        HashSet<string> lockset = new HashSet<string>();
+        HashSet<string> lockSet = new HashSet<string>();
 
         /// <summary>
         ///  加载
@@ -199,7 +200,7 @@ namespace BDFramework.ResourceMgr
             }
 
             //正在被加载中,放入后置队列
-            if (lockset.Contains(assetHash))
+            if (lockSet.Contains(assetHash))
             {
                 callback(LoadAssetState.IsLoding, null);
                 yield break;
@@ -208,13 +209,17 @@ namespace BDFramework.ResourceMgr
             //没被加载
             if (!AssetbundleMap.ContainsKey(assetHash))
             {
+                AssetBundleCreateRequest ret = null;
+                string fullpath = "";
                 //加锁
-                lockset.Add(assetHash);
-                var fullpath = FindAsset(assetHash);
-                var ret      = AssetBundle.LoadFromFileAsync(fullpath);
-                yield return ret;
+                lockSet.Add(assetHash);
+                {
+                    fullpath = FindAsset(assetHash);
+                    ret = AssetBundle.LoadFromFileAsync(fullpath);
+                    yield return ret;
+                }
                 //解锁
-                lockset.Remove(assetHash);
+                lockSet.Remove(assetHash);
                 //添加assetbundle
                 if (ret.assetBundle != null)
                 {
@@ -258,10 +263,7 @@ namespace BDFramework.ResourceMgr
             //
             if (!AssetbundleMap.ContainsKey(hash))
             {
-                AssetBundleWapper abr = new AssetBundleWapper()
-                {
-                    AssetBundle = ab
-                };
+                AssetBundleWapper abr = new AssetBundleWapper() {AssetBundle = ab};
                 AssetbundleMap[hash] = abr;
             }
 
@@ -281,7 +283,7 @@ namespace BDFramework.ResourceMgr
         private T LoadFormAssetBundle<T>(string assetHash) where T : UnityEngine.Object
         {
             ManifestItem item = this.config.Manifest.GetManifestItemByHash(assetHash);
-            
+
             if (item != null)
             {
                 return LoadFormAssetBundle(item, typeof(T)) as T;
@@ -329,7 +331,7 @@ namespace BDFramework.ResourceMgr
                 item = this.config.Manifest.GetManifestItemByHash(item.Package);
             }
 
-            Object            o   = null;
+            Object o = null;
             AssetBundleWapper abr = null;
             if (AssetbundleMap.TryGetValue(item.Hash, out abr))
             {
@@ -379,17 +381,12 @@ namespace BDFramework.ResourceMgr
             foreach (var res in dependAssets)
             {
                 //1.判断是否有多个ab在1个Package中
-                var item     = config.Manifest.GetManifestItemByHash(res);
-                var realPath = res;
-                //如果有package
-                if (item != null && !string.IsNullOrEmpty(item.Package))
-                {
-                    realPath = item.Package;
-                }
-
+                var item = config.Manifest.GetManifestItemByHash(res);
+                string realPath = string.IsNullOrEmpty(item.Package) ? item.Hash : item.Package;
+                
                 if (!AssetbundleMap.ContainsKey(realPath))
                 {
-                    var p  = FindAsset(realPath);
+                    var p = FindAsset(realPath);
                     var ab = AssetBundle.LoadFromFile(p);
 
                     //添加
@@ -415,6 +412,9 @@ namespace BDFramework.ResourceMgr
 
         /// <summary>
         /// load ALL TestAPI
+        /// 这个有一定局限性，这里是返回某个Ab中的所有资源
+        /// 简单处理一些简单资源情况：目前只解决图集
+        /// 仅作为某些项目补坑用
         /// </summary>
         /// <param name="path"></param>
         /// <typeparam name="T"></typeparam>
@@ -422,7 +422,32 @@ namespace BDFramework.ResourceMgr
         /// <exception cref="NotImplementedException"></exception>
         public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
         {
-            throw new NotImplementedException();
+            var item = config.Manifest.GetManifestItemByName(path);
+            string realPath = string.IsNullOrEmpty(item.Package) ? item.Hash : item.Package;
+
+            AssetBundle ab;
+            if (!AssetbundleMap.ContainsKey(realPath))
+            {
+                var p = FindAsset(realPath);
+                ab = AssetBundle.LoadFromFile(p);
+
+                //添加
+                AddAssetBundle(realPath, ab);
+            }
+            else
+            {
+                AssetBundleWapper abw = null;
+                if (AssetbundleMap.TryGetValue(realPath, out abw))
+                {
+                    abw.Use();
+                    ab = abw.AssetBundle;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return ab.LoadAllAssets<T>();
         }
 
 
@@ -457,7 +482,8 @@ namespace BDFramework.ResourceMgr
             List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
             //获取依赖
             var dependAssets = config.Manifest.GetDirectDependenciesByName(path);
-            if (dependAssets == null) return -1;
+            if (dependAssets == null)
+                return -1;
             //
             foreach (var r in dependAssets)
             {
@@ -468,8 +494,13 @@ namespace BDFramework.ResourceMgr
             var mainAsset = dependAssets[dependAssets.Length - 1];
 
             //添加任务组
-            LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainAsset, 10, taskQueue, AsyncLoadAssetBundle,
-                                                            (p, obj) => { callback(obj as T); });
+            LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainAsset, 10, taskQueue,
+                AsyncLoadAssetBundle, //Loader接口
+                (p, obj) =>
+                {
+                    //完成回调
+                    callback(obj as T);
+                });
             taskGroup.Id = this.taskIDCounter++;
             AddTaskGroup(taskGroup);
 
@@ -486,10 +517,11 @@ namespace BDFramework.ResourceMgr
         /// <param name="onLoadComplete">加载结束</param>
         /// <param name="onLoadProcess">进度</param>
         /// <returns>taskid</returns>
-        public List<int> AsyncLoad(IList<string>    assetsPath, Action<IDictionary<string, Object>> onLoadComplete,
-                                   Action<int, int> onLoadProcess)
+        public List<int> AsyncLoad(IList<string> assetsPath,
+            Action<IDictionary<string, Object>> onLoadComplete,
+            Action<int, int> onLoadProcess)
         {
-            List<int>                   idList = new List<int>();
+            List<int> idList = new List<int>();
             IDictionary<string, Object> retMap = new Dictionary<string, Object>();
             assetsPath = assetsPath.Distinct().ToList(); //去重
             int total = assetsPath.Count;
@@ -497,9 +529,9 @@ namespace BDFramework.ResourceMgr
             int counter = 0;
             foreach (var asset in assetsPath)
             {
-                var                  _asset       = asset;
-                List<LoaderTaskData> taskQueue    = new List<LoaderTaskData>();
-                var                  dependAssets = config.Manifest.GetDirectDependenciesByName(asset);
+                var _asset = asset;
+                List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
+                var dependAssets = config.Manifest.GetDirectDependenciesByName(asset);
                 //获取依赖
                 if (dependAssets == null)
                 {
@@ -516,23 +548,24 @@ namespace BDFramework.ResourceMgr
                 var mainAsset = dependAssets[dependAssets.Length - 1];
                 //添加任务组
                 //加载颗粒度10个
-                LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainAsset, 10, taskQueue, AsyncLoadAssetBundle,
-                (p, obj) =>
-                {
-                    counter++;
-                    //注意返回加载的id，不是具体地址的id
-                    retMap[_asset] = obj;
-                    if (onLoadProcess != null)
+                LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainAsset, 10, taskQueue,
+                    AsyncLoadAssetBundle, //Load接口
+                    (p, obj) =>
                     {
-                        onLoadProcess(counter, total);
-                    }
+                        counter++;
+                        //注意返回加载的id，不是具体地址的id
+                        retMap[_asset] = obj;
+                        if (onLoadProcess != null)
+                        {
+                            onLoadProcess(counter, total);
+                        }
 
-                    //完成
-                    if (retMap.Count == total)
-                    {
-                        onLoadComplete(retMap);
-                    }
-                });
+                        //完成
+                        if (retMap.Count == total)
+                        {
+                            onLoadComplete(retMap);
+                        }
+                    });
                 taskGroup.Id = this.taskIDCounter++;
                 AddTaskGroup(taskGroup);
                 idList.Add(taskGroup.Id);
@@ -596,9 +629,6 @@ namespace BDFramework.ResourceMgr
 
         #region 工具类
 
-
-        
-
         #endregion
 
         #region 核心任务驱动
@@ -636,7 +666,6 @@ namespace BDFramework.ResourceMgr
 
         #endregion
 
-
         #region 卸载资源
 
         /// <summary>
@@ -648,7 +677,8 @@ namespace BDFramework.ResourceMgr
             if (name != null)
             {
                 var res = config.Manifest.GetDirectDependenciesByName(name);
-                if (res == null) return;
+                if (res == null)
+                    return;
                 //将所有依赖,创建一个队列 倒序加载
                 Queue<string> resQue = new Queue<string>();
                 foreach (var r in res)

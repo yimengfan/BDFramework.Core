@@ -10,6 +10,9 @@ using UnityEngine.Networking;
 
 namespace BDFramework.ResourceMgr
 {
+    /// <summary>
+    /// 存储单个资源的数据
+    /// </summary>
     public class ManifestItem
     {
         public enum AssetTypeEnum
@@ -21,8 +24,7 @@ namespace BDFramework.ResourceMgr
             SpriteAtlas,
         }
 
-        public ManifestItem(string name, string hash, string package, AssetTypeEnum @enum,
-            List<string> Depend = null)
+        public ManifestItem(string name, string hash, string package, AssetTypeEnum @enum, List<string> Depend = null)
         {
             this.Name = name;
             this.Hash = hash;
