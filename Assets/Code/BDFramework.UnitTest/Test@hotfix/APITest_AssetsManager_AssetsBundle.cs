@@ -18,6 +18,12 @@ namespace Code.BDFramework.UnitTest
             //这里开启Assetbundle模式
             BResources.Load(Application.streamingAssetsPath);
         }
+        
+        [UnitTest(Des = "关闭",Order = 10000)]
+        static public void Close()
+        {
+            BResources.UnloadAll();
+        }
 
         [UnitTest(Des = "加载测试")]
         static public void Load()
