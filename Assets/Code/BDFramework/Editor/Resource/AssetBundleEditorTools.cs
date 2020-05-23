@@ -70,24 +70,9 @@ namespace BDFramework.Editor.Asset
             //0.cache path的路径
             cachePath = IPath.Combine(outPath, "Art/Cache.json");
             configPath = IPath.Combine(outPath, "Art/Config.json");
-            //1.环境准备
-            string rootPath = IPath.Combine(Application.dataPath, resRootPath);
-            //扫描所有文件
-            var allFiles = Directory.GetFiles(rootPath, "*.*", SearchOption.AllDirectories);
-            var fileList = new List<string>(allFiles);
-            //剔除不打包的部分
-            for (int i = fileList.Count - 1; i >= 0; i--)
-            {
-                var fi = allFiles[i];
-                var extension = Path.GetExtension(fi.ToLower());
-                //
-                if (extension.ToLower() == ".meta" || extension.ToLower() == ".cs" || extension.ToLower() == ".js")
-                {
-                    fileList.RemoveAt(i);
-                }
-            }
-
-
+            //
+            var fileList = BApplication.GetAllAssetsPath();
+            
             var artOutpath = IPath.Combine(outPath, "Art");
             //2.分析ab包
             AnalyzeResource(fileList.ToArray(), target, artOutpath);
