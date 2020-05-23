@@ -6,6 +6,10 @@ using Path = System.IO.Path;
 
 namespace BDFramework.Sql
 {
+    /// <summary>
+    /// 这里主要是为了和主工程隔离
+    /// hotfix专用的Sql Helper
+    /// </summary>
    static public class SqliteHelper
    {
        /// <summary>

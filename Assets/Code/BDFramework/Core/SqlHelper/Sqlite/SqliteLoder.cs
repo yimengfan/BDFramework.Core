@@ -19,10 +19,7 @@ namespace BDFramework.Sql
         /// <param name="str"></param>
         static public void Load(string root)
         {
-            if (Connection != null)
-            {
-                Connection.Dispose();
-            }
+            Connection?.Dispose();
 
             //先以外部传入的 作为 firstpath
             firstPath = IPath.Combine(root, BDUtils.GetPlatformPath(Application.platform) + "/Local.db");
@@ -40,6 +37,15 @@ namespace BDFramework.Sql
                 Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
 
             }
+        }
+        /// <summary>
+        /// 创建连接
+        /// </summary>
+        static public SQLiteConnection CreateConnetion(string path)
+        {  
+            Connection?.Dispose();
+            Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+            return Connection;
         }
 
 
@@ -73,13 +79,7 @@ namespace BDFramework.Sql
             }
         }
 
-        /// <summary>
-        /// 创建连接
-        /// </summary>
-        static public SQLiteConnection CreateConnetion(string path)
-        {
-            return new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-        }
+     
 
         /// <summary>
         /// 创建db
@@ -89,6 +89,16 @@ namespace BDFramework.Sql
         {
             var _db = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, false);
             _db.Dispose();
+        }
+
+
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        static public void Close()
+        {
+            Connection?.Dispose();
+            Connection = null;
         }
     }
 }

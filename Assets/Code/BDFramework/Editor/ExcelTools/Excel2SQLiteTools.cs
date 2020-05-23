@@ -49,7 +49,8 @@ namespace BDFramework.Editor.TableData
 
             var _path = IPath.Combine(outPath, "Local.db");
             //
-            sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
+            var connect = SqliteLoder.CreateConnetion(_path);
+            sql = new SQLiteService(connect);
             foreach (var f in xlslFiles)
             {
                 var excel = new ExcelUtility(f);
@@ -57,10 +58,8 @@ namespace BDFramework.Editor.TableData
                 Json2Sqlite(f, json);
             }
 
-            sql.Close();
+            SqliteLoder.Close();
             EditorUtility.ClearProgressBar();
-
-
             Debug.Log("导出Sqlite完成!");
             AssetDatabase.Refresh();
         }
@@ -82,11 +81,19 @@ namespace BDFramework.Editor.TableData
             var source = outPath + "/Local.db";
             var bytes = File.ReadAllBytes(source);
             if (source != outpath_android)
+            {
                 FileHelper.WriteAllBytes(outpath_android, bytes);
+            }
+
             if (source != outpath_ios)
+            {
                 FileHelper.WriteAllBytes(outpath_ios, bytes);
+            }
+
             if (source != outpath_win)
+            {
                 FileHelper.WriteAllBytes(outpath_win, bytes);
+            }
             //刷新
             AssetDatabase.Refresh();
         }
@@ -97,14 +104,15 @@ namespace BDFramework.Editor.TableData
             var tableDir = Path.GetDirectoryName(tablePath);
             var jsonFiles = Directory.GetFiles(tableDir, "*.json", SearchOption.AllDirectories);
             var _path = IPath.Combine(outPath, "Local.db");
-            sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
+            var c = SqliteLoder.CreateConnetion(_path);
+            sql = new SQLiteService(c);
             foreach (var f in jsonFiles)
             {
                 string content = File.ReadAllText(f);
                 Json2Sqlite(f, content);
             }
 
-            sql.Close();
+            SqliteLoder.Close();
             EditorUtility.ClearProgressBar();
             Debug.Log("导出Sqlite完成!");
             AssetDatabase.Refresh();
@@ -118,13 +126,14 @@ namespace BDFramework.Editor.TableData
             var outPath = IPath.Combine(Application.streamingAssetsPath,
                 BDUtils.GetPlatformPath(Application.platform));
             var _path = IPath.Combine(outPath, "Local.db");
-            sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
+            var c = SqliteLoder.CreateConnetion(_path);
+            sql = new SQLiteService(c);
             foreach (var f in path)
             {
                 Json2Sqlite(f.Key, f.Value);
             }
 
-            sql.Close();
+            SqliteLoder.Close();
             EditorUtility.ClearProgressBar();
             Debug.Log("导出Sqlite完成!");
             AssetDatabase.Refresh();
@@ -135,7 +144,8 @@ namespace BDFramework.Editor.TableData
             var outPath = IPath.Combine(Application.streamingAssetsPath,
                 BDUtils.GetPlatformPath(Application.platform));
             var _path = IPath.Combine(outPath, "Local.db");
-            sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
+            var c = SqliteLoder.CreateConnetion(_path);
+            sql = new SQLiteService(c);
             foreach (var f in paths)
             {
                 string content = File.ReadAllText(f);
@@ -143,7 +153,7 @@ namespace BDFramework.Editor.TableData
                 Json2Sqlite(f, content);
             }
 
-            sql.Close();
+            SqliteLoder.Close();
             EditorUtility.ClearProgressBar();
             Debug.Log("导出Sqlite完成!");
             AssetDatabase.Refresh();
@@ -181,9 +191,7 @@ namespace BDFramework.Editor.TableData
 
             //数据库创建表
             //sql.DB.Delete<>()
-            sql.Connection.DropTableByType(t);
-            //   Debug.Log(t.FullName);
-            sql.Connection.CreateTableByType(t);
+            sql.CreateDB(t);
 
             EditorUtility.ClearProgressBar();
             //
@@ -193,7 +201,7 @@ namespace BDFramework.Editor.TableData
                 var jo = JsonMapper.ToObject(t, j.ToJson());
                 try
                 {
-                    sql.Connection.Insert(jo);
+                    sql.Insert(jo);
                 }
                 catch
                 {
@@ -213,11 +221,13 @@ namespace BDFramework.Editor.TableData
             var outPath = IPath.Combine(Application.streamingAssetsPath,
                 BDUtils.GetPlatformPath(Application.platform));
             var _path = IPath.Combine(outPath, "Local.db");
-            sql = new SQLiteService(SqliteLoder.CreateConnetion(_path));
+            var c = SqliteLoder.CreateConnetion(_path);
+            sql = new SQLiteService(c);
             string content = File.ReadAllText(path);
             Debug.Log(path);
             Json2Sqlite(path, content);
-            sql.Close();
+            SqliteLoder.Close();
+            
             EditorUtility.ClearProgressBar();
             Debug.Log("导出Sqlite完成!");
             AssetDatabase.Refresh();
