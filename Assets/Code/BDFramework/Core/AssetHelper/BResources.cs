@@ -50,6 +50,21 @@ namespace BDFramework.ResourceMgr
             return ResLoader.Load<T>(name);
         }
 
+        
+        /// <summary>
+        /// 同步加载ALL
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static T[] LoadALL<T>(string name) where T : UnityEngine.Object
+        {
+            if (string.IsNullOrEmpty(name))
+                return null;
+            return ResLoader.LoadAll_TestAPI_2020_5_23<T>(name);
+        }
+
+        
         /// <summary>
         /// 异步加载
         /// </summary>

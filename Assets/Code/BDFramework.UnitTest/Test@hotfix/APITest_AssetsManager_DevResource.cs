@@ -28,9 +28,19 @@ namespace Code.BDFramework.UnitTest
             o = BResources.Load<GameObject>("AssetTest/Particle");
             //不同的runtime目录
             o = BResources.Load<GameObject>("CubeSVN");
-
             
         }
+        
+                
+        [UnitTest(Des = "加载测试2")]
+        static public void LoadALL()
+        {
+            //同个目录
+            var objs = BResources.LoadALL<Sprite>("LoadAllTest/timg");
+            Assert.Equals(objs.Length, 4);
+            
+        }
+        
         
         [UnitTest(Des = "异步测试")]
         static public void AsyncLoad()
