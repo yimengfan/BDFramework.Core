@@ -68,7 +68,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 取消所有加载任务
         /// </summary>
-        void LoadCalcelAll();
+        void LoadCancelAll();
 
         /// <summary>
         /// 获取某个目录下文件

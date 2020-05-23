@@ -268,7 +268,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 取消所有
         /// </summary>
-        public void LoadCalcelAll()
+        public void LoadCancelAll()
         {
             willdoTaskSet.Clear();
         }

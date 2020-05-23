@@ -174,7 +174,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public static void LoadCancel()
         {
-            ResLoader.LoadCalcelAll();
+            ResLoader.LoadCancelAll();
         }
     }
 }

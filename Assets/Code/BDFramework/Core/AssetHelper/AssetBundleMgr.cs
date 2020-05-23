@@ -577,7 +577,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 取消所有load任务
         /// </summary>
-        public void LoadCalcelAll()
+        public void LoadCancelAll()
         {
             foreach (var tg in allTaskGroupList)
             {
