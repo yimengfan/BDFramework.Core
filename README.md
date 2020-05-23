@@ -39,7 +39,10 @@ The following charging plug-ins are used. Please purchase and download them your
 <br> ~~2019.10 完成UI工作流的升级和重构(兼容老版本)~~
 <br> ~~2019.6.30之前 完成新文档的编写(已完成)
 <br> 2018.7 热更新工具整合：代码更新及工具(已完成)
-<br> 2018.8 热更新工具整合：资源更新（已完成）~~
+<br> 2018.8 热更新工具整合：资源更新（已完成）~~  
+## 贡献者名单
+[@gaojiexx](https://github.com/gaojiexx)  
+[@shaozhoucheng](https://github.com/shaozhoucheng)  
 ## 框架特点(Feature)
    **·TDD工作流、完整的测试用例:**  
    什么？没测试用例的框架（库）你也敢用？  
