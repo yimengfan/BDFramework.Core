@@ -28,6 +28,9 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.String)};
             method = type.GetMethod("Load", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Load_1);
+            args = new Type[]{};
+            method = type.GetMethod("Close", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, Close_2);
 
 
         }
@@ -61,6 +64,17 @@ namespace ILRuntime.Runtime.Generated
 
 
             BDFramework.Sql.SqliteLoder.Load(@root);
+
+            return __ret;
+        }
+
+        static StackObject* Close_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
+
+
+            BDFramework.Sql.SqliteLoder.Close();
 
             return __ret;
         }

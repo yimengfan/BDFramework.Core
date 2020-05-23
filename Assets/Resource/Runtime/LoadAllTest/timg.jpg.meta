@@ -1,7 +1,19 @@
 fileFormatVersion: 2
-guid: 1f433eab888c98b4f89dc81c8a5dbdcf
+guid: 5db1852abb9a1a6458bd981cd87dd3ab
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: timg_0
+  - first:
+      213: 21300002
+    second: timg_1
+  - first:
+      213: 21300004
+    second: timg_2
+  - first:
+      213: 21300006
+    second: timg_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -40,7 +52,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -97,11 +109,95 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: timg_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 325.5
+        width: 325
+        height: 325.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8656e65815a80234db7c031fcc47cf82
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: timg_1
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 325.5
+        width: 325
+        height: 325.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c058c4cc304750041ac2ed53c24c1912
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: timg_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0.5
+        width: 325
+        height: 325.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0ff4ab55c82ff34195126ddd816927c
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: timg_3
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 0.5
+        width: 325
+        height: 325.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6637dad575d1d9649804d896bf81284d
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 149830843c9c5fe44a342aa88699c50a
+    spriteID: 2ac72637a1645a84ba93cfb466fdf243
     internalID: 0
     vertices: []
     indices: 

@@ -35,6 +35,14 @@ namespace BDFramework.ResourceMgr
         T Load<T>(string path) where T : UnityEngine.Object;
 
         /// <summary>
+        /// 加载所有资源
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
+        /// <param name="abName"></param>
+        /// <returns></returns>
+        T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : UnityEngine.Object;
+        /// <summary>
         /// 异步加载资源
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -60,7 +68,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 取消所有加载任务
         /// </summary>
-        void LoadCalcelAll();
+        void LoadCancelAll();
 
         /// <summary>
         /// 获取某个目录下文件

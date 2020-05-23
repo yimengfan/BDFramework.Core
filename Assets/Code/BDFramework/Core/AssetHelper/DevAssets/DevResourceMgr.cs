@@ -46,38 +46,8 @@ namespace BDFramework.ResourceMgr
             willdoTaskSet = new HashSet<int>();
             allTaskList = new List<LoaderTaskGroup>();
             objsMap = new Dictionary<string, UnityEngine.Object>();
-            allResourceList = new List<string>();
-            //搜索所有资源
-            var root = Application.dataPath;
-
-            //获取根路径所有runtime
-            var directories = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly).ToList();
-            for (int i = directories.Count - 1; i >= 0; i--)
-            {
-                var dir = directories[i].Replace(BApplication.ProjectRoot + "/", "").Replace("\\", "/") + "/Runtime";
-                if (!Directory.Exists(dir))
-                {
-                    directories.RemoveAt(i);
-                }
-                else
-                {
-                    directories[i] = dir;
-                }
-            }
-
-            //所有资源列表
-            foreach (var dir in directories)
-            {
-                var rets = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
-                    .Where((s) => !s.EndsWith(".meta"));
-                allResourceList.AddRange(rets);
-            }
-
-            for (int i = 0; i < allResourceList.Count; i++)
-            {
-                var res = allResourceList[i];
-                allResourceList[i] = res.Replace("\\", "/");
-            }
+            //
+            allResourceList = BApplication.GetAllAssetsPath();
         }
 
 
@@ -129,6 +99,7 @@ namespace BDFramework.ResourceMgr
                 if (rets.Count == 0)
                 {
                     Debug.LogError("未找到资源:" + path);
+
                     return null;
                 }
 
@@ -145,6 +116,47 @@ namespace BDFramework.ResourceMgr
                 objsMap[path] = AssetDatabase.LoadAssetAtPath<T>(resPath);
                 return objsMap[path] as T;
             }
+        }
+
+        /// <summary>
+        /// 加载所有
+        /// </summary>
+        /// <param name="path"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
+        {
+            var findTarget = "/Runtime/" + path + ".";
+            var rets = this.allResourceList.FindAll((a) => a.Contains(findTarget));
+
+            if (rets.Count == 0)
+            {
+                Debug.LogError("未找到资源:" + path);
+
+                return null;
+            }
+
+            if (rets.Count > 1)
+            {
+                foreach (var r in rets)
+                {
+                    Debug.LogError("注意文件同名:" + r);
+                }
+            }
+            
+            var objs= AssetDatabase.LoadAllAssetsAtPath(rets[0]);
+            
+            List<T> list =new List<T>();
+            foreach (var obj in objs)
+            {
+                if (obj is T)
+                {
+                    list.Add(obj as T);
+                }
+            }
+
+            return list.ToArray();
         }
 
         /// <summary>
@@ -226,7 +238,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 取消所有
         /// </summary>
-        public void LoadCalcelAll()
+        public void LoadCancelAll()
         {
             willdoTaskSet.Clear();
         }

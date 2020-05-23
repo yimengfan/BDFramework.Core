@@ -6,24 +6,28 @@ using Path = System.IO.Path;
 
 namespace BDFramework.Sql
 {
+    /// <summary>
+    /// 这里主要是为了和主工程隔离
+    /// hotfix专用的Sql Helper
+    /// </summary>
    static public class SqliteHelper
    {
-       /// <summary>
-       /// 静态构造初始化
-       /// </summary>
-       static SqliteHelper()
-       {
-           if (DB == null)
-           {
-               DB = new SQLiteService(SqliteLoder.Connection);
-           } 
-       }   
+       
+       //
+       static private SQLiteService _dbservice;
        
        //现在是热更层不负责加载,只负责使用
        static public SQLiteService DB
        {
-           get;
-           private set;
+           get
+           {
+               if (_dbservice == null|| _dbservice.IsClose)
+               {
+                   _dbservice = new SQLiteService(SqliteLoder.Connection);
+               }
+
+               return _dbservice;
+           }
        }
 
        

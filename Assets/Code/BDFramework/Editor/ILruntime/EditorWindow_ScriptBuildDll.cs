@@ -213,7 +213,8 @@ namespace ILRuntime.Runtime.Generated
       static List<Type> blackTypeList =new List<Type>()
       {
           typeof(UnityEngine.UI.GraphicRebuildTracker),
-          typeof(UnityEngine.UI.Graphic)
+          typeof(UnityEngine.UI.Graphic),
+          typeof(UnityEngine.UI.DefaultControls)
       };
       /// <summary>
       /// 方法黑名单

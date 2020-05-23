@@ -5,36 +5,66 @@ namespace BDFramework.Sql
 {
     public class SQLiteService
     {
-        //db connect
-        public SQLiteConnection Connection { get; private set; }
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="con"></param>
         public SQLiteService(SQLiteConnection con)
         {
             this.Connection = con;
         }
 
+        //db connect
+        private SQLiteConnection Connection { get; set; }
 
-        public void Close()
+
+        /// <summary>
+        /// 是否关闭
+        /// </summary>
+        public bool IsClose
         {
-            if (Connection != null)
-                Connection.Close();
+            get
+            {
+                return Connection == null || !Connection.IsOpen;
+            }
         }
 
+        /// <summary>
+        /// 创建db
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void CreateDB<T>()
         {
             Connection.DropTable<T>();
             Connection.CreateTable<T>();
         }
 
-        public void CreateDBByType(Type t)
+        /// <summary>
+        /// 创建db
+        /// </summary>
+        /// <param name="t"></param>
+        public void CreateDB(Type t)
         {
             Connection.DropTableByType(t);
             Connection.CreateTableByType(t);
         }
 
+        /// <summary>
+        /// 插入数据
+        /// </summary>
+        /// <param name="objects"></param>
         public void InsertTable(System.Collections.IEnumerable objects)
         {
             Connection.InsertAll(objects);
+        }
+
+        /// <summary>
+        /// 插入数据
+        /// </summary>
+        /// <param name="objects"></param>
+        public void Insert(object @object)
+        {
+            Connection.Insert(@object);
         }
 
 

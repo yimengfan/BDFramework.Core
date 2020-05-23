@@ -91,8 +91,25 @@ namespace ILRuntime.Runtime.Generated
             method = type.GetMethod("Load", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Load_6);
             args = new Type[]{};
+            method = type.GetMethod("UnloadAll", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, UnloadAll_7);
+            args = new Type[]{typeof(UnityEngine.Sprite)};
+            if (genericMethods.TryGetValue("LoadALL", out lst))
+            {
+                foreach(var m in lst)
+                {
+                    if(m.MatchGenericParameters(args, typeof(UnityEngine.Sprite[]), typeof(System.String)))
+                    {
+                        method = m.MakeGenericMethod(args);
+                        app.RegisterCLRMethodRedirection(method, LoadALL_8);
+
+                        break;
+                    }
+                }
+            }
+            args = new Type[]{};
             method = type.GetMethod("get_ResLoader", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_ResLoader_7);
+            app.RegisterCLRMethodRedirection(method, get_ResLoader_9);
 
 
         }
@@ -236,7 +253,34 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* get_ResLoader_7(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* UnloadAll_7(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
+
+
+            BDFramework.ResourceMgr.BResources.UnloadAll();
+
+            return __ret;
+        }
+
+        static StackObject* LoadALL_8(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.String @name = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+
+            var result_of_this_method = BDFramework.ResourceMgr.BResources.LoadALL<UnityEngine.Sprite>(@name);
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* get_ResLoader_9(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);

@@ -59,7 +59,7 @@ namespace Tests
         [UnitTest(Des = "关闭",Order = 10000)]
         static public void Close()
         {
-            SqliteLoder.Connection.Dispose();
+            SqliteLoder.Close();
         }
         
         

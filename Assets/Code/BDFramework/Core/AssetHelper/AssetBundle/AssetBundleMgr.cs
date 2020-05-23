@@ -17,7 +17,7 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     public class AssetBundleWapper
     {
-        public AssetBundle assetBundle;
+        public AssetBundle AssetBundle;
 
         #region 各种加载接口
 
@@ -31,8 +31,8 @@ namespace BDFramework.ResourceMgr
         public Object LoadTextureFormAtlas(string texName)
         {
             //默认一个ab中只有一个atlas
-            var fs    = assetBundle.GetAllAssetNames();
-            var atlas = this.assetBundle.LoadAsset<SpriteAtlas>(fs[fs.Length - 1]);
+            var fs = AssetBundle.GetAllAssetNames();
+            var atlas = this.AssetBundle.LoadAsset<SpriteAtlas>(fs[fs.Length - 1]);
             texName = Path.GetFileName(texName);
             var sp = atlas.GetSprite(texName);
             return sp;
@@ -49,7 +49,7 @@ namespace BDFramework.ResourceMgr
             string realname = "";
             if (!assetNameMap.TryGetValue(name, out realname))
             {
-                var fs = this.assetBundle.GetAllAssetNames().ToList();
+                var fs = this.AssetBundle.GetAllAssetNames().ToList();
                 if (fs.Count == 1)
                 {
                     realname = fs[0];
@@ -65,28 +65,28 @@ namespace BDFramework.ResourceMgr
 
             if (realname == null)
                 return null;
-            return this.assetBundle.LoadAsset(realname, type);
+            return this.AssetBundle.LoadAsset(realname, type);
         }
 
         #endregion
 
         #region 引用计数
 
-        public int counter { get; private set; }
+        public int Counter { get; private set; }
 
         public void Use()
         {
-            counter++;
+            Counter++;
         }
 
         public void Unuse()
         {
-            counter--;
-            if (counter <= 0)
+            Counter--;
+            if (Counter <= 0)
             {
-                if (assetBundle)
+                if (AssetBundle)
                 {
-                    assetBundle.Unload(true);
+                    AssetBundle.Unload(true);
                 }
             }
         }
@@ -146,7 +146,7 @@ namespace BDFramework.ResourceMgr
                 GC.Collect();
             }
 
-            this.AssetbundleMap   = new Dictionary<string, AssetBundleWapper>();
+            this.AssetbundleMap = new Dictionary<string, AssetBundleWapper>();
             this.allTaskGroupList = new List<LoaderTaskGroup>();
             //1.设置加载路径  
             artRootPath = (root + "/" + BDUtils.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
@@ -157,19 +157,48 @@ namespace BDFramework.ResourceMgr
             string configPath = FindAsset("Config.json");
             BDebug.Log("Art加载路径:" + configPath, "red");
             //
-            this.config          = new AssetBundleManifestReference(configPath);
+            this.config = new AssetBundleManifestReference(configPath);
             this.config.OnLoaded = onLoded;
         }
 
-        #region 异步加载单个ab
+        #region 加载AssetsBundle
+
+        /// <summary>
+        /// 加载AssetBundle
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private AssetBundle LoadAssetBundle(string path)
+        {
+            if (AssetbundleMap.ContainsKey(path))
+            {
+                AssetBundleWapper abw = null;
+                if (AssetbundleMap.TryGetValue(path, out abw))
+                {
+                    abw.Use();
+                    return abw.AssetBundle;
+                }
+            }
+            else
+            {
+                var p = FindAsset(path);
+                var ab = AssetBundle.LoadFromFile(p);
+                //添加
+                AddAssetBundle(path, ab);
+                return ab;
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// 单个加载ab,会自动刷新依赖
         /// </summary>
         /// <param name="assetHash"></param>
         /// <param name="callback"></param>
-        private void AsyncLoadAssetBundle(string                         assetHash, bool isLoadObj = false,
-                                          Action<LoadAssetState, Object> callback = null)
+        private void AsyncLoadAssetBundle(string assetHash,
+            bool isLoadObj = false,
+            Action<LoadAssetState, Object> callback = null)
         {
             IEnumeratorTool.StartCoroutine(IEAsyncLoadAssetbundle(assetHash, isLoadObj, callback));
         }
@@ -177,7 +206,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 当前正在加载的所有AB
         /// </summary>
-        HashSet<string> lockset = new HashSet<string>();
+        HashSet<string> lockSet = new HashSet<string>();
 
         /// <summary>
         ///  加载
@@ -199,7 +228,7 @@ namespace BDFramework.ResourceMgr
             }
 
             //正在被加载中,放入后置队列
-            if (lockset.Contains(assetHash))
+            if (lockSet.Contains(assetHash))
             {
                 callback(LoadAssetState.IsLoding, null);
                 yield break;
@@ -208,13 +237,17 @@ namespace BDFramework.ResourceMgr
             //没被加载
             if (!AssetbundleMap.ContainsKey(assetHash))
             {
+                AssetBundleCreateRequest ret = null;
+                string fullpath = "";
                 //加锁
-                lockset.Add(assetHash);
-                var fullpath = FindAsset(assetHash);
-                var ret      = AssetBundle.LoadFromFileAsync(fullpath);
-                yield return ret;
+                lockSet.Add(assetHash);
+                {
+                    fullpath = FindAsset(assetHash);
+                    ret = AssetBundle.LoadFromFileAsync(fullpath);
+                    yield return ret;
+                }
                 //解锁
-                lockset.Remove(assetHash);
+                lockSet.Remove(assetHash);
                 //添加assetbundle
                 if (ret.assetBundle != null)
                 {
@@ -258,10 +291,7 @@ namespace BDFramework.ResourceMgr
             //
             if (!AssetbundleMap.ContainsKey(hash))
             {
-                AssetBundleWapper abr = new AssetBundleWapper()
-                {
-                    assetBundle = ab
-                };
+                AssetBundleWapper abr = new AssetBundleWapper() {AssetBundle = ab};
                 AssetbundleMap[hash] = abr;
             }
 
@@ -281,7 +311,7 @@ namespace BDFramework.ResourceMgr
         private T LoadFormAssetBundle<T>(string assetHash) where T : UnityEngine.Object
         {
             ManifestItem item = this.config.Manifest.GetManifestItemByHash(assetHash);
-            
+
             if (item != null)
             {
                 return LoadFormAssetBundle(item, typeof(T)) as T;
@@ -329,7 +359,7 @@ namespace BDFramework.ResourceMgr
                 item = this.config.Manifest.GetManifestItemByHash(item.Package);
             }
 
-            Object            o   = null;
+            Object o = null;
             AssetBundleWapper abr = null;
             if (AssetbundleMap.TryGetValue(item.Hash, out abr))
             {
@@ -379,38 +409,51 @@ namespace BDFramework.ResourceMgr
             foreach (var res in dependAssets)
             {
                 //1.判断是否有多个ab在1个Package中
-                var item     = config.Manifest.GetManifestItemByHash(res);
-                var realPath = res;
-                //如果有package
-                if (item != null && !string.IsNullOrEmpty(item.Package))
-                {
-                    realPath = item.Package;
-                }
-
-                if (!AssetbundleMap.ContainsKey(realPath))
-                {
-                    var p  = FindAsset(realPath);
-                    var ab = AssetBundle.LoadFromFile(p);
-
-                    //添加
-                    AddAssetBundle(realPath, ab);
-                }
-                else
-                {
-                    AssetBundleWapper abw = null;
-                    if (AssetbundleMap.TryGetValue(realPath, out abw))
-                    {
-                        abw.Use();
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
+                var item = config.Manifest.GetManifestItemByHash(res);
+                string realPath = string.IsNullOrEmpty(item.Package) ? item.Hash : item.Package;
+                LoadAssetBundle(realPath);
             }
 
 
             return LoadFormAssetBundle<T>(dependAssets.Last());
+        }
+
+        /// <summary>
+        /// load ALL TestAPI
+        /// 这个有一定局限性，这里是返回某个Ab中的所有资源
+        /// 简单处理一些简单资源情况：目前只解决图集
+        /// 仅作为某些项目补坑用
+        /// </summary>
+        /// <param name="path"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
+        {
+            var item = config.Manifest.GetManifestItemByName(path);
+            string realPath = string.IsNullOrEmpty(item.Package) ? item.Hash : item.Package;
+
+            //加载assetbundle
+            AssetBundle ab = LoadAssetBundle(realPath);
+
+            if (ab != null)
+            {
+              
+                var assetNames = ab.GetAllAssetNames();
+                string relname = "";
+                if (assetNames.Length == 1)
+                {
+                    relname = assetNames[0];
+                }
+                else
+                {
+                    var f = path + ".";
+                    relname = assetNames.First((s) => s.Contains(f));
+                }
+                return  ab.LoadAssetWithSubAssets<T>(relname);
+            }
+
+            return null;
         }
 
 
@@ -445,7 +488,8 @@ namespace BDFramework.ResourceMgr
             List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
             //获取依赖
             var dependAssets = config.Manifest.GetDirectDependenciesByName(path);
-            if (dependAssets == null) return -1;
+            if (dependAssets == null)
+                return -1;
             //
             foreach (var r in dependAssets)
             {
@@ -456,8 +500,13 @@ namespace BDFramework.ResourceMgr
             var mainAsset = dependAssets[dependAssets.Length - 1];
 
             //添加任务组
-            LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainAsset, 10, taskQueue, AsyncLoadAssetBundle,
-                                                            (p, obj) => { callback(obj as T); });
+            LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainAsset, 10, taskQueue,
+                AsyncLoadAssetBundle, //Loader接口
+                (p, obj) =>
+                {
+                    //完成回调
+                    callback(obj as T);
+                });
             taskGroup.Id = this.taskIDCounter++;
             AddTaskGroup(taskGroup);
 
@@ -474,10 +523,11 @@ namespace BDFramework.ResourceMgr
         /// <param name="onLoadComplete">加载结束</param>
         /// <param name="onLoadProcess">进度</param>
         /// <returns>taskid</returns>
-        public List<int> AsyncLoad(IList<string>    assetsPath, Action<IDictionary<string, Object>> onLoadComplete,
-                                   Action<int, int> onLoadProcess)
+        public List<int> AsyncLoad(IList<string> assetsPath,
+            Action<IDictionary<string, Object>> onLoadComplete,
+            Action<int, int> onLoadProcess)
         {
-            List<int>                   idList = new List<int>();
+            List<int> idList = new List<int>();
             IDictionary<string, Object> retMap = new Dictionary<string, Object>();
             assetsPath = assetsPath.Distinct().ToList(); //去重
             int total = assetsPath.Count;
@@ -485,9 +535,9 @@ namespace BDFramework.ResourceMgr
             int counter = 0;
             foreach (var asset in assetsPath)
             {
-                var                  _asset       = asset;
-                List<LoaderTaskData> taskQueue    = new List<LoaderTaskData>();
-                var                  dependAssets = config.Manifest.GetDirectDependenciesByName(asset);
+                var _asset = asset;
+                List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
+                var dependAssets = config.Manifest.GetDirectDependenciesByName(asset);
                 //获取依赖
                 if (dependAssets == null)
                 {
@@ -504,23 +554,24 @@ namespace BDFramework.ResourceMgr
                 var mainAsset = dependAssets[dependAssets.Length - 1];
                 //添加任务组
                 //加载颗粒度10个
-                LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainAsset, 10, taskQueue, AsyncLoadAssetBundle,
-                (p, obj) =>
-                {
-                    counter++;
-                    //注意返回加载的id，不是具体地址的id
-                    retMap[_asset] = obj;
-                    if (onLoadProcess != null)
+                LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainAsset, 10, taskQueue,
+                    AsyncLoadAssetBundle, //Load接口
+                    (p, obj) =>
                     {
-                        onLoadProcess(counter, total);
-                    }
+                        counter++;
+                        //注意返回加载的id，不是具体地址的id
+                        retMap[_asset] = obj;
+                        if (onLoadProcess != null)
+                        {
+                            onLoadProcess(counter, total);
+                        }
 
-                    //完成
-                    if (retMap.Count == total)
-                    {
-                        onLoadComplete(retMap);
-                    }
-                });
+                        //完成
+                        if (retMap.Count == total)
+                        {
+                            onLoadComplete(retMap);
+                        }
+                    });
                 taskGroup.Id = this.taskIDCounter++;
                 AddTaskGroup(taskGroup);
                 idList.Add(taskGroup.Id);
@@ -565,7 +616,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 取消所有load任务
         /// </summary>
-        public void LoadCalcelAll()
+        public void LoadCancelAll()
         {
             foreach (var tg in allTaskGroupList)
             {
@@ -575,17 +626,45 @@ namespace BDFramework.ResourceMgr
             this.allTaskGroupList.Clear();
         }
 
+        /// <summary>
+        /// 获取路径下所有资源
+        /// </summary>
+        /// <param name="floder"></param>
+        /// <param name="searchPattern"></param>
+        /// <returns></returns>
         public string[] GetAssets(string floder, string searchPattern = null)
         {
-            throw new NotImplementedException();
+            List<string> rets = new List<string>();
+            var str = floder + "/";
+            foreach (var key in this.config.Manifest.Manifest_NameKey.Keys)
+            {
+                if (key.StartsWith(str))
+                {
+                    rets.Add(key);
+                }
+            }
+            //寻找符合条件的
+            if (!string.IsNullOrEmpty(searchPattern))
+            {
+                rets = rets.FindAll((r) =>
+                {
+                    var fileName = Path.GetFileName(r);
+
+                    if (fileName.StartsWith(searchPattern))
+                    {
+                        return true;
+                    }
+
+                    return false;
+                });
+            }
+            
+            return rets.ToArray();
         }
 
         #endregion
 
         #region 工具类
-
-
-        
 
         #endregion
 
@@ -624,7 +703,6 @@ namespace BDFramework.ResourceMgr
 
         #endregion
 
-
         #region 卸载资源
 
         /// <summary>
@@ -636,7 +714,8 @@ namespace BDFramework.ResourceMgr
             if (name != null)
             {
                 var res = config.Manifest.GetDirectDependenciesByName(name);
-                if (res == null) return;
+                if (res == null)
+                    return;
                 //将所有依赖,创建一个队列 倒序加载
                 Queue<string> resQue = new Queue<string>();
                 foreach (var r in res)
@@ -654,7 +733,7 @@ namespace BDFramework.ResourceMgr
                     {
                         if (isForceUnload)
                         {
-                            AssetbundleMap[r].assetBundle.Unload(true);
+                            AssetbundleMap[r].AssetBundle.Unload(true);
                             AssetbundleMap.Remove(r);
                         }
                         else
@@ -668,7 +747,7 @@ namespace BDFramework.ResourceMgr
                 var keys = new List<string>(AssetbundleMap.Keys);
                 foreach (var k in keys)
                 {
-                    if (AssetbundleMap[k].counter <= 0)
+                    if (AssetbundleMap[k].Counter <= 0)
                     {
                         AssetbundleMap.Remove(k);
                     }
@@ -686,12 +765,15 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public void UnloadAllAsset()
         {
-            foreach (var v in AssetbundleMap)
-            {
-                UnloadAsset(v.Key);
-            }
+            
+            AssetBundle.UnloadAllAssetBundles(true);
+            // foreach (var v in AssetbundleMap)
+            // {
+            //     UnloadAsset(v.Key);
+            // }
 
-            AssetbundleMap.Clear();
+            
+            //AssetbundleMap.Clear();
             Resources.UnloadUnusedAssets();
         }
 

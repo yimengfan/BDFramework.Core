@@ -10,6 +10,9 @@ using UnityEngine.Networking;
 
 namespace BDFramework.ResourceMgr
 {
+    /// <summary>
+    /// 存储单个资源的数据
+    /// </summary>
     public class ManifestItem
     {
         public enum AssetTypeEnum
@@ -21,8 +24,7 @@ namespace BDFramework.ResourceMgr
             SpriteAtlas,
         }
 
-        public ManifestItem(string name, string hash, string package, AssetTypeEnum @enum,
-            List<string> Depend = null)
+        public ManifestItem(string name, string hash, string package, AssetTypeEnum @enum, List<string> Depend = null)
         {
             this.Name = name;
             this.Hash = hash;
@@ -275,8 +277,26 @@ namespace BDFramework.ResourceMgr
         /// <param name="path"></param>
         public AssetBundleManifestReference(string path)
         {
-            //加载manifest
-            IEnumeratorTool.StartCoroutine(IE_LoadConfig(path));
+
+            if (Application.isEditor)
+            {
+                //这里开个同步接口 为了单元测试用
+                if (File.Exists(path))
+                {
+                    BDebug.Log("manifest加载成功!");
+                    var  text = File.ReadAllText(path);
+                    this.Manifest = new ManifestConfig(text);
+                    OnLoaded?.Invoke();
+                    OnLoaded = null;
+                }
+            }
+            else
+            {
+                //加载manifest
+                IEnumeratorTool.StartCoroutine(IE_LoadConfig(path));
+            }
+            
+            
         }
 
 
@@ -306,16 +326,10 @@ namespace BDFramework.ResourceMgr
             {
                 this.Manifest = new ManifestConfig(text);
                 BDebug.Log("manifest加载成功!");
-
-                //回调
-                if (OnLoaded != null)
-                {
-                    OnLoaded();
-                    OnLoaded = null;
-                }
+                OnLoaded?.Invoke();
+                OnLoaded = null;
             }
-
-            yield break;
+            
         }
     }
 }
