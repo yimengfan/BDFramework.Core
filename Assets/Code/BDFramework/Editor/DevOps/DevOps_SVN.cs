@@ -12,13 +12,13 @@ namespace BDFramework.Editor.DevOps
 {
     static public class DevOps_SVN
     {
-        [MenuItem("Assets/DevOps/SVN同步Git")]
+        // [MenuItem("Assets/DevOps/SVN同步Git")]
         static void UpdateSVN2Git()
         {
-            var sourcePath = BApplication.EditorResourceLoadPath;
-            var targetPath = BApplication.RuntimeResourceLoadPath;
+            var sourcePath = BApplication.EditorResourceRuntimePath;
+            var targetPath = BApplication.EditorResourceRuntimePath;
 
-            SVN2Git(sourcePath, targetPath);
+            // SVN2Git(sourcePath, targetPath);
         }
 
 
@@ -28,22 +28,24 @@ namespace BDFramework.Editor.DevOps
         /// <param name="subfolder"></param>
         public static void UpdateSubFolder(string subfolder)
         {
-            var sourcePath = BApplication.EditorResourceLoadPath + "/"  + subfolder;
-            var targetPath = BApplication.RuntimeResourceLoadPath + "/" + subfolder;
-            SVN2Git(sourcePath, targetPath);
+            var sourcePath = BApplication.EditorResourceRuntimePath + "/" + subfolder;
+            var targetPath = BApplication.EditorResourceRuntimePath + "/"       + subfolder;
+            //SVN2Git(sourcePath, targetPath);
         }
 
 
         /// <summary>
-        /// 更新svn to git
+        /// 同步文件夹
+        /// 这里只能同步Prefab不一致的问题
+        /// 如果是png等资源，meta中有信息，且meta的资源id不一样
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <param name="targetPath"></param>
-        private static void SVN2Git(string sourcePath, string targetPath)
+        public static void CopyFloderAssts(string sourcePath, string targetPath)
         {
             var sourceDirects = Directory.GetDirectories(sourcePath, "*", SearchOption.TopDirectoryOnly).ToList();
             var targetDirects = Directory.GetDirectories(targetPath, "*", SearchOption.TopDirectoryOnly);
-            sourceDirects.Add(sourcePath);
+            //sourceDirects.Add(sourcePath);
             //
             foreach (var sourceDirect in sourceDirects)
             {
@@ -67,10 +69,11 @@ namespace BDFramework.Editor.DevOps
                         File.Delete(tf);
                         EditorUtility.DisplayProgressBar("svn同步git", "【删除】" + tf, 1);
                     }
-                    else
-                    {
-                        EditorUtility.DisplayProgressBar("svn同步git", "【处理】" + tf, 1);
-                    }
+
+                    // else
+                    // {
+                    //     EditorUtility.DisplayProgressBar("svn同步git", "【处理】" + tf, 1);
+                    // }
                 }
 
                 //复制源数据
@@ -80,15 +83,71 @@ namespace BDFramework.Editor.DevOps
                     if (FileHelper.GetHashFromFile(sf) != FileHelper.GetHashFromFile(tf))
                     {
                         EditorUtility.DisplayProgressBar("svn同步git", "【拷贝新资源】 " + sf, 1);
-
-                        var bytes = File.ReadAllBytes(sf);
-                        FileHelper.WriteAllBytes(tf, bytes);
+                        //文件夹判断
+                        var dir = Path.GetDirectoryName(tf);
+                        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                        //拷贝
+                        AssetDatabase.CopyAsset(sf, tf);
+                        // var bytes = File.ReadAllBytes(sf);
+                        // FileHelper.WriteAllBytes(tf, bytes);
                     }
                 }
 
                 EditorUtility.ClearProgressBar();
                 AssetDatabase.Refresh();
             }
+        }
+
+        /// <summary>
+        /// 复制fileAssets
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="targetPath"></param>
+        public static void CopyFileAssts(string sourcePath, string targetPath)
+        {
+            //
+            var sourceFiles = Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories).Where((s) => !s.EndsWith(".meta")).ToList();
+            //目标路径
+            List<string> targetFiles  = new List<string>();
+            if (Directory.Exists(targetPath))
+            {
+                targetFiles = Directory.GetFiles(targetPath, "*.*", SearchOption.AllDirectories).Where((s) => !s.EndsWith(".meta")).ToList();
+            }
+
+            //删除目标路径中，源目录不存在的部分
+            foreach (var tf in targetFiles)
+            {
+                var sf = tf.Replace(targetPath, sourcePath);
+                //源文档中不存在
+                if (!File.Exists(sf))
+                {
+                    File.Delete(tf);
+                    EditorUtility.DisplayProgressBar("svn同步git", "【删除】" + tf, 1);
+                }
+            }
+
+            //复制源数据
+            foreach (var sf in sourceFiles)
+            {
+                var tf = sf.Replace(sourcePath, targetPath);
+                if (FileHelper.GetHashFromFile(sf) != FileHelper.GetHashFromFile(tf))
+                {
+                    EditorUtility.DisplayProgressBar("svn同步git", "【拷贝新资源】 " + sf, 1);
+                    //文件夹判断
+                    var dir = Path.GetDirectoryName(tf);
+                    if (!Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
+                    //拷贝
+                    AssetDatabase.CopyAsset(sf, tf);
+                    // var bytes = File.ReadAllBytes(sf);
+                    // FileHelper.WriteAllBytes(tf, bytes);
+                }
+            }
+
+            EditorUtility.ClearProgressBar();
+            AssetDatabase.Refresh();
         }
     }
 }
