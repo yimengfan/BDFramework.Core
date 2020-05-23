@@ -17,7 +17,7 @@ namespace BDFramework.Sql
        static private SQLiteService _dbservice;
        
        //现在是热更层不负责加载,只负责使用
-       static public SQLiteService Dbservice
+       static public SQLiteService DB
        {
            get
            {
