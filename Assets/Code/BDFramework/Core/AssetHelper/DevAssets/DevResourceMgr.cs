@@ -48,19 +48,6 @@ namespace BDFramework.ResourceMgr
             objsMap = new Dictionary<string, UnityEngine.Object>();
             //
             allResourceList = BApplication.GetAllAssetsPath();
-            //所有资源列表
-            // foreach (var dir in directories)
-            // {
-            //     var rets = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
-            //         .Where((s) => !s.EndsWith(".meta"));
-            //     allResourceList.AddRange(rets);
-            // }
-            //
-            // for (int i = 0; i < allResourceList.Count; i++)
-            // {
-            //     var res = allResourceList[i];
-            //     allResourceList[i] = res.Replace("\\", "/");
-            // }
         }
 
 

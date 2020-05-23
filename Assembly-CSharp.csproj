@@ -73,12 +73,12 @@
     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\ILRuntimeTestRunner.cs" />
     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\LogicTest_BDFramework.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\Adaptor\@hotfix\ActionAdaptor.cs" />
-    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundleManifest.cs" />
-    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundleMgr.cs" />
+    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\AssetBundleManifest.cs" />
+    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\AssetBundleMgr.cs" />
+    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\LoaderTaskGroup.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\BResources.cs" />
-    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\DevResourceMgr.cs" />
+    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\DevAssets\DevResourceMgr.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\IResMgr.cs" />
-    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\LoaderTaskGroup.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\BDLauncher.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\BDLauncherBridge@hotfix.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\Config.cs" />
@@ -694,7 +694,7 @@
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Lightmap-BumpSpec.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\CGIncludes\UnityStandardParticleShadow.cginc" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Compositing.shader" />
-    <None Include="Assets\Resource_SVN\Runtime\1.根目录下第一个层级，所有Runtime都可以加载.txt" />
+    <None Include="Assets\Resource_SVN\1.根目录下第一个层级，所有Runtime都可以加载.txt" />
     <None Include="Assets\Code\BDFramework\Plugins\JsonDotNet20\Newtonsoft.Json.xml" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\CGIncludes\UnityLightingCommon.cginc" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Sprites-Mask.shader" />
@@ -738,7 +738,7 @@
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResources\Internal-ErrorShader.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\AutodeskInteractive.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\TerrainShaders\Details\WavingGrass.shader" />
-    <None Include="Assets\Resource_SVN\Runtime\2.SVN可以用作美术和策划同步的路径.txt" />
+    <None Include="Assets\Resource_SVN\2.SVN可以用作美术和策划同步的路径.txt" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\CGIncludes\UnityUI.cginc" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\TerrainShaders\Splats\AddPass.shader" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeavesFastOptimized.shader" />

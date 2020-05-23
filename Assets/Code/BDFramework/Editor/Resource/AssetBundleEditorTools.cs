@@ -65,14 +65,14 @@ namespace BDFramework.Editor.Asset
             string outPath,
             BuildTarget target,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression,
-            bool isClearAssets =true)
+            bool isClearAssets = true)
         {
             //0.cache path的路径
             cachePath = IPath.Combine(outPath, "Art/Cache.json");
             configPath = IPath.Combine(outPath, "Art/Config.json");
             //
             var fileList = BApplication.GetAllAssetsPath();
-            
+
             var artOutpath = IPath.Combine(outPath, "Art");
             //2.分析ab包
             AnalyzeResource(fileList.ToArray(), target, artOutpath);
@@ -82,15 +82,16 @@ namespace BDFramework.Editor.Asset
             //assetBundle 转 hash
             foreach (var item in allfileHashMap)
             {
-               var sub=  item.Key.Replace(BApplication.ProjectRoot + "/", "").ToLower();
-               var source = IPath.Combine(artOutpath, sub);
-               var copyto = IPath.Combine(artOutpath, item.Value);
-               if (File.Exists(source) && !File.Exists(copyto))
-               {
-                   File.Copy(source,copyto);
-               }
+                var sub = item.Key.Replace(BApplication.ProjectRoot + "/", "").ToLower();
+                var source = IPath.Combine(artOutpath, sub);
+                var copyto = IPath.Combine(artOutpath, item.Value);
+                if (File.Exists(source) && !File.Exists(copyto))
+                {
+                    File.Copy(source, copyto);
+                }
             }
-             Directory.Delete(IPath.Combine(artOutpath,"assets"),true);
+
+            Directory.Delete(IPath.Combine(artOutpath, "assets"), true);
 
             //保存配置
             FileHelper.WriteAllText(configPath, CurManifestConfig.ToString());
@@ -102,8 +103,8 @@ namespace BDFramework.Editor.Asset
             {
                 RemoveAllAbName();
             }
-           
-     
+
+
             //删除无用文件
             var delFiles = Directory.GetFiles(artOutpath, "*", SearchOption.AllDirectories);
             foreach (var df in delFiles)
@@ -215,7 +216,7 @@ namespace BDFramework.Editor.Asset
                     string.Format("分析:{0} {1}/{2}", Path.GetFileName(mainAssetFullPath), index + 1, paths.Length),
                     (index + 1f) / paths.Length);
                 //获取被依赖的路径
-                var mainAssetPath = "Assets" + mainAssetFullPath.Replace(Application.dataPath, "");
+                var mainAssetPath = mainAssetFullPath;
                 var subAssetsPath = GetDependencies(mainAssetPath).ToList();
 
 
@@ -224,7 +225,7 @@ namespace BDFramework.Editor.Asset
                 for (int i = 0; i < subAssetsPath.Count; i++)
                 {
                     var subAsset = subAssetsPath[i];
-                    var subAssetPath =subAssetsPath[i];// Application.dataPath + subAsset.Replace("Assets/", "/");
+                    var subAssetPath = subAssetsPath[i];
                     string subAssetHash = GetHashFromFile(subAssetPath);
                     subAssetHashList.Add(subAssetHash);
 
@@ -258,7 +259,7 @@ namespace BDFramework.Editor.Asset
                     {
                         for (int j = 0; j < subAssetDpendList.Count; j++)
                         {
-                            var sbd = subAssetDpendList[j];// Application.dataPath + subAssetDpendList[j].Replace("Assets/", "/");
+                            var sbd = subAssetDpendList[j];
                             subAssetDpendList[j] = GetHashFromFile(sbd);
                         }
                     }
@@ -369,8 +370,8 @@ namespace BDFramework.Editor.Asset
 //                        }
 //                        else
 //                        {
-                            ai.assetBundleName = subAsset;
-                            ai.assetBundleVariant = "";
+                        ai.assetBundleName = subAsset;
+                        ai.assetBundleVariant = "";
 //                        }
 //                        ai.assetBundleName = subAssetHash;
 //                        ai.assetBundleVariant = "";
@@ -469,7 +470,7 @@ namespace BDFramework.Editor.Asset
             {
                 var p = list[i];
 
-                var fullPath =  list[i];//Application.dataPath + p.Replace("Assets/", "/");
+                var fullPath = list[i];
                 //
                 if (!File.Exists(fullPath))
                 {
@@ -555,8 +556,8 @@ namespace BDFramework.Editor.Asset
             atlasMap = new Dictionary<string, List<string>>();
             textureExtensionSet = new HashSet<string>();
             //
-            var path = "Assets/Resource/Runtime";
-            var assets = AssetDatabase.FindAssets("t:spriteatlas", new string[] {path}).ToList();
+            var path = BApplication.GetAllRuntimeDirects().ToArray();
+            var assets = AssetDatabase.FindAssets("t:spriteatlas", path).ToList();
 
             //GUID to assetPath
             for (int i = 0; i < assets.Count; i++)
@@ -617,7 +618,7 @@ namespace BDFramework.Editor.Asset
             }
             catch (Exception ex)
             {
-                Debug.LogError("hash计算错误:" + fileName.Replace(Application.dataPath, "Assets"));
+                Debug.LogError("hash计算错误:" + fileName);
                 return "";
             }
         }
@@ -719,9 +720,12 @@ namespace BDFramework.Editor.Asset
 
             //判断是否在Runtime中
             //Runtime中要掐头去尾
-            if (str.StartsWith("Assets/Resource/Runtime/"))
+            var findStr = "/Runtime/";
+            if (str.Contains(findStr))
             {
-                str = str.Replace("Assets/Resource/Runtime/", "");
+                var index = str.IndexOf(findStr);
+                str = str.Substring(index + findStr.Length);
+                //
                 if (!string.IsNullOrEmpty(ext))
                 {
                     str = str.Replace(ext, "");
