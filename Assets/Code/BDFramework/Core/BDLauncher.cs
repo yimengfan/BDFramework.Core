@@ -237,10 +237,8 @@ namespace BDFramework
         void OnApplicationQuit()
         {
 #if UNITY_EDITOR
-            if (SqliteHelper.DB != null)
-            {
-                SqliteHelper.DB.Close();
-            }
+           
+            SqliteLoder.Close();
 
             ILRuntimeHelper.Close();
 #endif

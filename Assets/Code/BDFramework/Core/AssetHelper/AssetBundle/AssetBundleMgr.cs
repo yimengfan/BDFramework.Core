@@ -431,14 +431,26 @@ namespace BDFramework.ResourceMgr
         public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
         {
             var item = config.Manifest.GetManifestItemByName(path);
-
             string realPath = string.IsNullOrEmpty(item.Package) ? item.Hash : item.Package;
 
+            //加载assetbundle
             AssetBundle ab = LoadAssetBundle(realPath);
 
             if (ab != null)
             {
-                return ab.LoadAssetWithSubAssets<T>(path);
+              
+                var assetNames = ab.GetAllAssetNames();
+                string relname = "";
+                if (assetNames.Length == 1)
+                {
+                    relname = assetNames[0];
+                }
+                else
+                {
+                    var f = path + ".";
+                    relname = assetNames.First((s) => s.Contains(f));
+                }
+                return  ab.LoadAssetWithSubAssets<T>(relname);
             }
 
             return null;

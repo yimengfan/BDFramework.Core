@@ -117,6 +117,8 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public static void UnloadAll()
         {
+            
+            ResLoader.UnloadAllAsset();
         }
 
 
