@@ -18,7 +18,8 @@ namespace BDFramework.ResourceMgr
         {
             if (root != "")
             {
-                ResLoader = new AssetBundleMgr(root, onLoaded);
+                ResLoader = new AssetBundleMgr();
+                ResLoader.Init(root, onLoaded);
             }
             else
             {

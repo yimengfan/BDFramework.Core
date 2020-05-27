@@ -30,7 +30,7 @@ namespace Code.BDFramework.Core.Tools
         /// <summary>
         /// Editor的资源路径
         /// </summary>
-        public static string EditorResourceLoadPath { get; private set; } = EditorResourcePath + "/Runtime";
+        public static string EditorResourceRuntimePath { get; private set; } = EditorResourcePath + "/Runtime";
 
 
 
