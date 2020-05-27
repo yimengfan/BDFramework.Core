@@ -51,6 +51,16 @@ namespace BDFramework.ResourceMgr
         }
 
 
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="onInitEnd"></param>
+        public void Init(string path, Action onInitEnd)
+        {
+            
+        }
+
         public Dictionary<string, AssetBundleWapper> AssetbundleMap { get; set; }
 
 

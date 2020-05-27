@@ -77,13 +77,13 @@ namespace BDFramework
             Inst = this;
          
             ShowFPS();
+            
             if (localConfig != null)
             {
                 var newconfig= JsonMapper.ToObject<GameConfig>(localConfig.text);
                 SetNewConfig(newconfig);
             }
-
-
+            
             UseServerConfig(null);
         }
 
@@ -135,7 +135,10 @@ namespace BDFramework
         /// <param name="newConfig"></param>
         private void SetNewConfig(GameConfig newConfig)
         {
-            this.Data= newConfig;
+            if (newConfig != null)
+            {
+                this.Data = newConfig;
+            }
         }
         #endregion
         
