@@ -74,7 +74,12 @@ namespace BDFramework.ResourceMgr
         {
             allResourceList = BApplication.GetAllAssetsPath();
         }
-        
+
+        public void Init(string path, Action onInitEnd)
+        {
+            //
+        }
+
         /// <summary>
         /// AssetBundle 
         /// </summary>

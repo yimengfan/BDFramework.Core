@@ -7,38 +7,43 @@ namespace Code.BDFramework.Core.Tools
 {
     static public class BApplication
     {
-
         #region 路径相关
-
+        static public void Init()
+        {
+            ProjectRoot = Application.dataPath.Replace("/Assets", "");
+            Library = ProjectRoot + "/Library";
+            RuntimeResourceLoadPath = "Assets/Resource/Runtime";
+            EditorResourcePath = "Assets/Resource_SVN";
+            EditorResourceRuntimePath = EditorResourcePath + "/Runtime";
+        }
         /// <summary>
         /// 项目根目录
         /// </summary>
-        static public string ProjectRoot { get; private set; } = Application.dataPath.Replace("/Assets", "");
+        static public string ProjectRoot { get; private set; }
         /// <summary>
         /// Library
         /// </summary>
-        static public string Library { get; private set; } = ProjectRoot + "/Library";
+        static public string Library { get; private set; }
         /// <summary>
         /// 资源的根目录
         /// </summary>
-        static public string RuntimeResourceLoadPath { get; private set; } =  "Assets/Resource/Runtime";
-        
+        static public string RuntimeResourceLoadPath { get; private set; }
         /// <summary>
         /// Editor的资源路径
         /// </summary>
-        public static string EditorResourcePath { get; private set; } = "Assets/Resource_SVN";
-        /// <summary>
-        /// Editor的资源路径
-        /// </summary>
-        public static string EditorResourceRuntimePath { get; private set; } = EditorResourcePath + "/Runtime";
+        public static string EditorResourcePath { get; private set; } 
 
+        /// <summary>
+        /// Editor的资源路径
+        /// </summary>
+        public static string EditorResourceRuntimePath { get; private set; }
 
 
         /// <summary>
         /// 获取所有runtime的目录
         /// </summary>
         /// <returns></returns>
-        public static  List<string> GetAllRuntimeDirects()
+        public static List<string> GetAllRuntimeDirects()
         {
             //搜索所有资源
             var root = Application.dataPath;
@@ -60,16 +65,15 @@ namespace Code.BDFramework.Core.Tools
 
             return directories;
         }
-
-
+        
         /// <summary>
         /// 获取所有资源
         /// </summary>
         /// <returns></returns>
         public static List<string> GetAllAssetsPath()
         {
-            List<string> allAssetsList =new List<string>();
-            var directories = GetAllRuntimeDirects();
+            List<string> allAssetsList = new List<string>();
+            var          directories   = GetAllRuntimeDirects();
             //所有资源列表
             foreach (var dir in directories)
             {
@@ -78,16 +82,16 @@ namespace Code.BDFramework.Core.Tools
                 allAssetsList.AddRange(rets);
             }
 
-            
+
             for (int i = 0; i < allAssetsList.Count; i++)
             {
                 var res = allAssetsList[i];
                 allAssetsList[i] = res.Replace("\\", "/");
             }
-            
+
             return allAssetsList;
         }
+
         #endregion
-        
     }
 }

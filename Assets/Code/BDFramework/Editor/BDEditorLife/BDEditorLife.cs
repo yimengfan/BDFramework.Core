@@ -4,20 +4,21 @@ using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
+using Code.BDFramework.Core.Tools;
 using Code.BDFramework.Editor;
-using SQLite4Unity3d;
 using UnityEditor;
 using UnityEngine;
 
 namespace BDFramework.Editor.EditorLife
 {
-    [UnityEditor.InitializeOnLoad]
+    [InitializeOnLoad]
     static public class BDEditorLife
     {
         static BDEditorLife()
         {
             EditorApplication.delayCall += OnCompileCode;
             EditorApplication.playModeStateChanged += OnPlayExit;
+            
         }
 
 
@@ -76,7 +77,8 @@ namespace BDFramework.Editor.EditorLife
 
             Debug.Log("BDFrameEditor:管理器注册完成");
             #endregion
-            
+
+            BApplication.Init();
             DebuggerServerProcessManager.Inst.Start();
             BDEditorHelper.Init();
             BResources.Load("");
