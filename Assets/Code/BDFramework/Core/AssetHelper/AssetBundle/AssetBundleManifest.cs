@@ -26,10 +26,10 @@ namespace BDFramework.ResourceMgr
 
         public ManifestItem(string name, string hash, string package, AssetTypeEnum @enum, List<string> Depend = null)
         {
-            this.Name = name;
-            this.Hash = hash;
+            this.Name    = name;
+            this.Hash    = hash;
             this.Package = package;
-            this.Type = (int) @enum;
+            this.Type    = (int) @enum;
             if (Depend == null) Depend = new List<string>();
             this.Depend = Depend;
         }
@@ -68,12 +68,10 @@ namespace BDFramework.ResourceMgr
     /// 配置文件
     /// </summary>
     public class ManifestConfig
-    { 
-        public Dictionary<string, ManifestItem> Manifest_NameKey { get;  set; } =
-            new Dictionary<string, ManifestItem>();
+    {
+        public Dictionary<string, ManifestItem> Manifest_NameKey { get; set; } = new Dictionary<string, ManifestItem>();
 
-        public Dictionary<string, ManifestItem> Manifest_HashKey { get;  set; } =
-            new Dictionary<string, ManifestItem>();
+        public Dictionary<string, ManifestItem> Manifest_HashKey { get; set; } = new Dictionary<string, ManifestItem>();
 
         /// <summary>
         /// json结构
@@ -108,7 +106,8 @@ namespace BDFramework.ResourceMgr
                 list.Add(item.Hash);
                 return list.ToArray();
             }
-            BDebug.LogError("【config】不存在资源:"+name);
+
+            BDebug.LogError("【config】不存在资源:" + name);
             return null;
         }
 
@@ -126,8 +125,8 @@ namespace BDFramework.ResourceMgr
                 list.Add(item.Hash);
                 return list.ToArray();
             }
-            
-            BDebug.LogError("【config】不存在资源:"+hash);
+
+            BDebug.LogError("【config】不存在资源:" + hash);
             return null;
         }
 
@@ -170,31 +169,30 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="name"></param>
         /// <param name="dependencies"></param>
-        public void AddItem(string name, string hash, List<string> dependencies, ManifestItem.AssetTypeEnum @enum, string packageName = "")
+        public void AddItem(string name, string hash, List<string> dependencies, ManifestItem.AssetTypeEnum @enum,
+                            string packageName = "")
         {
-            
-           
             ManifestItem item = null;
-            if (this.Manifest_NameKey.TryGetValue(name,out item))
+            if (this.Manifest_NameKey.TryGetValue(name, out item))
             {
-                if (item.Hash!=hash)
+                if (item.Hash != hash)
                 {
-                    Debug.LogError("有重名：" +name+",如无显式BResource.Load加载则无视,隐式会自动根据hash算依赖!" );
-                    name = name + "_r";
-                    item = new ManifestItem(name, hash, packageName, @enum,dependencies);
+                    Debug.LogError("有重名：" + name + ",如无显式BResource.Load加载则无视,隐式会自动根据hash算依赖!");
+                    name                        = name + "_r";
+                    item                        = new ManifestItem(name, hash, packageName, @enum, dependencies);
                     this.Manifest_NameKey[name] = item;
                     this.Manifest_HashKey[hash] = item;
                 }
-                else if (dependencies.Count >=  item.Depend.Count)
+                else if (dependencies.Count >= item.Depend.Count)
                 {
-                    item = new ManifestItem(name, hash, packageName, @enum,dependencies);
+                    item                        = new ManifestItem(name, hash, packageName, @enum, dependencies);
                     this.Manifest_NameKey[name] = item;
                     this.Manifest_HashKey[hash] = item;
                 }
             }
             else
-            { 
-                item = new ManifestItem(name, hash, packageName, @enum,dependencies);
+            {
+                item                        = new ManifestItem(name, hash, packageName, @enum, dependencies);
                 this.Manifest_NameKey[name] = item;
                 this.Manifest_HashKey[hash] = item;
             }
@@ -219,6 +217,7 @@ namespace BDFramework.ResourceMgr
                 this.Manifest_HashKey[item.Hash] = item;
             }
         }
+
         /// <summary>
         /// 获取所有的ab
         /// </summary>
@@ -265,18 +264,17 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     public class AssetBundleManifestReference
     {
-        //
-        public Action OnLoaded { get; set; }
+        /// <summary>
+        /// 当加载成功
+        /// </summary>
+        private Action onLoaded { get; set; }
 
 
         public ManifestConfig Manifest { get; private set; }
 
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="path"></param>
-        public AssetBundleManifestReference(string path)
+        public void Load(string path, Action onLoaded)
         {
+            this.onLoaded = onLoaded;
 
             if (Application.isEditor)
             {
@@ -284,10 +282,10 @@ namespace BDFramework.ResourceMgr
                 if (File.Exists(path))
                 {
                     BDebug.Log("manifest加载成功!");
-                    var  text = File.ReadAllText(path);
+                    var text = File.ReadAllText(path);
                     this.Manifest = new ManifestConfig(text);
-                    OnLoaded?.Invoke();
-                    OnLoaded = null;
+                    this.onLoaded?.Invoke();
+                    this.onLoaded = null;
                 }
             }
             else
@@ -295,8 +293,6 @@ namespace BDFramework.ResourceMgr
                 //加载manifest
                 IEnumeratorTool.StartCoroutine(IE_LoadConfig(path));
             }
-            
-            
         }
 
 
@@ -326,10 +322,9 @@ namespace BDFramework.ResourceMgr
             {
                 this.Manifest = new ManifestConfig(text);
                 BDebug.Log("manifest加载成功!");
-                OnLoaded?.Invoke();
-                OnLoaded = null;
+                onLoaded?.Invoke();
+                onLoaded = null;
             }
-            
         }
     }
 }

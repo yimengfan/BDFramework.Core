@@ -11,14 +11,22 @@ namespace BDFramework.ResourceMgr
     public interface IResMgr
     {
         /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="onInitEnd"></param>
+        void Init(string path, Action onInitEnd);
+
+        /// <summary>
         /// 资源管理
         /// </summary>
         Dictionary<string, AssetBundleWapper> AssetbundleMap { get; }
+
         /// <summary>
         /// 卸载指定ab
         /// </summary>
         /// <param name="name"></param>
-        void UnloadAsset(string name ,bool isForceUnload =false);
+        void UnloadAsset(string name, bool isForceUnload = false);
 
         /// <summary>
         /// 卸载所有ab
@@ -42,6 +50,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="abName"></param>
         /// <returns></returns>
         T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : UnityEngine.Object;
+
         /// <summary>
         /// 异步加载资源
         /// </summary>
@@ -59,12 +68,15 @@ namespace BDFramework.ResourceMgr
         /// <param name="onLoadEnd"></param>
         /// <param name="onLoadProcess"></param>
         /// <returns></returns>
-        List<int> AsyncLoad(IList<string> assetsPath, Action<IDictionary<string, Object>> onLoadEnd, Action<int, int> onLoadProcess);
+        List<int> AsyncLoad(IList<string>    assetsPath, Action<IDictionary<string, Object>> onLoadEnd,
+                            Action<int, int> onLoadProcess);
+
         /// <summary>
         /// 取消一个加载任务
         /// </summary>
         /// <param name="taskid"></param>
-        void  LoadCancel(int taskid);
+        void LoadCancel(int taskid);
+
         /// <summary>
         /// 取消所有加载任务
         /// </summary>
@@ -74,9 +86,6 @@ namespace BDFramework.ResourceMgr
         /// 获取某个目录下文件
         /// 以runtime为根目录
         /// </summary>
-        string[] GetAssets(string floder,string searchPattern=null);
-        
-
-
+        string[] GetAssets(string floder, string searchPattern = null);
     }
 }
