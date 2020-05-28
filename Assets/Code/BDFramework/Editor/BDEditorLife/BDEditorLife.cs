@@ -82,7 +82,11 @@ namespace BDFramework.Editor.EditorLife
             DebuggerServerProcessManager.Inst.Start();
             BDEditorHelper.Init();
             BResources.Load("");
-            SqliteLoder.Load(Application.streamingAssetsPath);
+            //TODO 
+            //这一行还是不能加到框架层，应该还是：哪里用 哪里主动load，
+            //然后用完了close（SqliteLoder.Close（））。
+            //不然sql文件editor环境下一直被占用，很多麻烦事
+            // SqliteLoder.Load(Application.streamingAssetsPath);
         }
     }
 }

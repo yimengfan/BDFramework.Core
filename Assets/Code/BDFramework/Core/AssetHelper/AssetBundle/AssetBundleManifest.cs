@@ -287,6 +287,10 @@ namespace BDFramework.ResourceMgr
                     this.onLoaded?.Invoke();
                     this.onLoaded = null;
                 }
+                else
+                {
+                    Debug.LogError("配置文件不存在:" + path);
+                }
             }
             else
             {

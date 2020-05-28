@@ -25,7 +25,7 @@ namespace BDFramework.ResourceMgr
         {
             //重新刷新下
             var mgr = BResources.ResLoader as DevResourceMgr;
-            mgr?.Load();
+            mgr?.Init("",null);
         }
     }
 
@@ -66,18 +66,18 @@ namespace BDFramework.ResourceMgr
             allTaskList   = new List<LoaderTaskGroup>();
             objsMap       = new Dictionary<string, UnityEngine.Object>();
         }
+        
 
         /// <summary>
-        /// load
+        /// 初始化
         /// </summary>
-        public void Load()
-        {
-            allResourceList = BApplication.GetAllAssetsPath();
-        }
-
+        /// <param name="path"></param>
+        /// <param name="onInitEnd"></param>
         public void Init(string path, Action onInitEnd)
         {
             //
+            allResourceList = BApplication.GetAllAssetsPath();
+            onInitEnd?.Invoke();
         }
 
         /// <summary>
