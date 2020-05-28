@@ -8,6 +8,16 @@ namespace Code.BDFramework.Core.Tools
     static public class BApplication
     {
         #region 路径相关
+
+        static  BApplication()
+        {
+
+            if (Application.isEditor && Application.isPlaying)
+            {
+                Init();
+            }
+        }
+        
         static public void Init()
         {
             ProjectRoot = Application.dataPath.Replace("/Assets", "");
