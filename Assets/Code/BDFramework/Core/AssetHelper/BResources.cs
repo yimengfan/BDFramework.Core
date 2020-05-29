@@ -25,8 +25,7 @@ namespace BDFramework.ResourceMgr
             {
 #if UNITY_EDITOR
                 ResLoader = new DevResourceMgr();
-                if (onLoaded != null)
-                    onLoaded();
+                ResLoader.Init("",onLoaded);
                 BDebug.Log("资源加载:AssetDataBase editor only");
 #endif
             }

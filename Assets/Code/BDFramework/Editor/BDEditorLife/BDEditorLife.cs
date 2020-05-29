@@ -4,20 +4,21 @@ using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
+using Code.BDFramework.Core.Tools;
 using Code.BDFramework.Editor;
-using SQLite4Unity3d;
 using UnityEditor;
 using UnityEngine;
 
 namespace BDFramework.Editor.EditorLife
 {
-    [UnityEditor.InitializeOnLoad]
+    [InitializeOnLoad]
     static public class BDEditorLife
     {
         static BDEditorLife()
         {
             EditorApplication.delayCall += OnCompileCode;
             EditorApplication.playModeStateChanged += OnPlayExit;
+            
         }
 
 
@@ -76,11 +77,16 @@ namespace BDFramework.Editor.EditorLife
 
             Debug.Log("BDFrameEditor:管理器注册完成");
             #endregion
-            
+
+            BApplication.Init();
             DebuggerServerProcessManager.Inst.Start();
             BDEditorHelper.Init();
             BResources.Load("");
-            SqliteLoder.Load(Application.streamingAssetsPath);
+            //TODO 
+            //这一行还是不能加到框架层，应该还是：哪里用 哪里主动load，
+            //然后用完了close（SqliteLoder.Close（））。
+            //不然sql文件editor环境下一直被占用，很多麻烦事
+            // SqliteLoder.Load(Application.streamingAssetsPath);
         }
     }
 }
