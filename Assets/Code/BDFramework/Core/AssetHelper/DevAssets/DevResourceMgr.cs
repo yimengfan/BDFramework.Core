@@ -4,30 +4,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Collections;
+using System.Linq;
 using Code.BDFramework.Core.Tools;
+using Unity.UIWidgets.scheduler;
 using UnityEditor;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr
 {
-    public class OnAssetInmpoter_DevResourceMgr : AssetPostprocessor
-    {
-        /// <summary>
-        /// 资源更新完的时候重新刷新下文件列表
-        /// </summary>
-        /// <param name="importedAssets"></param>
-        /// <param name="deletedAssets"></param>
-        /// <param name="movedAssets"></param>
-        /// <param name="movedFromAssetPaths"></param>
-        private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
-                                                   string[] movedAssets,    string[] movedFromAssetPaths)
-        {
-            //重新刷新下
-            var mgr = BResources.ResLoader as DevResourceMgr;
-            mgr?.Init("",null);
-        }
-    }
+    // public class OnAssetInmpoter_DevResourceMgr : AssetPostprocessor
+    // {
+    //     /// <summary>
+    //     /// 资源更新完的时候重新刷新下文件列表
+    //     /// </summary>
+    //     /// <param name="importedAssets"></param>
+    //     /// <param name="deletedAssets"></param>
+    //     /// <param name="movedAssets"></param>
+    //     /// <param name="movedFromAssetPaths"></param>
+    //     private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
+    //                                                string[] movedAssets,    string[] movedFromAssetPaths)
+    //     {
+    //         //重新刷新下
+    //         var mgr = BResources.ResLoader as DevResourceMgr;
+    //         mgr?.Init("",null);
+    //     }
+    // }
 
 
     /// <summary>
@@ -55,10 +57,6 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         Dictionary<string, UnityEngine.Object> objsMap;
 
-        /// <summary>
-        /// 所有的资源列表
-        /// </summary>
-        private List<string> allResourceList;
 
         public DevResourceMgr()
         {
@@ -67,7 +65,9 @@ namespace BDFramework.ResourceMgr
             objsMap       = new Dictionary<string, UnityEngine.Object>();
         }
         
-
+        
+        //
+        private List<string> allRuntimeDirectList = new List<string>();
         /// <summary>
         /// 初始化
         /// </summary>
@@ -75,8 +75,8 @@ namespace BDFramework.ResourceMgr
         /// <param name="onInitEnd"></param>
         public void Init(string path, Action onInitEnd)
         {
+            allRuntimeDirectList = BApplication.GetAllRuntimeDirects();
             //
-            allResourceList = BApplication.GetAllAssetsPath();
             onInitEnd?.Invoke();
         }
 
@@ -138,24 +138,7 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                var findTarget = "/Runtime/" + path + ".";
-                var rets       = this.allResourceList.FindAll((a) => a.Contains(findTarget));
-
-                if (rets.Count == 0)
-                {
-                    Debug.LogError("未找到资源:" + path);
-
-                    return null;
-                }
-
-                if (rets.Count > 1)
-                {
-                    foreach (var r in rets)
-                    {
-                        Debug.LogError("注意文件同名:" + r);
-                    }
-                }
-
+                var rets = FindAssets(path);
                 //
                 var resPath = rets[0];
                 objsMap[path] = AssetDatabase.LoadAssetAtPath<T>(resPath);
@@ -163,18 +146,31 @@ namespace BDFramework.ResourceMgr
             }
         }
 
+
         /// <summary>
-        /// 加载所有
+        /// 寻找资源
         /// </summary>
         /// <param name="path"></param>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
+        private List<string> FindAssets(string path)
         {
-            var findTarget = "/Runtime/" + path + ".";
-            var rets       = this.allResourceList.FindAll((a) => a.Contains(findTarget));
 
+            List<string > rets =new List<string>();
+            //每个文件下判断
+            foreach (var direct in this.allRuntimeDirectList)
+            {
+                var filePath = IPath.Combine(direct, path);
+                var filename = Path.GetFileName(filePath);
+                var fileDierct = Path.GetDirectoryName(filePath);
+                //
+                if (!Directory.Exists(fileDierct)) continue;
+                //
+                var res = Directory.GetFiles(fileDierct, filename + ".*", SearchOption.TopDirectoryOnly)
+                    .Where((r)=>
+                               !r.EndsWith(".meta"));
+                rets.AddRange(res);
+            }
+            
             if (rets.Count == 0)
             {
                 Debug.LogError("未找到资源:" + path);
@@ -190,6 +186,19 @@ namespace BDFramework.ResourceMgr
                 }
             }
 
+            return rets;
+        }
+
+        /// <summary>
+        /// 加载所有
+        /// </summary>
+        /// <param name="path"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
+        {
+            var rets = FindAssets(path);
             var objs = AssetDatabase.LoadAllAssetsAtPath(rets[0]);
 
             List<T> list = new List<T>();
@@ -296,13 +305,25 @@ namespace BDFramework.ResourceMgr
         public string[] GetAssets(string floder, string searchPattern = null)
         {
             //判断是否存在这个目录
-            floder = "/Runtime/" + floder + "/";
-            var rets = allResourceList.FindAll((r) => r.Contains(floder));
+           
+            List<string > rets =new List<string>();
+            //每个文件下判断
+            foreach (var direct in this.allRuntimeDirectList)
+            {
+                var fileDierct = IPath.Combine(direct, floder);
+                //
+                if (!Directory.Exists(fileDierct)) continue;
+                //
+                var res = Directory.GetFiles(fileDierct, "*.*", SearchOption.TopDirectoryOnly)
+                    .Where((r)=>
+                               !r.EndsWith(".meta"));
+                rets.AddRange(res);
+            }
             //
             var splitStr = "/Runtime/";
             for (int i = 0; i < rets.Count; i++)
             {
-                var r     = rets[i];
+                var r     = rets[i].Replace("\\","/");
                 var index = r.IndexOf(splitStr);
                 var rs    = r.Substring(index + splitStr.Length).Split('.');
                 rets[i] = rs[0];
