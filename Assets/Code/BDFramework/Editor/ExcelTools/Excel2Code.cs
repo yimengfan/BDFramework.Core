@@ -16,7 +16,7 @@ namespace BDFramework.Editor.TableData
 {
     static public class Excel2Code
     {
-        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class[自动推测字段类型]", false,
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class", false,
             (int) BDEditorMenuEnum.BuildPackage_Table_Table2Class)]
         public static void Gen()
         {
