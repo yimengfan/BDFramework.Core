@@ -14,17 +14,27 @@ using System.Text.RegularExpressions;
 
 namespace BDFramework.Editor.TableData
 {
-
     static public class Excel2Code
     {
-        
-        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class", false,
-            (int)BDEditorMenuEnum.BuildPackage_Table_Table2Class)]
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class[自动推测字段类型]", false,
+            (int) BDEditorMenuEnum.BuildPackage_Table_Table2Class)]
         public static void Gen()
         {
-            Excel2Code.GenCode();
+            var ret = EditorUtility.DisplayDialog("提示", @"
+Excel格式如下:
+1.第一行为备注
+2.第二行可以自定义字段类型，如没检测到则自动分析字段类型
+3.所有表格字段名必须以Id开始，即第二或第三行首列必须是Id", "OK");
+            if (ret)
+            {
+                GenCode();
+            }
         }
-        
+
+
+        /// <summary>
+        /// 生成代码
+        /// </summary>
         public static void GenCode()
         {
             var tablePath = Path.Combine(Application.dataPath, "Resource/Table");
@@ -32,7 +42,8 @@ namespace BDFramework.Editor.TableData
 
             foreach (var file in info.GetFiles())
             {
-                if (!file.FullName.ToLower().EndsWith("xlsx") && !file.FullName.ToLower().EndsWith("xls")) continue;
+                if (!file.FullName.ToLower().EndsWith("xlsx") && !file.FullName.ToLower().EndsWith("xls"))
+                    continue;
                 string fname = Path.GetFileNameWithoutExtension(file.FullName).ToLower();
                 fname = UpperFirst(fname);
                 string destPath = Path.GetDirectoryName(file.FullName) + "\\" + fname +
@@ -43,7 +54,6 @@ namespace BDFramework.Editor.TableData
                 if (!oldPath.Equals(newPath))
                     AssetDatabase.CopyAsset(oldPath, newPath);
             }
-
 
             AssetDatabase.Refresh();
 
@@ -59,10 +69,29 @@ namespace BDFramework.Editor.TableData
             foreach (var f in xlslFiles)
             {
                 var excel = new ExcelUtility(f);
-                var json = excel.GetJson();
-                var statements = excel.GetLine(0);
-                Json2Class(f, json, statements);
-                Debug.Log("导出：" + f);
+                string json = excel.GetJson();
+                List<object> statements = excel.GetLine(0);
+                //这里将前三列进行判断
+                //如果第二列第一行是"Id"，则用自动推测字段模式
+                //如果第三列第一行是"Id",则用自定义字段类型模式
+                var list = excel.GetLine(1);
+                var list2 = excel.GetLine(2);
+                if (list[0].Equals("Id"))
+                {
+                    Json2Class(f, json, statements, null);
+                    Debug.Log("[自动分析]导出：" + f);
+                }
+                else if (list2[0].Equals("Id"))
+                {
+                    List<object> fieldTypes = excel.GetLine(1);
+                    Json2Class(f, json, statements, fieldTypes);
+                    Debug.Log("[自定义字段]导出：" + f);
+                }
+                else
+                {
+                    Debug.LogError("不符合规范内容:"+f);
+                }
+                
             }
 
             EditorUtility.DisplayDialog("提示", "生成完成!", "确定");
@@ -79,15 +108,22 @@ namespace BDFramework.Editor.TableData
             });
         }
 
-
-        private static void Json2Class(string fileName, string json, List<object> statements)
+        /// <summary>
+        /// Json2Class
+        /// 自动分析字段
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="json"></param>
+        /// <param name="statements"></param>
+        private static void Json2Class(string fileName,
+            string json,
+            List<object> statements,
+            List<object> fieldTypes = null)
         {
-            string structName = "";
-
-            structName = Path.GetFileName(fileName).ToLower().Replace(".xlsx", "");
-
+            string clsName = "";
+            clsName = Path.GetFileName(fileName).ToLower().Replace(".xlsx", "");
             //首字母大写
-            structName = structName.Substring(0, 1).ToUpper() + structName.Substring(1);
+            clsName = clsName.Substring(0, 1).ToUpper() + clsName.Substring(1);
             //输出目录控制
             string outputFile = Path.Combine(Application.dataPath, "Code/Game@hotfix/Table");
             if (Directory.Exists(outputFile) == false)
@@ -106,11 +142,9 @@ namespace BDFramework.Editor.TableData
             //引用命名空间
             sample.Imports.Add(new CodeNamespaceImport("System"));
             sample.Imports.Add(new CodeNamespaceImport("System.Collections.Generic"));
-            sample.Imports.Add(new CodeNamespaceImport("Game.Data"));
             sample.Imports.Add(new CodeNamespaceImport("SQLite4Unity3d"));
-
             //在命名空间下添加一个类
-            CodeTypeDeclaration wrapProxyClass = new CodeTypeDeclaration(structName);
+            CodeTypeDeclaration wrapProxyClass = new CodeTypeDeclaration(clsName);
             wrapProxyClass.IsClass = true;
             wrapProxyClass.IsEnum = false;
             wrapProxyClass.IsInterface = false;
@@ -123,7 +157,6 @@ namespace BDFramework.Editor.TableData
             wrapProxyClass.CustomAttributes.Add(attr);
             //
             var jsonData = JsonMapper.ToObject(json)[0];
-
             int i = 0;
             foreach (var key in jsonData.Keys)
             {
@@ -134,7 +167,7 @@ namespace BDFramework.Editor.TableData
                 CodeSnippetTypeMember member = new CodeSnippetTypeMember();
                 if (key.ToLower() == "id" && key != "Id")
                 {
-                    Debug.LogErrorFormat("<color=yellow>表格{0}字段必须为Id[大小写],请修改后生成</color>", structName);
+                    Debug.LogErrorFormat("<color=yellow>表格{0}字段必须为Id[大小写区分],请修改后生成</color>", clsName);
                     break;
                 }
                 else if (key == "Id")
@@ -146,26 +179,37 @@ namespace BDFramework.Editor.TableData
         public [type] [Name] {get;set;}";
                 }
 
-                var value = jsonData[key];
-
-
                 string type = null;
-                if (value.IsArray)
+                if (fieldTypes != null && fieldTypes.Count >= jsonData.Count)
                 {
-                    var str = value.ToJson();
-                    if (str.IndexOf("\"") > 0)
-                    {
-                        type = "List<string>";
-                    }
-                    else
-                    {
-                        type = "List<double>";
-                    }
+                    type = fieldTypes[i].ToString();
                 }
-                else if (value.IsInt) type = "int";
-                else if (value.IsDouble || value.IsLong) type = "double";
-                else if (value.IsBoolean) type = "bool";
-                else if (value.IsString) type = "string";
+                else
+                {
+                    //自动推测字段类型
+                    var value = jsonData[key];
+                    if (value.IsArray)
+                    {
+                        var str = value.ToJson();
+                        if (str.IndexOf("\"") > 0)
+                        {
+                            type = "List<string>";
+                        }
+                        else
+                        {
+                            type = "List<double>";
+                        }
+                    }
+                    else if (value.IsInt)
+                        type = "int";
+                    else if (value.IsDouble || value.IsLong)
+                        type = "double";
+                    else if (value.IsBoolean)
+                        type = "bool";
+                    else if (value.IsString)
+                        type = "string";
+                }
+
 
                 //注释
                 member.Comments.Add(new CodeCommentStatement(statements[i].ToString()));
@@ -211,7 +255,7 @@ namespace BDFramework.Editor.TableData
             var statements = excel.GetLine(0);
             Json2Class(f, json, statements);
             Debug.Log("导出：" + f);
-            
+
             EditorUtility.DisplayDialog("提示", "生成完成!", "确定");
             AssetDatabase.Refresh();
         }
@@ -219,9 +263,11 @@ namespace BDFramework.Editor.TableData
         [MenuItem("Assets/单个excel生成class", true)]
         private static bool SingleExcel2ClassValidation()
         {
-            if (Selection.activeObject == null) return false;
+            if (Selection.activeObject == null)
+                return false;
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            if (!path.StartsWith("Assets/Resource/Table") || !path.EndsWith(".xlsx")) return false;
+            if (!path.StartsWith("Assets/Resource/Table") || !path.EndsWith(".xlsx"))
+                return false;
             return true;
         }
     }

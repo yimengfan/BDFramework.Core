@@ -12,9 +12,10 @@ namespace Game.Data
 {
     using System;
     using System.Collections.Generic;
-    using Game.Data;
     using SQLite4Unity3d;
- 
+    
+    
+    [Serializable()]
     public class Skill
     {
         
