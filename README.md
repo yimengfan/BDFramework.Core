@@ -86,10 +86,10 @@ The following charging plug-ins are used. Please purchase and download them your
 
    ## Feature  
 
- **· TDD workflow, complete test cases:**  
+   **· TDD workflow, complete test cases:**  
  what? Dare you use a framework (library) without test cases?  
  
-**· DevOps workflow:**  
+   **· DevOps workflow:**  
    This has to wait for a while ~  
       
    **One key export C# hotfix code:**
@@ -106,23 +106,23 @@ The following charging plug-ins are used. Please purchase and download them your
    BD brings you a development idea, the user uses the timeline of the process (not the timeline of unity),  
    Divide the module and schedule according to the user process.The module here is not a narrow window ~  
    
-   **Perfect UI workflow:**
+   **Perfect UI workflow:**  
    There is a complete set of UI workflow in BD (here we only manage the UI logic, not considering ui production), whether you are UGUI NGUI or other.  
    We provide a set of mechanisms for UI management, value binding, data monitoring, and data flow.  
-   We expect to complete the further upgrade of the UI system in Q4 2018, hoping to create a more advanced and scientific workflow.  
- 
-**Resource management:**
-   BD abandons the Resources directory and retains the development habits of user Resources.  
-   A set of API switches automatically, compatible with AB and Editor modes.  
-   And there is a relatively complete AssetBundle management mechanism: atlas management, automatic collection Shader, 0 redundant packaging.  
-   And bd made a set of streamlined addressable, no matter your Asset under Streaming or persistent, it can automatically find and load.
+   We expect to complete the further upgrade of the UI system in Q4 2018, hoping to create a more advanced and scientific workflow.    
+   
+   **SQL table management:**  
+Sqlite is used to manage forms in BD, and excel2code, excel2json, excel2sqlite and other tools are provided
 
-   
-**Form management:**
-   Sqlite is used to manage forms in BD, and excel2code, excel2json, excel2sqlite and other tools are provided.  
-   
-**Version release:**
-   One-click packaging of codes, resources, and forms, and automatic download of version management  
+   **Discovery business registration:**  
+The bottom layer of BDFrame provides a set of discovery-type business registration. Without the previous various Registers, as long as you customize your own labels and managers, you can be automatically registered.
+On top of this, BD implements a series of manager such as ScreenviewManger, UIManager, EventManager...etc.
+This mechanism is highly extensible and customizable, and users can implement other managers according to their own needs
+And this is also effective in the editor environment~ It will be very helpful when writing tools~
+
+   **Module management and scheduling:**  
+BD brings you a development idea, the user uses the timeline of the process (not the timeline of unity),
+Divide the module and schedule according to the user process.The module here is not a narrow window~
      
    </br>There are many other things that I think are commonly used: such as the event system, what http library, what object pool is too lazy to list  
 
