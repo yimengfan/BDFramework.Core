@@ -61,6 +61,7 @@ namespace ILRuntime.Runtime.Generated
             SQLite4Unity3d_SQLiteCommand_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding_Enumerator_Binding.Register(app);
+            System_Collections_Generic_List_1_APITestHero_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding.Register(app);
@@ -121,6 +122,8 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_UnitTest_UnitTestBaseAttribute_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Type_List_1_ILTypeInstance_Binding.Register(app);
+            Code_BDFramework_UnitTest_Test_APITestHero_Binding.Register(app);
+            BDFramework_ResourceMgr_IResMgr_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_MethodInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Single_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_Action_1_Single_Binding.Register(app);

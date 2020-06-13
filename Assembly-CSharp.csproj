@@ -63,6 +63,7 @@
     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\EditorTestRunner.cs" />
     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\HotfixTestRunner.cs" />
     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\TestRunner.cs" />
+    <Compile Include="Assets\Code\BDFramework.UnitTest\Test\APITest_Sqlite.cs" />
     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_AssetsManager_AssetsBundle.cs" />
     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_AssetsManager_DevResource.cs" />
     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_DataListener.cs" />
@@ -450,12 +451,14 @@
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_GameStart_IGameStart_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_ILRuntimeHelper_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_ResourceMgr_BResources_Binding.cs" />
+    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_ResourceMgr_IResMgr_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_Sql_SqliteLoder_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UFlux_IButton_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UFlux_IComponentOnClick_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UnitTest_UnitTestBaseAttribute_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_VersionContrller_VersionContorller_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\CLRBindings.cs" />
+    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\Code_BDFramework_UnitTest_Test_APITestHero_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\IEnumeratorTool_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\ILRuntime_CLR_TypeSystem_IType_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\ILRuntime_Mono_Cecil_MemberReference_Binding.cs" />
@@ -513,6 +516,7 @@
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Action_1_ILTypeInstanc_t1.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Action_1_Single_Bindin.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Action_1_String_Bindin.cs" />
+    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_APITestHero_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Enum_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Enum_Binding_Enumerato.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_GameObject_Binding.cs" />
