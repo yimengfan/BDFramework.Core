@@ -42,7 +42,7 @@ The following charging plug-ins are used. Please purchase and download them your
 <br> 2018.8 热更新工具整合：资源更新（已完成）~~  
 ## 贡献者名单
 [@gaojiexx](https://github.com/gaojiexx)  
-[@shaozhoucheng](https://github.com/shaozhoucheng)  
+[@ricashao](https://github.com/ricashao)  
 ## 框架特点(Feature)
    **·TDD工作流、完整的测试用例:**  
    什么？没测试用例的框架（库）你也敢用？  
