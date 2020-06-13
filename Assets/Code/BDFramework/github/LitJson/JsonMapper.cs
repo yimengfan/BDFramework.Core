@@ -463,6 +463,22 @@ namespace LitJson
                     return conv_op.Invoke(null,
                         new object[] {reader.Value});
 
+                if (json_type.IsValueType && vt.IsValueType)
+                {
+                    if (vt == typeof(int))
+                    {
+                        return Convert.ToInt32(reader.Value) ;
+                    }
+                    else if (vt == typeof(float))
+                    {
+                        return  (float)Convert.ToDouble(reader.Value);
+                    }
+                    else if (vt == typeof(double))
+                    {
+                        return Convert.ToDouble(reader.Value);
+                    }
+                }
+                
                 // No luck
                 throw new JsonException(String.Format(
                     "Can't assign value '{0}' (type {1}) to type {2}",
