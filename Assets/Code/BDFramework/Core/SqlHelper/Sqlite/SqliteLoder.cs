@@ -20,17 +20,19 @@ namespace BDFramework.Sql
         static public void Load(string root)
         {
             Connection?.Dispose();
-
+            
             //先以外部传入的 作为 firstpath
             firstPath = IPath.Combine(root, BDUtils.GetPlatformPath(Application.platform) + "/Local.db");
+            
+            //editor下 不在执行的时候，直接创建
+            if (Application.isEditor && !Application.isPlaying)
+            {
+                Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+                BDebug.Log("DB加载路径:" + firstPath, "red");
+                return;
+            }
+  
 
-#if UNITY_EDITOR
-            
-            Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-            BDebug.Log("DB加载路径:" + firstPath, "red");
-            return;
-#endif
-            
             //firstpath不存在 或者 不支持io操作，
             //则默认情况生效，persistent为firstpath
             if (!File.Exists(firstPath))

@@ -8,6 +8,7 @@ using LitJson;
 using UnityEditor;
 using UnityEngine;
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
@@ -38,23 +39,31 @@ Excel格式如下:
         public static void GenCode()
         {
             var tablePath = Path.Combine(Application.dataPath, "Resource/Table");
-            DirectoryInfo info = new DirectoryInfo(tablePath);
-
-            foreach (var file in info.GetFiles())
-            {
-
-            }
-
-            AssetDatabase.Refresh();
-
-            var tableDir = Path.GetDirectoryName(tablePath);
-            var xlslFiles = Directory.GetFiles(tablePath, "*.xlsx", SearchOption.AllDirectories);
-
-            if (xlslFiles.Length == 0)
+            var xlslFiles = Directory.GetFiles(tablePath, "*.xlsx", SearchOption.AllDirectories).ToList();
+            
+            if (xlslFiles.Count == 0)
             {
                 EditorUtility.DisplayDialog("提示", "未发现xlsx文件，请注意不是xls", "确定");
                 return;
             }
+
+            //同名文件判断
+            var fnlist = xlslFiles.Select((s) => Path.GetFileName(s).ToLower()).ToList();
+
+            foreach (var fn in fnlist)
+            {
+                var rets = fnlist.FindAll((f) => f == fn);
+                if (rets.Count > 1)
+                {
+
+                    EditorUtility.DisplayDialog("提示", "Sqlite表名 字段名不区分大小写,请处理重名exel! ->"+ fn, "OK");
+                    
+                    return;
+                }
+            }
+
+
+
 
             foreach (var f in xlslFiles)
             {
