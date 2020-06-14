@@ -11,14 +11,14 @@ namespace BDFramework.Helper
         {
             switch (platform)
             {
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
                 case RuntimePlatform.WindowsEditor:
                 case RuntimePlatform.WindowsPlayer:
                     return "Windows";
                 case RuntimePlatform.Android:
                     return "Android";
                 case RuntimePlatform.IPhonePlayer:
-                case RuntimePlatform.OSXEditor:
-                case RuntimePlatform.OSXPlayer:
                     return "iOS";
             }
 

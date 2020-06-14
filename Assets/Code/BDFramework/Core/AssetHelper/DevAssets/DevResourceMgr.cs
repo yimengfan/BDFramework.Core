@@ -138,7 +138,10 @@ namespace BDFramework.ResourceMgr
             else
             {
                 var rets = FindAssets(path);
-                //
+                if (rets == null)
+                {
+                    return null;
+                }
                 var resPath = rets[0];
                 objsMap[path] = AssetDatabase.LoadAssetAtPath<T>(resPath);
                 return objsMap[path] as T;

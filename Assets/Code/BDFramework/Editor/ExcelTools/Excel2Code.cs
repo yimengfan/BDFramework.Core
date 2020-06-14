@@ -8,6 +8,7 @@ using LitJson;
 using UnityEditor;
 using UnityEngine;
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
@@ -38,60 +39,36 @@ Excel格式如下:
         public static void GenCode()
         {
             var tablePath = Path.Combine(Application.dataPath, "Resource/Table");
-            DirectoryInfo info = new DirectoryInfo(tablePath);
-
-            foreach (var file in info.GetFiles())
-            {
-                if (!file.FullName.ToLower().EndsWith("xlsx") && !file.FullName.ToLower().EndsWith("xls"))
-                    continue;
-                string fname = Path.GetFileNameWithoutExtension(file.FullName).ToLower();
-                fname = UpperFirst(fname);
-                string destPath = Path.GetDirectoryName(file.FullName) + "\\" + fname +
-                                  Path.GetExtension(file.FullName);
-//                //判断是否重名
-                string oldPath = "Assets" + file.FullName.Replace('\\', '/').Replace(Application.dataPath, "");
-                string newPath = "Assets" + destPath.Replace('\\', '/').Replace(Application.dataPath, "");
-                if (!oldPath.Equals(newPath))
-                    AssetDatabase.CopyAsset(oldPath, newPath);
-            }
-
-            AssetDatabase.Refresh();
-
-            var tableDir = Path.GetDirectoryName(tablePath);
-            var xlslFiles = Directory.GetFiles(tablePath, "*.xlsx", SearchOption.AllDirectories);
-
-            if (xlslFiles.Length == 0)
+            var xlslFiles = Directory.GetFiles(tablePath, "*.xlsx", SearchOption.AllDirectories).ToList();
+            
+            if (xlslFiles.Count == 0)
             {
                 EditorUtility.DisplayDialog("提示", "未发现xlsx文件，请注意不是xls", "确定");
                 return;
             }
 
+            //同名文件判断
+            var fnlist = xlslFiles.Select((s) => Path.GetFileName(s).ToLower()).ToList();
+
+            foreach (var fn in fnlist)
+            {
+                var rets = fnlist.FindAll((f) => f == fn);
+                if (rets.Count > 1)
+                {
+
+                    EditorUtility.DisplayDialog("提示", "Sqlite表名 字段名不区分大小写,请处理重名exel! ->"+ fn, "OK");
+                    
+                    return;
+                }
+            }
+
+
+
+
             foreach (var f in xlslFiles)
             {
-                var excel = new ExcelUtility(f);
-                string json = excel.GetJson();
-                List<object> statements = excel.GetLine(0);
-                //这里将前三列进行判断
-                //如果第二列第一行是"Id"，则用自动推测字段模式
-                //如果第三列第一行是"Id",则用自定义字段类型模式
-                var list = excel.GetLine(1);
-                var list2 = excel.GetLine(2);
-                if (list[0].Equals("Id"))
-                {
-                    Json2Class(f, json, statements, null);
-                    Debug.Log("[自动分析]导出：" + f);
-                }
-                else if (list2[0].Equals("Id"))
-                {
-                    List<object> fieldTypes = excel.GetLine(1);
-                    Json2Class(f, json, statements, fieldTypes);
-                    Debug.Log("[自定义字段]导出：" + f);
-                }
-                else
-                {
-                    Debug.LogError("不符合规范内容:"+f);
-                }
-                
+
+                GenClassByExcel(f);
             }
 
             EditorUtility.DisplayDialog("提示", "生成完成!", "确定");
@@ -99,14 +76,38 @@ Excel格式如下:
         }
 
 
-        private static string UpperFirst(string s)
+
+        /// <summary>
+        /// 通过excel生成class
+        /// </summary>
+        /// <param name="filename"></param>
+        static private  void GenClassByExcel(string filename)
         {
-            return Regex.Replace(s, @"\b[a-z]\w+", delegate(Match match)
+            var excel = new ExcelUtility(filename);
+            string json = excel.GetJson();
+            List<object> statements = excel.GetLine(0);
+            //这里将前三列进行判断
+            //如果第二列第一行是"Id"，则用自动推测字段模式
+            //如果第三列第一行是"Id",则用自定义字段类型模式
+            var list = excel.GetLine(1);
+            var list2 = excel.GetLine(2);
+            if (list[0].Equals("Id"))
             {
-                string v = match.ToString();
-                return char.ToUpper(v[0]) + v.Substring(1);
-            });
+                Json2Class(filename, json, statements, null);
+                Debug.Log("[自动分析]导出：" + filename);
+            }
+            else if (list2[0].Equals("Id"))
+            {
+                List<object> fieldTypes = excel.GetLine(1);
+                Json2Class(filename, json, statements, fieldTypes);
+                Debug.Log("[自定义字段]导出：" + filename);
+            }
+            else
+            {
+                Debug.LogError("不符合规范内容:"+filename);
+            }
         }
+
 
         /// <summary>
         /// Json2Class
@@ -121,9 +122,7 @@ Excel格式如下:
             List<object> fieldTypes = null)
         {
             string clsName = "";
-            clsName = Path.GetFileName(fileName).ToLower().Replace(".xlsx", "");
-            //首字母大写
-            clsName = clsName.Substring(0, 1).ToUpper() + clsName.Substring(1);
+            clsName = Path.GetFileNameWithoutExtension(fileName);
             //输出目录控制
             string outputFile = Path.Combine(Application.dataPath, "Code/Game@hotfix/Table");
             if (Directory.Exists(outputFile) == false)
@@ -132,7 +131,7 @@ Excel格式如下:
             }
 
             //输出目录
-            outputFile = Path.Combine(outputFile, Path.GetFileName(fileName).Replace(".xlsx", ".cs"));
+            outputFile = Path.Combine(outputFile, clsName+".cs");
 
 
             //生成类服务
@@ -233,32 +232,7 @@ Excel格式如下:
             }
         }
 
-        [MenuItem("Assets/单个excel生成class")]
-        public static void SingleExcel2Class()
-        {
-            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            FileInfo file = new FileInfo(path);
-            string fname = Path.GetFileNameWithoutExtension(file.FullName).ToLower();
-            fname = UpperFirst(fname);
-            string destPath = Path.GetDirectoryName(file.FullName) + "\\" + fname +
-                              Path.GetExtension(file.FullName);
-            //                //判断是否重名
-            string oldPath = "Assets" + file.FullName.Replace('\\', '/').Replace(Application.dataPath, "");
-            string newPath = "Assets" + destPath.Replace('\\', '/').Replace(Application.dataPath, "");
-            if (!oldPath.Equals(newPath))
-                AssetDatabase.CopyAsset(oldPath, newPath);
-            AssetDatabase.Refresh();
 
-            string f = file.FullName;
-            var excel = new ExcelUtility(f);
-            var json = excel.GetJson();
-            var statements = excel.GetLine(0);
-            Json2Class(f, json, statements);
-            Debug.Log("导出：" + f);
-
-            EditorUtility.DisplayDialog("提示", "生成完成!", "确定");
-            AssetDatabase.Refresh();
-        }
 
         [MenuItem("Assets/单个excel生成class", true)]
         private static bool SingleExcel2ClassValidation()
@@ -269,6 +243,13 @@ Excel格式如下:
             if (!path.StartsWith("Assets/Resource/Table") || !path.EndsWith(".xlsx"))
                 return false;
             return true;
+        }
+        [MenuItem("Assets/单个excel生成class")]
+        public static void SingleExcel2Class()
+        {
+            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            GenClassByExcel(path);
+            AssetDatabase.Refresh();
         }
     }
 }

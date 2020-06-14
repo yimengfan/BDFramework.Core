@@ -28,6 +28,7 @@ namespace Code.BDFramework.UnitTest
             o = BResources.Load<GameObject>("AssetTest/Particle");
             //不同的runtime目录
             o = BResources.Load<GameObject>("CubeSVN");
+            o = BResources.Load<GameObject>("null");
             
         }
         
