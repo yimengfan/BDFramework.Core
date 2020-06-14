@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SQLite4Unity3d;
 
 namespace BDFramework.Sql
@@ -67,6 +68,16 @@ namespace BDFramework.Sql
             Connection.Insert(@object);
         }
 
+
+        /// <summary>
+        /// 插入所有
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="objTypes"></param>
+        public void InsertAll<T>(List<T> obj)
+        {
+            Connection.Insert(@obj,typeof(T));
+        }
 
         /// <summary>
         /// 获取表

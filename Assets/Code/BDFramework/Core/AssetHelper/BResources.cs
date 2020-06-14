@@ -18,14 +18,14 @@ namespace BDFramework.ResourceMgr
         {
             if (root != "")
             {
-                ResLoader = new AssetBundleMgr(root, onLoaded);
+                ResLoader = new AssetBundleMgr();
+                ResLoader.Init(root, onLoaded);
             }
             else
             {
 #if UNITY_EDITOR
                 ResLoader = new DevResourceMgr();
-                if (onLoaded != null)
-                    onLoaded();
+                ResLoader.Init("",onLoaded);
                 BDebug.Log("资源加载:AssetDataBase editor only");
 #endif
             }

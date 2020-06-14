@@ -96,6 +96,10 @@ namespace BDFramework.Editor.TableData
             }
         }
 
+        /// <summary>
+        /// 获取json
+        /// </summary>
+        /// <returns></returns>
 
         public string GetJson()
         {
@@ -117,15 +121,34 @@ namespace BDFramework.Editor.TableData
             //准备一个列表存储整个表的数据
             List<Dictionary<string, object>> table = new List<Dictionary<string, object>>();
 
+
+            //第一行为备注，
+            //寻找到id字段行数，以下全为数据
+            int skipLineCount = -1;
+            for (int i = 1; i < 10; i++)
+            {
+                var list = this.GetLine(i);
+                if (list[0].Equals("Id"))
+                {
+                    skipLineCount = i;
+                    break;
+                }
+            }
+
+            if (skipLineCount == -1)
+            {
+                throw new Exception("表格数据可能有错,没发现Id字段,请检查");
+            }
+            //
             //读取数据
-            for (int i = 2; i < rowCount; i++)
+            for (int i = skipLineCount+1; i < rowCount; i++)
             {
                 //准备一个字典存储每一行的数据
                 Dictionary<string, object> row = new Dictionary<string, object>();
                 for (int j = 0; j < colCount; j++)
                 {
                     //读取第1行数据作为表头字段
-                    string field = mSheet.Rows[1][j].ToString();
+                    string field = mSheet.Rows[skipLineCount][j].ToString();
                     //Key-Value对应
                     row[field] = mSheet.Rows[i][j];
                 }

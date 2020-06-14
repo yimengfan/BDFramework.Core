@@ -391,7 +391,7 @@ MonoBehaviour:
       Data: 0|BDFramework.GameConfig, Assembly-CSharp
     - Name: CodeRoot
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: SQLRoot
       Entry: 3
       Data: 0

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BDFramework.Sql;
 using BDFramework.UnitTest;
+using Code.BDFramework.UnitTest.Test;
 using Game.Data;
 using LitJson;
 using SQLite4Unity3d;
@@ -12,37 +13,12 @@ namespace Tests
     [UnitTest(Des = "数据库测试")]
     static public class APITest_Sqlite
     {
-        public class APITestHero
-        {
-            // id
-            [PrimaryKey]
-            public double Id { get; set; } = 1;
-
-            // 名称
-            public string Name { get; set; } = "xx";
-
-            // 级别
-            public string Level { get; set; } = "";
-
-            // 星级 
-            public double StarLevel { get; set; } = 1;
-
-            // 下个等级
-            public double NextLevel { get; set; } = 1;
-
-            // 属性名
-            public List<string> AttributeName { get; set; } = new List<string>();
-
-            // 属性值
-            public List<double> AttributeValue { get; set; } = new List<double>();
-
-            // 拥有技能id
-            public List<double> Skills { get; set; } = new List<double>();
-        }
-
         [UnitTest(Des = "初始化数据库")]
         static public void Insert()
         {
+            //TODO 
+            //暂时热更内不支持创建插入操作
+            //该条测试可能会对后面有影响
             var h1 = new APITestHero() {Id = 1};
             var h2 = new APITestHero() {Id = 2};
             var h3 = new APITestHero() {Id = 3};
@@ -51,18 +27,12 @@ namespace Tests
             {
                 SqliteLoder.Load(Application.streamingAssetsPath);
             }
-            
+
             SqliteHelper.DB.CreateDB<APITestHero>();
-            SqliteHelper.DB.InsertTable(new List<APITestHero>(){h1,h2,h3});
+            SqliteHelper.DB.InsertTable(new List<APITestHero>() {h1, h2, h3});
         }
 
-        [UnitTest(Des = "关闭",Order = 10000)]
-        static public void Close()
-        {
-            SqliteLoder.Close();
-        }
-        
-        
+
         [UnitTest(Des = "单条件查询")]
         static public void Select()
         {
@@ -104,11 +74,10 @@ namespace Tests
         }
 
 
-
-
-
-
-
-
+        [UnitTest(Des = "关闭", Order = 10000)]
+        static public void Close()
+        {
+            SqliteLoder.Close();
+        }
     }
 }

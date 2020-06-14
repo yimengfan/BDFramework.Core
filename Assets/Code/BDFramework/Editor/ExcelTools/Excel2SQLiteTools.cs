@@ -197,8 +197,8 @@ namespace BDFramework.Editor.TableData
             //
             for (int i = 0; i < jsonObj.Count; i++)
             {
-                var j = jsonObj[i];
-                var jo = JsonMapper.ToObject(t, j.ToJson());
+                var _json = jsonObj[i].ToJson();
+                var jo = JsonMapper.ToObject(t, _json);
                 try
                 {
                     sql.Insert(jo);

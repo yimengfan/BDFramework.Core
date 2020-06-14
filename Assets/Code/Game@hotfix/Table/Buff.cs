@@ -12,31 +12,31 @@ namespace Game.Data
 {
     using System;
     using System.Collections.Generic;
-    using Game.Data;
     using SQLite4Unity3d;
     
     
+    [Serializable()]
     public class Buff
     {
         
         // buffid
       [PrimaryKey] 
-        public double Id {get;set;}
+        public int Id {get;set;}
         // buff类型
-       public double BuffType {get;set;}
+       public int BuffType {get;set;}
         // 冷却时间（回合）
-       public double CD {get;set;}
+       public int CD {get;set;}
         // 持续时间（回合）
-       public double LifeTime {get;set;}
+       public int LifeTime {get;set;}
         // 描述
        public string Des {get;set;}
-        // 参数列表 | 字符串类型
-       public List<string> Params_StrValue {get;set;}
+        // 参数列表，字符串类型
+       public string[] Params_StrValue {get;set;}
         // 公式
        public List<string> Params_Expression {get;set;}
         // 参数列表，数值类型(固定数值)
-       public List<double> Params_NumValue {get;set;}
+       public int[] Params_NumValue {get;set;}
         // 显示特效
-       public double Effect {get;set;}
+       public string Effect {get;set;}
     }
 }
