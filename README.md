@@ -47,7 +47,7 @@ The following charging plug-ins are used. Please purchase and download them your
 如果你想加入我们，并贡献代码，请联系我们。QQ:755737878  
 ## 框架特点(Feature)
    **·TDD工作流、完整的测试用例:**  
-   什么？没测试用例的框架（库）你也敢用？  
+  完整的测试用例，保证框架的稳定。
    
    **·DevOps工作流:**  
    这个还得等一小会~
@@ -58,7 +58,7 @@ The following charging plug-ins are used. Please purchase and download them your
  
    **一键版本发布:**  
    代码、资源、表格一键打包,版本管理自动下载  
-   还有好多我就觉得都是常用的东西:比如事件系统啊、什么http库啊、什么对象池啊就懒得列举了  
+
    
    **完善的资源管理系统，一套API各平台自动切换：**
    BD抛弃了Resources目录，并且保留的用户Resources的开发习惯.  
