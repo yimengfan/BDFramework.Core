@@ -23,6 +23,13 @@ namespace BDFramework.Sql
 
             //先以外部传入的 作为 firstpath
             firstPath = IPath.Combine(root, BDUtils.GetPlatformPath(Application.platform) + "/Local.db");
+
+#if UNITY_EDITOR
+            
+            Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+            BDebug.Log("DB加载路径:" + firstPath, "red");
+            return;
+#endif
             
             //firstpath不存在 或者 不支持io操作，
             //则默认情况生效，persistent为firstpath

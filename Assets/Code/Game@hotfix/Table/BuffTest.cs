@@ -16,7 +16,7 @@ namespace Game.Data
     
     
     [Serializable()]
-    public class Buff
+    public class BuffTest
     {
         
         // buffid

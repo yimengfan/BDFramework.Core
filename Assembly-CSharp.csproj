@@ -679,7 +679,7 @@
     <Compile Include="Assets\Code\Game@hotfix\ScreenView\ScreenView_Demo1_Screenview.cs" />
     <Compile Include="Assets\Code\Game@hotfix\ScreenView\ScreenView_Main.cs" />
     <Compile Include="Assets\Code\Game@hotfix\ScreenView\ScreenViewEnum.cs" />
-    <Compile Include="Assets\Code\Game@hotfix\Table\Buff.cs" />
+    <Compile Include="Assets\Code\Game@hotfix\Table\BuffTest.cs" />
     <Compile Include="Assets\Code\Game@hotfix\Table\Hero.cs" />
     <Compile Include="Assets\Code\Game@hotfix\Table\Skill.cs" />
     <Compile Include="Assets\Code\Game@hotfix\Window_DemoMain.cs" />
