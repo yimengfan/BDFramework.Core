@@ -33,21 +33,27 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Boolean)};
             method = type.GetMethod("set_maskable", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, set_maskable_3);
+            args = new Type[]{};
+            method = type.GetMethod("get_isMaskingGraphic", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_isMaskingGraphic_4);
+            args = new Type[]{typeof(System.Boolean)};
+            method = type.GetMethod("set_isMaskingGraphic", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, set_isMaskingGraphic_5);
             args = new Type[]{typeof(UnityEngine.Material)};
             method = type.GetMethod("GetModifiedMaterial", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, GetModifiedMaterial_4);
+            app.RegisterCLRMethodRedirection(method, GetModifiedMaterial_6);
             args = new Type[]{typeof(UnityEngine.Rect), typeof(System.Boolean)};
             method = type.GetMethod("Cull", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Cull_5);
+            app.RegisterCLRMethodRedirection(method, Cull_7);
             args = new Type[]{typeof(UnityEngine.Rect), typeof(System.Boolean)};
             method = type.GetMethod("SetClipRect", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, SetClipRect_6);
+            app.RegisterCLRMethodRedirection(method, SetClipRect_8);
             args = new Type[]{};
             method = type.GetMethod("RecalculateClipping", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, RecalculateClipping_7);
+            app.RegisterCLRMethodRedirection(method, RecalculateClipping_9);
             args = new Type[]{};
             method = type.GetMethod("RecalculateMasking", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, RecalculateMasking_8);
+            app.RegisterCLRMethodRedirection(method, RecalculateMasking_10);
 
 
 
@@ -131,7 +137,42 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* GetModifiedMaterial_4(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_isMaskingGraphic_4(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.UI.MaskableGraphic instance_of_this_method = (UnityEngine.UI.MaskableGraphic)typeof(UnityEngine.UI.MaskableGraphic).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = instance_of_this_method.isMaskingGraphic;
+
+            __ret->ObjectType = ObjectTypes.Integer;
+            __ret->Value = result_of_this_method ? 1 : 0;
+            return __ret + 1;
+        }
+
+        static StackObject* set_isMaskingGraphic_5(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Boolean @value = ptr_of_this_method->Value == 1;
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            UnityEngine.UI.MaskableGraphic instance_of_this_method = (UnityEngine.UI.MaskableGraphic)typeof(UnityEngine.UI.MaskableGraphic).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            instance_of_this_method.isMaskingGraphic = value;
+
+            return __ret;
+        }
+
+        static StackObject* GetModifiedMaterial_6(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -155,7 +196,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* Cull_5(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* Cull_7(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -177,7 +218,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* SetClipRect_6(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* SetClipRect_8(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -199,7 +240,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* RecalculateClipping_7(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* RecalculateClipping_9(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -214,7 +255,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* RecalculateMasking_8(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* RecalculateMasking_10(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
