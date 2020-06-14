@@ -168,7 +168,7 @@ namespace SQLite4Unity3d
             var type = typeof(T);
             var DataCache = new List<T>();
             //查询所有数据
-            var cmd = GenerateCommand(selection, type.Name.ToLower());
+            var cmd = GenerateCommand(selection, type.Name);
             BDebug.Log(cmd);
             var list = cmd.ExecuteQuery(typeof(T));
             foreach (var o in list)
