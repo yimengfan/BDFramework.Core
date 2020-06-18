@@ -143,7 +143,7 @@ namespace BDFramework.Mgr
         /// 获取所有的ClassData
         /// </summary>
         /// <returns></returns>
-        protected IEnumerable<ClassData> GetAllClassDatas()
+        public IEnumerable<ClassData> GetAllClassDatas()
         {
             IEnumerable<ClassData> classDatas = new List<ClassData>();
             if (this.ClassDataMap_IntKey.Count > 0)
