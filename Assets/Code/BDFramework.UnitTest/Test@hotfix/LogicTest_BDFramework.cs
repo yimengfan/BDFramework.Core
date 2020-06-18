@@ -1,6 +1,5 @@
 ﻿using BDFramework.UnitTest;
-using Code.Game;
-
+using Game;
 namespace Tests
 {
     [UnitTestAttribute(Des = "框架流程测试")]

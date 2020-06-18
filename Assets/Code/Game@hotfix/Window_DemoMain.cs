@@ -14,9 +14,9 @@ using BDFramework.DataListener;
 using BDFramework.ResourceMgr;
 using BDFramework.UFlux;
 using BDFramework.VersionContrller;
-using Code.Game;
-using Code.Game.demo_EventManager;
-using Code.Game.demo6_UFlux;
+using Game;
+using Game.demo_EventManager;
+using Game.demo6_UFlux;
 
 /// <summary>
 /// 这个是ui的标签，

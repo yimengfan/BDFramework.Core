@@ -6,7 +6,7 @@ using BDFramework.ScreenView;
 using BDFramework.Sql;
 using BDFramework.UFlux;
 using BDFramework.UI;
-using Code.Game;
+using Game;
 
 [ScreenView((int)ScreenViewEnum.Demo1)]
 public class ScreenView_Demo1_Screenview : IScreenView

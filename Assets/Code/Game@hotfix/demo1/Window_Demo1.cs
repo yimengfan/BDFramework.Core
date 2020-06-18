@@ -5,7 +5,7 @@ using BDFramework.ScreenView;
 using BDFramework.UFlux;
 using UnityEngine;
 using BDFramework.UI;
-using Code.Game;
+using Game;
 using UnityEngine.UI;
 
 /// <summary>

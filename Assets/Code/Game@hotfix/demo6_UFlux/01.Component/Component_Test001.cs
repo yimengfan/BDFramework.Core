@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BDFramework.UFlux;
 using UnityEngine;
 
-namespace Code.Game.demo6_UFlux
+namespace Game.demo6_UFlux
 {
     
     //这里是Component标签，用以创建时候进行绑定Transform

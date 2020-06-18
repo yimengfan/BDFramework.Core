@@ -2,7 +2,7 @@
 using BDFramework.UFlux.View.Props;
 using UnityEngine.UI;
 
-namespace Code.Game.demo6_UFlux
+namespace Game.demo6_UFlux
 {
     public class Props_Test001 : PropsBase
     {

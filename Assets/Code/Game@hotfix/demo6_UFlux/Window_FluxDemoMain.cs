@@ -4,7 +4,7 @@ using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Code.Game.demo6_UFlux
+namespace Game.demo6_UFlux
 {
     
     [UI((int) WinEnum.Win_Demo6,"Windows/UFlux/Window_FluxMain")]

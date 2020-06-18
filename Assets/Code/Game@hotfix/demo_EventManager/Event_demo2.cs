@@ -1,4 +1,4 @@
-namespace Code.Game.demo_EventManager
+namespace Game.demo_EventManager
 {
     
     /// <summary>

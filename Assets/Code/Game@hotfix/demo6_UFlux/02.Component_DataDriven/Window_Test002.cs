@@ -4,7 +4,7 @@ using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Code.Game.demo6_UFlux
+namespace Game.demo6_UFlux
 {
     [UI((int)WinEnum.Win_Demo6_Test002,"Windows/UFlux/demo002/Window_FluxTest002")]
     public class Window_Test002 : AWindow<Props_WindowTest002>

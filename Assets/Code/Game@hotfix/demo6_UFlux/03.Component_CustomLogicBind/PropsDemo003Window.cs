@@ -3,7 +3,7 @@ using BDFramework.UFlux;
 using BDFramework.UFlux.View.Props;
 using UnityEngine;
 
-namespace Code.Game.demo6_UFlux._05.NodeHelper
+namespace Game.demo6_UFlux._05.NodeHelper
 {
     public class PropsDemo003Window : PropsBase
     {   
