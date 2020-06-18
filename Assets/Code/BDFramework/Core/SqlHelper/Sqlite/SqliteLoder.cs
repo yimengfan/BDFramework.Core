@@ -20,6 +20,7 @@ namespace BDFramework.Sql
         /// <param name="str"></param>
         static public void LoadOnEditor(string root ,RuntimePlatform platform)
         {
+            //
             Connection?.Dispose();
             //用当前平台目录进行加载
             var path  = GetDBPath(root, platform);

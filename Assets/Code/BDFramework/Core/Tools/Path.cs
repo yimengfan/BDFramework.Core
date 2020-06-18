@@ -7,9 +7,10 @@ namespace System.IO
         //这里是修复Mamc下的 Path.Combine的Bug
         static public string Combine(params string[] strings)
         {
-            string str = "";
-            for (int i = 0; i < strings.Length; i++)
+            string str = strings[0];
+            for (int i = 1; i < strings.Length; i++)
             {
+                
                 str = str + "/" + strings[i];
             }
             return str;

@@ -7,6 +7,7 @@ using BDFramework.Helper;
 using LitJson;
 using BDFramework.Sql;
 using Code.BDFramework.Core.Tools;
+using marijnz.EditorCoroutines;
 using SQLite4Unity3d;
 using UnityEditor;
 using UnityEngine;
@@ -21,12 +22,15 @@ namespace BDFramework.Editor.TableData
             //生成sql
             GenExcel2SQLite(Application.streamingAssetsPath, Application.platform);
             CopySqlToOther(Application.streamingAssetsPath, Application.platform);
+            AssetDatabase.Refresh();
         }
 
         [MenuItem("BDFrameWork工具箱/3.表格/json->生成SQLite", false, (int) BDEditorMenuEnum.BuildPackage_Table_Json2Sqlite)]
         public static void ExecuteJsonToSqlite()
         {
             GenJson2SQLite();
+            CopySqlToOther(Application.streamingAssetsPath, Application.platform);
+            AssetDatabase.Refresh();
             Debug.Log("表格导出完毕");
         }
 
@@ -82,7 +86,7 @@ namespace BDFramework.Editor.TableData
             //
             EditorUtility.ClearProgressBar();
             Debug.Log("导出Sqlite完成!");
-            AssetDatabase.Refresh();
+
         }
 
         /// <summary>
@@ -100,19 +104,21 @@ namespace BDFramework.Editor.TableData
             };
 
             var target = SqliteLoder.GetDBPath(root, sourcePlatform);
-            var bytes  = File.ReadAllBytes(target);
+            //var bytes  = File.ReadAllBytes(target);
             //拷贝当前到其他目录
             foreach (var p in ps)
             {
                 if (p == sourcePlatform) continue;
                 var outpath = SqliteLoder.GetDBPath(root, p);
-                FileHelper.WriteAllBytes(outpath, bytes);
+                
+                File.Copy(target,outpath,true);
+                //FileHelper.WriteAllBytes(outpath, bytes);
             }
-
-
-            //刷新
-            AssetDatabase.Refresh();
         }
+        
+        
+        
+
 
 
         /// <summary>
@@ -173,7 +179,6 @@ namespace BDFramework.Editor.TableData
             SqliteLoder.Close();
             EditorUtility.ClearProgressBar();
             Debug.Log("导出Sqlite完成!");
-            AssetDatabase.Refresh();
         }
 
 

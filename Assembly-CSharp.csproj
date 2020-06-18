@@ -880,6 +880,9 @@
     <Reference Include="Unity.InternalAPIEditorBridge.023">
       <HintPath>C:/Users/admin/Documents/Project/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.023.dll</HintPath>
     </Reference>
+    <Reference Include="ShaderProfiler">
+      <HintPath>C:/Users/admin/Documents/Project/Unity2018/BDFramework.Core/Library/ScriptAssemblies/ShaderProfiler.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/admin/Documents/Project/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
@@ -888,9 +891,6 @@
     </Reference>
     <Reference Include="Unity.InternalAPIEngineBridge.024">
       <HintPath>C:/Users/admin/Documents/Project/Unity2018/BDFramework.Core/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.024.dll</HintPath>
-    </Reference>
-    <Reference Include="ShaderProfiler">
-      <HintPath>C:/Users/admin/Documents/Project/Unity2018/BDFramework.Core/Library/ScriptAssemblies/ShaderProfiler.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.4.23f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
