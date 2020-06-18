@@ -11,22 +11,19 @@ namespace BDFramework.Editor.Asset
 {
     public class EditorWindow_GenAssetBundle : EditorWindow
     {
-        
-        [MenuItem("BDFrameWork工具箱/2.AssetBundle打包", false, (int)BDEditorMenuEnum.BuildPackage_Assetbundle)]
+        [MenuItem("BDFrameWork工具箱/2.AssetBundle打包", false, (int) BDEditorMenuEnum.BuildPackage_Assetbundle)]
         public static void Open()
         {
-            var window =
-                (EditorWindow_GenAssetBundle) EditorWindow.GetWindow(typeof(EditorWindow_GenAssetBundle), false,
-                    "AB打包工具");
+            var window = EditorWindow.GetWindow<EditorWindow_GenAssetBundle>(false, "AB打包工具");
             window.Show();
         }
-        
+
         /// <summary>
         /// 资源下面根节点
         /// </summary>
         public string rootResourceDir = "Resource/Runtime/";
 
-        private bool isSelectIOS = false;
+        private bool isSelectIOS     = false;
         private bool isSelectWindows = false;
         private bool isSelectAndroid = true;
 
@@ -34,6 +31,7 @@ namespace BDFramework.Editor.Asset
         void DrawToolsBar()
         {
             GUILayout.Label("平台选择:");
+            //
             GUILayout.BeginHorizontal();
             {
                 GUILayout.Space(30);
@@ -46,17 +44,19 @@ namespace BDFramework.Editor.Asset
                 isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源");
             }
             GUILayout.EndHorizontal();
+            //
             GUILayout.BeginHorizontal();
             {
                 GUILayout.Space(30);
                 isSelectIOS = GUILayout.Toggle(isSelectIOS, "生成iOS资源");
             }
             GUILayout.EndHorizontal();
+            //
         }
 
         public void OnGUI()
         {
-            GUILayout.BeginVertical();
+            GUILayout.BeginVertical(GUILayout.Height(220));
             TipsGUI();
             DrawToolsBar();
             GUILayout.Space(10);
@@ -78,8 +78,8 @@ namespace BDFramework.Editor.Asset
             options = (BuildAssetBundleOptions) EditorGUILayout.EnumPopup("压缩格式:", options);
         }
 
-        private BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression;
-        private string exportPath = "";
+        private BuildAssetBundleOptions options    = BuildAssetBundleOptions.ChunkBasedCompression;
+        private string                  exportPath = "";
 
         /// <summary>
         /// 最新包
@@ -98,28 +98,32 @@ namespace BDFramework.Editor.Asset
                     return;
                 }
 
-                RuntimePlatform rp= RuntimePlatform.Lumin ;
-                BuildTarget bt= BuildTarget.Lumin;
+                RuntimePlatform rp = RuntimePlatform.Lumin;
+                BuildTarget     bt = BuildTarget.Lumin;
                 if (isSelectWindows)
                 {
-                    AssetBundleEditorTools.CheackAssets(rootResourceDir, 
-                        exportPath + "/"+ BDUtils.GetPlatformPath(RuntimePlatform.WindowsPlayer), BuildTarget.StandaloneWindows);
+                    AssetBundleEditorTools.CheackAssets(rootResourceDir,
+                                                        exportPath + "/" +
+                                                        BDUtils.GetPlatformPath(RuntimePlatform.WindowsPlayer),
+                                                        BuildTarget.StandaloneWindows);
                 }
-                   
+
                 if (isSelectAndroid)
                 {
-                    
-                    AssetBundleEditorTools.CheackAssets(rootResourceDir, 
-                        exportPath + "/"+ BDUtils.GetPlatformPath(RuntimePlatform.Android), BuildTarget.Android);
+                    AssetBundleEditorTools.CheackAssets(rootResourceDir,
+                                                        exportPath + "/" +
+                                                        BDUtils.GetPlatformPath(RuntimePlatform.Android),
+                                                        BuildTarget.Android);
                 }
+
                 if (isSelectIOS)
                 {
-                    AssetBundleEditorTools.CheackAssets(rootResourceDir, 
-                        exportPath + "/"+ BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer), BuildTarget.iOS);
+                    AssetBundleEditorTools.CheackAssets(rootResourceDir,
+                                                        exportPath + "/" +
+                                                        BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer),
+                                                        BuildTarget.iOS);
                 }
-                
-               
-                    
+
 
                 AssetDatabase.Refresh();
                 Debug.Log("资源打包完毕");
@@ -138,6 +142,8 @@ namespace BDFramework.Editor.Asset
                     return;
                 }
 
+                //搜集keyword
+                ShaderCollection.GenShaderVariant();
                 //开始打包
                 BuildAsset();
             }
@@ -149,10 +155,10 @@ namespace BDFramework.Editor.Asset
                 {
                     return;
                 }
-                
+
                 AssetBundleEditorTools.HashName2AssetName(exportPath);
-                
             }
+
             GUILayout.EndVertical();
         }
 
@@ -162,18 +168,25 @@ namespace BDFramework.Editor.Asset
         /// </summary>
         public void BuildAsset()
         {
+            RuntimePlatform platform    = RuntimePlatform.Android;
+            BuildTarget     buildTarget = BuildTarget.Android;
             if (isSelectWindows)
             {
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,
-                    exportPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.WindowsPlayer), BuildTarget.StandaloneWindows, options);
+                platform    = RuntimePlatform.WindowsPlayer;
+                buildTarget = BuildTarget.StandaloneWindows;
             }
-
-            if (isSelectAndroid)
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,
-                    exportPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android), BuildTarget.Android, options);
-            if (isSelectIOS)
-                AssetBundleEditorTools.GenAssetBundle(rootResourceDir,
-                    exportPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer), BuildTarget.iOS, options);
+            else if (isSelectAndroid)
+            {
+                platform    = RuntimePlatform.Android;
+                buildTarget = BuildTarget.Android;
+            }
+            else if (isSelectIOS)
+            {
+                platform    = RuntimePlatform.IPhonePlayer;
+                buildTarget = BuildTarget.iOS;
+            }
+            AssetBundleEditorTools.GenAssetBundle(exportPath + "/" + BDUtils.GetPlatformPath(platform), buildTarget,
+                                                  options);
 
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕");

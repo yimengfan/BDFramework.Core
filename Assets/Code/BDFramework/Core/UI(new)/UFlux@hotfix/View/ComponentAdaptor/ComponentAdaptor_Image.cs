@@ -15,6 +15,7 @@ namespace BDFramework.UFlux
             base.Init();
             setPropActionMap[nameof(Image.overrideSprite)] = SetProp_Sprite;
             setPropActionMap[nameof(Image.color)]          = SetProp_Color;
+            setPropActionMap[nameof(Image.fillAmount)] = SetProp_Amount;
         }
 
         /// <summary>
@@ -45,6 +46,15 @@ namespace BDFramework.UFlux
             if (value is Color)
             {
                 img.color = (Color) value;
+            }
+        }
+
+        private void SetProp_Amount(UIBehaviour uiBehaviour, object value)
+        {
+            var img = uiBehaviour as Image;
+            if (value is float)
+            {
+                img.fillAmount = (float) value;
             }
         }
     }

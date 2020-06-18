@@ -48,17 +48,18 @@ namespace BDFramework.Editor.BuildPackage
                     GUILayout.BeginVertical(GUILayout.Width(350), GUILayout.Height(220));
                     editorScript.OnGUI();
                     GUILayout.EndVertical();
-                    Layout_DrawLineV(Color.white);
                 }
-
+                Layout_DrawLineV(Color.white);
+                
                 if (editorAsset != null)
                 {
                     GUILayout.BeginVertical(GUILayout.Width(350), GUILayout.Height(220));
                     editorAsset.OnGUI();
                     GUILayout.EndVertical();
-                    Layout_DrawLineV(Color.white);
+                 
                 }
-
+                
+                Layout_DrawLineV(Color.white);
                 if (editorTable != null)
                 {
                     GUILayout.BeginVertical(GUILayout.Width(350), GUILayout.Height(220));
@@ -158,7 +159,9 @@ namespace BDFramework.Editor.BuildPackage
             //1.打包资源
             try
             {
-                AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/", outPath, target);
+                //搜集keywork
+                ShaderCollection.GenShaderVariant();
+                AssetBundleEditorTools.GenAssetBundle(outPath, target);
             }
             catch (Exception e)
             {
@@ -169,8 +172,7 @@ namespace BDFramework.Editor.BuildPackage
             //2.编译脚本
             try
             {
-                var targetPath = exportPath + "/" + BDUtils.GetPlatformPath(platform);
-                EditorWindow_ScriptBuildDll.RoslynBuild(ScriptBuildTools.BuildMode.Release,targetPath);
+                EditorWindow_ScriptBuildDll.RoslynBuild(ScriptBuildTools.BuildMode.Release,outPath);
             }
             catch (Exception e)
             {
@@ -181,8 +183,7 @@ namespace BDFramework.Editor.BuildPackage
             //3.打包表格
             try
             {
-                Excel2SQLiteTools.GenSQLite(outPath);
-                Excel2SQLiteTools.CopyCurrentSqlToOther(outPath);
+                Excel2SQLiteTools.GenExcel2SQLite(exportPath,platform);
             }
             catch (Exception e)
             {

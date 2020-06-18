@@ -17,10 +17,9 @@ namespace BDFramework.Editor.TableData
             GUILayout.Space(5);
             if (GUILayout.Button("表格导出成Sqlite", GUILayout.Width(300), GUILayout.Height(30)))
             {
-                var outPath = Application.persistentDataPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android);
                 //3.打包表格
-                Excel2SQLiteTools.GenSQLite(outPath);
-                Excel2SQLiteTools.CopyCurrentSqlToOther(outPath);
+                Excel2SQLiteTools.GenExcel2SQLite(Application.streamingAssetsPath,Application.platform);
+                Excel2SQLiteTools.CopySqlToOther(Application.streamingAssetsPath,Application.platform);
             }
 
             GUILayout.EndVertical();

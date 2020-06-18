@@ -11,14 +11,14 @@ using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using Code.BDFramework.Core.Tools;
 
 
 namespace BDFramework.Editor.TableData
 {
     static public class Excel2Code
     {
-        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class", false,
-            (int) BDEditorMenuEnum.BuildPackage_Table_Table2Class)]
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class", false, (int) BDEditorMenuEnum.BuildPackage_Table_Table2Class)]
         public static void Gen()
         {
             var ret = EditorUtility.DisplayDialog("提示", @"
@@ -38,9 +38,8 @@ Excel格式如下:
         /// </summary>
         public static void GenCode()
         {
-            var tablePath = Path.Combine(Application.dataPath, "Resource/Table");
-            var xlslFiles = Directory.GetFiles(tablePath, "*.xlsx", SearchOption.AllDirectories).ToList();
-            
+            var xlslFiles = Excel2SQLiteTools.GetAllConfigFiles();
+            //
             if (xlslFiles.Count == 0)
             {
                 EditorUtility.DisplayDialog("提示", "未发现xlsx文件，请注意不是xls", "确定");
@@ -55,19 +54,15 @@ Excel格式如下:
                 var rets = fnlist.FindAll((f) => f == fn);
                 if (rets.Count > 1)
                 {
+                    EditorUtility.DisplayDialog("提示", "Sqlite表名 字段名不区分大小写,请处理重名exel! ->" + fn, "OK");
 
-                    EditorUtility.DisplayDialog("提示", "Sqlite表名 字段名不区分大小写,请处理重名exel! ->"+ fn, "OK");
-                    
                     return;
                 }
             }
 
 
-
-
             foreach (var f in xlslFiles)
             {
-
                 GenClassByExcel(f);
             }
 
@@ -76,20 +71,19 @@ Excel格式如下:
         }
 
 
-
         /// <summary>
         /// 通过excel生成class
         /// </summary>
         /// <param name="filename"></param>
-        static private  void GenClassByExcel(string filename)
+        static private void GenClassByExcel(string filename)
         {
-            var excel = new ExcelUtility(filename);
-            string json = excel.GetJson();
+            var          excel      = new ExcelUtility(filename);
+            string       json       = excel.GetJson();
             List<object> statements = excel.GetLine(0);
             //这里将前三列进行判断
             //如果第二列第一行是"Id"，则用自动推测字段模式
             //如果第三列第一行是"Id",则用自定义字段类型模式
-            var list = excel.GetLine(1);
+            var list  = excel.GetLine(1);
             var list2 = excel.GetLine(2);
             if (list[0].Equals("Id"))
             {
@@ -104,7 +98,7 @@ Excel格式如下:
             }
             else
             {
-                Debug.LogError("不符合规范内容:"+filename);
+                Debug.LogError("不符合规范内容:" + filename);
             }
         }
 
@@ -116,10 +110,8 @@ Excel格式如下:
         /// <param name="fileName"></param>
         /// <param name="json"></param>
         /// <param name="statements"></param>
-        private static void Json2Class(string fileName,
-            string json,
-            List<object> statements,
-            List<object> fieldTypes = null)
+        private static void Json2Class(string       fileName, string json, List<object> statements,
+                                       List<object> fieldTypes = null)
         {
             string clsName = "";
             clsName = Path.GetFileNameWithoutExtension(fileName);
@@ -131,12 +123,12 @@ Excel格式如下:
             }
 
             //输出目录
-            outputFile = Path.Combine(outputFile, clsName+".cs");
+            outputFile = Path.Combine(outputFile, clsName + ".cs");
 
 
             //生成类服务
             CodeCompileUnit compunit = new CodeCompileUnit();
-            CodeNamespace sample = new CodeNamespace("Game.Data");
+            CodeNamespace   sample   = new CodeNamespace("Game.Data");
             compunit.Namespaces.Add(sample);
             //引用命名空间
             sample.Imports.Add(new CodeNamespaceImport("System"));
@@ -144,11 +136,11 @@ Excel格式如下:
             sample.Imports.Add(new CodeNamespaceImport("SQLite4Unity3d"));
             //在命名空间下添加一个类
             CodeTypeDeclaration wrapProxyClass = new CodeTypeDeclaration(clsName);
-            wrapProxyClass.IsClass = true;
-            wrapProxyClass.IsEnum = false;
+            wrapProxyClass.IsClass     = true;
+            wrapProxyClass.IsEnum      = false;
             wrapProxyClass.IsInterface = false;
-            wrapProxyClass.IsPartial = false;
-            wrapProxyClass.IsStruct = false;
+            wrapProxyClass.IsPartial   = false;
+            wrapProxyClass.IsStruct    = false;
             //把这个类添加到命名空间 
             sample.Types.Add(wrapProxyClass);
 
@@ -156,14 +148,13 @@ Excel格式如下:
             wrapProxyClass.CustomAttributes.Add(attr);
             //
             var jsonData = JsonMapper.ToObject(json)[0];
-            int i = 0;
+            int i        = 0;
             foreach (var key in jsonData.Keys)
             {
                 //字段
 
-                string memberContent =
-                    @"       public [type] [Name] {get;set;}";
-                CodeSnippetTypeMember member = new CodeSnippetTypeMember();
+                string                memberContent = @"       public [type] [Name] {get;set;}";
+                CodeSnippetTypeMember member        = new CodeSnippetTypeMember();
                 if (key.ToLower() == "id" && key != "Id")
                 {
                     Debug.LogErrorFormat("<color=yellow>表格{0}字段必须为Id[大小写区分],请修改后生成</color>", clsName);
@@ -173,8 +164,7 @@ Excel格式如下:
                 {
                     //增加一个sqlite主键
                     //member.CustomAttributes.Add(new CodeAttributeDeclaration("PrimaryKey"));
-                    memberContent =
-                        @"      [PrimaryKey] 
+                    memberContent = @"      [PrimaryKey] 
         public [type] [Name] {get;set;}";
                 }
 
@@ -221,9 +211,9 @@ Excel格式如下:
             }
 
             //生成代码       
-            CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
-            CodeGeneratorOptions options = new CodeGeneratorOptions();
-            options.BracingStyle = "C";
+            CodeDomProvider      provider = CodeDomProvider.CreateProvider("CSharp");
+            CodeGeneratorOptions options  = new CodeGeneratorOptions();
+            options.BracingStyle             = "C";
             options.BlankLinesBetweenMembers = true;
 
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter(outputFile))
@@ -231,7 +221,6 @@ Excel格式如下:
                 provider.GenerateCodeFromCompileUnit(compunit, sw, options);
             }
         }
-
 
 
         [MenuItem("Assets/单个excel生成class", true)]
@@ -244,6 +233,7 @@ Excel格式如下:
                 return false;
             return true;
         }
+
         [MenuItem("Assets/单个excel生成class")]
         public static void SingleExcel2Class()
         {

@@ -1,21 +1,17 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Excel;
 using System.Data;
 using System.IO;
-using Newtonsoft.Json;
 using System.Text;
 using System.Reflection;
-using System.Reflection.Emit;
 using System;
-using System.Web;
+using Newtonsoft.Json;
+
 
 namespace BDFramework.Editor.TableData
 {
     public class ExcelUtility
     {
-
         /// <summary>
         /// 表格数据集合
         /// </summary>
@@ -27,7 +23,7 @@ namespace BDFramework.Editor.TableData
         /// <param name="excelFile">Excel file.</param>
         public ExcelUtility(string excelFile)
         {
-            FileStream mStream = File.Open(excelFile, FileMode.Open, FileAccess.Read);
+            FileStream       mStream      = File.Open(excelFile, FileMode.Open, FileAccess.Read);
             IExcelDataReader mExcelReader = ExcelReaderFactory.CreateOpenXmlReader(mStream);
             mResultSet = mExcelReader.AsDataSet();
         }
@@ -58,9 +54,9 @@ namespace BDFramework.Editor.TableData
             for (int i = 1; i < rowCount; i++)
             {
                 //创建实例
-                Type t = typeof(T);
-                ConstructorInfo ct = t.GetConstructor(System.Type.EmptyTypes);
-                T target = (T) ct.Invoke(null);
+                Type            t      = typeof(T);
+                ConstructorInfo ct     = t.GetConstructor(System.Type.EmptyTypes);
+                T               target = (T) ct.Invoke(null);
                 for (int j = 0; j < colCount; j++)
                 {
                     //读取第1行数据作为表头字段
@@ -84,7 +80,6 @@ namespace BDFramework.Editor.TableData
         /// <param name="Header">表头行数</param>
         public void ConvertToJson(string JsonPath, Encoding encoding)
         {
-
             var json = GetJson();
             //写入文件
             using (FileStream fileStream = new FileStream(JsonPath, FileMode.Create, FileAccess.Write))
@@ -100,7 +95,6 @@ namespace BDFramework.Editor.TableData
         /// 获取json
         /// </summary>
         /// <returns></returns>
-
         public string GetJson()
         {
             //判断Excel文件中是否存在数据表
@@ -139,9 +133,10 @@ namespace BDFramework.Editor.TableData
             {
                 throw new Exception("表格数据可能有错,没发现Id字段,请检查");
             }
+
             //
             //读取数据
-            for (int i = skipLineCount+1; i < rowCount; i++)
+            for (int i = skipLineCount + 1; i < rowCount; i++)
             {
                 //准备一个字典存储每一行的数据
                 Dictionary<string, object> row = new Dictionary<string, object>();
@@ -244,7 +239,6 @@ namespace BDFramework.Editor.TableData
                     textWriter.Write(stringBuilder.ToString());
                 }
             }
-
         }
 
         /// <summary>
@@ -324,5 +318,4 @@ namespace BDFramework.Editor.TableData
             }
         }
     }
-
 }

@@ -63,7 +63,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.Sql.SqliteLoder.Load(@root);
+           // BDFramework.Sql.SqliteLoder.Load(@root);
 
             return __ret;
         }

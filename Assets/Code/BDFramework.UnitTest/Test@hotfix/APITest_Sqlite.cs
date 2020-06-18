@@ -25,7 +25,7 @@ namespace Tests
 
             if (SqliteLoder.Connection == null)
             {
-                SqliteLoder.Load(Application.streamingAssetsPath);
+                SqliteLoder.LoadOnEditor(Application.streamingAssetsPath,Application.platform);
             }
 
             SqliteHelper.DB.CreateDB<APITestHero>();
