@@ -24,7 +24,7 @@ Note: All bug fixes and new features will be submitted to the Debug branch first
 
 
 # 依赖的插件(Dependent plugins)
-使用了以下收费插件,请自行购买下载 ：  
+使用了以下收费插件,请自行购买下载（或问好心群友要） ：  
 **(否则会报错!)**  
 **(否则会报错!)**  
 **(否则会报错!)**  
