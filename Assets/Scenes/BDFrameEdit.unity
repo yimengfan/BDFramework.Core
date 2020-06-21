@@ -394,10 +394,10 @@ MonoBehaviour:
       Data: 2
     - Name: SQLRoot
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: ArtRoot
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: CustomArtRoot
       Entry: 1
       Data: 

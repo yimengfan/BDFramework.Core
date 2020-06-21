@@ -1,11 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System;
 using BDFramework.Editor.Tools;
-using BDFramework.Helper;
+using Code.BDFramework.Core.Tools;
 
 namespace BDFramework.Editor.Asset
 {
@@ -104,7 +100,7 @@ namespace BDFramework.Editor.Asset
                 {
                     AssetBundleEditorTools.CheackAssets(rootResourceDir,
                                                         exportPath + "/" +
-                                                        BDUtils.GetPlatformPath(RuntimePlatform.WindowsPlayer),
+                                                        BApplication.GetPlatformPath(RuntimePlatform.WindowsPlayer),
                                                         BuildTarget.StandaloneWindows);
                 }
 
@@ -112,7 +108,7 @@ namespace BDFramework.Editor.Asset
                 {
                     AssetBundleEditorTools.CheackAssets(rootResourceDir,
                                                         exportPath + "/" +
-                                                        BDUtils.GetPlatformPath(RuntimePlatform.Android),
+                                                        BApplication.GetPlatformPath(RuntimePlatform.Android),
                                                         BuildTarget.Android);
                 }
 
@@ -120,7 +116,7 @@ namespace BDFramework.Editor.Asset
                 {
                     AssetBundleEditorTools.CheackAssets(rootResourceDir,
                                                         exportPath + "/" +
-                                                        BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer),
+                                                        BApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer),
                                                         BuildTarget.iOS);
                 }
 
@@ -185,7 +181,7 @@ namespace BDFramework.Editor.Asset
                 platform    = RuntimePlatform.IPhonePlayer;
                 buildTarget = BuildTarget.iOS;
             }
-            AssetBundleEditorTools.GenAssetBundle(exportPath + "/" + BDUtils.GetPlatformPath(platform), buildTarget,
+            AssetBundleEditorTools.GenAssetBundle(exportPath + "/" + BApplication.GetPlatformPath(platform), buildTarget,
                                                   options);
 
             AssetDatabase.Refresh();

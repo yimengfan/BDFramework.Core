@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using BDFramework.Helper;
+using Code.BDFramework.Core.Tools;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -58,7 +58,7 @@ namespace BDFramework.VersionContrller
 
             localConfigRootPath = localConfigPath;
             
-            var platform = BDUtils.GetPlatformPath(Application.platform);
+            var platform = BApplication.GetPlatformPath(Application.platform);
             
             if (curDownloadList == null || curDownloadList.Count == 0)
             {
@@ -214,7 +214,7 @@ namespace BDFramework.VersionContrller
             if (local.Platfrom == server.Platfrom ) 
             {
                 //平台
-                var platform = BDUtils.GetPlatformPath(Application.platform);
+                var platform = BApplication.GetPlatformPath(Application.platform);
                 //
                 foreach (var serverAsset in server.Assets)
                 {

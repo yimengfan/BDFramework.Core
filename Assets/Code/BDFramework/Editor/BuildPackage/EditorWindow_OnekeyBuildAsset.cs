@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using BDFramework.Helper;
-using BDFramework.Editor;
-using BDFramework.Editor.BuildPackage;
 using UnityEditor;
 using UnityEngine;
 using BDFramework.Editor.TableData;
 using BDFramework.Editor.Asset;
+using Code.BDFramework.Core.Tools;
 
 namespace BDFramework.Editor.BuildPackage
 {
@@ -151,7 +147,7 @@ namespace BDFramework.Editor.BuildPackage
         /// <param name="target"></param>
         static public void GenAllAssets(string exportPath, RuntimePlatform platform, BuildTarget target)
         {
-            var outPath = exportPath + "/" + BDUtils.GetPlatformPath(platform);
+            var outPath = exportPath + "/" + BApplication.GetPlatformPath(platform);
             if (Directory.Exists(outPath))
             {
                 Directory.Delete(outPath,true);

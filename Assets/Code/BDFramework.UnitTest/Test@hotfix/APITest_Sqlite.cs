@@ -56,7 +56,7 @@ namespace Tests
             ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").Or.Where("id = 3").ToSearch<APITestHero>();
             Debug.Log(JsonMapper.ToJson(ds));
             Assert.Equals(ds.Count, 2);
-            Assert.Equals(ds[1].Id, 3);
+            Assert.Equals(ds[1].Id, 3d);
         }
 
 

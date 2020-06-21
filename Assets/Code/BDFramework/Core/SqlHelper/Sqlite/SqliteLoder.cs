@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
-using BDFramework.Helper;
+using Code.BDFramework.Core.Tools;
 using UnityEngine;
 using SQLite4Unity3d;
 
@@ -106,7 +106,7 @@ namespace BDFramework.Sql
         /// </summary>
         static public string GetDBPath(string root, RuntimePlatform platform)
         {
-            return IPath.Combine(root, BDUtils.GetPlatformPath(platform), DBName);
+            return IPath.Combine(root, BApplication.GetPlatformPath(platform), DBName);
         }
     }
 }

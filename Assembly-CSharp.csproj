@@ -126,7 +126,6 @@
     <Compile Include="Assets\Code\BDFramework\Core\SqlHelper\Sqlite@hotfix\TableQueryRuntime.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\SqlHelper\Test\PersonTest.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\Tools\BApplication.cs" />
-    <Compile Include="Assets\Code\BDFramework\Core\Tools\BDUtils.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\Tools\BGameObjectPools.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\Tools\FileHelper.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\Tools\HashHelper.cs" />
