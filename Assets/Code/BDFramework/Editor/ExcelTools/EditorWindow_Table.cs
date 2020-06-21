@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BDFramework.Editor;
-using BDFramework.Editor.Tools;
-using BDFramework.Helper;
+﻿using BDFramework.Editor.Tools;
 using UnityEditor;
 using UnityEngine;
 

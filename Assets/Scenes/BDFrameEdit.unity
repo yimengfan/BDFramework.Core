@@ -397,7 +397,7 @@ MonoBehaviour:
       Data: 2
     - Name: ArtRoot
       Entry: 3
-      Data: 2
+      Data: 0
     - Name: CustomArtRoot
       Entry: 1
       Data: 

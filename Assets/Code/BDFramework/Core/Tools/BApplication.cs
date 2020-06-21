@@ -114,7 +114,7 @@ namespace Code.BDFramework.Core.Tools
                 case RuntimePlatform.OSXPlayer:
                 case RuntimePlatform.WindowsEditor:
                 case RuntimePlatform.WindowsPlayer:
-                    return "Windows";
+                   // return "Windows";
                 case RuntimePlatform.Android:
                     return "Android";
                 case RuntimePlatform.IPhonePlayer:
