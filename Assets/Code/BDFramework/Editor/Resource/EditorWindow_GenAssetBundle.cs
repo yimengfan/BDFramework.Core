@@ -20,7 +20,7 @@ namespace BDFramework.Editor.Asset
         public string rootResourceDir = "Resource/Runtime/";
 
         private bool isSelectIOS     = false;
-        private bool isSelectWindows = false;
+        //private bool isSelectWindows = false;
         private bool isSelectAndroid = true;
 
         //
@@ -28,16 +28,16 @@ namespace BDFramework.Editor.Asset
         {
             GUILayout.Label("平台选择:");
             //
+            // GUILayout.BeginHorizontal();
+            // {
+            //     GUILayout.Space(30);
+            //     isSelectWindows = GUILayout.Toggle(isSelectWindows, "生成Windows资源");
+            // }
+            // GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             {
                 GUILayout.Space(30);
-                isSelectWindows = GUILayout.Toggle(isSelectWindows, "生成Windows资源");
-            }
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            {
-                GUILayout.Space(30);
-                isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源");
+                isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源(Windows共用)");
             }
             GUILayout.EndHorizontal();
             //
@@ -68,9 +68,12 @@ namespace BDFramework.Editor.Asset
         {
             GUILayout.Label("2.资源打包", EditorGUIHelper.TitleStyle);
             GUILayout.Space(5);
-            GUILayout.Label(string.Format("资源根目录:Assets/{0}", rootResourceDir));
+            GUILayout.Label("资源根目录:");
+            foreach (var root in  BApplication.GetAllRuntimeDirects())
+            {
+                GUILayout.Label(root);
+            }
             GUILayout.Label(string.Format("AB输出目录:{0}", exportPath));
-
             options = (BuildAssetBundleOptions) EditorGUILayout.EnumPopup("压缩格式:", options);
         }
 
@@ -96,13 +99,13 @@ namespace BDFramework.Editor.Asset
 
                 RuntimePlatform rp = RuntimePlatform.Lumin;
                 BuildTarget     bt = BuildTarget.Lumin;
-                if (isSelectWindows)
-                {
-                    AssetBundleEditorTools.CheackAssets(rootResourceDir,
-                                                        exportPath + "/" +
-                                                        BApplication.GetPlatformPath(RuntimePlatform.WindowsPlayer),
-                                                        BuildTarget.StandaloneWindows);
-                }
+                // if (isSelectWindows)
+                // {
+                //     AssetBundleEditorTools.CheackAssets(rootResourceDir,
+                //                                         exportPath + "/" +
+                //                                         BApplication.GetPlatformPath(RuntimePlatform.WindowsPlayer),
+                //                                         BuildTarget.StandaloneWindows);
+                // }
 
                 if (isSelectAndroid)
                 {
@@ -166,12 +169,13 @@ namespace BDFramework.Editor.Asset
         {
             RuntimePlatform platform    = RuntimePlatform.Android;
             BuildTarget     buildTarget = BuildTarget.Android;
-            if (isSelectWindows)
-            {
-                platform    = RuntimePlatform.WindowsPlayer;
-                buildTarget = BuildTarget.StandaloneWindows;
-            }
-            else if (isSelectAndroid)
+            // if (isSelectWindows)
+            // {
+            //     platform    = RuntimePlatform.WindowsPlayer;
+            //     buildTarget = BuildTarget.StandaloneWindows;
+            // }
+            // else 
+            if (isSelectAndroid)
             {
                 platform    = RuntimePlatform.Android;
                 buildTarget = BuildTarget.Android;

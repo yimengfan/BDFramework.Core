@@ -74,14 +74,14 @@ namespace BDFramework.Editor.BuildPackage
         public  string exportPath         = "";
         private bool   isGenIosAssets     = false;
         private bool   isGenAndroidAssets = true;
-        private bool isGenWindowsAssets = false;
+        //private bool isGenWindowsAssets = false;
         public void OnGUI_OneKeyExprot()
         {
             GUILayout.BeginVertical();
             {
                 GUILayout.Label("注:上面按钮操作,会默认生成到StreamingAssets", GUILayout.Width(500), GUILayout.Height(30));
-                isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
-                isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源");
+                //isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
+                isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源(Windows共用)");
                 isGenIosAssets     = GUILayout.Toggle(isGenIosAssets, "生成Ios资源");
 
                 //
@@ -96,10 +96,10 @@ namespace BDFramework.Editor.BuildPackage
                         return;
                     }
 
-                    if (isGenWindowsAssets)
-                    {
-                        GenAllAssets(exportPath, RuntimePlatform.WindowsPlayer, BuildTarget.StandaloneWindows);
-                    }
+                    // if (isGenWindowsAssets)
+                    // {
+                    //     GenAllAssets(exportPath, RuntimePlatform.WindowsPlayer, BuildTarget.StandaloneWindows);
+                    // }
 
                     //生成android资源
                     if (isGenAndroidAssets)
