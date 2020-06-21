@@ -98,13 +98,14 @@ namespace BDFramework.Editor.TableData
             };
 
             var target = SqliteLoder.GetDBPath(root, sourcePlatform);
-            //var bytes  = File.ReadAllBytes(target);
+            var bytes  = File.ReadAllBytes(target);
             //拷贝当前到其他目录
+            
             foreach (var p in ps)
             {
                 var outpath = SqliteLoder.GetDBPath(root, p);
                 if (target == outpath) continue;
-                File.Copy(target,outpath,true);
+                FileHelper.WriteAllBytes(outpath,bytes);
             }
         }
         
