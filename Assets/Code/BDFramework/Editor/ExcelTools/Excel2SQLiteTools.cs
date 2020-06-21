@@ -98,7 +98,7 @@ namespace BDFramework.Editor.TableData
         {
             RuntimePlatform[] ps = new RuntimePlatform[]
             {
-                RuntimePlatform.WindowsPlayer,
+                RuntimePlatform.WindowsEditor,
                 RuntimePlatform.IPhonePlayer,
                 RuntimePlatform.Android
             };
@@ -108,11 +108,9 @@ namespace BDFramework.Editor.TableData
             //拷贝当前到其他目录
             foreach (var p in ps)
             {
-                if (p == sourcePlatform) continue;
                 var outpath = SqliteLoder.GetDBPath(root, p);
-                
+                if (target == outpath) continue;
                 File.Copy(target,outpath,true);
-                //FileHelper.WriteAllBytes(outpath, bytes);
             }
         }
         
