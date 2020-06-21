@@ -27,7 +27,6 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_AnimationTriggers_Binding.Register(app);
             UnityEngine_UI_Button_Binding.Register(app);
             UnityEngine_UI_CanvasUpdateRegistry_Binding.Register(app);
-            UnityEngine_UI_DefaultControls_Binding.Register(app);
             UnityEngine_UI_Dropdown_Binding.Register(app);
             UnityEngine_UI_FontData_Binding.Register(app);
             UnityEngine_UI_FontUpdateTracker_Binding.Register(app);

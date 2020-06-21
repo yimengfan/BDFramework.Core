@@ -3,8 +3,6 @@ using System.Collections;
 using System.IO;
 using BDFramework.Helper;
 using UnityEngine;
-using BDFramework;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SQLite4Unity3d;
 
 namespace BDFramework.Sql
