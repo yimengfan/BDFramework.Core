@@ -1035,6 +1035,9 @@
  <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
  </Reference>
+ <Reference Include="ShaderProfiler">
+ <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/ShaderProfiler.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
@@ -1049,9 +1052,6 @@
  </Reference>
  <Reference Include="com.unity.multiplayer-hlapi.Runtime">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="ShaderProfiler">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/ShaderProfiler.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>D:/Program Files/2019.4.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
