@@ -210,7 +210,7 @@ namespace BDFramework
             BResources.Load(assetroot, () =>
             {
                 //sql
-                SqliteLoder.Load(sqlroot);
+                SqliteLoder.LoadOnRuntime(sqlroot);
                 //异步 这里如果代码很早的时候就开始走表格逻辑，有可能报错，
                 //但是大部分游戏应该不会，三层回调太丑，暂时用这个
                 ScriptLoder.Load(coderoot, Config.CodeRunMode);

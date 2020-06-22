@@ -1,6 +1,6 @@
 using BDFramework.Mgr;
 
-namespace Code.Game.demo_EventManager
+namespace Game.demo_EventManager
 {
     /// <summary>
     /// DemoEventManger的管理类

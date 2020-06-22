@@ -2,7 +2,7 @@
 using BDFramework.Sql;
 using UnityEngine;
 
-namespace Code.Game
+namespace Game
 {
     [GameStartAtrribute(1)]
     public class HotfixGameStart : IGameStart

@@ -1,8 +1,8 @@
 ﻿using BDFramework.UFlux;
 using BDFramework.UFlux.View.Props;
 using BDFramework.UI;
-using Code.Game.demo6_UFlux;
-using Code.Game.demo6_UFlux._05.NodeHelper;
+using Game.demo6_UFlux;
+using Game.demo6_UFlux._05.NodeHelper;
 using UnityEngine;
 using UnityEngine.UI;
 

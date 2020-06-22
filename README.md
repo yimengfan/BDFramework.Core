@@ -6,7 +6,7 @@ Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a colle
 
 #### 热更项目的开发,只需要轻轻一点，一键帮你完成~  
 
-#### 第九第十艺术交流:763141410 （QQ Group:763141410）  
+#### 第九第十艺术交流:763141410 （QQ Group:763141410）  [点击加群](http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f)
 If you find a bug or have some suggestions,please make issue! I'll get back to you!  
 任何问题直接提issue,24小时内必解决   
 github地址: https://github.com/yimengfan/BDFramework.Core  
@@ -24,7 +24,7 @@ Note: All bug fixes and new features will be submitted to the Debug branch first
 
 
 # 依赖的插件(Dependent plugins)
-使用了以下收费插件,请自行购买下载 ：  
+使用了以下收费插件,请自行购买下载（或问好心群友要） ：  
 **(否则会报错!)**  
 **(否则会报错!)**  
 **(否则会报错!)**  

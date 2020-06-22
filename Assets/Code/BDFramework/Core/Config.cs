@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
-using System.Net.Sockets;
-using BDFramework.Helper;
-using BDFramework.Http;
+using Code.BDFramework.Core.Tools;
 using LitJson;
 using Sirenix.OdinInspector;
 using UnityEditor;
@@ -106,7 +104,7 @@ namespace BDFramework
         /// <returns></returns>
         private IEnumerator UpdateServerConfig(Action callback)
         {
-            var url = string.Format("{0}/{1}/{2}", Data.FileServerUrl,BDUtils.GetPlatformPath(Application.platform) ,"GameConfig.json");
+            var url = string.Format("{0}/{1}/{2}", Data.FileServerUrl,BApplication.GetPlatformPath(Application.platform) ,"GameConfig.json");
             Debug.Log(url);
             UnityWebRequest uwq = UnityWebRequest.Get(url);
             GameConfig gconfig = null;
@@ -191,7 +189,7 @@ namespace BDFramework
         [Button("生成Config", ButtonSizes.Medium)]
         public static void GenConfig()
         {
-            GenGameConfig(Application.streamingAssetsPath, BDUtils.GetPlatformPath(Application.platform));
+            GenGameConfig(Application.streamingAssetsPath, BApplication.GetPlatformPath(Application.platform));
         }
         
         

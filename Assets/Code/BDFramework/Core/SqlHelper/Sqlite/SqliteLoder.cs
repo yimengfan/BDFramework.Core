@@ -1,60 +1,66 @@
 using System;
 using System.Collections;
 using System.IO;
-using BDFramework.Helper;
+using Code.BDFramework.Core.Tools;
 using UnityEngine;
-using BDFramework;
 using SQLite4Unity3d;
 
 namespace BDFramework.Sql
 {
     static public class SqliteLoder
     {
-        static public SQLiteConnection Connection { get; private set; }
-        private static string firstPath = "";
+        private static string           DBName = "Local.db";
+        static public  SQLiteConnection Connection { get; private set; }
 
         /// <summary>
-        /// 初始化DB
+        /// 编辑器下加载DB，可读写|创建
         /// </summary>
         /// <param name="str"></param>
-        static public void Load(string root)
+        static public void LoadOnEditor(string root ,RuntimePlatform platform)
+        {
+            //
+            Connection?.Dispose();
+            //用当前平台目录进行加载
+            var path  = GetDBPath(root, platform);
+            //
+            var dir = Path.GetDirectoryName(path);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            //编辑器下打开
+            if (Application.isEditor)
+            {
+                //editor下 不在执行的时候，直接创建
+                Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+                BDebug.Log("DB加载路径:" + path, "red");
+            }
+        }
+
+        /// <summary>
+        /// runtime下加载，只读
+        /// </summary>
+        /// <param name="str"></param>
+        static public void LoadOnRuntime(string path)
         {
             Connection?.Dispose();
-            
-            //先以外部传入的 作为 firstpath
-            firstPath = IPath.Combine(root, BDUtils.GetPlatformPath(Application.platform) + "/Local.db");
-            
-            //editor下 不在执行的时候，直接创建
-            if (Application.isEditor && !Application.isPlaying)
+            //用当前平台目录进行加载
+            path = GetDBPath(path, Application.platform);
+            if (File.Exists(path))
             {
-                Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-                BDebug.Log("DB加载路径:" + firstPath, "red");
-                return;
+                Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadOnly);
+                BDebug.Log("DB加载路径:" + path, "red");
             }
-  
-
-            //firstpath不存在 或者 不支持io操作，
-            //则默认情况生效，persistent为firstpath
-            if (!File.Exists(firstPath))
+            else if (!Application.isEditor)
             {
-                //这里sqlite 如果不在firstPath下，就到Streamming下面拷贝到第一路径
-                IEnumeratorTool.StartCoroutine(IE_LoadSqlite());
+                //执行手机端操作，进行寻址 方便测试
+                IEnumeratorTool.StartCoroutine(IE_LoadSqliteOnMobile());
+                BDebug.Log("DB加载路径:" + path, "red");
             }
             else
             {
-                BDebug.Log("DB加载路径:" + firstPath, "red");
-                Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-
+                Debug.LogError("DB不存在:" + path);
             }
-        }
-        /// <summary>
-        /// 创建连接
-        /// </summary>
-        static public SQLiteConnection CreateConnetion(string path)
-        {  
-            Connection?.Dispose();
-            Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-            return Connection;
         }
 
 
@@ -62,42 +68,26 @@ namespace BDFramework.Sql
         /// 异步拷贝,加载
         /// </summary>
         /// <returns></returns>
-        static private IEnumerator IE_LoadSqlite()
+        static private IEnumerator IE_LoadSqliteOnMobile()
         {
             //这里情况比较复杂,Mobile上基本认为Persistent才支持File操作,
             //可寻址目录也只有 StreamingAsset
-            firstPath = IPath.Combine(Application.persistentDataPath,BDUtils.GetPlatformPath(Application.platform) + "/Local.db");
-            var secPath = IPath.Combine(Application.streamingAssetsPath,BDUtils.GetPlatformPath(Application.platform) + "/Local.db");
-            if (Application.isEditor)
-            {
-                secPath = "file://" + secPath;
-            }
-            
-            WWW www = new WWW(secPath);
+            var firstPath = GetDBPath(Application.persistentDataPath, Application.platform);
+            var secPath   = GetDBPath(Application.streamingAssetsPath, Application.platform);
+            WWW www       = new WWW(secPath);
             yield return www;
 
             if (www.isDone && www.error == null)
             {
                 FileHelper.WriteAllBytes(firstPath, www.bytes);
                 BDebug.Log("拷贝DB成功:" + firstPath, "red");
-                Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+                Connection = new SQLiteConnection(firstPath, SQLiteOpenFlags.ReadOnly);
             }
             else
             {
-                BDebug.LogError(www.error+ "\n 拷贝DB失败:" +secPath);
+                BDebug.LogError(" 第一目录DB不存在:" + firstPath);
+                BDebug.LogError(" 第二目录DB不存在:" + secPath);
             }
-        }
-
-     
-
-        /// <summary>
-        /// 创建db
-        /// </summary>
-        /// <param name="pathme"></param>
-        static public void CreateDB(string path)
-        {
-            var _db = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, false);
-            _db.Dispose();
         }
 
 
@@ -108,6 +98,15 @@ namespace BDFramework.Sql
         {
             Connection?.Dispose();
             Connection = null;
+        }
+
+
+        /// <summary>
+        /// 获取DB路径
+        /// </summary>
+        static public string GetDBPath(string root, RuntimePlatform platform)
+        {
+            return IPath.Combine(root, BApplication.GetPlatformPath(platform), DBName);
         }
     }
 }

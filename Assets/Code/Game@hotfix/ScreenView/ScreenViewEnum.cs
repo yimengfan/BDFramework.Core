@@ -1,4 +1,4 @@
-﻿namespace Code.Game
+﻿namespace Game
 {
     public enum ScreenViewEnum
     {

@@ -61,7 +61,7 @@ namespace BDFramework.Editor.Asset
         /// <param name="resRootPath"></param>
         /// <param name="outPath"></param>
         /// <param name="target"></param>
-        public static void GenAssetBundle(string resRootPath,
+        public static void GenAssetBundle(
             string outPath,
             BuildTarget target,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression,

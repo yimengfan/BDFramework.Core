@@ -3,7 +3,7 @@ using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.Store;
 using BDFramework.UFlux.View.Props;
 using BDFramework.UI;
-using Code.Game.demo6_UFlux;
+using Game.demo6_UFlux;
 using ILRuntime.Runtime;
 using UnityEngine;
 using UnityEngine.UI;

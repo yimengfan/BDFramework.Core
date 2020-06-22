@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using BDFramework.Helper;
 using ILRuntime.Mono.Cecil.Pdb;
 using ILRuntime.Reflection;
 using ILRuntime.Runtime.Generated;

@@ -14,9 +14,9 @@ using BDFramework.DataListener;
 using BDFramework.ResourceMgr;
 using BDFramework.UFlux;
 using BDFramework.VersionContrller;
-using Code.Game;
-using Code.Game.demo_EventManager;
-using Code.Game.demo6_UFlux;
+using Game;
+using Game.demo_EventManager;
+using Game.demo6_UFlux;
 
 /// <summary>
 /// 这个是ui的标签，
@@ -105,8 +105,10 @@ public class Window_DemoMain : AWindow
             ds = SqliteHelper.DB.GetTableRuntime().Where("id = {0}",1).ToSearch<Hero>();
             foreach (var d in ds) Debug.Log(JsonMapper.ToJson(d));
             //多条件查询
-            Debug.Log("多条件查询：");
-            ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").Where("and id < 3").ToSearch<Hero>();
+            Debug.Log("OR And查询：");
+            ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").And.Where("id < 3").ToSearch<Hero>();
+            foreach (var d in ds) Debug.Log(JsonMapper.ToJson(d));
+            ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").Or.Where("id = 3").ToSearch<Hero>();
             foreach (var d in ds) Debug.Log(JsonMapper.ToJson(d));
             //批量查询
             Debug.Log("Where or 批量查询：");

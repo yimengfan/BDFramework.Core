@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.IO;
 using BDFramework;
-using BDFramework.Helper;
 using BDFramework.VersionContrller;
+using Code.BDFramework.Core.Tools;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,7 +48,7 @@ public class WindowPreconfig : MonoBehaviour
     private void Onclick_DownLoadAndLaunch()
     {
         //删除本地的文件
-        var cachedir = IPath.Combine(Application.persistentDataPath, BDUtils.GetPlatformPath(Application.platform));
+        var cachedir = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(Application.platform));
         if (Directory.Exists(cachedir))
         {
             Directory.Delete(cachedir, true);

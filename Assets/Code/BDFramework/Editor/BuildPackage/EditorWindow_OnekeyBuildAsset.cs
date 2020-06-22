@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using BDFramework.Helper;
-using BDFramework.Editor;
-using BDFramework.Editor.BuildPackage;
 using UnityEditor;
 using UnityEngine;
 using BDFramework.Editor.TableData;
 using BDFramework.Editor.Asset;
+using Code.BDFramework.Core.Tools;
 
 namespace BDFramework.Editor.BuildPackage
 {
@@ -78,14 +74,14 @@ namespace BDFramework.Editor.BuildPackage
         public  string exportPath         = "";
         private bool   isGenIosAssets     = false;
         private bool   isGenAndroidAssets = true;
-        private bool isGenWindowsAssets = false;
+        //private bool isGenWindowsAssets = false;
         public void OnGUI_OneKeyExprot()
         {
             GUILayout.BeginVertical();
             {
                 GUILayout.Label("注:上面按钮操作,会默认生成到StreamingAssets", GUILayout.Width(500), GUILayout.Height(30));
-                isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
-                isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源");
+                //isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
+                isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源(Windows共用)");
                 isGenIosAssets     = GUILayout.Toggle(isGenIosAssets, "生成Ios资源");
 
                 //
@@ -100,10 +96,10 @@ namespace BDFramework.Editor.BuildPackage
                         return;
                     }
 
-                    if (isGenWindowsAssets)
-                    {
-                        GenAllAssets(exportPath, RuntimePlatform.WindowsPlayer, BuildTarget.StandaloneWindows);
-                    }
+                    // if (isGenWindowsAssets)
+                    // {
+                    //     GenAllAssets(exportPath, RuntimePlatform.WindowsPlayer, BuildTarget.StandaloneWindows);
+                    // }
 
                     //生成android资源
                     if (isGenAndroidAssets)
@@ -151,7 +147,7 @@ namespace BDFramework.Editor.BuildPackage
         /// <param name="target"></param>
         static public void GenAllAssets(string exportPath, RuntimePlatform platform, BuildTarget target)
         {
-            var outPath = exportPath + "/" + BDUtils.GetPlatformPath(platform);
+            var outPath = exportPath + "/" + BApplication.GetPlatformPath(platform);
             if (Directory.Exists(outPath))
             {
                 Directory.Delete(outPath,true);
@@ -161,7 +157,7 @@ namespace BDFramework.Editor.BuildPackage
             {
                 //搜集keywork
                 ShaderCollection.GenShaderVariant();
-                AssetBundleEditorTools.GenAssetBundle("Resource/Runtime/", outPath, target);
+                AssetBundleEditorTools.GenAssetBundle(outPath, target);
             }
             catch (Exception e)
             {
@@ -172,8 +168,7 @@ namespace BDFramework.Editor.BuildPackage
             //2.编译脚本
             try
             {
-                var targetPath = exportPath + "/" + BDUtils.GetPlatformPath(platform);
-                EditorWindow_ScriptBuildDll.RoslynBuild(ScriptBuildTools.BuildMode.Release,targetPath);
+                EditorWindow_ScriptBuildDll.RoslynBuild(ScriptBuildTools.BuildMode.Release,outPath);
             }
             catch (Exception e)
             {
@@ -184,8 +179,7 @@ namespace BDFramework.Editor.BuildPackage
             //3.打包表格
             try
             {
-                Excel2SQLiteTools.GenSQLite(outPath);
-                Excel2SQLiteTools.CopyCurrentSqlToOther(outPath);
+                Excel2SQLiteTools.GenExcel2SQLite(exportPath,platform);
             }
             catch (Exception e)
             {

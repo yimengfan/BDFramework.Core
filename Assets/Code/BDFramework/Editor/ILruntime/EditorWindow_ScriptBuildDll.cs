@@ -8,12 +8,12 @@ using System.Reflection;
 using BDFramework;
 using BDFramework.Editor.Tools;
 using BDFramework.GameStart;
-using BDFramework.Helper;
 using ILRuntime.Runtime.CLRBinding;
 using Tool;
 using Debug = UnityEngine.Debug;
 using BDFramework.DataListener;
 using BDFramework.Editor;
+using Code.BDFramework.Core.Tools;
 using UnityEngine.UI;
 
 public class EditorWindow_ScriptBuildDll : EditorWindow
@@ -122,11 +122,11 @@ namespace ILRuntime.Runtime.Generated
         if (string.IsNullOrEmpty(outpath))
         {
             //1.build dll
-            var outpath_win = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(Application.platform);
+            var outpath_win = Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(Application.platform);
             ScriptBuildTools.BuildDll(outpath_win, mode);
             //2.同步到其他两个目录
-            var outpath_android = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.Android)      + DLLPATH;
-            var outpath_ios     = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(RuntimePlatform.IPhonePlayer) + DLLPATH;
+            var outpath_android = Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(RuntimePlatform.Android)      + DLLPATH;
+            var outpath_ios     = Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer) + DLLPATH;
 
             var source = outpath_win + DLLPATH;
             var bytes  = File.ReadAllBytes(source);
@@ -189,7 +189,7 @@ namespace ILRuntime.Runtime.Generated
         //默认读StreammingAssets下面path
         if (dllpath == "")
         {
-            dllpath = Application.streamingAssetsPath + "/" + BDUtils.GetPlatformPath(platform) + DLLPATH;
+            dllpath = Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(platform) + DLLPATH;
         }
 
         //不参与自动绑定的

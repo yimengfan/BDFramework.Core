@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BDFramework.Helper;
+using Code.BDFramework.Core.Tools;
 using UnityEngine;
 
 namespace BDFramework.VersionContrller
@@ -26,7 +26,7 @@ namespace BDFramework.VersionContrller
         /// </summary>
         static public void Load()
         {
-            var platform = BDUtils.GetPlatformPath(Application.platform);
+            var platform = BApplication.GetPlatformPath(Application.platform);
             var config = platform+ "_VersionConfig.json";
              
         }
