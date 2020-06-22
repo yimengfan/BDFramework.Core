@@ -255,7 +255,7 @@ PlayerSettings:
   AndroidTargetArchitectures: 1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/admin/Documents/Project/Unity2018/BDFramework.Core/BDTemp/SDK/user.keystore
+  AndroidKeystoreName: C:/Users/Administrator/Desktop/BDFramework.Core/BDTemp/SDK/user.keystore
   AndroidKeyaliasName: test
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
