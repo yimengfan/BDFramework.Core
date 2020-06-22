@@ -29,7 +29,7 @@ namespace BDFramework.Sql
                 Directory.CreateDirectory(dir);
             }
             //编辑器下打开
-            if (Application.isEditor && !Application.isPlaying)
+            if (Application.isEditor)
             {
                 //editor下 不在执行的时候，直接创建
                 Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);

@@ -23,11 +23,8 @@ namespace Tests
             var h2 = new APITestHero() {Id = 2};
             var h3 = new APITestHero() {Id = 3};
 
-            if (SqliteLoder.Connection == null)
-            {
-                SqliteLoder.LoadOnEditor(Application.streamingAssetsPath,Application.platform);
-            }
-
+            
+            SqliteLoder.LoadOnEditor(Application.streamingAssetsPath,Application.platform);
             SqliteHelper.DB.CreateDB<APITestHero>();
             SqliteHelper.DB.InsertTable(new List<APITestHero>() {h1, h2, h3});
         }
@@ -81,7 +78,10 @@ namespace Tests
         [UnitTest(Des = "关闭", Order = 10000)]
         static public void Close()
         {
-            SqliteLoder.Close();
+            if (!Application.isPlaying)
+            {
+                SqliteLoder.Close();
+            }
         }
     }
 }
