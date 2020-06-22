@@ -61,7 +61,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_LayoutUtility_Binding.Register(app);
             UnityEngine_UI_VerticalLayoutGroup_Binding.Register(app);
             UnityEngine_UI_VertexHelper_Binding.Register(app);
-            UnityEngine_Experimental_UI_VertexHelperExtension_Binding.Register(app);
+            //UnityEngine_Experimental_UI_VertexHelperExtension_Binding.Register(app);
             UnityEngine_UI_BaseMeshEffect_Binding.Register(app);
             UnityEngine_UI_Outline_Binding.Register(app);
             UnityEngine_UI_PositionAsUV1_Binding.Register(app);
