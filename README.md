@@ -45,6 +45,7 @@ The following charging plug-ins are used. Please purchase and download them your
 [@gaojiexx](https://github.com/gaojiexx)  
 [@ricashao](https://github.com/ricashao)  
 ### 【2020.06开启 社区建设计划】  
+### [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)  
 如果你想加入我们，并贡献代码，请联系我们。QQ:755737878  
 ## 框架特点(Feature)
    **·TDD工作流、完整的测试用例:**  
