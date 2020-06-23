@@ -13,10 +13,10 @@ github地址: https://github.com/yimengfan/BDFramework.Core
 gitee地址: https://gitee.com/yimengfan/BDFramework.Core  ,速度慢下这个(顺便讨个赞)
 
 ## 文档(Document)  
- #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
- #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
  ### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
  #### [English Wiki](http://www.nekosang.com)  
+ #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
+ #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
  ### [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
  ## 已经适配LWRP、URP工作流!!!    Supported URP!
 注:所有bug修复和新特性加入会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。  
@@ -32,6 +32,7 @@ The following charging plug-ins are used. Please purchase and download them your
 <br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
 
 ## v1.0版本计划(v1.0 Plan)
+### [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)  
 1.DevOps工作流加入，CI、CD更加完整  
 2.逐步完成框架层API测试用例 ，ILR下测试框架整合  
 3.Serverless 后端工作流引入
