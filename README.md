@@ -30,6 +30,7 @@ Note: All bug fixes and new features will be submitted to the Debug branch first
 **(否则会报错!)**  
 The following charging plug-ins are used. Please purchase and download them yourself.  
 <br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
+打包需要配置为：EditorOnly模式
 
 ## v1.0版本计划(v1.0 Plan)
 ### [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)  
