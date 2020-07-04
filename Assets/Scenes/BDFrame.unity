@@ -377,58 +377,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd5c6865487ed14f9bfe24a5c88e67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: Data
-      Entry: 7
-      Data: 0|BDFramework.GameConfig, Assembly-CSharp
-    - Name: CodeRoot
-      Entry: 3
-      Data: 0
-    - Name: SQLRoot
-      Entry: 3
-      Data: 0
-    - Name: ArtRoot
-      Entry: 3
-      Data: 0
-    - Name: CustomArtRoot
-      Entry: 1
-      Data: 
-    - Name: CodeRunMode
-      Entry: 3
-      Data: 0
-    - Name: IsDebuggerILRuntime
-      Entry: 5
-      Data: false
-    - Name: IsExcuteHotfixUnitTest
-      Entry: 5
-      Data: false
-    - Name: FileServerUrl
-      Entry: 1
-      Data: 192.168.8.68
-    - Name: GateServerIp
-      Entry: 1
-      Data: 
-    - Name: Port
-      Entry: 3
-      Data: 0
-    - Name: IsHotfix
-      Entry: 5
-      Data: false
-    - Name: IsNeedNet
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-  localConfig: {fileID: 4900000, guid: 58c3cebe37e56a54bbfc81263b7b702a, type: 3}
+  Data:
+    CodeRoot: 0
+    SQLRoot: 0
+    ArtRoot: 0
+    CustomArtRoot: 
+    CodeRunMode: 0
+    IsDebuggerILRuntime: 0
+    IsExcuteHotfixUnitTest: 0
+    FileServerUrl: 192.168.8.68
+    GateServerIp: 
+    Port: 0
+    IsHotfix: 0
+    IsNeedNet: 0
+  localConfig: {fileID: 4900000, guid: 23466dea4cded7a4b8350e21ff78477c, type: 3}
 --- !u!1 &878416750
 GameObject:
   m_ObjectHideFlags: 0

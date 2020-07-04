@@ -24,6 +24,7 @@ namespace BDFramework
         ByReflection,
     }
 
+    [Serializable]
     public class GameConfig
     {
         [LabelText("代码路径")]
@@ -57,7 +58,7 @@ namespace BDFramework
 
     }
 
-    public class Config : SerializedMonoBehaviour
+    public class Config : MonoBehaviour
     {
         [HideLabel]
         [InlinePropertyAttribute]
