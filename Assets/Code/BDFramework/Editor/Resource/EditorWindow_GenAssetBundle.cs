@@ -109,7 +109,7 @@ namespace BDFramework.Editor.Asset
 
                 if (isSelectAndroid)
                 {
-                    AssetBundleEditorTools.CheackAssets(rootResourceDir,
+                    AssetBundleEditorTools.CheckAssets(rootResourceDir,
                                                         exportPath + "/" +
                                                         BApplication.GetPlatformPath(RuntimePlatform.Android),
                                                         BuildTarget.Android);
@@ -117,7 +117,7 @@ namespace BDFramework.Editor.Asset
 
                 if (isSelectIOS)
                 {
-                    AssetBundleEditorTools.CheackAssets(rootResourceDir,
+                    AssetBundleEditorTools.CheckAssets(rootResourceDir,
                                                         exportPath + "/" +
                                                         BApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer),
                                                         BuildTarget.iOS);
@@ -185,7 +185,7 @@ namespace BDFramework.Editor.Asset
                 platform    = RuntimePlatform.IPhonePlayer;
                 buildTarget = BuildTarget.iOS;
             }
-            AssetBundleEditorTools.GenAssetBundle(exportPath + "/" + BApplication.GetPlatformPath(platform), buildTarget,
+            AssetBundleEditorTools2.GenAssetBundle(exportPath + "/" + BApplication.GetPlatformPath(platform), buildTarget,
                                                   options);
 
             AssetDatabase.Refresh();

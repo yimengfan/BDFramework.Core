@@ -18,25 +18,31 @@ namespace BDFramework.ResourceMgr
         public enum AssetTypeEnum
         {
             Others = 0,
-            Prefab,
-            TextAsset,
-            Texture,
-            SpriteAtlas,
+            Prefab = 1,
+            TextAsset = 2,
+            Texture = 3,
+            SpriteAtlas = 4,
         }
 
         public ManifestItem(string name, string hash, string package, AssetTypeEnum @enum, List<string> Depend = null)
         {
-            this.Name    = name;
-            this.Hash    = hash;
+            this.Name = name;
+            this.Hash = hash;
             this.Package = package;
-            this.Type    = (int) @enum;
-            if (Depend == null) Depend = new List<string>();
+            this.Type = (int) @enum;
+            if (Depend == null)
+                Depend = new List<string>();
             this.Depend = Depend;
         }
 
         public ManifestItem()
         {
         }
+
+        /// <summary>
+        /// Id
+        /// </summary>
+        public int Id { get; set; }
 
         /// <summary>
         /// 资源名,单ab 单资源情况下. name = ab名
@@ -169,8 +175,11 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="name"></param>
         /// <param name="dependencies"></param>
-        public void AddItem(string name, string hash, List<string> dependencies, ManifestItem.AssetTypeEnum @enum,
-                            string packageName = "")
+        public void AddItem(string name,
+            string hash,
+            List<string> dependencies,
+            ManifestItem.AssetTypeEnum @enum,
+            string packageName = "")
         {
             ManifestItem item = null;
             if (this.Manifest_NameKey.TryGetValue(name, out item))
@@ -178,21 +187,21 @@ namespace BDFramework.ResourceMgr
                 if (item.Hash != hash)
                 {
                     Debug.LogError("有重名：" + name + ",如无显式BResource.Load加载则无视,隐式会自动根据hash算依赖!");
-                    name                        = name + "_r";
-                    item                        = new ManifestItem(name, hash, packageName, @enum, dependencies);
+                    name = name + "_r";
+                    item = new ManifestItem(name, hash, packageName, @enum, dependencies);
                     this.Manifest_NameKey[name] = item;
                     this.Manifest_HashKey[hash] = item;
                 }
                 else if (dependencies.Count >= item.Depend.Count)
                 {
-                    item                        = new ManifestItem(name, hash, packageName, @enum, dependencies);
+                    item = new ManifestItem(name, hash, packageName, @enum, dependencies);
                     this.Manifest_NameKey[name] = item;
                     this.Manifest_HashKey[hash] = item;
                 }
             }
             else
             {
-                item                        = new ManifestItem(name, hash, packageName, @enum, dependencies);
+                item = new ManifestItem(name, hash, packageName, @enum, dependencies);
                 this.Manifest_NameKey[name] = item;
                 this.Manifest_HashKey[hash] = item;
             }

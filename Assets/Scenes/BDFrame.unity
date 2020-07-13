@@ -428,7 +428,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  localConfig: {fileID: 4900000, guid: 58c3cebe37e56a54bbfc81263b7b702a, type: 3}
+  localConfig: {fileID: 4900000, guid: 23466dea4cded7a4b8350e21ff78477c, type: 3}
 --- !u!1 &878416750
 GameObject:
   m_ObjectHideFlags: 0
