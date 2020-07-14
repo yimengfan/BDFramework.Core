@@ -82,7 +82,12 @@ namespace BDFramework.Editor.Asset
             allfileHashMap = new Dictionary<string, string>();
             //
             var builinfoPath = outPath + "/BuildInfo.json";
-            var assets = BApplication.GetAllAssetsPath();
+            var assetPaths = BApplication.GetAllAssetsPath();
+            for (int i = 0; i < assetPaths.Count; i++)
+            {
+                assetPaths[i] = assetPaths[i].ToLower();
+            }
+
             //获取当前AssetsInfo
             BuildInfo lastBuildInfo = new BuildInfo();
             if (File.Exists(builinfoPath))
@@ -92,8 +97,8 @@ namespace BDFramework.Editor.Asset
             }
 
             //获取变动的数据
-            var newbuildInfo = GetAssetsInfo(assets);
-            var changedList = GetChangedAssets(lastBuildInfo, newbuildInfo);
+            var newbuildInfo = GetAssetsInfo(assetPaths);
+            var changedAssetList = GetChangedAssets(lastBuildInfo, newbuildInfo);
             //保存Cache.json
             if (File.Exists(builinfoPath))
             {
@@ -101,8 +106,50 @@ namespace BDFramework.Editor.Asset
                 File.Delete(targetPath);
                 File.Move(builinfoPath, targetPath);
             }
-
             FileHelper.WriteAllText(builinfoPath, JsonMapper.ToJson(newbuildInfo));
+
+            //保存buildinfo后,
+            //整理runtime路径，减少加载时候的消耗
+            var runtimeStr = "/runtime/";
+            foreach (var asset in newbuildInfo.AssetDataMaps)
+            {
+                if(asset.Value.Name.Contains(runtimeStr))
+                {
+                    var newName = asset.Value.Name;
+                    //移除runtime之前的路径
+                    var index = newName.IndexOf(runtimeStr);
+                    newName = newName.Substring(index + runtimeStr.Length);
+                    //去除后缀
+                    newName = newName.Replace(Path.GetExtension(newName), "");
+                    
+                    //刷新整个列表替换
+                    foreach (var _asset in newbuildInfo.AssetDataMaps)
+                    {
+                        var oldName = asset.Value.Name;
+                        //name替换
+                        if (_asset.Value.Name == oldName)
+                        {
+                            _asset.Value.Name = newName;
+                        }
+                        //ab替换
+                        if (_asset.Value.AB == oldName)
+                        {
+                            _asset.Value.AB = newName;
+                        }
+                        //依赖替换
+                        for (int i = 0; i < _asset.Value.DependList.Count; i++)
+                        {
+                            if (_asset.Value.DependList[i] == oldName)
+                            {
+                                _asset.Value.DependList[i] = newName;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+            FileHelper.WriteAllText(builinfoPath+".manifest", JsonMapper.ToJson(newbuildInfo));
+            
             //根据buildinfo 生成manifest
             var manifest = new ManifestConfig();
             foreach (var item in newbuildInfo.AssetDataMaps)
@@ -114,10 +161,24 @@ namespace BDFramework.Editor.Asset
                     var asset = newbuildInfo.AssetDataMaps[assetName];
                     dependlist[i] = asset.Hash;
                 }
-
                 //添加manifest
-                manifest.AddItem(item.Key, item.Value.Hash, dependlist, (ManifestItem.AssetTypeEnum) item.Value.Type,
-                    item.Value.AB);
+                manifest.AddItem(item.Key, item.Value.Hash, dependlist, (ManifestItem.AssetTypeEnum) item.Value.Type, item.Value.AB);
+            }
+            //设置AB name
+            foreach (var asset in changedAssetList.AssetDataMaps)
+            {
+             
+                string abname = "";
+                if (!string.IsNullOrEmpty(asset.Value.AB))
+                {
+                    abname = asset.Value.AB;
+                }
+                else
+                {
+                    abname = asset.Value.Name;
+                }
+                // var ai = GetAssetImporter(asset.Key);
+                // ai.assetBundleName = abname;
             }
 
             return;
@@ -158,7 +219,7 @@ namespace BDFramework.Editor.Asset
         }
 
 
-        private static Dictionary<string, List<string>> customDependAssetsMap = null;
+        private static Dictionary<string, List<string>> atlasAssetsMap = null;
 
         #region 包颗配置
 
@@ -174,7 +235,7 @@ namespace BDFramework.Editor.Asset
             new MakePackage()
             {
                 FileExtens = new List<string>() {".shader", ".shadervariants"},
-                AssetBundleName = "Assets/ALLShaders.ab"
+                AssetBundleName = "assets/shaders.ab"
             }
         };
 
@@ -196,22 +257,22 @@ namespace BDFramework.Editor.Asset
         /// <returns></returns>
         static public BuildInfo GetAssetsInfo(List<string> paths)
         {
-            customDependAssetsMap = new Dictionary<string, List<string>>();
+            atlasAssetsMap = new Dictionary<string, List<string>>();
             //1.获取图集信息
-            var atlas = paths.FindAll((p) => Path.GetExtension(p).ToLower() == ".spriteatlas");
+            var atlas = paths.FindAll((p) => Path.GetExtension(p) == ".spriteatlas");
             for (int i = 0; i < atlas.Count; i++)
             {
                 var asset = atlas[i];
                 //获取依赖中的textrue
                 var dps = GetDependencies(asset).ToList();
-                customDependAssetsMap[asset] = dps;
+                atlasAssetsMap[asset] = dps;
             }
 
             //2.搜集Package config信息
             foreach (var config in PackageConfigMap)
             {
-                var rets = paths.FindAll((p) => config.FileExtens.Contains(Path.GetExtension(p).ToLower()));
-                customDependAssetsMap[config.AssetBundleName] = rets.ToList();
+                var rets = paths.FindAll((p) => config.FileExtens.Contains(Path.GetExtension(p)));
+                atlasAssetsMap[config.AssetBundleName] = rets.ToList();
             }
 
             //
@@ -219,22 +280,23 @@ namespace BDFramework.Editor.Asset
             buildInfo.Time = DateTime.Now.ToShortDateString();
             int id = 0;
             //搜集所有的依赖
-            foreach (var path in paths)
+            foreach (var mainpath in paths)
             {
-                var dependeAssetsPath = GetDependencies(path);
+                var dependeAssetsPath = GetDependencies(mainpath);
                 //获取依赖 并加入build info
-                foreach (var subAssets in dependeAssetsPath)
+                foreach (var subAssetPath in dependeAssetsPath)
                 {
                     var asset = new BuildInfo.AssetData();
                     asset.Id = id;
-                    asset.Hash = GetHashFromAssets(subAssets);
-                    asset.Name = path;
+                    asset.Hash = GetHashFromAssets(subAssetPath);
+                    asset.Name = subAssetPath;
                     //判断资源类型
                     asset.Type = (int) ManifestItem.AssetTypeEnum.Others;
-                    var ext = Path.GetExtension(path).ToLower();
+                    var subAssetsExtension = Path.GetExtension(subAssetPath);
+                    //
                     foreach (var item in AssetTypeConfigMap)
                     {
-                        if (item.Value.Contains(ext))
+                        if (item.Value.Contains(subAssetsExtension))
                         {
                             asset.Type = (int) item.Key;
                             break;
@@ -242,57 +304,75 @@ namespace BDFramework.Editor.Asset
                     }
 
                     //获取依赖
-                    var dependeAssetList = GetDependencies(path).ToList();
-                    dependeAssetList.Remove(subAssets);
+                    var dependeAssetList = GetDependencies(subAssetPath);
                     asset.DependList.AddRange(dependeAssetList);
                     //添加
-                    buildInfo.AssetDataMaps[asset.Name] = asset;
+                    buildInfo.AssetDataMaps[subAssetPath] = asset;
                     //判断package名
-                    foreach (var item in customDependAssetsMap)
+                    //图集
+                    foreach (var item in atlasAssetsMap)
                     {
-                        if (item.Value.Contains(path))
+                        if (item.Value.Contains(subAssetPath))
                         {
                             //设置AB的名字
                             asset.AB = item.Key;
                             break;
                         }
                     }
-
+                    //自己规则的ab
+                    foreach (var item in PackageConfigMap)
+                    {
+                        if (item.FileExtens.Contains(subAssetsExtension))
+                        {
+                            //设置AB的名字
+                            asset.AB = item.AssetBundleName;
+                            break;
+                        }
+                    }
                     id++;
                 }
             }
 
-            // //AB关系整理
-            // //1.剔除图片会依赖图集的依赖,
-            // var atlasList =
-            //     buildInfo.AssetDataMaps.Values.Where((a) => a.Type == (int) ManifestItem.AssetTypeEnum.SpriteAtlas);
-            // foreach (var _atlas in atlasList)
-            // {
-            //     foreach (var img in _atlas.DependList)
-            //     {
-            //         var imgAsset = buildInfo.AssetDataMaps[img];
-            //         if (imgAsset.Type != (int) ManifestItem.AssetTypeEnum.SpriteAtlas)
-            //         {
-            //             imgAsset.DependList.Clear();
-            //             imgAsset.DependList.Add(_atlas.Name);
-            //         }
-            //     }
-            // }
-            //
-            // //atlas会被循环依赖
-            // foreach (var asset in buildInfo.AssetDataMaps.Values)
-            // {
-            //     var dependAtlas = asset.DependList.FindAll((d) => d.EndsWith(".spriteatlas"));
-            //     //
-            //     foreach (var da in dependAtlas)
-            //     {
-            //         var _atlas = atlasList.First((a) => a.Name == da);
-            //         asset.DependList.Except(_atlas.DependList);
-            //         //
-            //     }
-            // }
-            //2.把依赖资源替换成AB Name，
+            //TODO AB依赖关系纠正
+            /// 已知Unity,bug/设计缺陷：
+            ///   1.依赖接口，中会携带自己
+            ///   2.如若a.png、b.png 依赖 c.atlas，则abc依赖都会是:a.png 、b.png 、 a.atlas
+            foreach (var asset in buildInfo.AssetDataMaps)
+            {
+                //依赖中不包含自己
+                asset.Value.DependList.Remove(asset.Value.Name);
+            }
 
+            //1.剔除图片会依赖图集的依赖,
+            var atlasList =
+                buildInfo.AssetDataMaps.Values.Where((a) => a.Type == (int) ManifestItem.AssetTypeEnum.SpriteAtlas);
+            foreach (var _atlas in atlasList)
+            {
+                foreach (var img in _atlas.DependList)
+                {
+                    if (img == _atlas.Name)
+                        continue;
+                    
+                    var imgAsset = buildInfo.AssetDataMaps[img];
+                    imgAsset.DependList.Clear();
+                }
+            }
+            
+            //2.把依赖资源替换成AB Name，
+            foreach (var asset in buildInfo.AssetDataMaps.Values)
+            {
+                for (int i = 0; i < asset.DependList.Count; i++)
+                {
+                    var da = asset.DependList[i];
+                    var dependAssetData = buildInfo.AssetDataMaps[da];
+                    if (!string.IsNullOrEmpty(dependAssetData.AB))
+                    {
+                        asset.DependList[i] = dependAssetData.AB;
+                    }
+                }
+                //去重
+                asset.DependList = asset.DependList.Distinct().ToList();
+            }
             return buildInfo;
         }
 
@@ -378,58 +458,18 @@ namespace BDFramework.Editor.Asset
 
         /// <summary>
         /// 获取依赖
-        /// 依赖格式：保持嵌套，比如a.prefab依赖b.mat，只保存b.mat，不保存b的依赖。 b的依赖由b保存。
-        ///    A: -a.preab -b.text  -c.png ...
-        ///    a.prefab:  -aa.png  -ab.mesh  -ac.tag ...
-        ///
-        /// 已知Unity,bug/设计缺陷：
-        ///   1.依赖接口，中会携带自己
-        ///   2.如若a.png、b.png 依赖 c.atlas，则abc依赖都会是:a.png 、b.png 、 a.atlas
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
         static private string[] GetDependencies(string path)
         {
             //全部小写
-            path = path.ToLower();
+            //path = path.ToLower();
             List<string> list = null;
             if (!DependenciesMap.TryGetValue(path, out list))
             {
                 //移除本身
-                list = AssetDatabase.GetDependencies(path).Select((s)=>s.ToLower()).ToList();
-                //fixed bug1:
-                list.Remove(path);
-                //fixed bug2: atlas需要特殊处理
-                // if(!path.EndsWith(".spriteatlas"))
-                // {
-                    var atlasList = list.FindAll((s) => s.EndsWith(".spriteatlas"));
-                    foreach (var atlas in atlasList)
-                    {
-                        //获取依赖，并从主工程中移除
-                        var imgs = AssetDatabase.GetDependencies(path).Select((s)=>s.ToLower()).ToList();
-                        imgs.Remove(atlas);
-                        //纠正依赖
-                        foreach (var img in imgs)
-                        {
-                            list.Remove(img);
-                        }
-                    }
-               // }
-                //递归处理所有依赖
-                List<string> dependList = new List<string>();
-                foreach (var p in list)
-                {
-                    if (p == path)
-                        continue;
-                    var ds = GetDependencies(p);
-                    dependList.AddRange(ds);
-                }
-                //纠正Unity依赖，保持嵌套规则
-                foreach (var depend in dependList)
-                {
-                    list.Remove(depend);
-                }
-
+                list = AssetDatabase.GetDependencies(path).Select((s) => s.ToLower()).ToList();
                 CheckAssetsPath(list);
                 DependenciesMap[path] = list;
             }
