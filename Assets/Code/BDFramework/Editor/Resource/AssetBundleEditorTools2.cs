@@ -106,6 +106,7 @@ namespace BDFramework.Editor.Asset
                 File.Delete(targetPath);
                 File.Move(builinfoPath, targetPath);
             }
+
             FileHelper.WriteAllText(builinfoPath, JsonMapper.ToJson(newbuildInfo));
 
             //保存buildinfo后,
@@ -113,7 +114,7 @@ namespace BDFramework.Editor.Asset
             var runtimeStr = "/runtime/";
             foreach (var asset in newbuildInfo.AssetDataMaps)
             {
-                if(asset.Value.Name.Contains(runtimeStr))
+                if (asset.Value.Name.Contains(runtimeStr))
                 {
                     var newName = asset.Value.Name;
                     //移除runtime之前的路径
@@ -121,21 +122,23 @@ namespace BDFramework.Editor.Asset
                     newName = newName.Substring(index + runtimeStr.Length);
                     //去除后缀
                     newName = newName.Replace(Path.GetExtension(newName), "");
-                    
+
                     //刷新整个列表替换
                     foreach (var _asset in newbuildInfo.AssetDataMaps)
                     {
-                        var oldName = asset.Value.Name;
+                        var oldName = asset.Key.ToLower();
                         //name替换
                         if (_asset.Value.Name == oldName)
                         {
                             _asset.Value.Name = newName;
                         }
+
                         //ab替换
                         if (_asset.Value.AB == oldName)
                         {
                             _asset.Value.AB = newName;
                         }
+
                         //依赖替换
                         for (int i = 0; i < _asset.Value.DependList.Count; i++)
                         {
@@ -145,11 +148,12 @@ namespace BDFramework.Editor.Asset
                             }
                         }
                     }
-                    
                 }
             }
-            FileHelper.WriteAllText(builinfoPath+".manifest", JsonMapper.ToJson(newbuildInfo));
+
+            FileHelper.WriteAllText( outPath + "/Manifest.json", JsonMapper.ToJson(newbuildInfo));
             
+
             //根据buildinfo 生成manifest
             var manifest = new ManifestConfig();
             foreach (var item in newbuildInfo.AssetDataMaps)
@@ -161,13 +165,15 @@ namespace BDFramework.Editor.Asset
                     var asset = newbuildInfo.AssetDataMaps[assetName];
                     dependlist[i] = asset.Hash;
                 }
+
                 //添加manifest
-                manifest.AddItem(item.Key, item.Value.Hash, dependlist, (ManifestItem.AssetTypeEnum) item.Value.Type, item.Value.AB);
+                manifest.AddItem(item.Key, item.Value.Hash, dependlist, (ManifestItem.AssetTypeEnum) item.Value.Type,
+                    item.Value.AB);
             }
+
             //设置AB name
             foreach (var asset in changedAssetList.AssetDataMaps)
             {
-             
                 string abname = "";
                 if (!string.IsNullOrEmpty(asset.Value.AB))
                 {
@@ -177,21 +183,23 @@ namespace BDFramework.Editor.Asset
                 {
                     abname = asset.Value.Name;
                 }
-                // var ai = GetAssetImporter(asset.Key);
-                // ai.assetBundleName = abname;
-            }
 
-            return;
+                //让runtime的ab 全都到runtime下
+                if (!abname.StartsWith("assets"))
+                {
+                    abname = string.Format("runtime/{0}", abname);
+                }
+                var ai = GetAssetImporter(asset.Key);
+                ai.assetBundleName = abname;
+            }
+            
             var artOutpath = IPath.Combine(outPath, "Art");
             //3.生成AssetBundle
             BuildAssetBundle(target, outPath, options);
             Directory.Delete(IPath.Combine(artOutpath, "assets"), true);
             //4.清除AB Name
-            if (isClearAssets)
-            {
-                RemoveAllAssetbundleName();
-            }
-
+           // RemoveAllAssetbundleName();
+            
             //删除无用文件
             var delFiles = Directory.GetFiles(artOutpath, "*", SearchOption.AllDirectories);
             foreach (var df in delFiles)
@@ -209,12 +217,12 @@ namespace BDFramework.Editor.Asset
                 }
 
                 //
-                var fn = Path.GetFileName(df);
-                var item = CurManifestConfig.GetManifestItemByHash(fn);
-                if (item == null)
-                {
-                    File.Delete(df);
-                }
+                // var fn = Path.GetFileName(df);
+                // var item = CurManifestConfig.GetManifestItemByHash(fn);
+                // if (item == null)
+                // {
+                //     File.Delete(df);
+                // }
             }
         }
 
@@ -319,6 +327,7 @@ namespace BDFramework.Editor.Asset
                             break;
                         }
                     }
+
                     //自己规则的ab
                     foreach (var item in PackageConfigMap)
                     {
@@ -329,6 +338,7 @@ namespace BDFramework.Editor.Asset
                             break;
                         }
                     }
+
                     id++;
                 }
             }
@@ -352,12 +362,12 @@ namespace BDFramework.Editor.Asset
                 {
                     if (img == _atlas.Name)
                         continue;
-                    
+
                     var imgAsset = buildInfo.AssetDataMaps[img];
                     imgAsset.DependList.Clear();
                 }
             }
-            
+
             //2.把依赖资源替换成AB Name，
             foreach (var asset in buildInfo.AssetDataMaps.Values)
             {
@@ -370,9 +380,11 @@ namespace BDFramework.Editor.Asset
                         asset.DependList[i] = dependAssetData.AB;
                     }
                 }
+
                 //去重
                 asset.DependList = asset.DependList.Distinct().ToList();
             }
+
             return buildInfo;
         }
 
