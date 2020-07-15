@@ -190,17 +190,20 @@ namespace BDFramework.Editor.Asset
                     abname = string.Format("runtime/{0}", abname);
                 }
                 var ai = GetAssetImporter(asset.Key);
-                ai.assetBundleName = abname;
+                if (ai)
+                {
+                    ai.assetBundleName = abname;
+                }
+
             }
             
             var artOutpath = IPath.Combine(outPath, "Art");
             //3.生成AssetBundle
             BuildAssetBundle(target, outPath, options);
-            Directory.Delete(IPath.Combine(artOutpath, "assets"), true);
             //4.清除AB Name
-           // RemoveAllAssetbundleName();
-            
-            //删除无用文件
+            RemoveAllAssetbundleName();
+            AssetImpoterCacheMap.Clear();
+            //the end.删除无用文件
             var delFiles = Directory.GetFiles(artOutpath, "*", SearchOption.AllDirectories);
             foreach (var df in delFiles)
             {
@@ -209,20 +212,6 @@ namespace BDFramework.Editor.Asset
                 {
                     File.Delete(df);
                 }
-
-                //避免删除配置
-                if (df.EndsWith("Cache.json") || df.EndsWith("Config.json"))
-                {
-                    continue;
-                }
-
-                //
-                // var fn = Path.GetFileName(df);
-                // var item = CurManifestConfig.GetManifestItemByHash(fn);
-                // if (item == null)
-                // {
-                //     File.Delete(df);
-                // }
             }
         }
 
@@ -444,7 +433,7 @@ namespace BDFramework.Editor.Asset
         //当前保存的配置
         static ManifestConfig CurManifestConfig = null; //这个配置中 只会用Runtime的索引信息
         private static Dictionary<string, string> allfileHashMap = null;
-        static private Dictionary<string, AssetImporter> assetImpoterMap = new Dictionary<string, AssetImporter>();
+        static private Dictionary<string, AssetImporter> AssetImpoterCacheMap = new Dictionary<string, AssetImporter>();
 
         /// <summary>
         /// 获取assetimpoter
@@ -454,11 +443,17 @@ namespace BDFramework.Editor.Asset
         static private AssetImporter GetAssetImporter(string path)
         {
             AssetImporter ai = null;
-            if (!assetImpoterMap.TryGetValue(path, out ai))
+            if (!AssetImpoterCacheMap.TryGetValue(path, out ai))
             {
                 ai = AssetImporter.GetAtPath(path);
-                assetImpoterMap[path] = ai;
+                AssetImpoterCacheMap[path] = ai;
+                if (!ai)
+                {
+                    Debug.LogError("【打包】获取资源失败:" + path);
+                }
             }
+            
+           
 
             return ai;
         }
@@ -604,7 +599,7 @@ namespace BDFramework.Editor.Asset
         {
             EditorUtility.DisplayProgressBar("资源清理", "清理中...", 1);
 
-            foreach (var ai in assetImpoterMap)
+            foreach (var ai in AssetImpoterCacheMap)
             {
                 if (ai.Value != null)
                 {
