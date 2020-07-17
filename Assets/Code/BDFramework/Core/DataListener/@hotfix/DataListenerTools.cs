@@ -111,7 +111,15 @@ namespace BDFramework.DataListener
         {
             dl.RemoveListener(name.ToString(), callback);
         }
-
+        /// <summary>
+        /// 枚举版本
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="callback"></param>
+        static public void RemoveListener(this ADataListener dl, Enum name, Action<object> callback)
+        {
+            dl.RemoveListener(name.ToString(), callback);
+        }
         /// <summary>
         /// 枚举版本 
         /// </summary>
