@@ -708,12 +708,12 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 卸载
         /// </summary>
-        /// <param name="name"></param>
-        public void UnloadAsset(string name, bool isForceUnload = false)
+        /// <param name="path"></param>
+        public void UnloadAsset(string path, bool isForceUnload = false)
         {
-            if (name != null)
+            if (path != null)
             {
-                var res = config.Manifest.GetDirectDependenciesByName(name);
+                var res = config.Manifest.GetDirectDependenciesByName(path);
                 if (res == null)
                     return;
                 //将所有依赖,创建一个队列 倒序加载

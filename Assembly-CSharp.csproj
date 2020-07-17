@@ -856,40 +856,40 @@
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\CGIncludes\UnityGlobalIllumination.cginc" />
     <None Include="Assets\Resource\Shaders\builtin_shaders-2018.4.0f1\DefaultResourcesExtra\Skybox.shader" />
     <Reference Include="Unity.DocZh.Editor">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/Unity.DocZh.Editor.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.DocZh.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.UIWidgets.Editor">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/Unity.UIWidgets.Editor.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.UIWidgets.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.UIWidgets">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/Unity.UIWidgets.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.UIWidgets.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Messenger.Editor">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/Unity.Messenger.Editor.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.Messenger.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEditorBridge.023">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.023.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.023.dll</HintPath>
     </Reference>
     <Reference Include="ShaderProfiler">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/ShaderProfiler.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/ShaderProfiler.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEngineBridge.024">
-      <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.024.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.024.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Program Files/2018.4.23f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -1090,124 +1090,124 @@
       <HintPath>D:/Program Files/2018.4.23f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="DemiLib">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/3rdPlugins/Dotween/DemiLib/Core/DemiLib.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/3rdPlugins/Dotween/DemiLib/Core/DemiLib.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/DOTween.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DOTween43">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/DOTween43.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/DOTween43.dll</HintPath>
     </Reference>
     <Reference Include="DOTween46">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/DOTween46.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/DOTween46.dll</HintPath>
     </Reference>
     <Reference Include="DOTween50">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/DOTween50.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/DOTween50.dll</HintPath>
     </Reference>
     <Reference Include="Debug.log">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Debug/Debug.log.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Debug/Debug.log.dll</HintPath>
     </Reference>
     <Reference Include="Excel">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Excel/Excel.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Excel/Excel.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.CSharp">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/Microsoft.CodeAnalysis.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/Microsoft.CodeAnalysis.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Buffers.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Collections.Immutable">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Collections.Immutable.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Common">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Data.Common.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Data.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.StackTrace">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Diagnostics.StackTrace.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Diagnostics.StackTrace.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Tracing">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Diagnostics.Tracing.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Diagnostics.Tracing.dll</HintPath>
     </Reference>
     <Reference Include="System.Globalization.Extensions">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Globalization.Extensions.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Globalization.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Compression">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.IO.Compression.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.IO.Compression.dll</HintPath>
     </Reference>
     <Reference Include="System.Memory">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Memory.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Net.Http.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Net.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Sockets">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Net.Sockets.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Net.Sockets.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics.Vectors">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Numerics.Vectors.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="System.Reflection.Metadata">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Reflection.Metadata.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Reflection.Metadata.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization.Primitives">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Runtime.Serialization.Primitives.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Runtime.Serialization.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Security.Cryptography.Algorithms">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Security.Cryptography.Algorithms.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Security.Cryptography.Algorithms.dll</HintPath>
     </Reference>
     <Reference Include="System.Security.SecureString">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Security.SecureString.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Security.SecureString.dll</HintPath>
     </Reference>
     <Reference Include="System.Text.Encoding.CodePages">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Text.Encoding.CodePages.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Overlapped">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Threading.Overlapped.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Threading.Overlapped.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Threading.Tasks.Extensions.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.XPath.XDocument">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Xml.XPath.XDocument.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.Editor">
-      <HintPath>E:/github.core/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>E:/github.core/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>E:/github.core/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>E:/github.core/BDFramework.Core/Library/PackageCache/com.unity.shaderprofiler@0.0.1-preview.1/Plugin/Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Serialization">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Utilities">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Utilities.Editor">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.OdinInspector.Editor">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Xml.XPath.XDocument.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.OdinInspector.Attributes">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.OdinInspector.Editor">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization.Config">
-      <HintPath>E:/github.core/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Serialization">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities.Editor">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Editor">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.StandardEvents">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Tracker">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.shaderprofiler@0.0.1-preview.1/Plugin/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:/Program Files/2018.4.23f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -1559,6 +1559,10 @@
     <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj">
       <Project>{5F4F3FDC-43F8-2A47-55F5-00E66F1587B4}</Project>
       <Name>Sirenix.OdinInspector.CompatibilityLayer.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.csproj">
+      <Project>{340E62B0-F825-70D7-F27F-06D2670E83C5}</Project>
+      <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

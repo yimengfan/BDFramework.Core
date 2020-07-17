@@ -87,17 +87,17 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 卸载
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="path"></param>
         /// <param name="isForceUnload"></param>
-        public void UnloadAsset(string name, bool isForceUnload = false)
+        public void UnloadAsset(string path, bool isForceUnload = false)
         {
             try
             {
-                if (objsMap.ContainsKey(name))
+                if (objsMap.ContainsKey(path))
                 {
-                    var obj = objsMap[name];
+                    var obj = objsMap[path];
                     //
-                    objsMap.Remove(name);
+                    objsMap.Remove(path);
                     Resources.UnloadUnusedAssets();
                 }
             }

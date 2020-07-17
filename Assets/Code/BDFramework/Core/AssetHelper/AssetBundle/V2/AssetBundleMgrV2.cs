@@ -634,12 +634,13 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 卸载
         /// </summary>
-        /// <param name="name"></param>
-        public void UnloadAsset(string name, bool isForceUnload = false)
+        /// <param name="path"></param>
+        public void UnloadAsset(string path, bool isForceUnload = false)
         {
-            if (name != null)
+            if (path != null)
             {
-                var res = loder.Manifest.GetDependenciesByName(name);
+                path = string.Format(RUNTIME, path.ToLower());
+                var res = loder.Manifest.GetDependenciesByName(path);
                 if (res == null)
                     return;
                 //将所有依赖,创建一个队列 倒序加载
