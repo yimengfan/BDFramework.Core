@@ -72,7 +72,8 @@ namespace BDFramework.ResourceMgr.V2
             this.allTaskGroupList = new List<LoaderTaskGroup>();
             //1.设置加载路径  
             artRootPath = (path + "/" + BApplication.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
-            secArtRootPath = (Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(Application.platform) + "/Art")
+            secArtRootPath = (Application.streamingAssetsPath + "/" +
+                              BApplication.GetPlatformPath(Application.platform) + "/Art")
                 .Replace("\\", "/");
             //
             string configPath = FindAsset("Config.json");
@@ -455,7 +456,7 @@ namespace BDFramework.ResourceMgr.V2
 
             if (item != null)
             {
-                return LoadFormAssetBundle(item, typeof(T)) as T;
+                return LoadFormAssetBundle(assetName, item, typeof(T)) as T;
             }
 
             Debug.LogError("不存在:" + assetName);
@@ -470,17 +471,8 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="abName"></param>
         /// <param name="objName"></param>
         /// <returns></returns>
-        private Object LoadFormAssetBundle(ManifestItem item, Type t)
+        private Object LoadFormAssetBundle(string assetName, ManifestItem item, Type t)
         {
-            //判断资源结构 是单ab-单资源、单ab-多资源
-            //单ab 单资源
-            var sourceName = item.Path;
-            // //单ab 多资源
-            // if (!string.IsNullOrEmpty(item.AB))
-            // {
-            //     item = this.loder.Manifest.GetManifest(item.AB);
-            // }
-
             Object o = null;
             AssetBundleWapper abr = null;
             if (AssetbundleMap.TryGetValue(item.Path, out abr))
@@ -490,7 +482,7 @@ namespace BDFramework.ResourceMgr.V2
                     //暂时需要特殊处理的只有一个
                     case ManifestItem.AssetTypeEnum.SpriteAtlas:
                     {
-                        o = abr.LoadTextureFormAtlas(item.Path);
+                        o = abr.LoadTextureFormAtlas(assetName);
                     }
                         break;
                     case ManifestItem.AssetTypeEnum.Prefab:
@@ -498,14 +490,14 @@ namespace BDFramework.ResourceMgr.V2
                     case ManifestItem.AssetTypeEnum.Others:
                     default:
                     {
-                        o = abr.LoadAsset(item.Path, t);
+                        o = abr.LoadAsset(assetName, t);
                     }
                         break;
                 }
             }
             else
             {
-                BDebug.Log("资源不存在:" + sourceName, "red");
+                BDebug.Log("资源不存在:" + assetName + " - " + item.Path, "red");
 
                 return null;
             }

@@ -33,7 +33,7 @@ namespace BDFramework.ResourceMgr.V2
         }
 
         /// <summary>
-        /// 资源名,单ab 单资源情况下. name = ab名
+        /// ab的资源路径名
         /// </summary>
         public string Path { get; private set; }
 
