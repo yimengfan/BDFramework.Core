@@ -74,9 +74,13 @@
     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\ILRuntimeTestRunner.cs" />
     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\LogicTest_BDFramework.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\Adaptor\@hotfix\ActionAdaptor.cs" />
-    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\AssetBundleManifest.cs" />
-    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\AssetBundleMgr.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\LoaderTaskGroup.cs" />
+    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\V1\AssetBundleManifest.cs" />
+    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\V1\AssetBundleMgr.cs" />
+    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\V2\AssetBundleMgrV2.cs" />
+    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\V2\ManifestConfig.cs" />
+    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\V2\ManifestItem.cs" />
+    <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\AssetBundle\V2\ManifestLoder.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\BResources.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\DevAssets\DevResourceMgr.cs" />
     <Compile Include="Assets\Code\BDFramework\Core\AssetHelper\IResMgr.cs" />

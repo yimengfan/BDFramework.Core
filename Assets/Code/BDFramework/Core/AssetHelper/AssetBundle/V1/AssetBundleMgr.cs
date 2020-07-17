@@ -693,7 +693,6 @@ namespace BDFramework.ResourceMgr
                 this.allTaskGroupList.RemoveAt(0);
                 var item = config.Manifest.GetManifestItemByHash(curDoTask.MainAsset);
                 BDebug.LogFormat(">>>>任务组|id:{0} 任务数:{1} - {2}", curDoTask.Id, curDoTask.TaskQueueNum, item.Name);
-                curDoTask.SetDebugManifest(this.config.Manifest);
                 //开始task
                 curDoTask.DoNextTask();
                 //注册完成回调
