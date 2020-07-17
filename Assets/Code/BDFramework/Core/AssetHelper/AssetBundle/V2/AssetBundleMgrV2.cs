@@ -127,10 +127,10 @@ namespace BDFramework.ResourceMgr.V2
         /// <exception cref="NotImplementedException"></exception>
         public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
         {
+            path = string.Format(RUNTIME, path.ToLower());
             var item = loder.Manifest.GetManifest(path);
             //加载assetbundle
-            var p = FindAsset(item.Path);
-            AssetBundle ab = LoadAssetBundle(p);
+            AssetBundle ab = LoadAssetBundle(item.Path);
 
             if (ab != null)
             {
@@ -549,7 +549,7 @@ namespace BDFramework.ResourceMgr.V2
         public string[] GetAssets(string floder, string searchPattern = null)
         {
             List<string> rets = new List<string>();
-            var str = floder + "/";
+            var str = string.Format(RUNTIME,  (floder + "/").ToLower());
             foreach (var key in this.loder.Manifest.ManifestMap.Keys)
             {
                 if (key.StartsWith(str))
