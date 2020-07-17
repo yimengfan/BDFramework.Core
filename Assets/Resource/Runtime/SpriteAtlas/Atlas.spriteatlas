@@ -6,7 +6,7 @@ SpriteAtlas:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: atlas_001
+  m_Name: Atlas
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -25,7 +25,7 @@ SpriteAtlas:
       m_BuildTarget: Android
       m_MaxTextureSize: 2048
       m_ResizeAlgorithm: 0
-      m_TextureFormat: 56
+      m_TextureFormat: 49
       m_TextureCompression: 1
       m_CompressionQuality: 50
       m_CrunchedCompression: 0
@@ -67,5 +67,5 @@ SpriteAtlas:
   - 5
   - 2
   - 3
-  m_Tag: atlas_001
+  m_Tag: Atlas
   m_IsVariant: 0
