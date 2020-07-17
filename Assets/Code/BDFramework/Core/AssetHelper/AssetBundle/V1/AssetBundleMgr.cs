@@ -158,6 +158,7 @@ namespace BDFramework.ResourceMgr
                 .Replace("\\", "/");
             //
             string configPath = FindAsset("Config.json");
+            BDebug.Log("AssetBundle Version: V2", "red");
             BDebug.Log("Art加载路径:" + configPath, "red");
             //
             this.config = new AssetBundleManifestReference();

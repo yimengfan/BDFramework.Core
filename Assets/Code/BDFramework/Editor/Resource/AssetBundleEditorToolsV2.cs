@@ -76,7 +76,8 @@ namespace BDFramework.Editor.Asset
         public static void GenAssetBundle(string outPath,
             BuildTarget target,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression,
-            bool isHashName = false)
+            bool isHashName = false,
+            string AES="")
         {
             //
             var artOutpath = IPath.Combine(outPath, "Art");

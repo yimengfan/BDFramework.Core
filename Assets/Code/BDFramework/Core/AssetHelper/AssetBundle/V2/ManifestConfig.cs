@@ -10,8 +10,6 @@ using UnityEngine.Networking;
 
 namespace BDFramework.ResourceMgr.V2
 {
-
-
     /// <summary>
     /// 配置文件
     /// </summary>
@@ -20,7 +18,8 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 资源Map
         /// </summary>
-        public Dictionary<string, ManifestItem> ManifestMap { get; private set; } //= new Dictionary<string, ManifestItem>();
+        public Dictionary<string, ManifestItem>
+            ManifestMap { get; private set; } //= new Dictionary<string, ManifestItem>();
 
         /// <summary>
         /// json结构
@@ -30,10 +29,10 @@ namespace BDFramework.ResourceMgr.V2
         {
             ManifestMap = JsonMapper.ToObject<Dictionary<string, ManifestItem>>(content);
         }
-        
+
         public ManifestConfig()
         {
-            ManifestMap =  new  Dictionary<string, ManifestItem>();
+            ManifestMap = new Dictionary<string, ManifestItem>();
         }
 
         /// <summary>
@@ -71,66 +70,5 @@ namespace BDFramework.ResourceMgr.V2
 
             return null;
         }
-
-
-  
-
-        public void AddItem(ManifestItem item)
-        {
-            if (this.ManifestMap.ContainsKey(item.Path))
-            {
-                //prefab 嵌套的情况, 2018新系统
-                //被依赖项 其实也有依赖，
-                if (item.Depend.Count >= this.ManifestMap[item.Path].Depend.Count)
-                {
-                    this.ManifestMap[item.Path] = item;
-                }
-            }
-            else
-            {
-                this.ManifestMap[item.Path] = item;
-            }
-        }
-
-        /// <summary>
-        /// 获取所有的ab
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetAllAssetBundles()
-        {
-            List<string> list = new List<string>();
-            //
-            foreach (var m in this.ManifestMap)
-            {
-                //添加主体
-                list.Add(m.Key);
-                //添加依赖
-                list.AddRange(m.Value.Depend);
-            }
-
-            return list.Distinct().ToList();
-        }
-
-        /// <summary>
-        /// 转字符串
-        /// </summary>
-        /// <returns></returns>
-        public string ToString()
-        {
-#if UNITY_EDITOR
-            int i = 0;
-
-            List<string> list = new List<string>();
-            foreach (var v in ManifestMap.Values)
-            {
-                list.AddRange(v.Depend);
-            }
-
-            var l = list.Distinct().ToList();
-#endif
-            var items = ManifestMap.Values.ToList();
-            return JsonMapper.ToJson(items);
-        }
     }
-
 }

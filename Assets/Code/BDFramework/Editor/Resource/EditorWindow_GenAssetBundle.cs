@@ -19,7 +19,8 @@ namespace BDFramework.Editor.Asset
         /// </summary>
         public string rootResourceDir = "Resource/Runtime/";
 
-        private bool isSelectIOS     = false;
+        private bool isSelectIOS = false;
+
         //private bool isSelectWindows = false;
         private bool isSelectAndroid = true;
 
@@ -27,13 +28,6 @@ namespace BDFramework.Editor.Asset
         void DrawToolsBar()
         {
             GUILayout.Label("平台选择:");
-            //
-            // GUILayout.BeginHorizontal();
-            // {
-            //     GUILayout.Space(30);
-            //     isSelectWindows = GUILayout.Toggle(isSelectWindows, "生成Windows资源");
-            // }
-            // GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             {
                 GUILayout.Space(30);
@@ -61,6 +55,9 @@ namespace BDFramework.Editor.Asset
             GUILayout.EndVertical();
         }
 
+        private BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression;
+        private string AES = "";
+
         /// <summary>
         /// 提示UI
         /// </summary>
@@ -69,16 +66,18 @@ namespace BDFramework.Editor.Asset
             GUILayout.Label("2.资源打包", EditorGUIHelper.TitleStyle);
             GUILayout.Space(5);
             GUILayout.Label("资源根目录:");
-            foreach (var root in  BApplication.GetAllRuntimeDirects())
+            foreach (var root in BApplication.GetAllRuntimeDirects())
             {
                 GUILayout.Label(root);
             }
+
             GUILayout.Label(string.Format("AB输出目录:{0}", exportPath));
             options = (BuildAssetBundleOptions) EditorGUILayout.EnumPopup("压缩格式:", options);
+            AES = EditorGUILayout.TextField("AES密钥(V2 only):", AES);
         }
 
-        private BuildAssetBundleOptions options    = BuildAssetBundleOptions.ChunkBasedCompression;
-        private string                  exportPath = "";
+
+        private string exportPath = "";
 
         /// <summary>
         /// 最新包
@@ -87,46 +86,40 @@ namespace BDFramework.Editor.Asset
         {
             GUILayout.BeginVertical();
 
-            if (GUILayout.Button("检测资源", GUILayout.Width(100)))
-            {
-                exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath, "");
-
-
-                if (string.IsNullOrEmpty(exportPath))
-                {
-                    return;
-                }
-
-                RuntimePlatform rp = RuntimePlatform.Lumin;
-                BuildTarget     bt = BuildTarget.Lumin;
-                // if (isSelectWindows)
-                // {
-                //     AssetBundleEditorTools.CheackAssets(rootResourceDir,
-                //                                         exportPath + "/" +
-                //                                         BApplication.GetPlatformPath(RuntimePlatform.WindowsPlayer),
-                //                                         BuildTarget.StandaloneWindows);
-                // }
-
-                if (isSelectAndroid)
-                {
-                    AssetBundleEditorTools.CheckAssets(rootResourceDir,
-                                                        exportPath + "/" +
-                                                        BApplication.GetPlatformPath(RuntimePlatform.Android),
-                                                        BuildTarget.Android);
-                }
-
-                if (isSelectIOS)
-                {
-                    AssetBundleEditorTools.CheckAssets(rootResourceDir,
-                                                        exportPath + "/" +
-                                                        BApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer),
-                                                        BuildTarget.iOS);
-                }
-
-
-                AssetDatabase.Refresh();
-                Debug.Log("资源打包完毕");
-            }
+            // if (GUILayout.Button("检测资源", GUILayout.Width(100)))
+            // {
+            //     exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath, "");
+            //
+            //
+            //     if (string.IsNullOrEmpty(exportPath))
+            //     {
+            //         return;
+            //     }
+            //
+            //     RuntimePlatform rp = RuntimePlatform.Lumin;
+            //     BuildTarget bt = BuildTarget.Lumin;
+            //
+            //
+            //     if (isSelectAndroid)
+            //     {
+            //         AssetBundleEditorTools.CheckAssets(rootResourceDir,
+            //             exportPath + "/" +
+            //             BApplication.GetPlatformPath(RuntimePlatform.Android),
+            //             BuildTarget.Android);
+            //     }
+            //
+            //     if (isSelectIOS)
+            //     {
+            //         AssetBundleEditorTools.CheckAssets(rootResourceDir,
+            //             exportPath + "/" +
+            //             BApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer),
+            //             BuildTarget.iOS);
+            //     }
+            //
+            //
+            //     AssetDatabase.Refresh();
+            //     Debug.Log("资源打包完毕");
+            // }
 
             if (GUILayout.Button("收集Shader keyword", GUILayout.Width(200)))
             {
@@ -167,26 +160,33 @@ namespace BDFramework.Editor.Asset
         /// </summary>
         public void BuildAsset()
         {
-            RuntimePlatform platform    = RuntimePlatform.Android;
-            BuildTarget     buildTarget = BuildTarget.Android;
-            // if (isSelectWindows)
-            // {
-            //     platform    = RuntimePlatform.WindowsPlayer;
-            //     buildTarget = BuildTarget.StandaloneWindows;
-            // }
-            // else 
+            RuntimePlatform platform = RuntimePlatform.Android;
+            BuildTarget buildTarget = BuildTarget.Android;
+ 
             if (isSelectAndroid)
             {
-                platform    = RuntimePlatform.Android;
+                platform = RuntimePlatform.Android;
                 buildTarget = BuildTarget.Android;
             }
             else if (isSelectIOS)
             {
-                platform    = RuntimePlatform.IPhonePlayer;
+                platform = RuntimePlatform.IPhonePlayer;
                 buildTarget = BuildTarget.iOS;
             }
-            AssetBundleEditorToolsV2.GenAssetBundle(exportPath + "/" + BApplication.GetPlatformPath(platform), buildTarget,
-                                                  options);
+
+
+            var outPath = exportPath + "/" + BApplication.GetPlatformPath(platform);
+            var config = GameObject.Find("BDFrame").GetComponent<Config>();
+            //根据版本进入不同打包模式
+            if (config.Data.AssetBundleManagerVersion == AssetBundleManagerVersion.V1)
+            {
+                AssetBundleEditorTools.GenAssetBundle(outPath, buildTarget, options);
+            }
+            else if (config.Data.AssetBundleManagerVersion == AssetBundleManagerVersion.V2_experiment)
+            {
+                AssetBundleEditorToolsV2.GenAssetBundle(outPath, buildTarget, options,AES:AES);
+            }
+
 
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕");

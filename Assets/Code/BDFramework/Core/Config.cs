@@ -24,6 +24,12 @@ namespace BDFramework
         ByReflection,
     }
 
+    public enum AssetBundleManagerVersion
+    {
+        V1,
+        V2_experiment,
+    }
+
     public class GameConfig
     {
         [LabelText("代码路径")]
@@ -36,8 +42,11 @@ namespace BDFramework
         [LabelText("配置到其他路径")]
         public string CustomArtRoot = "";
 
-        //只在非Editor模式下生效
+        [LabelText("热更代码执行模式")]
         public HotfixCodeRunMode CodeRunMode = HotfixCodeRunMode.ByILRuntime;
+
+        [LabelText("AssetBundleManager版本")]
+        public AssetBundleManagerVersion AssetBundleManagerVersion = AssetBundleManagerVersion.V1;
 
         [LabelText("是否开启ILRuntime调试")]
         public bool IsDebuggerILRuntime = false;

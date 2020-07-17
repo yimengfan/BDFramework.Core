@@ -16,15 +16,16 @@ namespace BDFramework.ResourceMgr.V2
     /// </summary>
     public class AssetBundleMgrV2 : IResMgr
     {
-
         /// <summary>
         /// 特殊的前缀
         /// </summary>
         static readonly public string RUNTIME = "runtime/{0}";
+
         /// <summary>
         /// 异步任务颗粒度，每帧执行多少个
         /// </summary>
         static readonly public int ASYNC_TASK_UNIT = 5;
+
         /// <summary>
         /// 全局的任务id
         /// </summary>
@@ -71,16 +72,17 @@ namespace BDFramework.ResourceMgr.V2
             this.allTaskGroupList = new List<LoaderTaskGroup>();
             //1.设置加载路径  
             artRootPath = (path + "/" + BApplication.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
-            secArtRootPath = (Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
+            secArtRootPath = (Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(Application.platform) + "/Art")
+                .Replace("\\", "/");
             //
             string configPath = FindAsset("Config.json");
+            BDebug.Log("AssetBundle Version: V2", "red");
             BDebug.Log("Art加载路径:" + configPath, "red");
             //
             this.loder = new ManifestLoder();
             this.loder.Load(configPath, onInitEnd);
         }
-        
-        
+
 
         #region 对外加载接口
 
@@ -103,7 +105,7 @@ namespace BDFramework.ResourceMgr.V2
                     LoadAssetBundle(dependAsset);
                 }
                 //加载主资源
-               
+
                 LoadAssetBundle(item.Path);
                 //
                 return LoadFormAssetBundle<T>(path);
@@ -150,8 +152,6 @@ namespace BDFramework.ResourceMgr.V2
         }
 
 
-
-
         /// <summary>
         /// 异步加载接口
         /// </summary>
@@ -193,6 +193,7 @@ namespace BDFramework.ResourceMgr.V2
                 DoNextTask();
                 return taskGroup.Id;
             }
+
             return -1;
         }
 
@@ -216,7 +217,7 @@ namespace BDFramework.ResourceMgr.V2
             int counter = 0;
             foreach (var assetPath in assetsPath)
             {
-                var   path = string.Format(RUNTIME, assetPath.ToLower());
+                var path = string.Format(RUNTIME, assetPath.ToLower());
                 //
                 var mainItem = loder.Manifest.GetManifest(path);
                 List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
@@ -238,26 +239,27 @@ namespace BDFramework.ResourceMgr.V2
                 //主任务
                 var mainTask = new LoaderTaskData(mainItem.Path, typeof(Object));
                 taskQueue.Add(mainTask);
-                
+
                 //添加任务组
                 //加载颗粒度10个
-                LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainItem.Path, ASYNC_TASK_UNIT, taskQueue, AsyncLoadAssetBundle, //Load接口
-                (p, obj) =>
-                {
-                    counter++;
-                    //注意返回加载的id，不是具体地址的id
-                    retMap[assetPath] = obj;
-                    if (onLoadProcess != null)
+                LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainItem.Path, ASYNC_TASK_UNIT, taskQueue,
+                    AsyncLoadAssetBundle, //Load接口
+                    (p, obj) =>
                     {
-                        onLoadProcess(counter, total);
-                    }
+                        counter++;
+                        //注意返回加载的id，不是具体地址的id
+                        retMap[assetPath] = obj;
+                        if (onLoadProcess != null)
+                        {
+                            onLoadProcess(counter, total);
+                        }
 
-                    //完成
-                    if (retMap.Count == total)
-                    {
-                        onLoadComplete(retMap);
-                    }
-                });
+                        //完成
+                        if (retMap.Count == total)
+                        {
+                            onLoadComplete(retMap);
+                        }
+                    });
                 taskGroup.Id = this.taskIDCounter++;
                 AddTaskGroup(taskGroup);
                 idList.Add(taskGroup.Id);
@@ -278,6 +280,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             this.allTaskGroupList.Add(taskGroup);
         }
+
         /// <summary>
         /// 检测
         /// </summary>
@@ -295,7 +298,7 @@ namespace BDFramework.ResourceMgr.V2
 
             return p;
         }
-        
+
         #endregion
 
         #region 加载AssetsBundle
@@ -438,6 +441,7 @@ namespace BDFramework.ResourceMgr.V2
         #endregion
 
         #region 从AB中加载资源
+
         /// <summary>
         /// 加载资源
         /// </summary>
@@ -458,7 +462,6 @@ namespace BDFramework.ResourceMgr.V2
             return null;
         }
 
-        
 
         /// <summary>
         /// 加载资源
@@ -510,10 +513,8 @@ namespace BDFramework.ResourceMgr.V2
             return o;
         }
 
-        
-
         #endregion
-        
+
         #region 取消加载任务
 
         /// <summary>

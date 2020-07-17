@@ -19,15 +19,38 @@ namespace BDFramework.ResourceMgr
         {
             if (root != "")
             {
-                //使用2版本，如果有问题，切回1版本
-                ResLoader = new AssetBundleMgrV2();
-                ResLoader.Init(root, onLoaded);
+                var config= GameObject.Find("BDFrame").GetComponent<Config>();
+                if (config != null)
+                {
+                    var version = config.Data.AssetBundleManagerVersion;
+                    switch (version)
+                    {
+                        case AssetBundleManagerVersion.V1:
+                        {
+                            ResLoader = new AssetBundleMgr();
+                            ResLoader.Init(root, onLoaded);
+                        }
+                            break;
+                        case AssetBundleManagerVersion.V2_experiment:
+                        {
+                            ResLoader = new AssetBundleMgrV2();
+                            ResLoader.Init(root, onLoaded);
+                        }
+                            break;
+                    }
+                }
+                else
+                {
+                    ResLoader = new AssetBundleMgr();
+                    ResLoader.Init(root, onLoaded);
+                }
+
             }
             else
             {
 #if UNITY_EDITOR
                 ResLoader = new DevResourceMgr();
-                ResLoader.Init("",onLoaded);
+                ResLoader.Init("", onLoaded);
                 BDebug.Log("资源加载:AssetDataBase editor only");
 #endif
             }
@@ -52,7 +75,7 @@ namespace BDFramework.ResourceMgr
             return ResLoader.Load<T>(name);
         }
 
-        
+
         /// <summary>
         /// 同步加载ALL
         /// </summary>
@@ -66,7 +89,7 @@ namespace BDFramework.ResourceMgr
             return ResLoader.LoadAll_TestAPI_2020_5_23<T>(name);
         }
 
-        
+
         /// <summary>
         /// 异步加载
         /// </summary>
@@ -83,7 +106,8 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="objlist"></param>
         /// <param name="onLoadEnd"></param>
-        public static List<int> AsyncLoad(IList<string> objlist, Action<int, int> onProcess = null,
+        public static List<int> AsyncLoad(IList<string> objlist,
+            Action<int, int> onProcess = null,
             Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
         {
             return ResLoader.AsyncLoad(objlist, onLoadEnd, onProcess);
@@ -99,19 +123,20 @@ namespace BDFramework.ResourceMgr
             {
                 return;
             }
+
             ResLoader.UnloadAsset(path, isForceUnload);
         }
-        
+
         /// <summary>
         /// 卸载资源
         /// </summary>
         /// <param name="asset"></param>
-        public static  void UnloadAsset(UnityEngine.Object asset)
+        public static void UnloadAsset(UnityEngine.Object asset)
         {
-            if(asset is GameObject ||  asset is Component) return;
+            if (asset is GameObject || asset is Component)
+                return;
             Resources.UnloadAsset(asset);
             asset = null;
-
         }
 
         /// <summary>
@@ -119,7 +144,6 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public static void UnloadAll()
         {
-            
             ResLoader.UnloadAllAsset();
         }
 
@@ -132,7 +156,6 @@ namespace BDFramework.ResourceMgr
         {
             if (trans)
             {
-                
                 Destroy(trans.gameObject);
             }
         }
@@ -170,9 +193,8 @@ namespace BDFramework.ResourceMgr
                     ResLoader.LoadCancel(id);
                 }
             }
-
-         
         }
+
         /// <summary>
         /// 取消所有任务
         /// </summary>
