@@ -404,6 +404,9 @@ MonoBehaviour:
     - Name: CodeRunMode
       Entry: 3
       Data: 1
+    - Name: AssetBundleManagerVersion
+      Entry: 3
+      Data: 1
     - Name: IsDebuggerILRuntime
       Entry: 5
       Data: false
