@@ -185,7 +185,7 @@ namespace BDFramework.Editor.Asset
                 platform    = RuntimePlatform.IPhonePlayer;
                 buildTarget = BuildTarget.iOS;
             }
-            AssetBundleEditorTools2.GenAssetBundle(exportPath + "/" + BApplication.GetPlatformPath(platform), buildTarget,
+            AssetBundleEditorToolsV2.GenAssetBundle(exportPath + "/" + BApplication.GetPlatformPath(platform), buildTarget,
                                                   options);
 
             AssetDatabase.Refresh();

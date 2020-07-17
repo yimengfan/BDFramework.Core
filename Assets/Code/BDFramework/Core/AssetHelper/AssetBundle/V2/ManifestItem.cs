@@ -16,14 +16,21 @@ namespace BDFramework.ResourceMgr.V2
             SpriteAtlas = 4,
         }
 
-        public ManifestItem(string path, string ab, AssetTypeEnum @enum, List<string> depend = null)
+        public ManifestItem(string path, AssetTypeEnum @enum, List<string> depend = null)
         {
             this.Path = path;
-            this.AB = ab;
+            //this.AB = ab;
             this.Type = (int) @enum;
             this.Depend = depend;
         }
 
+        /// <summary>
+        /// 给litjson 用的构造
+        /// </summary>
+        public ManifestItem()
+        {
+            
+        }
 
         /// <summary>
         /// 资源名,单ab 单资源情况下. name = ab名
@@ -31,18 +38,18 @@ namespace BDFramework.ResourceMgr.V2
         public string Path { get; private set; }
 
         /// <summary>
-        /// 单ab 多资源情况下，packagename 就是ab名 
+        ///  AB为空则用AB加载,用默认情况下以Path为AB名,
         /// </summary>
-        public string AB { get; private set; }
+        //public string AB { get;  private  set; }
 
         /// <summary>
         /// asset类型
         /// </summary>
-        public int Type { get; private set; }
+        public int Type { get;  private  set; }
 
         /// <summary>
         /// 依赖
         /// </summary>
-        public List<string> Depend { get; set; } = new List<string>();
+        public List<string> Depend { get;  private set; } = new List<string>();
     }
 }

@@ -1,15 +1,15 @@
-using BDFramework.ResourceMgr;
 using Code.BDFramework.Core.Tools;
 using LitJson;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
+using BDFramework.ResourceMgr.V2;
 using UnityEditor;
 using UnityEngine;
+
 
 namespace BDFramework.Editor.Asset
 {
@@ -64,31 +64,35 @@ namespace BDFramework.Editor.Asset
         public Dictionary<string, AssetData> AssetDataMaps = new Dictionary<string, AssetData>();
     }
 
-    static public class AssetBundleEditorTools2
+    static public class AssetBundleEditorToolsV2
     {
-        //
         /// <summary>
         /// 生成AssetBundle
         /// </summary>
-        /// <param name="resRootPath"></param>
-        /// <param name="outPath"></param>
-        /// <param name="target"></param>
+        /// <param name="outPath">导出目录</param>
+        /// <param name="target">平台</param>
+        /// <param name="options">打包参数</param>
+        /// <param name="isHashName">是否为hash name</param>
         public static void GenAssetBundle(string outPath,
             BuildTarget target,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression,
-            bool isClearAssets = true)
+            bool isHashName = false)
         {
+            //
+            var artOutpath = IPath.Combine(outPath, "Art");
+            var builinfoPath = IPath.Combine(outPath, "BuildInfo.json");
+
             //初始化
             allfileHashMap = new Dictionary<string, string>();
-            //
-            var builinfoPath = outPath + "/BuildInfo.json";
+
             var assetPaths = BApplication.GetAllAssetsPath();
             for (int i = 0; i < assetPaths.Count; i++)
             {
                 assetPaths[i] = assetPaths[i].ToLower();
             }
 
-            //获取当前AssetsInfo
+            /***********************新老资源依赖生成************************/
+            //获取老的配置
             BuildInfo lastBuildInfo = new BuildInfo();
             if (File.Exists(builinfoPath))
             {
@@ -96,19 +100,20 @@ namespace BDFramework.Editor.Asset
                 lastBuildInfo = JsonMapper.ToObject<BuildInfo>(content);
             }
 
-            //获取变动的数据
+            //获取当前配置
             var newbuildInfo = GetAssetsInfo(assetPaths);
+            //获取变动的数据
             var changedAssetList = GetChangedAssets(lastBuildInfo, newbuildInfo);
-            //保存Cache.json
             if (File.Exists(builinfoPath))
             {
-                string targetPath = builinfoPath + ".old";
+                string targetPath = outPath + "/BuildInfo.old.json";
                 File.Delete(targetPath);
                 File.Move(builinfoPath, targetPath);
             }
 
             FileHelper.WriteAllText(builinfoPath, JsonMapper.ToJson(newbuildInfo));
 
+            /***********************整理依赖关系 减少消耗************************/
             //保存buildinfo后,
             //整理runtime路径，减少加载时候的消耗
             var runtimeStr = "/runtime/";
@@ -119,7 +124,7 @@ namespace BDFramework.Editor.Asset
                     var newName = asset.Value.Name;
                     //移除runtime之前的路径
                     var index = newName.IndexOf(runtimeStr);
-                    newName = newName.Substring(index + runtimeStr.Length);
+                    newName = newName.Substring(index + 1); //runtimeStr.Length);
                     //去除后缀
                     newName = newName.Replace(Path.GetExtension(newName), "");
 
@@ -151,26 +156,53 @@ namespace BDFramework.Editor.Asset
                 }
             }
 
-            FileHelper.WriteAllText( outPath + "/Manifest.json", JsonMapper.ToJson(newbuildInfo));
-            
-
-            //根据buildinfo 生成manifest
-            var manifest = new ManifestConfig();
-            foreach (var item in newbuildInfo.AssetDataMaps)
+            /***********************生成Config************************/
+            //根据buildinfo 生成ArtConfig
+            Dictionary<string, ManifestItem> configMap = new Dictionary<string, ManifestItem>();
+            if (isHashName)
             {
-                var dependlist = new List<string>(item.Value.DependList.Count);
-                for (int i = 0; i < dependlist.Count; i++)
+                // foreach (var item in newbuildInfo.AssetDataMaps)
+                // {
+                //     var dependlist = new List<string>(item.Value.DependList.Count);
+                //     for (int i = 0; i < dependlist.Count; i++)
+                //     {
+                //         var assetName = item.Value.DependList[i]; //
+                //         var asset = newbuildInfo.AssetDataMaps[assetName];
+                //         dependlist[i] = asset.Hash;
+                //     }
+                //
+                //     //添加manifest
+                //     var path = !string.IsNullOrEmpty(item.Value.AB) ? item.Value.AB : item.Key;
+                //     var mi = new ManifestItem(path, (ManifestItem.AssetTypeEnum) item.Value.Type, dependlist);
+                //     configMap[item.Key] = mi;
+                // }
+            }
+            else
+            {
+                foreach (var item in newbuildInfo.AssetDataMaps)
                 {
-                    var assetName = item.Value.DependList[i]; //
-                    var asset = newbuildInfo.AssetDataMaps[assetName];
-                    dependlist[i] = asset.Hash;
-                }
+                    // var dependlist = new List<string>(item.Value.DependList.Count);
+                    // for (int i = 0; i < dependlist.Count; i++)
+                    // {
+                    //     var assetName = item.Value.DependList[i]; //
+                    //     var asset = newbuildInfo.AssetDataMaps[assetName];
+                    //     dependlist[i] = asset.Hash;
+                    // }
 
-                //添加manifest
-                manifest.AddItem(item.Key, item.Value.Hash, dependlist, (ManifestItem.AssetTypeEnum) item.Value.Type,
-                    item.Value.AB);
+                    //添加manifest
+                    var path = !string.IsNullOrEmpty(item.Value.AB) ? item.Value.AB : item.Key;
+                    var mi = new ManifestItem(path, (ManifestItem.AssetTypeEnum) item.Value.Type, new List<string>(item.Value.DependList));
+                    configMap[item.Key] = mi;
+                }  
             }
 
+
+            //hash命名
+
+            //写入
+            FileHelper.WriteAllText(artOutpath + "/Config.json", JsonMapper.ToJson(configMap));
+
+            /***********************开始设置build ab************************/
             //设置AB name
             foreach (var asset in changedAssetList.AssetDataMaps)
             {
@@ -184,20 +216,14 @@ namespace BDFramework.Editor.Asset
                     abname = asset.Value.Name;
                 }
 
-                //让runtime的ab 全都到runtime下
-                if (!abname.StartsWith("assets"))
-                {
-                    abname = string.Format("runtime/{0}", abname);
-                }
                 var ai = GetAssetImporter(asset.Key);
                 if (ai)
                 {
                     ai.assetBundleName = abname;
                 }
-
             }
-            
-            var artOutpath = IPath.Combine(outPath, "Art");
+
+
             //3.生成AssetBundle
             BuildAssetBundle(target, outPath, options);
             //4.清除AB Name
@@ -364,6 +390,7 @@ namespace BDFramework.Editor.Asset
                 {
                     var da = asset.DependList[i];
                     var dependAssetData = buildInfo.AssetDataMaps[da];
+                    //替换成真正AB名
                     if (!string.IsNullOrEmpty(dependAssetData.AB))
                     {
                         asset.DependList[i] = dependAssetData.AB;
@@ -452,8 +479,7 @@ namespace BDFramework.Editor.Asset
                     Debug.LogError("【打包】获取资源失败:" + path);
                 }
             }
-            
-           
+
 
             return ai;
         }

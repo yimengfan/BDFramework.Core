@@ -2,6 +2,7 @@
 using BDFramework.ResourceMgr;
 using System;
 using System.Collections.Generic;
+using BDFramework.ResourceMgr.V2;
 using UnityEngine.Rendering;
 
 namespace BDFramework.ResourceMgr
@@ -18,7 +19,8 @@ namespace BDFramework.ResourceMgr
         {
             if (root != "")
             {
-                ResLoader = new AssetBundleMgr();
+                //使用2版本，如果有问题，切回1版本
+                ResLoader = new AssetBundleMgrV2();
                 ResLoader.Init(root, onLoaded);
             }
             else

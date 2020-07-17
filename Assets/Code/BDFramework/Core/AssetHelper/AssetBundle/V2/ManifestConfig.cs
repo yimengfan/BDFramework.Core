@@ -20,8 +20,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 资源Map
         /// </summary>
-        public Dictionary<string, ManifestItem>
-            ManifestMap { get; private set; } //= new Dictionary<string, ManifestItem>();
+        public Dictionary<string, ManifestItem> ManifestMap { get; private set; } //= new Dictionary<string, ManifestItem>();
 
         /// <summary>
         /// json结构
@@ -30,6 +29,11 @@ namespace BDFramework.ResourceMgr.V2
         public ManifestConfig(string content)
         {
             ManifestMap = JsonMapper.ToObject<Dictionary<string, ManifestItem>>(content);
+        }
+        
+        public ManifestConfig()
+        {
+            ManifestMap =  new  Dictionary<string, ManifestItem>();
         }
 
         /// <summary>
@@ -69,40 +73,7 @@ namespace BDFramework.ResourceMgr.V2
         }
 
 
-        /// <summary>
-        /// 添加一个依赖,这个仅在Editor下调用
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="dependencies"></param>
-        public void AddItem(string path,
-            string hash,
-            List<string> dependencies,
-            ManifestItem.AssetTypeEnum @enum,
-            string abname = "")
-        {
-            ManifestItem item = null;
-            if (this.ManifestMap.TryGetValue(path, out item))
-            {
-                if (item.Path != hash)
-                {
-                    Debug.LogError("有重名：" + path + ",如无显式BResource.Load加载则无视,隐式会自动根据hash算依赖!");
-                    path = path + "_r";
-                    item = new ManifestItem(path, abname, @enum, dependencies);
-                    this.ManifestMap[path] = item;
-                }
-                else if (dependencies.Count >= item.Depend.Count)
-                {
-                    item = new ManifestItem(path, abname, @enum, dependencies);
-                    this.ManifestMap[path] = item;
-                }
-            }
-            else
-            {
-                item = new ManifestItem(path, abname, @enum, dependencies);
-                this.ManifestMap[path] = item;
-            }
-        }
-
+  
 
         public void AddItem(ManifestItem item)
         {
