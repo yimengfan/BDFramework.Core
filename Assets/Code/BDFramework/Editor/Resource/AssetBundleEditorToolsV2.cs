@@ -181,18 +181,20 @@ namespace BDFramework.Editor.Asset
             {
                 foreach (var item in newbuildInfo.AssetDataMaps)
                 {
-                    // var dependlist = new List<string>(item.Value.DependList.Count);
-                    // for (int i = 0; i < dependlist.Count; i++)
-                    // {
-                    //     var assetName = item.Value.DependList[i]; //
-                    //     var asset = newbuildInfo.AssetDataMaps[assetName];
-                    //     dependlist[i] = asset.Hash;
-                    // }
-
                     //添加manifest
-                    var path = !string.IsNullOrEmpty(item.Value.AB) ? item.Value.AB : item.Key;
+                    var path = !string.IsNullOrEmpty(item.Value.AB) ? item.Value.AB : item.Value.Name;
                     var mi = new ManifestItem(path, (ManifestItem.AssetTypeEnum) item.Value.Type, new List<string>(item.Value.DependList));
-                    configMap[item.Key] = mi;
+
+                    //runtime路径下，改成用Resources加载规则命名的key
+                    if (path.StartsWith("runtime/"))
+                    {
+                        configMap[item.Value.Name] = mi;
+                    }
+                    else
+                    {
+                        configMap[item.Key] = mi;
+                    }
+                 
                 }  
             }
 

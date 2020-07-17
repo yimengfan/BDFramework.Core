@@ -618,7 +618,11 @@ namespace BDFramework.ResourceMgr.V2
                 //开始task
                 curDoTask.DoNextTask();
                 //注册完成回调
-                curDoTask.onTaskCompleteCallback += (a, b) => { DoNextTask(); };
+                curDoTask.onTaskCompleteCallback += (a, b) =>
+                {
+                    //
+                    DoNextTask();
+                };
             }
         }
 
