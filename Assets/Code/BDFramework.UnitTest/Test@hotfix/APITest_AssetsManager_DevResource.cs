@@ -64,7 +64,7 @@ namespace Code.BDFramework.UnitTest
             //寻找具体字符串
             var rets2 = BResources.ResLoader.GetAssets("AssetTest","Cu");
             Assert.Equals(rets2.Length, 1);
-            Assert.Equals(rets2[0], "AssetTest/Cube","资源获取出错");
+            Assert.Equals(rets2[0].ToLower(), "AssetTest/Cube".ToLower(),"资源获取出错");
         }
         
     }

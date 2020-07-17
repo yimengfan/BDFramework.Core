@@ -550,6 +550,8 @@ namespace BDFramework.ResourceMgr.V2
         {
             List<string> rets = new List<string>();
             var str = string.Format(RUNTIME,  (floder + "/").ToLower());
+            
+            searchPattern = searchPattern?.ToLower();
             foreach (var key in this.loder.Manifest.ManifestMap.Keys)
             {
                 if (key.StartsWith(str))
@@ -574,6 +576,11 @@ namespace BDFramework.ResourceMgr.V2
                 });
             }
 
+            var count = "runtime/".Length;
+            for (int i = 0; i < rets.Count; i++)
+            {
+                rets[i] = rets[i].Substring(count);
+            }
             return rets.ToArray();
         }
 
