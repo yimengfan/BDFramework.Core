@@ -33,8 +33,12 @@ namespace BDFramework.Editor.Asset
                 //
                 allShaderNameList.Add(shaderPath);
             }
-
+            
             var toolsSVCpath = "Assets/Resource/Shaders/Tools.shadervariants";
+            //防空
+            FileHelper.WriteAllText(toolsSVCpath,"");
+            File.Delete(toolsSVCpath);
+            //
             AssetDatabase.CreateAsset(toolSVC, toolsSVCpath);
 
 
