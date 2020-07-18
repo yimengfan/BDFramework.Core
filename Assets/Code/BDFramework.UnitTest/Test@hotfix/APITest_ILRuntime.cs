@@ -3,6 +3,7 @@ using System.Net;
 using BDFramework.UnitTest;
 using LitJson;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Tests
 {
@@ -12,7 +13,7 @@ namespace Tests
         /// <summary>
         /// 测试启动逻辑
         /// </summary>
-        [HotfixUnitTest(Des = "测试Map tryget 为null")]
+        [HotfixUnitTest(Des = "测试Map try get 为null")]
         public static void MapTryGetTest()
         {
             Dictionary<string, object> testmap = new Dictionary<string, object>();
@@ -25,6 +26,36 @@ namespace Tests
             }
 
             Assert.IsTrue(o == null, "map TryGet API 失败");
+        }
+        
+        public class A
+        {
+            
+        }
+        public class B:A
+        {
+            
+        }
+        public class C:B
+        {
+            
+        }
+        
+        /// <summary>
+        /// 测试litjson
+        /// </summary>
+        [HotfixUnitTest(Des = "测试litjson")]
+        public static void TypeTest()
+        {
+            var b = new B();
+            var c =new C();
+            Assert.IsPass(b is A, "b父类判断");
+            Assert.IsPass(b is B, "b父类2判断");
+            Assert.IsFalse(b is C, "类型容错判断");
+            Assert.IsPass(c is A, "c父类判断");
+            Assert.IsPass(c is B, "c父类2判断");
+            Assert.IsPass(c is C, "c本身判断");
+
         }
 
 
@@ -64,8 +95,7 @@ namespace Tests
                           && obj.subObj.list.Count == obj2.subObj.list.Count && obj.subObj.list[0] == obj2.subObj.list[0],
                           "litjson 测试失败");
         }
-
-
+        
         /// <summary>
         /// 测试litjson
         /// </summary>

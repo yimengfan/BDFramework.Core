@@ -1,6 +1,6 @@
-
 {
   "dependencies": {
+    "com.ourpalm.ilruntime": "1.6.3",
     "com.unity.ads": "2.0.8",
     "com.unity.analytics": "3.2.2",
     "com.unity.collab-proxy": "1.2.15",

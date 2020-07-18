@@ -49,29 +49,13 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 }
             }
             GUILayout.EndHorizontal();
-
-            if (GUILayout.Button("2.分析DLL生成绑定", GUILayout.Width(305), GUILayout.Height(30)))
-            {
-                GenCLRBindingByAnalysis();
-            }
-
-            if (GUILayout.Button("2.1 手动绑定生成", GUILayout.Width(305), GUILayout.Height(30)))
-            {
-                GenCLRBinding();
-            }
-
-            if (GUILayout.Button("2.2 生成预绑定（如所有UI组件等）", GUILayout.Width(305), GUILayout.Height(30)))
-            {
-                GenPreCLRBinding();
-            }
-
-
-            if (GUILayout.Button("3.生成跨域Adapter[没事别瞎点]", GUILayout.Width(305), GUILayout.Height(30)))
+            
+            if (GUILayout.Button("2.生成跨域Adapter[没事别瞎点]", GUILayout.Width(305), GUILayout.Height(30)))
             {
                 GenCrossBindAdapter();
             }
 
-            if (GUILayout.Button("4.生成Link.xml[大部分不需要]", GUILayout.Width(305), GUILayout.Height(30)))
+            if (GUILayout.Button("3.生成Link.xml[大部分不需要]", GUILayout.Width(305), GUILayout.Height(30)))
             {
                 StripCode.GenLinkXml();
             }
@@ -100,40 +84,30 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     static public void RoslynBuild(ScriptBuildTools.BuildMode mode,string outpath =null)
     {
         var targetPath = "Assets/Code/Game/ILRuntime/Binding/Analysis";
-        //分析之前先删除,然后生成临时文件防止报错
+        //1.分析之前先删除,然后生成临时文件防止报错
         if (Directory.Exists(targetPath))
         {
             Directory.Delete(targetPath, true);
         }
         var fileContent = @"
-namespace ILRuntime.Runtime.Generated
-{
-    class CLRBindings
-    {
-        public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
+        namespace ILRuntime.Runtime.Generated
         {
-        }
-    } 
-}   ";
+            class CLRBindings
+            {
+                public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
+                {
+                }
+            } 
+        }   ";
         FileHelper.WriteAllText(targetPath + "/CLRBindings.cs", fileContent);
         AssetDatabase.Refresh(); //这里必须要刷新
 
-        //没指定，走默认模式
+        //2.生成DLL
         if (string.IsNullOrEmpty(outpath))
         {
             //1.build dll
             var outpath_win = Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(Application.platform);
             ScriptBuildTools.BuildDll(outpath_win, mode);
-            //2.同步到其他两个目录
-            var outpath_android = Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(RuntimePlatform.Android)      + DLLPATH;
-            var outpath_ios     = Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer) + DLLPATH;
-
-            var source = outpath_win + DLLPATH;
-            var bytes  = File.ReadAllBytes(source);
-            if (source != outpath_android)
-                FileHelper.WriteAllBytes(outpath_android, bytes);
-            if (source != outpath_ios)
-                FileHelper.WriteAllBytes(outpath_ios, bytes);
         }
         else
         {
@@ -141,8 +115,8 @@ namespace ILRuntime.Runtime.Generated
             ScriptBuildTools.BuildDll(outpath, mode);
         }
         //3.预绑定
-        GenPreCLRBinding();
-        //4.生成AnalysisCLRBinding
+        //GenPreCLRBinding();
+        //4.生成自动分析绑定
         GenCLRBindingByAnalysis();
         AssetDatabase.Refresh();
         Debug.Log("脚本打包完毕");
@@ -198,14 +172,54 @@ namespace ILRuntime.Runtime.Generated
         excludeTypes.AddRange(preBindingTypes);
 
         //用新的分析热更dll调用引用来生成绑定代码
-        var targetPath = "Assets/Code/Game/ILRuntime/Binding/Analysis";
+        var outputPath = "Assets/Code/Game/ILRuntime/Binding/Analysis";
         ILRuntimeHelper.LoadHotfix(dllpath, false);
-        BindingCodeGenerator.GenerateAnalysisBindingCode(ILRuntimeHelper.AppDomain, targetPath,
-                                                         blackTypes: excludeTypes);
-
+        BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain, outputPath);
         ILRuntimeHelper.Close();
+        
+        /******************移除已经被绑定的部分****************/
+        var analysisClrBinding = IPath.Combine(outputPath,"CLRBindings.cs");
+        var manualPath = "Assets/Code/Game/ILRuntime/Binding/Manual";
+        var prebindingPath = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
+        //手动绑定的所有文件
+        var bindingFs = Directory.GetFiles(manualPath, "*.*").ToList();
+        if (Directory.Exists(prebindingPath))
+        {
+            bindingFs.AddRange(Directory.GetFiles(prebindingPath, "*.*"));
+        }
+        for (int i = 0; i < bindingFs.Count; i++)
+        {
+            //删除被手动绑定的文件
+            var f = IPath.Combine(outputPath, Path.GetFileName(bindingFs[i]));
+            if (File.Exists(f))
+            {
+                File.Delete(f);
+            }
+            //
+            bindingFs[i] = Path.GetFileNameWithoutExtension(bindingFs[i]);
+        }
+        var analysisContent = File.ReadAllLines(analysisClrBinding).ToList();
+        //修改CLRbingding内容
+        for (int i = analysisContent.Count-1; i >= 0; i--)
+        {
+            var line = analysisContent[i];
+            //移除line
+            foreach (var mf in bindingFs)
+            {
+                if (line.Contains(mf))
+                {
+                    analysisContent.RemoveAt(i);
+                    Debug.Log("移除[已经绑定]:" +line);
+                    break;
+                }
+            }
+        }
+        //写入
+        File.WriteAllLines(analysisClrBinding,analysisContent);
+        
+        //Manual
+
         AssetDatabase.Refresh();
-        //暂时先不处理
     }
     
     
@@ -251,22 +265,16 @@ namespace ILRuntime.Runtime.Generated
                 }
             }
         }
-
-        BindingCodeGenerator.GenerateBindingCode(preBindingTypes, clrbingdingClassName: "PreCLRBinding",
-                                                 outputPath: "Assets/Code/Game/ILRuntime/Binding/PreBinding",
-                                                 excludeMethods: blackMethodList);
+        var output = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
+        var clrbinding = IPath.Combine(output, "CLRBindings.cs");
+        var prebinding =IPath.Combine(output, "PreCLRBinding.cs");
+        //
+        BindingCodeGenerator.GenerateBindingCode(preBindingTypes,output, excludeMethods: blackMethodList);
+        var oldContent = File.ReadAllText(clrbinding);
+        var newContent = oldContent.Replace("class CLRBindings","class PreCLRBinding");
+        //写入新的,删除老的
+        File.WriteAllText(prebinding,newContent);
+        File.Delete(clrbinding);
     }
-
-    /// <summary>
-    /// 生成手动绑定部分
-    /// </summary>
-    static private void GenCLRBinding()
-    {
-        var types = new List<Type>();
-        //反射类优先生成
-        types.Add(typeof(UnityEngine.Debug));
-        //PreBinding 
-        BindingCodeGenerator.GenerateBindingCode(types, "Assets/Code/Game/ILRuntime/Binding/PreBinding");
-        AssetDatabase.Refresh();
-    }
+    
 }

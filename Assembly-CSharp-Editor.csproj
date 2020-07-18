@@ -122,6 +122,9 @@
     <Reference Include="Unity.InternalAPIEngineBridge.024">
       <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.024.dll</HintPath>
     </Reference>
+    <Reference Include="ILRuntime">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/ILRuntime.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Program Files/2018.4.23f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -493,6 +496,15 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.shaderprofiler@0.0.1-preview.1/Plugin/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ILRuntim.Mono.Cecil">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.3/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="ILRuntime.Mono.Cecil.Pdb">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.3/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="ILRuntime.Mono.Cecil.Mdb">
+      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.3/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Program Files/2018.4.23f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

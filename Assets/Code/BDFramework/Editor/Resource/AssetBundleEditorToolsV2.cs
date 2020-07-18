@@ -191,7 +191,7 @@ namespace BDFramework.Editor.Asset
                     {
                         configMap[item.Value.Name] = mi;
                     }
-                    else
+                    else 
                     {
                         configMap[item.Key] = mi;
                     }
