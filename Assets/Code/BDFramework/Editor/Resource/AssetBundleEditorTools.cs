@@ -12,6 +12,7 @@ using UnityEngine;
 
 namespace BDFramework.Editor.Asset
 {
+
     static public class AssetBundleEditorTools
     {
         /// <summary>
@@ -20,7 +21,7 @@ namespace BDFramework.Editor.Asset
         /// <param name="resRootPath"></param>
         /// <param name="outPath"></param>
         /// <param name="target"></param>
-        public static void CheackAssets(string resRootPath, string outPath, BuildTarget target)
+        public static void CheckAssets(string resRootPath, string outPath, BuildTarget target)
         {
             //1.分析资源
             string rootPath = IPath.Combine(Application.dataPath, resRootPath);
@@ -42,7 +43,6 @@ namespace BDFramework.Editor.Asset
             AnalyzeResource(fileList.ToArray(), target, IPath.Combine(outPath, "Art"));
 
             //2.配置写入本地
-
             var configPath = IPath.Combine(outPath, "Art/Config_Check.json");
             var direct = Path.GetDirectoryName(configPath);
             if (Directory.Exists(direct) == false)
@@ -73,6 +73,7 @@ namespace BDFramework.Editor.Asset
             //
             var fileList = BApplication.GetAllAssetsPath();
 
+
             var artOutpath = IPath.Combine(outPath, "Art");
             //2.分析ab包
             AnalyzeResource(fileList.ToArray(), target, artOutpath);
@@ -101,7 +102,7 @@ namespace BDFramework.Editor.Asset
             //4.清除AB Name
             if (isClearAssets)
             {
-                RemoveAllAbName();
+                RemoveAllAssetbundleName();
             }
 
 
@@ -146,7 +147,7 @@ namespace BDFramework.Editor.Asset
                 Directory.CreateDirectory(path);
             }
 
-            UnityEditor.BuildPipeline.BuildAssetBundles(path, options, target);
+            BuildPipeline.BuildAssetBundles(path, options, target);
         }
 
 
@@ -738,7 +739,7 @@ namespace BDFramework.Editor.Asset
         /// <summary>
         /// 移除无效资源
         /// </summary>
-        public static void RemoveAllAbName()
+        public static void RemoveAllAssetbundleName()
         {
             EditorUtility.DisplayProgressBar("资源清理", "清理中...", 1);
 

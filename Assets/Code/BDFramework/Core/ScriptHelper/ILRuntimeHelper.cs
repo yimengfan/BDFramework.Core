@@ -72,7 +72,7 @@ namespace BDFramework
             {
                 CLRBindings.Initialize(AppDomain);
                 ManualCLRBindings.Initialize(AppDomain);
-                PreCLRBinding.Initialize(AppDomain);
+                //PreCLRBinding.Initialize(AppDomain);
             }
 
             JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);

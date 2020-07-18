@@ -94,12 +94,7 @@ namespace BDFramework.ResourceMgr
 
         private int curDoTaskNum = 0;
 
-
-        private ManifestConfig config;
-        public void SetDebugManifest(ManifestConfig config)
-        {
-            this.config = config;
-        }
+        
         /// <summary>
         /// 开始执行任务
         /// </summary>

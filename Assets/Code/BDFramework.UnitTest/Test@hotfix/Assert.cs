@@ -72,16 +72,16 @@ namespace BDFramework.UnitTest
             {
                 if (!ret)
                 {
-                    Debug.LogError(failMessage);
-                    throw new Exception();
+                   Debug.LogException(new Exception(failMessage));
+                   throw new Exception();
                 }
             }
             else
             {
                 if (!ret)
                 {
-                    Debug.LogError(failMessage);
-                    throw new Exception();
+                   // Debug.LogError(failMessage);
+                    throw new Exception(failMessage);
                 }
             }
         }

@@ -400,7 +400,7 @@ MonoBehaviour:
       Data: 0|BDFramework.GameConfig, Assembly-CSharp
     - Name: CodeRoot
       Entry: 3
-      Data: 2
+      Data: 0
     - Name: SQLRoot
       Entry: 3
       Data: 2
@@ -412,7 +412,10 @@ MonoBehaviour:
       Data: 
     - Name: CodeRunMode
       Entry: 3
-      Data: 0
+      Data: 1
+    - Name: AssetBundleManagerVersion
+      Entry: 3
+      Data: 1
     - Name: IsDebuggerILRuntime
       Entry: 5
       Data: false
@@ -437,7 +440,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  localConfig: {fileID: 4900000, guid: 04f1bed7e320d6440a29387c08710452, type: 3}
+  localConfig: {fileID: 0}
 --- !u!1 &878416750
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,8 +25,8 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 卸载指定ab
         /// </summary>
-        /// <param name="name"></param>
-        void UnloadAsset(string name, bool isForceUnload = false);
+        /// <param name="path"></param>
+        void UnloadAsset(string path, bool isForceUnload = false);
 
         /// <summary>
         /// 卸载所有ab
