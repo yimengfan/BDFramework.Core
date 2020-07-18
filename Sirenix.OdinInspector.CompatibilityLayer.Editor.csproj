@@ -418,24 +418,6 @@
     <Reference Include="Sirenix.Utilities.Editor">
       <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.Advertisements">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
-    </Reference>
-    <Reference Include="websocket-sharp">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.messenger@1.0.7-preview/Editor/Third-Party/websocket-sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Purchasing">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.shaderprofiler@0.0.1-preview.1/Plugin/Newtonsoft.Json.dll</HintPath>
     </Reference>

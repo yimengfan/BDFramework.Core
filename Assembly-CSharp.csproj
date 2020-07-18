@@ -565,32 +565,14 @@
     <Reference Include="Unity.UIWidgets.Editor">
       <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.UIWidgets.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.UIWidgets">
       <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.UIWidgets.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Messenger.Editor">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.Messenger.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.InternalAPIEditorBridge.023">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.023.dll</HintPath>
-    </Reference>
     <Reference Include="ShaderProfiler">
       <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/ShaderProfiler.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEngineBridge.024">
       <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.024.dll</HintPath>
@@ -903,15 +885,6 @@
     </Reference>
     <Reference Include="Sirenix.Utilities.Editor">
       <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:/Users/Administrator/Desktop/BDFramework.Core/Library/PackageCache/com.unity.shaderprofiler@0.0.1-preview.1/Plugin/Newtonsoft.Json.dll</HintPath>
