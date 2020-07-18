@@ -93,107 +93,23 @@
  <Reference Include="UnityEngine.TestRunner">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
- <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Timeline.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Monetization">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Universal.Shaders">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
- </Reference>
- <Reference Include="com.unity.multiplayer-hlapi.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Core.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Core.Runtime">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Universal.Runtime">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Universal.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+ <Reference Include="ILRuntime">
+ <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/ILRuntime.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Timeline">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
- </Reference>
- <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Postprocessing.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
- </Reference>
- <Reference Include="com.unity.multiplayer-weaver.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.XR.LegacyInputHelpers">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
- </Reference>
- <Reference Include="Unity.DeviceSimulator.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.DeviceSimulator.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Sprite.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Postprocessing.Runtime">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Tilemap.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.SpatialTracking">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.SpatialTracking">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
- </Reference>
- <Reference Include="Unity.ShaderGraph.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
  </Reference>
  <Reference Include="ShaderProfiler">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/ShaderProfiler.dll</HintPath>
  </Reference>
- <Reference Include="Unity.TextMeshPro">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Analytics.DataPrivacy">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.XR.LegacyInputHelpers">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="com.unity.multiplayer-hlapi.Runtime">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>D:/Program Files/2019.4.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -498,23 +414,14 @@
  <Reference Include="Sirenix.Utilities.Editor">
  <HintPath>E:/Unity2019/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.Advertisements">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.ads@3.4.5/Editor/UnityEditor.Advertisements.dll</HintPath>
+ <Reference Include="ILRuntim.Mono.Cecil">
+ <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.3/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Analytics.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
+ <Reference Include="ILRuntime.Mono.Cecil.Mdb">
+ <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.3/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Analytics.Tracker">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Analytics.StandardEvents">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.Purchasing">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
- </Reference>
- <Reference Include="ICSharpCode.NRefactory">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.3.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ <Reference Include="ILRuntime.Mono.Cecil.Pdb">
+ <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.3/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.shaderprofiler@0.0.1-preview.1/Plugin/Newtonsoft.Json.dll</HintPath>

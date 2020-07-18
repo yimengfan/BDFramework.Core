@@ -70,7 +70,7 @@ namespace BDFramework
             //是否注册各种binding
             if (isRegisterBindings)
             {
-                CLRBindings.Initialize(AppDomain);
+                CLRBinding.Initialize(AppDomain);
                 ManualCLRBindings.Initialize(AppDomain);
                 //PreCLRBinding.Initialize(AppDomain);
             }

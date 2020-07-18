@@ -370,23 +370,14 @@
  <Reference Include="Sirenix.Utilities.Editor">
  <HintPath>E:/Unity2019/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.Advertisements">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.ads@3.4.5/Editor/UnityEditor.Advertisements.dll</HintPath>
+ <Reference Include="ILRuntim.Mono.Cecil">
+ <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.3/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Analytics.Editor">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
+ <Reference Include="ILRuntime.Mono.Cecil.Mdb">
+ <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.3/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Analytics.Tracker">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Analytics.StandardEvents">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.Purchasing">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
- </Reference>
- <Reference Include="ICSharpCode.NRefactory">
- <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.3.1/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ <Reference Include="ILRuntime.Mono.Cecil.Pdb">
+ <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.3/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.shaderprofiler@0.0.1-preview.1/Plugin/Newtonsoft.Json.dll</HintPath>
