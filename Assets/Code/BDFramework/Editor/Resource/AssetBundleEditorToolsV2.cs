@@ -77,7 +77,7 @@ namespace BDFramework.Editor.Asset
             BuildTarget target,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression,
             bool isHashName = false,
-            string AES="")
+            string AES = "")
         {
             //
             var artOutpath = IPath.Combine(outPath, "Art");
@@ -159,7 +159,8 @@ namespace BDFramework.Editor.Asset
 
             /***********************生成Config************************/
             //根据buildinfo 生成ArtConfig
-            Dictionary<string, ManifestItem> configMap = new Dictionary<string, ManifestItem>();
+            ManifestConfig manifest = new ManifestConfig();
+            manifest.AES = AES;
             if (isHashName)
             {
                 // foreach (var item in newbuildInfo.AssetDataMaps)
@@ -184,26 +185,26 @@ namespace BDFramework.Editor.Asset
                 {
                     //添加manifest
                     var path = !string.IsNullOrEmpty(item.Value.AB) ? item.Value.AB : item.Value.Name;
-                    var mi = new ManifestItem(path, (ManifestItem.AssetTypeEnum) item.Value.Type, new List<string>(item.Value.DependList));
+                    var mi = new ManifestItem(path, (ManifestItem.AssetTypeEnum) item.Value.Type,
+                        new List<string>(item.Value.DependList));
 
                     //runtime路径下，改成用Resources加载规则命名的key
                     if (path.StartsWith("runtime/"))
                     {
-                        configMap[item.Value.Name] = mi;
+                        manifest.AddManifest(item.Value.Name, mi);
                     }
-                    else 
+                    else
                     {
-                        configMap[item.Key] = mi;
+                        manifest.AddManifest(item.Key, mi);
                     }
-                 
-                }  
+                }
             }
 
 
             //hash命名
 
             //写入
-            FileHelper.WriteAllText(artOutpath + "/Config.json", JsonMapper.ToJson(configMap));
+            FileHelper.WriteAllText(artOutpath + "/Config.json", JsonMapper.ToJson(manifest));
 
             /***********************开始设置build ab************************/
             //设置AB name

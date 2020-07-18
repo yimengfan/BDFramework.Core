@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using LitJson;
 using UnityEngine;
 
 namespace BDFramework.ResourceMgr.V2
@@ -36,7 +37,7 @@ namespace BDFramework.ResourceMgr.V2
                 {
                     BDebug.Log("manifest加载成功!");
                     var text = File.ReadAllText(path);
-                    this.Manifest = new ManifestConfig(text);
+                    this.Manifest = JsonMapper.ToObject<ManifestConfig>(text);
                     this.onLoaded?.Invoke();
                     this.onLoaded = null;
                 }
@@ -82,7 +83,7 @@ namespace BDFramework.ResourceMgr.V2
 
             if (!string.IsNullOrEmpty(text))
             {
-                this.Manifest = new ManifestConfig(text);
+                this.Manifest = JsonMapper.ToObject<ManifestConfig>(text);
                 BDebug.Log("manifest加载成功!");
                 onLoaded?.Invoke();
                 onLoaded = null;

@@ -16,44 +16,28 @@ namespace BDFramework.ResourceMgr.V2
     public class ManifestConfig
     {
         /// <summary>
+        /// 版本
+        /// </summary>
+        public string Version = "1.0.0";
+        /// <summary>
+        /// 密钥
+        /// </summary>
+        public string AES = "";
+        /// <summary>
         /// 资源Map
         /// </summary>
-        public Dictionary<string, ManifestItem>
-            ManifestMap { get; private set; } //= new Dictionary<string, ManifestItem>();
-
+        public Dictionary<string, ManifestItem> ManifestMap { get; private set; } =new Dictionary<string, ManifestItem>();
+        
         /// <summary>
-        /// json结构
+        /// 添加manifest
         /// </summary>
-        /// <param name="content"></param>
-        public ManifestConfig(string content)
+        /// <param name="key"></param>
+        /// <param name="item"></param>
+        public void AddManifest(string key, ManifestItem item)
         {
-            ManifestMap = JsonMapper.ToObject<Dictionary<string, ManifestItem>>(content);
+            ManifestMap[key] = item;
         }
-
-        public ManifestConfig()
-        {
-            ManifestMap = new Dictionary<string, ManifestItem>();
-        }
-
-        /// <summary>
-        /// 获取单个依赖
-        /// </summary>
-        /// <param name="menifestName"></param>
-        /// <returns>这个list外部不要修改</returns>
-        public List<string> GetDependenciesByName(string name)
-        {
-            ManifestItem item = null;
-            if (this.ManifestMap.TryGetValue(name, out item))
-            {
-                var list = new List<string>(item.Depend);
-                return list;
-            }
-
-            BDebug.LogError("【config】不存在资源:" + name);
-            return null;
-        }
-
-
+        
         /// <summary>
         /// 获取单个menifestItem
         /// </summary>
