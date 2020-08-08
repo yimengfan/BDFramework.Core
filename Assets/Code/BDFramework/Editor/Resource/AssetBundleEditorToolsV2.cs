@@ -462,8 +462,8 @@ namespace BDFramework.Editor.Asset
             
             //scriptable
             
-           // BuildPipeline.BuildAssetBundles(path, options, target);
-           CompatibilityBuildPipeline.BuildAssetBundles(path, options, target);
+            BuildPipeline.BuildAssetBundles(path, options, target);
+           //CompatibilityBuildPipeline.BuildAssetBundles(path, options, target);
         }
 
         //当前保存的配置
