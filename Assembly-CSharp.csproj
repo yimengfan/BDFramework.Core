@@ -334,6 +334,7 @@
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_UI_Text_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\UnityEngine_WaitForSeconds_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\ManualCLRBindings.cs" />
+    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\System_Activator_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\System_Reflection_FieldInfo_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\System_Reflection_MemberInfo_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\System_Reflection_MethodBase_Binding.cs" />
@@ -342,7 +343,6 @@
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\System_Type_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Component_Binding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Debug_Binding.cs" />
-    <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Transform_ManualBinding.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\Delegate\ILRuntimeDelegateHelper.cs" />
     <Compile Include="Assets\Code\Game\ILRuntime\ILTypeHelper.cs" />
     <Compile Include="Assets\Code\Game\LocalGameStart.cs" />
