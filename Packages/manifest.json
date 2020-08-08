@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "com.ourpalm.ilruntime": "1.6.3",
-    "com.unity.shaderprofiler": "0.0.1-preview.1",
     "com.unity.ide.rider": "1.1.4",
-    "com.unity.ide.vscode": "1.2.0",
+    "com.unity.ide.vscode": "1.2.1",
+    "com.unity.shaderprofiler": "0.0.1-preview.1",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
