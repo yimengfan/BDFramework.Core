@@ -10,18 +10,29 @@ using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.UFlux;
 using Game.ILRuntime;
+using LitJson;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace BDFramework
 {
+    /// <summary>
+    /// 框架的配置
+    /// </summary>
+    public class BDFrameConfig
+    {
+        /// <summary>
+        /// 版本号
+        /// </summary>
+        public string Version { get; set; }
+    }
     public class BDLauncher : MonoBehaviour
     {
         /// <summary>
-        /// BDLauncher的版本号
+        /// 框架的相关配置
         /// </summary>
-        static readonly public string Version = "1.0.1";
+        public BDFrameConfig FrameConfig { get; private set; }
 
         #region 对外的生命周期
 
@@ -38,8 +49,7 @@ namespace BDFramework
         /// </summary>
         static public Action OnBDFrameInitializedForTest { get; set; }
         #endregion
-
-
+        
         static public BDLauncher Inst { get; private set; }
 
         //全局Config
@@ -52,10 +62,22 @@ namespace BDFramework
             Inst = this;
             this.gameObject.AddComponent<IEnumeratorTool>();
             this.Config = BDFramework.Config.Inst.Data;
+            LoadFrameConfig();
             LaunchLocal();
-            //
+            
         }
-
+        
+        /// <summary>
+        /// 加载框架配置
+        /// </summary>
+        private void LoadFrameConfig()
+        {
+            var content = Resources.Load<TextAsset>("BDFrameConfig").text;
+            FrameConfig = JsonMapper.ToObject<BDFrameConfig>(content);
+            //框架版本
+            BDebug.Log("框架版本:" + FrameConfig.Version,"red");
+        }
+        
         #region 启动非热更逻辑
 
         private IGameStart mainStart;

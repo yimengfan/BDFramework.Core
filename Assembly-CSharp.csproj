@@ -619,7 +619,6 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\AlphaTest-Diffuse.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Mobile\Mobile-Particle-Alpha.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Unlit\Unlit-Normal.shader" />
-     <None Include="Assets\Code\BDFramework\Resources\BuildConfig\Define.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityStandardShadow.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\UI\UI-Default.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Lightmap-Diffuse.shader" />
