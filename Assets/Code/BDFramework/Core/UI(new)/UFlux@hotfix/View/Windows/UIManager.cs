@@ -56,19 +56,7 @@ namespace BDFramework.UFlux
             //
             return window;
         }
-
-        /// <summary>
-        ///加载窗口
-        /// </summary>
-        /// <param name="uiIndexes"></param>
-        public void LoadWindows<T>(List<T> uiIndexes) where  T: Enum
-        {
-            foreach (var i in uiIndexes)
-            {
-                LoadWindow(i);
-            }
-        }
-
+        
         /// <summary>
         /// 加载窗口
         /// </summary>
@@ -109,16 +97,15 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <param name="indexes"></param>
         /// <param name="loadProcessAction"></param>
-        public void AsyncLoadWindows<T>(List<T> indexes, Action<int, int> loadProcessAction) where  T: Enum
+        public void AsyncLoadWindows(List<int> indexes, Action<int, int> loadProcessAction)
         {
             //去重操作
             indexes = indexes.Distinct().ToList();
             //
             int allCount     = indexes.Count;
             int curTaskCount = 0;
-            foreach (var i in indexes)
+            foreach (var index in indexes)
             {
-                var index = i.GetHashCode();
                 if (windowMap.ContainsKey(index))
                 {
                     var uvalue = windowMap[index] as IComponent;

@@ -28,7 +28,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_Type_Binding_Enumerator_Binding.Register(app);
             System_Object_Binding.Register(app);
             BDFramework_GameStart_GameStartAtrribute_Binding.Register(app);
-            System_Activator_Binding.Register(app);
             System_IDisposable_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             BDFramework_GameStart_IGameStart_Binding.Register(app);

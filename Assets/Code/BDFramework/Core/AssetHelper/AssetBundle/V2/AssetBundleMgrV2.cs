@@ -639,19 +639,18 @@ namespace BDFramework.ResourceMgr.V2
             if (path != null)
             {
                 path = string.Format(RUNTIME, path.ToLower());
-                var res = loder.Manifest.GetDependenciesByName(path);
-                if (res == null)
-                    return;
+                var item = loder.Manifest.GetManifest(path);
+                if (item == null) return;
                 //将所有依赖,创建一个队列 倒序加载
                 Queue<string> resQue = new Queue<string>();
-                foreach (var r in res)
+                foreach (var r in item.Depend)
                 {
                     if (AssetbundleMap.ContainsKey(r))
                     {
                         resQue.Enqueue(r);
                     }
                 }
-
+                resQue.Enqueue(item.Path);
                 //判断是否有已经加载过的资源
                 foreach (var r in resQue)
                 {
