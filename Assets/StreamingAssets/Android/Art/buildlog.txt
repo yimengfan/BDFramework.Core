@@ -1,0 +1,99 @@
+Warning: The formatting in this file is subject to change.
+[LoadCachedData] 8009.40000000082us
+ 49 items
+ [GetCachedInfoFile] 3295.90000000007us
+ [Read and deserialize cache info] 2902.99999999934us
+  Time spent deserializing: 1ms
+  Cache hit count: 0
+ [Check for changed dependencies] 352.100000000064us
+[SaveCachedData] 60951.9us
+ Saving 49 infos
+ [SetupOperations] 2205.19999999942us
+ [SerializingCacheInfos] 58256.1000000005us
+[LoadCachedData] 2607.89999999997us
+ 27 items
+ [GetCachedInfoFile] 1170.39999999997us
+ [Read and deserialize cache info] 1411.79999999986us
+  Time spent deserializing: 0ms
+  Cache hit count: 0
+ [Check for changed dependencies] 2.40000000030705us
+[SaveCachedData] 16389.8000000008us
+ Saving 27 infos
+ [SetupOperations] 1188.90000000101us
+ [SyncPendingSaves] 8.79999999961001us
+ [SerializingCacheInfos] 14858.6999999989us
+[CreateWorkItems] 3925.50000000119us
+[CalculateHashFileOffsets] 1104.90000000027us
+[Creating Cache Entries] 111839.599999999us
+[Load Cached Data] 2594.80000000076us
+ [LoadCachedData] 2589.20000000035us
+  27 items
+  [GetCachedInfoFile] 1175.29999999897us
+  [Read and deserialize cache info] 1392.79999999962us
+   Time spent deserializing: 0ms
+   Cache hit count: 0
+  [Check for changed dependencies] 2.50000000050932us
+[CopyingCachedFiles] 10.3999999992084us
+[ArchiveItems] 359764.499999999us
+ Archiving 27 Bundles
+ [Archive runtime/test/cube] 14380.4us
+  [Copying From Cache Library/BuildCache/0c/0c6fdf1f0daa33f5a6a74c74aa588a57/d4001f9adc7f7ab7bb2209087ebe78d6/runtime/test/cube -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/test/cube] 3307.9us
+ [Archive runtime/windows/grid] 12431.1us
+  [Copying From Cache Library/BuildCache/23/23a66951a6cd2cd4d2deaaa3a71893b6/cff1f84380c5b2f06cc035ee24c08b96/runtime/windows/grid -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/grid] 1408.1us
+ [Archive runtime/windows/uflux/demo001/component_test01] 11962.4us
+  [Copying From Cache Library/BuildCache/da/da6477fba02c8dc475cb92c828dbbb32/7f408f197d20934c9299dbfc41645af5/runtime/windows/uflux/demo001/component_test01 -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/uflux/demo001/component_test01] 2505.8us
+ [Archive runtime/windows/uflux/demo006/window_reducer] 18165.3us
+  [Copying From Cache Library/BuildCache/56/56eb397c729ba31d60cbbe776077efcd/369d91be1a08b9398c930b61bff57fe9/runtime/windows/uflux/demo006/window_reducer -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/uflux/demo006/window_reducer] 1594.9us
+ [Archive runtime/test/new material] 14514.4us
+  [Copying From Cache Library/BuildCache/5a/5a53976ed9e4ff39567a40cc6504b6eb/36338e366551d5b9b5b255b6a0adde99/runtime/test/new material -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/test/new material] 3585.8us
+ [Archive runtime/windows/window_demo5_spriteatlas] 18181.8us
+  [Copying From Cache Library/BuildCache/2e/2e8796e2e896f862e38b27bf5c883ad4/d015ea24a075e4637fed6832fa19a0f1/runtime/windows/window_demo5_spriteatlas -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/window_demo5_spriteatlas] 1440.5us
+ [Archive runtime/windows/uflux/demo004/window_simplewindow] 17843.3us
+  [Copying From Cache Library/BuildCache/dc/dca937aae52d554f00fae33f9846cbde/574023e013186be057b57e5fd12de2c3/runtime/windows/uflux/demo004/window_simplewindow -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/uflux/demo004/window_simplewindow] 1559.6us
+ [Archive runtime/spriteatlas/sa2019_notinruntime] 83912.7us
+  [Copying From Cache Library/BuildCache/d6/d618853b28636c97a8841858ad8e73bd/9ff63b9005c0702d522853a73bba521e/runtime/spriteatlas/sa2019_notinruntime -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/spriteatlas/sa2019_notinruntime] 1485.8us
+ [Archive runtime/spriteatlas/sa2019] 330563.1us
+  [Copying From Cache Library/BuildCache/cd/cd5ec6d4983621f193d07b776286d935/777d01567e7c6692db9ba99513eb421d/runtime/spriteatlas/sa2019 -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/spriteatlas/sa2019] 1937.80000000004us
+ [Archive runtime/mat/lwrp_lit_test] 29813.1us
+  [Copying From Cache Library/BuildCache/e0/e04abaa4b5018333d879278f4944af98/63af14d7800b36f05d1ca17e2d86d210/runtime/mat/lwrp_lit_test -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/mat/lwrp_lit_test] 1473us
+ [Archive runtime/windows/uflux/demo002/item] 16034.2us
+  [Copying From Cache Library/BuildCache/f3/f3c4d742036e82e5d4d4c6b62941f01e/92ba73d53d318370da76b174c1c4a382/runtime/windows/uflux/demo002/item -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/uflux/demo002/item] 1778.6us
+ [Archive runtime/cubesvn] 6655.3us
+  [Copying From Cache Library/BuildCache/da/da8e998af20a9c1091e79ab2659fb160/51bc330f9242b6121533061c87a3d49d/runtime/cubesvn -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/cubesvn] 1312.5us
+ [Archive runtime/loadalltest/timg] 269103us
+  [Copying From Cache Library/BuildCache/fa/faa0f0690b3f072242fa4e93269ad1b4/b881dd860147c3a885c4e794812d390b/runtime/loadalltest/timg -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/loadalltest/timg] 1218.99999999999us
+ [Archive runtime/assettest/particletest] 31929.9us
+  [Copying From Cache Library/BuildCache/57/57d8e9734ccdc01f4e61d81b2563235a/975f5adae3e2254357ec8416a5c64e24/runtime/assettest/particletest -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/assettest/particletest] 3430.5us
+ [Archive assets/resource/imge/test/timg (1).jpg] 275669.6us
+  [Copying From Cache Library/BuildCache/34/342614b0dfc47734308c049174338580/758cfd3c9cc91b6b3b70af6ff20171ba/assets/resource/imge/test/timg (1).jpg -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/assets/resource/imge/test/timg (1).jpg] 3237.3us
+ [Archive runtime/assettest/particle] 41932.9us
+  [Copying From Cache Library/BuildCache/47/477c26efcf24142c676bae9a75e7ad0e/359f50c9c53e006cdc7e6273aea5fe14/runtime/assettest/particle -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/assettest/particle] 2205.2us
+ [Archive runtime/windows/window_demomain] 25110.5us
+  [Copying From Cache Library/BuildCache/9e/9e2603dc46b8b873cd811068bf83d3c6/630a1e2696b33965d3012447b9e9bfc5/runtime/windows/window_demomain -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/window_demomain] 1464us
+ [Archive assets/shaders.ab] 56544.7us
+  [Copying From Cache Library/BuildCache/99/998eb249e106ef40536f7642c05112de/d34be3a4b7a5cb0754339b31e8a7005b/assets/shaders.ab -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/assets/shaders.ab] 1406us
+ [Archive runtime/windows/uflux/demo005/window_propsdemo] 16306.5us
+  [Copying From Cache Library/BuildCache/a3/a38a79db8469f90d8e63742e5bcfb721/9c8978063029126f9d16aa307fdc8892/runtime/windows/uflux/demo005/window_propsdemo -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/uflux/demo005/window_propsdemo] 1433.7us
+ [Archive runtime/assettest/timg] 44500us
+  [Copying From Cache Library/BuildCache/21/210215af9ef89cae4a4dfd87e028cb01/85bacc4fd667fed3c51ee0fba03d723c/runtime/assettest/timg -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/assettest/timg] 1478.2us
+ [Archive runtime/windows/uflux/window_fluxmain] 23549.1us
+  [Copying From Cache Library/BuildCache/87/87a1420dc38135d70d0482d2b4dcf01a/d61f68b1fa2248678eb929a5243b0602/runtime/windows/uflux/window_fluxmain -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/uflux/window_fluxmain] 5445.9us
+ [Archive runtime/assettest/m_cube] 32383.4us
+  [Copying From Cache Library/BuildCache/9e/9e60b4c053a1197438d2fe62e0172c5e/e9696ab37a6b894a81e6aaaa9f8326cf/runtime/assettest/m_cube -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/assettest/m_cube] 3440.3us
+ [Archive runtime/windows/window_datalistener] 15138.6us
+  [Copying From Cache Library/BuildCache/d0/d06efd88eea6e50a268bb80924401902/a2473edaa5986c3f53abb96e31c7ab07/runtime/windows/window_datalistener -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/window_datalistener] 1358.7us
+ [Archive runtime/windows/uflux/demo002/window_fluxtest002] 22435.2us
+  [Copying From Cache Library/BuildCache/1d/1d563c794a155a9b2c0199f325aeb8cb/b4e073a93ed63850bfd4d03deff37e45/runtime/windows/uflux/demo002/window_fluxtest002 -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/uflux/demo002/window_fluxtest002] 1482.19999999999us
+ [Archive runtime/assettest/cube] 32484us
+  [Copying From Cache Library/BuildCache/d8/d85c05b9b8f8834044ad8feb5d23f186/168ffd6d1eae94448f0f26ff67d755f3/runtime/assettest/cube -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/assettest/cube] 3440.1us
+ [Archive runtime/windows/window_demo1] 18510.5us
+  [Copying From Cache Library/BuildCache/b5/b53e388247b5140c6aa5331b339aef7f/6a6025d2704dc512e5bd7f755183979d/runtime/windows/window_demo1 -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/window_demo1] 2079.4us
+ [Archive runtime/windows/uflux/demo003/window_fluxtest003] 20200.1us
+  [Copying From Cache Library/BuildCache/5d/5d9571c5a7599cf38936502380265d7e/bdd5bea641f7d01185234c3257dc3aa7/runtime/windows/uflux/demo003/window_fluxtest003 -> E:/Unity2019/BDFramework.Core/Assets/StreamingAssets/Android/Art/runtime/windows/uflux/demo003/window_fluxtest003] 1553.40000000001us
+[PostArchiveProcessing] 1342.09999999985us
+[Copying To Cache] 5533.09999999874us
+ [SaveCachedData] 5142.20000000023us
+  Saving 27 infos
+  [SetupOperations] 1224.89999999925us
+  [SyncPendingSaves] 4.10000000010768us
+  [SerializingCacheInfos] 3576.90000000002us

@@ -643,6 +643,7 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\UI\UI-Unlit-Text.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Mobile\Mobile-Particle-Alpha.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Nature\SpeedTreeBillboard.shader" />
+     <None Include="Assets\StreamingAssets\Android\Art\buildlog.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Internal-DepthNormalsTexture.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Internal-GUIRoundedRectWithColorPerBorder.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\AR\Shaders\TangoARRender.shader" />

@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using BDFramework.ResourceMgr.V2;
 using UnityEditor;
+using UnityEditor.Build.Pipeline;
 using UnityEngine;
 
 
@@ -229,7 +230,7 @@ namespace BDFramework.Editor.Asset
 
 
             //3.生成AssetBundle
-            BuildAssetBundle(target, outPath, options);
+            BuildAssetBundle(outPath, options, target);
             //4.清除AB Name
             RemoveAllAssetbundleName();
             AssetImpoterCacheMap.Clear();
@@ -447,9 +448,9 @@ namespace BDFramework.Editor.Asset
         /// <summary>
         /// 创建assetbundle
         /// </summary>
-        private static void BuildAssetBundle(BuildTarget target,
-            string outPath,
-            BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression)
+        private static void BuildAssetBundle(string outPath,
+            BuildAssetBundleOptions options,
+            BuildTarget target)
         {
             AssetDatabase.RemoveUnusedAssetBundleNames();
             string path = IPath.Combine(outPath, "Art");
@@ -460,7 +461,9 @@ namespace BDFramework.Editor.Asset
 
             
             //scriptable
-            BuildPipeline.BuildAssetBundles(path, options, target);
+            
+           // BuildPipeline.BuildAssetBundles(path, options, target);
+           CompatibilityBuildPipeline.BuildAssetBundles(path, options, target);
         }
 
         //当前保存的配置
