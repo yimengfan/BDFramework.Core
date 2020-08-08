@@ -28,12 +28,12 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Object)};
             method = type.GetMethod("Log", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Log_1);
-            args = new Type[]{typeof(System.Object)};
-            method = type.GetMethod("LogError", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, LogError_2);
             args = new Type[]{typeof(System.String), typeof(System.Object[])};
             method = type.GetMethod("LogFormat", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, LogFormat_3);
+            app.RegisterCLRMethodRedirection(method, LogFormat_2);
+            args = new Type[]{typeof(System.Object)};
+            method = type.GetMethod("LogError", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, LogError_3);
 
 
         }
@@ -75,23 +75,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* LogError_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Object @s = (System.Object)typeof(System.Object).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-
-            global::BDebug.LogError(@s);
-
-            return __ret;
-        }
-
-        static StackObject* LogFormat_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* LogFormat_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -107,6 +91,22 @@ namespace ILRuntime.Runtime.Generated
 
 
             global::BDebug.LogFormat(@format, @args);
+
+            return __ret;
+        }
+
+        static StackObject* LogError_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Object @s = (System.Object)typeof(System.Object).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+
+            global::BDebug.LogError(@s);
 
             return __ret;
         }

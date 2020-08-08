@@ -119,6 +119,20 @@ namespace ILRuntime.Runtime.Generated
                     }
                 }
             }
+            args = new Type[]{typeof(System.Int32)};
+            if (genericMethods.TryGetValue("Distinct", out lst))
+            {
+                foreach(var m in lst)
+                {
+                    if(m.MatchGenericParameters(args, typeof(System.Collections.Generic.IEnumerable<System.Int32>), typeof(System.Collections.Generic.IEnumerable<System.Int32>)))
+                    {
+                        method = m.MakeGenericMethod(args);
+                        app.RegisterCLRMethodRedirection(method, Distinct_6);
+
+                        break;
+                    }
+                }
+            }
 
 
         }
@@ -236,6 +250,27 @@ namespace ILRuntime.Runtime.Generated
 
 
             var result_of_this_method = System.Linq.Enumerable.ToList<System.String>(@source);
+
+            object obj_result_of_this_method = result_of_this_method;
+            if(obj_result_of_this_method is CrossBindingAdaptorType)
+            {    
+                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
+            }
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* Distinct_6(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Collections.Generic.IEnumerable<System.Int32> @source = (System.Collections.Generic.IEnumerable<System.Int32>)typeof(System.Collections.Generic.IEnumerable<System.Int32>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+
+            var result_of_this_method = System.Linq.Enumerable.Distinct<System.Int32>(@source);
 
             object obj_result_of_this_method = result_of_this_method;
             if(obj_result_of_this_method is CrossBindingAdaptorType)
