@@ -7,9 +7,16 @@
       "dependencies": {},
       "url": "https://packages.unity.cn"
     },
+    "com.unity.collab-proxy": {
+      "version": "1.2.16",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.cn"
+    },
     "com.unity.ext.nunit": {
       "version": "1.0.0",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.cn"
@@ -30,6 +37,41 @@
       "dependencies": {},
       "url": "https://packages.unity.cn"
     },
+    "com.unity.render-pipelines.core": {
+      "version": "7.4.3",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://packages.unity.cn"
+    },
+    "com.unity.render-pipelines.universal": {
+      "version": "7.4.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.render-pipelines.core": "7.4.3",
+        "com.unity.shadergraph": "7.4.3"
+      },
+      "url": "https://packages.unity.cn"
+    },
+    "com.unity.scriptablebuildpipeline": {
+      "version": "1.7.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.cn"
+    },
+    "com.unity.shadergraph": {
+      "version": "7.4.3",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.render-pipelines.core": "7.4.3"
+      },
+      "url": "https://packages.unity.cn"
+    },
     "com.unity.shaderprofiler": {
       "version": "0.0.1-preview.1",
       "depth": 0,
@@ -39,13 +81,29 @@
     },
     "com.unity.test-framework": {
       "version": "1.1.14",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.ext.nunit": "1.0.0",
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       },
+      "url": "https://packages.unity.cn"
+    },
+    "com.unity.textmeshpro": {
+      "version": "2.0.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://packages.unity.cn"
+    },
+    "com.unity.timeline": {
+      "version": "1.2.15",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.cn"
     },
     "com.unity.ugui": {

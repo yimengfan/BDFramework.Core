@@ -72,7 +72,7 @@ namespace BDFramework.Editor.Asset
         /// <param name="outPath">导出目录</param>
         /// <param name="target">平台</param>
         /// <param name="options">打包参数</param>
-        /// <param name="isHashName">是否为hash name</param>
+        /// <param name="isHashName">是否为hash命名资源</param>
         public static void GenAssetBundle(string outPath,
             BuildTarget target,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression,
@@ -458,6 +458,8 @@ namespace BDFramework.Editor.Asset
                 Directory.CreateDirectory(path);
             }
 
+            
+            //scriptable
             BuildPipeline.BuildAssetBundles(path, options, target);
         }
 
