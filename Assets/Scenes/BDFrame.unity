@@ -415,7 +415,7 @@ MonoBehaviour:
       Data: 0
     - Name: AssetBundleManagerVersion
       Entry: 3
-      Data: 0
+      Data: 1
     - Name: IsDebuggerILRuntime
       Entry: 5
       Data: false
@@ -440,7 +440,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  GameConfig: {fileID: 4900000, guid: 23466dea4cded7a4b8350e21ff78477c, type: 3}
+  GameConfig: {fileID: 0}
 --- !u!1 &878416750
 GameObject:
   m_ObjectHideFlags: 0

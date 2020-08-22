@@ -135,9 +135,8 @@ namespace BDFramework
         /// <returns></returns>
         private IEnumerator UpdateServerConfig(Action callback)
         {
-            var url = string.Format("{0}/{1}/{2}", Data.FileServerUrl,
-                BApplication.GetPlatformPath(Application.platform), "GameConfig.json");
-            Debug.Log(url);
+            var url = string.Format("{0}/{1}/{2}", Data.FileServerUrl, BApplication.GetPlatformPath(Application.platform), "GameConfig.json");
+            BDebug.Log(url);
             UnityWebRequest uwq = UnityWebRequest.Get(url);
             GameConfig gconfig = null;
             yield return uwq.SendWebRequest();

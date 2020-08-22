@@ -157,7 +157,20 @@ namespace BDFramework.Editor.BuildPackage
             {
                 //搜集keywork
                 ShaderCollection.GenShaderVariant();
-                AssetBundleEditorTools.GenAssetBundle(outPath, target);
+                
+                
+                var config = GameObject.Find("BDFrame").GetComponent<Config>();
+                //根据版本进入不同打包模式
+                if (config.Data.AssetBundleManagerVersion == AssetBundleManagerVersion.V1)
+                {
+                    AssetBundleEditorTools.GenAssetBundle(outPath, target);
+                }
+                else if (config.Data.AssetBundleManagerVersion == AssetBundleManagerVersion.V2_experiment)
+                {
+                    AssetBundleEditorToolsV2.GenAssetBundle(outPath, target);
+                }
+                
+         
             }
             catch (Exception e)
             {
