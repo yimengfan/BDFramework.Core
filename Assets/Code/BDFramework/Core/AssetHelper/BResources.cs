@@ -19,10 +19,10 @@ namespace BDFramework.ResourceMgr
         {
             if (root != "")
             {
-                var config= GameObject.Find("BDFrame").GetComponent<Config>();
+                var config = BDLauncher.Inst.GameConfig;
                 if (config != null)
                 {
-                    var version = config.Data.AssetBundleManagerVersion;
+                    var version = config.AssetBundleManagerVersion;
                     switch (version)
                     {
                         case AssetBundleManagerVersion.V1:

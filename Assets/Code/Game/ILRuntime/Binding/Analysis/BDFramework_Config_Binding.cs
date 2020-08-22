@@ -28,9 +28,9 @@ namespace ILRuntime.Runtime.Generated
             app.RegisterCLRMethodRedirection(method, get_Inst_0);
 
             field = type.GetField("Data", flag);
-            app.RegisterCLRFieldGetter(field, get_Data_0);
-            app.RegisterCLRFieldSetter(field, set_Data_0);
-            app.RegisterCLRFieldBinding(field, CopyToStack_Data_0, AssignFromStack_Data_0);
+            // app.RegisterCLRFieldGetter(field, get_Data_0);
+            // app.RegisterCLRFieldSetter(field, set_Data_0);
+            // app.RegisterCLRFieldBinding(field, CopyToStack_Data_0, AssignFromStack_Data_0);
 
 
         }
@@ -42,40 +42,18 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
 
-            var result_of_this_method = BDFramework.Config.Inst;
+            //var result_of_this_method = BDFramework.Config.Inst;
 
-            object obj_result_of_this_method = result_of_this_method;
-            if(obj_result_of_this_method is CrossBindingAdaptorType)
-            {    
-                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
-            }
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+            // object obj_result_of_this_method = result_of_this_method;
+            // if(obj_result_of_this_method is CrossBindingAdaptorType)
+            // {    
+            //     return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
+            // }
+
+            return null;
         }
 
 
-        static object get_Data_0(ref object o)
-        {
-            return ((BDFramework.Config)o).Data;
-        }
-
-        static StackObject* CopyToStack_Data_0(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
-        {
-            var result_of_this_method = ((BDFramework.Config)o).Data;
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static void set_Data_0(ref object o, object v)
-        {
-            ((BDFramework.Config)o).Data = (BDFramework.GameConfig)v;
-        }
-
-        static StackObject* AssignFromStack_Data_0(ref object o, ILIntepreter __intp, StackObject* ptr_of_this_method, IList<object> __mStack)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            BDFramework.GameConfig @Data = (BDFramework.GameConfig)typeof(BDFramework.GameConfig).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            ((BDFramework.Config)o).Data = @Data;
-            return ptr_of_this_method;
-        }
 
 
 

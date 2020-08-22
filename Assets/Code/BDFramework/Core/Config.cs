@@ -11,6 +11,7 @@ using UnityEngine.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
+
 #endif
 
 namespace BDFramework
@@ -90,78 +91,74 @@ namespace BDFramework
         public GameConfig Data;
 
         //本地配置
-
-        [FormerlySerializedAs("localConfig")]
-        [TitleGroup("真机环境下,该配置不能为null！(且保持Odin设置:Editor Only,无视该面板错误)", alignment: TitleAlignments.Centered)]
+        [TitleGroup("真机环境下,BDLauncher的Config不能为null！(且保持Odin设置:Editor Only,无视该面板错误)", alignment: TitleAlignments.Centered)]
         [LabelText("本地配置")]
-        [InfoBox("使用内置打包工具,会自动加载内置生成Config.\n或点击【生成Config】按钮生成，拖拽赋值", InfoMessageType.Warning)]
+        [InfoBox("使用内置打包工具,会自动加载内置生成Config.\n或点击【生成Config】按钮生成，拖拽赋值可预览", InfoMessageType.Warning)]
         [OnValueChanged("OnValueChanged_GameConfig")]
         public TextAsset GameConfig;
 
-        /// <summary>
-        /// 全局的单例
-        /// </summary>
-        static public Config Inst { get; private set; }
 
         private void Awake()
         {
-            Inst = this;
-
             if (GameConfig != null)
             {
                 var newconfig = JsonMapper.ToObject<GameConfig>(GameConfig.text);
                 SetNewConfig(newconfig);
+                // UseServerConfig(null);
             }
-
-            UseServerConfig(null);
+            else if (!Application.isEditor)
+            {
+                BDebug.LogError("不存在GameConfig,请检查!");
+            }
         }
 
         #region Config设置
 
-        /// <summary>
-        /// 使用服务器配置 
-        /// </summary>
-        /// <param name="callback"></param>
-        public void UseServerConfig(Action callback)
-        {
-            IEnumeratorTool.StartCoroutine(UpdateServerConfig(callback));
-        }
-
-
-        /// <summary>
-        /// 更新服务器配置
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <returns></returns>
-        private IEnumerator UpdateServerConfig(Action callback)
-        {
-            var url = string.Format("{0}/{1}/{2}", Data.FileServerUrl, BApplication.GetPlatformPath(Application.platform), "GameConfig.json");
-            BDebug.Log(url);
-            UnityWebRequest uwq = UnityWebRequest.Get(url);
-            GameConfig gconfig = null;
-            yield return uwq.SendWebRequest();
-            if (uwq.isDone && uwq.error == null)
-            {
-                var text = uwq.downloadHandler.text;
-                if (!string.IsNullOrEmpty(text))
-                {
-                    gconfig = JsonMapper.ToObject<GameConfig>(text);
-                    BDebug.Log("使用服务器配置:\n" + text);
-                }
-            }
-            else
-            {
-                BDebug.LogError("Game配置无法更新,使用本地");
-            }
-
-            SetNewConfig(gconfig);
-            callback?.Invoke();
-        }
-
-        /// <summary>
-        /// 使用新的配置
-        /// </summary>
-        /// <param name="newConfig"></param>
+        //
+        // /// <summary>
+        // /// 使用服务器配置 
+        // /// </summary>
+        // /// <param name="callback"></param>
+        // public void UseServerConfig(Action callback)
+        // {
+        //     IEnumeratorTool.StartCoroutine(UpdateServerConfig(callback));
+        // }
+        //
+        //
+        // /// <summary>
+        // /// 更新服务器配置
+        // /// </summary>
+        // /// <param name="callback"></param>
+        // /// <returns></returns>
+        // private IEnumerator UpdateServerConfig(Action callback)
+        // {
+        //     var url = string.Format("{0}/{1}/{2}", Data.FileServerUrl, BApplication.GetPlatformPath(Application.platform), "GameConfig.json");
+        //     BDebug.Log(url);
+        //     UnityWebRequest uwq = UnityWebRequest.Get(url);
+        //     GameConfig gconfig = null;
+        //     yield return uwq.SendWebRequest();
+        //     if (uwq.isDone && uwq.error == null)
+        //     {
+        //         var text = uwq.downloadHandler.text;
+        //         if (!string.IsNullOrEmpty(text))
+        //         {
+        //             gconfig = JsonMapper.ToObject<GameConfig>(text);
+        //             BDebug.Log("使用服务器配置:\n" + text);
+        //         }
+        //     }
+        //     else
+        //     {
+        //         BDebug.LogError("Game配置无法更新,使用本地");
+        //     }
+        //
+        //     SetNewConfig(gconfig);
+        //     callback?.Invoke();
+        // }
+        //
+        // /// <summary>
+        // /// 使用新的配置
+        // /// </summary>
+        // /// <param name="newConfig"></param>
         private void SetNewConfig(GameConfig newConfig)
         {
             if (newConfig != null)
@@ -210,7 +207,11 @@ namespace BDFramework
             Debug.Log("当前场景配置：" + fs);
             AssetDatabase.Refresh();
             //
-            config.GameConfig = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
+            var content = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
+            config.GameConfig = content;
+            var bdconfig = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
+            bdconfig.ConfigContent = content;
+
         }
 
         /// <summary>
@@ -224,10 +225,11 @@ namespace BDFramework
                 var configData = JsonMapper.ToObject<GameConfig>(text.text);
                 var config = GameObject.Find("BDFrame").GetComponent<Config>();
                 config.Data = configData;
+                //重新生成
+                GenConfig();
             }
-            
+
             BDebug.Log("配置改变,刷新!");
-            
         }
 #endif
 

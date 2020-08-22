@@ -78,7 +78,7 @@ namespace BDFramework
             JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);
 
 
-            if (BDLauncher.Inst != null && Config.Inst.Data.IsDebuggerILRuntime)
+            if (BDLauncher.Inst != null && BDLauncher.Inst.GameConfig.IsDebuggerILRuntime)
             {
                 AppDomain.DebugService.StartDebugService(56000);
                 Debug.Log("热更调试器 准备待命~");

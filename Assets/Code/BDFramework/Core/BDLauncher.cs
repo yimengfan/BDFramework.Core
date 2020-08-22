@@ -33,6 +33,14 @@ namespace BDFramework
         /// 框架的相关配置
         /// </summary>
         public BDFrameConfig FrameConfig { get; private set; }
+        
+        /// <summary>
+        /// GameConfig
+        /// </summary>
+        [HideInInspector]
+        public GameConfig GameConfig { get; private set; }
+
+        public TextAsset ConfigContent;
 
         #region 对外的生命周期
 
@@ -52,19 +60,34 @@ namespace BDFramework
         
         static public BDLauncher Inst { get; private set; }
 
-        //全局Config
-        [HideInInspector]
-        private GameConfig Config { get; set; }
 
         // Use this for initialization
         private void Awake()
         {
             Inst = this;
             this.gameObject.AddComponent<IEnumeratorTool>();
-            this.Config = BDFramework.Config.Inst.Data;
+            //框架配置
             LoadFrameConfig();
+            //游戏配置
+            if (Application.isEditor)
+            {
+                this.GameConfig = this.transform.GetComponent<Config>().Data;
+            }
+            else
+            {
+                if (this.ConfigContent)
+                {
+                    this.GameConfig = JsonMapper.ToObject<GameConfig>(this.ConfigContent.text);
+                }
+                else
+                {
+                    BDebug.LogError("GameConfig配置为null,请检查!");
+                }
+            }
+
+
+            //启动本地
             LaunchLocal();
-            
         }
         
         /// <summary>
@@ -156,7 +179,7 @@ namespace BDFramework
 
             //各自的路径
             //art
-            if (Config.ArtRoot == AssetLoadPath.Editor)
+            if (GameConfig.ArtRoot == AssetLoadPath.Editor)
             {
                 if (Application.isEditor)
                 {
@@ -169,16 +192,16 @@ namespace BDFramework
                     assetroot = Application.persistentDataPath;
                 }
             }
-            else if (Config.ArtRoot == AssetLoadPath.Persistent)
+            else if (GameConfig.ArtRoot == AssetLoadPath.Persistent)
             {
                 assetroot = Application.persistentDataPath;
             }
 
-            else if (Config.ArtRoot == AssetLoadPath.StreamingAsset)
+            else if (GameConfig.ArtRoot == AssetLoadPath.StreamingAsset)
             {
-                if (string.IsNullOrEmpty(Config.CustomArtRoot) == false)
+                if (string.IsNullOrEmpty(GameConfig.CustomArtRoot) == false)
                 {
-                    assetroot = Config.CustomArtRoot;
+                    assetroot = GameConfig.CustomArtRoot;
                 }
                 else
                 {
@@ -187,32 +210,32 @@ namespace BDFramework
             }
 
             //sql
-            if (Config.SQLRoot == AssetLoadPath.Editor)
+            if (GameConfig.SQLRoot == AssetLoadPath.Editor)
             {
                 //sql 默认读streaming
                 sqlroot = Application.streamingAssetsPath;
             }
 
-            else if (Config.SQLRoot == AssetLoadPath.Persistent)
+            else if (GameConfig.SQLRoot == AssetLoadPath.Persistent)
             {
                 sqlroot = Application.persistentDataPath;
             }
-            else if (Config.SQLRoot == AssetLoadPath.StreamingAsset)
+            else if (GameConfig.SQLRoot == AssetLoadPath.StreamingAsset)
             {
                 sqlroot = Application.streamingAssetsPath;
             }
 
             //code
-            if (Config.CodeRoot == AssetLoadPath.Editor)
+            if (GameConfig.CodeRoot == AssetLoadPath.Editor)
             {
                 //sql 默认读streaming
                 coderoot = "";
             }
-            else if (Config.CodeRoot == AssetLoadPath.Persistent)
+            else if (GameConfig.CodeRoot == AssetLoadPath.Persistent)
             {
                 coderoot = Application.persistentDataPath;
             }
-            else if (Config.CodeRoot == AssetLoadPath.StreamingAsset)
+            else if (GameConfig.CodeRoot == AssetLoadPath.StreamingAsset)
             {
                 coderoot = Application.streamingAssetsPath;
             }
@@ -235,7 +258,7 @@ namespace BDFramework
                 SqliteLoder.LoadOnRuntime(sqlroot);
                 //异步 这里如果代码很早的时候就开始走表格逻辑，有可能报错，
                 //但是大部分游戏应该不会，三层回调太丑，暂时用这个
-                ScriptLoder.Load(coderoot, Config.CodeRunMode);
+                ScriptLoder.Load(coderoot, GameConfig.CodeRunMode);
             });
         }
 
