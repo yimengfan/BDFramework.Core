@@ -5,8 +5,11 @@ using Code.BDFramework.Core.Tools;
 using LitJson;
 using Sirenix.OdinInspector;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace BDFramework
 {
@@ -62,6 +65,7 @@ namespace BDFramework
 
         [LabelText("Gate服务器")]
         public string GateServerIp = "";
+
         public int Port;
 
         [LabelText("是否热更")]
@@ -77,18 +81,20 @@ namespace BDFramework
 #else
         MonoBehaviour
 #endif
-        
+
     {
         [HideLabel]
         [InlinePropertyAttribute]
         public GameConfig Data;
 
         //本地配置
-        
-        [TitleGroup("真机环境下,该配置不能为null！(且保持Odin设置:Editor Only,无视该面板错误)", alignment:TitleAlignments.Centered)]
+
+        [FormerlySerializedAs("localConfig")]
+        [TitleGroup("真机环境下,该配置不能为null！(且保持Odin设置:Editor Only,无视该面板错误)", alignment: TitleAlignments.Centered)]
         [LabelText("本地配置")]
-        [InfoBox("使用内置打包工具,会自动加载内置生成Config.\n或点击【生成Config】按钮生成，拖拽赋值")]
-        public TextAsset localConfig;
+        [InfoBox("使用内置打包工具,会自动加载内置生成Config.\n或点击【生成Config】按钮生成，拖拽赋值", InfoMessageType.Warning)]
+        [OnValueChanged("OnValueChanged_GameConfig")]
+        public TextAsset GameConfig;
 
         /// <summary>
         /// 全局的单例
@@ -98,10 +104,10 @@ namespace BDFramework
         private void Awake()
         {
             Inst = this;
-            
-            if (localConfig != null)
+
+            if (GameConfig != null)
             {
-                var newconfig = JsonMapper.ToObject<GameConfig>(localConfig.text);
+                var newconfig = JsonMapper.ToObject<GameConfig>(GameConfig.text);
                 SetNewConfig(newconfig);
             }
 
@@ -182,20 +188,45 @@ namespace BDFramework
         [Button("生成Config", ButtonSizes.Medium)]
         public static void GenConfig()
         {
-            GenGameConfig(Application.streamingAssetsPath, BApplication.GetPlatformPath(Application.platform));
+            GenGameConfig("Assets/Scenes/Config", BApplication.GetPlatformPath(Application.platform));
         }
 
 
+        /// <summary>
+        /// 生成GameConfig
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="platform"></param>
         static public void GenGameConfig(string str, string platform)
         {
             //config
             var config = GameObject.Find("BDFrame").GetComponent<Config>();
             var json = JsonMapper.ToJson(config.Data);
-            //
-            var fs = string.Format("{0}/{1}/{2}", str, platform, "GameConfig.json");
+            //根据不同场景生成配置
+            Scene scene = EditorSceneManager.GetActiveScene();
+            var fs = string.Format("{0}/{1}", str, scene.name + "_GameConfig.json");
             FileHelper.WriteAllText(fs, json);
+            Debug.Log("当前场景配置：" + fs);
             AssetDatabase.Refresh();
-            Debug.Log("生成Config成功：" + fs);
+            //
+            config.GameConfig = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
+        }
+
+        /// <summary>
+        /// 值变动
+        /// </summary>
+        /// <param name="text"></param>
+        static public void OnValueChanged_GameConfig(TextAsset text)
+        {
+            if (text)
+            {
+                var configData = JsonMapper.ToObject<GameConfig>(text.text);
+                var config = GameObject.Find("BDFrame").GetComponent<Config>();
+                config.Data = configData;
+            }
+            
+            BDebug.Log("配置改变,刷新!");
+            
         }
 #endif
 
