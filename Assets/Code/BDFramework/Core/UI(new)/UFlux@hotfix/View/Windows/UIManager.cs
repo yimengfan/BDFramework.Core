@@ -29,15 +29,15 @@ namespace BDFramework.UFlux
         /// ui的三个层级
         /// </summary>
         private Transform Bottom, Center, Top;
-        
+
 
         override public void Init()
         {
             //初始化
             windowMap = new Dictionary<int, IWindow>();
-            Bottom    = GameObject.Find("UIRoot/Bottom").transform;
-            Center    = GameObject.Find("UIRoot/Center").transform;
-            Top       = GameObject.Find("UIRoot/Top").transform;
+            Bottom = GameObject.Find("UIRoot/Bottom").transform;
+            Center = GameObject.Find("UIRoot/Center").transform;
+            Top = GameObject.Find("UIRoot/Top").transform;
         }
 
         //
@@ -51,12 +51,12 @@ namespace BDFramework.UFlux
             }
 
             //
-            var attr   = classData.Attribute as UIAttribute;
+            var attr = classData.Attribute as UIAttribute;
             var window = Activator.CreateInstance(classData.Type, new object[] {attr.ResourcePath}) as IWindow;
             //
             return window;
         }
-        
+
         /// <summary>
         /// 加载窗口
         /// </summary>
@@ -102,7 +102,7 @@ namespace BDFramework.UFlux
             //去重操作
             indexes = indexes.Distinct().ToList();
             //
-            int allCount     = indexes.Count;
+            int allCount = indexes.Count;
             int curTaskCount = 0;
             foreach (var index in indexes)
             {
@@ -120,8 +120,8 @@ namespace BDFramework.UFlux
                 else
                 {
                     //创建窗口
-                    var win = CreateWindow(index);
-                    if (win == null)
+                    var window = CreateWindow(index);
+                    if (window == null)
                     {
                         Debug.LogErrorFormat("不存在UI:{0}", index);
                         curTaskCount++;
@@ -129,25 +129,21 @@ namespace BDFramework.UFlux
                     }
                     else
                     {
-                        windowMap[index] = win;
-                        var com = win as IComponent;
+                        windowMap[index] = window;
+                        var com = window as IComponent;
                         //开始窗口加载
                         com.AsyncLoad(() =>
                         {
                             curTaskCount++;
-                            if (loadProcessAction != null)
-                            {
-                                loadProcessAction(allCount, curTaskCount);
-                            }
-
                             if (com.Transform)
                             {
                                 com.Transform.gameObject.SetActive(false);
                                 com.Transform.SetParent(this.Bottom, false);
                             }
-
                             //推送缓存的数据
                             PushCaheData(index);
+                            //回调
+                            loadProcessAction?.Invoke(allCount, curTaskCount);
                         });
                     }
                 }
@@ -176,24 +172,23 @@ namespace BDFramework.UFlux
         }
 
 
-      
         /// <summary>
         /// 卸载窗口
         /// </summary>
         /// <param name="indexs">窗口枚举</param>
-        public void UnLoadWindows( List<Enum> indexs)
+        public void UnLoadWindows(List<Enum> indexs)
         {
             foreach (var i in indexs)
             {
                 UnLoadWindow(i);
-
             }
         }
+
         /// <summary>
         /// 卸载窗口
         /// </summary>
         /// <param name="indexs">窗口枚举</param>
-        public void UnLoadWindow( Enum index)
+        public void UnLoadWindow(Enum index)
         {
             var _index = index.GetHashCode();
             if (windowMap.ContainsKey(_index))
@@ -281,7 +276,7 @@ namespace BDFramework.UFlux
         /// 关闭窗口
         /// </summary>
         /// <param name="uiIndex">窗口枚举</param>
-        public void CloseWindow(Enum index, bool isMask = true)
+        public void CloseWindow(Enum index)
         {
             var uiIndex = index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
@@ -312,8 +307,8 @@ namespace BDFramework.UFlux
         public void SendMessage(Enum index, UIMessageData uiMsg)
         {
             var uiIndex = index.GetHashCode();
-            IWindow win ;
-            if (windowMap.TryGetValue(uiIndex,out win))
+            IWindow win;
+            if (windowMap.TryGetValue(uiIndex, out win))
             {
                 win.SendMessage(uiMsg);
                 return;
@@ -325,7 +320,7 @@ namespace BDFramework.UFlux
             //
             if (list == null)
             {
-                list                    = new List<UIMessageData>();
+                list = new List<UIMessageData>();
                 uiDataCacheMap[uiIndex] = list;
             }
 

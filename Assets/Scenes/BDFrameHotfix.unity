@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76df6a7acb4be174683f07772a347e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConfigContent: {fileID: 4900000, guid: dac4b223fdff90143ac6a3d1980e120b, type: 3}
+  ConfigContent: {fileID: 4900000, guid: 07a3bc21edb3c584b9883497db29bfcd, type: 3}
 --- !u!4 &617214994
 Transform:
   m_ObjectHideFlags: 0
@@ -401,13 +401,13 @@ MonoBehaviour:
       Data: 0|BDFramework.GameConfig, Assembly-CSharp
     - Name: CodeRoot
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: SQLRoot
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: ArtRoot
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: CustomArtRoot
       Entry: 1
       Data: 
@@ -441,7 +441,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  GameConfig: {fileID: 4900000, guid: dac4b223fdff90143ac6a3d1980e120b, type: 3}
+  GameConfig: {fileID: 4900000, guid: 07a3bc21edb3c584b9883497db29bfcd, type: 3}
 --- !u!1 &878416750
 GameObject:
   m_ObjectHideFlags: 0

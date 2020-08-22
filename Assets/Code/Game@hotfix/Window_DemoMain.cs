@@ -93,10 +93,8 @@ public class Window_DemoMain : AWindow
             {
                 //log
                 BDebug.LogFormat("加载进度:{0}-{1}",i,j);
+                UIManager.Inst.ShowWindow(WinEnum.Win_Demo6);
             });
-            UIManager.Inst.ShowWindow(WinEnum.Win_Demo6);
-            BDebug.Log("加载成功!");
-            //
         });
 
 
