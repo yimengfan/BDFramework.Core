@@ -4,12 +4,14 @@ using System.IO;
 using Code.BDFramework.Core.Tools;
 using LitJson;
 using Sirenix.OdinInspector;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.SceneManagement;
+#endif
 
 namespace BDFramework
 {
