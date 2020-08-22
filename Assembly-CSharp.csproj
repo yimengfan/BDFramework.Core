@@ -206,7 +206,6 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Adapter\Manual\MonoBehaviourAdapter.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Adapter\ScriptableObjectAdapter.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_BDLauncher_Binding.cs" />
-     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_Config_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_Core_Debugger_Debugger_NetworkServer_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_GameConfig_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_GameStart_GameStartAtrribute_Binding.cs" />

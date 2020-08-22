@@ -34,7 +34,6 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_BDLauncher_Binding.Register(app);
             System_Action_Binding.Register(app);
             IEnumeratorTool_Binding.Register(app);
-            BDFramework_Config_Binding.Register(app);
             BDFramework_GameConfig_Binding.Register(app);
             System_Runtime_CompilerServices_AsyncVoidMethodBuilder_Binding.Register(app);
             LitJson_JsonMapper_Binding.Register(app);

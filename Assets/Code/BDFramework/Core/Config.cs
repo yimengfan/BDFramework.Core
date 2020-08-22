@@ -106,10 +106,10 @@ namespace BDFramework
                 SetNewConfig(newconfig);
                 // UseServerConfig(null);
             }
-            else if (!Application.isEditor)
-            {
-                BDebug.LogError("不存在GameConfig,请检查!");
-            }
+            // else if (!Application.isEditor)
+            // {
+            //     BDebug.LogError("不存在GameConfig,请检查!");
+            // }
         }
 
         #region Config设置
@@ -225,8 +225,6 @@ namespace BDFramework
                 var configData = JsonMapper.ToObject<GameConfig>(text.text);
                 var config = GameObject.Find("BDFrame").GetComponent<Config>();
                 config.Data = configData;
-                //重新生成
-                GenConfig();
             }
 
             BDebug.Log("配置改变,刷新!");
