@@ -62,7 +62,6 @@ namespace BDFramework
 
         [LabelText("Gate服务器")]
         public string GateServerIp = "";
-
         public int Port;
 
         [LabelText("是否热更")]
@@ -72,14 +71,23 @@ namespace BDFramework
         public bool IsNeedNet = false;
     }
 
-    public class Config : SerializedMonoBehaviour
+    public class Config :
+#if UNITY_EDITOR
+        SerializedMonoBehaviour
+#else
+        MonoBehaviour
+#endif
+        
     {
         [HideLabel]
         [InlinePropertyAttribute]
         public GameConfig Data;
 
         //本地配置
+        
+        [TitleGroup("真机环境下,该配置不能为null！(且保持Odin设置:Editor Only,无视该面板错误)", alignment:TitleAlignments.Centered)]
         [LabelText("本地配置")]
+        [InfoBox("使用内置打包工具,会自动加载内置生成Config.\n或点击【生成Config】按钮生成，拖拽赋值")]
         public TextAsset localConfig;
 
         /// <summary>
@@ -187,7 +195,7 @@ namespace BDFramework
             var fs = string.Format("{0}/{1}/{2}", str, platform, "GameConfig.json");
             FileHelper.WriteAllText(fs, json);
             AssetDatabase.Refresh();
-            Debug.Log("导出成功：" + fs);
+            Debug.Log("生成Config成功：" + fs);
         }
 #endif
 
