@@ -9,7 +9,6 @@ using UnityEngine;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.UFlux;
-using Game.ILRuntime;
 using LitJson;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;

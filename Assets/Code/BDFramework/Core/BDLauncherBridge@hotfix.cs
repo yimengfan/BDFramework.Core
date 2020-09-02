@@ -8,9 +8,7 @@ using System.Linq;
 using BDFramework.GameStart;
 using BDFramework.UFlux;
 using BDFramework.UnitTest;
-using Game.ILRuntime;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+
 
 public class BDLauncherBridge
 {

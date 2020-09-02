@@ -343,7 +343,6 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Component_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Debug_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Delegate\ILRuntimeDelegateHelper.cs" />
-     <Compile Include="Assets\Code\Game\ILRuntime\ILTypeHelper.cs" />
      <Compile Include="Assets\Code\Game\LocalGameStart.cs" />
      <Compile Include="Assets\Code\Game\UIComponent\IButton.cs" />
      <Compile Include="Assets\Code\Game\UIComponent\PageList\PageGrid.cs" />
