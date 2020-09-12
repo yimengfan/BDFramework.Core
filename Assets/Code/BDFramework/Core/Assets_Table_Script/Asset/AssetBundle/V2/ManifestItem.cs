@@ -36,14 +36,9 @@ namespace BDFramework.ResourceMgr.V2
         /// ab的资源路径名
         /// </summary>
         public string Path { get; private set; }
-
+        
         /// <summary>
-        ///  AB为空则用AB加载,用默认情况下以Path为AB名,
-        /// </summary>
-        //public string AB { get;  private  set; }
-
-        /// <summary>
-        /// asset类型
+        /// 资源类型
         /// </summary>
         public int Type { get;  private  set; }
 
