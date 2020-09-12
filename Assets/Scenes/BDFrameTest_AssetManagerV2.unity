@@ -347,6 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76df6a7acb4be174683f07772a347e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ConfigContent: {fileID: 0}
 --- !u!4 &617214994
 Transform:
   m_ObjectHideFlags: 0
@@ -440,7 +441,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  localConfig: {fileID: 0}
+  GameConfig: {fileID: 0}
 --- !u!1 &878416750
 GameObject:
   m_ObjectHideFlags: 0
