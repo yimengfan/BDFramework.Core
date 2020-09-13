@@ -147,10 +147,9 @@ namespace BDFramework.Editor.Asset
                 if (asset.Key.Contains(runtimeStr))
                 {
                     var newName = asset.Value.ABName;
-                    //移除runtime之前的路径
+                    //移除runtime之前的路径、后缀
                     var index = newName.IndexOf(runtimeStr);
                     newName = newName.Substring(index + 1); //runtimeStr.Length);
-                    //去除后缀
                     newName = newName.Replace(Path.GetExtension(newName), "");
 
                     //刷新整个列表替换
@@ -185,21 +184,7 @@ namespace BDFramework.Editor.Asset
             Dictionary<string, ManifestItem> configMap = new Dictionary<string, ManifestItem>();
             if (isHashName)
             {
-                // foreach (var item in newbuildInfo.AssetDataMaps)
-                // {
-                //     var dependlist = new List<string>(item.Value.DependList.Count);
-                //     for (int i = 0; i < dependlist.Count; i++)
-                //     {
-                //         var assetName = item.Value.DependList[i]; //
-                //         var asset = newbuildInfo.AssetDataMaps[assetName];
-                //         dependlist[i] = asset.Hash;
-                //     }
-                //
-                //     //添加manifest
-                //     var path = !string.IsNullOrEmpty(item.Value.AB) ? item.Value.AB : item.Key;
-                //     var mi = new ManifestItem(path, (ManifestItem.AssetTypeEnum) item.Value.Type, dependlist);
-                //     configMap[item.Key] = mi;
-                // }
+                
             }
             else
             {
@@ -209,11 +194,15 @@ namespace BDFramework.Editor.Asset
                     //改成用Resources加载规则命名的key
                     if (item.Key.Contains("/runtime/"))
                     {
-                        var abName = item.Value.ABName;
+                        var key = item.Key;
+                        //移除runtime之前的路径、后缀
+                        var index = key.IndexOf(runtimeStr);
+                        key = key.Substring(index + 1); //runtimeStr.Length);
+                        key = key.Replace(Path.GetExtension(key), "");
                         //添加manifest
-                        var mi = new ManifestItem(abName, (ManifestItem.AssetTypeEnum) item.Value.Type,
+                        var mi = new ManifestItem( item.Value.ABName, (ManifestItem.AssetTypeEnum) item.Value.Type,
                             new List<string>(item.Value.DependList));
-                        configMap[abName] = mi;
+                        configMap[key] = mi;
                     }
                 }
             }
@@ -597,7 +586,10 @@ namespace BDFramework.Editor.Asset
                 AssetImpoterCacheMap[path] = ai;
                 if (!ai)
                 {
-                    Debug.LogError("【打包】获取资源失败:" + path);
+                    if (path != "assets/shaders.ab")
+                    {
+                        Debug.LogError("【打包】获取资源失败:" + path);
+                    }
                 }
             }
 

@@ -54,18 +54,25 @@ namespace Code.BDFramework.UnitTest
         }
 
         
-        [UnitTest(Des = "路径获取测试")]
-        static public void GetAssets()
+        [UnitTest(Des = "路径获取测试[单个]")]
+        static public void GetAsset()
         {
-            //寻找目录下整个
-            var rets = BResources.ResLoader.GetAssets("AssetTest");
-            Debug.Log(JsonMapper.ToJson(rets));
-            Assert.Equals(rets.Length, 5);
             //寻找具体字符串
             var rets2 = BResources.ResLoader.GetAssets("AssetTest","Cu");
             Assert.Equals(rets2.Length, 1);
             Assert.Equals(rets2[0].ToLower(), "AssetTest/Cube".ToLower(),"资源获取出错");
         }
+
         
+        [UnitTest(Des = "路径获取测试[批量]")]
+        static public void GetFolderAssets()
+        {
+            //寻找目录下整个
+            var rets = BResources.ResLoader.GetAssets("AssetTest");
+            Assert.Equals(rets.Length, 6);
+            Debug.Log(JsonMapper.ToJson(rets));
+           
+        }
+
     }
 }

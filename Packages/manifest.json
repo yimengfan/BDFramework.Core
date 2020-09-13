@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.ourpalm.ilruntime": "1.6.3",
+    "com.ourpalm.ilruntime": "1.6.4",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.1",
     "com.unity.render-pipelines.universal": "7.4.3",

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.ourpalm.ilruntime": {
-      "version": "1.6.3",
+      "version": "1.6.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

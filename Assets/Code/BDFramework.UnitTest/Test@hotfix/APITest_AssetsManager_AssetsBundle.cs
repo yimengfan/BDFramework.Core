@@ -52,11 +52,18 @@ namespace Code.BDFramework.UnitTest
             APITest_AssetsManager_DevResource.MultipleLoad();
         }
 
-        
-        [UnitTest(Des = "路径获取测试")]
-        static public void GetAssets()
+                
+        [UnitTest(Des = "路径获取测试【单个】")]
+        static public void GetAsset()
         {
-            APITest_AssetsManager_DevResource.GetAssets();
+            APITest_AssetsManager_DevResource.GetAsset();
+        }
+
+        
+        [UnitTest(Des = "路径获取测试【批量】")]
+        static public void GetFolderAssets()
+        {
+            APITest_AssetsManager_DevResource.GetFolderAssets();
         }
         
         
