@@ -59,9 +59,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Code\BDFramework\Editor\BDEditorLife\BDEditorLife.cs" />
-     <Compile Include="Assets\Code\BDFramework\Editor\BuildPackage\AssetUploadToServer.cs" />
-     <Compile Include="Assets\Code\BDFramework\Editor\BuildPackage\BuildPipeline_CI.cs" />
-     <Compile Include="Assets\Code\BDFramework\Editor\BuildPackage\EditorWindow_OnekeyBuildAsset.cs" />
+     <Compile Include="Assets\Code\BDFramework\Editor\CI\AssetUploadToServer.cs" />
+     <Compile Include="Assets\Code\BDFramework\Editor\CI\BuildPipeline\BuildPipeline_CI.cs" />
+     <Compile Include="Assets\Code\BDFramework\Editor\CI\EditorWindow_OnekeyBuildAsset.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\Config\BDEditorConfig.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\Config\BDEditorHelper.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\Config\EditorWindow_BDConfig.cs" />

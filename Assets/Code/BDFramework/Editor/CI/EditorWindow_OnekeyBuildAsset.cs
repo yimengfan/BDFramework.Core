@@ -15,7 +15,7 @@ namespace BDFramework.Editor.BuildPackage
         {
             var window =
                 (EditorWindow_OnekeyBuildAsset) EditorWindow.GetWindow(typeof(EditorWindow_OnekeyBuildAsset), false,
-                                                                       "一键打包");
+                    "一键打包");
             window.Show();
         }
 
@@ -27,8 +27,8 @@ namespace BDFramework.Editor.BuildPackage
 
         public void Show()
         {
-            this.editorTable  = new EditorWindow_Table();
-            this.editorAsset  = new EditorWindow_GenAssetBundle();
+            this.editorTable = new EditorWindow_Table();
+            this.editorAsset = new EditorWindow_GenAssetBundle();
             this.editorScript = new EditorWindow_ScriptBuildDll();
 
             this.minSize = this.maxSize = new Vector2(1050, 600);
@@ -45,16 +45,16 @@ namespace BDFramework.Editor.BuildPackage
                     editorScript.OnGUI();
                     GUILayout.EndVertical();
                 }
+
                 Layout_DrawLineV(Color.white);
-                
+
                 if (editorAsset != null)
                 {
                     GUILayout.BeginVertical(GUILayout.Width(350), GUILayout.Height(220));
                     editorAsset.OnGUI();
                     GUILayout.EndVertical();
-                 
                 }
-                
+
                 Layout_DrawLineV(Color.white);
                 if (editorTable != null)
                 {
@@ -71,10 +71,12 @@ namespace BDFramework.Editor.BuildPackage
         }
 
 
-        public  string exportPath         = "";
-        private bool   isGenIosAssets     = false;
-        private bool   isGenAndroidAssets = true;
-        //private bool isGenWindowsAssets = false;
+        public string exportPath = "";
+        private bool isGenIosAssets = false;
+        private bool isGenAndroidAssets = true;
+
+        private bool isBuilding = false;
+
         public void OnGUI_OneKeyExprot()
         {
             GUILayout.BeginVertical();
@@ -82,13 +84,17 @@ namespace BDFramework.Editor.BuildPackage
                 GUILayout.Label("注:上面按钮操作,会默认生成到StreamingAssets", GUILayout.Width(500), GUILayout.Height(30));
                 //isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
                 isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源(Windows共用)");
-                isGenIosAssets     = GUILayout.Toggle(isGenIosAssets, "生成Ios资源");
+                isGenIosAssets = GUILayout.Toggle(isGenIosAssets, "生成Ios资源");
 
                 //
                 GUILayout.Label("导出地址:" + exportPath, GUILayout.Width(500));
                 //
                 if (GUILayout.Button("一键导出", GUILayout.Width(350), GUILayout.Height(30)))
                 {
+                    if (isBuilding)
+                        return;
+                    isBuilding = true;
+
                     //选择目录
                     exportPath = EditorUtility.OpenFolderPanel("选择导出目录", exportPath, "");
                     if (string.IsNullOrEmpty(exportPath))
@@ -96,10 +102,6 @@ namespace BDFramework.Editor.BuildPackage
                         return;
                     }
 
-                    // if (isGenWindowsAssets)
-                    // {
-                    //     GenAllAssets(exportPath, RuntimePlatform.WindowsPlayer, BuildTarget.StandaloneWindows);
-                    // }
 
                     //生成android资源
                     if (isGenAndroidAssets)
@@ -114,6 +116,8 @@ namespace BDFramework.Editor.BuildPackage
                     }
 
                     EditorUtility.DisplayDialog("提示", "资源导出完成", "OK");
+
+                    isBuilding = false;
                 }
 
                 //
@@ -150,15 +154,16 @@ namespace BDFramework.Editor.BuildPackage
             var outPath = exportPath + "/" + BApplication.GetPlatformPath(platform);
             if (Directory.Exists(outPath))
             {
-                Directory.Delete(outPath,true);
+                Directory.Delete(outPath, true);
             }
+
             //1.打包资源
             try
             {
                 //搜集keywork
                 ShaderCollection.GenShaderVariant();
-                
-                
+
+
                 var config = GameObject.Find("BDFrame").GetComponent<Config>();
                 //根据版本进入不同打包模式
                 if (config.Data.AssetBundleManagerVersion == AssetBundleManagerVersion.V1)
@@ -169,8 +174,6 @@ namespace BDFramework.Editor.BuildPackage
                 {
                     AssetBundleEditorToolsV2.GenAssetBundle(outPath, target);
                 }
-                
-         
             }
             catch (Exception e)
             {
@@ -181,7 +184,7 @@ namespace BDFramework.Editor.BuildPackage
             //2.编译脚本
             try
             {
-                EditorWindow_ScriptBuildDll.RoslynBuild(ScriptBuildTools.BuildMode.Release,outPath);
+                EditorWindow_ScriptBuildDll.RoslynBuild(ScriptBuildTools.BuildMode.Release, outPath);
             }
             catch (Exception e)
             {
@@ -192,7 +195,7 @@ namespace BDFramework.Editor.BuildPackage
             //3.打包表格
             try
             {
-                Excel2SQLiteTools.GenExcel2SQLite(exportPath,platform);
+                Excel2SQLiteTools.GenExcel2SQLite(exportPath, platform);
             }
             catch (Exception e)
             {
@@ -200,7 +203,6 @@ namespace BDFramework.Editor.BuildPackage
             }
         }
 
-        
 
         public static void Layout_DrawLineH(Color color, float height = 4f)
         {
