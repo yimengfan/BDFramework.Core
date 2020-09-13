@@ -86,6 +86,7 @@
      <Compile Include="Assets\Code\BDFramework\Editor\Resource\ShaderCollection.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\TestRunner\TestRunnerEditor.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\Tools\EditorGUIHelper.cs" />
+     <Compile Include="Assets\Code\BDFramework\Editor\UIComponent\OverrideComponent\OverrideUIComponent.cs" />
      <None Include="Assets\3rdPlugins\Dotween\DemiLib\Core\Editor\DemiEditor.xml" />
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>E:/github.core/BDFramework.Core/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
