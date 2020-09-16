@@ -195,7 +195,7 @@ namespace BDFramework.Editor.BuildPackage
             //3.打包表格
             try
             {
-                Excel2SQLiteTools.GenExcel2SQLite(exportPath, platform);
+                Excel2SQLiteTools.ALLExcel2SQLite(exportPath, platform);
             }
             catch (Exception e)
             {
