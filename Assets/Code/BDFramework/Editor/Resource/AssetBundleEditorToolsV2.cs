@@ -150,7 +150,12 @@ namespace BDFramework.Editor.Asset
                     //移除runtime之前的路径、后缀
                     var index = newName.IndexOf(runtimeStr);
                     newName = newName.Substring(index + 1); //runtimeStr.Length);
-                    newName = newName.Replace(Path.GetExtension(newName), "");
+
+                    var extension = Path.GetExtension(newName);
+                    if (!string.IsNullOrEmpty(extension))
+                    {
+                        newName = newName.Replace(extension, "");
+                    }
 
                     //刷新整个列表替换
                     foreach (var _asset in newbuildInfo.AssetDataMaps)
