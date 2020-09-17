@@ -5,6 +5,7 @@ using UnityEngine;
 using BDFramework.Editor.TableData;
 using BDFramework.Editor.Asset;
 using Code.BDFramework.Core.Tools;
+using Sirenix.Utilities.Editor;
 
 namespace BDFramework.Editor.BuildPackage
 {
@@ -31,7 +32,7 @@ namespace BDFramework.Editor.BuildPackage
             this.editorAsset = new EditorWindow_GenAssetBundle();
             this.editorScript = new EditorWindow_ScriptBuildDll();
 
-            this.minSize = this.maxSize = new Vector2(1050, 600);
+            this.minSize = this.maxSize = new Vector2(1100, 800);
             base.Show();
         }
 
@@ -41,27 +42,29 @@ namespace BDFramework.Editor.BuildPackage
             {
                 if (editorScript != null)
                 {
-                    GUILayout.BeginVertical(GUILayout.Width(350), GUILayout.Height(220));
+                    //GUILayout.BeginVertical();
+                    SirenixEditorGUI.BeginBox("脚本", true, GUILayout.Width(220), GUILayout.Height(450));
                     editorScript.OnGUI();
-                    GUILayout.EndVertical();
+                    SirenixEditorGUI.EndBox();
+                    //GUILayout.EndVertical();
                 }
 
-                Layout_DrawLineV(Color.white);
+               // Layout_DrawLineV(Color.white);
 
                 if (editorAsset != null)
                 {
-                    GUILayout.BeginVertical(GUILayout.Width(350), GUILayout.Height(220));
+                    SirenixEditorGUI.BeginBox("资源", true, GUILayout.Width(220), GUILayout.Height(450));
                     editorAsset.OnGUI();
-                    GUILayout.EndVertical();
+                    SirenixEditorGUI.EndBox();
                 }
 
-                Layout_DrawLineV(Color.white);
+               // Layout_DrawLineV(Color.white);
                 if (editorTable != null)
                 {
-                    GUILayout.BeginVertical(GUILayout.Width(350), GUILayout.Height(220));
+                    SirenixEditorGUI.BeginBox("表格", true, GUILayout.Width(200), GUILayout.Height(450));
                     editorTable.OnGUI();
-                    GUILayout.EndVertical();
-                    Layout_DrawLineV(Color.white);
+                    SirenixEditorGUI.EndBox();
+                   //Layout_DrawLineV(Color.white);
                 }
             }
             GUILayout.EndHorizontal();
