@@ -58,7 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Code\BDFramework\Editor\BDEditorLife\BDEditorLife.cs" />
+     <Compile Include="Assets\Code\BDFramework\Editor\BDEditorLife\BDFrameEditorLife.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\CI\AssetUploadToServer.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\CI\BuildPipeline\BuildPipeline_CI.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\CI\EditorWindow_OnekeyBuildAsset.cs" />

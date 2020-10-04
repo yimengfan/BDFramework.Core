@@ -11,10 +11,13 @@ using UnityEngine;
 
 namespace BDFramework.Editor.EditorLife
 {
+    /// <summary>
+    /// 这个类用以编辑器环境下辅助BD生命周期的开发
+    /// </summary>
     [InitializeOnLoad]
-    static public class BDEditorLife
+    static public class BDFrameEditorLife
     {
-        static BDEditorLife()
+        static BDFrameEditorLife()
         {
             EditorApplication.delayCall += OnCompileCode;
             EditorApplication.playModeStateChanged += OnPlayExit;

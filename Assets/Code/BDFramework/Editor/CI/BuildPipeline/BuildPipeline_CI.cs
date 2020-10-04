@@ -82,7 +82,7 @@ namespace BDFramework.Editor
         /// </summary>
         public static void InitBDFrame()
         {
-            BDEditorLife.BDEditorInit();
+            BDFrameEditorLife.BDEditorInit();
         }
 
 
