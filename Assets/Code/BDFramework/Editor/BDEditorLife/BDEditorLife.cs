@@ -46,8 +46,27 @@ namespace BDFramework.Editor.EditorLife
 
         static public void BDEditorInit()
         {
-            #region 注册所以管理器，让管理器在编辑器下生效
 
+            RegisterEditorMgrInstance();
+
+
+            BApplication.Init();
+            DebuggerServerProcessManager.Inst.Start();
+            BDEditorHelper.Init();
+            BResources.Load("");
+            //TODO 
+            //这一行还是不能加到框架层，应该还是：哪里用 哪里主动load，
+            //然后用完了close（SqliteLoder.Close（））。
+            //不然sql文件editor环境下一直被占用，很多麻烦事
+            // SqliteLoder.Load(Application.streamingAssetsPath);
+        }
+
+
+        /// <summary>
+        /// 注册所有管理器，让管理器在编辑器下生效
+        /// </summary>
+        static public void RegisterEditorMgrInstance()
+        {
             //项目所有类
             var types = typeof(BDLauncher).Assembly.GetTypes().ToList();
             //编辑器所有类
@@ -76,17 +95,6 @@ namespace BDFramework.Editor.EditorLife
             
 
             Debug.Log("BDFrameEditor:管理器注册完成");
-            #endregion
-
-            BApplication.Init();
-            DebuggerServerProcessManager.Inst.Start();
-            BDEditorHelper.Init();
-            BResources.Load("");
-            //TODO 
-            //这一行还是不能加到框架层，应该还是：哪里用 哪里主动load，
-            //然后用完了close（SqliteLoder.Close（））。
-            //不然sql文件editor环境下一直被占用，很多麻烦事
-            // SqliteLoder.Load(Application.streamingAssetsPath);
         }
     }
 }
