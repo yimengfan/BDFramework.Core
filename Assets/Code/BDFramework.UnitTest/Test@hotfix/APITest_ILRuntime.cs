@@ -7,13 +7,13 @@ using UnityEngine.UI;
 
 namespace Tests
 {
-    [UnitTestAttribute(Des = "框架流程测试")]
+    [UnitTestAttribute(des:  "框架流程测试")]
     static public class APITest_ILRuntime
     {
         /// <summary>
         /// 测试启动逻辑
         /// </summary>
-        [HotfixUnitTest(Des = "测试Map try get 为null")]
+        [HotfixUnitTest(des:  "测试Map try get 为null")]
         public static void MapTryGetTest()
         {
             Dictionary<string, object> testmap = new Dictionary<string, object>();
@@ -44,7 +44,7 @@ namespace Tests
         /// <summary>
         /// 测试litjson
         /// </summary>
-        [HotfixUnitTest(Des = "测试litjson")]
+        [HotfixUnitTest(des: "测试litjson")]
         public static void TypeTest()
         {
             var b = new B();
@@ -77,7 +77,7 @@ namespace Tests
         /// <summary>
         /// 测试litjson
         /// </summary>
-        [HotfixUnitTest(Des = "测试litjson")]
+        [HotfixUnitTest(des:  "测试litjson")]
         public static void LitJsonTest()
         {
             var obj  = new LitjsonTest();
@@ -99,7 +99,7 @@ namespace Tests
         /// <summary>
         /// 测试litjson
         /// </summary>
-        [HotfixUnitTest(Des = "测试Await")]
+        [HotfixUnitTest(des: "测试Await")]
         public static async void AwaitAsyncTest()
         {
             WebClient wc =new WebClient();

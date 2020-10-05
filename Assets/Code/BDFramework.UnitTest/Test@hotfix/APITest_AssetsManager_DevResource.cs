@@ -7,12 +7,12 @@ using UnityEngine;
 
 namespace Code.BDFramework.UnitTest
 {
-    [UnitTestAttribute(Des = "资源管理测试-DevResource")]
+    [UnitTestAttribute(des:  "资源管理测试-DevResource")]
     static public class APITest_AssetsManager_DevResource
     {
         
         
-        [UnitTest(Des = "初始化")]
+        [UnitTest(des:  "初始化")]
         static public void Register()
         {
             BResources.Load();
@@ -20,7 +20,7 @@ namespace Code.BDFramework.UnitTest
         
         
         
-        [UnitTest(Des = "加载测试")]
+        [UnitTest(des: "加载测试")]
         static public void Load()
         {
             //同个目录
@@ -33,7 +33,7 @@ namespace Code.BDFramework.UnitTest
         }
         
                 
-        [UnitTest(Des = "加载测试2")]
+        [UnitTest(des: "加载测试2")]
         static public void LoadALL()
         {
             //同个目录
@@ -43,18 +43,18 @@ namespace Code.BDFramework.UnitTest
         }
         
         
-        [UnitTest(Des = "异步测试")]
+        [UnitTest(des: "异步测试")]
         static public void AsyncLoad()
         {
         }
         
-        [UnitTest(Des = "批量加载测试")]
+        [UnitTest(des: "批量加载测试")]
         static public void MultipleLoad()
         {
         }
 
         
-        [UnitTest(Des = "路径获取测试[单个]")]
+        [UnitTest(des: "路径获取测试[单个]")]
         static public void GetAsset()
         {
             //寻找具体字符串
@@ -64,7 +64,7 @@ namespace Code.BDFramework.UnitTest
         }
 
         
-        [UnitTest(Des = "路径获取测试[批量]")]
+        [UnitTest(des:  "路径获取测试[批量]")]
         static public void GetFolderAssets()
         {
             //寻找目录下整个

@@ -123,7 +123,7 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_Sql_SqliteLoder_Binding.Register(app);
             System_Exception_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding.Register(app);
-            BDFramework_UnitTest_UnitTestBaseAttribute_Binding.Register(app);
+            //BDFramework_UnitTest_UnitTestBaseAttribute_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Type_List_1_ILTypeInstance_Binding.Register(app);
             Code_BDFramework_UnitTest_Test_APITestHero_Binding.Register(app);

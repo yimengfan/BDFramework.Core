@@ -10,10 +10,10 @@ using UnityEngine;
 
 namespace Tests
 {
-    [UnitTest(Des = "数据库测试")]
+    [UnitTest(des:  "数据库测试")]
     static public class APITest_Sqlite
     {
-        [UnitTest(Des = "初始化数据库")]
+        [UnitTest(des:  "初始化数据库")]
         static public void Insert()
         {
             //TODO 
@@ -30,7 +30,7 @@ namespace Tests
         }
 
 
-        [UnitTest(Des = "单条件查询")]
+        [UnitTest(des:  "单条件查询")]
         static public void Select()
         {
             //单条件查询
@@ -42,7 +42,7 @@ namespace Tests
             }
         }
 
-        [UnitTest(Des = "Or And语句查询")]
+        [UnitTest(des:  "Or And语句查询")]
         static public void Select_OR_And()
         {
             var ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").And.Where("id < 3").ToSearch<APITestHero>();
@@ -57,14 +57,14 @@ namespace Tests
         }
 
 
-        [UnitTest(Des = "Where and 批量查询")]
+        [UnitTest(des:  "Where and 批量查询")]
         static public void MultiSelect_WhereAnd()
         {
             var ds = SqliteHelper.DB.GetTableRuntime().WhereAnd("id", "=", 1, 2).ToSearch<APITestHero>();
             Assert.Equals(ds.Count, 0);
         }
 
-        [UnitTest(Des = "Where or 批量查询")]
+        [UnitTest(des:  "Where or 批量查询")]
         static public void MultiSelect_WhereOr()
         {
             var ds = SqliteHelper.DB.GetTableRuntime().WhereOr("id", "=", 2, 3).ToSearch<APITestHero>();
@@ -75,7 +75,7 @@ namespace Tests
         }
 
 
-        [UnitTest(Des = "关闭", Order = 10000)]
+        [UnitTest(10000, "关闭")]
         static public void Close()
         {
             if (!Application.isPlaying)

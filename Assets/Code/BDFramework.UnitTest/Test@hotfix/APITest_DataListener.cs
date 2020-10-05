@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tests
 {
-    [UnitTestAttribute(Des = "数据监听测试")]
+    [UnitTestAttribute(des:  "数据监听测试")]
     static public class DataListener
     {
         public enum Msg
@@ -13,7 +13,7 @@ namespace Tests
             test,
         }
 
-        [UnitTestAttribute(Des = "添加监听测试")]
+        [UnitTestAttribute(des: "添加监听测试")]
         public static void AddListener()
         {
             int count        = 0;
@@ -35,7 +35,7 @@ namespace Tests
             Assert.Equals(count, 100);
         }
 
-        [UnitTestAttribute(Des = "值类型测试")]
+        [UnitTestAttribute(des:  "值类型测试")]
         public static void AddListener_ValuetypeParams()
         {
             var service = DataListenerServer.Create(nameof(Msg.test));
@@ -54,7 +54,7 @@ namespace Tests
             Assert.IsPass(true);
         }
         
-        [UnitTestAttribute(Des = "引用类型测试")]
+        [UnitTestAttribute(des:  "引用类型测试")]
         public static void AddListener_objecttypeParams()
         {
             var service = DataListenerServer.Create(nameof(Msg.test));
@@ -75,7 +75,7 @@ namespace Tests
             public int test2 = 2;
         }
 
-        [UnitTestAttribute(Des = "参数类型测试")]
+        [UnitTestAttribute(des:  "参数类型测试")]
         public static void AddListener_CustomTypeParams()
         {
             int count   = 0;
@@ -102,7 +102,7 @@ namespace Tests
             Assert.IsPass(true);
         }
 
-        [UnitTestAttribute(Des = "触发次数测试")]
+        [UnitTestAttribute(des:  "触发次数测试")]
         public static void AddListener_TriggerCount()
         {
             int count   = 0;
@@ -138,7 +138,7 @@ namespace Tests
             DataListenerServer.DelService(nameof(Msg.test));
         }
 
-        [UnitTestAttribute(Des = "添加顺序测试")]
+        [UnitTestAttribute(des:  "添加顺序测试")]
         public static void AddListener_Order()
         {
             int count   = 0;
@@ -178,7 +178,7 @@ namespace Tests
         }
 
 
-        [UnitTestAttribute(Des = "删除监听测试")]
+        [UnitTestAttribute(des:  "删除监听测试")]
         public static void DeleteListener()
         {
             int count   = 0;

@@ -2,8 +2,8 @@
 using Game;
 namespace Tests
 {
-    [UnitTestAttribute(Des = "框架流程测试")]
-    static public class LogicTest_BDFramework
+    [UnitTestAttribute(des: "框架流程测试")]
+    static public class LogicTest_BDFrameworkStartCheck
     {
 
 

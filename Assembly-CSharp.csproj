@@ -70,10 +70,10 @@
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_DataListener.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_ILRuntime.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_Sqlite.cs" />
-     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_UI.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_UIManager.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\Assert.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\ILRuntimeTestRunner.cs" />
-     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\LogicTest_BDFramework.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\LogicTest_BDFrameworkStartCheck.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Adaptor\@hotfix\ActionAdaptor.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Assets_Table_Script\Asset\AssetBundle\LoaderTaskGroup.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Assets_Table_Script\Asset\AssetBundle\V1\AssetBundleManifest.cs" />
@@ -216,7 +216,6 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_Sql_SqliteLoder_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UFlux_IButton_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UFlux_IComponentOnClick_Binding.cs" />
-     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UnitTest_UnitTestBaseAttribute_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_VersionContrller_VersionContorller_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDebug_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\CLRBindings.cs" />
