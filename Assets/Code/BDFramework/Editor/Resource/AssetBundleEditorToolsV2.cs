@@ -22,7 +22,7 @@ namespace BDFramework.Editor.Asset
         public class AssetData
         {
             /// <summary>
-            /// 
+            /// Id
             /// </summary>
             public int Id { get; set; } = -1;
 
