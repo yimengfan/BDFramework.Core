@@ -58,12 +58,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Code\BDFramework\Editor\BDEditorLife\ABDFrameEditorBehavior.cs" />
+     <Compile Include="Assets\Code\BDFramework\Editor\BDEditorLife\BDFrameEditorBehaviorHelper.cs" />
+     <Compile Include="Assets\Code\BDFramework\Editor\BDEditorLife\BDFrameEditorBehaviorTest.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\BDEditorLife\BDFrameEditorLife.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\CI\AssetUploadToServer.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\CI\BuildPipeline\BuildPipeline_CI.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\CI\EditorWindow_OnekeyBuildAsset.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\Config\BDEditorConfig.cs" />
-     <Compile Include="Assets\Code\BDFramework\Editor\Config\BDEditorHelper.cs" />
+     <Compile Include="Assets\Code\BDFramework\Editor\Config\BDFrameEditorConfigHelper.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\Config\EditorWindow_BDConfig.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\DevOps\DevOps_SVN.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\EditorCoroutines\Editor\CoroutineWindowExample.cs" />

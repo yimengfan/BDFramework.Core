@@ -71,9 +71,9 @@ namespace BDFramework.ResourceMgr.V2
             this.AssetbundleMap = new Dictionary<string, AssetBundleWapper>();
             this.allTaskGroupList = new List<LoaderTaskGroup>();
             //1.设置加载路径  
-            artRootPath = (path + "/" + BApplication.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
+            artRootPath = (path + "/" + BDApplication.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
             secArtRootPath = (Application.streamingAssetsPath + "/" +
-                              BApplication.GetPlatformPath(Application.platform) + "/Art")
+                              BDApplication.GetPlatformPath(Application.platform) + "/Art")
                 .Replace("\\", "/");
             //
             string configPath = FindAsset("Config.json");

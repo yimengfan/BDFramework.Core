@@ -154,7 +154,7 @@ namespace BDFramework.Editor.BuildPackage
         /// <param name="target"></param>
         static public void GenAllAssets(string exportPath, RuntimePlatform platform, BuildTarget target)
         {
-            var outPath = exportPath + "/" + BApplication.GetPlatformPath(platform);
+            var outPath = exportPath + "/" + BDApplication.GetPlatformPath(platform);
             if (Directory.Exists(outPath))
             {
                 Directory.Delete(outPath, true);

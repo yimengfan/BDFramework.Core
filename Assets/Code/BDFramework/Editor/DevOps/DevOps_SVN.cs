@@ -11,8 +11,8 @@ namespace BDFramework.Editor.DevOps
         // [MenuItem("Assets/DevOps/SVN同步Git")]
         static void UpdateSVN2Git()
         {
-            var sourcePath = BApplication.EditorResourceRuntimePath;
-            var targetPath = BApplication.EditorResourceRuntimePath;
+            var sourcePath = BDApplication.EditorResourceRuntimePath;
+            var targetPath = BDApplication.EditorResourceRuntimePath;
 
             // SVN2Git(sourcePath, targetPath);
         }
@@ -24,8 +24,8 @@ namespace BDFramework.Editor.DevOps
         /// <param name="subfolder"></param>
         public static void UpdateSubFolder(string subfolder)
         {
-            var sourcePath = BApplication.EditorResourceRuntimePath + "/" + subfolder;
-            var targetPath = BApplication.EditorResourceRuntimePath + "/"       + subfolder;
+            var sourcePath = BDApplication.EditorResourceRuntimePath + "/" + subfolder;
+            var targetPath = BDApplication.EditorResourceRuntimePath + "/"       + subfolder;
             //SVN2Git(sourcePath, targetPath);
         }
 

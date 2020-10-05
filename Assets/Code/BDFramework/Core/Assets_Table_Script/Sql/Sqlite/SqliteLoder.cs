@@ -106,7 +106,7 @@ namespace BDFramework.Sql
         /// </summary>
         static public string GetDBPath(string root, RuntimePlatform platform)
         {
-            return IPath.Combine(root, BApplication.GetPlatformPath(platform), DBName);
+            return IPath.Combine(root, BDApplication.GetPlatformPath(platform), DBName);
         }
     }
 }

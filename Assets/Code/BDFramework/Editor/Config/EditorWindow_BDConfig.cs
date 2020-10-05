@@ -14,7 +14,7 @@ namespace Code.BDFramework.Editor
         {
             var window = (EditorWindow_BDConfig) EditorWindow.GetWindow(typeof(EditorWindow_BDConfig), false, "BDFrame设置");
             window.maxSize = window.minSize = new Vector2(600, 800);
-            window.editorConfig = BDEditorHelper.EditorConfig;
+            window.editorConfig = BDFrameEditorConfigHelper.EditorConfig;
             window.Show();
         }
 

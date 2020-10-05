@@ -44,14 +44,14 @@ namespace BDFramework
             string dllPath = "";
             if (Application.isEditor)
             {
-                dllPath = root + "/" + BApplication.GetPlatformPath(Application.platform) + DLLPATH;
+                dllPath = root + "/" + BDApplication.GetPlatformPath(Application.platform) + DLLPATH;
             }
             else
             {
                 //这里情况比较复杂,Mobile上基本认为Persistent才支持File操作,
                 //可寻址目录也只有 StreamingAsset
-                var firstPath = Application.persistentDataPath + "/" + BApplication.GetPlatformPath(Application.platform) + DLLPATH;
-                var secondPath = Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(Application.platform) + DLLPATH;
+                var firstPath = Application.persistentDataPath + "/" + BDApplication.GetPlatformPath(Application.platform) + DLLPATH;
+                var secondPath = Application.streamingAssetsPath + "/" + BDApplication.GetPlatformPath(Application.platform) + DLLPATH;
                 if (!File.Exists(firstPath))
                 {
                     var www = new WWW(secondPath);

@@ -151,7 +151,7 @@ public class ScriptBuildTools
         //cs list
         List<string> csList = new List<string>();
 
-        var         projpath = BApplication.ProjectRoot + "/" + projName;
+        var         projpath = BDApplication.ProjectRoot + "/" + projName;
         XmlDocument xml      = new XmlDocument();
         xml.Load(projpath);
         XmlNode ProjectNode = null;
@@ -215,7 +215,7 @@ public class ScriptBuildTools
             //添加扫描到的dll
             FindDLLByCSPROJ(csproj, ref dllList);
             //
-            var gendll = BApplication.Library + "/ScriptAssemblies/" + csproj.Replace(".csproj", ".dll");
+            var gendll = BDApplication.Library + "/ScriptAssemblies/" + csproj.Replace(".csproj", ".dll");
             if (!File.Exists(gendll))
             {
                 Debug.LogError("不存在:" + gendll);

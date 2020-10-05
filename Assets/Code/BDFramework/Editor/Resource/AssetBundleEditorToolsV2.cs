@@ -80,7 +80,7 @@ namespace BDFramework.Editor.Asset
             var buildInfoPath = IPath.Combine(outPath, "BuildInfo.json");
             //初始化
             allfileHashMap = new Dictionary<string, string>();
-            var assetPaths = BApplication.GetAllAssetsPath();
+            var assetPaths = BDApplication.GetAllAssetsPath();
             for (int i = 0; i < assetPaths.Count; i++)
             {
                 assetPaths[i] = assetPaths[i].ToLower();

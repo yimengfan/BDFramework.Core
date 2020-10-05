@@ -82,7 +82,7 @@ namespace BDFramework.Editor
         /// </summary>
         public static void InitBDFrame()
         {
-            BDFrameEditorLife.BDEditorInit();
+            BDFrameEditorLife.InitBDEditorLife();
         }
 
 
@@ -118,19 +118,19 @@ namespace BDFramework.Editor
 
             InitBDFrame();
             
-            if (!BDEditorHelper.EditorConfig.IsSetConfig())
+            if (!BDFrameEditorConfigHelper.EditorConfig.IsSetConfig())
             {
                 BDebug.LogError("请注意设置apk keystore账号密码");
                 return;
             }
 
             var absroot = Application.dataPath.Replace("Assets", "");
-            PlayerSettings.Android.keystoreName =absroot  + BDEditorHelper.EditorConfig.Android.keystoreName;
-            PlayerSettings.keystorePass =  BDEditorHelper.EditorConfig.Android.keystorePass;
-            PlayerSettings.Android.keyaliasName= BDEditorHelper.EditorConfig.Android.keyaliasName;
-            PlayerSettings.keyaliasPass =  BDEditorHelper.EditorConfig.Android.keyaliasPass;
+            PlayerSettings.Android.keystoreName =absroot  + BDFrameEditorConfigHelper.EditorConfig.Android.keystoreName;
+            PlayerSettings.keystorePass =  BDFrameEditorConfigHelper.EditorConfig.Android.keystorePass;
+            PlayerSettings.Android.keyaliasName= BDFrameEditorConfigHelper.EditorConfig.Android.keyaliasName;
+            PlayerSettings.keyaliasPass =  BDFrameEditorConfigHelper.EditorConfig.Android.keyaliasPass;
             //
-            var outdir = BApplication.ProjectRoot + "/Build";
+            var outdir = BDApplication.ProjectRoot + "/Build";
             var outputPath = IPath.Combine(  outdir,  Application.productName+".apk");
             //文件夹处理
             if (!Directory.Exists(outdir)) Directory.CreateDirectory(outdir);

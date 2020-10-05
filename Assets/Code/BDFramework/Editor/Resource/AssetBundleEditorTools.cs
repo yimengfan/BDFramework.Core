@@ -71,7 +71,7 @@ namespace BDFramework.Editor.Asset
             cachePath = IPath.Combine(outPath, "Art/Cache.json");
             configPath = IPath.Combine(outPath, "Art/Config.json");
             //
-            var fileList = BApplication.GetAllAssetsPath();
+            var fileList = BDApplication.GetAllAssetsPath();
 
 
             var artOutpath = IPath.Combine(outPath, "Art");
@@ -83,7 +83,7 @@ namespace BDFramework.Editor.Asset
             //assetBundle 转 hash
             foreach (var item in allfileHashMap)
             {
-                var sub = item.Key.Replace(BApplication.ProjectRoot + "/", "").ToLower();
+                var sub = item.Key.Replace(BDApplication.ProjectRoot + "/", "").ToLower();
                 var source = IPath.Combine(artOutpath, sub);
                 var copyto = IPath.Combine(artOutpath, item.Value);
                 if (File.Exists(source) && !File.Exists(copyto))
@@ -333,7 +333,7 @@ namespace BDFramework.Editor.Asset
                             if (item.Value == packageHashName)
                             {
                                 packageName = item.Key;
-                                packageName = packageName.Replace(BApplication.ProjectRoot + "/", "");
+                                packageName = packageName.Replace(BDApplication.ProjectRoot + "/", "");
                                 break;
                             }
                         }
@@ -557,7 +557,7 @@ namespace BDFramework.Editor.Asset
             atlasMap = new Dictionary<string, List<string>>();
             textureExtensionSet = new HashSet<string>();
             //
-            var path = BApplication.GetAllRuntimeDirects().ToArray();
+            var path = BDApplication.GetAllRuntimeDirects().ToArray();
             var assets = AssetDatabase.FindAssets("t:spriteatlas", path).ToList();
 
             //GUID to assetPath

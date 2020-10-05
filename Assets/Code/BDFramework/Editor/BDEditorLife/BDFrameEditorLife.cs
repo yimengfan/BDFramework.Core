@@ -33,7 +33,7 @@ namespace BDFramework.Editor.EditorLife
         {
             if (state == PlayModeStateChange.ExitingPlayMode)
             {
-                BDEditorInit();
+                InitBDEditorLife();
             }
         }
         
@@ -43,20 +43,22 @@ namespace BDFramework.Editor.EditorLife
         static public void OnCompileCode()
         {
             if (EditorApplication.isPlaying) return;
-            BDEditorInit();
+            InitBDEditorLife();
         }
 
 
-        static public void BDEditorInit()
+        static public void InitBDEditorLife()
         {
-
+            //Editor的管理器初始化
             RegisterEditorMgrInstance();
-
-
-            BApplication.Init();
-            DebuggerServerProcessManager.Inst.Start();
-            BDEditorHelper.Init();
+            //BD生命周期启动
+            BDFrameEditorBehaviorHelper.Init();
+            BDFrameEditorConfigHelper.Init();
+            BDApplication.Init();
+            //编辑器下加载初始化
             BResources.Load("");
+            //调试器启动
+            DebuggerServerProcessManager.Inst.Start();
             //TODO 
             //这一行还是不能加到框架层，应该还是：哪里用 哪里主动load，
             //然后用完了close（SqliteLoder.Close（））。

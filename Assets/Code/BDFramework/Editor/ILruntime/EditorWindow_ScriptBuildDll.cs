@@ -108,7 +108,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         {
             //1.build dll
             var outpath_win = Application.streamingAssetsPath + "/" +
-                              BApplication.GetPlatformPath(Application.platform);
+                              BDApplication.GetPlatformPath(Application.platform);
             ScriptBuildTools.BuildDll(outpath_win, mode);
         }
         else
@@ -164,7 +164,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         //默认读StreammingAssets下面path
         if (dllpath == "")
         {
-            dllpath = Application.streamingAssetsPath + "/" + BApplication.GetPlatformPath(platform) + DLLPATH;
+            dllpath = Application.streamingAssetsPath + "/" + BDApplication.GetPlatformPath(platform) + DLLPATH;
         }
 
         //不参与自动绑定的

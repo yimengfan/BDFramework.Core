@@ -48,7 +48,7 @@ public class WindowPreconfig : MonoBehaviour
     private void Onclick_DownLoadAndLaunch()
     {
         //删除本地的文件
-        var cachedir = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(Application.platform));
+        var cachedir = IPath.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
         if (Directory.Exists(cachedir))
         {
             Directory.Delete(cachedir, true);

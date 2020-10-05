@@ -186,7 +186,7 @@ namespace BDFramework
         [Button("生成Config", ButtonSizes.Medium)]
         public static void GenConfig()
         {
-            GenGameConfig("Assets/Scenes/Config", BApplication.GetPlatformPath(Application.platform));
+            GenGameConfig("Assets/Scenes/Config", BDApplication.GetPlatformPath(Application.platform));
         }
 
 

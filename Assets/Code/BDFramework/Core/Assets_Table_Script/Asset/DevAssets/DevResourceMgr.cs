@@ -74,7 +74,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="onInitEnd"></param>
         public void Init(string path, Action onInitEnd)
         {
-            allRuntimeDirectList = BApplication.GetAllRuntimeDirects();
+            allRuntimeDirectList = BDApplication.GetAllRuntimeDirects();
             //
             onInitEnd?.Invoke();
         }

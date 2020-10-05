@@ -130,7 +130,7 @@
      <Compile Include="Assets\Code\BDFramework\Core\Screenview\@hotfix\ScreenViewAttribute.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Screenview\@hotfix\ScreenViewCenter.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Screenview\@hotfix\ScreenViewManager.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Tools\BApplication.cs" />
+     <Compile Include="Assets\Code\BDFramework\Core\Tools\BDApplication.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Tools\BGameObjectPools.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Tools\FileHelper.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Tools\HashHelper.cs" />

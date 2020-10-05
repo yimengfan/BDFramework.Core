@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Code.BDFramework.Editor
 {
-    static public class BDEditorHelper
+    static public class BDFrameEditorConfigHelper
     {
         /// <summary>
         /// 编辑器设置

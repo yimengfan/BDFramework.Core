@@ -5,11 +5,14 @@ using UnityEngine;
 
 namespace Code.BDFramework.Core.Tools
 {
-    static public class BApplication
+    /// <summary>
+    /// 职责类似Unity的Application
+    /// </summary>
+    static public class BDApplication
     {
         #region 路径相关
 
-        static  BApplication()
+        static  BDApplication()
         {
 
             if (Application.isEditor && Application.isPlaying)
@@ -62,7 +65,7 @@ namespace Code.BDFramework.Core.Tools
             var directories = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly).ToList();
             for (int i = directories.Count - 1; i >= 0; i--)
             {
-                var dir = directories[i].Replace(BApplication.ProjectRoot + "/", "").Replace("\\", "/") + "/Runtime";
+                var dir = directories[i].Replace(BDApplication.ProjectRoot + "/", "").Replace("\\", "/") + "/Runtime";
                 if (!Directory.Exists(dir))
                 {
                     directories.RemoveAt(i);

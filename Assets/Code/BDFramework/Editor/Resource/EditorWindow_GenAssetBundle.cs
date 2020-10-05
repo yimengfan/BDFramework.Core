@@ -66,7 +66,7 @@ namespace BDFramework.Editor.Asset
             GUILayout.Label("2.资源打包", EditorGUIHelper.TitleStyle);
             GUILayout.Space(5);
             GUILayout.Label("资源根目录:");
-            foreach (var root in BApplication.GetAllRuntimeDirects())
+            foreach (var root in BDApplication.GetAllRuntimeDirects())
             {
                 GUILayout.Label(root);
             }
@@ -175,7 +175,7 @@ namespace BDFramework.Editor.Asset
             }
 
 
-            var outPath = exportPath + "/" + BApplication.GetPlatformPath(platform);
+            var outPath = exportPath + "/" + BDApplication.GetPlatformPath(platform);
             var config = GameObject.Find("BDFrame").GetComponent<Config>();
             //根据版本进入不同打包模式
             if (config.Data.AssetBundleManagerVersion == AssetBundleManagerVersion.V1)
