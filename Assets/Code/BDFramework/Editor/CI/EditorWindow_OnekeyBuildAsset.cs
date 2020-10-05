@@ -165,8 +165,7 @@ namespace BDFramework.Editor.BuildPackage
             {
                 //搜集keywork
                 ShaderCollection.GenShaderVariant();
-
-
+                
                 var config = GameObject.Find("BDFrame").GetComponent<Config>();
                 //根据版本进入不同打包模式
                 if (config.Data.AssetBundleManagerVersion == AssetBundleManagerVersion.V1)

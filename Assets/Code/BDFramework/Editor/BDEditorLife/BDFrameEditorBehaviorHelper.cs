@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BDFramework.Editor.Asset;
 
 namespace BDFramework.Editor.EditorLife
 {
@@ -59,11 +60,11 @@ namespace BDFramework.Editor.EditorLife
             }
         }
 
-        static public void OnBeginBuildAssetBundle()
+        static public void OnBeginBuildAssetBundle(BuildInfo  buildInfo)
         {
             foreach (var behavior in BDFrameBehaviorList)
             {
-                behavior.OnBeginBuildAssetBundle();
+                behavior.OnBeginBuildAssetBundle(buildInfo);
             }
         }
 

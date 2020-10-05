@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using BDFramework.Editor.EditorLife;
 using BDFramework.ResourceMgr.V2;
 using UnityEditor;
 using UnityEngine;
@@ -75,6 +76,8 @@ namespace BDFramework.Editor.Asset
             bool isHashName = false,
             string AES = "")
         {
+            
+            
             //
             var artOutpath = IPath.Combine(outPath, "Art");
             var buildInfoPath = IPath.Combine(outPath, "BuildInfo.json");
@@ -97,7 +100,10 @@ namespace BDFramework.Editor.Asset
 
             //获取当前配置
             var newbuildInfo = GetAssetsInfo(assetPaths);
-            //通知外部
+            
+            //BD生命周期触发
+            BDFrameEditorBehaviorHelper.OnBeginBuildAssetBundle(newbuildInfo);
+            
             //
             if (File.Exists(buildInfoPath))
             {
@@ -105,10 +111,7 @@ namespace BDFramework.Editor.Asset
                 File.Delete(targetPath);
                 File.Move(buildInfoPath, targetPath);
             }
-
             FileHelper.WriteAllText(buildInfoPath, JsonMapper.ToJson(newbuildInfo));
-
-
             //获取改动的数据
             var changedBuildInfo = GetChangedAssets(lastBuildInfo, newbuildInfo);
             // newbuildInfo = null; //防止后面再用
@@ -117,8 +120,7 @@ namespace BDFramework.Editor.Asset
                 Debug.Log("无资源改变,不需要打包!");
                 return;
             }
-
-
+            
             #region 整理依赖关系
 
             //1.把依赖资源替换成AB Name，
@@ -255,6 +257,9 @@ namespace BDFramework.Editor.Asset
                     File.Delete(df);
                 }
             }
+            
+            //BD生命周期触发
+            BDFrameEditorBehaviorHelper.OnEndBuildAssetBundle(outPath);
         }
 
 

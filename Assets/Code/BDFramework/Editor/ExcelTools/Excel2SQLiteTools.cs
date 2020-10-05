@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.Editor.EditorLife;
 using LitJson;
 using BDFramework.Sql;
 using UnityEditor;
@@ -65,9 +66,10 @@ namespace BDFramework.Editor.TableData
         /// <param name="root">自定义路径</param>
         public static void ALLExcel2SQLite(string root, RuntimePlatform platform)
         {
+            //触发bd环境周期
+            BDFrameEditorBehaviorHelper.OnBeginBuildSqlite();
+            
             var xlslFiles = GetAllConfigFiles();
-
-            //
             SqliteLoder.LoadOnEditor(root, platform);
             {
                 foreach (var f in xlslFiles)
@@ -78,6 +80,8 @@ namespace BDFramework.Editor.TableData
             SqliteLoder.Close();
             //
             EditorUtility.ClearProgressBar();
+            //触发bd环境周期
+            BDFrameEditorBehaviorHelper.OnEndBuildSqlite(root);
             Debug.Log("导出Sqlite完成!");
         }
 
