@@ -216,6 +216,7 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_Sql_SqliteLoder_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UFlux_IButton_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UFlux_IComponentOnClick_Binding.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_UnitTest_UnitTestBaseAttribute_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDFramework_VersionContrller_VersionContorller_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\BDebug_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\CLRBindings.cs" />
