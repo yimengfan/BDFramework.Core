@@ -133,11 +133,13 @@ public class Window_DemoMain : AWindow
              var load2 =GameObject.Instantiate(go);
              go = BResources.Load<GameObject>("AssetTest/Particle");
              var load3 =GameObject.Instantiate(go);
-
+             go = BResources.Load<GameObject>("Char/001");
+             var loadModel =GameObject.Instantiate(go);
+             
              golist.Add(load1);
              golist.Add(load2);
              golist.Add(load3);
-             
+             golist.Add(loadModel);
             //2.异步加载单个
             var id = BResources.AsyncLoad<GameObject>("Test/Cube", (o) =>
             {

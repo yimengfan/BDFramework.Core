@@ -40,6 +40,11 @@ namespace BDFramework.Editor.Asset
 
 
             /// <summary>
+            /// 被依赖次数
+            /// </summary>
+            public int ReferenceCount { get; set; } = 0;
+            
+            /// <summary>
             /// hash
             /// </summary>
             public string Hash { get; set; } = "";
@@ -48,6 +53,8 @@ namespace BDFramework.Editor.Asset
             /// 依赖列表
             /// </summary>
             public List<string> DependList { get; set; } = new List<string>();
+            
+            
         }
 
         /// <summary>
@@ -392,21 +399,6 @@ namespace BDFramework.Editor.Asset
                 asset.Value.DependList.Remove(asset.Value.ABName);
             }
 
-            //1.剔除图片会依赖图集的依赖,
-            // var atlasList =
-            //     buildInfo.AssetDataMaps.Values.Where((a) => a.Type == (int) ManifestItem.AssetTypeEnum.SpriteAtlas);
-            // foreach (var _atlas in atlasList)
-            // {
-            //     foreach (var img in _atlas.DependList)
-            //     {
-            //         if (img == _atlas.Name)
-            //             continue;
-            //
-            //         var imgAsset = buildInfo.AssetDataMaps[img];
-            //         imgAsset.DependList.Clear();
-            //     }
-            // }
-
             //2.Package Config信息添加到BuildInfo
             foreach (var config in PackageConfigMap)
             {
@@ -420,25 +412,22 @@ namespace BDFramework.Editor.Asset
                 buildInfo.AssetDataMaps[asset.ABName] = asset;
             }
 
-
-            // //2.把依赖资源替换成AB Name，
-            // foreach (var asset in buildInfo.AssetDataMaps.Values)
-            // {
-            //     for (int i = 0; i < asset.DependList.Count; i++)
-            //     {
-            //         var da = asset.DependList[i];
-            //         var dependAssetData = buildInfo.AssetDataMaps[da];
-            //         //替换成真正AB名
-            //         if (!string.IsNullOrEmpty(dependAssetData.AB))
-            //         {
-            //             asset.DependList[i] = dependAssetData.AB;
-            //         }
-            //     }
-            //
-            //     //去重
-            //     asset.DependList = asset.DependList.Distinct().ToList();
-            //     asset.DependList.Remove(asset.Name);
-            // }
+            
+            //搜集引用的次数，以runtime内部引用为主
+            foreach (var item in buildInfo.AssetDataMaps)
+            {
+                if(!item.Key.Contains("/runtime/")) continue;
+                //
+                int count = 0;
+                foreach (var assetdata in buildInfo.AssetDataMaps.Values)
+                {
+                    if (assetdata.DependList.Contains(item.Key))
+                    {
+                        count++;
+                    }
+                }
+                item.Value.ReferenceCount = count;
+            }
 
             return buildInfo;
         }
