@@ -9,6 +9,7 @@ namespace BDFramework
 {
     static public class ScriptLoder
     {
+        static readonly public string DLLPATH = "Hotfix/hotfix.dll";
         static public Assembly Assembly { get; private set; }
 
         /// <summary>
@@ -47,11 +48,11 @@ namespace BDFramework
 
                 //加载dll
                 var dllPath = Path.Combine(path, DLLPATH);
-                LoadDLL(path, runMode);
+                LoadDLL(dllPath, runMode);
             }
         }
 
-        static readonly public string DLLPATH = "/Hotfix/hotfix.dll";
+
 
         /// <summary>
         /// 加载

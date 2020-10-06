@@ -96,7 +96,7 @@ namespace BDFramework.ResourceMgr.V2
             }
             else
             {
-                configPath  = string.Format("{0}/{1}/{2}", Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform),BResources.CONFIGPATH);
+                configPath  = string.Format("{0}/{1}/Art/{2}", Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform),BResources.CONFIGPATH);
             }
             
             this.loder.Load(configPath);

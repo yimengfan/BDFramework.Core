@@ -16,7 +16,7 @@ namespace BDFramework.ResourceMgr
     static public class BResources
     {
 
-        readonly static public string CONFIGPATH = "Art/Config.json";
+        readonly static public string CONFIGPATH = "Config.json";
         /// <summary>
         /// 初始化
         /// </summary>
@@ -40,24 +40,24 @@ namespace BDFramework.ResourceMgr
                 {
                     if (!string.IsNullOrEmpty(customRoot))
                     {
-                        path = Path.Combine(customRoot, BDApplication.GetPlatformPath(Application.platform));
+                        path = customRoot;
                     }
                     else
                     {
                         if (loadPath == AssetLoadPath.Persistent)
                         {
-                            path = Path.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
+                            path = Application.persistentDataPath;
                         }
                         else if  (loadPath == AssetLoadPath.StreamingAsset)
                         {
-                            path = Path.Combine(Application.streamingAssetsPath, BDApplication.GetPlatformPath(Application.platform));
+                            path = Application.streamingAssetsPath;
                         }
                     }
                 }
                 else
                 {
                     //真机情况下全在persistent下
-                    path = Path.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
+                    path = Application.persistentDataPath;
                 }
                 //
                 ResLoader = new AssetBundleMgrV2();
