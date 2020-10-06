@@ -142,7 +142,6 @@ namespace BDFramework
                     ILRuntimeHelper.UIComponentTypes[t.FullName] = t;
                 }
             }
-            
         }
 
         #endregion
@@ -156,12 +155,16 @@ namespace BDFramework
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
         public void Launch(string GameId = "")
         {
-            //1.美术目录
-            BResources.Load(GameConfig.ArtRoot,GameConfig.CustomArtRoot);
-            //2.sql
-            SqliteLoder.Load(GameConfig.SQLRoot);
-            //3.脚本,这个启动会开启所有的逻辑
-            ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode);
+            //开始资源检测
+            AssetHelper.AssetHelper.CheckAssetPackageVersion(Application.platform, () =>
+            {
+                //1.美术目录
+                BResources.Load(GameConfig.ArtRoot, GameConfig.CustomArtRoot);
+                //2.sql
+                SqliteLoder.Load(GameConfig.SQLRoot);
+                //3.脚本,这个启动会开启所有的逻辑
+                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode);
+            });
         }
 
         #endregion

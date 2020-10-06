@@ -87,7 +87,7 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.String), typeof(System.Boolean)};
             method = type.GetMethod("UnloadAsset", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, UnloadAsset_5);
-            args = new Type[]{typeof(System.String), typeof(System.Action)};
+            args = new Type[]{typeof(BDFramework.AssetLoadPath), typeof(System.String)};
             method = type.GetMethod("Load", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Load_6);
             args = new Type[]{};
@@ -240,15 +240,15 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Action @onLoaded = (System.Action)typeof(System.Action).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.String @customRoot = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.String @root = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            BDFramework.AssetLoadPath @loadPath = (BDFramework.AssetLoadPath)typeof(BDFramework.AssetLoadPath).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
 
-            //BDFramework.ResourceMgr.BResources.Load(@root, @onLoaded);
+            BDFramework.ResourceMgr.BResources.Load(@loadPath, @customRoot);
 
             return __ret;
         }

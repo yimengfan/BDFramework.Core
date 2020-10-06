@@ -84,10 +84,10 @@ namespace BDFramework.Editor.Asset
             bool isHashName = false,
             string AES = "")
         {
-            outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform));
+            var _outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform));
             //
-            var artOutputPath = IPath.Combine(outputPath, "Art");
-            var buildInfoPath = IPath.Combine(outputPath, "BuildInfo.json");
+            var artOutputPath = IPath.Combine(_outputPath, "Art");
+            var buildInfoPath = IPath.Combine(_outputPath, "BuildInfo.json");
             //初始化
             allfileHashMap = new Dictionary<string, string>();
             var assetPaths = BDApplication.GetAllAssetsPath();
@@ -114,7 +114,7 @@ namespace BDFramework.Editor.Asset
             //
             if (File.Exists(buildInfoPath))
             {
-                string targetPath = outputPath + "/BuildInfo.old.json";
+                string targetPath = _outputPath + "/BuildInfo.old.json";
                 File.Delete(targetPath);
                 File.Move(buildInfoPath, targetPath);
             }
@@ -250,7 +250,7 @@ namespace BDFramework.Editor.Asset
 
 
             //3.生成AssetBundle
-            BuildAssetBundle(target, outputPath, options);
+            BuildAssetBundle(target, _outputPath, options);
             //4.清除AB Name
             RemoveAllAssetbundleName();
             AssetImpoterCacheMap.Clear();
@@ -267,7 +267,6 @@ namespace BDFramework.Editor.Asset
             
             //BD生命周期触发
             BDFrameEditorBehaviorHelper.OnEndBuildAssetBundle(outputPath);
-            
             AssetHelper.AssetHelper.GenPackageBuildInfo(outputPath,platform);
         }
 

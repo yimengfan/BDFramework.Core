@@ -78,23 +78,26 @@ namespace BDFramework.AssetHelper
                     var persistentPackageInfo = JsonMapper.ToObject<PackageBuildInfo>(content);
                     var streamingPackageInfo = JsonMapper.ToObject<PackageBuildInfo>(www.text);
 
-                    if (persistentPackageInfo.BuildTime <= streamingPackageInfo.BuildTime)
+                    if (persistentPackageInfo.BuildTime >= streamingPackageInfo.BuildTime)
                     {
                         callback?.Invoke();
+                        BDebug.Log("【资源包】不复制，persistent目录最新");
                         yield break;
                     }
                     else
                     {
+                        BDebug.Log("【资源包】复制，Streaming包info更新");
                         //Streaming版本比较新
                         //复制Stream的packageinfo 到persistent
-                        File.WriteAllBytes(persistentPackageInfoPath,www.bytes);
+                        FileHelper.WriteAllBytes(persistentPackageInfoPath,www.bytes);
                     }
                 }
                 else
                 {
+                    BDebug.Log("【资源包】第一次创建资源包info到persistent目录");
                     //persistent版本不存在
                     //复制Stream的packageinfo 到persistent
-                    File.WriteAllBytes(persistentPackageInfoPath,www.bytes);
+                    FileHelper.WriteAllBytes(persistentPackageInfoPath,www.bytes);
                 }
             }
             //复制新版本的DLL 
@@ -104,7 +107,7 @@ namespace BDFramework.AssetHelper
             yield return www;
             if (www.error == null)
             {
-                File.WriteAllBytes(persistentDLLPath,www.bytes);
+                FileHelper.WriteAllBytes(persistentDLLPath,www.bytes);
             }
             //复制Sql
             var persistentSQLPath = string.Format("{0}/{1}", persistent, SqliteLoder.DBPATH);
@@ -113,7 +116,7 @@ namespace BDFramework.AssetHelper
             yield return www;
             if (www.error == null)
             {
-                File.WriteAllBytes(persistentSQLPath,www.bytes);
+                FileHelper.WriteAllBytes(persistentSQLPath,www.bytes);
             }
             //复制ArtConfig
             var persistentArtConfigPath = string.Format("{0}/{1}", persistent, BResources.CONFIGPATH);
@@ -122,7 +125,7 @@ namespace BDFramework.AssetHelper
             yield return www;
             if (www.error == null)
             {
-                File.WriteAllBytes(persistentArtConfigPath,www.bytes);
+                FileHelper.WriteAllBytes(persistentArtConfigPath,www.bytes);
             }
             callback?.Invoke();
             
