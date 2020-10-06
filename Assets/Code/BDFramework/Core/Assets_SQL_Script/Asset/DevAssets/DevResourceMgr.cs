@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections;
 using System.Linq;
+using BDFramework.ResourceMgr.V2;
 using Code.BDFramework.Core.Tools;
 using UnityEditor;
 using Debug = UnityEngine.Debug;
@@ -67,16 +68,14 @@ namespace BDFramework.ResourceMgr
         
         //
         private List<string> allRuntimeDirectList = new List<string>();
+
         /// <summary>
         /// 初始化
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="onInitEnd"></param>
-        public void Init(string path, Action onInitEnd)
+        public void Init(string path)
         {
             allRuntimeDirectList = BDApplication.GetAllRuntimeDirects();
-            //
-            onInitEnd?.Invoke();
         }
 
         /// <summary>

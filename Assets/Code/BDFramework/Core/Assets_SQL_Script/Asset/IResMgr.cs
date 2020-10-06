@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using BDFramework.ResourceMgr.V2;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -14,8 +15,7 @@ namespace BDFramework.ResourceMgr
         /// 初始化
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="onInitEnd"></param>
-        void Init(string path, Action onInitEnd);
+        void Init(string path);
 
         /// <summary>
         /// 资源管理

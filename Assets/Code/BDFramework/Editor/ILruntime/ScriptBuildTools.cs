@@ -23,7 +23,7 @@ public class ScriptBuildTools
 
 
     private static Dictionary<int, string> csFilesMap;
-    private static string                  DLLPATH = "/Hotfix/hotfix.dll";
+    private static string                  DLLPATH = "Hotfix/hotfix.dll";
 
     /// <summary>
     /// 宏
@@ -33,17 +33,15 @@ public class ScriptBuildTools
     /// <summary>
     /// 编译DLL
     /// </summary>
-    static public void BuildDll(string outPath, BuildMode mode)
+    static public void BuildDll(string outPath, RuntimePlatform platform, BuildMode mode)
     {
-        
         EditorUtility.DisplayProgressBar("编译服务", "准备编译环境...", 0.1f);
 
-        //输出环境
-        var path = outPath + "/Hotfix";
-
+        outPath = Path.Combine(outPath, BDApplication.GetPlatformPath(platform));
         //准备输出环境
         try
         {
+            var path = outPath + "/Hotfix";
             if (Directory.Exists(path))
             {
                 Directory.Delete(path, true);
@@ -77,7 +75,7 @@ public class ScriptBuildTools
 
         #endregion
 
-        var outHotfixPath = outPath + DLLPATH;
+        var outHotfixPath = Path.Combine(outPath , DLLPATH) ;
 
         if (mode == BuildMode.Release)
         {

@@ -26,13 +26,14 @@ namespace BDFramework
         /// </summary>
         public string Version { get; set; }
     }
+
     public class BDLauncher : MonoBehaviour
     {
         /// <summary>
         /// 框架的相关配置
         /// </summary>
         public BDFrameConfig FrameConfig { get; private set; }
-        
+
         /// <summary>
         /// GameConfig
         /// </summary>
@@ -51,12 +52,14 @@ namespace BDFramework
         /// 当框架初始化完成
         /// </summary>
         static public Action OnBDFrameInitialized { get; set; }
+
         /// <summary>
         /// 当框架初始化完成
         /// </summary>
         static public Action OnBDFrameInitializedForTest { get; set; }
+
         #endregion
-        
+
         static public BDLauncher Inst { get; private set; }
 
 
@@ -88,7 +91,7 @@ namespace BDFramework
             //启动本地
             LaunchLocal();
         }
-        
+
         /// <summary>
         /// 加载框架配置
         /// </summary>
@@ -97,9 +100,9 @@ namespace BDFramework
             var content = Resources.Load<TextAsset>("BDFrameConfig").text;
             FrameConfig = JsonMapper.ToObject<BDFrameConfig>(content);
             //框架版本
-            BDebug.Log("框架版本:" + FrameConfig.Version,"red");
+            BDebug.Log("框架版本:" + FrameConfig.Version, "red");
         }
-        
+
         #region 启动非热更逻辑
 
         private IGameStart mainStart;
@@ -139,25 +142,7 @@ namespace BDFramework
                     ILRuntimeHelper.UIComponentTypes[t.FullName] = t;
                 }
             }
-
-            // if (Config.CodeRoot == AssetLoadPath.Editor)
-            // {
-            //     foreach (var t in types)
-            //     {
-            //         if (t.IsClass && t.GetInterface("IGameStart") != null)
-            //         {
-            //             var attr = (GameStartAtrribute) t.GetCustomAttribute(typeof(GameStartAtrribute), false);
-            //             if (attr != null && attr.Index == 1)
-            //             {
-            //                 mainStart = Activator.CreateInstance(t) as IGameStart;
-            //                 //注册
-            //                 mainStart.Start();
-            //
-            //                 break;
-            //             }
-            //         }
-            //     }
-            // }
+            
         }
 
         #endregion
@@ -171,94 +156,12 @@ namespace BDFramework
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
         public void Launch(string GameId = "")
         {
-            //初始化资源加载
-            string coderoot = "";
-            string sqlroot = "";
-            string assetroot = "";
-
-            //各自的路径
-            //art
-            if (GameConfig.ArtRoot == AssetLoadPath.Editor)
-            {
-                if (Application.isEditor)
-                {
-                    //默认不走AssetBundle
-                    assetroot = "";
-                }
-                else
-                {
-                    //手机默认直接读取Assetbundle
-                    assetroot = Application.persistentDataPath;
-                }
-            }
-            else if (GameConfig.ArtRoot == AssetLoadPath.Persistent)
-            {
-                assetroot = Application.persistentDataPath;
-            }
-
-            else if (GameConfig.ArtRoot == AssetLoadPath.StreamingAsset)
-            {
-                if (string.IsNullOrEmpty(GameConfig.CustomArtRoot) == false)
-                {
-                    assetroot = GameConfig.CustomArtRoot;
-                }
-                else
-                {
-                    assetroot = Application.streamingAssetsPath;
-                }
-            }
-
-            //sql
-            if (GameConfig.SQLRoot == AssetLoadPath.Editor)
-            {
-                //sql 默认读streaming
-                sqlroot = Application.streamingAssetsPath;
-            }
-
-            else if (GameConfig.SQLRoot == AssetLoadPath.Persistent)
-            {
-                sqlroot = Application.persistentDataPath;
-            }
-            else if (GameConfig.SQLRoot == AssetLoadPath.StreamingAsset)
-            {
-                sqlroot = Application.streamingAssetsPath;
-            }
-
-            //code
-            if (GameConfig.CodeRoot == AssetLoadPath.Editor)
-            {
-                //sql 默认读streaming
-                coderoot = "";
-            }
-            else if (GameConfig.CodeRoot == AssetLoadPath.Persistent)
-            {
-                coderoot = Application.persistentDataPath;
-            }
-            else if (GameConfig.CodeRoot == AssetLoadPath.StreamingAsset)
-            {
-                coderoot = Application.streamingAssetsPath;
-            }
-
-            //多游戏更新逻辑
-            if (Application.isEditor == false)
-            {
-                if (GameId != "")
-                {
-                    assetroot = assetroot + "/" + GameId;
-                    coderoot = coderoot + "/" + GameId;
-                    sqlroot = sqlroot + "/" + GameId;
-                }
-            }
-
-            //异步
-            BResources.Load(assetroot, () =>
-            {
-                //sql
-                SqliteLoder.LoadOnRuntime(sqlroot);
-                //异步 这里如果代码很早的时候就开始走表格逻辑，有可能报错，
-                //但是大部分游戏应该不会，三层回调太丑，暂时用这个
-                ScriptLoder.Load(coderoot, GameConfig.CodeRunMode);
-            });
+            //1.美术目录
+            BResources.Load(GameConfig.ArtRoot,GameConfig.CustomArtRoot);
+            //2.sql
+            SqliteLoder.Load(GameConfig.SQLRoot);
+            //3.脚本,这个启动会开启所有的逻辑
+            ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode);
         }
 
         #endregion
@@ -281,9 +184,7 @@ namespace BDFramework
         void OnApplicationQuit()
         {
 #if UNITY_EDITOR
-           
             SqliteLoder.Close();
-
             ILRuntimeHelper.Close();
 #endif
         }

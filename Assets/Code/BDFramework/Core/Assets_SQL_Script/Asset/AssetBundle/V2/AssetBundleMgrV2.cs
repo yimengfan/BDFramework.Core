@@ -11,6 +11,18 @@ using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr.V2
 {
+
+    /// <summary>
+    /// 加载资源的返回状态
+    /// </summary>
+    public enum LoadAssetState
+    {
+        Success = 0,
+        Fail,
+        IsLoding,
+    }
+
+    
     /// <summary>
     /// ab包管理器
     /// </summary>
@@ -49,17 +61,16 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 资源加载路径
         /// </summary>
-        private string artRootPath = "";
+        private string firstArtDirectory = "";
 
         //第二寻址路径
-        private string secArtRootPath = "";
+        private string secArtDirectory = "";
 
         /// <summary>
         /// 初始化
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="onInitEnd"></param>
-        public void Init(string path, Action onInitEnd)
+        public void Init(string path)
         {
             //多热更切换,需要卸载
             if (this.loder != null)
@@ -71,17 +82,24 @@ namespace BDFramework.ResourceMgr.V2
             this.AssetbundleMap = new Dictionary<string, AssetBundleWapper>();
             this.allTaskGroupList = new List<LoaderTaskGroup>();
             //1.设置加载路径  
-            artRootPath = (path + "/" + BDApplication.GetPlatformPath(Application.platform) + "/Art").Replace("\\", "/");
-            secArtRootPath = (Application.streamingAssetsPath + "/" +
-                              BDApplication.GetPlatformPath(Application.platform) + "/Art")
+            firstArtDirectory = string.Format("{0}/{1}/Art", path, BDApplication.GetPlatformPath(Application.platform))
                 .Replace("\\", "/");
-            //
-            string configPath = FindAsset("Config.json");
-            BDebug.Log("AssetBundle Version: V2", "red");
-            BDebug.Log("Art加载路径:" + configPath, "red");
-            //
+            //当路径为persistent时，第二路径生效
+            secArtDirectory = string.Format("{0}/{1}/Art", Application.streamingAssetsPath, BDApplication.GetPlatformPath(Application.platform)) //
+                .Replace("\\", "/");
+            //加载
+            var configPath = "";
             this.loder = new ManifestLoder();
-            this.loder.Load(configPath, onInitEnd);
+            if (Application.isEditor)
+            {
+                configPath  = string.Format("{0}/{1}",firstArtDirectory,BResources.CONFIGPATH);
+            }
+            else
+            {
+                configPath  = string.Format("{0}/{1}/{2}", Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform),BResources.CONFIGPATH);
+            }
+            
+            this.loder.Load(configPath);
         }
 
 
@@ -290,11 +308,11 @@ namespace BDFramework.ResourceMgr.V2
         private string FindAsset(string res)
         {
             //第一地址
-            var p = IPath.Combine(this.artRootPath, res);
+            var p = IPath.Combine(this.firstArtDirectory, res);
             //寻址到第二路径,第二地址没有就放弃
             if (!File.Exists(p))
             {
-                p = IPath.Combine(this.secArtRootPath, res);
+                p = IPath.Combine(this.secArtDirectory, res);
             }
 
             return p;
@@ -549,8 +567,8 @@ namespace BDFramework.ResourceMgr.V2
         public string[] GetAssets(string floder, string searchPattern = null)
         {
             List<string> rets = new List<string>();
-            var str = string.Format(RUNTIME,  (floder + "/").ToLower());
-            
+            var str = string.Format(RUNTIME, (floder + "/").ToLower());
+
             searchPattern = searchPattern?.ToLower();
             foreach (var key in this.loder.Manifest.ManifestMap.Keys)
             {
@@ -581,6 +599,7 @@ namespace BDFramework.ResourceMgr.V2
             {
                 rets[i] = rets[i].Substring(count);
             }
+
             return rets.ToArray();
         }
 

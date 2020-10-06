@@ -33,7 +33,7 @@ namespace BDFramework
     public enum AssetBundleManagerVersion
     {
         V1,
-        V2_experiment,
+        V2,
     }
 
     public class GameConfig

@@ -63,14 +63,14 @@ namespace BDFramework.Editor.TableData
         /// 生成sqlite
         /// 默认导出到当前平台目录下
         /// </summary>
-        /// <param name="root">自定义路径</param>
-        public static void ALLExcel2SQLite(string root, RuntimePlatform platform)
+        /// <param name="ouptputPath">自定义路径</param>
+        public static void ALLExcel2SQLite(string ouptputPath, RuntimePlatform platform)
         {
             //触发bd环境周期
             BDFrameEditorBehaviorHelper.OnBeginBuildSqlite();
             
             var xlslFiles = GetAllConfigFiles();
-            SqliteLoder.LoadOnEditor(root, platform);
+            SqliteLoder.LoadOnEditor(ouptputPath, platform);
             {
                 foreach (var f in xlslFiles)
                 {
@@ -81,7 +81,8 @@ namespace BDFramework.Editor.TableData
             //
             EditorUtility.ClearProgressBar();
             //触发bd环境周期
-            BDFrameEditorBehaviorHelper.OnEndBuildSqlite(root);
+            BDFrameEditorBehaviorHelper.OnEndBuildSqlite(ouptputPath);
+            AssetHelper.AssetHelper.GenPackageBuildInfo(ouptputPath,platform);
             Debug.Log("导出Sqlite完成!");
         }
 

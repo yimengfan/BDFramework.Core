@@ -1,4 +1,5 @@
-﻿using BDFramework.ResourceMgr;
+﻿using BDFramework;
+using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.UnitTest;
 using Game.Data;
@@ -15,7 +16,7 @@ namespace Code.BDFramework.UnitTest
         [UnitTest(des:  "初始化")]
         static public void Register()
         {
-            BResources.Load();
+            BResources.Load(AssetLoadPath.Editor);
         }
         
         

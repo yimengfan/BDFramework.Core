@@ -49,7 +49,7 @@ namespace BDFramework.Editor.BuildPackage
                     //GUILayout.EndVertical();
                 }
 
-               // Layout_DrawLineV(Color.white);
+                // Layout_DrawLineV(Color.white);
 
                 if (editorAsset != null)
                 {
@@ -58,13 +58,13 @@ namespace BDFramework.Editor.BuildPackage
                     SirenixEditorGUI.EndBox();
                 }
 
-               // Layout_DrawLineV(Color.white);
+                // Layout_DrawLineV(Color.white);
                 if (editorTable != null)
                 {
                     SirenixEditorGUI.BeginBox("表格", true, GUILayout.Width(200), GUILayout.Height(450));
                     editorTable.OnGUI();
                     SirenixEditorGUI.EndBox();
-                   //Layout_DrawLineV(Color.white);
+                    //Layout_DrawLineV(Color.white);
                 }
             }
             GUILayout.EndHorizontal();
@@ -149,33 +149,25 @@ namespace BDFramework.Editor.BuildPackage
         /// <summary>
         /// 生成所有资源
         /// </summary>
-        /// <param name="exportPath"></param>
+        /// <param name="outputPath"></param>
         /// <param name="platform"></param>
         /// <param name="target"></param>
-        static public void GenAllAssets(string exportPath, RuntimePlatform platform, BuildTarget target)
+        static public void GenAllAssets(string outputPath, RuntimePlatform platform, BuildTarget target)
         {
-            var outPath = exportPath + "/" + BDApplication.GetPlatformPath(platform);
-            if (Directory.Exists(outPath))
+            var _outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform)); //  + "/" + ;
+            if (Directory.Exists(_outputPath))
             {
-                Directory.Delete(outPath, true);
+                Directory.Delete(_outputPath, true);
             }
 
+            _outputPath = null;
             //1.打包资源
             try
             {
-                //搜集keywork
+                //1.搜集keywork
                 ShaderCollection.GenShaderVariant();
-                
-                var config = GameObject.Find("BDFrame").GetComponent<Config>();
-                //根据版本进入不同打包模式
-                if (config.Data.AssetBundleManagerVersion == AssetBundleManagerVersion.V1)
-                {
-                    AssetBundleEditorTools.GenAssetBundle(outPath, target);
-                }
-                else if (config.Data.AssetBundleManagerVersion == AssetBundleManagerVersion.V2_experiment)
-                {
-                    AssetBundleEditorToolsV2.GenAssetBundle(outPath, target);
-                }
+                //2.打包模式
+                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target);
             }
             catch (Exception e)
             {
@@ -186,7 +178,7 @@ namespace BDFramework.Editor.BuildPackage
             //2.编译脚本
             try
             {
-                EditorWindow_ScriptBuildDll.RoslynBuild(ScriptBuildTools.BuildMode.Release, outPath);
+                EditorWindow_ScriptBuildDll.RoslynBuild(outputPath, platform, ScriptBuildTools.BuildMode.Release);
             }
             catch (Exception e)
             {
@@ -197,7 +189,7 @@ namespace BDFramework.Editor.BuildPackage
             //3.打包表格
             try
             {
-                Excel2SQLiteTools.ALLExcel2SQLite(exportPath, platform);
+                Excel2SQLiteTools.ALLExcel2SQLite(outputPath, platform);
             }
             catch (Exception e)
             {

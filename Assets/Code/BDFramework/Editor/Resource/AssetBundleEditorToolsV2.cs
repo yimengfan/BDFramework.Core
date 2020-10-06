@@ -73,21 +73,21 @@ namespace BDFramework.Editor.Asset
         /// <summary>
         /// 生成AssetBundle
         /// </summary>
-        /// <param name="outPath">导出目录</param>
+        /// <param name="outputPath">导出目录</param>
         /// <param name="target">平台</param>
         /// <param name="options">打包参数</param>
         /// <param name="isHashName">是否为hash name</param>
-        public static void GenAssetBundle(string outPath,
+        public static void GenAssetBundle(string outputPath,
+            RuntimePlatform platform,
             BuildTarget target,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression,
             bool isHashName = false,
             string AES = "")
         {
-            
-            
+            outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform));
             //
-            var artOutpath = IPath.Combine(outPath, "Art");
-            var buildInfoPath = IPath.Combine(outPath, "BuildInfo.json");
+            var artOutputPath = IPath.Combine(outputPath, "Art");
+            var buildInfoPath = IPath.Combine(outputPath, "BuildInfo.json");
             //初始化
             allfileHashMap = new Dictionary<string, string>();
             var assetPaths = BDApplication.GetAllAssetsPath();
@@ -114,7 +114,7 @@ namespace BDFramework.Editor.Asset
             //
             if (File.Exists(buildInfoPath))
             {
-                string targetPath = outPath + "/BuildInfo.old.json";
+                string targetPath = outputPath + "/BuildInfo.old.json";
                 File.Delete(targetPath);
                 File.Move(buildInfoPath, targetPath);
             }
@@ -222,7 +222,7 @@ namespace BDFramework.Editor.Asset
             }
 
             //写入
-            FileHelper.WriteAllText(artOutpath + "/Config.json", JsonMapper.ToJson(configMap));
+            FileHelper.WriteAllText(artOutputPath + "/Config.json", JsonMapper.ToJson(configMap));
 
             #endregion
 
@@ -250,12 +250,12 @@ namespace BDFramework.Editor.Asset
 
 
             //3.生成AssetBundle
-            BuildAssetBundle(target, outPath, options);
+            BuildAssetBundle(target, outputPath, options);
             //4.清除AB Name
             RemoveAllAssetbundleName();
             AssetImpoterCacheMap.Clear();
             //the end.删除无用文件
-            var delFiles = Directory.GetFiles(artOutpath, "*", SearchOption.AllDirectories);
+            var delFiles = Directory.GetFiles(artOutputPath, "*", SearchOption.AllDirectories);
             foreach (var df in delFiles)
             {
                 var ext = Path.GetExtension(df);
@@ -266,7 +266,9 @@ namespace BDFramework.Editor.Asset
             }
             
             //BD生命周期触发
-            BDFrameEditorBehaviorHelper.OnEndBuildAssetBundle(outPath);
+            BDFrameEditorBehaviorHelper.OnEndBuildAssetBundle(outputPath);
+            
+            AssetHelper.AssetHelper.GenPackageBuildInfo(outputPath,platform);
         }
 
 

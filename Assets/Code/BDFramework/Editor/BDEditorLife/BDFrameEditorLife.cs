@@ -56,7 +56,7 @@ namespace BDFramework.Editor.EditorLife
             BDFrameEditorConfigHelper.Init();
             BDApplication.Init();
             //编辑器下加载初始化
-            BResources.Load("");
+            BResources.Load(AssetLoadPath.Editor);
             //调试器启动
             DebuggerServerProcessManager.Inst.Start();
             //TODO 

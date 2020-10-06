@@ -1,4 +1,5 @@
-﻿using BDFramework.ResourceMgr;
+﻿using BDFramework;
+using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.UnitTest;
 using Game.Data;
@@ -16,7 +17,7 @@ namespace Code.BDFramework.UnitTest
         static public void Register()
         {
             //这里开启Assetbundle模式
-            BResources.Load(Application.streamingAssetsPath);
+            BResources.Load(AssetLoadPath.StreamingAsset);
         }
         
         [UnitTest(10000,"关闭")]

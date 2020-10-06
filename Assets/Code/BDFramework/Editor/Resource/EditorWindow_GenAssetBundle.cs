@@ -85,41 +85,7 @@ namespace BDFramework.Editor.Asset
         void LastestGUI()
         {
             GUILayout.BeginVertical();
-
-            // if (GUILayout.Button("检测资源", GUILayout.Width(100)))
-            // {
-            //     exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath, "");
-            //
-            //
-            //     if (string.IsNullOrEmpty(exportPath))
-            //     {
-            //         return;
-            //     }
-            //
-            //     RuntimePlatform rp = RuntimePlatform.Lumin;
-            //     BuildTarget bt = BuildTarget.Lumin;
-            //
-            //
-            //     if (isSelectAndroid)
-            //     {
-            //         AssetBundleEditorTools.CheckAssets(rootResourceDir,
-            //             exportPath + "/" +
-            //             BApplication.GetPlatformPath(RuntimePlatform.Android),
-            //             BuildTarget.Android);
-            //     }
-            //
-            //     if (isSelectIOS)
-            //     {
-            //         AssetBundleEditorTools.CheckAssets(rootResourceDir,
-            //             exportPath + "/" +
-            //             BApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer),
-            //             BuildTarget.iOS);
-            //     }
-            //
-            //
-            //     AssetDatabase.Refresh();
-            //     Debug.Log("资源打包完毕");
-            // }
+            
 
             if (GUILayout.Button("收集Shader keyword", GUILayout.Width(200)))
             {
@@ -148,7 +114,7 @@ namespace BDFramework.Editor.Asset
                     return;
                 }
 
-                AssetBundleEditorTools.HashName2AssetName(exportPath);
+                //AssetBundleEditorTools.HashName2AssetName(exportPath);
             }
 
             GUILayout.EndVertical();
@@ -162,7 +128,7 @@ namespace BDFramework.Editor.Asset
         {
             RuntimePlatform platform = RuntimePlatform.Android;
             BuildTarget buildTarget = BuildTarget.Android;
- 
+
             if (isSelectAndroid)
             {
                 platform = RuntimePlatform.Android;
@@ -173,21 +139,9 @@ namespace BDFramework.Editor.Asset
                 platform = RuntimePlatform.IPhonePlayer;
                 buildTarget = BuildTarget.iOS;
             }
-
-
-            var outPath = exportPath + "/" + BDApplication.GetPlatformPath(platform);
-            var config = GameObject.Find("BDFrame").GetComponent<Config>();
-            //根据版本进入不同打包模式
-            if (config.Data.AssetBundleManagerVersion == AssetBundleManagerVersion.V1)
-            {
-                AssetBundleEditorTools.GenAssetBundle(outPath, buildTarget, options);
-            }
-            else if (config.Data.AssetBundleManagerVersion == AssetBundleManagerVersion.V2_experiment)
-            {
-                AssetBundleEditorToolsV2.GenAssetBundle(outPath, buildTarget, options,AES:AES);
-            }
-
-
+            
+            //生成Assetbundlebunle
+            AssetBundleEditorToolsV2.GenAssetBundle(exportPath, platform, buildTarget, options, AES: AES);
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕");
         }

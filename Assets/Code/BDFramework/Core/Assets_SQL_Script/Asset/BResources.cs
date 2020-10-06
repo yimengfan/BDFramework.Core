@@ -2,58 +2,66 @@
 using BDFramework.ResourceMgr;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using BDFramework.ResourceMgr.V2;
+using Code.BDFramework.Core.Tools;
 using UnityEngine.Rendering;
 
 namespace BDFramework.ResourceMgr
 
 {
+    /// <summary>
+    /// 资源管理类
+    /// </summary>
     static public class BResources
     {
+
+        readonly static public string CONFIGPATH = "Art/Config.json";
         /// <summary>
         /// 初始化
         /// </summary>
         /// <param name="abModel"></param>
         /// <param name="callback"></param>
-        static public void Load(string root = "", Action onLoaded = null)
+        static public void Load(AssetLoadPath loadPath,string customRoot=null)
         {
-            if (root != "")
+            if (loadPath == AssetLoadPath.Editor)
             {
-                var config = BDLauncher.Inst.GameConfig;
-                if (config != null)
+                ResLoader = new DevResourceMgr();
+                ResLoader.Init("");
+                BDebug.Log("资源加载:AssetDataBase editor only");
+            }
+            else
+            {
+                var path = "";
+                if (Application.isEditor)
                 {
-                    var version = config.AssetBundleManagerVersion;
-                    switch (version)
+                    if (!string.IsNullOrEmpty(customRoot))
                     {
-                        case AssetBundleManagerVersion.V1:
+                        path = Path.Combine(customRoot, BDApplication.GetPlatformPath(Application.platform));
+                    }
+                    else
+                    {
+                        if (loadPath == AssetLoadPath.Persistent)
                         {
-                            ResLoader = new AssetBundleMgr();
-                            ResLoader.Init(root, onLoaded);
+                            path = Path.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
                         }
-                            break;
-                        case AssetBundleManagerVersion.V2_experiment:
+                        else if  (loadPath == AssetLoadPath.StreamingAsset)
                         {
-                            ResLoader = new AssetBundleMgrV2();
-                            ResLoader.Init(root, onLoaded);
+                            path = Path.Combine(Application.streamingAssetsPath, BDApplication.GetPlatformPath(Application.platform));
                         }
-                            break;
                     }
                 }
                 else
                 {
-                    ResLoader = new AssetBundleMgr();
-                    ResLoader.Init(root, onLoaded);
+                    //真机情况下全在persistent下
+                    path = Path.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
                 }
+                //
+                ResLoader = new AssetBundleMgrV2();
+                ResLoader.Init(path);
+            }
+            
 
-            }
-            else
-            {
-#if UNITY_EDITOR
-                ResLoader = new DevResourceMgr();
-                ResLoader.Init("", onLoaded);
-                BDebug.Log("资源加载:AssetDataBase editor only");
-#endif
-            }
         }
 
         /// <summary>

@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using BDFramework;
+using BDFramework.AssetHelper;
 using BDFramework.Editor.Tools;
 using BDFramework.GameStart;
 using ILRuntime.Runtime.CLRBinding;
@@ -41,12 +42,14 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 //
                 if (GUILayout.Button("1.编译dll(Roslyn-Release)", GUILayout.Width(155), GUILayout.Height(30)))
                 {
-                    RoslynBuild(ScriptBuildTools.BuildMode.Release);
+                    RoslynBuild(Application.streamingAssetsPath, Application.platform,
+                        ScriptBuildTools.BuildMode.Release);
                 }
 
                 if (GUILayout.Button("编译dll(Roslyn-Debug)", GUILayout.Width(150), GUILayout.Height(30)))
                 {
-                    RoslynBuild(ScriptBuildTools.BuildMode.Debug);
+                    RoslynBuild(Application.streamingAssetsPath, Application.platform,
+                        ScriptBuildTools.BuildMode.Debug);
                 }
             }
             GUILayout.EndHorizontal();
@@ -81,12 +84,14 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     /// <summary>
     /// 编译模式
     /// </summary>
+    /// <param name="outpath"></param>
+    /// <param name="platform"></param>
     /// <param name="mode"></param>
-    static public void RoslynBuild(ScriptBuildTools.BuildMode mode, string outpath = null)
+    static public void RoslynBuild(string outpath, RuntimePlatform platform, ScriptBuildTools.BuildMode mode)
     {
         //触发bd环境周期
         BDFrameEditorBehaviorHelper.OnBeginBuildDLL();
-        
+
         var targetPath = "Assets/Code/Game/ILRuntime/Binding/Analysis";
         //1.分析之前先删除,然后生成临时文件防止报错
         if (Directory.Exists(targetPath))
@@ -108,18 +113,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         AssetDatabase.Refresh(); //这里必须要刷新
 
         //2.生成DLL
-        if (string.IsNullOrEmpty(outpath))
-        {
-            //1.build dll
-            var outpath_win = Application.streamingAssetsPath + "/" +
-                              BDApplication.GetPlatformPath(Application.platform);
-            ScriptBuildTools.BuildDll(outpath_win, mode);
-        }
-        else
-        {
-            //指定了直接 build
-            ScriptBuildTools.BuildDll(outpath, mode);
-        }
+        ScriptBuildTools.BuildDll(outpath, platform, mode);
 
         //3.预绑定
         //GenPreCLRBinding();
@@ -128,6 +122,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         AssetDatabase.Refresh();
         //触发bd环境周期
         BDFrameEditorBehaviorHelper.OnEndBuildDLL(outpath);
+        AssetHelper.GenPackageBuildInfo(outpath, platform);
         Debug.Log("脚本打包完毕");
     }
 
@@ -151,8 +146,8 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
 
     static Type[] manualBindingTypes = new Type[]
     {
-        typeof(MethodBase), typeof(MemberInfo), typeof(FieldInfo), typeof(MethodInfo),
-        typeof(PropertyInfo), typeof(Component), typeof(Type), typeof(Debug)
+        typeof(MethodBase), typeof(MemberInfo), typeof(FieldInfo), typeof(MethodInfo), typeof(PropertyInfo),
+        typeof(Component), typeof(Type), typeof(Debug)
     };
 
     /// <summary>
@@ -187,8 +182,8 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
 
         /******************移除已经被绑定的部分****************/
         var analysisClrBinding = IPath.Combine(outputPath, "CLRBindings.cs");
-        var manualPath         = "Assets/Code/Game/ILRuntime/Binding/Manual";
-        var prebindingPath     = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
+        var manualPath = "Assets/Code/Game/ILRuntime/Binding/Manual";
+        var prebindingPath = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
         //手动绑定的所有文件
         var bindingFs = Directory.GetFiles(manualPath, "*.*").ToList();
         if (Directory.Exists(prebindingPath))
@@ -216,7 +211,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
             //移除line
             foreach (var mf in bindingFs)
             {
-                if (line.Contains(mf+".Register(app);"))
+                if (line.Contains(mf + ".Register(app);"))
                 {
                     analysisContent.RemoveAt(i);
                     Debug.Log("移除[已经绑定]:" + line);
@@ -282,7 +277,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
             }
         }
 
-        var output     = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
+        var output = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
         var clrbinding = IPath.Combine(output, "CLRBindings.cs");
         var prebinding = IPath.Combine(output, "PreCLRBinding.cs");
         //
