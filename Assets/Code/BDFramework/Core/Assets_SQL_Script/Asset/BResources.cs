@@ -16,7 +16,7 @@ namespace BDFramework.ResourceMgr
     static public class BResources
     {
 
-        readonly static public string CONFIGPATH = "Config.json";
+        readonly static public string CONFIGPATH = "Art/Config.json";
         /// <summary>
         /// 初始化
         /// </summary>
@@ -56,7 +56,7 @@ namespace BDFramework.ResourceMgr
                 }
                 else
                 {
-                    //真机情况下全在persistent下
+                    //真机环境config在persistent，跟dll和db保持一致
                     path = Application.persistentDataPath;
                 }
                 //

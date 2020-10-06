@@ -87,16 +87,18 @@ namespace BDFramework.ResourceMgr.V2
             //当路径为persistent时，第二路径生效
             secArtDirectory = string.Format("{0}/{1}/Art", Application.streamingAssetsPath, BDApplication.GetPlatformPath(Application.platform)) //
                 .Replace("\\", "/");
-            //加载
+            
+            //加载Config
             var configPath = "";
             this.loder = new ManifestLoder();
             if (Application.isEditor)
             {
-                configPath  = string.Format("{0}/{1}",firstArtDirectory,BResources.CONFIGPATH);
+                configPath  = string.Format("{0}/{1}/{2}", path, BDApplication.GetPlatformPath(Application.platform),BResources.CONFIGPATH);
             }
             else
             {
-                configPath  = string.Format("{0}/{1}/Art/{2}", Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform),BResources.CONFIGPATH);
+                //真机环境config在persistent，跟dll和db保持一致
+                configPath  = string.Format("{0}/{1}/{2}", Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform),BResources.CONFIGPATH);
             }
             
             this.loder.Load(configPath);

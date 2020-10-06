@@ -59,7 +59,7 @@ namespace BDFramework.Sql
             }
             else
             {
-                //真机情况下全在persistent下
+                //真机环境db在persistent下，因为需要io
                 path = Application.persistentDataPath;
             }
 

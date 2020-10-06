@@ -108,6 +108,7 @@ namespace BDFramework.AssetHelper
             if (www.error == null)
             {
                 FileHelper.WriteAllBytes(persistentDLLPath,www.bytes);
+                BDebug.Log("复制dll成功!");
             }
             //复制Sql
             var persistentSQLPath = string.Format("{0}/{1}", persistent, SqliteLoder.DBPATH);
@@ -117,6 +118,7 @@ namespace BDFramework.AssetHelper
             if (www.error == null)
             {
                 FileHelper.WriteAllBytes(persistentSQLPath,www.bytes);
+                BDebug.Log("复制db成功!");
             }
             //复制ArtConfig
             var persistentArtConfigPath = string.Format("{0}/{1}", persistent, BResources.CONFIGPATH);
@@ -126,6 +128,7 @@ namespace BDFramework.AssetHelper
             if (www.error == null)
             {
                 FileHelper.WriteAllBytes(persistentArtConfigPath,www.bytes);
+                BDebug.Log("复制artconfig成功!");
             }
             callback?.Invoke();
             

@@ -155,6 +155,8 @@ namespace BDFramework
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
         public void Launch(string GameId = "")
         {
+            BDebug.Log("Persistent:" + Application.persistentDataPath);
+            BDebug.Log("StreamingAsset:" + Application.streamingAssetsPath);
             //开始资源检测
             AssetHelper.AssetHelper.CheckAssetPackageVersion(Application.platform, () =>
             {
