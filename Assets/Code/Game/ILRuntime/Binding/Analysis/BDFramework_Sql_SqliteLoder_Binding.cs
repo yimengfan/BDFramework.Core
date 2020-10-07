@@ -22,37 +22,21 @@ namespace ILRuntime.Runtime.Generated
             MethodBase method;
             Type[] args;
             Type type = typeof(BDFramework.Sql.SqliteLoder);
-            args = new Type[]{};
-            method = type.GetMethod("get_Connection", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_Connection_0);
             args = new Type[]{typeof(System.String), typeof(UnityEngine.RuntimePlatform)};
             method = type.GetMethod("LoadOnEditor", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, LoadOnEditor_1);
+            app.RegisterCLRMethodRedirection(method, LoadOnEditor_0);
             args = new Type[]{};
             method = type.GetMethod("Close", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Close_2);
+            app.RegisterCLRMethodRedirection(method, Close_1);
+            args = new Type[]{};
+            method = type.GetMethod("get_Connection", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_Connection_2);
 
 
         }
 
 
-        static StackObject* get_Connection_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
-
-
-            var result_of_this_method = BDFramework.Sql.SqliteLoder.Connection;
-
-            object obj_result_of_this_method = result_of_this_method;
-            if(obj_result_of_this_method is CrossBindingAdaptorType)
-            {    
-                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
-            }
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* LoadOnEditor_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* LoadOnEditor_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -72,7 +56,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* Close_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* Close_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
@@ -81,6 +65,22 @@ namespace ILRuntime.Runtime.Generated
             BDFramework.Sql.SqliteLoder.Close();
 
             return __ret;
+        }
+
+        static StackObject* get_Connection_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
+
+
+            var result_of_this_method = BDFramework.Sql.SqliteLoder.Connection;
+
+            object obj_result_of_this_method = result_of_this_method;
+            if(obj_result_of_this_method is CrossBindingAdaptorType)
+            {    
+                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
+            }
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
 

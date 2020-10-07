@@ -46,13 +46,13 @@ namespace Code.BDFramework.UnitTest
                     Assert.IsPass(win.IsLoad, "窗口加载失败");
                     UIManager.Inst.ShowWindow(WinEnum.Win_Demo5_Atlas);
                     UIManager.Inst.CloseWindow(WinEnum.Win_Demo5_Atlas);
-
+                    UIManager.Inst.UnLoadWindow(WinEnum.Win_Demo5_Atlas);
 
                     win = UIManager.Inst.GetWindow(WinEnum.Win_Demo_Datalistener) as IComponent;
                     Assert.IsPass(win.IsLoad, "窗口加载失败");
                     UIManager.Inst.ShowWindow(WinEnum.Win_Demo_Datalistener);
                     UIManager.Inst.CloseWindow(WinEnum.Win_Demo_Datalistener);
-
+                    UIManager.Inst.UnLoadWindow(WinEnum.Win_Demo_Datalistener);
                     Assert.IsPass(true);
                 }
                 
