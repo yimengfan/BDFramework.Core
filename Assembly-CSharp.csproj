@@ -61,8 +61,9 @@
      <Compile Include="Assets\Code\BDFramework.UnitTest\Core\Attribute\HotfixUnitTestAttribute.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Core\Attribute\UnitTestAttribute.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Core\Attribute\UnitTestBaseAttribute.cs" />
-     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\EditorTestRunner.cs" />
-     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\HotfixTestRunner.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\HotfixTestRunner@hotfix.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\Mono\Mono_EditorTestRunner.cs" />
+     <Compile Include="Assets\Code\BDFramework.UnitTest\Core\Mono\Mono_HotfixTestRunner.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Core\TestRunner.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test\APITest_Sqlite.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_AssetsManager_AssetsBundle.cs" />
@@ -72,7 +73,6 @@
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_Sqlite.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_UIManager.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\Assert.cs" />
-     <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\ILRuntimeTestRunner.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\LogicTest_BDFrameworkStartCheck.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Adaptor\@hotfix\ActionAdaptor.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Assets_SQL_Script\Asset\AssetBundle\LoaderTaskGroup.cs" />

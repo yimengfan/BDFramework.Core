@@ -9,24 +9,10 @@ namespace BDFramework.UnitTest
     /// <summary>
     /// 执行所有的runner
     /// </summary>
-    static public class ILRuntimeTestRunner
+    static public class HotfixTestRunner
     {
         #region 对外的函数接口
-
-        /// <summary>
-        /// 执行所有的TestRunner
-        /// </summary>
-        static public void RunAPIUnitTest()
-        {
-            Debug.ClearDeveloperConsole();
-            Debug.Log("<color=red>----------------------开始测试-----------------------</color>");
-            //热更模式
-            CollectTestClassData(TestType.MonoOrCLR);
-            //执行普通的测试
-            ExcuteTest<UnitTestAttribute>();
-        }
-
-
+        
         /// <summary>
         /// 执行所有的TestRunner
         /// </summary>

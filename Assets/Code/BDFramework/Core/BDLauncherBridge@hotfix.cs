@@ -113,7 +113,7 @@ public class BDLauncherBridge
              //执行单元测试
              if (BDLauncher.Inst.GameConfig.IsExcuteHotfixUnitTest && ILRuntimeHelper.IsRunning)
              {
-                 ILRuntimeTestRunner.RunHotfixUnitTest();
+                 HotfixTestRunner.RunHotfixUnitTest();
              }
          });
   

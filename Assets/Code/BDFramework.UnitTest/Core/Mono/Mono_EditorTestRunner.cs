@@ -6,7 +6,7 @@ namespace BDFramework.UnitTest
     /// <summary>
     /// Hotfix的TestRunner
     /// </summary>
-    public class EditorTestRunner : MonoBehaviour
+    public class Mono_EditorTestRunner : MonoBehaviour
     {
         private void Start()
         {
@@ -18,9 +18,7 @@ namespace BDFramework.UnitTest
         /// </summary>
         public void RunUnitTest()
         {
-
-           
-
+            
             //提前注册好生命周期 相关测试
             BDLauncher.OnBDFrameInitializedForTest = () =>
             {
@@ -31,8 +29,6 @@ namespace BDFramework.UnitTest
             };
            
             BDLauncher.Inst.Launch();
-       
-           
         }
     }
 }

@@ -6,7 +6,7 @@ namespace BDFramework.UnitTest
     /// <summary>
     /// Hotfix的TestRunner
     /// </summary>
-    public class HotfixTestRunner : MonoBehaviour
+    public class Mono_HotfixTestRunner : MonoBehaviour
     {
         private void Start()
         {
@@ -18,11 +18,7 @@ namespace BDFramework.UnitTest
         /// </summary>
         public void RunUnitTest()
         {
-       
-
             BDLauncher.Inst.Launch();
-       
-           
         }
     }
 }

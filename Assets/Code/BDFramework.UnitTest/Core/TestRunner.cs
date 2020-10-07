@@ -25,23 +25,6 @@ namespace BDFramework.UnitTest
             //执行普通的测试
             ExcuteTest<UnitTestAttribute>();
         }
-
-
-        /// <summary>
-        /// 执行所有的TestRunner
-        /// </summary>
-        static public void RunHotfixUnitTest()
-        {
-            Debug.ClearDeveloperConsole();
-            Debug.Log("<color=red>----------------------开始测试-----------------------</color>");
-            //搜集测试用例
-            CollectTestClassData(TestType.ILRuntime);
-            //1.执行普通的测试
-            ExcuteTest<UnitTestAttribute>();
-            //2.执行hotfix的测试
-            ExcuteTest<HotfixUnitTestAttribute>();
-        }
-
         #endregion
 
 
