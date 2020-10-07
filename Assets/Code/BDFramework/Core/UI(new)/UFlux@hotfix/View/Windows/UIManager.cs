@@ -93,7 +93,53 @@ namespace BDFramework.UFlux
         }
 
         /// <summary>
+        /// 加载窗口
+        /// </summary>
+        /// <param name="uiIndexs">窗口枚举</param>
+        public void AsyncLoadWindow(Enum uiIndex,Action callback)
+        {
+            var index = uiIndex.GetHashCode();
+
+            if (windowMap.ContainsKey(index))
+            {
+                var uvalue = windowMap[index] as IComponent;
+                if (uvalue.IsLoad)
+                {
+                    BDebug.Log("已经加载过并未卸载" + index, "red");
+                }
+            }
+            else
+            {
+                //创建ui
+                var window = CreateWindow(index) as IComponent;
+                if (window == null)
+                {
+                    BDebug.Log("不存在UI:" + index, "red");
+                }
+                else
+                {
+                    windowMap[index] = window as IWindow;
+                    //开始窗口加载
+                    window.AsyncLoad(() =>
+                    {
+                     
+                        if (window.Transform)
+                        {
+                            window.Transform.gameObject.SetActive(false);
+                            window.Transform.SetParent(this.Bottom, false);
+                        }
+                        //推送缓存的数据
+                        PushCaheData(index);
+                        //回调
+                        callback?.Invoke();
+                    });
+                }
+            }
+        }
+        
+        /// <summary>
         /// 异步加载窗口
+        /// Todo 这里list<enum>  ilr解释下会报错，所以用list int传参
         /// </summary>
         /// <param name="indexes"></param>
         /// <param name="loadProcessAction"></param>
@@ -264,11 +310,16 @@ namespace BDFramework.UFlux
         }
 
 
-        public IWindow GetWindow(int index)
+        /// <summary>
+        /// 获取一个窗口
+        /// </summary>
+        /// <param name="uiIndex"></param>
+        /// <returns></returns>
+        public IWindow GetWindow(Enum uiIndex)
         {
+            var index = uiIndex.GetHashCode();
             IWindow win = null;
             this.windowMap.TryGetValue(index, out win);
-
             return win;
         }
 
