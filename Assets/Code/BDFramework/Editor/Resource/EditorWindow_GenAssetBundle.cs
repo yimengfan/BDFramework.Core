@@ -1,7 +1,9 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 using BDFramework.Editor.Tools;
 using Code.BDFramework.Core.Tools;
+using Code.BDFramework.Editor;
 
 namespace BDFramework.Editor.Asset
 {
@@ -20,9 +22,9 @@ namespace BDFramework.Editor.Asset
         public string rootResourceDir = "Resource/Runtime/";
 
         private bool isSelectIOS = false;
-
-        //private bool isSelectWindows = false;
+        
         private bool isSelectAndroid = true;
+        
 
         //
         void DrawToolsBar()
@@ -56,7 +58,6 @@ namespace BDFramework.Editor.Asset
         }
 
         private BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression;
-        private string AES = "";
 
         /// <summary>
         /// 提示UI
@@ -73,7 +74,17 @@ namespace BDFramework.Editor.Asset
 
             GUILayout.Label(string.Format("AB输出目录:{0}", exportPath));
             options = (BuildAssetBundleOptions) EditorGUILayout.EnumPopup("压缩格式:", options);
-            AES = EditorGUILayout.TextField("AES密钥(V2 only):", AES);
+
+            var assetConfig = BDFrameEditorConfigHelper.EditorConfig.AssetConfig;
+            assetConfig.AESCode = EditorGUILayout.TextField("AES密钥(V2 only):",  assetConfig.AESCode );
+            assetConfig.IsUseHashName = EditorGUILayout.Toggle("hash命名:",  assetConfig.IsUseHashName);
+        }
+
+
+        private void OnDestroy()
+        {
+            //保存
+            BDFrameEditorConfigHelper.EditorConfig.Save();
         }
 
 
@@ -85,7 +96,7 @@ namespace BDFramework.Editor.Asset
         void LastestGUI()
         {
             GUILayout.BeginVertical();
-            
+
 
             if (GUILayout.Button("收集Shader keyword", GUILayout.Width(200)))
             {
@@ -139,9 +150,10 @@ namespace BDFramework.Editor.Asset
                 platform = RuntimePlatform.IPhonePlayer;
                 buildTarget = BuildTarget.iOS;
             }
-            
+
+            var assetConfig = BDFrameEditorConfigHelper.EditorConfig.AssetConfig;
             //生成Assetbundlebunle
-            AssetBundleEditorToolsV2.GenAssetBundle(exportPath, platform, buildTarget, options, AES: AES);
+            AssetBundleEditorToolsV2.GenAssetBundle(exportPath, platform, buildTarget, options, assetConfig.IsUseHashName, assetConfig.AESCode);
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕");
         }

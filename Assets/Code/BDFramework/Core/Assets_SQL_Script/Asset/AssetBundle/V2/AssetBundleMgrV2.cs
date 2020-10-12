@@ -11,7 +11,6 @@ using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr.V2
 {
-
     /// <summary>
     /// 加载资源的返回状态
     /// </summary>
@@ -22,7 +21,7 @@ namespace BDFramework.ResourceMgr.V2
         IsLoding,
     }
 
-    
+
     /// <summary>
     /// ab包管理器
     /// </summary>
@@ -85,22 +84,25 @@ namespace BDFramework.ResourceMgr.V2
             firstArtDirectory = string.Format("{0}/{1}/Art", path, BDApplication.GetPlatformPath(Application.platform))
                 .Replace("\\", "/");
             //当路径为persistent时，第二路径生效
-            secArtDirectory = string.Format("{0}/{1}/Art", Application.streamingAssetsPath, BDApplication.GetPlatformPath(Application.platform)) //
+            secArtDirectory = string.Format("{0}/{1}/Art", Application.streamingAssetsPath,
+                    BDApplication.GetPlatformPath(Application.platform)) //
                 .Replace("\\", "/");
-            
+
             //加载Config
             var configPath = "";
             this.loder = new ManifestLoder();
             if (Application.isEditor)
             {
-                configPath  = string.Format("{0}/{1}/{2}", path, BDApplication.GetPlatformPath(Application.platform),BResources.CONFIGPATH);
+                configPath = string.Format("{0}/{1}/{2}", path, BDApplication.GetPlatformPath(Application.platform),
+                    BResources.CONFIGPATH);
             }
             else
             {
                 //真机环境config在persistent，跟dll和db保持一致
-                configPath  = string.Format("{0}/{1}/{2}", Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform),BResources.CONFIGPATH);
+                configPath = string.Format("{0}/{1}/{2}", Application.persistentDataPath,
+                    BDApplication.GetPlatformPath(Application.platform), BResources.CONFIGPATH);
             }
-            
+
             this.loder.Load(configPath);
         }
 
@@ -115,7 +117,15 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public T Load<T>(string path) where T : UnityEngine.Object
         {
-            path = string.Format(RUNTIME, path.ToLower());
+            if (!this.loder.Manifest.IsHashName)
+            {
+                path = string.Format(RUNTIME, path.ToLower());
+            }
+            else
+            {
+                path = path.ToLower();
+            }
+
             //1.依赖路径
             var item = loder.Manifest.GetManifest(path);
             if (item != null)
@@ -147,7 +157,15 @@ namespace BDFramework.ResourceMgr.V2
         /// <exception cref="NotImplementedException"></exception>
         public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
         {
-            path = string.Format(RUNTIME, path.ToLower());
+            if (!this.loder.Manifest.IsHashName)
+            {
+                path = string.Format(RUNTIME, path.ToLower());
+            }
+            else
+            {
+                path = path.ToLower();
+            }
+
             var item = loder.Manifest.GetManifest(path);
             //加载assetbundle
             AssetBundle ab = LoadAssetBundle(item.Path);
@@ -182,7 +200,16 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public int AsyncLoad<T>(string path, Action<T> callback) where T : UnityEngine.Object
         {
-            path = string.Format(RUNTIME, path.ToLower());
+            if (!this.loder.Manifest.IsHashName)
+            {
+                path = string.Format(RUNTIME, path.ToLower());
+            }
+            else
+            {
+                path = path.ToLower();
+            }
+
+
             List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
             //获取依赖
             var mainItem = loder.Manifest.GetManifest(path);
@@ -569,7 +596,10 @@ namespace BDFramework.ResourceMgr.V2
         public string[] GetAssets(string floder, string searchPattern = null)
         {
             List<string> rets = new List<string>();
-            var str = string.Format(RUNTIME, (floder + "/").ToLower());
+            string str;
+
+            str = string.Format(RUNTIME, (floder + "/").ToLower());
+
 
             searchPattern = searchPattern?.ToLower();
             foreach (var key in this.loder.Manifest.ManifestMap.Keys)
@@ -657,52 +687,53 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="path"></param>
         public void UnloadAsset(string path, bool isForceUnload = false)
         {
-            if (path != null)
+            if (!this.loder.Manifest.IsHashName)
             {
                 path = string.Format(RUNTIME, path.ToLower());
-                var res = loder.Manifest.GetDependenciesByName(path);
-                if (res == null)
-                    return;
-                //将所有依赖,创建一个队列 倒序加载
-                Queue<string> resQue = new Queue<string>();
-                foreach (var r in res)
-                {
-                    if (AssetbundleMap.ContainsKey(r))
-                    {
-                        resQue.Enqueue(r);
-                    }
-                }
-
-                //判断是否有已经加载过的资源
-                foreach (var r in resQue)
-                {
-                    if (AssetbundleMap.ContainsKey(r))
-                    {
-                        if (isForceUnload)
-                        {
-                            AssetbundleMap[r].AssetBundle.Unload(true);
-                            AssetbundleMap.Remove(r);
-                        }
-                        else
-                        {
-                            AssetbundleMap[r].Unuse();
-                        }
-                    }
-                }
-
-                //移除无用的assetbundle
-                var keys = new List<string>(AssetbundleMap.Keys);
-                foreach (var k in keys)
-                {
-                    if (AssetbundleMap[k].Counter <= 0)
-                    {
-                        AssetbundleMap.Remove(k);
-                    }
-                }
             }
             else
             {
-                BDebug.Log("路径不存在");
+                path = path.ToLower();
+            }
+
+            var res = loder.Manifest.GetDependenciesByName(path);
+            if (res == null)
+                return;
+            //将所有依赖,创建一个队列 倒序加载
+            Queue<string> resQue = new Queue<string>();
+            foreach (var r in res)
+            {
+                if (AssetbundleMap.ContainsKey(r))
+                {
+                    resQue.Enqueue(r);
+                }
+            }
+
+            //判断是否有已经加载过的资源
+            foreach (var r in resQue)
+            {
+                if (AssetbundleMap.ContainsKey(r))
+                {
+                    if (isForceUnload)
+                    {
+                        AssetbundleMap[r].AssetBundle.Unload(true);
+                        AssetbundleMap.Remove(r);
+                    }
+                    else
+                    {
+                        AssetbundleMap[r].Unuse();
+                    }
+                }
+            }
+
+            //移除无用的assetbundle
+            var keys = new List<string>(AssetbundleMap.Keys);
+            foreach (var k in keys)
+            {
+                if (AssetbundleMap[k].Counter <= 0)
+                {
+                    AssetbundleMap.Remove(k);
+                }
             }
         }
 

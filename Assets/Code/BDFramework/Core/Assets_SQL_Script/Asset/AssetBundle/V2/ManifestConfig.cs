@@ -15,25 +15,17 @@ namespace BDFramework.ResourceMgr.V2
     /// </summary>
     public class ManifestConfig
     {
+
+        /// <summary>
+        /// 是否为hash命名
+        /// </summary>
+        public bool IsHashName{ get;  set; } = false;
         /// <summary>
         /// 资源Map
         /// </summary>
-        public Dictionary<string, ManifestItem>
-            ManifestMap { get; private set; } //= new Dictionary<string, ManifestItem>();
+        public Dictionary<string, ManifestItem> ManifestMap { get; private set; } = new Dictionary<string, ManifestItem>();
 
-        /// <summary>
-        /// json结构
-        /// </summary>
-        /// <param name="content"></param>
-        public ManifestConfig(string content)
-        {
-            ManifestMap = JsonMapper.ToObject<Dictionary<string, ManifestItem>>(content);
-        }
 
-        public ManifestConfig()
-        {
-            ManifestMap = new Dictionary<string, ManifestItem>();
-        }
 
         /// <summary>
         /// 获取单个依赖

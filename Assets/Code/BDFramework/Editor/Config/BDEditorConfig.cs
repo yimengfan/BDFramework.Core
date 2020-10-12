@@ -38,6 +38,12 @@ namespace Code.BDFramework.Editor
         [HideLabel]
         [InlinePropertyAttribute]
         public IosConfig IosConfigDebug =new IosConfig();
+
+
+        [BoxGroup("资源设置")]
+        [HideLabel]
+        [InlinePropertyAttribute]
+        public AssetConfig AssetConfig = new AssetConfig();
         //
         [DisableInEditorMode]
         public string savepath = "";
@@ -98,5 +104,17 @@ namespace Code.BDFramework.Editor
         public string test;
         [LabelText("密钥")]
         public string test2;
+    }
+
+
+    /// <summary>
+    /// 打包设置
+    /// </summary>
+    public class AssetConfig
+    {
+        [LabelText("ASE密钥")]
+        public string AESCode = "bdframe$#@!@#";
+        [LabelText("是否hash命名")]
+        public bool IsUseHashName = false;
     }
 }

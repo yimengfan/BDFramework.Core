@@ -31,7 +31,7 @@ namespace BDFramework.Editor.EditorLife
 
         public override void OnBeginBuildAssetBundle(BuildInfo buildInfo)
         {
-            Debug.Log("【BDFrameEditorBehavior】打包Assetb之前测试!");
+            Debug.Log("【BDFrameEditorBehavior】打包Asset之前测试!");
             //测试1：Runtime/Char 下prefab依赖 打包成一个ab
             List<string> charList = new List<string>();
             var path = "/Runtime/Char/".ToLower();
@@ -62,7 +62,7 @@ namespace BDFramework.Editor.EditorLife
 
         public override void OnEndBuildAssetBundle(string outputPath)
         {
-            Debug.Log("【BDFrameEditorBehavior】打包Assetb之后测试!");
+            Debug.Log("【BDFrameEditorBehavior】打包Asset之后测试!");
         }
     }
 }

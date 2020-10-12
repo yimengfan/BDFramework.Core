@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using LitJson;
 using UnityEngine;
 
 namespace BDFramework.ResourceMgr.V2
@@ -22,16 +23,14 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="onLoaded"></param>
         public void Load(string path)
         {
-            //这里开个同步接口 为了单元测试用
             if (File.Exists(path))
             {
-                BDebug.Log("manifest加载成功!");
-                var text = File.ReadAllText(path);
-                this.Manifest = new ManifestConfig(text);
+                var content = File.ReadAllText(path);
+                this.Manifest = JsonMapper.ToObject<ManifestConfig>(content);
             }
             else
             {
-                Debug.LogError("配置文件不存在:" + path);
+                BDebug.LogError("配置文件不存在:" + path);
             }
         }
     }

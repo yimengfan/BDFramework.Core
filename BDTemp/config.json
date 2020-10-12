@@ -20,5 +20,9 @@
     "test" : null,
     "test2" : null
   },
-  "savepath"       : "E:/Unity2019/BDFramework.Core/BDTemp/config.json"
+  "AssetConfig"    : {
+    "AESCode" : "bdframe$#@!@#",
+    "IsUseHashName" : true
+  },
+  "savepath"       : "E:/github.core/BDFramework.Core/BDTemp/config.json"
 }

@@ -43,7 +43,7 @@ namespace BDFramework.Editor.Asset
             /// 被依赖次数
             /// </summary>
             public int ReferenceCount { get; set; } = 0;
-            
+
             /// <summary>
             /// hash
             /// </summary>
@@ -53,8 +53,6 @@ namespace BDFramework.Editor.Asset
             /// 依赖列表
             /// </summary>
             public List<string> DependList { get; set; } = new List<string>();
-            
-            
         }
 
         /// <summary>
@@ -107,10 +105,10 @@ namespace BDFramework.Editor.Asset
 
             //获取当前配置
             var newbuildInfo = GetAssetsInfo(assetPaths);
-            
+
             //BD生命周期触发
             BDFrameEditorBehaviorHelper.OnBeginBuildAssetBundle(newbuildInfo);
-            
+
             //
             if (File.Exists(buildInfoPath))
             {
@@ -118,6 +116,7 @@ namespace BDFramework.Editor.Asset
                 File.Delete(targetPath);
                 File.Move(buildInfoPath, targetPath);
             }
+
             FileHelper.WriteAllText(buildInfoPath, JsonMapper.ToJson(newbuildInfo));
             //获取改动的数据
             var changedBuildInfo = GetChangedAssets(lastBuildInfo, newbuildInfo);
@@ -127,7 +126,7 @@ namespace BDFramework.Editor.Asset
                 Debug.Log("无资源改变,不需要打包!");
                 return;
             }
-            
+
             #region 整理依赖关系
 
             //1.把依赖资源替换成AB Name，
@@ -149,39 +148,77 @@ namespace BDFramework.Editor.Asset
                 asset.DependList.Remove(asset.ABName);
             }
 
-            //2.整理runtime路径 替换路径名为Resource规则的名字
             var runtimeStr = "/runtime/";
-            foreach (var asset in newbuildInfo.AssetDataMaps)
-            {
-                if (asset.Key.Contains(runtimeStr))
-                {
-                    var newName = asset.Value.ABName;
-                    //移除runtime之前的路径、后缀
-                    var index = newName.IndexOf(runtimeStr);
-                    newName = newName.Substring(index + 1); //runtimeStr.Length);
 
-                    var extension = Path.GetExtension(newName);
-                    if (!string.IsNullOrEmpty(extension))
+            if (isHashName)
+            {
+                //使用guid 作为ab名
+
+                foreach (var asset in newbuildInfo.AssetDataMaps)
+                {
+                    var abname = AssetDatabase.AssetPathToGUID(asset.Value.ABName);
+                    if (!string.IsNullOrEmpty(abname))  //不存在的资源（如ab.shader之类）,则用原名
                     {
-                        newName = newName.Replace(extension, "");
+                        asset.Value.ABName = abname;
+                    }
+                    else
+                    {
+                        Debug.LogError("获取GUID失败：" + asset.Value.ABName);
                     }
 
-                    //刷新整个列表替换
-                    foreach (var _asset in newbuildInfo.AssetDataMaps)
+                    for (int i = 0; i < asset.Value.DependList.Count; i++)
                     {
-                        var oldName = asset.Key.ToLower();
-                        //ab替换
-                        if (_asset.Value.ABName == oldName)
+                        var dependAssetName = asset.Value.DependList[i];
+                        
+                        abname = AssetDatabase.AssetPathToGUID(dependAssetName);
+                        if (!string.IsNullOrEmpty(abname))  //不存在的资源（如ab.shader之类）,则用原名
                         {
-                            _asset.Value.ABName = newName;
+                            asset.Value.DependList[i] = abname;
+                        }
+                        else
+                        {
+                            Debug.LogError("获取GUID失败：" + dependAssetName);
+                        }
+                        
+                    }
+                }
+            }
+            else
+            {
+                //2.整理runtime路径 替换路径名为Resource规则的名字
+
+                foreach (var asset in newbuildInfo.AssetDataMaps)
+                {
+                    if (asset.Key.Contains(runtimeStr))
+                    {
+                        var newName = asset.Value.ABName;
+                        //移除runtime之前的路径、后缀
+                        var index = newName.IndexOf(runtimeStr);
+                        newName = newName.Substring(index + 1); //runtimeStr.Length);
+
+                        var extension = Path.GetExtension(newName);
+                        if (!string.IsNullOrEmpty(extension))
+                        {
+                            newName = newName.Replace(extension, "");
                         }
 
-                        //依赖替换
-                        for (int i = 0; i < _asset.Value.DependList.Count; i++)
+                        //刷新整个列表替换
+                        foreach (var _asset in newbuildInfo.AssetDataMaps)
                         {
-                            if (_asset.Value.DependList[i] == oldName)
+                            var oldName = asset.Key.ToLower();
+                            //ab替换
+                            if (_asset.Value.ABName == oldName)
                             {
-                                _asset.Value.DependList[i] = newName;
+                                _asset.Value.ABName = newName;
+                            }
+
+                            //依赖替换
+                            for (int i = 0; i < _asset.Value.DependList.Count; i++)
+                            {
+                                if (_asset.Value.DependList[i] == oldName)
+                                {
+                                    _asset.Value.DependList[i] = newName;
+                                }
                             }
                         }
                     }
@@ -192,38 +229,40 @@ namespace BDFramework.Editor.Asset
 
 
             #region 生成Runtime使用的Config
-
             //根据buildinfo 生成加载用的 Config
             //1.只保留Runtime目录下的配置
-            Dictionary<string, ManifestItem> configMap = new Dictionary<string, ManifestItem>();
-            if (isHashName)
+            ManifestConfig config = new ManifestConfig();
+            config.IsHashName = isHashName;
+            //
+            foreach (var item in newbuildInfo.AssetDataMaps)
             {
-                
-            }
-            else
-            {
-                foreach (var item in newbuildInfo.AssetDataMaps)
+                //runtime路径下，
+                //改成用Resources加载规则命名的key
+                if (item.Key.Contains(runtimeStr))
                 {
-                    //runtime路径下，
-                    //改成用Resources加载规则命名的key
-                    if (item.Key.Contains("/runtime/"))
+                    var key = item.Key;
+                    //移除runtime之前的路径、后缀
+                    var index = key.IndexOf(runtimeStr);
+                    if (config.IsHashName)
                     {
-                        var key = item.Key;
-                        //移除runtime之前的路径、后缀
-                        var index = key.IndexOf(runtimeStr);
-                        key = key.Substring(index + 1); //runtimeStr.Length);
-                        key = key.Replace(Path.GetExtension(key), "");
-                        //添加manifest
-                        var mi = new ManifestItem( item.Value.ABName, (ManifestItem.AssetTypeEnum) item.Value.Type,
-                            new List<string>(item.Value.DependList));
-                        configMap[key] = mi;
+                        key = key.Substring(index + runtimeStr.Length); //hash要去掉runtime
                     }
+                    else
+                    {
+                        key = key.Substring(index + 1);  // 保留runtime
+                    }
+                  
+                    key = key.Replace(Path.GetExtension(key), "");
+                    //添加manifest
+                    var mi = new ManifestItem(item.Value.ABName, (ManifestItem.AssetTypeEnum) item.Value.Type,
+                        new List<string>(item.Value.DependList));
+                    config.ManifestMap[key] = mi;
                 }
             }
+          
 
             //写入
-            FileHelper.WriteAllText(artOutputPath + "/Config.json", JsonMapper.ToJson(configMap));
-
+            FileHelper.WriteAllText(artOutputPath + "/Config.json", JsonMapper.ToJson(config));
             #endregion
 
 
@@ -264,10 +303,10 @@ namespace BDFramework.Editor.Asset
                     File.Delete(df);
                 }
             }
-            
+
             //BD生命周期触发
             BDFrameEditorBehaviorHelper.OnEndBuildAssetBundle(outputPath);
-            AssetHelper.AssetHelper.GenPackageBuildInfo(outputPath,platform);
+            AssetHelper.AssetHelper.GenPackageBuildInfo(outputPath, platform);
         }
 
 
@@ -282,6 +321,8 @@ namespace BDFramework.Editor.Asset
             public string AssetBundleName = "noname";
         }
 
+
+        static public string ALLSHADERS = "shaders.ab";
         /// <summary>
         /// 包配置相关
         /// </summary>
@@ -290,7 +331,7 @@ namespace BDFramework.Editor.Asset
             new MakePackage()
             {
                 FileExtens = new List<string>() {".mat", ".shader", ".shadervariants"},
-                AssetBundleName = "assets/shaders.ab"
+                AssetBundleName =ALLSHADERS
             }
         };
 
@@ -413,11 +454,12 @@ namespace BDFramework.Editor.Asset
                 buildInfo.AssetDataMaps[asset.ABName] = asset;
             }
 
-            
+
             //搜集引用的次数，以runtime内部引用为主
             foreach (var item in buildInfo.AssetDataMaps)
             {
-                if(!item.Key.Contains("/runtime/")) continue;
+                if (!item.Key.Contains("/runtime/"))
+                    continue;
                 //
                 int count = 0;
                 foreach (var assetdata in buildInfo.AssetDataMaps.Values)
@@ -427,6 +469,7 @@ namespace BDFramework.Editor.Asset
                         count++;
                     }
                 }
+
                 item.Value.ReferenceCount = count;
             }
 
@@ -487,10 +530,10 @@ namespace BDFramework.Editor.Asset
                 rebuildABNameList = rebuildABNameList.Distinct().ToList();
                 //搜索依赖的ab，直到没有新ab为止
                 int counter = 0;
-                while (counter < rebuildABNameList.Count )//防死循环
+                while (counter < rebuildABNameList.Count) //防死循环
                 {
                     string abName = rebuildABNameList[counter];
-                    
+
                     var findAssets = newAssetsInfo.AssetDataMaps.Where((asset) => asset.Value.ABName == abName);
                     foreach (var asset in findAssets)
                     {
@@ -500,6 +543,7 @@ namespace BDFramework.Editor.Asset
                         {
                             rebuildABNameList.Add(assetdata.ABName);
                         }
+
                         //添加依赖文件
                         foreach (var depend in assetdata.DependList)
                         {
@@ -521,15 +565,13 @@ namespace BDFramework.Editor.Asset
                     counter++;
                 }
 
-               
-                
+
                 var allRebuildAssets = new List<KeyValuePair<string, BuildInfo.AssetData>>();
                 //根据影响的ab，寻找出所有文件
                 foreach (var abname in rebuildABNameList)
                 {
                     var findAssets = newAssetsInfo.AssetDataMaps.Where((asset) => asset.Value.ABName == abname);
                     allRebuildAssets.AddRange(findAssets);
-
                 }
 
 
@@ -586,7 +628,7 @@ namespace BDFramework.Editor.Asset
                 AssetImpoterCacheMap[path] = ai;
                 if (!ai)
                 {
-                    if (path != "assets/shaders.ab")
+                    if (path != ALLSHADERS)
                     {
                         Debug.LogError("【打包】获取资源失败:" + path);
                     }

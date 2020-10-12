@@ -5,6 +5,7 @@ using UnityEngine;
 using BDFramework.Editor.TableData;
 using BDFramework.Editor.Asset;
 using Code.BDFramework.Core.Tools;
+using Code.BDFramework.Editor;
 using Sirenix.Utilities.Editor;
 
 namespace BDFramework.Editor.BuildPackage
@@ -159,7 +160,6 @@ namespace BDFramework.Editor.BuildPackage
             {
                 Directory.Delete(_outputPath, true);
             }
-
             _outputPath = null;
             //1.打包资源
             try
@@ -167,7 +167,9 @@ namespace BDFramework.Editor.BuildPackage
                 //1.搜集keywork
                 ShaderCollection.GenShaderVariant();
                 //2.打包模式
-                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target);
+                var config = BDFrameEditorConfigHelper.EditorConfig.AssetConfig;
+                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target,BuildAssetBundleOptions.ChunkBasedCompression,
+                    config.IsUseHashName,config.AESCode);
             }
             catch (Exception e)
             {
