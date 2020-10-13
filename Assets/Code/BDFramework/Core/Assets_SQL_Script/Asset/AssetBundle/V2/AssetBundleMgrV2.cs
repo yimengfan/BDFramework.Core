@@ -256,66 +256,26 @@ namespace BDFramework.ResourceMgr.V2
         {
             var taskIdList = new List<int>();
             int taskCounter = 0;
-            var retAssetMap = new Dictionary<string, Object>();
+            var loadAssetMap = new Dictionary<string, Object>();
             assetNameList = assetNameList.Distinct().ToList(); //去重
             int total = assetNameList.Count;
             //source
             foreach (var assetName in assetNameList)
             {
-                string path;
-                if (this.loder.Manifest.IsHashName)
+                var taskid =  AsyncLoad<Object>(assetName, (o) =>
                 {
-                    path = assetName.ToLower();
-                }
-                else
-                {
-                    path = string.Format(RUNTIME, assetName.ToLower());
-                }
-
-                //
-                var mainItem = loder.Manifest.GetManifest(path);
-                List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
-                //获取依赖
-                if (mainItem == null)
-                {
-                    BDebug.LogError("不存在:" + path);
-                    total--;
-                    continue;
-                }
-
-                //依赖ab，不需要从中load资源
-                foreach (var r in mainItem.Depend)
-                {
-                    var task = new LoaderTaskData(r, typeof(Object));
-                    taskQueue.Add(task);
-                }
-
-                //主任务
-                var mainTask = new LoaderTaskData(mainItem.Path, typeof(Object));
-                taskQueue.Add(mainTask);
-
-                //添加任务组
-                //加载颗粒度10个
-
-                var taskGroup = new LoaderTaskGroup(this, path, mainItem, taskQueue, //Load接口
-                    (p, obj) =>
+                    loadAssetMap[assetName] = o;
+                    //进度回调
+                    onLoadProcess?.Invoke(loadAssetMap.Count,total);
+                    //完成回调
+                    if (loadAssetMap.Count == total)
                     {
-                        taskCounter++;
-                        if (onLoadProcess != null)
-                        {
-                            onLoadProcess(taskCounter, total);
-                        }
+                        onLoadComplete?.Invoke(loadAssetMap);
+                    }
 
-                        retAssetMap[assetName] = obj;
-                        //完成
-                        if (retAssetMap.Count == total)
-                        {
-                            onLoadComplete(retAssetMap);
-                        }
-                    });
-                taskGroup.Id = this.taskIDCounter++;
-                AddTaskGroup(taskGroup);
-                taskIdList.Add(taskGroup.Id);
+                });
+
+                taskIdList.Add(taskid);
             }
 
             //开始任务
