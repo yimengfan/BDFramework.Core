@@ -21,7 +21,7 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public bool IsHashName{ get;  set; } = false;
         /// <summary>
-        /// 资源Map
+        /// 加载路径名-资源数据
         /// </summary>
         public Dictionary<string, ManifestItem> ManifestMap { get; private set; } = new Dictionary<string, ManifestItem>();
 

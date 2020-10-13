@@ -172,14 +172,14 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = BDFramework.ResourceMgr.BResources.AsyncLoad(@objlist, @onProcess, @onLoadEnd);
+            //var result_of_this_method ;// = BDFramework.ResourceMgr.BResources.AsyncLoad(@objlist, @onProcess, @onLoadEnd);
 
-            object obj_result_of_this_method = result_of_this_method;
+            object obj_result_of_this_method = null;
             if(obj_result_of_this_method is CrossBindingAdaptorType)
             {    
                 return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
             }
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+            return ILIntepreter.PushObject(__ret, __mStack, null);
         }
 
         static StackObject* Load_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)

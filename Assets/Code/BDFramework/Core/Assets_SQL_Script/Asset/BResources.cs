@@ -117,11 +117,11 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="objlist"></param>
         /// <param name="onLoadEnd"></param>
-        public static List<int> AsyncLoad(IList<string> objlist,
+        public static List<int> AsyncLoad(List<string> objlist,
             Action<int, int> onProcess = null,
             Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
         {
-            return ResLoader.AsyncLoad(objlist, onLoadEnd, onProcess);
+            return ResLoader.AsyncLoad(objlist, onProcess, onLoadEnd);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public static void LoadCancel()
         {
-            ResLoader.LoadCancelAll();
+            ResLoader.LoadAllCancel();
         }
     }
 }

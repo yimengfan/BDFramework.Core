@@ -55,21 +55,23 @@ namespace BDFramework.ResourceMgr
         /// 异步加载资源
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="objName"></param>
+        /// <param name="assetName"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        int AsyncLoad<T>(string objName, Action<T> callback) where T : UnityEngine.Object;
+        int AsyncLoad<T>(string assetName, Action<T> callback) where T : UnityEngine.Object;
 
         /// <summary>
         /// 异步加载资源表
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="sources"></param>
-        /// <param name="onLoadEnd"></param>
+        /// <param name="assetNameList"></param>
         /// <param name="onLoadProcess"></param>
+        /// <param name="onLoadEnd"></param>
+        /// <param name="sources"></param>
         /// <returns></returns>
-        List<int> AsyncLoad(IList<string>    assetsPath, Action<IDictionary<string, Object>> onLoadEnd,
-                            Action<int, int> onLoadProcess);
+        List<int> AsyncLoad(List<string> assetNameList,
+            Action<int, int> onLoadProcess,
+            Action<IDictionary<string, Object>> onLoadEnd);
 
         /// <summary>
         /// 取消一个加载任务
@@ -80,7 +82,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 取消所有加载任务
         /// </summary>
-        void LoadCancelAll();
+        void LoadAllCancel();
 
         /// <summary>
         /// 获取某个目录下文件

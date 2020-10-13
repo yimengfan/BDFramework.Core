@@ -32,10 +32,6 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         static readonly public string RUNTIME = "runtime/{0}";
 
-        /// <summary>
-        /// 异步任务颗粒度，每帧执行多少个
-        /// </summary>
-        static readonly public int ASYNC_TASK_UNIT = 5;
 
         /// <summary>
         /// 全局的任务id
@@ -139,7 +135,7 @@ namespace BDFramework.ResourceMgr.V2
 
                 LoadAssetBundle(item.Path);
                 //
-                return LoadFormAssetBundle<T>(path);
+                return LoadFormAssetBundle<T>(path, item);
             }
 
             return null;
@@ -195,51 +191,52 @@ namespace BDFramework.ResourceMgr.V2
         /// 异步加载接口
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
+        /// <param name="assetName"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public int AsyncLoad<T>(string path, Action<T> callback) where T : UnityEngine.Object
+        public int AsyncLoad<T>(string assetName, Action<T> callback) where T : UnityEngine.Object
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                path = string.Format(RUNTIME, path.ToLower());
+                assetName = string.Format(RUNTIME, assetName.ToLower());
             }
             else
             {
-                path = path.ToLower();
+                assetName = assetName.ToLower();
             }
 
 
             List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
             //获取依赖
-            var mainItem = loder.Manifest.GetManifest(path);
+            var mainItem = loder.Manifest.GetManifest(assetName);
             if (mainItem != null)
             {
-                //依赖任务
+                //依赖资源
                 foreach (var r in mainItem.Depend)
                 {
                     var task = new LoaderTaskData(r, typeof(Object));
                     taskQueue.Add(task);
                 }
-
-                //主任务
-                var mainTask = new LoaderTaskData(mainItem.Path, typeof(Object));
+                //主资源，
+                var mainTask = new LoaderTaskData(mainItem.Path, typeof(Object), true);
                 taskQueue.Add(mainTask);
-
                 //添加任务组
-                LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainItem.Path, ASYNC_TASK_UNIT, taskQueue,
-                    AsyncLoadAssetBundle, //Loader接口
-                    (p, obj) =>
-                    {
-                        //完成回调
-                        callback(obj as T);
-                    });
+                var taskGroup = new LoaderTaskGroup(this, assetName, mainItem, taskQueue, //Loader接口
+                (p, obj) =>
+                {
+                    //完成回调
+                    callback(obj as T);
+                });
                 taskGroup.Id = this.taskIDCounter++;
                 AddTaskGroup(taskGroup);
 
                 //开始任务
                 DoNextTask();
                 return taskGroup.Id;
+            }
+            else
+            {
+                BDebug.LogError("资源不存在:" + assetName);
             }
 
             return -1;
@@ -249,23 +246,32 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 异步加载 多个
         /// </summary>
-        /// <param name="assetsPath">资源</param>
-        /// <param name="onLoadComplete">加载结束</param>
+        /// <param name="assetNameList">资源</param>
         /// <param name="onLoadProcess">进度</param>
+        /// <param name="onLoadComplete">加载结束</param>
         /// <returns>taskid</returns>
-        public List<int> AsyncLoad(IList<string> assetsPath,
-            Action<IDictionary<string, Object>> onLoadComplete,
-            Action<int, int> onLoadProcess)
+        public List<int> AsyncLoad(List<string> assetNameList,
+            Action<int, int> onLoadProcess,
+            Action<IDictionary<string, Object>> onLoadComplete)
         {
-            List<int> idList = new List<int>();
-            IDictionary<string, Object> retMap = new Dictionary<string, Object>();
-            assetsPath = assetsPath.Distinct().ToList(); //去重
-            int total = assetsPath.Count;
+            var taskIdList = new List<int>();
+            int taskCounter = 0;
+            var retAssetMap = new Dictionary<string, Object>();
+            assetNameList = assetNameList.Distinct().ToList(); //去重
+            int total = assetNameList.Count;
             //source
-            int counter = 0;
-            foreach (var assetPath in assetsPath)
+            foreach (var assetName in assetNameList)
             {
-                var path = string.Format(RUNTIME, assetPath.ToLower());
+                string path;
+                if (this.loder.Manifest.IsHashName)
+                {
+                    path = assetName.ToLower();
+                }
+                else
+                {
+                    path = string.Format(RUNTIME, assetName.ToLower());
+                }
+
                 //
                 var mainItem = loder.Manifest.GetManifest(path);
                 List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
@@ -277,7 +283,7 @@ namespace BDFramework.ResourceMgr.V2
                     continue;
                 }
 
-                //依赖任务
+                //依赖ab，不需要从中load资源
                 foreach (var r in mainItem.Depend)
                 {
                     var task = new LoaderTaskData(r, typeof(Object));
@@ -290,33 +296,32 @@ namespace BDFramework.ResourceMgr.V2
 
                 //添加任务组
                 //加载颗粒度10个
-                LoaderTaskGroup taskGroup = new LoaderTaskGroup(mainItem.Path, ASYNC_TASK_UNIT, taskQueue,
-                    AsyncLoadAssetBundle, //Load接口
+
+                var taskGroup = new LoaderTaskGroup(this, path, mainItem, taskQueue, //Load接口
                     (p, obj) =>
                     {
-                        counter++;
-                        //注意返回加载的id，不是具体地址的id
-                        retMap[assetPath] = obj;
+                        taskCounter++;
                         if (onLoadProcess != null)
                         {
-                            onLoadProcess(counter, total);
+                            onLoadProcess(taskCounter, total);
                         }
 
+                        retAssetMap[assetName] = obj;
                         //完成
-                        if (retMap.Count == total)
+                        if (retAssetMap.Count == total)
                         {
-                            onLoadComplete(retMap);
+                            onLoadComplete(retAssetMap);
                         }
                     });
                 taskGroup.Id = this.taskIDCounter++;
                 AddTaskGroup(taskGroup);
-                idList.Add(taskGroup.Id);
+                taskIdList.Add(taskGroup.Id);
             }
 
             //开始任务
             DoNextTask();
             //
-            return idList;
+            return taskIdList;
         }
 
 
@@ -330,18 +335,18 @@ namespace BDFramework.ResourceMgr.V2
         }
 
         /// <summary>
-        /// 检测
+        /// 寻找可加载的地址
         /// </summary>
-        /// <param name="res"></param>
+        /// <param name="assetFileName"></param>
         /// <returns></returns>
-        private string FindAsset(string res)
+        public string FindAsset(string assetFileName)
         {
             //第一地址
-            var p = IPath.Combine(this.firstArtDirectory, res);
+            var p = IPath.Combine(this.firstArtDirectory, assetFileName);
             //寻址到第二路径,第二地址没有就放弃
             if (!File.Exists(p))
             {
-                p = IPath.Combine(this.secArtDirectory, res);
+                p = IPath.Combine(this.secArtDirectory, assetFileName);
             }
 
             return p;
@@ -356,7 +361,7 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private AssetBundle LoadAssetBundle(string path)
+        public AssetBundle LoadAssetBundle(string path)
         {
             if (AssetbundleMap.ContainsKey(path))
             {
@@ -379,111 +384,22 @@ namespace BDFramework.ResourceMgr.V2
             return null;
         }
 
-        /// <summary>
-        /// 单个加载ab,会自动刷新依赖
-        /// </summary>
-        /// <param name="assetHash"></param>
-        /// <param name="callback"></param>
-        private void AsyncLoadAssetBundle(string assetHash,
-            bool isLoadObj = false,
-            Action<LoadAssetState, Object> callback = null)
-        {
-            IEnumeratorTool.StartCoroutine(IE_AsyncLoadAssetbundle(assetHash, isLoadObj, callback));
-        }
-
-        /// <summary>
-        /// 当前正在加载的所有AB
-        /// </summary>
-        HashSet<string> lockSet = new HashSet<string>();
-
-        /// <summary>
-        ///  加载
-        /// 一般来说,主资源才需要load
-        /// 依赖资源只要加载ab,会自动依赖
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="isLoadObj">是否需要返回加载资源</param>
-        /// <param name="callback"></param>
-        /// <returns></returns>
-        IEnumerator IE_AsyncLoadAssetbundle(string name, bool isLoadObj, Action<LoadAssetState, Object> callback)
-        {
-            //
-            // var mainItem = loder.Manifest.GetManifest(name);
-            // //单ab 多资源,加载真正ab名
-            // if (mainItem != null && !string.IsNullOrEmpty(mainItem.AB))
-            // {
-            //     name = mainItem.AB;
-            // }
-
-            //正在被加载中,放入后置队列
-            if (lockSet.Contains(name))
-            {
-                callback(LoadAssetState.IsLoding, null);
-                yield break;
-            }
-
-            //没被加载
-            if (!AssetbundleMap.ContainsKey(name))
-            {
-                AssetBundleCreateRequest ret = null;
-                string fullpath = "";
-                //加锁
-                lockSet.Add(name);
-                {
-                    fullpath = FindAsset(name);
-                    ret = AssetBundle.LoadFromFileAsync(fullpath);
-                    yield return ret;
-                }
-                //解锁
-                lockSet.Remove(name);
-                //添加assetbundle
-                if (ret.assetBundle != null)
-                {
-                    AddAssetBundle(name, ret.assetBundle);
-                    if (isLoadObj)
-                    {
-                        callback(LoadAssetState.Success, LoadFormAssetBundle<Object>(name));
-                    }
-                    else
-                    {
-                        callback(LoadAssetState.Success, null);
-                    }
-                }
-                else
-                {
-                    callback(LoadAssetState.Fail, null);
-                    BDebug.LogError("ab资源为空:" + fullpath);
-                }
-            }
-            else
-            {
-                if (isLoadObj)
-                {
-                    callback(LoadAssetState.Success, LoadFormAssetBundle<Object>(name));
-                }
-                else
-                {
-                    callback(LoadAssetState.Success, null);
-                }
-            }
-        }
-
 
         /// <summary>
         /// ab包计数器
         /// </summary>
-        /// <param name="hash"></param>
+        /// <param name="assetPath"></param>
         /// <param name="ab"></param>
-        private void AddAssetBundle(string hash, AssetBundle ab)
+        public void AddAssetBundle(string assetPath, AssetBundle ab)
         {
             //
-            if (!AssetbundleMap.ContainsKey(hash))
+            if (!AssetbundleMap.ContainsKey(assetPath))
             {
                 AssetBundleWapper abr = new AssetBundleWapper() {AssetBundle = ab};
-                AssetbundleMap[hash] = abr;
+                AssetbundleMap[assetPath] = abr;
             }
 
-            AssetbundleMap[hash].Use();
+            AssetbundleMap[assetPath].Use();
         }
 
         #endregion
@@ -497,16 +413,14 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="abName"></param>
         /// <param name="objName"></param>
         /// <returns></returns>
-        private T LoadFormAssetBundle<T>(string assetName) where T : UnityEngine.Object
+        public T LoadFormAssetBundle<T>(string assetName, ManifestItem item) where T : UnityEngine.Object
         {
-            ManifestItem item = this.loder.Manifest.GetManifest(assetName);
-
             if (item != null)
             {
                 return LoadFormAssetBundle(assetName, item, typeof(T)) as T;
             }
 
-            Debug.LogError("不存在:" + assetName);
+            BDebug.LogError("不存在:" + assetName);
             return null;
         }
 
@@ -577,7 +491,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 取消所有load任务
         /// </summary>
-        public void LoadCancelAll()
+        public void LoadAllCancel()
         {
             foreach (var tg in allTaskGroupList)
             {
@@ -664,12 +578,10 @@ namespace BDFramework.ResourceMgr.V2
             {
                 curDoTask = this.allTaskGroupList[0];
                 this.allTaskGroupList.RemoveAt(0);
-                var item = loder.Manifest.GetManifest(curDoTask.MainAsset);
-                BDebug.LogFormat(">>>>任务组|id:{0} 任务数:{1} - {2}", curDoTask.Id, curDoTask.TaskQueueNum, item.Path);
                 //开始task
                 curDoTask.DoNextTask();
                 //注册完成回调
-                curDoTask.onTaskCompleteCallback += (a, b) =>
+                curDoTask.OnAllTaskCompleteCallback += (a, b) =>
                 {
                     //
                     DoNextTask();

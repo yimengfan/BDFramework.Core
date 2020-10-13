@@ -217,20 +217,20 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// AssetDataBase 不支持异步加载
         /// </summary>
-        /// <param name="objName"></param>
+        /// <param name="assetName"></param>
         /// <param name="callback"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public int AsyncLoad<T>(string objName, Action<T> callback) where T : UnityEngine.Object
+        public int AsyncLoad<T>(string assetName, Action<T> callback) where T : UnityEngine.Object
         {
             this.TaskCounter++;
-            if (objsMap.ContainsKey(objName))
+            if (objsMap.ContainsKey(assetName))
             {
-                callback(objsMap[objName] as T);
+                callback(objsMap[assetName] as T);
             }
             else
             {
-                var res = Load<T>(objName);
+                var res = Load<T>(assetName);
                 callback(res);
             }
 
@@ -241,30 +241,31 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// assetdatabase 不支持异步，暂时先做个加载，后期用update模拟异步
         /// </summary>
-        /// <param name="assetsPath"></param>
-        /// <param name="onLoadComplete"></param>
+        /// <param name="assetNameList"></param>
         /// <param name="onLoadProcess"></param>
+        /// <param name="onLoadComplete"></param>
         /// <returns></returns>
-        public List<int> AsyncLoad(IList<string>    assetsPath, Action<IDictionary<string, Object>> onLoadComplete,
-                                   Action<int, int> onLoadProcess)
+        public List<int> AsyncLoad(List<string> assetNameList,
+            Action<int, int> onLoadProcess,
+            Action<IDictionary<string, Object>> onLoadComplete)
         {
             //var list = assetsPath.Distinct().ToList();
 
             IDictionary<string, UnityEngine.Object> map        = new Dictionary<string, Object>();
             int                                     curProcess = 0;
             //每帧加载1个
-            IEnumeratorTool.StartCoroutine(TaskUpdate(1, assetsPath, (s, o) =>
+            IEnumeratorTool.StartCoroutine(TaskUpdate(1, assetNameList, (s, o) =>
             {
                 curProcess++;
                 map[s] = o;
                 //
                 if (onLoadProcess != null)
                 {
-                    onLoadProcess(curProcess, assetsPath.Count);
+                    onLoadProcess(curProcess, assetNameList.Count);
                 }
 
                 //
-                if (curProcess == assetsPath.Count)
+                if (curProcess == assetNameList.Count)
                 {
                     if (onLoadComplete != null)
                     {
@@ -292,7 +293,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 取消所有
         /// </summary>
-        public void LoadCancelAll()
+        public void LoadAllCancel()
         {
             willdoTaskSet.Clear();
         }
