@@ -472,7 +472,15 @@ namespace BDFramework.ResourceMgr.V2
             List<string> rets = new List<string>();
             string str;
 
-            str = string.Format(RUNTIME, (floder + "/").ToLower());
+            if (this.loder.Manifest.IsHashName)
+            {
+                str = (floder + "/").ToLower();
+            }
+            else
+            {
+                str = string.Format(RUNTIME, (floder + "/").ToLower());
+            }
+               
 
 
             searchPattern = searchPattern?.ToLower();
@@ -500,11 +508,15 @@ namespace BDFramework.ResourceMgr.V2
                 });
             }
 
-            var count = "runtime/".Length;
-            for (int i = 0; i < rets.Count; i++)
+            if (!this.loder.Manifest.IsHashName)
             {
-                rets[i] = rets[i].Substring(count);
+                var count = "runtime/".Length;
+                for (int i = 0; i < rets.Count; i++)
+                {
+                    rets[i] = rets[i].Substring(count);
+                }
             }
+
 
             return rets.ToArray();
         }

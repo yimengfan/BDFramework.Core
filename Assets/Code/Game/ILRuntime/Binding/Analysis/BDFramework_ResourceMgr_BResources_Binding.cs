@@ -64,7 +64,7 @@ namespace ILRuntime.Runtime.Generated
                     }
                 }
             }
-            args = new Type[]{typeof(System.Collections.Generic.IList<System.String>), typeof(System.Action<System.Int32, System.Int32>), typeof(System.Action<System.Collections.Generic.IDictionary<System.String, UnityEngine.Object>>)};
+            args = new Type[]{typeof(System.Collections.Generic.List<System.String>), typeof(System.Action<System.Int32, System.Int32>), typeof(System.Action<System.Collections.Generic.IDictionary<System.String, UnityEngine.Object>>)};
             method = type.GetMethod("AsyncLoad", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, AsyncLoad_2);
             args = new Type[]{typeof(BDFramework.AssetLoadPath), typeof(System.String)};
@@ -168,18 +168,18 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            System.Collections.Generic.IList<System.String> @objlist = (System.Collections.Generic.IList<System.String>)typeof(System.Collections.Generic.IList<System.String>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Collections.Generic.List<System.String> @objlist = (System.Collections.Generic.List<System.String>)typeof(System.Collections.Generic.List<System.String>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
 
-            //var result_of_this_method ;// = BDFramework.ResourceMgr.BResources.AsyncLoad(@objlist, @onProcess, @onLoadEnd);
+            var result_of_this_method = BDFramework.ResourceMgr.BResources.AsyncLoad(@objlist, @onProcess, @onLoadEnd);
 
-            object obj_result_of_this_method = null;
+            object obj_result_of_this_method = result_of_this_method;
             if(obj_result_of_this_method is CrossBindingAdaptorType)
             {    
                 return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
             }
-            return ILIntepreter.PushObject(__ret, __mStack, null);
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
         static StackObject* Load_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
