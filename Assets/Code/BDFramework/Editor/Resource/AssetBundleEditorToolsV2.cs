@@ -163,6 +163,7 @@ namespace BDFramework.Editor.Asset
                     }
                     else
                     {
+                        if(asset.Value.ABName!= "shaders.ab")
                         Debug.LogError("获取GUID失败：" + asset.Value.ABName);
                     }
 
