@@ -389,13 +389,13 @@
  <HintPath>E:/github.core/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntim.Mono.Cecil">
- <HintPath>E:/github.core/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.4/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
+ <HintPath>E:/github.core/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.5/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Mdb">
- <HintPath>E:/github.core/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.4/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
+ <HintPath>E:/github.core/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.5/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Pdb">
- <HintPath>E:/github.core/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.4/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+ <HintPath>E:/github.core/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.5/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>E:/github.core/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.4.3/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
