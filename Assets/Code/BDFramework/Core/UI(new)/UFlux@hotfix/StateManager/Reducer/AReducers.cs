@@ -95,7 +95,7 @@ namespace BDFramework.UFlux.Reducer
 
 
         /// <summary>
-        /// 添加同步 reducer
+        /// 添加异步 reducer
         /// </summary>
         /// <param name="enum"></param>
         protected void AddAsyncRecucer(Enum @enum,Store<T>.ReducerAsync reducer)
