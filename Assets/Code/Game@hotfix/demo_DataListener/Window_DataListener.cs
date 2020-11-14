@@ -63,7 +63,6 @@ public class Window_DataListener : AWindow
         {
             //演示两种方法监听
             var s2 = DataListenerServer.Create(nameof(Msg_Test001.Msg2));
-            s2.AddData(Msg_Test001.Msg2);
             //主动传递参数
             s2.AddListener<Msg_ParamTest>(Msg_Test001.Msg2, triggerNum: 10, action: (o) =>
             {
@@ -93,8 +92,7 @@ public class Window_DataListener : AWindow
             //获取监听对象 并且注册
             var service = DataListenerServer.GetService(nameof(Msg_Test001));
             //添加数据
-            service.AddData(Msg_Test001.Msg1);
-            
+
             //永久监听
             int count = 0;
             //带类型参数监听
@@ -107,7 +105,7 @@ public class Window_DataListener : AWindow
 
             //监听1次
             //默认object监听
-            service.AddListenerOnce<object>(Msg_Test001.Msg1, (o) =>
+            service.AddListenerOnce(Msg_Test001.Msg1, (o) =>
             {
                 Debug.Log( "监听消息1次，并移除：" +  o);
             });

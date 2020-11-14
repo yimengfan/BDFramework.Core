@@ -10,7 +10,6 @@ namespace BDFramework.DataListener
 
             foreach (var f in fs)
             {
-                AddData(f.Name);
                 SetData(f.Name,f.GetValue(o));
             }
         }

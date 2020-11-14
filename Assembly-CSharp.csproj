@@ -111,9 +111,10 @@
      <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\ABaseDataListenerT.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\ADataListener.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\ADataListenerT.cs" />
+     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerExtensionEnum.cs" />
+     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerExtensionT.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerServer.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerService.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerTools.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListener_Json.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Debugger\@hotfix\DebuggerServerProcessAttribute.cs" />
      <Compile Include="Assets\Code\BDFramework\Core\Debugger\@hotfix\DebuggerServerProcessManager.cs" />
@@ -301,7 +302,6 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_String_Binding_Enumera.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Type_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_List_1_Type_Binding_Enumerato.cs" />
-     <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_Generic_Queue_1_ILTypeInstance_Bindin.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_ICollection_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_IEnumerable_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Analysis\System_Collections_IEnumerator_Binding.cs" />

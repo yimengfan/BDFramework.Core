@@ -19,8 +19,6 @@ namespace Tests
             int count        = 0;
             int compareValue = 100;
             var service      = DataListenerServer.Create(nameof(Msg.test));
-            service.AddData(Msg.test);
-
             service.AddListener(Msg.test, (o) =>
             {
                 //每次自增
@@ -39,7 +37,6 @@ namespace Tests
         public static void AddListener_ValuetypeParams()
         {
             var service = DataListenerServer.Create(nameof(Msg.test));
-            service.AddData(Msg.test);
             service.AddListener<object>(Msg.test, triggerNum: 10, action: (o) =>
             {
                 var i = (int) o;
@@ -58,7 +55,6 @@ namespace Tests
         public static void AddListener_objecttypeParams()
         {
             var service = DataListenerServer.Create(nameof(Msg.test));
-            service.AddData(Msg.test);
             service.AddListener<object>(Msg.test, triggerNum: 10, action: (o) =>
             {
                 Debug.Log("收到值:" + o);
@@ -75,12 +71,11 @@ namespace Tests
             public int test2 = 2;
         }
 
-        [UnitTestAttribute(des:  "参数类型测试")]
+        [UnitTestAttribute(des:  "参数类型测试-name")]
         public static void AddListener_CustomTypeParams()
         {
             int count   = 0;
             var service = DataListenerServer.Create(nameof(Msg.test));
-            service.AddData(Msg.test);
             service.AddListener<Msg_ParamTest>(Msg.test, triggerNum: 10, action: (o) =>
             {
                 //每次自增
@@ -102,13 +97,41 @@ namespace Tests
             Assert.IsPass(true);
         }
 
+        
+        [UnitTestAttribute(des:  "参数类型测试-class")]
+        public static void AddListener_CustomTypeParams2()
+        {
+            int count   = 0;
+            var service = DataListenerServer.Create(nameof(Msg.test));
+            service.AddListener<Msg_ParamTest>( triggerNum: 10, action: (o) =>
+            {
+                //每次自增
+                Debug.Log("直接接受类型 p1 :" + o.test1);
+                Debug.Log("直接接受类型 p2 :" + o.test2);
+            });
+            
+            service.AddListener(Msg.test, triggerNum: 10, action: (o) =>
+            {
+                var _o = o as Msg_ParamTest;
+                //每次自增
+                Debug.Log("param1:" + _o.test1);
+                Debug.Log("param2:" + _o.test2);
+            });
+            
+            service.TriggerEvent(new Msg_ParamTest());
+            
+            DataListenerServer.DelService(nameof(Msg.test));
+            Assert.IsPass(true);
+        }
+        
+        
+        
         [UnitTestAttribute(des:  "触发次数测试")]
         public static void AddListener_TriggerCount()
         {
             int count   = 0;
             int triggerNum = 10;
             var service = DataListenerServer.Create(nameof(Msg.test));
-            service.AddData(Msg.test);
             service.AddListener(Msg.test, triggerNum: triggerNum, action: (o) =>
             {
                 //每次自增
@@ -121,7 +144,7 @@ namespace Tests
             }
             Assert.Equals(count, triggerNum);
             int count2 = 0;
-            service.AddListenerOnce<object>(Msg.test, (o) =>
+            service.AddListenerOnce(Msg.test, (o) =>
             {
                 //测试
                 count2++;
@@ -145,7 +168,6 @@ namespace Tests
             int count2  = 0;
             int count3  = 0;
             var service = DataListenerServer.Create(nameof(Msg.test));
-            service.AddData(Msg.test);
             service.AddListener(Msg.test, order: 10, action: (o) =>
             {
                 //每次自增
@@ -183,15 +205,13 @@ namespace Tests
         {
             int count   = 0;
             var service = DataListenerServer.Create(nameof(Msg.test));
-            service.AddData(Msg.test);
             Action<object> callback = (o) =>
             {
                 //每次自增
                 count++;
             };
             //初始化数据
-            service.AddListener<object>(nameof(Msg.test), triggerNum: 10, order: 10, callback: callback);
-
+            service.AddListener(nameof(Msg.test), triggerNum: 10, order: 10, callback: callback);
             //测试
             for (int i = 0; i < 10; i++)
             {

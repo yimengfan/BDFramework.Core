@@ -2,19 +2,9 @@
 
 namespace BDFramework.DataListener
 {
-    static public class DataListenerTools
+    static public class DataListenerExtensionEnum
     {
         #region 枚举版本
-
-        /// <summary>
-        /// 枚举版本
-        /// </summary>
-        /// <param name="name"></param>
-        static public void AddData(this ADataListener dl, Enum name)
-        {
-            dl.AddData(name.ToString());
-        }
-
         /// <summary>
         /// 枚举版本
         /// </summary>
@@ -79,14 +69,15 @@ namespace BDFramework.DataListener
         {
             dl.AddListener<T>(name.ToString(), action, order, triggerNum, isTriggerCacheData);
         }
-
+        
+        
         /// <summary>
         /// 枚举版本
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
         /// <param name="isTriggerCacheData"></param>
-        static public void AddListenerOnce<T>(this ADataListener dl, Enum name,
+        static public void AddListenerOnce(this ADataListener dl, Enum name,
                                            Action<object>     callback   = null,
                                            int                oder = -1, bool isTriggerCacheData = false)
         {
