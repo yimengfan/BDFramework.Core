@@ -34,16 +34,8 @@ The following charging plug-ins are used. Please purchase and download them your
 UPM Setting:  
 <img src="./BDTemp/Img/upm.png" width = "300" height = "200" div align=center />  
 
-## v1.0版本计划(v1.0 Plan)
+## v1.1版本计划(v1.0 Plan)
 ### [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)  
-1.DevOps工作流加入，CI、CD更加完整  
-2.逐步完成框架层API测试用例 ，ILR下测试框架整合  
-3.Serverless 后端工作流引入
-<br> ~~2020.2 TDD工作流加入~~
-<br> ~~2019.10 完成UI工作流的升级和重构(兼容老版本)~~
-<br> ~~2019.6.30之前 完成新文档的编写(已完成)
-<br> 2018.7 热更新工具整合：代码更新及工具(已完成)
-<br> 2018.8 热更新工具整合：资源更新（已完成）~~  
 ## 贡献者名单
 [@gaojiexx](https://github.com/gaojiexx)  
 [@ricashao](https://github.com/ricashao)  
@@ -51,9 +43,11 @@ UPM Setting:
 ### [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)  
 如果你想加入我们，并贡献代码，请联系我们。QQ:755737878  
 ## 框架特点(Feature)
-   **·TDD工作流、完整的测试用例:**  
+  <img src="./BDTemp/Img/OneKeyBuild.png" width = "300" height = "200" div align=center />  
+  
+  **·TDD工作流、完整的测试用例:**  
   完整的测试用例，保证框架的稳定。
-   
+  
    **·DevOps工作流:**  
    这个还得等一小会~
   
