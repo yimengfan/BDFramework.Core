@@ -142,6 +142,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_Action_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_Action_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Action_1_ILTypeInstance_Binding.Register(app);
+            System_Collections_Generic_Queue_1_ILTypeInstance_Binding.Register(app);
 
             ILRuntime.CLR.TypeSystem.CLRType __clrType = null;
             __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Vector2));
