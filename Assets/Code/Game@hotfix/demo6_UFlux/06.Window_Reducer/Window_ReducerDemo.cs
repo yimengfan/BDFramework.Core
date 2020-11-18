@@ -1,4 +1,5 @@
-﻿using BDFramework.UFlux.Reducer;
+﻿using BDFramework.UFlux.Contains;
+using BDFramework.UFlux.Reducer;
 using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,25 +7,35 @@ using UnityEngine.UI;
 namespace BDFramework.UFlux.Test
 {
     [UI((int)  WinEnum.Win_Demo6_Test006, "Windows/UFlux/demo006/Window_Reducer")]
-    public class Window_ReducerDemo: AWindow<Props_Hero2,State_Hero>
+    public class Window_ReducerDemo: AWindow<P_Hero2>
     {
         public Window_ReducerDemo(string path) : base(path)
         {
         }
-
-
+        
         [TransformPath("btn_RequestNet")]
         private Button btn_RequestNet;
 
-
+        private Store<S_Hero> store;
+        
         public override void Init()
         {
             base.Init();
+
+            store = StoreFactory.CreateStore(new Reducer_Demo06());
+            
+            store.Subscribe((s) =>
+            {
+                //刷新
+                StateToProps(s);
+                //提交修改
+                this.CommitProps();
+            });
             
             this.btn_RequestNet.onClick.AddListener(() =>
             {
                 //触发Reducer
-                this.store.Dispatch(Reducer06Enum.MsgRequestSrver,null);
+                this.store.Dispatch(Reducer_Demo06.Reducer06.RequestHeroData);
             });
         }
 
@@ -32,9 +43,9 @@ namespace BDFramework.UFlux.Test
         /// 这个一定得重写
         /// </summary>
         /// <returns></returns>
-        public override AReducers<State_Hero> CreateReducers()
+        public  AReducers<S_Hero> CreateReducers()
         {
-            return new ReducerDemo06();
+            return new Reducer_Demo06();
         }
         
 
@@ -44,23 +55,23 @@ namespace BDFramework.UFlux.Test
         /// 自行处理
         /// 需要注意的是，不要刷新整个页面，只要刷新部分更新的数值即可
         /// </summary>
-        /// <param name="state"></param>
-        public override void StateToProps(State_Hero state)
+        /// <param name="s"></param>
+        public void StateToProps(S_Hero s)
         {
             //下面逻辑 可以写个函数 批量判断
-            if (state.Name != null&& this.Props.Name != state.Name)
+            if (s.Name != null&& this.Props.Name != s.Name)
             {
-                this.Props.Name = state.Name;
-                this.Props.SetPropertyChange(nameof(Props_Hero2.Name));
+                this.Props.Name = s.Name;
+                this.Props.SetPropertyChange(nameof(P_Hero2.Name));
             }
             
-            if ( this.Props.Hp != state.Hp)
+            if ( this.Props.Hp != s.Hp)
             {
-                this.Props.Hp = state.Hp;
-                this.Props.SetPropertyChange(nameof(Props_Hero2.Hp));
+                this.Props.Hp = s.Hp;
+                this.Props.SetPropertyChange(nameof(P_Hero2.Hp));
                 //这里表现出State不一定跟Props完全一样，
                 //有些ui的渲染状态，需要根据State算出来
-                if (state.Hp < 50)
+                if (s.Hp < 50)
                 {
                     this.Props.HpColor= Color.red;
                 }
@@ -68,12 +79,15 @@ namespace BDFramework.UFlux.Test
                 {
                     this.Props.HpColor = Color.blue;
                 }
+                this.Props.SetPropertyChange(nameof(P_Hero2.HpColor));
             }
-            if (this.Props.MaxHp != state.MaxHp)
+            if (this.Props.MaxHp != s.MaxHp)
             {
-                this.Props.MaxHp = state.MaxHp;
-                this.Props.SetPropertyChange(nameof( Props_Hero2.MaxHp));
+                this.Props.MaxHp = s.MaxHp;
+                this.Props.SetPropertyChange(nameof( P_Hero2.MaxHp));
             }
+            
+
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-using BDFramework.UFlux.Store;
+using BDFramework.UFlux.Contains;
 
 namespace BDFramework.UFlux.Reducer
 {
@@ -31,49 +31,6 @@ namespace BDFramework.UFlux.Reducer
         /// </summary>
         virtual public void RegisterReducers()
         {
-            //这里改为显示注册，以减少使用者的 输入成本
-
-            #region 注释掉过渡设计,直接语法层约束，减少错误成本
-//            var t = this.GetType();
-//            var flag = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-//            foreach (var methodInfo in t.GetMethods(flag))
-//            {
-//                var attr = methodInfo.GetCustomAttributes(typeof(ReducerAttribute), false);
-//                if (attr.Length > 0)
-//                {
-//                    var _attr = attr[0] as ReducerAttribute;
-//
-//                    var action = Delegate.CreateDelegate(typeof(Store<T>.Reducer), this, methodInfo) as Store<T>.Reducer;
-//                    if (action != null)
-//                    {
-//                        ReducersMap[_attr.Reducer] = action;
-//                    }
-//                    else
-//                    {
-//                        BDebug.LogError("reducer 错误:" + methodInfo.Name);
-//                    }
-//                }
-//                else
-//                {
-//                    var asyncAttr = methodInfo.GetCustomAttributes(typeof(AsyncReducerAttribute), false);
-//                    if (asyncAttr.Length > 0)
-//                    {
-//                        var _attr = attr[0] as AsyncReducerAttribute;
-//
-//                        var action = Delegate.CreateDelegate(typeof(Store<T>.AsyncReducer), this, methodInfo) as Store<T>.AsyncReducer;
-//                        if (action != null)
-//                        {
-//                            AsyncReducersMap[_attr.Reducer] = action;
-//                        }
-//                        else
-//                        {
-//                            BDebug.LogError("async reducer 错误:" + methodInfo.Name);
-//                        }
-//                    }
-//                }
-//            }
-
-            #endregion
 
         }
 
@@ -95,7 +52,7 @@ namespace BDFramework.UFlux.Reducer
 
 
         /// <summary>
-        /// 添加异步 reducer
+        /// 添加同步 reducer
         /// </summary>
         /// <param name="enum"></param>
         protected void AddAsyncRecucer(Enum @enum,Store<T>.ReducerAsync reducer)
@@ -139,7 +96,7 @@ namespace BDFramework.UFlux.Reducer
             {
                 return false;
             }
-
+            
             if (this.CallbackReducersMap.ContainsKey(key))
             {
                 return true;

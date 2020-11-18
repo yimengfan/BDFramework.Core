@@ -6,10 +6,7 @@ using UnityEngine.UI;
 
 namespace BDFramework.UFlux.Test
 {
-    /// <summary>
-    /// 这里是渲染状态，用以描述页面渲染
-    /// </summary>
-    public class Props_Hero2: PropsBase
+    public class P_Hero: PropsBase
     {
         
         [TransformPath("Hero/Content/t_Name")]

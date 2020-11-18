@@ -45,7 +45,7 @@ public class Window_CustomLogicBind : AWindow<PropsDemo003Window>
             }
 
             this.Props.SetPropertyChange(nameof(this.Props.StarItems)); //设置属性更改
-            this.SetProps();
+            this.CommitProps();
         });
 
         btn_ChangeOneNode.onClick.AddListener(() =>
@@ -59,7 +59,7 @@ public class Window_CustomLogicBind : AWindow<PropsDemo003Window>
 
             this.Props.SetPropertyChange(nameof(this.Props.OneNodeChange)); //设置属性更改
 
-            this.SetProps();
+            this.CommitProps();
         });
 
         btn_ChangeNodeByInt.onClick.AddListener(() =>
@@ -69,7 +69,7 @@ public class Window_CustomLogicBind : AWindow<PropsDemo003Window>
 
             this.Props.SetPropertyChange(nameof(this.Props.value)); //设置属性更改
 
-            this.SetProps();
+            this.CommitProps();
         });
     }
     

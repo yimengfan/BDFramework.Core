@@ -50,7 +50,7 @@ namespace Game.demo6_UFlux
             //
             this.Props.CotentList.Add(item);
             this.Props.SetPropertyChange(nameof(this.Props.CotentList));//设置属性更改
-            this.SetProps();
+            this.CommitProps();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Game.demo6_UFlux
             
             this.Props.CotentList.RemoveAt(this.Props.CotentList.Count-1);
             this.Props.SetPropertyChange(nameof(this.Props.CotentList));//设置属性更改
-            this.SetProps();
+            this.CommitProps();
         }
 
 

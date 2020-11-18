@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace BDFramework.UFlux.Test
 {
     [UI((int)  WinEnum.Win_Demo6_Test005, "Windows/UFlux/demo005/Window_PropsDemo")]
-    public class Window_PropsDemo:  AWindow<Props_Hero>
+    public class Window_PropsDemo:  AWindow<P_Hero>
     {
         public Window_PropsDemo(string path) : base(path)
         {
@@ -46,8 +46,8 @@ namespace BDFramework.UFlux.Test
                 {
                     this.Props.HpColor = Color.blue;
                 }
-                this.Props.SetAllPropertyChanged();
-                this.SetProps();
+            
+                this.CommitProps();
             });
             
         }

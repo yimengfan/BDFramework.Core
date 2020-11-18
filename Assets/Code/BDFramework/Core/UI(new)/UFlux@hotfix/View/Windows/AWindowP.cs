@@ -15,17 +15,17 @@ namespace BDFramework.UFlux
     /// Window基类
     /// 不带Flux Store
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class AWindow<T> : Component<T>, IWindow, IUIMessage where T : PropsBase, new()
+    /// <typeparam name="TProp"></typeparam>
+    public class AWindow<TProp> : Component<TProp>, IWindow, IUIMessage where TProp : PropsBase, new()
     {
         public AWindow(string path) : base(path)
         {
-            RegisterActions();
+            RegisterUIMessages();
         }
 
         public AWindow(Transform transform) : base(transform)
         {
-            RegisterActions();
+            RegisterUIMessages();
         }
 
 
@@ -34,9 +34,9 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <typeparam name="T1"></typeparam>
         /// <exception cref="NotImplementedException"></exception>
-        public T1 GetProps<T1>() where T1 : PropsBase, new()
+        public TProp GetProps<TProp>() where TProp : PropsBase, new()
         {
-            return this.Props as T1;
+            return this.Props as TProp;
         }
 
         #region UIMessage 
@@ -52,7 +52,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 注册回调
         /// </summary>
-        private void RegisterActions()
+        private void RegisterUIMessages()
         {
             //注册回调
             var t = this.GetType();
@@ -119,25 +119,13 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 注册窗口
         /// </summary>
-        /// <param name="enum"></param>
         /// <param name="win"></param>
-        protected void RegisterSubWindow(int index, IWindow win)
-        {
-            subWindowsMap[index] = win;
-        }
-
-        /// <summary>
-        /// 获取窗口
-        /// </summary>
         /// <param name="enum"></param>
-        /// <typeparam name="T1"></typeparam>
-        /// <returns></returns>
-        public T1 GetSubWindow<T1>(int index)
+        protected void RegisterSubWindow(IWindow win)
         {
-            IWindow win = null;
-            subWindowsMap.TryGetValue(index, out win);
-            return (T1) win;
+            subWindowsMap[win.GetHashCode()] = win;
         }
+        
 
         /// <summary>
         /// 获取窗口

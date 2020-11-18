@@ -154,7 +154,7 @@ namespace BDFramework.UFlux
         #endregion
 
         /// <summary>
-        /// 这里是qian复制，后面会改成深复制
+        /// 这里是浅复制，后面会改成深复制
         /// </summary>
         /// <returns></returns>
         public AStateBase Clone()

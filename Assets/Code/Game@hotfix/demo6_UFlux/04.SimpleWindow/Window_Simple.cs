@@ -1,10 +1,4 @@
-﻿using BDFramework.UFlux.item;
-using BDFramework.UFlux.Reducer;
-using BDFramework.UFlux.Store;
-using BDFramework.UFlux.View.Props;
-using BDFramework.UI;
-using Game.demo6_UFlux;
-using ILRuntime.Runtime;
+﻿using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,9 +49,7 @@ namespace BDFramework.UFlux.UFluxTest004
 
             //注册子窗口
             var trans = this.Transform.Find("SubWindow");
-            var subWin = new SubWindow_Demo004(trans);
-            RegisterSubWindow(SubWindow.testSubWindows001.GetHashCode(),subWin);
-
+            RegisterSubWindow(new SubWindow_Demo004(trans));
             btn_close.onClick.AddListener((() => this.Close()));
             //点击测试 
             btn_OpenSubWin.onClick.AddListener(() =>

@@ -35,15 +35,15 @@ namespace Game.demo6_UFlux
             {
                
                 //这里对当前数据进行赋值
-                this.Props.headImg = "Image/" + (int)UnityEngine.Random.Range(1f, 10.9f);
-                this.Props.content = contentList[(int) UnityEngine.Random.Range(0f, contentList.Count)];
+                this.Props.headImg = "Image/" + (int)Random.Range(1f, 10.9f);
+                this.Props.content = contentList[(int) Random.Range(0f, contentList.Count)];
                 //设置属性修改，
                 //可以不设置，但是默认的对比算法，每次都要反射 对比所有值，效率很差
                 //遇到大规模数据，嵌套，效率会更差
                 this.Props.SetPropertyChange(nameof(this.Props.headImg));
                 this.Props.SetPropertyChange(nameof(this.Props.content));
                 //提交修改数据
-                this.SetProps();
+                this.CommitProps();
                 yield return new WaitForSeconds(2);
             }
            

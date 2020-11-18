@@ -4,24 +4,24 @@ using System.Threading.Tasks;
 using BDFramework.ResourceMgr;
 using BDFramework.UFlux.Reducer;
 
-namespace BDFramework.UFlux.Store
+namespace BDFramework.UFlux.Contains
 {
     /// <summary>
-    /// 这里集中管理
+    /// 一个Store 对应一个 数据状态
     /// </summary>
-    public class Store<T> where T : AStateBase, new()
+    public class Store<S> where S : AStateBase, new()
     {
         /// <summary>
         /// 异步堵塞
         /// </summary>
         /// <param name="oldState"></param>
         /// <param name="params"></param>
-        public delegate Task<T> ReducerAsync(T oldState, object @params = null);
+        public delegate Task<S> ReducerAsync(S oldState, object @params = null);
 
         /// <summary>
         /// 同步
         /// </summary>
-        public delegate T Reducer(T oldState, object @params = null);
+        public delegate S Reducer(S oldState, object @params = null);
 
         /// <summary>
         /// 异步回调方式
@@ -29,15 +29,15 @@ namespace BDFramework.UFlux.Store
         /// <param name="getStateFunc"></param>
         /// <param name="params"></param>
         /// <param name="callback"></param>
-        public delegate void ReducerCallback(GetState getStateFunc, object @params = null, Action<T> callback = null);
+        public delegate void ReducerCallback(GetState getStateFunc, object @params = null, Action<S> callback = null);
 
         /// <summary>
         /// 获取当前State的Delegate,异步接口用来实时获取 
         /// </summary>
-        public delegate T GetState();
+        public delegate S GetState();
 
         //当前State
-        private T state;
+        private S state;
 
         //最大的数据缓存数量
         private int maxStateCacheNum = 20;
@@ -48,33 +48,38 @@ namespace BDFramework.UFlux.Store
         /// <param name="state"></param>
         public Store()
         {
-            this.state = new T();
+            this.state = new S();
         }
 
         #region Reducers
 
-        private AReducers<T> reducers = null;
+        private List<AReducers<S>> reducerList = new List<AReducers<S>>();
 
         /// <summary>
         /// 注册Reducers
         /// </summary>
-        /// <param name="reducers"></param>
-        public void RegisterReducers(AReducers<T> reducers)
+        /// <param name="reducer"></param>
+        public void AddReducer(AReducers<S> reducer)
         {
-            this.reducers = reducers;
+            var paramType = reducer.GetType();
+            var find = this.reducerList.Find((r) => r.GetType() != paramType);
+            if (find == null)
+            {
+                this.reducerList.Add(reducer);
+            }
         }
 
         #endregion
 
         #region 事件分发
 
-        List<Action<T>> callbackList = new List<Action<T>>();
+        List<Action<S>> callbackList = new List<Action<S>>();
 
         /// <summary>
         /// 订阅
         /// </summary>
         /// <param name="callback"></param>
-        public void Subscribe(Action<T> callback)
+        public void Subscribe(Action<S> callback)
         {
             callbackList.Add(callback);
         }
@@ -83,12 +88,15 @@ namespace BDFramework.UFlux.Store
         private List<UFluxAction> taskList = new List<UFluxAction>();
 
         /// <summary>
-        /// 简化版接口
+        /// 分发
         /// </summary>
         /// <param name="actionEnum"></param>
         public void Dispatch(Enum actionEnum, object @params = null)
         {
-            Dispatch(new UFluxAction() {ActionEnum = actionEnum, Params = @params});
+            var action = new UFluxAction() {ActionEnum = actionEnum};
+            action.SetParams(@params);
+            //分发
+            Dispatch(action);
         }
 
         /// <summary>
@@ -99,39 +107,42 @@ namespace BDFramework.UFlux.Store
         async public void Dispatch(UFluxAction action)
         {
             var oldState = GetCurrentState();
-            var ret = this.reducers.IsAsyncLoad(action.ActionEnum);
-            if (!ret) //同步模式
+            
+            foreach (var reducer in reducerList)
             {
-                //先执行await
-                var _newstate = await this.reducers.ExcuteAsync(action.ActionEnum, action.Params, oldState);
-                //再执行普通
-                if (_newstate == null)
-                    _newstate = this.reducers.Excute(action.ActionEnum, action.Params, oldState);
-
-                //素质三连
-                CacheCurrentState();
-                this.state = _newstate;
-                TriggerAllCallback();
-            }
-            else //回调模式
-            {
-                this.reducers.ExcuteByCallback(action.ActionEnum, action.Params, GetCurrentState, (_newState) =>
+                var ret = reducer.IsAsyncLoad(action.ActionEnum);
+                if (!ret) //同步模式
                 {
-                    //素质三连
-                    CacheCurrentState();
-                    this.state = _newState;
-                    TriggerAllCallback();
-                });
+                    //先执行await
+                    var newstate = await reducer.ExcuteAsync(action.ActionEnum, action.Params, oldState);
+                    //再执行普通
+                    if (newstate == null)
+                    {
+                        newstate = reducer.Excute(action.ActionEnum, action.Params, oldState);
+                    }
+
+                    //设置new state
+                    SetNewState(newstate);
+                }
+                else //回调模式
+                {
+                    reducer.ExcuteByCallback(action.ActionEnum, action.Params, GetCurrentState, (newState) =>
+                    {
+                        //设置new state
+                        SetNewState(newState);
+                    });
+                }
             }
+
         }
 
         /// <summary>
         /// 获取实时的State;
         /// </summary>
         /// <returns></returns>
-        private T GetCurrentState()
+        private S GetCurrentState()
         {
-            var newState = state.Clone() as T;
+            var newState = state.Clone() as S;
             return newState;
         }
 
@@ -148,7 +159,6 @@ namespace BDFramework.UFlux.Store
 
         #endregion
 
-
         #region 回溯功能
 
         /// <summary>
@@ -159,19 +169,23 @@ namespace BDFramework.UFlux.Store
         /// <summary>
         /// State集合
         /// </summary>
-        private List<T> stateList = new List<T>();
+        private Queue<S> stateCacheQueue = new Queue<S>();
 
         /// <summary>
         /// 缓存当前State
         /// </summary>
-        public void CacheCurrentState()
+        public void SetNewState(S newState)
         {
-            if (stateList.Count == 20)
+            //缓存
+            if (stateCacheQueue.Count == 20)
             {
-                stateList.RemoveAt(0);
+                stateCacheQueue.Dequeue();
             }
-
-            stateList.Add(this.state);
+            stateCacheQueue.Enqueue(this.state);
+            //设置
+            this.state = newState;
+            //触发
+            TriggerAllCallback();
         }
 
         /// <summary>

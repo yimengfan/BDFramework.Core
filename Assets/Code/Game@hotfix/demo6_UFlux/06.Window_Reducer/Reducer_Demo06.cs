@@ -5,19 +5,23 @@ using LitJson;
 
 namespace BDFramework.UFlux.Test
 {
-    public enum Reducer06Enum
+    /// <summary>
+    /// Reducer 函数处理的集合
+    /// </summary>
+    public class Reducer_Demo06 : AReducers<S_Hero>
     {
-        MsgRequestSrver,
-    }
-
-    public class ReducerDemo06 : AReducers<State_Hero>
-    {
+        public enum Reducer06
+        {
+            //请求英雄属性
+            RequestHeroData,
+        }
+        
         public override void RegisterReducers()
         {
             base.RegisterReducers();
 
             //这里用显式注册，避免函数签名错误
-            this.AddAsyncRecucer(Reducer06Enum.MsgRequestSrver, RequestServer);
+            this.AddAsyncRecucer(Reducer06.RequestHeroData, RequestServer);
         }
 
 
@@ -31,12 +35,12 @@ namespace BDFramework.UFlux.Test
         /// <param name="old"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        async  private Task<State_Hero>RequestServer(State_Hero old, object @param)
+        async  private Task<S_Hero>RequestServer(S_Hero old, object @param)
         {
             var api = url + "api/bdframework/getherodata";
             WebClient  wc=new WebClient();
             string ret = await  wc.DownloadStringTaskAsync(api);
-            var hero = JsonMapper.ToObject<State_Hero>(ret);
+            var hero = JsonMapper.ToObject<S_Hero>(ret);
             return hero;
         }
     }

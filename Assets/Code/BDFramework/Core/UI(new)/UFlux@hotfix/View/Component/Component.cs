@@ -1,6 +1,6 @@
 ﻿using System;
 using BDFramework.UFlux.Reducer;
-using BDFramework.UFlux.Store;
+using BDFramework.UFlux.Contains;
 using BDFramework.UFlux.View.Props;
 using UnityEngine;
 
@@ -161,8 +161,13 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 提交状态
         /// </summary>
-        protected void SetProps()
+        protected void CommitProps(bool isAllPrpertyChanged =false)
         {
+            if (isAllPrpertyChanged)
+            {
+                this.Props.SetAllPropertyChanged();
+            }
+            
             if (this.Props.IsChanged())
             {
                 UFlux.SetComponentValue(this.Transform, this.Props);
