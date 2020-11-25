@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Reflection;
 using System;
-using Newtonsoft.Json;
+using LitJson;
 
 
 namespace BDFramework.Editor.TableData
@@ -153,7 +153,8 @@ namespace BDFramework.Editor.TableData
             }
 
             //生成Json字符串
-            string json = JsonConvert.SerializeObject(table, Newtonsoft.Json.Formatting.None);
+          
+            string json =  JsonMapper.ToJson(table);
 
             json = json.Replace("\"[", "[").Replace("]\"", "]");
             json = json.Replace("\\\"", "\"");

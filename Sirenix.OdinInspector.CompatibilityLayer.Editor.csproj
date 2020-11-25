@@ -299,9 +299,6 @@
  <Reference Include="ICSharpCode.SharpZipLib">
  <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
  </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/NewtonSoft/Newtonsoft.Json.dll</HintPath>
- </Reference>
  <Reference Include="Microsoft.CodeAnalysis.CSharp">
  <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
  </Reference>

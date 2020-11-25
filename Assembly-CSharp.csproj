@@ -607,7 +607,6 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityGBuffer.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\VR\Shaders\Internal-VRDistortion.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityStandardCoreForward.cginc" />
-     <None Include="Assets\Code\BDFramework\Plugins\NewtonSoft\Newtonsoft.Json.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeaves.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResources\Internal-ErrorShader.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Normal-DiffuseDetail.shader" />
@@ -909,9 +908,6 @@
  </Reference>
  <Reference Include="ICSharpCode.SharpZipLib">
  <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
- </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/NewtonSoft/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Microsoft.CodeAnalysis.CSharp">
  <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
