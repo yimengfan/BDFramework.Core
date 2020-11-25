@@ -1,1 +1,0 @@
-﻿[{"Id":1.0,"Name":"寒冰剑","NextLevelID":2.0,"IsPassive":false,"Buffs":[1,2,3],"AttackNum":4.0,"AttackRatio":[1, 0.8, 0.8, 0.8],"AttackCount":1.0,"Icon":"xxx","Des":"使用寒冰剑攻击对手","Effect":"testEffect","EffectType":1.0}]
