@@ -138,9 +138,11 @@ namespace BDFramework.Editor.BuildPackage
                     AssetUploadToServer.Assets2Hash(exportPath, "");
                 }
 
+                BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.AssetBundleFileServerUrl = EditorGUILayout.TextField("文件服务器", BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.AssetBundleFileServerUrl);
                 if (GUILayout.Button("上传到文件服务器[内网测试]", GUILayout.Width(350), GUILayout.Height(30)))
                 {
                     //先不实现,等待使用者实现
+                    //BuildPipeLine_CI.BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
                 }
             }
             GUILayout.EndVertical();
@@ -160,14 +162,13 @@ namespace BDFramework.Editor.BuildPackage
             {
                 Directory.Delete(_outputPath, true);
             }
-            _outputPath = null;
             //1.打包资源
             try
             {
                 //1.搜集keywork
                 ShaderCollection.GenShaderVariant();
                 //2.打包模式
-                var config = BDFrameEditorConfigHelper.EditorConfig.AssetConfig;
+                var config = BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig;
                 AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target,BuildAssetBundleOptions.ChunkBasedCompression,
                     config.IsUseHashName,config.AESCode);
             }

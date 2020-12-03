@@ -43,7 +43,7 @@ namespace Code.BDFramework.Editor
         [BoxGroup("资源设置")]
         [HideLabel]
         [InlinePropertyAttribute]
-        public AssetConfig AssetConfig = new AssetConfig();
+        public BuildAssetConfig BuildAssetConfig = new BuildAssetConfig();
         //
         [DisableInEditorMode]
         public string savepath = "";
@@ -110,11 +110,14 @@ namespace Code.BDFramework.Editor
     /// <summary>
     /// 打包设置
     /// </summary>
-    public class AssetConfig
+    public class BuildAssetConfig
     {
         [LabelText("ASE密钥")]
-        public string AESCode = "bdframe$#@!@#";
+        public string AESCode  = "bdframe$#@!@#";
         [LabelText("是否hash命名")]
         public bool IsUseHashName = false;
+
+        [LabelText("上传接口")]
+        public string AssetBundleFileServerUrl = "http://127.0.0.1:20001";
     }
 }

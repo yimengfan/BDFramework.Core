@@ -63,7 +63,8 @@
      <Compile Include="Assets\Code\BDFramework\Editor\BDEditorLife\BDFrameEditorBehaviorTest.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\BDEditorLife\BDFrameEditorLife.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\CI\AssetUploadToServer.cs" />
-     <Compile Include="Assets\Code\BDFramework\Editor\CI\BuildPipeline\BuildPipeline_CI.cs" />
+     <Compile Include="Assets\Code\BDFramework\Editor\CI\BuildPipeline\BuildPipeLine_CI.cs" />
+     <Compile Include="Assets\Code\BDFramework\Editor\CI\BuildPipeline\EditorBuildPackage.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\CI\EditorWindow_OnekeyBuildAsset.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\Config\BDEditorConfig.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\Config\BDFrameEditorConfigHelper.cs" />

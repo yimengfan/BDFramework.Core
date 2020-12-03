@@ -2,6 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using System.IO;
+using BDFramework.Editor.Asset;
 using BDFramework.Editor.BuildPackage;
 using BDFramework.Editor.EditorLife;
 using Code.BDFramework.Core.Tools;
@@ -10,7 +11,7 @@ using UnityEditor.SceneManagement;
 
 namespace BDFramework.Editor
 {
-    static public class BuildPipeline_CI
+    static public class EditorBuildPackage
     {
 
         public enum BuildMode
@@ -25,15 +26,23 @@ namespace BDFramework.Editor
             "Assets/Scenes/Config/Release.json",
         };
 
+
+        static EditorBuildPackage()
+        {
+            //初始化框架编辑器下
+            BDFrameEditorLife.InitBDEditorLife();
+        }
+        
+
         [MenuItem("BDFrameWork工具箱/打包/BuildAPK(使用当前配置 )")]
-        public static void GenAPKEmpty()
+        public static void EditorBuildAPK_Empty()
         {
             LoadConfig();
             BuildAPK_Empty();
         }
 
         [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Debug-StreamingAsset)")]
-        public static void GenAPKDebug()
+        public static void EditorBuildAPK_Debug()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
@@ -43,28 +52,32 @@ namespace BDFramework.Editor
         }
 
         [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Release-Persistent)")]
-        public static void GenPAK()
+        public static void EditorBuildAPK()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
                 BuildAPK_Release();
             }
         }
-
-
-
+        
         [MenuItem("BDFrameWork工具箱/打包/导出XCode工程(ipa暂未实现)")]
-        public static void GenIpa()
+        public static void EditorBuildIpa()
         {
             BuildIpa();
         }
 
 
+
+
+
         
+        /// <summary>
+        /// 加载场景配置
+        /// </summary>
+        /// <param name="mode"></param>
        
-        static void LoadConfig(BuildMode? mode=null)
+        static public void LoadConfig(BuildMode? mode=null)
         {
-            
             var  scene=  EditorSceneManager.OpenScene(SCENEPATH);
             TextAsset textContent = null;
             if (mode != null)
@@ -77,24 +90,23 @@ namespace BDFramework.Editor
             EditorSceneManager.SaveScene(scene);
         }
 
-        /// <summary>
-        /// 初始化BDFrame
-        /// </summary>
-        public static void InitBDFrame()
-        {
-            BDFrameEditorLife.InitBDEditorLife();
-        }
+
 
 
         #region Android
 
+        /// <summary>
+        /// 构建包体，
+        /// </summary>
         static public void BuildAPK_Empty()
         {
             LoadConfig();
             BuildAPK();
         }
 
-        
+        /// <summary>
+        /// 构建Debug包体
+        /// </summary>
         static public void BuildAPK_Debug()
         {
             LoadConfig(BuildMode.Debug);
@@ -102,6 +114,9 @@ namespace BDFramework.Editor
             BuildAPK();
         }
         
+        /// <summary>
+        /// 构建Release包体
+        /// </summary>
         static public void BuildAPK_Release()
         {
             LoadConfig(BuildMode.Release);
@@ -111,13 +126,11 @@ namespace BDFramework.Editor
 
         
         /// <summary>
-        /// build apk,Assetbunld 位于Streaming下~
+        /// 打包APK
         /// </summary>
         static public void BuildAPK()
         {
 
-            InitBDFrame();
-            
             if (!BDFrameEditorConfigHelper.EditorConfig.IsSetConfig())
             {
                 BDebug.LogError("请注意设置apk keystore账号密码");
@@ -159,19 +172,32 @@ namespace BDFramework.Editor
                 Debug.LogException(new Exception("Build Fail! Please Check the log! "));
             }
         }
+        
+        
         #endregion
         
         #region iOS
-        
-
         /// <summary>
-        /// build apk,Assetbunld 位于Streaming下~
+        /// build Ipa
         /// </summary>
         static public void BuildIpa()
         {
            
         }
-
+        
+        static public void BuildIpa_Empty()
+        {
+           
+        }
+        static public void BuildIpa_Debug()
+        {
+           
+        }
+        
+        static public void BuildIpa_Release()
+        {
+           
+        }
         #endregion
     }
 }
