@@ -5,13 +5,12 @@ using System.Text;
 
 namespace BDFramework.DataListener
 {
-
     /// <summary>
     /// 这个可以自定义任意类型，主要用来做值类型
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ADataListenerT<T>  : ABaseDataListenerT
-    { 
+    public class ADataListenerT<T> : ABaseDataListenerT
+    {
         /// <summary>
         /// 所有的数据
         /// </summary>
@@ -32,27 +31,16 @@ namespace BDFramework.DataListener
 
         public ADataListenerT()
         {
-            dataMap = new Dictionary<string, T>();
-            callbackMap = new Dictionary<string, List<Action<T>>>();
-            valueCacheMap = new Dictionary<string, List<T>>();
+            dataMap         = new Dictionary<string, T>();
+            callbackMap     = new Dictionary<string, List<Action<T>>>();
+            valueCacheMap   = new Dictionary<string, List<T>>();
             onceCallbackMap = new Dictionary<string, List<Action<T>>>();
         }
 
         virtual public void InitData()
         {
         }
-
-        /// <summary>
-        /// 注册数据
-        /// </summary>
-        /// <param name="name"></param>
-        virtual public void AddData(string name)
-        {
-            if (!dataMap.ContainsKey(name))
-            {
-                dataMap[name] = default(T);
-            }
-        }
+        
 
         /// <summary>
         /// 设置数据
@@ -61,15 +49,7 @@ namespace BDFramework.DataListener
         /// <param name="value"></param>
         virtual public void SetData(string name, T value, bool isTriggerCallback = true)
         {
-            if (dataMap.ContainsKey(name))
-            {
-                dataMap[name] = value;
-            }
-            else
-            {
-                BDebug.LogError("设置无效,无该数据:" + name);
-                return;
-            }
+            dataMap[name] = value;
 
             //调用数据改变
             if (isTriggerCallback)
@@ -86,7 +66,6 @@ namespace BDFramework.DataListener
                         onceCallbackMap[name].Remove(a);
                         a(value);
                     }
-                   
                 }
 
                 if (callbackMap.TryGetValue(name, out actions))
@@ -143,7 +122,7 @@ namespace BDFramework.DataListener
                 var _value = dataMap[name];
                 if (_value == null)
                 {
-                    t = default(T);
+                    t             = default(T);
                     dataMap[name] = t;
                 }
                 else
@@ -209,8 +188,7 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        virtual public void AddListenerOnce(string name, Action<T> callback = null,
-            bool isTriggerCacheData = false)
+        virtual public void AddListenerOnce(string name, Action<T> callback = null, bool isTriggerCacheData = false)
         {
             if (dataMap.ContainsKey(name) == false)
             {
@@ -295,15 +273,6 @@ namespace BDFramework.DataListener
             return this.dataMap.Keys.ToList();
         }
 
-
-        /// <summary>
-        /// 是否含有某个值
-        /// </summary>
-        /// <returns></returns>
-        public bool ContainsKey(string name)
-        {
-            return this.dataMap.ContainsKey(name);
-        }
-
+        
     }
 }
