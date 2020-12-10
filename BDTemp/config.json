@@ -20,9 +20,10 @@
     "test" : null,
     "test2" : null
   },
-  "AssetConfig"    : {
+  "BuildAssetConfig" : {
     "AESCode" : "bdframe$#@!@#",
-    "IsUseHashName" : true
+    "IsUseHashName" : false,
+    "AssetBundleFileServerUrl" : "http://127.0.0.1:20000"
   },
-  "savepath"       : "E:/github.core/BDFramework.Core/BDTemp/config.json"
+  "savepath"         : "E:/BDFramework.Core/BDTemp/config.json"
 }
