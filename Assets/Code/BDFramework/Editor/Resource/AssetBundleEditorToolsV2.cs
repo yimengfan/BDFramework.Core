@@ -85,7 +85,7 @@ namespace BDFramework.Editor.Asset
             var _outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform));
             //
             var artOutputPath = IPath.Combine(_outputPath, "Art");
-            var buildInfoPath = IPath.Combine(_outputPath, "BuildInfo.json");
+            var buildInfoPath = IPath.Combine(artOutputPath, "BuildInfo.json");
             //初始化
             allfileHashMap = new Dictionary<string, string>();
             var assetPaths = BDApplication.GetAllAssetsPath();
@@ -112,7 +112,7 @@ namespace BDFramework.Editor.Asset
             //
             if (File.Exists(buildInfoPath))
             {
-                string targetPath = _outputPath + "/BuildInfo.old.json";
+                string targetPath = artOutputPath + "/BuildInfo.old.json";
                 File.Delete(targetPath);
                 File.Move(buildInfoPath, targetPath);
             }
