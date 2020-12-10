@@ -24,3 +24,6 @@
 /Assets/Plugins/Sirenix
 /Assets/Code/BDFramework/github/Ilr/Mono.Cecil/.svn
 /Assets/StreamingAssets/Windows/Art
+/Server/DevServer/.idea
+/Server/DevServer/bin
+/Server/DevServer/obj
