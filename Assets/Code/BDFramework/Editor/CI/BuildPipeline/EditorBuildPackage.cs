@@ -207,7 +207,7 @@ namespace BDFramework.Editor
         
         static public void BuildIpa_Empty()
         {
-           
+            BuildIpa();
         }
         static public void BuildIpa_Debug()
         {
