@@ -75,7 +75,7 @@ namespace BDFramework.Editor.Asset
         /// <param name="target">平台</param>
         /// <param name="options">打包参数</param>
         /// <param name="isHashName">是否为hash name</param>
-        public static void GenAssetBundle(string outputPath,
+        public static bool GenAssetBundle(string outputPath,
             RuntimePlatform platform,
             BuildTarget target,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression,
@@ -124,7 +124,7 @@ namespace BDFramework.Editor.Asset
             if (changedBuildInfo.AssetDataMaps.Count == 0)
             {
                 Debug.Log("无资源改变,不需要打包!");
-                return;
+                return false;
             }
 
             #region 整理依赖关系
@@ -308,6 +308,8 @@ namespace BDFramework.Editor.Asset
             //BD生命周期触发
             BDFrameEditorBehaviorHelper.OnEndBuildAssetBundle(outputPath);
             AssetHelper.AssetHelper.GenPackageBuildInfo(outputPath, platform);
+
+            return true;
         }
 
 

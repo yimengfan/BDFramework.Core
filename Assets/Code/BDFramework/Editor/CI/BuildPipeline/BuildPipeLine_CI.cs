@@ -113,9 +113,12 @@ namespace BDFramework.Editor
             //下载
             DownloadFormFileServer(RuntimePlatform.IPhonePlayer);
             //构建
-            BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
-            //上传
-            UploadFormFileServer(RuntimePlatform.IPhonePlayer);
+           var ret =BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
+            //有资源变更，则上传
+            if (ret)
+            {
+                UploadFormFileServer(RuntimePlatform.IPhonePlayer);
+            }
         }
 
         /// <summary>
@@ -126,21 +129,25 @@ namespace BDFramework.Editor
             //下载
             DownloadFormFileServer(RuntimePlatform.Android);
             //构建
-            BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
-            //上传
-            UploadFormFileServer(RuntimePlatform.Android);
+            var ret = BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
+            //有资源变更，则上传
+            if (ret)
+            {
+                UploadFormFileServer(RuntimePlatform.Android);
+            }
         }
 
         /// <summary>
         /// 构建资源
         /// </summary>
-        private static void BuildAssetBundle(RuntimePlatform platform, BuildTarget target)
+        private static bool BuildAssetBundle(RuntimePlatform platform, BuildTarget target)
         {
             //1.搜集keyword
             ShaderCollection.GenShaderVariant();
             //2.打包模式
             var config = BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig;
-            AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, true, config.AESCode);
+            var ret =  AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, true, config.AESCode);
+            return ret;
         }
 
         #endregion
