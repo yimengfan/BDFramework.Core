@@ -23,8 +23,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     [MenuItem("BDFrameWork工具箱/1.DLL打包", false, (int) BDEditorMenuEnum.BuildPackage_DLL)]
     public static void Open()
     {
-        var window =
-            (EditorWindow_ScriptBuildDll) EditorWindow.GetWindow(typeof(EditorWindow_ScriptBuildDll), false, "DLL打包工具");
+        var window = (EditorWindow_ScriptBuildDll) EditorWindow.GetWindow(typeof(EditorWindow_ScriptBuildDll), false, "DLL打包工具");
         window.Show();
     }
 
@@ -42,14 +41,12 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 //
                 if (GUILayout.Button("1.编译dll(Roslyn-Release)", GUILayout.Width(155), GUILayout.Height(30)))
                 {
-                    RoslynBuild(Application.streamingAssetsPath, Application.platform,
-                        ScriptBuildTools.BuildMode.Release);
+                    RoslynBuild(Application.streamingAssetsPath, Application.platform, ScriptBuildTools.BuildMode.Release);
                 }
 
                 if (GUILayout.Button("编译dll(Roslyn-Debug)", GUILayout.Width(150), GUILayout.Height(30)))
                 {
-                    RoslynBuild(Application.streamingAssetsPath, Application.platform,
-                        ScriptBuildTools.BuildMode.Debug);
+                    RoslynBuild(Application.streamingAssetsPath, Application.platform, ScriptBuildTools.BuildMode.Debug);
                 }
             }
             GUILayout.EndHorizontal();
@@ -118,7 +115,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         //3.预绑定
         //GenPreCLRBinding();
         //4.生成自动分析绑定
-        GenCLRBindingByAnalysis();
+        GenCLRBindingByAnalysis(platform,outpath);
         AssetDatabase.Refresh();
         //触发bd环境周期
         BDFrameEditorBehaviorHelper.OnEndBuildDLL(outpath);
@@ -144,11 +141,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     }
 
 
-    static Type[] manualBindingTypes = new Type[]
-    {
-        typeof(MethodBase), typeof(MemberInfo), typeof(FieldInfo), typeof(MethodInfo), typeof(PropertyInfo),
-        typeof(Component), typeof(Type), typeof(Debug)
-    };
+    static Type[] manualBindingTypes = new Type[] {typeof(MethodBase), typeof(MemberInfo), typeof(FieldInfo), typeof(MethodInfo), typeof(PropertyInfo), typeof(Component), typeof(Type), typeof(Debug)};
 
     /// <summary>
     /// 分析dll生成
@@ -157,17 +150,17 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     /// <param name="dllpath"></param>
     static private void GenCLRBindingByAnalysis(RuntimePlatform platform = RuntimePlatform.Lumin, string dllpath = "")
     {
+        //默认参数
         if (platform == RuntimePlatform.Lumin)
         {
             platform = Application.platform;
         }
-
-        //默认读StreammingAssets下面path
         if (dllpath == "")
         {
-            dllpath = Application.streamingAssetsPath + "/" + BDApplication.GetPlatformPath(platform) + DLLPATH;
+            dllpath = Application.streamingAssetsPath;
         }
-
+        //路径
+        dllpath = dllpath + "/" + BDApplication.GetPlatformPath(platform) + DLLPATH;
         //不参与自动绑定的
         List<Type> excludeTypes = new List<Type>(); //
         excludeTypes.AddRange(manualBindingTypes);
@@ -182,8 +175,8 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
 
         /******************移除已经被绑定的部分****************/
         var analysisClrBinding = IPath.Combine(outputPath, "CLRBindings.cs");
-        var manualPath = "Assets/Code/Game/ILRuntime/Binding/Manual";
-        var prebindingPath = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
+        var manualPath         = "Assets/Code/Game/ILRuntime/Binding/Manual";
+        var prebindingPath     = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
         //手动绑定的所有文件
         var bindingFs = Directory.GetFiles(manualPath, "*.*").ToList();
         if (Directory.Exists(prebindingPath))
@@ -234,12 +227,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     /// <summary>
     /// 黑名单
     /// </summary>
-    static List<Type> blackTypeList = new List<Type>()
-    {
-        typeof(UnityEngine.UI.GraphicRebuildTracker),
-        typeof(UnityEngine.UI.Graphic),
-        typeof(UnityEngine.UI.DefaultControls)
-    };
+    static List<Type> blackTypeList = new List<Type>() {typeof(UnityEngine.UI.GraphicRebuildTracker), typeof(UnityEngine.UI.Graphic), typeof(UnityEngine.UI.DefaultControls)};
 
     /// <summary>
     /// 方法黑名单
@@ -277,7 +265,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
             }
         }
 
-        var output = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
+        var output     = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
         var clrbinding = IPath.Combine(output, "CLRBindings.cs");
         var prebinding = IPath.Combine(output, "PreCLRBinding.cs");
         //
