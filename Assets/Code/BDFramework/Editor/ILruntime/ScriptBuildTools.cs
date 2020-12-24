@@ -12,6 +12,7 @@ using Microsoft.CodeAnalysis.Emit;
 #if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
+
 #endif
 public class ScriptBuildTools
 {
@@ -64,8 +65,8 @@ public class ScriptBuildTools
         List<string> dllFiles = new List<string>();
         List<string> csFiles  = new List<string>();
         //所有宏
-        defineList =new List<string>();
-        
+        defineList = new List<string>();
+
         csFiles = FindDLLByCSPROJ("Assembly-CSharp.csproj", ref dllFiles);
 
         //去重
@@ -75,7 +76,7 @@ public class ScriptBuildTools
 
         #endregion
 
-        var outHotfixPath = Path.Combine(outPath , DLLPATH) ;
+        var outHotfixPath = Path.Combine(outPath, DLLPATH);
 
         if (mode == BuildMode.Release)
         {
@@ -93,15 +94,15 @@ public class ScriptBuildTools
     /// <param name="tempCodePath"></param>
     /// <param name="outBaseDllPath"></param>
     /// <param name="outHotfixDllPath"></param>
-    static public void Build(List<string> baseCs, List<string> hotfixCS, List<string> dllFiles, string outHotfixDllPath,
-                             bool         isdebug = false)
+    static public void Build(List<string> baseCs, List<string> hotfixCS, List<string> dllFiles, string outHotfixDllPath, bool isdebug = false)
     {
         var baseDll = outHotfixDllPath.Replace("hotfix.dll", "Assembly-CSharp.dll");
         //开始执行
         EditorUtility.DisplayProgressBar("编译服务", "[1/2]开始编译base.dll...", 0.5f);
         try
         {
-            BuildByRoslyn(dllFiles.ToArray(), baseCs.ToArray(), baseDll, false);
+            //使用宏编译
+            BuildByRoslyn(dllFiles.ToArray(), baseCs.ToArray(), baseDll, false, true);
         }
         catch (Exception e)
         {
@@ -192,15 +193,14 @@ public class ScriptBuildTools
             {
                 foreach (XmlNode item in childNode.ChildNodes)
                 {
-                    if (item.Name =="DefineConstants")
+                    if (item.Name == "DefineConstants")
                     {
                         var define = item.InnerText;
 
                         var defines = define.Split(';');
-                        
+
                         defineList.AddRange(defines);
                     }
-                    
                 }
             }
         }
@@ -234,7 +234,7 @@ public class ScriptBuildTools
     /// </summary>
     /// <param name="rootpaths"></param>
     /// <param name="output"></param>
-    static public bool BuildByRoslyn(string[] dlls, string[] codefiles, string output, bool isdebug = false,bool isUseDefine =false)
+    static public bool BuildByRoslyn(string[] dlls, string[] codefiles, string output, bool isdebug = false, bool isUseDefine = false)
     {
         if (Application.platform == RuntimePlatform.OSXEditor)
         {
@@ -253,17 +253,29 @@ public class ScriptBuildTools
 
         //添加语法树
         //宏解析
-        var                                     Symbols = defineList;
-        List<Microsoft.CodeAnalysis.SyntaxTree> codes   = new List<Microsoft.CodeAnalysis.SyntaxTree>();
-        CSharpParseOptions opa = null;
+        //移除editor相关宏
+        for (int i = defineList.Count - 1; i >= 0; i--)
+        {
+            var symbol = defineList[i];
+            if (symbol.Contains("UNITY_EDITOR"))
+            {
+                defineList.RemoveAt(i);
+            }
+        }
+
+        var Symbols = defineList;
+
+        List<Microsoft.CodeAnalysis.SyntaxTree> codes = new List<Microsoft.CodeAnalysis.SyntaxTree>();
+        CSharpParseOptions                      opa   = null;
         if (isUseDefine)
         {
             opa = new CSharpParseOptions(LanguageVersion.Latest, preprocessorSymbols: Symbols);
         }
         else
         {
-            opa= new CSharpParseOptions(LanguageVersion.Latest);
+            opa = new CSharpParseOptions(LanguageVersion.Latest);
         }
+
         foreach (var cs in codefiles)
         {
             //判断文件是否存在
@@ -292,15 +304,11 @@ public class ScriptBuildTools
         CSharpCompilationOptions option = null;
         if (isdebug)
         {
-            option = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
-                                                  optimizationLevel: OptimizationLevel.Debug, warningLevel: 4,
-                                                  allowUnsafe: true);
+            option = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, optimizationLevel: OptimizationLevel.Debug, warningLevel: 4, allowUnsafe: true);
         }
         else
         {
-            option = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
-                                                  optimizationLevel: OptimizationLevel.Release, warningLevel: 4,
-                                                  allowUnsafe: true);
+            option = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, optimizationLevel: OptimizationLevel.Release, warningLevel: 4, allowUnsafe: true);
         }
 
         //创建编译器代理
@@ -313,9 +321,8 @@ public class ScriptBuildTools
         }
         else
         {
-            var pdbPath = output + ".pdb";
-            var emitOptions = new EmitOptions(debugInformationFormat: DebugInformationFormat.PortablePdb,
-                                              pdbFilePath: pdbPath);
+            var pdbPath     = output + ".pdb";
+            var emitOptions = new EmitOptions(debugInformationFormat: DebugInformationFormat.PortablePdb, pdbFilePath: pdbPath);
             using (var dllStream = new MemoryStream())
             using (var pdbStream = new MemoryStream())
             {
@@ -329,10 +336,7 @@ public class ScriptBuildTools
         // 编译失败，提示
         if (!result.Success)
         {
-            IEnumerable<Diagnostic> failures = result.Diagnostics.Where(diagnostic =>
-                                                                            diagnostic.IsWarningAsError ||
-                                                                            diagnostic.Severity ==
-                                                                            DiagnosticSeverity.Error);
+            IEnumerable<Diagnostic> failures = result.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);
 
             foreach (var diagnostic in failures)
             {
