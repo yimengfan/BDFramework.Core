@@ -34,7 +34,7 @@ namespace Tests
         static public void Select()
         {
             //单条件查询
-            var ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").ToSearch<APITestHero>();
+            var ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").FromAll<APITestHero>();
 
             if (Assert.Equals(ds.Count, 1))
             {
@@ -45,12 +45,12 @@ namespace Tests
         [UnitTest(des:  "Or And语句查询")]
         static public void Select_OR_And()
         {
-            var ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").And.Where("id < 3").ToSearch<APITestHero>();
+            var ds = SqliteHelper.DB.GetTableRuntime().Where("id > 1").And.Where("id < 3").FromAll<APITestHero>();
             Debug.Log(JsonMapper.ToJson(ds));
             Assert.Equals(ds.Count, 1);
             Assert.Equals(ds[0].Id, 2d);
             
-            ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").Or.Where("id = 3").ToSearch<APITestHero>();
+            ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").Or.Where("id = 3").FromAll<APITestHero>();
             Debug.Log(JsonMapper.ToJson(ds));
             Assert.Equals(ds.Count, 2);
             Assert.Equals(ds[1].Id, 3d);
@@ -60,14 +60,14 @@ namespace Tests
         [UnitTest(des:  "Where and 批量查询")]
         static public void MultiSelect_WhereAnd()
         {
-            var ds = SqliteHelper.DB.GetTableRuntime().WhereAnd("id", "=", 1, 2).ToSearch<APITestHero>();
+            var ds = SqliteHelper.DB.GetTableRuntime().WhereAnd("id", "=", 1, 2).FromAll<APITestHero>();
             Assert.Equals(ds.Count, 0);
         }
 
         [UnitTest(des:  "Where or 批量查询")]
         static public void MultiSelect_WhereOr()
         {
-            var ds = SqliteHelper.DB.GetTableRuntime().WhereOr("id", "=", 2, 3).ToSearch<APITestHero>();
+            var ds = SqliteHelper.DB.GetTableRuntime().WhereOr("id", "=", 2, 3).FromAll<APITestHero>();
 
             Assert.Equals(ds.Count, 2);
             Assert.Equals(ds[0].Id, 2d);

@@ -200,23 +200,35 @@ namespace SQLite4Unity3d
         /// forilruntime
         /// </summary>
         /// <returns></returns>
-        public List<T> ToSearch<T>(string selection = "*") where T : new()
+        public T From<T>(string selection = "*") where T : class, new()
         {
-            var type = typeof(T);
-            var DataCache = new List<T>();
+            var rets = FromAll<T>(selection);
+            if (rets.Count > 1)
+            {
+                return rets[0];
+            }
+
+            return null;
+        }
+
+        public List<T> FromAll<T>(string selection = "*") where T : new()
+        {
+            var type    = typeof(T);
+            var results = new List<T>();
             //查询所有数据
-            var cmd = GenerateCommand(selection, type.Name);
-            BDebug.Log(cmd);
+            var cmd  = GenerateCommand(selection, type.Name);
             var list = cmd.ExecuteQuery(typeof(T));
             foreach (var o in list)
             {
                 var t = (T) o;
-                DataCache.Add(t);
+                results.Add(t);
             }
 
-            return DataCache;
+            return results;
         }
-
+        
+        
+        
         #endregion
     }
 }
