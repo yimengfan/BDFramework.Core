@@ -378,13 +378,16 @@
  <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntim.Mono.Cecil">
- <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.5/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Mdb">
- <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.5/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Pdb">
- <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.5/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Burst.Unsafe">
+ <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.burst@1.4.6/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.4.3/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>

@@ -209,6 +209,7 @@
      <Compile Include="Assets\Code\BDFramework\github\Telepathy\SafeQueue.cs" />
      <Compile Include="Assets\Code\BDFramework\github\Telepathy\Server.cs" />
      <Compile Include="Assets\Code\BDFramework\github\Telepathy\Utils.cs" />
+     <Compile Include="Assets\Code\Game\GameViewUtils.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Adapter\AdapterRegister.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Adapter\ExceptionAdapter.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Adapter\IAsyncStateMachineAdapter.cs" />
@@ -356,6 +357,7 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Debug_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Delegate\ILRuntimeDelegateHelper.cs" />
      <Compile Include="Assets\Code\Game\LocalGameStart.cs" />
+     <Compile Include="Assets\Code\Game\StartPageTest.cs" />
      <Compile Include="Assets\Code\Game\WindowPreconfig.cs" />
      <Compile Include="Assets\Code\Game@hotfix\HotfixCheck.cs" />
      <Compile Include="Assets\Code\Game@hotfix\HotfixGameStart.cs" />
@@ -673,8 +675,14 @@
  <Reference Include="Unity.RenderPipelines.Universal.Shaders">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Burst">
+ <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Burst.Editor">
+ <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.RenderPipelines.Core.Editor">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
@@ -700,11 +708,17 @@
  <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Mathematics">
+ <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.ScriptableBuildPipeline">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.ShaderGraph.Editor">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics.Editor">
+ <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
@@ -989,13 +1003,16 @@
  <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntim.Mono.Cecil">
- <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.5/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Mdb">
- <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.5/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Pdb">
- <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.5/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Burst.Unsafe">
+ <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.burst@1.4.6/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Unity3d/2019.4.21f1c1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
