@@ -10,19 +10,19 @@ namespace BDFramework.Sql
    {
        
        //
-       static private SQLiteService _dbservice;
+       static private SQLiteService dbservice;
        
        //现在是热更层不负责加载,只负责使用
        static public SQLiteService DB
        {
            get
            {
-               if (_dbservice == null|| _dbservice.IsClose)
+               if (dbservice == null|| dbservice.IsClose)
                {
-                   _dbservice = new SQLiteService(SqliteLoder.Connection);
+                   dbservice = new SQLiteService(SqliteLoder.Connection);
                }
 
-               return _dbservice;
+               return dbservice;
            }
        }
 

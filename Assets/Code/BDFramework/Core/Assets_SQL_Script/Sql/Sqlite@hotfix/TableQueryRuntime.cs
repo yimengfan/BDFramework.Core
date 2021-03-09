@@ -203,7 +203,7 @@ namespace SQLite4Unity3d
         public T From<T>(string selection = "*") where T : class, new()
         {
             var rets = FromAll<T>(selection);
-            if (rets.Count > 1)
+            if (rets.Count > 0)
             {
                 return rets[0];
             }
