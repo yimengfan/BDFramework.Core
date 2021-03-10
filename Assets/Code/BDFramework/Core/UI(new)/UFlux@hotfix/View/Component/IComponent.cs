@@ -28,6 +28,11 @@ namespace BDFramework.UFlux
         /// 异步加载
         /// </summary>
         void AsyncLoad(Action callback);
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        void Init();
         /// <summary>
         /// 打开
         /// </summary>

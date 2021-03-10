@@ -124,7 +124,7 @@ namespace BDFramework.UFlux
         protected void RegisterSubWindow(IWindow win)
         {
             subWindowsMap[win.GetHashCode()] = win;
-            (win as AWindow).Init();
+            (win as IComponent).Init();
         }
         
 
