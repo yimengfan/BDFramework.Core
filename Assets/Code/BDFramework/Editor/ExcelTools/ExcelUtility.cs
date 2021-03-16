@@ -6,6 +6,7 @@ using System.Text;
 using System.Reflection;
 using System;
 using LitJson;
+using UnityEngine;
 
 
 namespace BDFramework.Editor.TableData
@@ -131,7 +132,8 @@ namespace BDFramework.Editor.TableData
 
             if (skipLineCount == -1)
             {
-                throw new Exception("表格数据可能有错,没发现Id字段,请检查");
+              Debug.LogError("表格数据可能有错,没发现Id字段,请检查");
+              return "{}";
             }
 
             //
@@ -144,8 +146,19 @@ namespace BDFramework.Editor.TableData
                 {
                     //读取第1行数据作为表头字段
                     string field = mSheet.Rows[skipLineCount][j].ToString();
+                    //跳过空字段
+                    if (string.IsNullOrEmpty(field))
+                    {
+                        continue;
+                    }
                     //Key-Value对应
-                    row[field] = mSheet.Rows[i][j];
+                    var rowdata = mSheet.Rows[i][j];
+                    //跳过空ID
+                    if (field == "Id" && rowdata == null)
+                    {
+                        continue;
+                    }
+                    row[field] = rowdata;
                 }
 
                 //添加到表数据中

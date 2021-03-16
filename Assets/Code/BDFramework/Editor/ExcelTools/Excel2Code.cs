@@ -229,7 +229,7 @@ Excel格式如下:
             if (Selection.activeObject == null)
                 return false;
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            if (!path.StartsWith("Assets/Resource/Table") || !path.EndsWith(".xlsx"))
+            if (!path.EndsWith(".xlsx"))
                 return false;
             return true;
         }
