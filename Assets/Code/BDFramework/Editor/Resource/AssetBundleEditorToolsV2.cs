@@ -252,8 +252,12 @@ namespace BDFramework.Editor.Asset
                     {
                         key = key.Substring(index + 1);  // 保留runtime
                     }
-                  
-                    key = key.Replace(Path.GetExtension(key), "");
+
+                    var exten = Path.GetExtension(key);
+                    if (!string.IsNullOrEmpty(exten))
+                    {
+                        key = key.Replace(exten, "");
+                    }
                     //添加manifest
                     var mi = new ManifestItem(item.Value.ABName, (ManifestItem.AssetTypeEnum) item.Value.Type,
                         new List<string>(item.Value.DependList));
