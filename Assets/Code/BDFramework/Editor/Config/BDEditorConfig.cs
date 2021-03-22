@@ -118,6 +118,6 @@ namespace Code.BDFramework.Editor
         public bool IsUseHashName = false;
 
         [LabelText("上传接口")]
-        public string AssetBundleFileServerUrl = "http://127.0.0.1:20001";
+        public string AssetBundleFileServerUrl = "http://127.0.0.1:20000";
     }
 }

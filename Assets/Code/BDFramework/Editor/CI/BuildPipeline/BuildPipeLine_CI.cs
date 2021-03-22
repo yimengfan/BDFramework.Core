@@ -6,6 +6,7 @@ using System.Net;
 using System.Runtime.Serialization.Json;
 using BDFramework.Editor.Asset;
 using BDFramework.Editor.EditorLife;
+using CI;
 using Code.BDFramework.Core.Tools;
 using Code.BDFramework.Editor;
 using LitJson;
@@ -86,7 +87,7 @@ namespace BDFramework.Editor
                 return (T) targetObj;
             }
 
-            return (T)new object();
+            return (T) new object();
         }
     }
 
@@ -99,7 +100,11 @@ namespace BDFramework.Editor
             //初始化编辑器
             BDFrameEditorLife.InitBDEditorLife();
             //
-            outputPath = Application.streamingAssetsPath;
+            outputPath = BDApplication.ProjectRoot+"/CI_TEMP";
+            if (!Directory.Exists(outputPath))
+            {
+                Directory.CreateDirectory(outputPath);
+            }
         }
 
 
@@ -113,12 +118,19 @@ namespace BDFramework.Editor
             //下载
             DownloadFormFileServer(RuntimePlatform.IPhonePlayer);
             //构建
-           var ret =BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
-            //有资源变更，则上传
+            var ret = BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
             if (ret)
             {
+                //执行打包后上传
                 UploadFormFileServer(RuntimePlatform.IPhonePlayer);
             }
+            else
+            {
+                Debug.LogError("未有资源变动，无需上传!");
+            }
+            //删除目录防止下次导入
+            var localPath = string.Format("{0}/{1}/Art", outputPath, BDApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer));
+            Directory.Delete(localPath,true);
         }
 
         /// <summary>
@@ -130,11 +142,19 @@ namespace BDFramework.Editor
             DownloadFormFileServer(RuntimePlatform.Android);
             //构建
             var ret = BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
-            //有资源变更，则上传
             if (ret)
             {
+                //执行打包后上传
                 UploadFormFileServer(RuntimePlatform.Android);
             }
+            else
+            {
+                Debug.LogError("未有资源变动，无需上传!");
+            }
+            //删除目录防止下次导入
+            var localPath = string.Format("{0}/{1}/Art", outputPath, BDApplication.GetPlatformPath(RuntimePlatform.Android));
+            Directory.Delete(localPath,true);
+            
         }
 
         /// <summary>
@@ -146,8 +166,7 @@ namespace BDFramework.Editor
             ShaderCollection.GenShaderVariant();
             //2.打包模式
             var config = BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig;
-            var ret =  AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, true, config.AESCode);
-            return ret;
+            return AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, true, config.AESCode);
         }
 
         #endregion
@@ -172,21 +191,25 @@ namespace BDFramework.Editor
 
         static public void BuildAndroidDebug()
         {
+            outputPath = Application.streamingAssetsPath;
             BuildPackage(RuntimePlatform.Android, EditorBuildPackage.BuildMode.Debug);
         }
 
         static public void BuildAndroidRelease()
         {
+            outputPath = Application.streamingAssetsPath;
             BuildPackage(RuntimePlatform.Android, EditorBuildPackage.BuildMode.Release);
         }
 
         static public void BuildIOSDebug()
         {
+            outputPath = Application.streamingAssetsPath;
             BuildPackage(RuntimePlatform.IPhonePlayer, EditorBuildPackage.BuildMode.Debug);
         }
 
         static public void BuildIOSRelease()
         {
+            outputPath = Application.streamingAssetsPath;
             BuildPackage(RuntimePlatform.IPhonePlayer, EditorBuildPackage.BuildMode.Release);
         }
 
@@ -221,10 +244,14 @@ namespace BDFramework.Editor
             if (platform == RuntimePlatform.Android)
             {
                 EditorBuildPackage.BuildAPK();
+                //上传APK
+                UploadAPK();
             }
             else if (platform == RuntimePlatform.IPhonePlayer)
             {
-                EditorBuildPackage.BuildIpa();
+                //测试构建
+                BuildTest.BuildIPA();
+                //EditorBuildPackage.BuildIpa();
             }
 
             //最后上传
@@ -244,7 +271,8 @@ namespace BDFramework.Editor
             GetLastUploadFiles,
             Upload,
             Download,
-            GetLastVersion
+            GetLastVersion,
+            UploadAPK,
         }
 
 
@@ -280,6 +308,7 @@ namespace BDFramework.Editor
                 Debug.LogError(response.Msg);
                 return false;
             }
+
             var fs        = response.GetContent<List<string>>();
             var fileQueue = new Queue<string>();
             foreach (var f in fs)
@@ -390,6 +419,49 @@ namespace BDFramework.Editor
             webclient.Dispose();
 
             Debug.Log("所有ab上传成功,版本号:" + version);
+        }
+
+        #endregion
+
+        #region 上传APK
+        
+        private static void UploadAPK()
+        {
+            var outdir = BDApplication.ProjectRoot + "/Build";
+            var apkPath = IPath.Combine(  outdir,  Application.productName+".apk");
+            if (!File.Exists(apkPath))
+            {
+                Debug.LogError("不存在APK文件!!");
+                throw new Exception("不存在APK文件!!");
+                return;   
+            }
+            var url = BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.AssetBundleFileServerUrl + "/APK";
+            var protocol = $"{url}/{nameof(ABServer_Protocol.UploadAPK)}";
+            var webclient = new WebClient();
+            int maxErrorCount = 10;
+            bool isSuccess = true;
+            for (int i = 0; i < maxErrorCount; i++)
+            {
+                try
+                {
+                    webclient.UploadFile(protocol, apkPath);
+                }
+                catch (Exception e)
+                {
+                    if (i == maxErrorCount - 1)
+                    {
+                        Debug.LogError(e.Message);
+                        Debug.Log($"失败次数过多 {protocol}");
+                        throw new Exception("失败次数过多 {protocol}!!");
+                        isSuccess = false;
+                    }
+                }
+            }
+            webclient.Dispose();
+            if (isSuccess)
+            {
+                Debug.Log("APK上传成功!");
+            }
         }
 
         #endregion

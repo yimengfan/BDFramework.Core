@@ -169,7 +169,7 @@ namespace BDFramework.Editor
             else
             {
 
-                Debug.LogException(new Exception("Build Fail! Please Check the log! "));
+                Debug.LogError(new Exception("Build Fail! Please Check the log! "));
             }
         }
         
@@ -182,32 +182,12 @@ namespace BDFramework.Editor
         /// </summary>
         static public void BuildIpa()
         {
-            //
-            var outdir = BDApplication.ProjectRoot + "/Build";
-            //文件夹处理
-            if (!Directory.Exists(outdir))
-            {
-                Directory.CreateDirectory(outdir);
-            }
-            //清空StreamingAsset
-            var android = IPath.Combine(Application.streamingAssetsPath, "Android");
-            if (Directory.Exists(android))
-            {
-                Directory.Delete(android, true);
-            }
-            var win = IPath.Combine(Application.streamingAssetsPath, "Windows");
-            if (Directory.Exists(win)) 
-            {
-                Directory.Delete(win, true);
-            }
-            //开始构建XCode
-            string[] scenes = { SCENEPATH };
-            BuildPipeline.BuildPlayer(scenes, outdir, BuildTarget.iOS,BuildOptions.None);
+           
         }
         
         static public void BuildIpa_Empty()
         {
-            BuildIpa();
+           
         }
         static public void BuildIpa_Debug()
         {

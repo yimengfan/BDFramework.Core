@@ -24,7 +24,6 @@ namespace BDFramework.Editor.TableData
                 
                 float counter = 1f;
                 foreach (var excel in excelList)
-                {
                     Excel2SQLiteTools.Excel2SQLite(excel);
                     EditorUtility.DisplayProgressBar("自动导表", excel, counter / excelList.Count);
                     counter++;
