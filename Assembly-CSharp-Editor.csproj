@@ -76,6 +76,7 @@
      <Compile Include="Assets\Code\BDFramework\Editor\ExcelTools\EditorWindow_Table.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\ExcelTools\Excel2Code.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\ExcelTools\Excel2SQLiteTools.cs" />
+     <Compile Include="Assets\Code\BDFramework\Editor\ExcelTools\ExcelImporter.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\ExcelTools\ExcelTools.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\ExcelTools\ExcelUtility.cs" />
      <Compile Include="Assets\Code\BDFramework\Editor\ILruntime\EditorWindow_ScriptBuildDll.cs" />

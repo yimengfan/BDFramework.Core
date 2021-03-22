@@ -88,6 +88,7 @@ namespace BDFramework.Editor.TableData
 
         /// <summary>
         /// excel导出sqlite
+        /// 需要主动连接数据库
         /// </summary>
         /// <param name="filePath"></param>
         public static void Excel2SQLite(string filePath)
