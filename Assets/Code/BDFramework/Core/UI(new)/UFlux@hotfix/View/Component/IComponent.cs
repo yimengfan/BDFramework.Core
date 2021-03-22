@@ -18,12 +18,14 @@ namespace BDFramework.UFlux
         /// 是否打开
         /// </summary>
         bool IsOpen { get; }
-        
+
         bool IsDestroy { get; }
+
         /// <summary>
         /// 同步加载
         /// </summary>
         void Load();
+
         /// <summary>
         /// 异步加载
         /// </summary>
@@ -33,6 +35,7 @@ namespace BDFramework.UFlux
         /// 初始化
         /// </summary>
         void Init();
+
         /// <summary>
         /// 打开
         /// </summary>
@@ -47,6 +50,7 @@ namespace BDFramework.UFlux
         /// 帧更新
         /// </summary>
         void Update();
+
         /// <summary>
         /// 删除
         /// </summary>

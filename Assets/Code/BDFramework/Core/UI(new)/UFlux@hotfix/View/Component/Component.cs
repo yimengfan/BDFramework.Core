@@ -18,6 +18,7 @@ namespace BDFramework.UFlux
         /// 资源节点
         /// </summary>
         public Transform Transform { get; private set; }
+        
         /// <summary>
         /// 是否加载
         /// </summary>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using BDFramework.DataListener;
 using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.View.Props;
 using ILRuntime.Runtime;
@@ -21,13 +22,19 @@ namespace BDFramework.UFlux
         public AWindow(string path) : base(path)
         {
             RegisterUIMessages();
+            State = new DataListenerService();
         }
 
         public AWindow(Transform transform) : base(transform)
         {
             RegisterUIMessages();
+            State = new DataListenerService();
         }
 
+        /// <summary>
+        /// 状态管理
+        /// </summary>
+        public ADataListener State { get; private set; }
 
         /// <summary>
         /// 获取Props
@@ -110,6 +117,8 @@ namespace BDFramework.UFlux
             }
         }
 
+
+
         #endregion
 
         #region 子窗口
@@ -119,15 +128,30 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 注册窗口
         /// </summary>
-        /// <param name="win"></param>
+        /// <param name="subwin"></param>
         /// <param name="enum"></param>
-        protected void RegisterSubWindow(IWindow win)
+        protected void RegisterSubWindow(IWindow subwin)
         {
-            subWindowsMap[win.GetHashCode()] = win;
-            (win as IComponent).Init();
+            subWindowsMap[subwin.GetHashCode()] = subwin;
+            (subwin as IComponent).Init();
+            subwin.SetParent(this);
         }
         
 
+        /// <summary>
+        /// 父节点
+        /// </summary>
+        public IWindow Parent { get; private set; }
+
+        /// <summary>
+        /// 设置父节点
+        /// </summary>
+        /// <param name="window"></param>
+        public void SetParent(IWindow window)
+        {
+            this.Parent = window;
+        }
+        
         /// <summary>
         /// 获取窗口
         /// </summary>

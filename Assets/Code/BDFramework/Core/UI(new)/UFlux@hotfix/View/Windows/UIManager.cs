@@ -339,12 +339,12 @@ namespace BDFramework.UFlux
                 }
                 else
                 {
-                    Debug.LogErrorFormat("UI未加载或已经处于close状态：{0}", uiIndex);
+                    Debug.LogErrorFormat("UI未加载或已经处于close状态：{0}", index.ToString());
                 }
             }
             else
             {
-                Debug.LogErrorFormat("不存在UI：{0}", uiIndex);
+                Debug.LogErrorFormat("不存在UI：{0}", index.ToString());
             }
         }
 
