@@ -73,7 +73,7 @@
      <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
      <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />
      <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\EditorCoroutines\EditorCoroutines.cs" />
-     <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\EditorTest.cs" />
+     <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\EditorGUIHelper.cs" />
      <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\ExcelTools\EditorWindow_Table.cs" />
      <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\ExcelTools\Excel2Code.cs" />
      <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\ExcelTools\Excel2SQLiteTools.cs" />
@@ -89,7 +89,6 @@
      <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Resource\AssetBundleEditorToolsV2.cs" />
      <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Resource\EditorWindow_GenAssetBundle.cs" />
      <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Resource\ShaderCollection.cs" />
-     <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Tools\EditorGUIHelper.cs" />
      <Compile Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\UIComponent\OverrideUIComponent.cs" />
      <None Include="E:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\BDFramework.Editor.asmdef" />
  <Reference Include="ILRuntime">
