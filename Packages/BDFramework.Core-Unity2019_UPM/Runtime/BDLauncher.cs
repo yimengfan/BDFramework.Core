@@ -68,6 +68,7 @@ namespace BDFramework
         {
             Inst = this;
             this.gameObject.AddComponent<IEnumeratorTool>();
+            this.gameObject.AddComponent<BDebug>();
             //框架配置
             LoadFrameConfig();
             //游戏配置
