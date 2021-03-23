@@ -440,24 +440,6 @@
  <Reference Include="System.Xml.XPath.XDocument">
  <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
- <Reference Include="Sirenix.OdinInspector.Attributes">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.OdinInspector.Editor">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Serialization.Config">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Serialization">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Utilities">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Utilities.Editor">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
- </Reference>
  <Reference Include="ILRuntim.Mono.Cecil">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
@@ -472,6 +454,24 @@
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.4.3/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Serialization">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Utilities">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Utilities.Editor">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.OdinInspector.Editor">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.OdinInspector.Attributes">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Serialization.Config">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
@@ -841,10 +841,6 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{BF016426-C7F0-D5D6-ACF4-3C6340AB86C3}</Project>
       <Name>Assembly-CSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.csproj">
-      <Project>{340E62B0-F825-70D7-F27F-06D2670E83C5}</Project>
-      <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
     </ProjectReference>
     <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj">
       <Project>{5F4F3FDC-43F8-2A47-55F5-00E66F1587B4}</Project>

@@ -400,6 +400,7 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorBarkOptimized.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\GIDebug\ShowLightMask.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityStereoSupport.glslinc" />
+     <None Include="Assets\3rdPlugins\Sirenix\Assemblies\Sirenix.Utilities.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Particle VertexLit Blended.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Alpha-Parallax.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Mobile\Mobile-Lightmap-Unlit.shader" />
@@ -416,6 +417,7 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\VR\Shaders\BlitTexArraySliceToDepth.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorBark.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Utils\BrushPreview.shader" />
+     <None Include="Assets\3rdPlugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Reflect-Glossy.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Alpha-VertexLit.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Utils\GenNormalmap.shader" />
@@ -427,6 +429,7 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Alpha-Diffuse.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\SpeedTreeBillboardCommon.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Normal-Glossy.shader" />
+     <None Include="Assets\3rdPlugins\Sirenix\Assemblies\Sirenix.Serialization.Config.xml" />
      <None Include="Assets\Code\BDFramework\Plugins\Roslyn\System.Reflection.Metadata.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResources\Internal-Clear.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResources\Internal-Skinning.compute" />
@@ -479,8 +482,10 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\UI\UI-Unlit-Transparent.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityStandardConfig.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityCG.cginc" />
+     <None Include="Assets\3rdPlugins\Sirenix\Assemblies\NoEditor\Sirenix.Serialization.dll.backup.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Trees\CameraFacingBillboardTree.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Splats\DiffuseBaseGen.shader" />
+     <None Include="Assets\3rdPlugins\Sirenix\Assemblies\Sirenix.Serialization.Config.dll.backup.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\VideoDecode.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Particle Multiply.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResources\Internal-Colored.shader" />
@@ -517,6 +522,7 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Splats\AddPass.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\VR\Shaders\BlitFromTex2DToTexArraySlice.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Particle Blend.shader" />
+     <None Include="Assets\3rdPlugins\Sirenix\Assemblies\NoEmitAndNoEditor\Sirenix.Serialization.dll.backup.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Illumin-Parallax.shader" />
      <None Include="Assets\Code\BDFramework\github\Reademe.txt" />
      <None Include="Assets\Code\Game\ILRuntime\Binding\这里放置CLRbinding.txt" />
@@ -541,7 +547,9 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\AlphaTest-BumpSpec.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\HLSLSupport.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Internal-Flare.shader" />
+     <None Include="Assets\3rdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Particle Premultiply Blend.shader" />
+     <None Include="Assets\3rdPlugins\Sirenix\Assemblies\NoEmitAndNoEditor\Sirenix.Utilities.dll.backup.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Utils\TerrainLayerUtils.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeavesRendertex.shader" />
      <None Include="Assets\Code\BDFramework\Core\DataListener\readme.txt" />
@@ -563,6 +571,7 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Cubemaps\CubeCopy.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityInstancing.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeavesOptimized.shader" />
+     <None Include="Assets\3rdPlugins\Sirenix\Readme.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityStereoExtensions.glslinc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\UI\UI-Unlit-Detail.shader" />
      <None Include="Assets\Code\BDFramework\Plugins\Roslyn\System.Collections.Immutable.xml" />
@@ -584,6 +593,7 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Alpha-BumpSpec.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Splats\Standard-BaseGen.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TextCore-SDF-SSD.shader" />
+     <None Include="Assets\3rdPlugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Nature\SpeedTree8.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\AutoLight.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\GIDebug\UV1sAsPositions.shader" />
@@ -608,6 +618,7 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityGBuffer.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\VR\Shaders\Internal-VRDistortion.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityStandardCoreForward.cginc" />
+     <None Include="Assets\3rdPlugins\Sirenix\Assemblies\link.xml.backup.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeaves.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResources\Internal-ErrorShader.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Normal-DiffuseDetail.shader" />
@@ -625,6 +636,7 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorNormalRendertex.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Splats\Specular-Base.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Splats\Standard-AddPass.shader" />
+     <None Include="Assets\3rdPlugins\Sirenix\Assemblies\NoEditor\Sirenix.Utilities.dll.backup.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Normal-BumpSpec.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityStandardParticles.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Utils\CrossBlendNeighbors.shader" />
@@ -979,24 +991,6 @@
  <Reference Include="System.Xml.XPath.XDocument">
  <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
- <Reference Include="Sirenix.OdinInspector.Attributes">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.OdinInspector.Editor">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Serialization.Config">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Serialization">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Utilities">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Utilities.Editor">
- <HintPath>E:/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
- </Reference>
  <Reference Include="ILRuntim.Mono.Cecil">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
@@ -1008,6 +1002,24 @@
  </Reference>
  <Reference Include="Unity.Burst.Unsafe">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.burst@1.4.6/Unity.Burst.Unsafe.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Serialization">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Utilities">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Utilities.Editor">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.OdinInspector.Editor">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.OdinInspector.Attributes">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Serialization.Config">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Unity3d/2019.4.21f1c1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -1362,10 +1374,6 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.csproj">
-      <Project>{340E62B0-F825-70D7-F27F-06D2670E83C5}</Project>
-      <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj">
       <Project>{5F4F3FDC-43F8-2A47-55F5-00E66F1587B4}</Project>
       <Name>Sirenix.OdinInspector.CompatibilityLayer.Editor</Name>

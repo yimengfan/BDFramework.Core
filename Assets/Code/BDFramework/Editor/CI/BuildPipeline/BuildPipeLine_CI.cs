@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.Serialization.Json;
 using BDFramework.Editor.Asset;
 using BDFramework.Editor.EditorLife;
-using CI;
 using Code.BDFramework.Core.Tools;
 using Code.BDFramework.Editor;
 using LitJson;
 using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace BDFramework.Editor
@@ -250,7 +247,7 @@ namespace BDFramework.Editor
             else if (platform == RuntimePlatform.IPhonePlayer)
             {
                 //测试构建
-                BuildTest.BuildIPA();
+               // BuildTest.BuildIPA();
                 //EditorBuildPackage.BuildIpa();
             }
 
