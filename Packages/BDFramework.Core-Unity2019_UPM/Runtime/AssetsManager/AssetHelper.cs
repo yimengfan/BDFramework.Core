@@ -3,7 +3,7 @@ using System.Collections;
 using System.IO;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
-using Code.BDFramework.Core.Tools;
+using BDFramework.Core.Tools;
 using LitJson;
 using UnityEngine;
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Code.BDFramework.Core.Tools;
+using BDFramework.Core.Tools;
 using UnityEditor;
 
 namespace BDFramework.Editor.DevOps

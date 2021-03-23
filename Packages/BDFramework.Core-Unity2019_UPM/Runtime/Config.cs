@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
-using Code.BDFramework.Core.Tools;
+using BDFramework.Core.Tools;
 using LitJson;
 using Sirenix.OdinInspector;
 using UnityEngine;

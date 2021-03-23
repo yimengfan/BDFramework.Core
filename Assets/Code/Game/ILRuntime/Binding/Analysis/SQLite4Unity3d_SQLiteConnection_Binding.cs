@@ -48,7 +48,7 @@ namespace ILRuntime.Runtime.Generated
                     lst.Add(m);
                 }
             }
-            args = new Type[]{typeof(Code.BDFramework.UnitTest.Test.APITestHero)};
+            args = new Type[]{typeof(BDFramework.UnitTest.Test.APITestHero)};
             if (genericMethods.TryGetValue("DropTable", out lst))
             {
                 foreach(var m in lst)
@@ -62,7 +62,7 @@ namespace ILRuntime.Runtime.Generated
                     }
                 }
             }
-            args = new Type[]{typeof(Code.BDFramework.UnitTest.Test.APITestHero)};
+            args = new Type[]{typeof(BDFramework.UnitTest.Test.APITestHero)};
             if (genericMethods.TryGetValue("CreateTable", out lst))
             {
                 foreach(var m in lst)
@@ -183,7 +183,7 @@ namespace ILRuntime.Runtime.Generated
             SQLite4Unity3d.SQLiteConnection instance_of_this_method = (SQLite4Unity3d.SQLiteConnection)typeof(SQLite4Unity3d.SQLiteConnection).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
-            var result_of_this_method = instance_of_this_method.DropTable<Code.BDFramework.UnitTest.Test.APITestHero>();
+            var result_of_this_method = instance_of_this_method.DropTable<BDFramework.UnitTest.Test.APITestHero>();
 
             __ret->ObjectType = ObjectTypes.Integer;
             __ret->Value = result_of_this_method;
@@ -204,7 +204,7 @@ namespace ILRuntime.Runtime.Generated
             SQLite4Unity3d.SQLiteConnection instance_of_this_method = (SQLite4Unity3d.SQLiteConnection)typeof(SQLite4Unity3d.SQLiteConnection).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
-            var result_of_this_method = instance_of_this_method.CreateTable<Code.BDFramework.UnitTest.Test.APITestHero>(@createFlags);
+            var result_of_this_method = instance_of_this_method.CreateTable<BDFramework.UnitTest.Test.APITestHero>(@createFlags);
 
             __ret->ObjectType = ObjectTypes.Integer;
             __ret->Value = result_of_this_method;

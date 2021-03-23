@@ -2,7 +2,7 @@ using System.IO;
 using System.Net.Mime;
 using UnityEngine;
 
-namespace Code.BDFramework.Editor
+namespace BDFramework.Editor
 {
     static public class BDFrameEditorConfigHelper
     {

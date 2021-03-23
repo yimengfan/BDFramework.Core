@@ -2,8 +2,8 @@
 using UnityEditor;
 using UnityEngine;
 using BDFramework.Editor.Tools;
-using Code.BDFramework.Core.Tools;
-using Code.BDFramework.Editor;
+using BDFramework.Core.Tools;
+using BDFramework.Editor;
 
 namespace BDFramework.Editor.Asset
 {

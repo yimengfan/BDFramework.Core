@@ -4,6 +4,13 @@ using UnityEngine;
 
 namespace BDFramework.Editor.TestRunner
 {
+    // public enum BDEditorMenuEnum
+    // {
+    //     //测试用例
+    //     //Testrunner
+    //     TestRunnerEditor =151,
+    // }
+
     /// <summary>
     /// 测试
     /// </summary>
@@ -15,7 +22,9 @@ namespace BDFramework.Editor.TestRunner
         [MenuItem("BDFrameWork工具箱/执行框架UnitTest-API", false, (int) BDEditorMenuEnum.TestRunnerEditor)]
         public static void UnitTest()
         {
-            BDFramework.UnitTest.TestRunner.RunAPIUnitTest();
+           // BDFramework.UnitTest.TestRunner.RunAPIUnitTest();
+           // TestRunner.TestRunnerEditor.RunILRuntimeTest();
+            
         }
 
 

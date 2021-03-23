@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Reflection;
-using Code.BDFramework.Core.Tools;
+using BDFramework.Core.Tools;
 using UnityEngine;
 
 namespace BDFramework

@@ -4,8 +4,8 @@ using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
-using Code.BDFramework.Core.Tools;
-using Code.BDFramework.Editor;
+using BDFramework.Core.Tools;
+using BDFramework.Editor;
 using UnityEditor;
 using UnityEngine;
 

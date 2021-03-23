@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-namespace Code.BDFramework.Core.Tools
+namespace BDFramework.Core.Tools
 {
     /// <summary>
     /// 职责类似Unity的Application

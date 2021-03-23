@@ -5,8 +5,8 @@ using System.IO;
 using BDFramework.Editor.Asset;
 using BDFramework.Editor.BuildPackage;
 using BDFramework.Editor.EditorLife;
-using Code.BDFramework.Core.Tools;
-using Code.BDFramework.Editor;
+using BDFramework.Core.Tools;
+using BDFramework.Editor;
 using UnityEditor.SceneManagement;
 
 namespace BDFramework.Editor

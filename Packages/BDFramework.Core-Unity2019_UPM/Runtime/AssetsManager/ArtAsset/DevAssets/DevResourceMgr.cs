@@ -6,7 +6,7 @@ using System.IO;
 using System.Collections;
 using System.Linq;
 using BDFramework.ResourceMgr.V2;
-using Code.BDFramework.Core.Tools;
+using BDFramework.Core.Tools;
 using UnityEditor;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;

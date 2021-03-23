@@ -2,7 +2,7 @@
 using System.IO;
 using BDFramework;
 using BDFramework.VersionContrller;
-using Code.BDFramework.Core.Tools;
+using BDFramework.Core.Tools;
 using UnityEngine;
 using UnityEngine.UI;
 

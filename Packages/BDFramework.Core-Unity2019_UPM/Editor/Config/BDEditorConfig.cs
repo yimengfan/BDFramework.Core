@@ -3,7 +3,7 @@ using LitJson;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Code.BDFramework.Editor
+namespace BDFramework.Editor
 {
     public class BDEditorConfig
     {
@@ -19,30 +19,30 @@ namespace Code.BDFramework.Editor
         
         [BoxGroup("Android设置")]
         [HideLabel]
-        [InlinePropertyAttribute]
+        [InlineProperty]
         public AndroidConfig Android = new AndroidConfig();
         
         
         [BoxGroup("Ios设置")]
         [HideLabel]
-        [InlinePropertyAttribute]
+        [InlineProperty]
         public IosConfig IosConfig =new IosConfig();
         
         
         [BoxGroup("Android设置[debug]")]
         [HideLabel]
-        [InlinePropertyAttribute]
+        [InlineProperty]
         public AndroidConfig AndroidDebug = new AndroidConfig();
         
         [BoxGroup("Ios设置[debug]")]
         [HideLabel]
-        [InlinePropertyAttribute]
+        [InlineProperty]
         public IosConfig IosConfigDebug =new IosConfig();
 
 
         [BoxGroup("资源设置")]
         [HideLabel]
-        [InlinePropertyAttribute]
+        [InlineProperty]
         public BuildAssetConfig BuildAssetConfig = new BuildAssetConfig();
         //
         [DisableInEditorMode]

@@ -9,13 +9,13 @@ using BDFramework;
 using BDFramework.AssetHelper;
 using BDFramework.Editor.Tools;
 using BDFramework.GameStart;
-using ILRuntime.Runtime.CLRBinding;
 using Tool;
 using Debug = UnityEngine.Debug;
 using BDFramework.DataListener;
 using BDFramework.Editor;
 using BDFramework.Editor.EditorLife;
-using Code.BDFramework.Core.Tools;
+using BDFramework.Core.Tools;
+using ILRuntime.Runtime.CLRBinding;
 using UnityEngine.UI;
 
 public class EditorWindow_ScriptBuildDll : EditorWindow

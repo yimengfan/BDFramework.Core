@@ -304,9 +304,6 @@
  <Reference Include="Sirenix.Utilities.Editor">
  <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Debug.log">
- <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Debug/Debug.log.dll</HintPath>
- </Reference>
  <Reference Include="Excel">
  <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Excel/Excel.dll</HintPath>
  </Reference>
@@ -379,6 +376,9 @@
  <Reference Include="System.Xml.XPath.XDocument">
  <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
+ <Reference Include="System">
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/System/System.dll</HintPath>
+ </Reference>
  <Reference Include="ILRuntim.Mono.Cecil">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
@@ -388,17 +388,8 @@
  <Reference Include="ILRuntime.Mono.Cecil.Pdb">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Burst.Unsafe">
- <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.burst@1.4.6/Unity.Burst.Unsafe.dll</HintPath>
- </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.4.3/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
- </Reference>
- <Reference Include="ChannelPurchase">
- <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.xiaomi@1.0.3/ChannelPurchase.dll</HintPath>
- </Reference>
- <Reference Include="UnityStore">
- <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.xiaomi@1.0.3/UnityStore.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>

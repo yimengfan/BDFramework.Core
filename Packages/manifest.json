@@ -1,13 +1,10 @@
 {
   "dependencies": {
     "com.ourpalm.ilruntime": "1.6.6",
-    "com.unity.burst": "1.4.6",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.3",
     "com.unity.render-pipelines.universal": "7.4.3",
-    "com.unity.scriptablebuildpipeline": "1.15.2",
     "com.unity.ugui": "1.0.0",
-    "com.unity.xiaomi": "1.0.3",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",

@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ourpalm.ilruntime": "1.6.5"
+        "com.ourpalm.ilruntime": "1.6.6"
       }
     },
     "com.ourpalm.ilruntime": {
@@ -13,15 +13,6 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.cn"
-    },
-    "com.unity.burst": {
-      "version": "1.4.6",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.mathematics": "1.2.1"
-      },
       "url": "https://packages.unity.cn"
     },
     "com.unity.ext.nunit": {
@@ -47,13 +38,6 @@
       "dependencies": {},
       "url": "https://packages.unity.cn"
     },
-    "com.unity.mathematics": {
-      "version": "1.2.1",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.cn"
-    },
     "com.unity.render-pipelines.core": {
       "version": "7.4.3",
       "depth": 1,
@@ -71,13 +55,6 @@
         "com.unity.render-pipelines.core": "7.4.3",
         "com.unity.shadergraph": "7.4.3"
       },
-      "url": "https://packages.unity.cn"
-    },
-    "com.unity.scriptablebuildpipeline": {
-      "version": "1.15.2",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.cn"
     },
     "com.unity.shadergraph": {
@@ -108,13 +85,6 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
-    },
-    "com.unity.xiaomi": {
-      "version": "1.0.3",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.cn"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

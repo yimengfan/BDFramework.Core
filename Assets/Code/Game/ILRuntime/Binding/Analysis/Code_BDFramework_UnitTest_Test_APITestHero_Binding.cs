@@ -21,7 +21,7 @@ namespace ILRuntime.Runtime.Generated
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(Code.BDFramework.UnitTest.Test.APITestHero);
+            Type type = typeof(BDFramework.UnitTest.Test.APITestHero);
             args = new Type[]{typeof(System.Double)};
             method = type.GetMethod("set_Id", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, set_Id_0);
@@ -46,7 +46,7 @@ namespace ILRuntime.Runtime.Generated
             System.Double @value = *(double*)&ptr_of_this_method->Value;
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            Code.BDFramework.UnitTest.Test.APITestHero instance_of_this_method = (Code.BDFramework.UnitTest.Test.APITestHero)typeof(Code.BDFramework.UnitTest.Test.APITestHero).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            BDFramework.UnitTest.Test.APITestHero instance_of_this_method = (BDFramework.UnitTest.Test.APITestHero)typeof(BDFramework.UnitTest.Test.APITestHero).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.Id = value;
@@ -61,7 +61,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            Code.BDFramework.UnitTest.Test.APITestHero instance_of_this_method = (Code.BDFramework.UnitTest.Test.APITestHero)typeof(Code.BDFramework.UnitTest.Test.APITestHero).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            BDFramework.UnitTest.Test.APITestHero instance_of_this_method = (BDFramework.UnitTest.Test.APITestHero)typeof(BDFramework.UnitTest.Test.APITestHero).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.Id;
@@ -77,7 +77,7 @@ namespace ILRuntime.Runtime.Generated
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
-            var result_of_this_method = new Code.BDFramework.UnitTest.Test.APITestHero();
+            var result_of_this_method = new BDFramework.UnitTest.Test.APITestHero();
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }

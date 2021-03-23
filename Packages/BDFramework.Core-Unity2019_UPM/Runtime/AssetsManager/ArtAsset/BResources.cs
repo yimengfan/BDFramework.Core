@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using BDFramework.ResourceMgr.V2;
-using Code.BDFramework.Core.Tools;
+using BDFramework.Core.Tools;
 using UnityEngine.Rendering;
 
 namespace BDFramework.ResourceMgr

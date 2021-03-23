@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections;
 using System.Linq;
-using Code.BDFramework.Core.Tools;
+using BDFramework.Core.Tools;
 using UnityEngine.U2D;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;

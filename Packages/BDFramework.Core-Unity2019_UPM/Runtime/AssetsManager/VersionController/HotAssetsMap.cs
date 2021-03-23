@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Code.BDFramework.Core.Tools;
+using BDFramework.Core.Tools;
 using UnityEngine;
 
 namespace BDFramework.VersionContrller

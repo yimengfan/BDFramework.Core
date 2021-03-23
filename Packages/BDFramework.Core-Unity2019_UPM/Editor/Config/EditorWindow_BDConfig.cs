@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Code.BDFramework.Editor
+namespace BDFramework.Editor
 {
     public class EditorWindow_BDConfig : OdinEditorWindow
     {

@@ -1,12 +1,8 @@
 using System;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Text;
-using BDFramework.ResourceMgr;
 using BDFramework.VersionContrller;
 using LitJson;
-using NUnit.Framework.Constraints;
 using UnityEditor;
 using UnityEngine;
 namespace BDFramework.Editor.BuildPackage

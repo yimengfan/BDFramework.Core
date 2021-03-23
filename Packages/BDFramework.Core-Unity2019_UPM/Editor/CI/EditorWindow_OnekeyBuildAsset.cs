@@ -4,8 +4,8 @@ using UnityEditor;
 using UnityEngine;
 using BDFramework.Editor.TableData;
 using BDFramework.Editor.Asset;
-using Code.BDFramework.Core.Tools;
-using Code.BDFramework.Editor;
+using BDFramework.Core.Tools;
+using BDFramework.Editor;
 using Sirenix.Utilities.Editor;
 
 namespace BDFramework.Editor.BuildPackage

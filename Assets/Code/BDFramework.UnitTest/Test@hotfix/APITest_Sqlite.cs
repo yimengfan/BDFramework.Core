@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using BDFramework.Sql;
 using BDFramework.UnitTest;
-using Code.BDFramework.UnitTest.Test;
+using BDFramework.UnitTest.Test;
 using Game.Data;
 using LitJson;
 using SQLite4Unity3d;
