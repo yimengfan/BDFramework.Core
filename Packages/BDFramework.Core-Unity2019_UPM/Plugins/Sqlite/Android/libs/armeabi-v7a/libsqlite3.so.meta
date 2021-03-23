@@ -12,25 +12,25 @@ PluginImporter:
   validateReferences: 1
   platformData:
   - first:
-      '': OSXIntel
+      : OSXIntel
     second:
       enabled: 0
       settings:
         CPU: AnyCPU
   - first:
-      '': OSXIntel64
+      : OSXIntel64
     second:
       enabled: 0
       settings:
         CPU: AnyCPU
   - first:
-      '': SamsungTV
+      : SamsungTV
     second:
       enabled: 0
       settings:
         STV_MODEL: STANDARD_13
   - first:
-      '': WP8
+      : WP8
     second:
       enabled: 0
       settings:
