@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "com.bdframework.core": {
+      "version": "file:BDFramework.Core-Unity2019_UPM",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.ourpalm.ilruntime": "1.6.5"
+      }
+    },
     "com.ourpalm.ilruntime": {
       "version": "1.6.6",
       "depth": 0,
@@ -100,6 +108,13 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "com.unity.xiaomi": {
+      "version": "1.0.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.cn"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

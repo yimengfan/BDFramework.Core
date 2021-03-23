@@ -65,12 +65,6 @@
      <Compile Include="Assets\3rdPlugins\Dotween\DOTween\Modules\DOTweenModuleUI.cs" />
      <Compile Include="Assets\3rdPlugins\Dotween\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
      <Compile Include="Assets\3rdPlugins\Dotween\DOTween\Modules\DOTweenModuleUtils.cs" />
-     <Compile Include="Assets\Code\BDFramework.Component\Localization\L2Image.cs" />
-     <Compile Include="Assets\Code\BDFramework.Component\Localization\L2Text.cs" />
-     <Compile Include="Assets\Code\BDFramework.Component\UIComponent\IButton.cs" />
-     <Compile Include="Assets\Code\BDFramework.Component\UIComponent\PageList\PageGrid.cs" />
-     <Compile Include="Assets\Code\BDFramework.Component\UIComponent\PageList\PageList.cs" />
-     <Compile Include="Assets\Code\BDFramework.Component\UIComponent\PageList\PageListDemo.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Core\Assert@hotfix.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Core\Attribute\HotfixUnitTestAttribute.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Core\Attribute\UnitTestAttribute.cs" />
@@ -87,123 +81,6 @@
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_Sqlite.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\APITest_UIManager.cs" />
      <Compile Include="Assets\Code\BDFramework.UnitTest\Test@hotfix\LogicTest_BDFrameworkStartCheck.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\ArtAsset\AssetBundle\LoaderTaskGroup.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleMgrV2.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleWapper.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\ArtAsset\AssetBundle\V2\ManifestConfig.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\ArtAsset\AssetBundle\V2\ManifestItem.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\ArtAsset\AssetBundle\V2\ManifestLoder.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\ArtAsset\BResources.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\ArtAsset\IResMgr.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\AssetHelper.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Script\Binding\ValueType\QuaternionBinder.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Script\Binding\ValueType\Vector2Binder.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Script\Binding\ValueType\Vector3Binder.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Script\Binding\ValueType\Vector4Binder.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Script\ILRuntimeHelper.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Script\ScriptLoder.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Sql\Sqlite\SQLite3.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Sql\Sqlite\SQLite3DllImport.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Sql\Sqlite\SqliteLoder.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Sql\Sqlite\TableMaping.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Sql\Sqlite@hotfix\SQLiteService.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Sql\Sqlite@hotfix\SqliteHelper.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Sql\Sqlite@hotfix\TableQuery.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\Sql\Sqlite@hotfix\TableQueryRuntime.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\VersionController\HotAssetsMap.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\AssetsManager\VersionController\VersionContorller.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\BDLauncher.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\BDLauncherBridge@hotfix.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Config.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\ABaseDataListenerT.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\ADataListener.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\ADataListenerT.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerExtensionEnum.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerExtensionT.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerServer.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListenerService.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\DataListener\@hotfix\DataListener_Json.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Debugger\@hotfix\DebuggerServerProcessAttribute.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Debugger\@hotfix\DebuggerServerProcessManager.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Debugger\@hotfix\IDebuggerServerProcess.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Debugger\core\DebuggerNetworkTools.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Debugger\core\Debugger_NetworkClient.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Debugger\core\Debugger_NetworkServer.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\GameStart\GameStartAtrribute.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\GameStart\IGameStart.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\ManagerBase\@hotfix\IMgr.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\ManagerBase\@hotfix\ManagerBase.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\ScreenNavigation\@hotfix\IScreenView.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\ScreenNavigation\@hotfix\ScreenViewAttribute.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\ScreenNavigation\@hotfix\ScreenViewCenter.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\ScreenNavigation\@hotfix\ScreenViewManager.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Tools\Adaptor\@hotfix\ActionAdaptor.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Tools\BDApplication.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Tools\BGameObjectPools.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Tools\FileHelper.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Tools\HashHelper.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Tools\IEnumerator\IEnumeratorTool.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\Tools\Path.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\Extension\ObjectsExtension.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\State\AStateBase.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\State\IPropertyChange.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\State\IState.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\State\StateBase.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\State\StateFactory.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\StateManager\Reducer\AReducers.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\StateManager\Reducer\Attribute\AsyncReducerAttribute.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\StateManager\Reducer\Attribute\ReducerAttribute.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\StateManager\Reducer\UFluxAction.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\StateManager\Store\StoreFactory.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\StateManager\Store\StoreT.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\UFlux.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\UFlux_AutoSetTransform.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Atrribute\Component.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Atrribute\ComponentValueBind.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Atrribute\TransformPath.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Component\AComponent.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Component\Component.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Component\IComponent.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Component\ISubComponent.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\ComponentAdaptor\AComponentAdaptor.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\ComponentAdaptor\ComponentAdaptor_Button.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\ComponentAdaptor\ComponentAdaptor_IButton.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\ComponentAdaptor\ComponentAdaptor_Image.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\ComponentAdaptor\ComponentAdaptor_Text.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\ComponentAdaptor\CustomLogicAdaptor_TransformChild.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\ComponentAdaptor\CustomLogicAdaptor_UFluxAutoLogic.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\ComponentAdaptor\Manager\ComponentValueAdaptorAttribute.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\ComponentAdaptor\Manager\ComponentValueAdaptorManager.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Props\PropsBase.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Windows\AWindow.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Windows\AWindowP.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Windows\Attribute\UIAttribute.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Windows\Attribute\UIMessageAttribute.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Windows\Interface\IUIMessage.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Windows\Interface\IWindow.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Windows\UIManager.cs" />
-     <Compile Include="Assets\Code\BDFramework\Core\UI\UFlux@hotfix\View\Windows\UIMessageData.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\LitJson\IJsonWrapper.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\LitJson\JsonData.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\LitJson\JsonException.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\LitJson\JsonMapper.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\LitJson\JsonMockWrapper.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\LitJson\JsonReader.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\LitJson\JsonWriter.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\LitJson\Lexer.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\LitJson\ParserToken.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\Myjson\MyJson.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\Myjson\MyJsonCompress.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\Telepathy\Client.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\Telepathy\Common.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\Telepathy\EventType.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\Telepathy\Logger.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\Telepathy\Message.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\Telepathy\NetworkStreamExtensions.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\Telepathy\SafeQueue.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\Telepathy\Server.cs" />
-     <Compile Include="Assets\Code\BDFramework\github\Telepathy\Utils.cs" />
      <Compile Include="Assets\Code\Game\GameViewUtils.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Adapter\AdapterRegister.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Adapter\ExceptionAdapter.cs" />
@@ -350,6 +227,10 @@
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\System_Type_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Component_Binding.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Binding\Manual\UnityEngine_Debug_Binding.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\ValueType\QuaternionBinder.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\ValueType\Vector2Binder.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\ValueType\Vector3Binder.cs" />
+     <Compile Include="Assets\Code\Game\ILRuntime\Binding\ValueType\Vector4Binder.cs" />
      <Compile Include="Assets\Code\Game\ILRuntime\Delegate\ILRuntimeDelegateHelper.cs" />
      <Compile Include="Assets\Code\Game\LocalGameStart.cs" />
      <Compile Include="Assets\Code\Game\StartPageTest.cs" />
@@ -430,11 +311,9 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\SpeedTreeBillboardCommon.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Normal-Glossy.shader" />
      <None Include="Assets\3rdPlugins\Sirenix\Assemblies\Sirenix.Serialization.Config.xml" />
-     <None Include="Assets\Code\BDFramework\Plugins\Roslyn\System.Reflection.Metadata.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResources\Internal-Clear.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResources\Internal-Skinning.compute" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Particle MultiplyDouble.shader" />
-     <None Include="Assets\Code\BDFramework\Plugins\Roslyn\System.Threading.Tasks.Extensions.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\UI\UI-Lit-RefractionDetail.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Mobile\Mobile-VertexLit-OnlyDirectionalLights.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Trees\BillboardTree.shader" />
@@ -466,7 +345,6 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Internal-BlitCopyDepth.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\Tessellation.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Skybox.shader" />
-     <None Include="Assets\Code\BDFramework\Plugins\Roslyn\System.Buffers.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityShaderUtilities.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityDeprecated.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Details\WavingGrassBillboard.shader" />
@@ -524,9 +402,7 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Particle Blend.shader" />
      <None Include="Assets\3rdPlugins\Sirenix\Assemblies\NoEmitAndNoEditor\Sirenix.Serialization.dll.backup.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Illumin-Parallax.shader" />
-     <None Include="Assets\Code\BDFramework\github\Reademe.txt" />
      <None Include="Assets\Code\Game\ILRuntime\Binding\这里放置CLRbinding.txt" />
-     <None Include="Assets\Code\BDFramework\Plugins\Roslyn\System.Memory.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Internal-PrePassLighting.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityShadowLibrary.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Illumin-BumpSpec.shader" />
@@ -552,9 +428,7 @@
      <None Include="Assets\3rdPlugins\Sirenix\Assemblies\NoEmitAndNoEditor\Sirenix.Utilities.dll.backup.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Utils\TerrainLayerUtils.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeavesRendertex.shader" />
-     <None Include="Assets\Code\BDFramework\Core\DataListener\readme.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Internal-CombineDepthNormals.shader" />
-     <None Include="Assets\Code\BDFramework\Plugins\Roslyn\System.Runtime.CompilerServices.Unsafe.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\TerrainSplatmapCommon.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityDeferredLibrary.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Particle AddSmooth.shader" />
@@ -574,7 +448,6 @@
      <None Include="Assets\3rdPlugins\Sirenix\Readme.txt" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityStereoExtensions.glslinc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\UI\UI-Unlit-Detail.shader" />
-     <None Include="Assets\Code\BDFramework\Plugins\Roslyn\System.Collections.Immutable.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Internal-GUIRoundedRect.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Particle Add.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\license.txt" />
@@ -585,7 +458,6 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityStandardMeta.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\TerrainShaders\Splats\Terrain-Utilities.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Internal-BlitToDepth_MSAA.shader" />
-     <None Include="Assets\Code\BDFramework\Plugins\Roslyn\Microsoft.CodeAnalysis.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\TerrainTool.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Lightmap-VertexLit.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityUI.cginc" />
@@ -609,11 +481,9 @@
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityLightingCommon.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Lightmap-Glossy.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorBarkRendertex.shader" />
-     <None Include="Assets\Code\BDFramework\Plugins\Roslyn\Microsoft.CodeAnalysis.CSharp.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Mobile\Mobile-Bumped.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Standard.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\SpeedTreeWind.cginc" />
-     <None Include="Assets\Code\BDFramework\Plugins\Roslyn\System.Numerics.Vectors.xml" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\Reflect-Parallax.shader" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\CGIncludes\UnityGBuffer.cginc" />
      <None Include="Assets\Resource\Shaders\builtin_shaders-2019.3\DefaultResourcesExtra\VR\Shaders\Internal-VRDistortion.shader" />
@@ -715,6 +585,9 @@
  <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
  </Reference>
+ <Reference Include="Editor">
+ <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Mathematics">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
  </Reference>
@@ -729,6 +602,9 @@
  </Reference>
  <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+ </Reference>
+ <Reference Include="XiaomiSupport">
+ <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/XiaomiSupport.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>E:/BDFramework.Core/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
@@ -916,80 +792,98 @@
  <Reference Include="DOTween">
  <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/DOTween.dll</HintPath>
  </Reference>
+ <Reference Include="Sirenix.OdinInspector.Attributes">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.OdinInspector.Editor">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Serialization.Config">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Serialization">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Utilities">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
+ </Reference>
+ <Reference Include="Sirenix.Utilities.Editor">
+ <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Debug.log">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Debug/Debug.log.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Debug/Debug.log.dll</HintPath>
  </Reference>
  <Reference Include="Excel">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Excel/Excel.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Excel/Excel.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.SharpZipLib">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
  </Reference>
  <Reference Include="Microsoft.CodeAnalysis.CSharp">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
  </Reference>
  <Reference Include="Microsoft.CodeAnalysis">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/Microsoft.CodeAnalysis.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/Microsoft.CodeAnalysis.dll</HintPath>
  </Reference>
  <Reference Include="System.Buffers">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Buffers.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Buffers.dll</HintPath>
  </Reference>
  <Reference Include="System.Collections.Immutable">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Collections.Immutable.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Collections.Immutable.dll</HintPath>
  </Reference>
  <Reference Include="System.Data.Common">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Data.Common.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Data.Common.dll</HintPath>
  </Reference>
  <Reference Include="System.Diagnostics.StackTrace">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Diagnostics.StackTrace.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Diagnostics.StackTrace.dll</HintPath>
  </Reference>
  <Reference Include="System.Diagnostics.Tracing">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Diagnostics.Tracing.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Diagnostics.Tracing.dll</HintPath>
  </Reference>
  <Reference Include="System.Globalization.Extensions">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Globalization.Extensions.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Globalization.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="System.IO.Compression">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.IO.Compression.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.IO.Compression.dll</HintPath>
  </Reference>
  <Reference Include="System.Memory">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Memory.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Memory.dll</HintPath>
  </Reference>
  <Reference Include="System.Net.Http">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Net.Http.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Net.Http.dll</HintPath>
  </Reference>
  <Reference Include="System.Net.Sockets">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Net.Sockets.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Net.Sockets.dll</HintPath>
  </Reference>
  <Reference Include="System.Numerics.Vectors">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Numerics.Vectors.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Numerics.Vectors.dll</HintPath>
  </Reference>
  <Reference Include="System.Reflection.Metadata">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Reflection.Metadata.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Reflection.Metadata.dll</HintPath>
  </Reference>
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="System.Runtime.Serialization.Primitives">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Runtime.Serialization.Primitives.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Runtime.Serialization.Primitives.dll</HintPath>
  </Reference>
  <Reference Include="System.Security.Cryptography.Algorithms">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Security.Cryptography.Algorithms.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Security.Cryptography.Algorithms.dll</HintPath>
  </Reference>
  <Reference Include="System.Security.SecureString">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Security.SecureString.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Security.SecureString.dll</HintPath>
  </Reference>
  <Reference Include="System.Text.Encoding.CodePages">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Text.Encoding.CodePages.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Text.Encoding.CodePages.dll</HintPath>
  </Reference>
  <Reference Include="System.Threading.Overlapped">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Threading.Overlapped.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Threading.Overlapped.dll</HintPath>
  </Reference>
  <Reference Include="System.Threading.Tasks.Extensions">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Threading.Tasks.Extensions.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Threading.Tasks.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="System.Xml.XPath.XDocument">
- <HintPath>E:/BDFramework.Core/Assets/Code/BDFramework/Plugins/Roslyn/System.Xml.XPath.XDocument.dll</HintPath>
+ <HintPath>E:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Roslyn/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntim.Mono.Cecil">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
@@ -1003,23 +897,11 @@
  <Reference Include="Unity.Burst.Unsafe">
  <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.burst@1.4.6/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
- <Reference Include="Sirenix.Serialization">
- <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
+ <Reference Include="ChannelPurchase">
+ <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.xiaomi@1.0.3/ChannelPurchase.dll</HintPath>
  </Reference>
- <Reference Include="Sirenix.Utilities">
- <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Utilities.Editor">
- <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.OdinInspector.Editor">
- <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.OdinInspector.Attributes">
- <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Serialization.Config">
- <HintPath>E:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
+ <Reference Include="UnityStore">
+ <HintPath>E:/BDFramework.Core/Library/PackageCache/com.unity.xiaomi@1.0.3/UnityStore.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Unity3d/2019.4.21f1c1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -1377,6 +1259,10 @@
     <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj">
       <Project>{5F4F3FDC-43F8-2A47-55F5-00E66F1587B4}</Project>
       <Name>Sirenix.OdinInspector.CompatibilityLayer.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="BDFramework.Core.csproj">
+      <Project>{1F8A5412-7A4B-A299-7D9E-7B027681C23C}</Project>
+      <Name>BDFramework.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

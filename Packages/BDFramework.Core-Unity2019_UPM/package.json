@@ -1,0 +1,19 @@
+{
+  "name": "com.bdframework.core",
+  "displayName": "BDFrameWork",
+  "version": "1.0.6",
+  "unity": "2019.4",
+  "description": "Unity3d 高效的C#全热更开发工作流",
+  "dependencies": {
+    "com.ourpalm.ilruntime": "1.6.5"
+ },
+ "keywords": [
+    "BDFramework",
+    "Framework"
+  ],
+  "author": {
+    "name": "Yimengfan",
+    "email": "755737878@qq.com",
+    "url": "https://github.com/yimengfan/BDFramework.Core"
+  }
+}
