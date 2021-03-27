@@ -12,7 +12,7 @@ namespace BDFramework.Editor.TableData
             var excelList = new List<string>();
             foreach (var asset in importedAssets)
             {
-                if (asset.EndsWith("xlsx") && asset.Contains("Table"))
+                if (asset.EndsWith("xlsx") && asset.Contains("Table") && !asset.Contains("~"))
                 {
                     excelList.Add(asset);
                 }

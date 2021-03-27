@@ -132,7 +132,7 @@ namespace BDFramework.Editor.TableData
         {
             var table   = Path.GetFileName(filePath).Replace(Path.GetExtension(filePath), "");
             var jsonObj = JsonMapper.ToObject(jsonContent);
-            var type    = typeof(BDLauncher).Assembly.GetTypes().First((t) => t.FullName.StartsWith("Game.Data.") && t.Name.ToLower() == table.ToLower());
+            var type    = typeof(BDLauncher).Assembly.GetTypes().FirstOrDefault((t) => t.FullName.StartsWith("Game.Data.") && t.Name.ToLower() == table.ToLower());
             //
             if (type == null)
             {
