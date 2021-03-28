@@ -32,14 +32,19 @@ namespace BDFramework.Editor.EditorLife
         [UnityEditor.Callbacks.DidReloadScripts(0)]
         static void OnScriptReload()
         {
-            OnCompileCode();
+            OnCodeBuildComplete();
             //编译dll
-            ScriptBuildTools.BuildDll(Application.streamingAssetsPath, Application.platform,
-                ScriptBuildTools.BuildMode.Release, false);
+            if (BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll)
+            {
+                ScriptBuildTools.BuildDll(Application.streamingAssetsPath, Application.platform,
+                    ScriptBuildTools.BuildMode.Release, false);
+            }
 
-
+            
             //EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, RuntimePlatform.Android, ScriptBuildTools.BuildMode.Release);
         }
+        
+        
 
         /// <summary>
         /// 退出播放模式
@@ -56,7 +61,7 @@ namespace BDFramework.Editor.EditorLife
         /// <summary>
         /// Editor代码刷新后执行
         /// </summary>
-        static public void OnCompileCode()
+        static public void OnCodeBuildComplete()
         {
             if (EditorApplication.isPlaying)
             {

@@ -23,7 +23,8 @@
   "BuildAssetConfig" : {
     "AESCode" : "bdframe$#@!@#",
     "IsUseHashName" : false,
-    "AssetBundleFileServerUrl" : "http://127.0.0.1:20000"
+    "AssetBundleFileServerUrl" : "http://127.0.0.1:20000",
+    "IsAutoBuildDll"           : false
   },
   "savepath"         : "E:/Unity2019/BDFramework/BDTemp/config.json"
 }

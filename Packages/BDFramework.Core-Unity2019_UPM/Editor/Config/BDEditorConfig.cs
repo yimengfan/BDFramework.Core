@@ -116,8 +116,10 @@ namespace BDFramework.Editor
         public string AESCode  = "bdframe$#@!@#";
         [LabelText("是否hash命名")]
         public bool IsUseHashName = false;
-
         [LabelText("上传接口")]
         public string AssetBundleFileServerUrl = "http://127.0.0.1:20000";
+
+        [LabelText("自动生成热更DLL")]
+        public bool IsAutoBuildDll = false;
     }
 }
