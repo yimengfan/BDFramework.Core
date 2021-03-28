@@ -771,6 +771,9 @@
  <Reference Include="Sirenix.Utilities.Editor">
  <HintPath>E:/Unity2019/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Debug.log">
+ <HintPath>E:/Unity2019/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Debug/Debug.log.dll</HintPath>
+ </Reference>
  <Reference Include="ILRuntim.Mono.Cecil">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
@@ -779,9 +782,6 @@
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Pdb">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
- </Reference>
- <Reference Include="Debug.log">
- <HintPath>E:/Unity2019/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Debug/Debug.log.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Program Files/2019.4.19f1c1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

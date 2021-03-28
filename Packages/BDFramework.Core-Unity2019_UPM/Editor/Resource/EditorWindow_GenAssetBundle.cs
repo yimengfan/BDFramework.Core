@@ -84,7 +84,7 @@ namespace BDFramework.Editor.Asset
         private void OnDestroy()
         {
             //保存
-            BDFrameEditorConfigHelper.EditorConfig.Save();
+            BDFrameEditorConfigHelper.EditorConfig?.Save();
         }
 
 
