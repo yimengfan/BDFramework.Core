@@ -32,7 +32,7 @@ namespace BDFramework.Editor.TableData
                 EditorUtility.ClearProgressBar();
             }
             SqliteLoder.Close();
-           Debug.Log("自动导表完成!");
+           BDebug.Log("自动导表完成!");
 
         }
     }

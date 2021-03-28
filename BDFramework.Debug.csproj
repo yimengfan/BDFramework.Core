@@ -58,8 +58,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="E:\Unity2019\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Debug\BDebug.cs" />
-     <None Include="E:\Unity2019\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Debug\BDFramework.Debug.asmdef" />
+     <Compile Include="E:\Unity2019\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Runtime\Debug\BDebug.cs" />
+     <None Include="E:\Unity2019\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Runtime\Debug\BDFramework.Debug.asmdef" />
  <Reference Include="UnityEditor.UI">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>

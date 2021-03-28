@@ -418,6 +418,9 @@
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>E:/Unity2019/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.4.3/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
  </Reference>
+ <Reference Include="Debug.log">
+ <HintPath>E:/Unity2019/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Debug/Debug.log.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Program Files/2019.4.19f1c1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
@@ -774,10 +777,6 @@
     <ProjectReference Include="BDFramework.Core.csproj">
       <Project>{1F8A5412-7A4B-A299-7D9E-7B027681C23C}</Project>
       <Name>BDFramework.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="BDFramework.Debug.csproj">
-      <Project>{691EAA25-4946-56A3-1799-81E420494361}</Project>
-      <Name>BDFramework.Debug</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

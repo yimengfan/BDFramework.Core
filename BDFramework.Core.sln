@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirenix.OdinInspector.Compa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BDFramework.Editor.TestRunner", "BDFramework.Editor.TestRunner.csproj", "{14E8D7D5-24D7-2A8C-CEF5-5D69D1549027}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BDFramework.Debug", "BDFramework.Debug.csproj", "{691EAA25-4946-56A3-1799-81E420494361}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirenix.OdinInspector.CompatibilityLayer.Editor", "Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj", "{5F4F3FDC-43F8-2A47-55F5-00E66F1587B4}"
 EndProject
 Global
@@ -41,10 +39,6 @@ Global
 		{14E8D7D5-24D7-2A8C-CEF5-5D69D1549027}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14E8D7D5-24D7-2A8C-CEF5-5D69D1549027}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14E8D7D5-24D7-2A8C-CEF5-5D69D1549027}.Release|Any CPU.Build.0 = Release|Any CPU
-		{691EAA25-4946-56A3-1799-81E420494361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{691EAA25-4946-56A3-1799-81E420494361}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{691EAA25-4946-56A3-1799-81E420494361}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{691EAA25-4946-56A3-1799-81E420494361}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5F4F3FDC-43F8-2A47-55F5-00E66F1587B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5F4F3FDC-43F8-2A47-55F5-00E66F1587B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F4F3FDC-43F8-2A47-55F5-00E66F1587B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
