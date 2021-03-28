@@ -48,11 +48,11 @@ public class ScriptBuildTools
         //生成CSProj
         CodeEditor.CurrentEditor.SyncAll();
         //
-        outPath = Path.Combine(outPath, BDApplication.GetPlatformPath(platform));
+         var _outPath = Path.Combine(outPath, BDApplication.GetPlatformPath(platform));
         //准备输出环境
         try
         {
-            var path = outPath + "/Hotfix";
+            var path = _outPath + "/Hotfix";
             if (Directory.Exists(path))
             {
                 Directory.Delete(path, true);
@@ -111,7 +111,7 @@ public class ScriptBuildTools
         var baseCs = csFileList.FindAll(f => !f.Contains("@hotfix") && f.EndsWith(".cs"));
         var hotfixCs = csFileList.FindAll(f => f.Contains("@hotfix") && f.EndsWith(".cs"));
 
-        var outHotfixPath = Path.Combine(outPath, DLLPATH);
+        var outHotfixPath = Path.Combine(_outPath, DLLPATH);
 
         if (mode == BuildMode.Release)
         {
@@ -121,7 +121,6 @@ public class ScriptBuildTools
         {
             Build(baseCs, hotfixCs, dllFileList, outHotfixPath, true);
         }
-        
         AssetHelper.GenPackageBuildInfo(outPath, platform);
     }
 

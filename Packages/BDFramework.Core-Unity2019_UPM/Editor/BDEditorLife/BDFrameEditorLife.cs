@@ -144,8 +144,6 @@ namespace BDFramework.Editor.EditorLife
                     }
                 }
             }
-
-            Debug.Log("BDFrameEditor:管理器注册完成");
         }
     }
 }

@@ -42,11 +42,18 @@ namespace BDFramework.AssetHelper
         {
            var path =  string.Format("{0}/{1}/{2}", ouptputPath, BDApplication.GetPlatformPath(platform),
                 PackageBuildInfo);
+           
            //写入buildinfo内容
            var buildinfo = new PackageBuildInfo();
-           buildinfo.BuildTime = DateTime.Now.ToFileTime();
+           DateTime startTime = TimeZoneInfo.ConvertTime(new System.DateTime(1970, 1, 1), TimeZoneInfo.Utc,TimeZoneInfo.Local);  // 当地时区
+           long timeStamp = (long)(DateTime.Now - startTime).TotalSeconds;
+           buildinfo.BuildTime = timeStamp;
            var content = JsonMapper.ToJson(buildinfo);
            //写入本地
+           if (File.Exists(path))
+           {
+               File.Delete(path);
+           }
            FileHelper.WriteAllText(path,content);
         }
 
@@ -77,7 +84,6 @@ namespace BDFramework.AssetHelper
                     var content = File.ReadAllText(persistentPackageInfoPath);
                     var persistentPackageInfo = JsonMapper.ToObject<PackageBuildInfo>(content);
                     var streamingPackageInfo = JsonMapper.ToObject<PackageBuildInfo>(www.text);
-
                     if (persistentPackageInfo.BuildTime >= streamingPackageInfo.BuildTime)
                     {
                         callback?.Invoke();

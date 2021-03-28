@@ -16,19 +16,21 @@ namespace BDFramework.Editor.BuildPackage
             var android = IPath.Combine(path, "Android");
             var windows = IPath.Combine(path, "Windows");
 
+            DateTime startTime = TimeZoneInfo.ConvertTime(new System.DateTime(1970, 1, 1), TimeZoneInfo.Utc,TimeZoneInfo.Local);  // 当地时区
+            long timeStamp = (long)(DateTime.Now - startTime).TotalSeconds;
+         
             if (Directory.Exists(ios))
             {
-                File2Hash("iOS", DateTime.Now.ToFileTime().ToString(), ios);
+                File2Hash("iOS", timeStamp.ToString(), ios);
             }
-
             if (Directory.Exists(android))
             {
-                File2Hash("Android", DateTime.Now.ToFileTime().ToString(), android);
+                File2Hash("Android", timeStamp.ToString(), android);
             }
 
             if (Directory.Exists(windows))
             {
-                File2Hash("Windows", DateTime.Now.ToFileTime().ToString(), windows);
+                File2Hash("Windows", timeStamp.ToString(), windows);
             }
 
             EditorUtility.ClearProgressBar();

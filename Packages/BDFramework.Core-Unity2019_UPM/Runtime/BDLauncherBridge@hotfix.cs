@@ -53,16 +53,16 @@ public class BDLauncherBridge
             }
         }
 
-
+        BDebug.Log("ALLtype:" +  allTypes.Count);
         //遍历type执行逻辑
         foreach (var type in allTypes)
         {
             var baseAttributes = type.GetCustomAttributes();
-            if (baseAttributes.Count() == 0)
+            if (baseAttributes==null || baseAttributes.Count() == 0)
             {
                 continue;
             }
-
+            BDebug.Log("-------");
             //1.类型注册到管理器
             var attributes = baseAttributes.Where((attr) => attr is ManagerAtrribute);
             if (attributes.Count() > 0)
