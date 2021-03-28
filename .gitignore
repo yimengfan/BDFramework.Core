@@ -32,3 +32,5 @@
 /Assets/Code/BDFramework.UnitTest/Core/.idea/.idea.Core.dir/.idea/encodings.xml
 /Assets/Code/BDFramework.UnitTest/Core/.idea/.idea.Core.dir/.idea/indexLayout.xml
 /Assets/Code/BDFramework.UnitTest/Core/.idea/.idea.Core.dir/.idea/vcs.xml
+/*.csproj
+/*.sln
