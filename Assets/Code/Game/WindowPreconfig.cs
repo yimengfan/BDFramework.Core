@@ -3,6 +3,7 @@ using System.IO;
 using BDFramework;
 using BDFramework.VersionContrller;
 using BDFramework.Core.Tools;
+using Game.ILRuntime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,7 +38,7 @@ public class WindowPreconfig : MonoBehaviour
     void Onclick_PassAndLaunch()
     {
         //直接启动
-        BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes());
+        BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(),GameLogicILRBinding.Bind);
         //
         this.StartCoroutine(IE_Destroy());
     }
@@ -63,7 +64,7 @@ public class WindowPreconfig : MonoBehaviour
             {
                 this.text_DownloadProcess.text = "下载完毕";
                 //启动
-                BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes());
+                BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(),GameLogicILRBinding.Bind);
             }
         }, (e) =>
         {

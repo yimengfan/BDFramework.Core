@@ -24,14 +24,14 @@ namespace ILRuntime.Runtime.Generated
             Type[] args;
             Type type = typeof(BDFramework.ILRuntimeHelper);
             args = new Type[]{};
-            method = type.GetMethod("GetHotfixTypes", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, GetHotfixTypes_0);
+            method = type.GetMethod("get_AppDomain", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_AppDomain_0);
             args = new Type[]{};
             method = type.GetMethod("get_IsRunning", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, get_IsRunning_1);
             args = new Type[]{};
-            method = type.GetMethod("get_AppDomain", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_AppDomain_2);
+            method = type.GetMethod("GetHotfixTypes", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, GetHotfixTypes_2);
 
             field = type.GetField("UIComponentTypes", flag);
             app.RegisterCLRFieldGetter(field, get_UIComponentTypes_0);
@@ -42,19 +42,14 @@ namespace ILRuntime.Runtime.Generated
         }
 
 
-        static StackObject* GetHotfixTypes_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_AppDomain_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
 
-            var result_of_this_method = BDFramework.ILRuntimeHelper.GetHotfixTypes();
+            var result_of_this_method = BDFramework.ILRuntimeHelper.AppDomain;
 
-            object obj_result_of_this_method = result_of_this_method;
-            if(obj_result_of_this_method is CrossBindingAdaptorType)
-            {    
-                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
-            }
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
@@ -71,14 +66,19 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* get_AppDomain_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* GetHotfixTypes_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
 
-            var result_of_this_method = BDFramework.ILRuntimeHelper.AppDomain;
+            var result_of_this_method = BDFramework.ILRuntimeHelper.GetHotfixTypes();
 
+            object obj_result_of_this_method = result_of_this_method;
+            if(obj_result_of_this_method is CrossBindingAdaptorType)
+            {    
+                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
+            }
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 

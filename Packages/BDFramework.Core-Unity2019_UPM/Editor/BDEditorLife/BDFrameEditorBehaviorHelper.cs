@@ -10,14 +10,13 @@ namespace BDFramework.Editor.EditorLife
     static public class BDFrameEditorBehaviorHelper
     {
         static private List<ABDFrameEditorBehavior> BDFrameBehaviorList = new List<ABDFrameEditorBehavior>();
-
         /// <summary>
         /// 初始化
         /// </summary>
         static public void Init()
         {
             var type = typeof(ABDFrameEditorBehavior);
-            var types = type.Assembly.GetTypes();
+            var types = BDFrameEditorLife.Types;
             foreach (var t in types)
             {
                 if (t.IsSubclassOf(type))

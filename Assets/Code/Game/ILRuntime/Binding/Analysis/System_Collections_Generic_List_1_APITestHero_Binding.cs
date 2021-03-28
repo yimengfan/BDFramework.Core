@@ -22,7 +22,7 @@ namespace ILRuntime.Runtime.Generated
             MethodBase method;
             Type[] args;
             Type type = typeof(System.Collections.Generic.List<BDFramework.UnitTest.Test.APITestHero>);
-            args   = new Type[]{typeof(BDFramework.UnitTest.Test.APITestHero)};
+            args = new Type[]{typeof(BDFramework.UnitTest.Test.APITestHero)};
             method = type.GetMethod("Add", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Add_0);
             args = new Type[]{};

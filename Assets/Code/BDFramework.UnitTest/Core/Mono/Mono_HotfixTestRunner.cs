@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.ILRuntime;
 using UnityEngine;
 
 namespace BDFramework.UnitTest
@@ -18,7 +19,7 @@ namespace BDFramework.UnitTest
         /// </summary>
         public void RunUnitTest()
         {
-            BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes());
+            BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(), GameLogicILRBinding.Bind);
         }
     }
 }

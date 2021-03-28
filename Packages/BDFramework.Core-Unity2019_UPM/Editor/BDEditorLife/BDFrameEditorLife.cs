@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,6 +8,7 @@ using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
+using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -33,7 +35,7 @@ namespace BDFramework.Editor.EditorLife
         {
             if (state == PlayModeStateChange.ExitingPlayMode)
             {
-                InitBDEditorLife();
+                InitEditorFrame();
             }
         }
 
@@ -43,42 +45,58 @@ namespace BDFramework.Editor.EditorLife
         static public void OnCompileCode()
         {
             if (EditorApplication.isPlaying)
+            {
                 return;
-            InitBDEditorLife();
+            }
+
+            InitEditorFrame();
         }
-
-
-        static public void InitBDEditorLife()
+        
+        static public void InitEditorFrame()
         {
-            //Editor的管理器初始化
-            RegisterEditorMgrInstance();
             //BD生命周期启动
-            BDFrameEditorBehaviorHelper.Init();
-            BDFrameEditorConfigHelper.Init();
             BDApplication.Init();
+            BDFrameEditorConfigHelper.Init();
+          
             //编辑器下加载初始化
             BResources.Load(AssetLoadPath.Editor);
-            //调试器启动
-            DebuggerServerProcessManager.Inst.Start();
-            //TODO 
-            //这一行还是不能加到框架层，应该还是：哪里用 哪里主动load，
-            //然后用完了close（SqliteLoder.Close（））。
-            //不然sql文件editor环境下一直被占用，很多麻烦事
-            // SqliteLoder.Load(Application.streamingAssetsPath);
         }
 
 
         /// <summary>
+        /// 游戏逻辑的Assembly
+        /// </summary>
+        static public Type[] Types { get; set; }
+
+        /// <summary>
+        /// 外部注册主工程的Assembly
+        /// </summary>
+        /// <param name="gameLogicAssembly"></param>
+        /// <param name="gameEditorAssembly"></param>
+        static public void RegisterMainProjectAssembly(Assembly gameLogicAssembly, Assembly gameEditorAssembly)
+        {
+            //编辑器所有类
+            List<Type> typeList = new List<Type>();
+            typeList.AddRange(gameLogicAssembly.GetTypes());
+            typeList.AddRange(gameEditorAssembly.GetTypes());
+            //BD编辑器下所有的类
+            typeList.AddRange(typeof(BDFrameEditorLife).Assembly.GetTypes());
+            //BDRuntime下所有类
+            typeList.AddRange(typeof(BDLauncher).Assembly.GetTypes());
+            Types = typeList.ToArray();
+            //Editor的管理器初始化
+            RegisterEditorMgrbase(Types);
+            BDFrameEditorBehaviorHelper.Init();
+            //调试器启动
+            DebuggerServerProcessManager.Inst.Start();
+        }
+
+        /// <summary>
         /// 注册所有管理器，让管理器在编辑器下生效
         /// </summary>
-        static public void RegisterEditorMgrInstance()
+        static private void RegisterEditorMgrbase(Type[] types)
         {
-            //项目所有类
-            var types = typeof(BDLauncher).Assembly.GetTypes().ToList();
-            //编辑器所有类
-            var editorTypes = typeof(BDEditorMenuEnum).Assembly.GetTypes();
-            types.AddRange(editorTypes);
-
+            //
             List<IMgr> mgrs = new List<IMgr>();
             foreach (var t in types)
             {
@@ -87,7 +105,6 @@ namespace BDFramework.Editor.EditorLife
                 {
                     var i = t.BaseType.GetProperty("Inst").GetValue(null, null) as IMgr;
                     mgrs.Add(i);
-                    continue;
                 }
             }
 
@@ -109,7 +126,6 @@ namespace BDFramework.Editor.EditorLife
                     }
                 }
             }
-
 
             Debug.Log("BDFrameEditor:管理器注册完成");
         }

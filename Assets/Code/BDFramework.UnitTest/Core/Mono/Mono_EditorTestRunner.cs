@@ -29,7 +29,7 @@ namespace BDFramework.UnitTest
             };
            
             //启动
-            BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes());
+            BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(),Game.ILRuntime.GameLogicILRBinding.Bind);
         }
     }
 }

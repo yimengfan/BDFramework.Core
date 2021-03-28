@@ -14,7 +14,7 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class Code_BDFramework_UnitTest_Test_APITestHero_Binding
+    unsafe class BDFramework_UnitTest_Test_APITestHero_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {

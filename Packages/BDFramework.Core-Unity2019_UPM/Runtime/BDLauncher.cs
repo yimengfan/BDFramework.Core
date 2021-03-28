@@ -142,7 +142,7 @@ namespace BDFramework
         /// </summary>
         /// <param name="editorModelGamelogicTypes">Editor模式下,UPM隔离了DLL需要手动传入</param>
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
-        public void Launch(Type[] editorModelGamelogicTypes,string gameId = "default")
+        public void Launch(Type[] editorModelGamelogicTypes,Action<bool> gameLogicIlrBindAction ,string gameId = "default")
         {
             BDebug.Log("Persistent:" + Application.persistentDataPath);
             BDebug.Log("StreamingAsset:" + Application.streamingAssetsPath);
@@ -154,7 +154,7 @@ namespace BDFramework
                 //2.sql
                 SqliteLoder.Load(GameConfig.SQLRoot);
                 //3.脚本,这个启动会开启所有的逻辑
-                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode,editorModelGamelogicTypes);
+                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode,editorModelGamelogicTypes,gameLogicIlrBindAction);
             });
         }
 

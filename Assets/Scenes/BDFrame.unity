@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44631976, g: 0.49611664, b: 0.5744803, a: 1}
+  m_IndirectSpecularColor: {r: 0.44664264, g: 0.49656898, b: 0.5749908, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1077,6 +1077,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8458203362226980182, guid: f2a6a38608360fa4bb89aacd441e2b97,
         type: 3}
+    - target: {fileID: 8458203362226980182, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980182, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"Data.CodeRoot","value":{"$id":0,"$type":"BDFramework.AssetLoadPath,
+        BDFramework.Core",2}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980182, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"Data.CodeRunMode","value":{"$id":0,"$type":"BDFramework.HotfixCodeRunMode,
+        BDFramework.Core",1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980182, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8458203362226980183, guid: f2a6a38608360fa4bb89aacd441e2b97,
         type: 3}
       propertyPath: m_Name

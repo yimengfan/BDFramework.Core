@@ -14,7 +14,14 @@ namespace BDFramework
     static public class ScriptLoder
     {
         static readonly public string DLLPATH = "Hotfix/hotfix.dll";
+        /// <summary>
+        /// 加载的Assembly
+        /// </summary>
         static public Assembly Assembly { get; private set; }
+        /// <summary>
+        /// 反射注册
+        /// </summary>
+        private static Action<bool> GamelogicILRBindAction { get; set; }
 
         /// <summary>
         /// 脚本加载入口
@@ -22,8 +29,13 @@ namespace BDFramework
         /// <param name="loadPath"></param>
         /// <param name="runMode"></param>
         /// <param name="editorModelGamelogicTypes">编辑器模式下 UPM隔离了dll,需要手动传入</param>
-        static public void Load(AssetLoadPath loadPath, HotfixCodeRunMode runMode, Type[] editorModelGamelogicTypes)
+        static public void Load(AssetLoadPath loadPath,
+            HotfixCodeRunMode runMode,
+            Type[] editorModelGamelogicTypes,
+            Action<bool> gamelogicILRBindAction)
         {
+            ScriptLoder.GamelogicILRBindAction = gamelogicILRBindAction;
+            
             if (loadPath == AssetLoadPath.Editor)
             {
                 BDebug.Log("内置code模式!");
@@ -78,7 +90,7 @@ namespace BDFramework
             //反射执行
             if (mode == HotfixCodeRunMode.ByReflection)
             {
-                BDebug.Log("Dll路径:" + dllPath, "red");
+                BDebug.Log("反射Dll路径:" + dllPath, "red");
                 var dllBytes = File.ReadAllBytes(dllPath);
                 var pdbPath = dllPath + ".pdb";
                 if (File.Exists(pdbPath))
@@ -91,8 +103,8 @@ namespace BDFramework
                     Assembly = Assembly.Load(dllBytes);
                 }
 
-                BDebug.Log("代码加载成功,开始执行Start");
-                var type = Assembly.GetType("BDLauncherBridge");
+                BDebug.Log("反射加载成功,开始执行Start");
+                var type = typeof(ScriptLoder).Assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
 
                 method.Invoke(null, new object[] {Assembly.GetTypes()});
@@ -100,9 +112,9 @@ namespace BDFramework
             //解释执行
             else if (mode == HotfixCodeRunMode.ByILRuntime)
             {
-                BDebug.Log("Dll路径:" + dllPath, "red");
+                BDebug.Log("热更Dll路径:" + dllPath, "red");
                 //解释执行模式
-                ILRuntimeHelper.LoadHotfix(dllPath);
+                ILRuntimeHelper.LoadHotfix(dllPath,GamelogicILRBindAction);
                 var gamelogicTypes = ILRuntimeHelper.GetHotfixTypes();
                 ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] {gamelogicTypes});
             }
