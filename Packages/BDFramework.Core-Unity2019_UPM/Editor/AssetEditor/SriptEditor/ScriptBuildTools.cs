@@ -9,6 +9,7 @@ using BDFramework.Core.Tools;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
+using Unity.CodeEditor;
 #if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
@@ -24,7 +25,7 @@ public class ScriptBuildTools
 
 
     private static Dictionary<int, string> csFilesMap;
-    private static string                  DLLPATH = "Hotfix/hotfix.dll";
+    private static string DLLPATH = "Hotfix/hotfix.dll";
 
     /// <summary>
     /// 宏
@@ -37,7 +38,9 @@ public class ScriptBuildTools
     static public void BuildDll(string outPath, RuntimePlatform platform, BuildMode mode)
     {
         EditorUtility.DisplayProgressBar("编译服务", "准备编译环境...", 0.1f);
-
+        //生成CSProj
+        CodeEditor.CurrentEditor.SyncAll();
+        //
         outPath = Path.Combine(outPath, BDApplication.GetPlatformPath(platform));
         //准备输出环境
         try
@@ -62,29 +65,47 @@ public class ScriptBuildTools
 
         #region CS DLL引用搜集处理
 
-        List<string> dllFiles = new List<string>();
-        List<string> csFiles  = new List<string>();
+        List<string> dllFileList = new List<string>();
+        List<string> csFileList = new List<string>();
         //所有宏
         defineList = new List<string>();
 
-        csFiles = FindDLLByCSPROJ("Assembly-CSharp.csproj", ref dllFiles);
-
+        var gameLogicCsproj = "Assembly-CSharp.csproj"; //游戏逻辑的代码
+        var frameworkCsproj = "BDFramework.Core.csproj"; //框架部分的代码
+        ParseCsprojFile(gameLogicCsproj, new List<string>() {frameworkCsproj}, ref csFileList, ref dllFileList);
+        ParseCsprojFile(frameworkCsproj, new List<string>(), ref csFileList, ref dllFileList);
         //去重
-        defineList.Distinct();
-        var baseCs   = csFiles.FindAll(f => !f.Contains("@hotfix") && f.EndsWith(".cs"));
-        var hotfixCs = csFiles.FindAll(f => f.Contains("@hotfix")  && f.EndsWith(".cs"));
+        dllFileList = dllFileList.Distinct().ToList();
+        csFileList = csFileList.Distinct().ToList();
+        defineList = defineList.Distinct().ToList();
+
+        //宏解析
+        //移除editor相关宏
+        for (int i = defineList.Count - 1; i >= 0; i--)
+        {
+            var symbol = defineList[i];
+            if (symbol.Contains("UNITY_EDITOR"))
+            {
+                defineList.RemoveAt(i);
+            }
+        }
 
         #endregion
+
+
+        // 热更代码 = 框架部分@hotfix  +  游戏逻辑部分@hotfix
+        var baseCs = csFileList.FindAll(f => !f.Contains("@hotfix") && f.EndsWith(".cs"));
+        var hotfixCs = csFileList.FindAll(f => f.Contains("@hotfix") && f.EndsWith(".cs"));
 
         var outHotfixPath = Path.Combine(outPath, DLLPATH);
 
         if (mode == BuildMode.Release)
         {
-            Build(baseCs, hotfixCs, dllFiles, outHotfixPath);
+            Build(baseCs, hotfixCs, dllFileList, outHotfixPath);
         }
         else if (mode == BuildMode.Debug)
         {
-            Build(baseCs, hotfixCs, dllFiles, outHotfixPath, true);
+            Build(baseCs, hotfixCs, dllFileList, outHotfixPath, true);
         }
     }
 
@@ -94,7 +115,11 @@ public class ScriptBuildTools
     /// <param name="tempCodePath"></param>
     /// <param name="outBaseDllPath"></param>
     /// <param name="outHotfixDllPath"></param>
-    static public void Build(List<string> baseCs, List<string> hotfixCS, List<string> dllFiles, string outHotfixDllPath, bool isdebug = false)
+    static public void Build(List<string> baseCs,
+        List<string> hotfixCS,
+        List<string> dllFiles,
+        string outHotfixDllPath,
+        bool isdebug = false)
     {
         var baseDll = outHotfixDllPath.Replace("hotfix.dll", "Assembly-CSharp.dll");
         //开始执行
@@ -114,10 +139,9 @@ public class ScriptBuildTools
         EditorUtility.DisplayProgressBar("编译服务", "[2/2]开始编译hotfix.dll...", 0.7f);
         //将base.dll加入
         //var mainDll = BApplication.ProjectRoot + "/Library/ScriptAssemblies/Assembly-CSharp.dll";
-        var mainDll = baseDll;
-        if (!dllFiles.Contains(mainDll))
+        if (!dllFiles.Contains(baseDll))
         {
-            dllFiles.Add(mainDll);
+            dllFiles.Add(baseDll);
         }
 
         //build
@@ -141,20 +165,23 @@ public class ScriptBuildTools
 
 
     /// <summary>
-    /// 解析project中的dll
+    /// 解析project
+    /// 获取里面的dll和cs
     /// </summary>
     /// <returns></returns>
-    static List<string> FindDLLByCSPROJ(string projName, ref List<string> dllList)
+    static void ParseCsprojFile(string projName,
+        List<string> blackCspList,
+        ref List<string> csList,
+        ref List<string> dllList)
     {
-        if (dllList == null) dllList = new List<string>();
-        //cs list
-        List<string> csList = new List<string>();
+        var projpath = BDApplication.ProjectRoot + "/" + projName;
+        List<string> csprojList = new List<string>();
 
-        var         projpath = BDApplication.ProjectRoot + "/" + projName;
-        XmlDocument xml      = new XmlDocument();
+        #region 解析xml
+
+        XmlDocument xml = new XmlDocument();
         xml.Load(projpath);
         XmlNode ProjectNode = null;
-
         foreach (XmlNode x in xml.ChildNodes)
         {
             if (x.Name == "Project")
@@ -164,7 +191,6 @@ public class ScriptBuildTools
             }
         }
 
-        List<string> csprojList = new List<string>();
         foreach (XmlNode childNode in ProjectNode.ChildNodes)
         {
             if (childNode.Name == "ItemGroup")
@@ -179,7 +205,7 @@ public class ScriptBuildTools
                     else if (item.Name == "Reference") //DLL 引用
                     {
                         var HintPath = item.FirstChild;
-                        var dir      = HintPath.InnerText.Replace("/", "\\");
+                        var dir = HintPath.InnerText.Replace("/", "\\");
                         dllList.Add(dir);
                     }
                     else if (item.Name == "ProjectReference") //工程引用
@@ -205,13 +231,17 @@ public class ScriptBuildTools
             }
         }
 
+        #endregion
+
         //csproj也加入
         foreach (var csproj in csprojList)
         {
             //有editor退出
-            if (csproj.ToLower().Contains("editor")) continue;
-            //添加扫描到的dll
-            FindDLLByCSPROJ(csproj, ref dllList);
+            if (csproj.ToLower().Contains("editor") || blackCspList.Contains(csproj))
+            {
+                continue;
+            }
+
             //
             var gendll = BDApplication.Library + "/ScriptAssemblies/" + csproj.Replace(".csproj", ".dll");
             if (!File.Exists(gendll))
@@ -219,13 +249,8 @@ public class ScriptBuildTools
                 Debug.LogError("不存在:" + gendll);
             }
 
-            dllList.Add(gendll);
+            dllList?.Add(gendll);
         }
-
-        //去重
-        dllList = dllList.Distinct().ToList();
-
-        return csList;
     }
 
 
@@ -234,7 +259,11 @@ public class ScriptBuildTools
     /// </summary>
     /// <param name="rootpaths"></param>
     /// <param name="output"></param>
-    static public bool BuildByRoslyn(string[] dlls, string[] codefiles, string output, bool isdebug = false, bool isUseDefine = false)
+    static public bool BuildByRoslyn(string[] dlls,
+        string[] codefiles,
+        string output,
+        bool isdebug = false,
+        bool isUseDefine = false)
     {
         if (Application.platform == RuntimePlatform.OSXEditor)
         {
@@ -252,21 +281,10 @@ public class ScriptBuildTools
         }
 
         //添加语法树
-        //宏解析
-        //移除editor相关宏
-        for (int i = defineList.Count - 1; i >= 0; i--)
-        {
-            var symbol = defineList[i];
-            if (symbol.Contains("UNITY_EDITOR"))
-            {
-                defineList.RemoveAt(i);
-            }
-        }
-
         var Symbols = defineList;
 
         List<Microsoft.CodeAnalysis.SyntaxTree> codes = new List<Microsoft.CodeAnalysis.SyntaxTree>();
-        CSharpParseOptions                      opa   = null;
+        CSharpParseOptions opa = null;
         if (isUseDefine)
         {
             opa = new CSharpParseOptions(LanguageVersion.Latest, preprocessorSymbols: Symbols);
@@ -279,9 +297,10 @@ public class ScriptBuildTools
         foreach (var cs in codefiles)
         {
             //判断文件是否存在
-            if (!File.Exists(cs)) continue;
+            if (!File.Exists(cs))
+                continue;
             //
-            var content    = File.ReadAllText(cs);
+            var content = File.ReadAllText(cs);
             var syntaxTree = CSharpSyntaxTree.ParseText(content, opa, cs, Encoding.UTF8);
             codes.Add(syntaxTree);
         }
@@ -304,25 +323,28 @@ public class ScriptBuildTools
         CSharpCompilationOptions option = null;
         if (isdebug)
         {
-            option = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, optimizationLevel: OptimizationLevel.Debug, warningLevel: 4, allowUnsafe: true);
+            option = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
+                optimizationLevel: OptimizationLevel.Debug, warningLevel: 4, allowUnsafe: true);
         }
         else
         {
-            option = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, optimizationLevel: OptimizationLevel.Release, warningLevel: 4, allowUnsafe: true);
+            option = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
+                optimizationLevel: OptimizationLevel.Release, warningLevel: 4, allowUnsafe: true);
         }
 
         //创建编译器代理
-        var        assemblyname = Path.GetFileNameWithoutExtension(output);
-        var        compilation  = CSharpCompilation.Create(assemblyname, codes, assemblies, option);
-        EmitResult result       = null;
+        var assemblyname = Path.GetFileNameWithoutExtension(output);
+        var compilation = CSharpCompilation.Create(assemblyname, codes, assemblies, option);
+        EmitResult result = null;
         if (!isdebug)
         {
             result = compilation.Emit(output);
         }
         else
         {
-            var pdbPath     = output + ".pdb";
-            var emitOptions = new EmitOptions(debugInformationFormat: DebugInformationFormat.PortablePdb, pdbFilePath: pdbPath);
+            var pdbPath = output + ".pdb";
+            var emitOptions = new EmitOptions(debugInformationFormat: DebugInformationFormat.PortablePdb,
+                pdbFilePath: pdbPath);
             using (var dllStream = new MemoryStream())
             using (var pdbStream = new MemoryStream())
             {
@@ -336,7 +358,8 @@ public class ScriptBuildTools
         // 编译失败，提示
         if (!result.Success)
         {
-            IEnumerable<Diagnostic> failures = result.Diagnostics.Where(diagnostic => diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);
+            IEnumerable<Diagnostic> failures = result.Diagnostics.Where(diagnostic =>
+                diagnostic.IsWarningAsError || diagnostic.Severity == DiagnosticSeverity.Error);
 
             foreach (var diagnostic in failures)
             {
