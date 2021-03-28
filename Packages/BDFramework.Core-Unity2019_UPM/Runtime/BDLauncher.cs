@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using BDFramework.GameStart;
-using SQLite4Unity3d;
 using UnityEngine;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
-using BDFramework.UFlux;
 using LitJson;
-using UnityEngine.EventSystems;
-using UnityEngine.Networking;
-using UnityEngine.UI;
+using Sirenix.OdinInspector;
+
 
 namespace BDFramework
 {
@@ -27,6 +21,7 @@ namespace BDFramework
         public string Version { get; set; }
     }
 
+    [RequireComponent(typeof(Config))]
     public class BDLauncher : MonoBehaviour
     {
         /// <summary>
@@ -40,7 +35,12 @@ namespace BDFramework
         [HideInInspector]
         public GameConfig GameConfig { get; private set; }
 
-        public TextAsset ConfigContent;
+
+        /// <summary>
+        /// Config的Text
+        /// </summary>
+        [OnValueChanged("OnConfigChanged")]
+        public TextAsset ConfigText;
 
         #region 对外的生命周期
 
@@ -62,13 +62,12 @@ namespace BDFramework
 
         static public BDLauncher Inst { get; private set; }
 
-
         // Use this for initialization
         private void Awake()
         {
             Inst = this;
             this.gameObject.AddComponent<IEnumeratorTool>();
-            this.gameObject.AddComponent<BDebug>();
+            var debug = this.gameObject.GetComponent<BDebug>();
             //框架配置
             LoadFrameConfig();
             //游戏配置
@@ -78,9 +77,9 @@ namespace BDFramework
             }
             else
             {
-                if (this.ConfigContent)
+                if (this.ConfigText)
                 {
-                    this.GameConfig = JsonMapper.ToObject<GameConfig>(this.ConfigContent.text);
+                    this.GameConfig = JsonMapper.ToObject<GameConfig>(this.ConfigText.text);
                 }
                 else
                 {
@@ -88,7 +87,8 @@ namespace BDFramework
                 }
             }
 
-
+            //日志打印
+            debug.IsLog = this.GameConfig.IsDebugLog;
             //启动本地
             LaunchLocal();
         }
@@ -129,7 +129,6 @@ namespace BDFramework
                     }
                 }
             }
-
         }
 
         #endregion
@@ -140,9 +139,9 @@ namespace BDFramework
         /// 初始化
         /// 修改版本,让这个启动逻辑由使用者自行处理
         /// </summary>
-        /// <param name="editorModelGamelogicTypes">Editor模式下,UPM隔离了DLL需要手动传入</param>
+        /// <param name="editorGamelogicTypes">Editor模式下,UPM隔离了DLL需要手动传入</param>
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
-        public void Launch(Type[] editorModelGamelogicTypes,Action<bool> gameLogicIlrBindAction ,string gameId = "default")
+        public void Launch(Type[] editorGamelogicTypes, Action<bool> gameLogicIlrBindAction, string gameId = "default")
         {
             BDebug.Log("Persistent:" + Application.persistentDataPath);
             BDebug.Log("StreamingAsset:" + Application.streamingAssetsPath);
@@ -154,12 +153,14 @@ namespace BDFramework
                 //2.sql
                 SqliteLoder.Load(GameConfig.SQLRoot);
                 //3.脚本,这个启动会开启所有的逻辑
-                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode,editorModelGamelogicTypes,gameLogicIlrBindAction);
+                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode, editorGamelogicTypes,
+                    gameLogicIlrBindAction);
             });
         }
 
         #endregion
 
+        #region 生命周期
 
         //普通帧循环
         private void Update()
@@ -182,5 +183,20 @@ namespace BDFramework
             ILRuntimeHelper.Close();
 #endif
         }
+
+        #endregion
+
+#if UNITY_EDITOR
+
+        /// <summary>
+        /// 当Config修改
+        /// </summary>
+        public static void OnConfigChanged()
+        {
+            var config = GameObject.Find("BDFrame").GetComponent<Config>();
+            var bdLauncher = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
+            config.SetNewConfig(bdLauncher.ConfigText.text);
+        }
+#endif
     }
 }

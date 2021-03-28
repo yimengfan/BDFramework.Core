@@ -28,10 +28,10 @@ namespace BDFramework
         /// </summary>
         /// <param name="loadPath"></param>
         /// <param name="runMode"></param>
-        /// <param name="editorModelGamelogicTypes">编辑器模式下 UPM隔离了dll,需要手动传入</param>
+        /// <param name="editorGamelogicTypes">编辑器模式下 UPM隔离了dll,需要手动传入</param>
         static public void Load(AssetLoadPath loadPath,
             HotfixCodeRunMode runMode,
-            Type[] editorModelGamelogicTypes,
+            Type[] editorGamelogicTypes,
             Action<bool> gamelogicILRBindAction)
         {
             ScriptLoder.GamelogicILRBindAction = gamelogicILRBindAction;
@@ -45,7 +45,7 @@ namespace BDFramework
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
                 //添加框架部分的type，热更下不需要，打包会把框架的部分打进去
                 var list = new List<Type>();
-                list.AddRange(editorModelGamelogicTypes);
+                list.AddRange(editorGamelogicTypes);
                 list.AddRange(typeof(BDLauncher).Assembly.GetTypes());
                 method.Invoke(null, new object[] {list.ToArray()});
             }
@@ -115,7 +115,7 @@ namespace BDFramework
                 BDebug.Log("热更Dll路径:" + dllPath, "red");
                 //解释执行模式
                 ILRuntimeHelper.LoadHotfix(dllPath,GamelogicILRBindAction);
-                var gamelogicTypes = ILRuntimeHelper.GetHotfixTypes();
+                var gamelogicTypes = ILRuntimeHelper.GetHotfixTypes().ToArray();
                 ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] {gamelogicTypes});
             }
             else

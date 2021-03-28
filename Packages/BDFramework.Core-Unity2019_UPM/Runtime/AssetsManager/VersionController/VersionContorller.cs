@@ -11,7 +11,7 @@ namespace BDFramework.VersionContrller
     public class AssetConfig
     {
         public string Platfrom = "";
-        public double Version = 0.1d;
+        public string Version = "0001";
         public List<AssetItem> Assets = new List<AssetItem>();
     }
 

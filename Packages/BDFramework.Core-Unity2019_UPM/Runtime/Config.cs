@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.IO;
-using BDFramework.Core.Tools;
 using LitJson;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEditor.SceneManagement;
 
+#if UNITY_EDITOR
+using UnityEngine.SceneManagement;
+using UnityEditor;
 #endif
 
 namespace BDFramework
@@ -36,6 +31,7 @@ namespace BDFramework
         V2,
     }
 
+    [Serializable]
     public class GameConfig
     {
         [LabelText("代码路径")]
@@ -60,6 +56,9 @@ namespace BDFramework
         [LabelText("是否开启ILRuntime调试")]
         public bool IsDebuggerILRuntime = false;
 
+        [LabelText("是否打印日志")]
+        public bool IsDebugLog = true;
+
         [LabelText("是否执行热更单元测试")]
         public bool IsExcuteHotfixUnitTest = false;
 
@@ -78,96 +77,24 @@ namespace BDFramework
         public bool IsNeedNet = false;
     }
 
-    public class Config :
-#if UNITY_EDITOR
-        SerializedMonoBehaviour
-#else
-        MonoBehaviour
-#endif
-
+    /// <summary>
+    /// 游戏进入的config
+    /// </summary>
+    public class Config : MonoBehaviour
     {
         [HideLabel]
         [InlinePropertyAttribute]
         public GameConfig Data;
 
-        //本地配置
-        [TitleGroup("真机环境下,BDLauncher的Config不能为null！(且保持Odin设置:Editor Only,无视该面板错误)", alignment: TitleAlignments.Centered)]
-        [LabelText("本地配置")]
-        [InfoBox("使用内置打包工具,会自动加载内置生成Config.\n或点击【生成Config】按钮生成，拖拽赋值可预览", InfoMessageType.Warning)]
-        [OnValueChanged("OnValueChanged_GameConfig")]
-        public TextAsset GameConfig;
 
-
-        private void Awake()
+        /// <summary>
+        /// 设置新配置
+        /// </summary>
+        /// <param name="gameConfig"></param>
+        public void SetNewConfig(string gameConfig)
         {
-            if (GameConfig != null)
-            {
-                var newconfig = JsonMapper.ToObject<GameConfig>(GameConfig.text);
-                SetNewConfig(newconfig);
-                // UseServerConfig(null);
-            }
-            // else if (!Application.isEditor)
-            // {
-            //     BDebug.LogError("不存在GameConfig,请检查!");
-            // }
+            this.Data = JsonMapper.ToObject<GameConfig>(gameConfig);
         }
-
-        #region Config设置
-
-        //
-        // /// <summary>
-        // /// 使用服务器配置 
-        // /// </summary>
-        // /// <param name="callback"></param>
-        // public void UseServerConfig(Action callback)
-        // {
-        //     IEnumeratorTool.StartCoroutine(UpdateServerConfig(callback));
-        // }
-        //
-        //
-        // /// <summary>
-        // /// 更新服务器配置
-        // /// </summary>
-        // /// <param name="callback"></param>
-        // /// <returns></returns>
-        // private IEnumerator UpdateServerConfig(Action callback)
-        // {
-        //     var url = string.Format("{0}/{1}/{2}", Data.FileServerUrl, BApplication.GetPlatformPath(Application.platform), "GameConfig.json");
-        //     BDebug.Log(url);
-        //     UnityWebRequest uwq = UnityWebRequest.Get(url);
-        //     GameConfig gconfig = null;
-        //     yield return uwq.SendWebRequest();
-        //     if (uwq.isDone && uwq.error == null)
-        //     {
-        //         var text = uwq.downloadHandler.text;
-        //         if (!string.IsNullOrEmpty(text))
-        //         {
-        //             gconfig = JsonMapper.ToObject<GameConfig>(text);
-        //             BDebug.Log("使用服务器配置:\n" + text);
-        //         }
-        //     }
-        //     else
-        //     {
-        //         BDebug.LogError("Game配置无法更新,使用本地");
-        //     }
-        //
-        //     SetNewConfig(gconfig);
-        //     callback?.Invoke();
-        // }
-        //
-        // /// <summary>
-        // /// 使用新的配置
-        // /// </summary>
-        // /// <param name="newConfig"></param>
-        private void SetNewConfig(GameConfig newConfig)
-        {
-            if (newConfig != null)
-            {
-                this.Data = newConfig;
-            }
-        }
-
-        #endregion
 
 
         #region 编辑器
@@ -175,19 +102,36 @@ namespace BDFramework
 #if UNITY_EDITOR
 
 
+        private void OnValidate()
+        {
+            var asset = this.gameObject.GetComponent<BDLauncher>().ConfigText;
+            GenGameConfig("Assets/Scenes/Config", asset.name);
+        }
+
+        
+       
+        [TitleGroup("真机环境下,BDLauncher的Config不能为null！", alignment: TitleAlignments.Centered)]
+        [LabelText("生成配置名")]
+        public string ConfigFileName="noname";
+        
         [ButtonGroup("1")]
-        [Button("清空Persistent", ButtonSizes.Medium)]
+        [Button("清空Persistent", ButtonSizes.Small)]
         public static void DeletePersistent()
         {
             Directory.Delete(Application.persistentDataPath, true);
         }
 
         [ButtonGroup("1")]
-        [Button("生成Config", ButtonSizes.Medium)]
+        [Button("生成Config", ButtonSizes.Small)]
         public static void GenConfig()
-        {
-            GenGameConfig("Assets/Scenes/Config", BDApplication.GetPlatformPath(Application.platform));
+        { 
+            var config = GameObject.Find("BDFrame").GetComponent<Config>();
+            GenGameConfig("Assets/Scenes/Config", config.ConfigFileName);
+            
+            EditorUtility.DisplayDialog("提示:", "生成:Assets/Scenes/Config/" + config.ConfigFileName, "OK");
         }
+
+
 
 
         /// <summary>
@@ -195,23 +139,20 @@ namespace BDFramework
         /// </summary>
         /// <param name="str"></param>
         /// <param name="platform"></param>
-        static public void GenGameConfig(string str, string platform)
+        static public void GenGameConfig(string str, string filename)
         {
             //config
             var config = GameObject.Find("BDFrame").GetComponent<Config>();
             var json = JsonMapper.ToJson(config.Data);
             //根据不同场景生成配置
-            Scene scene = EditorSceneManager.GetActiveScene();
-            var fs = string.Format("{0}/{1}", str, scene.name + "_GameConfig.json");
+           // Scene scene = EditorSceneManager.GetActiveScene();
+            var fs = string.Format("{0}/{1}", str, filename + ".json");
             FileHelper.WriteAllText(fs, json);
-            Debug.Log("当前场景配置：" + fs);
             AssetDatabase.Refresh();
             //
             var content = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
-            config.GameConfig = content;
             var bdconfig = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
-            bdconfig.ConfigContent = content;
-
+            bdconfig.ConfigText = content;
         }
 
         /// <summary>

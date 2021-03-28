@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8458203362226980181}
-  - component: {fileID: 8458203362226980180}
   - component: {fileID: 8458203362226980182}
+  - component: {fileID: 8458203362226980180}
+  - component: {fileID: 568326173991133346}
   m_Layer: 0
   m_Name: BDFrame
   m_TagString: Untagged
@@ -32,19 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8458203362226980180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8458203362226980183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53901f56d09f96d4886992ff20f43b1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConfigContent: {fileID: 4900000, guid: a215f2a2fe5e61649a9ed1a27888673e, type: 3}
 --- !u!114 &8458203362226980182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,58 +45,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c55bb42676de1c4993dc7ec9b884229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: Data
-      Entry: 7
-      Data: 0|BDFramework.GameConfig, BDFramework.Core
-    - Name: CodeRoot
-      Entry: 3
-      Data: 0
-    - Name: SQLRoot
-      Entry: 3
-      Data: 0
-    - Name: ArtRoot
-      Entry: 3
-      Data: 0
-    - Name: CustomArtRoot
-      Entry: 1
-      Data: 
-    - Name: CodeRunMode
-      Entry: 3
-      Data: 0
-    - Name: AssetBundleManagerVersion
-      Entry: 3
-      Data: 1
-    - Name: IsDebuggerILRuntime
-      Entry: 5
-      Data: false
-    - Name: IsExcuteHotfixUnitTest
-      Entry: 5
-      Data: false
-    - Name: FileServerUrl
-      Entry: 1
-      Data: 192.168.8.68
-    - Name: GateServerIp
-      Entry: 1
-      Data: 
-    - Name: Port
-      Entry: 3
-      Data: 0
-    - Name: IsHotfix
-      Entry: 5
-      Data: false
-    - Name: IsNeedNet
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
+  Data:
+    CodeRoot: 0
+    SQLRoot: 0
+    ArtRoot: 0
+    CustomArtRoot: 
+    CodeRunMode: 0
+    AssetBundleManagerVersion: 0
+    IsDebuggerILRuntime: 0
+    IsDebugLog: 1
+    IsExcuteHotfixUnitTest: 0
+    FileServerUrl: 192.168.8.68
+    GateServerIp: 
+    Port: 0
+    IsHotfix: 0
+    IsNeedNet: 0
   GameConfig: {fileID: 4900000, guid: a215f2a2fe5e61649a9ed1a27888673e, type: 3}
+--- !u!114 &8458203362226980180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8458203362226980183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53901f56d09f96d4886992ff20f43b1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConfigText: {fileID: 4900000, guid: a215f2a2fe5e61649a9ed1a27888673e, type: 3}
+--- !u!114 &568326173991133346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8458203362226980183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -614279893, guid: 3b8ad62e537bc86418adf879fac81ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLog: 1

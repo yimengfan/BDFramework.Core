@@ -57,7 +57,9 @@ namespace SQLite4Unity3d
     public partial class SQLiteConnection : IDisposable
     {
         private bool _open;
+
         private TimeSpan _busyTimeout;
+
         //assembly -  classfullname,table mapping
         private Dictionary<int, Dictionary<string, TableMapping>> _mappings = null;
         private Dictionary<string, TableMapping> _tables = null;
@@ -71,11 +73,11 @@ namespace SQLite4Unity3d
         internal static readonly Sqlite3DatabaseHandle NullHandle = default(Sqlite3DatabaseHandle);
 
         public string DatabasePath { get; private set; }
-        
+
         /// <summary>
         /// is open
         /// </summary>
-        public bool IsOpen { get { return _open;}}
+        public bool IsOpen { get { return _open; } }
 
         // Dictionary of synchronization objects.
         //
@@ -185,7 +187,9 @@ namespace SQLite4Unity3d
             }
             else
             {
+#if UNITY_EDITOR
                 Debug.Log("连接sqlite 成功!");
+#endif
             }
 
             _open = true;
@@ -301,6 +305,7 @@ namespace SQLite4Unity3d
                 maps = new Dictionary<string, TableMapping>();
                 _mappings[key] = maps;
             }
+
             //获取具体map
             TableMapping map;
             if (!maps.TryGetValue(type.FullName, out map))
@@ -456,11 +461,7 @@ namespace SQLite4Unity3d
                         throw new Exception(
                             "All the columns in an index must have the same value for their Unique property");
 
-                    iinfo.Columns.Add(new IndexedColumn
-                    {
-                        Order = i.Order,
-                        ColumnName = c.Name
-                    });
+                    iinfo.Columns.Add(new IndexedColumn {Order = i.Order, ColumnName = c.Name});
                 }
             }
 
@@ -1660,7 +1661,6 @@ namespace SQLite4Unity3d
                             {
                                 sqlInsertCommand.Dispose();
                             }
-                            
                         }
                     }
 
@@ -2142,7 +2142,7 @@ namespace SQLite4Unity3d
 
                     while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                     {
-                        var obj = ILRuntimeHelper.CreateILRuntimeInstance(map.MappedType); 
+                        var obj = ILRuntimeHelper.CreateILRuntimeInstance(map.MappedType);
                         for (int i = 0; i < cols.Length; i++)
                         {
                             if (cols[i] == null)
@@ -2151,6 +2151,7 @@ namespace SQLite4Unity3d
                             var val = ReadCol(stmt, i, colType, cols[i].ColumnType);
                             cols[i].SetValue(obj, val);
                         }
+
                         yield return obj;
                     }
                 }
@@ -2183,7 +2184,7 @@ namespace SQLite4Unity3d
 
                     while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                     {
-                        var obj =  map.MappedType.Assembly.CreateInstance(map.MappedType.FullName);
+                        var obj = map.MappedType.Assembly.CreateInstance(map.MappedType.FullName);
                         for (int i = 0; i < cols.Length; i++)
                         {
                             if (cols[i] == null)
@@ -2244,11 +2245,7 @@ namespace SQLite4Unity3d
 
         public void Bind(string name, object val)
         {
-            _bindings.Add(new Binding
-            {
-                Name = name,
-                Value = val
-            });
+            _bindings.Add(new Binding {Name = name, Value = val});
         }
 
         public void Bind(object val)
@@ -2612,7 +2609,9 @@ namespace SQLite4Unity3d
         {
         }
 
-        protected NotNullConstraintViolationException(SQLite3.Result r, string message, TableMapping mapping,
+        protected NotNullConstraintViolationException(SQLite3.Result r,
+            string message,
+            TableMapping mapping,
             object obj)
         {
             if (mapping != null && obj != null)
@@ -2628,13 +2627,16 @@ namespace SQLite4Unity3d
             return new NotNullConstraintViolationException(r, message);
         }
 
-        public static NotNullConstraintViolationException New(SQLite3.Result r, string message, TableMapping mapping,
+        public static NotNullConstraintViolationException New(SQLite3.Result r,
+            string message,
+            TableMapping mapping,
             object obj)
         {
             return new NotNullConstraintViolationException(r, message, mapping, obj);
         }
 
-        public static NotNullConstraintViolationException New(SQLiteException exception, TableMapping mapping,
+        public static NotNullConstraintViolationException New(SQLiteException exception,
+            TableMapping mapping,
             object obj)
         {
             return new NotNullConstraintViolationException(exception.Result, exception.Message, mapping, obj);
