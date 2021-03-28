@@ -18,10 +18,10 @@ namespace BDFramework.Editor.TableData
                 }
             }
 
-            SqliteLoder.LoadOnEditor(Application.streamingAssetsPath, Application.platform);
+           
             if (excelList.Count > 0)
             {
-                
+                SqliteLoder.LoadOnEditor(Application.streamingAssetsPath, Application.platform);
                 float counter = 1f;
                 foreach (var excel in excelList)
                 {
@@ -30,9 +30,11 @@ namespace BDFramework.Editor.TableData
                     counter++;
                 }
                 EditorUtility.ClearProgressBar();
+                BDebug.Log("自动导表完成!");
+                SqliteLoder.Close();
             }
-            SqliteLoder.Close();
-           BDebug.Log("自动导表完成!");
+           
+          
 
         }
     }
