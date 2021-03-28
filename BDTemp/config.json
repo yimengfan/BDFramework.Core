@@ -25,5 +25,5 @@
     "IsUseHashName" : false,
     "AssetBundleFileServerUrl" : "http://127.0.0.1:20000"
   },
-  "savepath"         : "E:/Unity2019/BDFramework.Core/BDTemp/config.json"
+  "savepath"         : "E:/Unity2019/BDFramework/BDTemp/config.json"
 }

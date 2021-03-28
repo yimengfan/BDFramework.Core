@@ -98,7 +98,6 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         {
             Directory.Delete(targetPath, true);
         }
-
         var fileContent = @"
         namespace ILRuntime.Runtime.Generated
         {
@@ -122,8 +121,6 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         AssetDatabase.Refresh();
         //触发bd环境周期
         BDFrameEditorBehaviorHelper.OnEndBuildDLL(outpath);
-        AssetHelper.GenPackageBuildInfo(outpath, platform);
-        Debug.Log("脚本打包完毕");
     }
 
     /// <summary>

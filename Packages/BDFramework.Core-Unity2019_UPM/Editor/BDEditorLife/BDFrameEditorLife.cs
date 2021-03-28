@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
@@ -22,10 +23,23 @@ namespace BDFramework.Editor.EditorLife
     {
         static BDFrameEditorLife()
         {
-            EditorApplication.delayCall += OnCompileCode;
             EditorApplication.playModeStateChanged += OnPlayExit;
         }
 
+        /// <summary>
+        /// 代码编译完成后
+        /// </summary>
+        [UnityEditor.Callbacks.DidReloadScripts(0)]
+        static void OnScriptReload()
+        {
+            OnCompileCode();
+            //编译dll
+            ScriptBuildTools.BuildDll(Application.streamingAssetsPath, Application.platform,
+                ScriptBuildTools.BuildMode.Release, false);
+
+
+            //EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, RuntimePlatform.Android, ScriptBuildTools.BuildMode.Release);
+        }
 
         /// <summary>
         /// 退出播放模式
@@ -51,13 +65,12 @@ namespace BDFramework.Editor.EditorLife
 
             InitEditorFrame();
         }
-        
+
         static public void InitEditorFrame()
         {
             //BD生命周期启动
             BDApplication.Init();
             BDFrameEditorConfigHelper.Init();
-          
             //编辑器下加载初始化
             BResources.Load(AssetLoadPath.Editor);
         }

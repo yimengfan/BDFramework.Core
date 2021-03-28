@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using BDFramework.AssetHelper;
 using Debug = UnityEngine.Debug;
 using BDFramework.Core.Tools;
 using Microsoft.CodeAnalysis;
@@ -27,6 +28,7 @@ public class ScriptBuildTools
     private static Dictionary<int, string> csFilesMap;
     private static string DLLPATH = "Hotfix/hotfix.dll";
 
+    private static bool IsShowTips;
     /// <summary>
     /// 宏
     /// </summary>
@@ -35,12 +37,16 @@ public class ScriptBuildTools
     /// <summary>
     /// 编译DLL
     /// </summary>
-    static public void BuildDll(string outPath, RuntimePlatform platform, BuildMode mode)
+    static public void BuildDll(string outPath, RuntimePlatform platform, BuildMode mode,bool isShowTips =true)
     {
-        EditorUtility.DisplayProgressBar("编译服务", "准备编译环境...", 0.1f);
+        IsShowTips = isShowTips;
+        
+        if (IsShowTips)
+        {
+            EditorUtility.DisplayProgressBar("编译服务", "准备编译环境...", 0.1f);
+        }
         //生成CSProj
         CodeEditor.CurrentEditor.SyncAll();
-        AssetDatabase.Refresh();
         //
         outPath = Path.Combine(outPath, BDApplication.GetPlatformPath(platform));
         //准备输出环境
@@ -57,12 +63,19 @@ public class ScriptBuildTools
         catch (Exception e)
         {
             Debug.LogError(e.Message);
-            EditorUtility.ClearProgressBar();
-            EditorUtility.DisplayDialog("提示", "请手动删除hotfix文件后重试!", "OK");
+            if (IsShowTips)
+            {
+                EditorUtility.ClearProgressBar();
+                EditorUtility.DisplayDialog("提示", "请手动删除hotfix文件后重试!", "OK");
+            }
+
             return;
         }
 
-        EditorUtility.DisplayProgressBar("编译服务", "开始处理脚本", 0.2f);
+        if (IsShowTips)
+        {
+            EditorUtility.DisplayProgressBar("编译服务", "开始处理脚本", 0.2f);
+        }
 
         #region CS DLL引用搜集处理
 
@@ -108,6 +121,8 @@ public class ScriptBuildTools
         {
             Build(baseCs, hotfixCs, dllFileList, outHotfixPath, true);
         }
+        
+        AssetHelper.GenPackageBuildInfo(outPath, platform);
     }
 
     /// <summary>
@@ -124,7 +139,10 @@ public class ScriptBuildTools
     {
         var baseDll = outHotfixDllPath.Replace("hotfix.dll", "Assembly-CSharp.dll");
         //开始执行
-        EditorUtility.DisplayProgressBar("编译服务", "[1/2]开始编译base.dll...", 0.5f);
+        if (IsShowTips)
+        {
+            EditorUtility.DisplayProgressBar("编译服务", "[1/2]开始编译base.dll...", 0.5f);
+        }
         try
         {
             //使用宏编译
@@ -137,7 +155,10 @@ public class ScriptBuildTools
             return;
         }
 
-        EditorUtility.DisplayProgressBar("编译服务", "[2/2]开始编译hotfix.dll...", 0.7f);
+        if (IsShowTips)
+        {
+            EditorUtility.DisplayProgressBar("编译服务", "[2/2]开始编译hotfix.dll...", 0.7f);
+        }
         //将base.dll加入
         //var mainDll = BApplication.ProjectRoot + "/Library/ScriptAssemblies/Assembly-CSharp.dll";
         if (!dllFiles.Contains(baseDll))
@@ -158,8 +179,10 @@ public class ScriptBuildTools
             return;
         }
 
+        if(IsShowTips)
         EditorUtility.DisplayProgressBar("编译服务", "清理临时文件", 0.9f);
         File.Delete(baseDll);
+        if(IsShowTips)
         EditorUtility.ClearProgressBar();
         AssetDatabase.Refresh();
     }
