@@ -18,7 +18,7 @@ namespace BDFramework.UnitTest
         /// </summary>
         public void RunUnitTest()
         {
-            BDLauncher.Inst.Launch();
+            BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes());
         }
     }
 }

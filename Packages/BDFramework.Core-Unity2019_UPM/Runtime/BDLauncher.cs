@@ -130,19 +130,6 @@ namespace BDFramework
                 }
             }
 
-            //类型注册
-            List<Type> types = new List<Type>();
-            types.AddRange(typeof(Button).Assembly.GetTypes());
-            types.AddRange(typeof(IButton).Assembly.GetTypes());
-            var uitype = typeof(UIBehaviour);
-            foreach (var t in types)
-            {
-                //注册所有uiComponent
-                if (t.IsSubclassOf(uitype))
-                {
-                    ILRuntimeHelper.UIComponentTypes[t.FullName] = t;
-                }
-            }
         }
 
         #endregion
@@ -153,8 +140,9 @@ namespace BDFramework
         /// 初始化
         /// 修改版本,让这个启动逻辑由使用者自行处理
         /// </summary>
+        /// <param name="editorModelGamelogicTypes">Editor模式下,UPM隔离了DLL需要手动传入</param>
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
-        public void Launch(string GameId = "")
+        public void Launch(Type[] editorModelGamelogicTypes,string gameId = "default")
         {
             BDebug.Log("Persistent:" + Application.persistentDataPath);
             BDebug.Log("StreamingAsset:" + Application.streamingAssetsPath);
@@ -166,7 +154,7 @@ namespace BDFramework
                 //2.sql
                 SqliteLoder.Load(GameConfig.SQLRoot);
                 //3.脚本,这个启动会开启所有的逻辑
-                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode);
+                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode,editorModelGamelogicTypes);
             });
         }
 

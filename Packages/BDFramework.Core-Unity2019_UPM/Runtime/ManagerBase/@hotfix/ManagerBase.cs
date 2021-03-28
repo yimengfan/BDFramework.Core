@@ -9,10 +9,12 @@ namespace BDFramework.Mgr
     {
         public int IntTag { get; private set; } = -1;
         public string Tag { get; private set; } = null;
+
         public ManagerAtrribute(int intTag)
         {
             this.IntTag = intTag;
         }
+
         public ManagerAtrribute(string tag)
         {
             this.Tag = tag;
@@ -41,37 +43,35 @@ namespace BDFramework.Mgr
                 return i;
             }
         }
+
         private Dictionary<int, ClassData> ClassDataMap_IntKey { get; set; }
         private Dictionary<string, ClassData> ClassDataMap_StringKey { get; set; }
+
         protected ManagerBase()
         {
             this.ClassDataMap_IntKey = new Dictionary<int, ClassData>();
-            this.ClassDataMap_StringKey=new Dictionary<string, ClassData>();
+            this.ClassDataMap_StringKey = new Dictionary<string, ClassData>();
         }
-        
+
         private Type vtype = null;
-        virtual public void CheckType(Type type)
+
+        virtual public void CheckType(Type type, IEnumerable<Attribute> attributes)
         {
             if (vtype == null)
             {
                 vtype = typeof(V);
             }
-
-            var attrs = type.GetCustomAttributes(vtype, false);
-            if (attrs.Length > 0)
+            var attr = attributes.FirstOrDefault((a) => a is V);
+            if (attr != null)
             {
-                var attr = attrs[0];
-                if (attr is V)
+                var vAttr = (V) attr;
+                if (vAttr.IntTag != -1)
                 {
-                    var _attr = (V) attr;
-                    if (_attr.IntTag != -1)
-                    {
-                        SaveAttribute(_attr.IntTag, new ClassData() {Attribute = _attr, Type = type});
-                    }
-                    else if(_attr.Tag!=null)
-                    {
-                        SaveAttribute(_attr.Tag, new ClassData() {Attribute = _attr, Type = type});
-                    }
+                    SaveAttribute(vAttr.IntTag, new ClassData() {Attribute = vAttr, Type = type});
+                }
+                else if (vAttr.Tag != null)
+                {
+                    SaveAttribute(vAttr.Tag, new ClassData() {Attribute = vAttr, Type = type});
                 }
             }
         }
@@ -135,6 +135,7 @@ namespace BDFramework.Mgr
                     return value;
                 }
             }
+
             return null;
         }
 
@@ -154,7 +155,7 @@ namespace BDFramework.Mgr
             {
                 classDatas = this.ClassDataMap_StringKey.Values;
             }
-            
+
             return classDatas;
         }
 
@@ -167,6 +168,7 @@ namespace BDFramework.Mgr
         {
             this.ClassDataMap_IntKey[tag] = data;
         }
+
         /// <summary>
         /// 保存属性
         /// </summary>
@@ -222,6 +224,7 @@ namespace BDFramework.Mgr
 
             return CreateInstance<T2>(cd, args);
         }
+
         /// <summary>
         /// 创建实例
         /// </summary>

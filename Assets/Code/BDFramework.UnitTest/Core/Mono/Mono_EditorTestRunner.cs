@@ -28,7 +28,8 @@ namespace BDFramework.UnitTest
                 TestRunner.ExcuteTest<UnitTestAttribute>();
             };
            
-            BDLauncher.Inst.Launch();
+            //启动
+            BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes());
         }
     }
 }

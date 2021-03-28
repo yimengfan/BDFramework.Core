@@ -1,8 +1,12 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using BDFramework.Core.Tools;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Sirenix.Utilities;
 using UnityEngine;
 
 namespace BDFramework
@@ -13,9 +17,12 @@ namespace BDFramework
         static public Assembly Assembly { get; private set; }
 
         /// <summary>
-        /// 开始热更脚本逻辑
+        /// 脚本加载入口
         /// </summary>
-        static public void Load(AssetLoadPath loadPath, HotfixCodeRunMode runMode)
+        /// <param name="loadPath"></param>
+        /// <param name="runMode"></param>
+        /// <param name="editorModelGamelogicTypes">编辑器模式下 UPM隔离了dll,需要手动传入</param>
+        static public void Load(AssetLoadPath loadPath, HotfixCodeRunMode runMode, Type[] editorModelGamelogicTypes)
         {
             if (loadPath == AssetLoadPath.Editor)
             {
@@ -24,7 +31,11 @@ namespace BDFramework
                 var assembly = Assembly.GetExecutingAssembly();
                 var type = assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                method.Invoke(null, new object[] {false, false});
+                //添加框架部分的type，热更下不需要，打包会把框架的部分打进去
+                var list = new List<Type>();
+                list.AddRange(editorModelGamelogicTypes);
+                list.AddRange(typeof(BDLauncher).Assembly.GetTypes());
+                method.Invoke(null, new object[] {list.ToArray()});
             }
             else
             {
@@ -33,17 +44,20 @@ namespace BDFramework
                 {
                     if (loadPath == AssetLoadPath.Persistent)
                     {
-                        path = Path.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
+                        path = Path.Combine(Application.persistentDataPath,
+                            BDApplication.GetPlatformPath(Application.platform));
                     }
                     else if (loadPath == AssetLoadPath.StreamingAsset)
                     {
-                        path = Path.Combine(Application.streamingAssetsPath, BDApplication.GetPlatformPath(Application.platform));
+                        path = Path.Combine(Application.streamingAssetsPath,
+                            BDApplication.GetPlatformPath(Application.platform));
                     }
                 }
                 else
                 {
                     //真机环境，代码在persistent下，因为需要io
-                    path = Path.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
+                    path = Path.Combine(Application.persistentDataPath,
+                        BDApplication.GetPlatformPath(Application.platform));
                 }
 
                 //加载dll
@@ -51,7 +65,6 @@ namespace BDFramework
                 LoadDLL(dllPath, runMode);
             }
         }
-
 
 
         /// <summary>
@@ -81,7 +94,8 @@ namespace BDFramework
                 BDebug.Log("代码加载成功,开始执行Start");
                 var type = Assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                method.Invoke(null, new object[] {false, true});
+
+                method.Invoke(null, new object[] {Assembly.GetTypes()});
             }
             //解释执行
             else if (mode == HotfixCodeRunMode.ByILRuntime)
@@ -89,7 +103,8 @@ namespace BDFramework
                 BDebug.Log("Dll路径:" + dllPath, "red");
                 //解释执行模式
                 ILRuntimeHelper.LoadHotfix(dllPath);
-                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] {true, false});
+                var gamelogicTypes = ILRuntimeHelper.GetHotfixTypes();
+                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] {gamelogicTypes});
             }
             else
             {

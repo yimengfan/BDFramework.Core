@@ -32,12 +32,12 @@ public class WindowPreconfig : MonoBehaviour
 
 
     /// <summary>
-    /// 
+    /// 点击按钮事件
     /// </summary>
     void Onclick_PassAndLaunch()
     {
         //直接启动
-        BDLauncher.Inst.Launch();
+        BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes());
         //
         this.StartCoroutine(IE_Destroy());
     }
@@ -63,7 +63,7 @@ public class WindowPreconfig : MonoBehaviour
             {
                 this.text_DownloadProcess.text = "下载完毕";
                 //启动
-                GameObject.Find("BDFrame").GetComponent<BDLauncher>().Launch();
+                BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes());
             }
         }, (e) =>
         {

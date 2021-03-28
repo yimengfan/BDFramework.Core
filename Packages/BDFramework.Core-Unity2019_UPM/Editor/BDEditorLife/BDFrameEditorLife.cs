@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
@@ -21,7 +22,6 @@ namespace BDFramework.Editor.EditorLife
         {
             EditorApplication.delayCall += OnCompileCode;
             EditorApplication.playModeStateChanged += OnPlayExit;
-            
         }
 
 
@@ -36,13 +36,14 @@ namespace BDFramework.Editor.EditorLife
                 InitBDEditorLife();
             }
         }
-        
+
         /// <summary>
         /// Editor代码刷新后执行
         /// </summary>
         static public void OnCompileCode()
         {
-            if (EditorApplication.isPlaying) return;
+            if (EditorApplication.isPlaying)
+                return;
             InitBDEditorLife();
         }
 
@@ -90,14 +91,25 @@ namespace BDFramework.Editor.EditorLife
                 }
             }
 
-            foreach (var t in types)
+            foreach (var type in types)
             {
-                foreach (var mgr in mgrs)
+                var baseAttributes = type.GetCustomAttributes();
+                if (baseAttributes.Count() == 0)
                 {
-                    mgr.CheckType(t);
+                    continue;
+                }
+
+                //1.类型注册到管理器
+                var attributes = baseAttributes.Where((attr) => attr is ManagerAtrribute);
+                if (attributes.Count() > 0)
+                {
+                    foreach (var mgr in mgrs)
+                    {
+                        mgr.CheckType(type, attributes);
+                    }
                 }
             }
-            
+
 
             Debug.Log("BDFrameEditor:管理器注册完成");
         }
