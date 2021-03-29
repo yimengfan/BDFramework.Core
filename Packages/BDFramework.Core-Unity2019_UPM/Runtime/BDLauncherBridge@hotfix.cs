@@ -54,17 +54,28 @@ public class BDLauncherBridge
         }
 
         BDebug.Log("ALLtype:" +  allTypes.Count);
+
+        foreach (var type in allTypes)
+        {
+            BDebug.Log(type.FullName);
+        }
         //遍历type执行逻辑
         foreach (var type in allTypes)
         {
-            var baseAttributes = type.GetCustomAttributes();
+            var baseAttributes = type.GetCustomAttributes(true);
             if (baseAttributes==null || baseAttributes.Count() == 0)
             {
                 continue;
             }
+        
             BDebug.Log("-------");
+            BDebug.Log(type.FullName,"red");
+            foreach (var a in baseAttributes)
+            {
+                Debug.Log(a.GetType().FullName);
+            }
             //1.类型注册到管理器
-            var attributes = baseAttributes.Where((attr) => attr is ManagerAtrribute);
+            var attributes = baseAttributes.Where((attr) => attr is ManagerAtrribute).Select((a)=> a as ManagerAtrribute);
             if (attributes.Count() > 0)
             {
                 foreach (var iMgr in mgrList)
