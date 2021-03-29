@@ -18,7 +18,7 @@ public class ILRuntimeDelegateHelper
         appdomain.DelegateManager.RegisterMethodDelegate<System.Single>();
         appdomain.DelegateManager.RegisterFunctionDelegate<System.Object, System.Boolean>();
         appdomain.DelegateManager.RegisterFunctionDelegate<System.Attribute, System.Boolean>();
-
+        appdomain.DelegateManager.RegisterFunctionDelegate<System.Object, ILRuntime.Runtime.Adapters.AttributeAdapter.Adapter>();
 
         appdomain.DelegateManager.RegisterDelegateConvertor<UnityEngine.Events.UnityAction>((act) =>
         {

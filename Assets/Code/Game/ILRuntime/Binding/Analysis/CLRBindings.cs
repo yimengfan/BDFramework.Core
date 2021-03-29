@@ -50,8 +50,8 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_Type_Binding.Register(app);
             System_Linq_Enumerable_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding_Enumerator_Binding.Register(app);
-            System_Reflection_CustomAttributeExtensions_Binding.Register(app);
-            BDFramework_GameStart_GameStartAtrribute_Binding.Register(app);
+            System_Reflection_PropertyInfo_Binding.Register(app);
+            System_Reflection_MemberInfo_Binding.Register(app);
             System_Reflection_Assembly_Binding.Register(app);
             BDFramework_ILRuntimeHelper_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Type_Binding.Register(app);
@@ -83,6 +83,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_String_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_Object_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
+            System_Reflection_FieldInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Action_2_Transform_Object_Binding.Register(app);
             System_Collections_ICollection_Binding.Register(app);
             UnityEngine_Mathf_Binding.Register(app);
@@ -126,6 +127,7 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_UnitTest_UnitTestBaseAttribute_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Type_List_1_ILTypeInstance_Binding.Register(app);
+            System_Reflection_MethodBase_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_MethodInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Single_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_Action_1_Single_Binding.Register(app);

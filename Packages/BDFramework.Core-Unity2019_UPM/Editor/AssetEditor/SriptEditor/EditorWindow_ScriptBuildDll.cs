@@ -65,7 +65,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
             }
 
             BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll =
-                EditorGUILayout.Toggle("是否自动编译DLL",BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll );
+                EditorGUILayout.Toggle("修改后立即编译DLL",BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll );
 
             GUI.color = Color.green;
             GUILayout.Label(@"
