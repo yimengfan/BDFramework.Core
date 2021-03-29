@@ -127,7 +127,6 @@ namespace BDFramework
         { 
             var config = GameObject.Find("BDFrame").GetComponent<Config>();
             GenGameConfig("Assets/Scenes/Config", config.ConfigFileName);
-            
             EditorUtility.DisplayDialog("提示:", "生成:Assets/Scenes/Config/" + config.ConfigFileName, "OK");
         }
 
@@ -141,8 +140,13 @@ namespace BDFramework
         /// <param name="platform"></param>
         static public void GenGameConfig(string str, string filename)
         {
+            var go = GameObject.Find("BDFrame");
+            if (!go)
+            {
+                return;
+            }
             //config
-            var config = GameObject.Find("BDFrame").GetComponent<Config>();
+            var config = go.GetComponent<Config>();
             var json = JsonMapper.ToJson(config.Data);
             //根据不同场景生成配置
            // Scene scene = EditorSceneManager.GetActiveScene();
@@ -153,6 +157,7 @@ namespace BDFramework
             var content = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
             var bdconfig = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
             bdconfig.ConfigText = content;
+            Debug.Log("保存配置成功!");
         }
 
         /// <summary>
