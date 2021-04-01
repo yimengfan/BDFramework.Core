@@ -41,7 +41,7 @@ UPM Setting:
 
 ### 【2020.06开启 社区建设计划】  
 
-【广告】如果需要项目方案定制、技术方案定制、技术培训,可以联系 QQ:755737878  
+如果需要项目方案定制、技术方案定制、技术培训,可以联系 QQ:755737878  
 
 ## 框架特点(Feature)
   <img src="./BDTemp/Img/OneKeyBuild.png" width = "300" height = "200" div align=center />  
