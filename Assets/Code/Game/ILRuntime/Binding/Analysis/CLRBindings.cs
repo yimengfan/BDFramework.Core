@@ -7,6 +7,15 @@ namespace ILRuntime.Runtime.Generated
     class CLRBindings
     {
 
+//will auto register in unity
+#if UNITY_5_3_OR_NEWER
+        [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.BeforeSceneLoad)]
+#endif
+        static private void RegisterBindingAction()
+        {
+            ILRuntime.Runtime.CLRBinding.CLRBindingUtils.RegisterBindingAction(Initialize);
+        }
+
         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2> s_UnityEngine_Vector2_Binding_Binder = null;
         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3> s_UnityEngine_Vector3_Binding_Binder = null;
         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector4> s_UnityEngine_Vector4_Binding_Binder = null;
@@ -22,6 +31,7 @@ namespace ILRuntime.Runtime.Generated
             System_Object_Binding.Register(app);
             System_Action_1_String_Binding.Register(app);
             System_Action_2_Int32_Int32_Binding.Register(app);
+            UnityEngine_Debug_Binding.Register(app);
             UnityEngine_UI_Button_Binding.Register(app);
             UnityEngine_Events_UnityEvent_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
@@ -47,19 +57,19 @@ namespace ILRuntime.Runtime.Generated
             System_Int32_Binding.Register(app);
             UnityEngine_UI_Text_Binding.Register(app);
             System_DateTime_Binding.Register(app);
+            System_Type_Binding.Register(app);
+            System_Reflection_PropertyInfo_Binding.Register(app);
+            BDFramework_Reflection_ReflectionExtension_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding.Register(app);
-            System_Linq_Enumerable_Binding.Register(app);
-            System_Collections_Generic_List_1_Type_Binding_Enumerator_Binding.Register(app);
-            System_Reflection_CustomAttributeExtensions_Binding.Register(app);
-            BDFramework_GameStart_GameStartAtrribute_Binding.Register(app);
             System_Reflection_Assembly_Binding.Register(app);
+            System_Collections_Generic_List_1_Type_Binding_Enumerator_Binding.Register(app);
             BDFramework_ILRuntimeHelper_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Type_Binding.Register(app);
-            BDFramework_GameStart_IGameStart_Binding.Register(app);
             BDFramework_BDLauncher_Binding.Register(app);
             System_Action_Binding.Register(app);
             System_Array_Binding.Register(app);
             SQLite4Unity3d_SQLiteConnection_Binding.Register(app);
+            System_Reflection_MemberInfo_Binding.Register(app);
             SQLite4Unity3d_SQLiteCommand_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding_Enumerator_Binding.Register(app);
@@ -82,11 +92,15 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_Core_Debugger_Debugger_NetworkServer_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_Object_Binding.Register(app);
+            System_Linq_Enumerable_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
+            System_Reflection_FieldInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Action_2_Transform_Object_Binding.Register(app);
+            UnityEngine_Component_Binding.Register(app);
             System_Collections_ICollection_Binding.Register(app);
             UnityEngine_Mathf_Binding.Register(app);
             System_Collections_IList_Binding.Register(app);
+            System_Activator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding_Enumerator_Binding.Register(app);
@@ -126,6 +140,7 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_UnitTest_UnitTestBaseAttribute_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Type_List_1_ILTypeInstance_Binding.Register(app);
+            System_Reflection_MethodBase_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_MethodInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Single_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_Action_1_Single_Binding.Register(app);
