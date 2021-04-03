@@ -13,7 +13,7 @@ namespace Tests
         [UnitTest]
         public static void GameStartLogic()
         {
-            Assert.Equals(HotfixGameStart.IsAwake, true,"热更启动器未执行");
+            Assert.Equals(HotFixGameStart.IsAwake, true,"热更启动器未执行");
         }
     }
 }

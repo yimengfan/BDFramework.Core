@@ -15,7 +15,7 @@ namespace BDFramework.Mgr
         
         void Init();
         void Start();
-        void CheckType(Type type, IEnumerable<Attribute> attributes);
+        void CheckType(Type type, ManagerAtrribute attribute);
         T2 CreateInstance<T2>(int tag , params object[] args)  where T2 : class;
         ClassData GetClassData(int typeName);
     }

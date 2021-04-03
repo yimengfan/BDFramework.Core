@@ -65,7 +65,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
             }
 
             BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll =
-                EditorGUILayout.Toggle("是否自动编译DLL",BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll );
+                EditorGUILayout.Toggle("是否自动编译热更DLL",BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll );
 
             GUI.color = Color.green;
             GUILayout.Label(@"
@@ -146,8 +146,8 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
 
     static Type[] manualBindingTypes = new Type[]
     {
-        typeof(MethodBase), typeof(MemberInfo), typeof(FieldInfo), typeof(MethodInfo), typeof(PropertyInfo),
-        typeof(Component), typeof(Type), typeof(Debug)
+        //typeof(MethodBase), typeof(MemberInfo), typeof(FieldInfo), typeof(MethodInfo), typeof(PropertyInfo),
+        //typeof(Component), typeof(Type), typeof(Debug)
     };
 
     /// <summary>

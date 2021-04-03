@@ -11,27 +11,27 @@ namespace BDFramework.Editor.EditorLife
         public override void OnBeginBuildDLL()
         {
 
-            Debug.Log("【BDFrameEditorBehavior】打包DLL之前测试!");
+            Debug.Log("【BDFrameEditorBehavior】打包DLL前,回调测试!");
         }
 
         public override void OnEndBuildDLL(string outputPath)
         {
-            Debug.Log("【BDFrameEditorBehavior】打包DLL之后测试!");
+            Debug.Log("【BDFrameEditorBehavior】打包DLL后,回调测试!");
         }
 
         public override void OnBeginBuildSqlite()
         {
-            Debug.Log("【BDFrameEditorBehavior】打包Sqlite之前测试!");
+            Debug.Log("【BDFrameEditorBehavior】打包Sqlite前,回调测试!");
         }
 
         public override void OnEndBuildSqlite(string outputPath)
         {
-            Debug.Log("【BDFrameEditorBehavior】打包Sqlite之后测试!");
+            Debug.Log("【BDFrameEditorBehavior】打包Sqlite后,回调测试!");
         }
 
         public override void OnBeginBuildAssetBundle(BuildInfo buildInfo)
         {
-            Debug.Log("【BDFrameEditorBehavior】打包Asset之前测试!");
+            Debug.Log("【BDFrameEditorBehavior】打包Asset时,回调测试!");
             //测试1：Runtime/Char 下prefab依赖 打包成一个ab
             List<string> charList = new List<string>();
             var path = "/Runtime/Char/".ToLower();

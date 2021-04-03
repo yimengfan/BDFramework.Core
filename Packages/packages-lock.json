@@ -5,11 +5,11 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ourpalm.ilruntime": "1.6.6"
+        "com.ourpalm.ilruntime": "1.6.5"
       }
     },
     "com.ourpalm.ilruntime": {
-      "version": "1.6.6",
+      "version": "1.6.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

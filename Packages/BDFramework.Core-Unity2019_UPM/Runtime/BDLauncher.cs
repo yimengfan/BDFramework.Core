@@ -44,9 +44,10 @@ namespace BDFramework
 
         #region 对外的生命周期
 
-        static public Action OnStart { get; set; }
-        static public Action OnUpdate { get; set; }
-        static public Action OnLateUpdate { get; set; }
+        public delegate void GameLauncherDelegate();
+        
+        static public GameLauncherDelegate OnUpdate { get; set; }
+        static public GameLauncherDelegate OnLateUpdate { get; set; }
 
         /// <summary>
         /// 当框架初始化完成
@@ -116,17 +117,15 @@ namespace BDFramework
             //寻找iGamestart
             foreach (var t in Assembly.GetExecutingAssembly().GetTypes())
             {
-                if (t.IsClass && t.GetInterface("IGameStart") != null)
+                if (t.IsClass && t.GetInterface(nameof(IGameStart)) != null)
                 {
-                    var attr = (GameStartAtrribute) t.GetCustomAttribute(typeof(GameStartAtrribute), false);
-                    if (attr != null && attr.Index == 0)
-                    {
-                        mainStart = Activator.CreateInstance(t) as IGameStart;
-                        //注册
-                        mainStart.Start();
+                    mainStart = Activator.CreateInstance(t) as IGameStart;
+                    //注册
+                    mainStart.Start();
 
-                        break;
-                    }
+                    OnUpdate += mainStart.Update;
+                    OnLateUpdate += mainStart.LateUpdate;
+                    break;
                 }
             }
         }
@@ -141,7 +140,7 @@ namespace BDFramework
         /// </summary>
         /// <param name="editorGamelogicTypes">Editor模式下,UPM隔离了DLL需要手动传入</param>
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
-        public void Launch(Type[] editorGamelogicTypes, Action<bool> gameLogicIlrBindAction, string gameId = "default")
+        public void Launch(Type[] editorGamelogicTypes, Action<bool> gameLogicILRBind, string gameId = "default")
         {
             BDebug.Log("Persistent:" + Application.persistentDataPath);
             BDebug.Log("StreamingAsset:" + Application.streamingAssetsPath);
@@ -154,7 +153,7 @@ namespace BDFramework
                 SqliteLoder.Load(GameConfig.SQLRoot);
                 //3.脚本,这个启动会开启所有的逻辑
                 ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode, editorGamelogicTypes,
-                    gameLogicIlrBindAction);
+                    gameLogicILRBind);
             });
         }
 

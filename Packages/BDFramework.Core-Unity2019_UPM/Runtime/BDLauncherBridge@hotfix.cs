@@ -6,6 +6,8 @@ using System;
 using BDFramework.Mgr;
 using System.Linq;
 using BDFramework.GameStart;
+using BDFramework.Reflection;
+using BDFramework.ScreenView;
 using BDFramework.UFlux;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -25,63 +27,55 @@ public class BDLauncherBridge
     /// <param name="gameLogicTypes">游戏逻辑域传过来的所有type</param>
     static public void Start(Type[] gameLogicTypes = null)
     {
-        //组件加载
-        List<Type> allTypes = new List<Type>();
         //获取DLL ALLtype
         if (gameLogicTypes == null)
         {
             BDebug.Log("缺少游戏逻辑域的type！");
         }
 
-        allTypes.AddRange(gameLogicTypes);
-        //allTypes.Add();
 
         //管理器列表
         var mgrList = new List<IMgr>();
-        //寻找所有的管理器
-        allTypes = allTypes.Distinct().ToList();
-        foreach (var t in allTypes)
+        foreach (var t in gameLogicTypes)
         {
             if (t != null
                 && t.BaseType != null
-                && t.BaseType.FullName != null
-                && t.BaseType.FullName.Contains(".ManagerBase`2")) //这里ILR里面只能这么做，丑但有效
+                && t.BaseType.FullName != null)
             {
-                BDebug.Log("加载管理器-" + t, "green");
-                var i = t.BaseType.GetProperty("Inst").GetValue(null, null) as IMgr;
-                mgrList.Add(i);
+                if (t.BaseType.FullName.Contains(".ManagerBase`2")) //这里ILR里面只能这么做，丑但有效
+                {
+                    BDebug.Log("加载管理器-" + t, "green");
+                    var i = t.BaseType.GetProperty("Inst").GetValue(null, null) as IMgr;
+                    mgrList.Add(i);
+                }
             }
         }
-
-        BDebug.Log("ALLtype:" +  allTypes.Count);
+        
         //遍历type执行逻辑
-        foreach (var type in allTypes)
+        foreach (var type in gameLogicTypes)
         {
-            var baseAttributes = type.GetCustomAttributes();
-            if (baseAttributes==null || baseAttributes.Count() == 0)
+            var mgrAttribute = type.GetAttributeInILRuntime<ManagerAtrribute>();
+            if (mgrAttribute == null)
             {
                 continue;
             }
-            BDebug.Log("-------");
+
             //1.类型注册到管理器
-            var attributes = baseAttributes.Where((attr) => attr is ManagerAtrribute);
-            if (attributes.Count() > 0)
+            foreach (var iMgr in mgrList)
             {
-                foreach (var iMgr in mgrList)
-                {
-                    iMgr.CheckType(type, attributes);
-                }
+                iMgr.CheckType(type, mgrAttribute);
             }
 
-            //2.游戏启动器
-            if (hotfixStart == null)
-            {
-                var attr = baseAttributes.FirstOrDefault((a) => a is GameStartAtrribute);
-                if (attr != null && (attr as GameStartAtrribute).Index == 1)
-                {
-                    hotfixStart = Activator.CreateInstance(type) as IGameStart;
-                }
-            }
+
+           // // 2.游戏启动器
+           //   if (hotfixStart == null)
+           //   {
+           //       var attr = mgrAttribute.FirstOrDefault((a) => a is GameStartAtrribute);
+           //       if (attr != null && (attr as GameStartAtrribute).Index == 1)
+           //       {
+           //           hotfixStart = Activator.CreateInstance(type) as IGameStart;
+           //       }
+           //   }
         }
 
         //UI相关逻辑整理
@@ -109,8 +103,8 @@ public class BDLauncherBridge
         if (hotfixStart != null)
         {
             hotfixStart.Start();
-            BDLauncher.OnUpdate = hotfixStart.Update;
-            BDLauncher.OnLateUpdate = hotfixStart.LateUpdate;
+            BDLauncher.OnUpdate += hotfixStart.Update;
+            BDLauncher.OnLateUpdate += hotfixStart.LateUpdate;
         }
 
         //执行框架初始化完成的测试

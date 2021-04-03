@@ -9,6 +9,7 @@ using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
+using BDFramework.Reflection;
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
@@ -38,13 +39,13 @@ namespace BDFramework.Editor.EditorLife
             {
                 ScriptBuildTools.BuildDll(Application.streamingAssetsPath, Application.platform,
                     ScriptBuildTools.BuildMode.Release, false);
+                Debug.Log("自动编译Hotfix.dll成功!");
             }
 
-            
+
             //EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, RuntimePlatform.Android, ScriptBuildTools.BuildMode.Release);
         }
-        
-        
+
 
         /// <summary>
         /// 退出播放模式
@@ -128,20 +129,15 @@ namespace BDFramework.Editor.EditorLife
 
             foreach (var type in types)
             {
-                var baseAttributes = type.GetCustomAttributes();
-                if (baseAttributes.Count() == 0)
+                var attr = type.GetAttributeInILRuntime<ManagerAtrribute>();
+                if (attr == null)
                 {
                     continue;
                 }
-
                 //1.类型注册到管理器
-                var attributes = baseAttributes.Where((attr) => attr is ManagerAtrribute);
-                if (attributes.Count() > 0)
+                foreach (var mgr in mgrs)
                 {
-                    foreach (var mgr in mgrs)
-                    {
-                        mgr.CheckType(type, attributes);
-                    }
+                    mgr.CheckType(type, attr);
                 }
             }
         }

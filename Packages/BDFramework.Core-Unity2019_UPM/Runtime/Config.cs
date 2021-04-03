@@ -142,7 +142,11 @@ namespace BDFramework
         static public void GenGameConfig(string str, string filename)
         {
             //config
-            var config = GameObject.Find("BDFrame").GetComponent<Config>();
+            var config = GameObject.Find("BDFrame")?.GetComponent<Config>();
+            if (config == null)
+            {
+                return;
+            }
             var json = JsonMapper.ToJson(config.Data);
             //根据不同场景生成配置
            // Scene scene = EditorSceneManager.GetActiveScene();

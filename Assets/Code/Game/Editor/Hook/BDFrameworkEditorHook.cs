@@ -44,7 +44,7 @@ namespace Game.Editor
         /// </summary>
         static private void RegisterAssembly()
         {
-            var logicAssembly = typeof(LocalGameStart).Assembly;
+            var logicAssembly = typeof(MainGameStart).Assembly;
             var editorAssembly = typeof(BDFrameworkEditorHook).Assembly;
             BDFrameEditorLife.RegisterMainProjectAssembly(logicAssembly, editorAssembly);
         }

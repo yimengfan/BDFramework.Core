@@ -7,7 +7,13 @@ namespace BDFramework.Mgr
 {
     public class ManagerAtrribute : Attribute
     {
+        /// <summary>
+        /// int类型Tag
+        /// </summary>
         public int IntTag { get; private set; } = -1;
+        /// <summary>
+        /// String类型tag
+        /// </summary>
         public string Tag { get; private set; } = null;
 
         public ManagerAtrribute(int intTag)
@@ -22,7 +28,7 @@ namespace BDFramework.Mgr
     }
 
     /// <summary>
-    /// 虽有管理器的基类
+    /// 所有管理器的基类
     /// </summary>
     /// <typeparam name="T">是管理器实例</typeparam>
     /// <typeparam name="V">标签属性</typeparam>
@@ -52,19 +58,19 @@ namespace BDFramework.Mgr
             this.ClassDataMap_IntKey = new Dictionary<int, ClassData>();
             this.ClassDataMap_StringKey = new Dictionary<string, ClassData>();
         }
-
-        private Type vtype = null;
-
-        virtual public void CheckType(Type type, IEnumerable<Attribute> attributes)
+        
+        
+        /// <summary>
+        /// 检测类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="attribute"></param>
+        virtual public void CheckType(Type type, ManagerAtrribute attribute)
         {
-            if (vtype == null)
+            var vAttr = attribute as V;
+            if (vAttr != null)
             {
-                vtype = typeof(V);
-            }
-            var attr = attributes.FirstOrDefault((a) => a is V);
-            if (attr != null)
-            {
-                var vAttr = (V) attr;
+               
                 if (vAttr.IntTag != -1)
                 {
                     SaveAttribute(vAttr.IntTag, new ClassData() {Attribute = vAttr, Type = type});
