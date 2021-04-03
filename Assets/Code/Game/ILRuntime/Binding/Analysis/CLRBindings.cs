@@ -59,6 +59,7 @@ namespace ILRuntime.Runtime.Generated
             System_DateTime_Binding.Register(app);
             System_Type_Binding.Register(app);
             System_Reflection_PropertyInfo_Binding.Register(app);
+            System_Activator_Binding.Register(app);
             BDFramework_Reflection_ReflectionExtension_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding.Register(app);
             System_Reflection_Assembly_Binding.Register(app);
@@ -100,7 +101,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_ICollection_Binding.Register(app);
             UnityEngine_Mathf_Binding.Register(app);
             System_Collections_IList_Binding.Register(app);
-            System_Activator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding_Enumerator_Binding.Register(app);

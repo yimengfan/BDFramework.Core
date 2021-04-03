@@ -18,7 +18,7 @@ using UnityEngine.UI;
 
 public class BDLauncherBridge
 {
-    static private IGameStart hotfixStart = null;
+    static private IHotfixGameStart hotfixStart = null;
 
 
     /// <summary>
@@ -36,21 +36,32 @@ public class BDLauncherBridge
 
         //管理器列表
         var mgrList = new List<IMgr>();
-        foreach (var t in gameLogicTypes)
+        foreach (var type in gameLogicTypes)
         {
-            if (t != null
-                && t.BaseType != null
-                && t.BaseType.FullName != null)
+            if (type != null
+                && type.BaseType != null
+                && type.BaseType.FullName != null)
             {
-                if (t.BaseType.FullName.Contains(".ManagerBase`2")) //这里ILR里面只能这么做，丑但有效
+                if (type.BaseType.FullName.Contains(".ManagerBase`2")) //这里ILR里面只能这么做，丑但有效
                 {
-                    BDebug.Log("加载管理器-" + t, "green");
-                    var i = t.BaseType.GetProperty("Inst").GetValue(null, null) as IMgr;
+                    BDebug.Log("加载管理器-" + type, "green");
+                    var i = type.BaseType.GetProperty("Inst").GetValue(null, null) as IMgr;
                     mgrList.Add(i);
+                }
+                else
+                {
+                    // 2.游戏启动器
+                    if (hotfixStart == null)
+                    {
+                        if (type.IsClass && type.GetInterface(nameof(IHotfixGameStart)) != null)
+                        {
+                            hotfixStart = Activator.CreateInstance(type) as IHotfixGameStart;
+                        }
+                    }
                 }
             }
         }
-        
+
         //遍历type执行逻辑
         foreach (var type in gameLogicTypes)
         {
@@ -65,17 +76,6 @@ public class BDLauncherBridge
             {
                 iMgr.CheckType(type, mgrAttribute);
             }
-
-
-           // // 2.游戏启动器
-           //   if (hotfixStart == null)
-           //   {
-           //       var attr = mgrAttribute.FirstOrDefault((a) => a is GameStartAtrribute);
-           //       if (attr != null && (attr as GameStartAtrribute).Index == 1)
-           //       {
-           //           hotfixStart = Activator.CreateInstance(type) as IGameStart;
-           //       }
-           //   }
         }
 
         //UI相关逻辑整理
