@@ -38,6 +38,22 @@ public class BDLauncherBridge
             BDebug.Log("缺少游戏逻辑域的type！");
         }
 
+        
+        //UI组件类型注册
+        List<Type> types = new List<Type>();
+        types.AddRange(typeof(Button).Assembly.GetTypes()); //Unity
+        types.AddRange(typeof(IButton).Assembly.GetTypes()); //BDFramework.component
+        types.AddRange(mainProjectTypes); //游戏业务逻辑
+        var uitype = typeof(UIBehaviour);
+        foreach (var type in types)
+        {
+            //注册所有uiComponent
+            if (type.IsSubclassOf(uitype))
+            {
+                ILRuntimeHelper.UIComponentTypes[type.FullName] = type;
+            }
+        }
+        
 
         //管理器列表
         var mgrList = new List<IMgr>();
@@ -83,22 +99,7 @@ public class BDLauncherBridge
             }
         }
 
-        //UI相关逻辑整理
-        List<Type> types = new List<Type>();
-        types.AddRange(typeof(Button).Assembly.GetTypes()); //Unity
-        types.AddRange(typeof(IButton).Assembly.GetTypes()); //BDFramework.component
-        types.AddRange(mainProjectTypes); //游戏业务逻辑
-        types = types.Distinct().ToList();
-        var uitype = typeof(UIBehaviour);
-        foreach (var t in types)
-        {
-            //注册所有uiComponent
-            if (t.IsAssignableFrom(uitype))
-            {
-                ILRuntimeHelper.UIComponentTypes[t.FullName] = t;
-                Debug.Log(t.FullName);
-            }
-        }
+
 
         //管理器初始化
         foreach (var m in mgrList)
