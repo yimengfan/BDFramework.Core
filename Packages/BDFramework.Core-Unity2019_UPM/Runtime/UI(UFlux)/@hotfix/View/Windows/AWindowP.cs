@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using BDFramework.DataListener;
+using BDFramework.Reflection;
 using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.View.Props;
 using ILRuntime.Runtime;
@@ -46,7 +47,7 @@ namespace BDFramework.UFlux
             return this.Props as TProp;
         }
 
-        #region UIMessage 
+        #region UIMessage
 
         //
         public delegate void UIMessageDelegate(UIMessageData message);
@@ -66,12 +67,10 @@ namespace BDFramework.UFlux
             var flag = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
             foreach (var methodInfo in t.GetMethods(flag))
             {
-                var attrs = methodInfo.GetCustomAttributes(typeof(UIMessageAttribute), false);
-                if (attrs.Length > 0)
+                var attr = methodInfo.GetAttributeInILRuntime<UIMessageAttribute>();
+                if (attr != null)
                 {
-                    var _attr = attrs[0] as UIMessageAttribute;
-
-                    callbackMap[_attr.MessageName] = methodInfo;
+                    callbackMap[attr.MessageName] = methodInfo;
                     //很惨，以下 热更中用不了~
 //                    var action = Delegate.CreateDelegate(typeof(UIMessageDelegate), this, methodInfo) as UIMessageDelegate;
 //                    if (action != null)
@@ -94,7 +93,6 @@ namespace BDFramework.UFlux
         /// <param name="uiMsg">数据</param>
         public void SendMessage(UIMessageData uiMsg)
         {
-          
             //所有的消息会被派发给子窗口
 //            var keys = subWindowsMap.Keys.ToList();
 //            for (int i = 0; i < keys.Count; i++)
@@ -107,17 +105,16 @@ namespace BDFramework.UFlux
             {
                 subWin.SendMessage(uiMsg);
             }
+
             //TODO: 执行完Invoke会导致 map的堆栈出问题，
             MethodInfo method = null;
-            var        key    = uiMsg.Name.GetHashCode();
-            bool       flag   = this.callbackMap.TryGetValue(key, out method);
+            var key = uiMsg.Name.GetHashCode();
+            bool flag = this.callbackMap.TryGetValue(key, out method);
             if (flag)
             {
                 method.Invoke(this, new object[] {uiMsg});
             }
         }
-
-
 
         #endregion
 
@@ -136,7 +133,7 @@ namespace BDFramework.UFlux
             (subwin as IComponent).Init();
             subwin.SetParent(this);
         }
-        
+
 
         /// <summary>
         /// 父节点
@@ -151,7 +148,7 @@ namespace BDFramework.UFlux
         {
             this.Parent = window;
         }
-        
+
         /// <summary>
         /// 获取窗口
         /// </summary>

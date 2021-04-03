@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using BDFramework.Core;
+using BDFramework.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -34,11 +35,9 @@ namespace BDFramework.UFlux
 
                 //1.自动获取节点
                 //TODO 热更层必须这样获取属性
-                var attrs = f.GetCustomAttributes(typeof(TransformPath), false); //as Attribute[];
-                if (attrs != null && attrs.Length > 0)
+                var attr = f.GetAttributeInILRuntime<TransformPath>(); //as Attribute[];
+                if (attr!=null)
                 {
-                    var attr = attrs.FirstOrDefault((a) => a is TransformPath) as TransformPath;
-                    if (attr == null) continue;
                     //获取节点,并且获取组件
                     var trans = vTransform.Find(attr.Path);
                     if (trans == null)

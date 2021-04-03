@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using BDFramework.Mgr;
+using BDFramework.Reflection;
 using BDFramework.UFlux.View.Props;
 using LitJson;
 using UnityEngine;
@@ -12,18 +13,18 @@ using UnityEngine.EventSystems;
 
 namespace BDFramework.UFlux
 {
-    public class ComponentValueAdaptorManager : ManagerBase<ComponentValueAdaptorManager, ComponentAdaptorProcessAttribute>
+    public class
+        ComponentValueAdaptorManager : ManagerBase<ComponentValueAdaptorManager, ComponentAdaptorProcessAttribute>
     {
         Dictionary<Type, AComponentAdaptor> adaptorMap = new Dictionary<Type, AComponentAdaptor>();
 
-        
+
         public override void Start()
         {
             base.Start();
             var clsList = this.GetAllClassDatas();
             foreach (var cd in clsList)
             {
-               
                 var attr = cd.Attribute as ComponentAdaptorProcessAttribute;
                 //Debug.Log(attr.Type.FullName);
                 var inst = CreateInstance<AComponentAdaptor>(cd);
@@ -40,10 +41,10 @@ namespace BDFramework.UFlux
         /// </summary>
         public class ComponentValueCahce
         {
-            public UIBehaviour        UIBehaviour;
-            public Transform          Transform;
+            public UIBehaviour UIBehaviour;
+            public Transform Transform;
             public ComponentValueBind ValueBind;
-            public object             LastValue;
+            public object LastValue;
         }
 
         //
@@ -60,10 +61,10 @@ namespace BDFramework.UFlux
             //第一次进行缓存绑定后，就不再重新解析了，
             //所以使用者要保证每次的 state尽量是一致的
             Dictionary<string, ComponentValueCahce> map = null;
-            var                                     key = t.GetInstanceID();
+            var key = t.GetInstanceID();
             if (!componentValueCacheMap.TryGetValue(key, out map))
             {
-                map                         = TransformStateBind(t, aState);
+                map = TransformStateBind(t, aState);
                 componentValueCacheMap[key] = map;
             }
 
@@ -81,7 +82,7 @@ namespace BDFramework.UFlux
                     //考虑 是否二次验证值是否改变
                     var newValue = aState.GetValue(field);
                     //执行赋值操作
-                    if (cvc.UIBehaviour!=null) //UI操作
+                    if (cvc.UIBehaviour != null) //UI操作
                     {
                         adaptorMap[cvc.ValueBind.Type].SetData(cvc.UIBehaviour, cvc.ValueBind.FieldName, newValue);
                     }
@@ -116,10 +117,9 @@ namespace BDFramework.UFlux
                 //先寻找节点 
                 Transform transform = null;
                 {
-                    var attrs = mi.GetCustomAttributes(typeof(TransformPath), false);
-                    if (attrs.Length > 0)
+                    var attr = mi.GetAttributeInILRuntime<TransformPath>();
+                    if (attr != null)
                     {
-                        var attr = attrs[0] as TransformPath;
                         transform = t.Find(attr.Path);
                         if (!transform)
                         {
@@ -134,26 +134,21 @@ namespace BDFramework.UFlux
                 {
                     ComponentValueCahce cvc = new ComponentValueCahce();
 
-                    var attrType = typeof(ComponentValueBind);
-                    var attrs = mi.GetCustomAttributes(attrType, false);
-                    //
-                    if (attrs.Length > 0) //寻找ComponentValueBind
-                    {
-                        if (attrs[0] is ComponentValueBind)
-                        {
-                            var cvb = (ComponentValueBind) attrs[0];
-                            
-                            if ( cvb.Type.IsSubclassOf(typeof(UIBehaviour)))
-                            {
-                                cvc.UIBehaviour = transform.GetComponent(cvb.Type)as UIBehaviour;
-                            }
-                            else
-                            {
-                                cvc.Transform = transform;
-                            }
 
-                            cvc.ValueBind = cvb;
+                    var cvb = mi.GetAttributeInILRuntime<ComponentValueBind>();
+                    //
+                    if (cvb != null)
+                    {
+                        if (cvb.Type.IsSubclassOf(typeof(UIBehaviour)))
+                        {
+                            cvc.UIBehaviour = transform.GetComponent(cvb.Type) as UIBehaviour;
                         }
+                        else
+                        {
+                            cvc.Transform = transform;
+                        }
+
+                        cvc.ValueBind = cvb;
                     }
                     else //如果只有Transform 没有ComponentValueBind标签，处理默认逻辑
                     {
@@ -177,26 +172,28 @@ namespace BDFramework.UFlux
                         }
                         else
                         {
-                            
-                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.ForeachSetChildValue));
+                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic),
+                                nameof(UFluxAutoLogic.ForeachSetChildValue));
 
-                            #if UNITY_EDITOR
+#if UNITY_EDITOR
                             //props 数组
-                            if (type.IsArray &&  !type.GetElementType().IsSubclassOf(typeof(PropsBase))) //数组
+                            if (type.IsArray && !type.GetElementType().IsSubclassOf(typeof(PropsBase))) //数组
                             {
                                 Debug.LogError("自动适配节点逻辑失败，类型元素不是Props!!!");
                             }
                             //泛型
-                            else if (type.IsGenericType && !type.GetGenericArguments()[0].IsSubclassOf(typeof(PropsBase))) //泛型
+                            else if (type.IsGenericType &&
+                                     !type.GetGenericArguments()[0].IsSubclassOf(typeof(PropsBase))) //泛型
                             {
                                 Debug.LogError("自动适配节点逻辑失败，类型元素不是Props!!!");
                             }
-                            #endif
-                            
+#endif
+
                             //list t或者array
-                            if (type.IsArray ||  type.IsGenericType) //数组
+                            if (type.IsArray || type.IsGenericType) //数组
                             {
-                                cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.ForeachSetChildValue));
+                                cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic),
+                                    nameof(UFluxAutoLogic.ForeachSetChildValue));
                             }
                         }
 
@@ -223,7 +220,7 @@ namespace BDFramework.UFlux
                 var keys = componentValueCacheMap.Keys.ToList();
                 for (int j = 0; j < keys.Count; j++)
                 {
-                    var key    = keys[j];
+                    var key = keys[j];
                     var cvcMap = componentValueCacheMap[key];
                     //遍历cache
                     var cvcMapkeys = cvcMap.Keys.ToList();

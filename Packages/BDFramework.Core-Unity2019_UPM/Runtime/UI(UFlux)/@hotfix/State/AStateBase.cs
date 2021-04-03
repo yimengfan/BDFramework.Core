@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using BDFramework.Reflection;
 
 namespace BDFramework.UFlux
 {
@@ -28,8 +29,8 @@ namespace BDFramework.UFlux
                 propMap = new Dictionary<string, MemberInfo>();
                 foreach (var mi in list)
                 {
-                    var attrs = mi.GetCustomAttributes(typeof(TransformPath), false);
-                    if (attrs.Length > 0)
+                    var attr = mi.GetAttributeInILRuntime<TransformPath>();
+                    if (attr!=null)
                     {
                         propMap[mi.Name] = mi;
                     }

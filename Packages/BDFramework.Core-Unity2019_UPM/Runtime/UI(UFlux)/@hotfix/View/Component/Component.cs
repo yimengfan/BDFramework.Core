@@ -1,4 +1,5 @@
 ﻿using System;
+using BDFramework.Reflection;
 using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.Contains;
 using BDFramework.UFlux.View.Props;
@@ -41,9 +42,11 @@ namespace BDFramework.UFlux
         public Component()
         {
             var t = this.GetType();
-            var attrs = t.GetCustomAttributes(typeof(ComponentAttribute), false);
-            if (attrs.Length == 0) return;
-            var attr = attrs[0] as ComponentAttribute;
+            var attr = t.GetAttributeInILRuntime<ComponentAttribute>();
+            if (attr == null)
+            {
+                return;
+            }
             this.resPath = attr.Path;
             //创建State
             this.Props = new T();

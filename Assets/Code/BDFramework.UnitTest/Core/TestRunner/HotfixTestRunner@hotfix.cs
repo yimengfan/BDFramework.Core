@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using BDFramework.Reflection;
 using UnityEngine;
 
 namespace BDFramework.UnitTest
@@ -72,14 +73,13 @@ namespace BDFramework.UnitTest
             {
                 types = ILRuntimeHelper.GetHotfixTypes();
             }
-
-            var attribute = typeof(UnitTestBaseAttribute);
+            
             //测试用例类
             List<Type> testClassList = new List<Type>();
             foreach (var type in types)
             {
-                var attrs = type.GetCustomAttributes(attribute, false);
-                if (attrs.Length > 0)
+                var attr = type.GetAttributeInILRuntime<UnitTestBaseAttribute>();
+                if (attr!=null)
                 {
                     testClassList.Add(type);
                 }
@@ -96,8 +96,7 @@ namespace BDFramework.UnitTest
                 //获取uit test并排序
                 foreach (var method in methods)
                 {
-                    var mattrs = method.GetCustomAttributes(attribute, false);
-                    var mattr  = mattrs[0] as UnitTestBaseAttribute;
+                    var mattr = method.GetAttributeInILRuntime<UnitTestBaseAttribute>();
 
                     //数据
                     var newMethodData = new TestMethodData() {MethodInfo = method, TestData = mattr,};

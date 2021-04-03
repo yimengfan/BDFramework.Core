@@ -34,7 +34,7 @@ public class BDLauncherBridge
             {
                 hotfixTypes = mainProjectTypes;
             }
-            
+
             BDebug.Log("缺少游戏逻辑域的type！");
         }
 
