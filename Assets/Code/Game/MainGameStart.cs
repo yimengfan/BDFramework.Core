@@ -2,8 +2,7 @@ using BDFramework.GameStart;
 
 namespace Game
 {
-    [GameStartAtrribute(0)]
-    public class LocalGameStart : IGameStart
+    public class MainGameStart : IGameStart
     {
         public void Start()
         {
