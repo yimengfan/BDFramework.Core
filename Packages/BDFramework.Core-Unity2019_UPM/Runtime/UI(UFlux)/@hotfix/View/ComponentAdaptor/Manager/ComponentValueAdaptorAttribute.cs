@@ -22,7 +22,11 @@ namespace BDFramework.UFlux
                     IType ilrtype = null;
                     if (ILRuntimeHelper.AppDomain.LoadedTypes.TryGetValue(name, out ilrtype))
                     {
-                        this.Type =  ilrtype.ReflectionType;
+                        this.Type = ilrtype.ReflectionType;
+                    }
+                    else
+                    {
+                        BDebug.LogError("【UFlux】不存在ComponentAdaptor:" + name);
                     }
                 }
             }

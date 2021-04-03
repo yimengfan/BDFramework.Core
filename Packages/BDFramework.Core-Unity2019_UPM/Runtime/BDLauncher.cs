@@ -45,7 +45,7 @@ namespace BDFramework
         #region 对外的生命周期
 
         public delegate void GameLauncherDelegate();
-        
+
         static public GameLauncherDelegate OnUpdate { get; set; }
         static public GameLauncherDelegate OnLateUpdate { get; set; }
 
@@ -90,8 +90,6 @@ namespace BDFramework
 
             //日志打印
             debug.IsLog = this.GameConfig.IsDebugLog;
-            //启动本地
-            LaunchLocal();
         }
 
         /// <summary>
@@ -105,32 +103,8 @@ namespace BDFramework
             BDebug.Log("框架版本:" + FrameConfig.Version, "red");
         }
 
-        #region 启动非热更逻辑
-
-        private IGameStart mainStart;
 
         /// <summary>
-        /// 启动本地代码
-        /// </summary>
-        public void LaunchLocal()
-        {
-            //寻找iGamestart
-            foreach (var t in Assembly.GetExecutingAssembly().GetTypes())
-            {
-                if (t.IsClass && t.GetInterface(nameof(IGameStart)) != null)
-                {
-                    mainStart = Activator.CreateInstance(t) as IGameStart;
-                    //注册
-                    mainStart.Start();
-
-                    OnUpdate += mainStart.Update;
-                    OnLateUpdate += mainStart.LateUpdate;
-                    break;
-                }
-            }
-        }
-
-        #endregion
 
         #region 启动热更逻辑
 
@@ -138,12 +112,27 @@ namespace BDFramework
         /// 初始化
         /// 修改版本,让这个启动逻辑由使用者自行处理
         /// </summary>
-        /// <param name="editorGamelogicTypes">Editor模式下,UPM隔离了DLL需要手动传入</param>
+        /// <param name="mainProjectTypes">Editor模式下,UPM隔离了DLL需要手动传入</param>
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
-        public void Launch(Type[] editorGamelogicTypes, Action<bool> gameLogicILRBind, string gameId = "default")
+        public void Launch(Type[] mainProjectTypes, Action<bool> gameLogicILRBind, string gameId = "default")
         {
             BDebug.Log("Persistent:" + Application.persistentDataPath);
             BDebug.Log("StreamingAsset:" + Application.streamingAssetsPath);
+            //主工程启动
+            IGameStart mainStart;
+            foreach (var type in mainProjectTypes)
+            {
+                if (type.GetInterface(nameof(IGameStart)) != null)
+                {
+                    mainStart = Activator.CreateInstance(type) as IGameStart;
+                    //注册
+                    mainStart.Start();
+                    OnUpdate += mainStart.Update;
+                    OnLateUpdate += mainStart.LateUpdate;
+                    break;
+                }
+            }
+
             //开始资源检测
             AssetHelper.AssetHelper.CheckAssetPackageVersion(Application.platform, () =>
             {
@@ -152,7 +141,7 @@ namespace BDFramework
                 //2.sql
                 SqliteLoder.Load(GameConfig.SQLRoot);
                 //3.脚本,这个启动会开启所有的逻辑
-                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode, editorGamelogicTypes,
+                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode, mainProjectTypes,
                     gameLogicILRBind);
             });
         }
@@ -164,14 +153,12 @@ namespace BDFramework
         //普通帧循环
         private void Update()
         {
-            mainStart?.Update();
             OnUpdate?.Invoke();
         }
 
         //更快的帧循环
         private void LateUpdate()
         {
-            mainStart?.LateUpdate();
             OnLateUpdate?.Invoke();
         }
 

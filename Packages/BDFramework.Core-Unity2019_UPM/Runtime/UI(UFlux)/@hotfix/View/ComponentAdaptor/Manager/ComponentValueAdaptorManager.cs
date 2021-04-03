@@ -20,10 +20,14 @@ namespace BDFramework.UFlux
         public override void Start()
         {
             base.Start();
-            foreach (var cd in this.GetAllClassDatas())
+            var clsList = this.GetAllClassDatas();
+            foreach (var cd in clsList)
             {
+               
                 var attr = cd.Attribute as ComponentAdaptorProcessAttribute;
-                adaptorMap[attr.Type] = CreateInstance<AComponentAdaptor>(cd);
+                //Debug.Log(attr.Type.FullName);
+                var inst = CreateInstance<AComponentAdaptor>(cd);
+                adaptorMap[attr.Type] = inst;
             }
 
             //执行30s清理一次的cache
@@ -217,8 +221,6 @@ namespace BDFramework.UFlux
             while (true)
             {
                 var keys = componentValueCacheMap.Keys.ToList();
-
-
                 for (int j = 0; j < keys.Count; j++)
                 {
                     var key    = keys[j];
