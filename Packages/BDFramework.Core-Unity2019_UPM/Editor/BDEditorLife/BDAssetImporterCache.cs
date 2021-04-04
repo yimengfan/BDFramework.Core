@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using BDFramework.Core.Tools;
+using LitJson;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,6 +12,7 @@ namespace BDFramework.Editor.EditorLife
     /// </summary>
     public class BDAssetImporterCache : AssetPostprocessor
     {
+        private static string importerCahcePath = BDApplication.BDEditorCachePath + "/ImporterCache";
         /// <summary>
         /// 上次修改Hotfix的脚本
         /// </summary>
@@ -18,6 +22,11 @@ namespace BDFramework.Editor.EditorLife
         {
             get
             {
+                if (File.Exists(importerCahcePath))
+                {
+                    LastChangedHotfixCs =  JsonMapper.ToObject<List<string>>(File.ReadAllText(importerCahcePath));
+                }
+                
                 return LastChangedHotfixCs.Count > 0;
             }
         }
@@ -34,10 +43,13 @@ namespace BDFramework.Editor.EditorLife
                 if (str.Contains("@hotfix") && str.EndsWith(".cs"))
                 {
                     LastChangedHotfixCs.Add(str);
-
-                    Debug.Log("修改hotfix代码");
+                    
                 }
             }
+            
+            //写入本地
+            FileHelper.WriteAllText(importerCahcePath,JsonMapper.ToJson(LastChangedHotfixCs));
+            
         }
     }
 }

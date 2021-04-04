@@ -133,8 +133,9 @@ namespace BDFramework.Editor.EditorLife
         #endregion
         public static void OnMainProjectReady()
         {
-            //Editor的管理器初始化
+          
             RegisterEditorMgrbase(Types);
+            //Editor的管理器初始化
             BDFrameEditorBehaviorHelper.Init();
             //调试器启动
             DebuggerServerProcessManager.Inst.Start();

@@ -1,13 +1,10 @@
 ﻿using BDFramework;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Reflection;
 using System;
 using BDFramework.Mgr;
-using System.Linq;
 using BDFramework.GameStart;
 using BDFramework.Reflection;
-using BDFramework.ScreenView;
 using BDFramework.UFlux;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -38,7 +35,7 @@ public class BDLauncherBridge
             BDebug.Log("缺少游戏逻辑域的type！");
         }
 
-        
+
         //UI组件类型注册
         List<Type> types = new List<Type>();
         types.AddRange(typeof(Button).Assembly.GetTypes()); //Unity
@@ -50,10 +47,12 @@ public class BDLauncherBridge
             //注册所有uiComponent
             if (type.IsSubclassOf(uitype))
             {
+                Debug.Log("hotfix:" + type.FullName);
+                //
+
                 ILRuntimeHelper.UIComponentTypes[type.FullName] = type;
             }
         }
-        
 
         //管理器列表
         var mgrList = new List<IMgr>();
@@ -98,7 +97,6 @@ public class BDLauncherBridge
                 iMgr.CheckType(type, mgrAttribute);
             }
         }
-
 
 
         //管理器初始化

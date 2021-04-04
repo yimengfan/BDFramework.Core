@@ -20,15 +20,7 @@ namespace BDFramework.Core.Tools
                 Init();
             }
         }
-        
-        static public void Init()
-        {
-            ProjectRoot = Application.dataPath.Replace("/Assets", "");
-            Library = ProjectRoot + "/Library";
-            RuntimeResourceLoadPath = "Assets/Resource/Runtime";
-            EditorResourcePath = "Assets/Resource_SVN";
-            EditorResourceRuntimePath = EditorResourcePath + "/Runtime";
-        }
+
         /// <summary>
         /// 项目根目录
         /// </summary>
@@ -52,6 +44,21 @@ namespace BDFramework.Core.Tools
         public static string EditorResourceRuntimePath { get; private set; }
 
 
+        /// <summary>
+        /// 编辑器缓存目录
+        /// </summary>
+        public static string BDEditorCachePath { get; private set; }
+                
+        static public void Init()
+        {
+            ProjectRoot = Application.dataPath.Replace("/Assets", "");
+            Library = ProjectRoot + "/Library";
+            RuntimeResourceLoadPath = "Assets/Resource/Runtime";
+            EditorResourcePath = "Assets/Resource_SVN";
+            EditorResourceRuntimePath = EditorResourcePath + "/Runtime";
+
+            BDEditorCachePath = Library + "/BDFrameCache";
+        }
         /// <summary>
         /// 获取所有runtime的目录
         /// </summary>
