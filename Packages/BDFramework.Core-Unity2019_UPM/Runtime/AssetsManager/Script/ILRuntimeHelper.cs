@@ -117,7 +117,7 @@ namespace BDFramework
         /// <summary>
         /// 所有UIComponent的类型
         /// </summary>
-        public static Dictionary<string, Type> UIComponentTypes = new Dictionary<string, Type>();
+        public static Dictionary<string, Type> UIComponentTypes { get; set; } = new Dictionary<string, Type>();
 
         #region 辅助工具类
 

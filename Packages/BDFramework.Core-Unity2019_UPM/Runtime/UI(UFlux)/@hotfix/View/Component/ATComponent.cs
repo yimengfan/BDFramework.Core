@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BDFramework.UFlux
 {
-    abstract  public class Component<T> : IComponent where T : PropsBase, new()
+    abstract  public class ATComponent<T> : IComponent where T : PropsBase, new()
     {
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 构造函数,n一旦new 会自动创建相关的渲染组件
         /// </summary>
-        public Component()
+        public ATComponent()
         {
             var t = this.GetType();
             var attr = t.GetAttributeInILRuntime<ComponentAttribute>();
@@ -66,7 +66,7 @@ namespace BDFramework.UFlux
         /// 构造
         /// </summary>
         /// <param name="trans"></param>
-        public Component(Transform trans)
+        public ATComponent(Transform trans)
         {
             this.Transform = trans;
             //创建State
@@ -77,7 +77,7 @@ namespace BDFramework.UFlux
         /// 这里重载一个构造函数
         /// </summary>
         /// <param name="resPath"></param>
-        public Component(string resPath)
+        public ATComponent(string resPath)
         {
             this.resPath = resPath;
             //创建State

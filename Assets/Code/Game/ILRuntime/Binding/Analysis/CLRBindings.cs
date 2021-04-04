@@ -96,7 +96,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_String_List_1_Object_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             System_Reflection_FieldInfo_Binding.Register(app);
-            UnityEngine_UI_ScrollRect_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Action_2_UIBehaviour_Object_Binding.Register(app);
             UnityEngine_Events_UnityEventBase_Binding.Register(app);
             BDFramework_UFlux_IButton_Binding.Register(app);
@@ -117,14 +116,16 @@ namespace ILRuntime.Runtime.Generated
             System_Action_2_Transform_Object_Binding.Register(app);
             UnityEngine_Behaviour_Binding.Register(app);
             System_Collections_IEnumerable_Binding.Register(app);
+            ILRuntime_Runtime_Enviorment_AppDomain_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_IType_Binding.Register(app);
+            ILRuntime_CLR_TypeSystem_IType_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_IType_Binding_KeyCollection_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_IType_Binding_KeyCollection_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_List_1_String_Binding_Enumerator_Binding.Register(app);
-            ILRuntime_Runtime_Enviorment_AppDomain_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_String_IType_Binding.Register(app);
-            ILRuntime_CLR_TypeSystem_IType_Binding.Register(app);
             System_Collections_Generic_List_1_Int32_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_Enum_Binding.Register(app);
@@ -132,6 +133,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_Object_Binding.Register(app);
+            UnityEngine_UI_ScrollRect_Binding.Register(app);
             UnityEngine_Color_Binding.Register(app);
             System_Runtime_CompilerServices_AsyncTaskMethodBuilder_1_ILTypeInstance_Binding.Register(app);
             System_Exception_Binding.Register(app);

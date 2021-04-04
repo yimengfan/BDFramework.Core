@@ -2,7 +2,7 @@
 
 namespace BDFramework.UFlux
 {
-    abstract  public class AComponent : Component<PropsBase>
+    abstract  public class AComponent : ATComponent<PropsBase>
     {
         
     }

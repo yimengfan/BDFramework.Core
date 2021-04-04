@@ -8,7 +8,7 @@ namespace Game.demo6_UFlux
     
     //这里是Component标签，用以创建时候进行绑定Transform
     [Component("Windows/UFlux/demo001/Component_test01")] 
-    public class Component_Test001 : Component<Props_Test001>
+    public class AtComponentTest001 : ATComponent<Props_Test001>
     {
         public override void Open()
         {

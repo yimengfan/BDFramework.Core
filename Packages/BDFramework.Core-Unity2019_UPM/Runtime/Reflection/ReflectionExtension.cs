@@ -30,7 +30,7 @@ namespace BDFramework.Reflection
             }
             catch (Exception e)
             {
-                Debug.LogError("获取失败Attribute:" + memberInfo.Name + "\n 请注意该Attribute构造过程中是否报错!");
+                Debug.LogError("获取[Attribute]失败:" + memberInfo.Name + "\n 请注意该Attribute构造过程中是否报错!");
             }
 #endif
             return null;

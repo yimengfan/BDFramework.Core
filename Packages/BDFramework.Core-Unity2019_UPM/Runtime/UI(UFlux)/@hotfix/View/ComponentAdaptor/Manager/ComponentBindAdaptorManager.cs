@@ -13,9 +13,12 @@ using UnityEngine.EventSystems;
 
 namespace BDFramework.UFlux
 {
-    public class ComponentValueBindManager : ManagerBase<ComponentValueBindManager, ComponentBindAttribute>
+    /// <summary>
+    /// 组件绑定逻辑 管理器
+    /// </summary>
+    public class ComponentBindAdaptorManager : ManagerBase<ComponentBindAdaptorManager, ComponentBindAdaptorAttribute>
     {
-        Dictionary<Type, AComponentAdaptor> adaptorMap = new Dictionary<Type, AComponentAdaptor>();
+        Dictionary<Type, AComponentBindAdaptor> adaptorMap = new Dictionary<Type, AComponentBindAdaptor>();
 
 
         public override void Start()
@@ -24,15 +27,16 @@ namespace BDFramework.UFlux
             var clsList = this.GetAllClassDatas();
             foreach (var cd in clsList)
             {
-                var attr = cd.Attribute as ComponentBindAttribute;
-                var inst = CreateInstance<AComponentAdaptor>(cd);
-                adaptorMap[attr.Type] = inst;
+                var attr = cd.Attribute as ComponentBindAdaptorAttribute;
+                var inst = CreateInstance<AComponentBindAdaptor>(cd);
+                adaptorMap[attr.BindComponentType] = inst;
 
                 if (Application.isEditor)
                 {
-                    if (!attr.Type.FullName.StartsWith("BDFramework.UFlux."))
+                    if (!attr.BindComponentType.IsSubclassOf(typeof(UIBehaviour)) &&
+                        !attr.BindComponentType.FullName.StartsWith("BDFramework.UFlux."))
                     {
-                        BDebug.LogError("请注意命名空间不为BDFramework.UFlux:" + attr.Type.FullName);
+                        BDebug.LogError("请注意命名空间不为BDFramework.UFlux:" + attr.BindComponentType.FullName);
                     }
                 }
             }
@@ -49,7 +53,7 @@ namespace BDFramework.UFlux
         {
             public UIBehaviour UIBehaviour { get; set; }
             public Transform Transform { get; set; }
-            public ComponentValueBind ValueBind { get; set; }
+            public ComponentValueBindAttribute ValueBindAttribute { get; set; }
             public object LastValue { get; set; }
         }
 
@@ -86,7 +90,6 @@ namespace BDFramework.UFlux
                 ComponentValueCahce cvc = null;
                 if (map.TryGetValue(field, out cvc))
                 {
-                    //考虑 是否二次验证值是否改变
                     var newValue = aState.GetValue(field);
                     if (!cvc.LastValue.Equals(newValue))
                     {
@@ -94,13 +97,13 @@ namespace BDFramework.UFlux
                         //执行赋值操作
                         if (cvc.UIBehaviour != null) //UI操作
                         {
-                            adaptorMap[cvc.ValueBind.Type]
-                                .SetData(cvc.UIBehaviour, cvc.ValueBind.FieldNameName, newValue);
+                            var componentAdaptor = adaptorMap[cvc.ValueBindAttribute.UIType];
+                            componentAdaptor.SetData(cvc.UIBehaviour, cvc.ValueBindAttribute.FieldName, newValue);
                         }
                         else if (cvc.Transform) //自定义逻辑管理
                         {
-                            adaptorMap[cvc.ValueBind.Type]
-                                .SetData(cvc.Transform, cvc.ValueBind.FieldNameName, newValue);
+                            var componentAdaptor = adaptorMap[cvc.ValueBindAttribute.UIType];
+                            componentAdaptor.SetData(cvc.Transform, cvc.ValueBindAttribute.FieldName, newValue);
                         }
                     }
                 }
@@ -143,24 +146,22 @@ namespace BDFramework.UFlux
                 }
                 //再进行值绑定
                 {
-                    ComponentValueCahce cvc = new ComponentValueCahce();
-
-
-                    var cvb = mi.GetAttributeInILRuntime<ComponentValueBind>();
+                    var cvc = new ComponentValueCahce();
+                    var cvb = mi.GetAttributeInILRuntime<ComponentValueBindAttribute>();
                     //
                     if (cvb != null)
                     {
-                        var ret = cvb.Type.IsSubclassOf(typeof(UIBehaviour));
+                        var ret = cvb.UIType.IsSubclassOf(typeof(UIBehaviour));
                         if (ret)
                         {
-                            cvc.UIBehaviour = transform.GetComponent(cvb.Type) as UIBehaviour;
+                            cvc.UIBehaviour = transform.GetComponent(cvb.UIType) as UIBehaviour;
                         }
                         else
                         {
                             cvc.Transform = transform;
                         }
 
-                        cvc.ValueBind = cvb;
+                        cvc.ValueBindAttribute = cvb;
                     }
                     else //如果只有Transform 没有ComponentValueBind标签，处理默认逻辑
                     {
@@ -179,13 +180,11 @@ namespace BDFramework.UFlux
                         if (type.IsSubclassOf(typeof(PropsBase)))
                         {
                             //填充 子节点赋值逻辑
-                            cvc.ValueBind =
-                                new ComponentValueBind(typeof(UFluxAutoLogic).FullName,
-                                    nameof(UFluxAutoLogic.SetChildValue));
+                            cvc.ValueBindAttribute = new ComponentValueBindAttribute(nameof(UFluxAutoLogic), nameof(UFluxAutoLogic.SetChildValue));
                         }
                         else
                         {
-                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic).FullName,
+                            cvc.ValueBindAttribute = new ComponentValueBindAttribute(nameof(UFluxAutoLogic),
                                 nameof(UFluxAutoLogic.ForeachSetChildValue));
 
 #if UNITY_EDITOR
@@ -205,7 +204,7 @@ namespace BDFramework.UFlux
                             //list t或者array
                             if (type.IsArray || type.IsGenericType) //数组
                             {
-                                cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic).FullName,
+                                cvc.ValueBindAttribute = new ComponentValueBindAttribute(nameof(UFluxAutoLogic),
                                     nameof(UFluxAutoLogic.ForeachSetChildValue));
                             }
                         }

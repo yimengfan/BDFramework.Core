@@ -8,8 +8,8 @@ namespace  BDFramework.UFlux
     /// <summary>
     /// 这里是UnityEngine的UI Text适配器
     /// </summary>
-    [ComponentBind(nameof(Text))]
-    public class ComponentAdaptor_Text : AComponentAdaptor
+    [ComponentBindAdaptor(nameof(Text))]
+    public class ComponentBindAdaptorText : AComponentBindAdaptor
     {
         
         public override void Init()

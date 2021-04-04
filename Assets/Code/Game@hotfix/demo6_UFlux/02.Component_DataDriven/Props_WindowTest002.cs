@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using BDFramework.UFlux;
+using BDFramework.UFlux.Demo_ScrollRect;
 using BDFramework.UFlux.item;
 using BDFramework.UFlux.View.Props;
-using BDFramework.UI.Demo_ScreenRect;
 using UnityEngine.UI;
 
 namespace Game.demo6_UFlux

@@ -4,7 +4,7 @@ using BDFramework.UFlux.View.Props;
 namespace BDFramework.UFlux
 {
     /// <summary>
-    /// 窗口基类
+    /// 窗口接口
     /// </summary>
     public interface IWindow
     {

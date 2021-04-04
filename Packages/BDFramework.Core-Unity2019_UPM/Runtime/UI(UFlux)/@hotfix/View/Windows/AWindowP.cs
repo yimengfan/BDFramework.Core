@@ -14,11 +14,11 @@ using Object = System.Object;
 namespace BDFramework.UFlux
 {
     /// <summary>
-    /// Window基类
+    /// Window-Prop基类
     /// 不带Flux Store
     /// </summary>
     /// <typeparam name="TProp"></typeparam>
-    public class AWindow<TProp> : Component<TProp>, IWindow, IUIMessage where TProp : PropsBase, new()
+    public class AWindow<TProp> : ATComponent<TProp>, IWindow, IUIMessage where TProp : PropsBase, new()
     {
         public AWindow(string path) : base(path)
         {

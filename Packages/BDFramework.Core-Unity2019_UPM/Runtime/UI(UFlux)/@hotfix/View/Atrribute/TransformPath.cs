@@ -3,7 +3,7 @@
 namespace BDFramework.UFlux
 {
     /// <summary>
-    /// 节点发现属性
+    /// 节点自动赋值
     /// </summary>
     public class TransformPath : Attribute
     {

@@ -6,7 +6,10 @@ using UnityEngine.EventSystems;
 
 namespace BDFramework.UFlux
 {
-    abstract public class AComponentAdaptor
+    /// <summary>
+    /// 组件绑定基类
+    /// </summary>
+    abstract public class AComponentBindAdaptor
     {
         /// <summary>
         /// 组件绑定map
@@ -20,7 +23,7 @@ namespace BDFramework.UFlux
         protected Dictionary<string, Action<Transform, object>> setPropCustomLogicMap =
             new Dictionary<string, Action<Transform, object>>();
 
-        public AComponentAdaptor()
+        public AComponentBindAdaptor()
         {
             Init();
         }

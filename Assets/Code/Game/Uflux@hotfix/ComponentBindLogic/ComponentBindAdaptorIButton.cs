@@ -9,8 +9,8 @@ namespace BDFramework.UFlux
     /// <summary>
     /// 这里是BDFrame的UI IButton适配器
     /// </summary>
-    [ComponentBind(nameof(IButton))]
-    public class ComponentAdaptor_IButton : AComponentAdaptor
+    [ComponentBindAdaptor(nameof(IButton))]
+    public class ComponentBindAdaptorIButton : AComponentBindAdaptor
     {
         
         public override void Init()

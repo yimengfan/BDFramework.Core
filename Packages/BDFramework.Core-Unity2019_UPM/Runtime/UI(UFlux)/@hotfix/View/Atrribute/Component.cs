@@ -3,7 +3,7 @@
 namespace BDFramework.UFlux
 {
     /// <summary>
-    /// 节点发现属性
+    /// 组件属性
     /// </summary>
     public class ComponentAttribute : Attribute
     {

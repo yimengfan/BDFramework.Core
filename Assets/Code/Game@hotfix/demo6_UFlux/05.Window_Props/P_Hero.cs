@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using BDFramework.UFlux.View.Props;
-using BDFramework.UI.Demo_ScreenRect;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -36,7 +36,7 @@ namespace Game.demo6_UFlux
             var item = new Props_ItemTest002();
             int id = this.Props.CotentList.Count;
             //填充数据 
-            item.ComponentType = typeof(Component_ItemTest002);//该item的组件，用于自动赋值时候用
+            item.ComponentType = typeof(AtComponentItemTest002);//该item的组件，用于自动赋值时候用
             
             var rand = (int) UnityEngine.Random.Range(1f, 10.9f);
             item.ItemImg ="Image/" +rand;
