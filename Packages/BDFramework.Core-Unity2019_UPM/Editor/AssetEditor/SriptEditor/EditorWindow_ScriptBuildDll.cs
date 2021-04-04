@@ -95,7 +95,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         //触发bd环境周期
         BDFrameEditorBehaviorHelper.OnBeginBuildDLL();
 
-        var targetPath = "Assets/Code/Game/ILRuntime/Binding/Analysis";
+        var targetPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
         //1.分析之前先删除,然后生成临时文件防止报错
         // if (Directory.Exists(targetPath))
         // {
@@ -141,7 +141,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         types.Add(typeof(ADataListener));
         types.Add(typeof(Attribute));
         //types.Add(typeof(SerializedMonoBehaviour));
-        GenAdapter.CreateAdapter(types, "Assets/Code/Game/ILRuntime/Adapter");
+        GenAdapter.CreateAdapter(types, "Assets/Code/BDFramework.Game/ILRuntime/Adapter");
     }
 
 
@@ -176,7 +176,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         excludeTypes.AddRange(manualBindingTypes);
         excludeTypes.AddRange(preBindingTypes);
         //用新的分析热更dll调用引用来生成绑定代码
-        var outputPath = "Assets/Code/Game/ILRuntime/Binding/Analysis";
+        var outputPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
         //游戏工程的Bind
         Action<bool> mainProjectIlrBindAction = null;
         var type = BDFrameEditorLife.Types.FirstOrDefault((t) => t.FullName == "Game.ILRuntime.GameLogicILRBinding");
@@ -194,8 +194,8 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
 
         /******************移除已经被绑定的部分****************/
         var analysisClrBinding = IPath.Combine(outputPath, "CLRBindings.cs");
-        var manualPath = "Assets/Code/Game/ILRuntime/Binding/Manual";
-        var prebindingPath = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
+        var manualPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Manual";
+        var prebindingPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/PreBinding";
         //手动绑定的所有文件
         var bindingFs = Directory.GetFiles(manualPath, "*.*").ToList();
         if (Directory.Exists(prebindingPath))
@@ -289,7 +289,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
             }
         }
 
-        var output = "Assets/Code/Game/ILRuntime/Binding/PreBinding";
+        var output = "Assets/Code/BDFramework.Game/ILRuntime/Binding/PreBinding";
         var clrbinding = IPath.Combine(output, "CLRBindings.cs");
         var prebinding = IPath.Combine(output, "PreCLRBinding.cs");
         //
