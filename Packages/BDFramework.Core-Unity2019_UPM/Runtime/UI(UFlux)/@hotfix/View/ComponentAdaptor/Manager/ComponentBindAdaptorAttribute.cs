@@ -19,26 +19,23 @@ namespace BDFramework.UFlux
         {
             //1.组件类绑定
             Type type;
-            if (ILRuntimeHelper.UIComponentTypes.TryGetValue(bindComponentTypeName,out type))
+            if (ILRuntimeHelper.UIComponentTypes.TryGetValue(bindComponentTypeName, out type))
             {
                 this.BindComponentType = type;
                 return;
             }
-            
+
             //2.自定义逻辑类绑定
             //限制typename的命名空间,增加查询速度
-            var fullname = "BDFramework.UFlux." + bindComponentTypeName;
-            IType ilrtype;
-            if (ILRuntimeHelper.AppDomain != null &&
-                ILRuntimeHelper.AppDomain.LoadedTypes != null && //这两个判断防止编辑器下报错
-                ILRuntimeHelper.AppDomain.LoadedTypes.TryGetValue(fullname, out ilrtype))
+            if (ILRuntimeHelper.AppDomain != null && ILRuntimeHelper.AppDomain.LoadedTypes != null) //这两个判断防止编辑器下报错
             {
-                this.BindComponentType = ilrtype.ReflectionType;
-            }
-            else
-            {
-                
-                if (ILRuntimeHelper.AppDomain != null)
+                var fullname = "BDFramework.UFlux." + bindComponentTypeName;
+                IType ilrtype;
+                if (ILRuntimeHelper.AppDomain.LoadedTypes.TryGetValue(fullname, out ilrtype))
+                {
+                    this.BindComponentType = ilrtype.ReflectionType;
+                }
+                else
                 {
                     foreach (var key in ILRuntimeHelper.AppDomain.LoadedTypes.Keys)
                     {
@@ -47,9 +44,8 @@ namespace BDFramework.UFlux
                             BDebug.LogError("错误命名空间:" + key);
                         }
                     }
+                    BDebug.LogError("【UFlux】请检查BindAdaptor命名空间,是否为:" + fullname);
                 }
-
-                BDebug.LogError("【UFlux】请检查BindAdaptor命名空间,是否为:" + fullname);
             }
         }
     }
