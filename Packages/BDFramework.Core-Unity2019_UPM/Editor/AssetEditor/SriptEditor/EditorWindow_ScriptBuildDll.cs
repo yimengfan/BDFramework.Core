@@ -90,17 +90,18 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     /// <param name="outpath"></param>
     /// <param name="platform"></param>
     /// <param name="mode"></param>
-    static public void RoslynBuild(string outpath, RuntimePlatform platform, ScriptBuildTools.BuildMode mode)
+    static public void RoslynBuild(string outpath, RuntimePlatform platform, ScriptBuildTools.BuildMode mode,bool isShowTips =true)
     {
         //触发bd环境周期
         BDFrameEditorBehaviorHelper.OnBeginBuildDLL();
 
         var targetPath = "Assets/Code/Game/ILRuntime/Binding/Analysis";
         //1.分析之前先删除,然后生成临时文件防止报错
-        if (Directory.Exists(targetPath))
-        {
-            Directory.Delete(targetPath, true);
-        }
+        // if (Directory.Exists(targetPath))
+        // {
+        //     Directory.Delete(targetPath, true);
+        // }
+        
         var fileContent = @"
         namespace ILRuntime.Runtime.Generated
         {
@@ -115,7 +116,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         AssetDatabase.Refresh(); //这里必须要刷新
 
         //2.生成DLL
-        ScriptBuildTools.BuildDll(outpath, platform, mode);
+        ScriptBuildTools.BuildDll(outpath, platform, mode,isShowTips);
 
         //3.预绑定
         //GenPreCLRBinding();
@@ -215,7 +216,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         }
 
         var analysisContent = File.ReadAllLines(analysisClrBinding).ToList();
-        //修改CLRbingding内容
+        //修改CLRbindding内容
         for (int i = analysisContent.Count - 1; i >= 0; i--)
         {
             var line = analysisContent[i];

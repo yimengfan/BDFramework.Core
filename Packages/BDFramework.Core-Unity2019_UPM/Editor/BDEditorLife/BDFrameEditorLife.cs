@@ -34,18 +34,7 @@ namespace BDFramework.Editor.EditorLife
         static void OnScriptReload()
         {
             OnCodeBuildComplete();
-            //编译dll
-            if (BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll)
-            {
-                ScriptBuildTools.BuildDll(Application.streamingAssetsPath, Application.platform,
-                    ScriptBuildTools.BuildMode.Release, false);
-                Debug.Log("自动编译Hotfix.dll成功!");
-            }
-
-
-            //EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, RuntimePlatform.Android, ScriptBuildTools.BuildMode.Release);
         }
-
 
         /// <summary>
         /// 退出播放模式
@@ -82,6 +71,8 @@ namespace BDFramework.Editor.EditorLife
         }
 
 
+        #region Assembly Hook
+
         /// <summary>
         /// 游戏逻辑的Assembly
         /// </summary>
@@ -103,11 +94,8 @@ namespace BDFramework.Editor.EditorLife
             //BDRuntime下所有类
             typeList.AddRange(typeof(BDLauncher).Assembly.GetTypes());
             Types = typeList.ToArray();
-            //Editor的管理器初始化
-            RegisterEditorMgrbase(Types);
-            BDFrameEditorBehaviorHelper.Init();
-            //调试器启动
-            DebuggerServerProcessManager.Inst.Start();
+            //
+            OnMainProjectReady();
         }
 
         /// <summary>
@@ -134,11 +122,35 @@ namespace BDFramework.Editor.EditorLife
                 {
                     continue;
                 }
+
                 //1.类型注册到管理器
                 foreach (var mgr in mgrs)
                 {
                     mgr.CheckType(type, attr);
                 }
+            }
+        }
+        #endregion
+        public static void OnMainProjectReady()
+        {
+            //Editor的管理器初始化
+            RegisterEditorMgrbase(Types);
+            BDFrameEditorBehaviorHelper.Init();
+            //调试器启动
+            DebuggerServerProcessManager.Inst.Start();
+            BuildHotfixDll();
+        }
+
+
+        static private void BuildHotfixDll()
+        {
+            //编译dll
+            if (BDAssetImporterCache.IsChangedHotfixCode&& //修改过Hotfix
+                BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll)
+            {
+                EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, Application.platform,
+                    ScriptBuildTools.BuildMode.Debug, false);
+                Debug.Log("自动编译Hotfix.dll成功!");
             }
         }
     }
