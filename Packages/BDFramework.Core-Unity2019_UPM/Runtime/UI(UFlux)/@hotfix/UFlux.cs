@@ -14,7 +14,7 @@ namespace BDFramework.UFlux
         /// <param name="aState"></param>
         static public void SetComponentValue(Transform t ,AStateBase aState)
         {
-            ComponentValueAdaptorManager.Inst.SetComponentValue(t,aState);
+            ComponentValueBindManager.Inst.SetComponentValue(t,aState);
         }
 
         /// <summary>

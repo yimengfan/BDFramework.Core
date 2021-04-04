@@ -3,7 +3,7 @@ using BDFramework.Mgr;
 
 namespace BDFramework.Core.Debugger
 {
-    public class DebuggerServerProcessAttribute : ManagerAtrribute
+    public class DebuggerServerProcessAttribute : ManagerAttribute
     {
         /// <summary>
         /// ID 是协议号

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using BDFramework.UFlux;
 using BDFramework.UFlux.View.Props;
-using UnityEngine;
 
 namespace Game.demo6_UFlux._05.NodeHelper
 {
@@ -25,7 +24,7 @@ namespace Game.demo6_UFlux._05.NodeHelper
         /// 值转换成执行逻辑
         /// </summary>
         [TransformPath("Equipments")]
-        [ComponentValueBind(typeof(TransformChild),nameof(TransformChild.ShowHideChildByNumber))]
+        [ComponentValueBind(nameof(TransformChild),nameof(TransformChild.ShowHideChildByNumber))]
         public int value;
     }
 }

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections;
-using BDFramework.UFlux.View.Props;
+﻿using BDFramework.UFlux;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-
-namespace BDFramework.UFlux
+//这里的命名空间必须为：BDFramework.Uflux
+namespace  BDFramework.UFlux
 {
-
     public class TransformChild
     {
         /// <summary>
@@ -19,14 +14,14 @@ namespace BDFramework.UFlux
     /// <summary>
     /// 自定义逻辑的适配器
     /// </summary>
-    [ComponentAdaptorProcessAttribute(typeof(TransformChild))]
+    [ComponentBind(nameof(TransformChild))]
     public class CustomLogicAdaptor_TransformChild : AComponentAdaptor
     {
         
         public override void Init()
         {
             base.Init();
-            setPropCustomAdaptorMap[nameof(TransformChild.ShowHideChildByNumber)] = ShowHideChildByNumber;
+            setPropCustomLogicMap[nameof(TransformChild.ShowHideChildByNumber)] = ShowHideChildByNumber;
           
         }
         /// <summary>

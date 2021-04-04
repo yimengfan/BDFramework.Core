@@ -1,21 +1,22 @@
-﻿using UnityEngine;
+﻿using BDFramework.UFlux;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-namespace BDFramework.UFlux
+//这里的命名空间必须为：BDFramework.Uflux
+namespace  BDFramework.UFlux
 {
     /// <summary>
     /// 这里是UnityEngine的UI Text适配器
     /// </summary>
-    [ComponentAdaptorProcessAttribute(typeof(Text))]
+    [ComponentBind(nameof(Text))]
     public class ComponentAdaptor_Text : AComponentAdaptor
     {
         
         public override void Init()
         {
             base.Init();
-            setPropActionMap[nameof(Text.text)] = SetProp_Text;
-            setPropActionMap[nameof(Text.color)] = SetProp_Color;
+            setPropComponentBindMap[nameof(Text.text)] = SetProp_Text;
+            setPropComponentBindMap[nameof(Text.color)] = SetProp_Color;
         }
         /// <summary>
         /// 设置文字

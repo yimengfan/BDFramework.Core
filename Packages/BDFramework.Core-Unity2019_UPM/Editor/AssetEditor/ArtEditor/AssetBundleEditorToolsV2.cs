@@ -53,6 +53,15 @@ namespace BDFramework.Editor.Asset
             /// 依赖列表
             /// </summary>
             public List<string> DependList { get; set; } = new List<string>();
+
+            /// <summary>
+            /// 是否被多次引用
+            /// </summary>
+            public bool IsRefrenceByOtherAsset()
+            {
+                return this.ReferenceCount > 1;
+            }
+            
         }
 
         /// <summary>
@@ -64,6 +73,27 @@ namespace BDFramework.Editor.Asset
         /// 资源列表
         /// </summary>
         public Dictionary<string, AssetData> AssetDataMaps = new Dictionary<string, AssetData>();
+
+
+        public enum ChangeABNameMode
+        {
+            Simple,
+            ForceAll
+        }
+        
+        /// <summary>
+        /// 设置AB名
+        /// </summary>
+        public bool SetABName(string assetName, string newABName ,  ChangeABNameMode mode = ChangeABNameMode.Simple)
+        {
+            //1.如果ab名被修改过,说明有其他规则影响，需要理清打包规则。（比如散图打成图集名）
+            //2.如果资源被其他资源引用，修改ab名，需要修改所有引用该ab的名字
+            
+            //AssetData assetdata = this.AssetDataMaps.
+
+
+            return false;
+        }
     }
 
     static public class AssetBundleEditorToolsV2

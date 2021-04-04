@@ -8,10 +8,16 @@ namespace BDFramework.UFlux
 {
     abstract public class AComponentAdaptor
     {
-        protected Dictionary<string, Action<UIBehaviour, object>> setPropActionMap =
+        /// <summary>
+        /// 组件绑定map
+        /// </summary>
+        protected Dictionary<string, Action<UIBehaviour, object>> setPropComponentBindMap =
             new Dictionary<string, Action<UIBehaviour, object>>();
 
-        protected Dictionary<string, Action<Transform, object>> setPropCustomAdaptorMap =
+        /// <summary>
+        /// 自定义逻辑map
+        /// </summary>
+        protected Dictionary<string, Action<Transform, object>> setPropCustomLogicMap =
             new Dictionary<string, Action<Transform, object>>();
 
         public AComponentAdaptor()
@@ -24,8 +30,8 @@ namespace BDFramework.UFlux
         /// </summary>
         public virtual void Init()
         {
-            setPropActionMap[nameof(UIBehaviour.enabled)] = SetProp_Enable;
-            setPropActionMap[nameof(UIBehaviour.gameObject.active)] = SetProp_Active;
+            setPropComponentBindMap[nameof(UIBehaviour.enabled)] = SetProp_Enable;
+            setPropComponentBindMap[nameof(UIBehaviour.gameObject.active)] = SetProp_Active;
         }
 
         /// <summary>
@@ -37,7 +43,7 @@ namespace BDFramework.UFlux
         public virtual void SetData(UIBehaviour uiBehaviour, string propName, object propValue)
         {
             Action<UIBehaviour, object> action = null;
-            this.setPropActionMap.TryGetValue(propName, out action);
+            this.setPropComponentBindMap.TryGetValue(propName, out action);
             if (action != null)
             {
                 action(uiBehaviour, propValue);
@@ -57,7 +63,7 @@ namespace BDFramework.UFlux
         public virtual void SetData(Transform transform, string propName, object propValue)
         {
             Action<Transform, object> action = null;
-            this.setPropCustomAdaptorMap.TryGetValue(propName, out action);
+            this.setPropCustomLogicMap.TryGetValue(propName, out action);
             if (action != null)
             {
                 action(transform, propValue);

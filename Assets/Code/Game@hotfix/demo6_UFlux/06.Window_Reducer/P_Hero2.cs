@@ -13,16 +13,16 @@ namespace BDFramework.UFlux.Test
     {
         
         [TransformPath("Hero/Content/t_Name")]
-        [ComponentValueBind(typeof(Text),nameof(Text.text))]
+        [ComponentValueBind(nameof(Text),nameof(Text.text))]
         public string Name;
         [TransformPath("Hero/Content/t_Hp")]
-        [ComponentValueBind(typeof(Text),nameof(Text.text))]
+        [ComponentValueBind(nameof(Text),nameof(Text.text))]
         public int Hp;
         [TransformPath("Hero/Content/t_MaxHp")]
-        [ComponentValueBind(typeof(Text),nameof(Text.text))]
+        [ComponentValueBind(nameof(Text),nameof(Text.text))]
         public int MaxHp;
         [TransformPath("Hero/Content/t_Hp")]
-        [ComponentValueBind(typeof(Text),nameof(Text.color))]
+        [ComponentValueBind(nameof(Text),nameof(Text.color))]
         public Color HpColor;
     }
 }

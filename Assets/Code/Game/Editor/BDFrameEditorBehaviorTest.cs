@@ -49,9 +49,12 @@ namespace BDFramework.Editor.EditorLife
                 //所有依赖的资源
                 foreach (var dependAssetKey in charAssetData.DependList)
                 {
+                    //
+                    buildInfo.SetABName(dependAssetKey, charAssetData.ABName, BuildInfo.ChangeABNameMode.Simple);
+                    
                     var dependAsset = buildInfo.AssetDataMaps[dependAssetKey];
-                    //判断是否被多次引用，ab名是否被修改
-                    if (dependAsset.ReferenceCount == 1 && dependAssetKey== dependAsset.ABName)
+                    //判断是否被其他资源引用，ab名是否被其他规则修改
+                    if (!dependAsset.IsRefrenceByOtherAsset() && dependAssetKey== dependAsset.ABName)
                     {
                         //打包到一个ab中
                         dependAsset.ABName = charAssetData.ABName;

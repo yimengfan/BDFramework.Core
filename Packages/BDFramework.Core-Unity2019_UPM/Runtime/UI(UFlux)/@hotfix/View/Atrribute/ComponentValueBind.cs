@@ -10,37 +10,23 @@ namespace BDFramework.UFlux
     /// </summary>
     public class ComponentValueBind : Attribute
     {
-        public Type   Type;
-        public string FieldName;
-
-        public ComponentValueBind(Type type, string field)
+        public string FieldNameName { get;  private set; }
+        public Type Type;
+        /// <summary>
+        /// 构造函数
+        /// 热更Attr不支持基础类型以外
+        /// </summary>
+        /// <param name="typeName"></param>
+        /// <param name="fieldName"></param>
+        public ComponentValueBind(string typeName, string fieldName)
         {
-            //这里故意让破坏优化 ilrbug
-            var ot = (object) type;
-            if (ot is TypeReference)
+            this.FieldNameName = fieldName;
+            if (!ILRuntimeHelper.UIComponentTypes.TryGetValue(typeName, out Type))
             {
-                var name = ((TypeReference) ot).FullName;
-                if (!ILRuntimeHelper.UIComponentTypes.TryGetValue(name, out Type))
-                {
-                    IType ilrtype = null;
-                    if (ILRuntimeHelper.AppDomain.LoadedTypes.TryGetValue(name, out ilrtype))
-                    {
-                        this.Type =  ilrtype.ReflectionType;
-                    }
-                }
-                
-                if (Type == null)
-                {
-                    BDebug.LogError("isnull:" +name);
-                }
- 
+                BDebug.LogError("【Uflux】type is null:" +typeName);
             }
-            else
-            {
-                this.Type = type;
-            }
+            
 
-            this.FieldName = field;
         }
     }
 }

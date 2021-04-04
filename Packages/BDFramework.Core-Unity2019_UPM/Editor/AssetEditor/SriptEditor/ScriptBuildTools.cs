@@ -332,6 +332,7 @@ public class ScriptBuildTools
         List<MetadataReference> assemblies = new List<MetadataReference>();
         foreach (var dll in dlls)
         {
+            
             var metaref = MetadataReference.CreateFromFile(dll);
             if (metaref != null)
             {

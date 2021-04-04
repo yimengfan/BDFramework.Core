@@ -6,7 +6,7 @@ using BDFramework.Mgr;
 
 namespace BDFramework.UFlux
 {
-    public class UIAttribute : ManagerAtrribute
+    public class UIAttribute : ManagerAttribute
     {
         public string ResourcePath { get; private set; }
        

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BDFramework.Mgr
 {
-    public class ManagerAtrribute : Attribute
+    public class ManagerAttribute : Attribute
     {
         /// <summary>
         /// int类型Tag
@@ -16,12 +16,12 @@ namespace BDFramework.Mgr
         /// </summary>
         public string Tag { get; private set; } = null;
 
-        public ManagerAtrribute(int intTag)
+        public ManagerAttribute(int intTag)
         {
             this.IntTag = intTag;
         }
 
-        public ManagerAtrribute(string tag)
+        public ManagerAttribute(string tag)
         {
             this.Tag = tag;
         }
@@ -33,7 +33,7 @@ namespace BDFramework.Mgr
     /// <typeparam name="T">是管理器实例</typeparam>
     /// <typeparam name="V">标签属性</typeparam>
     public class ManagerBase<T, V> : IMgr where T : IMgr, new()
-        where V : ManagerAtrribute
+        where V : ManagerAttribute
     {
         static private T i;
 
@@ -65,7 +65,7 @@ namespace BDFramework.Mgr
         /// </summary>
         /// <param name="type"></param>
         /// <param name="attribute"></param>
-        virtual public void CheckType(Type type, ManagerAtrribute attribute)
+        virtual public void CheckType(Type type, ManagerAttribute attribute)
         {
             var vAttr = attribute as V;
             if (vAttr != null)

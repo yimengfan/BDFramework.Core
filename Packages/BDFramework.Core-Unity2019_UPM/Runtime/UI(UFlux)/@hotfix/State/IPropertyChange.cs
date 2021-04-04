@@ -15,6 +15,6 @@
         /// 获取改变的属性
         /// </summary>
         /// <returns></returns>
-        string GetPropertyChange();
+        string GetChangedProperty();
     }
 }

@@ -128,7 +128,7 @@ namespace BDFramework.UFlux
         /// 获取变更的属性
         /// </summary>
         /// <returns></returns>
-        public string GetPropertyChange()
+        public string GetChangedProperty()
         {
             curGetIndex = curGetIndex+1;
             //

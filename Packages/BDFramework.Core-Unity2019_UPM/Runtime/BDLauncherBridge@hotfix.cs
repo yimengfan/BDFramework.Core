@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 using BDFramework.Mgr;
 using BDFramework.GameStart;
 using BDFramework.Reflection;
@@ -41,16 +42,27 @@ public class BDLauncherBridge
         types.AddRange(typeof(Button).Assembly.GetTypes()); //Unity
         types.AddRange(typeof(IButton).Assembly.GetTypes()); //BDFramework.component
         types.AddRange(mainProjectTypes); //游戏业务逻辑
+        if (Application.isEditor)
+        {
+            types = types.Distinct().ToList();
+        }
+
         var uitype = typeof(UIBehaviour);
         foreach (var type in types)
         {
             //注册所有uiComponent
-            if (type.IsSubclassOf(uitype))
+            bool ret = type.IsSubclassOf(uitype);
+            if (ret)
             {
-                Debug.Log("hotfix:" + type.FullName);
-                //
-
-                ILRuntimeHelper.UIComponentTypes[type.FullName] = type;
+                if (!ILRuntimeHelper.UIComponentTypes.ContainsKey(type.Name))
+                {
+                    //因为Attribute typeof（Type）后无法获取fullname
+                    ILRuntimeHelper.UIComponentTypes[type.Name] = type;
+                }
+                else
+                {
+                    BDebug.LogError("有重名UI组件，请注意" + type.FullName);
+                }
             }
         }
 
@@ -85,7 +97,7 @@ public class BDLauncherBridge
         //遍历type执行逻辑
         foreach (var type in hotfixTypes)
         {
-            var mgrAttribute = type.GetAttributeInILRuntime<ManagerAtrribute>();
+            var mgrAttribute = type.GetAttributeInILRuntime<ManagerAttribute>();
             if (mgrAttribute == null)
             {
                 continue;

@@ -13,8 +13,7 @@ using UnityEngine.EventSystems;
 
 namespace BDFramework.UFlux
 {
-    public class
-        ComponentValueAdaptorManager : ManagerBase<ComponentValueAdaptorManager, ComponentAdaptorProcessAttribute>
+    public class ComponentValueBindManager : ManagerBase<ComponentValueBindManager, ComponentBindAttribute>
     {
         Dictionary<Type, AComponentAdaptor> adaptorMap = new Dictionary<Type, AComponentAdaptor>();
 
@@ -25,10 +24,17 @@ namespace BDFramework.UFlux
             var clsList = this.GetAllClassDatas();
             foreach (var cd in clsList)
             {
-                var attr = cd.Attribute as ComponentAdaptorProcessAttribute;
-                //Debug.Log(attr.Type.FullName);
+                var attr = cd.Attribute as ComponentBindAttribute;
                 var inst = CreateInstance<AComponentAdaptor>(cd);
                 adaptorMap[attr.Type] = inst;
+
+                if (Application.isEditor)
+                {
+                    if (!attr.Type.FullName.StartsWith("BDFramework.UFlux."))
+                    {
+                        BDebug.LogError("请注意命名空间不为BDFramework.UFlux:" + attr.Type.FullName);
+                    }
+                }
             }
 
             //执行30s清理一次的cache
@@ -41,10 +47,10 @@ namespace BDFramework.UFlux
         /// </summary>
         public class ComponentValueCahce
         {
-            public UIBehaviour UIBehaviour;
-            public Transform Transform;
-            public ComponentValueBind ValueBind;
-            public object LastValue;
+            public UIBehaviour UIBehaviour { get; set; }
+            public Transform Transform { get; set; }
+            public ComponentValueBind ValueBind { get; set; }
+            public object LastValue { get; set; }
         }
 
         //
@@ -70,10 +76,11 @@ namespace BDFramework.UFlux
 
             while (true)
             {
-                var field = aState.GetPropertyChange();
-
+                var field = aState.GetChangedProperty();
                 if (field == null)
+                {
                     break;
+                }
 
                 //开始
                 ComponentValueCahce cvc = null;
@@ -81,17 +88,21 @@ namespace BDFramework.UFlux
                 {
                     //考虑 是否二次验证值是否改变
                     var newValue = aState.GetValue(field);
-                    //执行赋值操作
-                    if (cvc.UIBehaviour != null) //UI操作
+                    if (!cvc.LastValue.Equals(newValue))
                     {
-                        adaptorMap[cvc.ValueBind.Type].SetData(cvc.UIBehaviour, cvc.ValueBind.FieldName, newValue);
+                        cvc.LastValue = newValue;
+                        //执行赋值操作
+                        if (cvc.UIBehaviour != null) //UI操作
+                        {
+                            adaptorMap[cvc.ValueBind.Type]
+                                .SetData(cvc.UIBehaviour, cvc.ValueBind.FieldNameName, newValue);
+                        }
+                        else if (cvc.Transform) //自定义逻辑管理
+                        {
+                            adaptorMap[cvc.ValueBind.Type]
+                                .SetData(cvc.Transform, cvc.ValueBind.FieldNameName, newValue);
+                        }
                     }
-                    else if (cvc.Transform) //自定义逻辑管理
-                    {
-                        adaptorMap[cvc.ValueBind.Type].SetData(cvc.Transform, cvc.ValueBind.FieldName, newValue);
-                    }
-
-                    cvc.LastValue = newValue;
                 }
                 else
                 {
@@ -139,7 +150,8 @@ namespace BDFramework.UFlux
                     //
                     if (cvb != null)
                     {
-                        if (cvb.Type.IsSubclassOf(typeof(UIBehaviour)))
+                        var ret = cvb.Type.IsSubclassOf(typeof(UIBehaviour));
+                        if (ret)
                         {
                             cvc.UIBehaviour = transform.GetComponent(cvb.Type) as UIBehaviour;
                         }
@@ -168,11 +180,12 @@ namespace BDFramework.UFlux
                         {
                             //填充 子节点赋值逻辑
                             cvc.ValueBind =
-                                new ComponentValueBind(typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.SetChildValue));
+                                new ComponentValueBind(typeof(UFluxAutoLogic).FullName,
+                                    nameof(UFluxAutoLogic.SetChildValue));
                         }
                         else
                         {
-                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic),
+                            cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic).FullName,
                                 nameof(UFluxAutoLogic.ForeachSetChildValue));
 
 #if UNITY_EDITOR
@@ -192,7 +205,7 @@ namespace BDFramework.UFlux
                             //list t或者array
                             if (type.IsArray || type.IsGenericType) //数组
                             {
-                                cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic),
+                                cvc.ValueBind = new ComponentValueBind(typeof(UFluxAutoLogic).FullName,
                                     nameof(UFluxAutoLogic.ForeachSetChildValue));
                             }
                         }

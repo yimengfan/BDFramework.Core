@@ -25,14 +25,14 @@ namespace BDFramework.UFlux
     /// <summary>
     /// 
     /// </summary>
-    [ComponentAdaptorProcessAttribute(typeof(UFluxAutoLogic))]
+    [ComponentBind(nameof(UFluxAutoLogic))]
     public class CustomLogicAdaptor_NodeHelper : AComponentAdaptor
     {
         public override void Init()
         {
             base.Init();
-            setPropCustomAdaptorMap[nameof(UFluxAutoLogic.SetChildValue)] = SetChildValue;
-            setPropCustomAdaptorMap[nameof(UFluxAutoLogic.ForeachSetChildValue)] = ForeahSetChildValueFormArray;
+            setPropCustomLogicMap[nameof(UFluxAutoLogic.SetChildValue)] = SetChildValue;
+            setPropCustomLogicMap[nameof(UFluxAutoLogic.ForeachSetChildValue)] = ForeahSetChildValue;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <param name="transform"></param>
         /// <param name="value">Value必须为集合类型</param>
-        private void ForeahSetChildValueFormArray(Transform transform, object value)
+        private void ForeahSetChildValue(Transform transform, object value)
         {
             ICollection Collection = value as ICollection;
             if (Collection == null)

@@ -1,21 +1,23 @@
 ﻿using System;
+using BDFramework.UFlux;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+//这里的命名空间必须为：BDFramework.Uflux
 namespace BDFramework.UFlux
 {
     /// <summary>
     /// 这里是BDFrame的UI IButton适配器
     /// </summary>
-    [ComponentAdaptorProcessAttribute(typeof(IButton))]
+    [ComponentBind(nameof(IButton))]
     public class ComponentAdaptor_IButton : AComponentAdaptor
     {
+        
         public override void Init()
         {
             base.Init();
-            setPropActionMap[nameof(IButton.onClick)] = SetProp_OnClick;
-            setPropActionMap[nameof(IButton.onClick.AddListener)] = SetProp_AddListener;
+            setPropComponentBindMap[nameof(IButton.onClick)] = SetProp_OnClick;
+            setPropComponentBindMap[nameof(IButton.onClick.AddListener)] = SetProp_AddListener;
         }
 
         /// <summary>

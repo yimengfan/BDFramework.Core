@@ -114,10 +114,11 @@ namespace BDFramework.Editor.EditorLife
                     mgrs.Add(i);
                 }
             }
+            
 
             foreach (var type in types)
             {
-                var attr = type.GetAttributeInILRuntime<ManagerAtrribute>();
+                var attr = type.GetAttributeInILRuntime<ManagerAttribute>();
                 if (attr == null)
                 {
                     continue;

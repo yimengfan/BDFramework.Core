@@ -11,7 +11,7 @@ using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
 namespace BDFramework
 {
-     static public partial class ILRuntimeHelper
+    static public class ILRuntimeHelper
     {
         public static AppDomain AppDomain { get; private set; }
         public static bool IsRunning { get; private set; }
@@ -26,7 +26,9 @@ namespace BDFramework
         /// <param name="dllPath"></param>
         /// <param name="gamelogicBindAction">游戏逻辑测注册</param>
         /// <param name="isRegisterBindings"></param>
-        public static void LoadHotfix(string dllPath, Action<bool> gamelogicBindAction=null, bool isRegisterBindings = true)
+        public static void LoadHotfix(string dllPath,
+            Action<bool> gamelogicBindAction = null,
+            bool isRegisterBindings = true)
         {
             //
             IsRunning = true;
@@ -61,6 +63,7 @@ namespace BDFramework
                 AppDomain.DebugService.StartDebugService(56000);
                 Debug.Log("热更调试器 准备待命~");
             }
+
             //
             AppDomain.Invoke("HotfixCheck", "Log", null, null);
         }

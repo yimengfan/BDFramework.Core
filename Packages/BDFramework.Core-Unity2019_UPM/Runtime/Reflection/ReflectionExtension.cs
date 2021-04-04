@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using UnityEngine;
 
 namespace BDFramework.Reflection
 {
@@ -13,17 +14,25 @@ namespace BDFramework.Reflection
         /// <returns></returns>
         static public T GetAttributeInILRuntime<T>(this MemberInfo memberInfo) where T : Attribute
         {
-
-            var attrs = memberInfo.GetCustomAttributes(false);
-
-            foreach (var attr in attrs)
+#if UNITY_EDITOR
+            try
             {
-                if (attr is T)
+#endif
+                var attrs = memberInfo.GetCustomAttributes(false);
+                foreach (var attr in attrs)
                 {
-                    return (attr as T);
+                    if (attr is T)
+                    {
+                        return (attr as T);
+                    }
                 }
+#if UNITY_EDITOR
             }
-            
+            catch (Exception e)
+            {
+                Debug.LogError("获取失败Attribute:" + memberInfo.Name + "\n 请注意该Attribute构造过程中是否报错!");
+            }
+#endif
             return null;
         }
     }

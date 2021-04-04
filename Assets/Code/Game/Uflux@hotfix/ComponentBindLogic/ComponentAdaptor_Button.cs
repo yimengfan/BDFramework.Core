@@ -1,22 +1,23 @@
 ﻿using System;
-using UnityEngine;
+using BDFramework.ScreenView;
+using BDFramework.UFlux;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+//这里的命名空间必须为：BDFramework.Uflux
 namespace BDFramework.UFlux
 {
     /// <summary>
     /// 这里是UnityEngine的UI Button适配器
     /// </summary>
-    [ComponentAdaptorProcessAttribute(typeof(Button))]
+    [ComponentBind(nameof(Button))]
     public class ComponentAdaptor_Button : AComponentAdaptor
     {
         public override void Init()
         {
             base.Init();
             
-            setPropActionMap[nameof(Button.onClick)] = SetProp_OnClick;
-            setPropActionMap[nameof(Button.onClick.AddListener)] = SetProp_AddListener;
+            setPropComponentBindMap[nameof(Button.onClick)] = SetProp_OnClick;
+            setPropComponentBindMap[nameof(Button.onClick.AddListener)] = SetProp_AddListener;
         }
 
         /// <summary>
@@ -33,6 +34,7 @@ namespace BDFramework.UFlux
             if (action != null)
             {
                 //注册回调
+                btn.onClick.RemoveAllListeners();
                 btn.onClick.AddListener(() => { action(); });
             }
         }
@@ -49,6 +51,7 @@ namespace BDFramework.UFlux
             if (action != null)
             {
                 //注册回调
+                btn.onClick.RemoveAllListeners();
                 btn.onClick.AddListener(() => { action(); });
             }
         }

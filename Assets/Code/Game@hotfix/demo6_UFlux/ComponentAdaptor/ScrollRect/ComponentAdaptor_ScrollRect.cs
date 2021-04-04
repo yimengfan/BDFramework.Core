@@ -13,13 +13,13 @@ namespace BDFramework.UFlux
     /// 这里是UnityEngine的UI Scroll适配器
     /// 这里不适合无限滚动列表设计，只是做演示demo
     /// </summary>
-    [ComponentAdaptorProcessAttribute(typeof(ScrollRectAdaptor))]
+    [ComponentBind(nameof(ScrollRectAdaptor))]
     public class ComponentAdaptor_ScrollRect : AComponentAdaptor
     {
         public override void Init()
         {
             base.Init();
-            this.setPropCustomAdaptorMap[nameof(ScrollRectAdaptor.Contents)] = SetProp_Contents;
+            this.setPropCustomLogicMap[nameof(ScrollRectAdaptor.Contents)] = SetProp_Contents;
         }
 
         Dictionary<int, ScrollRectAdaptor> srlogicMap = new Dictionary<int, ScrollRectAdaptor>();

@@ -1,21 +1,22 @@
-﻿using UnityEngine;
+﻿using BDFramework.UFlux;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-namespace BDFramework.UFlux
+//这里的命名空间必须为：BDFramework.Uflux
+namespace  BDFramework.UFlux
 {
     /// <summary>
     /// 这里是UnityEngine的UI Image适配器
     /// </summary>
-    [ComponentAdaptorProcessAttribute(typeof(Image))]
+    [ComponentBind(nameof(Image))]
     public class ComponentAdaptor_Image : AComponentAdaptor
     {
         public override void Init()
         {
             base.Init();
-            setPropActionMap[nameof(Image.overrideSprite)] = SetProp_Sprite;
-            setPropActionMap[nameof(Image.color)]          = SetProp_Color;
-            setPropActionMap[nameof(Image.fillAmount)] = SetProp_Amount;
+            setPropComponentBindMap[nameof(Image.overrideSprite)] = SetProp_Sprite;
+            setPropComponentBindMap[nameof(Image.color)]          = SetProp_Color;
+            setPropComponentBindMap[nameof(Image.fillAmount)] = SetProp_Amount;
         }
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace BDFramework.UFlux
             var img = uiBehaviour as Image;
             if (value is string)
             {
-                img.sprite = UFlux.Load<Sprite>((string) value);
+                img.sprite = BDFramework.UFlux.UFlux.Load<Sprite>((string) value);
             }
             else if (value is Sprite)
             {
