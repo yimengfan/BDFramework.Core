@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Reflection_MethodBase_Binding.cs.meta
 guid: a01bf250464e62542831a6edb8a4a161
+=======
+guid: 307f47fa93000954b9cab4a5438bd4d6
+>>>>>>> 5d25d1c29d3036398be7000d89253a1aa554fa48:Assets/Code/Game/ILRuntime/Binding/Analysis/System_Reflection_MethodBase_Binding.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
