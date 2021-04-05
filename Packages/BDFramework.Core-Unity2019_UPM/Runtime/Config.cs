@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using LitJson;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -112,7 +113,41 @@ namespace BDFramework
        
         [TitleGroup("真机环境下,BDLauncher的Config不能为null！", alignment: TitleAlignments.Centered)]
         [LabelText("生成配置名")]
+        [OnInspectorGUI("ONGUI_SelcectConfig")]
         public string ConfigFileName="noname";
+
+        private static int curSlectConfigIdx = -1;
+        //选择配置
+        static public void ONGUI_SelcectConfig()
+        {
+            GUI.color = Color.green;
+            
+            var launcher = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
+            var curFilePath = AssetDatabase.GetAssetPath(launcher.ConfigText.GetInstanceID());
+            Debug.Log(curFilePath);
+            
+            var direct = Path.GetDirectoryName(curFilePath);
+            var fs = Directory.GetFiles(direct, "*.json", SearchOption.AllDirectories)
+                .Select((s)=>s.Replace("\\","/")).ToList();
+            var configNames = fs.Select((s) => Path.GetFileName(s)).ToArray();
+            if (curSlectConfigIdx == -1)
+            {
+                curSlectConfigIdx  = fs.FindIndex((s) => s == curFilePath);
+            }
+            curSlectConfigIdx =EditorGUILayout.Popup("选择配置:", curSlectConfigIdx, configNames);
+            if (fs[curSlectConfigIdx] != curFilePath)
+            {
+                Debug.Log("选择配置:" + fs[curSlectConfigIdx]);
+                var assetText = AssetDatabase.LoadAssetAtPath<TextAsset>(fs[curSlectConfigIdx]);
+                launcher.ConfigText = assetText;
+                //设置新的配置内容
+               var config=  GameObject.Find("BDFrame").GetComponent<Config>();
+               config.SetNewConfig(assetText.text);
+            }
+
+            GUI.color = GUI.backgroundColor;
+        }
+        
         
         [ButtonGroup("1")]
         [Button("清空Persistent", ButtonSizes.Small)]
@@ -152,7 +187,8 @@ namespace BDFramework
            // Scene scene = EditorSceneManager.GetActiveScene();
             var fs = string.Format("{0}/{1}", str, filename + ".json");
             FileHelper.WriteAllText(fs, json);
-            AssetDatabase.Refresh();
+            //
+            //AssetDatabase.Refresh();
             //
             var content = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
             var bdconfig = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
