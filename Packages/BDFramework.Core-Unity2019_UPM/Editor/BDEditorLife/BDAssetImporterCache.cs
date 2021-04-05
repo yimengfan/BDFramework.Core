@@ -46,7 +46,14 @@ namespace BDFramework.Editor.EditorLife
                     
                 }
             }
-            
+            foreach (string str in movedAssets)
+            {
+                if (str.Contains("@hotfix") && str.EndsWith(".cs"))
+                {
+                    LastChangedHotfixCs.Add(str);
+                    
+                }
+            }
             //写入本地
             FileHelper.WriteAllText(importerCahcePath,JsonMapper.ToJson(LastChangedHotfixCs));
             
