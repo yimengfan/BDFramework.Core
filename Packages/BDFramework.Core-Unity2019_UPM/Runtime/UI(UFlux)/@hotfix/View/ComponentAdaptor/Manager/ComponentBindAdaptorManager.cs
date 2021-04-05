@@ -97,8 +97,8 @@ namespace BDFramework.UFlux
                 if (map.TryGetValue(field, out cvc))
                 {
                     var newValue = aState.GetValue(field);
-                    if (cvc.LastValue == null || !cvc.LastValue.Equals(newValue))
-                    {
+                    // if (cvc.LastValue == null || !cvc.LastValue.Equals(newValue))
+                    // {
                         cvc.LastValue = newValue;
                         //执行赋值操作
                         if (cvc.UIBehaviour != null) //UI操作
@@ -111,7 +111,7 @@ namespace BDFramework.UFlux
                             var componentAdaptor = adaptorMap[cvc.ValueBindAttribute.UIComponentType];
                             componentAdaptor.SetData(cvc.Transform, cvc.ValueBindAttribute.FieldName, newValue);
                         }
-                    }
+                    //}
                 }
                 else
                 {
