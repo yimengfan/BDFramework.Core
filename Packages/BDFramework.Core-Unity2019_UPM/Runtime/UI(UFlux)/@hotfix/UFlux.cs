@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Reflection;
 using BDFramework.ResourceMgr;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace BDFramework.UFlux
 {
+
     static public partial class UFlux
     {
         /// <summary>
@@ -14,7 +16,7 @@ namespace BDFramework.UFlux
         /// <param name="aState"></param>
         static public void SetComponentValue(Transform t ,AStateBase aState)
         {
-            ComponentBindAdaptorManager.Inst.SetComponentValue(t,aState);
+            ComponentBindAdaptorManager.Inst.SetComponentBindValue(t,aState);
         }
 
         /// <summary>

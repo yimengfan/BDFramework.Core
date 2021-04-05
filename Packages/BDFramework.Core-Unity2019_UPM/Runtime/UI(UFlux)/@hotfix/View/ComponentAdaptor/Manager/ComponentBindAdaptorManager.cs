@@ -68,11 +68,11 @@ namespace BDFramework.UFlux
             new Dictionary<int, Dictionary<string, ComponentValueCahce>>();
 
         /// <summary>
-        /// 设置属性
+        /// 设置组件绑定值
         /// </summary>
         /// <param name="t"></param>
         /// <param name="aState"></param>
-        public void SetComponentValue(Transform t, AStateBase aState)
+        public void SetComponentBindValue(Transform t, AStateBase aState)
         {
             //第一次进行缓存绑定后，就不再重新解析了，
             //所以使用者要保证每次的 state尽量是一致的
