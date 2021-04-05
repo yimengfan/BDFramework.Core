@@ -19,23 +19,19 @@ using BDFramework.UFlux;
 public class Window_Demo5 : AWindow
 {
 
-    [TransformPath("btn_Close")]
-    private Button btn_close;
+    [ButtonOnclick("btn_Close")]
+    private void btn_close()
+    {
+        this.Close();
+        UIManager.Inst.ShowWindow(WinEnum.Win_Main);
+    }
 
     public Window_Demo5(string path) : base(path)
     {
     }
 
-    public override void Init()
-    {
-        base.Init();
-        //01按钮
-        btn_close.onClick.AddListener(() =>
-        {
-            this.Close();
-            UIManager.Inst.ShowWindow(WinEnum.Win_Main);
-        });
-    }
+   
+    
 
 
 

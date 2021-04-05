@@ -1,14 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using BDFramework.UFlux;
+using BDFramework.UFlux.View.Props;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.demo6_UFlux
 {
+    public class Props_Test001 : PropsBase
+    {
+        //这里进行数据的绑定
+        [TransformPath("chatbox/head")]  //节点
+        [ComponentValueBind(  typeof(Image),nameof(Image.overrideSprite))]//数据赋值对象
+        public string headImg = "";
+        
+        //这里进行数据的绑定
+        [TransformPath("chatbox/content")] //节点
+        [ComponentValueBind(typeof(Text),nameof(Text.text))]//数据赋值对象
+        public string content = "";
+
+    }
     
     //这里是Component标签，用以创建时候进行绑定Transform
     [Component("Windows/UFlux/demo001/Component_test01")] 
-    public class AtComponentTest001 : ATComponent<Props_Test001>
+    public class ComponentTest001 : ATComponent<Props_Test001>
     {
         public override void Open()
         {

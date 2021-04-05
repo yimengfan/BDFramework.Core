@@ -19,7 +19,7 @@ namespace BDFramework.UFlux.UFluxTest004
     /// 可以基于这个做任何逻辑，
     /// 不强制使用flux
     /// </summary>
-    [UI((int)  WinEnum.Win_Demo6_Test004, "Windows/UFlux/demo004/Window_SimpleWindow")]
+    [UI((int) WinEnum.Win_Demo6_Test004, "Windows/UFlux/demo004/Window_SimpleWindow")]
     public class Window_SimpleDemo004 : AWindow
     {
         public Window_SimpleDemo004(string path) : base(path)
@@ -30,16 +30,6 @@ namespace BDFramework.UFlux.UFluxTest004
         {
         }
 
-        [TransformPath("btn_OpenSubWin")]
-        private Button btn_OpenSubWin;
-
-        [TransformPath("btn_CloseSubWin")]
-        private Button btn_CloseSubWin;
-
-        [TransformPath("btn_SendMessage")]
-        private Button btn_SndMessage;
-        [TransformPath("btn_Close")]
-        private Button btn_close;
         [TransformPath("Content")]
         private Text Content;
 
@@ -48,27 +38,33 @@ namespace BDFramework.UFlux.UFluxTest004
             base.Init();
 
             //注册子窗口
-            var trans = this.Transform.Find("SubWindow");
-            RegisterSubWindow(new SubWindow_Demo004(trans));
-            btn_close.onClick.AddListener((() => this.Close()));
-            //点击测试 
-            btn_OpenSubWin.onClick.AddListener(() =>
-            {
-                GetSubWindow<SubWindow_Demo004>().Open();
-            });
+            RegisterSubWindow(new SubWindow_Demo004(this.Transform.Find("SubWindow")));
+        }
 
-            btn_CloseSubWin.onClick.AddListener(() =>
-            {
-                GetSubWindow<SubWindow_Demo004>().Close();
-            });
+        [TransformPath("btn_OpenSubWin")]
+        private void btn_OpenSubWin()
+        {
+            GetSubWindow<SubWindow_Demo004>().Open();
+        }
 
-            btn_SndMessage.onClick.AddListener(() =>
-            {
-                var msg = new UIMessageData(WinMsg.testMsg, "我是一个测试消息");
+        [TransformPath("btn_CloseSubWin")]
+        private void btn_CloseSubWin()
+        {
+            GetSubWindow<SubWindow_Demo004>().Close();
+        }
 
-                UIManager.Inst.SendMessage( WinEnum.Win_Demo6_Test004, msg);
-                
-            });
+        [TransformPath("btn_SendMessage")]
+        private void btn_SndMessage()
+        {
+            var msg = new UIMessageData(WinMsg.testMsg, "我是一个测试消息");
+
+            UIManager.Inst.SendMessage(WinEnum.Win_Demo6_Test004, msg);
+        }
+
+        [TransformPath("btn_Close")]
+        private void btn_close()
+        {
+            this.Close();
         }
 
 
