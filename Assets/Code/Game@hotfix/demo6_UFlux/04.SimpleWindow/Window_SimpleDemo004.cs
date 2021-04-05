@@ -20,13 +20,13 @@ namespace BDFramework.UFlux.UFluxTest004
     /// 不强制使用flux
     /// </summary>
     [UI((int)  WinEnum.Win_Demo6_Test004, "Windows/UFlux/demo004/Window_SimpleWindow")]
-    public class Window_Simple : AWindow
+    public class Window_SimpleDemo004 : AWindow
     {
-        public Window_Simple(string path) : base(path)
+        public Window_SimpleDemo004(string path) : base(path)
         {
         }
 
-        public Window_Simple(Transform transform) : base(transform)
+        public Window_SimpleDemo004(Transform transform) : base(transform)
         {
         }
 

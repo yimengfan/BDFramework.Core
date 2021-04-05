@@ -8,7 +8,7 @@ namespace BDFramework.UFlux.Test
     /// <summary>
     /// Reducer 函数处理的集合
     /// </summary>
-    public class Reducer_Demo06 : AReducers<S_HeroData>
+    public class Reducer_Demo06 : AReducers<Server_HeroData>
     {
         public enum Reducer06
         {
@@ -35,12 +35,12 @@ namespace BDFramework.UFlux.Test
         /// <param name="old"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        async  private Task<S_HeroData>RequestServer(S_HeroData old, object @param)
+        async  private Task<Server_HeroData>RequestServer(Server_HeroData old, object @param)
         {
             var api = url + "api/bdframework/getherodata";
             WebClient  wc=new WebClient();
             string ret = await  wc.DownloadStringTaskAsync(api);
-            var hero = JsonMapper.ToObject<S_HeroData>(ret);
+            var hero = JsonMapper.ToObject<Server_HeroData>(ret);
             return hero;
         }
     }

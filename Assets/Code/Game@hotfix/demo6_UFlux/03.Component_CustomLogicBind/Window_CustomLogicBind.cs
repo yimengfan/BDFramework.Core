@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [UI((int) WinEnum.Win_Demo6_Test003, "Windows/UFlux/demo003/Window_FluxTest003")]
-public class Window_CustomLogicBind : AWindow<PropsDemo003Window>
+public class Window_CustomLogicBind : AWindow<Props_Demo003Window>
 {
     public Window_CustomLogicBind(string path) : base(path)
     {
@@ -37,7 +37,7 @@ public class Window_CustomLogicBind : AWindow<PropsDemo003Window>
             this.Props.StarItems.Clear();
             for (int i = 0; i < stars; i++)
             {
-                var item = new PropsDemo003Item();
+                var item = new Props_Demo003Item();
                 item.EquipmentIconPath = "Image/1";
                 item.EquipmentName     = "小新" + i + "号";
                 item.SetAllPropertyChanged();
@@ -52,7 +52,7 @@ public class Window_CustomLogicBind : AWindow<PropsDemo003Window>
         {
             int i = Random.Range(1, 6);
 
-            this.Props.OneNodeChange                   = new PropsDemo003Item();
+            this.Props.OneNodeChange                   = new Props_Demo003Item();
             this.Props.OneNodeChange.EquipmentIconPath = "Image/"     + i;
             this.Props.OneNodeChange.EquipmentName     = "小新被刷新:" + i;
             this.Props.OneNodeChange.SetAllPropertyChanged();

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Game.demo6_UFlux._05.NodeHelper
 {
-    public class PropsDemo003Item : PropsBase
+    public class Props_Demo003Item : PropsBase
     {
         [TransformPath("Img_Star")]
         [ComponentValueBind(typeof(Image),nameof(Image.overrideSprite))]

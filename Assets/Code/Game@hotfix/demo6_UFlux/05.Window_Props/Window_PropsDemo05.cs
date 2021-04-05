@@ -27,14 +27,18 @@ namespace BDFramework.UFlux.Test
     }
 
 
+    /// <summary>
+    /// Props=》Windows 的演示
+    /// 设置props 就能刷新Windows
+    /// </summary>
     [UI((int) WinEnum.Win_Demo6_Test005, "Windows/UFlux/demo005/Window_PropsDemo")]
-    public class Window_PropsDemo : AWindow<P_HeroData>
+    public class Window_PropsDemo05 : AWindow<P_HeroData>
     {
-        public Window_PropsDemo(string path) : base(path)
+        public Window_PropsDemo05(string path) : base(path)
         {
         }
 
-        public Window_PropsDemo(Transform transform) : base(transform)
+        public Window_PropsDemo05(Transform transform) : base(transform)
         {
         }
 
@@ -70,7 +74,7 @@ namespace BDFramework.UFlux.Test
                     this.Props.HpColor = Color.blue;
                 }
 
-                this.CommitProps();
+                this.CommitProps(true);
             });
         }
     }

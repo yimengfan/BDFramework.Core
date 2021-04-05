@@ -1,11 +1,32 @@
 ﻿using BDFramework.UFlux.Contains;
 using BDFramework.UFlux.Reducer;
+using BDFramework.UFlux.View.Props;
 using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace BDFramework.UFlux.Test
 {
+    /// <summary>
+    /// 这里是渲染状态，用以描述页面渲染
+    /// </summary>
+    public class P_HeroData2: PropsBase
+    {
+        
+        [TransformPath("Hero/Content/t_Name")]
+        [ComponentValueBind(typeof(Text),nameof(Text.text))]
+        public string Name;
+        [TransformPath("Hero/Content/t_Hp")]
+        [ComponentValueBind(typeof(Text),nameof(Text.text))]
+        public int Hp;
+        [TransformPath("Hero/Content/t_MaxHp")]
+        [ComponentValueBind(typeof(Text),nameof(Text.text))]
+        public int MaxHp;
+        [TransformPath("Hero/Content/t_Hp")]
+        [ComponentValueBind(typeof(Text),nameof(Text.color))]
+        public Color HpColor;
+    }
+    
     [UI((int)  WinEnum.Win_Demo6_Test006, "Windows/UFlux/demo006/Window_Reducer")]
     public class Window_Demo06: AWindow<P_HeroData2>
     {
@@ -16,7 +37,7 @@ namespace BDFramework.UFlux.Test
         [TransformPath("btn_RequestNet")]
         private Button btn_RequestNet;
 
-        private Store<S_HeroData> store;
+        private Store<Server_HeroData> store;
         
         public override void Init()
         {
@@ -28,8 +49,7 @@ namespace BDFramework.UFlux.Test
             {
                 //刷新
                 StateToProps(s);
-                //提交修改
-                this.CommitProps();
+
             });
             
             this.btn_RequestNet.onClick.AddListener(() =>
@@ -43,7 +63,7 @@ namespace BDFramework.UFlux.Test
         /// 这个一定得重写
         /// </summary>
         /// <returns></returns>
-        public  AReducers<S_HeroData> CreateReducers()
+        public  AReducers<Server_HeroData> CreateReducers()
         {
             return new Reducer_Demo06();
         }
@@ -55,23 +75,23 @@ namespace BDFramework.UFlux.Test
         /// 自行处理
         /// 需要注意的是，不要刷新整个页面，只要刷新部分更新的数值即可
         /// </summary>
-        /// <param name="s"></param>
-        public void StateToProps(S_HeroData s)
+        /// <param name="server"></param>
+        public void StateToProps(Server_HeroData server)
         {
             //下面逻辑 可以写个函数 批量判断
-            if (s.Name != null&& this.Props.Name != s.Name)
+            if (server.Name != null&& this.Props.Name != server.Name)
             {
-                this.Props.Name = s.Name;
+                this.Props.Name = server.Name;
                 this.Props.SetPropertyChange(nameof(P_HeroData2.Name));
             }
             
-            if ( this.Props.Hp != s.Hp)
+            if ( this.Props.Hp != server.Hp)
             {
-                this.Props.Hp = s.Hp;
+                this.Props.Hp = server.Hp;
                 this.Props.SetPropertyChange(nameof(P_HeroData2.Hp));
                 //这里表现出State不一定跟Props完全一样，
                 //有些ui的渲染状态，需要根据State算出来
-                if (s.Hp < 50)
+                if (server.Hp < 50)
                 {
                     this.Props.HpColor= Color.red;
                 }
@@ -81,13 +101,14 @@ namespace BDFramework.UFlux.Test
                 }
                 this.Props.SetPropertyChange(nameof(P_HeroData2.HpColor));
             }
-            if (this.Props.MaxHp != s.MaxHp)
+            if (this.Props.MaxHp != server.MaxHp)
             {
-                this.Props.MaxHp = s.MaxHp;
+                this.Props.MaxHp = server.MaxHp;
                 this.Props.SetPropertyChange(nameof( P_HeroData2.MaxHp));
             }
             
-
+            //提交修改
+            this.CommitProps();
         }
     }
 }
