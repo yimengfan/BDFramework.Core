@@ -9,7 +9,7 @@ namespace BDFramework.UFlux
     /// <summary>
     /// 这里是UnityEngine的UI Button适配器
     /// </summary>
-    [ComponentBindAdaptor(nameof(Button))]
+    [ComponentBindAdaptor(typeof(Button))]
     public class ComponentBindAdaptorButton : AComponentBindAdaptor
     {
         public override void Init()

@@ -24,7 +24,7 @@ namespace Game.demo6_UFlux._05.NodeHelper
         /// 值转换成执行逻辑
         /// </summary>
         [TransformPath("Equipments")]
-        [ComponentValueBind(nameof(TransformChild),nameof(TransformChild.ShowHideChildByNumber))]
+        [ComponentValueBind(typeof(TransformChild),nameof(TransformChild.ShowHideChildByNumber))]
         public int value;
     }
 }

@@ -14,7 +14,7 @@ namespace  BDFramework.UFlux
     /// <summary>
     /// 自定义逻辑的适配器
     /// </summary>
-    [ComponentBindAdaptor(nameof(TransformChild))]
+    [ComponentBindAdaptor(typeof(TransformChild))]
     public class CustomLogicBindAdaptorTransformChild : AComponentBindAdaptor
     {
         

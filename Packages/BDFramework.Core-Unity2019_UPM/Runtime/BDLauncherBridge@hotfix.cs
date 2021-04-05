@@ -32,8 +32,6 @@ public class BDLauncherBridge
             {
                 hotfixTypes = mainProjectTypes;
             }
-
-            BDebug.Log("缺少游戏逻辑域的type！");
         }
 
 
@@ -57,7 +55,7 @@ public class BDLauncherBridge
                 if (!ILRuntimeHelper.UIComponentTypes.ContainsKey(type.Name))
                 {
                     //因为Attribute typeof（Type）后无法获取fullname
-                    ILRuntimeHelper.UIComponentTypes[type.Name] = type;
+                    ILRuntimeHelper.UIComponentTypes[type.FullName] = type;
                 }
                 else
                 {

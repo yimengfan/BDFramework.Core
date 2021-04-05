@@ -106,7 +106,8 @@ namespace BDFramework
         private void OnValidate()
         {
             var asset = this.gameObject.GetComponent<BDLauncher>().ConfigText;
-            GenGameConfig("Assets/Scenes/Config", asset.name);
+            var path = AssetDatabase.GetAssetPath(asset.GetInstanceID());
+            GenGameConfig(Path.GetDirectoryName(path), asset.name);
         }
 
         
@@ -124,8 +125,6 @@ namespace BDFramework
             
             var launcher = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
             var curFilePath = AssetDatabase.GetAssetPath(launcher.ConfigText.GetInstanceID());
-            Debug.Log(curFilePath);
-            
             var direct = Path.GetDirectoryName(curFilePath);
             var fs = Directory.GetFiles(direct, "*.json", SearchOption.AllDirectories)
                 .Select((s)=>s.Replace("\\","/")).ToList();

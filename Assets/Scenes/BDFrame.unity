@@ -1020,7 +1020,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ConfigText
       value: 
-      objectReference: {fileID: 4900000, guid: dac4b223fdff90143ac6a3d1980e120b, type: 3}
+      objectReference: {fileID: 4900000, guid: 07a3bc21edb3c584b9883497db29bfcd, type: 3}
     - target: {fileID: 8458203362226980180, guid: f2a6a38608360fa4bb89aacd441e2b97,
         type: 3}
       propertyPath: ConfigContent

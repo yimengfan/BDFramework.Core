@@ -29,7 +29,7 @@ namespace BDFramework.UFlux
                 propMap = new Dictionary<string, MemberInfo>();
                 foreach (var mi in list)
                 {
-                    var attr = mi.GetAttributeInILRuntime<TransformPath>();
+                    var attr = mi.GetAttributeInILRuntime<TransformPathAttribute>();
                     if (attr!=null)
                     {
                         propMap[mi.Name] = mi;

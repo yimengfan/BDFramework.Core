@@ -3,7 +3,7 @@ using BDFramework.UFlux;
 using BDFramework.UFlux.View.Props;
 using UnityEngine.UI;
 
-namespace BDFramework.UFlux.Demo_ScrollRect
+namespace BDFramework.UFlux
 {
     public class ScrollRectAdaptor
     {

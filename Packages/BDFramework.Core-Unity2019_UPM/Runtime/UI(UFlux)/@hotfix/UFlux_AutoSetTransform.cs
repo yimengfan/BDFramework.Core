@@ -35,7 +35,7 @@ namespace BDFramework.UFlux
 
                 //1.自动获取节点
                 //TODO 热更层必须这样获取属性
-                var attr = f.GetAttributeInILRuntime<TransformPath>(); //as Attribute[];
+                var attr = f.GetAttributeInILRuntime<TransformPathAttribute>(); //as Attribute[];
                 if (attr!=null)
                 {
                     //获取节点,并且获取组件

@@ -8,7 +8,7 @@ namespace  BDFramework.UFlux
     /// <summary>
     /// 这里是UnityEngine的UI Image适配器
     /// </summary>
-    [ComponentBindAdaptor(nameof(Image))]
+    [ComponentBindAdaptor(typeof(Image))]
     public class ComponentBindAdaptorImage : AComponentBindAdaptor
     {
         public override void Init()

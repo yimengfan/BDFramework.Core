@@ -25,7 +25,7 @@ namespace BDFramework.UFlux
     /// <summary>
     /// 
     /// </summary>
-    [ComponentBindAdaptor(nameof(UFluxAutoLogic))]
+    [ComponentBindAdaptor(typeof(UFluxAutoLogic))]
     public class CBA_UFluxAutoLogic : AComponentBindAdaptor
     {
         public override void Init()

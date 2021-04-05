@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using BDFramework.UFlux.Demo_ScrollRect;
 using BDFramework.UFlux.View.Props;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +11,7 @@ namespace BDFramework.UFlux
     /// 这里是UnityEngine的UI Scroll适配器
     /// 这里不适合无限滚动列表设计，只是做演示demo
     /// </summary>
-    [ComponentBindAdaptor(nameof(ScrollRectAdaptor))]
+    [ComponentBindAdaptor(typeof(ScrollRectAdaptor))]
     public class ComponentBindAdaptorScrollRect : AComponentBindAdaptor
     {
         public override void Init()

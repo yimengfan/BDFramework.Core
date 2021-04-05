@@ -13,26 +13,42 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 字段名
         /// </summary>
-        public string FieldName { get;  private set; }
+        public string FieldName { get; private set; }
+
         /// <summary>
         /// 绑定UI类
         /// </summary>
-        public Type UIType;
+        public Type UIComponentType;
+
         /// <summary>
         /// 构造函数
         /// 热更Attr不支持基础类型以外
         /// </summary>
-        /// <param name="typeName"></param>
+        /// <param name="uiType"></param>
         /// <param name="fieldName"></param>
-        public ComponentValueBindAttribute(string typeName, string fieldName)
+        public ComponentValueBindAttribute(Type uiType, string fieldName)
         {
             this.FieldName = fieldName;
-            if (!ILRuntimeHelper.UIComponentTypes.TryGetValue(typeName, out UIType))
+            //这里故意让破坏优化 ilrbug
+            var ot = (object) uiType;
+            string typeFullname = "";
+            if (ot is TypeReference)
             {
-                BDebug.LogError("【Uflux】type is null:" +typeName);
+                typeFullname = ((TypeReference) ot).FullName;
+            }
+            else
+            {
+                typeFullname = uiType.FullName;
             }
             
 
+            var type = ComponentBindAdaptorManager.Inst.GetBindComponentType(typeFullname);
+            this.UIComponentType = type;
+
+            if (type == null)
+            {
+                BDebug.LogError("ComponentBindAdaptor不存在:" +  typeFullname);
+            }
         }
     }
 }
