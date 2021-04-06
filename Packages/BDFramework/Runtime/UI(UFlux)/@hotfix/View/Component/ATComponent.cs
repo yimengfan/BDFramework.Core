@@ -55,11 +55,6 @@ namespace BDFramework.UFlux
             {
                 this.Load();
             }
-            else
-            {
-                this.AsyncLoad();
-            }
-            
         }
         
         /// <summary>

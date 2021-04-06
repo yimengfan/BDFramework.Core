@@ -8,12 +8,7 @@ namespace BDFramework.UFlux.UFluxTest004
     {
         testMsg = 0,
     }
-
-    public enum SubWindow
-    {
-        testSubWindows001
-    }
-
+    
     /// <summary>
     /// 这个是最简单的窗口模型，
     /// 可以基于这个做任何逻辑，

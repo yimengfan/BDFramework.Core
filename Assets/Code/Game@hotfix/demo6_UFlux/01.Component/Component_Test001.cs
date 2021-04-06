@@ -22,8 +22,8 @@ namespace Game.demo6_UFlux
     }
     
     //这里是Component标签，用以创建时候进行绑定Transform
-    [Component("Windows/UFlux/demo001/Component_test01")] 
-    public class ComponentTest001 : ATComponent<Props_Test001>
+    [Component("Windows/UFlux/demo001/Component_test01",false)] 
+    public class Component_Test001 : ATComponent<Props_Test001>
     {
         public override void Open()
         {
@@ -52,9 +52,7 @@ namespace Game.demo6_UFlux
                 //这里对当前数据进行赋值
                 this.Props.headImg = "Image/" + (int)Random.Range(1f, 10.9f);
                 this.Props.content = contentList[(int) Random.Range(0f, contentList.Count)];
-                //设置属性修改，
-                //可以不设置，但是默认的对比算法，每次都要反射 对比所有值，效率很差
-                //遇到大规模数据，嵌套，效率会更差
+                //设置属性修改
                 this.Props.SetPropertyChange(nameof(this.Props.headImg));
                 this.Props.SetPropertyChange(nameof(this.Props.content));
                 //提交修改数据
