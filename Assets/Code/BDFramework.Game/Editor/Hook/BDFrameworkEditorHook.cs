@@ -1,4 +1,5 @@
 ﻿using BDFramework.Editor.EditorLife;
+using ILRuntime.Runtime.Generated;
 using UnityEditor;
 
 namespace Game.Editor
@@ -44,7 +45,7 @@ namespace Game.Editor
         /// </summary>
         static private void RegisterAssembly()
         {
-            var logicAssembly = typeof(MainGameStart).Assembly;
+            var logicAssembly  = typeof(ILRuntimeDelegateHelper).Assembly;
             var editorAssembly = typeof(BDFrameworkEditorHook).Assembly;
             BDFrameEditorLife.RegisterMainProjectAssembly(logicAssembly, editorAssembly);
         }

@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using BDFramework.Sql;
 using BDFramework.UnitTest;
 using BDFramework.UnitTest.Test;
-using Game.Data;
 using LitJson;
-using SQLite4Unity3d;
 using UnityEngine;
 
 namespace Tests

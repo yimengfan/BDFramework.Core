@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ILRuntime.Runtime.Generated
 {
-    class ManualCLRBindings
+    public class ManualCLRBindings
     {
         /// <summary>
         /// Initialize the CLR binding, please invoke this AFTER CLR Redirection registration
@@ -26,7 +26,6 @@ namespace ILRuntime.Runtime.Generated
         /// </summary>
         public static void Shutdown(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
-            
         }
     }
 }

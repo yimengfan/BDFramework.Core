@@ -122,10 +122,16 @@ namespace BDFramework
         static public void ONGUI_SelcectConfig()
         {
             GUI.color = Color.green;
+
+            var goBDFrame = GameObject.Find("BDFrame");
+            if (!goBDFrame)
+            {
+                return;
+            }
             
-            var launcher = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
+            var launcher    = goBDFrame.GetComponent<BDLauncher>();
             var curFilePath = AssetDatabase.GetAssetPath(launcher.ConfigText.GetInstanceID());
-            var direct = Path.GetDirectoryName(curFilePath);
+            var direct      = Path.GetDirectoryName(curFilePath);
             var fs = Directory.GetFiles(direct, "*.json", SearchOption.AllDirectories)
                 .Select((s)=>s.Replace("\\","/")).ToList();
             var configNames = fs.Select((s) => Path.GetFileName(s)).ToArray();
@@ -175,8 +181,14 @@ namespace BDFramework
         /// <param name="platform"></param>
         static public void GenGameConfig(string str, string filename)
         {
+            var goBDFrame = GameObject.Find("BDFrame");
+            if (!goBDFrame)
+            {
+                return;
+            }
+            
             //config
-            var config = GameObject.Find("BDFrame")?.GetComponent<Config>();
+            var config = goBDFrame.GetComponent<Config>();
             if (config == null)
             {
                 return;
@@ -190,7 +202,7 @@ namespace BDFramework
             //AssetDatabase.Refresh();
             //
             var content = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
-            var bdconfig = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
+            var bdconfig = goBDFrame.GetComponent<BDLauncher>();
             bdconfig.ConfigText = content;
         }
 
