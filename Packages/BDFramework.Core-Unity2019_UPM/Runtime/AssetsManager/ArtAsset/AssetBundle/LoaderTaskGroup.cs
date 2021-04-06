@@ -101,7 +101,9 @@ namespace BDFramework.ResourceMgr
         public void DoNextTask()
         {
             if (isStop)
+            {
                 return;
+            }
             //获取一个任务
             while (taskList.Count > 0 && curDoTaskConter < ASYNC_TASK_NUM)
             {
@@ -113,7 +115,7 @@ namespace BDFramework.ResourceMgr
                     taskList.Add(task);
                     continue;
                 }
-
+                
                 //主资源才加载
                 IEnumeratorTool.StartCoroutine(IE_AsyncLoadAssetbundle(task, (ret, obj) =>
                 {
@@ -135,11 +137,7 @@ namespace BDFramework.ResourceMgr
             }
         }
 
-        /// <summary>
-        /// 完成任务数
-        /// </summary>
-        private int taskCompleteCounter = 0;
-
+        
         /// <summary>
         /// 一个任务完成的回调
         /// </summary>
@@ -151,11 +149,9 @@ namespace BDFramework.ResourceMgr
             {
                 return;
             }
-
-            //任务计数++
-            taskCompleteCounter++;
+            
             //判断任务进度
-            if (taskCompleteCounter < totalTaskNum)
+            if (assetPath != MainAssetName)
             {
                 this.DoNextTask();
             }
