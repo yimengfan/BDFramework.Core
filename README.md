@@ -1,4 +1,4 @@
-<img src="./BDTemp/Img/logo.png" width = "350" height = "120" div align=right />  
+<img src="./BDTemp/Img/logo.png" width = "80%" height = "80%" div align=center />  
 
 # 简介(Introduction)
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries  
@@ -30,8 +30,6 @@ Note: All bug fixes and new features will be submitted to the Debug branch first
 The following charging plug-ins are used. Please purchase and download them yourself.  
 <br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
 打包需要配置为：EditorOnly模式  
-UPM Setting:  
-<img src="./BDTemp/Img/upm.png" width = "300" height = "200" div align=center />  
 
 ## v1.1版本计划(v1.0 Plan)
 ### [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)  
