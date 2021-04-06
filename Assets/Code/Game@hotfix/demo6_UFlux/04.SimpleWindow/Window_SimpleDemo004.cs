@@ -41,19 +41,19 @@ namespace BDFramework.UFlux.UFluxTest004
             RegisterSubWindow(new SubWindow_Demo004(this.Transform.Find("SubWindow")));
         }
 
-        [TransformPath("btn_OpenSubWin")]
+        [ButtonOnclick("btn_OpenSubWin")]
         private void btn_OpenSubWin()
         {
             GetSubWindow<SubWindow_Demo004>().Open();
         }
 
-        [TransformPath("btn_CloseSubWin")]
+        [ButtonOnclick("btn_CloseSubWin")]
         private void btn_CloseSubWin()
         {
             GetSubWindow<SubWindow_Demo004>().Close();
         }
 
-        [TransformPath("btn_SendMessage")]
+        [ButtonOnclick("btn_SendMessage")]
         private void btn_SndMessage()
         {
             var msg = new UIMessageData(WinMsg.testMsg, "我是一个测试消息");
@@ -61,7 +61,7 @@ namespace BDFramework.UFlux.UFluxTest004
             UIManager.Inst.SendMessage(WinEnum.Win_Demo6_Test004, msg);
         }
 
-        [TransformPath("btn_Close")]
+        [ButtonOnclick("btn_Close")]
         private void btn_close()
         {
             this.Close();
