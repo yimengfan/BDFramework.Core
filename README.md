@@ -1,4 +1,5 @@
-<img src="./BDTemp/Img/logo.png" width = "50%" height = "50%" div align=center />  
+<img src="./BDTemp/Img/logo.png" width = "80%" height = "80%" div align=center />  
+
 # 简介(Introduction)
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries  
 
