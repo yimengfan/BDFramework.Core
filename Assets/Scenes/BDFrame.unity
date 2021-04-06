@@ -869,6 +869,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartPage
       objectReference: {fileID: 0}
+    - target: {fileID: 4651398941402966389, guid: 3a48620e3cd22904dbd21ff328377ccf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a48620e3cd22904dbd21ff328377ccf, type: 3}
 --- !u!1001 &4547825529114816998
@@ -878,11 +883,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1440034326}
     m_Modifications:
-    - target: {fileID: 2884646170973464134, guid: 775fad6a3186592448e34c0af68e119c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2884646171612803760, guid: 775fad6a3186592448e34c0af68e119c,
         type: 3}
       propertyPath: m_Pivot.x
@@ -992,11 +992,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MainLoading
-      objectReference: {fileID: 0}
-    - target: {fileID: 2884646171612803763, guid: 775fad6a3186592448e34c0af68e119c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 775fad6a3186592448e34c0af68e119c, type: 3}
