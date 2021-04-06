@@ -1,10 +1,6 @@
 ﻿using BDFramework;
 using BDFramework.ResourceMgr;
-using BDFramework.Sql;
 using BDFramework.UnitTest;
-using Game.Data;
-using LitJson;
-using UnityEngine;
 
 namespace Code.BDFramework.UnitTest
 {

@@ -16,11 +16,11 @@ namespace Game.demo_EventManager
         {
             //这里是每次创建的一个，
             //实际使用中,使用者可以对创建的对象群体进行管理，如池化 等
-            var _event = CreateInstance<IDemoEvent>((int)@enum);
+            var @event = CreateInstance<IDemoEvent>((int)@enum);
 
-            if (_event != null)
+            if (@event != null)
             {
-                _event.Do();
+                @event.Do();
             }
             
         }

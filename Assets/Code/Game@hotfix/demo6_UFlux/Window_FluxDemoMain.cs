@@ -43,7 +43,7 @@ namespace Game.demo6_UFlux
                 Debug.Log("Flux demo1,点击这里追踪代码!");
                 
                 //可以F12查看Test01Component的代码
-                var com = new Component_Test001();
+                var com = new ComponentTest001();
                 //这里是同步加载 
                 if (com.IsLoad)
                 {

@@ -13,33 +13,18 @@ using UnityEngine.UI;
 /// index 
 /// resource 目录
 /// </summary>
-[UI((int)WinEnum.Win_Demo1,"Windows/window_demo1") ]
+[UI((int) WinEnum.Win_Demo1, "Windows/window_demo1")]
 public class Window_Demo1 : AWindow
 {
-    [TransformPath("Button")]
-    private Button btn_01;
-
-
-    
     //[]
     public Window_Demo1(string path) : base(path)
     {
-        var c = new Camera();
     }
 
-    public override void Init()
+    [ButtonOnclick("Button")]
+    private void btn_01()
     {
-        base.Init();
-
-
-        //
-        btn_01.onClick.AddListener(() =>
-        {
-           this.Close();
-           ScreenViewManager.Inst.MainLayer.BeginNavTo(ScreenViewEnum.Main);
-        });
-        
-
+        this.Close();
+        ScreenViewManager.Inst.MainLayer.BeginNavTo(ScreenViewEnum.Main);
     }
-
 }

@@ -1,36 +1,44 @@
-﻿using BDFramework.UFlux;
+﻿using System.Collections.Generic;
+using BDFramework.UFlux;
 using BDFramework.UFlux.item;
+using BDFramework.UFlux.View.Props;
 using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.demo6_UFlux
 {
+    
+    /// <summary>
+    /// props
+    /// </summary>
+    public class Props_WindowTest002 : PropsBase
+    {
+        [TransformPath("ScrollView")]
+        [ComponentValueBind(typeof(ScrollRectAdaptor), nameof(ScrollRectAdaptor.Contents))]//数据赋值对象
+        public List<Props_ItemTest002>  CotentList =new List<Props_ItemTest002>();
+    }
+    
+    /// <summary>
+    /// 窗口2测试
+    /// </summary>
     [UI((int)WinEnum.Win_Demo6_Test002,"Windows/UFlux/demo002/Window_FluxTest002")]
     public class Window_Test002 : AWindow<Props_WindowTest002>
     {
         public Window_Test002(string path) : base(path)
         {
         }
-
-        [TransformPath("btn_AddItem")]
-        private Button btn_AddItem;
-        [TransformPath("btn_RemoveItem")]
-        private Button btn_RemoveItem;
-        [TransformPath("btn_Close")]
-        private Button btn_Close;
+        
         public override void Init()
         {
             base.Init();
-            btn_AddItem.onClick.AddListener(Onclick_AddItem);
-            btn_RemoveItem.onClick.AddListener(Onclick_RemoveItem);
-            btn_Close.onClick.AddListener(Onclick_Close);
         }
 
 
         /// <summary>
         /// 点击事件
         /// </summary>
+        [ButtonOnclick("btn_AddItem")]
         private void Onclick_AddItem()
         {
             var item = new Props_ItemTest002();
@@ -56,6 +64,7 @@ namespace Game.demo6_UFlux
         /// <summary>
         /// 移除Item
         /// </summary>
+        [ButtonOnclick("btn_RemoveItem")]
         private void Onclick_RemoveItem()
         {
             if(this.Props.CotentList.Count==0)return;
@@ -69,6 +78,7 @@ namespace Game.demo6_UFlux
         /// <summary>
         /// 关闭窗口
         /// </summary>
+        [ButtonOnclick("btn_Close")]
         private void Onclick_Close()
         {
             this.Close();

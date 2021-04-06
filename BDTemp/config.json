@@ -23,7 +23,8 @@
   "BuildAssetConfig" : {
     "AESCode" : "bdframe$#@!@#",
     "IsUseHashName" : false,
-    "AssetBundleFileServerUrl" : "http://127.0.0.1:20000"
+    "AssetBundleFileServerUrl" : "http://127.0.0.1:20000",
+    "IsAutoBuildDll"           : true
   },
-  "savepath"         : "E:/BDFramework.Core/BDTemp/config.json"
+  "savepath"         : "F:/BDFramework.Core/BDTemp/config.json"
 }

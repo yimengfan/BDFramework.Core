@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44631976, g: 0.49611664, b: 0.5744803, a: 1}
+  m_IndirectSpecularColor: {r: 0.44664264, g: 0.49656898, b: 0.5749908, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -322,132 +322,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1933055363}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &617214992
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 617214994}
-  - component: {fileID: 617214995}
-  - component: {fileID: 617214993}
-  - component: {fileID: 617214996}
-  m_Layer: 0
-  m_Name: BDFrame
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &617214993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617214992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76df6a7acb4be174683f07772a347e37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConfigContent: {fileID: 4900000, guid: 517ff72e71a574546a91d76ad65770c9, type: 3}
---- !u!4 &617214994
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617214992}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &617214995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617214992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -614279893, guid: 3b8ad62e537bc86418adf879fac81ef0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsLog: 1
---- !u!114 &617214996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617214992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afd5c6865487ed14f9bfe24a5c88e67a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: Data
-      Entry: 7
-      Data: 0|BDFramework.GameConfig, Assembly-CSharp
-    - Name: CodeRoot
-      Entry: 3
-      Data: 0
-    - Name: SQLRoot
-      Entry: 3
-      Data: 0
-    - Name: ArtRoot
-      Entry: 3
-      Data: 2
-    - Name: CustomArtRoot
-      Entry: 1
-      Data: 
-    - Name: CodeRunMode
-      Entry: 3
-      Data: 0
-    - Name: AssetBundleManagerVersion
-      Entry: 3
-      Data: 1
-    - Name: IsDebuggerILRuntime
-      Entry: 5
-      Data: false
-    - Name: IsExcuteHotfixUnitTest
-      Entry: 5
-      Data: false
-    - Name: FileServerUrl
-      Entry: 1
-      Data: 192.168.8.68
-    - Name: GateServerIp
-      Entry: 1
-      Data: 
-    - Name: Port
-      Entry: 3
-      Data: 0
-    - Name: IsHotfix
-      Entry: 5
-      Data: false
-    - Name: IsNeedNet
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-  GameConfig: {fileID: 0}
 --- !u!1 &865066839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,3 +1009,72 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4547825529114816998}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8458203361752396103
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8458203362226980181, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980181, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980181, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980181, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980181, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980181, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980181, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980181, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980181, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980181, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980181, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458203362226980183, guid: f2a6a38608360fa4bb89aacd441e2b97,
+        type: 3}
+      propertyPath: m_Name
+      value: BDFrame
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f2a6a38608360fa4bb89aacd441e2b97, type: 3}

@@ -2,7 +2,7 @@ using BDFramework.Mgr;
 
 namespace Game.demo_EventManager
 {
-    public class DemoEventAttribute :  ManagerAtrribute
+    public class DemoEventAttribute :  ManagerAttribute
     {
         
         

@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using BDFramework.Sql;
 using BDFramework.UnitTest;
-using Code.BDFramework.UnitTest.Test;
-using Game.Data;
+using BDFramework.UnitTest.Test;
 using LitJson;
-using SQLite4Unity3d;
 using UnityEngine;
 
 namespace Tests

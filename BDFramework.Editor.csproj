@@ -58,48 +58,48 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\ArtEditor\AssetBundleEditorToolsV2.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\ArtEditor\EditorWindow_GenAssetBundle.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\ArtEditor\ShaderCollection.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\SriptEditor\EditorWindow_ScriptBuildDll.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\SriptEditor\GenAdapter.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\SriptEditor\ScriptBuildTools.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\SriptEditor\StripCode.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\TableEditor\EditorWindow_Table.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\TableEditor\Excel2Code.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\TableEditor\Excel2SQLiteTools.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\TableEditor\ExcelImporter.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\TableEditor\ExcelTools.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\AssetEditor\TableEditor\ExcelUtility.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\BDEditorLife\ABDFrameEditorBehavior.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\BDEditorLife\BDFrameEditorBehaviorHelper.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\BDEditorLife\BDFrameEditorBehaviorTest.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\BDEditorLife\BDFrameEditorLife.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\CI\AssetUploadToServer.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\CI\BuildPipeline\BuildPipeLine_CI.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\CI\BuildPipeline\EditorBuildPackage.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\CI\EditorWindow_OnekeyBuildAsset.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Config\BDEditorConfig.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Config\BDFrameEditorConfigHelper.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Config\EditorWindow_BDConfig.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\DevOps\DevOps_SVN.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\EditorCoroutines\EditorCoroutines.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\EditorGUIHelper.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Menu\EditorMenu.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Menu\Menu.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\UIComponent\OverrideUIComponent.cs" />
-     <None Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Plugins\Roslyn\System.Numerics.Vectors.xml" />
-     <None Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\BDFramework.Editor.asmdef" />
-     <None Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Plugins\Roslyn\System.Collections.Immutable.xml" />
-     <None Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Plugins\Roslyn\Microsoft.CodeAnalysis.xml" />
-     <None Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Plugins\Roslyn\Microsoft.CodeAnalysis.CSharp.xml" />
-     <None Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Plugins\Roslyn\System.Threading.Tasks.Extensions.xml" />
-     <None Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Plugins\Roslyn\System.Reflection.Metadata.xml" />
-     <None Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Plugins\Roslyn\System.Memory.xml" />
-     <None Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Plugins\Roslyn\System.Buffers.xml" />
-     <None Include="F:\BDFramework.Core\Packages\BDFramework.Core-Unity2019_UPM\Editor\Plugins\Roslyn\System.Runtime.CompilerServices.Unsafe.xml" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\ArtEditor\AssetBundleEditorToolsV2.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\ArtEditor\EditorWindow_GenAssetBundle.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\ArtEditor\ShaderCollection.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\SriptEditor\EditorWindow_ScriptBuildDll.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\SriptEditor\GenAdapter.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\SriptEditor\ScriptBuildTools.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\SriptEditor\StripCode.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\TableEditor\EditorWindow_Table.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\TableEditor\Excel2Code.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\TableEditor\Excel2SQLiteTools.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\TableEditor\ExcelImporter.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\TableEditor\ExcelTools.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\AssetEditor\TableEditor\ExcelUtility.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\BDEditorLife\ABDFrameEditorBehavior.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\BDEditorLife\BDAssetImporterCache.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\BDEditorLife\BDFrameEditorBehaviorHelper.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\BDEditorLife\BDFrameEditorLife.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\CI\AssetUploadToServer.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\CI\BuildPipeline\BuildPipeLine_CI.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\CI\BuildPipeline\EditorBuildPackage.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\CI\EditorWindow_OnekeyBuildAsset.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Config\BDEditorConfig.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Config\BDFrameEditorConfigHelper.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Config\EditorWindow_BDConfig.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\DevOps\DevOps_SVN.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\EditorCoroutines\EditorCoroutines.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\EditorGUIHelper.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Menu\EditorMenu.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Menu\Menu.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\BDFramework\Editor\UIComponent\OverrideUIComponent.cs" />
+     <None Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Plugins\Roslyn\System.Numerics.Vectors.xml" />
+     <None Include="F:\BDFramework.Core\Packages\BDFramework\Editor\BDFramework.Editor.asmdef" />
+     <None Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Plugins\Roslyn\System.Collections.Immutable.xml" />
+     <None Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Plugins\Roslyn\Microsoft.CodeAnalysis.xml" />
+     <None Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Plugins\Roslyn\Microsoft.CodeAnalysis.CSharp.xml" />
+     <None Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Plugins\Roslyn\System.Threading.Tasks.Extensions.xml" />
+     <None Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Plugins\Roslyn\System.Reflection.Metadata.xml" />
+     <None Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Plugins\Roslyn\System.Memory.xml" />
+     <None Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Plugins\Roslyn\System.Buffers.xml" />
+     <None Include="F:\BDFramework.Core\Packages\BDFramework\Editor\Plugins\Roslyn\System.Runtime.CompilerServices.Unsafe.xml" />
  <Reference Include="ILRuntime">
  <HintPath>F:/BDFramework.Core/Library/ScriptAssemblies/ILRuntime.dll</HintPath>
  </Reference>
@@ -332,88 +332,88 @@
  <HintPath>F:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Excel">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Excel/Excel.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Excel/Excel.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.SharpZipLib">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
  </Reference>
  <Reference Include="Microsoft.CodeAnalysis.CSharp">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
  </Reference>
  <Reference Include="Microsoft.CodeAnalysis">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/Microsoft.CodeAnalysis.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/Microsoft.CodeAnalysis.dll</HintPath>
  </Reference>
  <Reference Include="System.Buffers">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Buffers.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Buffers.dll</HintPath>
  </Reference>
  <Reference Include="System.Collections.Immutable">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Collections.Immutable.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Collections.Immutable.dll</HintPath>
  </Reference>
  <Reference Include="System.Data.Common">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Data.Common.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Data.Common.dll</HintPath>
  </Reference>
  <Reference Include="System.Diagnostics.StackTrace">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Diagnostics.StackTrace.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Diagnostics.StackTrace.dll</HintPath>
  </Reference>
  <Reference Include="System.Diagnostics.Tracing">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Diagnostics.Tracing.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Diagnostics.Tracing.dll</HintPath>
  </Reference>
  <Reference Include="System.Globalization.Extensions">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Globalization.Extensions.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Globalization.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="System.IO.Compression">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.IO.Compression.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.IO.Compression.dll</HintPath>
  </Reference>
  <Reference Include="System.Memory">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Memory.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Memory.dll</HintPath>
  </Reference>
  <Reference Include="System.Net.Http">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Net.Http.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Net.Http.dll</HintPath>
  </Reference>
  <Reference Include="System.Net.Sockets">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Net.Sockets.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Net.Sockets.dll</HintPath>
  </Reference>
  <Reference Include="System.Numerics.Vectors">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Numerics.Vectors.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Numerics.Vectors.dll</HintPath>
  </Reference>
  <Reference Include="System.Reflection.Metadata">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Reflection.Metadata.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Reflection.Metadata.dll</HintPath>
  </Reference>
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="System.Runtime.Serialization.Primitives">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Runtime.Serialization.Primitives.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Runtime.Serialization.Primitives.dll</HintPath>
  </Reference>
  <Reference Include="System.Security.Cryptography.Algorithms">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Security.Cryptography.Algorithms.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Security.Cryptography.Algorithms.dll</HintPath>
  </Reference>
  <Reference Include="System.Security.SecureString">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Security.SecureString.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Security.SecureString.dll</HintPath>
  </Reference>
  <Reference Include="System.Text.Encoding.CodePages">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Text.Encoding.CodePages.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Text.Encoding.CodePages.dll</HintPath>
  </Reference>
  <Reference Include="System.Threading.Overlapped">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Threading.Overlapped.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Threading.Overlapped.dll</HintPath>
  </Reference>
  <Reference Include="System.Threading.Tasks.Extensions">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Threading.Tasks.Extensions.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Threading.Tasks.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="System.Xml.XPath.XDocument">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Editor/Plugins/Roslyn/System.Xml.XPath.XDocument.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
  <Reference Include="Debug.log">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework.Core-Unity2019_UPM/Plugins/Debug/Debug.log.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/BDFramework/Plugins/Debug/Debug.log.dll</HintPath>
  </Reference>
- <Reference Include="ILRuntim.Mono.Cecil">
- <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
+ <Reference Include="ILRuntime.Mono.Cecil">
+ <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.7/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Mdb">
- <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.7/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Pdb">
- <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.7/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>F:/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.4.3/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>

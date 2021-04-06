@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Reflection_PropertyInfo_Binding.cs.meta
+guid: 5f508882e44786d4f899fb2d32ada6cc
+=======
+guid: 96c528dfdc140ec4baa9dbcac8c89bc9
+>>>>>>> 5d25d1c29d3036398be7000d89253a1aa554fa48:Assets/Code/Game/ILRuntime/Binding/Analysis/System_Reflection_PropertyInfo_Binding.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
