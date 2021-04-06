@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Editor.EditorLife;
@@ -68,13 +69,20 @@ namespace BDFramework.Editor.TableData
         {
             //触发bd环境周期
             BDFrameEditorBehaviorHelper.OnBeginBuildSqlite();
-            
+
             var xlslFiles = GetAllConfigFiles();
             SqliteLoder.LoadOnEditor(ouptputPath, platform);
             {
                 foreach (var f in xlslFiles)
                 {
-                    Excel2SQLite(f);
+                    try
+                    {
+                        Excel2SQLite(f);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError("导表失败:" + f);
+                    }
                 }
             }
             SqliteLoder.Close();
@@ -82,7 +90,7 @@ namespace BDFramework.Editor.TableData
             EditorUtility.ClearProgressBar();
             //触发bd环境周期
             BDFrameEditorBehaviorHelper.OnEndBuildSqlite(ouptputPath);
-            AssetHelper.AssetHelper.GenPackageBuildInfo(ouptputPath,platform);
+            AssetHelper.AssetHelper.GenPackageBuildInfo(ouptputPath, platform);
             Debug.Log("导出Sqlite完成!");
         }
 
@@ -99,7 +107,7 @@ namespace BDFramework.Editor.TableData
         }
 
         #endregion
-        
+
         #region Json2Sql
 
         /// <summary>
@@ -113,8 +121,15 @@ namespace BDFramework.Editor.TableData
             {
                 foreach (var f in jsonFiles)
                 {
-                    string content = File.ReadAllText(f);
-                    Json2Sqlite(f, content);
+                    try
+                    {
+                        string content = File.ReadAllText(f);
+                        Json2Sqlite(f, content);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError("导表失败:" + f);
+                    }
                 }
             }
             SqliteLoder.Close();
