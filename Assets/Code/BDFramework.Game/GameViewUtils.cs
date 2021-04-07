@@ -3,6 +3,7 @@ using System;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class GameViewUtils
 {
@@ -39,14 +40,21 @@ public static class GameViewUtils
 #endif
     public static void Set1080p()
     {
-        var idx= FindSize(GameViewSizeGroupType.Standalone, 1080, 1920);
+        var canvas = GameObject.Find("UIRoot")?.GetComponent<CanvasScaler>();
+        if (canvas == null)
+        {
+            Debug.LogError("未找到UIRoot");
+            return;
+        }
+        var wh     = canvas.referenceResolution;
+        var idx    = FindSize(GameViewSizeGroupType.Standalone, (int)wh.x, (int)wh.y);
         if (idx != -1)
         {
             SetSize(idx);
         }
         else
         {
-            EditorUtility.DisplayDialog("提示","请设置分辨率为：1080*1920","OK");
+            EditorUtility.DisplayDialog("提示",string.Format("请添加CanvasScaler分辨率: {0}*{1}",(int)wh.x, (int)wh.y),"OK");
         }
     }
 
