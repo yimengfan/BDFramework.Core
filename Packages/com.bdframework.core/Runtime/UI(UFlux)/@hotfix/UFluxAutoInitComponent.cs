@@ -16,10 +16,11 @@ namespace BDFramework.UFlux
     /// </summary>
     public class ComponentClassCache
     {
-        public FieldInfo[] FieldInfos;
+        public FieldInfo[]    FieldInfos;
         public PropertyInfo[] PropertyInfos;
-        public MethodInfo[] MethodInfos;
+        public MethodInfo[]   MethodInfos;
     }
+
     /// <summary>
     /// Uflux辅助类
     /// </summary>
@@ -43,56 +44,39 @@ namespace BDFramework.UFlux
             //反射获取信息
             if (!ComponentClassCacheMap.TryGetValue(comType.FullName, out classCache))
             {
-                var fields = comType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
-                var properties =
-                    comType.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
-                var methodes = comType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+                var fields     = comType.GetFields(BindingFlags.NonPublic     | BindingFlags.Instance | BindingFlags.Public);
+                var properties = comType.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+                var methodes   = comType.GetMethods(BindingFlags.NonPublic    | BindingFlags.Instance | BindingFlags.Public);
 
                 //筛选有属性的,且为自动赋值的
                 classCache = new ComponentClassCache();
                 classCache.FieldInfos = fields.Where((f) =>
+                {
+                    var attrs = f.GetCustomAttributes(false);
+                    for (int i = 0; i < attrs.Length; i++)
                     {
-                        if (f.GetCustomAttributesData().Count > 0)
-                        {
-                            var attrs = f.GetCustomAttributes(false);
-                            for (int i = 0; i < attrs.Length; i++)
-                            {
-                                if (attrs[i] is AutoInitComponentContentAttribute)
-                                    return true;
-                            }
-                        }
-                        return false;
-                    })
-                    .ToArray();
+                        if (attrs[i] is AutoInitComponentContentAttribute) return true;
+                    }
+                    return false;
+                }).ToArray();
                 classCache.PropertyInfos = properties.Where((p) =>
+                {
+                    var attrs = p.GetCustomAttributes(false);
+                    for (int i = 0; i < attrs.Length; i++)
                     {
-                        if (p.GetCustomAttributesData().Count > 0)
-                        {
-                            var attrs = p.GetCustomAttributes(false);
-                            for (int i = 0; i < attrs.Length; i++)
-                            {
-                                if (attrs[i] is AutoInitComponentContentAttribute)
-                                    return true;
-                            }
-                        }
-                        return false;
-                    })
-                    .ToArray();
+                        if (attrs[i] is AutoInitComponentContentAttribute) return true;
+                    }
+                    return false;
+                }).ToArray();
                 classCache.MethodInfos = methodes.Where((m) =>
+                {
+                    var attrs = m.GetCustomAttributes(false);
+                    for (int i = 0; i < attrs.Length; i++)
                     {
-                        if (m.GetCustomAttributesData().Count > 0)
-                        {
-                            var attrs = m.GetCustomAttributes(false);
-                            for (int i = 0; i < attrs.Length; i++)
-                            {
-                                if (attrs[i] is AutoInitComponentContentAttribute)
-                                    return true;
-                            }
-                        }
-
-                        return false;
-                    })
-                    .ToArray();
+                        if (attrs[i] is AutoInitComponentContentAttribute) return true;
+                    }
+                    return false;
+                }).ToArray();
                 //缓存cls data
                 ComponentClassCacheMap[comType.FullName] = classCache;
             }
@@ -106,6 +90,7 @@ namespace BDFramework.UFlux
                     (attrs[i] as AutoInitComponentContentAttribute)?.AutoSetField(component, f);
                 }
             }
+
             foreach (var p in classCache.PropertyInfos)
             {
                 var attrs = p.GetCustomAttributes(false);
@@ -114,6 +99,7 @@ namespace BDFramework.UFlux
                     (attrs[i] as AutoInitComponentContentAttribute)?.AutoSetProperty(component, p);
                 }
             }
+
             foreach (var m in classCache.MethodInfos)
             {
                 var attrs = m.GetCustomAttributes(false);
@@ -122,6 +108,7 @@ namespace BDFramework.UFlux
                     (attrs[i] as AutoInitComponentContentAttribute)?.AutoSetMethod(component, m);
                 }
             }
+
             #endregion
         }
     }
