@@ -46,7 +46,7 @@ namespace BDFramework
 
         public delegate void GameLauncherDelegate();
 
-        static public GameLauncherDelegate OnUpdate { get; set; }
+        static public GameLauncherDelegate OnUpdate     { get; set; }
         static public GameLauncherDelegate OnLateUpdate { get; set; }
 
         /// <summary>
@@ -87,7 +87,6 @@ namespace BDFramework
                     BDebug.LogError("GameConfig配置为null,请检查!");
                 }
             }
-
             //日志打印
             debug.IsLog = this.GameConfig.IsDebugLog;
         }
@@ -116,7 +115,7 @@ namespace BDFramework
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
         public void Launch(Type[] mainProjectTypes, Action<bool> gameLogicILRBind, string gameId = "default")
         {
-            BDebug.Log("Persistent:" + Application.persistentDataPath);
+            BDebug.Log("Persistent:"     + Application.persistentDataPath);
             BDebug.Log("StreamingAsset:" + Application.streamingAssetsPath);
             //主工程启动
             IGameStart mainStart;
@@ -127,7 +126,7 @@ namespace BDFramework
                     mainStart = Activator.CreateInstance(type) as IGameStart;
                     //注册
                     mainStart.Start();
-                    OnUpdate += mainStart.Update;
+                    OnUpdate     += mainStart.Update;
                     OnLateUpdate += mainStart.LateUpdate;
                     break;
                 }
@@ -141,8 +140,7 @@ namespace BDFramework
                 //2.sql
                 SqliteLoder.Load(GameConfig.SQLRoot);
                 //3.脚本,这个启动会开启所有的逻辑
-                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode, mainProjectTypes,
-                    gameLogicILRBind);
+                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode, mainProjectTypes, gameLogicILRBind);
             });
         }
 
@@ -179,8 +177,8 @@ namespace BDFramework
         /// </summary>
         public static void OnConfigChanged()
         {
-            var config = GameObject.Find("BDFrame").GetComponent<Config>();
-            var bdLauncher = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
+            var config     = GameObject.FindObjectOfType<Config>();
+            var bdLauncher = GameObject.FindObjectOfType<BDLauncher>();
             config.SetNewConfig(bdLauncher.ConfigText.text);
         }
 #endif

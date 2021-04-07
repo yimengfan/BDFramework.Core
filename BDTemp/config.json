@@ -22,7 +22,7 @@
   },
   "BuildAssetConfig" : {
     "AESCode" : "bdframe$#@!@#",
-    "IsUseHashName" : false,
+    "IsUseHashName" : true,
     "AssetBundleFileServerUrl" : "http://127.0.0.1:20000",
     "IsAutoBuildDll"           : true
   },
