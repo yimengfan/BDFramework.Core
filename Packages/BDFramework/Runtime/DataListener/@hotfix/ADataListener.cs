@@ -242,7 +242,6 @@ namespace BDFramework.DataListener
             }
         }
 
-
         /// <summary>
         /// 移除属性变动事件注册
         /// </summary>
@@ -254,8 +253,6 @@ namespace BDFramework.DataListener
                 callbackMap.Remove(name);
             }
         }
-
-        
 
         /// <summary>
         /// 移除属性变动事件注册

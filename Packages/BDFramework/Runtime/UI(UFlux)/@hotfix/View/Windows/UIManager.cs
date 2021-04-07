@@ -40,7 +40,11 @@ namespace BDFramework.UFlux
             Top = GameObject.Find("UIRoot/Top").transform;
         }
 
-        //
+        /// <summary>
+        /// 创建一个窗口
+        /// </summary>
+        /// <param name="uiIndex"></param>
+        /// <returns></returns>
         private IWindow CreateWindow(int uiIndex)
         {
             var classData = this.GetClassData(uiIndex);

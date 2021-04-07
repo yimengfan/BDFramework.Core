@@ -5,9 +5,9 @@ using UnityEngine;
 namespace BDFramework.UFlux
 {
     /// <summary>
-    /// 自动初始化Component
+    /// 自动初始化Component属性街垒
     /// </summary>
-    public class UFluxAutoInitComponentAttribute : Attribute
+    public class AutoInitComponentContentAttribute : Attribute
     {
         virtual public void AutoSetField(IComponent com, FieldInfo fieldInfo)
         {

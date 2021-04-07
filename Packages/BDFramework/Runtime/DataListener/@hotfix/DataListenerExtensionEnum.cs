@@ -39,6 +39,9 @@ namespace BDFramework.DataListener
             dl.TriggerEvent(name.ToString(), value, isTriggerCallback);
         }
 
+        
+
+        
         /// <summary>
         /// 枚举版本
         /// </summary>

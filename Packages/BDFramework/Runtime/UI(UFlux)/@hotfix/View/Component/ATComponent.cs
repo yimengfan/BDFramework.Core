@@ -66,7 +66,7 @@ namespace BDFramework.UFlux
             this.Transform = trans;
             //创建State
             this.Props = new T();
-            UFlux.SetTransformPath(this);
+            UFlux.InitComponentContent(this);
         }
         /// <summary>
         /// 这里重载一个构造函数
@@ -93,7 +93,7 @@ namespace BDFramework.UFlux
             var o = UFlux.Load<GameObject>(resPath);
             this.Transform = GameObject.Instantiate(o).transform;
             this.IsLoad = true;
-            UFlux.SetTransformPath(this);
+            UFlux.InitComponentContent(this);
             //初始化
             this.Init();
         }
@@ -110,7 +110,7 @@ namespace BDFramework.UFlux
             {
                 this.Transform = GameObject.Instantiate(obj).transform;
                 this.IsLoad = true;
-                UFlux.SetTransformPath(this);
+                UFlux.InitComponentContent(this);
                 //初始化
                 Init();
                 if (callback != null)

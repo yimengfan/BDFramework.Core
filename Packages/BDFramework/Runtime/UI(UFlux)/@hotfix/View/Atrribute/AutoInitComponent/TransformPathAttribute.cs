@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 namespace BDFramework.UFlux
 {
     /// <summary>
-    /// 节点自动赋值
+    /// 自动初始化，节点自动赋值
     /// </summary>
-    public class TransformPathAttribute : UFluxAutoInitComponentAttribute
+    public class TransformPathAttribute : AutoInitComponentContentAttribute
     {
         public string Path;
 

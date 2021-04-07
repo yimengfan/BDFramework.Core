@@ -11,12 +11,18 @@ using Object = UnityEngine.Object;
 
 namespace BDFramework.UFlux
 {
+    /// <summary>
+    /// 组件信息缓存
+    /// </summary>
     public class ComponentClassCache
     {
         public FieldInfo[] FieldInfos;
         public PropertyInfo[] PropertyInfos;
         public MethodInfo[] MethodInfos;
     }
+    /// <summary>
+    /// Uflux辅助类
+    /// </summary>
     static public partial class UFlux
     {
         /// <summary>
@@ -27,15 +33,14 @@ namespace BDFramework.UFlux
         #region 自动设置值
 
         /// <summary>
-        /// 绑定Windows的值
+        /// 初始化Component内容
         /// </summary>
         /// <param name="o"></param>
-        static public void SetTransformPath(IComponent component)
+        static public void InitComponentContent(IComponent component)
         {
-            var comType = component.GetType();
-
+            var                 comType    = component.GetType();
             ComponentClassCache classCache = null;
-
+            //反射获取信息
             if (!ComponentClassCacheMap.TryGetValue(comType.FullName, out classCache))
             {
                 var fields = comType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
@@ -52,7 +57,7 @@ namespace BDFramework.UFlux
                             var attrs = f.GetCustomAttributes(false);
                             for (int i = 0; i < attrs.Length; i++)
                             {
-                                if (attrs[i] is UFluxAutoInitComponentAttribute)
+                                if (attrs[i] is AutoInitComponentContentAttribute)
                                     return true;
                             }
                         }
@@ -66,7 +71,7 @@ namespace BDFramework.UFlux
                             var attrs = p.GetCustomAttributes(false);
                             for (int i = 0; i < attrs.Length; i++)
                             {
-                                if (attrs[i] is UFluxAutoInitComponentAttribute)
+                                if (attrs[i] is AutoInitComponentContentAttribute)
                                     return true;
                             }
                         }
@@ -80,7 +85,7 @@ namespace BDFramework.UFlux
                             var attrs = m.GetCustomAttributes(false);
                             for (int i = 0; i < attrs.Length; i++)
                             {
-                                if (attrs[i] is UFluxAutoInitComponentAttribute)
+                                if (attrs[i] is AutoInitComponentContentAttribute)
                                     return true;
                             }
                         }
@@ -92,13 +97,13 @@ namespace BDFramework.UFlux
                 ComponentClassCacheMap[comType.FullName] = classCache;
             }
 
-            //开始赋值逻辑
+            //开始初始化component内容
             foreach (var f in classCache.FieldInfos)
             {
                 var attrs = f.GetCustomAttributes(false);
                 for (int i = 0; i < attrs.Length; i++)
                 {
-                    (attrs[i] as UFluxAutoInitComponentAttribute)?.AutoSetField(component, f);
+                    (attrs[i] as AutoInitComponentContentAttribute)?.AutoSetField(component, f);
                 }
             }
             foreach (var p in classCache.PropertyInfos)
@@ -106,7 +111,7 @@ namespace BDFramework.UFlux
                 var attrs = p.GetCustomAttributes(false);
                 for (int i = 0; i < attrs.Length; i++)
                 {
-                    (attrs[i] as UFluxAutoInitComponentAttribute)?.AutoSetProperty(component, p);
+                    (attrs[i] as AutoInitComponentContentAttribute)?.AutoSetProperty(component, p);
                 }
             }
             foreach (var m in classCache.MethodInfos)
@@ -114,7 +119,7 @@ namespace BDFramework.UFlux
                 var attrs = m.GetCustomAttributes(false);
                 for (int i = 0; i < attrs.Length; i++)
                 {
-                    (attrs[i] as UFluxAutoInitComponentAttribute)?.AutoSetMethod(component, m);
+                    (attrs[i] as AutoInitComponentContentAttribute)?.AutoSetMethod(component, m);
                 }
             }
             #endregion

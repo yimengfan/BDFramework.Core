@@ -6,7 +6,7 @@ using UnityEngine;
 namespace BDFramework.UFlux
 {
     /// <summary>
-    /// 描述成员变量 是给哪个组件 哪个字段赋值
+    /// 组件绑定属性
     /// </summary>
     public class ComponentValueBindAttribute : Attribute
     {
