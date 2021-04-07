@@ -46,7 +46,9 @@ public class ScriptBuildTools
             EditorUtility.DisplayProgressBar("编译服务", "准备编译环境...", 0.1f);
         }
         //生成CSProj
+        EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
         CodeEditor.CurrentEditor.SyncAll();
+        
         //
          var _outPath = Path.Combine(outPath, BDApplication.GetPlatformPath(platform));
         //准备输出环境
