@@ -12,6 +12,7 @@ public static class GameViewUtils
 
     static GameViewUtils()
     {
+        
         // gameViewSizesInstance  = ScriptableSingleton<GameViewSizes>.instance;
         var sizesType = typeof(Editor).Assembly.GetType("UnityEditor.GameViewSizes");
         var singleType = typeof(ScriptableSingleton<>).MakeGenericType(sizesType);
@@ -35,19 +36,20 @@ public static class GameViewUtils
         selectedSizeIndexProp.SetValue(gvWnd, index, null);
     }
 
-#if UNITY_5_3_OR_NEWER
-    [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.BeforeSceneLoad)]
+#if UNITY_5_3_OR_NEWER && UNITY_EDITOR
+    [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.AfterSceneLoad)]
 #endif
     public static void Set1080p()
     {
-        var canvas = GameObject.Find("UIRoot")?.GetComponent<CanvasScaler>();
-        if (canvas == null)
+        
+        var scaler = GameObject.FindObjectOfType<CanvasScaler>();
+        if (scaler == null)
         {
             Debug.LogError("未找到UIRoot");
             return;
         }
-        var wh     = canvas.referenceResolution;
-        var idx    = FindSize(GameViewSizeGroupType.Standalone, (int)wh.x, (int)wh.y);
+        var wh     = scaler.referenceResolution;
+        var idx    = FindSize(GameViewSizeGroupType.Standalone, (int)wh.x, (int)wh.y)-5;
         if (idx != -1)
         {
             SetSize(idx);
@@ -113,26 +115,33 @@ public static class GameViewUtils
         // int sizesCount = group.GetBuiltinCount() + group.GetCustomCount();
         // iterate through the sizes via group.GetGameViewSize(int index)
 
-        var group = GetGroup(sizeGroupType);
-        var groupType = group.GetType();
+        var group           = GetGroup(sizeGroupType);
+        var groupType       = group.GetType();
         var getBuiltinCount = groupType.GetMethod("GetBuiltinCount");
-        var getCustomCount = groupType.GetMethod("GetCustomCount");
-        int sizesCount = (int)getBuiltinCount.Invoke(group, null) + (int)getCustomCount.Invoke(group, null);
+        var getCustomCount  = groupType.GetMethod("GetCustomCount");
+        int sizesCount      = (int)getBuiltinCount.Invoke(group, null) + (int)getCustomCount.Invoke(group, null);
         var getGameViewSize = groupType.GetMethod("GetGameViewSize");
-        var gvsType = getGameViewSize.ReturnType;
-        var widthProp = gvsType.GetProperty("width");
-        var heightProp = gvsType.GetProperty("height");
-        var indexValue = new object[1];
+        var gvsType         = getGameViewSize.ReturnType;
+        var widthProp       = gvsType.GetProperty("width");
+        var heightProp      = gvsType.GetProperty("height");
+        //
+        var ret             = -1;
         for (int i = 0; i < sizesCount; i++)
         {
-            indexValue[0] = i;
-            var size = getGameViewSize.Invoke(group, indexValue);
-            int sizeWidth = (int)widthProp.GetValue(size, null);
+            var size       = getGameViewSize.Invoke(group, new object[]{i});
+            if (size == null)
+            {
+                break;
+            }
+            int sizeWidth  = (int)widthProp.GetValue(size, null);
             int sizeHeight = (int)heightProp.GetValue(size, null);
+            //Debug.Log( sizeWidth + " - " + sizeHeight);
             if (sizeWidth == width && sizeHeight == height)
-                return i;
+            {
+                ret = i;
+            }
         }
-        return -1;
+        return ret;
     }
 
     static object GetGroup(GameViewSizeGroupType type)

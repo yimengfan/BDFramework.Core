@@ -10,8 +10,7 @@ public class ILRuntimeDelegateHelper
     static public void Register(AppDomain appdomain)
     {
         appdomain.DelegateManager.RegisterMethodDelegate<System.Object>();
-        appdomain.DelegateManager
-            .RegisterFunctionDelegate<ILRuntime.Runtime.Intepreter.ILTypeInstance, System.Boolean>();
+        appdomain.DelegateManager.RegisterFunctionDelegate<ILRuntime.Runtime.Intepreter.ILTypeInstance, System.Boolean>();
         appdomain.DelegateManager.RegisterMethodDelegate<System.Collections.Generic.List<System.Object>>();
         appdomain.DelegateManager.RegisterMethodDelegate<System.Collections.Generic.IDictionary<System.String, UnityEngine.Object>>();
         appdomain.DelegateManager.RegisterMethodDelegate<System.Boolean>();
@@ -19,11 +18,16 @@ public class ILRuntimeDelegateHelper
         appdomain.DelegateManager.RegisterFunctionDelegate<System.Object, System.Boolean>();
         appdomain.DelegateManager.RegisterFunctionDelegate<System.Attribute, System.Boolean>();
         appdomain.DelegateManager.RegisterFunctionDelegate<System.Type, System.Boolean>();
-
+        appdomain.DelegateManager.RegisterFunctionDelegate<System.Reflection.FieldInfo, System.Boolean>();
+        appdomain.DelegateManager.RegisterFunctionDelegate<System.Reflection.PropertyInfo, System.Boolean>();
+        appdomain.DelegateManager.RegisterFunctionDelegate<System.Reflection.MethodInfo, System.Boolean>();
 
         appdomain.DelegateManager.RegisterDelegateConvertor<UnityEngine.Events.UnityAction>((act) =>
         {
-            return new UnityEngine.Events.UnityAction(() => { ((Action) act)(); });
+            return new UnityEngine.Events.UnityAction(() =>
+            {
+                ((Action) act)();
+            });
         });
         appdomain.DelegateManager.RegisterDelegateConvertor<UnityEngine.Events.UnityAction<System.Single>>((act) =>
         {
@@ -53,14 +57,13 @@ public class ILRuntimeDelegateHelper
 
         appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.Transform, System.Object>();
 
-        appdomain.DelegateManager
-            .RegisterDelegateConvertor<System.Predicate<ILRuntime.Runtime.Intepreter.ILTypeInstance>>((act) =>
+        appdomain.DelegateManager.RegisterDelegateConvertor<System.Predicate<ILRuntime.Runtime.Intepreter.ILTypeInstance>>((act) =>
+        {
+            return new System.Predicate<ILRuntime.Runtime.Intepreter.ILTypeInstance>((obj) =>
             {
-                return new System.Predicate<ILRuntime.Runtime.Intepreter.ILTypeInstance>((obj) =>
-                {
-                    return ((Func<ILRuntime.Runtime.Intepreter.ILTypeInstance, System.Boolean>) act)(obj);
-                });
+                return ((Func<ILRuntime.Runtime.Intepreter.ILTypeInstance, System.Boolean>) act)(obj);
             });
+        });
 
 //[insert]
     }

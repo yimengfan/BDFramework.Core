@@ -117,7 +117,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_Dictionary_2_String_MemberInfo_Binding.Register(app);
-            System_Collections_Generic_ICollection_1_CustomAttributeData_Binding.Register(app);
             ILRuntime_Mono_Cecil_MemberReference_Binding.Register(app);
             System_Action_2_UIBehaviour_Object_Binding.Register(app);
             System_Action_2_Transform_Object_Binding.Register(app);

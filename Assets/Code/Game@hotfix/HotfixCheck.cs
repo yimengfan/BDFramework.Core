@@ -6,11 +6,6 @@ using UnityEngine;
 
 public class HotfixCheck
 {
-   static public void Log()
-   {
-
-   }
-   
    public class  testclass
    {
       public int i = 1;
