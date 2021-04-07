@@ -45,15 +45,15 @@ namespace BDFramework.ResourceMgr.V2
             string realname = "";
             if (!assetNameMap.TryGetValue(name, out realname))
             {
-                var fs = this.AssetBundle.GetAllAssetNames().ToList();
-                if (fs.Count == 1)
+                var fs = this.AssetBundle.GetAllAssetNames();
+                if (fs.Length == 1)
                 {
                     realname = fs[0];
                 }
                 else
                 {
-                    var _name = name.ToLower() + ".";
-                    realname = fs.Find((p) => p.Contains(_name));
+                    var lname = name.ToLower() + ".";
+                    realname = fs.FirstOrDefault((p) => p.Contains(lname));
                 }
 
                 assetNameMap[name] = realname;

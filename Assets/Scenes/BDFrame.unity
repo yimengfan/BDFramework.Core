@@ -948,7 +948,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data:
-    CodeRoot: 0
+    CodeRoot: 1
     SQLRoot: 1
     ArtRoot: 1
     CustomArtRoot: 

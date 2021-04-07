@@ -39,7 +39,6 @@ namespace BDFramework
         /// <summary>
         /// Config的Text
         /// </summary>
-        [OnValueChanged("OnConfigChanged")]
         public TextAsset ConfigText;
 
         #region 对外的生命周期
@@ -162,23 +161,6 @@ namespace BDFramework
         }
 
         #endregion
-
-#if UNITY_EDITOR
-
-        /// <summary>
-        /// 当Config修改
-        /// </summary>
-        public static void OnConfigChanged()
-        {
-            if (Application.isPlaying)
-            {
-                return;
-            }
-
-            var config     = GameObject.FindObjectOfType<Config>();
-            var bdLauncher = GameObject.FindObjectOfType<BDLauncher>();
-            config.SetNewConfig(bdLauncher.ConfigText.text);
-        }
-#endif
+        
     }
 }

@@ -122,7 +122,7 @@ namespace BDFramework
         [TitleGroup("真机环境下,BDLauncher的Config不能为null！", alignment: TitleAlignments.Centered)]
         [LabelText("生成配置名")]
         [OnInspectorGUI("ONGUI_SelcectConfig")]
-        public string ConfigFileName="noname";
+        public string ConfigFileName="Default";
 
         private static int curSlectConfigIdx = -1;
         //选择配置
