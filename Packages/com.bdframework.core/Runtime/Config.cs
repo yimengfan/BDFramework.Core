@@ -86,8 +86,6 @@ namespace BDFramework
         [HideLabel]
         [InlinePropertyAttribute]
         public GameConfig Data;
-
-
         /// <summary>
         /// 设置新配置
         /// </summary>
@@ -96,8 +94,6 @@ namespace BDFramework
         {
             this.Data = JsonMapper.ToObject<GameConfig>(gameConfig);
         }
-
-
         #region 编辑器
 
 #if UNITY_EDITOR
@@ -198,13 +194,18 @@ namespace BDFramework
             }
             var json = JsonMapper.ToJson(config.Data);
             //根据不同场景生成配置
-           // Scene scene = EditorSceneManager.GetActiveScene();
+            //Scene scene = EditorSceneManager.GetActiveScene();
             var fs = string.Format("{0}/{1}", str, filename + ".json");
             FileHelper.WriteAllText(fs, json);
+            AssetDatabase.Refresh();
             //
             var content = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
             var bdconfig = GameObject.FindObjectOfType<BDLauncher>();
-            bdconfig.ConfigText = content;
+            if (bdconfig.ConfigText.name != filename)
+            {
+                bdconfig.ConfigText = content;
+            }
+            Debug.Log("修改配置保存成功:" + filename);
         }
 
         /// <summary>
