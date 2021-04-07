@@ -116,12 +116,18 @@ namespace BDFramework.AssetHelper
                 FileHelper.WriteAllBytes(persistentDLLPath,www.bytes);
                 BDebug.Log("复制dll成功!");
             }
+            
             www = new WWW(streamingDLLPath+".pdb");
             yield return www;
             if (www.error == null)
             {
                 FileHelper.WriteAllBytes(persistentDLLPath+".pdb",www.bytes);
-                BDebug.Log("复制dll pdb成功!");
+                BDebug.Log("复制dll.pdb成功!");
+            }
+            else
+            {
+                //删除persistent下的pdb防止跟dll不匹配
+                File.Delete(persistentDLLPath +".pdb");
             }
             //复制Sql
             var persistentSQLPath = string.Format("{0}/{1}", persistent, SqliteLoder.DBPATH);
