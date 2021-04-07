@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ourpalm.ilruntime": "1.6.5"
+        "com.ourpalm.ilruntime": "1.6.7"
       }
     },
     "com.ourpalm.ilruntime": {
