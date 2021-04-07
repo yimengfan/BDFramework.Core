@@ -108,9 +108,9 @@ namespace BDFramework
         //触发这个函数的时候，有些值没被修改，暂时这样让他刷新
         public void _ONGUI()
         {
-          
             if (isChangedData)
             {
+                //
                 var asset = this.gameObject.GetComponent<BDLauncher>().ConfigText;
                 var path  = AssetDatabase.GetAssetPath(asset.GetInstanceID());
                 GenGameConfig(Path.GetDirectoryName(path), asset.name);
@@ -128,11 +128,14 @@ namespace BDFramework
         //选择配置
         static public void ONGUI_SelcectConfig()
         {
+            if(Application.isPlaying) return;
+            
             GUI.color = Color.green;
             var launcher    = GameObject.FindObjectOfType<BDLauncher>();
             if (launcher == null)
             {
                 BDebug.LogError("场景上没找到BDLauncher");
+                return;
             }
 
             var curFilePath = AssetDatabase.GetAssetPath(launcher.ConfigText.GetInstanceID());
@@ -186,6 +189,10 @@ namespace BDFramework
         /// <param name="platform"></param>
         static public void GenGameConfig(string str, string filename)
         {
+            if (Application.isPlaying)
+            {
+                return;
+            }
             //config
             var config = GameObject.FindObjectOfType<Config>();
             if (config == null)

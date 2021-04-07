@@ -72,20 +72,13 @@ namespace BDFramework
             //框架配置
             LoadFrameConfig();
             //游戏配置
-            if (Application.isEditor)
+            if (this.ConfigText)
             {
-                this.GameConfig = this.transform.GetComponent<Config>().Data;
+                this.GameConfig = JsonMapper.ToObject<GameConfig>(this.ConfigText.text);
             }
             else
             {
-                if (this.ConfigText)
-                {
-                    this.GameConfig = JsonMapper.ToObject<GameConfig>(this.ConfigText.text);
-                }
-                else
-                {
-                    BDebug.LogError("GameConfig配置为null,请检查!");
-                }
+                BDebug.LogError("GameConfig配置为null,请检查!");
             }
             //日志打印
             debug.IsLog = this.GameConfig.IsDebugLog;
@@ -177,6 +170,11 @@ namespace BDFramework
         /// </summary>
         public static void OnConfigChanged()
         {
+            if (Application.isPlaying)
+            {
+                return;
+            }
+
             var config     = GameObject.FindObjectOfType<Config>();
             var bdLauncher = GameObject.FindObjectOfType<BDLauncher>();
             config.SetNewConfig(bdLauncher.ConfigText.text);
