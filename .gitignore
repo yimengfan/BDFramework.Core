@@ -35,3 +35,7 @@
 /*.csproj
 /*.sln
 /Build
+/BDFramework.Core.csproj
+/BDFramework.Core.sln
+/BDFramework.Editor.csproj
+/BDFramework.Editor.TestRunner.csproj
