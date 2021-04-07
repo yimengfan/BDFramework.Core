@@ -34,14 +34,14 @@ namespace BDFramework.Editor
         }
         
 
-        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(使用当前配置 )")]
+        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(使用当前配置)")]
         public static void EditorBuildAPK_Empty()
         {
             LoadConfig();
             BuildAPK_Empty();
         }
 
-        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Debug-StreamingAsset)")]
+        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Config-Debug.json)")]
         public static void EditorBuildAPK_Debug()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
@@ -51,7 +51,7 @@ namespace BDFramework.Editor
           
         }
 
-        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Release-Persistent)")]
+        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Config-Release.json)")]
         public static void EditorBuildAPK()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))

@@ -175,7 +175,10 @@ namespace BDFramework.Editor
         /// </summary>
         public static void BuildDLL()
         {
+            //检查打包脚本
             EditorWindow_ScriptBuildDll.RoslynBuild(outputPath, RuntimePlatform.Android, ScriptBuildTools.BuildMode.Release);
+            //检查下打包前的代码错
+            BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath,   BuildAssetBundleOptions.DeterministicAssetBundle, BuildTarget.Android);
         }
 
         #endregion
