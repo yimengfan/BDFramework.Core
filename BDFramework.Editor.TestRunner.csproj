@@ -289,79 +289,79 @@
  <HintPath>F:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Excel">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Excel/Excel.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Excel/Excel.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.SharpZipLib">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
  </Reference>
  <Reference Include="Microsoft.CodeAnalysis.CSharp">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
  </Reference>
  <Reference Include="Microsoft.CodeAnalysis">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/Microsoft.CodeAnalysis.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/Microsoft.CodeAnalysis.dll</HintPath>
  </Reference>
  <Reference Include="System.Buffers">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Buffers.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Buffers.dll</HintPath>
  </Reference>
  <Reference Include="System.Collections.Immutable">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Collections.Immutable.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Collections.Immutable.dll</HintPath>
  </Reference>
  <Reference Include="System.Data.Common">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Data.Common.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Data.Common.dll</HintPath>
  </Reference>
  <Reference Include="System.Diagnostics.StackTrace">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Diagnostics.StackTrace.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Diagnostics.StackTrace.dll</HintPath>
  </Reference>
  <Reference Include="System.Diagnostics.Tracing">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Diagnostics.Tracing.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Diagnostics.Tracing.dll</HintPath>
  </Reference>
  <Reference Include="System.Globalization.Extensions">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Globalization.Extensions.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Globalization.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="System.IO.Compression">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.IO.Compression.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.IO.Compression.dll</HintPath>
  </Reference>
  <Reference Include="System.Memory">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Memory.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Memory.dll</HintPath>
  </Reference>
  <Reference Include="System.Net.Http">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Net.Http.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Net.Http.dll</HintPath>
  </Reference>
  <Reference Include="System.Net.Sockets">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Net.Sockets.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Net.Sockets.dll</HintPath>
  </Reference>
  <Reference Include="System.Numerics.Vectors">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Numerics.Vectors.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Numerics.Vectors.dll</HintPath>
  </Reference>
  <Reference Include="System.Reflection.Metadata">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Reflection.Metadata.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Reflection.Metadata.dll</HintPath>
  </Reference>
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="System.Runtime.Serialization.Primitives">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Runtime.Serialization.Primitives.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Runtime.Serialization.Primitives.dll</HintPath>
  </Reference>
  <Reference Include="System.Security.Cryptography.Algorithms">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Security.Cryptography.Algorithms.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Security.Cryptography.Algorithms.dll</HintPath>
  </Reference>
  <Reference Include="System.Security.SecureString">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Security.SecureString.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Security.SecureString.dll</HintPath>
  </Reference>
  <Reference Include="System.Text.Encoding.CodePages">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Text.Encoding.CodePages.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Text.Encoding.CodePages.dll</HintPath>
  </Reference>
  <Reference Include="System.Threading.Overlapped">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Threading.Overlapped.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Threading.Overlapped.dll</HintPath>
  </Reference>
  <Reference Include="System.Threading.Tasks.Extensions">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Threading.Tasks.Extensions.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Threading.Tasks.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="System.Xml.XPath.XDocument">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Editor/Plugins/Roslyn/System.Xml.XPath.XDocument.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Editor/Plugins/Roslyn/System.Xml.XPath.XDocument.dll</HintPath>
  </Reference>
  <Reference Include="Debug.log">
- <HintPath>F:/BDFramework.Core/Packages/BDFramework/Plugins/Debug/Debug.log.dll</HintPath>
+ <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Plugins/Debug/Debug.log.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil">
  <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.7/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.bdframework.core": {
-      "version": "file:BDFramework",
+      "version": "file:com.bdframework.core",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
