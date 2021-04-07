@@ -128,7 +128,7 @@ namespace BDFramework.ResourceMgr
                             break;
                         case LoadAssetState.Fail:
                         case LoadAssetState.Success:
-                            OnTaskComplete(task.AssetPath, obj);
+                            OnTaskComplete(task, obj);
                             break;
                     }
                 }));
@@ -143,7 +143,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="assetPath"></param>
         /// <param name="obj"></param>
-        private void OnTaskComplete(string assetPath, Object obj)
+        private void OnTaskComplete(LoaderTaskData task, Object obj)
         {
             if (isStop)
             {
@@ -151,14 +151,14 @@ namespace BDFramework.ResourceMgr
             }
             
             //判断任务进度
-            if (assetPath != MainAssetName)
+            if (!task.IsMainAsset)
             {
                 this.DoNextTask();
             }
             else
             {
-                IsComplete = true;
                 //总进度通知
+                IsComplete = true;
                 OnAllTaskCompleteCallback?.Invoke(MainAssetName, obj);
             }
         }
