@@ -18,15 +18,15 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core  ,速度慢下这个(�
  #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
  ### [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
  ##  V2版本已经发布!  
- 1.全面升级为UPM管理:  
-   i.拷贝github中Package的BDFrame包到项目的Package下,导入Package中的Asset.package到工程Asset目录下即可   
-   ii.通过UPM安装,不过npm源更新较慢  
- 2.全面适配URP管线工作流  
- 3.全面定制Unity Editor环境，升级编辑器操作。更便捷、人性化的开发体验  
- 4.全面优化框架启动速度,重构部分远古代码。  
- 5.UFlux UI工作流全面升级,更智能的值绑定,更简单的工作流,更方便的自定义扩展.  
- 6.更全面的文档  
- 7.商业级的Demo加入，后续会开放免费商业级项目开发教程   
+#### 1.全面升级为UPM管理:  
+      i.拷贝github中Package的BDFrame包到项目的Package下,导入Package中的Asset.package到工程Asset目录下即可   
+      ii.通过UPM安装,不过npm源更新较慢  
+#### 2.全面适配URP管线工作流  
+#### 3.全面定制Unity Editor环境，升级编辑器操作。更便捷、人性化的开发体验  
+#### 4.全面优化框架启动速度,重构部分远古代码。  
+#### 5.UFlux UI工作流全面升级,更智能的值绑定,更简单的工作流,更方便的自定义扩展.  
+#### 6.更全面的文档  
+#### 7.商业级的Demo加入，后续会开放免费商业级项目开发教程   
 注:所有bug修复和新特性加入会先提交到Master分支。待审核期一个月，稳定则会提交Release版本 
 
 # 依赖的插件(Dependent plugins)
@@ -67,7 +67,7 @@ The following charging plug-ins are used. Please purchase and download them your
    而且有一套比较完善的AssetBundle管理机制：图集管理、自动搜集Shader、0冗余打包  
    并且bd做了一套精简版可寻址，无论你的Asset再Streaming或者persistent下，都能自动寻找并且加载  
    
-   **完善的UI工作流:**  
+   **完善的UI工作流UFlux:**  
    BD中有一整套完善的UI工作流(这里我们只对UI逻辑进行管理，不考虑ui制作)，无论你是UGUI NGUI还是其他。  
    我们提供了一套UI管理、值绑定、数据监听、数据流、状态管理等一系列机制.  
    
