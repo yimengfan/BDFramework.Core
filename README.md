@@ -21,6 +21,7 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core  ,速度慢下这个(�
 #### 1.全面升级为UPM管理:  
       i.拷贝github中Package的BDFrame包到项目的Package下,导入Package中的Asset.package到工程Asset目录下即可   
       ii.通过UPM安装,不过npm源更新较慢  
+      iii.旧版本转移到Unity2019LTS_2021.04.06分支上    
 #### 2.全面适配URP管线工作流  
 #### 3.全面定制Unity Editor环境，升级编辑器操作。更便捷、人性化的开发体验  
 #### 4.全面优化框架启动速度,重构部分远古代码。  
@@ -34,7 +35,7 @@ The following charging plug-ins are used. Please purchase and download them your
 <br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
 打包需要配置为：EditorOnly模式  
 
-## v1.1版本计划(v1.0 Plan)
+## v2.1版本计划(v2.1 Plan)
 ### [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)  
 ## 贡献者名单
 [@gaojiexx](https://github.com/gaojiexx)  
