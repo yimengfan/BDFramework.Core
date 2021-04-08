@@ -46,8 +46,15 @@ public class ScriptBuildTools
             EditorUtility.DisplayProgressBar("编译服务", "准备编译环境...", 0.1f);
         }
         //生成CSProj
-        EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
-        CodeEditor.CurrentEditor.SyncAll();
+
+        var csproj = Directory.GetFiles(BDApplication.ProjectRoot, "*.csproj", SearchOption.AllDirectories);
+        if (csproj.Length == 0)
+        {
+            EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
+            CodeEditor.CurrentEditor.SyncAll();
+            Debug.Log("生成Csproj!");
+        }
+
         
         //
          var _outPath = Path.Combine(outPath, BDApplication.GetPlatformPath(platform));
