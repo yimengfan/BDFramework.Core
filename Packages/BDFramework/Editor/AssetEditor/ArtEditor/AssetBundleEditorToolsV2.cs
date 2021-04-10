@@ -136,18 +136,9 @@ namespace BDFramework.Editor.Asset
             //获取当前配置
             var newbuildInfo = GetAssetsInfo(assetPaths);
 
+            var buildinfoCahce = JsonMapper.ToJson(newbuildInfo);
             //BD生命周期触发
             BDFrameEditorBehaviorHelper.OnBeginBuildAssetBundle(newbuildInfo);
-
-            //
-            if (File.Exists(buildInfoPath))
-            {
-                string targetPath = artOutputPath + "/BuildInfo.old.json";
-                File.Delete(targetPath);
-                File.Move(buildInfoPath, targetPath);
-            }
-
-            FileHelper.WriteAllText(buildInfoPath, JsonMapper.ToJson(newbuildInfo));
             //获取改动的数据
             var changedBuildInfo = GetChangedAssets(lastBuildInfo, newbuildInfo);
             // newbuildInfo = null; //防止后面再用
@@ -324,7 +315,16 @@ namespace BDFramework.Editor.Asset
 
 
             //3.生成AssetBundle
-            BuildAssetBundle(target, _outputPath, options);
+            try
+            {
+                BuildAssetBundle(target, _outputPath, options);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                throw;
+            }
+
             //4.清除AB Name
             RemoveAllAssetbundleName();
             AssetImpoterCacheMap.Clear();
@@ -338,6 +338,15 @@ namespace BDFramework.Editor.Asset
                     File.Delete(df);
                 }
             }
+            
+            //the end. BuildInfo写入
+            if (File.Exists(buildInfoPath))
+            {
+                string targetPath = artOutputPath + "/BuildInfo.old.json";
+                File.Delete(targetPath);
+                File.Move(buildInfoPath, targetPath);
+            }
+            FileHelper.WriteAllText(buildInfoPath, JsonMapper.ToJson(buildinfoCahce));
 
             //BD生命周期触发
             BDFrameEditorBehaviorHelper.OnEndBuildAssetBundle(outputPath);
