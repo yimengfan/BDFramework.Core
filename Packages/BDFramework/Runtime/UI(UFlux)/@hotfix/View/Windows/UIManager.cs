@@ -145,8 +145,6 @@ namespace BDFramework.UFlux
         /// <param name="loadProcessAction"></param>
         public void AsyncLoadWindows(List<int> indexes, Action<int, int> loadProcessAction)
         {
-            //去重操作
-            indexes = indexes.Distinct().ToList();
             //
             int allCount = indexes.Count;
             int curTaskCount = 0;
