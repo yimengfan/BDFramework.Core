@@ -346,7 +346,7 @@ namespace BDFramework.Editor.Asset
                 File.Delete(targetPath);
                 File.Move(buildInfoPath, targetPath);
             }
-            FileHelper.WriteAllText(buildInfoPath, JsonMapper.ToJson(buildinfoCahce));
+            FileHelper.WriteAllText(buildInfoPath, buildinfoCahce);
 
             //BD生命周期触发
             BDFrameEditorBehaviorHelper.OnEndBuildAssetBundle(outputPath);
