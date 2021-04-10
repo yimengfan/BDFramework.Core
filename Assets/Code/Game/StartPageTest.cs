@@ -8,9 +8,9 @@ public class StartPageTest : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-#if UNITY_EDITOR
-       GameViewUtils.Set1080p();
-#endif
+// #if UNITY_EDITOR
+//        GameViewUtils.Set1080p();
+// #endif
         //
         var simple = this.transform.Find("Tween/text_simple");
         var easy = this.transform.Find("Tween/text_easy");

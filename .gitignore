@@ -34,3 +34,8 @@
 /Assets/Code/BDFramework.UnitTest/Core/.idea/.idea.Core.dir/.idea/vcs.xml
 /*.csproj
 /*.sln
+/Build
+/BDFramework.Core.csproj
+/BDFramework.Core.sln
+/BDFramework.Editor.csproj
+/BDFramework.Editor.TestRunner.csproj

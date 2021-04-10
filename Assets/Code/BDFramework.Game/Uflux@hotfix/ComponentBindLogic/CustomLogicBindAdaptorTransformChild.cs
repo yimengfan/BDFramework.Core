@@ -11,6 +11,7 @@ namespace  BDFramework.UFlux
         public  void ShowHideChildByNumber(){}
     }
     
+    
     /// <summary>
     /// 自定义逻辑的适配器
     /// </summary>

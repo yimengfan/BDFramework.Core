@@ -136,14 +136,18 @@ public class Window_DemoMain : AWindow
 
         //3.异步加载多个
         var list = new List<string>() {"AssetTest/Cube", "Test/Cube"};
-        BResources.AsyncLoad(list, (i, i2) => { Debug.Log(string.Format("进度 {0} / {1}", i, i2)); }, (map) =>
+        BResources.AsyncLoad(list, (i, i2) =>
+        {
+            //进度
+            Debug.Log(string.Format("进度 {0} / {1}", i, i2));
+        }, (map) =>
         {
             BDebug.Log("加载全部完成,资源列表:");
             foreach (var r in map)
             {
                 BDebug.Log(string.Format("--> {0} ： {1}", r.Key, r.Value.name));
-                var _go = GameObject.Instantiate(r.Value) as GameObject;
-                golist.Add(_go);
+                var _go = GameObject.Instantiate(r.Value) ;
+                golist.Add(_go as  GameObject);
             }
         });
 

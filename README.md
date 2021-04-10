@@ -1,9 +1,9 @@
-<img src="./BDTemp/Img/logo.png" width = "80%" height = "80%" div align=center />  
+<img src="./BDTemp/Img/logo.png" width = "65%" height = "65%" div align=center />  
 
 # 简介(Introduction)
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries  
 
-#### 热更项目的开发,只需要轻轻一点，一键帮你完成~  
+#### 完善的工作流,热更项目的开发,一键帮你完成~  
 
 #### 第九第十艺术交流:763141410 （QQ Group:763141410）  [点击加群](http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f)
 If you find a bug or have some suggestions,please make issue! I'll get back to you!  
@@ -17,21 +17,25 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core  ,速度慢下这个(�
  #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
  #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
  ### [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
- ## 已经适配LWRP、URP工作流!!!    Supported URP!
-注:所有bug修复和新特性加入会先提交到Debug分支。待审核期一个月，稳定则会跟主分支进行合并。  
-Note: All bug fixes and new features will be submitted to the Debug branch first. The period to be audited is one month, and stability will be merged with the main branch.
-
+ ##  V2版本已经发布!  
+#### 1.全面升级为UPM管理:  
+      i.拷贝github中Package的BDFrame包到项目的Package下,导入Package中的Asset.package到工程Asset目录下即可   
+      ii.通过UPM安装,不过npm源更新较慢  
+      iii.旧版本转移到Unity2019LTS_2021.04.06分支上    
+#### 2.全面适配URP管线工作流  
+#### 3.全面定制Unity Editor环境，升级编辑器操作。更便捷、人性化的开发体验  
+#### 4.全面优化框架启动速度,重构部分远古代码。  
+#### 5.UFlux UI工作流全面升级,更智能的值绑定,更简单的工作流,更方便的自定义扩展.  
+#### 6.更全面的文档  
+#### 7.商业级的Demo加入，后续会开放免费商业级项目开发教程   
+注:所有bug修复和新特性加入会先提交到Master分支。待审核期一个月，稳定则会提交Release版本 
 
 # 依赖的插件(Dependent plugins)
-使用了以下收费插件,请自行购买下载（或问好心群友要） ：  
-**(否则会报错!)**  
-**(否则会报错!)**  
-**(否则会报错!)**  
 The following charging plug-ins are used. Please purchase and download them yourself.  
 <br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
 打包需要配置为：EditorOnly模式  
 
-## v1.1版本计划(v1.0 Plan)
+## v2.1版本计划(v2.1 Plan)
 ### [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)  
 ## 贡献者名单
 [@gaojiexx](https://github.com/gaojiexx)  
@@ -64,7 +68,7 @@ The following charging plug-ins are used. Please purchase and download them your
    而且有一套比较完善的AssetBundle管理机制：图集管理、自动搜集Shader、0冗余打包  
    并且bd做了一套精简版可寻址，无论你的Asset再Streaming或者persistent下，都能自动寻找并且加载  
    
-   **完善的UI工作流:**  
+   **完善的UI工作流UFlux:**  
    BD中有一整套完善的UI工作流(这里我们只对UI逻辑进行管理，不考虑ui制作)，无论你是UGUI NGUI还是其他。  
    我们提供了一套UI管理、值绑定、数据监听、数据流、状态管理等一系列机制.  
    
