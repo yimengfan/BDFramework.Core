@@ -240,7 +240,7 @@ namespace BDFramework.Editor
             //
             if (platform == RuntimePlatform.Android)
             {
-                EditorBuildPackage.BuildAPK();
+                EditorBuildPackage.BuildAPK(buildMode);
                 //上传APK
                 UploadAPK();
             }
