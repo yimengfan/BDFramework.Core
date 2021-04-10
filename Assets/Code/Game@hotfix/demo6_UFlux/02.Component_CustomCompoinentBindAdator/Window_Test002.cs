@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BDFramework.UFlux;
+using BDFramework.UFlux.Collections;
 using BDFramework.UFlux.item;
 using BDFramework.UFlux.View.Props;
 using BDFramework.UI;
@@ -11,25 +12,25 @@ namespace Game.demo6_UFlux
     /// <summary>
     /// props
     /// </summary>
-    public class APropsWindowTest002 : APropsBase
+    public class Props_Test002 : APropsBase
     {
-        [ComponentValueBind("ScrollView",typeof(ScrollRectAdaptor), nameof(ScrollRectAdaptor.Contents))]//数据赋值对象
-        public List<APropsItemTest002>  CotentList =new List<APropsItemTest002>();
+        /// <summary>
+        /// 列表的数据结构
+        /// 容器必须为ComponentList，元素必须为Props
+        /// 
+        /// </summary>
+        [ComponentValueBind("ScrollView",typeof(ScrollRectAdaptor), nameof(ScrollRectAdaptor.ContentMap))]
+        public ComponentList<Props_ItemTest002>  CotentList =new ComponentList<Props_ItemTest002>();
     }
     
     /// <summary>
     /// 窗口2测试
     /// </summary>
     [UI((int)WinEnum.Win_Demo6_Test002,"Windows/UFlux/demo002/Window_FluxTest002")]
-    public class Window_Test002 : AWindow<APropsWindowTest002>
+    public class Window_Test002 : AWindow<Props_Test002>
     {
         public Window_Test002(string path) : base(path)
         {
-        }
-        
-        public override void Init()
-        {
-            base.Init();
         }
 
 
@@ -39,7 +40,7 @@ namespace Game.demo6_UFlux
         [ButtonOnclick("btn_AddItem")]
         private void Onclick_AddItem()
         {
-            var item = new APropsItemTest002();
+            var item = new Props_ItemTest002();
             int id = this.Props.CotentList.Count;
             //填充数据 
             item.ComponentType = typeof(Component_ItemTest002);//该item的组件，用于自动赋值时候用
@@ -51,13 +52,30 @@ namespace Game.demo6_UFlux
             {
                 Debug.Log("购买道具,id:"+  id);
             };
-            item.SetAllPropertyChanged();  //设置所有属性更改
             //
             this.Props.CotentList.Add(item);
-            this.Props.SetPropertyChange(nameof(this.Props.CotentList));//设置属性更改
             this.CommitProps();
         }
 
+        
+        /// <summary>
+        /// 修改Item
+        /// </summary>
+        [ButtonOnclick("btn_ChangeItem")]
+        private void Onclick_ChangeItem()
+        {
+            if(this.Props.CotentList.Count==0)return;
+            //随机修改一个数据
+            var idx = (int)UnityEngine.Random.Range(0, this.Props.CotentList.Count);
+            var item = this.Props.CotentList.Get(idx);
+            var imgIdx = (int)UnityEngine.Random.Range(1,10);
+            item.ItemImg = "Image/" + imgIdx;
+            //设置好修改数据
+            this.Props.CotentList.SetChangedData(item);
+            this.CommitProps();
+        }
+
+        
         /// <summary>
         /// 移除Item
         /// </summary>
@@ -65,9 +83,8 @@ namespace Game.demo6_UFlux
         private void Onclick_RemoveItem()
         {
             if(this.Props.CotentList.Count==0)return;
-            
-            this.Props.CotentList.RemoveAt(this.Props.CotentList.Count-1);
-            this.Props.SetPropertyChange(nameof(this.Props.CotentList));//设置属性更改
+            var idx = (int)UnityEngine.Random.Range(0, this.Props.CotentList.Count);
+            this.Props.CotentList.RemoveAt(idx);
             this.CommitProps();
         }
 

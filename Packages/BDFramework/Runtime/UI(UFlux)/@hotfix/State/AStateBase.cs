@@ -16,11 +16,16 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 属性缓存
         /// </summary>
-        public Dictionary<string, MemberInfo> MemberinfoMap { get; set; } 
-
+        public Dictionary<string, MemberInfo> MemberinfoMap { get; set; }
         public AStateBase( )
         {
         }
+
+        /// <summary>
+        /// 是否手动mark模式
+        /// 只要设置过一次 就是永久手动模式，不会再自动了
+        /// </summary>
+        public bool IsMunalMarkMode { get; private set; } = false;
 
         /// <summary>
         /// 数据源
@@ -98,6 +103,7 @@ namespace BDFramework.UFlux
         /// <param name="name"></param>
         public void SetPropertyChange(string name)
         {
+            IsMunalMarkMode = true;
             changeProptyList.Add(name);
         }
 
@@ -107,6 +113,7 @@ namespace BDFramework.UFlux
         /// <exception cref="NotImplementedException"></exception>
         public void SetAllPropertyChanged()
         {
+            IsMunalMarkMode = true;
             var t = this.GetType();
             var map = StateFactory.GetMemberinfoCache(t);
             var list = map.Keys.ToArray();
@@ -114,7 +121,6 @@ namespace BDFramework.UFlux
             this.changeProptyList.AddRange(list);
         }
 
-        private int curGetIndex = -1;
 
         /// <summary>
         /// 获取变更的属性

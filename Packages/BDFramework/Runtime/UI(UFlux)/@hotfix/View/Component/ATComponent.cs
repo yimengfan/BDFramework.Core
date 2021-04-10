@@ -134,23 +134,20 @@ namespace BDFramework.UFlux
         /// <param name="props"></param>
         public void SetProps(T props)
         {
-            if (props.IsChanged)
-            {
-                this.Props = props;
-                UFlux.SetComponentProps(this.Transform, props);
-            }
+            this.Props = props;
+            this.CommitProps();
         }
 
         /// <summary>
         /// 设置数据
         /// </summary>
-        /// <param name="aPropsBase"></param>
-        public void SetProps(APropsBase aPropsBase)
+        /// <param name="propsBase"></param>
+        public void SetProps(APropsBase propsBase)
         {
-            var t = aPropsBase as T;
+            var t = propsBase as T;
             if (t == null)
             {
-                BDebug.LogError("类型转换失败:" + aPropsBase.GetType().Name);
+                BDebug.LogError("类型转换失败:" + propsBase.GetType().Name);
             }
             else
             {

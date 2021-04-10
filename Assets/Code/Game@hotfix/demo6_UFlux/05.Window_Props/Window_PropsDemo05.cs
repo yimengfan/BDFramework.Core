@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BDFramework.UFlux.Test
 {
-    public class APropsHeroData : APropsBase
+    public class Props_HeroData : APropsBase
     {
         [ComponentValueBind("Hero/Content/t_Name",typeof(Text), nameof(Text.text))]
         public string Name;
@@ -28,7 +28,7 @@ namespace BDFramework.UFlux.Test
     /// 设置props 就能刷新Windows
     /// </summary>
     [UI((int) WinEnum.Win_Demo6_Test005, "Windows/UFlux/demo005/Window_PropsDemo")]
-    public class Window_PropsDemo05 : AWindow<APropsHeroData>
+    public class Window_PropsDemo05 : AWindow<Props_HeroData>
     {
         public Window_PropsDemo05(string path) : base(path)
         {

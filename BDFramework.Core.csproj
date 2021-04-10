@@ -131,7 +131,7 @@
      <Compile Include="E:\Unity2019\BDFramework\Packages\BDFramework\Runtime\Tools\HashHelper.cs" />
      <Compile Include="E:\Unity2019\BDFramework\Packages\BDFramework\Runtime\Tools\IEnumerator\IEnumeratorTool.cs" />
      <Compile Include="E:\Unity2019\BDFramework\Packages\BDFramework\Runtime\Tools\Path.cs" />
-     <Compile Include="E:\Unity2019\BDFramework\Packages\BDFramework\Runtime\UI(UFlux)\@hotfix\Collections\CompnentList.cs" />
+     <Compile Include="E:\Unity2019\BDFramework\Packages\BDFramework\Runtime\UI(UFlux)\@hotfix\Collections\ComponentList.cs" />
      <Compile Include="E:\Unity2019\BDFramework\Packages\BDFramework\Runtime\UI(UFlux)\@hotfix\Extension\ObjectsExtension.cs" />
      <Compile Include="E:\Unity2019\BDFramework\Packages\BDFramework\Runtime\UI(UFlux)\@hotfix\State\AStateBase.cs" />
      <Compile Include="E:\Unity2019\BDFramework\Packages\BDFramework\Runtime\UI(UFlux)\@hotfix\State\IPropertyChange.cs" />

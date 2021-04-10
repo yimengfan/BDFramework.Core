@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using BDFramework.UFlux.Collections;
 using BDFramework.UFlux.View.Props;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,68 +18,68 @@ namespace BDFramework.UFlux
         public override void Init()
         {
             base.Init();
-            this.setPropCustomLogicMap[nameof(ScrollRectAdaptor.Contents)] = SetProp_Contents;
+            this.setPropCustomLogicMap[nameof(ScrollRectAdaptor.ContentMap)] = SetProp_Contents;
         }
 
-        Dictionary<int, ScrollRectAdaptor> srlogicMap = new Dictionary<int, ScrollRectAdaptor>();
+        /// <summary>
+        /// 这里管理所有的这类组件，所以需要map
+        /// </summary>
+        Dictionary<Transform, ScrollRectAdaptor> srlogicMap = new Dictionary<Transform, ScrollRectAdaptor>();
 
         /// <summary>
         /// ScrollView的Content
         /// </summary>
-        /// <param name="value">value必须是list[AStateBase] 类型 </param>
+        /// <param name="value">value必须是ComponentList 类型 </param>
         private void SetProp_Contents(Transform trans, object value)
         {
-            ScrollRectAdaptor srlogic = null;
-            if (!srlogicMap.TryGetValue(trans.GetHashCode(), out srlogic))
+            ScrollRectAdaptor scrollRectAdaptor = null;
+            if (!srlogicMap.TryGetValue(trans, out scrollRectAdaptor))
             {
                 var sr = trans.GetComponent<ScrollRect>();
-                srlogic = new ScrollRectAdaptor(sr);
-                srlogicMap[trans.GetHashCode()] = srlogic;
+                scrollRectAdaptor = new ScrollRectAdaptor(sr);
+                srlogicMap[trans] = scrollRectAdaptor;
             }
-            //遍历Conent进行赋值操作
-            var sourceList = value as IList;
-            //这里做适配演示，
-            //一般ScrollRect不会把所有的数据加载出来
-            var count = Mathf.Max(srlogic.Contents.Count, sourceList.Count);
-            for (int i = 0; i < count; i++)
+
+            //这里用协变能保证一定转型成功
+            var ComtList = value as IComponentList<APropsBase>;
+            /**********************增***********************/
+            var list = ComtList.GetNewDatas();
+            foreach (var props in list)
             {
-                if (i >= sourceList.Count) //现有列表大于新增列表
+                //创建component实例
+                var com = Activator.CreateInstance(props.ComponentType) as IComponent;
+                if (com != null)
                 {
-                    //删除节点
-                    srlogic.Contents[i].Destroy();
-                }
-                else if (i >= srlogic.Contents.Count) //新增模式
-                {
-                    var sourceProp = sourceList[i] as APropsBase;
-                    //创建component实例
-                    var com = Activator.CreateInstance(sourceProp.ComponentType) as IComponent;
-                    if (com != null)
+                    if (com.IsLoad) //同步加载
                     {
-                        if (com.IsLoad) //同步加载
-                        {
-                            //添加组件 
-                            srlogic.AddItem(com);
-                            //更新组件
-                            com.SetProps(sourceProp);
-                        }
-                    }
-                    else
-                    {
-                        BDebug.LogError("【类型出错】该类型不是组件:" + sourceProp.ComponentType);
+                        //添加组件 
+                        scrollRectAdaptor.AddItem(props, com);
+                        //更新组件
+                        com.SetProps(props);
                     }
                 }
-                else //更新模式
+                else
                 {
-                    //TODO 这里更新模式一般不这么强制更新，
-                    //最好自己做算法索引，动态调整item的位置，
-                    //不要每个重新设置
-                    var source = sourceList[i] as APropsBase;
-                    var com = srlogic.GetItem(i);
-                    com.SetProps(source);
+                    BDebug.LogError("【类型出错】该类型不是组件:" + props.ComponentType);
                 }
             }
-            //移除无效component
-            srlogic.RemoveUnInvalidComponent();
+
+            /**********************改***********************/
+            list = ComtList.GetChangedDatas();
+            foreach (var props in list)
+            {
+                //刷新节点
+                var com = scrollRectAdaptor.GetItem(props);
+                com.SetProps(props);
+            }
+
+            /**********************删***********************/
+            list = ComtList.GetRemovedDatas();
+            foreach (var props in list)
+            {
+                //删除节点
+                scrollRectAdaptor.Destroy(props);
+            }
         }
     }
 }

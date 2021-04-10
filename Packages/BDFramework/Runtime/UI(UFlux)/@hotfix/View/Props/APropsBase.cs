@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace BDFramework.UFlux.View.Props
 {
@@ -13,6 +14,10 @@ namespace BDFramework.UFlux.View.Props
         /// 这里是描述ComponentType的类型，
         /// </summary>
         public Type ComponentType { get; set; }= null;
+        /// <summary>
+        /// Props绑定的Transform,一般情况下只做Get
+        /// </summary>
+        public Transform Transform { get; private set; }
 
     }
 }

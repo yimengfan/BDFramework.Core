@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BDFramework.UFlux;
+using BDFramework.UFlux.Collections;
 using BDFramework.UFlux.View.Props;
 using BDFramework.UI;
 using Game.demo6_UFlux;
@@ -15,12 +16,12 @@ namespace Game.demo6_UFlux
         /// 绑定Equipments 所有子元素
         /// </summary>
         [ComponentValueBind("Equipments",typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.ForeachSetChildValue))]
-        public List<APropsDemo003Item> StarItems = new List<APropsDemo003Item>();
+        public ComponentList<PropsDemo003Item> StarItems = new ComponentList<PropsDemo003Item>();
         /// <summary>
         /// 绑定OneNodeChange节点为PropsDemo003Item
         /// </summary>
         [ComponentValueBind("OneNodeChange",typeof(UFluxAutoLogic), nameof(UFluxAutoLogic.SetChildValue))]
-        public APropsDemo003Item OneNodeChange;
+        public PropsDemo003Item OneNodeChange;
         /// <summary>
         /// 值转换成执行逻辑
         /// </summary>
@@ -42,7 +43,7 @@ namespace Game.demo6_UFlux
             this.Props.StarItems.Clear();
             for (int i = 0; i < stars; i++)
             {
-                var item = new APropsDemo003Item();
+                var item = new PropsDemo003Item();
                 item.EquipmentIconPath = "Image/1";
                 item.EquipmentName = "小新" + i + "号";
                 item.SetAllPropertyChanged();
@@ -58,7 +59,7 @@ namespace Game.demo6_UFlux
         {
             int i = Random.Range(1, 6);
 
-            this.Props.OneNodeChange = new APropsDemo003Item();
+            this.Props.OneNodeChange = new PropsDemo003Item();
             this.Props.OneNodeChange.EquipmentIconPath = "Image/" + i;
             this.Props.OneNodeChange.EquipmentName = "小新被刷新:" + i;
             this.Props.OneNodeChange.SetAllPropertyChanged();

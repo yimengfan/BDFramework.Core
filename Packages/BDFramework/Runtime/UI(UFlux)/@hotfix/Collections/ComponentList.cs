@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BDFramework.UFlux.View.Props;
 
 namespace BDFramework.UFlux.Collections
 {
-
-    interface IComponentList<out T> where T : APropsBase
+    public interface IComponentList<out T> where T : APropsBase
     {
         /// <summary>
         /// 是否改变
         /// </summary>
         bool IsChanged { get; }
+
         /// <summary>
         /// 获取新增列表
         /// </summary>
@@ -29,19 +30,67 @@ namespace BDFramework.UFlux.Collections
         /// <returns></returns>
         T[] GetChangedDatas();
     }
+
     /// <summary>
     /// 组件列表的实例
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class CompnentList<T> : List<T> ,IComponentList<T>  where T : APropsBase
+    public class ComponentList<T> : IComponentList<T> where T : APropsBase
     {
+        /// <summary>
+        /// 所有组件的列表，
+        /// 这里暴露只是为了方便遍历，查询
+        /// 不适合直接增删改操作
+        /// </summary>
+        public List<T> BaseList = new List<T>();
 
         /// <summary>
         /// 是否被修改
         /// </summary>
         public bool IsChanged { get; set; }
 
+        #region 数组基本操作重写，防止跨域继承
+
+        /// <summary>
+        /// Count
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return this.BaseList.Count;
+            }
+        }
+
+
+        /// <summary>
+        /// 遍历
+        /// </summary>
+        /// <param name="action"></param>
+        public void Foreach(Action<T> action)
+        {
+            for (int i = 0; i < this.BaseList.Count; i++)
+            {
+                var t = this.BaseList[i];
+                action(t);
+            }
+        }
+
+
+        /// <summary>
+        /// 获取
+        /// </summary>
+        /// <param name="idx"></param>
+        public T Get(int idx)
+        {
+            return this.BaseList[idx];
+        }
+
+        #endregion
+
+
         #region 基本容器操作重写
+
         /// <summary>
         /// 重写添加
         /// </summary>
@@ -50,7 +99,18 @@ namespace BDFramework.UFlux.Collections
         {
             IsChanged = true;
             newDataList.Add(t);
-            base.Add(t);
+            this.BaseList.Add(t);
+        }
+
+
+        /// <summary>
+        /// 设置改变的容器
+        /// </summary>
+        /// <param name="t"></param>
+        public void SetChangedData(T t)
+        {
+            IsChanged = true;
+            changedDataList.Add(t);
         }
 
 
@@ -61,7 +121,7 @@ namespace BDFramework.UFlux.Collections
         new public void Remove(T t)
         {
             IsChanged = true;
-            base.Remove(t);
+            this.BaseList.Remove(t);
             this.removeDataList.Add(t);
         }
 
@@ -73,10 +133,9 @@ namespace BDFramework.UFlux.Collections
         public void RemoveAt(int idx)
         {
             IsChanged = true;
-            this.removeDataList.Add(this[idx]);
-            base.RemoveAt(idx);
+            this.removeDataList.Add(this.BaseList[idx]);
+            this.BaseList.RemoveAt(idx);
         }
-
 
 
         /// <summary>
@@ -85,27 +144,19 @@ namespace BDFramework.UFlux.Collections
         new public void Clear()
         {
             IsChanged = true;
-            this.removeDataList.AddRange(this);
-            base.Clear();
+            this.removeDataList.AddRange(this.BaseList);
+            this.BaseList.Clear();
         }
-        
 
         #endregion
 
-        /// <summary>
-        /// 设置改变的容器
-        /// </summary>
-        /// <param name="t"></param>
-        public void SetChanedData(T t)
-        {
-            IsChanged = true;
-            ChangedDataList.Add(t);
-        }
 
-        private List<T> ChangedDataList = new List<T>();
+        #region 差异数据
+
+        private List<T> changedDataList = new List<T>();
         private List<T> newDataList = new List<T>();
         private List<T> removeDataList = new List<T>();
-        
+
         /// <summary>
         /// 获取新增列表
         /// </summary>
@@ -115,11 +166,11 @@ namespace BDFramework.UFlux.Collections
             var ret = this.newDataList.ToArray();
             this.newDataList.Clear();
 
-            if (this.newDataList.Count == 0 && removeDataList.Count == 0 && ChangedDataList.Count == 0)
+            if (this.newDataList.Count == 0 && removeDataList.Count == 0 && changedDataList.Count == 0)
             {
                 IsChanged = false;
             }
-            
+
             return ret;
         }
 
@@ -132,11 +183,11 @@ namespace BDFramework.UFlux.Collections
             var ret = this.removeDataList.ToArray();
             this.removeDataList.Clear();
 
-            if (this.newDataList.Count == 0 && removeDataList.Count == 0 && ChangedDataList.Count == 0)
+            if (this.newDataList.Count == 0 && removeDataList.Count == 0 && changedDataList.Count == 0)
             {
                 IsChanged = false;
             }
-            
+
             return ret;
         }
 
@@ -146,16 +197,17 @@ namespace BDFramework.UFlux.Collections
         /// <returns></returns>
         public T[] GetChangedDatas()
         {
-            var ret = this.ChangedDataList.ToArray();
-            this.ChangedDataList.Clear();
+            var ret = this.changedDataList.ToArray();
+            this.changedDataList.Clear();
 
-            if (this.newDataList.Count == 0 && removeDataList.Count == 0 && ChangedDataList.Count == 0)
+            if (this.newDataList.Count == 0 && removeDataList.Count == 0 && changedDataList.Count == 0)
             {
                 IsChanged = false;
             }
-            
+
             return ret;
         }
 
+        #endregion
     }
 }

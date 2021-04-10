@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BDFramework.UFlux.item
 {
-    public class APropsItemTest002 : APropsBase
+    public class Props_ItemTest002 : APropsBase
     {
         [ComponentValueBind("img", typeof(Image), nameof(Image.overrideSprite))] //数据赋值对象
         public string ItemImg = "";
@@ -20,7 +20,8 @@ namespace BDFramework.UFlux.item
     }
 
     [Component("Windows/UFlux/demo002/item")]
-    public class Component_ItemTest002 : ATComponent<APropsItemTest002>
+    public class Component_ItemTest002 : ATComponent<Props_ItemTest002>
     {
     }
+    
 }

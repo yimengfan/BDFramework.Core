@@ -62,7 +62,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 设置prop
         /// </summary>
-        /// <param name="aPropsBase"></param>
-        void SetProps(APropsBase aPropsBase);
+        /// <param name="propsBase"></param>
+        void SetProps(APropsBase propsBase);
     }
 }

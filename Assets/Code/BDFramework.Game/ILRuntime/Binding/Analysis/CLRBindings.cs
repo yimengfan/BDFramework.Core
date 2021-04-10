@@ -107,10 +107,9 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_Graphic_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
             UnityEngine_GameObject_Binding.Register(app);
-            System_Collections_ICollection_Binding.Register(app);
-            UnityEngine_Mathf_Binding.Register(app);
-            System_Collections_IList_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_Transform_ILTypeInstance_Binding.Register(app);
             UnityEngine_UI_ScrollRect_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_ILTypeInstance_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_Dictionary_2_String_MemberInfo_Binding.Register(app);
             ILRuntime_Mono_Cecil_MemberReference_Binding.Register(app);
@@ -120,7 +119,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_String_IType_Binding.Register(app);
             ILRuntime_CLR_TypeSystem_IType_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_ILTypeInstance_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Transform_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding.Register(app);
             System_Collections_Generic_List_1_MemberInfo_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MemberInfo_Binding_ValueCollection_Binding.Register(app);
@@ -150,9 +148,9 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_Action_1_String_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_String_Binding.Register(app);
             System_Collections_Generic_List_1_String_Binding_Enumerator_Binding.Register(app);
+            System_Action_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_Action_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_Action_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
-            System_Action_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Queue_1_ILTypeInstance_Binding.Register(app);
 
             ILRuntime.CLR.TypeSystem.CLRType __clrType = null;

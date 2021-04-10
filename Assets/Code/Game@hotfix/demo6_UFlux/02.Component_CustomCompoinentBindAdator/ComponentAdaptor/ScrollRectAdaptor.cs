@@ -5,23 +5,28 @@ using UnityEngine.UI;
 
 namespace BDFramework.UFlux
 {
+    /// <summary>
+    /// 每一个ScrollRect的 Adaptor
+    /// </summary>
     public class ScrollRectAdaptor
     {
         private ScrollRect sr;
+
         public ScrollRectAdaptor(ScrollRect sr)
         {
             this.sr = sr;
         }
-        
-        public List<IComponent> Contents = new List<IComponent>();
+
+        public Dictionary<APropsBase, IComponent> ContentMap { get;private  set; } = new Dictionary<APropsBase, IComponent>();
+
 
         /// <summary>
         /// 添加item
         /// </summary>
-        public void AddItem(IComponent component)
+        public void AddItem(APropsBase propsBase, IComponent component)
         {
             component.Transform.SetParent(this.sr.content, false);
-            this.Contents.Add(component);
+            this.ContentMap[propsBase] = component;
         }
 
         /// <summary>
@@ -29,30 +34,22 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public IComponent GetItem(int index)
+        public IComponent GetItem(APropsBase props)
         {
-            if (index < Contents.Count)
-            {
-                return Contents[index];
-            }
-
-            return null;
+            return ContentMap[props];
         }
 
         /// <summary>
-        /// 移除无效component
+        /// 删除
         /// </summary>
-        public void RemoveUnInvalidComponent()
+        /// <param name="props"></param>
+        public void Destroy(APropsBase props)
         {
 
-            for (int i = Contents.Count-1; i >=0; i--)
-            {
-                var com = Contents[i];
-                if (com.IsDestroy)
-                {
-                    Contents.RemoveAt(i);
-                }
-            }
+            var com = ContentMap[props];
+            com.Destroy();
+            ContentMap.Remove(props);
         }
+        
     }
 }

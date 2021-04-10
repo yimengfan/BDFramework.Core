@@ -10,7 +10,7 @@ namespace BDFramework.UFlux.Test
     /// <summary>
     /// 这里是渲染状态，用以描述页面渲染
     /// </summary>
-    public class APropsHeroData2 : APropsBase
+    public class Props_HeroData2 : APropsBase
     {
         [ComponentValueBind("Hero/Content/t_Name",typeof(Text), nameof(Text.text))]
         public string Name;
@@ -26,7 +26,7 @@ namespace BDFramework.UFlux.Test
     }
 
     [UI((int) WinEnum.Win_Demo6_Test006, "Windows/UFlux/demo006/Window_Reducer")]
-    public class Window_Demo06 : AWindow<APropsHeroData2>
+    public class Window_Demo06 : AWindow<Props_HeroData2>
     {
         public Window_Demo06(string path) : base(path)
         {
@@ -61,13 +61,13 @@ namespace BDFramework.UFlux.Test
             if (server.Name != null && this.Props.Name != server.Name)
             {
                 this.Props.Name = server.Name;
-                this.Props.SetPropertyChange(nameof(APropsHeroData2.Name));
+                this.Props.SetPropertyChange(nameof(Props_HeroData2.Name));
             }
 
             if (this.Props.Hp != server.Hp)
             {
                 this.Props.Hp = server.Hp;
-                this.Props.SetPropertyChange(nameof(APropsHeroData2.Hp));
+                this.Props.SetPropertyChange(nameof(Props_HeroData2.Hp));
                 //这里表现出State不一定跟Props完全一样，
                 //有些ui的渲染状态，需要根据State算出来
                 if (server.Hp < 50)
@@ -79,13 +79,13 @@ namespace BDFramework.UFlux.Test
                     this.Props.HpColor = Color.blue;
                 }
 
-                this.Props.SetPropertyChange(nameof(APropsHeroData2.HpColor));
+                this.Props.SetPropertyChange(nameof(Props_HeroData2.HpColor));
             }
 
             if (this.Props.MaxHp != server.MaxHp)
             {
                 this.Props.MaxHp = server.MaxHp;
-                this.Props.SetPropertyChange(nameof(APropsHeroData2.MaxHp));
+                this.Props.SetPropertyChange(nameof(Props_HeroData2.MaxHp));
             }
 
             //提交修改
