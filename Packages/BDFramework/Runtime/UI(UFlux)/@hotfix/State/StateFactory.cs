@@ -15,7 +15,7 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static Dictionary<string, MemberInfo> GetCache(Type t)
+        public static Dictionary<string, MemberInfo> GetMemberinfoCache(Type t)
         {
             Dictionary<string, MemberInfo> map = null;
             StateCahce.TryGetValue(t, out map);
@@ -28,7 +28,7 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <param name="t"></param>
         /// <param name="map"></param>
-        public static void AddCache(Type t, Dictionary<string, MemberInfo> map)
+        public static void AddMemberinfoCache(Type t, Dictionary<string, MemberInfo> map)
         {
             StateCahce[t] = map;
         }

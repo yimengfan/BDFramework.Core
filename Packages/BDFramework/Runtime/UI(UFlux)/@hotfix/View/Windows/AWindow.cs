@@ -6,7 +6,7 @@ namespace BDFramework.UFlux
     /// <summary>
     /// 窗口基类 不带Props
     /// </summary>
-    public class AWindow: AWindow<PropsBase>
+    public class AWindow: AWindow<NoProps>
     {
         public AWindow(string path) : base(path)
         {

@@ -8,7 +8,7 @@ namespace BDFramework.UFlux
     /// </summary>
     public interface IWindow
     {
-        T1   GetProps<T1>() where T1 : PropsBase, new();
+        T1   GetProps<T1>() where T1 : APropsBase, new();
         void SendMessage(UIMessageData uiMsg);
 
         /// <summary>

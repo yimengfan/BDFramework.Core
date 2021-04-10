@@ -10,11 +10,11 @@
         /// <summary>
         /// 设置所有属性都改变
         /// </summary>
-        void SetAllPropertyChanged();
+        //void SetAllPropertyChanged();
         /// <summary>
         /// 获取改变的属性
         /// </summary>
         /// <returns></returns>
-        string GetChangedProperty();
+        string[] GetChangedPropertise();
     }
 }

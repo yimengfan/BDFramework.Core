@@ -2,6 +2,7 @@
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.Mono.Cecil;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace BDFramework.UFlux
 {
@@ -11,24 +12,37 @@ namespace BDFramework.UFlux
     public class ComponentValueBindAttribute : Attribute
     {
         /// <summary>
-        /// 字段名
+        /// 节点路径
         /// </summary>
-        public string FieldName { get; private set; }
-
+        public string TransformPath { get; private set; }
         /// <summary>
-        /// 绑定UI类
+        /// 绑定UI类type，或者自定义逻辑type
         /// </summary>
-        public Type UIComponentType;
-
+        public Type Type;
+        /// <summary>
+        /// 方法名，
+        /// 用以修改 Tranform或者ui值的方法
+        /// </summary>
+        public string FunctionName { get; private set; }
+        
+        /// <summary>
+        /// 组件
+        /// </summary>
+        public UIBehaviour UIBehaviour { get; private set; }
+        /// <summary>
+        /// 节点
+        /// </summary>
+        public Transform Transform { get; private set; }
         /// <summary>
         /// 构造函数
         /// 热更Attr不支持基础类型以外
         /// </summary>
         /// <param name="uiType"></param>
-        /// <param name="fieldName"></param>
-        public ComponentValueBindAttribute(Type uiType, string fieldName)
+        /// <param name="functionName"></param>
+        public ComponentValueBindAttribute(string transformPath, Type uiType, string functionName)
         {
-            this.FieldName = fieldName;
+            this.FunctionName = functionName;
+            this.TransformPath = transformPath;
             //这里故意让破坏优化 ilrbug
             var ot = (object) uiType;
             string typeFullname = "";
@@ -43,8 +57,7 @@ namespace BDFramework.UFlux
             
 
             var type = ComponentBindAdaptorManager.Inst.GetBindComponentType(typeFullname);
-            this.UIComponentType = type;
-
+            this.Type = type;
             if (type == null)
             {
                 BDebug.LogError("ComponentBindAdaptor不存在:" +  typeFullname);

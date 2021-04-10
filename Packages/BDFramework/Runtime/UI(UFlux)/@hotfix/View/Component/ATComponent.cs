@@ -7,23 +7,23 @@ using UnityEngine;
 
 namespace BDFramework.UFlux
 {
-    abstract  public class ATComponent<T> : IComponent where T : PropsBase, new()
+    abstract public class ATComponent<T> : IComponent where T : APropsBase, new()
     {
-        
         /// <summary>
         /// 当前组件所有状态集合
         /// </summary>
         protected T Props { get; private set; }
-        
+
         /// <summary>
         /// 资源节点
         /// </summary>
         public Transform Transform { get; private set; }
-        
+
         /// <summary>
         /// 是否加载
         /// </summary>
         public bool IsLoad { get; private set; } = false;
+
         /// <summary>
         /// 是否打开
         /// </summary>
@@ -47,6 +47,7 @@ namespace BDFramework.UFlux
             {
                 return;
             }
+
             this.resPath = attr.Path;
             //创建State
             this.Props = new T();
@@ -56,7 +57,7 @@ namespace BDFramework.UFlux
                 this.Load();
             }
         }
-        
+
         /// <summary>
         /// 构造
         /// </summary>
@@ -66,8 +67,9 @@ namespace BDFramework.UFlux
             this.Transform = trans;
             //创建State
             this.Props = new T();
-            UFlux.SetTransformPath(this);
+            UFlux.InitComponent(this);
         }
+
         /// <summary>
         /// 这里重载一个构造函数
         /// </summary>
@@ -79,7 +81,6 @@ namespace BDFramework.UFlux
             this.Props = new T();
         }
 
-   
 
         private string resPath = null;
 
@@ -88,12 +89,13 @@ namespace BDFramework.UFlux
         /// </summary>
         public void Load()
         {
-            if (resPath == null) return;
+            if (resPath == null)
+                return;
 
             var o = UFlux.Load<GameObject>(resPath);
             this.Transform = GameObject.Instantiate(o).transform;
             this.IsLoad = true;
-            UFlux.SetTransformPath(this);
+            UFlux.InitComponent(this);
             //初始化
             this.Init();
         }
@@ -103,14 +105,15 @@ namespace BDFramework.UFlux
         /// 异步加载
         /// </summary>
         /// <param name="callback"></param>
-        public void AsyncLoad(Action callback=null)
+        public void AsyncLoad(Action callback = null)
         {
-            if (resPath == null) return;
+            if (resPath == null)
+                return;
             UFlux.AsyncLoad<GameObject>(resPath, obj =>
             {
                 this.Transform = GameObject.Instantiate(obj).transform;
                 this.IsLoad = true;
-                UFlux.SetTransformPath(this);
+                UFlux.InitComponent(this);
                 //初始化
                 Init();
                 if (callback != null)
@@ -125,31 +128,29 @@ namespace BDFramework.UFlux
 
         #region 状态处理
 
-
         /// <summary>
         /// 设置数据，全局只能通过这个接口设置数据
         /// </summary>
         /// <param name="props"></param>
         public void SetProps(T props)
         {
-            if (props.IsChanged())
+            if (props.IsChanged)
             {
                 this.Props = props;
-                UFlux.SetComponentValue(this.Transform, props);
+                UFlux.SetComponentProps(this.Transform, props);
             }
-          
         }
 
         /// <summary>
         /// 设置数据
         /// </summary>
-        /// <param name="propsBase"></param>
-        public void SetProps(PropsBase propsBase)
+        /// <param name="aPropsBase"></param>
+        public void SetProps(APropsBase aPropsBase)
         {
-            var t = propsBase as T;
+            var t = aPropsBase as T;
             if (t == null)
             {
-                BDebug.LogError("类型转换失败:" +propsBase.GetType().Name);
+                BDebug.LogError("类型转换失败:" + aPropsBase.GetType().Name);
             }
             else
             {
@@ -160,30 +161,24 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 提交状态
         /// </summary>
-        protected void CommitProps(bool isAllPrpertyChanged =false)
+        protected void CommitProps()
         {
-            if (isAllPrpertyChanged)
-            {
-                this.Props.SetAllPropertyChanged();
-            }
-            
-            if (this.Props.IsChanged())
-            {
-                UFlux.SetComponentValue(this.Transform, this.Props);
-            }
+            UFlux.SetComponentProps(this.Transform, this.Props);
         }
+
         #endregion
-        
-        
+
+
         #region 生命周期
+
         /// <summary>
         /// 初始化
         /// </summary>
         virtual public void Init()
         {
             //初始化所有成员变量
-           
         }
+
         /// <summary>
         /// 打开
         /// </summary>
@@ -202,17 +197,14 @@ namespace BDFramework.UFlux
             this.Transform.gameObject.SetActive(false);
         }
 
-        
+
         /// <summary>
         /// 帧驱动
         /// </summary>
         virtual public void Update()
         {
-            
         }
 
-
- 
 
         /// <summary>
         /// 删除

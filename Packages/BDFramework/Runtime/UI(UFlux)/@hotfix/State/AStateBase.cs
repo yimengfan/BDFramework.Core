@@ -13,35 +13,13 @@ namespace BDFramework.UFlux
     /// </summary>
     abstract public class AStateBase : IState, IPropertyChange
     {
-        Dictionary<string, MemberInfo> propMap = new Dictionary<string, MemberInfo>();
+        /// <summary>
+        /// 属性缓存
+        /// </summary>
+        public Dictionary<string, MemberInfo> MemberinfoMap { get; set; } 
 
-        public AStateBase()
+        public AStateBase( )
         {
-            var t = this.GetType();
-            var cache = StateFactory.GetCache(t);
-            if (cache == null)
-            {
-                List<MemberInfo> list = new List<MemberInfo>();
-                var flag = BindingFlags.Instance | BindingFlags.Public;
-                list.AddRange(t.GetFields(flag));
-                list.AddRange(t.GetProperties(flag));
-                //缓存所有属性
-                propMap = new Dictionary<string, MemberInfo>();
-                foreach (var mi in list)
-                {
-                    var attr = mi.GetAttributeInILRuntime<TransformPathAttribute>();
-                    if (attr!=null)
-                    {
-                        propMap[mi.Name] = mi;
-                    }
-                }
-
-                StateFactory.AddCache(t, propMap);
-            }
-            else
-            {
-                propMap = cache;
-            }
         }
 
         /// <summary>
@@ -57,7 +35,7 @@ namespace BDFramework.UFlux
         public object GetValue(string fieldName)
         {
             MemberInfo mi = null;
-            if (this.propMap.TryGetValue(fieldName, out mi))
+            if (this.MemberinfoMap.TryGetValue(fieldName, out mi))
             {
                 if (mi is FieldInfo)
                 {
@@ -78,7 +56,7 @@ namespace BDFramework.UFlux
         public void SetValue(string fieldName, object o)
         {
             MemberInfo mi = null;
-            if (this.propMap.TryGetValue(fieldName, out mi))
+            if (this.MemberinfoMap.TryGetValue(fieldName, out mi))
             {
                 if (mi is FieldInfo)
                 {
@@ -96,10 +74,23 @@ namespace BDFramework.UFlux
 
         #region 值监听
 
+        
+        /// <summary>
+        /// 是否发生改变
+        /// </summary>
+        /// <returns></returns>
+        public bool IsChanged
+        {
+            get
+            {
+                return this.changeProptyList.Count > 0;
+            }
+          
+        }
         /// <summary>
         /// 属性改变的回调
         /// </summary>
-        private List<string> curProptyChangeList = new List<string>();
+        private List<string> changeProptyList = new List<string>();
 
         /// <summary>
         /// 设置属性改变
@@ -107,7 +98,7 @@ namespace BDFramework.UFlux
         /// <param name="name"></param>
         public void SetPropertyChange(string name)
         {
-            curProptyChangeList.Add(name);
+            changeProptyList.Add(name);
         }
 
         /// <summary>
@@ -117,41 +108,35 @@ namespace BDFramework.UFlux
         public void SetAllPropertyChanged()
         {
             var t = this.GetType();
-            var map = StateFactory.GetCache(t);
+            var map = StateFactory.GetMemberinfoCache(t);
             var list = map.Keys.ToArray();
-            this.curProptyChangeList.Clear();
-            this.curProptyChangeList.AddRange(list);
+            this.changeProptyList.Clear();
+            this.changeProptyList.AddRange(list);
         }
-        
+
         private int curGetIndex = -1;
+
         /// <summary>
         /// 获取变更的属性
         /// </summary>
         /// <returns></returns>
-        public string GetChangedProperty()
+        public string[] GetChangedPropertise()
         {
-            curGetIndex = curGetIndex+1;
-            //
-            if (curProptyChangeList.Count == 0 || curGetIndex == curProptyChangeList.Count)
-            {
-                curGetIndex=-1;
-                curProptyChangeList.Clear();
-                return null;
-            }
-            //获取
-            var name = curProptyChangeList[curGetIndex];
-            return name;
+            var ret = changeProptyList.ToArray();
+            changeProptyList.Clear();
+            return ret;
         }
+
 
         /// <summary>
-        /// 是否发生改变
+        /// 获取所有的属性
         /// </summary>
         /// <returns></returns>
-        public bool IsChanged()
+        public string[] GetAllPropertise()
         {
-            return this.curProptyChangeList.Count > 0 && curGetIndex < curProptyChangeList.Count;
+            return MemberinfoMap.Keys.ToArray();
         }
-
+        
         #endregion
 
         /// <summary>

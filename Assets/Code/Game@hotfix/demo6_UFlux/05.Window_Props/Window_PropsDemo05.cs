@@ -7,22 +7,18 @@ using UnityEngine.UI;
 
 namespace BDFramework.UFlux.Test
 {
-    public class Props_HeroData : PropsBase
+    public class APropsHeroData : APropsBase
     {
-        [TransformPath("Hero/Content/t_Name")]
-        [ComponentValueBind(typeof(Text), nameof(Text.text))]
+        [ComponentValueBind("Hero/Content/t_Name",typeof(Text), nameof(Text.text))]
         public string Name;
-
-        [TransformPath("Hero/Content/t_Hp")]
-        [ComponentValueBind(typeof(Text), nameof(Text.text))]
+        
+        [ComponentValueBind("Hero/Content/t_Hp",typeof(Text), nameof(Text.text))]
         public int Hp;
-
-        [TransformPath("Hero/Content/t_MaxHp")]
-        [ComponentValueBind(typeof(Text), nameof(Text.text))]
+        
+        [ComponentValueBind("Hero/Content/t_MaxHp",typeof(Text), nameof(Text.text))]
         public int MaxHp;
-
-        [TransformPath("Hero/Content/t_Hp")]
-        [ComponentValueBind(typeof(Text), nameof(Text.color))]
+        
+        [ComponentValueBind("Hero/Content/t_Hp",typeof(Text), nameof(Text.color))]
         public Color HpColor;
     }
 
@@ -32,7 +28,7 @@ namespace BDFramework.UFlux.Test
     /// 设置props 就能刷新Windows
     /// </summary>
     [UI((int) WinEnum.Win_Demo6_Test005, "Windows/UFlux/demo005/Window_PropsDemo")]
-    public class Window_PropsDemo05 : AWindow<Props_HeroData>
+    public class Window_PropsDemo05 : AWindow<APropsHeroData>
     {
         public Window_PropsDemo05(string path) : base(path)
         {
@@ -65,7 +61,7 @@ namespace BDFramework.UFlux.Test
                 this.Props.HpColor = Color.blue;
             }
 
-            this.CommitProps(true);
+            this.CommitProps();
         }
     }
 }

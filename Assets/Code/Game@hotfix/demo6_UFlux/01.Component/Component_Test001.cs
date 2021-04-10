@@ -7,23 +7,21 @@ using UnityEngine.UI;
 
 namespace Game.demo6_UFlux
 {
-    public class Props_Test001 : PropsBase
+    public class APropsTest001 : APropsBase
     {
         //这里进行数据的绑定
-        [TransformPath("chatbox/head")]  //节点
-        [ComponentValueBind(  typeof(Image),nameof(Image.overrideSprite))]//数据赋值对象
+        [ComponentValueBind( "chatbox/head", typeof(Image),nameof(Image.overrideSprite))]//数据赋值对象
         public string headImg = "";
         
         //这里进行数据的绑定
-        [TransformPath("chatbox/content")] //节点
-        [ComponentValueBind(typeof(Text),nameof(Text.text))]//数据赋值对象
+        [ComponentValueBind("chatbox/content",typeof(Text),nameof(Text.text))]//数据赋值对象
         public string content = "";
 
     }
     
     //这里是Component标签，用以创建时候进行绑定Transform
     [Component("Windows/UFlux/demo001/Component_test01",false)] 
-    public class Component_Test001 : ATComponent<Props_Test001>
+    public class Component_Test001 : ATComponent<APropsTest001>
     {
         public override void Open()
         {
@@ -52,6 +50,7 @@ namespace Game.demo6_UFlux
                 //这里对当前数据进行赋值
                 this.Props.headImg = "Image/" + (int)Random.Range(1f, 10.9f);
                 this.Props.content = contentList[(int) Random.Range(0f, contentList.Count)];
+                //这里是手动设置修改版本
                 //设置属性修改
                 this.Props.SetPropertyChange(nameof(this.Props.headImg));
                 this.Props.SetPropertyChange(nameof(this.Props.content));

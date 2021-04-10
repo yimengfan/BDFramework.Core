@@ -18,7 +18,7 @@ namespace BDFramework.UFlux
     /// 不带Flux Store
     /// </summary>
     /// <typeparam name="TProp"></typeparam>
-    public class AWindow<TProp> : ATComponent<TProp>, IWindow, IUIMessage where TProp : PropsBase, new()
+    public class AWindow<TProp> : ATComponent<TProp>, IWindow, IUIMessage where TProp : APropsBase, new()
     {
         public AWindow(string path) : base(path)
         {
@@ -42,7 +42,7 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <typeparam name="T1"></typeparam>
         /// <exception cref="NotImplementedException"></exception>
-        public TProp GetProps<TProp>() where TProp : PropsBase, new()
+        public TProp GetProps<TProp>() where TProp : APropsBase, new()
         {
             return this.Props as TProp;
         }
