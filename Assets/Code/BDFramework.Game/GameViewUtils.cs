@@ -37,7 +37,7 @@ public static class GameViewUtils
     }
 
 #if UNITY_5_3_OR_NEWER && UNITY_EDITOR
-    [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.AfterSceneLoad)]
+   // [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.AfterSceneLoad)]
 #endif
     public static void Set1080p()
     {
