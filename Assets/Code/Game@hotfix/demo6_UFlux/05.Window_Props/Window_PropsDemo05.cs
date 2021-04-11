@@ -27,7 +27,7 @@ namespace BDFramework.UFlux.Test
     /// Props=》Windows 的演示
     /// 设置props 就能刷新Windows
     /// </summary>
-    [UI((int) WinEnum.Win_Demo6_Test005, "Windows/UFlux/demo005/Window_PropsDemo")]
+    [UI((int) WinEnum.Win_UFlux_Test005, "Windows/UFlux/demo005/Window_PropsDemo")]
     public class Window_PropsDemo05 : AWindow<Props_HeroData>
     {
         public Window_PropsDemo05(string path) : base(path)

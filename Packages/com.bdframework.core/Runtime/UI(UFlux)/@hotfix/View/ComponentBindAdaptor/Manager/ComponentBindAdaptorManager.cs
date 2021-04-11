@@ -288,9 +288,9 @@ namespace BDFramework.UFlux
                             }
                         }
                     }
-                    else if (newFieldValue is IComponentList<APropsBase>)
+                    else if (newFieldValue is IPropsList)
                     {
-                        var comList = newFieldValue as IComponentList<APropsBase>;
+                        var comList = newFieldValue as IPropsList;
                         if (comList.IsChanged)
                         {
                             isChanged = true;

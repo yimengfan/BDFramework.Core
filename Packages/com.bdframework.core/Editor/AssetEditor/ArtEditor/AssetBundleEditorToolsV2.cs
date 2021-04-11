@@ -199,7 +199,10 @@ namespace BDFramework.Editor.Asset
                         }
                         else
                         {
-                            Debug.LogError("获取GUID失败：" + dependAssetName);
+                            if (dependAssetName == "shaders.ab")
+                            {
+                                Debug.LogError("获取GUID失败：" + dependAssetName);
+                            }
                         }
                         
                     }

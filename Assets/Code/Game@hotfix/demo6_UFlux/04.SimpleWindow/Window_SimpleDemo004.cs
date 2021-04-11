@@ -14,7 +14,7 @@ namespace BDFramework.UFlux.UFluxTest004
     /// 可以基于这个做任何逻辑，
     /// 不强制使用flux
     /// </summary>
-    [UI((int) WinEnum.Win_Demo6_Test004, "Windows/UFlux/demo004/Window_SimpleWindow")]
+    [UI((int) WinEnum.Win_UFlux_Test004, "Windows/UFlux/demo004/Window_SimpleWindow")]
     public class Window_SimpleDemo004 : AWindow
     {
         public Window_SimpleDemo004(string path) : base(path)
@@ -53,7 +53,7 @@ namespace BDFramework.UFlux.UFluxTest004
         {
             var msg = new UIMessageData(WinMsg.testMsg, "我是一个测试消息");
 
-            UIManager.Inst.SendMessage(WinEnum.Win_Demo6_Test004, msg);
+            UIManager.Inst.SendMessage(WinEnum.Win_UFlux_Test004, msg);
         }
 
         [ButtonOnclick("btn_Close")]

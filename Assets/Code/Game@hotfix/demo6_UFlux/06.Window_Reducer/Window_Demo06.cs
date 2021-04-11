@@ -25,7 +25,7 @@ namespace BDFramework.UFlux.Test
         public Color HpColor;
     }
 
-    [UI((int) WinEnum.Win_Demo6_Test006, "Windows/UFlux/demo006/Window_Reducer")]
+    [UI((int) WinEnum.Win_UFlux_Test006, "Windows/UFlux/demo006/Window_Reducer")]
     public class Window_Demo06 : AWindow<Props_HeroData2>
     {
         public Window_Demo06(string path) : base(path)

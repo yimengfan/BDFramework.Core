@@ -60,12 +60,12 @@ public class Window_DemoMain : AWindow
     private void btn_04()
     {
         //测试多个接口
-        var list = new List<int>() {(int) WinEnum.Win_Demo6};
+        var list = new List<int>() {(int) WinEnum.Win_UFlux};
         UIManager.Inst.AsyncLoadWindows(list, (i, j) =>
         {
             //log
             BDebug.LogFormat("加载进度:{0}-{1}", i, j);
-            UIManager.Inst.ShowWindow(WinEnum.Win_Demo6);
+            UIManager.Inst.ShowWindow(WinEnum.Win_UFlux);
         });
     }
 
