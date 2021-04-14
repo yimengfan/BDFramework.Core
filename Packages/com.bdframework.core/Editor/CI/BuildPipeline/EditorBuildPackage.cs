@@ -142,7 +142,10 @@ namespace BDFramework.Editor
             PlayerSettings.keystorePass =  BDFrameEditorConfigHelper.EditorConfig.Android.keystorePass;
             PlayerSettings.Android.keyaliasName= BDFrameEditorConfigHelper.EditorConfig.Android.keyaliasName;
             PlayerSettings.keyaliasPass =  BDFrameEditorConfigHelper.EditorConfig.Android.keyaliasPass;
-            PlayerSettings.stripEngineCode = false;
+            //具体安卓的配置
+            PlayerSettings.gcIncremental                    = true;
+            PlayerSettings.stripEngineCode                  = false;
+            PlayerSettings.Android.preferredInstallLocation = AndroidPreferredInstallLocation.Auto;
             //
             var outdir = BDApplication.ProjectRoot + "/Build";
             var outputPath = IPath.Combine(  outdir,  Application.productName+".apk");
@@ -165,7 +168,8 @@ namespace BDFramework.Editor
             BuildOptions opa = BuildOptions.None;
             if (mode == BuildMode.Debug)
             {
-                opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging;
+                opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging|
+                      BuildOptions.ConnectWithProfiler| BuildOptions.EnableDeepProfilingSupport;
             }
             else if(mode == BuildMode.Release)
             {
@@ -176,10 +180,10 @@ namespace BDFramework.Editor
             if (File.Exists(outputPath))
             {
                 Debug.Log( "Build Success :" + outputPath);
+                EditorUtility.RevealInFinder(Path.GetDirectoryName(outputPath));
             }
             else
             {
-
                 Debug.LogError(new Exception("Build Fail! Please Check the log! "));
             }
         }
