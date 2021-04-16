@@ -180,7 +180,7 @@ namespace BDFramework.Editor
             if (File.Exists(outputPath))
             {
                 Debug.Log( "Build Success :" + outputPath);
-                EditorUtility.RevealInFinder(Path.GetDirectoryName(outputPath));
+                EditorUtility.RevealInFinder(outputPath);
             }
             else
             {
