@@ -12,16 +12,16 @@ namespace BDFramework.UFlux.Test
     /// </summary>
     public class Props_HeroData2 : APropsBase
     {
-        [ComponentValueBind("Hero/Content/t_Name",typeof(Text), nameof(Text.text))]
+        [ComponentValueBind("Hero/Content/t_Name", typeof(Text), nameof(Text.text))]
         public string Name;
-        
-        [ComponentValueBind("Hero/Content/t_Hp",typeof(Text), nameof(Text.text))]
+
+        [ComponentValueBind("Hero/Content/t_Hp", typeof(Text), nameof(Text.text))]
         public int Hp;
-        
-        [ComponentValueBind("Hero/Content/t_MaxHp",typeof(Text), nameof(Text.text))]
+
+        [ComponentValueBind("Hero/Content/t_MaxHp", typeof(Text), nameof(Text.text))]
         public int MaxHp;
-        
-        [ComponentValueBind("Hero/Content/t_Hp",typeof(Text), nameof(Text.color))]
+
+        [ComponentValueBind("Hero/Content/t_Hp", typeof(Text), nameof(Text.color))]
         public Color HpColor;
     }
 
@@ -47,7 +47,6 @@ namespace BDFramework.UFlux.Test
                 StateToProps(s);
             });
         }
-
         /// <summary>
         /// 这个是根据逻辑State
         /// 转化为渲染Props的部分
@@ -57,37 +56,19 @@ namespace BDFramework.UFlux.Test
         /// <param name="server"></param>
         public void StateToProps(Server_HeroData server)
         {
-            //下面逻辑 可以写个函数 批量判断
-            if (server.Name != null && this.Props.Name != server.Name)
+           
+            this.Props.Hp    = server.Hp;
+            this.Props.MaxHp = server.MaxHp;
+            //这里表现出State不一定跟Props完全一样，
+            //有些ui的渲染状态，需要根据State算出来
+            if (server.Hp < 50)
             {
-                this.Props.Name = server.Name;
-                this.Props.SetPropertyChange(nameof(Props_HeroData2.Name));
+                this.Props.HpColor = Color.red;
             }
-
-            if (this.Props.Hp != server.Hp)
+            else
             {
-                this.Props.Hp = server.Hp;
-                this.Props.SetPropertyChange(nameof(Props_HeroData2.Hp));
-                //这里表现出State不一定跟Props完全一样，
-                //有些ui的渲染状态，需要根据State算出来
-                if (server.Hp < 50)
-                {
-                    this.Props.HpColor = Color.red;
-                }
-                else
-                {
-                    this.Props.HpColor = Color.blue;
-                }
-
-                this.Props.SetPropertyChange(nameof(Props_HeroData2.HpColor));
+                this.Props.HpColor = Color.blue;
             }
-
-            if (this.Props.MaxHp != server.MaxHp)
-            {
-                this.Props.MaxHp = server.MaxHp;
-                this.Props.SetPropertyChange(nameof(Props_HeroData2.MaxHp));
-            }
-
             //提交修改
             this.CommitProps();
         }
