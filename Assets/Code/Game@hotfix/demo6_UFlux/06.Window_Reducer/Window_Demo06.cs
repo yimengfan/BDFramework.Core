@@ -56,7 +56,8 @@ namespace BDFramework.UFlux.Test
         /// <param name="server"></param>
         public void StateToProps(Server_HeroData server)
         {
-           
+
+           // this.Props.Name  = server.Name;
             this.Props.Hp    = server.Hp;
             this.Props.MaxHp = server.MaxHp;
             //这里表现出State不一定跟Props完全一样，

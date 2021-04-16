@@ -240,9 +240,12 @@ namespace BDFramework.UFlux
                 {
                     var fieldName = item.Key;
                     var newFieldValue = newProps.GetValue(fieldName);
-                
                     //旧数据为null 直接加入
-                    if (item.Value.LastValue == null)
+                    if (newFieldValue == null)
+                    {
+                        continue;
+                    }
+                    else if (item.Value.LastValue == null)
                     {
                         item.Value.LastValue = newFieldValue;
                         changedFiledList.Add(fieldName);
@@ -257,6 +260,10 @@ namespace BDFramework.UFlux
                         {
                             isChanged = true;
                         }
+                    }
+                    else if(newFieldValue ==null)
+                    {
+                        continue;
                     }
                     else if (newFieldValue is APropsBase) //成员属性尽量使用手动版本设置改变
                     {
