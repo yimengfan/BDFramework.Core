@@ -127,7 +127,11 @@ namespace BDFramework.AssetHelper
             else
             {
                 //删除persistent下的pdb防止跟dll不匹配
-                File.Delete(persistentDLLPath +".pdb");
+                var pbdPath= persistentDLLPath +".pdb";
+                if(File.Exists(pbdPath))
+                {
+                    File.Delete(pbdPath);
+                }
             }
             //复制Sql
             var persistentSQLPath = string.Format("{0}/{1}", persistent, SqliteLoder.DBPATH);
