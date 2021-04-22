@@ -28,12 +28,15 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{};
             method = type.GetMethod("get_IsOpen", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, get_IsOpen_1);
+            args = new Type[]{};
+            method = type.GetMethod("get_DatabasePath", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_DatabasePath_2);
             args = new Type[]{typeof(System.Type)};
             method = type.GetMethod("DropTableByType", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, DropTableByType_2);
+            app.RegisterCLRMethodRedirection(method, DropTableByType_3);
             args = new Type[]{typeof(System.Type), typeof(SQLite4Unity3d.CreateFlags)};
             method = type.GetMethod("CreateTableByType", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, CreateTableByType_3);
+            app.RegisterCLRMethodRedirection(method, CreateTableByType_4);
             Dictionary<string, List<MethodInfo>> genericMethods = new Dictionary<string, List<MethodInfo>>();
             List<MethodInfo> lst = null;                    
             foreach(var m in type.GetMethods())
@@ -56,7 +59,7 @@ namespace ILRuntime.Runtime.Generated
                     if(m.MatchGenericParameters(args, typeof(System.Int32)))
                     {
                         method = m.MakeGenericMethod(args);
-                        app.RegisterCLRMethodRedirection(method, DropTable_4);
+                        app.RegisterCLRMethodRedirection(method, DropTable_5);
 
                         break;
                     }
@@ -70,7 +73,7 @@ namespace ILRuntime.Runtime.Generated
                     if(m.MatchGenericParameters(args, typeof(System.Int32), typeof(SQLite4Unity3d.CreateFlags)))
                     {
                         method = m.MakeGenericMethod(args);
-                        app.RegisterCLRMethodRedirection(method, CreateTable_5);
+                        app.RegisterCLRMethodRedirection(method, CreateTable_6);
 
                         break;
                     }
@@ -78,10 +81,10 @@ namespace ILRuntime.Runtime.Generated
             }
             args = new Type[]{typeof(System.Collections.IEnumerable)};
             method = type.GetMethod("InsertAll", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, InsertAll_6);
+            app.RegisterCLRMethodRedirection(method, InsertAll_7);
             args = new Type[]{typeof(System.Object)};
             method = type.GetMethod("Insert", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Insert_7);
+            app.RegisterCLRMethodRedirection(method, Insert_8);
 
 
         }
@@ -127,7 +130,22 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* DropTableByType_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_DatabasePath_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            SQLite4Unity3d.SQLiteConnection instance_of_this_method = (SQLite4Unity3d.SQLiteConnection)typeof(SQLite4Unity3d.SQLiteConnection).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = instance_of_this_method.DatabasePath;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* DropTableByType_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -148,7 +166,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* CreateTableByType_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* CreateTableByType_4(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -173,7 +191,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* DropTable_4(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* DropTable_5(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -190,7 +208,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* CreateTable_5(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* CreateTable_6(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -211,7 +229,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* InsertAll_6(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* InsertAll_7(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -232,7 +250,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* Insert_7(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* Insert_8(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;

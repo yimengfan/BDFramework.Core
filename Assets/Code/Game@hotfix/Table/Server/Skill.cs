@@ -5,7 +5,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Game.Data
+namespace Game.Data.Server
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace Game.Data
         /// 技能
         /// </summary>
         [PrimaryKey]
-        public double Id {get;set;}
+        public int Id {get;set;}
         /// <summary>
         /// 技能名
         /// </summary>
@@ -27,7 +27,7 @@ namespace Game.Data
         /// <summary>
         /// 下一级ID
         /// </summary>
-        public double NextLevelID {get;set;}
+        public int NextLevelID {get;set;}
         /// <summary>
         /// 是否被动技能
         /// </summary>
@@ -35,19 +35,19 @@ namespace Game.Data
         /// <summary>
         /// Buff列表
         /// </summary>
-        public List<double> Buffs {get;set;}
+        public int[] Buffs {get;set;}
         /// <summary>
         /// 攻击单位
         /// </summary>
-        public double AttackNum {get;set;}
+        public int AttackNum {get;set;}
         /// <summary>
         /// 攻击系数
         /// </summary>
-        public List<double> AttackRatio {get;set;}
+        public float[] AttackRatio {get;set;}
         /// <summary>
         /// 攻击次数
         /// </summary>
-        public double AttackCount {get;set;}
+        public int AttackCount {get;set;}
         /// <summary>
         /// 图标
         /// </summary>
@@ -63,6 +63,6 @@ namespace Game.Data
         /// <summary>
         /// 特效类型
         /// </summary>
-        public double EffectType {get;set;}
+        public int EffectType {get;set;}
     }
 }

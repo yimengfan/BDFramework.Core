@@ -81,7 +81,7 @@ namespace BDFramework.Editor.TableData
         /// <param name="Header">表头行数</param>
         public void ConvertToJson(string JsonPath, Encoding encoding)
         {
-            var json = GetJson();
+            var json = GetJson(DBType.Local);
             //写入文件
             using (FileStream fileStream = new FileStream(JsonPath, FileMode.Create, FileAccess.Write))
             {
@@ -93,11 +93,29 @@ namespace BDFramework.Editor.TableData
         }
 
         /// <summary>
+        /// 后补的接口，适配旧的调用
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="IdX"></param>
+        /// <param name="IdY"></param>
+        /// <returns></returns>
+        public string GetJson(DBType dbType)
+        {
+            int x    = -1;
+            int y    = -1;
+            var list = new List<object>();
+            var json = GetJson( dbType.ToString(), ref x, ref y , ref  list);
+            return json;
+        }
+
+        /// <summary>
         /// 获取json
         /// </summary>
         /// <returns></returns>
-        public string GetJson()
+        public string GetJson(string tableName ,ref int IdX ,ref int IdY ,ref List<object> keepFieldList)
         {
+            IdX = -1;
+            IdY = -1;
             //判断Excel文件中是否存在数据表
             if (mResultSet.Tables.Count < 1)
                 return "";
@@ -108,67 +126,123 @@ namespace BDFramework.Editor.TableData
             //判断数据表内是否存在数据
             if (mSheet.Rows.Count < 1)
                 return "";
-
-            //读取数据表行数和列数
-            int rowCount = mSheet.Rows.Count;
-            int colCount = mSheet.Columns.Count;
-
             //准备一个列表存储整个表的数据
             List<Dictionary<string, object>> table = new List<Dictionary<string, object>>();
-
-
+            /************Keep * Mode 保留带*的行列 ********************/
+            /*   server |      |   *   |
+             *   local  |  *   |   *   |
+             *          | Id   |   xxx |
+             *     *    | 1    |       |
+             *     *    | 2    |       |
+             *
+             * 带*的行列保留
+             */
+            List<object> serverRowDatas = new List<object>();
+            List<object> localRowDatas  = new List<object>();
+            List<object> fieldRowDatas  = new List<object>();
             //第一行为备注，
             //寻找到id字段行数，以下全为数据
-            int skipLineCount = -1;
-            for (int i = 1; i < 10; i++)
+            int          skipRowCount   = -1;
+            int          skipColCount   = -1;
+            for (int i = 0; i < 10 && skipColCount == -1; i++)
             {
-                var list = this.GetLine(i);
-                if (list[0].Equals("Id"))
+                var rows = this.GetRowDatas(i);
+                //判断是否为Skip模式
+                if (rows[0].ToString().ToLower().Equals("server"))
                 {
-                    skipLineCount = i;
-                    break;
+                    serverRowDatas = rows;
+                }
+                else if(rows[0].ToString().ToLower().Equals("local"))
+                {
+                    localRowDatas = rows;
+                }
+                //遍历rows
+                for (int j = 0; j < rows.Count; j++)
+                {
+                    if (rows[j].Equals("Id"))
+                    {
+                        skipRowCount  = i;
+                        skipColCount  = j;
+                        fieldRowDatas = rows;
+                        break;
+                    }
                 }
             }
-
-            if (skipLineCount == -1)
+            if (skipRowCount == -1)
             {
               Debug.LogError("表格数据可能有错,没发现Id字段,请检查");
               return "{}";
             }
+            IdX           = skipColCount;
+            IdY           = skipRowCount ;
+            keepFieldList = new List<object>();
+            if (tableName == "Local")
+            {
+                keepFieldList = localRowDatas;
+            }
+            else if(tableName == "Server")
+            {
+                keepFieldList = serverRowDatas;
+            }
 
-            //
+            bool isKeepStarMode = false;
+            if (keepFieldList.Count > 0)
+            {
+                isKeepStarMode = true;
+            }
+            
             //读取数据
-            for (int i = skipLineCount + 1; i < rowCount; i++)
+            for (int i = skipRowCount + 1; i < mSheet.Rows.Count; i++)
             {
                 //准备一个字典存储每一行的数据
                 Dictionary<string, object> row = new Dictionary<string, object>();
-                for (int j = 0; j < colCount; j++)
+     
+                for (int j = skipColCount; j < mSheet.Columns.Count; j++)
                 {
-                    //读取第1行数据作为表头字段
-                    string field = mSheet.Rows[skipLineCount][j].ToString();
+                    string field = fieldRowDatas[j].ToString();
                     //跳过空字段
-                    if (string.IsNullOrEmpty(field))
+                    if (string.IsNullOrEmpty(field) )
                     {
                         continue;
                     }
+                    //根据*保留字段
+                    if (keepFieldList.Count > 0)
+                    {
+                        if (!keepFieldList[j].Equals("*"))
+                        {
+                            continue;
+                        }
+                    }
+                    //根据*保留记录
+                    if (isKeepStarMode)
+                    {
+                        if (!mSheet.Rows[i][0].Equals("*"))
+                        {
+                            continue;
+                        }
+                    }
+                    
                     //Key-Value对应
                     var rowdata = mSheet.Rows[i][j];
-                    //跳过空ID
-                    if (field == "Id" && rowdata == null)
+                    
+                    //根据null判断
+                    if (rowdata == null)
                     {
+                        Debug.LogErrorFormat("表格数据为空：[{0},{1}]",i,j);
                         continue;
                     }
                     row[field] = rowdata;
                 }
 
                 //添加到表数据中
-                table.Add(row);
+                if (row.Count > 0)
+                {
+                    table.Add(row);
+                }
             }
 
             //生成Json字符串
-          
             string json =  JsonMapper.ToJson(table);
-
             json = json.Replace("\"[", "[").Replace("]\"", "]");
             json = json.Replace("\\\"", "\"");
             json = json.Replace("\"\"\"\"", "\"\"");
@@ -177,7 +251,12 @@ namespace BDFramework.Editor.TableData
             return json;
         }
 
-        public List<object> GetLine(int index)
+        /// <summary>
+        /// 获取一行数据
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public List<object> GetRowDatas(int index)
         {
             List<object> list = new List<object>();
 
@@ -191,18 +270,12 @@ namespace BDFramework.Editor.TableData
             //判断数据表内是否存在数据
             if (mSheet.Rows.Count < 1)
                 return list;
-
-            //读取数据表行数和列数
-            int rowCount = mSheet.Rows.Count;
-            int colCount = mSheet.Columns.Count;
-
             //读取数据
-
+            int colCount = mSheet.Columns.Count;
             for (int j = 0; j < colCount; j++)
             {
-                //读取第1行数据作为表头字段
-                string field = mSheet.Rows[index][j].ToString();
-                list.Add(field);
+                object item = mSheet.Rows[index][j];
+                list.Add(item);
             }
 
 

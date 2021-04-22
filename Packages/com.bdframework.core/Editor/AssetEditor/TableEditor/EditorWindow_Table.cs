@@ -14,7 +14,7 @@ namespace BDFramework.Editor.TableData
             if (GUILayout.Button("表格导出成Sqlite", GUILayout.Width(300), GUILayout.Height(30)))
             {
                 //3.打包表格
-                Excel2SQLiteTools.ALLExcel2SQLite(Application.streamingAssetsPath,Application.platform);
+                Excel2SQLiteTools.AllExcel2SQLite(Application.streamingAssetsPath,Application.platform);
                 Excel2SQLiteTools.CopySqlToOther(Application.streamingAssetsPath,Application.platform);
             }
 

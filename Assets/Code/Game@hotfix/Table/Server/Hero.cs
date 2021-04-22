@@ -5,7 +5,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Game.Data
+namespace Game.Data.Server
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace Game.Data
         /// id
         /// </summary>
         [PrimaryKey]
-        public double Id {get;set;}
+        public int Id {get;set;}
         /// <summary>
         /// 名称
         /// </summary>
@@ -31,22 +31,22 @@ namespace Game.Data
         /// <summary>
         /// 星级
         /// </summary>
-        public double StarLevel {get;set;}
+        public int StarLevel {get;set;}
         /// <summary>
         /// 下个等级
         /// </summary>
-        public double NextLevel {get;set;}
+        public int NextLevel {get;set;}
         /// <summary>
         /// 属性名
         /// </summary>
-        public List<string> AttributeName {get;set;}
+        public string[] AttributeName {get;set;}
         /// <summary>
         /// 属性值
         /// </summary>
-        public List<double> AttributeValue {get;set;}
+        public int[] AttributeValue {get;set;}
         /// <summary>
         /// 拥有技能id
         /// </summary>
-        public List<double> Skills {get;set;}
+        public int[] Skills {get;set;}
     }
 }

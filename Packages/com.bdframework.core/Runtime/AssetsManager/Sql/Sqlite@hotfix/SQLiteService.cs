@@ -18,6 +18,7 @@ namespace BDFramework.Sql
         //db connect
         private SQLiteConnection Connection { get; set; }
 
+        
 
         /// <summary>
         /// 是否关闭
@@ -31,10 +32,21 @@ namespace BDFramework.Sql
         }
 
         /// <summary>
+        /// DB路径
+        /// </summary>
+        public string DBPath
+        {
+            get
+            {
+                return this.Connection.DatabasePath;
+            }
+        }
+
+        /// <summary>
         /// 创建db
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void CreateDB<T>()
+        public void CreateTable<T>()
         {
             Connection.DropTable<T>();
             Connection.CreateTable<T>();
@@ -44,7 +56,7 @@ namespace BDFramework.Sql
         /// 创建db
         /// </summary>
         /// <param name="t"></param>
-        public void CreateDB(Type t)
+        public void CreateTable(Type t)
         {
             Connection.DropTableByType(t);
             Connection.CreateTableByType(t);

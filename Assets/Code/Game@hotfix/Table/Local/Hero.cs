@@ -5,52 +5,48 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Game.Data
+namespace Game.Data.Local
 {
     using System;
     using System.Collections.Generic;
     using SQLite4Unity3d;
     
     [Serializable()]
-    public class BuffTest
+    public class Hero
     {
         
         /// <summary>
-        /// buffid
+        /// id
         /// </summary>
         [PrimaryKey]
         public int Id {get;set;}
         /// <summary>
-        /// buff类型
+        /// 名称
         /// </summary>
-        public int BuffType {get;set;}
+        public string Name {get;set;}
         /// <summary>
-        /// 冷却时间（回合）
+        /// 级别
         /// </summary>
-        public int CD {get;set;}
+        public string Level {get;set;}
         /// <summary>
-        /// 持续时间（回合）
+        /// 星级
         /// </summary>
-        public int LifeTime {get;set;}
+        public int StarLevel {get;set;}
         /// <summary>
-        /// 描述
+        /// 下个等级
         /// </summary>
-        public string Des {get;set;}
+        public int NextLevel {get;set;}
         /// <summary>
-        /// 参数列表，字符串类型
+        /// 属性名
         /// </summary>
-        public string[] Params_StrValue {get;set;}
+        public string[] AttributeName {get;set;}
         /// <summary>
-        /// 公式
+        /// 属性值
         /// </summary>
-        public List<string> Params_Expression {get;set;}
+        public int[] AttributeValue {get;set;}
         /// <summary>
-        /// 参数列表，数值类型(固定数值)
+        /// 拥有技能id
         /// </summary>
-        public int[] Params_NumValue {get;set;}
-        /// <summary>
-        /// 显示特效
-        /// </summary>
-        public string Effect {get;set;}
+        public int[] Skills {get;set;}
     }
 }

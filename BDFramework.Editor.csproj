@@ -67,7 +67,7 @@
      <Compile Include="F:\BDFramework.Core\Packages\com.bdframework.core\Editor\AssetEditor\SriptEditor\ScriptBuildTools.cs" />
      <Compile Include="F:\BDFramework.Core\Packages\com.bdframework.core\Editor\AssetEditor\SriptEditor\StripCode.cs" />
      <Compile Include="F:\BDFramework.Core\Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\EditorWindow_Table.cs" />
-     <Compile Include="F:\BDFramework.Core\Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\Excel2Code.cs" />
+     <Compile Include="F:\BDFramework.Core\Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\Excel2CodeTools.cs" />
      <Compile Include="F:\BDFramework.Core\Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\Excel2SQLiteTools.cs" />
      <Compile Include="F:\BDFramework.Core\Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\ExcelImporter.cs" />
      <Compile Include="F:\BDFramework.Core\Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\ExcelTools.cs" />

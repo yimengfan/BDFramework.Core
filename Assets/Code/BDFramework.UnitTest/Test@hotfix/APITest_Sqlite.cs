@@ -22,8 +22,8 @@ namespace Tests
             var h3 = new APITestHero() {Id = 3};
 
             
-            SqliteLoder.LoadOnEditor(Application.streamingAssetsPath,Application.platform);
-            SqliteHelper.DB.CreateDB<APITestHero>();
+            SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath,Application.platform);
+            SqliteHelper.DB.CreateTable<APITestHero>();
             SqliteHelper.DB.InsertTable(new List<APITestHero>() {h1, h2, h3});
         }
 

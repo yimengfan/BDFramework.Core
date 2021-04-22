@@ -78,7 +78,6 @@ namespace SQLite4Unity3d
         /// is open
         /// </summary>
         public bool IsOpen { get { return _open; } }
-
         // Dictionary of synchronization objects.
         //
         // To prevent database disruption, a database file must be accessed *synchronously*.

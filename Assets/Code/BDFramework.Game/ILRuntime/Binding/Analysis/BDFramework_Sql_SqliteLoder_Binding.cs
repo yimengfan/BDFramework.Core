@@ -23,8 +23,8 @@ namespace ILRuntime.Runtime.Generated
             Type[] args;
             Type type = typeof(BDFramework.Sql.SqliteLoder);
             args = new Type[]{typeof(System.String), typeof(UnityEngine.RuntimePlatform)};
-            method = type.GetMethod("LoadOnEditor", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, LoadOnEditor_0);
+            method = type.GetMethod("LoadLocalDBOnEditor", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, LoadLocalDBOnEditor_0);
             args = new Type[]{};
             method = type.GetMethod("Close", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Close_1);
@@ -36,7 +36,7 @@ namespace ILRuntime.Runtime.Generated
         }
 
 
-        static StackObject* LoadOnEditor_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* LoadLocalDBOnEditor_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -51,7 +51,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.Sql.SqliteLoder.LoadOnEditor(@root, @platform);
+            BDFramework.Sql.SqliteLoder.LoadLocalDBOnEditor(@root, @platform);
 
             return __ret;
         }

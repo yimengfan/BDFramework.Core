@@ -15,6 +15,7 @@ using BDFramework.ResourceMgr;
 using BDFramework.UFlux;
 using BDFramework.VersionContrller;
 using Game;
+using Game.Data.Local;
 using Game.demo_EventManager;
 using Game.demo6_UFlux;
 
