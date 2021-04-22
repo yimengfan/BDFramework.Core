@@ -48,8 +48,6 @@ namespace BDFramework.Editor.TableData
                 if (!Directory.Exists(dir)) continue;
 
                 tableRoot.Add(dir);
-
-                Debug.Log("寻找到table目录：" + dir);
             }
 
             //table发现

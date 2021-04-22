@@ -35,14 +35,12 @@ namespace BDFramework.Editor.TableData
         public List<T> ConvertToList<T>()
         {
             //判断Excel文件中是否存在数据表
-            if (mResultSet.Tables.Count < 1)
-                return null;
+            if (mResultSet.Tables.Count < 1) return null;
             //默认读取第一个数据表
             DataTable mSheet = mResultSet.Tables[0];
 
             //判断数据表内是否存在数据
-            if (mSheet.Rows.Count < 1)
-                return null;
+            if (mSheet.Rows.Count < 1) return null;
 
             //读取数据表行数和列数
             int rowCount = mSheet.Rows.Count;
@@ -104,7 +102,7 @@ namespace BDFramework.Editor.TableData
             int x    = -1;
             int y    = -1;
             var list = new List<object>();
-            var json = GetJson( dbType.ToString(), ref x, ref y , ref  list);
+            var json = GetJson(dbType.ToString(), ref x, ref y, ref list);
             return json;
         }
 
@@ -112,20 +110,18 @@ namespace BDFramework.Editor.TableData
         /// 获取json
         /// </summary>
         /// <returns></returns>
-        public string GetJson(string tableName ,ref int IdX ,ref int IdY ,ref List<object> keepFieldList)
+        public string GetJson(string tableName, ref int IdX, ref int IdY, ref List<object> keepFieldList)
         {
             IdX = -1;
             IdY = -1;
             //判断Excel文件中是否存在数据表
-            if (mResultSet.Tables.Count < 1)
-                return "";
+            if (mResultSet.Tables.Count < 1) return "";
 
             //默认读取第一个数据表
             DataTable mSheet = mResultSet.Tables[0];
 
             //判断数据表内是否存在数据
-            if (mSheet.Rows.Count < 1)
-                return "";
+            if (mSheet.Rows.Count < 1) return "";
             //准备一个列表存储整个表的数据
             List<Dictionary<string, object>> table = new List<Dictionary<string, object>>();
             /************Keep * Mode 保留带*的行列 ********************/
@@ -142,20 +138,38 @@ namespace BDFramework.Editor.TableData
             List<object> fieldRowDatas  = new List<object>();
             //第一行为备注，
             //寻找到id字段行数，以下全为数据
-            int          skipRowCount   = -1;
-            int          skipColCount   = -1;
-            for (int i = 0; i < 10 && skipColCount == -1; i++)
+            int skipRowCount = -1;
+            int skipColCount = -1;
+            for (int i = 0; i < 10; i++)
             {
                 var rows = this.GetRowDatas(i);
+                if (rows.Count == 0)
+                {
+                    break;
+                }
                 //判断是否为Skip模式
                 if (rows[0].ToString().ToLower().Equals("server"))
                 {
                     serverRowDatas = rows;
                 }
-                else if(rows[0].ToString().ToLower().Equals("local"))
+                else if (rows[0].ToString().ToLower().Equals("local"))
                 {
                     localRowDatas = rows;
                 }
+            }
+            //这里skip 防止有人在 备注行直接输入id
+            int skipLine = 1;
+            if (serverRowDatas.Count > 0)
+            {
+                skipLine = 3;
+            }
+            else
+            {
+                Debug.Log("【无server local模式】");
+            }
+            for (int i = skipLine; i < 10 && skipColCount == -1; i++)
+            {
+                var rows = this.GetRowDatas(i);
                 //遍历rows
                 for (int j = 0; j < rows.Count; j++)
                 {
@@ -168,19 +182,22 @@ namespace BDFramework.Editor.TableData
                     }
                 }
             }
+
+
             if (skipRowCount == -1)
             {
-              Debug.LogError("表格数据可能有错,没发现Id字段,请检查");
-              return "{}";
+                Debug.LogError("表格数据可能有错,没发现Id字段,请检查");
+                return "{}";
             }
+
             IdX           = skipColCount;
-            IdY           = skipRowCount ;
+            IdY           = skipRowCount;
             keepFieldList = new List<object>();
             if (tableName == "Local")
             {
                 keepFieldList = localRowDatas;
             }
-            else if(tableName == "Server")
+            else if (tableName == "Server")
             {
                 keepFieldList = serverRowDatas;
             }
@@ -190,21 +207,22 @@ namespace BDFramework.Editor.TableData
             {
                 isKeepStarMode = true;
             }
-            
+
             //读取数据
             for (int i = skipRowCount + 1; i < mSheet.Rows.Count; i++)
             {
                 //准备一个字典存储每一行的数据
                 Dictionary<string, object> row = new Dictionary<string, object>();
-     
+
                 for (int j = skipColCount; j < mSheet.Columns.Count; j++)
                 {
                     string field = fieldRowDatas[j].ToString();
                     //跳过空字段
-                    if (string.IsNullOrEmpty(field) )
+                    if (string.IsNullOrEmpty(field))
                     {
                         continue;
                     }
+
                     //根据*保留字段
                     if (keepFieldList.Count > 0)
                     {
@@ -213,6 +231,7 @@ namespace BDFramework.Editor.TableData
                             continue;
                         }
                     }
+
                     //根据*保留记录
                     if (isKeepStarMode)
                     {
@@ -221,16 +240,17 @@ namespace BDFramework.Editor.TableData
                             continue;
                         }
                     }
-                    
+
                     //Key-Value对应
                     var rowdata = mSheet.Rows[i][j];
-                    
+
                     //根据null判断
                     if (rowdata == null)
                     {
-                        Debug.LogErrorFormat("表格数据为空：[{0},{1}]",i,j);
+                        Debug.LogErrorFormat("表格数据为空：[{0},{1}]", i, j);
                         continue;
                     }
+
                     row[field] = rowdata;
                 }
 
@@ -242,7 +262,7 @@ namespace BDFramework.Editor.TableData
             }
 
             //生成Json字符串
-            string json =  JsonMapper.ToJson(table);
+            string json = JsonMapper.ToJson(table);
             json = json.Replace("\"[", "[").Replace("]\"", "]");
             json = json.Replace("\\\"", "\"");
             json = json.Replace("\"\"\"\"", "\"\"");
@@ -262,14 +282,16 @@ namespace BDFramework.Editor.TableData
 
             //判断Excel文件中是否存在数据表
             if (mResultSet.Tables.Count < 1)
+            {
                 return list;
-
+            }
             //默认读取第一个数据表
             DataTable mSheet = mResultSet.Tables[0];
-
             //判断数据表内是否存在数据
-            if (mSheet.Rows.Count < 1)
+            if (mSheet.Rows.Count <= index)
+            {
                 return list;
+            }
             //读取数据
             int colCount = mSheet.Columns.Count;
             for (int j = 0; j < colCount; j++)
@@ -288,15 +310,13 @@ namespace BDFramework.Editor.TableData
         public void ConvertToCSV(string CSVPath, Encoding encoding)
         {
             //判断Excel文件中是否存在数据表
-            if (mResultSet.Tables.Count < 1)
-                return;
+            if (mResultSet.Tables.Count < 1) return;
 
             //默认读取第一个数据表
             DataTable mSheet = mResultSet.Tables[0];
 
             //判断数据表内是否存在数据
-            if (mSheet.Rows.Count < 1)
-                return;
+            if (mSheet.Rows.Count < 1) return;
 
             //读取数据表行数和列数
             int rowCount = mSheet.Rows.Count;
@@ -334,15 +354,13 @@ namespace BDFramework.Editor.TableData
         public void ConvertToXml(string XmlFile)
         {
             //判断Excel文件中是否存在数据表
-            if (mResultSet.Tables.Count < 1)
-                return;
+            if (mResultSet.Tables.Count < 1) return;
 
             //默认读取第一个数据表
             DataTable mSheet = mResultSet.Tables[0];
 
             //判断数据表内是否存在数据
-            if (mSheet.Rows.Count < 1)
-                return;
+            if (mSheet.Rows.Count < 1) return;
 
             //读取数据表行数和列数
             int rowCount = mSheet.Rows.Count;

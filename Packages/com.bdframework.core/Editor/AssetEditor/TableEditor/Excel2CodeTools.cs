@@ -78,6 +78,7 @@ Excel格式如下:
         /// <param name="filename"></param>
         static private void GenClassByExcel(string filename, string dbType)
         {
+            Debug.LogFormat("[{0}]正在生成：" + filename, dbType);
             var          excel         = new ExcelUtility(filename);
             int          idX           = -1;
             int          idY           = -1;
@@ -85,6 +86,12 @@ Excel格式如下:
             string       json          = excel.GetJson(dbType, ref idX, ref idY, ref keepFieldList);
             if (idX != -1 && idY != -1)
             {
+                if (idY < 2)
+                {
+                    Debug.LogErrorFormat("【生成失败】 {0} ,请检查表头预留3行:备注，类型，字段名!"  ,Path.GetFileName(filename));
+                    return;
+                }
+
                 //这里将前三列进行判断
                 var statements = excel.GetRowDatas(idY - 2);
                 var fieldTypes = excel.GetRowDatas(idY - 1);
@@ -92,7 +99,10 @@ Excel格式如下:
                 {
                     statements.RemoveRange(0, idX);
                     fieldTypes.RemoveRange(0, idX);
-                    keepFieldList.RemoveRange(0, idX);
+                    if (keepFieldList.Count > 0)
+                    {
+                        keepFieldList.RemoveRange(0, idX);
+                    }
                 }
 
                 if (keepFieldList.Count > 0)
@@ -108,7 +118,7 @@ Excel格式如下:
                 }
                 
                 Json2Class(filename, json, dbType, statements, fieldTypes);
-                Debug.LogFormat("<color=red> [{0} class] </color>：{1}", dbType, filename);
+                Debug.LogFormat("<color=red> [{0} 成功] </color>：{1}", dbType, filename);
             }
             else
             {
