@@ -304,6 +304,8 @@ namespace BDFramework.UFlux
                 {
                     Debug.LogErrorFormat("UI处于[unload,lock,open]状态之一：{0}", uiIndex);
                 }
+
+                AddToHistory(index.GetHashCode());
             }
             else
             {
@@ -311,7 +313,24 @@ namespace BDFramework.UFlux
             }
         }
 
-
+        /// <summary>
+        /// 历史列表
+        /// </summary>
+        public List<int> HistoryList { get; private set; } = new List<int>();
+        
+        /// <summary>
+        /// 添加到历史
+        /// </summary>
+        /// <param name="idx"></param>
+        private void AddToHistory(int idx)
+        {
+            HistoryList.Add(idx);
+            if (HistoryList.Count > 10)
+            {
+                HistoryList.RemoveAt(0);
+            }
+        }
+        
         /// <summary>
         /// 获取一个窗口
         /// </summary>
