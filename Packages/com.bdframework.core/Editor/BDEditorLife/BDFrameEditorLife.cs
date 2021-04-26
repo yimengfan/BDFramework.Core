@@ -44,7 +44,7 @@ namespace BDFramework.Editor.EditorLife
         {
             if (state == PlayModeStateChange.ExitingPlayMode)
             {
-                InitEditorFrame();
+                InitFrameEditor();
             }
         }
 
@@ -58,16 +58,23 @@ namespace BDFramework.Editor.EditorLife
                 return;
             }
 
-            InitEditorFrame();
+            InitFrameEditor();
         }
 
-        static public void InitEditorFrame()
+        /// <summary>
+        /// 初始化框架编辑器
+        /// </summary>
+        static public void InitFrameEditor()
         {
             //BD生命周期启动
             BDApplication.Init();
             BDFrameEditorConfigHelper.Init();
             //编辑器下加载初始化
             BResources.Load(AssetLoadPath.Editor);
+            //初始化DLL
+            var gAssembly = Assembly.LoadFile(BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll");
+            var eAssemlby = Assembly.LoadFile(BDApplication.Library +"/ScriptAssemblies/Assembly-CSharp-Editor.dll");
+            RegisterMainProjectAssembly(gAssembly, eAssemlby);
         }
 
 
@@ -76,7 +83,7 @@ namespace BDFramework.Editor.EditorLife
         /// <summary>
         /// 游戏逻辑的Assembly
         /// </summary>
-        static public Type[] Types { get; set; }
+        static public Type[] Types { get; set; } = new Type[] { };
 
         /// <summary>
         /// 外部注册主工程的Assembly
