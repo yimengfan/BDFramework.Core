@@ -114,7 +114,16 @@ namespace BDFramework.Editor.TableData
         {
             var excel = new ExcelUtility(filePath);
             var json  = excel.GetJson(dbType);
-            Json2Sqlite(filePath, json);
+            try
+            {
+                Json2Sqlite(filePath, json);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                EditorUtility.ClearProgressBar();
+            }
+          
         }
 
         #endregion
@@ -135,6 +144,10 @@ namespace BDFramework.Editor.TableData
             var type       = BDFrameEditorLife.Types.FirstOrDefault((t) => t.FullName.StartsWith(@namespace) && t.Name.ToLower() == table.ToLower());
             if (type == null)
             {
+                type = BDFrameEditorLife.Types.FirstOrDefault((t) => t.FullName.StartsWith( "Game.Data.") && t.Name.ToLower() == table.ToLower());
+            }
+            if (type == null)
+            {
                 Debug.LogError(table + "类不存在，请检查!");
                 return;
             }
@@ -145,11 +158,12 @@ namespace BDFramework.Editor.TableData
             SqliteHelper.DB.CreateTable(type);
             for (int i = 0; i < jsonObj.Count; i++)
             {
-                var _json = jsonObj[i].ToJson();
-                var jo    = JsonMapper.ToObject(type, _json);
+               
                 try
                 {
-                    SqliteHelper.DB.Insert(jo);
+                    var j = jsonObj[i].ToJson();
+                    var jobj    = JsonMapper.ToObject(type, j);
+                    SqliteHelper.DB.Insert(jobj);
                 }
                 catch
                 {
