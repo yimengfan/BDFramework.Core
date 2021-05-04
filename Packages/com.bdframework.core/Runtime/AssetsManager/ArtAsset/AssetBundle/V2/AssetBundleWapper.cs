@@ -66,27 +66,6 @@ namespace BDFramework.ResourceMgr.V2
 
         #endregion
 
-        #region 引用计数
 
-        public int Counter { get; private set; }
-
-        public void Use()
-        {
-            Counter++;
-        }
-
-        public void Unuse()
-        {
-            Counter--;
-            if (Counter <= 0)
-            {
-                if (AssetBundle)
-                {
-                    AssetBundle.Unload(true);
-                }
-            }
-        }
-
-        #endregion
     }
 }
