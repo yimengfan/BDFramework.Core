@@ -184,12 +184,16 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         var outputPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
         //游戏工程的Bind
         Action<bool> mainProjectIlrBindAction = null;
-        var type = BDFrameEditorLife.Types.FirstOrDefault((t) => t.FullName == "Game.ILRuntime.GameLogicILRBinding");
+        var type = BDFrameEditorLife.Types.FirstOrDefault((t) => t.FullName == "Game.ILRuntime.GameLogicCLRBinding");
         if (type != null)
         {
             var method = type.GetMethod("Bind", BindingFlags.Public | BindingFlags.Static);
             Delegate bindDelegate = Delegate.CreateDelegate(typeof(Action<bool>), null, method);
             mainProjectIlrBindAction = bindDelegate as Action<bool>;
+        }
+        else
+        {
+            Debug.LogError("Not find CLRBinding logic!!!");
         }
         //注册
         ILRuntimeHelper.LoadHotfix(dllpath, mainProjectIlrBindAction, false);

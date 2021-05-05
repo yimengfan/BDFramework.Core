@@ -25,10 +25,10 @@ namespace BDFramework
         /// </summary>
         /// <param name="dllPath"></param>
         /// <param name="gamelogicBindAction">游戏逻辑测注册</param>
-        /// <param name="isDoClrBinding"></param>
+        /// <param name="isDoCLRBinding"></param>
         public static void LoadHotfix(string dllPath,
             Action<bool> gamelogicBindAction = null,
-            bool isDoClrBinding = true)
+            bool isDoCLRBinding = true)
         {
             //
             IsRunning = true;
@@ -55,7 +55,7 @@ namespace BDFramework
             AppDomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
 #endif
             //
-            gamelogicBindAction?.Invoke(isDoClrBinding);
+            gamelogicBindAction?.Invoke(isDoCLRBinding);
             //
             JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);
             if (BDLauncher.Inst != null && BDLauncher.Inst.GameConfig.IsDebuggerILRuntime)
