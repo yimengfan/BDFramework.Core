@@ -42,9 +42,7 @@ The following charging plug-ins are used. Please purchase and download them your
 #### 6.更全面的文档  
 #### 7.商业级的Demo加入，后续会开放免费商业级项目开发教程   
 
-## V1版本：框架特点(Feature)
-  <img src="./BDTemp/Img/OneKeyBuild.png" width = "300" height = "200" div align=center />  
-  
+## V1版本：框架特点(Feature)   
   **·TDD工作流、完整的测试用例:**  
   完整的测试用例，保证框架的稳定。  
   
