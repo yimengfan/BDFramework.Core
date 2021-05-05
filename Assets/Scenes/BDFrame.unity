@@ -361,7 +361,7 @@ MonoBehaviour:
     CodeRunMode: 0
     AssetBundleManagerVersion: 1
     IsDebuggerILRuntime: 0
-    IsDebugLog: 0
+    IsDebugLog: 1
     IsExcuteHotfixUnitTest: 0
     FileServerUrl: 192.168.8.68
     GateServerIp: 

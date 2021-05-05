@@ -19,7 +19,7 @@ namespace BDFramework.UnitTest
         /// </summary>
         public void RunUnitTest()
         {
-            BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(), GameLogicILRBinding.Bind);
+            BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(), GameLogicCLRBinding.Bind);
         }
     }
 }

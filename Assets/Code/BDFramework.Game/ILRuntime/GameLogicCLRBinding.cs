@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.ILRuntime
 {
-    static public class GameLogicILRBinding
+    static public class GameLogicCLRBinding
     {
         /// <summary>
         /// 主工程的绑定
@@ -29,6 +29,7 @@ namespace Game.ILRuntime
                 CLRBindings.Initialize(AppDomain);
                 ManualCLRBindings.Initialize(AppDomain);
                 //PreCLRBinding.Initialize(AppDomain);
+                BDebug.Log("[ILRuntime] CLR Binding Success!!!");
             }
         }
     }
