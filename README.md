@@ -62,7 +62,7 @@ The following charging plug-ins are used. Please purchase and download them your
    代码、资源、表格一键打包,版本管理自动下载  
 
    
-   **完善的资源管理系统，一套API各平台自动切换：**
+   **完善的资源管理系统，一套API各平台自动切换：**  
    BD抛弃了Resources目录，并且保留的用户Resources的开发习惯.  
    一套API自动切换，兼容AB和Editor模式.  
    而且有一套比较完善的AssetBundle管理机制：图集管理、自动搜集Shader、0冗余打包  
@@ -71,6 +71,7 @@ The following charging plug-ins are used. Please purchase and download them your
    **完善的UI工作流UFlux:**  
    BD中有一整套完善的UI工作流(这里我们只对UI逻辑进行管理，不考虑ui制作)，无论你是UGUI NGUI还是其他。  
    我们提供了一套UI管理、值绑定、数据监听、数据流、状态管理等一系列机制.  
+   V2中添加了DI相关支持
    
    **SQL化表格管理:**   
    BD中用Sqlite进行管理表格,并且提供了excel2code，excel2json，excel2sqlite等工具  
