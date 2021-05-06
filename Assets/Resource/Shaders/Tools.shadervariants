@@ -13,6 +13,11 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+  - first: {fileID: 4800000, guid: 62873910d2c8cdc4a8e7e4b49ecfe37e, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
   - first: {fileID: 4800000, guid: 695d1040af68751498cff7b572bd19bd, type: 3}
     second:
       variants:
@@ -340,6 +345,11 @@ ShaderVariantCollection:
       - keywords: 
         passType: 0
   - first: {fileID: 4800000, guid: e205247465b2db84db02910becd7a33a, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: a5d7a784372567a469e1b498c7bdd697, type: 3}
     second:
       variants:
       - keywords: 
@@ -1183,6 +1193,11 @@ ShaderVariantCollection:
       - keywords: 
         passType: 0
   - first: {fileID: 4800000, guid: da07703fcc09f8d4799221050659bd55, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: d053233f84bf8c047bef2431d30a7eb7, type: 3}
     second:
       variants:
       - keywords: 
