@@ -28,7 +28,8 @@ The following charging plug-ins are used. Please purchase and download them your
 [@gaojiexx](https://github.com/gaojiexx)  
 [@ricashao](https://github.com/ricashao)  
 如果需要项目方案定制、技术方案定制、技术培训,可以联系 QQ:755737878  
-
+### Demo：  
+九宫棋（带一套技能buff处理）:https://gitee.com/yimengfan/TheCatChess  
 ### v2.1版本计划: [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)   
  ##  V2版本已经发布!  
 #### 1.全面升级为UPM管理:  
