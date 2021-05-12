@@ -472,6 +472,9 @@
  <Reference Include="Debug.log">
  <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Plugins/Debug/Debug.log.dll</HintPath>
  </Reference>
+ <Reference Include="ILRuntim.Mono.Cecil">
+ <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
+ </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Mdb">
  <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
  </Reference>
@@ -480,9 +483,6 @@
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>F:/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
- </Reference>
- <Reference Include="ILRuntim.Mono.Cecil">
- <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Unity3d/2019.4.24f1c1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

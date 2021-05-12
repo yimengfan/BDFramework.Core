@@ -367,6 +367,9 @@
  <Reference Include="Debug.log">
  <HintPath>F:/BDFramework.Core/Packages/com.bdframework.core/Plugins/Debug/Debug.log.dll</HintPath>
  </Reference>
+ <Reference Include="ILRuntim.Mono.Cecil">
+ <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
+ </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Mdb">
  <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
  </Reference>
@@ -375,9 +378,6 @@
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>F:/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
- </Reference>
- <Reference Include="ILRuntim.Mono.Cecil">
- <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>F:/BDFramework.Core/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
