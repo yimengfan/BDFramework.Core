@@ -36,6 +36,7 @@ The following charging plug-ins are used. Please purchase and download them your
       i.拷贝github中Package的BDFrame包到项目的Package下,导入Package中的Asset.package到工程Asset目录下即可   
       ii.通过UPM安装,不过npm源更新较慢  
       iii.旧版本转移到Unity2019LTS_2021.04.06分支上    
+      iv.urp版本安装引导: https://www.yuque.com/naipaopao/eg6gik/xy8dm4
 #### 2.全面适配URP管线工作流  
 #### 3.全面定制Unity Editor环境，升级编辑器操作。更便捷、人性化的开发体验  
 #### 4.全面优化框架启动速度,重构部分远古代码。  
