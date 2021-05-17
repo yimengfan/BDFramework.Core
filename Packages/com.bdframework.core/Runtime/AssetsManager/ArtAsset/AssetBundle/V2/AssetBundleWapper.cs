@@ -72,19 +72,12 @@ namespace BDFramework.ResourceMgr.V2
 
         public void Use()
         {
-            Counter++;
+          
         }
 
         public void Unuse()
         {
-            Counter--;
-            if (Counter <= 0)
-            {
-                if (AssetBundle)
-                {
-                    AssetBundle.Unload(true);
-                }
-            }
+           
         }
 
         #endregion

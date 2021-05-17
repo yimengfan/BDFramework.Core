@@ -567,75 +567,27 @@ namespace BDFramework.ResourceMgr.V2
 
         /// <summary>
         /// 卸载
+        /// 废弃接口，现在ab管理只需要 使用者管理好实例化出来的资源即可
+        /// AB本身只有一个头的消耗
         /// </summary>
         /// <param name="path"></param>
+        [Obsolete]
         public void UnloadAsset(string path, bool isForceUnload = false)
         {
-            if (!this.loder.Manifest.IsHashName)
-            {
-                path = string.Format(RUNTIME, path.ToLower());
-            }
-            else
-            {
-                path = path.ToLower();
-            }
-
-            var res = loder.Manifest.GetDependenciesByName(path);
-            if (res == null)
-                return;
-            //将所有依赖,创建一个队列 倒序加载
-            Queue<string> resQue = new Queue<string>();
-            foreach (var r in res)
-            {
-                if (AssetbundleMap.ContainsKey(r))
-                {
-                    resQue.Enqueue(r);
-                }
-            }
-
-            //判断是否有已经加载过的资源
-            foreach (var r in resQue)
-            {
-                if (AssetbundleMap.ContainsKey(r))
-                {
-                    if (isForceUnload)
-                    {
-                        AssetbundleMap[r].AssetBundle.Unload(true);
-                        AssetbundleMap.Remove(r);
-                    }
-                    else
-                    {
-                        AssetbundleMap[r].Unuse();
-                    }
-                }
-            }
-
-            //移除无用的assetbundle
-            var keys = new List<string>(AssetbundleMap.Keys);
-            foreach (var k in keys)
-            {
-                if (AssetbundleMap[k].Counter <= 0)
-                {
-                    AssetbundleMap.Remove(k);
-                }
-            }
+            
         }
 
 
         /// <summary>
-        /// 卸载所有资源
+        /// 卸载
+        /// 废弃接口，现在ab管理只需要 使用者管理好实例化出来的资源即可
+        /// AB本身只有一个头的消耗
         /// </summary>
+        /// <param name="path"></param>
+        [Obsolete]
         public void UnloadAllAsset()
         {
-            AssetBundle.UnloadAllAssetBundles(true);
-            // foreach (var v in AssetbundleMap)
-            // {
-            //     UnloadAsset(v.Key);
-            // }
-
-
-            //AssetbundleMap.Clear();
-            Resources.UnloadUnusedAssets();
+            
         }
 
         #endregion
