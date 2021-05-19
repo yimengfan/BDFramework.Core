@@ -10,6 +10,30 @@ public class ExpoterMainProjectAsset
     [MenuItem("BDFrame开发辅助/导出主工程资源")]
     static void Exprot()
     {
+        var targetPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
+        //1.分析之前先删除,然后生成临时文件防止报错
+        if (Directory.Exists(targetPath))
+        {
+            Directory.Delete(targetPath, true);
+        }
+        var fileContent = @"
+        namespace ILRuntime.Runtime.Generated
+        {
+            class CLRBindings
+            {
+                internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2> s_UnityEngine_Vector2_Binding_Binder = null;
+                internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3> s_UnityEngine_Vector3_Binding_Binder = null;
+                internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector4> s_UnityEngine_Vector4_Binding_Binder = null;
+                internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Quaternion> s_UnityEngine_Quaternion_Binding_Binder = null;
+                public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
+                {
+                }
+            } 
+        }   ";
+        FileHelper.WriteAllText(targetPath + "/CLRBindings.cs", fileContent);
+
+        AssetDatabase.Refresh();
+            
         var exporterDirectoryList = new string[] {"Assets/Code/BDFramework.Game", "Assets/Scenes",};
         var exportAssets          = new List<string>();
         foreach (var direct in exporterDirectoryList)

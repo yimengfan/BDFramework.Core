@@ -66,6 +66,20 @@ namespace BDFramework.ResourceMgr.V2
 
         #endregion
 
+        #region 引用计数
 
+        public int Counter { get; private set; }
+
+        public void Use()
+        {
+          
+        }
+
+        public void Unuse()
+        {
+           
+        }
+
+        #endregion
     }
 }

@@ -38,7 +38,7 @@ public class WindowPreconfig : MonoBehaviour
     void Onclick_PassAndLaunch()
     {
         //直接启动
-        BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(),GameLogicILRBinding.Bind);
+        BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(),GameLogicCLRBinding.Bind);
         //
         this.StartCoroutine(IE_Destroy());
     }
@@ -64,7 +64,7 @@ public class WindowPreconfig : MonoBehaviour
             {
                 this.text_DownloadProcess.text = "下载完毕";
                 //启动
-                BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(),GameLogicILRBinding.Bind);
+                BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(),GameLogicCLRBinding.Bind);
             }
         }, (e) =>
         {

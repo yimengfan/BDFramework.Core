@@ -17,17 +17,6 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core  ,速度慢下这个(�
  #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
  #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
  ### [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
- ##  V2版本已经发布!  
-#### 1.全面升级为UPM管理:  
-      i.拷贝github中Package的BDFrame包到项目的Package下,导入Package中的Asset.package到工程Asset目录下即可   
-      ii.通过UPM安装,不过npm源更新较慢  
-      iii.旧版本转移到Unity2019LTS_2021.04.06分支上    
-#### 2.全面适配URP管线工作流  
-#### 3.全面定制Unity Editor环境，升级编辑器操作。更便捷、人性化的开发体验  
-#### 4.全面优化框架启动速度,重构部分远古代码。  
-#### 5.UFlux UI工作流全面升级,更智能的值绑定,更简单的工作流,更方便的自定义扩展.  
-#### 6.更全面的文档  
-#### 7.商业级的Demo加入，后续会开放免费商业级项目开发教程   
 注:所有bug修复和新特性加入会先提交到Master分支。待审核期一个月，稳定则会提交Release版本 
 
 # 依赖的插件(Dependent plugins)
@@ -35,24 +24,28 @@ The following charging plug-ins are used. Please purchase and download them your
 <br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
 打包需要配置为：EditorOnly模式  
 
-## v2.1版本计划(v2.1 Plan)
-### [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)  
 ## 贡献者名单
 [@gaojiexx](https://github.com/gaojiexx)  
 [@ricashao](https://github.com/ricashao)  
-
-### 【2020.06开启 社区建设计划】  
-
 如果需要项目方案定制、技术方案定制、技术培训,可以联系 QQ:755737878  
+### Demo：  
+九宫棋（带一套技能buff处理）:https://gitee.com/yimengfan/TheCatChess  
+### v2.1版本计划: [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)   
+ ##  V2版本已经发布!  
+#### 1.全面升级为UPM管理: [urp版本安装引导]( https://www.yuque.com/naipaopao/eg6gik/xy8dm4)  
+      i.拷贝github中Package的BDFrame包到项目的Package下,导入Package中的Asset.package到工程Asset目录下即可   
+      ii.通过UPM安装,不过npm源更新较慢  
+      iii.旧版本转移到Unity2019LTS_2021.04.06分支上  
+#### 2.全面适配URP管线工作流  
+#### 3.全面定制Unity Editor环境，升级编辑器操作。更便捷、人性化的开发体验  
+#### 4.全面优化框架启动速度,重构部分远古代码。  
+#### 5.UFlux UI工作流全面升级：更智能的值绑定、更简单的工作流、更方便的自定义扩展、DI等...
+#### 6.更全面的文档  
+#### 7.商业级的Demo加入，后续会开放免费商业级项目开发教程   
 
-## 框架特点(Feature)
-  <img src="./BDTemp/Img/OneKeyBuild.png" width = "300" height = "200" div align=center />  
-  
+## V1版本：框架特点(Feature)   
   **·TDD工作流、完整的测试用例:**  
-  完整的测试用例，保证框架的稳定。
-  
-   **·DevOps工作流:**  
-   这个还得等一小会~
+  完整的测试用例，保证框架的稳定。  
   
   **一键C#热更:**  
    BD中对ILRuntime进行了二次改造，不用分工程、并且写了一套完善的脚本编译机制,打包工具自动搜集热更代码进行打包。  
@@ -60,9 +53,8 @@ The following charging plug-ins are used. Please purchase and download them your
  
    **一键版本发布:**  
    代码、资源、表格一键打包,版本管理自动下载  
-
    
-   **完善的资源管理系统，一套API各平台自动切换：**
+   **完善的资源管理系统，一套API各平台自动切换：**  
    BD抛弃了Resources目录，并且保留的用户Resources的开发习惯.  
    一套API自动切换，兼容AB和Editor模式.  
    而且有一套比较完善的AssetBundle管理机制：图集管理、自动搜集Shader、0冗余打包  
@@ -71,6 +63,7 @@ The following charging plug-ins are used. Please purchase and download them your
    **完善的UI工作流UFlux:**  
    BD中有一整套完善的UI工作流(这里我们只对UI逻辑进行管理，不考虑ui制作)，无论你是UGUI NGUI还是其他。  
    我们提供了一套UI管理、值绑定、数据监听、数据流、状态管理等一系列机制.  
+   V2中添加了DI相关支持
    
    **SQL化表格管理:**   
    BD中用Sqlite进行管理表格,并且提供了excel2code，excel2json，excel2sqlite等工具  

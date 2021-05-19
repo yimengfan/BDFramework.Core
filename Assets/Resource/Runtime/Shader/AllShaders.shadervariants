@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AllShaders
+  m_Shaders:
+  - first: {fileID: 4800000, guid: 62873910d2c8cdc4a8e7e4b49ecfe37e, type: 3}
+    second:
+      variants:
+      - keywords: _ALPHABLEND_ON
+        passType: 4
+      - keywords: _ALPHABLEND_ON _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A _SPECULARHIGHLIGHTS_OFF
+        passType: 4
+  - first: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 13
+  - first: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 274f4bce520b62349a794dd74b69d5e9, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: d053233f84bf8c047bef2431d30a7eb7, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 00218e4f0ba5f5342b9e30a2079bede9, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0

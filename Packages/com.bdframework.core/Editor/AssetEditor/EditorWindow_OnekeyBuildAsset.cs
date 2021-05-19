@@ -244,7 +244,6 @@ namespace BDFramework.Editor.BuildPackage
             catch (Exception e)
             {
                 Debug.LogError(e.Message);
-                return;
             }
 
             //2.编译脚本
@@ -255,7 +254,6 @@ namespace BDFramework.Editor.BuildPackage
             catch (Exception e)
             {
                 Debug.LogError(e.Message);
-                return;
             }
 
             //3.打包表格

@@ -14,7 +14,7 @@ namespace BDFramework
         /// <summary>
         /// 反射注册
         /// </summary>
-        private static Action<bool> GamelogicILRBindAction { get; set; }
+        private static Action<bool> CLRBindAction { get; set; }
 
         /// <summary>
         /// 脚本加载入口
@@ -25,9 +25,9 @@ namespace BDFramework
         static public void Load(AssetLoadPath loadPath,
             HotfixCodeRunMode runMode,
             Type[] mainProjectTypes,
-            Action<bool> ILRBindAction)
+            Action<bool> clrBindingAction)
         {
-            GamelogicILRBindAction = ILRBindAction;
+            CLRBindAction = clrBindingAction;
 
             if (loadPath == AssetLoadPath.Editor)
             {
@@ -108,7 +108,7 @@ namespace BDFramework
             {
                 BDebug.Log("热更Dll路径:" + dllPath, "red");
                 //解释执行模式
-                ILRuntimeHelper.LoadHotfix(dllPath, GamelogicILRBindAction);
+                ILRuntimeHelper.LoadHotfix(dllPath, CLRBindAction);
                 var hotfixTypes = ILRuntimeHelper.GetHotfixTypes().ToArray();
                 ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null,
                     new object[] {mainProjecTypes, hotfixTypes});
