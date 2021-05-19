@@ -16,15 +16,16 @@ namespace BDFramework.UFlux.Test
             RequestHeroData,
         }
         
+        /// <summary>
+        /// 注册所有的Recucer
+        /// </summary>
         public override void RegisterReducers()
         {
             base.RegisterReducers();
-
             //这里用显式注册，避免函数签名错误
             this.AddAsyncRecucer(Reducer06.RequestHeroData, RequestServer);
         }
-
-
+        
         /// <summary>
         /// url
         /// </summary>

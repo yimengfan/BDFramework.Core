@@ -18,7 +18,7 @@ namespace BDFramework.UFlux
     /// <summary>
     /// UI管理类
     /// </summary>
-    public class UIManager : ManagerBase<UIManager, UIAttribute>
+    public partial class UIManager : ManagerBase<UIManager, UIAttribute>
     {
         /// <summary>
         /// UI窗口字典
@@ -57,6 +57,8 @@ namespace BDFramework.UFlux
             //
             var attr = classData.Attribute as UIAttribute;
             var window = Activator.CreateInstance(classData.Type, new object[] {attr.ResourcePath}) as IWindow;
+            //设置DI
+            SetWindowDI(window);
             //
             return window;
         }
@@ -198,24 +200,28 @@ namespace BDFramework.UFlux
             }
         }
 
-        private void PushCaheData(int uiIndex)
+        /// <summary>
+        /// 推送缓存信息
+        /// </summary>
+        /// <param name="uiIdx"></param>
+        private void PushCaheData(int uiIdx)
         {
             // return;
             //检查ui数据缓存
             List<UIMessageData> cacheList = null;
-            uiDataCacheMap.TryGetValue(uiIndex, out cacheList);
+            uiDataCacheMap.TryGetValue(uiIdx, out cacheList);
             if (cacheList != null)
             {
                 for (int i = 0; i < cacheList.Count; i++)
                 {
                     var data = cacheList[i];
 
-                    windowMap[uiIndex].SendMessage(data);
-                    BDebug.Log("push cache data " + uiIndex);
+                    windowMap[uiIdx].SendMessage(data);
+                    BDebug.Log("push cache data " + uiIdx);
                 }
 
                 cacheList.Clear();
-                BDebug.LogFormat("推送数据：{0} ,{1}条", uiIndex, cacheList.Count);
+                BDebug.LogFormat("推送数据：{0} ,{1}条", uiIdx, cacheList.Count);
             }
         }
 
@@ -223,10 +229,10 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 卸载窗口
         /// </summary>
-        /// <param name="indexs">窗口枚举</param>
-        public void UnLoadWindows(List<Enum> indexs)
+        /// <param name="idxs">窗口枚举</param>
+        public void UnLoadWindows(List<Enum> idxs)
         {
-            foreach (var i in indexs)
+            foreach (var i in idxs)
             {
                 UnLoadWindow(i);
             }

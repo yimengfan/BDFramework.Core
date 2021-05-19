@@ -1,6 +1,7 @@
 ﻿using BDFramework.UFlux;
 using BDFramework.UFlux.View.Props;
 using BDFramework.UI;
+using Game.demo6_UFlux._07.Windows_DI;
 using Game.demo6_UFlux.Comonent._01;
 using Game.demo6_UFlux.Comonent._02;
 using UnityEngine;
@@ -115,6 +116,19 @@ namespace Game.demo6_UFlux
             UIManager.Inst.ShowWindow(WinEnum.Win_UFlux_Test006);
         }
 
+        [ButtonOnclick("Btns/btn_07")]
+        private void btn_07()
+        {
+            Debug.Log("Flux demo,点击这里追踪代码!");
+            //添加两个service
+            UIManager.Inst.AddSingleton<Test1Service>();
+            UIManager.Inst.AddSingleton(new Test2Service());
+            //打开窗口测试DI
+            UIManager.Inst.LoadWindow(WinEnum.Win_UFlux_Test007_DI);
+            UIManager.Inst.ShowWindow(WinEnum.Win_UFlux_Test007_DI);
+        }
+        
+        
         [ButtonOnclick("btn_close")]
         private void btn_close()
         {

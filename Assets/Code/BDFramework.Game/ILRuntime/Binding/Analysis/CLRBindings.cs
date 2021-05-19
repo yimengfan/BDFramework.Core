@@ -122,6 +122,8 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_Enum_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
+            System_Reflection_MethodInfo_Binding.Register(app);
+            System_Reflection_ParameterInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_Object_Binding.Register(app);
             UnityEngine_Color_Binding.Register(app);
             System_Runtime_CompilerServices_AsyncTaskMethodBuilder_1_ILTypeInstance_Binding.Register(app);

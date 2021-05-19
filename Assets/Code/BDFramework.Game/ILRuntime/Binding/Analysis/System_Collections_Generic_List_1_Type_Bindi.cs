@@ -31,6 +31,9 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Type)};
             method = type.GetMethod("Add", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Add_2);
+            args = new Type[]{typeof(System.Predicate<System.Type>)};
+            method = type.GetMethod("Find", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, Find_3);
 
             args = new Type[]{};
             method = type.GetConstructor(flag, null, args, null);
@@ -90,6 +93,25 @@ namespace ILRuntime.Runtime.Generated
             instance_of_this_method.Add(@item);
 
             return __ret;
+        }
+
+        static StackObject* Find_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Predicate<System.Type> @match = (System.Predicate<System.Type>)typeof(System.Predicate<System.Type>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            System.Collections.Generic.List<System.Type> instance_of_this_method = (System.Collections.Generic.List<System.Type>)typeof(System.Collections.Generic.List<System.Type>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = instance_of_this_method.Find(@match);
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
 
