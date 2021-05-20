@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using BDFramework.Core.Tools;
+using LitJson;
 
 namespace BDFramework.Editor.Asset
 {
@@ -184,7 +185,7 @@ namespace BDFramework.Editor.Asset
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e);
+                    Debug.LogErrorFormat("当前shader不存在变体（可以无视）:{0}-{1}",pt, JsonMapper.ToJson( curMat.shaderKeywords) );
                     continue;
                 }
 
