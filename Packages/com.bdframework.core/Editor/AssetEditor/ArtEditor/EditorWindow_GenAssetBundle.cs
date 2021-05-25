@@ -100,7 +100,7 @@ namespace BDFramework.Editor.Asset
 
             if (GUILayout.Button("收集Shader keyword", GUILayout.Width(200)))
             {
-                ShaderCollection.GenShaderVariant();
+                ShaderCollection.GenShaderVariantsCollection();
             }
 
             if (GUILayout.Button("一键打包[美术资源]", GUILayout.Width(380), GUILayout.Height(30)))
@@ -112,7 +112,7 @@ namespace BDFramework.Editor.Asset
                 }
 
                 //搜集keyword
-                ShaderCollection.GenShaderVariant();
+                ShaderCollection.GenShaderVariantsCollection();
                 //开始打包
                 BuildAsset();
             }

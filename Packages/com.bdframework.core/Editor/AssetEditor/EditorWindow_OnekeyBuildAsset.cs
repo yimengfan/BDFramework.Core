@@ -236,7 +236,7 @@ namespace BDFramework.Editor.BuildPackage
             try
             {
                 //1.搜集keywork
-                ShaderCollection.GenShaderVariant();
+                ShaderCollection.GenShaderVariantsCollection();
                 //2.打包模式
                 var config = BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig;
                 AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, config.IsUseHashName, config.AESCode);
