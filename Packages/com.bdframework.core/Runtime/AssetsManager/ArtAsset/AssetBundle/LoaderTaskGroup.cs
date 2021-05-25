@@ -104,6 +104,7 @@ namespace BDFramework.ResourceMgr
             {
                 return;
             }
+
             //获取一个任务
             while (taskList.Count > 0 && curDoTaskConter < ASYNC_TASK_NUM)
             {
@@ -115,20 +116,37 @@ namespace BDFramework.ResourceMgr
                     taskList.Add(task);
                     continue;
                 }
-                
                 //主资源才加载
-                IEnumeratorTool.StartCoroutine(IE_AsyncLoadAssetbundle(task, (ret, obj) =>
+                IEnumeratorTool.StartCoroutine(IE_AsyncLoadAssetbundle(task, (ret) =>
                 {
                     curDoTaskConter--;
+                    
                     switch (ret)
                     {
                         case LoadAssetState.IsLoding:
-                            //正在加载，需要重新执行一次task 插入在倒数第二个位置
-                            taskList.Insert(taskList.Count - 2, task);
+                            //正在加载，需要重新压入task
+                            taskList.Add( task);
                             break;
                         case LoadAssetState.Fail:
                         case LoadAssetState.Success:
-                            OnTaskComplete(task, obj);
+                        {
+                            if (isStop)
+                            {
+                                return;
+                            }
+                            //判断任务进度
+                            if (curDoTaskConter>0)
+                            {
+                                this.DoNextTask();
+                            }
+                            else
+                            {
+                                //总进度通知
+                                IsComplete = true;
+                                var instObj = loder.LoadFormAssetBundle<Object>(this.MainAssetName, this.manifestItem);
+                                OnAllTaskCompleteCallback?.Invoke(MainAssetName, instObj);
+                            }
+                        }
                             break;
                     }
                 }));
@@ -137,31 +155,8 @@ namespace BDFramework.ResourceMgr
             }
         }
 
-        
-        /// <summary>
-        /// 一个任务完成的回调
-        /// </summary>
-        /// <param name="assetPath"></param>
-        /// <param name="obj"></param>
-        private void OnTaskComplete(LoaderTaskData task, Object obj)
-        {
-            if (isStop)
-            {
-                return;
-            }
-            
-            //判断任务进度
-            if (!task.IsMainAsset)
-            {
-                this.DoNextTask();
-            }
-            else
-            {
-                //总进度通知
-                IsComplete = true;
-                OnAllTaskCompleteCallback?.Invoke(MainAssetName, obj);
-            }
-        }
+
+
 
         private bool isStop = false;
 
@@ -181,9 +176,6 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         static HashSet<string> lockSet = new HashSet<string>();
 
-       
-          
-        
 
         /// <summary>
         ///  加载
@@ -194,12 +186,12 @@ namespace BDFramework.ResourceMgr
         /// <param name="isMainAsset">是否需要返回加载资源</param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        IEnumerator IE_AsyncLoadAssetbundle(LoaderTaskData task, Action<LoadAssetState, Object> callback)
+        IEnumerator IE_AsyncLoadAssetbundle(LoaderTaskData task, Action<LoadAssetState> callback)
         {
             //正在被加载中,放入后置队列
             if (lockSet.Contains(task.AssetPath))
             {
-                callback(LoadAssetState.IsLoding, null);
+                callback(LoadAssetState.IsLoding);
                 yield break;
             }
 
@@ -208,14 +200,14 @@ namespace BDFramework.ResourceMgr
             {
                 AssetBundleCreateRequest ret = null;
                 string fullpath = "";
-               
+
                 lockSet.Add(task.AssetPath); //加锁
                 {
                     fullpath = loder.FindAsset(task.AssetPath);
                     ret = AssetBundle.LoadFromFileAsync(fullpath);
                     yield return ret;
                 }
-                lockSet.Remove(task.AssetPath);  //解锁
+                lockSet.Remove(task.AssetPath); //解锁
                 //添加assetbundle
                 if (ret.assetBundle != null)
                 {
@@ -223,21 +215,14 @@ namespace BDFramework.ResourceMgr
                 }
                 else
                 {
-                    callback(LoadAssetState.Fail, null);
+                    callback(LoadAssetState.Fail);
                     BDebug.LogError("ab资源为空:" + fullpath);
                     yield break;
                 }
             }
 
-            if (task.IsMainAsset)
-            {
-                var instObj = loder.LoadFormAssetBundle<Object>(this.MainAssetName, this.manifestItem);
-                callback(LoadAssetState.Success, instObj);
-            }
-            else
-            {
-                callback(LoadAssetState.Success, null);
-            }
+
+            callback(LoadAssetState.Success);
         }
 
         #endregion
