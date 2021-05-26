@@ -16,7 +16,8 @@ namespace BDFramework
     {
         Editor = 0,
         Persistent,
-        StreamingAsset
+        StreamingAsset,
+        EditorLibrary
     }
 
 //

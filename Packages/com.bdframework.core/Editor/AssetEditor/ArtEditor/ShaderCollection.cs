@@ -9,76 +9,27 @@ using System.Linq;
 using System.Reflection;
 using BDFramework.Core.Tools;
 using LitJson;
-using Microsoft.CodeAnalysis;
 
 namespace BDFramework.Editor.Asset
 {
-    /// <summary>
-    /// shader 搜集
-    /// </summary>
-    public class ShaderCollection
+    public class ShaderCollection : EditorWindow
     {
-        static public void GenShaderVariantsCollection()
-        {
-            var sc = new ShaderCollection();
-            sc.GenShaderVariantCollection();
-        }
-
-
-        /// <summary>
-        /// shader varaint的路径
-        /// </summary>
-        readonly public static string ALL_SHADER_VARAINT_PATH = "Assets/Resource/Runtime/Shader/AllShaders.shadervariants";
-        /// <summary>
-        /// 最大10W个变体
-        /// </summary>
-        private static int MAX_VARAINT_COUNT = 400000;
-
         private ShaderVariantCollection svc;
 
 
         #region FindMaterial
 
-        /// <summary>
-        /// shader路径
-        /// </summary>
-        List<string> allShaderNameList = new List<string>();
+        static List<string> allShaderNameList = new List<string>();
 
-        /// <summary>
-        /// shader 缓存的列表
-        /// </summary>
-        private List<ShaderCache> shaderCacheList = new List<ShaderCache>();
-
-        /// <summary>
-        /// 工具svc
-        /// </summary>
-        static ShaderVariantCollection toolSVC = null;
-
-        /// <summary>
-        /// 跳过Shader分析列表
-        /// </summary>
-        List<Shader> skipShaderList = new List<Shader>();
-
-        /// <summary>
-        /// shader缓存
-        /// </summary>
-        Dictionary<Shader, List<ShaderVariantCollection.ShaderVariant>> ShaderVariantMap =
-            new Dictionary<Shader, List<ShaderVariantCollection.ShaderVariant>>();
-
-
-        /// <summary>
-        /// 生成ShaderSVC
-        /// </summary>
-        /// <returns></returns>
-        public string GenShaderVariantCollection()
+        public static string GenShaderVariant()
         {
             //先搜集所有keyword到工具类SVC
             toolSVC = new ShaderVariantCollection();
             var shaders = AssetDatabase.FindAssets("t:Shader", new string[] {"Assets", "Packages"}).ToList();
             foreach (var shader in shaders)
             {
-                ShaderVariantCollection.ShaderVariant sv = new ShaderVariantCollection.ShaderVariant();
-                var shaderPath = AssetDatabase.GUIDToAssetPath(shader);
+                ShaderVariantCollection.ShaderVariant sv         = new ShaderVariantCollection.ShaderVariant();
+                var                                   shaderPath = AssetDatabase.GUIDToAssetPath(shader);
                 sv.shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
                 toolSVC.Add(sv);
                 //
@@ -93,8 +44,10 @@ namespace BDFramework.Editor.Asset
 
 
             //搜索所有Mat
-            var paths = BDApplication.GetAllRuntimeDirects().ToArray();
-            var assets = AssetDatabase.FindAssets("t:Prefab", paths).ToList();
+            var paths   = BDApplication.GetAllRuntimeDirects().ToArray();
+            var path    = "Assets/Resource/Runtime";
+            var path2   = "Assets/Resource_SVN/Runtime";
+            var assets  = AssetDatabase.FindAssets("t:Prefab", paths).ToList();
             var assets2 = AssetDatabase.FindAssets("t:Material", paths);
             assets.AddRange(assets2);
 
@@ -107,7 +60,7 @@ namespace BDFramework.Editor.Asset
                 var p = AssetDatabase.GUIDToAssetPath(assets[i]);
                 //获取依赖中的mat
                 var dependenciesPath = AssetDatabase.GetDependencies(p, true);
-                var mats = dependenciesPath.ToList().FindAll((dp) => dp.EndsWith(".mat"));
+                var mats             = dependenciesPath.ToList().FindAll((dp) => dp.EndsWith(".mat"));
                 allMats.AddRange(mats);
             }
 
@@ -116,60 +69,60 @@ namespace BDFramework.Editor.Asset
 
 
             float count = 1;
-            foreach (var matPath in allMats)
+            foreach (var mat in allMats)
             {
-                var obj = AssetDatabase.LoadMainAssetAtPath(matPath);
+                var obj = AssetDatabase.LoadMainAssetAtPath(mat);
                 if (obj is Material)
                 {
-                    var mat = obj as Material;
-                    EditorUtility.DisplayProgressBar("处理mat",
-                        string.Format("处理:{0} - {1}", Path.GetFileName(matPath), mat.shader.name),
-                        count / allMats.Count);
-                    GenMatShaderVaraints(mat);
+                    var _mat = obj as Material;
+                    EditorUtility.DisplayProgressBar("处理mat", string.Format("处理:{0} - {1}", Path.GetFileName(mat), _mat.shader.name), count / allMats.Count);
+                    AddToDict(_mat);
                 }
 
                 count++;
             }
 
             EditorUtility.ClearProgressBar();
-
-            return "";
             //所有的svc
             ShaderVariantCollection svc = new ShaderVariantCollection();
-            foreach (var item in ShaderVariantMap)
+            foreach (var item in ShaderVariantDict)
             {
-                foreach (var sv in item.Value)
+                foreach (var _sv in item.Value)
                 {
-                    svc.Add(sv);
+                    svc.Add(_sv);
                 }
             }
-            
-            AssetDatabase.DeleteAsset(ALL_SHADER_VARAINT_PATH);
-            AssetDatabase.CreateAsset(svc, ALL_SHADER_VARAINT_PATH);
+
+            var allSvcPath = "Assets/Resource/Runtime/Shader/AllShaders.shadervariants";
+            AssetDatabase.CreateAsset(svc, allSvcPath);
             AssetDatabase.Refresh();
 
-            return ALL_SHADER_VARAINT_PATH;
+            return allSvcPath;
         }
 
 
-        /// <summary>
-        /// shader缓存
-        /// </summary>
-        public class ShaderCache
+        public class ShaderData
         {
-            public Shader Shader;
-            public string[] Keywords;
+            public  int[]      PassTypes         = new int[] { };
+            public string[][] KeyWords          = new string[][] { };
+            public  string[]   ReMainingKeyWords = new string[] { };
         }
 
+        //shader数据的缓存
+        static Dictionary<string, ShaderData> ShaderDataDict = new Dictionary<string, ShaderData>();
+
+        static Dictionary<string, List<ShaderVariantCollection.ShaderVariant>> ShaderVariantDict = new Dictionary<string, List<ShaderVariantCollection.ShaderVariant>>();
+
+        //添加Material计算
+        static List<string> passShaderList = new List<string>();
 
         /// <summary>
-        /// 生成shader的Varaint
+        /// 添加到Dictionary
         /// </summary>
         /// <param name="curMat"></param>
-        void GenMatShaderVaraints(Material curMat)
+        static void AddToDict(Material curMat)
         {
-            if (!curMat || !curMat.shader)
-                return;
+            if (!curMat || !curMat.shader) return;
 
             var path = AssetDatabase.GetAssetPath(curMat.shader);
             if (!allShaderNameList.Contains(path))
@@ -179,39 +132,26 @@ namespace BDFramework.Editor.Asset
                 return;
             }
 
-            if (!curMat.shader.name.Contains("PBR"))
+            ShaderData sd = null;
+            ShaderDataDict.TryGetValue(curMat.shader.name, out sd);
+            if (sd == null)
             {
-                return;
+                //一次性取出所有的 passtypes 和  keywords
+                sd                                 = GetShaderKeywords(curMat.shader);
+                ShaderDataDict[curMat.shader.name] = sd;
             }
 
-            //已经处理过的直接return
-            var _shaderCache = shaderCacheList.Find((sc) =>
-                sc.Shader == curMat.shader && System.Linq.Enumerable.SequenceEqual(curMat.shaderKeywords, sc.Keywords));
-            if (_shaderCache != null)
+            var kwCount = sd.PassTypes.Length;
+            if (kwCount > 2000)
             {
-                Debug.Log("已经处理过相同shader keyword:" + curMat.shader.name + " - " + curMat.shaderKeywords);
-                return;
-            }
-
-            //获取所有keyword
-            var _passtypes = new int[] { };
-            var _keywords = new string[][] { };
-            var _remainingKeywords = new string[] { };
-            GetShaderVariantEntriesFiltered(curMat.shader, new string[]{}, out _passtypes, out _keywords,
-                out _remainingKeywords);
-
-
-            if (_passtypes.Length > MAX_VARAINT_COUNT)
-            {
-                if (!skipShaderList.Contains(curMat.shader))
+                if (!passShaderList.Contains(curMat.shader.name))
                 {
-                    Debug.LogFormat("Shader【{0}】,变体数量:{1},变体数量太多，建议剔除后再分析!", curMat.shader.name, _passtypes.Length);
-                    skipShaderList.Add(curMat.shader);
+                    Debug.LogFormat("Shader【{0}】,变体数量:{1},不建议继续分析,后续也会跳过!", curMat.shader.name, kwCount);
+                    passShaderList.Add(curMat.shader.name);
                 }
                 else
                 {
-                    Debug.LogFormat("mat:{0} , shader:{1} ,keywordCount:{2}", curMat.name, curMat.shader.name,
-                        _passtypes.Length);
+                    Debug.LogFormat("mat:{0} , shader:{1} ,keywordCount:{2}", curMat.name, curMat.shader.name, kwCount);
                 }
 
                 return;
@@ -219,61 +159,70 @@ namespace BDFramework.Editor.Asset
 
             //变体增加规则：https://blog.csdn.net/RandomXM/article/details/88642534
             List<ShaderVariantCollection.ShaderVariant> svlist = null;
-            if (!ShaderVariantMap.TryGetValue(curMat.shader, out svlist))
+            if (!ShaderVariantDict.TryGetValue(curMat.shader.name, out svlist))
             {
-                svlist = new List<ShaderVariantCollection.ShaderVariant>();
-                ShaderVariantMap[curMat.shader] = svlist;
+                svlist                                = new List<ShaderVariantCollection.ShaderVariant>();
+                ShaderVariantDict[curMat.shader.name] = svlist;
             }
 
-            if (curMat.shaderKeywords.Length > 0)
+            //求所有mat的kw
+            for (int i = 0; i < sd.PassTypes.Length; i++)
             {
-                Debug.LogFormat("{0}-{1}", "", JsonMapper.ToJson(_remainingKeywords));
-                
-                for (int i = 0; i < _passtypes.Length; i++)
+                //
+                var                                    pt = (PassType) sd.PassTypes[i];
+                ShaderVariantCollection.ShaderVariant? sv = null;
+                try
                 {
-                    //剔除延迟渲染
-                    if (_passtypes[i] == (int) PassType.Deferred)
+                    if (curMat.shaderKeywords.Length > 0)
                     {
-                        continue;
+                        //变体交集 大于0 ，添加到 svcList
+                        sv = new ShaderVariantCollection.ShaderVariant(curMat.shader, pt, curMat.shaderKeywords);
                     }
-                    //当前keywords 包含 mat的keyword,则添加
-                    var ret = _keywords[i].Intersect(curMat.shaderKeywords).ToArray();
-                    if (ret.Length == curMat.shaderKeywords.Length)
+                    else
                     {
-                        // var includeRemainingKWs = _keywords[i].Intersect(_remainingKeywords);
-                        //
-                        // if (includeRemainingKWs.Count() == 0)
-                        {
-                            var sv = new ShaderVariantCollection.ShaderVariant(curMat.shader, (PassType) _passtypes[i],
-                                _keywords[i]);
-                            Debug.LogFormat("{0}-{1}", (PassType) _passtypes[i], JsonMapper.ToJson(_keywords[i]));
-                            svlist.Add(sv);
-                        }
+                        sv = new ShaderVariantCollection.ShaderVariant(curMat.shader, pt);
                     }
                 }
-
-                Debug.Log("--------------------------------------------------------------------");
-            }
-            else
-            {
-                //keyword没选,则把对应的 passtype加入
-                var pts = _passtypes.Distinct();
-                foreach (var pt in pts)
+                catch (Exception e)
                 {
-                    //剔除延迟渲染
-                    if (pt == (int) PassType.Deferred)
+                    Debug.LogErrorFormat("当前shader不存在变体（可以无视）:{0}-{1}",pt, JsonMapper.ToJson( curMat.shaderKeywords) );
+                    continue;
+                }
+
+                //判断sv 是否存在,不存在则添加
+                if (sv != null)
+                {
+                    bool isContain = false;
+                    var  _sv       = (ShaderVariantCollection.ShaderVariant) sv;
+                    foreach (var val in svlist)
                     {
-                        continue;
+                        if (val.passType == _sv.passType && System.Linq.Enumerable.SequenceEqual(val.keywords, _sv.keywords))
+                        {
+                            isContain = true;
+                            break;
+                        }
                     }
-                    
-                    var sv = new ShaderVariantCollection.ShaderVariant(curMat.shader, (PassType) pt);
-                    svlist.Add(sv);
+
+                    if (!isContain)
+                    {
+                        svlist.Add(_sv);
+                    }
                 }
             }
         }
 
 
         static MethodInfo GetShaderVariantEntries = null;
+
+        static ShaderVariantCollection toolSVC = null;
+
+        //获取shader的 keywords
+        public static ShaderData GetShaderKeywords(Shader shader)
+        {
+            ShaderData sd = new ShaderData();
+            GetShaderVariantEntriesFiltered(shader, new string[] { }, out sd.PassTypes, out sd.KeyWords, out sd.ReMainingKeyWords);
+            return sd;
+        }
 
         /// <summary>
         /// 获取keyword
@@ -283,11 +232,7 @@ namespace BDFramework.Editor.Asset
         /// <param name="passTypes"></param>
         /// <param name="keywordLists"></param>
         /// <param name="remainingKeywords"></param>
-        static void GetShaderVariantEntriesFiltered(Shader shader,
-            string[] filterKeywords,
-            out int[] passTypes,
-            out string[][] keywordLists,
-            out string[] remainingKeywords)
+        static void GetShaderVariantEntriesFiltered(Shader shader, string[] filterKeywords, out int[] passTypes, out string[][] keywordLists, out string[] remainingKeywords)
         {
             //2019.3接口
 //            internal static void GetShaderVariantEntriesFiltered(
@@ -300,22 +245,18 @@ namespace BDFramework.Editor.Asset
 //                out string[]            remainingKeywords)          6
             if (GetShaderVariantEntries == null)
             {
-                GetShaderVariantEntries = typeof(ShaderUtil).GetMethod("GetShaderVariantEntriesFiltered",
-                    BindingFlags.NonPublic | BindingFlags.Static);
+                GetShaderVariantEntries = typeof(ShaderUtil).GetMethod("GetShaderVariantEntriesFiltered", BindingFlags.NonPublic | BindingFlags.Static);
             }
 
-            passTypes = new int[] { };
-            keywordLists = new string[][] { };
+            passTypes         = new int[] { };
+            keywordLists      = new string[][] { };
             remainingKeywords = new string[] { };
             if (toolSVC != null)
             {
-                var _passtypes = new int[] { };
-                var _keywords = new string[] { };
-                var _remainingKeywords = new string[] { };
-                object[] args = new object[]
-                {
-                    shader, MAX_VARAINT_COUNT, filterKeywords, toolSVC, _passtypes, _keywords, _remainingKeywords
-                };
+                var      _passtypes         = new int[] { };
+                var      _keywords          = new string[] { };
+                var      _remainingKeywords = new string[] { };
+                object[] args               = new object[] {shader, 256, filterKeywords, toolSVC, _passtypes, _keywords, _remainingKeywords};
                 GetShaderVariantEntries.Invoke(null, args);
 
                 var passtypes = args[4] as int[];

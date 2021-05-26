@@ -25,12 +25,6 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: 4800000, guid: 274f4bce520b62349a794dd74b69d5e9, type: 3}
-    second:
-      variants: []
-  - first: {fileID: 4800000, guid: d053233f84bf8c047bef2431d30a7eb7, type: 3}
-    second:
-      variants: []
   - first: {fileID: 4800000, guid: 00218e4f0ba5f5342b9e30a2079bede9, type: 3}
     second:
       variants:
