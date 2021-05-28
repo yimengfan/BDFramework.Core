@@ -15,13 +15,12 @@ namespace BDFramework.Editor.Asset
     public class ShaderCollection : EditorWindow
     {
         private ShaderVariantCollection svc;
-
-
+        readonly public static string ALL_SHADER_VARAINT_PATH = "Assets/Resource/Runtime/Shader/AllShaders.shadervariants";
         #region FindMaterial
 
         static List<string> allShaderNameList = new List<string>();
 
-        public static string GenShaderVariant()
+        public static void GenShaderVariant()
         {
             //先搜集所有keyword到工具类SVC
             toolSVC = new ShaderVariantCollection();
@@ -45,13 +44,9 @@ namespace BDFramework.Editor.Asset
 
             //搜索所有Mat
             var paths   = BDApplication.GetAllRuntimeDirects().ToArray();
-            var path    = "Assets/Resource/Runtime";
-            var path2   = "Assets/Resource_SVN/Runtime";
             var assets  = AssetDatabase.FindAssets("t:Prefab", paths).ToList();
             var assets2 = AssetDatabase.FindAssets("t:Material", paths);
             assets.AddRange(assets2);
-
-
             List<string> allMats = new List<string>();
 
             //GUID to assetPath
@@ -93,11 +88,9 @@ namespace BDFramework.Editor.Asset
                 }
             }
 
-            var allSvcPath = "Assets/Resource/Runtime/Shader/AllShaders.shadervariants";
-            AssetDatabase.CreateAsset(svc, allSvcPath);
+            AssetDatabase.DeleteAsset(ALL_SHADER_VARAINT_PATH);
+            AssetDatabase.CreateAsset(svc, ALL_SHADER_VARAINT_PATH);
             AssetDatabase.Refresh();
-
-            return allSvcPath;
         }
 
 
@@ -185,7 +178,7 @@ namespace BDFramework.Editor.Asset
                 }
                 catch (Exception e)
                 {
-                    Debug.LogErrorFormat("当前shader不存在变体（可以无视）:{0}-{1}",pt, JsonMapper.ToJson( curMat.shaderKeywords) );
+                    Debug.LogErrorFormat("{0}-当前shader不存在变体（可以无视）:{1}-{2}",curMat.name,pt, JsonMapper.ToJson( curMat.shaderKeywords) );
                     continue;
                 }
 
