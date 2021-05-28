@@ -1,9 +1,10 @@
-using BDFramework.Editor;
-using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
+
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;
+using Sirenix.OdinInspector.Editor;
+
 
 namespace BDFramework.Editor
 {
@@ -41,3 +42,4 @@ namespace BDFramework.Editor
         }
     }
 }
+#endif

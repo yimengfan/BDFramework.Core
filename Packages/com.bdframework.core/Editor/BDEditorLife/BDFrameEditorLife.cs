@@ -10,7 +10,6 @@ using BDFramework.Sql;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
 using BDFramework.Reflection;
-using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -155,7 +154,7 @@ namespace BDFramework.Editor.EditorLife
         {
             //编译dll
             if (BDAssetImporterCache.IsChangedHotfixCode&& //修改过Hotfix
-                BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll)
+                BDFrameEditorConfigHelper.FrameEditorConfig.BuildAssetConfig.IsAutoBuildDll)
             {
                 EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, Application.platform,
                     ScriptBuildTools.BuildMode.Debug, false);

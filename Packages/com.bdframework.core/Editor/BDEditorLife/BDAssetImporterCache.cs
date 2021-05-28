@@ -18,6 +18,9 @@ namespace BDFramework.Editor.EditorLife
         /// </summary>
         public static List<string> LastChangedHotfixCs { get; set; } = new List<string>();
 
+        /// <summary>
+        /// 是否修改了热更代码
+        /// </summary>
         public static bool IsChangedHotfixCode
         {
             get
@@ -31,6 +34,13 @@ namespace BDFramework.Editor.EditorLife
             }
         }
 
+        /// <summary>
+        /// 资源导入监听
+        /// </summary>
+        /// <param name="importedAssets"></param>
+        /// <param name="deletedAssets"></param>
+        /// <param name="movedAssets"></param>
+        /// <param name="movedFromAssetPaths"></param>
         static void OnPostprocessAllAssets(string[] importedAssets,
             string[] deletedAssets,
             string[] movedAssets,

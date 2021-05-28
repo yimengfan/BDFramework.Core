@@ -75,7 +75,7 @@ namespace BDFramework.Editor.Asset
             GUILayout.Label(string.Format("AB输出目录:{0}", exportPath));
             options = (BuildAssetBundleOptions) EditorGUILayout.EnumPopup("压缩格式:", options);
 
-            var assetConfig = BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig;
+            var assetConfig = BDFrameEditorConfigHelper.FrameEditorConfig.BuildAssetConfig;
             assetConfig.AESCode = EditorGUILayout.TextField("AES密钥(V2 only):",  assetConfig.AESCode );
             assetConfig.IsUseHashName = EditorGUILayout.Toggle("hash命名:",  assetConfig.IsUseHashName);
         }
@@ -84,7 +84,7 @@ namespace BDFramework.Editor.Asset
         private void OnDestroy()
         {
             //保存
-            BDFrameEditorConfigHelper.EditorConfig?.Save();
+            BDFrameEditorConfigHelper.FrameEditorConfig?.Save();
         }
 
 
@@ -151,7 +151,7 @@ namespace BDFramework.Editor.Asset
                 buildTarget = BuildTarget.iOS;
             }
 
-            var assetConfig = BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig;
+            var assetConfig = BDFrameEditorConfigHelper.FrameEditorConfig.BuildAssetConfig;
             //生成Assetbundlebunle
             AssetBundleEditorToolsV2.GenAssetBundle(exportPath, platform, buildTarget, options, assetConfig.IsUseHashName, assetConfig.AESCode);
             AssetDatabase.Refresh();

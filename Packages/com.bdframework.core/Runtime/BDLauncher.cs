@@ -5,7 +5,6 @@ using UnityEngine;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using LitJson;
-using Sirenix.OdinInspector;
 
 
 namespace BDFramework

@@ -1,52 +1,64 @@
 using System.IO;
 using LitJson;
+
+#if ODIN_INSPECTOR
 using Sirenix.OdinInspector;
-using UnityEngine;
+#endif
 
 namespace BDFramework.Editor
 {
-    public class BDEditorConfig
+/// <summary>
+/// 编辑器所有设置
+/// </summary>
+    public class BDFrameEditorConfig
     {
-        public BDEditorConfig(string root)
+        public BDFrameEditorConfig(string root)
         {
             savepath = IPath.Combine(root, "BDTemp/config.json");
         }
 
-        public BDEditorConfig()
+        public BDFrameEditorConfig()
         {
-            
         }
-        
+#if ODIN_INSPECTOR
         [BoxGroup("Android设置")]
         [HideLabel]
         [InlineProperty]
+#endif
         public AndroidConfig Android = new AndroidConfig();
-        
-        
+
+#if ODIN_INSPECTOR
         [BoxGroup("Ios设置")]
         [HideLabel]
         [InlineProperty]
-        public IosConfig IosConfig =new IosConfig();
-        
-        
+#endif
+        public IosConfig IosConfig = new IosConfig();
+
+#if ODIN_INSPECTOR
         [BoxGroup("Android设置[debug]")]
         [HideLabel]
         [InlineProperty]
+#endif
         public AndroidConfig AndroidDebug = new AndroidConfig();
-        
+#if ODIN_INSPECTOR
         [BoxGroup("Ios设置[debug]")]
         [HideLabel]
         [InlineProperty]
-        public IosConfig IosConfigDebug =new IosConfig();
+#endif
+        public IosConfig IosConfigDebug = new IosConfig();
 
-
+#if ODIN_INSPECTOR
         [BoxGroup("资源设置")]
         [HideLabel]
         [InlineProperty]
+#endif
         public BuildAssetConfig BuildAssetConfig = new BuildAssetConfig();
         //
+#if ODIN_INSPECTOR
         [DisableInEditorMode]
+#endif
         public string savepath = "";
+
         /// <summary>
         /// 检查config设置
         /// </summary>
@@ -55,54 +67,75 @@ namespace BDFramework.Editor
         {
             return File.Exists(savepath);
         }
+
         /// <summary>
         /// 加载
         /// </summary>
         /// <param name="root"></param>
         /// <returns></returns>
-        public BDEditorConfig Load()
+        public BDFrameEditorConfig Load()
         {
-            BDEditorConfig editorConfig= null;
+            BDFrameEditorConfig frameEditorConfig = null;
             if (File.Exists(savepath))
             {
                 var content = File.ReadAllText(savepath);
-                editorConfig = JsonMapper.ToObject<BDEditorConfig>(content);
-                editorConfig.savepath = savepath;
-                return editorConfig;
+                frameEditorConfig = JsonMapper.ToObject<BDFrameEditorConfig>(content);
+                frameEditorConfig.savepath = savepath;
+                return frameEditorConfig;
             }
             else
             {
                 return this;
             }
         }
+
         /// <summary>
         /// 保存
         /// </summary>
         public void Save()
         {
-            FileHelper.WriteAllText(savepath,JsonMapper.ToJson(this,true));
+            FileHelper.WriteAllText(savepath, JsonMapper.ToJson(this, true));
         }
     }
-    
+
+    /// <summary>
+    /// Android配置
+    /// </summary>
     public class AndroidConfig
     {
+#if ODIN_INSPECTOR
         [LabelText("Keystore路径")]
         [FilePath(Extensions = "keystore")]
-        public  string keystoreName;
+#endif
+        public string keystoreName;
+#if ODIN_INSPECTOR
         [LabelText("Keystore密码")]
-        public  string keystorePass;
+#endif
+        public string keystorePass;
+#if ODIN_INSPECTOR
         [LabelText("keyalias")]
-        public  string keyaliasName;
+#endif
+        public string keyaliasName;
+#if ODIN_INSPECTOR
         [LabelText("keyalias密码")]
-        public  string keyaliasPass;
+#endif
+        public string keyaliasPass;
     }
 
 
+    /// <summary>
+    /// IOS配置
+    /// </summary>
     public class IosConfig
     {
+#if ODIN_INSPECTOR
         [LabelText("证书")]
+#endif
         public string test;
+
+#if ODIN_INSPECTOR
         [LabelText("密钥")]
+#endif
         public string test2;
     }
 
@@ -112,14 +145,24 @@ namespace BDFramework.Editor
     /// </summary>
     public class BuildAssetConfig
     {
+#if ODIN_INSPECTOR
         [LabelText("ASE密钥")]
-        public string AESCode  = "bdframe$#@!@#";
+#endif
+        public string AESCode = "bdframe$#@!@#";
+
+#if ODIN_INSPECTOR
         [LabelText("是否hash命名")]
+#endif
         public bool IsUseHashName = false;
+
+#if ODIN_INSPECTOR
         [LabelText("上传接口")]
+#endif
         public string AssetBundleFileServerUrl = "http://127.0.0.1:20001";
 
+#if ODIN_INSPECTOR
         [LabelText("自动生成热更DLL")]
+#endif
         public bool IsAutoBuildDll = true;
     }
 }

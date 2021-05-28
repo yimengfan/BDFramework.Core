@@ -6,8 +6,9 @@ using BDFramework.Editor.TableData;
 using BDFramework.Editor.Asset;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
+#if ODIN_INSPECTOR
 using Sirenix.Utilities.Editor;
-
+#endif
 namespace BDFramework.Editor.BuildPackage
 {
     public class EditorWindow_OnekeyBuildAsset : EditorWindow
@@ -39,6 +40,7 @@ namespace BDFramework.Editor.BuildPackage
         {
             GUILayout.BeginHorizontal();
             {
+#if ODIN_INSPECTOR
                 if (editorScript != null)
                 {
                     //GUILayout.BeginVertical();
@@ -65,6 +67,7 @@ namespace BDFramework.Editor.BuildPackage
                     SirenixEditorGUI.EndBox();
                     //Layout_DrawLineV(Color.white);
                 }
+#endif
             }
             GUILayout.EndHorizontal();
 
@@ -80,7 +83,7 @@ namespace BDFramework.Editor.BuildPackage
         private void OnDisable()
         {
             //保存
-            BDFrameEditorConfigHelper.EditorConfig.Save();
+            BDFrameEditorConfigHelper.FrameEditorConfig.Save();
         }
 
         public  string exportPath         = "";
@@ -161,7 +164,7 @@ namespace BDFramework.Editor.BuildPackage
             {
                 GUILayout.Label("CI相关测试");
                 
-                BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.AssetBundleFileServerUrl = EditorGUILayout.TextField("文件服务器", BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.AssetBundleFileServerUrl, GUILayout.Width(350));
+                BDFrameEditorConfigHelper.FrameEditorConfig.BuildAssetConfig.AssetBundleFileServerUrl = EditorGUILayout.TextField("文件服务器", BDFrameEditorConfigHelper.FrameEditorConfig.BuildAssetConfig.AssetBundleFileServerUrl, GUILayout.Width(350));
         
                 //构建资源
                 int Width = 100;
@@ -238,7 +241,7 @@ namespace BDFramework.Editor.BuildPackage
                 //1.搜集keywork
                 ShaderCollection.GenShaderVariant();
                 //2.打包模式
-                var config = BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig;
+                var config = BDFrameEditorConfigHelper.FrameEditorConfig.BuildAssetConfig;
                 AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, config.IsUseHashName, config.AESCode);
             }
             catch (Exception e)
