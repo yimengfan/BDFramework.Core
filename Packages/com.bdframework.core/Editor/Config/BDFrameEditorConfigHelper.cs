@@ -10,17 +10,15 @@ namespace BDFramework.Editor
         /// <summary>
         /// 编辑器设置
         /// </summary>
-        static public BDFrameEditorConfig FrameEditorConfig { get; private set; } = new BDFrameEditorConfig();
+        static public BDEditorConfig EditorConfig { get; private set; }
         
         /// <summary>
         /// 初始化
         /// </summary>
         static public void Init()
         {
-#if ODIN_INSPECTOR
             var config = new BDEditorConfig(BDApplication.ProjectRoot);
             EditorConfig = config.Load();
-#endif
         }
     }
 }

@@ -5,7 +5,7 @@ using BDFramework.Editor.Asset;
 namespace BDFramework.Editor.EditorLife
 {
     /// <summary>
-    /// BDFrame各种行为
+    /// BDFrame各种事件帮助
     /// </summary>
     static public class BDFrameEditorBehaviorHelper
     {

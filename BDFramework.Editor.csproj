@@ -71,7 +71,7 @@
      <Compile Include="Packages\com.bdframework.core\Editor\CI\AssetUploadToServer.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\CI\BuildPipeline\BuildPipeLine_CI.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\CI\BuildPipeline\EditorBuildPackage.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\Config\BDFrameEditorConfig.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\Config\BDEditorConfig.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\Config\BDFrameEditorConfigHelper.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\Config\EditorWindow_BDConfig.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\DevOps\DevOps_SVN.cs" />

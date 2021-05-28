@@ -131,17 +131,17 @@ namespace BDFramework.Editor
         static public void BuildAPK(BuildMode mode)
         {
 
-            if (!BDFrameEditorConfigHelper.FrameEditorConfig.IsSetConfig())
+            if (!BDFrameEditorConfigHelper.EditorConfig.IsSetConfig())
             {
                 BDebug.LogError("请注意设置apk keystore账号密码");
                 return;
             }
 
             var absroot = Application.dataPath.Replace("Assets", "");
-            PlayerSettings.Android.keystoreName =absroot  + BDFrameEditorConfigHelper.FrameEditorConfig.Android.keystoreName;
-            PlayerSettings.keystorePass =  BDFrameEditorConfigHelper.FrameEditorConfig.Android.keystorePass;
-            PlayerSettings.Android.keyaliasName= BDFrameEditorConfigHelper.FrameEditorConfig.Android.keyaliasName;
-            PlayerSettings.keyaliasPass =  BDFrameEditorConfigHelper.FrameEditorConfig.Android.keyaliasPass;
+            PlayerSettings.Android.keystoreName =absroot  + BDFrameEditorConfigHelper.EditorConfig.Android.keystoreName;
+            PlayerSettings.keystorePass =  BDFrameEditorConfigHelper.EditorConfig.Android.keystorePass;
+            PlayerSettings.Android.keyaliasName= BDFrameEditorConfigHelper.EditorConfig.Android.keyaliasName;
+            PlayerSettings.keyaliasPass =  BDFrameEditorConfigHelper.EditorConfig.Android.keyaliasPass;
             //具体安卓的配置
             PlayerSettings.gcIncremental                    = true;
             PlayerSettings.stripEngineCode                  = false;

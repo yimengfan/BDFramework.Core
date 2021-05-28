@@ -1,10 +1,9 @@
-using UnityEditor;
-using UnityEngine;
-
-#if ODIN_INSPECTOR
+using BDFramework.Editor;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
-
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace BDFramework.Editor
 {
@@ -19,7 +18,7 @@ namespace BDFramework.Editor
             window.Show();
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             base.OnDestroy();
             if(editorConfig!=null)
@@ -42,4 +41,3 @@ namespace BDFramework.Editor
         }
     }
 }
-#endif

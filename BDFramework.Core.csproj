@@ -111,6 +111,7 @@
      <Compile Include="Packages\com.bdframework.core\Runtime\GameStart\IHotfixGameStart@hotfix.cs" />
      <Compile Include="Packages\com.bdframework.core\Runtime\ManagerBase\@hotfix\IMgr.cs" />
      <Compile Include="Packages\com.bdframework.core\Runtime\ManagerBase\@hotfix\ManagerBase.cs" />
+     <Compile Include="Packages\com.bdframework.core\Runtime\OdinHelper\NoOdinHelper.cs" />
      <Compile Include="Packages\com.bdframework.core\Runtime\Reflection\@hotfix\ReflectionExtension.cs" />
      <Compile Include="Packages\com.bdframework.core\Runtime\ScreenNavigation\@hotfix\IScreenView.cs" />
      <Compile Include="Packages\com.bdframework.core\Runtime\ScreenNavigation\@hotfix\ScreenViewAttribute.cs" />
