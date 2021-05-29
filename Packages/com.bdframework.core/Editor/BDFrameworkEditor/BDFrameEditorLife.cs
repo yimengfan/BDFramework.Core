@@ -7,6 +7,7 @@ using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
 using BDFramework.Core.Tools;
 using BDFramework.Reflection;
+using LitJson;
 using UnityEditor;
 using UnityEngine;
 
@@ -64,7 +65,7 @@ namespace BDFramework.Editor
         {
             //BD生命周期启动
             BDApplication.Init();
-            BDFrameEditorConfigHelper.Init();
+            BDEditorApplication.Init();
             //编辑器下加载初始化
             BResources.Load(AssetLoadPath.Editor);
             //加载主工程的DLL Type
@@ -151,8 +152,7 @@ namespace BDFramework.Editor
             DebuggerServerProcessManager.Inst.Start();
             BuildHotfixDll();
         }
-
-
+        
         /// <summary>
         /// Build热更DLL
         /// </summary>
@@ -160,12 +160,14 @@ namespace BDFramework.Editor
         {
             //编译dll
             if (BDAssetImporter.IsChangedHotfixCode && //修改过Hotfix
-                BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll)
+                BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig.IsAutoBuildDll)
             {
                 EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, Application.platform,
                     ScriptBuildTools.BuildMode.Debug, false);
                 Debug.Log("自动编译Hotfix.dll成功!");
             }
         }
+        
+
     }
 }

@@ -68,12 +68,14 @@
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDAssetImporter.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDEditorBehaviorHelper.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDFrameEditorLife.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\Config\BDEditorApplication.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\Config\BDEditorSetting.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\Config\EditorWindow_BDFrameworkConfig.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\EditorBuiltinStyle.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\CI\AssetUploadToServer.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\CI\BuildPipeline\BuildPipeLine_CI.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\CI\BuildPipeline\EditorBuildPackage.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\Config\BDEditorConfig.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\Config\BDFrameEditorConfigHelper.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\Config\EditorWindow_BDConfig.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\DevOps\DevOps_SVN.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />

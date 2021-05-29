@@ -83,7 +83,7 @@ namespace BDFramework.Editor.BuildPackage
         private void OnDisable()
         {
             //保存
-            BDFrameEditorConfigHelper.EditorConfig.Save();
+            BDEditorApplication.BdFrameEditorSetting.Save();
         }
 
         public  string exportPath         = "";
@@ -164,7 +164,7 @@ namespace BDFramework.Editor.BuildPackage
             {
                 GUILayout.Label("CI相关测试");
                 
-                BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.AssetBundleFileServerUrl = EditorGUILayout.TextField("文件服务器", BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.AssetBundleFileServerUrl, GUILayout.Width(350));
+                BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig.AssetBundleFileServerUrl = EditorGUILayout.TextField("文件服务器", BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig.AssetBundleFileServerUrl, GUILayout.Width(350));
         
                 //构建资源
                 int Width = 100;
@@ -241,7 +241,7 @@ namespace BDFramework.Editor.BuildPackage
                 //1.搜集keywork
                 ShaderCollection.GenShaderVariant();
                 //2.打包模式
-                var config = BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig;
+                var config = BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig;
                 AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, config.IsUseHashName, config.AESCode);
             }
             catch (Exception e)

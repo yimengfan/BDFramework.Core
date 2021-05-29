@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace BDFramework.Editor
 {
-    public class BDEditorConfig
+    public class BDEditorSetting
     {
-        public BDEditorConfig(string root)
+        public BDEditorSetting(string root)
         {
             savepath = IPath.Combine(root, "BDTemp/config.json");
         }
 
-        public BDEditorConfig()
+        public BDEditorSetting()
         {
             
         }
@@ -60,15 +60,15 @@ namespace BDFramework.Editor
         /// </summary>
         /// <param name="root"></param>
         /// <returns></returns>
-        public BDEditorConfig Load()
+        public BDEditorSetting Load()
         {
-            BDEditorConfig editorConfig= null;
+            BDEditorSetting editorSetting= null;
             if (File.Exists(savepath))
             {
                 var content = File.ReadAllText(savepath);
-                editorConfig = JsonMapper.ToObject<BDEditorConfig>(content);
-                editorConfig.savepath = savepath;
-                return editorConfig;
+                editorSetting = JsonMapper.ToObject<BDEditorSetting>(content);
+                editorSetting.savepath = savepath;
+                return editorSetting;
             }
             else
             {
