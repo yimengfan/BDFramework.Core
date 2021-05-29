@@ -94,7 +94,7 @@ namespace BDFramework.Editor
         static BuildPipeLine_CI()
         {
             //初始化编辑器
-            BDFrameEditorLife.InitFrameEditor();
+            BDFrameEditorLife.InitBDFrameworkEditor();
             //
             outputPath = BDApplication.ProjectRoot+"/CI_TEMP";
             if (!Directory.Exists(outputPath))

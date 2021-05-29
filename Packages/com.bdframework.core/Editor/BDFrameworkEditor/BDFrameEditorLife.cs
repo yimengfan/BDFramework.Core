@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
@@ -39,7 +40,7 @@ namespace BDFramework.Editor
         {
             if (state == PlayModeStateChange.ExitingPlayMode)
             {
-                InitFrameEditor();
+                InitBDFrameworkEditor();
             }
         }
 
@@ -53,29 +54,32 @@ namespace BDFramework.Editor
                 return;
             }
 
-            InitFrameEditor();
+            InitBDFrameworkEditor();
         }
 
         /// <summary>
         /// 初始化框架编辑器
         /// </summary>
-        static public void InitFrameEditor()
+        static public void InitBDFrameworkEditor()
         {
             //BD生命周期启动
             BDApplication.Init();
             BDFrameEditorConfigHelper.Init();
             //编辑器下加载初始化
             BResources.Load(AssetLoadPath.Editor);
-            //初始化DLL
-            
-            var gAssembly = Assembly.LoadFile(BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll");
-            var eAssemlby = Assembly.LoadFile(BDApplication.Library +"/ScriptAssemblies/Assembly-CSharp-Editor.dll");
-            RegisterMainProjectAssembly(gAssembly, eAssemlby);
+            //加载主工程的DLL Type
+            var assemblyPath = BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll";
+            var editorAssemlyPath = BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp-Editor.dll";
+            if (File.Exists(assemblyPath) && File.Exists(editorAssemlyPath))
+            {
+                var gAssembly = Assembly.LoadFile(assemblyPath);
+                var eAssemlby = Assembly.LoadFile(editorAssemlyPath);
+                RegisterMainProjectAssembly(gAssembly, eAssemlby);
+            }
         }
 
 
-        #region Assembly Hook
-
+        #region 主工程 Assembly
         /// <summary>
         /// 游戏逻辑的Assembly
         /// </summary>
@@ -106,7 +110,7 @@ namespace BDFramework.Editor
         /// </summary>
         static private void RegisterEditorMgrbase(Type[] types)
         {
-            //
+            //编辑器下管理器注册
             List<IMgr> mgrs = new List<IMgr>();
             foreach (var t in types)
             {
@@ -117,8 +121,6 @@ namespace BDFramework.Editor
                     mgrs.Add(i);
                 }
             }
-            
-
             foreach (var type in types)
             {
                 var attr = type.GetAttributeInILRuntime<ManagerAttribute>();
@@ -134,10 +136,14 @@ namespace BDFramework.Editor
                 }
             }
         }
+
         #endregion
+
+        /// <summary>
+        /// 当主工程准备好
+        /// </summary>
         public static void OnMainProjectReady()
         {
-          
             RegisterEditorMgrbase(Types);
             //Editor的管理器初始化
             BDEditorBehaviorHelper.Init();
@@ -147,10 +153,13 @@ namespace BDFramework.Editor
         }
 
 
+        /// <summary>
+        /// Build热更DLL
+        /// </summary>
         static private void BuildHotfixDll()
         {
             //编译dll
-            if (BDAssetImporter.IsChangedHotfixCode&& //修改过Hotfix
+            if (BDAssetImporter.IsChangedHotfixCode && //修改过Hotfix
                 BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll)
             {
                 EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, Application.platform,

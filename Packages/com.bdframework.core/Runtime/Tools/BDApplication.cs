@@ -56,7 +56,6 @@ namespace BDFramework.Core.Tools
             RuntimeResourceLoadPath = "Assets/Resource/Runtime";
             EditorResourcePath = "Assets/Resource_SVN";
             EditorResourceRuntimePath = EditorResourcePath + "/Runtime";
-
             BDEditorCachePath = Library + "/BDFrameCache";
         }
         /// <summary>

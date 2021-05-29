@@ -29,7 +29,7 @@ namespace BDFramework.Editor
         static EditorBuildPackage()
         {
             //初始化框架编辑器下
-            BDFrameEditorLife.InitFrameEditor();
+            BDFrameEditorLife.InitBDFrameworkEditor();
         }
         
 

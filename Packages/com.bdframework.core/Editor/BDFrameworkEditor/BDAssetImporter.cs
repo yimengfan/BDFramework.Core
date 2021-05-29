@@ -8,11 +8,21 @@ using UnityEngine;
 namespace BDFramework.Editor
 {
     /// <summary>
-    /// 资源导入缓存
+    /// 资源导入监听管理
     /// </summary>
     public class BDAssetImporter : AssetPostprocessor
     {
-        private static string importerCahcePath = BDApplication.BDEditorCachePath + "/ImporterCache";
+        /// <summary>
+        /// 缓存路径
+        /// </summary>
+        private static string importerCahcePath
+        {
+            get
+            {
+                return BDApplication.BDEditorCachePath + "/ImporterCache";
+            }
+        }
+
         /// <summary>
         /// 上次修改Hotfix的脚本
         /// </summary>
@@ -24,9 +34,9 @@ namespace BDFramework.Editor
             {
                 if (File.Exists(importerCahcePath))
                 {
-                    LastChangedHotfixCs =  JsonMapper.ToObject<List<string>>(File.ReadAllText(importerCahcePath));
+                    LastChangedHotfixCs = JsonMapper.ToObject<List<string>>(File.ReadAllText(importerCahcePath));
                 }
-                
+
                 return LastChangedHotfixCs.Count > 0;
             }
         }
@@ -43,20 +53,19 @@ namespace BDFramework.Editor
                 if (str.Contains("@hotfix") && str.EndsWith(".cs"))
                 {
                     LastChangedHotfixCs.Add(str);
-                    
                 }
             }
+
             foreach (string str in movedAssets)
             {
                 if (str.Contains("@hotfix") && str.EndsWith(".cs"))
                 {
                     LastChangedHotfixCs.Add(str);
-                    
                 }
             }
+
             //写入本地
-            FileHelper.WriteAllText(importerCahcePath,JsonMapper.ToJson(LastChangedHotfixCs));
-            
+            FileHelper.WriteAllText(importerCahcePath, JsonMapper.ToJson(LastChangedHotfixCs));
         }
     }
 }
