@@ -1,19 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
-using BDFramework.Sql;
 using BDFramework.Core.Tools;
-using BDFramework.Editor;
 using BDFramework.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace BDFramework.Editor.EditorLife
+namespace BDFramework.Editor
 {
     /// <summary>
     /// 这个类用以编辑器环境下辅助BD生命周期的开发
@@ -71,6 +67,7 @@ namespace BDFramework.Editor.EditorLife
             //编辑器下加载初始化
             BResources.Load(AssetLoadPath.Editor);
             //初始化DLL
+            
             var gAssembly = Assembly.LoadFile(BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll");
             var eAssemlby = Assembly.LoadFile(BDApplication.Library +"/ScriptAssemblies/Assembly-CSharp-Editor.dll");
             RegisterMainProjectAssembly(gAssembly, eAssemlby);
@@ -143,7 +140,7 @@ namespace BDFramework.Editor.EditorLife
           
             RegisterEditorMgrbase(Types);
             //Editor的管理器初始化
-            BDFrameEditorBehaviorHelper.Init();
+            BDEditorBehaviorHelper.Init();
             //调试器启动
             DebuggerServerProcessManager.Inst.Start();
             BuildHotfixDll();
@@ -153,7 +150,7 @@ namespace BDFramework.Editor.EditorLife
         static private void BuildHotfixDll()
         {
             //编译dll
-            if (BDAssetImporterCache.IsChangedHotfixCode&& //修改过Hotfix
+            if (BDAssetImporter.IsChangedHotfixCode&& //修改过Hotfix
                 BDFrameEditorConfigHelper.EditorConfig.BuildAssetConfig.IsAutoBuildDll)
             {
                 EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, Application.platform,

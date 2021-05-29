@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using BDFramework.Editor.EditorLife;
 using BDFramework.ResourceMgr.V2;
 using UnityEditor;
 using UnityEngine;
@@ -137,7 +136,7 @@ namespace BDFramework.Editor.Asset
 
             var buildinfoCahce = JsonMapper.ToJson(newbuildInfo);
             //BD生命周期触发
-            BDFrameEditorBehaviorHelper.OnBeginBuildAssetBundle(newbuildInfo);
+            BDEditorBehaviorHelper.OnBeginBuildAssetBundle(newbuildInfo);
             //获取改动的数据
             var changedBuildInfo = GetChangedAssets(lastBuildInfo, newbuildInfo);
             // newbuildInfo = null; //防止后面再用
@@ -350,7 +349,7 @@ namespace BDFramework.Editor.Asset
             FileHelper.WriteAllText(buildInfoPath, buildinfoCahce);
 
             //BD生命周期触发
-            BDFrameEditorBehaviorHelper.OnEndBuildAssetBundle(outputPath);
+            BDEditorBehaviorHelper.OnEndBuildAssetBundle(outputPath);
             AssetHelper.AssetHelper.GenPackageBuildInfo(outputPath, platform);
 
             return true;

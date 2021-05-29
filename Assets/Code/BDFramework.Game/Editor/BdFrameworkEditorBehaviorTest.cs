@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BDFramework.Editor.EditorLife
 {
-    public class BDFrameEditorBehaviorTest : ABDFrameEditorBehavior
+    public class BdFrameworkEditorBehaviorTest : ABDFrameworkEditorBehavior
     {
         public override void OnBeginBuildDLL()
         {

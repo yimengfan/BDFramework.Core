@@ -13,7 +13,6 @@ using Tool;
 using Debug = UnityEngine.Debug;
 using BDFramework.DataListener;
 using BDFramework.Editor;
-using BDFramework.Editor.EditorLife;
 using BDFramework.Core.Tools;
 using ILRuntime.Runtime.CLRBinding;
 using UnityEngine.UI;
@@ -93,7 +92,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     static public void RoslynBuild(string outpath, RuntimePlatform platform, ScriptBuildTools.BuildMode mode,bool isShowTips =true)
     {
         //触发bd环境周期
-        BDFrameEditorBehaviorHelper.OnBeginBuildDLL();
+        BDEditorBehaviorHelper.OnBeginBuildDLL();
 
         var targetPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
         //1.分析之前先删除,然后生成临时文件防止报错
@@ -129,7 +128,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         GenCLRBindingByAnalysis(platform, outpath);
         AssetDatabase.Refresh();
         //触发bd环境周期
-        BDFrameEditorBehaviorHelper.OnEndBuildDLL(outpath);
+        BDEditorBehaviorHelper.OnEndBuildDLL(outpath);
     }
 
     /// <summary>

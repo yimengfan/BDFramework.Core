@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using BDFramework.Editor.EditorLife;
 using LitJson;
 using BDFramework.Sql;
 using UnityEditor;
@@ -71,7 +70,7 @@ namespace BDFramework.Editor.TableData
         public static void AllExcel2SQLite(string ouptputPath, RuntimePlatform platform,DBType dbType = DBType.Local )
         {
             //触发bd环境周期
-            BDFrameEditorBehaviorHelper.OnBeginBuildSqlite();
+            BDEditorBehaviorHelper.OnBeginBuildSqlite();
             var xlslFiles = GetAllConfigFiles();
             switch (dbType)
             {
@@ -100,7 +99,7 @@ namespace BDFramework.Editor.TableData
             //
             EditorUtility.ClearProgressBar();
             //触发bd环境周期
-            BDFrameEditorBehaviorHelper.OnEndBuildSqlite(ouptputPath);
+            BDEditorBehaviorHelper.OnEndBuildSqlite(ouptputPath);
             AssetHelper.AssetHelper.GenPackageBuildInfo(ouptputPath, platform);
             Debug.Log("导出Sqlite完成!");
         }

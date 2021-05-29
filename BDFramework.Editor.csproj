@@ -64,10 +64,10 @@
      <Compile Include="Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\ExcelImporter.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\ExcelTools.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\ExcelUtility.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\BDEditorLife\ABDFrameEditorBehavior.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\BDEditorLife\BDAssetImporterCache.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\BDEditorLife\BDFrameEditorBehaviorHelper.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\BDEditorLife\BDFrameEditorLife.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\ABDFrameworkEditorBehavior.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDAssetImporter.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDEditorBehaviorHelper.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDFrameEditorLife.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\CI\AssetUploadToServer.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\CI\BuildPipeline\BuildPipeLine_CI.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\CI\BuildPipeline\EditorBuildPackage.cs" />

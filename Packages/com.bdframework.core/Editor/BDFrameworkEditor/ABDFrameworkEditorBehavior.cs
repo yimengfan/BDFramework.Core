@@ -1,11 +1,11 @@
 ﻿using BDFramework.Editor.Asset;
 
-namespace BDFramework.Editor.EditorLife
+namespace BDFramework.Editor
 {
     /// <summary>
     /// BDFrame的扩展生命周期
     /// </summary>
-    abstract public class ABDFrameEditorBehavior
+    abstract public class ABDFrameworkEditorBehavior
     {
         /// <summary>
         ///一键打包时， 开始build dll

@@ -5,12 +5,12 @@ using LitJson;
 using UnityEditor;
 using UnityEngine;
 
-namespace BDFramework.Editor.EditorLife
+namespace BDFramework.Editor
 {
     /// <summary>
     /// 资源导入缓存
     /// </summary>
-    public class BDAssetImporterCache : AssetPostprocessor
+    public class BDAssetImporter : AssetPostprocessor
     {
         private static string importerCahcePath = BDApplication.BDEditorCachePath + "/ImporterCache";
         /// <summary>
@@ -37,7 +37,7 @@ namespace BDFramework.Editor.EditorLife
             string[] movedFromAssetPaths)
         {
             LastChangedHotfixCs = new List<string>();
-            //
+            //搜集热更脚本变更
             foreach (string str in importedAssets)
             {
                 if (str.Contains("@hotfix") && str.EndsWith(".cs"))

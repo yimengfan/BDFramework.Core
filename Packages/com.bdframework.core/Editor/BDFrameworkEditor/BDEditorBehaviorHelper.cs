@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using BDFramework.Editor.Asset;
 
-namespace BDFramework.Editor.EditorLife
+namespace BDFramework.Editor
 {
     /// <summary>
     /// BDFrame各种事件帮助
     /// </summary>
-    static public class BDFrameEditorBehaviorHelper
+    static public class BDEditorBehaviorHelper
     {
-        static private List<ABDFrameEditorBehavior> BDFrameBehaviorList = new List<ABDFrameEditorBehavior>();
+        static private List<ABDFrameworkEditorBehavior> BDFrameBehaviorList = new List<ABDFrameworkEditorBehavior>();
         /// <summary>
         /// 初始化
         /// </summary>
         static public void Init()
         {
-            var type = typeof(ABDFrameEditorBehavior);
+            var type = typeof(ABDFrameworkEditorBehavior);
             var types = BDFrameEditorLife.Types;
             foreach (var t in types)
             {
                 if (t.IsSubclassOf(type))
                 {
-                    var bdBehaviorInst = Activator.CreateInstance(t) as ABDFrameEditorBehavior;
+                    var bdBehaviorInst = Activator.CreateInstance(t) as ABDFrameworkEditorBehavior;
                     BDFrameBehaviorList.Add(bdBehaviorInst);
                 }
             }

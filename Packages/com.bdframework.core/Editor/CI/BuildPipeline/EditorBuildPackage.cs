@@ -4,7 +4,6 @@ using UnityEngine;
 using System.IO;
 using BDFramework.Editor.Asset;
 using BDFramework.Editor.BuildPackage;
-using BDFramework.Editor.EditorLife;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
 using UnityEditor.SceneManagement;
