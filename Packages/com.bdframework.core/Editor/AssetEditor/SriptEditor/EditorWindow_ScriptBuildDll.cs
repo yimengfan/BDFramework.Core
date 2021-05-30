@@ -106,7 +106,6 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         {
             class CLRBindings
             {
-
                 internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2> s_UnityEngine_Vector2_Binding_Binder = null;
                 internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3> s_UnityEngine_Vector3_Binding_Binder = null;
                 internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector4> s_UnityEngine_Vector4_Binding_Binder = null;
@@ -160,7 +159,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     /// </summary>
     /// <param name="platform"></param>
     /// <param name="dllpath"></param>
-    static private void GenCLRBindingByAnalysis(RuntimePlatform platform = RuntimePlatform.Lumin, string dllpath = "")
+    static public void GenCLRBindingByAnalysis(RuntimePlatform platform = RuntimePlatform.Lumin, string dllpath = "")
     {
         //默认参数
         if (platform == RuntimePlatform.Lumin)

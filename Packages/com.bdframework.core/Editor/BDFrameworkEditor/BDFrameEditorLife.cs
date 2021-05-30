@@ -22,6 +22,7 @@ namespace BDFramework.Editor
         static BDFrameEditorLife()
         {
             EditorApplication.playModeStateChanged += OnPlayExit;
+            EditorApplication.update += EditorUpdate_CheckGuideWindow;
         }
 
         /// <summary>
@@ -55,6 +56,7 @@ namespace BDFramework.Editor
                 return;
             }
 
+            //初始化框架编辑器
             InitBDFrameworkEditor();
         }
 
@@ -81,6 +83,7 @@ namespace BDFramework.Editor
 
 
         #region 主工程 Assembly
+
         /// <summary>
         /// 游戏逻辑的Assembly
         /// </summary>
@@ -122,6 +125,7 @@ namespace BDFramework.Editor
                     mgrs.Add(i);
                 }
             }
+
             foreach (var type in types)
             {
                 var attr = type.GetAttributeInILRuntime<ManagerAttribute>();
@@ -152,7 +156,7 @@ namespace BDFramework.Editor
             DebuggerServerProcessManager.Inst.Start();
             BuildHotfixDll();
         }
-        
+
         /// <summary>
         /// Build热更DLL
         /// </summary>
@@ -167,7 +171,19 @@ namespace BDFramework.Editor
                 Debug.Log("自动编译Hotfix.dll成功!");
             }
         }
-        
 
+
+        /// <summary>
+        /// 引导启动页面
+        /// </summary>
+        static public void EditorUpdate_CheckGuideWindow()
+        {
+            EditorApplication.update -= EditorUpdate_CheckGuideWindow;
+
+            if (!EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                EditorWindow_BDFrameworkStart.AutoOpen();
+            }
+        }
     }
 }

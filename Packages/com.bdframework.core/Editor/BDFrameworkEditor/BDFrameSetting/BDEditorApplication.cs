@@ -30,7 +30,6 @@ namespace BDFramework.Editor
             LoadFrameConfig();
         }
         
-                
         /// <summary>
         /// 加载框架配置
         /// </summary>

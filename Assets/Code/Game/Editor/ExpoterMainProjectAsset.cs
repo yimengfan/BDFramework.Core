@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.Core.Tools;
+using BDFramework.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -41,13 +43,20 @@ public class ExpoterMainProjectAsset
             var fs = Directory.GetFiles(direct, "*.*", SearchOption.AllDirectories);
             exportAssets.AddRange(fs);
         }
-
         var exportfs = exportAssets.Where((ex) => !ex.EndsWith(".meta")).ToArray();
+        //版本信息添加
+        var path = AssetDatabase.GUIDToAssetPath("924d970067c935c4f8b818e6b4ab9e07");
+        File.WriteAllText(path,BDEditorApplication.BDFrameConfig.Version);
+        
+        
         //导出
         ExportPackageOptions op          = ExportPackageOptions.Default;
         var                  packagePath = AssetDatabase.GUIDToAssetPath("69227cf6ea5304641ae95ffb93874014");
         //AssetDatabase.ImportPackage(packagePath,true);
         AssetDatabase.ExportPackage(exportfs, packagePath, op);
+        //重新生成clr分析文件
+        EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis();
+        //debug
         Debug.Log("导出成功:" + packagePath);
     }
 }

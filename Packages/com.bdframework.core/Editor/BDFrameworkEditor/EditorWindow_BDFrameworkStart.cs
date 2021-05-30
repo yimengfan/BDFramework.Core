@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Net;
 using BDFramework.Core.Tools;
 using LitJson;
@@ -17,29 +18,35 @@ namespace BDFramework.Editor
     public class EditorWindow_BDFrameworkStart : EditorWindow
     {
         private static string WIKI_URL = "https://www.yuque.com/naipaopao/eg6gik";
-
         private static string GITHUB_URL = "https://github.com/yimengfan/BDFramework.Core";
+
+        private static string Odin_URL =
+            "https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041";
+
+        private static string QQGroup_URL =
+            "http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f";
 
         //更新日志
         private static string CHANGEDLOG_URL =
-            "https://gitee.com/yimengfan/BDFramework.Core/blob/master/Packages/com.bdframework.core/CHANGELOG.md";
+            "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.bdframework.core/CHANGELOG.md";
 
         //版本号
         private static string VERSION_URL =
-            "https://gitee.com/yimengfan/BDFramework.Core/blob/master/Packages/com.bdframework.core/Runtime/Resources/BDFrameConfig.Json";
+            "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.bdframework.core/Runtime/Resources/BDFrameConfig.Json";
 
         private static Texture webIcon; //= EditorGUIUtility.IconContent( "BuildSettings.Web.Small" ).image;
 
         //btn样式
-        private GUIContent wikiBtnContent; // = new GUIContent( " 中文Wiki", webIcon );
+        private static GUIContent wikiBtnContent; // = new GUIContent( " 中文Wiki", webIcon );
 
-        private GUIContent gitBtnContent; // = new GUIContent( " Github", webIcon );
+        private static GUIContent gitBtnContent; // = new GUIContent( " Github", webIcon );
 
         //label样式
-        private GUIStyle titleStyle;
-        private GUIStyle errorStyle;
+        private static GUIStyle titleStyle;
+        private static GUIStyle errorStyle;
 
-        [MenuItem("Assets/测试111")]
+
+        //[MenuItem("Assets/测试111")]
         static public void Open()
         {
             var win = GetWindow<EditorWindow_BDFrameworkStart>("BDFramework使用引导");
@@ -48,11 +55,57 @@ namespace BDFramework.Editor
         }
 
         /// <summary>
+        /// 自动打开
+        /// </summary>
+        static public void AutoOpen()
+        {
+            if (!IsTodayOpened() //今天打开过
+                || IsHaveNewVerison() //新版本
+                || !IsExsitOdin() || !IsImportedAsset() //缺少文件
+            )
+            {
+                Open();
+            }
+        }
+
+        /// <summary>
+        /// 检测今天是否打开过
+        /// </summary>
+        /// <returns></returns>
+        static public bool IsTodayOpened()
+        {
+            var path = BDApplication.BDEditorCachePath + "/OpenGuideLog_" + DateTime.Today.ToLongDateString();
+            if (!File.Exists(path))
+            {
+                File.WriteAllText(path, "EditorWindow_BDFrameworkStart today is open!");
+
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// 打开窗口
         /// 覆盖show接口
         /// </summary>
         public void Show()
         {
+            base.Show();
+            //执行各种任务
+            this.GetNewChangeLog();
+        }
+
+        /// <summary>
+        /// 初始化样式
+        /// </summary>
+        private void InitStyle()
+        {
+            if (webIcon)
+            {
+                return;
+            }
+
             //初始化各种样式
             webIcon = EditorGUIUtility.IconContent("BuildSettings.Web.Small").image;
             wikiBtnContent = new GUIContent(" 中文Wiki", webIcon);
@@ -61,14 +114,14 @@ namespace BDFramework.Editor
             {
                 margin = new RectOffset(4, 4, 4, 4), padding = new RectOffset(2, 2, 2, 2), fontSize = 13
             };
-
-            base.Show();
-            //执行各种任务
-            this.GetNewChangeLog();
         }
 
+        /// <summary>
+        /// 渲染当前页面
+        /// </summary>
         private void OnGUI()
         {
+            InitStyle();
             GUILayout.BeginHorizontal();
             {
                 if (GUILayout.Button(wikiBtnContent))
@@ -86,6 +139,21 @@ namespace BDFramework.Editor
             OnGUI_DependLib();
             OnGUI_UpdateNewVersion();
             OnGUI_DrawUpdateNote();
+
+            GUILayout.Space(20);
+            GUILayout.BeginHorizontal();
+            {
+                GUI.color = Color.green;
+                GUILayout.Label("官方1群:763141410", GUILayout.Width(120));
+                GUI.color = GUI.contentColor;
+
+                if (GUILayout.Button("加入", GUILayout.Width(35)))
+                {
+                    Application.OpenURL(QQGroup_URL);
+                }
+            }
+            GUILayout.EndHorizontal();
+            this.Focus();
         }
 
         /// <summary>
@@ -108,28 +176,39 @@ namespace BDFramework.Editor
             GUILayout.Label("依赖库", titleStyle);
             DrawLine();
             //1.判断Odin
-            if (!IsExsitOdin())
             {
                 GUILayout.BeginHorizontal();
-
-                GUI.color = Color.red;
-                GUILayout.Label("缺少Odin");
+                if (!IsExsitOdin())
+                {
+                    GUI.color = Color.red;
+                }
+                else
+                {
+                    GUI.color = Color.green;
+                }
+                GUILayout.Label("1.缺少Odin");
                 GUI.color = GUI.contentColor;
                 if (GUILayout.Button("Download", GUILayout.Width(80)))
                 {
-                    var packagePath = AssetDatabase.GUIDToAssetPath("69227cf6ea5304641ae95ffb93874014");
-                    AssetDatabase.ImportPackage(packagePath, true);
+                    Application.OpenURL(Odin_URL);
                 }
 
                 GUILayout.EndHorizontal();
             }
 
             //2.判断是否缺少资源
-            if (!IsImportedAsset())
             {
                 GUILayout.BeginHorizontal();
-                GUI.color = Color.red;
-                GUILayout.Label("导入Asset.package");
+                if (!IsImportedAsset())
+                {
+                    GUI.color = Color.red;
+                }
+                else
+                {
+                    GUI.color = Color.green;
+                }
+
+                GUILayout.Label("2.导入Asset.package");
                 GUI.color = GUI.contentColor;
                 if (GUILayout.Button("Import", GUILayout.Width(80)))
                 {
@@ -149,7 +228,7 @@ namespace BDFramework.Editor
         {
             bool isHaveOdin = false;
 #if ODIN_INSPECTOR
-           isHaveOdin = true;
+            isHaveOdin = true;
 #endif
             return isHaveOdin;
         }
@@ -160,6 +239,16 @@ namespace BDFramework.Editor
         /// <returns></returns>
         static public bool IsImportedAsset()
         {
+            var path = AssetDatabase.GUIDToAssetPath("924d970067c935c4f8b818e6b4ab9e07");
+            if (File.Exists(path))
+            {
+                var version = File.ReadAllText(path);
+                if (version == BDEditorApplication.BDFrameConfig.Version)
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
@@ -171,7 +260,7 @@ namespace BDFramework.Editor
         /// <summary>
         /// 新版本号
         /// </summary>
-        private string NewVersionNum = "获取中...";
+        static private string NewVersionNum = null;
 
         /// <summary>
         /// 更新 新版本
@@ -181,35 +270,35 @@ namespace BDFramework.Editor
             GUILayout.Space(10);
             GUILayout.Label("版本信息", titleStyle);
             DrawLine();
+            GUI.color = Color.green;
             GUILayout.Label("当前版本:" + BDEditorApplication.BDFrameConfig.Version);
             GUILayout.Label("最新版本:" + NewVersionNum);
-            if (!CheckExsitNewVersion() && GUILayout.Button("更新"))
+            GUI.color = GUI.contentColor;
+            //
+            if (IsHaveNewVerison() && GUILayout.Button("更新"))
             {
                 Application.OpenURL(GITHUB_URL);
             }
         }
 
         // <summary>
-        /// 检测odin
+        /// 是否有新版本
         /// </summary>
         /// <returns></returns>
-        public bool CheckExsitNewVersion()
+        static public bool IsHaveNewVerison()
         {
-            return BDEditorApplication.BDFrameConfig.Version == NewVersionNum;
-        }
-
-        /// <summary>
-        /// 更新服务器版本号好
-        /// </summary>
-        public void GetNewVersionNum()
-        {
-            WebClient wc = new WebClient();
-            var ret = wc.DownloadString(VERSION_URL);
-            var config = JsonMapper.ToObject<BDFrameConfig>(ret); // ret;
-            if (config != null)
+            if (NewVersionNum == null)
             {
-                this.NewVersionNum = config.Version;
+                WebClient wc = new WebClient();
+                var ret = wc.DownloadString(VERSION_URL);
+                var config = JsonMapper.ToObject<BDFrameConfig>(ret);
+                if (config != null)
+                {
+                    NewVersionNum = config.Version;
+                }
             }
+
+            return BDEditorApplication.BDFrameConfig.Version != NewVersionNum;
         }
 
         #endregion
@@ -230,7 +319,7 @@ namespace BDFramework.Editor
             GUILayout.Label("更新日志", titleStyle);
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, "ProgressBarBack",
                 GUILayout.Height(200), GUILayout.ExpandWidth(true));
-            GUILayout.Label(FrameUpdateNote, "WordWrappedMiniLabel", GUILayout.Height(200));
+            GUILayout.Label(FrameUpdateNote, "WordWrappedMiniLabel", GUILayout.ExpandHeight(true));
             GUILayout.EndScrollView();
         }
 
@@ -241,9 +330,26 @@ namespace BDFramework.Editor
         /// <returns></returns>
         void GetNewChangeLog()
         {
-            WebClient wc = new WebClient();
-            var ret = wc.DownloadString(CHANGEDLOG_URL);
-            this.FrameUpdateNote = ret;
+            //有新版本则拉取服务器上的
+            if (IsHaveNewVerison())
+            {
+                var newLogPath = Path.Combine(BDApplication.BDEditorCachePath, "VersionLog_" + NewVersionNum);
+                //本地不存在就缓存到本地
+                if (!File.Exists(newLogPath))
+                {
+                    WebClient wc = new WebClient();
+                    var ret = wc.DownloadString(CHANGEDLOG_URL);
+                    File.WriteAllText(newLogPath, ret);
+                }
+
+                this.FrameUpdateNote = File.ReadAllText(newLogPath);
+            }
+            else
+            {
+                var path = AssetDatabase.GUIDToAssetPath("20c952b57a090a14f86ceff9cc824d05");
+                var localNote = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
+                this.FrameUpdateNote = localNote.text;
+            }
         }
 
         #endregion

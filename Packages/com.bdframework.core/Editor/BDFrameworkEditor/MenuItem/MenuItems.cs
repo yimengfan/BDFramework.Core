@@ -10,7 +10,6 @@ namespace BDFramework.Editor
     {
         BDFrameStart=0,
         BDSetting = 1,
-        
         UIMVCTools=51,
         BuildPackage_DLL=52,
         BuildPackage_Assetbundle=53,
@@ -31,7 +30,7 @@ namespace BDFramework.Editor
     /// </summary>
     static public class MenuItems
     {
-        [MenuItem("BDFrameWork工具箱/框架帮助", false, (int) BDEditorMenuEnum.BDFrameStart)]
+        [MenuItem("BDFrameWork工具箱/框架引导", false, (int) BDEditorMenuEnum.BDFrameStart)]
         public static void Open()
         {
             EditorWindow_BDFrameworkStart.Open();
