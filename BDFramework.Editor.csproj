@@ -68,11 +68,12 @@
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDAssetImporter.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDEditorBehaviorHelper.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDFrameEditorLife.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\Config\BDEditorApplication.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\Config\BDEditorSetting.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\Config\EditorWindow_BDFrameworkConfig.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDFrameSetting\BDEditorApplication.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDFrameSetting\BDEditorSetting.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDFrameSetting\EditorWindow_BDFrameworkConfig.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\EditorBuiltinStyle.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\EditorWindow_BDFrameworkStart.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\MenuItem\MenuItems.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\CI\AssetUploadToServer.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\CI\BuildPipeline\BuildPipeLine_CI.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\CI\BuildPipeline\EditorBuildPackage.cs" />
@@ -81,8 +82,6 @@
      <Compile Include="Packages\com.bdframework.core\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\EditorCoroutines\EditorCoroutines.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\EditorGUIHelper.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\Menu\EditorMenu.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\Menu\Menu.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\UIComponent\OverrideUIComponent.cs" />
      <None Include="Packages\com.bdframework.core\Editor\Plugins\Roslyn\System.Numerics.Vectors.xml" />
      <None Include="Packages\com.bdframework.core\Editor\BDFramework.Editor.asmdef" />

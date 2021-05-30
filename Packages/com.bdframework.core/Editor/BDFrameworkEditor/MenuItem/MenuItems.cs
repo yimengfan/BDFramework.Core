@@ -1,11 +1,14 @@
-﻿
+﻿using UnityEditor;
+using UnityEngine;
+
 namespace BDFramework.Editor
 {
-
-
+    /// <summary>
+    /// 按钮枚举
+    /// </summary>
     public enum BDEditorMenuEnum
     {
-        BDHelperURL=0,
+        BDFrameStart=0,
         BDSetting = 1,
         
         UIMVCTools=51,
@@ -23,4 +26,16 @@ namespace BDFramework.Editor
         
     }
     
+    /// <summary>
+    /// 按钮排版
+    /// </summary>
+    static public class MenuItems
+    {
+        [MenuItem("BDFrameWork工具箱/框架帮助", false, (int) BDEditorMenuEnum.BDFrameStart)]
+        public static void Open()
+        {
+            EditorWindow_BDFrameworkStart.Open();
+        }
+
+    }
 }

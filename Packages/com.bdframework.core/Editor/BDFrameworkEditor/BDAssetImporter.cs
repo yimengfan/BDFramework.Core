@@ -9,50 +9,71 @@ namespace BDFramework.Editor
 {
     /// <summary>
     /// 资源导入监听管理
+    /// 这里只能保存到本地，每次修改cs unity都会清空内存变量，重新build dll
     /// </summary>
     public class BDAssetImporter : AssetPostprocessor
     {
+        
+        /// <summary>
+        /// 资源导入缓存
+        /// 导入表示则有修改
+        /// </summary>
+        public class BDAssetImpoterCache
+        {
+           public  List<string> HotfixList { get; set; } = new List<string>();
+        }
+        
         /// <summary>
         /// 缓存路径
         /// </summary>
-        private static string importerCahcePath
+        private static string ImporterCahcePath
         {
             get
             {
                 return BDApplication.BDEditorCachePath + "/ImporterCache";
             }
         }
-
+        
         /// <summary>
         /// 上次修改Hotfix的脚本
         /// </summary>
-        public static List<string> LastChangedHotfixCs { get; set; } = new List<string>();
+        public static BDAssetImpoterCache CacheData;
 
+        /// <summary>
+        /// 是否修改过hotfix文件
+        /// </summary>
         public static bool IsChangedHotfixCode
         {
             get
             {
-                if (File.Exists(importerCahcePath))
+                if (File.Exists(ImporterCahcePath))
                 {
-                    LastChangedHotfixCs = JsonMapper.ToObject<List<string>>(File.ReadAllText(importerCahcePath));
+                    CacheData = JsonMapper.ToObject<BDAssetImpoterCache>(File.ReadAllText(ImporterCahcePath));
                 }
 
-                return LastChangedHotfixCs.Count > 0;
+                return CacheData.HotfixList.Count > 0;
             }
         }
 
+        /// <summary>
+        /// 资源导入监听
+        /// </summary>
+        /// <param name="importedAssets"></param>
+        /// <param name="deletedAssets"></param>
+        /// <param name="movedAssets"></param>
+        /// <param name="movedFromAssetPaths"></param>
         static void OnPostprocessAllAssets(string[] importedAssets,
             string[] deletedAssets,
             string[] movedAssets,
             string[] movedFromAssetPaths)
         {
-            LastChangedHotfixCs = new List<string>();
+            CacheData = new BDAssetImpoterCache();
             //搜集热更脚本变更
             foreach (string str in importedAssets)
             {
                 if (str.Contains("@hotfix") && str.EndsWith(".cs"))
                 {
-                    LastChangedHotfixCs.Add(str);
+                    CacheData.HotfixList.Add(str);
                 }
             }
 
@@ -60,12 +81,12 @@ namespace BDFramework.Editor
             {
                 if (str.Contains("@hotfix") && str.EndsWith(".cs"))
                 {
-                    LastChangedHotfixCs.Add(str);
+                    CacheData.HotfixList.Add(str);
                 }
             }
 
             //写入本地
-            FileHelper.WriteAllText(importerCahcePath, JsonMapper.ToJson(LastChangedHotfixCs));
+            FileHelper.WriteAllText(ImporterCahcePath, JsonMapper.ToJson(CacheData));
         }
     }
 }
