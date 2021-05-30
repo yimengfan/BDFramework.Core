@@ -47,8 +47,7 @@ public class ExpoterMainProjectAsset
         //版本信息添加
         var path = AssetDatabase.GUIDToAssetPath("924d970067c935c4f8b818e6b4ab9e07");
         File.WriteAllText(path,BDEditorApplication.BDFrameConfig.Version);
-        
-        
+        AssetDatabase.Refresh();
         //导出
         ExportPackageOptions op          = ExportPackageOptions.Default;
         var                  packagePath = AssetDatabase.GUIDToAssetPath("69227cf6ea5304641ae95ffb93874014");

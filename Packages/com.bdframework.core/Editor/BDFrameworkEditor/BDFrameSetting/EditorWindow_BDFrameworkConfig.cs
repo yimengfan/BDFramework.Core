@@ -18,7 +18,7 @@ namespace BDFramework.Editor
             window.Show();
         }
 
-        public override void OnDestroy()
+        public void OnDestroy()
         {
             base.OnDestroy();
             if(EditorSetting!=null)

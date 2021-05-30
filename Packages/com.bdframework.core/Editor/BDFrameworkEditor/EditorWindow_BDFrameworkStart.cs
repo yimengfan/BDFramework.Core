@@ -186,6 +186,7 @@ namespace BDFramework.Editor
                 {
                     GUI.color = Color.green;
                 }
+
                 GUILayout.Label("1.缺少Odin");
                 GUI.color = GUI.contentColor;
                 if (GUILayout.Button("Download", GUILayout.Width(80)))
@@ -272,13 +273,22 @@ namespace BDFramework.Editor
             DrawLine();
             GUI.color = Color.green;
             GUILayout.Label("当前版本:" + BDEditorApplication.BDFrameConfig.Version);
-            GUILayout.Label("最新版本:" + NewVersionNum);
-            GUI.color = GUI.contentColor;
             //
-            if (IsHaveNewVerison() && GUILayout.Button("更新"))
+            if (IsHaveNewVerison())
             {
-                Application.OpenURL(GITHUB_URL);
+                GUI.color = Color.red;
+                GUILayout.Label("最新版本:" + NewVersionNum);
+                if (GUILayout.Button("更新"))
+                {
+                    Application.OpenURL(GITHUB_URL);
+                }
             }
+            else
+            {
+                GUILayout.Label("最新版本:" + NewVersionNum);
+            }
+
+            GUI.color = GUI.contentColor;
         }
 
         // <summary>

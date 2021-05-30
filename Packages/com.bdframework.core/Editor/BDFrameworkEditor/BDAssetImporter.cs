@@ -68,7 +68,7 @@ namespace BDFramework.Editor
             string[] movedFromAssetPaths)
         {
             CacheData = new BDAssetImpoterCache();
-            //搜集热更脚本变更
+            //1.搜集热更脚本变更
             foreach (string str in importedAssets)
             {
                 if (str.Contains("@hotfix") && str.EndsWith(".cs"))
@@ -76,7 +76,6 @@ namespace BDFramework.Editor
                     CacheData.HotfixList.Add(str);
                 }
             }
-
             foreach (string str in movedAssets)
             {
                 if (str.Contains("@hotfix") && str.EndsWith(".cs"))
@@ -84,9 +83,21 @@ namespace BDFramework.Editor
                     CacheData.HotfixList.Add(str);
                 }
             }
-
-            //写入本地
             FileHelper.WriteAllText(ImporterCahcePath, JsonMapper.ToJson(CacheData));
+            
+            //2.判断是否导入Odin
+            foreach (string str in importedAssets)
+            {
+                if (str.Contains("Sirenix.OdinInspector.Attributes.dll"))
+                {
+                    var path = AssetDatabase.GUIDToAssetPath("b072c123447549fa81bb03f3ddebec80");
+                    if (File.Exists(path))
+                    {
+                        AssetDatabase.DeleteAsset(path);
+                    }
+                    break;
+                }
+            }
         }
     }
 }
