@@ -154,13 +154,13 @@ namespace BDFramework.Editor
             BDEditorBehaviorHelper.Init();
             //调试器启动
             DebuggerServerProcessManager.Inst.Start();
-            BuildHotfixDll();
+
         }
 
         /// <summary>
         /// Build热更DLL
         /// </summary>
-        static private void BuildHotfixDll()
+        static public void BuildHotfixDll()
         {
             //编译dll
             if (BDAssetImporter.IsChangedHotfixCode && //修改过Hotfix

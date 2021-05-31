@@ -98,6 +98,8 @@ namespace BDFramework.Editor
                     break;
                 }
             }
+            //编译dll
+            BDFrameEditorLife.BuildHotfixDll();
         }
     }
 }
