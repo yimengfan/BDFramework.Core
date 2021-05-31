@@ -1,4 +1,10 @@
 ## 更新记录
+### V2.0.5
+【Editor】
+1.Auto build dll 修改编译时机，解决play模式退出无法自动编译的bug
+【UIManager】
+1.制定UIMsgData规范
+2.修改UIMsg为UIMsgListener
 ### V2.0.4
 【Editor】
  1.增加一个编辑器启动引导界面
