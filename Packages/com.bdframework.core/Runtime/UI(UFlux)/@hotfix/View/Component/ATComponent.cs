@@ -179,7 +179,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 打开
         /// </summary>
-        virtual public void Open()
+        virtual public void Open(UIMsgData uiMsg = null)
         {
             this.IsOpen = true;
             this.Transform.gameObject.SetActive(true);

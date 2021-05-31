@@ -208,7 +208,7 @@ namespace BDFramework.UFlux
         {
             // return;
             //检查ui数据缓存
-            List<UIMessageData> cacheList = null;
+            List<UIMsgData> cacheList = null;
             uiDataCacheMap.TryGetValue(uiIdx, out cacheList);
             if (cacheList != null)
             {
@@ -279,7 +279,7 @@ namespace BDFramework.UFlux
         /// 显示窗口
         /// </summary>
         /// <param name="uiIndex">窗口枚举</param>
-        public void ShowWindow(Enum index, bool resetMask = true, UILayer layer = UILayer.Bottom)
+        public void ShowWindow(Enum index, UIMsgData uiMsgData=null, bool resetMask = true, UILayer layer = UILayer.Bottom)
         {
             int uiIndex = index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
@@ -303,7 +303,7 @@ namespace BDFramework.UFlux
                     }
 
                     v.Transform.SetAsLastSibling();
-                    v.Open();
+                    v.Open(uiMsgData);
                     //effect
                 }
                 else
@@ -375,14 +375,14 @@ namespace BDFramework.UFlux
             }
         }
 
-        private Dictionary<int, List<UIMessageData>> uiDataCacheMap = new Dictionary<int, List<UIMessageData>>();
+        private Dictionary<int, List<UIMsgData>> uiDataCacheMap = new Dictionary<int, List<UIMsgData>>();
 
         /// <summary>
         /// 外部推送ui数据
         /// </summary>
         /// <param name="uiIndex"></param>
         /// <param name="uiMsg"></param>
-        public void SendMessage(Enum index, UIMessageData uiMsg)
+        public void SendMessage(Enum index, UIMsgData uiMsg)
         {
             var uiIndex = index.GetHashCode();
             IWindow win;
@@ -393,12 +393,12 @@ namespace BDFramework.UFlux
             }
 
             //存入缓存
-            List<UIMessageData> list = null;
+            List<UIMsgData> list = null;
             uiDataCacheMap.TryGetValue(uiIndex, out list);
             //
             if (list == null)
             {
-                list = new List<UIMessageData>();
+                list = new List<UIMsgData>();
                 uiDataCacheMap[uiIndex] = list;
             }
 

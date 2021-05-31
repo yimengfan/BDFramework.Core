@@ -50,12 +50,12 @@ namespace BDFramework.UFlux
         #region UIMessage
 
         //
-        public delegate void UIMessageDelegate(UIMessageData message);
+        public delegate void UIMessageDelegate(UIMsgData message);
 
         /// <summary>
         /// Action 回调表
         /// </summary>
-        protected Dictionary<int, MethodInfo> callbackMap = new Dictionary<int, MethodInfo>();
+        protected Dictionary<Type, MethodInfo> msgCallbackMap = new Dictionary<Type, MethodInfo>();
 
         /// <summary>
         /// 注册回调
@@ -65,23 +65,23 @@ namespace BDFramework.UFlux
             //注册回调
             var t = this.GetType();
             var flag = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-            foreach (var methodInfo in t.GetMethods(flag))
+            foreach (var mi in t.GetMethods(flag))
             {
-                var attr = methodInfo.GetAttributeInILRuntime<UIMessageAttribute>();
+                var attr = mi.GetAttributeInILRuntime<UIMessageListenerAttribute>();
                 if (attr != null)
                 {
-                    callbackMap[attr.MessageName] = methodInfo;
-                    //很惨，以下 热更中用不了~
-//                    var action = Delegate.CreateDelegate(typeof(UIMessageDelegate), this, methodInfo) as UIMessageDelegate;
-//                    if (action != null)
-//                    {
-//                      
-//                        callbackMap[_attr.MessageName] = action;
-//                    }
-//                    else
-//                    {
-//                        BDebug.LogError("uimessage 函数签名错误:" + methodInfo.Name);
-//                    }
+                    var @params = mi.GetParameters();
+
+                    if (@params.Length == 1)
+                    {
+                        msgCallbackMap[@params[0].ParameterType] = mi;
+                    }
+                    else
+                    {
+                        BDebug.LogError("UIMsg 绑定失败，请检查函数签名:" + mi.Name);
+                    }
+                    
+                  
                 }
             }
         }
@@ -91,7 +91,7 @@ namespace BDFramework.UFlux
         /// 更新UI使用的数据
         /// </summary>
         /// <param name="uiMsg">数据</param>
-        public void SendMessage(UIMessageData uiMsg)
+        public void SendMessage(UIMsgData uiMsg)
         {
             //所有的消息会被派发给子窗口
 //            var keys = subWindowsMap.Keys.ToList();
@@ -100,7 +100,7 @@ namespace BDFramework.UFlux
 //                var k = keys[i];
 //                subWindowsMap[k].SendMessage(uiMsg);
 //            }
-
+            //通知子窗口
             foreach (var subWin in subWindowsMap.Values)
             {
                 subWin.SendMessage(uiMsg);
@@ -108,8 +108,8 @@ namespace BDFramework.UFlux
 
             //TODO: 执行完Invoke会导致 map的堆栈出问题，
             MethodInfo method = null;
-            var key = uiMsg.Name.GetHashCode();
-            bool flag = this.callbackMap.TryGetValue(key, out method);
+            var        key    = uiMsg.GetType();
+            bool       flag   = this.msgCallbackMap.TryGetValue(key, out method);
             if (flag)
             {
                 method.Invoke(this, new object[] {uiMsg});
