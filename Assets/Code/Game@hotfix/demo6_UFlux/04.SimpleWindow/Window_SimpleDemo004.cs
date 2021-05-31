@@ -1,4 +1,5 @@
-﻿using BDFramework.UI;
+﻿using System;
+using BDFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,25 +49,36 @@ namespace BDFramework.UFlux.UFluxTest004
             GetSubWindow<SubWindow_Demo004>().Close();
         }
 
-        [ButtonOnclick("btn_SendMessage")]
-        private void btn_SndMessage()
-        {
-            var msg = new UIMessageData(WinMsg.testMsg, "我是一个测试消息");
-
-            UIManager.Inst.SendMessage(WinEnum.Win_UFlux_Test004, msg);
-        }
-
         [ButtonOnclick("btn_Close")]
         private void btn_close()
         {
             this.Close();
         }
-
-
-        [UIMessage((int) WinMsg.testMsg)]
-        private void TestMessage(UIMessageData msg)
+        
+        /// <summary>
+        /// 测试消息
+        /// </summary>
+        public class UIMsg_Test: UIMsgData
         {
-            Content.text = "父窗口收到消息:" + msg.GetData<string>();
+            public string MsgContent;
+        }
+        
+        [ButtonOnclick("btn_SendMessage")]
+        private void btn_SndMessage()
+        {
+            var msg =new UIMsg_Test()
+            {
+                MsgContent = "我是一个测试消息!\n time:"+ DateTime.Now.ToLongTimeString()
+            };
+            UIManager.Inst.SendMessage(WinEnum.Win_UFlux_Test004, msg);
+        }
+        
+
+        
+        [UIMessageListener]
+        private void TestMessage(Window_SimpleDemo004.UIMsg_Test msg)
+        {
+            Content.text = "父窗口收到消息:" + msg.MsgContent;
         }
     }
 }

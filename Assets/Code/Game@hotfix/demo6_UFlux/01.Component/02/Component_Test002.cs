@@ -13,9 +13,9 @@ namespace Game.demo6_UFlux.Comonent._02
     [Component("Windows/UFlux/01Component/Component_test01",false)] 
     public class Component_Test002 : ATComponent<Props_Test001>
     {
-        public override void Open()
+        public override void Open(UIMsgData uiMsg = null)
         {
-            base.Open();
+            base.Open(uiMsg);
             //执行 test logic
             IEnumeratorTool.StartCoroutine(IE_DoTestLogic());
         }

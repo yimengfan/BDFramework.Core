@@ -127,7 +127,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_Type_Object_Binding.Register(app);
             UnityEngine_Color_Binding.Register(app);
             System_Runtime_CompilerServices_AsyncTaskMethodBuilder_1_ILTypeInstance_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Int32_MethodInfo_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_Type_MethodInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Single_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_Action_1_Single_Binding.Register(app);
             System_Collections_Generic_List_1_Action_1_Single_Binding.Register(app);

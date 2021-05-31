@@ -2119,7 +2119,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u7B80\u5355\u7A97\u53E3\uFF0C\u4E0D\u4F7F\u7528UFlux"
+  m_Text: "\u7B80\u5355\u7A97\u53E3:\u5B50\u7A97\u53E3,\u7A97\u53E3\u6D88\u606F"
 --- !u!1 &3811077667678821320
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,9 +30,9 @@ namespace Game.demo6_UFlux._07.Windows_DI
             this.testService2 = service2;
         }
 
-        public override void Open()
+        public override void Open(UIMsgData uiMsg = null)
         {
-            base.Open();
+            base.Open(uiMsg);
         }
         
         [ButtonOnclick("btn_Close")]
