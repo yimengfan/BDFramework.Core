@@ -1,4 +1,7 @@
 ## 更新记录
+### V2.0.6
+【Edtior】
+1.增加Excel导表回调，用以做表格检测
 ### V2.0.5
 【Editor】
 1.Auto build dll 修改编译时机，解决play模式退出无法自动编译的bug

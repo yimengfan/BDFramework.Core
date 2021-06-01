@@ -169,7 +169,9 @@ namespace BDFramework.Editor.TableData
                     Debug.LogError("导出数据有错,跳过! 错误位置:" + type.Name + ":" + i + "/" + jsonObj.Count);
                 }
             }
-
+            //回调通知
+            BDEditorBehaviorHelper.OnExportExcel(type);
+            //
             EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.Name, jsonObj.Count), 1);
         }
 

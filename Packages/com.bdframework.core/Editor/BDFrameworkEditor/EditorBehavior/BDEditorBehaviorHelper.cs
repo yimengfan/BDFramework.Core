@@ -9,19 +9,19 @@ namespace BDFramework.Editor
     /// </summary>
     static public class BDEditorBehaviorHelper
     {
-        static private List<ABDFrameworkEditorBehavior> BDFrameBehaviorList = new List<ABDFrameworkEditorBehavior>();
+        static private List<ABDEditorBehavior> BDFrameBehaviorList = new List<ABDEditorBehavior>();
         /// <summary>
         /// 初始化
         /// </summary>
         static public void Init()
         {
-            var type = typeof(ABDFrameworkEditorBehavior);
+            var type = typeof(ABDEditorBehavior);
             var types = BDFrameEditorLife.Types;
             foreach (var t in types)
             {
                 if (t.IsSubclassOf(type))
                 {
-                    var bdBehaviorInst = Activator.CreateInstance(t) as ABDFrameworkEditorBehavior;
+                    var bdBehaviorInst = Activator.CreateInstance(t) as ABDEditorBehavior;
                     BDFrameBehaviorList.Add(bdBehaviorInst);
                 }
             }
@@ -74,5 +74,14 @@ namespace BDFramework.Editor
                 behavior.OnEndBuildAssetBundle(outputPath);
             }
         }
+        
+        static public void OnExportExcel(Type type)
+        {
+            foreach (var behavior in BDFrameBehaviorList)
+            {
+                behavior.OnExportExcel(type);
+            }
+        }
+
     }
 }

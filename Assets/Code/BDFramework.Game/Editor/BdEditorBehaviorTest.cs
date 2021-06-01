@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BDFramework.Editor.Asset;
 using BDFramework.ResourceMgr;
@@ -6,11 +7,10 @@ using UnityEngine;
 
 namespace BDFramework.Editor.EditorLife
 {
-    public class BdFrameworkEditorBehaviorTest : ABDFrameworkEditorBehavior
+    public class BdEditorBehaviorTest : ABDEditorBehavior
     {
         public override void OnBeginBuildDLL()
         {
-
             Debug.Log("【BDFrameEditorBehavior】打包DLL前,回调测试!");
         }
 
@@ -34,7 +34,7 @@ namespace BDFramework.Editor.EditorLife
             Debug.Log("【BDFrameEditorBehavior】打包Asset时,回调测试!");
             //测试1：Runtime/Char 下prefab依赖 打包成一个ab
             List<string> charList = new List<string>();
-            var path = "/Runtime/Char/".ToLower();
+            var          path     = "/Runtime/Char/".ToLower();
             foreach (var key in buildInfo.AssetDataMaps.Keys)
             {
                 if (key.Contains(path))
@@ -42,6 +42,7 @@ namespace BDFramework.Editor.EditorLife
                     charList.Add(key);
                 }
             }
+
             //角色列表
             foreach (var charPath in charList)
             {
@@ -51,10 +52,10 @@ namespace BDFramework.Editor.EditorLife
                 {
                     //
                     buildInfo.SetABName(dependAssetKey, charAssetData.ABName, BuildInfo.ChangeABNameMode.Simple);
-                    
+
                     var dependAsset = buildInfo.AssetDataMaps[dependAssetKey];
                     //判断是否被其他资源引用，ab名是否被其他规则修改
-                    if (!dependAsset.IsRefrenceByOtherAsset() && dependAssetKey== dependAsset.ABName)
+                    if (!dependAsset.IsRefrenceByOtherAsset() && dependAssetKey == dependAsset.ABName)
                     {
                         //打包到一个ab中
                         dependAsset.ABName = charAssetData.ABName;
@@ -66,6 +67,15 @@ namespace BDFramework.Editor.EditorLife
         public override void OnEndBuildAssetBundle(string outputPath)
         {
             Debug.Log("【BDFrameEditorBehavior】打包Asset之后测试!");
+        }
+
+        /// <summary>
+        /// 导出一张excel
+        /// </summary>
+        /// <param name="type"></param>
+        public override void OnExportExcel(Type type)
+        {
+            Debug.Log("导出表格回调测试:" + type.FullName);
         }
     }
 }

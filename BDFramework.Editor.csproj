@@ -64,13 +64,13 @@
      <Compile Include="Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\ExcelImporter.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\ExcelTools.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\AssetEditor\TableEditor\ExcelUtility.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\ABDFrameworkEditorBehavior.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDAssetImporter.cs" />
-     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDEditorBehaviorHelper.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\AssetHelper\BDAssetImporter.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDFrameEditorLife.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDFrameSetting\BDEditorApplication.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDFrameSetting\BDEditorSetting.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\BDFrameSetting\EditorWindow_BDFrameworkConfig.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\EditorBehavior\ABDEditorBehavior.cs" />
+     <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\EditorBehavior\BDEditorBehaviorHelper.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\EditorBuiltinStyle.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.bdframework.core\Editor\BDFrameworkEditor\MenuItem\MenuItems.cs" />
