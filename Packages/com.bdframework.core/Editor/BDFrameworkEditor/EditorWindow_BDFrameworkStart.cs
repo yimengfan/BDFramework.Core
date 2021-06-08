@@ -181,19 +181,20 @@ namespace BDFramework.Editor
                 if (!IsExsitOdin())
                 {
                     GUI.color = Color.red;
+                    GUILayout.Label("1.缺少Odin");
+                    GUI.color = GUI.contentColor;
+                    if (GUILayout.Button("Download", GUILayout.Width(80)))
+                    {
+                        Application.OpenURL(Odin_URL);
+                    }
                 }
                 else
                 {
                     GUI.color = Color.green;
+                    GUILayout.Label("1.已存在Odin");
+                    GUI.color = GUI.contentColor;
                 }
-
-                GUILayout.Label("1.缺少Odin");
-                GUI.color = GUI.contentColor;
-                if (GUILayout.Button("Download", GUILayout.Width(80)))
-                {
-                    Application.OpenURL(Odin_URL);
-                }
-
+                
                 GUILayout.EndHorizontal();
             }
 
@@ -203,19 +204,22 @@ namespace BDFramework.Editor
                 if (!IsImportedAsset())
                 {
                     GUI.color = Color.red;
+                    GUILayout.Label("2.导入Asset.package");
+                    GUI.color = GUI.contentColor;
+                    if (GUILayout.Button("Import", GUILayout.Width(80)))
+                    {
+                        var packagePath = AssetDatabase.GUIDToAssetPath("69227cf6ea5304641ae95ffb93874014");
+                        AssetDatabase.ImportPackage(packagePath, true);
+                    }
                 }
                 else
                 {
                     GUI.color = Color.green;
+                    GUILayout.Label("2.已导入Asset.package");
+                    GUI.color = GUI.contentColor;
                 }
 
-                GUILayout.Label("2.导入Asset.package");
-                GUI.color = GUI.contentColor;
-                if (GUILayout.Button("Import", GUILayout.Width(80)))
-                {
-                    var packagePath = AssetDatabase.GUIDToAssetPath("69227cf6ea5304641ae95ffb93874014");
-                    AssetDatabase.ImportPackage(packagePath, true);
-                }
+              
 
                 GUILayout.EndHorizontal();
             }
