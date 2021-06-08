@@ -115,13 +115,20 @@ namespace BDFramework.Editor.TableData
             IdX = -1;
             IdY = -1;
             //判断Excel文件中是否存在数据表
-            if (mResultSet.Tables.Count < 1) return "";
+            if (mResultSet.Tables.Count < 1)
+            {
+                return "";
+            }
 
             //默认读取第一个数据表
             DataTable mSheet = mResultSet.Tables[0];
 
             //判断数据表内是否存在数据
-            if (mSheet.Rows.Count < 1) return "";
+            if (mSheet.Rows.Count < 1)
+            {
+                return "";
+            }
+
             //准备一个列表存储整个表的数据
             List<Dictionary<string, object>> table = new List<Dictionary<string, object>>();
             /************Keep * Mode 保留带*的行列 ********************/
@@ -133,9 +140,11 @@ namespace BDFramework.Editor.TableData
              *
              * 带*的行列保留
              */
-            List<object> serverRowDatas = new List<object>();
-            List<object> localRowDatas  = new List<object>();
-            List<object> fieldRowDatas  = new List<object>();
+            List<object> serverRowDatas    = new List<object>();
+            List<object> localRowDatas     = new List<object>();
+            List<object> fieldNameRowDatas = new List<object>();
+            //
+            List<object> fieldTypeRowDatas = new List<object>();
             //第一行为备注，
             //寻找到id字段行数，以下全为数据
             int skipRowCount = -1;
@@ -147,6 +156,7 @@ namespace BDFramework.Editor.TableData
                 {
                     break;
                 }
+
                 //判断是否为Skip模式
                 if (rows[0].ToString().ToLower().Equals("server"))
                 {
@@ -157,6 +167,7 @@ namespace BDFramework.Editor.TableData
                     localRowDatas = rows;
                 }
             }
+
             //这里skip 防止有人在 备注行直接输入id
             int skipLine = 1;
             if (serverRowDatas.Count > 0)
@@ -167,6 +178,7 @@ namespace BDFramework.Editor.TableData
             {
                 Debug.Log("【无server local模式】");
             }
+
             for (int i = skipLine; i < 10 && skipColCount == -1; i++)
             {
                 var rows = this.GetRowDatas(i);
@@ -175,9 +187,13 @@ namespace BDFramework.Editor.TableData
                 {
                     if (rows[j].Equals("Id"))
                     {
-                        skipRowCount  = i;
-                        skipColCount  = j;
-                        fieldRowDatas = rows;
+                        skipRowCount      = i;
+                        skipColCount      = j;
+                        fieldNameRowDatas = rows;
+                        //获取字段类型
+                        var rowtype = this.GetRowDatas(i - 1);
+                        fieldTypeRowDatas = rowtype;
+                        //
                         break;
                     }
                 }
@@ -213,10 +229,10 @@ namespace BDFramework.Editor.TableData
             {
                 //准备一个字典存储每一行的数据
                 Dictionary<string, object> row = new Dictionary<string, object>();
-
+                //
                 for (int j = skipColCount; j < mSheet.Columns.Count; j++)
                 {
-                    string field = fieldRowDatas[j].ToString();
+                    string field = fieldNameRowDatas[j].ToString();
                     //跳过空字段
                     if (string.IsNullOrEmpty(field))
                     {
@@ -243,7 +259,6 @@ namespace BDFramework.Editor.TableData
 
                     //Key-Value对应
                     var rowdata = mSheet.Rows[i][j];
-
                     //根据null判断
                     if (rowdata == null)
                     {
@@ -251,7 +266,110 @@ namespace BDFramework.Editor.TableData
                         continue;
                     }
 
-                    row[field] = rowdata;
+                    var fieldType = fieldTypeRowDatas[j].ToString().ToLower();
+                    if (rowdata is DBNull) //空类型判断，赋默认值
+                    {
+                        if (fieldType == "int" || fieldType == "float" || fieldType == "double")
+                        {
+                            row[field] = -9999;
+                        }
+                        else if (fieldType == "string")
+                        {
+                            row[field] = "";
+                        }
+                        else if (fieldType.Contains("[]")) //空数组
+                        {
+                            row[field] = "[]";
+                        }
+                    }
+                    else
+                    {
+                        //string数组，对单个元素加上""
+                        if (fieldType == "string[]")
+                        {
+                            var value = rowdata.ToString();
+                            if (value != "[]" && !value.Contains("\"")) //不是空数组,且没有""
+                            {
+                                if (value.StartsWith("\"["))
+                                {
+                                    value = value.Replace("\"[", "[\"");
+                                    value = value.Replace("]\"", "\"]");
+                                }
+                                else
+                                {
+                                    value = value.Replace("[", "[\"");
+                                    value = value.Replace("]", "\"]");
+                                }
+
+                                value      = value.Replace(",", "\",\"");
+                                row[field] = value;
+                            }
+                            else
+                            {
+                                row[field] = rowdata;
+                            }
+                        }
+                        //其他数组 会被处理成string
+                        else if (fieldType.Contains("["))
+                        {
+                            var value = rowdata.ToString();
+                            value      = value.Replace("\"[", "[");
+                            value      = value.Replace("]\"", "]");
+                            row[field] = value;
+                        }
+
+                        else if (fieldType == "int" || fieldType == "float" || fieldType == "double")
+                        {
+                            var oldValue = rowdata.ToString();
+                            if (fieldType == "int")
+                            {
+                                int value = 0;
+                                if (int.TryParse(oldValue, out value))
+                                {
+                                    row[field] = value;
+                                }
+                                else
+                                {
+                                    row[field] = -9999;
+                                    Debug.LogErrorFormat("表格数据出错:{0}-{1}", i, j);
+                                }
+                            }
+                            else if (fieldType == "float")
+                            {
+                                float value = 0;
+                                if (float.TryParse(oldValue, out value))
+                                {
+                                    row[field] = value;
+                                }
+                                else
+                                {
+                                    row[field] = -9999;
+                                    Debug.LogErrorFormat("表格数据出错:{0}-{1}", i, j);
+                                }
+                            }
+                            else if (fieldType == "double")
+                            {
+                                double value = 0;
+                                if (double.TryParse(oldValue, out value))
+                                {
+                                    row[field] = value;
+                                }
+                                else
+                                {
+                                    row[field] = -9999;
+                                    Debug.LogErrorFormat("表格数据出错:{0}-{1}", i, j);
+                                }
+                            }
+                        }
+                        else if (field.Equals("string"))
+                        {
+                            row[field] = rowdata.ToString();
+                        }
+                        else
+                        {
+                            row[field] = rowdata;
+                        }
+                    }
                 }
 
                 //添加到表数据中
@@ -263,11 +381,10 @@ namespace BDFramework.Editor.TableData
 
             //生成Json字符串
             string json = JsonMapper.ToJson(table);
+            //把当字符串的数组 重新处理成数组
             json = json.Replace("\"[", "[").Replace("]\"", "]");
             json = json.Replace("\\\"", "\"");
             json = json.Replace("\"\"\"\"", "\"\"");
-
-
             return json;
         }
 
@@ -285,6 +402,7 @@ namespace BDFramework.Editor.TableData
             {
                 return list;
             }
+
             //默认读取第一个数据表
             DataTable mSheet = mResultSet.Tables[0];
             //判断数据表内是否存在数据
@@ -292,6 +410,7 @@ namespace BDFramework.Editor.TableData
             {
                 return list;
             }
+
             //读取数据
             int colCount = mSheet.Columns.Count;
             for (int j = 0; j < colCount; j++)

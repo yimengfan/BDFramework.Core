@@ -41,12 +41,14 @@ namespace BDFramework.Editor.TableData
         public static List<string> GetAllConfigFiles(string filetype = "*.xlsx")
         {
             List<string> tableRoot = new List<string>();
-            foreach (var p in Directory.GetDirectories(Application.dataPath, "*", SearchOption.TopDirectoryOnly))
+            foreach (var path in Directory.GetDirectories(Application.dataPath, "*", SearchOption.TopDirectoryOnly))
             {
-                var dir = p + "/Table";
-                if (!Directory.Exists(dir)) continue;
-
-                tableRoot.Add(dir);
+                var tableDir = path + "/Table";
+                if (!Directory.Exists(tableDir))
+                {
+                    continue;
+                }
+                tableRoot.Add(tableDir);
             }
 
             //table发现
@@ -160,13 +162,13 @@ namespace BDFramework.Editor.TableData
                
                 try
                 {
-                    var j = jsonObj[i].ToJson();
-                    var jobj    = JsonMapper.ToObject(type, j);
+                    var json = jsonObj[i].ToJson();
+                    var jobj    = JsonMapper.ToObject(type, json);
                     SqliteHelper.DB.Insert(jobj);
                 }
-                catch
+                catch(Exception e)
                 {
-                    Debug.LogError("导出数据有错,跳过! 错误位置:" + type.Name + ":" + i + "/" + jsonObj.Count);
+                    Debug.LogError("导出数据有错,跳过! 错误位置:" + type.Name + ":" + i + "/" + jsonObj.Count + "\n" +e);
                 }
             }
             //回调通知
