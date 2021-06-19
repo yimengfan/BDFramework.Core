@@ -22,7 +22,7 @@ namespace BDFramework.Editor
         static BDFrameEditorLife()
         {
             EditorApplication.playModeStateChanged += OnPlayExit;
-            EditorApplication.update += EditorUpdate_CheckGuideWindow;
+           
         }
 
         /// <summary>
@@ -79,6 +79,9 @@ namespace BDFramework.Editor
                 var eAssemlby = Assembly.LoadFile(editorAssemlyPath);
                 RegisterMainProjectAssembly(gAssembly, eAssemlby);
             }
+            
+            //注册 检测guidewindow
+            EditorApplication.update += EditorUpdate_CheckGuideWindow;
         }
 
 

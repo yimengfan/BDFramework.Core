@@ -248,7 +248,7 @@ namespace BDFramework.Editor
             if (File.Exists(path))
             {
                 var version = File.ReadAllText(path);
-                if (version == BDEditorApplication.BDFrameConfig.Version)
+                if (version == BDEditorApplication.BDFrameConfig?.Version)
                 {
                     return true;
                 }
