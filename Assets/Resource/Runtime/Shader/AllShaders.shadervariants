@@ -23,7 +23,7 @@ ShaderVariantCollection:
   - first: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
     second:
       variants:
-      - keywords: 
+      - keywords: _ALPHAMODULATE_ON
         passType: 0
   - first: {fileID: 4800000, guid: 00218e4f0ba5f5342b9e30a2079bede9, type: 3}
     second:

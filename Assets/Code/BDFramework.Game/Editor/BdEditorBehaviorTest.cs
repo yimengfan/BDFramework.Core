@@ -51,7 +51,7 @@ namespace BDFramework.Editor.EditorLife
                 foreach (var dependAssetKey in charAssetData.DependList)
                 {
                     //
-                    buildInfo.SetABName(dependAssetKey, charAssetData.ABName, BuildInfo.ChangeABNameMode.Simple);
+                    buildInfo.SetABName(dependAssetKey, charAssetData.ABName, BuildInfo.SetABNameMode.Simple);
 
                     var dependAsset = buildInfo.AssetDataMaps[dependAssetKey];
                     //判断是否被其他资源引用，ab名是否被其他规则修改
