@@ -131,15 +131,6 @@ public class BDLauncherBridge
         {
             m.Start();
         }
-
-
-        // IEnumeratorTool.WaitingForExec(5, () =>
-        // {
-        //     //执行单元测试
-        //     if (BDLauncher.Inst.GameConfig.IsExcuteHotfixUnitTest && ILRuntimeHelper.IsRunning)
-        //     {
-        //         HotfixTestRunner.RunHotfixUnitTest();
-        //     }
-        // });
+        
     }
 }

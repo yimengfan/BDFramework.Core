@@ -5,9 +5,9 @@ using BDFramework.UnitTest;
 using LitJson;
 using UnityEngine;
 
-namespace Code.BDFramework.UnitTest
+namespace BDFramework.UnitTest
 {
-    [UnitTestAttribute(des:  "资源管理测试-DevResource")]
+    [UnitTest(des:  "资源管理测试-DevResource")]
     static public class APITest_AssetsManager_DevResource
     {
         

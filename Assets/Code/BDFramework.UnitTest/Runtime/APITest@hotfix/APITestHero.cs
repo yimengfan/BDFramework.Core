@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using SQLite4Unity3d;
 
-namespace BDFramework.UnitTest.Test
+namespace BDFramework.UnitTest.Data
 {
     public class APITestHero
     {

@@ -34,12 +34,9 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.String), typeof(System.Object[])};
             method = type.GetMethod("LogErrorFormat", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, LogErrorFormat_3);
-            args = new Type[]{typeof(System.Exception)};
-            method = type.GetMethod("LogException", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, LogException_4);
             args = new Type[]{};
             method = type.GetMethod("ClearDeveloperConsole", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, ClearDeveloperConsole_5);
+            app.RegisterCLRMethodRedirection(method, ClearDeveloperConsole_4);
 
 
         }
@@ -117,23 +114,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* LogException_4(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Exception @exception = (System.Exception)typeof(System.Exception).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-
-            UnityEngine.Debug.LogException(@exception);
-
-            return __ret;
-        }
-
-        static StackObject* ClearDeveloperConsole_5(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* ClearDeveloperConsole_4(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);

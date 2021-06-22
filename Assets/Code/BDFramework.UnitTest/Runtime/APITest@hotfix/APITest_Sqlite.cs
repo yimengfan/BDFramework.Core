@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using BDFramework.Sql;
 using BDFramework.UnitTest;
-using BDFramework.UnitTest.Test;
+using BDFramework.UnitTest.Data;
 using LitJson;
 using UnityEngine;
 
-namespace Tests
+namespace BDFramework.UnitTest
 {
     [UnitTest(des:  "数据库测试")]
     static public class APITest_Sqlite
@@ -21,10 +21,14 @@ namespace Tests
             var h2 = new APITestHero() {Id = 2};
             var h3 = new APITestHero() {Id = 3};
 
+            if (!ILRuntimeHelper.IsRunning)
+            {
+                SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath,Application.platform);
+                SqliteHelper.DB.CreateTable<APITestHero>();
+                SqliteHelper.DB.InsertTable(new List<APITestHero>() {h1, h2, h3});
+            }
             
-            SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath,Application.platform);
-            SqliteHelper.DB.CreateTable<APITestHero>();
-            SqliteHelper.DB.InsertTable(new List<APITestHero>() {h1, h2, h3});
+            Assert.IsPass(true);
         }
 
 

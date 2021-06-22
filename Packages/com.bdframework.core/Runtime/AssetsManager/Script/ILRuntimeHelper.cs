@@ -14,7 +14,7 @@ namespace BDFramework
     static public class ILRuntimeHelper
     {
         public static AppDomain AppDomain { get; private set; }
-        public static bool IsRunning { get; private set; }
+        public static bool      IsRunning { get; private set; } = false;
 
         static private FileStream fsDll = null;
         static private FileStream fsPdb = null;
@@ -63,9 +63,6 @@ namespace BDFramework
                 AppDomain.DebugService.StartDebugService(56000);
                 Debug.Log("热更调试器 准备待命~");
             }
-
-            //
-            AppDomain.Invoke("HotfixCheck", "Log", null, null);
         }
 
         /// <summary>

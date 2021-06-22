@@ -5,15 +5,15 @@ using LitJson;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Tests
+namespace BDFramework.UnitTest
 {
-    [UnitTestAttribute(des:  "框架流程测试")]
-    static public class APITest_ILRuntime
+    [UnitTestAttribute(des:  "ILRuntime测试")]
+    static public class APITest_LitJson
     {
         /// <summary>
         /// 测试启动逻辑
         /// </summary>
-        [HotfixUnitTest(des:  "测试Map try get 为null")]
+        [HotfixOnlyUnitTest(des:  "测试Map try get 为null")]
         public static void MapTryGetTest()
         {
             Dictionary<string, object> testmap = new Dictionary<string, object>();
@@ -44,7 +44,7 @@ namespace Tests
         /// <summary>
         /// 测试litjson
         /// </summary>
-        [HotfixUnitTest(des: "测试litjson")]
+        [HotfixOnlyUnitTest(des: "测试类型判断")]
         public static void TypeTest()
         {
             var b = new B();
@@ -77,7 +77,7 @@ namespace Tests
         /// <summary>
         /// 测试litjson
         /// </summary>
-        [HotfixUnitTest(des:  "测试litjson")]
+        [HotfixOnlyUnitTest(des:  "测试litjson")]
         public static void LitJsonTest()
         {
             var obj  = new LitjsonTest();
@@ -95,15 +95,17 @@ namespace Tests
                           && obj.subObj.list.Count == obj2.subObj.list.Count && obj.subObj.list[0] == obj2.subObj.list[0],
                           "litjson 测试失败");
         }
+
         
+                
         /// <summary>
         /// 测试litjson
         /// </summary>
-        [HotfixUnitTest(des: "测试Await")]
+        [HotfixOnlyUnitTest(des: "测试Await")]
         public static async void AwaitAsyncTest()
         {
-            WebClient wc =new WebClient();
-            var ret = await wc.DownloadStringTaskAsync("http://www.baidu.com");
+            WebClient wc  =new WebClient();
+            var       ret = await wc.DownloadStringTaskAsync("http://www.baidu.com");
             Debug.Log("Async Await测试:" + ret);
             Assert.IsPass(true, "测试Await Async");
         }

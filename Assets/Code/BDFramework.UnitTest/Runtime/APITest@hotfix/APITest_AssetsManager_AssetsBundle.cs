@@ -2,9 +2,9 @@
 using BDFramework.ResourceMgr;
 using BDFramework.UnitTest;
 
-namespace Code.BDFramework.UnitTest
+namespace BDFramework.UnitTest
 {
-    [UnitTestAttribute(des:  "资源管理测试-Assetbundle")]
+    [UnitTest(des:  "资源管理测试-Assetbundle")]
     static public class APITest_AssetsManager_AssetsBundle
     {
         

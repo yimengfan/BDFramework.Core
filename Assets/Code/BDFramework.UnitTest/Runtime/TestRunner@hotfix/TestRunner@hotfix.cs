@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using BDFramework.Reflection;
+using ILRuntime.Runtime.Generated;
+using LitJson;
 using UnityEngine;
 
 namespace BDFramework.UnitTest
@@ -10,23 +12,38 @@ namespace BDFramework.UnitTest
     /// <summary>
     /// 执行所有的runner
     /// </summary>
-    static public class HotfixTestRunner
+    static public class TestRunner
     {
         #region 对外的函数接口
-        
+
+        /// <summary>
+        /// 执行所有的TestRunner
+        /// </summary>
+        static public void RunMonoCLRUnitTest()
+        {
+            Debug.ClearDeveloperConsole();
+            Debug.Log("<color=red>----------------------开始测试MonoCLR-----------------------</color>");
+            //热更模式
+            CollectTestClassData(TestType.MonoOrCLR);
+            //执行普通的测试
+            ExcuteTest<UnitTestAttribute>();
+        }
+
+
+
         /// <summary>
         /// 执行所有的TestRunner
         /// </summary>
         static public void RunHotfixUnitTest()
         {
             Debug.ClearDeveloperConsole();
-            Debug.Log("<color=red>----------------------开始测试-----------------------</color>");
+            Debug.Log("<color=red>----------------------开始测试ILR-----------------------</color>");
             //搜集测试用例
             CollectTestClassData(TestType.ILRuntime);
             //1.执行普通的测试
             ExcuteTest<UnitTestAttribute>();
             //2.执行hotfix的测试
-            ExcuteTest<HotfixUnitTestAttribute>();
+            ExcuteTest<HotfixOnlyUnitTestAttribute>();
         }
 
         #endregion
@@ -64,22 +81,24 @@ namespace BDFramework.UnitTest
             testMethodDataMap = new Dictionary<Type, List<TestMethodData>>();
             List<Type> types = new List<Type>();
             //判断不同的模式
+
             if (testType == TestType.MonoOrCLR)
             {
-                var assembly = typeof(BDLauncher).Assembly;
+                var assembly = typeof(ILRuntimeDelegateHelper).Assembly;
                 types = assembly.GetTypes().ToList();
             }
             else if (testType == TestType.ILRuntime)
             {
                 types = ILRuntimeHelper.GetHotfixTypes();
             }
-            
+
+            var attribute = typeof(UnitTestBaseAttribute);
             //测试用例类
             List<Type> testClassList = new List<Type>();
             foreach (var type in types)
             {
                 var attr = type.GetAttributeInILRuntime<UnitTestBaseAttribute>();
-                if (attr!=null)
+                if (attr != null)
                 {
                     testClassList.Add(type);
                 }
@@ -96,7 +115,8 @@ namespace BDFramework.UnitTest
                 //获取uit test并排序
                 foreach (var method in methods)
                 {
-                    var mattr = method.GetAttributeInILRuntime<UnitTestBaseAttribute>();
+                    var mattrs = method.GetCustomAttributes(attribute, false);
+                    var mattr  = mattrs[0] as UnitTestBaseAttribute;
 
                     //数据
                     var newMethodData = new TestMethodData() {MethodInfo = method, TestData = mattr,};
@@ -126,34 +146,72 @@ namespace BDFramework.UnitTest
         /// <summary>
         /// 执行正常测试
         /// </summary>
+        // static public void ExcuteTest<T>() where T : UnitTestBaseAttribute
+        // {
+        //     foreach (var item in testMethodDataMap)
+        //     {
+        //         //判断当前执行的测试类型
+        //         var md = item.Value.FindAll((_item) => _item.TestData is T);
+        //         if (md.Count > 0)
+        //         {
+        //             Debug.LogFormat("<color=yellow>---->执行:{0} </color>", item.Key.FullName);
+        //         }
+        //
+        //         foreach (var methodData in md)
+        //         {
+        //             //开始执行测试
+        //             try
+        //             {
+        //                 methodData.MethodInfo.Invoke(null, null);
+        //                 Debug.LogFormat("<color=green>执行 {0}: 成功! - {1}</color>", methodData.TestData.Des, methodData.MethodInfo.Name);
+        //             }
+        //             catch (Exception e)
+        //             {
+        //                 Debug.LogErrorFormat("<color=red>执行 {0}: 失败! - {1}</color>", methodData.TestData.Des, methodData.MethodInfo.Name);
+        //
+        //                 // if (!ILRuntimeHelper.IsRunning)
+        //                 // {
+        //                 //
+        //                 //     //Debug.LogError(JsonMapper.ToJson(e.Data.Keys));
+        //                 // }
+        //             }
+        //         }
+        //     }
+        // }
+        
+        
         static public void ExcuteTest<T>() where T : UnitTestBaseAttribute
         {
             foreach (var item in testMethodDataMap)
             {
                 //判断当前执行的测试类型
                 var md = item.Value.FindAll((_item) => _item.TestData is T);
-                if(md.Count>0)
+                if (md.Count > 0)
                 {
                     Debug.LogFormat("<color=yellow>---->执行:{0} </color>", item.Key.FullName);
                 }
+        
                 foreach (var methodData in md)
                 {
                     //开始执行测试
-                    try
+                    methodData.MethodInfo.Invoke(null, null);
+                    bool   isFail  = false;
+                    string failMsg = "";
+                    //采用最简单的状态模式，防止ilr下爆栈
+                    Assert.GetAssertStaus(out isFail, out failMsg);
+                    Assert.ClearStatus();
+                    if (!isFail)
                     {
-                        methodData.MethodInfo.Invoke(null, null);
-                        Debug.LogFormat("<color=green>执行 {0}: 成功! - {1}</color>", methodData.TestData.Des,
-                                        methodData.MethodInfo.Name);
+                        Debug.LogFormat("<color=green>执行 {0}: 成功! - {1}</color>", methodData.TestData.Des, methodData.MethodInfo.Name);
                     }
-                    catch (Exception e)
+                    else
                     {
-                        Debug.LogErrorFormat("<color=red>执行 {0}: 失败! - {1}</color>", methodData.TestData.Des,
-                                             methodData.MethodInfo.Name);
-
-                        if (e.InnerException!=null)
-                            Debug.LogError(e.InnerException.Message + "\n" + e.InnerException.StackTrace);
-                        else
-                            Debug.LogError(e.Message + "\n" + e.StackTrace);
+                        Debug.LogErrorFormat("<color=red>执行 {0}: 失败! - {1}</color>", methodData.TestData.Des, methodData.MethodInfo.Name);
+                      
+                        // if (ILRuntimeHelper.IsRunning)
+                        // {
+                            //  Debug.LogError(ILRuntimeHelper.AppDomain.GetCurrentStackTrace());
+                        // }
                     }
                 }
             }

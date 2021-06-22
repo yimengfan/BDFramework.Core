@@ -3,10 +3,10 @@ using BDFramework.DataListener;
 using BDFramework.UnitTest;
 using UnityEngine;
 
-namespace Tests
+namespace BDFramework.UnitTest
 {
-    [UnitTestAttribute(des:  "数据监听测试")]
-    static public class DataListener
+    [UnitTest(des:  "数据监听测试")]
+    static public class APITest_DataListener
     {
         public enum Msg
         {

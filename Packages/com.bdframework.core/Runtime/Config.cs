@@ -60,9 +60,7 @@ namespace BDFramework
 
         [LabelText("是否打印日志")]
         public bool IsDebugLog = true;
-
-        [LabelText("是否执行热更单元测试")]
-        public bool IsExcuteHotfixUnitTest = false;
+        
 
         [LabelText("文件服务器")]
         public string FileServerUrl = "192.168.8.68";
@@ -98,6 +96,7 @@ namespace BDFramework
         #region 编辑器
 
 #if UNITY_EDITOR
+        [HideInInspector]
         [OnInspectorGUI("_ONGUI")]
         private bool isChangedData = false;
       

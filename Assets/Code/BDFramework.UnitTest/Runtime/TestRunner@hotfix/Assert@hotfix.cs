@@ -16,7 +16,7 @@ namespace BDFramework.UnitTest
             Log(!ret, failMessage);
             return ret;
         }
-
+        
         /// <summary>
         /// 是否为false
         /// </summary>
@@ -61,6 +61,8 @@ namespace BDFramework.UnitTest
         }
 
 
+        private static bool isFail  = false;
+        private static string fileMsg = "";
         /// <summary>
         /// log
         /// </summary>
@@ -68,22 +70,32 @@ namespace BDFramework.UnitTest
         /// <exception cref="Exception"></exception>
         static void Log(bool ret, string failMessage = "")
         {
-            if (ILRuntimeHelper.IsRunning)
-            {
-                if (!ret)
-                {
-                   Debug.LogException(new Exception(failMessage));
-                   throw new Exception();
-                }
-            }
-            else
-            {
-                if (!ret)
-                {
-                   // Debug.LogError(failMessage);
-                    throw new Exception(failMessage);
-                }
-            }
+            isFail  = !ret;
+            fileMsg = failMessage;
+
+            // if (!ret)
+            // {
+            //     throw new Exception();
+            // }
+
+        }
+
+        /// <summary>
+        /// 获取成功失败状态 并且清除
+        /// </summary>
+        static public void GetAssertStaus(out bool ret, out string log)
+        {
+            ret = isFail;
+            log = fileMsg;
+        }
+
+        /// <summary>
+        /// 清理状态
+        /// </summary>
+        static public void ClearStatus()
+        {
+            isFail  = false;
+            fileMsg = "";
         }
     }
 }

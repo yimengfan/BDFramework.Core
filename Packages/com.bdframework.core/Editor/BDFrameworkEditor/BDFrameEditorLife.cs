@@ -19,6 +19,11 @@ namespace BDFramework.Editor
     [InitializeOnLoad]
     static public class BDFrameEditorLife
     {
+
+        /// <summary>
+        /// 是否完成初始化
+        /// </summary>
+        static public bool IsInited { get; private set; } = false;
         static BDFrameEditorLife()
         {
             EditorApplication.playModeStateChanged += OnPlayExit;
@@ -79,6 +84,13 @@ namespace BDFramework.Editor
                 var eAssemlby = Assembly.LoadFile(editorAssemlyPath);
                 RegisterMainProjectAssembly(gAssembly, eAssemlby);
             }
+
+            
+            
+            
+            
+            //最后，完成初始化
+            IsInited = true;
         }
 
 

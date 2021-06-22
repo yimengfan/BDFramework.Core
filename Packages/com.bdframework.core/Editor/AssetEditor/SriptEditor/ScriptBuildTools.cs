@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using BDFramework;
 using BDFramework.AssetHelper;
 using Debug = UnityEngine.Debug;
 using BDFramework.Core.Tools;
@@ -26,8 +27,10 @@ public class ScriptBuildTools
 
 
     private static Dictionary<int, string> csFilesMap;
-    private static string DLLPATH = "Hotfix/hotfix.dll";
+    private static string                  DLLPATH { get;  set; } = ScriptLoder.DLLPATH; // "Hotfix/hotfix.dll";
 
+   
+    
     private static bool IsShowTips;
     /// <summary>
     /// 宏
@@ -117,7 +120,10 @@ public class ScriptBuildTools
 
 
         // 热更代码 = 框架部分@hotfix  +  游戏逻辑部分@hotfix
-        var baseCs = csFileList.FindAll(f => !f.Contains("@hotfix") && f.EndsWith(".cs"));
+        var baseCs = csFileList.FindAll(f => !f.Contains("@hotfix") && f.EndsWith(".cs")); //筛选cs
+        //不用ILR binding进行编译base.dll,因为binding本身会因为@hotfix调整容易报错
+        baseCs = baseCs.Where((cs) => (!cs.Contains("\\ILRuntime\\Binding\\Analysis\\") && !cs.Contains("/ILRuntime/Binding/Analysis/"))||cs.EndsWith("CLRBindings.cs") ).ToList(); 
+        //
         var hotfixCs = csFileList.FindAll(f => f.Contains("@hotfix") && f.EndsWith(".cs"));
 
         var outHotfixPath = Path.Combine(_outPath, DLLPATH);
@@ -145,7 +151,7 @@ public class ScriptBuildTools
         string outHotfixDllPath,
         bool isdebug = false)
     {
-        var baseDll = outHotfixDllPath.Replace("hotfix.dll", "Assembly-CSharp.dll");
+        var baseDll = outHotfixDllPath.Replace("hotfix.dll", "Assembly-CSharp.dll"); //这里早期叫base.dll，后因为mono执行依赖Assembly-CSharp.dll
         //开始执行
         if (IsShowTips)
         {
