@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Resource/NetProtocal.meta
 guid: d45ee30c6ae7a234fb07282af02d2f9d
 folderAsset: yes
+=======
+guid: 50b8f92983fc7b049b0138184df46c0e
+>>>>>>> 3b122e060afda3daf9ac1d5620e2484f20353af5:Assets/StreamingAssets/Android/Art/51f5616e141ad98478c3557ebbf2b999.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

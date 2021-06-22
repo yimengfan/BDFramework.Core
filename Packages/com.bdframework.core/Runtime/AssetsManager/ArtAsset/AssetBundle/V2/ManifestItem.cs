@@ -21,7 +21,6 @@ namespace BDFramework.ResourceMgr.V2
         public ManifestItem(string path, AssetTypeEnum @enum, List<string> depend = null)
         {
             this.Path = path;
-            //this.AB = ab;
             this.Type = (int) @enum;
             this.Depend = depend;
         }

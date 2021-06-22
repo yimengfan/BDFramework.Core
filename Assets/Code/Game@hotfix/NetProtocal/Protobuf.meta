@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Code/Game@hotfix/NetProtocal/Protobuf.meta
 guid: b401759e227928f4b80abf079f51ea84
+=======
+guid: f8e19636f4da8114cbcd3fb40a962aca
+>>>>>>> 3b122e060afda3daf9ac1d5620e2484f20353af5:Assets/Plugins.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

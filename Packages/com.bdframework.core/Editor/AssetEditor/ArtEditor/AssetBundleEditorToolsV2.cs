@@ -73,7 +73,7 @@ namespace BDFramework.Editor.Asset
         public Dictionary<string, AssetData> AssetDataMaps = new Dictionary<string, AssetData>();
 
 
-        public enum ChangeABNameMode
+        public enum SetABNameMode
         {
             Simple,
             ForceAll
@@ -82,7 +82,7 @@ namespace BDFramework.Editor.Asset
         /// <summary>
         /// 设置AB名
         /// </summary>
-        public bool SetABName(string assetName, string newABName, ChangeABNameMode mode = ChangeABNameMode.Simple)
+        public bool SetABName(string assetName, string newABName, SetABNameMode mode = SetABNameMode.Simple)
         {
             //1.如果ab名被修改过,说明有其他规则影响，需要理清打包规则。（比如散图打成图集名）
             //2.如果资源被其他资源引用，修改ab名，需要修改所有引用该ab的名字
@@ -376,7 +376,7 @@ namespace BDFramework.Editor.Asset
             new MakePackage()
             {
                 FileExtens = new List<string>() {".shader", ".shadervariants"},
-                AssetBundleName =  ShaderCollection.ALL_SHADER_VARAINT_PATH.Replace(".shadervariants","")
+                AssetBundleName =  ShaderCollection.ALL_SHADER_VARAINT_PATH
             }
         };
 
