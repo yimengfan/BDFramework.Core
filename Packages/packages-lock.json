@@ -1,12 +1,10 @@
 {
   "dependencies": {
-    "com.bdframework.core": {
-      "version": "file:com.bdframework.core",
+    "com.cysharp.zstring": {
+      "version": "file:ZString",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {
-        "com.ourpalm.ilruntime": "1.6.6"
-      }
+      "dependencies": {}
     },
     "com.ourpalm.ilruntime": {
       "version": "1.6.6",
@@ -14,6 +12,15 @@
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.cn"
+    },
+    "com.popo.bdframework": {
+      "version": "file:com.popo.bdframework",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.ourpalm.ilruntime": "1.6.6",
+        "com.cysharp.zstring": "2.4.2"
+      }
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
