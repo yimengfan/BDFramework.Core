@@ -16,6 +16,7 @@ namespace BDFramework.Editor
         BuildPackage_Table_Table2Class=54,
         BuildPackage_Table_GenSqlite=55,
         BuildPackage_Table_Json2Sqlite=56,
+        BuildPackage_NetProtocol_Proto2Class=57,
         //
         OnekeyBuildAsset =101,
         
