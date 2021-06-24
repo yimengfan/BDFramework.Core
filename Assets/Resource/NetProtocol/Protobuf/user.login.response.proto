@@ -1,0 +1,12 @@
+syntax="proto3";
+//用户登录返回proto结构
+package com.xiaoxing.proto;
+option java_outer_classname = "UserLoginResponseEntity";
+
+message UserLoginResponse {
+  int32 status=1;
+  string name = 2;//用户名
+  string token = 3;//用于鉴权用户合法状态，连接业务服后每条消息必须带token
+  string logic_url = 4;//业务服地址
+  string msg = 5;
+}
