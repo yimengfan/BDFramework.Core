@@ -15,8 +15,11 @@ namespace BDFramework.Editor.Protocol
     {
         private static readonly string protoPath = BDApplication.ProjectRoot + "\\Assets\\Resource\\NetProtocol\\Protobuf\\";
         private static readonly string classPath = BDApplication.ProjectRoot + "\\Assets\\Code\\Game@hotfix\\NetProtocol\\Protobuf\\";
-        private static readonly string execPath = BDApplication.ProjectRoot + "/Packages/com.BDFramework.core/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
+        private static readonly string execPath = BDApplication.ProjectRoot + "/Packages/com.popo.bdframework/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
+        
         private static readonly string cachePath = BDApplication.BDEditorCachePath + "/ProtoCache/";
+        private static readonly string protoCachePath = cachePath + "Proto/";
+        private static readonly string classCachePath = cachePath + "Class/";
         
         [MenuItem("BDFrameWork工具箱/4.网络协议/Protobuf->生成Class", false, (int) BDEditorMenuEnum.BuildPackage_NetProtocol_Proto2Class)]
         public static void ExecuteGenProtobuf()
@@ -28,17 +31,44 @@ namespace BDFramework.Editor.Protocol
             var protoPaths = GetProtoFiles(protoPath);
             foreach (var toPath in protoPaths)
             {
+                ReplaceNamespace(toPath);
+
                 //拆分相对路径的 路径 文件名
-                var relativePath = GetRelativePath(Protobuf2ClassTools.protoPath, toPath);
+                var relativePath = GetRelativePath(protoPath, toPath);
                 var path = Path.GetDirectoryName(relativePath);
                 var name = Path.GetFileName(relativePath);
 
                 RunProtobufExe(name, path);
             }
-
-            RebuildDirectory(BDApplication.BDEditorCachePath + "/ProtoCache/");
+            
             AssetDatabase.Refresh();
             Debug.Log("Protobuf 转换完成");
+        }
+        
+        /// <summary>
+        /// 缓存区替换proto命名空间
+        /// </summary>
+        private static void ReplaceNamespace(string filePath)
+        {
+            RebuildDirectory(protoCachePath);
+            
+            var fileName = Path.GetFileName(filePath);
+            var @namespace = FindRightToLeft(fileName, ".", 2);
+            var regex = new Regex(@"(?<=package ).*?(?=;)");
+
+            var lines = File.ReadLines(filePath).ToArray();
+            for (int i = 0; i < lines.Length; i++)
+            {
+                var package = regex.Match(lines[i]).Value;
+                if (!string.IsNullOrEmpty(package))
+                {
+                    lines[i] = lines[i].Replace(package, @namespace);
+                    break;
+                }
+            }
+            
+            var newPath = Path.Combine(protoCachePath, Path.GetFileName(filePath));
+            File.WriteAllLines(newPath, lines);
         }
 
         /// <summary>
@@ -46,11 +76,11 @@ namespace BDFramework.Editor.Protocol
         /// </summary>
         private static void RunProtobufExe(string fileName, string path)
         {
+            RebuildDirectory(classCachePath);
+            
             if (!string.IsNullOrEmpty(path)) path = path + "/";
             
-            var inputPath = protoPath + path;
-            var args = $" --csharp_out={cachePath} --proto_path={inputPath} {fileName}";
-
+            var args = $" --csharp_out={classCachePath} --proto_path={protoCachePath} {fileName}";
             Process process = new Process();
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.FileName = execPath;;
@@ -59,38 +89,24 @@ namespace BDFramework.Editor.Protocol
             process.Start();
             process.WaitForExit();
 
-            var outputPath = classPath + path;
-            ReplaceNamespace(fileName, outputPath);
+            var newPath = classPath + path;
+            ReplaceFileName(fileName, newPath);
         }
 
         /// <summary>
-        /// 替换文件内容的命名空间 移动到新目录
+        /// 替换生成的class 文件名
         /// </summary>
-        private static void ReplaceNamespace(string fileName, string outputPath)
+        private static void ReplaceFileName(string fileName, string outputPath)
         {
             CheckDirectory(outputPath);
             
-            var directoryInfo = new DirectoryInfo(cachePath);
+            var directoryInfo = new DirectoryInfo(classCachePath);
             var fileInfo = directoryInfo.GetFiles()[0];
             if (fileInfo.Exists)
             {
-                var @namespace = FindRightToLeft(fileName, ".", 2);
                 var newName = fileName.Replace(".proto", ".cs");
                 var newPath = Path.Combine(outputPath, newName);
-                
-                var regexPackage = new Regex(@"(?<=namespace ).*?(?= {)");
-                
-                var lines = File.ReadLines(fileInfo.FullName).ToArray();
-                for (int i = 0; i < lines.Length; i++)
-                {
-                    var package = regexPackage.Match(lines[i]).Value;
-                    if (!string.IsNullOrEmpty(package))
-                    {
-                        lines[i] = lines[i].Replace(package, @namespace);
-                    }
-
-                    File.WriteAllLines(newPath, lines);
-                }
+                fileInfo.MoveTo(newPath);
             }
         }
 
