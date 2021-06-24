@@ -15,11 +15,8 @@ namespace BDFramework.Editor.Protocol
     {
         private static readonly string protoPath = BDApplication.ProjectRoot + "\\Assets\\Resource\\NetProtocol\\Protobuf\\";
         private static readonly string classPath = BDApplication.ProjectRoot + "\\Assets\\Code\\Game@hotfix\\NetProtocol\\Protobuf\\";
-        private static readonly string execPath = BDApplication.ProjectRoot + "/Packages/com.popo.bdframework/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
-        
         private static readonly string cachePath = BDApplication.BDEditorCachePath + "/ProtoCache/";
-        private static readonly string protoCachePath = cachePath + "Proto/";
-        private static readonly string classCachePath = cachePath + "Class/";
+        private static readonly string execPath = BDApplication.ProjectRoot + "/Packages/com.popo.bdframework/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
         
         [MenuItem("BDFrameWork工具箱/4.网络协议/Protobuf->生成Class", false, (int) BDEditorMenuEnum.BuildPackage_NetProtocol_Proto2Class)]
         public static void ExecuteGenProtobuf()
@@ -50,8 +47,6 @@ namespace BDFramework.Editor.Protocol
         /// </summary>
         private static void ReplaceNamespace(string filePath)
         {
-            RebuildDirectory(protoCachePath);
-            
             var fileName = Path.GetFileName(filePath);
             var @namespace = FindRightToLeft(fileName, ".", 2);
             var regex = new Regex(@"(?<=package ).*?(?=;)");
@@ -67,7 +62,7 @@ namespace BDFramework.Editor.Protocol
                 }
             }
             
-            var newPath = Path.Combine(protoCachePath, Path.GetFileName(filePath));
+            var newPath = Path.Combine(cachePath, Path.GetFileName(filePath));
             File.WriteAllLines(newPath, lines);
         }
 
@@ -76,11 +71,9 @@ namespace BDFramework.Editor.Protocol
         /// </summary>
         private static void RunProtobufExe(string fileName, string path)
         {
-            RebuildDirectory(classCachePath);
-            
             if (!string.IsNullOrEmpty(path)) path = path + "/";
-            
-            var args = $" --csharp_out={classCachePath} --proto_path={protoCachePath} {fileName}";
+
+            var args = $" --csharp_out={cachePath} --proto_path={cachePath} {fileName}";
             Process process = new Process();
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.FileName = execPath;;
@@ -100,8 +93,8 @@ namespace BDFramework.Editor.Protocol
         {
             CheckDirectory(outputPath);
             
-            var directoryInfo = new DirectoryInfo(classCachePath);
-            var fileInfo = directoryInfo.GetFiles()[0];
+            var directoryInfo = new DirectoryInfo(cachePath);
+            var fileInfo = directoryInfo.GetFiles("*.cs")[0];
             if (fileInfo.Exists)
             {
                 var newName = fileName.Replace(".proto", ".cs");
