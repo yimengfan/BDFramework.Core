@@ -28,11 +28,11 @@ namespace BDFramework.Editor
 
         //更新日志
         private static string CHANGEDLOG_URL =
-            "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.bdframework.core/CHANGELOG.md";
+            "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/CHANGELOG.md";
 
         //版本号
         private static string VERSION_URL =
-            "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.bdframework.core/Runtime/Resources/BDFrameConfig.Json";
+            "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/Runtime/Resources/BDFrameConfig.Json";
 
         private static Texture webIcon; //= EditorGUIUtility.IconContent( "BuildSettings.Web.Small" ).image;
 
