@@ -1,0 +1,25 @@
+﻿syntax = "proto3";
+package Item;
+
+option java_package = "com.jedi.serverEngine.message";  
+option java_outer_classname = "PBItem";
+
+message one_item{
+	uint32 id = 1; //物品id，见cfg_item
+	string name = 2;
+	uint32 amount = 3; //数量
+}
+
+
+message rsp_getItem{
+	string user_name = 1;
+	repeated one_item items = 2;// 所有物品
+}
+
+
+
+
+
+
+
+

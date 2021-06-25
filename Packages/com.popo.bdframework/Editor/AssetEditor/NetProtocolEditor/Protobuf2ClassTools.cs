@@ -28,7 +28,7 @@ namespace BDFramework.Editor.Protocol
             var protoPaths = GetProtoFiles(protoPath);
             foreach (var toPath in protoPaths)
             {
-                ReplaceNamespace(toPath);
+                if (!ReplaceNamespace(toPath)) continue;
 
                 //拆分相对路径的 路径 文件名
                 var relativePath = GetRelativePath(protoPath, toPath);
@@ -45,10 +45,17 @@ namespace BDFramework.Editor.Protocol
         /// <summary>
         /// 缓存区替换proto命名空间
         /// </summary>
-        private static void ReplaceNamespace(string filePath)
+        private static bool ReplaceNamespace(string filePath)
         {
+            //文件名是否符合命名规范(namespace.xxx.proto)
             var fileName = Path.GetFileName(filePath);
             var @namespace = FindRightToLeft(fileName, ".", 2);
+            if (string.IsNullOrEmpty(@namespace))
+            {
+                Debug.Log($"{fileName} 不符合命名规范!");
+                return false;
+            }
+            
             var regex = new Regex(@"(?<=package ).*?(?=;)");
 
             var lines = File.ReadLines(filePath).ToArray();
@@ -64,6 +71,7 @@ namespace BDFramework.Editor.Protocol
             
             var newPath = Path.Combine(cachePath, Path.GetFileName(filePath));
             File.WriteAllLines(newPath, lines);
+            return true;
         }
 
         /// <summary>
@@ -111,8 +119,10 @@ namespace BDFramework.Editor.Protocol
             string findStr = str;
             for (int i = 0; i < count; i++)
             {
-                int startPos = findStr.LastIndexOf(match, StringComparison.Ordinal);
-                findStr = findStr.Substring(0, startPos);
+                int findIndex = findStr.LastIndexOf(match, StringComparison.Ordinal);
+                if (findIndex == -1) return null;
+                
+                findStr = findStr.Substring(0, findIndex);
             }
 
             return findStr;
