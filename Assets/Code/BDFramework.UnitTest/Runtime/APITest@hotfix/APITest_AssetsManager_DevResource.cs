@@ -1,4 +1,5 @@
-﻿using BDFramework;
+﻿using System;
+using BDFramework;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.UnitTest;
@@ -69,9 +70,8 @@ namespace BDFramework.UnitTest
         {
             //寻找目录下整个
             var rets = BResources.ResLoader.GetAssets("AssetTest");
-            Assert.Equals(rets.Length, 6);
             Debug.Log(JsonMapper.ToJson(rets));
-           
+            Assert.Equals(rets.Length, 6);
         }
 
     }

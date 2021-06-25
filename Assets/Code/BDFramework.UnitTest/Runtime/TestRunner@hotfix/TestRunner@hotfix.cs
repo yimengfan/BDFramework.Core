@@ -29,14 +29,11 @@ namespace BDFramework.UnitTest
             ExcuteTest<UnitTestAttribute>();
         }
 
-
-
         /// <summary>
         /// 执行所有的TestRunner
         /// </summary>
         static public void RunHotfixUnitTest()
         {
-            Debug.ClearDeveloperConsole();
             Debug.Log("<color=red>----------------------开始测试ILR-----------------------</color>");
             //搜集测试用例
             CollectTestClassData(TestType.ILRuntime);
@@ -178,8 +175,6 @@ namespace BDFramework.UnitTest
         //         }
         //     }
         // }
-        
-        
         static public void ExcuteTest<T>() where T : UnitTestBaseAttribute
         {
             foreach (var item in testMethodDataMap)
@@ -190,28 +185,32 @@ namespace BDFramework.UnitTest
                 {
                     Debug.LogFormat("<color=yellow>---->执行:{0} </color>", item.Key.FullName);
                 }
-        
+
                 foreach (var methodData in md)
                 {
-                    //开始执行测试
-                    methodData.MethodInfo.Invoke(null, null);
                     bool   isFail  = false;
                     string failMsg = "";
-                    //采用最简单的状态模式，防止ilr下爆栈
-                    Assert.GetAssertStaus(out isFail, out failMsg);
-                    Assert.ClearStatus();
+                    //开始执行测试
+                    try
+                    {
+                        methodData.MethodInfo.Invoke(null, null);
+                        //采用最简单的状态模式，防止ilr下爆栈
+                        Assert.GetAssertStaus(out isFail, out failMsg);
+                        Assert.ClearStatus();
+                    }
+                    catch (Exception e)
+                    {
+                        isFail  = true;
+                        failMsg = e.Message;
+                    }
+
                     if (!isFail)
                     {
                         Debug.LogFormat("<color=green>执行 {0}: 成功! - {1}</color>", methodData.TestData.Des, methodData.MethodInfo.Name);
                     }
                     else
                     {
-                        Debug.LogErrorFormat("<color=red>执行 {0}: 失败! - {1}</color>", methodData.TestData.Des, methodData.MethodInfo.Name);
-                      
-                        // if (ILRuntimeHelper.IsRunning)
-                        // {
-                            //  Debug.LogError(ILRuntimeHelper.AppDomain.GetCurrentStackTrace());
-                        // }
+                        Debug.LogErrorFormat("<color=red>执行 {0}: 失败! - {1}</color> \n {2}", methodData.TestData.Des, methodData.MethodInfo.Name, failMsg);
                     }
                 }
             }
