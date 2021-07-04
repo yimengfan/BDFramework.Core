@@ -312,7 +312,7 @@ namespace BDFramework.Editor
                 }
             }
 
-            return BDEditorApplication.BDFrameConfig.Version != NewVersionNum;
+            return BDEditorApplication.BDFrameConfig?.Version != NewVersionNum;
         }
 
         #endregion

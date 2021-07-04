@@ -19,26 +19,16 @@ namespace BDFramework.Editor
         /// <summary>
         /// Runtime的config
         /// </summary>
-        static public BDFrameConfig  BDFrameConfig { get; private set; }
+        static public BDFrameConfig BDFrameConfig { get; private set; }
+
         /// <summary>
         /// 初始化
         /// </summary>
         static public void Init()
         {
-            var config = new BDEditorSetting(BDApplication.ProjectRoot);
-            BdFrameEditorSetting = config.Load();
-            LoadFrameConfig();
+            BdFrameEditorSetting = BDEditorSetting.Load();
+            BDFrameConfig = BDFrameConfig.Load();
         }
         
-        /// <summary>
-        /// 加载框架配置
-        /// </summary>
-        static private void LoadFrameConfig()
-        {
-            var content = Resources.Load<TextAsset>("BDFrameConfig").text;
-            BDFrameConfig = JsonMapper.ToObject<BDFrameConfig>(content);
-            //框架版本
-            BDebug.Log("框架版本:" + BDFrameConfig.Version, "red");
-        }
     }
 }

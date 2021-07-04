@@ -163,9 +163,11 @@ namespace BDFramework.Editor.BuildPackage
             GUILayout.BeginVertical();
             {
                 GUILayout.Label("CI相关测试");
+
+                var url = BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl;
+                url = EditorGUILayout.TextField("文件服务器", url, GUILayout.Width(350));
+                BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl = url;
                 
-                BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig.AssetBundleFileServerUrl = EditorGUILayout.TextField("文件服务器", BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig.AssetBundleFileServerUrl, GUILayout.Width(350));
-        
                 //构建资源
                 int Width = 100;
                 GUILayout.Label("[构建资源]");
@@ -241,7 +243,7 @@ namespace BDFramework.Editor.BuildPackage
                 //1.搜集keywork
                 ShaderCollection.GenShaderVariant();
                 //2.打包模式
-                var config = BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig;
+                var config = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
                 AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, config.IsUseHashName, config.AESCode);
             }
             catch (Exception e)

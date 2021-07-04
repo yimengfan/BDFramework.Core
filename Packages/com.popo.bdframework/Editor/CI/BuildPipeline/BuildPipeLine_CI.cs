@@ -161,7 +161,7 @@ namespace BDFramework.Editor
             //1.搜集keyword
             ShaderCollection.GenShaderVariant();
             //2.打包模式
-            var config = BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig;
+            var config = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
             return AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, true, config.AESCode);
         }
 
@@ -282,7 +282,7 @@ namespace BDFramework.Editor
         private static bool DownloadFormFileServer(RuntimePlatform platform)
         {
             var platformStr = BDApplication.GetPlatformPath(platform);
-            var url         = BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig.AssetBundleFileServerUrl + "/Assetbundle";
+            var url         = BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl + "/Assetbundle";
             var webclient   = new WebClient();
 
             //获取最新版本的文件 //url + 协议 +参数 
@@ -360,7 +360,7 @@ namespace BDFramework.Editor
         private static void UploadFormFileServer(RuntimePlatform platform)
         {
             var platformStr = BDApplication.GetPlatformPath(platform);
-            var url         = BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig.AssetBundleFileServerUrl + "/Assetbundle";
+            var url         = BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl + "/Assetbundle";
             ;
             var webclient = new WebClient();
             //获取版本号
@@ -434,7 +434,7 @@ namespace BDFramework.Editor
                 throw new Exception("不存在APK文件!!");
                 return;   
             }
-            var url = BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig.AssetBundleFileServerUrl + "/APK";
+            var url = BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl + "/APK";
             var protocol = $"{url}/{nameof(ABServer_Protocol.UploadAPK)}";
             var webclient = new WebClient();
             int maxErrorCount = 10;

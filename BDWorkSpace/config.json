@@ -1,0 +1,34 @@
+
+{
+  "PATH" : "E:/Unity2019/BDFramework/BDWorkSpace/config.json",
+  "pageType" : 2,
+  "WorkFollow" : {
+    "HotfixCodeFloderType" : 0,
+    "IsAutoBuildDll"       : true,
+    "AssetBundleFileServerUrl" : "http://127.0.0.1:20001"
+  },
+  "BuildAssetBundle" : {
+    "AESCode" : "bdframe$#@!@#",
+    "IsUseHashName" : false
+  },
+  "Android"          : {
+    "keystoreName" : "BDWorkSpace/SDK/user.keystore",
+    "keystorePass" : "111111",
+    "keyaliasName" : "test",
+    "keyaliasPass" : "111111"
+  },
+  "IOSConfig"        : {
+    "test" : null,
+    "test2" : null
+  },
+  "AndroidDebug"     : {
+    "keystoreName" : null,
+    "keystorePass" : null,
+    "keyaliasName" : null,
+    "keyaliasPass" : null
+  },
+  "IOSConfigDebug"   : {
+    "test" : null,
+    "test2" : null
+  }
+}

@@ -12,9 +12,8 @@ namespace BDFramework.Core.Tools
     {
         #region 路径相关
 
-        static  BDApplication()
+        static BDApplication()
         {
-
             if (Application.isEditor && Application.isPlaying)
             {
                 Init();
@@ -25,18 +24,26 @@ namespace BDFramework.Core.Tools
         /// 项目根目录
         /// </summary>
         static public string ProjectRoot { get; private set; }
+
+        /// <summary>
+        /// BD Assets目录以外的workspace目录
+        /// </summary>
+        static public string BDWorkSpace { get; private set; }
+
         /// <summary>
         /// Library
         /// </summary>
         static public string Library { get; private set; }
+
         /// <summary>
         /// 资源的根目录
         /// </summary>
         static public string RuntimeResourceLoadPath { get; private set; }
+
         /// <summary>
         /// Editor的资源路径
         /// </summary>
-        public static string EditorResourcePath { get; private set; } 
+        public static string EditorResourcePath { get; private set; }
 
         /// <summary>
         /// Editor的资源路径
@@ -48,16 +55,19 @@ namespace BDFramework.Core.Tools
         /// 编辑器缓存目录
         /// </summary>
         public static string BDEditorCachePath { get; private set; }
-                
+
         static public void Init()
         {
             ProjectRoot = Application.dataPath.Replace("/Assets", "");
             Library = ProjectRoot + "/Library";
+            BDWorkSpace = ProjectRoot + "/BDWorkSpace";
             RuntimeResourceLoadPath = "Assets/Resource/Runtime";
+            //editor相关目录
             EditorResourcePath = "Assets/Resource_SVN";
             EditorResourceRuntimePath = EditorResourcePath + "/Runtime";
             BDEditorCachePath = Library + "/BDFrameCache";
         }
+
         /// <summary>
         /// 获取所有runtime的目录
         /// </summary>
@@ -84,7 +94,7 @@ namespace BDFramework.Core.Tools
 
             return directories;
         }
-        
+
         /// <summary>
         /// 获取所有资源
         /// </summary>
@@ -92,7 +102,7 @@ namespace BDFramework.Core.Tools
         public static List<string> GetAllAssetsPath()
         {
             List<string> allAssetsList = new List<string>();
-            var          directories   = GetAllRuntimeDirects();
+            var directories = GetAllRuntimeDirects();
             //所有资源列表
             foreach (var dir in directories)
             {
@@ -111,7 +121,7 @@ namespace BDFramework.Core.Tools
             return allAssetsList;
         }
 
-        
+
         /// <summary>
         /// 平台资源的父路径
         /// </summary>
@@ -123,7 +133,7 @@ namespace BDFramework.Core.Tools
                 case RuntimePlatform.OSXPlayer:
                 case RuntimePlatform.WindowsEditor:
                 case RuntimePlatform.WindowsPlayer:
-                   // return "Windows";
+                // return "Windows";
                 case RuntimePlatform.Android:
                     return "Android";
                 case RuntimePlatform.IPhonePlayer:
@@ -132,6 +142,7 @@ namespace BDFramework.Core.Tools
 
             return "";
         }
+
         #endregion
     }
 }

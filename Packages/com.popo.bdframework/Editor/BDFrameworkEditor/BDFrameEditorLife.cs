@@ -176,7 +176,7 @@ namespace BDFramework.Editor
         {
             //编译dll
             if (BDAssetImporter.IsChangedHotfixCode && //修改过Hotfix
-                BDEditorApplication.BdFrameEditorSetting.BuildAssetConfig.IsAutoBuildDll)
+                BDEditorApplication.BdFrameEditorSetting.WorkFollow.IsAutoBuildDll)
             {
                 EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, Application.platform,
                     ScriptBuildTools.BuildMode.Debug, false);

@@ -19,6 +19,18 @@ namespace BDFramework
         /// 版本号
         /// </summary>
         public string Version { get; set; }
+        
+        /// <summary>
+        /// 加载框架配置
+        /// </summary>
+       public static BDFrameConfig  Load()
+        {
+            var content = Resources.Load<TextAsset>("BDFrameConfig").text;
+             var config = JsonMapper.ToObject<BDFrameConfig>(content);
+            //框架版本
+            BDebug.Log("框架版本:" + config, "red");
+            return config;
+        }
     }
 
     [RequireComponent(typeof(Config))]
