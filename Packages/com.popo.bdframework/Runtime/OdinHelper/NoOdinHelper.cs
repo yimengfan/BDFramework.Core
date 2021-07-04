@@ -18,7 +18,7 @@ namespace Sirenix.OdinInspector
 
     public class LabelText : Attribute
     {
-        public LabelText(string str)
+        public LabelText(string str, bool xx= true)
         {
         }
     }
@@ -61,9 +61,14 @@ namespace Sirenix.OdinInspector
         }
     }
 
+    public class EnumToggleButtons : Attribute
+    {
+        
+    }
+
     public class BoxGroup : Attribute
     {
-        public BoxGroup(string str)
+        public BoxGroup(string str, bool paramsBool =false)
         {
         }
     }
@@ -102,6 +107,23 @@ namespace Sirenix.OdinInspector
         {
             
         }
+    }
+
+    public class ShowIf : Attribute
+    {
+        public ShowIf(string name, object value)
+        {
+            
+        }
+    }
+    
+    public class   PropertySpace: Attribute
+    {
+        public PropertySpace(int value = 0)
+        {
+            
+        }
+        
     }
 }
 
