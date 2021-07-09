@@ -271,11 +271,15 @@ namespace BDFramework.Editor.TableData
                     {
                         if (fieldType == "int" || fieldType == "float" || fieldType == "double")
                         {
-                            row[field] = -9999;
+                            row[field] = 0;
                         }
                         else if (fieldType == "string")
                         {
                             row[field] = "";
+                        }
+                        else if(fieldType=="bool")
+                        {
+                            row[field] = false;
                         }
                         else if (fieldType.Contains("[]")) //空数组
                         {
@@ -330,7 +334,7 @@ namespace BDFramework.Editor.TableData
                                 }
                                 else
                                 {
-                                    row[field] = -9999;
+                                    row[field] = 0;
                                     Debug.LogErrorFormat("表格数据出错:{0}-{1}", i, j);
                                 }
                             }
@@ -343,7 +347,7 @@ namespace BDFramework.Editor.TableData
                                 }
                                 else
                                 {
-                                    row[field] = -9999;
+                                    row[field] = 0;
                                     Debug.LogErrorFormat("表格数据出错:{0}-{1}", i, j);
                                 }
                             }
@@ -356,7 +360,7 @@ namespace BDFramework.Editor.TableData
                                 }
                                 else
                                 {
-                                    row[field] = -9999;
+                                    row[field] = 0;
                                     Debug.LogErrorFormat("表格数据出错:{0}-{1}", i, j);
                                 }
                             }

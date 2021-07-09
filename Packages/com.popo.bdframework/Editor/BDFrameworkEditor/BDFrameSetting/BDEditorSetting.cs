@@ -183,7 +183,7 @@ namespace BDFramework.Editor
         
         [PropertySpace(10)]
         [BoxGroup("DevOps")]
-        [LabelText("AssetBundleServer", true)]
+        [LabelText("AssetBundleServer")]
         public string AssetBundleFileServerUrl = "http://127.0.0.1:20001";
     }
 }
