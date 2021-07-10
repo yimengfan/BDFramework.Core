@@ -1,6 +1,7 @@
 using System.IO;
 using System.Net.Mime;
 using BDFramework.Core.Tools;
+using JetBrains.Annotations;
 using LitJson;
 using UnityEngine;
 
@@ -28,6 +29,16 @@ namespace BDFramework.Editor
         {
             BdFrameEditorSetting = BDEditorSetting.Load();
             BDFrameConfig = BDFrameConfig.Load();
+        }
+
+
+       
+        /// <summary>
+        /// 获取最近修改的热更代码
+        /// </summary>
+        static public string[] GetLeastHotfixCodes()
+        {
+            return BDAssetImporter.CacheData?.HotfixList.ToArray();
         }
         
     }

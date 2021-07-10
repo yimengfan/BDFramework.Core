@@ -76,6 +76,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\BDFrameworkEditor\EditorBuiltinStyle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\BDFrameworkEditor\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\BDFrameworkEditor\MenuItem\MenuItems.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\BDFrameworkEditor\WorkFollow\HotfixCodeWorkFollow.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\CI\AssetUploadToServer.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\CI\BuildPipeline\BuildPipeLine_CI.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\CI\BuildPipeline\EditorBuildPackage.cs" />

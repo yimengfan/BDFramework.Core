@@ -156,30 +156,30 @@ namespace BDFramework.Editor
     {
         public enum HotfixCodeFloderTypeEnum
         {
-            Unity内部,
+            InUnityAssets,
             BDWorkSpace
         }
 
         [BoxGroup("热更", true)]
         [LabelText("热更代码模式")]
-        public HotfixCodeFloderTypeEnum HotfixCodeFloderType = HotfixCodeFloderTypeEnum.Unity内部;
+        public HotfixCodeFloderTypeEnum HotfixCodeFloderType = HotfixCodeFloderTypeEnum.InUnityAssets;
 
         /// <summary>
         ///热更代码是否在unity外
         /// </summary>
         public bool IsHotfixCodeOutofUnityAssets()
         {
-            return HotfixCodeFloderType != HotfixCodeFloderTypeEnum.Unity内部;
+            return HotfixCodeFloderType != HotfixCodeFloderTypeEnum.InUnityAssets;
         }
 
         [BoxGroup("热更")]
         [LabelText("自动编译热更DLL")]
         public bool IsAutoBuildDll = true;
 
-        // public bool IsAutoBuildDll()
-        // {
-        //     return IsHotfixCodeOutofUnityAssets() && IsAutoBuildDll;
-        // }
+        public bool IsNeedAutoBuildDll()
+        {
+            return  IsAutoBuildDll && HotfixCodeFloderType == HotfixCodeFloderTypeEnum.InUnityAssets;
+        }
         
         [PropertySpace(10)]
         [BoxGroup("DevOps")]

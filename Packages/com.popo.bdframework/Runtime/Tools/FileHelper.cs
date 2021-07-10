@@ -41,6 +41,12 @@ namespace System.IO
             CheckDirectory(path);
             File.WriteAllText(path,contents);
         }
+        
+        static public void Copy(string path, string targetPath,bool overwrite)
+        {
+            CheckDirectory(targetPath);
+            File.Copy(path,targetPath, overwrite);
+        }
 
         /// <summary>
         /// 写入所有行

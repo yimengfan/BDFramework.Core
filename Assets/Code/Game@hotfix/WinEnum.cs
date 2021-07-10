@@ -18,4 +18,5 @@ namespace BDFramework.UI
         Win_UFlux_Test007_DI,
         Win_Demo_Datalistener
     }
+    
 }

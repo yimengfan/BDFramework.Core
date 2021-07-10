@@ -169,21 +169,6 @@ namespace BDFramework.Editor
 
         }
 
-        /// <summary>
-        /// Build热更DLL
-        /// </summary>
-        static public void BuildHotfixDll()
-        {
-            //编译dll
-            if (BDAssetImporter.IsChangedHotfixCode && //修改过Hotfix
-                BDEditorApplication.BdFrameEditorSetting.WorkFollow.IsAutoBuildDll)
-            {
-                EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, Application.platform,
-                    ScriptBuildTools.BuildMode.Debug, false);
-                Debug.Log("自动编译Hotfix.dll成功!");
-            }
-        }
-
 
         /// <summary>
         /// 引导启动页面

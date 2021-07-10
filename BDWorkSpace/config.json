@@ -1,9 +1,9 @@
 
 {
   "PATH" : "E:/Unity2019/BDFramework/BDWorkSpace/config.json",
-  "pageType" : 2,
+  "pageType" : 0,
   "WorkFollow" : {
-    "HotfixCodeFloderType" : 0,
+    "HotfixCodeFloderType" : 1,
     "IsAutoBuildDll"       : true,
     "AssetBundleFileServerUrl" : "http://127.0.0.1:20001"
   },
