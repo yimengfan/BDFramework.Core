@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using BDFramework.Core.Tools;
+using Microsoft.Build.Construction;
 using UnityEngine;
 
 namespace BDFramework.Editor.WorkFollow
@@ -52,6 +53,25 @@ namespace BDFramework.Editor.WorkFollow
                     FileHelper.Copy(codePath, targetpath, true);
                 }
             }
+
+            AddCSFileToHotfix();
+        }
+
+
+        /// <summary>
+        /// 添加热更
+        /// </summary>
+        /// <param name="file"></param>
+        static void AddCSFileToHotfix()
+        {
+            var sln = Directory.GetFiles(BDApplication.ProjectRoot, "*.sln");
+            var slution = SolutionFile.Parse(sln[0]);
+            foreach (var project in slution.ProjectsInOrder)
+            {
+                //project.
+            }
+
+            
         }
     }
 }

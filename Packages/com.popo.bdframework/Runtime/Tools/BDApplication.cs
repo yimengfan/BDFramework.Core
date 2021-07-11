@@ -36,6 +36,11 @@ namespace BDFramework.Core.Tools
         static public string Library { get; private set; }
 
         /// <summary>
+        /// Package目录
+        /// </summary>
+        static public string Package { get;private set; }
+        
+        /// <summary>
         /// 资源的根目录
         /// </summary>
         static public string RuntimeResourceLoadPath { get; private set; }
@@ -60,6 +65,7 @@ namespace BDFramework.Core.Tools
         {
             ProjectRoot = Application.dataPath.Replace("/Assets", "");
             Library = ProjectRoot + "/Library";
+            Package = ProjectRoot + "/Package";
             BDWorkSpace = ProjectRoot + "/BDWorkSpace";
             RuntimeResourceLoadPath = "Assets/Resource/Runtime";
             //editor相关目录

@@ -494,9 +494,6 @@
  <Reference Include="System.Globalization.Extensions">
  <HintPath>E:/Unity2019/BDFramework/Packages/com.popo.bdframework/Editor/Plugins/Roslyn/System.Globalization.Extensions.dll</HintPath>
  </Reference>
- <Reference Include="System.IO.Compression">
- <HintPath>E:/Unity2019/BDFramework/Packages/com.popo.bdframework/Editor/Plugins/Roslyn/System.IO.Compression.dll</HintPath>
- </Reference>
  <Reference Include="System.Net.Http">
  <HintPath>E:/Unity2019/BDFramework/Packages/com.popo.bdframework/Editor/Plugins/Roslyn/System.Net.Http.dll</HintPath>
  </Reference>
@@ -535,6 +532,15 @@
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>E:/Unity2019/BDFramework/Library/PackageCache/com.unity.render-pipelines.core@7.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ </Reference>
+ <Reference Include="System.IO.Compression.ZipFile">
+ <HintPath>E:/Unity2019/BDFramework/Packages/com.popo.bdframework/Editor/Plugins/System.IO.Compression/System.IO.Compression.ZipFile.dll</HintPath>
+ </Reference>
+ <Reference Include="System.IO.Compression.FileSystem">
+ <HintPath>E:/Unity2019/BDFramework/Packages/com.popo.bdframework/Editor/Plugins/System.IO.Compression/System.IO.Compression.FileSystem.dll</HintPath>
+ </Reference>
+ <Reference Include="System.IO.Compression">
+ <HintPath>E:/Unity2019/BDFramework/Packages/com.popo.bdframework/Editor/Plugins/System.IO.Compression/System.IO.Compression.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>D:/Program Files/2019.4.25f1c1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
