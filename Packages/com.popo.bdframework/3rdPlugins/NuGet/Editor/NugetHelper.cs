@@ -29,17 +29,18 @@
         /// <summary>
         /// The path to the nuget.config file.
         /// </summary>
-        public static readonly string NugetConfigFilePath = Path.Combine(Application.dataPath, "Packages/NuGet.config");
+        public static  string NugetConfigFilePath { get; private set; } = Path.Combine(Application.dataPath, "Packages/NuGet.config");
 
         /// <summary>
         /// The path to the packages.config file.
         /// </summary>
-        private static readonly string PackagesConfigFilePath = Path.Combine(Application.dataPath, "Packages/packages.config");
+        private static  string PackagesConfigFilePath { get;  set; } = Path.Combine(Application.dataPath, "Packages/packages.config");
 
+        
         /// <summary>
         /// The path where to put created (packed) and downloaded (not installed yet) .nupkg files.
         /// </summary>
-        public static readonly string PackOutputDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Path.Combine("NuGet", "Cache"));
+        public static  string PackOutputDirectory{ get; private set; }  = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Path.Combine("NuGet", "Cache"));
 
         /// <summary>
         /// The amount of time, in milliseconds, before the nuget.exe process times out and is killed.
@@ -546,21 +547,25 @@
         private static bool IsAlreadyImportedInEngine(NugetPackageIdentifier package)
         {
             HashSet<string> alreadyImportedLibs = GetAlreadyImportedLibs();
-            bool isAlreadyImported = alreadyImportedLibs.Contains(package.Id);
-            LogVerbose("Is package '{0}' already imported? {1}", package.Id, isAlreadyImported);
-            return isAlreadyImported;
+            var ret = alreadyImportedLibs.FirstOrDefault((lib)=>Path.GetFileNameWithoutExtension(lib) == package.Id);
+            
+            LogVerbose("Is package '{0}' already imported? {1}", package.Id, ret!=null);
+            if (ret != null)
+            {
+                Debug.LogErrorFormat("【{0}】The package exsit in :{1}",package.Id, ret);
+            }
+            return ret!=null;
         }
 
         private static HashSet<string> alreadyImportedLibs = null;
-        private static HashSet<string> GetAlreadyImportedLibs()
+        private static HashSet<string> 
+            GetAlreadyImportedLibs()
         {
             if (alreadyImportedLibs == null)
             {
                 string[] lookupPaths = GetAllLookupPaths();
                 IEnumerable<string> libNames = lookupPaths
-                    .SelectMany(directory => Directory.EnumerateFiles(directory, "*.dll", SearchOption.AllDirectories))
-                    .Select(Path.GetFileName)
-                    .Select(p => Path.ChangeExtension(p, null));
+                    .SelectMany(directory => Directory.EnumerateFiles(directory, "*.dll", SearchOption.AllDirectories));
                 alreadyImportedLibs = new HashSet<string>(libNames);
                 LogVerbose("Already imported libs: {0}", string.Join(", ", alreadyImportedLibs));
             }
@@ -570,6 +575,10 @@
 
         private static string[] GetAllLookupPaths()
         {
+
+            //Only Search in unity project dll.
+            return new string[] {Application.dataPath+"/Package"};
+            //
             var executablePath = EditorApplication.applicationPath;
             var roots = new[] {
                 // MacOS directory layout
@@ -1262,7 +1271,7 @@
         /// <param name="args">The arguments for the formattted message string.</param>
         public static void LogVerbose(string format, params object[] args)
         {
-            if (NugetConfigFile == null || NugetConfigFile.Verbose)
+            if (NugetConfigFile ==null || NugetConfigFile.Verbose)
             {
 #if UNITY_5_4_OR_NEWER
                 StackTraceLogType stackTraceLogType = Application.GetStackTraceLogType(LogType.Log);

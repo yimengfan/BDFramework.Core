@@ -894,6 +894,12 @@
  <HintPath>D:/Program Files/2019.4.25f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
  </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ZString.csproj">
+      <Project>{2213c499-a0f8-86bf-b56e-86d92c69f852}</Project>
+      <Name>ZString</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
