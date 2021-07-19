@@ -1,6 +1,6 @@
 ﻿using System.IO;
+using Com.Test.Item;
 using Google.Protobuf;
-using Test;
 using UnityEngine;
 
 namespace BDFramework.UnitTest
@@ -9,7 +9,7 @@ namespace BDFramework.UnitTest
     static public class APITest_Protobuf
     {
         /// <summary>
-        /// 测试litjson
+        /// 测试Protobuf
         /// </summary>
         [HotfixOnlyUnitTest(des:  "测试Protobuf")]
         public static void Protobuf()

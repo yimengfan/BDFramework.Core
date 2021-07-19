@@ -6,40 +6,35 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using BDFramework.Core.Tools;
 using UnityEditor;
-using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 namespace BDFramework.Editor.Protocol
 {
     public static class Protobuf2ClassTools
     {
-        private static readonly string protoPath = BDApplication.ProjectRoot + "\\Assets\\Resource\\NetProtocol\\Protobuf\\";
-        private static readonly string classPath = BDApplication.ProjectRoot + "\\Assets\\Code\\Game@hotfix\\NetProtocol\\Protobuf\\";
+        private static readonly string protoPath = BDApplication.ProjectRoot + "/Assets/Resource/NetProtocol/Protobuf/";
+        private static readonly string classPath = BDApplication.ProjectRoot + "/Assets/Code/Game@hotfix/NetProtocol/Protobuf/";
         private static readonly string cachePath = BDApplication.BDEditorCachePath + "/ProtoCache/";
         private static readonly string execPath = BDApplication.ProjectRoot + "/Packages/com.popo.bdframework/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
+        private static readonly string prefixName = "Com";
         
         [MenuItem("BDFrameWork工具箱/4.网络协议/Protobuf->生成Class", false, (int) BDEditorMenuEnum.BuildPackage_NetProtocol_Proto2Class)]
         public static void ExecuteGenProtobuf()
         {
-            //重新创建文件夹 确保不会产生冲突
+            // 重新创建文件夹 确保不会产生冲突
             RebuildDirectory(classPath);
             RebuildDirectory(cachePath);
 
-            var protoPaths = GetProtoFiles(protoPath);
+            var protoPaths = GetProtoAndCopyFiles(protoPath);
             foreach (var toPath in protoPaths)
             {
-                if (!ReplaceNamespace(toPath)) continue;
-
-                //拆分相对路径的 路径 文件名
-                var relativePath = GetRelativePath(protoPath, toPath);
-                var path = Path.GetDirectoryName(relativePath);
-                var name = Path.GetFileName(relativePath);
-
-                RunProtobufExe(name, path);
+                if (ReplaceNamespace(toPath))
+                {
+                    RunProtobufExe(toPath);
+                }
             }
             
             AssetDatabase.Refresh();
-            Debug.Log("Protobuf 转换完成");
+            BDebug.Log("Protobuf 转换完成");
         }
         
         /// <summary>
@@ -47,39 +42,48 @@ namespace BDFramework.Editor.Protocol
         /// </summary>
         private static bool ReplaceNamespace(string filePath)
         {
-            //文件名是否符合命名规范(namespace.xxx.proto)
-            var fileName = Path.GetFileName(filePath);
-            var @namespace = FindRightToLeft(fileName, ".", 2);
-            if (string.IsNullOrEmpty(@namespace))
+            var newFilePath = Path.Combine(cachePath, Path.GetFileName(filePath));
+            var _namespace = Path.GetFileNameWithoutExtension(filePath);
+            
+            // 文件名是否符合命名规范(namespace.xxx.proto)
+            if (_namespace.Contains(".response") || _namespace.Contains(".request"))
             {
-                Debug.Log($"{fileName} 不符合命名规范!");
-                return false;
+                _namespace = _namespace.Replace(".response", "");
+                _namespace = _namespace.Replace(".request", "");
+                
+                if (string.IsNullOrEmpty(_namespace))
+                {
+                    BDebug.Log($"{_namespace} 不符合命名规范!");
+                    return false;
+                }
             }
             
+            // 解决 因非url package 问题
+            _namespace = $"{prefixName}.{_namespace}";
+            
+            // 替换proto包名 对应 生成的Class名
             var regex = new Regex(@"(?<=package ).*?(?=;)");
-
             var lines = File.ReadLines(filePath).ToArray();
             for (int i = 0; i < lines.Length; i++)
             {
                 var package = regex.Match(lines[i]).Value;
                 if (!string.IsNullOrEmpty(package))
                 {
-                    lines[i] = lines[i].Replace(package, @namespace);
+                    lines[i] = lines[i].Replace(package, _namespace);
                     break;
                 }
             }
             
-            var newPath = Path.Combine(cachePath, Path.GetFileName(filePath));
-            File.WriteAllLines(newPath, lines);
+            File.WriteAllLines(newFilePath, lines);
             return true;
         }
 
         /// <summary>
         /// 执行proto转换程序
         /// </summary>
-        private static void RunProtobufExe(string fileName, string path)
+        private static void RunProtobufExe(string filePath)
         {
-            if (!string.IsNullOrEmpty(path)) path = path + "/";
+            var fileName = Path.GetFileName(filePath);
 
             var args = $" --csharp_out={cachePath} --proto_path={cachePath} {fileName}";
             Process process = new Process();
@@ -89,9 +93,12 @@ namespace BDFramework.Editor.Protocol
             process.StartInfo.UseShellExecute = true;
             process.Start();
             process.WaitForExit();
-
-            var newPath = classPath + path;
-            ReplaceFileName(fileName, newPath);
+            process.Close();
+            
+            // 提取相对路径
+            var newPath = filePath.Replace(cachePath, "");
+            newPath = newPath.Replace(fileName, "");
+            ReplaceFileName(fileName, classPath + newPath);
         }
 
         /// <summary>
@@ -102,32 +109,19 @@ namespace BDFramework.Editor.Protocol
             CheckDirectory(outputPath);
             
             var directoryInfo = new DirectoryInfo(cachePath);
-            var fileInfo = directoryInfo.GetFiles("*.cs")[0];
-            if (fileInfo.Exists)
+            var fileInfos = directoryInfo.GetFiles("*.cs");
+            if (fileInfos.Length > 0)
             {
-                var newName = fileName.Replace(".proto", ".cs");
-                var newPath = Path.Combine(outputPath, newName);
-                fileInfo.MoveTo(newPath);
+                var fileInfo = fileInfos[0];
+                if (fileInfo.Exists)
+                {
+                    var newName = fileName.Replace(".proto", ".cs");
+                    var newPath = Path.Combine(outputPath, newName);
+                    fileInfo.MoveTo(newPath);
+                }
             }
         }
 
-        /// <summary>
-        /// 从右往左搜索
-        /// </summary>
-        private static string FindRightToLeft(string str, string match, int count = 1)
-        {
-            string findStr = str;
-            for (int i = 0; i < count; i++)
-            {
-                int findIndex = findStr.LastIndexOf(match, StringComparison.Ordinal);
-                if (findIndex == -1) return null;
-                
-                findStr = findStr.Substring(0, findIndex);
-            }
-
-            return findStr;
-        }
-        
         /// <summary>
         /// 重新生成目录
         /// </summary>
@@ -153,21 +147,9 @@ namespace BDFramework.Editor.Protocol
         }
         
         /// <summary>
-        /// 获取相对路径
+        /// 获取目录下所有proto 并复制到缓存目录
         /// </summary>
-        private static string GetRelativePath(string fromPath, string toPath)
-        {
-            Uri fromUri = new Uri(fromPath);
-            Uri toUri = new Uri(toPath);
-
-            Uri relativeUri = fromUri.MakeRelativeUri(toUri);
-            return Uri.UnescapeDataString(relativeUri.ToString());
-        }
-
-        /// <summary>
-        /// 获取目录下所有proto
-        /// </summary>
-        private static List<string> GetProtoFiles(string folderPath)
+        private static List<string> GetProtoAndCopyFiles(string folderPath)
         {
             List<string> protoList = new List<string>();
             if (Directory.Exists(folderPath))
@@ -176,7 +158,9 @@ namespace BDFramework.Editor.Protocol
                 FileInfo[] fileInfos = directoryInfo.GetFiles("*.proto", SearchOption.AllDirectories);
                 foreach (var fileInfo in fileInfos)
                 {
-                    protoList.Add(fileInfo.FullName);
+                    var destFileName = cachePath + fileInfo.Name;
+                    fileInfo.CopyTo(destFileName);
+                    protoList.Add(destFileName);
                 }
             }
 

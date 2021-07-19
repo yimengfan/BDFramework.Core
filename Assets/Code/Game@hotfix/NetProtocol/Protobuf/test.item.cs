@@ -6,7 +6,7 @@
 using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using scg = global::System.Collections.Generic;
-namespace Test {
+namespace Com.Test.Item {
 
   #region Messages
   public sealed class one_item : pb::IMessage {
@@ -128,14 +128,14 @@ namespace Test {
 
     /// <summary>Field number for the "items" field.</summary>
     public const int ItemsFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Test.one_item> _repeated_items_codec
-        = pb::FieldCodec.ForMessage(18, global::Test.one_item.Parser);
-    private readonly pbc::RepeatedField<global::Test.one_item> items_ = new pbc::RepeatedField<global::Test.one_item>();
+    private static readonly pb::FieldCodec<global::Com.Test.Item.one_item> _repeated_items_codec
+        = pb::FieldCodec.ForMessage(18, global::Com.Test.Item.one_item.Parser);
+    private readonly pbc::RepeatedField<global::Com.Test.Item.one_item> items_ = new pbc::RepeatedField<global::Com.Test.Item.one_item>();
     /// <summary>
     /// 所有物品
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Test.one_item> Items {
+    public pbc::RepeatedField<global::Com.Test.Item.one_item> Items {
       get { return items_; }
     }
 
