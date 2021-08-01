@@ -9,7 +9,7 @@
   },
   "BuildAssetBundle" : {
     "AESCode" : "bdframe$#@!@#",
-    "IsUseHashName" : false
+    "IsUseHashName" : true
   },
   "Android"          : {
     "keystoreName" : "BDWorkSpace/SDK/user.keystore",
