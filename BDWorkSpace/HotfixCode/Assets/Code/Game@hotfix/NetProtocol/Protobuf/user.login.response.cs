@@ -6,7 +6,7 @@
 using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using scg = global::System.Collections.Generic;
-namespace User.Login {
+namespace Com.User.Login {
 
   #region Messages
   public sealed class UserLoginResponse : pb::IMessage {

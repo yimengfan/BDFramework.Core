@@ -36,7 +36,12 @@ public class ExpoterMainProjectAsset
 
         AssetDatabase.Refresh();
             
-        var exporterDirectoryList = new string[] {"Assets/Code/BDFramework.Game", "Assets/Scenes",};
+        var exporterDirectoryList = new string[] {
+            "Assets/Code/BDFramework.Game",//Game
+            "Assets/Scenes",//Scene
+            "Assets/Packages",//Nuget
+            
+        };
         var exportAssets          = new List<string>();
         foreach (var direct in exporterDirectoryList)
         {
