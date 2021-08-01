@@ -376,7 +376,7 @@ namespace BDFramework.Editor.Asset
             new MakePackage()
             {
                 FileExtens = new List<string>() {".shader", ".shadervariants"},
-                AssetBundleName =  ShaderCollection.ALL_SHADER_VARAINT_PATH
+                AssetBundleName = ShaderCollection.ALL_SHADER_VARAINT_PATH
             }
         };
 
@@ -833,10 +833,15 @@ namespace BDFramework.Editor.Asset
             {
                 if (ai.Value != null)
                 {
-                    ai.Value.assetBundleVariant = "";
-                    ai.Value.assetBundleName = "";
+                    if (!string.IsNullOrEmpty(ai.Value.assetBundleVariant))
+                    {
+                        ai.Value.assetBundleVariant = null;
+                    }
+
+                    ai.Value.assetBundleName = null;
                 }
             }
+
 
             EditorUtility.ClearProgressBar();
         }
