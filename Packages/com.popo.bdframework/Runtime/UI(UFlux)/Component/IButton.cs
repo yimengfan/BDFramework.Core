@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -49,7 +50,7 @@ namespace BDFramework.UFlux
             }
         }
     }
-    
+
     /// <summary>
     /// 点击的接口
     /// </summary>
@@ -62,13 +63,13 @@ namespace BDFramework.UFlux
 
         public class LongTimePressData
         {
-            
-            public  float                    Time;
+            public float                    Time;
             public OnClickDelegete          onclick         = null;
             public OnClickDelegeteWhithData onclickWithData = null;
 
             public bool IsTrigger { get; private set; }
-            public void Trigger( PointerEventData data=null )
+
+            public void Trigger(PointerEventData data = null)
             {
                 onclick?.Invoke();
                 onclickWithData?.Invoke(data);
@@ -86,15 +87,21 @@ namespace BDFramework.UFlux
 
         /// <summary>
         /// 事件数量
+        /// 没有触发的
         /// </summary>
-        public int EventCount
+        public int EventNum
         {
             get
             {
-                return longTimePressDataList.Count;
+                if (longTimePressDataList.Count > 0)
+                {
+                    return longTimePressDataList.Count - triggeredEventCount;
+                }
+                
+                return 0;
             }
         }
-        
+
         /// <summary>
         /// 添加监听
         /// </summary>
@@ -102,13 +109,13 @@ namespace BDFramework.UFlux
         /// <param name="action"></param>
         public void AddListener(float pressTime, OnClickDelegete action)
         {
-            LongTimePressData pressData = new LongTimePressData() {Time = pressTime, onclick = action,};
+            LongTimePressData pressData = new LongTimePressData() { Time = pressTime, onclick = action, };
             this.longTimePressDataList.Add(pressData);
         }
 
-        public void AddListener(float pressTime,OnClickDelegeteWhithData action)
+        public void AddListener(float pressTime, OnClickDelegeteWhithData action)
         {
-            LongTimePressData pressData = new LongTimePressData() {Time = pressTime, onclickWithData = action,};
+            LongTimePressData pressData = new LongTimePressData() { Time = pressTime, onclickWithData = action, };
             this.longTimePressDataList.Add(pressData);
         }
 
@@ -117,31 +124,43 @@ namespace BDFramework.UFlux
             longTimePressDataList.Clear();
         }
 
+
+        /// <summary>
+        /// 已触发事件的数量
+        /// </summary>
+        private int triggeredEventCount = 0;
+        /// <summary>
+        /// 执行
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="data"></param>
+        /// <returns>是否触发长摁，触发则取消点击事件</returns>
         public bool Invoke(float time, PointerEventData data = null)
         {
             bool isTrigger = false;
             foreach (var pressData in longTimePressDataList)
             {
-                if (time > pressData.Time && !pressData.IsTrigger)
+                if (pressData.IsTrigger && time >= pressData.Time)
                 {
                     pressData.Trigger(data);
+                    triggeredEventCount++;
                     isTrigger = true;
                 }
             }
-
             return isTrigger;
         }
 
         /// <summary>
-        /// 抬起
+        /// 重置
         /// </summary>
         public void Reset()
         {
-
+           
             foreach (var pressData in this.longTimePressDataList)
             {
                 pressData.Reset();
             }
+            triggeredEventCount = 0;
         }
     }
 
@@ -176,7 +195,7 @@ namespace BDFramework.UFlux
         }
     }
 
-    public class IButton : UIBehaviour, IPointerDownHandler,IDragHandler,IEndDragHandler
+    public class IButton : UIBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler
 #if !UNITY_EDITOR && ( UNITY_ANDROID || UNITY_IOS)
 ,IPointerExitHandler ,IPointerUpHandler
 #else
@@ -189,28 +208,32 @@ namespace BDFramework.UFlux
         public  Color OnClickColor = new Color(195f / 255f, 195f / 255f, 195f / 255f);
 
         //各种点击回调
-        public IComponentOnClick onClick     { get; private set; } = new IComponentOnClick();
+        public IComponentOnClick onClick { get; private set; } = new IComponentOnClick();
 
         /// <summary>
         /// 长摁
         /// </summary>
         public IComponentOnLongTimeClick onLongTimePress { get; private set; } = new IComponentOnLongTimeClick();
+
         /// <summary>
         /// 摁下
         /// </summary>
-        public IComponentOnClick onDownClick { get;   private set; } = new IComponentOnClick();
+        public IComponentOnClick onDownClick { get; private set; } = new IComponentOnClick();
+
         /// <summary>
         /// 抬起
         /// </summary>
-        public IComponentOnClick onUpClick   { get;   private set; } = new IComponentOnClick();
+        public IComponentOnClick onUpClick { get; private set; } = new IComponentOnClick();
+
         /// <summary>
         /// 滑动
         /// </summary>
         public IComponentOnClick onDrag { get; private set; } = new IComponentOnClick();
+
         /// <summary>
         /// 滑动结束
         /// </summary>
-        public IComponentOnClick onDragEnd  { get; private set; } = new IComponentOnClick();
+        public IComponentOnClick onDragEnd { get; private set; } = new IComponentOnClick();
 
 
         private Image img;
@@ -222,7 +245,7 @@ namespace BDFramework.UFlux
         }
 
 
-        
+
 
         /// <summary>
         /// 点摁下事件
@@ -231,11 +254,12 @@ namespace BDFramework.UFlux
         public void OnPointerDown(PointerEventData eventData)
         {
             isCancelThisClick = false;
-         
+
             if (img != null && img.sprite != null)
             {
                 img.color = this.OnClickColor;
             }
+
             onDownClick.Invoke(eventData);
             LongPressStart(eventData);
         }
@@ -315,11 +339,11 @@ namespace BDFramework.UFlux
             {
                 onClick.Invoke(eventData);
             }
+
             onLongTimePress.Reset();
-            
         }
 
-        
+
         public void OnDrag(PointerEventData eventData)
         {
             onDrag.Invoke(eventData);
@@ -334,12 +358,21 @@ namespace BDFramework.UFlux
         #region 长摁相关逻辑
 
         private Coroutine coroutine;
+        /// <summary>
+        /// 长摁开始 开启协程计时逻辑
+        /// </summary>
+        /// <param name="eventData"></param>
         private void LongPressStart(PointerEventData eventData)
         {
-            if(this.onLongTimePress.EventCount>0)
-            coroutine=  this.StartCoroutine( this.LongPressTimeCounter(eventData));
+            if (this.onLongTimePress.EventNum > 0)
+            {
+                coroutine = this.StartCoroutine(this.LongPressTimeCounter(eventData));
+            }
         }
 
+        /// <summary>
+        /// 长按结束 重置所有状态
+        /// </summary>
         private void LongPressEnd()
         {
             if (this.coroutine != null)
@@ -347,38 +380,38 @@ namespace BDFramework.UFlux
                 this.StopCoroutine(this.coroutine);
             }
             this.onLongTimePress.Reset();
-            
         }
+
         /// <summary>
         /// 每0.x 一次
         /// </summary>
         /// <returns></returns>
         private IEnumerator LongPressTimeCounter(PointerEventData eventData)
         {
-            float intval = 0.05f;
-            //每0.05s一次
-            for (int i = 0; i < 100; i++)
+            float startTime = Time.realtimeSinceStartup;
+            while (this.onLongTimePress.EventNum > 0)
             {
-                yield return new WaitForSeconds(intval);
-               var ret = this.onLongTimePress.Invoke(intval *i,eventData);
-
-               //触发成功就要取消点击事件
-               if (ret)
-               {
-                   this.CancelThisClick();
-               }
+                //每3帧一次
+                yield return null;
+                yield return null;
+                yield return null;
+                var isTrigger = this.onLongTimePress.Invoke(Time.realtimeSinceStartup - startTime, eventData);
+                //触发成功就要取消点击事件
+                if (isTrigger)
+                {
+                    this.CancelThisClick();
+                }
             }
         }
-        
 
         #endregion
 
 
         private bool isCancelThisClick = false;
+
         private void CancelThisClick()
         {
             isCancelThisClick = true;
         }
-
     }
 }
