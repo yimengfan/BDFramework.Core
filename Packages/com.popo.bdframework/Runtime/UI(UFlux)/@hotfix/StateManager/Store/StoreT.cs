@@ -11,6 +11,9 @@ namespace BDFramework.UFlux.Contains
     /// </summary>
     public class Store<S> where S : AStateBase, new()
     {
+        //最大的数据缓存数量
+        static int MAX_STATE_NUM = 20;
+
         /// <summary>
         /// 异步堵塞
         /// </summary>
@@ -39,8 +42,6 @@ namespace BDFramework.UFlux.Contains
         //当前State
         private S state;
 
-        //最大的数据缓存数量
-        private int maxStateCacheNum = 20;
 
         /// <summary>
         /// 构造函数
@@ -53,7 +54,10 @@ namespace BDFramework.UFlux.Contains
 
         #region Reducers
 
-        private List<AReducers<S>> reducerList = new List<AReducers<S>>();
+        /// <summary>
+        /// reducer的实例
+        /// </summary>
+        AReducers<S> reducer = null;
 
         /// <summary>
         /// 注册Reducers
@@ -61,11 +65,9 @@ namespace BDFramework.UFlux.Contains
         /// <param name="reducer"></param>
         public void AddReducer(AReducers<S> reducer)
         {
-            var paramType = reducer.GetType();
-            var find = this.reducerList.Find((r) => r.GetType() != paramType);
-            if (find == null)
+            if (reducer == null)
             {
-                this.reducerList.Add(reducer);
+                this.reducer = reducer;
             }
         }
 
@@ -73,19 +75,51 @@ namespace BDFramework.UFlux.Contains
 
         #region 事件分发
 
-        List<Action<S>> callbackList = new List<Action<S>>();
+        /// <summary>
+        /// callback 包装
+        /// </summary>
+        public class CallbackWarpper
+        {
+            public Enum      Tag      = null;
+            public Action<S> Callback = null;
+        }
+
+        /// <summary>
+        /// 回调包装
+        /// </summary>
+        List<CallbackWarpper> callbackList = new List<CallbackWarpper>();
 
         /// <summary>
         /// 订阅
+        /// 每次State修改后都会触发
         /// </summary>
         /// <param name="callback"></param>
         public void Subscribe(Action<S> callback)
         {
-            callbackList.Add(callback);
+            var callbackWarpper = new CallbackWarpper();
+            callbackWarpper.Callback = callback;
+            callbackList.Add(callbackWarpper);
         }
 
+
+        /// <summary>
+        /// 订阅
+        /// 指定事件触发后才会修改
+        /// </summary>
+        /// <param name="callback"></param>
+        public void Subscribe(Enum tag, Action<S> callback)
+        {
+            var callbackWarpper = new CallbackWarpper();
+            callbackWarpper.Tag      = tag;
+            callbackWarpper.Callback = callback;
+            callbackList.Add(callbackWarpper);
+        }
+
+
+        /// <summary>
+        /// 锁住发布
+        /// </summary>
         private bool lockDispatch = false;
-        private List<UFluxAction> taskList = new List<UFluxAction>();
 
         /// <summary>
         /// 分发
@@ -93,7 +127,7 @@ namespace BDFramework.UFlux.Contains
         /// <param name="actionEnum"></param>
         public void Dispatch(Enum actionEnum, object @params = null)
         {
-            var action = new UFluxAction() {ActionEnum = actionEnum};
+            var action = new UFluxAction() { ActionTag = actionEnum };
             action.SetParams(@params);
             //分发
             Dispatch(action);
@@ -107,33 +141,32 @@ namespace BDFramework.UFlux.Contains
         async public void Dispatch(UFluxAction action)
         {
             var oldState = GetCurrentState();
-            
-            foreach (var reducer in reducerList)
+
+            // foreach (var reducer in reducer)
             {
-                var ret = reducer.IsAsyncLoad(action.ActionEnum);
+                var ret = reducer.IsAsyncLoad(action.ActionTag);
                 if (!ret) //同步模式
                 {
                     //先执行await
-                    var newstate = await reducer.ExcuteAsync(action.ActionEnum, action.Params, oldState);
+                    var newstate = await reducer.ExcuteAsync(action.ActionTag, action.Params, oldState);
                     //再执行普通
                     if (newstate == null)
                     {
-                        newstate = reducer.Excute(action.ActionEnum, action.Params, oldState);
+                        newstate = reducer.Excute(action.ActionTag, action.Params, oldState);
                     }
 
                     //设置new state
-                    SetNewState(newstate);
+                    SetNewState(action.ActionTag, newstate);
                 }
                 else //回调模式
                 {
-                    reducer.ExcuteByCallback(action.ActionEnum, action.Params, GetCurrentState, (newState) =>
+                    reducer.ExcuteByCallback(action.ActionTag, action.Params, GetCurrentState, (newState) =>
                     {
                         //设置new state
-                        SetNewState(newState);
+                        SetNewState(action.ActionTag, newState);
                     });
                 }
             }
-
         }
 
         /// <summary>
@@ -147,13 +180,32 @@ namespace BDFramework.UFlux.Contains
         }
 
         /// <summary>
-        /// 触发所有监听
+        /// 触发监听
         /// </summary>
-        private void TriggerAllCallback()
+        private void TriggerCallback(Enum tag = null)
         {
-            foreach (var cb in callbackList)
+            //触发
+            for (int i = 0; i < callbackList.Count; i++)
             {
-                cb(this.state);
+                var cbw = callbackList[i];
+                if (cbw.Tag == null)
+                {
+                    cbw.Callback.Invoke(this.state);
+                }
+                else if (cbw.Tag == tag)
+                {
+                    cbw.Callback.Invoke(this.state);
+                }
+            }
+
+            //触发具体事件监听
+            for (int i = 0; i < callbackList.Count; i++)
+            {
+                var cbw = callbackList[i];
+                if (tag != null && cbw.Tag == tag)
+                {
+                    cbw.Callback.Invoke(this.state);
+                }
             }
         }
 
@@ -174,18 +226,19 @@ namespace BDFramework.UFlux.Contains
         /// <summary>
         /// 缓存当前State
         /// </summary>
-        public void SetNewState(S newState)
+        public void SetNewState(Enum reducerEnum, S newState)
         {
             //缓存
-            if (stateCacheQueue.Count == 20)
+            if (stateCacheQueue.Count == MaxCacheNumber)
             {
                 stateCacheQueue.Dequeue();
             }
+
             stateCacheQueue.Enqueue(this.state);
             //设置
             this.state = newState;
-            //触发
-            TriggerAllCallback();
+            //触发回调
+            TriggerCallback(reducerEnum);
         }
 
         /// <summary>

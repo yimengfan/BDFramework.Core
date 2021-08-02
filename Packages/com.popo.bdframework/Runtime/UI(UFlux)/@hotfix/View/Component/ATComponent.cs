@@ -12,7 +12,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 当前组件所有状态集合
         /// </summary>
-        protected T Props { get; private set; }
+        public T Props { get; private set; }
 
         /// <summary>
         /// 资源节点

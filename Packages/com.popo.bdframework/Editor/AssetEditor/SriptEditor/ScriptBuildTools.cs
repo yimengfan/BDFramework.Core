@@ -417,7 +417,6 @@ public class ScriptBuildTools
                 Debug.LogError(diagnostic.ToString());
             }
         }
-
         return result.Success;
     }
 }
