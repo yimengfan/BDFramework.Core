@@ -45,15 +45,16 @@ namespace BDFramework.UFlux
         void Open(UIMsgData uiMsg=null);
 
         /// <summary>
+        /// 当窗口重新获得焦点时会调用
+        /// 如 2覆盖1上面，2关闭，1触发focus
+        /// </summary>
+        void OnFocus();
+    
+        /// <summary>
         /// 关闭
         /// </summary>
         void Close();
-
-        /// <summary>
-        /// 帧更新
-        /// </summary>
-        void Update();
-
+        
         /// <summary>
         /// 删除
         /// </summary>

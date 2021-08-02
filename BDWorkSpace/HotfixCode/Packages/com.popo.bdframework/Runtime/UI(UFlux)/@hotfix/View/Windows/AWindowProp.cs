@@ -6,6 +6,7 @@ using BDFramework.DataListener;
 using BDFramework.Reflection;
 using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.View.Props;
+using BDFramework.UFlux.WindowStatus;
 using ILRuntime.Runtime;
 using LitJson;
 using UnityEngine;
@@ -38,7 +39,40 @@ namespace BDFramework.UFlux
         public ADataListener State { get; private set; }
 
 
-        #region UIMessage
+
+        #region 生命周期
+
+        /// <summary>
+        /// 打开
+        /// </summary>
+        /// <param name="uiMsg"></param>
+        virtual public void Open(UIMsgData uiMsg = null)
+        {
+            base.Open(uiMsg);
+            this.State.TriggerEvent<OnWindowOpen>();
+        }
+
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        virtual public void Close()
+        {
+            base.Close();
+            this.State.TriggerEvent<OnWindowClose>();
+        }
+
+        /// <summary>
+        /// 获得焦点
+        /// </summary>
+        virtual public void OnFocus()
+        {
+            this.Open();
+        }
+
+        #endregion
+
+
+        #region ui消息
 
         //
         public delegate void UIMessageDelegate(UIMsgData message);
@@ -95,7 +129,7 @@ namespace BDFramework.UFlux
                 subWin.SendMessage(uiMsg);
             }
 
-            //TODO: 执行完Invoke会导致 map的堆栈出问题，
+            //TODO: 热更执行完Invoke会导致 map的堆栈出问题，
             MethodInfo method = null;
             var        key    = uiMsg.GetType();
             bool       flag   = this.msgCallbackMap.TryGetValue(key, out method);

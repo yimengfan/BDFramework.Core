@@ -6,6 +6,7 @@ using BDFramework.DataListener;
 using BDFramework.Reflection;
 using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.View.Props;
+using BDFramework.UFlux.WindowStatus;
 using ILRuntime.Runtime;
 using LitJson;
 using UnityEngine;
@@ -37,17 +38,41 @@ namespace BDFramework.UFlux
         /// </summary>
         public ADataListener State { get; private set; }
 
+
+
+        #region 生命周期
+
         /// <summary>
-        /// 获取Props
+        /// 打开
         /// </summary>
-        /// <typeparam name="T1"></typeparam>
-        /// <exception cref="NotImplementedException"></exception>
-        public TProp GetProps<TProp>() where TProp : APropsBase, new()
+        /// <param name="uiMsg"></param>
+        virtual public void Open(UIMsgData uiMsg = null)
         {
-            return this.Props as TProp;
+            base.Open(uiMsg);
+            this.State.TriggerEvent<OnWindowOpen>();
         }
 
-        #region UIMessage
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        virtual public void Close()
+        {
+            base.Close();
+            this.State.TriggerEvent<OnWindowClose>();
+        }
+
+        /// <summary>
+        /// 获得焦点
+        /// </summary>
+        virtual public void OnFocus()
+        {
+            this.Open();
+        }
+
+        #endregion
+
+
+        #region ui消息
 
         //
         public delegate void UIMessageDelegate(UIMsgData message);
@@ -63,7 +88,7 @@ namespace BDFramework.UFlux
         private void RegisterUIMessages()
         {
             //注册回调
-            var t = this.GetType();
+            var t    = this.GetType();
             var flag = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
             foreach (var mi in t.GetMethods(flag))
             {
@@ -80,8 +105,6 @@ namespace BDFramework.UFlux
                     {
                         BDebug.LogError("UIMsg 绑定失败，请检查函数签名:" + mi.Name);
                     }
-                    
-                  
                 }
             }
         }
@@ -106,13 +129,13 @@ namespace BDFramework.UFlux
                 subWin.SendMessage(uiMsg);
             }
 
-            //TODO: 执行完Invoke会导致 map的堆栈出问题，
+            //TODO: 热更执行完Invoke会导致 map的堆栈出问题，
             MethodInfo method = null;
             var        key    = uiMsg.GetType();
             bool       flag   = this.msgCallbackMap.TryGetValue(key, out method);
             if (flag)
             {
-                method.Invoke(this, new object[] {uiMsg});
+                method.Invoke(this, new object[] { uiMsg });
             }
         }
 
@@ -120,6 +143,14 @@ namespace BDFramework.UFlux
 
         #region 子窗口
 
+        /// <summary>
+        /// 父节点
+        /// </summary>
+        public IWindow Parent { get; private set; }
+
+        /// <summary>
+        /// 子窗口列表
+        /// </summary>
         protected Dictionary<int, IWindow> subWindowsMap = new Dictionary<int, IWindow>();
 
         /// <summary>
@@ -127,7 +158,7 @@ namespace BDFramework.UFlux
         /// </summary>
         /// <param name="subwin"></param>
         /// <param name="enum"></param>
-        protected void RegisterSubWindow(IWindow subwin)
+        public void RegisterSubWindow(IWindow subwin)
         {
             subWindowsMap[subwin.GetHashCode()] = subwin;
             (subwin as IComponent).Init();
@@ -135,10 +166,7 @@ namespace BDFramework.UFlux
         }
 
 
-        /// <summary>
-        /// 父节点
-        /// </summary>
-        public IWindow Parent { get; private set; }
+
 
         /// <summary>
         /// 设置父节点
@@ -161,7 +189,7 @@ namespace BDFramework.UFlux
             {
                 if (value is T1)
                 {
-                    return (T1) value;
+                    return (T1)value;
                 }
             }
 

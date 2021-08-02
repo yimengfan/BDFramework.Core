@@ -12,7 +12,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 当前组件所有状态集合
         /// </summary>
-        protected T Props { get; private set; }
+        public T Props { get; private set; }
 
         /// <summary>
         /// 资源节点
@@ -41,7 +41,7 @@ namespace BDFramework.UFlux
         /// </summary>
         public ATComponent()
         {
-            var t = this.GetType();
+            var t    = this.GetType();
             var attr = t.GetAttributeInILRuntime<ComponentAttribute>();
             if (attr == null)
             {
@@ -89,12 +89,11 @@ namespace BDFramework.UFlux
         /// </summary>
         public void Load()
         {
-            if (resPath == null)
-                return;
+            if (resPath == null) return;
 
             var o = UFlux.Load<GameObject>(resPath);
             this.Transform = GameObject.Instantiate(o).transform;
-            this.IsLoad = true;
+            this.IsLoad    = true;
             UFlux.InitComponent(this);
             //初始化
             this.Init();
@@ -107,12 +106,11 @@ namespace BDFramework.UFlux
         /// <param name="callback"></param>
         public void AsyncLoad(Action callback = null)
         {
-            if (resPath == null)
-                return;
+            if (resPath == null) return;
             UFlux.AsyncLoad<GameObject>(resPath, obj =>
             {
                 this.Transform = GameObject.Instantiate(obj).transform;
-                this.IsLoad = true;
+                this.IsLoad    = true;
                 UFlux.InitComponent(this);
                 //初始化
                 Init();
@@ -186,6 +184,14 @@ namespace BDFramework.UFlux
         }
 
         /// <summary>
+        /// 获得焦点
+        /// </summary>
+        virtual public void OnFocus()
+        {
+            this.Open();
+        }
+
+        /// <summary>
         ///  关闭
         /// </summary>
         virtual public void Close()
@@ -195,12 +201,6 @@ namespace BDFramework.UFlux
         }
 
 
-        /// <summary>
-        /// 帧驱动
-        /// </summary>
-        virtual public void Update()
-        {
-        }
 
 
         /// <summary>

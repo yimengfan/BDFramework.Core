@@ -169,7 +169,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\ComponentBindAdaptor\Manager\ComponentBindAdaptorManager.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Props\APropsBase.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\AWindow.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\AWindowP.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\AWindowProp.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\Attribute\UIAttribute.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\Attribute\UIMessageListenerAttribute.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\Interface\IUIMessage.cs" />
@@ -177,6 +177,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\UIManager.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\UIManagerExDI.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\UIMsgData.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\WindowStatus.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\IButton.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\Localization\L2Image.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\Localization\L2Text.cs" />
