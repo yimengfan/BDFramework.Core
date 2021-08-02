@@ -1,4 +1,6 @@
-﻿namespace NugetForUnity
+﻿using UnityEngine;
+
+namespace NugetForUnity
 {
     using System;
     using System.Collections.Generic;
@@ -152,6 +154,7 @@
         /// <returns>The <see cref="NugetPackage"/> loaded from the .nupkg file.</returns>
         public static NugetPackage FromNupkgFile(string nupkgFilepath)
         {
+            Debug.Log(nupkgFilepath);
             NugetPackage package = FromNuspec(NuspecFile.FromNupkgFile(nupkgFilepath));
             package.DownloadUrl = nupkgFilepath;
             return package;
