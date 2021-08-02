@@ -1,11 +1,5 @@
 {
   "dependencies": {
-    "com.cysharp.zstring": {
-      "version": "file:ZString",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.ourpalm.ilruntime": {
       "version": "1.6.6",
       "depth": 0,
@@ -18,8 +12,7 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ourpalm.ilruntime": "1.6.6",
-        "com.cysharp.zstring": "2.4.2"
+        "com.ourpalm.ilruntime": "1.6.6"
       }
     },
     "com.unity.ext.nunit": {
