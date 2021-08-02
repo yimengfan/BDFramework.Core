@@ -58,6 +58,7 @@ namespace ILRuntime.Runtime.Generated
             System_Activator_Binding.Register(app);
             BDFramework_BDLauncher_Binding.Register(app);
             System_Action_Binding.Register(app);
+            Cysharp_Text_ZString_Binding.Register(app);
             System_Array_Binding.Register(app);
             SQLite4Unity3d_SQLiteConnection_Binding.Register(app);
             SQLite4Unity3d_SQLiteCommand_Binding.Register(app);

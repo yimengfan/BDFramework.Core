@@ -43,6 +43,18 @@ namespace BDFramework.UnitTest
                 Assert.Equals(ds[0].Id, 1d);
             }
         }
+        
+        [UnitTest(des:  "Limit查询")]
+        static public void Limit()
+        {
+            //单条件查询
+            var d = SqliteHelper.DB.GetTableRuntime().Where("id != 1").Limit(1).From<APITestHero>();
+            if (d != null)
+            {
+                Debug.Log(JsonMapper.ToJson(d));
+            }
+            Assert.IsNull(d,"limit查询失败");
+        }
 
         [UnitTest(des:  "Or And语句查询")]
         static public void Select_OR_And()

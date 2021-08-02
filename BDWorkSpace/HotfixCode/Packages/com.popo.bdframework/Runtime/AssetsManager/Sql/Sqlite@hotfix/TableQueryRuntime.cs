@@ -11,6 +11,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using BDFramework;
+using Cysharp.Text;
 using LitJson;
 using Debug = UnityEngine.Debug;
 #if USE_CSHARP_SQLITE
@@ -26,6 +27,7 @@ using Sqlite3DatabaseHandle = System.IntPtr;
 using Sqlite3Statement = System.IntPtr;
 
 #endif
+
 namespace SQLite4Unity3d
 {
     public class TableQueryILRuntime : BaseTableQuery
@@ -33,8 +35,9 @@ namespace SQLite4Unity3d
         public SQLiteConnection Connection { get; private set; }
 
 
-        private string @where = "";
-        private string @sql = null;
+        private string @where = null;
+        private string @sql   = null;
+        private string @limit = null;
 
         public TableQueryILRuntime(SQLiteConnection connection)
         {
@@ -44,22 +47,28 @@ namespace SQLite4Unity3d
 
         #region 数据库直接操作
 
-        private SQLiteCommand GenerateCommand(string selection, string tablename)
+        private SQLiteCommand GenerateCommand(string @select, string tablename)
         {
-            //0表名
             string cmdText = "";
 
             //select where语句
-            if (!string.IsNullOrEmpty(@where))
+
+            if (@sql == null)
             {
-                cmdText = "select " + selection + " from {0} {1}";
-                @sql = "where " + @where;
-                cmdText = string.Format(cmdText, tablename, @sql);
-            }
-            else if (@sql == null)
-            {
-                cmdText = "select " + selection + " from {0}";
-                cmdText = string.Format(cmdText, tablename, @sql);
+                if (!string.IsNullOrEmpty(@where))
+                {
+                    cmdText = ZString.Format("select {0} from {1} where {2}", @select, tablename, @where);
+
+                    //limit语句
+                    if (!string.IsNullOrEmpty(this.limit))
+                    {
+                        cmdText = ZString.Concat(cmdText, " Limit ", limit);
+                    }
+                }
+                else
+                {
+                    cmdText = ZString.Format("select {0} from {1}", @select, tablename);
+                }
             }
             else
             {
@@ -68,7 +77,10 @@ namespace SQLite4Unity3d
             }
 
 
-            // BDebug.Log("sql:" + cmdText);
+#if UNITY_EDITOR
+            BDebug.Log("sql:" + cmdText);
+#endif
+
             return Connection.CreateCommand(cmdText);
         }
 
@@ -87,7 +99,8 @@ namespace SQLite4Unity3d
         }
 
 
-        #region Where数据库操作  by BDFramework
+
+        #region Where、or、And 、Limit
 
         /// <summary>
         /// Where语句
@@ -129,7 +142,6 @@ namespace SQLite4Unity3d
                 this.@where += " and";
                 return this;
             }
-           
         }
 
         /// <summary>
@@ -197,12 +209,29 @@ namespace SQLite4Unity3d
         }
 
         /// <summary>
+        /// Limit 语句
+        /// </summary>
+        /// <param name="limitValue"></param>
+        public TableQueryILRuntime Limit(int limitValue)
+        {
+            this.limit = limitValue.ToString();
+
+            return this;
+        }
+
+        #endregion
+
+
+        #region Select语句
+
+        /// <summary>
         /// forilruntime
         /// </summary>
         /// <returns></returns>
         public T From<T>(string selection = "*") where T : class, new()
         {
-            var rets = FromAll<T>(selection);
+            var rets = this.Limit(1).FromAll<T>(selection);
+
             if (rets.Count > 0)
             {
                 return rets[0];
@@ -220,15 +249,13 @@ namespace SQLite4Unity3d
             var list = cmd.ExecuteQuery(typeof(T));
             foreach (var o in list)
             {
-                var t = (T) o;
+                var t = (T)o;
                 results.Add(t);
             }
 
             return results;
         }
-        
-        
-        
+
         #endregion
     }
 }
