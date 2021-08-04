@@ -18,7 +18,7 @@ namespace BDFramework.UnitTest
         {
             int count        = 0;
             int compareValue = 100;
-            var service      = DataListenerServer.Create(nameof(Msg.test));
+            var service      = StatusListenerServer.Create(nameof(Msg.test));
             service.AddListener(Msg.test, (o) =>
             {
                 //每次自增
@@ -29,14 +29,14 @@ namespace BDFramework.UnitTest
                 service.TriggerEvent(Msg.test);
             }
 
-            DataListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.DelService(nameof(Msg.test));
             Assert.Equals(count, 100);
         }
 
         [UnitTestAttribute(des:  "值类型测试")]
         public static void AddListener_ValuetypeParams()
         {
-            var service = DataListenerServer.Create(nameof(Msg.test));
+            var service = StatusListenerServer.Create(nameof(Msg.test));
             service.AddListener<object>(Msg.test, triggerNum: 10, action: (o) =>
             {
                 var i = (int) o;
@@ -47,21 +47,21 @@ namespace BDFramework.UnitTest
             Debug.Log("发送值:" + sender);
             service.TriggerEvent(Msg.test, sender);
             
-            DataListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.DelService(nameof(Msg.test));
             Assert.IsPass(true);
         }
         
         [UnitTestAttribute(des:  "引用类型测试")]
         public static void AddListener_objecttypeParams()
         {
-            var service = DataListenerServer.Create(nameof(Msg.test));
+            var service = StatusListenerServer.Create(nameof(Msg.test));
             service.AddListener<object>(Msg.test, triggerNum: 10, action: (o) =>
             {
                 Debug.Log("收到值:" + o);
             });
             service.TriggerEvent(Msg.test, "一零零八六");
             
-            DataListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.DelService(nameof(Msg.test));
             Assert.IsPass(true);
         }
 
@@ -75,7 +75,7 @@ namespace BDFramework.UnitTest
         public static void AddListener_CustomTypeParams()
         {
             int count   = 0;
-            var service = DataListenerServer.Create(nameof(Msg.test));
+            var service = StatusListenerServer.Create(nameof(Msg.test));
             service.AddListener<Msg_ParamTest>(Msg.test, triggerNum: 10, action: (o) =>
             {
                 //每次自增
@@ -93,7 +93,7 @@ namespace BDFramework.UnitTest
             
             service.TriggerEvent(Msg.test, new Msg_ParamTest());
             
-            DataListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.DelService(nameof(Msg.test));
             Assert.IsPass(true);
         }
 
@@ -102,7 +102,7 @@ namespace BDFramework.UnitTest
         public static void AddListener_CustomTypeParams2()
         {
             int count   = 0;
-            var service = DataListenerServer.Create(nameof(Msg.test));
+            var service = StatusListenerServer.Create(nameof(Msg.test));
             service.AddListener<Msg_ParamTest>( triggerNum: 10, action: (o) =>
             {
                 //每次自增
@@ -120,7 +120,7 @@ namespace BDFramework.UnitTest
             
             service.TriggerEvent(new Msg_ParamTest());
             
-            DataListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.DelService(nameof(Msg.test));
             Assert.IsPass(true);
         }
         
@@ -131,7 +131,7 @@ namespace BDFramework.UnitTest
         {
             int count   = 0;
             int triggerNum = 10;
-            var service = DataListenerServer.Create(nameof(Msg.test));
+            var service = StatusListenerServer.Create(nameof(Msg.test));
             service.AddListener(Msg.test, triggerNum: triggerNum, action: (o) =>
             {
                 //每次自增
@@ -158,7 +158,7 @@ namespace BDFramework.UnitTest
             }
             Assert.Equals(count2, 1,"AddOnce 测试失败");
             
-            DataListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.DelService(nameof(Msg.test));
         }
 
         [UnitTestAttribute(des:  "添加顺序测试")]
@@ -167,7 +167,7 @@ namespace BDFramework.UnitTest
             int count   = 0;
             int count2  = 0;
             int count3  = 0;
-            var service = DataListenerServer.Create(nameof(Msg.test));
+            var service = StatusListenerServer.Create(nameof(Msg.test));
             service.AddListener(Msg.test, order: 10, action: (o) =>
             {
                 //每次自增
@@ -192,7 +192,7 @@ namespace BDFramework.UnitTest
 
             //次数到了之后不会再执行
             service.TriggerEvent(Msg.test);
-            DataListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.DelService(nameof(Msg.test));
             //两个必须等于1
             Assert.Equals(count, 1);
             Assert.Equals(count2, 1);
@@ -204,7 +204,7 @@ namespace BDFramework.UnitTest
         public static void DeleteListener()
         {
             int count   = 0;
-            var service = DataListenerServer.Create(nameof(Msg.test));
+            var service = StatusListenerServer.Create(nameof(Msg.test));
             Action<object> callback = (o) =>
             {
                 //每次自增
@@ -219,7 +219,7 @@ namespace BDFramework.UnitTest
                 service.RemoveListener(Msg.test, callback);
             }
 
-            DataListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.DelService(nameof(Msg.test));
             //验证结果
             Assert.Equals(count, 1);
         }

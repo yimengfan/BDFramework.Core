@@ -46,7 +46,7 @@ public class Window_DemoMain : AWindow
         base.Init();
 
         //增加覆盖测试
-        var service = DataListenerServer.Create(nameof(DataListenerEnum));
+        var service = StatusListenerServer.Create(nameof(DataListenerEnum));
         service.AddListener(DataListenerEnum.test, (o) => { Debug.Log(o.ToString()); });
     }
 

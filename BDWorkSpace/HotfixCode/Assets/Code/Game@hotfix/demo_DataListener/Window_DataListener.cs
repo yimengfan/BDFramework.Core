@@ -62,7 +62,7 @@ public class Window_DataListener : AWindow
         btn_1.onClick.AddListener(() =>
         {
             //演示两种方法监听
-            var s2 = DataListenerServer.Create(nameof(Msg_Test001.Msg2));
+            var s2 = StatusListenerServer.Create(nameof(Msg_Test001.Msg2));
             //主动传递参数
             s2.AddListener<Msg_ParamTest>(Msg_Test001.Msg2, triggerNum: 10, action: (o) =>
             {
@@ -80,17 +80,17 @@ public class Window_DataListener : AWindow
             });
             
             s2.TriggerEvent(Msg_Test001.Msg2, new Msg_ParamTest());
-            DataListenerServer.DelService(nameof(Msg_Test001.Msg2));
+            StatusListenerServer.DelService(nameof(Msg_Test001.Msg2));
             
             //1.创建数据监听服务
-            var service = DataListenerServer.Create(nameof(Msg_Test001));
+            var service = StatusListenerServer.Create(nameof(Msg_Test001));
             text_message.text="创建service成功:" +nameof(Msg_Test001);
         });
 
         btn_2.onClick.AddListener(() =>
         {
             //获取监听对象 并且注册
-            var service = DataListenerServer.GetService(nameof(Msg_Test001));
+            var service = StatusListenerServer.GetService(nameof(Msg_Test001));
             //添加数据
 
             //永久监听
@@ -116,7 +116,7 @@ public class Window_DataListener : AWindow
         btn_3.onClick.AddListener(() =>
         {
             //创建数据监听服务
-            var service = DataListenerServer.Create(nameof(Msg_Test001));
+            var service = StatusListenerServer.Create(nameof(Msg_Test001));
             
             service.TriggerEvent(Msg_Test001.Msg1,DateTime.Now.ToShortTimeString());
         });
@@ -125,10 +125,10 @@ public class Window_DataListener : AWindow
         btn_4.onClick.AddListener(() =>
         {
             text_message.text="自定义Value类型 Service 已经创建，查看代码";
-            var s1 = DataListenerServer.Create<ADataListenerT<float>>("x1");
-            var s2 = DataListenerServer.Create<ADataListenerT<string>>("x2");
+            var s1 = StatusListenerServer.Create<ADataListenerT<float>>("x1");
+            var s2 = StatusListenerServer.Create<ADataListenerT<string>>("x2");
             //获取
-            var s3 = DataListenerServer.GetService<ADataListenerT<float>>("x1");
+            var s3 = StatusListenerServer.GetService<ADataListenerT<float>>("x1");
         });
           
     }

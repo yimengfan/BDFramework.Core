@@ -9,7 +9,7 @@ namespace BDFramework.DataListener
     /// 这个可以自定义任意类型，主要用来做值类型
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ADataListenerT<T> : ABaseDataListenerT
+    public class ADataListenerT<T> : ADataListenerTBase
     {
         /// <summary>
         /// 所有的数据

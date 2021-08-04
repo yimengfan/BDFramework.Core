@@ -1,4 +1,5 @@
 ﻿using System;
+using BDFramework.DataListener;
 using BDFramework.Reflection;
 using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.Contains;
@@ -18,6 +19,11 @@ namespace BDFramework.UFlux
         /// 资源节点
         /// </summary>
         public Transform Transform { get; private set; }
+
+        /// <summary>
+        /// 状态管理
+        /// </summary>
+        public AStatusListener State { get; }
 
         /// <summary>
         /// 是否加载

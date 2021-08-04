@@ -63,7 +63,7 @@ namespace BDFramework.UFlux
             SetWindowDI(window);
 
             //添加窗口关闭消息
-            window.State.AddListener<OnWindowClose>((o) =>
+            window .State.AddListener<OnWindowClose>((o) =>
             {
                 this.OnWindowClose(uiIdx, window);
             });
@@ -83,8 +83,9 @@ namespace BDFramework.UFlux
 
             if (windowMap.ContainsKey(index))
             {
-                var uvalue = windowMap[index] as IComponent;
-                if (uvalue.IsLoad)
+                var win    = windowMap[index] as IComponent;
+                var winCom = win as IComponent;
+                if (winCom.IsLoad)
                 {
                     BDebug.Log("已经加载过并未卸载" + index, "red");
                 }
@@ -276,25 +277,26 @@ namespace BDFramework.UFlux
             int uiIndex = index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
             {
-                var v = windowMap[uiIndex] as IComponent;
-                if (!v.IsOpen && v.IsLoad)
+                var win    = windowMap[uiIndex];
+                var winCom = win as IComponent;
+             
+                if (!winCom.IsOpen && winCom.IsLoad)
                 {
                     switch (layer)
                     {
                         case UILayer.Bottom:
-                            v.Transform.SetParent(this.Bottom, false);
+                            winCom.Transform.SetParent(this.Bottom, false);
                             break;
                         case UILayer.Center:
-                            v.Transform.SetParent(this.Center, false);
+                            winCom.Transform.SetParent(this.Center, false);
                             break;
                         case UILayer.Top:
-                            v.Transform.SetParent(this.Top, false);
+                            winCom.Transform.SetParent(this.Top, false);
                             break;
-                        default: break;
                     }
 
-                    v.Transform.SetAsLastSibling();
-                    v.Open(uiMsgData);
+                    winCom.Transform.SetAsLastSibling();
+                    win.Open(uiMsgData);
                     //effect
                 }
                 else
@@ -323,10 +325,11 @@ namespace BDFramework.UFlux
             var uiIndex = index.GetHashCode();
             if (windowMap.ContainsKey(uiIndex))
             {
-                var v = windowMap[uiIndex] as IComponent;
-                if (v.IsOpen && v.IsLoad)
+                var win    = windowMap[uiIndex];
+                var winCom = win as IComponent;
+                if (winCom.IsOpen && winCom.IsLoad)
                 {
-                    v.Close();
+                    win.Close();
                 }
                 else
                 {
@@ -380,12 +383,12 @@ namespace BDFramework.UFlux
                     {
                         isCheckFocus = true;
                     }
-                    else if(winCom.IsOpen && isCheckFocus)
+                    else if (winCom.IsOpen && isCheckFocus)
                     {
-                        winCom.OnFocus();
+                        win.OnFocus();
                         break;
                     }
-                    else 
+                    else
                     {
                         break;
                     }

@@ -24,19 +24,19 @@ namespace BDFramework.UFlux
         public AWindow(string path) : base(path)
         {
             RegisterUIMessages();
-            State = new DataListenerService();
+            State = new StatusListenerService();
         }
 
         public AWindow(Transform transform) : base(transform)
         {
             RegisterUIMessages();
-            State = new DataListenerService();
+            State = new StatusListenerService();
         }
 
         /// <summary>
         /// 状态管理
         /// </summary>
-        public ADataListener State { get; private set; }
+        public AStatusListener State { get; private set; }
 
 
 
@@ -44,9 +44,10 @@ namespace BDFramework.UFlux
 
         /// <summary>
         /// 打开
+        /// 这里是IWindow的接口
         /// </summary>
         /// <param name="uiMsg"></param>
-        virtual public void Open(UIMsgData uiMsg = null)
+        public override void Open(UIMsgData uiMsg = null)
         {
             base.Open(uiMsg);
             this.State.TriggerEvent<OnWindowOpen>();
@@ -54,8 +55,9 @@ namespace BDFramework.UFlux
 
         /// <summary>
         /// 关闭
+        /// 这里是IWindow的接口
         /// </summary>
-        virtual public void Close()
+        public override void Close()
         {
             base.Close();
             this.State.TriggerEvent<OnWindowClose>();
@@ -63,14 +65,14 @@ namespace BDFramework.UFlux
 
         /// <summary>
         /// 获得焦点
+        /// 这里是IWindow的接口
         /// </summary>
-        virtual public void OnFocus()
+        public override void OnFocus()
         {
             this.Open();
         }
 
         #endregion
-
 
         #region ui消息
 
