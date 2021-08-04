@@ -1,4 +1,5 @@
 ﻿using System;
+using BDFramework.DataListener;
 using BDFramework.UFlux.View.Props;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
@@ -42,14 +43,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 打开
         /// </summary>
-        void Open(UIMsgData uiMsg=null);
-
-        /// <summary>
-        /// 当窗口重新获得焦点时会调用
-        /// 如 2覆盖1上面，2关闭，1触发focus
-        /// </summary>
-        void OnFocus();
-    
+        void Open(UIMsgData uiMsg =null);
         /// <summary>
         /// 关闭
         /// </summary>

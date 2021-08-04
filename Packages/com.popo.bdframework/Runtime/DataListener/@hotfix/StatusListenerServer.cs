@@ -10,19 +10,19 @@ namespace BDFramework.DataListener
     /// <summary>
     /// 做数据驱动服务
     /// </summary>
-    public class DataListenerServer
+    public class StatusListenerServer
     {
 
-        static private Dictionary<string, DataListenerService> serviceMap = new Dictionary<string, DataListenerService>();
+        static private Dictionary<string, StatusListenerService> serviceMap = new Dictionary<string, StatusListenerService>();
 
         /// <summary>
         /// 创建一个service
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static DataListenerService Create(string name)
+        public static StatusListenerService Create(string name)
         {
-            var data = new DataListenerService();
+            var data = new StatusListenerService();
 
             if (serviceMap.ContainsKey(name) == false)
             {
@@ -41,17 +41,17 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static DataListenerService GetService(string name)
+        public static StatusListenerService GetService(string name)
         {
-            DataListenerService data = null;
-            serviceMap.TryGetValue(name, out data);
-            if (data == null)
+            StatusListenerService status = null;
+            serviceMap.TryGetValue(name, out status);
+            if (status == null)
             {
-                data = new DataListenerService();
+                status = new StatusListenerService();
 
-                serviceMap[name] = data;
+                serviceMap[name] = status;
             }
-            return data;
+            return status;
         }
 
         /// <summary>
@@ -60,9 +60,9 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         static public void DelService(string name)
         {
-            DataListenerService data = null;
-            serviceMap.TryGetValue(name, out data);
-            data = null;
+            StatusListenerService status = null;
+            serviceMap.TryGetValue(name, out status);
+            status = null;
             //
             serviceMap.Remove(name);
         }
@@ -80,7 +80,7 @@ namespace BDFramework.DataListener
 
         
         
-        static private Dictionary<string, ABaseDataListenerT> serviceTMap = new Dictionary<string, ABaseDataListenerT>();
+        static private Dictionary<string, ADataListenerTBase> serviceTMap = new Dictionary<string, ADataListenerTBase>();
 
         /// <summary>
         /// 创建一个service
@@ -89,7 +89,7 @@ namespace BDFramework.DataListener
         /// <returns></returns>
         public static ADataListenerT<T> Create<T>(string name)
         {
-            ABaseDataListenerT data = null;
+            ADataListenerTBase data = null;
             
             if (!serviceTMap.TryGetValue(name, out data))
             {
@@ -107,7 +107,7 @@ namespace BDFramework.DataListener
         /// <returns></returns>
         public static  ADataListenerT<T>  GetService<T>(string name)
         {
-            ABaseDataListenerT data = null;
+            ADataListenerTBase data = null;
             serviceTMap.TryGetValue(name, out data);
             if (data == null)
             {

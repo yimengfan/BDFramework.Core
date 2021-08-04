@@ -54,10 +54,7 @@ namespace BDFramework.UFlux.Contains
 
         #region Reducers
 
-        /// <summary>
-        /// reducer的实例
-        /// </summary>
-        AReducers<S> reducer = null;
+        private AReducers<S> reducer;
 
         /// <summary>
         /// 注册Reducers
@@ -65,7 +62,9 @@ namespace BDFramework.UFlux.Contains
         /// <param name="reducer"></param>
         public void AddReducer(AReducers<S> reducer)
         {
-            if (reducer == null)
+            // var paramType = reducer.GetType();
+            // var find      = this.reducerList.Find((r) => r.GetType() != paramType);
+            if (this.reducer == null)
             {
                 this.reducer = reducer;
             }
@@ -192,17 +191,7 @@ namespace BDFramework.UFlux.Contains
                 {
                     cbw.Callback.Invoke(this.state);
                 }
-                else if (cbw.Tag == tag)
-                {
-                    cbw.Callback.Invoke(this.state);
-                }
-            }
-
-            //触发具体事件监听
-            for (int i = 0; i < callbackList.Count; i++)
-            {
-                var cbw = callbackList[i];
-                if (tag != null && cbw.Tag == tag)
+                else if (cbw.Tag.GetHashCode() == tag.GetHashCode())
                 {
                     cbw.Callback.Invoke(this.state);
                 }

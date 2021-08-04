@@ -9,9 +9,9 @@ namespace BDFramework.UFlux
     public interface IWindow
     {
         /// <summary>
-        /// 状态管理
+        /// 状态管理,事件监听
         /// </summary>
-        ADataListener State { get; }
+        AStatusListener State { get; }
 
         /// <summary>
         /// 发送消息
@@ -29,6 +29,23 @@ namespace BDFramework.UFlux
         /// 父窗口
         /// </summary>
         IWindow Parent { get; }
+        
+        /// <summary>
+        /// 打开
+        /// </summary>
+        void Open(UIMsgData uiMsg =null);
+
+        /// <summary>
+        /// 当窗口重新获得焦点时会调用
+        /// 如 2覆盖1上面，2关闭，1触发focus
+        /// </summary>
+        void OnFocus();
+    
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        void Close();
+
         
         /// <summary>
         /// 注册子窗口

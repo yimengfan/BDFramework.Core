@@ -2,7 +2,10 @@
 
 namespace BDFramework.DataListener
 {
-    static public class DataListenerExtensionT
+    /// <summary>
+    /// 状态事件监听扩展版本
+    /// </summary>
+    static public class StatusListenerExtensionT
     {
         /// <summary>
         /// T版本监听一次
@@ -10,7 +13,7 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <param name="callback"></param>
         /// <param name="isTriggerCacheData"></param>
-        static public void AddListenerOnce<T>(this ADataListener dl, Action<T> callback = null, int order = -1, bool isTriggerCacheData = false) where T : class, new()
+        static public void AddListenerOnce<T>(this AStatusListener dl, Action<T> callback = null, int order = -1, bool isTriggerCacheData = false) where T : class, new()
         {
             dl.AddListener<T>(typeof(T).FullName, callback, order, 1, isTriggerCacheData);
         }
@@ -25,7 +28,7 @@ namespace BDFramework.DataListener
         /// <param name="triggerNum">触发次数，-1代表一直触发</param>
         /// <param name="isTriggerCacheData">是否触发回调</param>
         /// <typeparam name="T"></typeparam>
-        static public void AddListener<T>(this ADataListener dl, Action<T> action = null, int order = -1, int triggerNum = -1, bool isTriggerCacheData = false) where T : class, new()
+        static public void AddListener<T>(this AStatusListener dl, Action<T> action = null, int order = -1, int triggerNum = -1, bool isTriggerCacheData = false) where T : class, new()
         {
             dl.AddListener<T>(typeof(T).FullName, action, order, triggerNum, isTriggerCacheData);
         }
@@ -34,7 +37,7 @@ namespace BDFramework.DataListener
         /// <summary>
         /// 移除所有的监听
         /// </summary>
-        static public void ClearAllListener<T>(this ADataListener dl) where T : class, new()
+        static public void ClearAllListener<T>(this AStatusListener dl) where T : class, new()
         {
             dl.RemoveListener(typeof(T).FullName);
         }
@@ -46,7 +49,7 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        static public void RemoveListener<T>(this ADataListener dl, Action<T> callback) where T : class, new()
+        static public void RemoveListener<T>(this AStatusListener dl, Action<T> callback) where T : class, new()
         {
             dl.RemoveListener(typeof(T).FullName, callback);
         }
@@ -57,7 +60,7 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <param name="isTriggerCallback"></param>
-        static public void TriggerEvent<T>(this ADataListener dl, T value = null) where T : class
+        static public void TriggerEvent<T>(this AStatusListener dl, T value = null) where T : class
         {
             dl.TriggerEvent(typeof(T).FullName, value, true);
         }

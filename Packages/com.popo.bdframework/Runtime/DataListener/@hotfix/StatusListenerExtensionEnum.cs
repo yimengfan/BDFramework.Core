@@ -2,7 +2,10 @@
 
 namespace BDFramework.DataListener
 {
-    static public class DataListenerExtensionEnum
+    /// <summary>
+    /// 状态事件监听扩展版本
+    /// </summary>
+    static public class StatusListenerExtensionEnum
     {
         #region 枚举版本
         /// <summary>
@@ -11,7 +14,7 @@ namespace BDFramework.DataListener
         /// <param name="enum"></param>
         /// <param name="value"></param>
         /// <param name="isTriggerCallback"></param>
-        static public void SetData(this ADataListener dl, Enum @enum, object value, bool isTriggerCallback = true)
+        static public void SetData(this AStatusListener dl, Enum @enum, object value, bool isTriggerCallback = true)
         {
             dl.SetData(@enum.ToString(), value, isTriggerCallback);
         }
@@ -22,7 +25,7 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        static public T GetData<T>(this ADataListener dl, Enum name)
+        static public T GetData<T>(this AStatusListener dl, Enum name)
         {
             return dl.GetData<T>(name.ToString());
         }
@@ -33,7 +36,7 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <param name="isTriggerCallback"></param>
-        static public void TriggerEvent(this ADataListener dl, Enum name, object value = null,
+        static public void TriggerEvent(this AStatusListener dl, Enum name, object value = null,
                                         bool               isTriggerCallback = true)
         {
             dl.TriggerEvent(name.ToString(), value, isTriggerCallback);
@@ -48,7 +51,7 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <param name="action"></param>
         /// <param name="isTriggerCacheData"></param>
-        static public void AddListener(this ADataListener dl, Enum name, Action<object> action = null,
+        static public void AddListener(this AStatusListener dl, Enum name, Action<object> action = null,
                                        int                order      = -1,
                                        int                triggerNum = -1, bool isTriggerCacheData = false)
         {
@@ -66,7 +69,7 @@ namespace BDFramework.DataListener
         /// <param name="triggerNum">触发次数，-1代表一直触发</param>
         /// <param name="isTriggerCacheData">是否触发回调</param>
         /// <typeparam name="T"></typeparam>
-        static public void AddListener<T>(this ADataListener dl, Enum name, Action<T> action = null,
+        static public void AddListener<T>(this AStatusListener dl, Enum name, Action<T> action = null,
                                           int                order      = -1,
                                           int                triggerNum = -1, bool isTriggerCacheData = false)  where T:class
         {
@@ -80,7 +83,7 @@ namespace BDFramework.DataListener
         /// <param name="name"></param>
         /// <param name="callback"></param>
         /// <param name="isTriggerCacheData"></param>
-        static public void AddListenerOnce(this ADataListener dl, Enum name,
+        static public void AddListenerOnce(this AStatusListener dl, Enum name,
                                            Action<object>     callback   = null,
                                            int                oder = -1, bool isTriggerCacheData = false)
         {
@@ -91,7 +94,7 @@ namespace BDFramework.DataListener
         /// 枚举版本
         /// </summary>
         /// <param name="name"></param>
-        static public void ClearListener(this ADataListener dl, Enum name)
+        static public void ClearListener(this AStatusListener dl, Enum name)
         {
             dl.ClearListener(name.ToString());
         }
@@ -101,7 +104,7 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        static public void RemoveListener<T>(this ADataListener dl, Enum name, Action<T> callback)
+        static public void RemoveListener<T>(this AStatusListener dl, Enum name, Action<T> callback)
         {
             dl.RemoveListener(name.ToString(), callback);
         }
@@ -110,7 +113,7 @@ namespace BDFramework.DataListener
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
-        static public void RemoveListener(this ADataListener dl, Enum name, Action<object> callback)
+        static public void RemoveListener(this AStatusListener dl, Enum name, Action<object> callback)
         {
             dl.RemoveListener(name.ToString(), callback);
         }
@@ -118,7 +121,7 @@ namespace BDFramework.DataListener
         /// 枚举版本 
         /// </summary>
         /// <param name="name"></param>
-        static public void RemoveListener(this ADataListener dl, Enum name)
+        static public void RemoveListener(this AStatusListener dl, Enum name)
         {
             dl.RemoveListener(name.ToString());
         }

@@ -7,7 +7,10 @@ using UnityEngine;
 
 namespace BDFramework.DataListener
 {
-    abstract public class ADataListener
+    /// <summary>
+    /// 这个用来做状态、事件监听
+    /// </summary>
+    abstract public class AStatusListener
     {
         /// <summary>
         /// 所有的数据
@@ -28,7 +31,7 @@ namespace BDFramework.DataListener
         /// </summary>
         private int maxCacheValueCount = 20;
 
-        public ADataListener()
+        public AStatusListener()
         {
             dataMap       = new Dictionary<string, object>();
             callbackMap   = new Dictionary<string, List<ListenerCallbackData>>();

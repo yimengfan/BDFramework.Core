@@ -9,19 +9,21 @@ namespace BDFramework.UFlux.Contains
         /// <summary>
         /// store的map
         /// </summary>
-        static Dictionary<Type, object> StoreMap = new Dictionary<Type, object>();
+        static List< object> StoreList = new List< object >();
 
         /// <summary>
         /// 创建store
+        /// 每次请求都是独立的Store
         /// </summary>
         /// <param name="state"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        static public Store<T> CreateStore<T>(AReducers<T> reducers) where T : AStateBase, new()
+        static public Store<T> CreateStore<T>(AReducers<T> reducer) where T : AStateBase, new()
         {
-            var store = GetStore<T>();
-            //添加reducer
-            store?.AddReducer(reducers);
+            //构造store
+            var store = Activator.CreateInstance<Store<T>>();
+            store.AddReducer(reducer);
+            StoreList.Add(store);
             //返回
             return store;
         }
@@ -33,17 +35,10 @@ namespace BDFramework.UFlux.Contains
         /// <returns></returns>
         static public Store<T> GetStore<T>() where T : AStateBase, new()
         {
-            object ret;
-            var    key = typeof(T);
-            if (!StoreMap.TryGetValue(key, out ret))
-            {
-                //这里隐藏了构造函数，所需要反射创建
-                var type = typeof(Store<T>);
-                ret           = Activator.CreateInstance(type); // new(state);
-                StoreMap[key] = ret;
-            }
-
-            return ret as Store<T>;
+            //这里隐藏了构造函数，所需要反射创建
+            //var type = typeof(Store<T>);
+            var ret = Activator.CreateInstance<Store<T>>(); //as Store<T>;
+            return ret;
         }
     }
 }

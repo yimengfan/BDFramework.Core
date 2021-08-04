@@ -2,7 +2,7 @@ using LitJson;
 using BDFramework.DataListener;
 namespace BDFramework.DataListener
 {
-    public class DataListener_Json : ADataListener
+    public class StatusListenerJson : AStatusListener
     {
         public void SetMap(object o)
         {
