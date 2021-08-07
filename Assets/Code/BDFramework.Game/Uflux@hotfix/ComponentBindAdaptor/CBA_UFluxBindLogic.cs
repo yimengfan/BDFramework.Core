@@ -54,7 +54,7 @@ namespace BDFramework.UFlux
                 return;
             }
 
-            UFlux.SetComponentProps(transform, props);
+            UFluxUtils.SetComponentProps(transform, props);
         }
 
 
@@ -76,7 +76,7 @@ namespace BDFramework.UFlux
             {
                 if (idx < transform.childCount)
                 {
-                    UFlux.SetComponentProps(transform.GetChild(idx), props);
+                    UFluxUtils.SetComponentProps(transform.GetChild(idx), props);
                 }
             });
 

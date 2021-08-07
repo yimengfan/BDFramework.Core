@@ -73,7 +73,7 @@ namespace BDFramework.UFlux
             this.Transform = trans;
             //创建State
             this.Props = new T();
-            UFlux.InitComponent(this);
+            UFluxUtils.InitComponent(this);
         }
 
         /// <summary>
@@ -97,10 +97,10 @@ namespace BDFramework.UFlux
         {
             if (resPath == null) return;
 
-            var o = UFlux.Load<GameObject>(resPath);
+            var o = UFluxUtils.Load<GameObject>(resPath);
             this.Transform = GameObject.Instantiate(o).transform;
             this.IsLoad    = true;
-            UFlux.InitComponent(this);
+            UFluxUtils.InitComponent(this);
             //初始化
             this.Init();
         }
@@ -113,11 +113,11 @@ namespace BDFramework.UFlux
         public void AsyncLoad(Action callback = null)
         {
             if (resPath == null) return;
-            UFlux.AsyncLoad<GameObject>(resPath, obj =>
+            UFluxUtils.AsyncLoad<GameObject>(resPath, obj =>
             {
                 this.Transform = GameObject.Instantiate(obj).transform;
                 this.IsLoad    = true;
-                UFlux.InitComponent(this);
+                UFluxUtils.InitComponent(this);
                 //初始化
                 Init();
                 if (callback != null)
@@ -164,7 +164,7 @@ namespace BDFramework.UFlux
         /// </summary>
         protected void CommitProps()
         {
-            UFlux.SetComponentProps(this.Transform, this.Props);
+            UFluxUtils.SetComponentProps(this.Transform, this.Props);
         }
 
         #endregion
@@ -214,9 +214,9 @@ namespace BDFramework.UFlux
         /// </summary>
         virtual public void Destroy()
         {
-            UFlux.Destroy(this.Transform.gameObject);
+            UFluxUtils.Destroy(this.Transform.gameObject);
             this.Transform = null;
-            UFlux.Unload(this.resPath);
+            UFluxUtils.Unload(this.resPath);
             IsDestroy = true;
         }
 

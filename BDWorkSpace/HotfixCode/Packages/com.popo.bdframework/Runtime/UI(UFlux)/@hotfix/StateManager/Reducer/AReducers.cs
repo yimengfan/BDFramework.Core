@@ -17,7 +17,8 @@ namespace BDFramework.UFlux.Reducer
         /// 当前的Reducermap，callback模式
         /// </summary>
         protected Dictionary<int, Store<T>.ReducerCallback> CallbackReducersMap = new Dictionary<int, Store<T>.ReducerCallback>();
-
+        
+        
         /// <summary>
         /// 构造函数
         /// </summary>

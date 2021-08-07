@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 
 namespace BDFramework.UFlux
 {
-    static public partial class UFlux
+    static public partial class UFluxUtils
     {
         #region 组件初始化
 
@@ -154,11 +154,22 @@ namespace BDFramework.UFlux
         }
 
         /// <summary>
+        /// 实例化接口
+        /// </summary>
+        /// <param name="go"></param>
+        static public void Instantiate(GameObject go)
+        {
+            
+        }
+
+        
+        /// <summary>
         /// 删除接口
         /// </summary>
         /// <param name="go"></param>
         static public void Destroy(GameObject go)
         {
+           
             BResources.Destroy(go);
         }
 

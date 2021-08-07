@@ -28,7 +28,7 @@ namespace  BDFramework.UFlux
             var img = uiBehaviour as Image;
             if (value is string)
             {
-                img.sprite = BDFramework.UFlux.UFlux.Load<Sprite>((string) value);
+                img.sprite = BDFramework.UFlux.UFluxUtils.Load<Sprite>((string) value);
             }
             else if (value is Sprite)
             {

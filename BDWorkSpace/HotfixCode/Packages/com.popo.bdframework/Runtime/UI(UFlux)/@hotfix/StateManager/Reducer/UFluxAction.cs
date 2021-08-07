@@ -7,7 +7,7 @@ namespace BDFramework.UFlux.Reducer
         /// <summary>
         /// Action的枚举
         /// </summary>
-        public Enum ActionEnum { get; set; }
+        public Enum ActionTag { get; set; }
         
         public object Params { get; private set; }
         /// <summary>
