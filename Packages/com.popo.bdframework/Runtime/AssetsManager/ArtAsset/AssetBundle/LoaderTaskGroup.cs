@@ -203,7 +203,7 @@ namespace BDFramework.ResourceMgr
 
                 lockSet.Add(task.AssetPath); //加锁
                 {
-                    fullpath = loder.FindAsset(task.AssetPath);
+                    fullpath = loder.FindMultiAddressAsset(task.AssetPath);
                     ret = AssetBundle.LoadFromFileAsync(fullpath);
                     yield return ret;
                 }

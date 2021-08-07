@@ -5,6 +5,7 @@ using System.IO;
 using System.Collections;
 using System.Linq;
 using BDFramework.Core.Tools;
+using Cysharp.Text;
 using UnityEngine.U2D;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -71,31 +72,45 @@ namespace BDFramework.ResourceMgr.V2
             if (this.loder != null)
             {
                 this.UnloadAllAsset();
-                GC.Collect();
             }
 
             this.AssetbundleMap = new Dictionary<string, AssetBundleWapper>();
             this.allTaskGroupList = new List<LoaderTaskGroup>();
             //1.设置加载路径  
-            firstArtDirectory = string.Format("{0}/{1}/Art", path, BDApplication.GetPlatformPath(Application.platform))
-                .Replace("\\", "/");
+            firstArtDirectory =
+                ZString.Format("{0}/{1}/Art", path, BDApplication.GetPlatformPath(Application.platform));
             //当路径为persistent时，第二路径生效
-            secArtDirectory = string.Format("{0}/{1}/Art", Application.streamingAssetsPath,
-                    BDApplication.GetPlatformPath(Application.platform)) //
-                .Replace("\\", "/");
+            secArtDirectory = ZString.Format("{0}/{1}/Art", Application.streamingAssetsPath,
+                BDApplication.GetPlatformPath(Application.platform)); //
 
+
+            //路径替换
+            switch (Application.platform)
+            {
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
+                case RuntimePlatform.WindowsEditor:
+                case RuntimePlatform.WindowsPlayer:
+                {
+                    firstArtDirectory = firstArtDirectory.Replace("\\", "/");
+                    secArtDirectory = secArtDirectory.Replace("\\", "/");
+                }
+                    break;
+            }
+            
+            
             //加载Config
             var configPath = "";
             this.loder = new ManifestLoder();
             if (Application.isEditor)
             {
-                configPath = string.Format("{0}/{1}/{2}", path, BDApplication.GetPlatformPath(Application.platform),
+                configPath = ZString.Format("{0}/{1}/{2}", path, BDApplication.GetPlatformPath(Application.platform),
                     BResources.CONFIGPATH);
             }
             else
             {
                 //真机环境config在persistent，跟dll和db保持一致
-                configPath = string.Format("{0}/{1}/{2}", Application.persistentDataPath,
+                configPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath,
                     BDApplication.GetPlatformPath(Application.platform), BResources.CONFIGPATH);
             }
 
@@ -217,16 +232,17 @@ namespace BDFramework.ResourceMgr.V2
                     var task = new LoaderTaskData(r, typeof(Object));
                     taskQueue.Add(task);
                 }
+
                 //主资源，
                 var mainTask = new LoaderTaskData(mainItem.Path, typeof(Object), true);
                 taskQueue.Add(mainTask);
                 //添加任务组
                 var taskGroup = new LoaderTaskGroup(this, assetName, mainItem, taskQueue, //Loader接口
-                (p, obj) =>
-                {
-                    //完成回调
-                    callback(obj as T);
-                });
+                    (p, obj) =>
+                    {
+                        //完成回调
+                        callback(obj as T);
+                    });
                 taskGroup.Id = this.taskIDCounter++;
                 AddTaskGroup(taskGroup);
 
@@ -262,17 +278,16 @@ namespace BDFramework.ResourceMgr.V2
             //source
             foreach (var assetName in assetNameList)
             {
-                var taskid =  AsyncLoad<Object>(assetName, (o) =>
+                var taskid = AsyncLoad<Object>(assetName, (o) =>
                 {
                     loadAssetMap[assetName] = o;
                     //进度回调
-                    onLoadProcess?.Invoke(loadAssetMap.Count,total);
+                    onLoadProcess?.Invoke(loadAssetMap.Count, total);
                     //完成回调
                     if (loadAssetMap.Count == total)
                     {
                         onLoadComplete?.Invoke(loadAssetMap);
                     }
-
                 });
 
                 taskIdList.Add(taskid);
@@ -295,11 +310,11 @@ namespace BDFramework.ResourceMgr.V2
         }
 
         /// <summary>
-        /// 寻找可加载的地址
+        /// 多路径寻址
         /// </summary>
         /// <param name="assetFileName"></param>
         /// <returns></returns>
-        public string FindAsset(string assetFileName)
+        public string FindMultiAddressAsset(string assetFileName)
         {
             //第一地址
             var p = IPath.Combine(this.firstArtDirectory, assetFileName);
@@ -323,18 +338,15 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public AssetBundle LoadAssetBundle(string path)
         {
-            if (AssetbundleMap.ContainsKey(path))
+            AssetBundleWapper abw = null;
+            if (AssetbundleMap.TryGetValue(path, out abw))
             {
-                AssetBundleWapper abw = null;
-                if (AssetbundleMap.TryGetValue(path, out abw))
-                {
-                    abw.Use();
-                    return abw.AssetBundle;
-                }
+                abw.Use();
+                return abw.AssetBundle;
             }
             else
             {
-                var p = FindAsset(path);
+                var p = FindMultiAddressAsset(path);
                 var ab = AssetBundle.LoadFromFile(p);
                 //添加
                 AddAssetBundle(path, ab);
@@ -352,14 +364,15 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="ab"></param>
         public void AddAssetBundle(string assetPath, AssetBundle ab)
         {
+            AssetBundleWapper abw = null;
             //
-            if (!AssetbundleMap.ContainsKey(assetPath))
+            if (!AssetbundleMap.TryGetValue(assetPath, out abw))
             {
-                AssetBundleWapper abr = new AssetBundleWapper() {AssetBundle = ab};
-                AssetbundleMap[assetPath] = abr;
+                abw = new AssetBundleWapper(ab);
+                AssetbundleMap[assetPath] = abw;
             }
 
-            AssetbundleMap[assetPath].Use();
+            abw.Use();
         }
 
         #endregion
@@ -398,7 +411,7 @@ namespace BDFramework.ResourceMgr.V2
             AssetBundleWapper abr = null;
             if (AssetbundleMap.TryGetValue(item.Path, out abr))
             {
-                switch ((ManifestItem.AssetTypeEnum) item.Type)
+                switch ((ManifestItem.AssetTypeEnum)item.Type)
                 {
                     //暂时需要特殊处理的只有一个
                     case ManifestItem.AssetTypeEnum.SpriteAtlas:
@@ -480,7 +493,6 @@ namespace BDFramework.ResourceMgr.V2
             {
                 str = string.Format(RUNTIME, (floder + "/").ToLower());
             }
-               
 
 
             searchPattern = searchPattern?.ToLower();
@@ -567,14 +579,44 @@ namespace BDFramework.ResourceMgr.V2
 
         /// <summary>
         /// 卸载
-        /// 废弃接口，现在ab管理只需要 使用者管理好实例化出来的资源即可
-        /// AB本身只有一个头的消耗
         /// </summary>
-        /// <param name="path"></param>
-        [Obsolete]
+        /// <param name="path">根据加载路径卸载</param>
+        /// <param name="isForceUnload">强制卸载</param>
         public void UnloadAsset(string path, bool isForceUnload = false)
         {
-            
+            if (!this.loder.Manifest.IsHashName)
+            {
+                path = string.Format(RUNTIME, path.ToLower());
+            }
+            else
+            {
+                path = path.ToLower();
+            }
+
+            var assetList = loder.Manifest.GetDependenciesByName(path);
+            if (assetList == null)
+            {
+                return;
+            }
+
+            //卸载
+            for (int i = 0; i <= assetList.Count; i++)
+            {
+                var assetPath = assetList[i];
+                AssetBundleWapper abw = null;
+
+                if (AssetbundleMap.TryGetValue(assetPath, out abw))
+                {
+                    if (isForceUnload)
+                    {
+                        abw.UnLoad();
+                    }
+                    else
+                    {
+                        abw.Unuse();
+                    }
+                }
+            }
         }
 
 
@@ -587,7 +629,8 @@ namespace BDFramework.ResourceMgr.V2
         [Obsolete]
         public void UnloadAllAsset()
         {
-            
+            AssetBundle.UnloadAllAssetBundles(true);
+            Resources.UnloadUnusedAssets();
         }
 
         #endregion

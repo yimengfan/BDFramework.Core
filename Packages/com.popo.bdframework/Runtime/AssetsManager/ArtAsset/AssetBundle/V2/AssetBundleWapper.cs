@@ -13,8 +13,15 @@ namespace BDFramework.ResourceMgr.V2
     /// </summary>
     public class AssetBundleWapper
     {
-        public AssetBundle AssetBundle;
+        public AssetBundle AssetBundle { get; private set; }
 
+
+        public AssetBundleWapper(AssetBundle ab)
+        {
+            this.AssetBundle = ab;
+        }
+        
+        
         #region 各种加载接口
 
         Dictionary<string, string> assetNameMap = new Dictionary<string, string>();
@@ -60,7 +67,9 @@ namespace BDFramework.ResourceMgr.V2
             }
 
             if (realname == null)
+            {
                 return null;
+            }
             return this.AssetBundle.LoadAsset(realname, type);
         }
 
@@ -68,18 +77,35 @@ namespace BDFramework.ResourceMgr.V2
 
         #region 引用计数
 
-        public int Counter { get; private set; }
+        public int UseCounter { get; private set; }
 
+        /// <summary>
+        /// 使用
+        /// </summary>
         public void Use()
         {
-          
+
+            UseCounter++;
+
         }
 
+        /// <summary>
+        /// 不使用
+        /// </summary>
         public void Unuse()
         {
-           
+            UseCounter--;
         }
 
         #endregion
+        
+        /// <summary>
+        /// 卸载
+        /// </summary>
+        public void UnLoad()
+        {
+            this.UseCounter = 0;
+            this.AssetBundle.Unload(true);
+        }
     }
 }
