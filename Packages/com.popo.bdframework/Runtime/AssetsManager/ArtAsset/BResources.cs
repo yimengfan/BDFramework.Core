@@ -15,7 +15,10 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     static public class BResources
     {
-        readonly static public string CONFIGPATH = "Art/Config.json";
+        /// <summary>
+        /// 美术目录
+        /// </summary>
+        readonly static public string ART_CONFIG_PATH = "Art/Config.json";
 
         /// <summary>
         /// 初始化

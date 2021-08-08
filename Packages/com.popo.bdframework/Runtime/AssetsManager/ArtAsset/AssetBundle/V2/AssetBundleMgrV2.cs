@@ -57,10 +57,10 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 资源加载路径
         /// </summary>
-        private string firstArtDirectory = "";
+        private string firstArtDirectory;
 
         //第二寻址路径
-        private string secArtDirectory = "";
+        private string secArtDirectory;
 
         /// <summary>
         /// 初始化
@@ -74,14 +74,15 @@ namespace BDFramework.ResourceMgr.V2
                 this.UnloadAllAsset();
             }
 
-            this.AssetbundleMap = new Dictionary<string, AssetBundleWapper>();
+            this.AssetbundleMap = new Dictionary<string, AssetBundleWapper>(StringComparer.OrdinalIgnoreCase);
             this.allTaskGroupList = new List<LoaderTaskGroup>();
+            var platformPath = BDApplication.GetPlatformPath(Application.platform);
             //1.设置加载路径  
             firstArtDirectory =
-                ZString.Format("{0}/{1}/Art", path, BDApplication.GetPlatformPath(Application.platform));
+                ZString.Format("{0}/{1}/Art", path, platformPath);
             //当路径为persistent时，第二路径生效
             secArtDirectory = ZString.Format("{0}/{1}/Art", Application.streamingAssetsPath,
-                BDApplication.GetPlatformPath(Application.platform)); //
+                platformPath); //
 
 
             //路径替换
@@ -97,24 +98,23 @@ namespace BDFramework.ResourceMgr.V2
                 }
                     break;
             }
-            
-            
+
+
             //加载Config
-            var configPath = "";
+            var artconfigPath = "";
             this.loder = new ManifestLoder();
             if (Application.isEditor)
             {
-                configPath = ZString.Format("{0}/{1}/{2}", path, BDApplication.GetPlatformPath(Application.platform),
-                    BResources.CONFIGPATH);
+                artconfigPath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ART_CONFIG_PATH);
             }
             else
             {
                 //真机环境config在persistent，跟dll和db保持一致
-                configPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath,
-                    BDApplication.GetPlatformPath(Application.platform), BResources.CONFIGPATH);
+                artconfigPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath,
+                    BResources.ART_CONFIG_PATH);
             }
 
-            this.loder.Load(configPath);
+            this.loder.Load(artconfigPath);
         }
 
 
@@ -130,11 +130,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                path = string.Format(RUNTIME, path.ToLower());
-            }
-            else
-            {
-                path = path.ToLower();
+                path = ZString.Format(RUNTIME, path);
             }
 
             //1.依赖路径
@@ -146,8 +142,8 @@ namespace BDFramework.ResourceMgr.V2
                 {
                     LoadAssetBundle(dependAsset);
                 }
-                //加载主资源
 
+                //加载主资源
                 LoadAssetBundle(item.Path);
                 //
                 return LoadFormAssetBundle<T>(path, item);
@@ -170,12 +166,9 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                path = string.Format(RUNTIME, path.ToLower());
+                path = string.Format(RUNTIME, path);
             }
-            else
-            {
-                path = path.ToLower();
-            }
+
 
             var item = loder.Manifest.GetManifest(path);
             //加载assetbundle
@@ -213,11 +206,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                assetName = string.Format(RUNTIME, assetName.ToLower());
-            }
-            else
-            {
-                assetName = assetName.ToLower();
+                assetName = string.Format(RUNTIME, assetName);
             }
 
 
@@ -318,7 +307,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             //第一地址
             var p = IPath.Combine(this.firstArtDirectory, assetFileName);
-            //寻址到第二路径,第二地址没有就放弃
+            //寻址到第二路径
             if (!File.Exists(p))
             {
                 p = IPath.Combine(this.secArtDirectory, assetFileName);
@@ -349,7 +338,7 @@ namespace BDFramework.ResourceMgr.V2
                 var p = FindMultiAddressAsset(path);
                 var ab = AssetBundle.LoadFromFile(p);
                 //添加
-                AddAssetBundle(path, ab);
+                this.AddAssetBundle(path, ab);
                 return ab;
             }
 
@@ -485,20 +474,16 @@ namespace BDFramework.ResourceMgr.V2
             List<string> rets = new List<string>();
             string str;
 
-            if (this.loder.Manifest.IsHashName)
+            str = ZString.Concat(floder, "/");
+            if (!this.loder.Manifest.IsHashName)
             {
-                str = (floder + "/").ToLower();
-            }
-            else
-            {
-                str = string.Format(RUNTIME, (floder + "/").ToLower());
+                str = ZString.Format(RUNTIME, str);
             }
 
 
-            searchPattern = searchPattern?.ToLower();
             foreach (var key in this.loder.Manifest.ManifestMap.Keys)
             {
-                if (key.StartsWith(str))
+                if (key.StartsWith(str, StringComparison.OrdinalIgnoreCase))
                 {
                     rets.Add(key);
                 }
@@ -511,7 +496,7 @@ namespace BDFramework.ResourceMgr.V2
                 {
                     var fileName = Path.GetFileName(r);
 
-                    if (fileName.StartsWith(searchPattern))
+                    if (fileName.StartsWith(searchPattern, StringComparison.OrdinalIgnoreCase))
                     {
                         return true;
                     }
@@ -586,12 +571,9 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                path = string.Format(RUNTIME, path.ToLower());
+                path = string.Format(RUNTIME, path);
             }
-            else
-            {
-                path = path.ToLower();
-            }
+
 
             var assetList = loder.Manifest.GetDependenciesByName(path);
             if (assetList == null)

@@ -23,10 +23,9 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 加载路径名-资源数据
         /// </summary>
-        public Dictionary<string, ManifestItem> ManifestMap { get; private set; } = new Dictionary<string, ManifestItem>();
+        public Dictionary<string, ManifestItem> ManifestMap { get; private set; } = new Dictionary<string, ManifestItem>(StringComparer.OrdinalIgnoreCase);
 
-
-
+        
         /// <summary>
         /// 获取单个依赖
         /// </summary>
@@ -34,6 +33,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns>这个list外部不要修改</returns>
         public List<string> GetDependenciesByName(string name)
         {
+            
             ManifestItem item = null;
             if (this.ManifestMap.TryGetValue(name, out item))
             {

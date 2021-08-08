@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Cysharp.Text;
 using UnityEngine;
 using UnityEngine.U2D;
 using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr.V2
 {
-  /// <summary>
+    /// <summary>
     ///ab包引用计数类
     /// </summary>
     public class AssetBundleWapper
     {
+        /// <summary>
+        /// 当前Assetbundle
+        /// </summary>
         public AssetBundle AssetBundle { get; private set; }
 
 
@@ -20,8 +24,8 @@ namespace BDFramework.ResourceMgr.V2
         {
             this.AssetBundle = ab;
         }
-        
-        
+
+
         #region 各种加载接口
 
         Dictionary<string, string> assetNameMap = new Dictionary<string, string>();
@@ -34,7 +38,7 @@ namespace BDFramework.ResourceMgr.V2
         public Object LoadTextureFormAtlas(string texName)
         {
             //默认一个ab中只有一个atlas
-            var fs    = AssetBundle.GetAllAssetNames();
+            var fs = AssetBundle.GetAllAssetNames();
             var atlas = this.AssetBundle.LoadAsset<SpriteAtlas>(fs[fs.Length - 1]);
             texName = Path.GetFileName(texName);
             var sp = atlas.GetSprite(texName);
@@ -59,7 +63,7 @@ namespace BDFramework.ResourceMgr.V2
                 }
                 else
                 {
-                    var lname = name.ToLower() + ".";
+                    var lname = ZString.Concat(name, ".").ToLower();
                     realname = fs.FirstOrDefault((p) => p.Contains(lname));
                 }
 
@@ -70,6 +74,7 @@ namespace BDFramework.ResourceMgr.V2
             {
                 return null;
             }
+
             return this.AssetBundle.LoadAsset(realname, type);
         }
 
@@ -84,9 +89,7 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public void Use()
         {
-
             UseCounter++;
-
         }
 
         /// <summary>
@@ -98,7 +101,7 @@ namespace BDFramework.ResourceMgr.V2
         }
 
         #endregion
-        
+
         /// <summary>
         /// 卸载
         /// </summary>
