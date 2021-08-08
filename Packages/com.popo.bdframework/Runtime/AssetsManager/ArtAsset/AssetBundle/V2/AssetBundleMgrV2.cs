@@ -166,7 +166,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                path = string.Format(RUNTIME, path);
+                path = ZString.Format(RUNTIME, path);
             }
 
 
@@ -206,7 +206,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                assetName = string.Format(RUNTIME, assetName);
+                assetName = ZString.Format(RUNTIME, assetName);
             }
 
 
@@ -520,9 +520,7 @@ namespace BDFramework.ResourceMgr.V2
 
         #endregion
 
-        #region 工具类
 
-        #endregion
 
         #region 核心任务驱动
 
@@ -571,7 +569,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                path = string.Format(RUNTIME, path);
+                path = ZString.Format(RUNTIME, path);
             }
 
 
@@ -604,11 +602,8 @@ namespace BDFramework.ResourceMgr.V2
 
         /// <summary>
         /// 卸载
-        /// 废弃接口，现在ab管理只需要 使用者管理好实例化出来的资源即可
-        /// AB本身只有一个头的消耗
         /// </summary>
         /// <param name="path"></param>
-        [Obsolete]
         public void UnloadAllAsset()
         {
             AssetBundle.UnloadAllAssetBundles(true);
