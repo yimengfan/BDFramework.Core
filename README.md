@@ -3,7 +3,11 @@
 # 简介(Introduction)
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow!   
 Make game development easier!
-#### 完善的工作流,热更项目的开发,一键帮你完成~  
+
+> 让游戏开发更专业！  
+> 让专业开发更简单！  
+> 让商业开发更高效！  
+> 致力于打造简单、专业、高效的商业游戏工作流.  
 
 #### 第九第十艺术交流:763141410 （QQ Group:763141410）  [点击加群](http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f)
 If you find a bug or have some suggestions,please make issue! I'll get back to you!  
