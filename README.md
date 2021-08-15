@@ -1,8 +1,8 @@
 <img src="./BDTemp/Img/logo.png" width = "65%" height = "65%" div align=center />  
 
 # 简介(Introduction)
-Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow! Not a collection of libraries  
-
+Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow!   
+Make game development easier!
 #### 完善的工作流,热更项目的开发,一键帮你完成~  
 
 #### 第九第十艺术交流:763141410 （QQ Group:763141410）  [点击加群](http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f)
