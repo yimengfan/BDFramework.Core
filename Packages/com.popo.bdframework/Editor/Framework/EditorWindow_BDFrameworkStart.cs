@@ -276,7 +276,12 @@ namespace BDFramework.Editor
             GUILayout.Label("版本信息", titleStyle);
             DrawLine();
             GUI.color = Color.green;
-            GUILayout.Label("当前版本:" + BDEditorApplication.BDFrameConfig.Version);
+            var version = "null";
+            if (BDEditorApplication.BDFrameConfig != null)
+            {
+                version = BDEditorApplication.BDFrameConfig.Version;
+            }
+            GUILayout.Label("当前版本:" + version);
             //
             if (IsHaveNewVerison())
             {
