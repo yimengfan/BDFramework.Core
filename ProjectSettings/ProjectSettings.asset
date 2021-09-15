@@ -720,7 +720,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     1: 
     4: 
-    7: ODIN_INSPECTOR
+    7: 
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
