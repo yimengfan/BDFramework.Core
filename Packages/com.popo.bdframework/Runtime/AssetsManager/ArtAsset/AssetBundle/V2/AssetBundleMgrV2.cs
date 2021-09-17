@@ -519,9 +519,7 @@ namespace BDFramework.ResourceMgr.V2
         }
 
         #endregion
-
-
-
+        
         #region 核心任务驱动
 
         /// <summary>
@@ -580,7 +578,7 @@ namespace BDFramework.ResourceMgr.V2
             }
 
             //卸载
-            for (int i = 0; i <= assetList.Count; i++)
+            for (int i = 0; i < assetList.Count; i++)
             {
                 var assetPath = assetList[i];
                 AssetBundleWapper abw = null;
