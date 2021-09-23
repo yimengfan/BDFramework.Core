@@ -159,7 +159,7 @@ namespace BDFramework.Editor
         private static bool BuildAssetBundle(RuntimePlatform platform, BuildTarget target)
         {
             //1.搜集keyword
-            ShaderCollection.GenShaderVariant();
+            ShaderCollection.SimpleGenShaderVariant();
             //2.打包模式
             var config = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
             return AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, true, config.AESCode);

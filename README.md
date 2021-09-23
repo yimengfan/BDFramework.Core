@@ -1,5 +1,10 @@
 <img src="./BDTemp/Img/logo.png" width = "65%" height = "65%" div align=center />  
 
+[![openupm](https://img.shields.io/npm/v/com.popo.bdframework?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.cn/packages/com.popo.bdframework/)
+[![LICENSE](https://img.shields.io/github/license/yimengfan/BDFramework.Core)
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg?style=flat-square)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
+[![Badge](https://img.shields.io/badge/link-996.icu-%23FF4D5B.svg?style=flat-square)](https://996.icu/#/zh_CN)
+
 # 简介(Introduction)
 Simple! Easy! Beautiful!  This‘s a powerful Unity3d game workflow!   
 Make game development easier!

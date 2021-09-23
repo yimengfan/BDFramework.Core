@@ -20,7 +20,7 @@ namespace BDFramework.Editor.Asset
 
         static List<string> allShaderNameList = new List<string>();
 
-        public static void GenShaderVariant()
+        public static void SimpleGenShaderVariant()
         {
             //先搜集所有keyword到工具类SVC
             toolSVC = new ShaderVariantCollection();

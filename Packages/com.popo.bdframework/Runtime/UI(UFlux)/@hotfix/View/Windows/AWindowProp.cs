@@ -163,8 +163,8 @@ namespace BDFramework.UFlux
         public void RegisterSubWindow(IWindow subwin)
         {
             subWindowsMap[subwin.GetHashCode()] = subwin;
-            (subwin as IComponent).Init();
             subwin.SetParent(this);
+            (subwin as IComponent).Init();
         }
 
 
