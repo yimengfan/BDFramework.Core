@@ -9,8 +9,11 @@ namespace BDFramework.Editor
 {
     public class BDEditorSetting
     {
-        [HideInInspector]
-        static public string PATH = null;
+        
+        /// <summary>
+        /// 配置文件路径
+        /// </summary>
+        static private string SETTING_PATH { get; set; } = null;
 
         public enum PageType
         {
@@ -74,7 +77,7 @@ namespace BDFramework.Editor
         /// <returns></returns>
         public bool IsSetConfig()
         {
-            return File.Exists(PATH);
+            return File.Exists(SETTING_PATH);
         }
 
         /// <summary>
@@ -84,16 +87,16 @@ namespace BDFramework.Editor
         /// <returns></returns>
         static public BDEditorSetting Load()
         {
-            if (string.IsNullOrEmpty(PATH))
+            if (string.IsNullOrEmpty(SETTING_PATH))
             {
-                PATH = IPath.Combine(BDApplication.BDWorkSpace, "config.json");
+                SETTING_PATH = IPath.Combine(BDApplication.BDWorkSpace, "config.json");
             }
 
             var setting = new BDEditorSetting();
 
-            if (File.Exists(PATH))
+            if (File.Exists(SETTING_PATH))
             {
-                var content = File.ReadAllText(PATH);
+                var content = File.ReadAllText(SETTING_PATH);
                 setting = JsonMapper.ToObject<BDEditorSetting>(content);
             }
 
@@ -105,7 +108,7 @@ namespace BDFramework.Editor
         /// </summary>
         public void Save()
         {
-            FileHelper.WriteAllText(PATH, JsonMapper.ToJson(this, true));
+            FileHelper.WriteAllText(SETTING_PATH, JsonMapper.ToJson(this, true));
         }
     }
 

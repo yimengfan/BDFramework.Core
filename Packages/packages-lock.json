@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.com"
+      "url": "https://packages.unity.cn"
     },
     "com.popo.bdframework": {
       "version": "file:com.popo.bdframework",
@@ -20,7 +20,7 @@
       "depth": 2,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.com"
+      "url": "https://packages.unity.cn"
     },
     "com.unity.ide.rider": {
       "version": "1.2.1",
@@ -29,14 +29,14 @@
       "dependencies": {
         "com.unity.test-framework": "1.1.1"
       },
-      "url": "https://packages.unity.com"
+      "url": "https://packages.unity.cn"
     },
     "com.unity.ide.vscode": {
       "version": "1.2.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.com"
+      "url": "https://packages.unity.cn"
     },
     "com.unity.render-pipelines.core": {
       "version": "7.6.0",
@@ -46,7 +46,7 @@
         "com.unity.ugui": "1.0.0",
         "com.unity.modules.physics": "1.0.0"
       },
-      "url": "https://packages.unity.com"
+      "url": "https://packages.unity.cn"
     },
     "com.unity.render-pipelines.universal": {
       "version": "7.6.0",
@@ -56,7 +56,7 @@
         "com.unity.render-pipelines.core": "7.6.0",
         "com.unity.shadergraph": "7.6.0"
       },
-      "url": "https://packages.unity.com"
+      "url": "https://packages.unity.cn"
     },
     "com.unity.shadergraph": {
       "version": "7.6.0",
@@ -65,7 +65,7 @@
       "dependencies": {
         "com.unity.render-pipelines.core": "7.6.0"
       },
-      "url": "https://packages.unity.com"
+      "url": "https://packages.unity.cn"
     },
     "com.unity.test-framework": {
       "version": "1.1.27",
@@ -76,7 +76,7 @@
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       },
-      "url": "https://packages.unity.com"
+      "url": "https://packages.unity.cn"
     },
     "com.unity.ugui": {
       "version": "1.0.0",

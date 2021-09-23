@@ -148,7 +148,7 @@ namespace BDFramework.Editor
         {
             if (!BDEditorApplication.BdFrameEditorSetting.IsSetConfig())
             {
-                BDebug.LogError("请注意设置apk keystore账号密码");
+                Debug.LogError("请注意设置apk keystore账号密码");
                 return;
             }
 
