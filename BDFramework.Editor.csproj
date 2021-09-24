@@ -62,7 +62,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\ShaderCollection.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDAssetImporter.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDFrameEditorLife.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BuildPackage\EditorBuildPackage.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BuildPackage\EditorMenu_BuildPackage.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorBehavior\ABDEditorBehavior.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorBehavior\BDEditorBehaviorHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorBuiltinStyle.cs" />
@@ -70,8 +70,8 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDEditorApplication.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDEditorSetting.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\EditorWindow_BDFrameworkConfig.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorWindow_OnekeyBuildAsset.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\MenuItem\MenuItems.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorWindow_BuildAssetsGuide.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\GlobalEditorMenuItems.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\NetProtocolEditor\Protobuf2ClassTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\ScriptEditor\EditorWindow_ScriptBuildDll.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\ScriptEditor\GenAdapter.cs" />

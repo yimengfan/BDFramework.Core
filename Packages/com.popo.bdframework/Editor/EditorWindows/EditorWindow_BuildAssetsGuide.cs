@@ -11,12 +11,15 @@ using Sirenix.Utilities.Editor;
 #endif
 namespace BDFramework.Editor.BuildPackage
 {
-    public class EditorWindow_OnekeyBuildAsset : EditorWindow
+    /// <summary>
+    /// 资源构建引导界面
+    /// </summary>
+    public class EditorWindow_BuildAssetsGuide : EditorWindow
     {
         [MenuItem("BDFrameWork工具箱/资源一键打包", false, (int) BDEditorMenuEnum.OnekeyBuildAsset)]
         public static void Open()
         {
-            var window = (EditorWindow_OnekeyBuildAsset) EditorWindow.GetWindow(typeof(EditorWindow_OnekeyBuildAsset), false, "一键打包");
+            var window = (EditorWindow_BuildAssetsGuide) EditorWindow.GetWindow(typeof(EditorWindow_BuildAssetsGuide), false, "一键打包");
             window.Show();
         }
 
@@ -40,6 +43,12 @@ namespace BDFramework.Editor.BuildPackage
         {
             GUILayout.BeginHorizontal();
             {
+                
+#if !ODIN_INSPECTOR
+                
+                GUILayout.Label("缺少Odin!");
+#endif
+                
 #if ODIN_INSPECTOR
                 if (editorScript != null)
                 {

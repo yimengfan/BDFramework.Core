@@ -190,37 +190,37 @@ namespace BDFramework.Editor
         static public void BuildAndroidDebug()
         {
             outputPath = Application.streamingAssetsPath;
-            BuildPackage(RuntimePlatform.Android, EditorBuildPackage.BuildMode.Debug);
+            BuildPackage(RuntimePlatform.Android, EditorMenu_BuildPackage.BuildMode.Debug);
         }
 
         static public void BuildAndroidRelease()
         {
             outputPath = Application.streamingAssetsPath;
-            BuildPackage(RuntimePlatform.Android, EditorBuildPackage.BuildMode.Release);
+            BuildPackage(RuntimePlatform.Android, EditorMenu_BuildPackage.BuildMode.Release);
         }
 
         static public void BuildIOSDebug()
         {
             outputPath = Application.streamingAssetsPath;
-            BuildPackage(RuntimePlatform.IPhonePlayer, EditorBuildPackage.BuildMode.Debug);
+            BuildPackage(RuntimePlatform.IPhonePlayer, EditorMenu_BuildPackage.BuildMode.Debug);
         }
 
         static public void BuildIOSRelease()
         {
             outputPath = Application.streamingAssetsPath;
-            BuildPackage(RuntimePlatform.IPhonePlayer, EditorBuildPackage.BuildMode.Release);
+            BuildPackage(RuntimePlatform.IPhonePlayer, EditorMenu_BuildPackage.BuildMode.Release);
         }
 
 
         /// <summary>
         /// 构建包体
         /// </summary>
-        static private void BuildPackage(RuntimePlatform platform, EditorBuildPackage.BuildMode buildMode)
+        static private void BuildPackage(RuntimePlatform platform, EditorMenu_BuildPackage.BuildMode buildMode)
         {
             //1.下载资源已有、Sql
             var ret = DownloadFormFileServer(platform);
             //2.打包dll
-            ScriptBuildTools.BuildMode mode = buildMode == EditorBuildPackage.BuildMode.Debug ? ScriptBuildTools.BuildMode.Debug : ScriptBuildTools.BuildMode.Release;
+            ScriptBuildTools.BuildMode mode = buildMode == EditorMenu_BuildPackage.BuildMode.Debug ? ScriptBuildTools.BuildMode.Debug : ScriptBuildTools.BuildMode.Release;
             EditorWindow_ScriptBuildDll.RoslynBuild(outputPath, platform, mode);
             //3.构建空包即可
             if (!ret)
@@ -237,11 +237,11 @@ namespace BDFramework.Editor
             }
 
             //加载配置
-            EditorBuildPackage.LoadConfig(buildMode);
+            EditorMenu_BuildPackage.LoadConfig(buildMode);
             //
             if (platform == RuntimePlatform.Android)
             {
-                EditorBuildPackage.BuildAPK(buildMode);
+                EditorMenu_BuildPackage.BuildAPK(buildMode);
                 //上传APK
                 UploadAPK();
             }

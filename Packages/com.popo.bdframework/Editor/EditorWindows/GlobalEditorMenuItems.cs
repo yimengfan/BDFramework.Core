@@ -10,7 +10,6 @@ namespace BDFramework.Editor
     {
         BDFrameStart=0,
         BDSetting = 1,
-        UIMVCTools=51,
         BuildPackage_DLL=52,
         BuildPackage_Assetbundle=53,
         BuildPackage_Table_Table2Class=54,
@@ -27,9 +26,9 @@ namespace BDFramework.Editor
     }
     
     /// <summary>
-    /// 按钮排版
+    /// 全局的按钮排版
     /// </summary>
-    static public class MenuItems
+    static public class GlobalEditorMenuItems
     {
         [MenuItem("BDFrameWork工具箱/框架引导", false, (int) BDEditorMenuEnum.BDFrameStart)]
         public static void Open()

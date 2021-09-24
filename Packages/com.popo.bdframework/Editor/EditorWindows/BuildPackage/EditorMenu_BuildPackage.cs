@@ -14,7 +14,7 @@ namespace BDFramework.Editor
     /// 构建包体，
     /// 这里是第一次构建母包
     /// </summary>
-    static public class EditorBuildPackage
+    static public class EditorMenu_BuildPackage
     {
         public enum BuildMode
         {
@@ -26,7 +26,7 @@ namespace BDFramework.Editor
         static string[] SceneConfigs = { "Assets/Scenes/Config/Debug.json", "Assets/Scenes/Config/Release.json", };
 
 
-        static EditorBuildPackage()
+        static EditorMenu_BuildPackage()
         {
             //初始化框架编辑器下
             BDFrameEditorLife.InitBDFrameworkEditor();
@@ -126,7 +126,7 @@ namespace BDFramework.Editor
         static public void BuildDebugAPK()
         {
             LoadConfig(BuildMode.Debug);
-            EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.Android, BuildTarget.Android);
+            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.Android, BuildTarget.Android);
             BuildAPK(BuildMode.Debug);
         }
 
@@ -136,7 +136,7 @@ namespace BDFramework.Editor
         static public void BuildReleaseAPK()
         {
             LoadConfig(BuildMode.Release);
-            EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.Android, BuildTarget.Android);
+            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.Android, BuildTarget.Android);
             BuildAPK(BuildMode.Release);
         }
 
@@ -223,7 +223,7 @@ namespace BDFramework.Editor
         static public void BuildDebugIpa()
         {
             LoadConfig(BuildMode.Debug);
-            EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
+            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
             BuildXCode(BuildMode.Debug);
         }
 
@@ -233,7 +233,7 @@ namespace BDFramework.Editor
         static public void BuildReleaseIpa()
         {
             LoadConfig(BuildMode.Release);
-            EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
+            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
             BuildXCode(BuildMode.Release);
         }
 
