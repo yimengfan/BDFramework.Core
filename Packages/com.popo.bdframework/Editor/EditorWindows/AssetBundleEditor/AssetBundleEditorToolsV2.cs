@@ -11,7 +11,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace BDFramework.Editor.Asset
+namespace BDFramework.Editor.AssetBundle
 {
     /// <summary>
     /// build信息
@@ -70,7 +70,7 @@ namespace BDFramework.Editor.Asset
         /// <summary>
         /// 资源列表
         /// </summary>
-        public Dictionary<string, AssetData> AssetDataMaps = new Dictionary<string, AssetData>();
+        public Dictionary<string, AssetData> AssetDataMaps = new Dictionary<string, AssetData>(StringComparer.OrdinalIgnoreCase);
 
 
         public enum SetABNameMode
@@ -82,12 +82,40 @@ namespace BDFramework.Editor.Asset
         /// <summary>
         /// 设置AB名
         /// </summary>
-        public bool SetABName(string assetName, string newABName, SetABNameMode mode = SetABNameMode.Simple)
+        public bool SetABName(string assetName, string newABName, SetABNameMode setNameMode = SetABNameMode.Simple)
         {
             //1.如果ab名被修改过,说明有其他规则影响，需要理清打包规则。（比如散图打成图集名）
             //2.如果资源被其他资源引用，修改ab名，需要修改所有引用该ab的名字
 
             //AssetData assetdata = this.AssetDataMaps.
+            AssetData assetData = null;
+            this.AssetDataMaps.TryGetValue(assetName, out assetData);
+            //
+            if (assetData != null)
+            {
+                switch (setNameMode)
+                {
+                    //未被其他规则设置过abname,可以直接修改
+                    case SetABNameMode.Simple:
+                    {
+                        if (assetData.ABName == assetName)
+                        {
+                            assetData.ABName = newABName;
+
+                            return true;
+                        }
+                    }
+                        break;
+
+                    case SetABNameMode.ForceAll:
+                    {
+                        assetData.ABName = newABName;
+
+                        return true;
+                    }
+                        break;
+                }
+            }
 
 
             return false;
@@ -116,7 +144,7 @@ namespace BDFramework.Editor.Asset
             var buildInfoPath = IPath.Combine(artOutputPath, "BuildInfo.json");
             //初始化
             allfileHashMap = new Dictionary<string, string>();
-            var assetPaths = BDApplication.GetAllAssetsPath();
+            var assetPaths = BDApplication.GetAllRuntimeAssetsPath();
             for (int i = 0; i < assetPaths.Count; i++)
             {
                 assetPaths[i] = assetPaths[i].ToLower();
@@ -133,7 +161,6 @@ namespace BDFramework.Editor.Asset
 
             //获取当前配置
             var newbuildInfo = GetAssetsInfo(assetPaths);
-
             var buildinfoCahce = JsonMapper.ToJson(newbuildInfo);
             //BD生命周期触发
             BDEditorBehaviorHelper.OnBeginBuildAssetBundle(newbuildInfo);
@@ -396,11 +423,11 @@ namespace BDFramework.Editor.Asset
         /// 获取当前所有资源配置
         /// </summary>
         /// <returns></returns>
-        static public BuildInfo GetAssetsInfo(List<string> paths)
+        static public BuildInfo GetAssetsInfo(List<string> assetPaths)
         {
             packageAssetsMap = new Dictionary<string, List<string>>();
             //1.获取图集信息
-            var atlas = paths.FindAll((p) => Path.GetExtension(p) == ".spriteatlas");
+            var atlas = assetPaths.FindAll((p) => Path.GetExtension(p) == ".spriteatlas");
             for (int i = 0; i < atlas.Count; i++)
             {
                 var asset = atlas[i];
@@ -412,7 +439,7 @@ namespace BDFramework.Editor.Asset
             //2.搜集Package config信息
             foreach (var config in PackageConfigMap)
             {
-                var rets = paths.FindAll((p) => config.FileExtens.Contains(Path.GetExtension(p)));
+                var rets = assetPaths.FindAll((p) => config.FileExtens.Contains(Path.GetExtension(p)));
                 packageAssetsMap[config.AssetBundleName] = rets.ToList();
             }
 
@@ -421,7 +448,7 @@ namespace BDFramework.Editor.Asset
             buildInfo.Time = DateTime.Now.ToShortDateString();
             int id = 0;
             //搜集所有的依赖
-            foreach (var mainpath in paths)
+            foreach (var mainpath in assetPaths)
             {
                 var dependeAssetsPath = GetDependencies(mainpath);
                 //获取依赖 并加入build info
@@ -772,7 +799,7 @@ namespace BDFramework.Editor.Asset
                 byteList.AddRange(assetBytes);
                 byteList.AddRange(metaBytes);
                 //这里为了防止碰撞 考虑Sha256 512 但是速度会更慢
-                var sha1 = SHA1.Create();
+                var sha1 = SHA256.Create();
                 byte[] retVal = sha1.ComputeHash(byteList.ToArray());
                 //hash
                 StringBuilder sb = new StringBuilder();
@@ -790,34 +817,6 @@ namespace BDFramework.Editor.Asset
                 Debug.LogError("hash计算错误:" + fileName);
                 return "";
             }
-        }
-
-        /// <summary>
-        /// 获取文件的md5
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        private static string GetHashFromString(string fileName)
-        {
-            var hash = "";
-            if (allfileHashMap.TryGetValue(fileName, out hash))
-            {
-                return hash;
-            }
-
-            var sha1 = SHA1.Create();
-            byte[] retVal = sha1.ComputeHash(System.Text.Encoding.UTF8.GetBytes(fileName));
-            //
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < retVal.Length; i++)
-            {
-                sb.Append(retVal[i].ToString("x2"));
-            }
-
-            allfileHashMap[fileName] = sb.ToString();
-
-            return sb.ToString();
         }
 
         #endregion

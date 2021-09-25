@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using BDFramework.Editor.Asset;
+using BDFramework.Editor.AssetBundle;
 
 namespace BDFramework.Editor
 {

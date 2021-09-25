@@ -105,7 +105,7 @@ namespace BDFramework.Core.Tools
         /// 获取所有资源
         /// </summary>
         /// <returns></returns>
-        public static List<string> GetAllAssetsPath()
+        public static List<string> GetAllRuntimeAssetsPath()
         {
             List<string> allAssetsList = new List<string>();
             var directories = GetAllRuntimeDirects();

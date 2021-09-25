@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using BDFramework.Editor.Asset;
+using BDFramework.Editor.AssetBundle;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
 using LitJson;

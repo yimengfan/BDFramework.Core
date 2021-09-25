@@ -2,7 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using System.IO;
-using BDFramework.Editor.Asset;
+using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPackage;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;

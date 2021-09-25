@@ -59,9 +59,11 @@ namespace BDFramework.Editor
         /// </summary>
         static public void AutoOpen()
         {
-            if (!IsTodayOpened() //今天打开过
-                || IsHaveNewVerison() //新版本
-                || !IsExsitOdin() || !IsImportedAsset() //缺少文件
+            if (!IsTodayOpened() //今天没打开过,保证一天只打开一次
+                && (IsHaveNewVerison() //新版本
+                || !IsExsitOdin()  //缺少odin
+                || !IsImportedAsset() //缺少文件
+                    )
             )
             {
                 Open();

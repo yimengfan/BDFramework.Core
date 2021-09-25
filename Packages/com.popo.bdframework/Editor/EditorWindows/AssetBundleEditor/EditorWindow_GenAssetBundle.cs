@@ -5,7 +5,7 @@ using BDFramework.Editor.Tools;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
 
-namespace BDFramework.Editor.Asset
+namespace BDFramework.Editor.AssetBundle
 {
     public class EditorWindow_GenAssetBundle : EditorWindow
     {

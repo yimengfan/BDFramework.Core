@@ -10,7 +10,7 @@ using System.Reflection;
 using BDFramework.Core.Tools;
 using LitJson;
 
-namespace BDFramework.Editor.Asset
+namespace BDFramework.Editor.AssetBundle
 {
     public class ShaderCollection : EditorWindow
     {

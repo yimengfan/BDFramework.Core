@@ -1,5 +1,5 @@
 ﻿using System;
-using BDFramework.Editor.Asset;
+using BDFramework.Editor.AssetBundle;
 
 namespace BDFramework.Editor
 {

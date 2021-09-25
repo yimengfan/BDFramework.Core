@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 using BDFramework.Editor.TableData;
-using BDFramework.Editor.Asset;
+using BDFramework.Editor.AssetBundle;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
 #if ODIN_INSPECTOR
