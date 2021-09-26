@@ -76,7 +76,7 @@ namespace BDFramework.Editor.AssetBundle
         public enum SetABNameMode
         {
             Simple,
-            ForceAll
+            Force
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace BDFramework.Editor.AssetBundle
                     }
                         break;
 
-                    case SetABNameMode.ForceAll:
+                    case SetABNameMode.Force:
                     {
                         assetData.ABName = newABName;
 
@@ -402,8 +402,7 @@ namespace BDFramework.Editor.AssetBundle
         {
             new MakePackage()
             {
-                FileExtens = new List<string>() {".shader", ".shadervariants"},
-                AssetBundleName = ShaderCollection.ALL_SHADER_VARAINT_PATH
+
             }
         };
 

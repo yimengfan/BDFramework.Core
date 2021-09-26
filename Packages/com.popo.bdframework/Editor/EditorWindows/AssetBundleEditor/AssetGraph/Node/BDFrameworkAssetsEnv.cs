@@ -67,6 +67,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+            BuildInfo = new BuildInfo();
 
             //搜集runtime资源
             var runtimeAssetList = new List<AssetReference>();

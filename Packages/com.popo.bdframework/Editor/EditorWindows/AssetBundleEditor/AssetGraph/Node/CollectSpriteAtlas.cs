@@ -70,15 +70,17 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 foreach (var group in assetgroup.assetGroups)
                 {
-                    if (group.Key == nameof(BDFrameworkAssetsEnv.FloderType.Runtime))//runtime 特殊处理
+                    if (group.Key == nameof(BDFrameworkAssetsEnv.FloderType.Runtime)) //runtime 特殊处理
                     {
-                        var newRuntimelist = group.Value.ToList();
+                        //不直接操作传入的容器存储
+                        var newAssetList = group.Value.ToList();
                         foreach (var atlas in atlasAssetReferenceList)
                         {
-                            newRuntimelist.Remove(atlas);
+                            newAssetList.Remove(atlas);
                         }
+
                         outputFunc(connectionsToOutput.FirstOrDefault(),
-                            new Dictionary<string, List<AssetReference>>() {{group.Key, newRuntimelist}});
+                            new Dictionary<string, List<AssetReference>>() {{group.Key, newAssetList}});
                     }
                     else
                     {
@@ -88,9 +90,10 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
             }
 
+            //atlas
             outputFunc(connectionsToOutput.FirstOrDefault(),
                 new Dictionary<string, List<AssetReference>>()
-                    {{nameof(BDFrameworkAssetsEnv.FloderType.SpriteAtlas), atlasAssetReferenceList}});
+                    {{nameof(BDFrameworkAssetsEnv.FloderType.SpriteAtlas), atlasAssetReferenceList.ToList()}});
         }
 
         /// <summary>
@@ -109,7 +112,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     foreach (var dependTex in atlasAssetData.DependList)
                     {
                         var ret = this.BuildInfo.SetABName(dependTex, atlasAR.importFrom,
-                            BuildInfo.SetABNameMode.ForceAll);
+                            BuildInfo.SetABNameMode.Force);
                     }
                 }
             }

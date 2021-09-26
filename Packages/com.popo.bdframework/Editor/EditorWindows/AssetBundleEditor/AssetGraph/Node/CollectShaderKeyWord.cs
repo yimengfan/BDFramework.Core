@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using BDFramework.Editor.AssetBundle;
 using UnityEditor;
 using UnityEngine.AssetGraph;
 using UnityEngine.AssetGraph.DataModel.Version2;
@@ -7,8 +9,10 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 namespace BDFramework.Editor.AssetGraph.Node
 {
     [CustomNode("BDFramework/搜集shader变体", 50)]
-    public class CollectShaderKeyWord : UnityEngine.AssetGraph.Node
+    public class CollectShaderKeyWord : UnityEngine.AssetGraph.Node, IBDAssetBundleV2Node
     {
+        public BuildInfo BuildInfo { get; private set; }
+
         public override string ActiveStyle
         {
             get { return "node 7 on"; }
@@ -41,12 +45,59 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
         }
 
+        //后缀和
+        private List<string> FileExtens = new List<string>() {".shader", ".shadervariants"};
+        private string AssetBundleName = ShaderCollection.ALL_SHADER_VARAINT_PATH;
 
-        public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput,
+        public override void Prepare(BuildTarget target, NodeData nodeData,
+            IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput,
             PerformGraph.Output outputFunc)
         {
-           
-            //
+            if (incoming == null)
+            {
+                return;
+            }
+
+            this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+
+            //开始搜集shader varint
+            var shaderAndVariantList = new List<AssetReference>();
+            foreach (var ags in incoming)
+            {
+                foreach (var group in ags.assetGroups)
+                {
+                    var newList = group.Value.ToList();
+                    for (int i = newList.Count - 1; i >= 0; i--)
+                    {
+                        //不直接操作传入的容器存储
+                        var af = newList[i];
+                        if (FileExtens.Contains(af.extension))
+                        {
+                            newList.RemoveAt(i);
+                            shaderAndVariantList.Add(af);
+                        }
+                        
+                    }
+                    //输出
+                    outputFunc(connectionsToOutput.FirstOrDefault(),
+                        new Dictionary<string, List<AssetReference>>() {{group.Key, newList}});
+                }
+            }
+
+            //设置ab
+            foreach (var sharder in shaderAndVariantList)
+            {
+                this.BuildInfo.SetABName(sharder.importFrom, AssetBundleName, BuildInfo.SetABNameMode.Force);
+            }
+            
+            //输出shader
+            outputFunc(connectionsToOutput.FirstOrDefault(),
+                new Dictionary<string, List<AssetReference>>() {{nameof(BDFrameworkAssetsEnv.FloderType.Shaders), shaderAndVariantList}});
+            
+            
+            
+            
+            
         }
     }
 }
