@@ -55,8 +55,8 @@ MonoBehaviour:
         height: 23
   - m_name: Group By File Path
     m_id: 8498fd60-e590-4df0-9504-4fb312979f08
-    m_x: 684
-    m_y: 492
+    m_x: 624
+    m_y: 120
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Grouping, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -85,8 +85,8 @@ MonoBehaviour:
         height: 23
   - m_name: "\u641C\u96C6\u56FE\u96C6"
     m_id: 4e93d487-bd56-4bd3-a305-231aeed30565
-    m_x: 492
-    m_y: 312
+    m_x: 456
+    m_y: 324
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectSpriteAtlas, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -136,7 +136,7 @@ MonoBehaviour:
   - m_name: Group By File Path
     m_id: 567d6560-ae44-4c8a-86f9-e2298fdbffac
     m_x: 840
-    m_y: 132
+    m_y: 108
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Grouping, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -165,8 +165,8 @@ MonoBehaviour:
         height: 23
   - m_name: "\u641C\u96C6shader\u53D8\u4F53"
     m_id: ecbfb000-a67d-4e67-9eab-0fc9da0bfb6d
-    m_x: 696
-    m_y: 312
+    m_x: 648
+    m_y: 324
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectShaderKeyWord, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -195,7 +195,7 @@ MonoBehaviour:
         height: 23
   - m_name: "\u68C0\u67E5\u53D8\u66F4\u8D44\u6E90"
     m_id: 421e46e2-b889-457a-bdc1-449246a93d08
-    m_x: 972
+    m_x: 840
     m_y: 324
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CheckChangedAssets, BDFramework.Editor,
@@ -225,8 +225,8 @@ MonoBehaviour:
         height: 23
   - m_name: "\u521D\u59CB\u5316\u6846\u67B6Assets\u73AF\u5883"
     m_id: 930cc3b6-804b-4b29-8590-6d63702cb695
-    m_x: 252
-    m_y: 300
+    m_x: 216
+    m_y: 324
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.BDFrameworkAssetsEnv, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -284,13 +284,13 @@ MonoBehaviour:
     m_toNodeId: 930cc3b6-804b-4b29-8590-6d63702cb695
     m_toNodeConnectionPoiontId: 1ecff2c9-b83f-497f-b9ad-a7f28f9cab13
     m_label: +
-  - m_id: 018f5e90-f137-42e3-93b7-216bfacec852
+  - m_id: c7bfd1fe-9eea-4a05-9cc7-b78d1c15dc09
     m_fromNodeId: 930cc3b6-804b-4b29-8590-6d63702cb695
     m_fromNodeConnectionPointId: 1497616a-ab88-401c-8460-c58400fbf3eb
     m_toNodeId: 4e93d487-bd56-4bd3-a305-231aeed30565
     m_toNodeConnectionPoiontId: 4bd99a94-2b91-4b23-b0e6-c04bf371d6ea
     m_label: +
-  m_lastModified: 132770661253416830
+  m_lastModified: 132771485871636134
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0
