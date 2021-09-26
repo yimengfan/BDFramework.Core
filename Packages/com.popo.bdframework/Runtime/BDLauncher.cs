@@ -25,7 +25,7 @@ namespace BDFramework
         /// </summary>
         public static BDFrameConfig Load()
         {
-            var content = Resources.Load<TextAsset>("BDFrameConfig").text;
+            var content = Resources.Load<TextAsset>("BDFrameConfig")?.text;
             var config  = JsonMapper.ToObject<BDFrameConfig>(content);
 
 #if UNITY_EDITOR
