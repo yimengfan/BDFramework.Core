@@ -63,23 +63,34 @@ namespace BDFramework.Editor.AssetGraph.Node
             //获取所有的图集设置
             var atlasAssetReferenceList = runtimeAssetReferenceList.FindAll((af) => af.extension == ".spriteatlas");
             this.SetAllSpriteAtlasAB(atlasAssetReferenceList);
-            foreach (var atlas in atlasAssetReferenceList)
-            {
-                runtimeAssetReferenceList.Remove(atlas);
-            }
+
 
             //输出传入的
             foreach (var assetgroup in incoming)
             {
                 foreach (var group in assetgroup.assetGroups)
                 {
-                    outputFunc(connectionsToOutput.FirstOrDefault(),
-                        new Dictionary<string, List<AssetReference>>() {{group.Key, group.Value}});
+                    if (group.Key == nameof(BDFrameworkAssetsEnv.FloderType.Runtime))//runtime 特殊处理
+                    {
+                        var newRuntimelist = group.Value.ToList();
+                        foreach (var atlas in atlasAssetReferenceList)
+                        {
+                            newRuntimelist.Remove(atlas);
+                        }
+                        outputFunc(connectionsToOutput.FirstOrDefault(),
+                            new Dictionary<string, List<AssetReference>>() {{group.Key, newRuntimelist}});
+                    }
+                    else
+                    {
+                        outputFunc(connectionsToOutput.FirstOrDefault(),
+                            new Dictionary<string, List<AssetReference>>() {{group.Key, group.Value.ToList()}});
+                    }
                 }
             }
-            
+
             outputFunc(connectionsToOutput.FirstOrDefault(),
-                new Dictionary<string, List<AssetReference>>() {{nameof(BDFrameworkAssetsEnv.FloderType.SpriteAtlas),atlasAssetReferenceList}});
+                new Dictionary<string, List<AssetReference>>()
+                    {{nameof(BDFrameworkAssetsEnv.FloderType.SpriteAtlas), atlasAssetReferenceList}});
         }
 
         /// <summary>

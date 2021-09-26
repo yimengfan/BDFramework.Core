@@ -55,8 +55,8 @@ MonoBehaviour:
         height: 23
   - m_name: Group By File Path
     m_id: 8498fd60-e590-4df0-9504-4fb312979f08
-    m_x: 768
-    m_y: 396
+    m_x: 684
+    m_y: 492
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Grouping, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -85,8 +85,8 @@ MonoBehaviour:
         height: 23
   - m_name: "\u641C\u96C6\u56FE\u96C6"
     m_id: 4e93d487-bd56-4bd3-a305-231aeed30565
-    m_x: 444
-    m_y: 300
+    m_x: 492
+    m_y: 312
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectSpriteAtlas, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -115,8 +115,8 @@ MonoBehaviour:
         height: 23
   - m_name: "\u6253\u5305AssetBundle"
     m_id: 63fba693-49ce-4d28-87e4-a4d636cef6c1
-    m_x: 1188
-    m_y: 276
+    m_x: 1248
+    m_y: 324
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.BuildAssetBundle, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -163,40 +163,10 @@ MonoBehaviour:
         y: 33.7
         width: 10
         height: 23
-  - m_name: "\u521D\u59CB\u6846\u67B6\u73AF\u5883"
-    m_id: 7d52144d-ef73-47a9-930d-4f33e6c3ca2b
-    m_x: 264
-    m_y: 276
-    m_nodeInstance:
-      m_className: BDFramework.Editor.AssetGraph.Node.InitBDFrameworkEnv, BDFramework.Editor,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|e30=
-    m_inputPoints:
-    - id: 87905d44-b0b0-4921-9de0-fcd72996a4e4
-      label: '-'
-      parentId: 7d52144d-ef73-47a9-930d-4f33e6c3ca2b
-      isInput: 1
-      buttonRect:
-        serializedVersion: 2
-        x: 0
-        y: 30.7
-        width: 21
-        height: 29
-    m_outputPoints:
-    - id: 3b39792b-862c-4c3d-947f-cc313def24c8
-      label: +
-      parentId: 7d52144d-ef73-47a9-930d-4f33e6c3ca2b
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 115
-        y: 33.7
-        width: 10
-        height: 23
   - m_name: "\u641C\u96C6shader\u53D8\u4F53"
     m_id: ecbfb000-a67d-4e67-9eab-0fc9da0bfb6d
-    m_x: 624
-    m_y: 300
+    m_x: 696
+    m_y: 312
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectShaderKeyWord, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -226,7 +196,7 @@ MonoBehaviour:
   - m_name: "\u68C0\u67E5\u53D8\u66F4\u8D44\u6E90"
     m_id: 421e46e2-b889-457a-bdc1-449246a93d08
     m_x: 972
-    m_y: 276
+    m_y: 324
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CheckChangedAssets, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -253,30 +223,42 @@ MonoBehaviour:
         y: 33.7
         width: 10
         height: 23
+  - m_name: "\u521D\u59CB\u5316\u6846\u67B6Assets\u73AF\u5883"
+    m_id: 930cc3b6-804b-4b29-8590-6d63702cb695
+    m_x: 252
+    m_y: 300
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.BDFrameworkAssetsEnv, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|e30=
+    m_inputPoints:
+    - id: 1ecff2c9-b83f-497f-b9ad-a7f28f9cab13
+      label: '-'
+      parentId: 930cc3b6-804b-4b29-8590-6d63702cb695
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.7
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 1497616a-ab88-401c-8460-c58400fbf3eb
+      label: +
+      parentId: 930cc3b6-804b-4b29-8590-6d63702cb695
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 165.4
+        y: 33.7
+        width: 10
+        height: 23
   m_allConnections:
-  - m_id: 5e553d67-0372-492a-8222-60640c68d454
-    m_fromNodeId: a059f8cb-da3d-4ec3-af2c-0db726d754fb
-    m_fromNodeConnectionPointId: c9770d1f-623d-40e0-aada-d14ebe9d5a15
-    m_toNodeId: 7d52144d-ef73-47a9-930d-4f33e6c3ca2b
-    m_toNodeConnectionPoiontId: 87905d44-b0b0-4921-9de0-fcd72996a4e4
-    m_label: +
-  - m_id: fc9fea4a-97ff-4e66-a10d-fb29a12f92dc
-    m_fromNodeId: 7d52144d-ef73-47a9-930d-4f33e6c3ca2b
-    m_fromNodeConnectionPointId: 3b39792b-862c-4c3d-947f-cc313def24c8
-    m_toNodeId: 4e93d487-bd56-4bd3-a305-231aeed30565
-    m_toNodeConnectionPoiontId: 4bd99a94-2b91-4b23-b0e6-c04bf371d6ea
-    m_label: +
   - m_id: 5a121b71-0fa2-4d30-a97e-cccf87e3e30d
     m_fromNodeId: 4e93d487-bd56-4bd3-a305-231aeed30565
     m_fromNodeConnectionPointId: cdfb9790-635f-4c1f-900e-af80a4724a84
     m_toNodeId: ecbfb000-a67d-4e67-9eab-0fc9da0bfb6d
     m_toNodeConnectionPoiontId: f860466f-fae3-40ac-851e-dc012f9b858a
-    m_label: +
-  - m_id: 11ae4555-3141-469d-99b0-32ee1863c83b
-    m_fromNodeId: 55f5366b-dbd1-403b-a6b0-54a43c16ec35
-    m_fromNodeConnectionPointId: ad7b1a8f-2240-4a09-a665-5c9327a03476
-    m_toNodeId: 7d52144d-ef73-47a9-930d-4f33e6c3ca2b
-    m_toNodeConnectionPoiontId: 87905d44-b0b0-4921-9de0-fcd72996a4e4
     m_label: +
   - m_id: d4249382-812c-416a-967b-1fc8ed60de70
     m_fromNodeId: ecbfb000-a67d-4e67-9eab-0fc9da0bfb6d
@@ -290,7 +272,25 @@ MonoBehaviour:
     m_toNodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
     m_toNodeConnectionPoiontId: 1bc423f3-4588-44cd-b253-2aa8eec05a5d
     m_label: +
-  m_lastModified: 132770591850434689
+  - m_id: ed99f52e-3a96-4736-b2f8-fb4aa66bc268
+    m_fromNodeId: 55f5366b-dbd1-403b-a6b0-54a43c16ec35
+    m_fromNodeConnectionPointId: ad7b1a8f-2240-4a09-a665-5c9327a03476
+    m_toNodeId: 930cc3b6-804b-4b29-8590-6d63702cb695
+    m_toNodeConnectionPoiontId: 1ecff2c9-b83f-497f-b9ad-a7f28f9cab13
+    m_label: +
+  - m_id: 44fdb9f3-3111-4892-96a8-6d9d4294ed9e
+    m_fromNodeId: a059f8cb-da3d-4ec3-af2c-0db726d754fb
+    m_fromNodeConnectionPointId: c9770d1f-623d-40e0-aada-d14ebe9d5a15
+    m_toNodeId: 930cc3b6-804b-4b29-8590-6d63702cb695
+    m_toNodeConnectionPoiontId: 1ecff2c9-b83f-497f-b9ad-a7f28f9cab13
+    m_label: +
+  - m_id: 018f5e90-f137-42e3-93b7-216bfacec852
+    m_fromNodeId: 930cc3b6-804b-4b29-8590-6d63702cb695
+    m_fromNodeConnectionPointId: 1497616a-ab88-401c-8460-c58400fbf3eb
+    m_toNodeId: 4e93d487-bd56-4bd3-a305-231aeed30565
+    m_toNodeConnectionPoiontId: 4bd99a94-2b91-4b23-b0e6-c04bf371d6ea
+    m_label: +
+  m_lastModified: 132770661253416830
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0

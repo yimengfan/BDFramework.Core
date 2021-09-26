@@ -102,8 +102,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             //输出
             var output = new Dictionary<string, List<AssetReference>>
             {
-                {nameof(FloderType.Runtime), runtimeAssetList},
-                {nameof(FloderType.Depend), dependAssetList}
+                {nameof(FloderType.Runtime), runtimeAssetList.ToList()}, //传递新容器
+                {nameof(FloderType.Depend), dependAssetList.ToList()}
             };
 
             outputFunc(connectionsToOutput.FirstOrDefault(), output);
