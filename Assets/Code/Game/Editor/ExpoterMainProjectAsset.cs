@@ -37,6 +37,8 @@ public class ExpoterMainProjectAsset
         AssetDatabase.Refresh();
             
         var exporterDirectoryList = new string[] {
+            
+            "Assets/3rdPlugins/Dotween",// 第三方查件
             "Assets/Code/BDFramework.Game",//Game
             "Assets/Scenes",//Scene
             "Assets/Packages",//Nuget
