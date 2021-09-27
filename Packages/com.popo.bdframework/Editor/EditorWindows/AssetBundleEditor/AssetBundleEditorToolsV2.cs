@@ -70,7 +70,8 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 资源列表
         /// </summary>
-        public Dictionary<string, AssetData> AssetDataMaps = new Dictionary<string, AssetData>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, AssetData> AssetDataMaps =
+            new Dictionary<string, AssetData>(StringComparer.OrdinalIgnoreCase);
 
 
         public enum SetABNameMode
@@ -402,7 +403,9 @@ namespace BDFramework.Editor.AssetBundle
         {
             new MakePackage()
             {
-
+                //后缀和
+                FileExtens = new List<string>() {".shader", ".shadervariants"},
+                AssetBundleName = ShaderCollection.ALL_SHADER_VARAINT_PATH
             }
         };
 
@@ -657,8 +660,7 @@ namespace BDFramework.Editor.AssetBundle
 
                 return retBuildInfo;
             }
-
-
+            
             return newAssetsInfo;
         }
 
