@@ -28,10 +28,13 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core  ,速度慢下这个(�
  ### [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
 注:所有bug修复和新特性加入会先提交到Master分支。待审核期一个月，稳定则会提交Release版本 
 
-# 依赖的插件(Dependent plugins)
-The following charging plug-ins are used. Please purchase and download them yourself.  
-<br>[Odin] (https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
-打包需要配置为：EditorOnly模式  
+# 安装使用(Start)
+#### OpenUPM(强烈推荐)：  
+https://openupm.cn/packages/com.popo.bdframework/?subPage=readme  
+或者:  
+手动复制框架文件夹到Package目录即可.  
+
+[安装教程](https://www.yuque.com/naipaopao/eg6gik/xy8dm4)  
 
 ## 贡献者名单
 [@gaojiexx](https://github.com/gaojiexx)  
