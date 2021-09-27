@@ -1,5 +1,17 @@
+让游戏开发更专业！
+让专业开发更简单！
+让商业开发更高效！
+致力于打造简单、专业、高效的商业游戏工作流.
+                        - BDFramework.
 ---更新记录---
-## V2.0.7 beta
+## V2.0.7 beta2
+【Nuget】
+-Add Nuget support.
+
+【Runtime】
+-Fixed some on new ios 14.5 or m1 mac  bug.
+
+## V2.0.7 beta1
 【Excel2Sqlite】
 - 增加excel空数据的检测
 - 增加excel2call导出到策划目录
