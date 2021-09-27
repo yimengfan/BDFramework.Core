@@ -22,9 +22,9 @@ namespace BDFramework.Editor.AssetBundle
         public string rootResourceDir = "Resource/Runtime/";
 
         private bool isSelectIOS = false;
-        
+
         private bool isSelectAndroid = true;
-        
+
 
         //
         void DrawToolsBar()
@@ -33,7 +33,7 @@ namespace BDFramework.Editor.AssetBundle
             GUILayout.BeginHorizontal();
             {
                 GUILayout.Space(30);
-                isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源(Windows共用)");
+                isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源(Windows Editor环境共用)");
             }
             GUILayout.EndHorizontal();
             //
@@ -76,8 +76,8 @@ namespace BDFramework.Editor.AssetBundle
             options = (BuildAssetBundleOptions) EditorGUILayout.EnumPopup("压缩格式:", options);
 
             var assetConfig = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
-            assetConfig.AESCode = EditorGUILayout.TextField("AES密钥(V2 only):",  assetConfig.AESCode );
-            assetConfig.IsUseHashName = EditorGUILayout.Toggle("hash命名:",  assetConfig.IsUseHashName);
+           //assetConfig.AESCode = EditorGUILayout.TextField("AES密钥(V2 only):", assetConfig.AESCode);
+            assetConfig.IsUseHashName = EditorGUILayout.Toggle("hash命名:", assetConfig.IsUseHashName);
         }
 
 
@@ -110,7 +110,6 @@ namespace BDFramework.Editor.AssetBundle
                 {
                     return;
                 }
-
                 //搜集keyword
                 ShaderCollection.SimpleGenShaderVariant();
                 //开始打包
@@ -138,22 +137,18 @@ namespace BDFramework.Editor.AssetBundle
         public void BuildAsset()
         {
             RuntimePlatform platform = RuntimePlatform.Android;
-            BuildTarget buildTarget = BuildTarget.Android;
-
             if (isSelectAndroid)
             {
                 platform = RuntimePlatform.Android;
-                buildTarget = BuildTarget.Android;
             }
             else if (isSelectIOS)
             {
                 platform = RuntimePlatform.IPhonePlayer;
-                buildTarget = BuildTarget.iOS;
             }
 
             var assetConfig = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
             //生成Assetbundlebunle
-            AssetBundleEditorToolsV2.GenAssetBundle(exportPath, platform, buildTarget, options, assetConfig.IsUseHashName, assetConfig.AESCode);
+            AssetBundleEditorToolsV2.GenAssetBundle(exportPath, platform, options, assetConfig.IsUseHashName);
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕");
         }

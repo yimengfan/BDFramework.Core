@@ -39,15 +39,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             return new CollectSpriteAtlas();
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager,
-            NodeGUIEditor editor,
-            Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
         }
 
-        public override void Prepare(BuildTarget target, NodeData nodeData,
-            IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput,
-            PerformGraph.Output outputFunc)
+        public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             if (incoming == null)
             {
@@ -58,14 +54,12 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //找到runtime
             List<AssetReference> runtimeAssetReferenceList = null;
-            incoming.FirstOrDefault()?.assetGroups.TryGetValue(nameof(BDFrameworkAssetsEnv.FloderType.Runtime),
-                out runtimeAssetReferenceList);
+            incoming.FirstOrDefault()?.assetGroups.TryGetValue(nameof(BDFrameworkAssetsEnv.FloderType.Runtime), out runtimeAssetReferenceList);
             //获取所有的图集设置
             var atlasAssetReferenceList = runtimeAssetReferenceList.FindAll((af) => af.extension == ".spriteatlas");
             this.SetAllSpriteAtlasAB(atlasAssetReferenceList);
-
-
             //输出传入的
+            var outMap = new Dictionary<string, List<AssetReference>>();
             foreach (var assetgroup in incoming)
             {
                 foreach (var group in assetgroup.assetGroups)
@@ -79,21 +73,18 @@ namespace BDFramework.Editor.AssetGraph.Node
                             newAssetList.Remove(atlas);
                         }
 
-                        outputFunc(connectionsToOutput.FirstOrDefault(),
-                            new Dictionary<string, List<AssetReference>>() {{group.Key, newAssetList}});
+                        outMap[group.Key] = newAssetList;
                     }
                     else
                     {
-                        outputFunc(connectionsToOutput.FirstOrDefault(),
-                            new Dictionary<string, List<AssetReference>>() {{group.Key, group.Value.ToList()}});
+                        outMap[group.Key] = group.Value.ToList();
                     }
                 }
             }
 
             //atlas
-            outputFunc(connectionsToOutput.FirstOrDefault(),
-                new Dictionary<string, List<AssetReference>>()
-                    {{nameof(BDFrameworkAssetsEnv.FloderType.SpriteAtlas), atlasAssetReferenceList.ToList()}});
+            outMap[nameof(BDFrameworkAssetsEnv.FloderType.SpriteAtlas)] = atlasAssetReferenceList.ToList();
+            outputFunc(connectionsToOutput.FirstOrDefault(), outMap);
         }
 
         /// <summary>
@@ -105,14 +96,12 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 var atlasAR = atlasAssetReferenceList[i];
                 //获取依赖中的tex,并设置AB名为atlas名
-                if (this.BuildInfo.AssetDataMaps.TryGetValue(atlasAR.importFrom,
-                    out BuildInfo.AssetData atlasAssetData))
+                if (this.BuildInfo.AssetDataMaps.TryGetValue(atlasAR.importFrom, out BuildInfo.AssetData atlasAssetData))
                 {
                     //设置tex ab
                     foreach (var dependTex in atlasAssetData.DependList)
                     {
-                        var ret = this.BuildInfo.SetABName(dependTex, atlasAR.importFrom,
-                            BuildInfo.SetABNameMode.Force);
+                        var ret = this.BuildInfo.SetABName(dependTex, atlasAR.importFrom, BuildInfo.SetABNameMode.Force);
                     }
                 }
             }

@@ -126,7 +126,7 @@ namespace BDFramework.Editor
         static public void BuildDebugAPK()
         {
             LoadConfig(BuildMode.Debug);
-            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.Android, BuildTarget.Android);
+            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.Android);
             BuildAPK(BuildMode.Debug);
         }
 
@@ -136,7 +136,7 @@ namespace BDFramework.Editor
         static public void BuildReleaseAPK()
         {
             LoadConfig(BuildMode.Release);
-            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.Android, BuildTarget.Android);
+            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.Android);
             BuildAPK(BuildMode.Release);
         }
 
@@ -223,7 +223,7 @@ namespace BDFramework.Editor
         static public void BuildDebugIpa()
         {
             LoadConfig(BuildMode.Debug);
-            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
+            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer);
             BuildXCode(BuildMode.Debug);
         }
 
@@ -233,7 +233,7 @@ namespace BDFramework.Editor
         static public void BuildReleaseIpa()
         {
             LoadConfig(BuildMode.Release);
-            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
+            EditorWindow_BuildAssetsGuide.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer);
             BuildXCode(BuildMode.Release);
         }
 

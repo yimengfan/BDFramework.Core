@@ -134,11 +134,33 @@ namespace BDFramework.Editor.AssetBundle
         /// <param name="isHashName">是否为hash name</param>
         public static bool GenAssetBundle(string outputPath,
             RuntimePlatform platform,
-            BuildTarget target,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression,
-            bool isHashName = false,
-            string AES = "")
+            bool isHashName = false)
         {
+            //构建平台
+            BuildTarget target = BuildTarget.Android;
+            switch (platform)
+            {
+                case RuntimePlatform.Android:
+                    target = BuildTarget.Android;
+                    break;
+                case RuntimePlatform.IPhonePlayer:
+                    target = BuildTarget.iOS;
+                    break;
+                case RuntimePlatform.WindowsEditor:
+                case RuntimePlatform.WindowsPlayer:
+                {
+                    target = BuildTarget.StandaloneWindows64;
+                }
+                    break;
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
+                {
+                    target = BuildTarget.StandaloneOSX;
+                }
+                    break;
+            }
+            //开始构建
             var _outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform));
             //
             var artOutputPath = IPath.Combine(_outputPath, "Art");
@@ -660,7 +682,7 @@ namespace BDFramework.Editor.AssetBundle
 
                 return retBuildInfo;
             }
-            
+
             return newAssetsInfo;
         }
 

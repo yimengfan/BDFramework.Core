@@ -46,7 +46,7 @@ namespace BDFramework.Editor
         static public Response Cretate(string json)
         {
             var ret = new Response();
-            var jw  = JsonMapper.ToObject(json);
+            var jw = JsonMapper.ToObject(json);
 
             //code
             int code = -1;
@@ -77,7 +77,7 @@ namespace BDFramework.Editor
             }
             else
             {
-                var type      = typeof(T);
+                var type = typeof(T);
                 var targetObj = Convert.ChangeType(Content.ToString(), type);
 
                 return (T) targetObj;
@@ -96,13 +96,13 @@ namespace BDFramework.Editor
             //初始化编辑器
             BDFrameEditorLife.InitBDFrameworkEditor();
             //
-            outputPath = BDApplication.ProjectRoot+"/CI_TEMP";
+            outputPath = BDApplication.ProjectRoot + "/CI_TEMP";
             if (!Directory.Exists(outputPath))
             {
                 Directory.CreateDirectory(outputPath);
             }
         }
-        
+
         #region 构建资源
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace BDFramework.Editor
             //下载
             DownloadFormFileServer(RuntimePlatform.IPhonePlayer);
             //构建
-            var ret = BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
+            var ret = BuildAssetBundle(RuntimePlatform.IPhonePlayer);
             if (ret)
             {
                 //执行打包后上传
@@ -123,9 +123,10 @@ namespace BDFramework.Editor
             {
                 Debug.LogError("未有资源变动，无需上传!");
             }
+
             //删除目录防止下次导入
             var localPath = string.Format("{0}/{1}/Art", outputPath, BDApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer));
-            Directory.Delete(localPath,true);
+            Directory.Delete(localPath, true);
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace BDFramework.Editor
             //下载
             DownloadFormFileServer(RuntimePlatform.Android);
             //构建
-            var ret = BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
+            var ret = BuildAssetBundle(RuntimePlatform.Android);
             if (ret)
             {
                 //执行打包后上传
@@ -146,22 +147,21 @@ namespace BDFramework.Editor
             {
                 Debug.LogError("未有资源变动，无需上传!");
             }
+
             //删除目录防止下次导入
             var localPath = string.Format("{0}/{1}/Art", outputPath, BDApplication.GetPlatformPath(RuntimePlatform.Android));
-            Directory.Delete(localPath,true);
-            
+            Directory.Delete(localPath, true);
         }
 
         /// <summary>
         /// 构建资源
         /// </summary>
-        private static bool BuildAssetBundle(RuntimePlatform platform, BuildTarget target)
+        private static bool BuildAssetBundle(RuntimePlatform platform)
         {
             //1.搜集keyword
             ShaderCollection.SimpleGenShaderVariant();
             //2.打包模式
-            var config = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
-            return AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, true, config.AESCode);
+            return AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, BuildAssetBundleOptions.ChunkBasedCompression, true);
         }
 
         #endregion
@@ -176,7 +176,7 @@ namespace BDFramework.Editor
             //检查打包脚本
             EditorWindow_ScriptBuildDll.RoslynBuild(outputPath, RuntimePlatform.Android, ScriptBuildTools.BuildMode.Release);
             //检查下打包前的代码错
-            BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath,   BuildAssetBundleOptions.DeterministicAssetBundle, BuildTarget.Android);
+            BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, BuildAssetBundleOptions.DeterministicAssetBundle, BuildTarget.Android);
         }
 
         #endregion
@@ -225,15 +225,7 @@ namespace BDFramework.Editor
             //3.构建空包即可
             if (!ret)
             {
-                //构建资源
-                if (platform == RuntimePlatform.Android)
-                {
-                    BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
-                }
-                else if (platform == RuntimePlatform.IPhonePlayer)
-                {
-                    BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
-                }
+                BuildAssetBundle(RuntimePlatform.IPhonePlayer);
             }
 
             //加载配置
@@ -248,7 +240,7 @@ namespace BDFramework.Editor
             else if (platform == RuntimePlatform.IPhonePlayer)
             {
                 //测试构建
-               // BuildTest.BuildIPA();
+                // BuildTest.BuildIPA();
                 //EditorBuildPackage.BuildIpa();
             }
 
@@ -281,8 +273,8 @@ namespace BDFramework.Editor
         private static bool DownloadFormFileServer(RuntimePlatform platform)
         {
             var platformStr = BDApplication.GetPlatformPath(platform);
-            var url         = BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl + "/Assetbundle";
-            var webclient   = new WebClient();
+            var url = BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl + "/Assetbundle";
+            var webclient = new WebClient();
 
             //获取最新版本的文件 //url + 协议 +参数 
             var protocol = string.Format("{0}/{1}/{2}/{3}", url, nameof(ABServer_Protocol.GetLastUploadFiles), PlayerSettings.applicationIdentifier, platformStr);
@@ -307,7 +299,7 @@ namespace BDFramework.Editor
                 return false;
             }
 
-            var fs        = response.GetContent<List<string>>();
+            var fs = response.GetContent<List<string>>();
             var fileQueue = new Queue<string>();
             foreach (var f in fs)
             {
@@ -327,7 +319,7 @@ namespace BDFramework.Editor
             while (fileQueue.Count > 0)
             {
                 var filename = fileQueue.Dequeue();
-                var furl     = string.Format("{0}/{1}/{2}/{3}/{4}", url, nameof(ABServer_Protocol.Download), PlayerSettings.applicationIdentifier, platformStr, filename);
+                var furl = string.Format("{0}/{1}/{2}/{3}/{4}", url, nameof(ABServer_Protocol.Download), PlayerSettings.applicationIdentifier, platformStr, filename);
                 var savePath = string.Format("{0}/{1}", localPath, filename);
 
                 try
@@ -359,15 +351,15 @@ namespace BDFramework.Editor
         private static void UploadFormFileServer(RuntimePlatform platform)
         {
             var platformStr = BDApplication.GetPlatformPath(platform);
-            var url         = BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl + "/Assetbundle";
+            var url = BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl + "/Assetbundle";
             ;
             var webclient = new WebClient();
             //获取版本号
             var protocol = string.Format("{0}/{1}/{2}/{3}", url, nameof(ABServer_Protocol.GetLastVersion), PlayerSettings.applicationIdentifier, platformStr);
-            int version  = 0;
+            int version = 0;
             try
             {
-                var ret      = webclient.DownloadString(protocol);
+                var ret = webclient.DownloadString(protocol);
                 var response = Response.Cretate(ret);
                 version = response.GetContent<int>();
                 version++;
@@ -422,17 +414,18 @@ namespace BDFramework.Editor
         #endregion
 
         #region 上传APK
-        
+
         private static void UploadAPK()
         {
             var outdir = BDApplication.ProjectRoot + "/Build";
-            var apkPath = IPath.Combine(  outdir,  Application.productName+".apk");
+            var apkPath = IPath.Combine(outdir, Application.productName + ".apk");
             if (!File.Exists(apkPath))
             {
                 Debug.LogError("不存在APK文件!!");
                 throw new Exception("不存在APK文件!!");
-                return;   
+                return;
             }
+
             var url = BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl + "/APK";
             var protocol = $"{url}/{nameof(ABServer_Protocol.UploadAPK)}";
             var webclient = new WebClient();
@@ -455,6 +448,7 @@ namespace BDFramework.Editor
                     }
                 }
             }
+
             webclient.Dispose();
             if (isSuccess)
             {

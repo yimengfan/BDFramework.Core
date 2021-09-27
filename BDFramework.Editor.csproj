@@ -58,6 +58,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutines.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorGUIHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetBundleEditorToolsV2.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\BuildAssetBundleParams.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\ABUnitByFileExtension.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\ABUnitByFolder.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\BDFrameworkAssetsEnv.cs" />

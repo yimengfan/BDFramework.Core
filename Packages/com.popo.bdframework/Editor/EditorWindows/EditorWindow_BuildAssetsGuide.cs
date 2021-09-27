@@ -132,13 +132,13 @@ namespace BDFramework.Editor.BuildPackage
                     //生成android资源
                     if (isGenAndroidAssets)
                     {
-                        GenAllAssets(exportPath, RuntimePlatform.Android, BuildTarget.Android);
+                        GenAllAssets(exportPath, RuntimePlatform.Android);
                     }
 
                     //生成ios资源
                     if (isGenIosAssets)
                     {
-                        GenAllAssets(exportPath, RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
+                        GenAllAssets(exportPath, RuntimePlatform.IPhonePlayer);
                     }
 
                     EditorUtility.DisplayDialog("提示", "资源导出完成", "OK");
@@ -238,7 +238,7 @@ namespace BDFramework.Editor.BuildPackage
         /// <param name="outputPath"></param>
         /// <param name="platform"></param>
         /// <param name="target"></param>
-        static public void GenAllAssets(string outputPath, RuntimePlatform platform, BuildTarget target)
+        static public void GenAllAssets(string outputPath, RuntimePlatform platform)
         {
             var _outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform)); //  + "/" + ;
             if (Directory.Exists(_outputPath))
@@ -253,7 +253,7 @@ namespace BDFramework.Editor.BuildPackage
                 ShaderCollection.SimpleGenShaderVariant();
                 //2.打包模式
                 var config = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
-                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, config.IsUseHashName, config.AESCode);
+                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, BuildAssetBundleOptions.ChunkBasedCompression, config.IsUseHashName);
             }
             catch (Exception e)
             {

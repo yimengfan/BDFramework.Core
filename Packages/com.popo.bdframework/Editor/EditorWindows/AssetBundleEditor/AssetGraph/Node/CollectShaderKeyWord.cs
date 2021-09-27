@@ -39,19 +39,15 @@ namespace BDFramework.Editor.AssetGraph.Node
             return new CollectShaderKeyWord();
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager,
-            NodeGUIEditor editor,
-            Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
         }
 
-        //后缀和
+        //后缀和ab名
         private List<string> FileExtens = new List<string>() {".shader", ".shadervariants"};
         private string AssetBundleName = ShaderCollection.ALL_SHADER_VARAINT_PATH;
 
-        public override void Prepare(BuildTarget target, NodeData nodeData,
-            IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput,
-            PerformGraph.Output outputFunc)
+        public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             if (incoming == null)
             {
@@ -61,6 +57,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
 
             //开始搜集shader varint
+            var outMap = new Dictionary<string, List<AssetReference>>();
             var shaderAndVariantList = new List<AssetReference>();
             foreach (var ags in incoming)
             {
@@ -76,11 +73,10 @@ namespace BDFramework.Editor.AssetGraph.Node
                             newList.RemoveAt(i);
                             shaderAndVariantList.Add(af);
                         }
-                        
                     }
+
                     //输出
-                    outputFunc(connectionsToOutput.FirstOrDefault(),
-                        new Dictionary<string, List<AssetReference>>() {{group.Key, newList}});
+                    outMap[group.Key] = newList;
                 }
             }
 
@@ -89,15 +85,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 this.BuildInfo.SetABName(sharder.importFrom, AssetBundleName, BuildInfo.SetABNameMode.Force);
             }
-            
+
             //输出shader
-            outputFunc(connectionsToOutput.FirstOrDefault(),
-                new Dictionary<string, List<AssetReference>>() {{nameof(BDFrameworkAssetsEnv.FloderType.Shaders), shaderAndVariantList}});
-            
-            
-            
-            
-            
+            outMap[nameof(BDFrameworkAssetsEnv.FloderType.Shaders)] = shaderAndVariantList;
+            //输出
+            outputFunc(connectionsToOutput.FirstOrDefault(), outMap);
         }
     }
 }

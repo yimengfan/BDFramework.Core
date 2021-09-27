@@ -52,29 +52,50 @@ namespace BDFramework.Editor.AssetGraph.Node
             IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput,
             PerformGraph.Output outputFunc)
         {
+
+            this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+            //加载上一次缓存的资源
+            var lastbuildInfoPath = BDFrameworkAssetsEnv.BuildInfoPath;
+            BuildInfo lastBuildInfo = new BuildInfo();
+            if (File.Exists(lastbuildInfoPath))
+            {
+                var content = File.ReadAllText(lastbuildInfoPath);
+                lastBuildInfo = JsonMapper.ToObject<BuildInfo>(content);
+            }
+            //获取变动资源
+            var changedBuildInfo = GetChangedAssets(lastBuildInfo, this.BuildInfo);
+            if (changedBuildInfo.AssetDataMaps.Count == 0)
+            {
+                Debug.Log("无资源改变,不需要打包!");
+            }
+            //输出
             if (incoming == null)
             {
                 return;
             }
 
-            this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
-
-            var buildInfoPath = IPath.Combine(artOutputPath, "BuildInfo.json");
-            //获取改动的数据
-            BuildInfo lastBuildInfo = new BuildInfo();
-            if (File.Exists(buildInfoPath))
+            Dictionary<string, List<AssetReference>> outMap = new Dictionary<string, List<AssetReference>>();
+            foreach (var ags in incoming)
             {
-                var content = File.ReadAllText(buildInfoPath);
-                lastBuildInfo = JsonMapper.ToObject<BuildInfo>(content);
+                foreach (var group in ags.assetGroups)
+                {
+                    var assetList = group.Value.ToList();
+                    for (int i = assetList.Count-1; i >= 0; i--)
+                    {
+                        var ar = assetList[i];
+                        if (!changedBuildInfo.AssetDataMaps.ContainsKey(ar.importFrom))
+                        {
+                            assetList.RemoveAt(i);
+                        }
+                    }
+
+                    outMap[group.Key] = assetList;
+
+                }
             }
 
-            var changedBuildInfo = GetChangedAssets(lastBuildInfo, this.BuildInfo);
-            // newbuildInfo = null; //防止后面再用
-            if (changedBuildInfo.AssetDataMaps.Count == 0)
-            {
-                Debug.Log("无资源改变,不需要打包!");
-                return;
-            }
+
+            outputFunc(connectionsToOutput.FirstOrDefault(), outMap);
         }
 
 

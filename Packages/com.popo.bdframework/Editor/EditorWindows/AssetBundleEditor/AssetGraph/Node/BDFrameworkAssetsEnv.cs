@@ -24,7 +24,26 @@ namespace BDFramework.Editor.AssetGraph.Node
             Shaders,
         }
 
+
+        /// <summary>
+        /// Build AB包的信息
+        /// </summary>
         static public BuildInfo BuildInfo { get; set; }
+
+        /// <summary>
+        /// 打包Assetbundle的参数
+        /// </summary>
+        static public BuildAssetBundleParams BuildAssetBundleParams { get; set; }
+
+        /// <summary>
+        /// BuildInfo路径
+        /// </summary>
+        static public string BuildInfoPath
+        {
+            get { return IPath.Combine(BuildAssetBundleParams.OutputPath, "BuildInfo.json"); }
+        }
+
+        #region 渲染相关信息
 
         public override string ActiveStyle
         {
@@ -52,23 +71,23 @@ namespace BDFramework.Editor.AssetGraph.Node
             return new BDFrameworkAssetsEnv();
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager,
-            NodeGUIEditor editor,
-            Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
         }
 
+        #endregion
 
-        public override void Prepare(BuildTarget target, NodeData nodeData,
-            IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput,
-            PerformGraph.Output outputFunc)
+
+        public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             if (incoming == null)
             {
                 return;
             }
-            BuildInfo = new BuildInfo();
 
+            //构建对象
+            BuildInfo = new BuildInfo();
+            BuildAssetBundleParams = new BuildAssetBundleParams();
             //搜集runtime资源
             var runtimeAssetList = new List<AssetReference>();
             foreach (var incom in incoming)
@@ -90,8 +109,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             foreach (var assetDataItem in BuildInfo.AssetDataMaps)
             {
                 //不包含在runtime资源里面
-                var ret = runtimeAssetList.FirstOrDefault((ra) =>
-                    ra.importFrom.Equals(assetDataItem.Key, StringComparison.OrdinalIgnoreCase));
+                var ret = runtimeAssetList.FirstOrDefault((ra) => ra.importFrom.Equals(assetDataItem.Key, StringComparison.OrdinalIgnoreCase));
                 if (ret == null)
                 {
                     var arf = AssetReference.CreateReference(assetDataItem.Key);
@@ -116,12 +134,11 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 资源类型配置
         /// </summary>
-        static Dictionary<ManifestItem.AssetTypeEnum, List<string>> AssetTypeConfigMap =
-            new Dictionary<ManifestItem.AssetTypeEnum, List<string>>()
-            {
-                {ManifestItem.AssetTypeEnum.Prefab, new List<string>() {".prefab"}}, //Prefab
-                {ManifestItem.AssetTypeEnum.SpriteAtlas, new List<string>() {".spriteatlas"}}, //Atlas
-            };
+        static Dictionary<ManifestItem.AssetTypeEnum, List<string>> AssetTypeConfigMap = new Dictionary<ManifestItem.AssetTypeEnum, List<string>>()
+        {
+            {ManifestItem.AssetTypeEnum.Prefab, new List<string>() {".prefab"}}, //Prefab
+            {ManifestItem.AssetTypeEnum.SpriteAtlas, new List<string>() {".spriteatlas"}}, //Atlas
+        };
 
         /// <summary>
         /// 生成BuildInfo信息

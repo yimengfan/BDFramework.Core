@@ -144,8 +144,8 @@ namespace BDFramework.Editor
     /// </summary>
     public class BuildAssetConfig
     {
-        [LabelText("ASE密钥")]
-        public string AESCode = "bdframe$#@!@#";
+        // [LabelText("ASE密钥")]
+        // public string AESCode = "bdframe$#@!@#";
 
         [LabelText("是否hash命名")]
         public bool IsUseHashName = false;
