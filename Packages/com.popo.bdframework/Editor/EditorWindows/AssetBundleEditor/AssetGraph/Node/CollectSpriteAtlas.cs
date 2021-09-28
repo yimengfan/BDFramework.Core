@@ -8,7 +8,7 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 
 namespace BDFramework.Editor.AssetGraph.Node
 {
-    [CustomNode("BDFramework/搜集图集", 50)]
+    [CustomNode("BDFramework/[逻辑]搜集图集", 60)]
     public class CollectSpriteAtlas : UnityEngine.AssetGraph.Node, IBDAssetBundleV2Node
     {
         public BuildInfo BuildInfo { get; set; }
@@ -84,7 +84,11 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //atlas
             outMap[nameof(BDFrameworkAssetsEnv.FloderType.SpriteAtlas)] = atlasAssetReferenceList.ToList();
-            outputFunc(connectionsToOutput.FirstOrDefault(), outMap);
+            var output = connectionsToOutput?.FirstOrDefault();
+            if (output != null)
+            {
+                outputFunc(output, outMap);
+            }
         }
 
         /// <summary>

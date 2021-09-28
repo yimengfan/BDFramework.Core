@@ -13,7 +13,7 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 
 namespace BDFramework.Editor.AssetGraph.Node
 {
-    [CustomNode("BDFramework/初始化框架Assets环境", 50)]
+    [CustomNode("BDFramework/[*]初始化框架Assets环境", 1)]
     public class BDFrameworkAssetsEnv : UnityEngine.AssetGraph.Node
     {
         public enum FloderType
@@ -47,12 +47,12 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override string ActiveStyle
         {
-            get { return "node 5 on"; }
+            get { return "node 3 on"; }
         }
 
         public override string InactiveStyle
         {
-            get { return "node 5"; }
+            get { return "node 3"; }
         }
 
         public override string Category
@@ -119,13 +119,18 @@ namespace BDFramework.Editor.AssetGraph.Node
 
 
             //输出
-            var output = new Dictionary<string, List<AssetReference>>
+            var outMap= new Dictionary<string, List<AssetReference>>
             {
                 {nameof(FloderType.Runtime), runtimeAssetList.ToList()}, //传递新容器
                 {nameof(FloderType.Depend), dependAssetList.ToList()}
             };
 
-            outputFunc(connectionsToOutput.FirstOrDefault(), output);
+            
+            var output = connectionsToOutput?.FirstOrDefault();
+            if (output != null)
+            {
+                outputFunc(output, outMap);
+            }
         }
 
 

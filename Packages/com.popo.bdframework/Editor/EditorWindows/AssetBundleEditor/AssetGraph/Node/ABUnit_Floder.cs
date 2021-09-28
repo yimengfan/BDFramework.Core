@@ -4,22 +4,22 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 
 namespace BDFramework.Editor.AssetGraph.Node
 {
-    [CustomNode("BDFramework/[颗粒度]文件后缀名", 50)]
-    public class ABUnitByFileExtension : UnityEngine.AssetGraph.Node
+    [CustomNode("BDFramework/[颗粒度]文件夹", 10)]
+    public class ABUnit_Floder : UnityEngine.AssetGraph.Node
     {
         public override string ActiveStyle
         {
-            get { return "node 1 on"; }
+            get { return "node 6 on"; }
         }
 
         public override string InactiveStyle
         {
-            get { return "node 1"; }
+            get { return "node 6"; }
         }
 
         public override string Category
         {
-            get { return "[颗粒度]文件后缀名"; }
+            get { return "[颗粒度]文件夹打成1个AB"; }
         }
 
         public override void Initialize(NodeData data)
@@ -30,7 +30,9 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override UnityEngine.AssetGraph.Node Clone(NodeData newData)
         {
-            return new ABUnitByFileExtension();
+            newData.AddDefaultInputPoint();
+            newData.AddDefaultOutputPoint();
+            return new ABUnit_Floder();
         }
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager,

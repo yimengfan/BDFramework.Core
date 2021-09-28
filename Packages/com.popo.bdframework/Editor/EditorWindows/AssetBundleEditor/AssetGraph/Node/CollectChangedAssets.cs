@@ -11,8 +11,8 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 
 namespace BDFramework.Editor.AssetGraph.Node
 {
-    [CustomNode("BDFramework/检查变更资源", 50)]
-    public class CheckChangedAssets : UnityEngine.AssetGraph.Node, IBDAssetBundleV2Node
+    [CustomNode("BDFramework/[逻辑]检查变更资源", 60)]
+    public class CollectChangedAssets : UnityEngine.AssetGraph.Node, IBDAssetBundleV2Node
     {
         public BuildInfo BuildInfo { get; private set; }
 
@@ -39,7 +39,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override UnityEngine.AssetGraph.Node Clone(NodeData newData)
         {
-            return new CheckChangedAssets();
+            return new CollectChangedAssets();
         }
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager,
@@ -95,7 +95,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
 
-            outputFunc(connectionsToOutput.FirstOrDefault(), outMap);
+            var output = connectionsToOutput?.FirstOrDefault();
+            if (output != null)
+            {
+                outputFunc(output, outMap);
+            }
         }
 
 

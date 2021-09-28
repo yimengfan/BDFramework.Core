@@ -8,7 +8,7 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 
 namespace BDFramework.Editor.AssetGraph.Node
 {
-    [CustomNode("BDFramework/搜集shader变体", 50)]
+    [CustomNode("BDFramework/[逻辑]搜集shader变体", 60)]
     public class CollectShaderKeyWord : UnityEngine.AssetGraph.Node, IBDAssetBundleV2Node
     {
         public BuildInfo BuildInfo { get; private set; }
@@ -89,7 +89,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             //输出shader
             outMap[nameof(BDFrameworkAssetsEnv.FloderType.Shaders)] = shaderAndVariantList;
             //输出
-            outputFunc(connectionsToOutput.FirstOrDefault(), outMap);
+            var output = connectionsToOutput?.FirstOrDefault();
+            if (output != null)
+            {
+                outputFunc(output, outMap);
+            }
         }
     }
 }

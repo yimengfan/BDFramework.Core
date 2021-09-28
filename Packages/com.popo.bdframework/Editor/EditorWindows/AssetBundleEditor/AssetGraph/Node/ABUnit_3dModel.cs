@@ -4,33 +4,35 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 
 namespace BDFramework.Editor.AssetGraph.Node
 {
-    [CustomNode("BDFramework/打包AssetBundle", 100)]
-    public class BuildAssetBundle : UnityEngine.AssetGraph.Node
+    [CustomNode("BDFramework/[颗粒度]3D模型", 10)]
+    public class ABUnit_3dModel : UnityEngine.AssetGraph.Node
     {
         public override string ActiveStyle
         {
-            get { return "node 7 on"; }
+            get { return "node 6 on"; }
         }
 
         public override string InactiveStyle
         {
-            get { return "node 7"; }
+            get { return "node 6"; }
         }
 
         public override string Category
         {
-            get { return "打包AssetBundle"; }
+            get { return "[颗粒度]3D模型"; }
         }
 
         public override void Initialize(NodeData data)
         {
             data.AddDefaultInputPoint();
-            //data.AddDefaultOutputPoint();
+            data.AddDefaultOutputPoint();
         }
 
         public override UnityEngine.AssetGraph.Node Clone(NodeData newData)
         {
-            return new BuildAssetBundle();
+            newData.AddDefaultInputPoint();
+            newData.AddDefaultOutputPoint();
+            return new ABUnit_3dModel();
         }
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager,
