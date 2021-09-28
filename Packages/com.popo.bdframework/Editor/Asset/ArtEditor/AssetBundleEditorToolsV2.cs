@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using BDFramework.Asset;
+using BDFramework.ResourceMgr;
 using BDFramework.ResourceMgr.V2;
 using UnityEditor;
 using UnityEngine;
@@ -110,10 +112,16 @@ namespace BDFramework.Editor.Asset
             bool isHashName = false,
             string AES = "")
         {
-            var _outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform));
-            //
-            var artOutputPath = IPath.Combine(_outputPath, "Art");
-            var buildInfoPath = IPath.Combine(artOutputPath, "BuildInfo.json");
+            //初始化路径
+            var platformOutputPath    = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform));
+            var assetbundleOutputPath = IPath.Combine(platformOutputPath, BResources.ASSET_ROOT_PATH);
+            var buildInfoPath         = IPath.Combine(platformOutputPath, BResources.ASSET_BUILDINFO_PATH);
+            //创建目录
+            if (!Directory.Exists(assetbundleOutputPath))
+            {
+                Directory.CreateDirectory(assetbundleOutputPath);
+            }
+            
             //初始化
             allfileHashMap = new Dictionary<string, string>();
             var assetPaths = BDApplication.GetAllAssetsPath();
@@ -286,7 +294,7 @@ namespace BDFramework.Editor.Asset
 
 
             //写入
-            FileHelper.WriteAllText(artOutputPath + "/Config.json", JsonMapper.ToJson(config));
+            FileHelper.WriteAllText(assetbundleOutputPath + "/Config.json", JsonMapper.ToJson(config));
 
             #endregion
 
@@ -316,7 +324,7 @@ namespace BDFramework.Editor.Asset
             //3.生成AssetBundle
             try
             {
-                BuildAssetBundle(target, _outputPath, options);
+                BuildAssetBundle(target, assetbundleOutputPath, options);
             }
             catch (Exception e)
             {
@@ -328,7 +336,7 @@ namespace BDFramework.Editor.Asset
             RemoveAllAssetbundleName();
             AssetImpoterCacheMap.Clear();
             //the end.删除无用文件
-            var delFiles = Directory.GetFiles(artOutputPath, "*", SearchOption.AllDirectories);
+            var delFiles = Directory.GetFiles(assetbundleOutputPath, "*", SearchOption.AllDirectories);
             foreach (var df in delFiles)
             {
                 var ext = Path.GetExtension(df);
@@ -341,7 +349,7 @@ namespace BDFramework.Editor.Asset
             //the end. BuildInfo写入
             if (File.Exists(buildInfoPath))
             {
-                string targetPath = artOutputPath + "/BuildInfo.old.json";
+                string targetPath = assetbundleOutputPath + "/BuildInfo.old.json";
                 File.Delete(targetPath);
                 File.Move(buildInfoPath, targetPath);
             }
@@ -350,7 +358,7 @@ namespace BDFramework.Editor.Asset
 
             //BD生命周期触发
             BDEditorBehaviorHelper.OnEndBuildAssetBundle(outputPath);
-            AssetHelper.AssetHelper.GenPackageBuildInfo(outputPath, platform);
+            GameAssetHelper.GenPackageBuildInfo(outputPath, platform);
 
             return true;
         }
@@ -641,17 +649,12 @@ namespace BDFramework.Editor.Asset
         /// 创建assetbundle
         /// </summary>
         private static void BuildAssetBundle(BuildTarget target,
-            string outPath,
+            string outputPath,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression)
         {
-            AssetDatabase.RemoveUnusedAssetBundleNames();
-            string path = IPath.Combine(outPath, "Art");
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
 
-            BuildPipeline.BuildAssetBundles(path, options | BuildAssetBundleOptions.DeterministicAssetBundle, target);
+            
+            BuildPipeline.BuildAssetBundles(outputPath, options | BuildAssetBundleOptions.DeterministicAssetBundle, target);
         }
 
         //当前保存的配置
@@ -772,10 +775,9 @@ namespace BDFramework.Editor.Asset
                 byteList.AddRange(assetBytes);
                 byteList.AddRange(metaBytes);
                 //这里为了防止碰撞 考虑Sha256 512 但是速度会更慢
-                var sha1 = SHA1.Create();
-                byte[] retVal = sha1.ComputeHash(byteList.ToArray());
-                //hash
-                StringBuilder sb = new StringBuilder();
+                var           sha1   = SHA1.Create();
+                byte[]        retVal = sha1.ComputeHash(byteList.ToArray());
+                StringBuilder sb     = new StringBuilder();
                 for (int i = 0; i < retVal.Length; i++)
                 {
                     sb.Append(retVal[i].ToString("x2"));

@@ -14,8 +14,9 @@ namespace BDFramework.Editor.Asset
 {
     public class ShaderCollection : EditorWindow
     {
-        private ShaderVariantCollection svc;
-        readonly public static string ALL_SHADER_VARAINT_PATH = "Assets/Resource/Runtime/Shader/AllShaders.shadervariants";
+        private                ShaderVariantCollection svc;
+        readonly public static string                  ALL_SHADER_VARAINT_PATH = "Assets/Resource/Runtime/Shader/AllShaders.shadervariants";
+
         #region FindMaterial
 
         static List<string> allShaderNameList = new List<string>();
@@ -24,7 +25,7 @@ namespace BDFramework.Editor.Asset
         {
             //先搜集所有keyword到工具类SVC
             toolSVC = new ShaderVariantCollection();
-            var shaders = AssetDatabase.FindAssets("t:Shader", new string[] {"Assets", "Packages"}).ToList();
+            var shaders = AssetDatabase.FindAssets("t:Shader", new string[] { "Assets", "Packages" }).ToList();
             foreach (var shader in shaders)
             {
                 ShaderVariantCollection.ShaderVariant sv         = new ShaderVariantCollection.ShaderVariant();
@@ -96,9 +97,9 @@ namespace BDFramework.Editor.Asset
 
         public class ShaderData
         {
-            public  int[]      PassTypes         = new int[] { };
+            public int[]      PassTypes         = new int[] { };
             public string[][] KeyWords          = new string[][] { };
-            public  string[]   ReMainingKeyWords = new string[] { };
+            public string[]   ReMainingKeyWords = new string[] { };
         }
 
         //shader数据的缓存
@@ -162,7 +163,7 @@ namespace BDFramework.Editor.Asset
             for (int i = 0; i < sd.PassTypes.Length; i++)
             {
                 //
-                var                                    pt = (PassType) sd.PassTypes[i];
+                var                                    pt = (PassType)sd.PassTypes[i];
                 ShaderVariantCollection.ShaderVariant? sv = null;
                 try
                 {
@@ -178,7 +179,7 @@ namespace BDFramework.Editor.Asset
                 }
                 catch (Exception e)
                 {
-                    Debug.LogErrorFormat("{0}-当前shader不存在变体（可以无视）:{1}-{2}",curMat.name,pt, JsonMapper.ToJson( curMat.shaderKeywords) );
+                    Debug.LogWarning(string.Format("{0}-当前shader不存在变体（可以无视）:{1}-{2}", curMat.name, pt, JsonMapper.ToJson(curMat.shaderKeywords)));
                     continue;
                 }
 
@@ -186,7 +187,7 @@ namespace BDFramework.Editor.Asset
                 if (sv != null)
                 {
                     bool isContain = false;
-                    var  _sv       = (ShaderVariantCollection.ShaderVariant) sv;
+                    var  _sv       = (ShaderVariantCollection.ShaderVariant)sv;
                     foreach (var val in svlist)
                     {
                         if (val.passType == _sv.passType && System.Linq.Enumerable.SequenceEqual(val.keywords, _sv.keywords))
@@ -249,7 +250,7 @@ namespace BDFramework.Editor.Asset
                 var      _passtypes         = new int[] { };
                 var      _keywords          = new string[] { };
                 var      _remainingKeywords = new string[] { };
-                object[] args               = new object[] {shader, 256, filterKeywords, toolSVC, _passtypes, _keywords, _remainingKeywords};
+                object[] args               = new object[] { shader, 256, filterKeywords, toolSVC, _passtypes, _keywords, _remainingKeywords };
                 GetShaderVariantEntries.Invoke(null, args);
 
                 var passtypes = args[4] as int[];

@@ -66,9 +66,10 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\TableEditor\ExcelTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\TableEditor\ExcelUtility.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\TableEditor\GenCodeTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\CI\AssetUploadToServer.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\CI\BDFrameworkServerTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\CI\BuildPipeline\BuildPipeLine_CI.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\CI\BuildPipeline\EditorBuildPackage.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\CI\FileHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\DevOps_SVN.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />

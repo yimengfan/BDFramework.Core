@@ -105,13 +105,13 @@ namespace BDFramework.ResourceMgr.V2
             this.loder = new ManifestLoder();
             if (Application.isEditor)
             {
-                artconfigPath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ART_CONFIG_PATH);
+                artconfigPath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_BUILDINFO_PATH);
             }
             else
             {
                 //真机环境config在persistent，跟dll和db保持一致
                 artconfigPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath,
-                    BResources.ART_CONFIG_PATH);
+                    BResources.ASSET_BUILDINFO_PATH);
             }
 
             this.loder.Load(artconfigPath);

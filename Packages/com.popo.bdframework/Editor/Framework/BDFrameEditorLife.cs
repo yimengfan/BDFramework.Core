@@ -84,9 +84,6 @@ namespace BDFramework.Editor
                 var eAssemlby = Assembly.LoadFile(editorAssemlyPath);
                 RegisterMainProjectAssembly(gAssembly, eAssemlby);
             }
-
-            
-            
             
             
             //最后，完成初始化

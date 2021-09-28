@@ -214,7 +214,7 @@ namespace BDFramework.Editor
         static public void BuildEmptyIpa()
         {
             LoadConfig();
-            BuildXCode(BuildMode.Debug);
+            BuildIpa(BuildMode.Debug);
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace BDFramework.Editor
         {
             LoadConfig(BuildMode.Debug);
             EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
-            BuildXCode(BuildMode.Debug);
+            BuildIpa(BuildMode.Debug);
         }
 
         /// <summary>
@@ -234,14 +234,14 @@ namespace BDFramework.Editor
         {
             LoadConfig(BuildMode.Release);
             EditorWindow_OnekeyBuildAsset.GenAllAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
-            BuildXCode(BuildMode.Release);
+            BuildIpa(BuildMode.Release);
         }
 
         /// <summary>
         /// 编译Xcode（这里是出母包版本）
         /// </summary>
         /// <param name="mode"></param>
-        static public void BuildXCode(BuildMode mode)
+        static public void BuildIpa(BuildMode mode)
         {
             //具体IOS的的配置
             PlayerSettings.gcIncremental   = true;

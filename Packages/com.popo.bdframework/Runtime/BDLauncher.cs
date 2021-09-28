@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using BDFramework.Asset;
 using BDFramework.GameStart;
 using UnityEngine;
 using BDFramework.ResourceMgr;
@@ -140,7 +141,7 @@ namespace BDFramework
             }
 
             //开始资源检测
-            AssetHelper.AssetHelper.CheckAssetPackageVersion(Application.platform, () =>
+            GameAssetHelper.CheckAssetPackageVersion(Application.platform, () =>
             {
                 //1.美术目录
                 BResources.Load(GameConfig.ArtRoot, GameConfig.CustomArtRoot);

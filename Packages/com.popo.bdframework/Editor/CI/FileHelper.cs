@@ -8,9 +8,14 @@ using UnityEngine;
 
 namespace BDFramework.Editor.BuildPackage
 {
-    static public class AssetUploadToServer
+    static public class FileHelper
     {
-        static public void Assets2Hash(string path, string uploadHttpApi)
+        /// <summary>
+        /// 资源转hash
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="uploadHttpApi"></param>
+        static public void Assets2Hash(string path)
         {
             var ios = IPath.Combine(path, "iOS");
             var android = IPath.Combine(path, "Android");
@@ -38,6 +43,13 @@ namespace BDFramework.Editor.BuildPackage
             File.WriteAllText(path + "/_Hash目录提交到服务器(并去除_Hash后缀)", "");
         }
 
+        /// <summary>
+        /// 文件转hash
+        /// </summary>
+        /// <param name="Platform"></param>
+        /// <param name="version"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
 
         static public string File2Hash(string Platform, string version, string path)
         {
@@ -98,6 +110,12 @@ namespace BDFramework.Editor.BuildPackage
         }
 
 
+        /// <summary>
+        /// File2Md5
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private static string GetMD5HashFromFile(string fileName)
         {
             try

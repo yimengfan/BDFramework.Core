@@ -16,9 +16,14 @@ namespace BDFramework.ResourceMgr
     static public class BResources
     {
         /// <summary>
-        /// 美术目录
+        /// 美术根目录
         /// </summary>
-        readonly static public string ART_CONFIG_PATH = "Art/Config.json";
+        readonly static public string ASSET_ROOT_PATH = "Art";
+
+        /// <summary>
+        /// 美术配置目录
+        /// </summary>
+        readonly static public string ASSET_BUILDINFO_PATH = "Art/Config.json";
 
         /// <summary>
         /// 初始化
@@ -71,12 +76,9 @@ namespace BDFramework.ResourceMgr
         /// 加载器
         /// </summary>
         static public IResMgr ResLoader { get; private set; }
-
-
-
+        
         #region 加载、取消加载
 
-        
         /// <summary>
         /// 同步加载
         /// </summary>
@@ -85,8 +87,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public static T Load<T>(string name) where T : UnityEngine.Object
         {
-            if (string.IsNullOrEmpty(name))
-                return null;
+            if (string.IsNullOrEmpty(name)) return null;
             return ResLoader.Load<T>(name);
         }
 
@@ -99,12 +100,11 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public static T[] LoadALL<T>(string name) where T : UnityEngine.Object
         {
-            if (string.IsNullOrEmpty(name))
-                return null;
+            if (string.IsNullOrEmpty(name)) return null;
             return ResLoader.LoadAll_TestAPI_2020_5_23<T>(name);
         }
 
-        
+
         /// <summary>
         /// 异步加载
         /// </summary>
@@ -121,14 +121,12 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="objlist"></param>
         /// <param name="onLoadEnd"></param>
-        public static List<int> AsyncLoad(List<string> objlist,
-            Action<int, int> onProcess = null,
-            Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
+        public static List<int> AsyncLoad(List<string> objlist, Action<int, int> onProcess = null, Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
         {
             return ResLoader.AsyncLoad(objlist, onProcess, onLoadEnd);
         }
 
-        
+
         /// <summary>
         /// 取消单个任务
         /// </summary>
@@ -158,9 +156,9 @@ namespace BDFramework.ResourceMgr
         {
             ResLoader.LoadAllCancel();
         }
+
         #endregion
-
-
+        
         #region 卸载资源
 
         /// <summary>
@@ -183,8 +181,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="asset"></param>
         public static void UnloadAsset(UnityEngine.Object asset)
         {
-            if (asset is GameObject || asset is Component)
-                return;
+            if (asset is GameObject || asset is Component) return;
             Resources.UnloadAsset(asset);
             asset = null;
         }
@@ -197,15 +194,10 @@ namespace BDFramework.ResourceMgr
             ResLoader.UnloadAllAsset();
         }
 
-
         #endregion
-
-        
         
         #region 实例化、删除管理
 
-        
-        
         /// <summary>
         /// 实例化
         /// </summary>
@@ -222,7 +214,6 @@ namespace BDFramework.ResourceMgr
         /// <param name="trans"></param>
         public static void Destroy(Transform trans)
         {
-      
             if (trans)
             {
                 Destroy(trans.gameObject);
@@ -242,10 +233,6 @@ namespace BDFramework.ResourceMgr
             }
         }
 
-        
-
         #endregion
-        
-
     }
 }

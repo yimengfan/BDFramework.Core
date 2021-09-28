@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.Asset;
 using LitJson;
 using BDFramework.Sql;
 using UnityEditor;
@@ -102,7 +103,7 @@ namespace BDFramework.Editor.TableData
             EditorUtility.ClearProgressBar();
             //触发bd环境周期
             BDEditorBehaviorHelper.OnEndBuildSqlite(ouptputPath);
-            AssetHelper.AssetHelper.GenPackageBuildInfo(ouptputPath, platform);
+            GameAssetHelper.GenPackageBuildInfo(ouptputPath, platform);
             Debug.Log("导出Sqlite完成!");
         }
 

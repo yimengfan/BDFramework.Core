@@ -148,7 +148,7 @@ namespace BDFramework.Editor.BuildPackage
                     }
 
                     //自动转hash
-                    AssetUploadToServer.Assets2Hash(exportPath, "");
+                    FileHelper.Assets2Hash(exportPath);
                 }
             }
             GUILayout.EndVertical();
