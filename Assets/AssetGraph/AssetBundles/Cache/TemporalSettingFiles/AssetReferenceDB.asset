@@ -17,16 +17,16 @@ MonoBehaviour:
     m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetReferenceDB.asset
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c17344e918b14346b220ccc9a7a10548
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/ABUnit_Spine.cs
+  - m_assetDatabaseId: 28a4cf2eccbd4d59956b882a1ec425c3
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/GranularityFloder.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: d0acde051d494db5a32d1380959f0532
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/ABUnit_3dModel.cs
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/Granularity3dModel.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 28a4cf2eccbd4d59956b882a1ec425c3
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/ABUnit_FloderAllOneAB.cs
+  - m_assetDatabaseId: c17344e918b14346b220ccc9a7a10548
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/GranularitySpine.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: bfcd26e55a55bd04f8a6f662bdde9abf
@@ -209,16 +209,8 @@ MonoBehaviour:
     m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/FilterGroupByPath.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 82d7db8630024bfbb3cf6f1ce48e608c
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/BDFrameworkAssetsEnv.cs
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 48d3455260f25b242ba46325b82b68f1
     m_importFrom: Assets/AssetGraph/BResourceAssetBundleConfig.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 28a4cf2eccbd4d59956b882a1ec425c3
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/ABUnit_Floder.cs
     m_exportTo: 
     m_variantName: 
   m_version: 2

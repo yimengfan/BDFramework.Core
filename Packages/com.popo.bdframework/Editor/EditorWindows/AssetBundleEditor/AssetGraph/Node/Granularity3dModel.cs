@@ -4,8 +4,11 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 
 namespace BDFramework.Editor.AssetGraph.Node
 {
-    [CustomNode("BDFramework/[颗粒度]文件夹", 10)]
-    public class ABUnit_Floder : UnityEngine.AssetGraph.Node
+    /// <summary>
+    /// 颗粒度,排序30-50
+    /// </summary>
+    [CustomNode("BDFramework/[颗粒度]3D模型", 30)]
+    public class Granularity3dModel : UnityEngine.AssetGraph.Node
     {
         public override string ActiveStyle
         {
@@ -19,7 +22,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override string Category
         {
-            get { return "[颗粒度]文件夹打成1个AB"; }
+            get { return "[颗粒度]3D模型"; }
         }
 
         public override void Initialize(NodeData data)
@@ -32,7 +35,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             newData.AddDefaultInputPoint();
             newData.AddDefaultOutputPoint();
-            return new ABUnit_Floder();
+            return new Granularity3dModel();
         }
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager,

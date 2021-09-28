@@ -10,6 +10,9 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 
 namespace BDFramework.Editor.AssetGraph.Node
 {
+    /// <summary>
+    /// 筛选,排序10-30
+    /// </summary>
     [CustomNode("BDFramework/[筛选]Group by Path", 10)]
     public class FilterGroupByPath : UnityEngine.AssetGraph.Node, IBDAssetBundleV2Node
     {
