@@ -18,7 +18,7 @@ using UnityEngine.UI;
 
 public class EditorWindow_ScriptBuildDll : EditorWindow
 {
-    [MenuItem("BDFrameWork工具箱/1.DLL打包", false, (int) BDEditorMenuEnum.BuildPackage_DLL)]
+    [MenuItem("BDFrameWork工具箱/1.DLL打包", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_DLL)]
     public static void Open()
     {
         var window =
@@ -62,8 +62,8 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 StripCode.GenLinkXml();
             }
 
-            BDEditorApplication.BdFrameEditorSetting.WorkFollow.IsAutoBuildDll =
-                EditorGUILayout.Toggle("是否自动编译热更DLL",BDEditorApplication.BdFrameEditorSetting.WorkFollow.IsAutoBuildDll );
+            BDEditorApplication.BDFrameEditorSetting.WorkFollow.IsAutoBuildDll =
+                EditorGUILayout.Toggle("是否自动编译热更DLL",BDEditorApplication.BDFrameEditorSetting.WorkFollow.IsAutoBuildDll );
 
             GUI.color = Color.green;
             GUILayout.Label(@"

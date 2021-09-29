@@ -15,7 +15,7 @@ namespace BDFramework.Editor
         /// <summary>
         /// 编辑器设置
         /// </summary>
-        static public BDEditorSetting BdFrameEditorSetting { get; private set; }
+        static public BDEditorSetting BDFrameEditorSetting { get; private set; }
 
         /// <summary>
         /// Runtime的config
@@ -27,7 +27,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public void Init()
         {
-            BdFrameEditorSetting = BDEditorSetting.Load();
+            BDFrameEditorSetting = BDEditorSetting.Load();
             BDFrameConfig = BDFrameConfig.Load();
         }
 

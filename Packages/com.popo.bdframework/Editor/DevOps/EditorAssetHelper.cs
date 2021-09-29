@@ -6,9 +6,9 @@ using LitJson;
 using UnityEditor;
 using UnityEngine;
 
-namespace BDFramework.Editor.BuildPackage
+namespace BDFramework.Editor
 {
-    static public class FileHelper
+    static public class EditorAssetHelper
     {
         /// <summary>
         /// 资源转hash

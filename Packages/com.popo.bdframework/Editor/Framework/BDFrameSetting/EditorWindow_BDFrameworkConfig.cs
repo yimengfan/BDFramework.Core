@@ -9,12 +9,12 @@ namespace BDFramework.Editor
 {
     public class EditorWindow_BDFrameworkConfig : OdinEditorWindow
     {
-        [MenuItem("BDFrameWork工具箱/框架设置", false, (int) BDEditorMenuEnum.BDSetting)]
+        [MenuItem("BDFrameWork工具箱/框架设置", false, (int) BDEditorGlobalMenuItemOrderEnum.BDSetting)]
         public static void Open()
         {
             var window = GetWindow<EditorWindow_BDFrameworkConfig>(false, "BDFrame设置");
             window.maxSize = window.minSize = new Vector2(600, 800);
-            window.EditorSetting = BDEditorApplication.BdFrameEditorSetting;
+            window.EditorSetting = BDEditorApplication.BDFrameEditorSetting;
             window.Show();
         }
 

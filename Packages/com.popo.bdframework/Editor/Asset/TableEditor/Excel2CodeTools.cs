@@ -18,7 +18,7 @@ namespace BDFramework.Editor.TableData
 {
     static public class Excel2CodeTools
     {
-        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class[程序目录]", false, (int) BDEditorMenuEnum.BuildPackage_Table_Table2Class)]
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class[程序目录]", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Table2Class)]
         public static void Gen()
         {
             var ret = EditorUtility.DisplayDialog("提示", @"
@@ -32,7 +32,7 @@ Excel格式如下:
             }
         }
 
-        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class[策划目录]", false, (int) BDEditorMenuEnum.BuildPackage_Table_Table2Class)]
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class[策划目录]", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Table2Class)]
         public static void Gen2()
         {
             var ret = EditorUtility.DisplayDialog("提示", @"

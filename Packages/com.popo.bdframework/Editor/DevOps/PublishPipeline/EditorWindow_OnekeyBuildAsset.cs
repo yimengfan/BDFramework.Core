@@ -9,20 +9,28 @@ using BDFramework.Editor;
 #if ODIN_INSPECTOR
 using Sirenix.Utilities.Editor;
 #endif
-namespace BDFramework.Editor.BuildPackage
+namespace BDFramework.Editor.PublishPipeline
 {
+    /// <summary>
+    /// 一键构建资源
+    /// </summary>
     public class EditorWindow_OnekeyBuildAsset : EditorWindow
     {
-        [MenuItem("BDFrameWork工具箱/资源一键打包", false, (int) BDEditorMenuEnum.OnekeyBuildAsset)]
+        [MenuItem("BDFrameWork工具箱/【Publish Pipeline】", false, (int)BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildAsset)]
+        static void NULL()
+        {
+            
+        }
+        
+        [MenuItem("BDFrameWork工具箱/1.资源一键构建", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildAsset)]
         public static void Open()
         {
-            var window = (EditorWindow_OnekeyBuildAsset) EditorWindow.GetWindow(typeof(EditorWindow_OnekeyBuildAsset), false, "一键打包");
+            var window =  EditorWindow.GetWindow<EditorWindow_OnekeyBuildAsset>( false, "一键构建资源");
             window.Show();
+            window.Focus();
         }
-
-
-        private EditorWindow_Table editorTable;
-
+        
+        private EditorWindow_Table          editorTable;
         private EditorWindow_ScriptBuildDll editorScript;
         private EditorWindow_GenAssetBundle editorAsset;
 
@@ -75,7 +83,6 @@ namespace BDFramework.Editor.BuildPackage
             
             GUILayout.BeginHorizontal();
             OnGUI_OneKeyExprot();
-            OnGUI_BuildpipelineCI();
             GUILayout.EndHorizontal();
         }
 
@@ -83,7 +90,7 @@ namespace BDFramework.Editor.BuildPackage
         private void OnDisable()
         {
             //保存
-            BDEditorApplication.BdFrameEditorSetting.Save();
+            BDEditorApplication.BDFrameEditorSetting.Save();
         }
 
         public  string exportPath         = "";
@@ -148,79 +155,13 @@ namespace BDFramework.Editor.BuildPackage
                     }
 
                     //自动转hash
-                    FileHelper.Assets2Hash(exportPath);
+                    EditorAssetHelper.Assets2Hash(exportPath);
                 }
             }
             GUILayout.EndVertical();
         }
 
 
-        /// <summary>
-        /// CI 相关
-        /// </summary>
-        public void OnGUI_BuildpipelineCI()
-        {
-            GUILayout.BeginVertical();
-            {
-                GUILayout.Label("CI相关测试");
-
-                var url = BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl;
-                url = EditorGUILayout.TextField("文件服务器", url, GUILayout.Width(350));
-                BDEditorApplication.BdFrameEditorSetting.WorkFollow.AssetBundleFileServerUrl = url;
-                
-                //构建资源
-                int Width = 100;
-                GUILayout.Label("[构建资源]");
-                GUILayout.BeginHorizontal();
-                {
-                    if (GUILayout.Button("IOS资源", GUILayout.Width(Width)))
-                    {
-                        BuildPipeLine_CI.BuildAssetBundle_iOS();
-                    }
-
-                    if (GUILayout.Button("Android资源", GUILayout.Width(Width)))
-                    {
-                        BuildPipeLine_CI.BuildAssetBundle_Android();
-                    }
-                }
-                GUILayout.EndHorizontal();
-                //构建dll
-                GUILayout.Label("[代码检查]");
-                GUILayout.BeginHorizontal();
-                {
-                    if (GUILayout.Button("DLL", GUILayout.Width(Width)))
-                    {
-                        BuildPipeLine_CI.BuildDLL();
-                    }
-                }
-                GUILayout.EndHorizontal();
-                //构建包体
-                GUILayout.Label("[构建包体]");
-                GUILayout.BeginHorizontal();
-                {
-                    if (GUILayout.Button("IOS-Release", GUILayout.Width(Width)))
-                    {
-                        BuildPipeLine_CI.BuildIOSRelease();
-                    }
-
-                    if (GUILayout.Button("IOS-Debug", GUILayout.Width(Width)))
-                    {
-                        BuildPipeLine_CI.BuildIOSDebug();
-                    }
-
-                    if (GUILayout.Button("Android-Release", GUILayout.Width(Width)))
-                    {
-                        BuildPipeLine_CI.BuildAndroidRelease();
-                    }
-
-                    if (GUILayout.Button("Android-Debug", GUILayout.Width(Width)))
-                    {
-                        BuildPipeLine_CI.BuildAndroidDebug();
-                    }
-                }
-            }
-            GUILayout.EndVertical();
-        }
 
 
         /// <summary>
@@ -243,7 +184,7 @@ namespace BDFramework.Editor.BuildPackage
                 //1.搜集keywork
                 ShaderCollection.SimpleGenShaderVariant();
                 //2.打包模式
-                var config = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
+                var config = BDEditorApplication.BDFrameEditorSetting.BuildAssetBundle;
                 AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, target, BuildAssetBundleOptions.ChunkBasedCompression, config.IsUseHashName, config.AESCode);
             }
             catch (Exception e)

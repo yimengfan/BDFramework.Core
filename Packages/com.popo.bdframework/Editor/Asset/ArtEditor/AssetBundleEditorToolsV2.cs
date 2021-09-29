@@ -652,9 +652,8 @@ namespace BDFramework.Editor.Asset
             string outputPath,
             BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression)
         {
-
             
-            BuildPipeline.BuildAssetBundles(outputPath, options | BuildAssetBundleOptions.DeterministicAssetBundle, target);
+            UnityEditor.BuildPipeline.BuildAssetBundles(outputPath, options | BuildAssetBundleOptions.DeterministicAssetBundle, target);
         }
 
         //当前保存的配置

@@ -17,7 +17,7 @@ namespace BDFramework.Editor.Protocol
         private static readonly string execPath = BDApplication.ProjectRoot + "/Packages/com.popo.bdframework/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
         private static readonly string prefixName = "Com";
         
-        [MenuItem("BDFrameWork工具箱/4.网络协议/Protobuf->生成Class", false, (int) BDEditorMenuEnum.BuildPackage_NetProtocol_Proto2Class)]
+        [MenuItem("BDFrameWork工具箱/4.网络协议/Protobuf->生成Class", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_NetProtocol_Proto2Class)]
         public static void ExecuteGenProtobuf()
         {
             // 重新创建文件夹 确保不会产生冲突

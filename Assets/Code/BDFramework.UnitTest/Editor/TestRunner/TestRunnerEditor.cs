@@ -19,7 +19,7 @@ namespace BDFramework.Editor.TestRunner
         /// <summary>
         /// 测试所有
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/执行框架UnitTest-API", false, (int) BDEditorMenuEnum.TestRunnerEditor)]
+        [MenuItem("BDFrameWork工具箱/执行框架UnitTest-API", false, (int) BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
         public static void UnitTest()
         {
            // BDFramework.UnitTest.TestRunner.RunAPIUnitTest();
@@ -31,7 +31,7 @@ namespace BDFramework.Editor.TestRunner
         /// <summary>
         /// editor的逻辑测试
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/执行逻辑测试-Editor", false, (int) BDEditorMenuEnum.TestRunnerEditor)]
+        [MenuItem("BDFrameWork工具箱/执行逻辑测试-Editor", false, (int) BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
         public static void UnitTestEditor()
         {
             RunMonoOrCLRTest();
@@ -40,7 +40,7 @@ namespace BDFramework.Editor.TestRunner
         /// <summary>
         /// ilrutnime的逻辑测试
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/执行逻辑测试-ILRuntime", false, (int) BDEditorMenuEnum.TestRunnerEditor)]
+        [MenuItem("BDFrameWork工具箱/执行逻辑测试-ILRuntime", false, (int) BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
         public static void UnitTestILRuntime()
         {
             RunILRuntimeTest();
@@ -49,7 +49,7 @@ namespace BDFramework.Editor.TestRunner
         /// <summary>
         /// ilrutnime的逻辑测试
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int)BDEditorMenuEnum.TestRunnerEditor)]
+        [MenuItem("BDFrameWork工具箱/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int)BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
         public static void UnitTestILRuntimeWithRebuildDll()
         {
             EditorWindow_ScriptBuildDll.RoslynBuild( Application.streamingAssetsPath,Application.platform,ScriptBuildTools.BuildMode.Debug);

@@ -2,19 +2,16 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using System.IO;
-using BDFramework.Editor.Asset;
-using BDFramework.Editor.BuildPackage;
 using BDFramework.Core.Tools;
-using BDFramework.Editor;
 using UnityEditor.SceneManagement;
 
-namespace BDFramework.Editor
+namespace BDFramework.Editor.PublishPipeline
 {
     /// <summary>
     /// 构建包体，
     /// 这里是第一次构建母包
     /// </summary>
-    static public class EditorBuildPackage
+    static public class BuildPackageTools
     {
         public enum BuildMode
         {
@@ -23,23 +20,24 @@ namespace BDFramework.Editor
         }
 
         static string   SCENEPATH    = "Assets/Scenes/BDFrame.unity";
-        static string[] SceneConfigs = { "Assets/Scenes/Config/Debug.json", "Assets/Scenes/Config/Release.json", };
+        static string[] SceneConfigs = { "Assets/Scenes/Config/Debug.json", "Assets/Scenes/Config/Release.json" };
 
-
-        static EditorBuildPackage()
+        /// <summary>
+        /// build包体工具
+        /// </summary>
+        static BuildPackageTools()
         {
             //初始化框架编辑器下
             BDFrameEditorLife.InitBDFrameworkEditor();
         }
 
-
-        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(使用当前配置、资源)")]
+        [MenuItem("BDFrameWork工具箱/2.发布包体/BuildAPK(使用当前配置、资源)", false, (int)BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
         public static void EditorBuildAPKUseCurrentAssets()
         {
             BuildAPK();
         }
 
-        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Config-Debug.json)")]
+        [MenuItem("BDFrameWork工具箱/2.发布包体/BuildAPK(Config-Debug.json)", false, (int)BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
         public static void EditorBuildAPK_Debug()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
@@ -48,7 +46,7 @@ namespace BDFramework.Editor
             }
         }
 
-        [MenuItem("BDFrameWork工具箱/打包/BuildAPK(Config-Release.json)")]
+        [MenuItem("BDFrameWork工具箱/2.发布包体/BuildAPK(Config-Release.json)", false, (int)BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
         public static void EditorBuildAPK()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
@@ -58,13 +56,13 @@ namespace BDFramework.Editor
         }
 
 
-        [MenuItem("BDFrameWork工具箱/打包/BuildIOS(使用当前配置、资源)")]
+        [MenuItem("BDFrameWork工具箱/2.发布包体/BuildIOS(使用当前配置、资源)", false, (int)BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
         public static void EditorBuildIpaUseCurrentAssets()
         {
             BuildEmptyIpa();
         }
 
-        [MenuItem("BDFrameWork工具箱/打包/BuildIOS(Config-Debug.json)")]
+        [MenuItem("BDFrameWork工具箱/2.发布包体/BuildIOS(Config-Debug.json)", false, (int)BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
         public static void EditorBuildIpa_Debug()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
@@ -73,7 +71,7 @@ namespace BDFramework.Editor
             }
         }
 
-        [MenuItem("BDFrameWork工具箱/打包/BuildIOS(Config-Release.json)")]
+        [MenuItem("BDFrameWork工具箱/2.发布包体/BuildIOS(Config-Release.json)", false, (int)BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
         public static void EditorBuildIpa()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
@@ -81,11 +79,6 @@ namespace BDFramework.Editor
                 BuildReleaseIpa();
             }
         }
-
-
-
-
-
 
         /// <summary>
         /// 加载场景配置
@@ -146,17 +139,17 @@ namespace BDFramework.Editor
         /// </summary>
         static public void BuildAPK(BuildMode mode)
         {
-            if (!BDEditorApplication.BdFrameEditorSetting.IsSetConfig())
+            if (!BDEditorApplication.BDFrameEditorSetting.IsSetConfig())
             {
                 Debug.LogError("请注意设置apk keystore账号密码");
                 return;
             }
 
             var absroot = Application.dataPath.Replace("Assets", "");
-            PlayerSettings.Android.keystoreName = absroot + BDEditorApplication.BdFrameEditorSetting.Android.keystoreName;
-            PlayerSettings.keystorePass         = BDEditorApplication.BdFrameEditorSetting.Android.keystorePass;
-            PlayerSettings.Android.keyaliasName = BDEditorApplication.BdFrameEditorSetting.Android.keyaliasName;
-            PlayerSettings.keyaliasPass         = BDEditorApplication.BdFrameEditorSetting.Android.keyaliasPass;
+            PlayerSettings.Android.keystoreName = absroot + BDEditorApplication.BDFrameEditorSetting.Android.keystoreName;
+            PlayerSettings.keystorePass         = BDEditorApplication.BDFrameEditorSetting.Android.keystorePass;
+            PlayerSettings.Android.keyaliasName = BDEditorApplication.BDFrameEditorSetting.Android.keyaliasName;
+            PlayerSettings.keyaliasPass         = BDEditorApplication.BDFrameEditorSetting.Android.keyaliasPass;
             //具体安卓的配置
             PlayerSettings.gcIncremental                    = true;
             PlayerSettings.stripEngineCode                  = true;
@@ -247,8 +240,8 @@ namespace BDFramework.Editor
             PlayerSettings.gcIncremental   = true;
             PlayerSettings.stripEngineCode = true;
             //
-            var outdir     = BDApplication.ProjectRoot + "/Build";
-            
+            var outdir = BDApplication.ProjectRoot + "/Build";
+
             var outputPath = IPath.Combine(outdir, string.Format("{0}_{1}", Application.productName, mode.ToString()));
             //文件夹处理
             if (File.Exists(outputPath))
@@ -283,7 +276,7 @@ namespace BDFramework.Editor
                 opa = BuildOptions.CompressWithLz4HC;
             }
 
-            BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.iOS, opa);
+            UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.iOS, opa);
             if (File.Exists(outputPath + "/Info.plist"))
             {
                 Debug.Log("Build Success :" + outputPath + ",后续请配合Jekins出包!");

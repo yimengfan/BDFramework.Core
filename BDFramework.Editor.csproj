@@ -53,7 +53,6 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\ArtEditor\AssetBundleEditorToolsV2.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\ArtEditor\EditorWindow_GenAssetBundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\ArtEditor\ShaderCollection.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\Asset\EditorWindow_OnekeyBuildAsset.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\NetProtocolEditor\Protobuf2ClassTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\ScriptEditor\EditorWindow_ScriptBuildDll.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\ScriptEditor\GenAdapter.cs" />
@@ -66,11 +65,12 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\TableEditor\ExcelTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\TableEditor\ExcelUtility.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Asset\TableEditor\GenCodeTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\CI\BDFrameworkServerTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\CI\BuildPipeline\BuildPipeLine_CI.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\CI\BuildPipeline\EditorBuildPackage.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\CI\FileHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\DevOps_SVN.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\BDFrameworkServerTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\EditorAssetHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\BuildPackageTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\CI\PublishPipeLineCI.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorWindow_CICD.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorWindow_OnekeyBuildAsset.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutines.cs" />

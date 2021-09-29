@@ -6,19 +6,21 @@ namespace BDFramework.Editor
     /// <summary>
     /// 按钮枚举
     /// </summary>
-    public enum BDEditorMenuEnum
+    public enum BDEditorGlobalMenuItemOrderEnum
     {
-        BDFrameStart=0,
-        BDSetting = 1,
-        UIMVCTools=51,
-        BuildPackage_DLL=52,
-        BuildPackage_Assetbundle=53,
-        BuildPackage_Table_Table2Class=54,
-        BuildPackage_Table_GenSqlite=55,
-        BuildPackage_Table_Json2Sqlite=56,
-        BuildPackage_NetProtocol_Proto2Class=57,
+        BDFrameStart                         =0,
+        BDSetting                            = 1,
+        BuildPackage_DLL                     =52,
+        BuildPackage_Assetbundle             =53,
+        BuildPackage_Table_Table2Class       =54,
+        BuildPackage_Table_GenSqlite         =55,
+        BuildPackage_Table_Json2Sqlite       =56,
+        BuildPackage_NetProtocol_Proto2Class =57,
         //
-        OnekeyBuildAsset =101,
+        BuildPipeline=100,
+        BuildPipeline_BuildAsset =101,
+        BuildPipeline_CICD=102,
+        BuildPipeline_PublishPackage =103,
         
         //测试用例
         //Testrunner
@@ -31,7 +33,7 @@ namespace BDFramework.Editor
     /// </summary>
     static public class MenuItems
     {
-        [MenuItem("BDFrameWork工具箱/框架引导", false, (int) BDEditorMenuEnum.BDFrameStart)]
+        [MenuItem("BDFrameWork工具箱/框架引导", false, (int) BDEditorGlobalMenuItemOrderEnum.BDFrameStart)]
         public static void Open()
         {
             EditorWindow_BDFrameworkStart.Open();
