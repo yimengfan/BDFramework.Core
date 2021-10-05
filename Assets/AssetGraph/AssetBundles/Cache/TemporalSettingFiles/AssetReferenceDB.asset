@@ -17,18 +17,6 @@ MonoBehaviour:
     m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetReferenceDB.asset
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 28a4cf2eccbd4d59956b882a1ec425c3
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/GranularityFloder.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: d0acde051d494db5a32d1380959f0532
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/Granularity3dModel.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c17344e918b14346b220ccc9a7a10548
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/GranularitySpine.cs
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: bfcd26e55a55bd04f8a6f662bdde9abf
     m_importFrom: Assets/Resource_SVN/Runtime/Char/001.prefab
     m_exportTo: 
@@ -205,8 +193,20 @@ MonoBehaviour:
     m_importFrom: Assets/Resource/Runtime/Windows/window_demoMain.prefab
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 480e195f4f0949ee93fbf76bb53813f5
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/FilterGroupByPath.cs
+  - m_assetDatabaseId: 28a4cf2eccbd4d59956b882a1ec425c3
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/SetGranularityByFloder.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c17344e918b14346b220ccc9a7a10548
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/SetGranularityTest.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 48d65b2f00ac4a81a2e043a9f72c3bca
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/SetGranularityByExtension.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3d7be23299854645be6de6558ca415a8
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/BuildAssetBundleParams.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 48d3455260f25b242ba46325b82b68f1

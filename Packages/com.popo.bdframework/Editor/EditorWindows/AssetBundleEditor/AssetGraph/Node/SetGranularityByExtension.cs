@@ -3,12 +3,11 @@ using UnityEngine.AssetGraph;
 using UnityEngine.AssetGraph.DataModel.Version2;
 
 namespace BDFramework.Editor.AssetGraph.Node
-{
-    /// <summary>
+{    /// <summary>
     /// 颗粒度,排序30-50
     /// </summary>
-    [CustomNode("BDFramework/[颗粒度]3D模型", 30)]
-    public class Granularity3dModel : UnityEngine.AssetGraph.Node
+    [CustomNode("BDFramework/[颗粒度]后缀名", 30)]
+    public class SetGranularityByExtension : UnityEngine.AssetGraph.Node
     {
         public override string ActiveStyle
         {
@@ -22,9 +21,9 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override string Category
         {
-            get { return "[颗粒度]3D模型"; }
+            get { return "[颗粒度]后缀名"; }
         }
-
+        
         public override void Initialize(NodeData data)
         {
             data.AddDefaultInputPoint();
@@ -35,7 +34,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             newData.AddDefaultInputPoint();
             newData.AddDefaultOutputPoint();
-            return new Granularity3dModel();
+            return new SetGranularityByExtension();
         }
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager,

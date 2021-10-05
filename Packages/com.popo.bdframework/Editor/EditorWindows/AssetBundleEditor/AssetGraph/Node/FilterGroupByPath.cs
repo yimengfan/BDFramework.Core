@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using BDFramework.Editor.AssetBundle;
 using UnityEditor;
 using UnityEditorInternal;
@@ -54,7 +55,6 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         ReorderableList e_groupList;
 
-        private NodeGUI selfNodeData;
 
         public override void Initialize(NodeData data)
         {
@@ -70,6 +70,8 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         #region 渲染 list Inspector
 
+        private NodeGUI selfNodeGUI;
+
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
             if (e_groupList == null)
@@ -78,57 +80,75 @@ namespace BDFramework.Editor.AssetGraph.Node
                 e_groupList.onReorderCallback = ReorderFilterEntryList;
                 e_groupList.onAddCallback = AddToFilterEntryList;
                 e_groupList.onRemoveCallback = RemoveFromFilterEntryList;
-                e_groupList.onCanRemoveCallback = CanRemoveFilterEntry;
                 e_groupList.drawElementCallback = DrawFilterEntryListElement;
+                e_groupList.onChangedCallback = OnChangeList;
                 e_groupList.elementHeight = EditorGUIUtility.singleLineHeight + 8f;
                 e_groupList.headerHeight = 3;
 
                 e_groupList.index = this.groupFilterPathDataList.Count - 1;
             }
 
-            this.selfNodeData = node;
+            this.selfNodeGUI = node;
 
-            GUILayout.Label("路径:");
+            GUILayout.Label("路径匹配:建议以\"/\"结尾,不然路径中包含这一段path都会被匹配上.");
             e_groupList.DoLayoutList();
         }
 
-        private bool CanRemoveFilterEntry(ReorderableList list)
-        {
-            return list.index > 0;
-        }
 
         private void RemoveFromFilterEntryList(ReorderableList list)
         {
+            //使用scope能触发刷新
+            // using (new RecordUndoScope("Remove Group Condition", this.selfNodeGUI))
+            // {
             if (list.index > 0)
             {
                 this.groupFilterPathDataList.RemoveAt(this.groupFilterPathDataList.Count - 1);
                 list.index--;
                 list.onChangedCallback.Invoke(list);
             }
+            // }
         }
 
         private void AddToFilterEntryList(ReorderableList list)
         {
+            //使用scope能触发刷新
+            // using (new RecordUndoScope("Add Group Condition", this.selfNodeGUI))
+            // {
             list.index++;
-            var node = this.selfNodeData.Data.AddOutputPoint(list.index.ToString());
+            var node = this.selfNodeGUI.Data.AddOutputPoint(list.index.ToString());
             this.groupFilterPathDataList.Add(new GroupPathData()
             {
                 OutputNodeId = node.Id,
                 GroupPath = list.index.ToString()
             });
+            // }
         }
 
-        private void DrawFilterEntryListElement(Rect rect, int index, bool isactive, bool isfocused)
+        private void DrawFilterEntryListElement(Rect rect, int idx, bool isactive, bool isfocused)
         {
             //渲染数据
-            var gp = this.groupFilterPathDataList[index];
+            var gp = this.groupFilterPathDataList[idx];
             gp.GroupPath = EditorGUILayout.TextField(gp.GroupPath);
             //更新
-            UpdateGroupPathData(index);
+            UpdateGroupPathData(idx);
         }
+
+        private void OnChangeList(ReorderableList list)
+        {
+            Debug.Log("onchangelist");
+            
+            //TODO 先排序让其他标签的为最低
+            // redo node output due to filter condition change
+            
+            
+            
+            NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_NODE_UPDATED, this.selfNodeGUI));
+        }
+
 
         private void ReorderFilterEntryList(ReorderableList list)
         {
+            Debug.Log("recorder");
         }
 
         /// <summary>
@@ -137,13 +157,12 @@ namespace BDFramework.Editor.AssetGraph.Node
         private void UpdateGroupPathData(int idx)
         {
             var gpd = this.groupFilterPathDataList[idx];
-            var outputNode = this.selfNodeData.Data.FindOutputPoint(gpd.OutputNodeId);
+            var outputNode = this.selfNodeGUI.Data.FindOutputPoint(gpd.OutputNodeId);
             outputNode.Label = gpd.GroupPath;
         }
 
         #endregion
 
-        
 
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {

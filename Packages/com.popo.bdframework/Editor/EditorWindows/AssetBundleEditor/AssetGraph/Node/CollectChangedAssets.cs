@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Editor.AssetBundle;
+using BDFramework.ResourceMgr;
 using LitJson;
 using UnityEditor;
 using UnityEngine;
@@ -53,9 +54,10 @@ namespace BDFramework.Editor.AssetGraph.Node
             PerformGraph.Output outputFunc)
         {
 
+            var buildParams = BDFrameworkAssetsEnv.BuildAssetBundleParams;
             this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
             //加载上一次缓存的资源
-            var lastbuildInfoPath = BDFrameworkAssetsEnv.BuildInfoPath;
+            var lastbuildInfoPath = IPath.Combine(buildParams.OutputPath, BResources.ART_CONFIG_PATH);
             BuildInfo lastBuildInfo = new BuildInfo();
             if (File.Exists(lastbuildInfoPath))
             {

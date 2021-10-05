@@ -6,8 +6,8 @@ namespace BDFramework.Editor.AssetGraph.Node
 {    /// <summary>
     /// 颗粒度,排序30-50
     /// </summary>
-    [CustomNode("BDFramework/[颗粒度]Spine", 30)]
-    public class GranularitySpine : UnityEngine.AssetGraph.Node
+    [CustomNode("BDFramework/[颗粒度]Test", 30)]
+    public class SetGranularityTest : UnityEngine.AssetGraph.Node
     {
         public override string ActiveStyle
         {
@@ -21,7 +21,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override string Category
         {
-            get { return "[颗粒度]Spine"; }
+            get { return "[颗粒度]Test"; }
         }
         
         public override void Initialize(NodeData data)
@@ -34,7 +34,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             newData.AddDefaultInputPoint();
             newData.AddDefaultOutputPoint();
-            return new GranularitySpine();
+            return new SetGranularityTest();
         }
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager,

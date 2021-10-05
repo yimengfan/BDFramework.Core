@@ -16,10 +16,19 @@ namespace BDFramework.ResourceMgr
     static public class BResources
     {
         /// <summary>
-        /// 美术目录
+        /// 美术根目录
         /// </summary>
-        readonly static public string ART_CONFIG_PATH = "Art/Config.json";
-
+        readonly static public string ART_ROOT_PATH = "Art";
+        /// <summary>
+        /// 美术config配置
+        /// </summary>
+        readonly static public string ART_CONFIG_PATH = ART_ROOT_PATH + "/Config.json";
+        /// <summary>
+        /// 美术old config
+        /// </summary>
+        readonly static public string ART_OLD_CONFIG_PATH = ART_ROOT_PATH + "/Config.json.old";
+        
+        
         /// <summary>
         /// 初始化
         /// </summary>
@@ -71,12 +80,9 @@ namespace BDFramework.ResourceMgr
         /// 加载器
         /// </summary>
         static public IResMgr ResLoader { get; private set; }
-
-
-
+        
         #region 加载、取消加载
 
-        
         /// <summary>
         /// 同步加载
         /// </summary>
@@ -104,7 +110,7 @@ namespace BDFramework.ResourceMgr
             return ResLoader.LoadAll_TestAPI_2020_5_23<T>(name);
         }
 
-        
+
         /// <summary>
         /// 异步加载
         /// </summary>
@@ -128,7 +134,7 @@ namespace BDFramework.ResourceMgr
             return ResLoader.AsyncLoad(objlist, onProcess, onLoadEnd);
         }
 
-        
+
         /// <summary>
         /// 取消单个任务
         /// </summary>
@@ -158,9 +164,9 @@ namespace BDFramework.ResourceMgr
         {
             ResLoader.LoadAllCancel();
         }
+
         #endregion
-
-
+        
         #region 卸载资源
 
         /// <summary>
@@ -197,15 +203,10 @@ namespace BDFramework.ResourceMgr
             ResLoader.UnloadAllAsset();
         }
 
-
         #endregion
-
-        
         
         #region 实例化、删除管理
 
-        
-        
         /// <summary>
         /// 实例化
         /// </summary>
@@ -222,7 +223,6 @@ namespace BDFramework.ResourceMgr
         /// <param name="trans"></param>
         public static void Destroy(Transform trans)
         {
-      
             if (trans)
             {
                 Destroy(trans.gameObject);
@@ -242,10 +242,6 @@ namespace BDFramework.ResourceMgr
             }
         }
 
-        
-
         #endregion
-        
-
     }
 }

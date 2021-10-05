@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using BDFramework.Editor.AssetBundle;
+using BDFramework.ResourceMgr;
 using BDFramework.ResourceMgr.V2;
 using UnityEditor;
 using UnityEngine;
@@ -35,13 +36,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         static public BuildAssetBundleParams BuildAssetBundleParams { get; set; }
 
-        /// <summary>
-        /// BuildInfo路径
-        /// </summary>
-        static public string BuildInfoPath
-        {
-            get { return IPath.Combine(BuildAssetBundleParams.OutputPath, "BuildInfo.json"); }
-        }
+
 
         #region 渲染相关信息
 

@@ -65,10 +65,11 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\CollectShaderKeyWord.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\CollectSpriteAtlas.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\FilterGroupByPath.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\Granularity3dModel.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\GranularityFloder.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\GranularitySpine.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\IBDAssetBundleV2Node.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\SetGranularityByExtension.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\SetGranularityByFloder.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\SetGranularityTest.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\BuildInfo.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\EditorWindow_GenAssetBundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\ShaderCollection.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDAssetImporter.cs" />

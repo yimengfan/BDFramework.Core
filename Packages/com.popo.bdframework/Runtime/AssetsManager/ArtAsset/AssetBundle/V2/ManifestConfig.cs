@@ -66,8 +66,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!string.IsNullOrEmpty(manifestName))
             {
-                ManifestItem item = null;
-                if (this.ManifestMap.TryGetValue(manifestName, out item))
+                if (this.ManifestMap.TryGetValue(manifestName, out var item))
                 {
                     return item;
                 }

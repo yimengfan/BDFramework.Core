@@ -29,9 +29,9 @@ namespace BDFramework.ResourceMgr.V2
     public class AssetBundleMgrV2 : IResMgr
     {
         /// <summary>
-        /// 特殊的前缀
+        /// 非Hash命名时，runtime目录的都放在一起，方便调试
         /// </summary>
-        static readonly public string RUNTIME = "runtime/{0}";
+        static readonly public string DEBUG_RUNTIME = "runtime/{0}";
 
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 异步回调表
         /// </summary>
-        private List<LoaderTaskGroup> allTaskGroupList;
+        private List<LoaderTaskGroup> allTaskGroupList= new List<LoaderTaskGroup>();
 
         /// <summary>
         /// 全局唯一的依赖
@@ -52,7 +52,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 全局的assetbundle字典
         /// </summary>
-        public Dictionary<string, AssetBundleWapper> AssetbundleMap { get; private set; }
+        public Dictionary<string, AssetBundleWapper> AssetbundleMap { get; private set; }= new Dictionary<string, AssetBundleWapper>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// 资源加载路径
@@ -74,17 +74,11 @@ namespace BDFramework.ResourceMgr.V2
                 this.UnloadAllAsset();
             }
 
-            this.AssetbundleMap = new Dictionary<string, AssetBundleWapper>(StringComparer.OrdinalIgnoreCase);
-            this.allTaskGroupList = new List<LoaderTaskGroup>();
             var platformPath = BDApplication.GetPlatformPath(Application.platform);
             //1.设置加载路径  
-            firstArtDirectory =
-                ZString.Format("{0}/{1}/Art", path, platformPath);
+            firstArtDirectory = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ART_ROOT_PATH);
             //当路径为persistent时，第二路径生效
-            secArtDirectory = ZString.Format("{0}/{1}/Art", Application.streamingAssetsPath,
-                platformPath); //
-
-
+            secArtDirectory = ZString.Format("{0}/{1}/{2}", Application.streamingAssetsPath, platformPath, BResources.ART_ROOT_PATH); //
             //路径替换
             switch (Application.platform)
             {
@@ -98,8 +92,7 @@ namespace BDFramework.ResourceMgr.V2
                 }
                     break;
             }
-
-
+            
             //加载Config
             var artconfigPath = "";
             this.loder = new ManifestLoder();
@@ -110,8 +103,7 @@ namespace BDFramework.ResourceMgr.V2
             else
             {
                 //真机环境config在persistent，跟dll和db保持一致
-                artconfigPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath,
-                    BResources.ART_CONFIG_PATH);
+                artconfigPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ART_CONFIG_PATH);
             }
 
             this.loder.Load(artconfigPath);
@@ -130,7 +122,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                path = ZString.Format(RUNTIME, path);
+                path = ZString.Format(DEBUG_RUNTIME, path);
             }
 
             //1.依赖路径
@@ -166,7 +158,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                path = ZString.Format(RUNTIME, path);
+                path = ZString.Format(DEBUG_RUNTIME, path);
             }
 
 
@@ -206,7 +198,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                assetName = ZString.Format(RUNTIME, assetName);
+                assetName = ZString.Format(DEBUG_RUNTIME, assetName);
             }
 
 
@@ -400,7 +392,7 @@ namespace BDFramework.ResourceMgr.V2
             AssetBundleWapper abr = null;
             if (AssetbundleMap.TryGetValue(item.Path, out abr))
             {
-                switch ((ManifestItem.AssetTypeEnum)item.Type)
+                switch ((ManifestItem.AssetTypeEnum) item.Type)
                 {
                     //暂时需要特殊处理的只有一个
                     case ManifestItem.AssetTypeEnum.SpriteAtlas:
@@ -477,7 +469,7 @@ namespace BDFramework.ResourceMgr.V2
             str = ZString.Concat(floder, "/");
             if (!this.loder.Manifest.IsHashName)
             {
-                str = ZString.Format(RUNTIME, str);
+                str = ZString.Format(DEBUG_RUNTIME, str);
             }
 
 
@@ -519,7 +511,7 @@ namespace BDFramework.ResourceMgr.V2
         }
 
         #endregion
-        
+
         #region 核心任务驱动
 
         /// <summary>
@@ -567,7 +559,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!this.loder.Manifest.IsHashName)
             {
-                path = ZString.Format(RUNTIME, path);
+                path = ZString.Format(DEBUG_RUNTIME, path);
             }
 
 

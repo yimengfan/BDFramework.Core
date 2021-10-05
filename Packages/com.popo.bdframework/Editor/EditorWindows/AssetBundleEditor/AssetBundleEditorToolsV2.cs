@@ -13,118 +13,9 @@ using UnityEngine;
 
 namespace BDFramework.Editor.AssetBundle
 {
-    /// <summary>
-    /// build信息
-    /// </summary>
-    public class BuildInfo
-    {
-        public class AssetData
-        {
-            /// <summary>
-            /// Id
-            /// </summary>
-            public int Id { get; set; } = -1;
-
-            /// <summary>
-            /// 资源类型
-            /// </summary>
-            public int Type { get; set; } = -1;
-
-            /// <summary>
-            /// AssetBundleName
-            /// 默认AB是等于自己文件名
-            /// 当自己自己处于某个ab中的时候这个不为null
-            /// </summary>
-            public string ABName { get; set; } = "";
-
-
-            /// <summary>
-            /// 被依赖次数
-            /// </summary>
-            public int ReferenceCount { get; set; } = 0;
-
-            /// <summary>
-            /// hash
-            /// </summary>
-            public string Hash { get; set; } = "";
-
-            /// <summary>
-            /// 依赖列表
-            /// </summary>
-            public List<string> DependList { get; set; } = new List<string>();
-
-            /// <summary>
-            /// 是否被多次引用
-            /// </summary>
-            public bool IsRefrenceByOtherAsset()
-            {
-                return this.ReferenceCount > 1;
-            }
-        }
-
-        /// <summary>
-        /// time
-        /// </summary>
-        public string Time;
-
-        /// <summary>
-        /// 资源列表
-        /// </summary>
-        public Dictionary<string, AssetData> AssetDataMaps =
-            new Dictionary<string, AssetData>(StringComparer.OrdinalIgnoreCase);
-
-
-        public enum SetABNameMode
-        {
-            Simple,
-            Force
-        }
-
-        /// <summary>
-        /// 设置AB名
-        /// </summary>
-        public bool SetABName(string assetName, string newABName, SetABNameMode setNameMode = SetABNameMode.Simple)
-        {
-            //1.如果ab名被修改过,说明有其他规则影响，需要理清打包规则。（比如散图打成图集名）
-            //2.如果资源被其他资源引用，修改ab名，需要修改所有引用该ab的名字
-
-            //AssetData assetdata = this.AssetDataMaps.
-            AssetData assetData = null;
-            this.AssetDataMaps.TryGetValue(assetName, out assetData);
-            //
-            if (assetData != null)
-            {
-                switch (setNameMode)
-                {
-                    //未被其他规则设置过abname,可以直接修改
-                    case SetABNameMode.Simple:
-                    {
-                        if (assetData.ABName == assetName)
-                        {
-                            assetData.ABName = newABName;
-
-                            return true;
-                        }
-                    }
-                        break;
-
-                    case SetABNameMode.Force:
-                    {
-                        assetData.ABName = newABName;
-
-                        return true;
-                    }
-                        break;
-                }
-            }
-
-
-            return false;
-        }
-    }
-
     static public class AssetBundleEditorToolsV2
     {
+        static string RUNTIME_PATH = "/runtime/";
         /// <summary>
         /// 生成AssetBundle
         /// </summary>
@@ -160,6 +51,7 @@ namespace BDFramework.Editor.AssetBundle
                 }
                     break;
             }
+
             //开始构建
             var _outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform));
             //
@@ -199,30 +91,27 @@ namespace BDFramework.Editor.AssetBundle
             #region 整理依赖关系
 
             //1.把依赖资源替换成AB Name，
-            foreach (var asset in newbuildInfo.AssetDataMaps.Values)
+            foreach (var assetItem in newbuildInfo.AssetDataMaps.Values)
             {
-                for (int i = 0; i < asset.DependList.Count; i++)
+                for (int i = 0; i < assetItem.DependList.Count; i++)
                 {
-                    var da = asset.DependList[i];
-                    var dependAssetData = newbuildInfo.AssetDataMaps[da];
+                    var dependAsset = assetItem.DependList[i];
+                    var dependAssetData = newbuildInfo.AssetDataMaps[dependAsset];
                     //替换成真正AB名
                     if (!string.IsNullOrEmpty(dependAssetData.ABName))
                     {
-                        asset.DependList[i] = dependAssetData.ABName;
+                        assetItem.DependList[i] = dependAssetData.ABName;
                     }
                 }
-
                 //去重
-                asset.DependList = asset.DependList.Distinct().ToList();
-                asset.DependList.Remove(asset.ABName);
+                assetItem.DependList = assetItem.DependList.Distinct().ToList();
+                assetItem.DependList.Remove(assetItem.ABName);
             }
 
-            var runtimeStr = "/runtime/";
-
+          
             if (isHashName)
             {
                 //使用guid 作为ab名
-
                 foreach (var asset in newbuildInfo.AssetDataMaps)
                 {
                     var abname = AssetDatabase.AssetPathToGUID(asset.Value.ABName);
@@ -253,15 +142,16 @@ namespace BDFramework.Editor.AssetBundle
             }
             else
             {
+                
                 //2.整理runtime路径 替换路径名为Resource规则的名字
-
-                foreach (var asset in newbuildInfo.AssetDataMaps)
+                // 非Hash命名时，runtime目录的都放在一起，方便调试
+                foreach (var assetData in newbuildInfo.AssetDataMaps)
                 {
-                    if (asset.Key.Contains(runtimeStr))
+                    if (assetData.Key.Contains(RUNTIME_PATH))
                     {
-                        var newName = asset.Value.ABName;
+                        var newName = assetData.Value.ABName;
                         //移除runtime之前的路径、后缀
-                        var index = newName.IndexOf(runtimeStr);
+                        var index = newName.IndexOf(RUNTIME_PATH);
                         newName = newName.Substring(index + 1); //runtimeStr.Length);
 
                         var extension = Path.GetExtension(newName);
@@ -270,25 +160,7 @@ namespace BDFramework.Editor.AssetBundle
                             newName = newName.Replace(extension, "");
                         }
 
-                        //刷新整个列表替换
-                        foreach (var _asset in newbuildInfo.AssetDataMaps)
-                        {
-                            var oldName = asset.Key.ToLower();
-                            //ab替换
-                            if (_asset.Value.ABName == oldName)
-                            {
-                                _asset.Value.ABName = newName;
-                            }
-
-                            //依赖替换
-                            for (int i = 0; i < _asset.Value.DependList.Count; i++)
-                            {
-                                if (_asset.Value.DependList[i] == oldName)
-                                {
-                                    _asset.Value.DependList[i] = newName;
-                                }
-                            }
-                        }
+                        newbuildInfo.SetABName(assetData.Key, newName);
                     }
                 }
             }
@@ -296,8 +168,7 @@ namespace BDFramework.Editor.AssetBundle
             #endregion
 
 
-            #region 生成Runtime使用的Config
-
+            #region 生成Runtime下的Art.Config
             //根据buildinfo 生成加载用的 Config
             //1.只保留Runtime目录下的配置
             ManifestConfig config = new ManifestConfig();
@@ -307,14 +178,14 @@ namespace BDFramework.Editor.AssetBundle
             {
                 //runtime路径下，
                 //改成用Resources加载规则命名的key
-                if (item.Key.Contains(runtimeStr))
+                if (item.Key.Contains(RUNTIME_PATH))
                 {
                     var key = item.Key;
                     //移除runtime之前的路径、后缀
-                    var index = key.IndexOf(runtimeStr);
+                    var index = key.IndexOf(RUNTIME_PATH);
                     if (config.IsHashName)
                     {
-                        key = key.Substring(index + runtimeStr.Length); //hash要去掉runtime
+                        key = key.Substring(index + RUNTIME_PATH.Length); //hash要去掉runtime
                     }
                     else
                     {
@@ -328,13 +199,12 @@ namespace BDFramework.Editor.AssetBundle
                     }
 
                     //添加manifest
-                    var mi = new ManifestItem(item.Value.ABName, (ManifestItem.AssetTypeEnum) item.Value.Type,
-                        new List<string>(item.Value.DependList));
+                    var mi = new ManifestItem(item.Value.ABName, (ManifestItem.AssetTypeEnum) item.Value.Type, new List<string>(item.Value.DependList));
                     config.ManifestMap[key] = mi;
                 }
             }
-
-
+            
+            
             //写入
             FileHelper.WriteAllText(artOutputPath + "/Config.json", JsonMapper.ToJson(config));
 
