@@ -119,7 +119,15 @@ namespace BDFramework.Editor.AssetBundle
 
             if (GUILayout.Button("AssetBundle SG打包测试", GUILayout.Width(380), GUILayout.Height(30)))
             {
-                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, BDApplication.ProjectRoot + "/CI_TEMP", true);
+                var outputpath = BDApplication.ProjectRoot + "/CI_TEMP";
+                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android,outputpath , true);
+               
+            }
+
+            if (GUILayout.Button("AssetBundle 加载测试", GUILayout.Width(380), GUILayout.Height(30)))
+            {
+                var outputpath = BDApplication.ProjectRoot + "/CI_TEMP";
+                AssetBundleEditorToolsV2.TestLoadAllAssetbundle(outputpath);
             }
 
             GUILayout.EndVertical();

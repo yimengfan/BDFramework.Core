@@ -76,9 +76,9 @@ namespace BDFramework.ResourceMgr.V2
 
             var platformPath = BDApplication.GetPlatformPath(Application.platform);
             //1.设置加载路径  
-            firstArtDirectory = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ART_ROOT_PATH);
+            firstArtDirectory = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_ROOT_PATH);
             //当路径为persistent时，第二路径生效
-            secArtDirectory = ZString.Format("{0}/{1}/{2}", Application.streamingAssetsPath, platformPath, BResources.ART_ROOT_PATH); //
+            secArtDirectory = ZString.Format("{0}/{1}/{2}", Application.streamingAssetsPath, platformPath, BResources.ASSET_ROOT_PATH); //
             //路径替换
             switch (Application.platform)
             {
@@ -98,12 +98,12 @@ namespace BDFramework.ResourceMgr.V2
             this.loder = new ManifestLoder();
             if (Application.isEditor)
             {
-                artconfigPath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ART_CONFIG_PATH);
+                artconfigPath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_CONFIG_PATH);
             }
             else
             {
                 //真机环境config在persistent，跟dll和db保持一致
-                artconfigPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ART_CONFIG_PATH);
+                artconfigPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_CONFIG_PATH);
             }
 
             this.loder.Load(artconfigPath);

@@ -2,13 +2,16 @@ using BDFramework.Core.Tools;
 using LitJson;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using BDFramework.ResourceMgr;
 using BDFramework.ResourceMgr.V2;
 using UnityEditor;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 
 namespace BDFramework.Editor.AssetBundle
@@ -284,10 +287,16 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 资源类型配置
         /// </summary>
-        static Dictionary<ManifestItem.AssetTypeEnum, List<string>> AssetTypeConfigMap = new Dictionary<ManifestItem.AssetTypeEnum, List<string>>()
+        static public Dictionary<ManifestItem.AssetTypeEnum, List<string>> AssetTypeConfigMap = new Dictionary<ManifestItem.AssetTypeEnum, List<string>>()
         {
             {ManifestItem.AssetTypeEnum.Prefab, new List<string>() {".prefab"}}, //Prefab
             {ManifestItem.AssetTypeEnum.SpriteAtlas, new List<string>() {".spriteatlas"}}, //Atlas
+            {ManifestItem.AssetTypeEnum.Texture, new List<string>() {".jpg", ".jpeg", ".png", ".tga"}}, //Tex
+            {ManifestItem.AssetTypeEnum.Mat, new List<string>() {".mat"}}, //mat
+            {ManifestItem.AssetTypeEnum.TextAsset, new List<string>() {".json", ".xml", ".info", ".txt"}}, //TextAsset
+            {ManifestItem.AssetTypeEnum.AudioClip, new List<string>() {".mp3", ".ogg", ".wav"}}, //sound
+            {ManifestItem.AssetTypeEnum.Mesh, new List<string>() {".mesh"}}, //sound
+            {ManifestItem.AssetTypeEnum.Font, new List<string>() {".fnt", ".fon", ".font", ".ttf", ".ttc", ".otf", ".eot",}}, //sound
         };
 
         #endregion
@@ -643,7 +652,6 @@ namespace BDFramework.Editor.AssetBundle
 
         #endregion
 
-
         #region 文件 md5
 
         /// <summary>
@@ -714,8 +722,8 @@ namespace BDFramework.Editor.AssetBundle
 
             EditorUtility.ClearProgressBar();
         }
-        
-        
+
+
         #region BuildTarget 和RuntimePlatform互转
 
         /// <summary>
@@ -786,6 +794,75 @@ namespace BDFramework.Editor.AssetBundle
             }
 
             return platform;
+        }
+
+        #endregion
+
+        #region 资源测试相关
+
+        /// <summary>
+        /// 获取资源类型
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <returns></returns>
+        static public ManifestItem.AssetTypeEnum GetAssetType(string assetPath)
+        {
+            var ext = Path.GetExtension(assetPath);
+            foreach (var item in AssetTypeConfigMap)
+            {
+                if (item.Value.Contains(ext))
+                {
+                    return item.Key;
+                }
+            }
+
+            return ManifestItem.AssetTypeEnum.Others;
+        }
+
+        /// <summary>
+        /// 测试加载所有的AssetBundle
+        /// </summary>
+        static public void TestLoadAllAssetbundle(string abPath)
+        {
+            //初始化BResource
+            BResources.Load(AssetLoadPath.StreamingAsset, abPath);
+            //加载
+            var allRuntimeAssets = BDApplication.GetAllRuntimeAssetsPath();
+            foreach (var asset in allRuntimeAssets)
+            {
+                var type = GetAssetType(asset);
+                switch (type)
+                {
+                    case ManifestItem.AssetTypeEnum.Prefab:
+                    {
+                        var idx = asset.IndexOf(RUNTIME_PATH,StringComparison.OrdinalIgnoreCase);
+                        var runtimePath = asset.Substring(idx + RUNTIME_PATH.Length);
+                        runtimePath = runtimePath.Replace(Path.GetExtension(runtimePath), "");
+                        try
+                        {
+                            Debug.Log("【LoadTest】:" + runtimePath);
+                            //加载
+                            Stopwatch sw = new Stopwatch();
+                            sw.Start();
+                            var obj = BResources.Load<GameObject>(runtimePath);
+                            sw.Stop();
+                            var loadtime = sw.ElapsedMilliseconds;
+                            //实例化
+                            sw.Restart();
+                            var gobj = GameObject.Instantiate(obj);
+                            sw.Stop();
+                            var instantTime = sw.ElapsedMilliseconds;
+                            Debug.LogFormat("【LoadTest】:{0},Load:{1};Instantiate:{2}", runtimePath, loadtime, instantTime);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogError("【LoadTest】加载失败:" + runtimePath);
+                        }
+                   
+                    }
+                        break;
+                }
+            }
         }
 
         #endregion

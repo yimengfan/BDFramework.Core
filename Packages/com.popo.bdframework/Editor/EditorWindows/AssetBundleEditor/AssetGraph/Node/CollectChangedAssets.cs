@@ -64,7 +64,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             }
             //加载上一次缓存的资源
-            var lastbuildInfoPath = IPath.Combine(this.BuildParams.OutputPath, BResources.ART_CONFIG_PATH);
+            var lastbuildInfoPath = IPath.Combine(this.BuildParams.OutputPath, BResources.ASSET_CONFIG_PATH);
             BuildInfo lastBuildInfo = new BuildInfo();
             if (File.Exists(lastbuildInfoPath))
             {
@@ -135,7 +135,6 @@ namespace BDFramework.Editor.AssetGraph.Node
                             continue;
                         }
                     }
-
                     changedAssetList.Add(newAssetItem);
                 }
 

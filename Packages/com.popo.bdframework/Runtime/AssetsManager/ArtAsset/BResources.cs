@@ -18,17 +18,17 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 美术根目录
         /// </summary>
-        readonly static public string ART_ROOT_PATH = "Art";
+        readonly static public string ASSET_ROOT_PATH = "Art";
         /// <summary>
         /// 美术config配置
         /// </summary>
-        readonly static public string ART_CONFIG_PATH = ART_ROOT_PATH + "/Config.json";
+        readonly static public string ASSET_CONFIG_PATH = ASSET_ROOT_PATH + "/Config.json";
         /// <summary>
         /// 美术old config
         /// </summary>
-        readonly static public string ART_OLD_CONFIG_PATH = ART_ROOT_PATH + "/OldConfig.json";
+        readonly static public string ASSET_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/BuildInfo.json";
         
-        
+        readonly static public string ASSET_OLD_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/BuildInfo.json";
         /// <summary>
         /// 初始化
         /// </summary>

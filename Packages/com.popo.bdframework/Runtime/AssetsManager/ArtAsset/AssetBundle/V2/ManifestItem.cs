@@ -16,6 +16,11 @@ namespace BDFramework.ResourceMgr.V2
             SpriteAtlas = 4,
             Mat,
             Shader,
+            AudioClip,
+            AnimationClip,
+            Mesh,
+            Font
+            
         }
 
         public ManifestItem(string path, AssetTypeEnum @enum, List<string> depend = null)

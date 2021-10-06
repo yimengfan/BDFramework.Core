@@ -155,15 +155,6 @@ namespace BDFramework.Editor.AssetGraph.Node
         #region 初始化所有Assets信息
 
         /// <summary>
-        /// 资源类型配置
-        /// </summary>
-        static Dictionary<ManifestItem.AssetTypeEnum, List<string>> AssetTypeConfigMap = new Dictionary<ManifestItem.AssetTypeEnum, List<string>>()
-        {
-            {ManifestItem.AssetTypeEnum.Prefab, new List<string>() {".prefab"}}, //Prefab
-            {ManifestItem.AssetTypeEnum.SpriteAtlas, new List<string>() {".spriteatlas"}}, //Atlas
-        };
-
-        /// <summary>
         /// 生成BuildInfo信息
         /// </summary>
         public void GenBuildInfo(List<AssetReference> assets)
@@ -186,19 +177,10 @@ namespace BDFramework.Editor.AssetGraph.Node
                     assetData.Id = id;
                     assetData.Hash = GetHashFromAssets(subAssetPath);
                     assetData.ABName = subAssetPath;
+                    
                     //判断资源类型
-                    assetData.Type = (int) ManifestItem.AssetTypeEnum.Others;
-                    var subAssetsExtension = Path.GetExtension(subAssetPath);
-                    //
-                    foreach (var item in AssetTypeConfigMap)
-                    {
-                        if (item.Value.Contains(subAssetsExtension))
-                        {
-                            assetData.Type = (int) item.Key;
-                            break;
-                        }
-                    }
-
+                    assetData.Type = (int) AssetBundleEditorToolsV2.GetAssetType(subAssetPath);
+                    
                     //获取依赖
                     var dependeAssetList = GetDependencies(subAssetPath);
                     assetData.DependList.AddRange(dependeAssetList);

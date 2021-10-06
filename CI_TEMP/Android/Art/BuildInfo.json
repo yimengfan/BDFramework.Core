@@ -1,0 +1,644 @@
+{
+  "Time": "2021/10/7",
+  "AssetDataMaps": {
+    "assets/resource_svn/model/001/spongebob.obj": {
+      "Id": 0,
+      "Type": 0,
+      "ABName": "588d2883df702024e8c86857a1a9dd97",
+      "ReferenceCount": 0,
+      "Hash": "5aa4a587ce8f8042efcf0fa02ae9f910bf915246d12ef6ec3dd863b5d11fd8f0",
+      "DependList": [
+        "9d59e1d84070e4c46a595b3112d75a40",
+        "9870713b13aaf0b4b92d39098c620dea"
+      ]
+    },
+    "packages/com.unity.render-pipelines.universal/shaders/lit.shader": {
+      "Id": 55,
+      "Type": 0,
+      "ABName": "9d59e1d84070e4c46a595b3112d75a40",
+      "ReferenceCount": 0,
+      "Hash": "66315cd80ab500d154feaf0a9436d879d44f6172725834d168e764e381c21698",
+      "DependList": []
+    },
+    "assets/resource_svn/runtime/char/001.prefab": {
+      "Id": 2,
+      "Type": 1,
+      "ABName": "bfcd26e55a55bd04f8a6f662bdde9abf",
+      "ReferenceCount": 0,
+      "Hash": "c8340368af0c4a1e089720a2f1c3688e203bcc3588474f14c2b126dd23c416ea",
+      "DependList": [
+        "588d2883df702024e8c86857a1a9dd97",
+        "9d59e1d84070e4c46a595b3112d75a40",
+        "9870713b13aaf0b4b92d39098c620dea",
+        "30d051dc134b45a43904d6bfbef14c38"
+      ]
+    },
+    "assets/resource_svn/model/001/spongebob_squarepants.png": {
+      "Id": 3,
+      "Type": 3,
+      "ABName": "9870713b13aaf0b4b92d39098c620dea",
+      "ReferenceCount": 0,
+      "Hash": "1e847f6995ba1bda07eb863aa152d64b7e7fbf6bef36c03a721045542a45520c",
+      "DependList": []
+    },
+    "assets/resource_svn/model/001/sb.mat": {
+      "Id": 4,
+      "Type": 5,
+      "ABName": "30d051dc134b45a43904d6bfbef14c38",
+      "ReferenceCount": 0,
+      "Hash": "8c3ca1df80a8dae09c83fd755bbae28c7fd3366a736ddb21a296cd1e928f6e10",
+      "DependList": [
+        "9d59e1d84070e4c46a595b3112d75a40",
+        "9870713b13aaf0b4b92d39098c620dea"
+      ]
+    },
+    "assets/resource_svn/runtime/cubesvn.prefab": {
+      "Id": 5,
+      "Type": 1,
+      "ABName": "ae37c57b09de2ec4399a3eceb62b77ea",
+      "ReferenceCount": 0,
+      "Hash": "5bf0cbe6ae584e0fdf6f0e71f75e69f64f7955874148cdfc60cce13d1c688763",
+      "DependList": []
+    },
+    "assets/resource/shaders/testshader/defaultresourcesextra/standard.shader": {
+      "Id": 54,
+      "Type": 0,
+      "ABName": "9d59e1d84070e4c46a595b3112d75a40",
+      "ReferenceCount": 0,
+      "Hash": "fb3f82b50b7890cc3eaeb9ca9aab48b76d6ed61e22d32d3cea4ee9db55b51aa9",
+      "DependList": [
+        "dbf484ca75d6a184e8f984d6f2b972b6"
+      ]
+    },
+    "assets/resource_svn/runtime/testmat/arrow 1.mat": {
+      "Id": 7,
+      "Type": 5,
+      "ABName": "70ed25d8f6269304483b716d4ffd3434",
+      "ReferenceCount": 0,
+      "Hash": "2ea6c3aa1078661ffad8eb89666eb1612bf5c38d7a2be5e726afcffcf71f3cce",
+      "DependList": [
+        "9d59e1d84070e4c46a595b3112d75a40",
+        "dbf484ca75d6a184e8f984d6f2b972b6"
+      ]
+    },
+    "assets/resource/shaders/builtin_shaders-2019/defaultresourcesextra/normal-vertexlit.shader": {
+      "Id": 58,
+      "Type": 0,
+      "ABName": "dbf484ca75d6a184e8f984d6f2b972b6",
+      "ReferenceCount": 0,
+      "Hash": "2a575000575aa38c14e4b9fe655b1fc14314296d4847a81a99d9b93d6963e56e",
+      "DependList": []
+    },
+    "assets/resource_svn/runtime/testmat/arrow.mat": {
+      "Id": 10,
+      "Type": 5,
+      "ABName": "c0d661c42cc867d46887fa3b94908542",
+      "ReferenceCount": 0,
+      "Hash": "f2eed984772066417b30ca142cc52082d9b740104feb794d55de0c985b0f82a2",
+      "DependList": [
+        "9d59e1d84070e4c46a595b3112d75a40",
+        "dbf484ca75d6a184e8f984d6f2b972b6"
+      ]
+    },
+    "assets/resource_svn/runtime/testmat/h_role_lanzhan_clotha_000.mat": {
+      "Id": 12,
+      "Type": 5,
+      "ABName": "8fb6653cf0d095a4da38233e10efdb41",
+      "ReferenceCount": 0,
+      "Hash": "0d2ce68d9806a8355bd63962dc351efe8e81a20ac6b12c338624a6451f3ded56",
+      "DependList": [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ]
+    },
+    "assets/resource/shaders/testshader/shader/pbr_silk.shader": {
+      "Id": 13,
+      "Type": 0,
+      "ABName": "9d59e1d84070e4c46a595b3112d75a40",
+      "ReferenceCount": 0,
+      "Hash": "09c2d68b6380c909da3cc0e416a4c416edbed15841acd2409677010d29b6e2f8",
+      "DependList": []
+    },
+    "assets/resource/runtime/allassettype/archive.jpg": {
+      "Id": 14,
+      "Type": 3,
+      "ABName": "d2a3862f18046f54eb8d3a4da64aa3a4",
+      "ReferenceCount": 0,
+      "Hash": "9699d2d91bae5c81d5e04ee23ce81bd0e8f87f1e46a2be4fe06c2a085041496f",
+      "DependList": []
+    },
+    "assets/resource/runtime/allassettype/audioclip.mp3": {
+      "Id": 15,
+      "Type": 7,
+      "ABName": "d1e9a6292667d134d8745300304b1824",
+      "ReferenceCount": 0,
+      "Hash": "4e9adeafcbd6c10b4ff3f4999a9d2c91253b5920b3da7aba018d189bcb4f3450",
+      "DependList": []
+    },
+    "assets/resource/runtime/allassettype/font2.ttf": {
+      "Id": 18,
+      "Type": 10,
+      "ABName": "051e691b99a9cb84784ea93c99bcb967",
+      "ReferenceCount": 0,
+      "Hash": "8dbb49d31abe4555979fc7e18c19e64e5a35c4a6199a140bbeb45396ebe4736a",
+      "DependList": [
+        "d64edb7b5e83d3247b9bbd478715e5a6"
+      ]
+    },
+    "assets/resource/runtime/allassettype/font1.otf": {
+      "Id": 19,
+      "Type": 10,
+      "ABName": "d64edb7b5e83d3247b9bbd478715e5a6",
+      "ReferenceCount": 0,
+      "Hash": "2e1e48685a265c9d5ec32d54fb3ea6d00de9fc3d625b419c3dbb147228965c9b",
+      "DependList": [
+        "051e691b99a9cb84784ea93c99bcb967"
+      ]
+    },
+    "assets/resource/runtime/allassettype/mesh.mesh": {
+      "Id": 20,
+      "Type": 9,
+      "ABName": "17c174d5584b1694b85f182dd46d03f6",
+      "ReferenceCount": 0,
+      "Hash": "0b4e679142be79d6fa76558a604ab04480357ea2a27b32e3844585041b1a248c",
+      "DependList": []
+    },
+    "assets/resource/runtime/allassettype/new sprite atlas.spriteatlas": {
+      "Id": 21,
+      "Type": 4,
+      "ABName": "570885a00974e1d41b1f5d5b4dac96d6",
+      "ReferenceCount": 0,
+      "Hash": "fa0a5c17a287ee849b5dc2c03c5abce083b24b6ed058976ef806489c11476801",
+      "DependList": []
+    },
+    "assets/resource/runtime/test/new material.mat": {
+      "Id": 85,
+      "Type": 5,
+      "ABName": "362a42798cd38c844bb6e946a9266c8a",
+      "ReferenceCount": 0,
+      "Hash": "9fb0a9518db250b7342264a9198dfa96cc0abfb088050bd72885e86623afe539",
+      "DependList": [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ]
+    },
+    "assets/resource/runtime/allassettype/prefab.prefab": {
+      "Id": 23,
+      "Type": 1,
+      "ABName": "f9c24efe9caac82418f78b87f9ec7e2d",
+      "ReferenceCount": 0,
+      "Hash": "aa68081ef808560f869c3e6b0a2be5137864ee9bb55827f938f9daaa43b732dc",
+      "DependList": [
+        "362a42798cd38c844bb6e946a9266c8a",
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ]
+    },
+    "assets/resource/shaders/builtin_shaders-2019/defaultresourcesextra/unlit/unlit-color.shader": {
+      "Id": 86,
+      "Type": 0,
+      "ABName": "9d59e1d84070e4c46a595b3112d75a40",
+      "ReferenceCount": 0,
+      "Hash": "a6a6fec02fd2cc79df109c335dc26bacbfa4ded799ab50f3b417dcbcff1aa642",
+      "DependList": []
+    },
+    "assets/resource/runtime/allassettype/tex/tex.png": {
+      "Id": 25,
+      "Type": 3,
+      "ABName": "16dd6483913a3c244b1a552e76dda7a7",
+      "ReferenceCount": 0,
+      "Hash": "ba8bb83e4390d71c3873a2647fcfd0360ba20bad912834c223d3748e3107297c",
+      "DependList": []
+    },
+    "assets/resource/runtime/assettest/cube.prefab": {
+      "Id": 26,
+      "Type": 1,
+      "ABName": "f43f8753e3c3460499a09f37075d54cf",
+      "ReferenceCount": 0,
+      "Hash": "1d41def107f7cd2b12cff63acfa69372938d8566fe5d79f6a0936bdff65987e1",
+      "DependList": [
+        "d4a88a73900de024eb62d0da15c80841",
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ]
+    },
+    "assets/resource/runtime/assettest/m_cube.mat": {
+      "Id": 30,
+      "Type": 5,
+      "ABName": "d4a88a73900de024eb62d0da15c80841",
+      "ReferenceCount": 0,
+      "Hash": "280b9aa83c85d1f0131327aad7511d343942797f44d6208c0fc4e2a5ef8daee6",
+      "DependList": [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ]
+    },
+    "assets/resource/runtime/assettest/logo.png": {
+      "Id": 29,
+      "Type": 3,
+      "ABName": "bab9d97529bb5b547ac8856fca3f85ef",
+      "ReferenceCount": 0,
+      "Hash": "9b972ef723666a2b41564a8172174860d844e8ad635c171c3fa55ca1ce3ea73b",
+      "DependList": []
+    },
+    "assets/resource/runtime/assettest/timg.jpg": {
+      "Id": 40,
+      "Type": 3,
+      "ABName": "2612b115ce3857f45833e28c2325fdbb",
+      "ReferenceCount": 0,
+      "Hash": "e34c108ce44e0229e22ef15b6cc8f0773f4ce3708d8947acd85c39651e771809",
+      "DependList": []
+    },
+    "packages/com.unity.render-pipelines.universal/shaders/particles/particlesunlit.shader": {
+      "Id": 57,
+      "Type": 0,
+      "ABName": "9d59e1d84070e4c46a595b3112d75a40",
+      "ReferenceCount": 0,
+      "Hash": "0dff574cdffdd69b7a9aebecbc563ebe600494133c71d21b4abc6346b65898d8",
+      "DependList": []
+    },
+    "assets/resource/runtime/assettest/particle.prefab": {
+      "Id": 34,
+      "Type": 1,
+      "ABName": "e5ef808d32e88b243bd0521877b3b07a",
+      "ReferenceCount": 0,
+      "Hash": "de1f40c28f3a3f73fe9b1f0ca4215d7fc725a991756555de765b2f4ee80d2ddf",
+      "DependList": [
+        "2612b115ce3857f45833e28c2325fdbb",
+        "9d59e1d84070e4c46a595b3112d75a40",
+        "635df57f674eda446b0d64328236e858"
+      ]
+    },
+    "assets/resource/runtime/assettest/particletest.mat": {
+      "Id": 38,
+      "Type": 5,
+      "ABName": "635df57f674eda446b0d64328236e858",
+      "ReferenceCount": 0,
+      "Hash": "aaa53316a49a3ec317b847aec455ef411dbffe958b608e5dd90eece120d3ae48",
+      "DependList": [
+        "2612b115ce3857f45833e28c2325fdbb",
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ]
+    },
+    "assets/resource/runtime/assettest/smoke_tex_012.png": {
+      "Id": 39,
+      "Type": 3,
+      "ABName": "9e1ccbb85029ae447b779059c47e8da6",
+      "ReferenceCount": 0,
+      "Hash": "eeb69341861e85135e40f3d22cc99d343dc4bf1cbd8189f46d971af6479ea0b4",
+      "DependList": []
+    },
+    "assets/resource/runtime/image/1.jpeg": {
+      "Id": 112,
+      "Type": 3,
+      "ABName": "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount": 0,
+      "Hash": "fe56e282bfb6beb7b4ee070177455e2cf3d333c186f0d28a0d9db12c164fd934",
+      "DependList": []
+    },
+    "assets/resource/runtime/image/2.jpeg": {
+      "Id": 128,
+      "Type": 3,
+      "ABName": "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount": 0,
+      "Hash": "c70c1f21155708f8ee7af884aee4bd618e1f89536d0412de8c8d534170e77172",
+      "DependList": []
+    },
+    "assets/resource/runtime/image/3.jpeg": {
+      "Id": 133,
+      "Type": 3,
+      "ABName": "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount": 0,
+      "Hash": "3101991503d9c4a4ddff9c6f24c44ed873e944494912c4f03bf1bf66c04199c9",
+      "DependList": []
+    },
+    "assets/resource/runtime/image/4.jpeg": {
+      "Id": 115,
+      "Type": 3,
+      "ABName": "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount": 0,
+      "Hash": "b2448a3b79ad8d3523e5de0b20610996d3012d3a14e1ddc64f8593c4283f82a6",
+      "DependList": []
+    },
+    "assets/resource/runtime/image/5.jpeg": {
+      "Id": 124,
+      "Type": 3,
+      "ABName": "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount": 0,
+      "Hash": "76fff11c69701b969c75807bd19e4260cf8ec99d24aeb03a43191895c0c85065",
+      "DependList": []
+    },
+    "assets/resource/runtime/image/6.jpeg": {
+      "Id": 123,
+      "Type": 3,
+      "ABName": "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount": 0,
+      "Hash": "1e827b7a11704e9905a2b724376f82486957c39851e64b15d79a4ee7f86294f8",
+      "DependList": []
+    },
+    "assets/resource/runtime/image/7.jpeg": {
+      "Id": 113,
+      "Type": 3,
+      "ABName": "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount": 0,
+      "Hash": "83d1f5ea17df52e5f1622257a0ae07a0eef5e67a66d805bf7c4479fa6ae4717c",
+      "DependList": []
+    },
+    "assets/resource/runtime/image/8.jpeg": {
+      "Id": 117,
+      "Type": 3,
+      "ABName": "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount": 0,
+      "Hash": "998543d5ba161b6046f5cde8a33a2dcb120a86e1d9757f1d93957a4f8dc97469",
+      "DependList": []
+    },
+    "assets/resource/runtime/image/9.jpeg": {
+      "Id": 119,
+      "Type": 3,
+      "ABName": "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount": 0,
+      "Hash": "fc55c5700911c815061c851dab5a37dbc3ffa5d3c437abfb5adb1dacd16ad532",
+      "DependList": []
+    },
+    "assets/resource/runtime/image/10.jpeg": {
+      "Id": 118,
+      "Type": 3,
+      "ABName": "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount": 0,
+      "Hash": "93f3af85c901abac354b693232bbbad8d3854c35f2d3b9577893d6b8900f331d",
+      "DependList": []
+    },
+    "assets/resource/runtime/loadalltest/timg.jpg": {
+      "Id": 51,
+      "Type": 3,
+      "ABName": "5db1852abb9a1a6458bd981cd87dd3ab",
+      "ReferenceCount": 0,
+      "Hash": "d3b8354bf0abc923a8f3189b0863e14840b636ad0289b3626ebcc50bc5c2c7fc",
+      "DependList": []
+    },
+    "assets/resource/runtime/mat/lwrp_lit_test.mat": {
+      "Id": 53,
+      "Type": 5,
+      "ABName": "51f5616e141ad98478c3557ebbf2b999",
+      "ReferenceCount": 0,
+      "Hash": "17af45ddcec935185a533d5d352cddbda415785376b93b13974337591abad12d",
+      "DependList": [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ]
+    },
+    "assets/resource/runtime/shader/allshaders.shadervariants": {
+      "Id": 56,
+      "Type": 0,
+      "ABName": "9d59e1d84070e4c46a595b3112d75a40",
+      "ReferenceCount": 0,
+      "Hash": "8e4be641a45571fa5ae33f5691ce87ccf505797473564ce3941f7d1099687650",
+      "DependList": [
+        "dbf484ca75d6a184e8f984d6f2b972b6"
+      ]
+    },
+    "assets/resource/runtime/spriteatlas/sa2019.spriteatlas": {
+      "Id": 66,
+      "Type": 4,
+      "ABName": "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount": 0,
+      "Hash": "e3cd7018a2e5733c14dc8f101f33be7c8cd506c787fbef26cfcac4c5ed00f828",
+      "DependList": [
+        "76c21518bd7f0e64ca49af74a4987cd9"
+      ]
+    },
+    "assets/resource/image/test2/5.jpg": {
+      "Id": 114,
+      "Type": 3,
+      "ABName": "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount": 0,
+      "Hash": "f370a53b5538f0d770e243289f2c8caff162f8fe8b9aebb2a5a9f4ffe0d31ff2",
+      "DependList": []
+    },
+    "assets/resource/image/test2/3.jpg": {
+      "Id": 116,
+      "Type": 3,
+      "ABName": "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount": 0,
+      "Hash": "17d47ffee374664d55c822378844b874c010338c83ca919c4ebf170e1d41d3fb",
+      "DependList": []
+    },
+    "assets/resource/image/test2/4.jpg": {
+      "Id": 120,
+      "Type": 3,
+      "ABName": "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount": 0,
+      "Hash": "6c87744ac6964feb5a3ce45a4c37f8b7b44baa1b6fea9eea281a71016e62282d",
+      "DependList": []
+    },
+    "assets/resource/image/test2/10.jpg": {
+      "Id": 121,
+      "Type": 3,
+      "ABName": "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount": 0,
+      "Hash": "040b00703eb49104532bed3d320bd1c944ad65a41b55601971d3253996c80510",
+      "DependList": []
+    },
+    "assets/resource/image/test2/9.jpg": {
+      "Id": 122,
+      "Type": 3,
+      "ABName": "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount": 0,
+      "Hash": "9b54656d8b146a84bf5863bae2dff4141e51abd41653d6e56554a631e2d312bd",
+      "DependList": []
+    },
+    "assets/resource/runtime/spriteatlas/sa2019_notinruntime.spriteatlas": {
+      "Id": 76,
+      "Type": 4,
+      "ABName": "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount": 0,
+      "Hash": "8b87576f14c01800686b2674fb316e84122c6e18dc39a0318b3044318d3c3dff",
+      "DependList": [
+        "ec429a586bfac5f4284f3a31749303e7"
+      ]
+    },
+    "assets/resource/image/test2/2.jpg": {
+      "Id": 126,
+      "Type": 3,
+      "ABName": "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount": 0,
+      "Hash": "912770565d89003e920ed34ffe01627f1990a1a171d86877370c03e9db90c68f",
+      "DependList": []
+    },
+    "assets/resource/image/test2/6.jpg": {
+      "Id": 127,
+      "Type": 3,
+      "ABName": "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount": 0,
+      "Hash": "5072b304d5ddcdf23fc5902a18afc0c12717a0dfb2239214d7303fb27e0db5a4",
+      "DependList": []
+    },
+    "assets/resource/image/test2/1.jpg": {
+      "Id": 129,
+      "Type": 3,
+      "ABName": "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount": 0,
+      "Hash": "9bd75d8868a6497f34139eb0cfcaf71763b0349e302a99cf55204ab02a1bb7a4",
+      "DependList": []
+    },
+    "assets/resource/image/test2/8.jpg": {
+      "Id": 130,
+      "Type": 3,
+      "ABName": "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount": 0,
+      "Hash": "56ee15edeb2a9705e06dc707ab05439de7d7675ece6f541321eb1bc15bbe5d71",
+      "DependList": []
+    },
+    "assets/resource/image/test2/7.jpg": {
+      "Id": 132,
+      "Type": 3,
+      "ABName": "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount": 0,
+      "Hash": "2748e9d885492f1b6ad1361e2b7c28cdaf4c1022d7b5de711bed6635f088603a",
+      "DependList": []
+    },
+    "assets/resource/runtime/test/cube.prefab": {
+      "Id": 82,
+      "Type": 1,
+      "ABName": "a7feec6462d3d3249936655cf4e31de5",
+      "ReferenceCount": 0,
+      "Hash": "b1801e8734ac10d6865552507d49aa775e4d49a6dc23f172b8720947d1b92b3a",
+      "DependList": [
+        "362a42798cd38c844bb6e946a9266c8a",
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ]
+    },
+    "assets/resource/runtime/windows/grid.prefab": {
+      "Id": 131,
+      "Type": 1,
+      "ABName": "36c26bcd10b840e4f9868d6a6b9b6b37",
+      "ReferenceCount": 0,
+      "Hash": "71bb85339ba0a10831e3b46b3d806c4bdc95299c8a3d24f645d5593276b492bf",
+      "DependList": [
+        "76c21518bd7f0e64ca49af74a4987cd9"
+      ]
+    },
+    "assets/resource/runtime/windows/uflux/01component/component_test01.prefab": {
+      "Id": 99,
+      "Type": 1,
+      "ABName": "e157959f9c83caa419fd530f402b54f8",
+      "ReferenceCount": 0,
+      "Hash": "fd99029f3a5c4ba4214acd9d939a7ee7467f6fc55b1d1dd65c34b1671a3b706b",
+      "DependList": [
+        "76c21518bd7f0e64ca49af74a4987cd9"
+      ]
+    },
+    "assets/resource/runtime/windows/uflux/01component/window_test003.prefab": {
+      "Id": 100,
+      "Type": 1,
+      "ABName": "0fab552ab15035e4d82bf9adc52725f6",
+      "ReferenceCount": 0,
+      "Hash": "0a009a03c901dadb9a51307dcb5ce767a46370686b4f173cc08b6659000e1d0c",
+      "DependList": []
+    },
+    "assets/resource/runtime/windows/uflux/02customcomponentbindadator/01/item.prefab": {
+      "Id": 101,
+      "Type": 1,
+      "ABName": "7ab40f5c94bb46c4d8bdc9719471a0ea",
+      "ReferenceCount": 0,
+      "Hash": "ea27784133e02878cbc41ce15adf36288620425ce485b99d2bdd55d1564f2a22",
+      "DependList": []
+    },
+    "assets/resource/runtime/windows/uflux/02customcomponentbindadator/01/window_test.prefab": {
+      "Id": 102,
+      "Type": 1,
+      "ABName": "a68e48a29a930504a9ca43956d727eed",
+      "ReferenceCount": 0,
+      "Hash": "1583bd81325b497000e7dd5cff3dd3852c795502de14f2a4bf171f4d737bd363",
+      "DependList": []
+    },
+    "assets/resource/runtime/windows/uflux/02customcomponentbindadator/02/window_test.prefab": {
+      "Id": 103,
+      "Type": 1,
+      "ABName": "f69fe24036fa721438c98fb52af11c6b",
+      "ReferenceCount": 0,
+      "Hash": "f97a93a44e7e4e1952f78d9d136ccf577c38794c0f7dbcedef171c4248660c34",
+      "DependList": []
+    },
+    "assets/resource/runtime/windows/uflux/demo004/window_simplewindow.prefab": {
+      "Id": 104,
+      "Type": 1,
+      "ABName": "2090e433e199dc549aae632bee6b20d9",
+      "ReferenceCount": 0,
+      "Hash": "225049c7446728629356b3c745955af7907b5f089baebbcdcb75e1ef4ba38483",
+      "DependList": []
+    },
+    "assets/resource/runtime/windows/uflux/demo005/window_propsdemo.prefab": {
+      "Id": 105,
+      "Type": 1,
+      "ABName": "7d3eab7902fddd347af42de5a0958047",
+      "ReferenceCount": 0,
+      "Hash": "e69e6459e72741c8a24bbee4e44feece701f60f2ef06a233e19fd36894b6dcae",
+      "DependList": []
+    },
+    "assets/resource/runtime/windows/uflux/demo006/window_reducer.prefab": {
+      "Id": 106,
+      "Type": 1,
+      "ABName": "22d5ca41200316741aaa39b9c265eb9b",
+      "ReferenceCount": 0,
+      "Hash": "548a204053157346e1db61cbcf031950d0c55edddcee5815eb76256f33caa2d1",
+      "DependList": []
+    },
+    "assets/resource/runtime/windows/uflux/demo007/window_di.prefab": {
+      "Id": 107,
+      "Type": 1,
+      "ABName": "7c6f5172672ac234a85467bc91e5283f",
+      "ReferenceCount": 0,
+      "Hash": "570e393c8965c25f40711fecfda86888876e9045275152cd573ccd9e98d3ebb0",
+      "DependList": []
+    },
+    "assets/resource/runtime/windows/uflux/window_fluxmain.prefab": {
+      "Id": 108,
+      "Type": 1,
+      "ABName": "0cd1aa33ffab96440974e3fd84b4e99f",
+      "ReferenceCount": 0,
+      "Hash": "cc75dc544a421da1e47ea1685a9fefd61a2e9df81100f25abd45bdd359c024c0",
+      "DependList": []
+    },
+    "assets/resource/runtime/windows/window_datalistener.prefab": {
+      "Id": 109,
+      "Type": 1,
+      "ABName": "890171c9213476c4487fdfe8320fed47",
+      "ReferenceCount": 0,
+      "Hash": "fe70c0d83a9f428aab848885104f2770d54cf702f140c6564867315348469187",
+      "DependList": []
+    },
+    "assets/resource/runtime/windows/window_demo1.prefab": {
+      "Id": 110,
+      "Type": 1,
+      "ABName": "3b35ba17053b1d34792c38b1d32a4a12",
+      "ReferenceCount": 0,
+      "Hash": "e2e5521de37f52e771ba16f1a2267cf07338fafdd3becf740773caf31a4d6b83",
+      "DependList": [
+        "d2abdb77f35d37c4c9469630d1f22e50"
+      ]
+    },
+    "assets/resource/image/test/timg (1).jpg": {
+      "Id": 111,
+      "Type": 3,
+      "ABName": "d2abdb77f35d37c4c9469630d1f22e50",
+      "ReferenceCount": 0,
+      "Hash": "3a908f6df3de6622a61068d30f0ae6804cd7dfb61e5d28c6036a5d5280cbc28f",
+      "DependList": []
+    },
+    "assets/resource/runtime/windows/window_demo5_spriteatlas.prefab": {
+      "Id": 125,
+      "Type": 1,
+      "ABName": "d5430f7acac73bb4eaa529db1d8b763a",
+      "ReferenceCount": 0,
+      "Hash": "c858dd983f924310299712e30280968dedaca2eb201eefc4a9ca2925979a57d2",
+      "DependList": [
+        "76c21518bd7f0e64ca49af74a4987cd9",
+        "ec429a586bfac5f4284f3a31749303e7",
+        "36c26bcd10b840e4f9868d6a6b9b6b37"
+      ]
+    },
+    "assets/resource/runtime/windows/window_demomain.prefab": {
+      "Id": 134,
+      "Type": 1,
+      "ABName": "3d1d74f67a3b7b54ba46fec8ab67f807",
+      "ReferenceCount": 0,
+      "Hash": "5b080fad1538bc05ce61dbc37bbe9d9a6b5a2e595f268cb85deeda49c4228e40",
+      "DependList": []
+    }
+  }
+}

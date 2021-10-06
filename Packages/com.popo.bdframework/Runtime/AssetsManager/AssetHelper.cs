@@ -144,8 +144,8 @@ namespace BDFramework.AssetHelper
                 BDebug.Log("复制db成功!");
             }
             //复制ArtConfig
-            var persistentArtConfigPath = string.Format("{0}/{1}", persistent, BResources.ART_CONFIG_PATH);
-            var  streamingArtConfigPath =  string.Format("{0}/{1}", streamingAsset,  BResources.ART_CONFIG_PATH);
+            var persistentArtConfigPath = string.Format("{0}/{1}", persistent, BResources.ASSET_CONFIG_PATH);
+            var  streamingArtConfigPath =  string.Format("{0}/{1}", streamingAsset,  BResources.ASSET_CONFIG_PATH);
             www = new WWW(streamingArtConfigPath);
             yield return www;
             if (www.error == null)

@@ -171,21 +171,21 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         private void GenArtConfig(BuildInfo buildInfo, BuildAssetBundleParams buildParams, RuntimePlatform platform)
         {
+            
             //根据buildinfo 生成加载用的 Config
             //1.只保留Runtime目录下的配置
-            ManifestConfig config = new ManifestConfig();
-            config.IsHashName = buildParams.IsUseHashName;
+            ManifestConfig manifestConfig = new ManifestConfig();
+            manifestConfig.IsHashName = buildParams.IsUseHashName;
             //
             foreach (var item in buildInfo.AssetDataMaps)
             {
-                //runtime路径下，
-                //改成用Resources加载规则命名的key
+                //runtime路径下，写入配置
                 if (item.Key.Contains(RUNTIME_PATH))
                 {
                     var key = item.Key;
                     //移除runtime之前的路径、后缀
                     var index = key.IndexOf(RUNTIME_PATH);
-                    if (config.IsHashName)
+                    if (manifestConfig.IsHashName)
                     {
                         key = key.Substring(index + RUNTIME_PATH.Length); //hash要去掉runtime
                     }
@@ -202,15 +202,16 @@ namespace BDFramework.Editor.AssetGraph.Node
 
                     //添加manifest
                     var mi = new ManifestItem(item.Value.ABName, (ManifestItem.AssetTypeEnum) item.Value.Type, new List<string>(item.Value.DependList));
-                    config.ManifestMap[key] = mi;
+                    manifestConfig.ManifestMap[key] = mi;
                 }
             }
 
-
-            //写入
+            
             var outputPath = Path.Combine(buildParams.OutputPath, BDApplication.GetPlatformPath(platform));
-            var configPath = IPath.Combine(outputPath, BResources.ART_CONFIG_PATH);
-            FileHelper.WriteAllText(configPath, JsonMapper.ToJson(config));
+            var configPath = IPath.Combine(outputPath, BResources.ASSET_CONFIG_PATH);
+         
+            //写入配置
+            FileHelper.WriteAllText(configPath, JsonMapper.ToJson(manifestConfig));
         }
 
 
@@ -244,7 +245,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             
             //----------------------------生成AssetBundle-------------------------------
             var platformOutputPath = Path.Combine(buildParams.OutputPath, BDApplication.GetPlatformPath(platform));
-            string artOutputPath = IPath.Combine(platformOutputPath, BResources.ART_ROOT_PATH);
+            string artOutputPath = IPath.Combine(platformOutputPath, BResources.ASSET_ROOT_PATH);
             try
             {
                 AssetDatabase.RemoveUnusedAssetBundleNames();
@@ -276,17 +277,17 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
             }
 
+            //BuildInfo配置处理
+            var buildinfoPath = IPath.Combine(platformOutputPath, BResources.ASSET_BUILD_INFO_PATH);
             //移动老配置
-            var buildInfoPath = Path.Combine(platformOutputPath, BResources.ART_CONFIG_PATH);
-            if (File.Exists(buildInfoPath))
+            if (File.Exists(buildinfoPath))
             {
-                string oldBuildInfoPath = Path.Combine(platformOutputPath, BResources.ART_OLD_CONFIG_PATH);
+                string oldBuildInfoPath = Path.Combine(platformOutputPath, BResources.ASSET_OLD_BUILD_INFO_PATH);
                 File.Delete(oldBuildInfoPath);
-                File.Move(buildInfoPath, oldBuildInfoPath);
+                File.Move(buildinfoPath, oldBuildInfoPath);
             }
-
-            //写入新配置
-            FileHelper.WriteAllText(buildInfoPath, JsonMapper.ToJson(buildInfo));
+            //写入配置
+            FileHelper.WriteAllText(buildinfoPath, JsonMapper.ToJson(buildInfo));
             //BD生命周期触发
             BDEditorBehaviorHelper.OnEndBuildAssetBundle(platformOutputPath);
             AssetHelper.AssetHelper.GenPackageBuildInfo(buildParams.OutputPath, platform);
