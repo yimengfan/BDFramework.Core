@@ -26,7 +26,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 美术old config
         /// </summary>
-        readonly static public string ART_OLD_CONFIG_PATH = ART_ROOT_PATH + "/Config.json.old";
+        readonly static public string ART_OLD_CONFIG_PATH = ART_ROOT_PATH + "/OldConfig.json";
         
         
         /// <summary>

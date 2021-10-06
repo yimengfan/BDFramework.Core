@@ -17,6 +17,6 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 是否使用hash
         /// </summary>
-        public bool IsUseHashName = false;
+        public bool IsUseHashName = true;
     }
 }

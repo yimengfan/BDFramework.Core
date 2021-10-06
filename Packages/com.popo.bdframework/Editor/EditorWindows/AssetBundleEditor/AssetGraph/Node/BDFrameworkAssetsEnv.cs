@@ -104,7 +104,6 @@ namespace BDFramework.Editor.AssetGraph.Node
 
 
             //设置所有节点参数请求,依次传参
-
             Debug.Log("outpath:" + BuildParams.OutputPath);
 
             //搜集runtime资源

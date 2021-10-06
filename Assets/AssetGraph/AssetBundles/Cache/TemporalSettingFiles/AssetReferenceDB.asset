@@ -285,4 +285,52 @@ MonoBehaviour:
     m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/CollectChangedAssets.cs
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 20da2732c56f0694d88f8b96d5657f0e
+    m_importFrom: Assets/AssetGraph/Cache/AssetBundleBuildMap.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 62873910d2c8cdc4a8e7e4b49ecfe37e
+    m_importFrom: Assets/Resource/Shaders/TestShader/DefaultResourcesExtra/Standard.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 588d2883df702024e8c86857a1a9dd97
+    m_importFrom: Assets/Resource_SVN/Model/001/spongebob.obj
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9870713b13aaf0b4b92d39098c620dea
+    m_importFrom: Assets/Resource_SVN/Model/001/Spongebob_SquarePants.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 30d051dc134b45a43904d6bfbef14c38
+    m_importFrom: Assets/Resource_SVN/Model/001/sb.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d053233f84bf8c047bef2431d30a7eb7
+    m_importFrom: Assets/Resource/Shaders/TestShader/shader/PBR_Silk.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 00218e4f0ba5f5342b9e30a2079bede9
+    m_importFrom: Assets/Resource/Shaders/builtin_shaders-2019/DefaultResourcesExtra/Unlit/Unlit-Color.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dbf484ca75d6a184e8f984d6f2b972b6
+    m_importFrom: Assets/Resource/Shaders/builtin_shaders-2019/DefaultResourcesExtra/Normal-VertexLit.shader
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 96168413bbd4fa648afde93610042817
+    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/ArtAsset/BResources.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8e5253bb84714ac43852f4b9e6193f82
+    m_importFrom: Assets/StreamingAssets
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3d7be23299854645be6de6558ca415a8
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/BuildAssetBundleParams.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a5d7a784372567a469e1b498c7bdd697
+    m_importFrom: Assets/Resource/Shaders/TestShader/DefaultResourcesExtra/Normal-VertexLit.shader
+    m_exportTo: 
+    m_variantName: 
   m_version: 2

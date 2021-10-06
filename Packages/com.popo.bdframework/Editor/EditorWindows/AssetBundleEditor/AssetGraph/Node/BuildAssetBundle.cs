@@ -289,7 +289,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             FileHelper.WriteAllText(buildInfoPath, JsonMapper.ToJson(buildInfo));
             //BD生命周期触发
             BDEditorBehaviorHelper.OnEndBuildAssetBundle(platformOutputPath);
-            AssetHelper.AssetHelper.GenPackageBuildInfo(platformOutputPath, platform);
+            AssetHelper.AssetHelper.GenPackageBuildInfo(buildParams.OutputPath, platform);
         }
 
         #region asset缓存、辅助等
