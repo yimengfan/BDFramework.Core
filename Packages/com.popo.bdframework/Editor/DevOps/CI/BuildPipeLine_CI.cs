@@ -161,7 +161,7 @@ namespace BDFramework.Editor
             //1.搜集keyword
             ShaderCollection.SimpleGenShaderVariant();
             //2.打包模式
-            return AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, BuildAssetBundleOptions.ChunkBasedCompression, true);
+            return AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform,  true);
         }
 
         #endregion

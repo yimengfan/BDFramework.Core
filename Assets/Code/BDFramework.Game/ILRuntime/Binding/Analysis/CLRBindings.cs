@@ -83,8 +83,8 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_String_Object_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_Object_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             System_Reflection_FieldInfo_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             BDFramework_Sql_SqliteLoder_Binding.Register(app);
             BDFramework_ResourceMgr_IResMgr_Binding.Register(app);
             System_Net_WebClient_Binding.Register(app);
@@ -132,7 +132,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_Int32_List_1_ILTypeInstance_Binding.Register(app);
             System_Reflection_MethodInfo_Binding.Register(app);
             System_Reflection_ParameterInfo_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Type_Object_Binding.Register(app);
             UnityEngine_Color_Binding.Register(app);
             System_Runtime_CompilerServices_AsyncTaskMethodBuilder_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_MethodInfo_Binding.Register(app);

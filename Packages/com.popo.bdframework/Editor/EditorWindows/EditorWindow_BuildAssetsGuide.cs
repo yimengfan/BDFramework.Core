@@ -253,7 +253,7 @@ namespace BDFramework.Editor.BuildPackage
                 ShaderCollection.SimpleGenShaderVariant();
                 //2.打包模式
                 var config = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
-                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, BuildAssetBundleOptions.ChunkBasedCompression, config.IsUseHashName);
+                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, config.IsUseHashName);
             }
             catch (Exception e)
             {

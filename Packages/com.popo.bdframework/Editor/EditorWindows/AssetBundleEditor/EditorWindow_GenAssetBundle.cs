@@ -57,7 +57,6 @@ namespace BDFramework.Editor.AssetBundle
             GUILayout.EndVertical();
         }
 
-        private BuildAssetBundleOptions options = BuildAssetBundleOptions.ChunkBasedCompression;
 
         /// <summary>
         /// 提示UI
@@ -73,7 +72,6 @@ namespace BDFramework.Editor.AssetBundle
             }
 
             GUILayout.Label(string.Format("AB输出目录:{0}", exportPath));
-            options = (BuildAssetBundleOptions) EditorGUILayout.EnumPopup("压缩格式:", options);
 
             var assetConfig = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
             //assetConfig.AESCode = EditorGUILayout.TextField("AES密钥(V2 only):", assetConfig.AESCode);
@@ -120,14 +118,14 @@ namespace BDFramework.Editor.AssetBundle
             if (GUILayout.Button("AssetBundle SG打包测试", GUILayout.Width(380), GUILayout.Height(30)))
             {
                 var outputpath = BDApplication.ProjectRoot + "/CI_TEMP";
-                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android,outputpath , true);
-               
+                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath, true);
             }
 
             if (GUILayout.Button("AssetBundle 加载测试", GUILayout.Width(380), GUILayout.Height(30)))
             {
                 var outputpath = BDApplication.ProjectRoot + "/CI_TEMP";
-                AssetBundleEditorToolsV2.TestLoadAllAssetbundle(outputpath);
+                var outputpath2 = Application.streamingAssetsPath;
+                AssetBundleEditorToolsV2.TestLoadAllAssetbundle(outputpath2);
             }
 
             GUILayout.EndVertical();
@@ -151,7 +149,7 @@ namespace BDFramework.Editor.AssetBundle
 
             var assetConfig = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
             //生成Assetbundlebunle
-            AssetBundleEditorToolsV2.GenAssetBundle(exportPath, platform, options, assetConfig.IsUseHashName);
+            AssetBundleEditorToolsV2.GenAssetBundle(exportPath, platform, assetConfig.IsUseHashName);
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕");
         }
