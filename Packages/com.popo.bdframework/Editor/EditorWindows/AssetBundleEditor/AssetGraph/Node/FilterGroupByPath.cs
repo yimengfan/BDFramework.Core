@@ -15,9 +15,10 @@ namespace BDFramework.Editor.AssetGraph.Node
     /// 筛选,排序10-30
     /// </summary>
     [CustomNode("BDFramework/[筛选]Group by Path", 10)]
-    public class FilterGroupByPath : UnityEngine.AssetGraph.Node, IBDAssetBundleV2Node
+    public class FilterGroupByPath : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
         public BuildInfo BuildInfo { get; set; }
+        public BuildAssetBundleParams BuildParams { get; set; }
 
         public override string ActiveStyle
         {
@@ -170,8 +171,14 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
-
-            this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+            if (this.BuildInfo == null)
+            {
+                this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+            }
+            if (this.BuildParams == null)
+            {
+                this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
+            }
 
             //初始化输出列表
             var outMap = new Dictionary<string, List<AssetReference>>();

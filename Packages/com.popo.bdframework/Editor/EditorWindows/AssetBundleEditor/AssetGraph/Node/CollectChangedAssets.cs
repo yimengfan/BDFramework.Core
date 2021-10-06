@@ -13,9 +13,10 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 namespace BDFramework.Editor.AssetGraph.Node
 {
     [CustomNode("BDFramework/[逻辑]检查变更资源", 60)]
-    public class CollectChangedAssets : UnityEngine.AssetGraph.Node, IBDAssetBundleV2Node
+    public class CollectChangedAssets : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo BuildInfo { get; private set; }
+        public BuildInfo BuildInfo { get;  set; }
+        public BuildAssetBundleParams BuildParams { get; set; }
 
         public override string ActiveStyle
         {
@@ -54,10 +55,16 @@ namespace BDFramework.Editor.AssetGraph.Node
             PerformGraph.Output outputFunc)
         {
 
-            var buildParams = BDFrameworkAssetsEnv.BuildAssetBundleParams;
-            this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+            if (this.BuildInfo == null)
+            {
+                this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+            }
+            if (this.BuildParams == null)
+            {
+                this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
+            }
             //加载上一次缓存的资源
-            var lastbuildInfoPath = IPath.Combine(buildParams.OutputPath, BResources.ART_CONFIG_PATH);
+            var lastbuildInfoPath = IPath.Combine(this.BuildParams.OutputPath, BResources.ART_CONFIG_PATH);
             BuildInfo lastBuildInfo = new BuildInfo();
             if (File.Exists(lastbuildInfoPath))
             {

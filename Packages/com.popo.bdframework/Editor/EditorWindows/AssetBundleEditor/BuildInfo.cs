@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BDFramework.ResourceMgr;
 
 namespace BDFramework.Editor.AssetBundle
 {
@@ -65,7 +66,8 @@ namespace BDFramework.Editor.AssetBundle
         public enum SetABNameMode
         {
             Simple,
-            Force
+            Force,
+            ForceAndFixAllRef
         }
 
         /// <summary>
@@ -91,12 +93,19 @@ namespace BDFramework.Editor.AssetBundle
                         if (assetData.ABName == assetName)
                         {
                             isSetABName = true;
-                            isSetAllDependAB = true;
                         }
                     }
                         break;
 
+                    //强行修改
                     case SetABNameMode.Force:
+                    {
+                        isSetABName = true;
+  
+                    }
+                        break;
+                    //强行修改 并且修改所有AB引用
+                    case SetABNameMode.ForceAndFixAllRef:
                     {
                         isSetABName = true;
                         isSetAllDependAB = true;

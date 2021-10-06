@@ -58,6 +58,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutines.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorGUIHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetBundleEditorToolsV2.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetBundleEditorToolsV2ForAssetGraph.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\BuildAssetBundleParams.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\BDFrameworkAssetsEnv.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\BuildAssetBundle.cs" />
@@ -65,7 +66,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\CollectShaderKeyWord.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\CollectSpriteAtlas.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\FilterGroupByPath.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\IBDAssetBundleV2Node.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\IBDFrameowrkAssetEnvParams.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\SetGranularityByExtension.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\SetGranularityByFloder.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\SetGranularityTest.cs" />

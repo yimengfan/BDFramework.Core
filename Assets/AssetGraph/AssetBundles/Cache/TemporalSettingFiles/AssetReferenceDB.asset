@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AssetReferenceDB
   m_EditorClassIdentifier: 
   m_assets:
-  - m_assetDatabaseId: 1d081ca1b3ab10f4b83b885e106a17d1
-    m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetReferenceDB.asset
+  - m_assetDatabaseId: dff0b2680f3f99941b7a426f1000a9a4
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/EditorWindow_GenAssetBundle.cs
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: bfcd26e55a55bd04f8a6f662bdde9abf
@@ -193,24 +193,96 @@ MonoBehaviour:
     m_importFrom: Assets/Resource/Runtime/Windows/window_demoMain.prefab
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 99c02593638544cab7732cc220538f10
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetBundleEditorToolsV2ForAssetGraph.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 82d7db8630024bfbb3cf6f1ce48e608c
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/BDFrameworkAssetsEnv.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: baec4592e177461dbefd69b60866d6b1
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/CollectShaderKeyWord.cs
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: 28a4cf2eccbd4d59956b882a1ec425c3
     m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/SetGranularityByFloder.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c17344e918b14346b220ccc9a7a10548
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/SetGranularityTest.cs
+  - m_assetDatabaseId: e60d994d666b43d99949499d5929d960
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/CollectSpriteAtlas.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 48d65b2f00ac4a81a2e043a9f72c3bca
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/SetGranularityByExtension.cs
+  - m_assetDatabaseId: 480e195f4f0949ee93fbf76bb53813f5
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/FilterGroupByPath.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 3d7be23299854645be6de6558ca415a8
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/BuildAssetBundleParams.cs
+  - m_assetDatabaseId: 00000000000000006100000000000000
+    m_importFrom: ProjectSettings/GraphicsSettings.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1d081ca1b3ab10f4b83b885e106a17d1
+    m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetReferenceDB.asset
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 48d3455260f25b242ba46325b82b68f1
     m_importFrom: Assets/AssetGraph/BResourceAssetBundleConfig.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ca01dce9064609744a9601b973443c53
+    m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetProcessEventRecord.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1b1f04b2ae699c342b01c3a07b2e5e03
+    m_importFrom: Assets/Resource/Image/Test2/5.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 36363df2082242a4596a6b8c7dda8abb
+    m_importFrom: Assets/Resource/Image/Test2/3.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 324b5c460daed5b4ea93aa9d690b508c
+    m_importFrom: Assets/Resource/Image/Test2/4.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: edfb1f96cfbf3b043b10d110680ff91f
+    m_importFrom: Assets/Resource/Image/Test2/10.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 669f7a674010020419c1b821194b8c39
+    m_importFrom: Assets/Resource/Image/Test2/9.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d2abdb77f35d37c4c9469630d1f22e50
+    m_importFrom: Assets/Resource/Image/Test/timg (1).jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 205e91aa2d4ef4f43a82556c9beffc58
+    m_importFrom: Assets/Resource/Image/Test2/2.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4047254b0a2e9014f8f66466fb6c8ab4
+    m_importFrom: Assets/Resource/Image/Test2/6.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9b458a2c447d300438ddb8fdec4f52e6
+    m_importFrom: Assets/Resource/Image/Test2/1.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 45b4a2ac7b8750046825d3fdbfa50a79
+    m_importFrom: Assets/Resource/Image/Test2/8.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: affae40fcce2824448f082b077ee1eae
+    m_importFrom: Assets/Resource/Image/Test2/7.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 378313d6f21247a282a431b8bb67190d
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/BuildAssetBundle.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c88cbaa6cd08422e84b8aeb87e7dfebd
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/CollectChangedAssets.cs
     m_exportTo: 
     m_variantName: 
   m_version: 2

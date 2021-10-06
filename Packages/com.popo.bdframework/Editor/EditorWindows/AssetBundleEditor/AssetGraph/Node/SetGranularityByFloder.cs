@@ -14,9 +14,10 @@ namespace BDFramework.Editor.AssetGraph.Node
     /// 颗粒度,排序30-50
     /// </summary>
     [CustomNode("BDFramework/[颗粒度]文件夹规则", 30)]
-    public class SetGranularityByFloder : UnityEngine.AssetGraph.Node, IBDAssetBundleV2Node
+    public class SetGranularityByFloder : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo BuildInfo { get; private set; }
+        public BuildInfo BuildInfo { get;  set; }
+        public BuildAssetBundleParams BuildParams { get; set; }
 
         /// <summary>
         /// 文件夹AB规则
@@ -94,9 +95,15 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
-
-            this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
-
+            if (this.BuildInfo == null)
+            {
+                this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+            }
+            if (this.BuildParams == null)
+            {
+                this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
+            }
+            
             var outMap = new Dictionary<string, List<AssetReference>>();
             foreach (var ags in incoming)
             {

@@ -9,9 +9,10 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 namespace BDFramework.Editor.AssetGraph.Node
 {
     [CustomNode("BDFramework/[逻辑]搜集shader变体", 60)]
-    public class CollectShaderKeyWord : UnityEngine.AssetGraph.Node, IBDAssetBundleV2Node
+    public class CollectShaderKeyWord : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo BuildInfo { get; private set; }
+        public BuildInfo BuildInfo { get;  set; }
+        public BuildAssetBundleParams BuildParams { get; set; }
 
         public override string ActiveStyle
         {
@@ -54,7 +55,14 @@ namespace BDFramework.Editor.AssetGraph.Node
                 return;
             }
 
-            this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+            if (this.BuildInfo == null)
+            {
+                this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+            }
+            if (this.BuildParams == null)
+            {
+                this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
+            }
 
             //开始搜集shader varint
             var outMap = new Dictionary<string, List<AssetReference>>();

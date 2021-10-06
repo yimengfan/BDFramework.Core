@@ -33,7 +33,7 @@ namespace BDFramework.Editor.AssetBundle
             GUILayout.BeginHorizontal();
             {
                 GUILayout.Space(30);
-                isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源(Windows Editor环境共用)");
+                isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源(Windows资源 Editor环境下共用)");
             }
             GUILayout.EndHorizontal();
             //
@@ -76,7 +76,7 @@ namespace BDFramework.Editor.AssetBundle
             options = (BuildAssetBundleOptions) EditorGUILayout.EnumPopup("压缩格式:", options);
 
             var assetConfig = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
-           //assetConfig.AESCode = EditorGUILayout.TextField("AES密钥(V2 only):", assetConfig.AESCode);
+            //assetConfig.AESCode = EditorGUILayout.TextField("AES密钥(V2 only):", assetConfig.AESCode);
             assetConfig.IsUseHashName = EditorGUILayout.Toggle("hash命名:", assetConfig.IsUseHashName);
         }
 
@@ -110,21 +110,16 @@ namespace BDFramework.Editor.AssetBundle
                 {
                     return;
                 }
+
                 //搜集keyword
                 ShaderCollection.SimpleGenShaderVariant();
                 //开始打包
                 BuildAsset();
             }
 
-            if (GUILayout.Button("AssetBundle还原目录", GUILayout.Width(380), GUILayout.Height(30)))
+            if (GUILayout.Button("AssetBundle SG打包测试", GUILayout.Width(380), GUILayout.Height(30)))
             {
-                exportPath = EditorUtility.OpenFolderPanel("选择资源目录", Application.dataPath, "");
-                if (string.IsNullOrEmpty(exportPath))
-                {
-                    return;
-                }
-
-                //AssetBundleEditorTools.HashName2AssetName(exportPath);
+                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, BDApplication.ProjectRoot + "/CI_TEMP", true);
             }
 
             GUILayout.EndVertical();

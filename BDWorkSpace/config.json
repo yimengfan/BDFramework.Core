@@ -7,7 +7,6 @@
     "AssetBundleFileServerUrl" : "http://127.0.0.1:20001"
   },
   "BuildAssetBundle" : {
-    "AESCode" : "bdframe$#@!@#",
     "IsUseHashName" : true
   },
   "Android"          : {

@@ -16,6 +16,7 @@ namespace BDFramework.Editor.AssetBundle
     static public class AssetBundleEditorToolsV2
     {
         static string RUNTIME_PATH = "/runtime/";
+
         /// <summary>
         /// 生成AssetBundle
         /// </summary>
@@ -29,29 +30,7 @@ namespace BDFramework.Editor.AssetBundle
             bool isHashName = false)
         {
             //构建平台
-            BuildTarget target = BuildTarget.Android;
-            switch (platform)
-            {
-                case RuntimePlatform.Android:
-                    target = BuildTarget.Android;
-                    break;
-                case RuntimePlatform.IPhonePlayer:
-                    target = BuildTarget.iOS;
-                    break;
-                case RuntimePlatform.WindowsEditor:
-                case RuntimePlatform.WindowsPlayer:
-                {
-                    target = BuildTarget.StandaloneWindows64;
-                }
-                    break;
-                case RuntimePlatform.OSXEditor:
-                case RuntimePlatform.OSXPlayer:
-                {
-                    target = BuildTarget.StandaloneOSX;
-                }
-                    break;
-            }
-
+            BuildTarget buildTarget = GetBuildTarget(platform);
             //开始构建
             var _outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform));
             //
@@ -103,12 +82,13 @@ namespace BDFramework.Editor.AssetBundle
                         assetItem.DependList[i] = dependAssetData.ABName;
                     }
                 }
+
                 //去重
                 assetItem.DependList = assetItem.DependList.Distinct().ToList();
                 assetItem.DependList.Remove(assetItem.ABName);
             }
 
-          
+
             if (isHashName)
             {
                 //使用guid 作为ab名
@@ -142,7 +122,6 @@ namespace BDFramework.Editor.AssetBundle
             }
             else
             {
-                
                 //2.整理runtime路径 替换路径名为Resource规则的名字
                 // 非Hash命名时，runtime目录的都放在一起，方便调试
                 foreach (var assetData in newbuildInfo.AssetDataMaps)
@@ -169,6 +148,7 @@ namespace BDFramework.Editor.AssetBundle
 
 
             #region 生成Runtime下的Art.Config
+
             //根据buildinfo 生成加载用的 Config
             //1.只保留Runtime目录下的配置
             ManifestConfig config = new ManifestConfig();
@@ -203,8 +183,8 @@ namespace BDFramework.Editor.AssetBundle
                     config.ManifestMap[key] = mi;
                 }
             }
-            
-            
+
+
             //写入
             FileHelper.WriteAllText(artOutputPath + "/Config.json", JsonMapper.ToJson(config));
 
@@ -236,7 +216,7 @@ namespace BDFramework.Editor.AssetBundle
             //3.生成AssetBundle
             try
             {
-                BuildAssetBundle(target, _outputPath, options);
+                BuildAssetBundle(buildTarget, _outputPath, options);
             }
             catch (Exception e)
             {
@@ -304,12 +284,11 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 资源类型配置
         /// </summary>
-        static Dictionary<ManifestItem.AssetTypeEnum, List<string>> AssetTypeConfigMap =
-            new Dictionary<ManifestItem.AssetTypeEnum, List<string>>()
-            {
-                {ManifestItem.AssetTypeEnum.Prefab, new List<string>() {".prefab"}}, //Prefab
-                {ManifestItem.AssetTypeEnum.SpriteAtlas, new List<string>() {".spriteatlas"}}, //Atlas
-            };
+        static Dictionary<ManifestItem.AssetTypeEnum, List<string>> AssetTypeConfigMap = new Dictionary<ManifestItem.AssetTypeEnum, List<string>>()
+        {
+            {ManifestItem.AssetTypeEnum.Prefab, new List<string>() {".prefab"}}, //Prefab
+            {ManifestItem.AssetTypeEnum.SpriteAtlas, new List<string>() {".spriteatlas"}}, //Atlas
+        };
 
         #endregion
 
@@ -442,7 +421,6 @@ namespace BDFramework.Editor.AssetBundle
             return buildInfo;
         }
 
-
         /// <summary>
         /// 获取改动的Assets
         /// </summary>
@@ -555,7 +533,6 @@ namespace BDFramework.Editor.AssetBundle
 
             return newAssetsInfo;
         }
-
 
         /// <summary>
         /// 创建assetbundle
@@ -737,57 +714,80 @@ namespace BDFramework.Editor.AssetBundle
 
             EditorUtility.ClearProgressBar();
         }
+        
+        
+        #region BuildTarget 和RuntimePlatform互转
 
-
-        public static void HashName2AssetName(string path)
+        /// <summary>
+        /// 获取AB构建平台
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        public static BuildTarget GetBuildTarget(RuntimePlatform platform)
         {
-            string android = "Android";
-            string iOS = "iOS";
-
-            android = IPath.Combine(path, android);
-            iOS = IPath.Combine(path, iOS);
-
-            string[] paths = new string[] {android, iOS};
-
-            foreach (var p in paths)
+            //构建平台
+            BuildTarget target = BuildTarget.Android;
+            switch (platform)
             {
-                if (!Directory.Exists(p))
+                case RuntimePlatform.Android:
+                    target = BuildTarget.Android;
+                    break;
+                case RuntimePlatform.IPhonePlayer:
+                    target = BuildTarget.iOS;
+                    break;
+                case RuntimePlatform.WindowsEditor:
+                case RuntimePlatform.WindowsPlayer:
                 {
-                    Debug.Log("不存在:" + p);
-                    continue;
+                    target = BuildTarget.StandaloneWindows64;
                 }
-
-                var cachePath = IPath.Combine(p, "Art/Cache.json");
-                var cacheDic = JsonMapper.ToObject<Dictionary<string, string>>(File.ReadAllText(cachePath));
-
-                float i = 0;
-                foreach (var cache in cacheDic)
+                    break;
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
                 {
-                    var source = IPath.Combine(p, "Art/" + cache.Value);
-                    var index = cache.Key.IndexOf("/Assets/");
-                    string t = "";
-                    if (index != -1)
-                    {
-                        t = cache.Key.Substring(index);
-                    }
-                    else
-                    {
-                        t = cache.Key;
-                    }
-
-                    var target = IPath.Combine(p, "ArtEditor/" + t);
-                    if (File.Exists(source))
-                    {
-                        FileHelper.WriteAllBytes(target, File.ReadAllBytes(source));
-                    }
-
-                    i++;
-                    EditorUtility.DisplayProgressBar("进度", i + "/" + cacheDic.Count, i / cacheDic.Count);
+                    target = BuildTarget.StandaloneOSX;
                 }
+                    break;
             }
 
-            EditorUtility.ClearProgressBar();
-            Debug.Log("还原完成!");
+            return target;
         }
+
+        /// <summary>
+        /// 获取runtimeplatform
+        /// </summary>
+        /// <param name="buildTarget"></param>
+        /// <returns></returns>
+        public static RuntimePlatform GetRuntimePlatform(BuildTarget buildTarget)
+        {
+            var platform = RuntimePlatform.Android;
+            switch (buildTarget)
+            {
+                case BuildTarget.Android:
+                {
+                    platform = RuntimePlatform.Android;
+                }
+                    break;
+                case BuildTarget.iOS:
+                {
+                    platform = RuntimePlatform.IPhonePlayer;
+                }
+                    break;
+                case BuildTarget.StandaloneWindows:
+                case BuildTarget.StandaloneWindows64:
+                {
+                    platform = RuntimePlatform.WindowsPlayer;
+                }
+                    break;
+                case BuildTarget.StandaloneOSX:
+                {
+                    platform = RuntimePlatform.OSXPlayer;
+                }
+                    break;
+            }
+
+            return platform;
+        }
+
+        #endregion
     }
 }

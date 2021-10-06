@@ -6,11 +6,15 @@ namespace BDFramework.Editor.AssetGraph.Node
     /// <summary>
     /// 序号
     /// </summary>
-    public interface IBDAssetBundleV2Node
+    public interface IBDFrameowrkAssetEnvParams
     {
         /// <summary>
         /// 当前buildinfo
         /// </summary>
-        BuildInfo BuildInfo { get; }
+        BuildInfo BuildInfo { get; set; }
+        /// <summary>
+        /// Build参数
+        /// </summary>
+        BuildAssetBundleParams BuildParams { get; set; }
     }
 }

@@ -13,15 +13,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 输出目录
         /// </summary>
-        public string OutputPath;
-        /// <summary>
-        /// 构建平台
-        /// </summary>
-        public RuntimePlatform Platform;
-        /// <summary>
-        /// 构建ab参数
-        /// </summary>
-        public BuildAssetBundleOptions Options = BuildAssetBundleOptions.ChunkBasedCompression;
+        public string OutputPath = Application.streamingAssetsPath;
         /// <summary>
         /// 是否使用hash
         /// </summary>

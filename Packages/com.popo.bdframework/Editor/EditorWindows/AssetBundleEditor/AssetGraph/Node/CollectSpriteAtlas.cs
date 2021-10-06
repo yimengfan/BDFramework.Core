@@ -9,9 +9,10 @@ using UnityEngine.AssetGraph.DataModel.Version2;
 namespace BDFramework.Editor.AssetGraph.Node
 {
     [CustomNode("BDFramework/[逻辑]搜集图集", 60)]
-    public class CollectSpriteAtlas : UnityEngine.AssetGraph.Node, IBDAssetBundleV2Node
+    public class CollectSpriteAtlas : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
         public BuildInfo BuildInfo { get; set; }
+        public BuildAssetBundleParams BuildParams { get; set; }
 
         public override string ActiveStyle
         {
@@ -49,9 +50,14 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
-
-            this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
-
+            if (this.BuildInfo == null)
+            {
+                this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+            }
+            if (this.BuildParams == null)
+            {
+                this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
+            }
             //找到runtime
             List<AssetReference> runtimeAssetReferenceList = null;
             incoming.FirstOrDefault()?.assetGroups.TryGetValue(nameof(BDFrameworkAssetsEnv.FloderType.Runtime), out runtimeAssetReferenceList);

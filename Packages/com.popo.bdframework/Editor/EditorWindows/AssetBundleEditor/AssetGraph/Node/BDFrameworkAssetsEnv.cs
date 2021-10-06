@@ -34,8 +34,23 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 打包Assetbundle的参数
         /// </summary>
-        static public BuildAssetBundleParams BuildAssetBundleParams { get; set; }
+        static public BuildAssetBundleParams BuildParams { get; set; }
 
+        private NodeGUI selfNode;
+
+        /// <summary>
+        /// 设置Params
+        /// </summary>
+        /// <param name="outpath"></param>
+        /// <param name="isUseHash"></param>
+        public void SetBuildParams(string outpath, bool isUseHash)
+        {
+            BuildParams = new BuildAssetBundleParams()
+            {
+                OutputPath = outpath,
+                IsUseHashName = isUseHash,
+            };
+        }
 
 
         #region 渲染相关信息
@@ -68,10 +83,10 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
+            this.selfNode = node;
         }
 
         #endregion
-
 
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
@@ -82,7 +97,16 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //构建对象
             BuildInfo = new BuildInfo();
-            BuildAssetBundleParams = new BuildAssetBundleParams();
+            if (BuildParams == null)
+            {
+                BuildParams = new BuildAssetBundleParams();
+            }
+
+
+            //设置所有节点参数请求,依次传参
+
+            Debug.Log("outpath:" + BuildParams.OutputPath);
+
             //搜集runtime资源
             var runtimeAssetList = new List<AssetReference>();
             foreach (var incom in incoming)
@@ -114,13 +138,13 @@ namespace BDFramework.Editor.AssetGraph.Node
 
 
             //输出
-            var outMap= new Dictionary<string, List<AssetReference>>
+            var outMap = new Dictionary<string, List<AssetReference>>
             {
                 {nameof(FloderType.Runtime), runtimeAssetList.ToList()}, //传递新容器
                 {nameof(FloderType.Depend), dependAssetList.ToList()}
             };
 
-            
+
             var output = connectionsToOutput?.FirstOrDefault();
             if (output != null)
             {
