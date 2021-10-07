@@ -68,13 +68,13 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 加载的manifest
         /// </summary>
-        private ManifestItem manifestItem { get; set; }
+        private AssetBundleItem AssetBundleItem { get; set; }
 
         private AssetBundleMgrV2 loder { get; set; }
 
         public LoaderTaskGroup(AssetBundleMgrV2 loder,
             string mainAssetName,
-            ManifestItem manifestItem,
+            AssetBundleItem assetBundleItem,
             List<LoaderTaskData> taskList,
             OnTaskCompleteCallbackDelegate onAllTaskCompleteCallbackDelegate)
         {
@@ -82,7 +82,7 @@ namespace BDFramework.ResourceMgr
             this.taskList = taskList;
             //主资源
             this.MainAssetName = mainAssetName;
-            this.manifestItem = manifestItem;
+            this.AssetBundleItem = assetBundleItem;
 
             this.totalTaskNum = taskList.Count;
             this.OnAllTaskCompleteCallback += onAllTaskCompleteCallbackDelegate;
@@ -143,7 +143,7 @@ namespace BDFramework.ResourceMgr
                             {
                                 //总进度通知
                                 IsComplete = true;
-                                var instObj = loder.LoadFormAssetBundle<Object>(this.MainAssetName, this.manifestItem);
+                                var instObj = loder.LoadFormAssetBundle<Object>(this.MainAssetName, this.AssetBundleItem);
                                 OnAllTaskCompleteCallback?.Invoke(MainAssetName, instObj);
                             }
                         }

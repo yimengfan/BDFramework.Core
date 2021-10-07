@@ -48,7 +48,7 @@ namespace BDFramework.Editor.EditorLife
             {
                 var charAssetData = buildInfo.AssetDataMaps[charPath];
                 //所有依赖的资源
-                foreach (var dependAssetKey in charAssetData.DependList)
+                foreach (var dependAssetKey in charAssetData.DependAssetList)
                 {
                     //
                     buildInfo.SetABName(dependAssetKey, charAssetData.ABName, BuildInfo.SetABNameMode.Simple);

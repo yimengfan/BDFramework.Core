@@ -64,7 +64,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             }
             //加载上一次缓存的资源
-            var lastbuildInfoPath = string.Format("{0}/{1}/{2}",this.BuildParams.OutputPath, BDApplication.GetPlatformPath(target),BResources.ASSET_BUILD_INFO_PATH);
+            var lastbuildInfoPath = string.Format("{0}/{1}/{2}",this.BuildParams.OutputPath, BDEditorApplication.GetPlatformPath(target),BResources.ASSET_BUILD_INFO_PATH);
             
             BuildInfo lastBuildInfo = new BuildInfo();
             if (File.Exists(lastbuildInfoPath))
@@ -124,11 +124,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             if (lastAssetsInfo.AssetDataMaps.Count != 0)
             {
                 Debug.Log("<color=red>开始增量分析...</color>");
-                var changedAssetList = new List<KeyValuePair<string, BuildInfo.AssetData>>();
+                var changedAssetList = new List<KeyValuePair<string, BuildInfo.BuildAssetData>>();
                 //找出差异文件
                 foreach (var newAssetItem in newAssetsInfo.AssetDataMaps)
                 {
-                    BuildInfo.AssetData lastAssetData = null;
+                    BuildInfo.BuildAssetData lastAssetData = null;
                     if (lastAssetsInfo.AssetDataMaps.TryGetValue(newAssetItem.Key, out lastAssetData))
                     {
                         if (lastAssetData.Hash == newAssetItem.Value.Hash)
@@ -147,9 +147,9 @@ namespace BDFramework.Editor.AssetGraph.Node
                     //1.添加自身的ab
                     rebuildABNameList.Add(tempAsset.Value.ABName);
                     //2.添加所有依赖的ab
-                    foreach (var depend in tempAsset.Value.DependList)
+                    foreach (var depend in tempAsset.Value.DependAssetList)
                     {
-                        BuildInfo.AssetData dependAssetData = null;
+                        BuildInfo.BuildAssetData dependAssetData = null;
                         if (newAssetsInfo.AssetDataMaps.TryGetValue(depend, out dependAssetData))
                         {
                             rebuildABNameList.Add(dependAssetData.ABName);
@@ -180,9 +180,9 @@ namespace BDFramework.Editor.AssetGraph.Node
                         }
 
                         //添加依赖文件
-                        foreach (var depend in assetdata.DependList)
+                        foreach (var depend in assetdata.DependAssetList)
                         {
-                            BuildInfo.AssetData dependAssetData = null;
+                            BuildInfo.BuildAssetData dependAssetData = null;
                             if (newAssetsInfo.AssetDataMaps.TryGetValue(depend, out dependAssetData))
                             {
                                 if (!rebuildABNameList.Contains(dependAssetData.ABName))
@@ -201,7 +201,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
 
 
-                var allRebuildAssets = new List<KeyValuePair<string, BuildInfo.AssetData>>();
+                var allRebuildAssets = new List<KeyValuePair<string, BuildInfo.BuildAssetData>>();
                 //根据影响的ab，寻找出所有文件
                 foreach (var abname in rebuildABNameList)
                 {

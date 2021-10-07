@@ -38,16 +38,17 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 资源类型配置
         /// </summary>
-        static public Dictionary<ManifestItem.AssetTypeEnum, List<string>> AssetTypeConfigMap = new Dictionary<ManifestItem.AssetTypeEnum, List<string>>()
+        static public Dictionary<AssetBundleItem.AssetTypeEnum, List<string>> AssetTypeConfigMap = new Dictionary<AssetBundleItem.AssetTypeEnum, List<string>>()
         {
-            {ManifestItem.AssetTypeEnum.Prefab, new List<string>() {".prefab"}}, //Prefab
-            {ManifestItem.AssetTypeEnum.SpriteAtlas, new List<string>() {".spriteatlas"}}, //Atlas
-            {ManifestItem.AssetTypeEnum.Texture, new List<string>() {".jpg", ".jpeg", ".png", ".tga"}}, //Tex
-            {ManifestItem.AssetTypeEnum.Mat, new List<string>() {".mat"}}, //mat
-            {ManifestItem.AssetTypeEnum.TextAsset, new List<string>() {".json", ".xml", ".info", ".txt"}}, //TextAsset
-            {ManifestItem.AssetTypeEnum.AudioClip, new List<string>() {".mp3", ".ogg", ".wav"}}, //sound
-            {ManifestItem.AssetTypeEnum.Mesh, new List<string>() {".mesh"}}, //sound
-            {ManifestItem.AssetTypeEnum.Font, new List<string>() {".fnt", ".fon", ".font", ".ttf", ".ttc", ".otf", ".eot",}}, //sound
+            {AssetBundleItem.AssetTypeEnum.Prefab, new List<string>() {".prefab"}}, //Prefab
+            {AssetBundleItem.AssetTypeEnum.SpriteAtlas, new List<string>() {".spriteatlas"}}, //Atlas
+            {AssetBundleItem.AssetTypeEnum.Texture, new List<string>() {".jpg", ".jpeg", ".png", ".tga"}}, //Tex
+            {AssetBundleItem.AssetTypeEnum.Mat, new List<string>() {".mat"}}, //mat
+            {AssetBundleItem.AssetTypeEnum.Shader, new List<string>() {".shader"}}, //mat
+            {AssetBundleItem.AssetTypeEnum.TextAsset, new List<string>() {".json", ".xml", ".info", ".txt"}}, //TextAsset
+            {AssetBundleItem.AssetTypeEnum.AudioClip, new List<string>() {".mp3", ".ogg", ".wav"}}, //sound
+            {AssetBundleItem.AssetTypeEnum.Mesh, new List<string>() {".mesh"}}, //sound
+            {AssetBundleItem.AssetTypeEnum.Font, new List<string>() {".fnt", ".fon", ".font", ".ttf", ".ttc", ".otf", ".eot",}}, //sound
         };
 
 
@@ -197,7 +198,7 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         /// <param name="assetPath"></param>
         /// <returns></returns>
-        static public ManifestItem.AssetTypeEnum GetAssetType(string assetPath)
+        static public AssetBundleItem.AssetTypeEnum GetAssetType(string assetPath)
         {
             var ext = Path.GetExtension(assetPath);
             foreach (var item in AssetTypeConfigMap)
@@ -208,7 +209,7 @@ namespace BDFramework.Editor.AssetBundle
                 }
             }
 
-            return ManifestItem.AssetTypeEnum.Others;
+            return AssetBundleItem.AssetTypeEnum.Others;
         }
 
         /// <summary>
@@ -231,7 +232,7 @@ namespace BDFramework.Editor.AssetBundle
                 //Debug.Log("【LoadTest】:" + runtimePath);
                 switch (type)
                 {
-                    case ManifestItem.AssetTypeEnum.Prefab:
+                    case AssetBundleItem.AssetTypeEnum.Prefab:
                     {
                         try
                         {
@@ -254,7 +255,7 @@ namespace BDFramework.Editor.AssetBundle
                         }
                     }
                         break;
-                    case ManifestItem.AssetTypeEnum.TextAsset:
+                    case AssetBundleItem.AssetTypeEnum.TextAsset:
                     {
                         //测试打印AssetText资源
                         var textAsset = BResources.Load<TextAsset>(runtimePath);

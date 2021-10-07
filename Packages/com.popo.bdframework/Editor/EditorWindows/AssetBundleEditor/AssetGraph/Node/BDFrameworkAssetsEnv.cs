@@ -173,7 +173,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 //获取依赖 并加入build info
                 foreach (var subAssetPath in dependeAssetsPath)
                 {
-                    var assetData = new BuildInfo.AssetData();
+                    var assetData = new BuildInfo.BuildAssetData();
                     assetData.Id = id;
                     assetData.Hash = GetHashFromAssets(subAssetPath);
                     assetData.ABName = subAssetPath;
@@ -183,7 +183,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     
                     //获取依赖
                     var dependeAssetList = GetDependencies(subAssetPath);
-                    assetData.DependList.AddRange(dependeAssetList);
+                    assetData.DependAssetList.AddRange(dependeAssetList);
                     //添加
                     BuildInfo.AssetDataMaps[subAssetPath] = assetData;
                     id++;
@@ -198,7 +198,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             foreach (var asset in BuildInfo.AssetDataMaps)
             {
                 //依赖中不包含自己
-                asset.Value.DependList.Remove(asset.Value.ABName);
+                asset.Value.DependAssetList.Remove(asset.Value.ABName);
             }
         }
 

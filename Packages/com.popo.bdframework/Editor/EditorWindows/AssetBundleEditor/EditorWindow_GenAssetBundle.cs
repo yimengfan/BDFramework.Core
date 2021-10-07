@@ -114,14 +114,16 @@ namespace BDFramework.Editor.AssetBundle
                 //开始打包
                 BuildAsset();
             }
-
-            if (GUILayout.Button("AssetBundle SG打包测试", GUILayout.Width(380), GUILayout.Height(30)))
+            
+            GUILayout.Label("测试:");
+            if (GUILayout.Button("AssetBundle SG打包测试(StreamingAsset)", GUILayout.Width(380), GUILayout.Height(30)))
             {
                 var outputpath = BDApplication.ProjectRoot + "/CI_TEMP";
-                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath, true);
+                var outputpath2 = Application.streamingAssetsPath;
+                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath2, true);
             }
 
-            if (GUILayout.Button("AssetBundle 加载测试", GUILayout.Width(380), GUILayout.Height(30)))
+            if (GUILayout.Button("AssetBundle 加载测试(StreamingAsset)", GUILayout.Width(380), GUILayout.Height(30)))
             {
                 var outputpath = BDApplication.ProjectRoot + "/CI_TEMP";
                 var outputpath2 = Application.streamingAssetsPath;

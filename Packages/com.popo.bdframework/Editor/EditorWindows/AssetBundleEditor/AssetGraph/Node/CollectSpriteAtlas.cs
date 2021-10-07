@@ -106,10 +106,10 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 var atlasAR = atlasAssetReferenceList[i];
                 //获取依赖中的tex,并设置AB名为atlas名
-                if (this.BuildInfo.AssetDataMaps.TryGetValue(atlasAR.importFrom, out BuildInfo.AssetData atlasAssetData))
+                if (this.BuildInfo.AssetDataMaps.TryGetValue(atlasAR.importFrom, out BuildInfo.BuildAssetData atlasAssetData))
                 {
                     //设置tex ab
-                    foreach (var dependTex in atlasAssetData.DependList)
+                    foreach (var dependTex in atlasAssetData.DependAssetList)
                     {
                         var ret = this.BuildInfo.SetABName(dependTex, atlasAR.importFrom, BuildInfo.SetABNameMode.Force);
                     }

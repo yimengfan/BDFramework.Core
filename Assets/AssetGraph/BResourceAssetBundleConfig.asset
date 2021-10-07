@@ -165,8 +165,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u903B\u8F91]\u68C0\u67E5\u53D8\u66F4\u8D44\u6E90"
     m_id: eb301d9c-cb22-4ebd-af33-9491e9c6be33
-    m_x: 1020
-    m_y: 396
+    m_x: 1056
+    m_y: 384
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectChangedAssets, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

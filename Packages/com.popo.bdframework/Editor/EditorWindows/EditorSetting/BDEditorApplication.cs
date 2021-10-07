@@ -3,6 +3,7 @@ using System.Net.Mime;
 using BDFramework.Core.Tools;
 using JetBrains.Annotations;
 using LitJson;
+using UnityEditor;
 using UnityEngine;
 
 namespace BDFramework.Editor
@@ -41,5 +42,23 @@ namespace BDFramework.Editor
             return BDAssetImporter.CacheData?.HotfixList.ToArray();
         }
         
+        /// <summary>
+        /// 平台资源的父路径
+        /// </summary>
+        public static string GetPlatformPath(BuildTarget buildTarget)
+        {
+            switch (buildTarget)
+            {
+                case BuildTarget.Android:
+                case BuildTarget.StandaloneWindows:
+                case BuildTarget.StandaloneWindows64:
+                    return "Android";
+                case BuildTarget.iOS:
+                case BuildTarget.StandaloneOSX:
+                    return "iOS";
+            }
+
+            return "";
+        }
     }
 }

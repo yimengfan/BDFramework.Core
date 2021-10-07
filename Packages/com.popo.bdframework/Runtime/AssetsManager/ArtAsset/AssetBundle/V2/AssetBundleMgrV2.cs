@@ -42,17 +42,17 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 异步回调表
         /// </summary>
-        private List<LoaderTaskGroup> allTaskGroupList= new List<LoaderTaskGroup>();
+        private List<LoaderTaskGroup> allTaskGroupList = new List<LoaderTaskGroup>();
 
         /// <summary>
         /// 全局唯一的依赖
         /// </summary>
-        private ManifestLoder loder;
+        private AssetbundleConfigLoder assetConfigLoder;
 
         /// <summary>
         /// 全局的assetbundle字典
         /// </summary>
-        public Dictionary<string, AssetBundleWapper> AssetbundleMap { get; private set; }= new Dictionary<string, AssetBundleWapper>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, AssetBundleWapper> AssetbundleMap { get; private set; } = new Dictionary<string, AssetBundleWapper>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// 资源加载路径
@@ -69,7 +69,7 @@ namespace BDFramework.ResourceMgr.V2
         public void Init(string path)
         {
             //多热更切换,需要卸载
-            if (this.loder != null)
+            if (this.assetConfigLoder != null)
             {
                 this.UnloadAllAsset();
             }
@@ -92,10 +92,10 @@ namespace BDFramework.ResourceMgr.V2
                 }
                     break;
             }
-            
+
             //加载Config
             var artconfigPath = "";
-            this.loder = new ManifestLoder();
+            this.assetConfigLoder = new AssetbundleConfigLoder();
             if (Application.isEditor)
             {
                 artconfigPath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_CONFIG_PATH);
@@ -106,7 +106,7 @@ namespace BDFramework.ResourceMgr.V2
                 artconfigPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_CONFIG_PATH);
             }
 
-            this.loder.Load(artconfigPath);
+            this.assetConfigLoder.Load(artconfigPath);
         }
 
 
@@ -120,25 +120,26 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public T Load<T>(string path) where T : UnityEngine.Object
         {
-            if (!this.loder.Manifest.IsHashName)
+            //非hash模式，需要debugRuntime
+            if (!this.assetConfigLoder.IsHashName)
             {
                 path = ZString.Format(DEBUG_RUNTIME, path);
             }
 
             //1.依赖路径
-            var item = loder.Manifest.GetManifest(path);
-            if (item != null)
+            var (assetBundleItem, dependAssetList) = assetConfigLoder.GetDependAssetsByName(path);
+            if (assetBundleItem != null)
             {
                 //加载依赖
-                foreach (var dependAsset in item.Depend)
+                foreach (var dependAssetBundle in dependAssetList)
                 {
-                    LoadAssetBundle(dependAsset);
+                    LoadAssetBundle(dependAssetBundle);
                 }
 
                 //加载主资源
-                LoadAssetBundle(item.Path);
+                LoadAssetBundle(assetBundleItem.AssetBundlePath);
                 //
-                return LoadFormAssetBundle<T>(path, item);
+                return LoadFormAssetBundle<T>(path, assetBundleItem);
             }
 
             return null;
@@ -156,15 +157,16 @@ namespace BDFramework.ResourceMgr.V2
         /// <exception cref="NotImplementedException"></exception>
         public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
         {
-            if (!this.loder.Manifest.IsHashName)
+            //非hash模式，需要debugRuntime
+            if (!this.assetConfigLoder.IsHashName)
             {
                 path = ZString.Format(DEBUG_RUNTIME, path);
             }
 
 
-            var item = loder.Manifest.GetManifest(path);
+            var item = assetConfigLoder.GetAssetBundleData(path);
             //加载assetbundle
-            AssetBundle ab = LoadAssetBundle(item.Path);
+            AssetBundle ab = LoadAssetBundle(item.AssetBundlePath);
 
             if (ab != null)
             {
@@ -196,7 +198,8 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public int AsyncLoad<T>(string assetName, Action<T> callback) where T : UnityEngine.Object
         {
-            if (!this.loder.Manifest.IsHashName)
+            //非hash模式，需要debugRuntime
+            if (!this.assetConfigLoder.IsHashName)
             {
                 assetName = ZString.Format(DEBUG_RUNTIME, assetName);
             }
@@ -204,22 +207,21 @@ namespace BDFramework.ResourceMgr.V2
 
             List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
             //获取依赖
-            var mainItem = loder.Manifest.GetManifest(assetName);
-            if (mainItem != null)
+            var (assetBundleItem, dependAssetList) = assetConfigLoder.GetDependAssetsByName(assetName);
+            if (assetBundleItem != null)
             {
                 //依赖资源
-                foreach (var r in mainItem.Depend)
+                foreach (var dependAsset in dependAssetList)
                 {
-                    var task = new LoaderTaskData(r, typeof(Object));
+                    var task = new LoaderTaskData(dependAsset, typeof(Object));
                     taskQueue.Add(task);
                 }
 
                 //主资源，
-                var mainTask = new LoaderTaskData(mainItem.Path, typeof(Object), true);
+                var mainTask = new LoaderTaskData(assetBundleItem.AssetBundlePath, typeof(Object), true);
                 taskQueue.Add(mainTask);
                 //添加任务组
-                var taskGroup = new LoaderTaskGroup(this, assetName, mainItem, taskQueue, //Loader接口
-                    (p, obj) =>
+                var taskGroup = new LoaderTaskGroup(this, assetName, assetBundleItem, taskQueue, (p, obj) =>
                     {
                         //完成回调
                         callback(obj as T);
@@ -367,7 +369,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="abName"></param>
         /// <param name="objName"></param>
         /// <returns></returns>
-        public T LoadFormAssetBundle<T>(string assetName, ManifestItem item) where T : UnityEngine.Object
+        public T LoadFormAssetBundle<T>(string assetName, AssetBundleItem item) where T : UnityEngine.Object
         {
             if (item != null)
             {
@@ -386,23 +388,23 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="abName"></param>
         /// <param name="objName"></param>
         /// <returns></returns>
-        private Object LoadFormAssetBundle(string assetName, ManifestItem item, Type t)
+        private Object LoadFormAssetBundle(string assetName, AssetBundleItem item, Type t)
         {
             Object o = null;
             AssetBundleWapper abr = null;
-            if (AssetbundleMap.TryGetValue(item.Path, out abr))
+            if (AssetbundleMap.TryGetValue(item.AssetBundlePath, out abr))
             {
-                switch ((ManifestItem.AssetTypeEnum) item.Type)
+                switch ((AssetBundleItem.AssetTypeEnum) item.Type)
                 {
                     //暂时需要特殊处理的只有一个
-                    case ManifestItem.AssetTypeEnum.SpriteAtlas:
+                    case AssetBundleItem.AssetTypeEnum.SpriteAtlas:
                     {
                         o = abr.LoadTextureFormAtlas(assetName);
                     }
                         break;
-                    case ManifestItem.AssetTypeEnum.Prefab:
-                    case ManifestItem.AssetTypeEnum.Texture:
-                    case ManifestItem.AssetTypeEnum.Others:
+                    case AssetBundleItem.AssetTypeEnum.Prefab:
+                    case AssetBundleItem.AssetTypeEnum.Texture:
+                    case AssetBundleItem.AssetTypeEnum.Others:
                     default:
                     {
                         o = abr.LoadAsset(assetName, t);
@@ -412,7 +414,7 @@ namespace BDFramework.ResourceMgr.V2
             }
             else
             {
-                BDebug.Log("资源不存在:" + assetName + " - " + item.Path, "red");
+                BDebug.Log("资源不存在:" + assetName + " - " + item.AssetBundlePath, "red");
 
                 return null;
             }
@@ -467,13 +469,13 @@ namespace BDFramework.ResourceMgr.V2
             string str;
 
             str = ZString.Concat(floder, "/");
-            if (!this.loder.Manifest.IsHashName)
+            if (!this.assetConfigLoder.IsHashName)
             {
                 str = ZString.Format(DEBUG_RUNTIME, str);
             }
 
 
-            foreach (var key in this.loder.Manifest.ManifestMap.Keys)
+            foreach (var key in this.assetConfigLoder.LoadPathIdxMap.Keys)
             {
                 if (key.StartsWith(str, StringComparison.OrdinalIgnoreCase))
                 {
@@ -497,7 +499,7 @@ namespace BDFramework.ResourceMgr.V2
                 });
             }
 
-            if (!this.loder.Manifest.IsHashName)
+            if (!this.assetConfigLoder.IsHashName)
             {
                 var count = "runtime/".Length;
                 for (int i = 0; i < rets.Count; i++)
@@ -553,26 +555,23 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 卸载
         /// </summary>
-        /// <param name="path">根据加载路径卸载</param>
+        /// <param name="assetName">根据加载路径卸载</param>
         /// <param name="isForceUnload">强制卸载</param>
-        public void UnloadAsset(string path, bool isForceUnload = false)
+        public void UnloadAsset(string assetName, bool isForceUnload = false)
         {
-            if (!this.loder.Manifest.IsHashName)
+            //非hash模式，需要debugRuntime
+            if (!this.assetConfigLoder.IsHashName)
             {
-                path = ZString.Format(DEBUG_RUNTIME, path);
+                assetName = ZString.Format(DEBUG_RUNTIME, assetName);
             }
-
-
-            var assetList = loder.Manifest.GetDependenciesByName(path);
-            if (assetList == null)
-            {
-                return;
-            }
-
+            
+            var (assetBundleItem, dependAssetList) = assetConfigLoder.GetDependAssetsByName(assetName);
+            //添加主资源一起卸载
+            dependAssetList.Add(assetBundleItem.AssetBundlePath);
             //卸载
-            for (int i = 0; i < assetList.Count; i++)
+            for (int i = 0; i < dependAssetList.Count; i++)
             {
-                var assetPath = assetList[i];
+                var assetPath = dependAssetList[i];
                 AssetBundleWapper abw = null;
 
                 if (AssetbundleMap.TryGetValue(assetPath, out abw))

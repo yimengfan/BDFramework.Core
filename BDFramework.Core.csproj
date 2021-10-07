@@ -86,11 +86,10 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Server.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Utils.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\LoaderTaskGroup.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleItem.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleMgrV2.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleWapper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\ManifestConfig.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\ManifestItem.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\ManifestLoder.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetbundleConfigLoder.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\BResources.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
@@ -455,6 +454,12 @@
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.unity.render-pipelines.core@7.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.Bcl.AsyncInterfaces">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.1.1.1/lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+ </Reference>
+ <Reference Include="ServiceStack.Text">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Assets/Packages/ServiceStack.Text.5.12.0/lib/netstandard2.0/ServiceStack.Text.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.30f1c2/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace BDFramework.Core.Tools
@@ -150,24 +149,7 @@ namespace BDFramework.Core.Tools
             return "";
         }
 
-        /// <summary>
-        /// 平台资源的父路径
-        /// </summary>
-        public static string GetPlatformPath(BuildTarget buildTarget)
-        {
-            switch (buildTarget)
-            {
-                case BuildTarget.Android:
-                case BuildTarget.StandaloneWindows:
-                case BuildTarget.StandaloneWindows64:
-                    return "Android";
-                case BuildTarget.iOS:
-                case BuildTarget.StandaloneOSX:
-                    return "iOS";
-            }
 
-            return "";
-        }
 
         #endregion
     }

@@ -9,7 +9,7 @@ namespace BDFramework.Editor.AssetBundle
     /// </summary>
     public class BuildInfo
     {
-        public class AssetData
+        public class BuildAssetData
         {
             /// <summary>
             /// Id
@@ -27,8 +27,7 @@ namespace BDFramework.Editor.AssetBundle
             /// 当自己自己处于某个ab中的时候这个不为null
             /// </summary>
             public string ABName { get; set; } = "";
-
-
+            
             /// <summary>
             /// 被依赖次数
             /// </summary>
@@ -42,7 +41,7 @@ namespace BDFramework.Editor.AssetBundle
             /// <summary>
             /// 依赖列表
             /// </summary>
-            public List<string> DependList { get; set; } = new List<string>();
+            public List<string> DependAssetList { get; set; } = new List<string>();
 
             /// <summary>
             /// 是否被多次引用
@@ -61,7 +60,7 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 资源列表
         /// </summary>
-        public Dictionary<string, AssetData> AssetDataMaps = new Dictionary<string, AssetData>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, BuildAssetData> AssetDataMaps = new Dictionary<string, BuildAssetData>(StringComparer.OrdinalIgnoreCase);
 
         public enum SetABNameMode
         {
@@ -127,11 +126,11 @@ namespace BDFramework.Editor.AssetBundle
                 foreach (var assetItem in this.AssetDataMaps)
                 {
                     //依赖替换
-                    for (int i = 0; i < assetItem.Value.DependList.Count; i++)
+                    for (int i = 0; i < assetItem.Value.DependAssetList.Count; i++)
                     {
-                        if (assetItem.Value.DependList[i] == assetName)
+                        if (assetItem.Value.DependAssetList[i] == assetName)
                         {
-                            assetItem.Value.DependList[i] = newABName;
+                            assetItem.Value.DependAssetList[i] = newABName;
                         }
                     }
                 }

@@ -22,13 +22,12 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 美术config配置
         /// </summary>
-        readonly static public string ASSET_CONFIG_PATH = ASSET_ROOT_PATH + "/Config.json";
+        readonly static public string ASSET_CONFIG_PATH = ASSET_ROOT_PATH + "/Config.Info";
         /// <summary>
-        /// 美术old config
+        /// 构建时的信息
         /// </summary>
-        readonly static public string ASSET_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/BuildInfo.json";
-        
-        readonly static public string ASSET_OLD_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/BuildInfo.json";
+        readonly static public string ASSET_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/Build.Info";
+        readonly static public string ASSET_OLD_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/OldBuild.Info";
         /// <summary>
         /// 初始化
         /// </summary>

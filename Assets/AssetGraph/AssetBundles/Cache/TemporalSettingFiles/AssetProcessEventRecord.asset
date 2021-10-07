@@ -12,18 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9a5f17c54584a67b7fe58665965f15, type: 3}
   m_Name: AssetProcessEventRecord
   m_EditorClassIdentifier: 
-  m_events:
-  - m_kind: 1
-    m_timestampUtc: 132780185741787921
-    m_assetName: 
-    m_assetGuid: 
-    m_graphGuid: 48d3455260f25b242ba46325b82b68f1
-    m_nodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
-    m_nodeName: "\u6253\u5305AssetBundle"
-    m_description: System.IO.FileNotFoundException:E:/Unity3d Project/Github/BDFramework.EnvCheck/CI_TEMP\Android/Art/BuildInfo.json
-      does not exist
-    m_howToFix: See Console for detail.
-  m_errorEventCount: 2
+  m_events: []
+  m_errorEventCount: 3
   m_infoEventCount: 0
   m_version: 1
   m_processStartIndex: 0

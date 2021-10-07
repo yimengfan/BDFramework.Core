@@ -13,12 +13,32 @@ MonoBehaviour:
   m_Name: AssetReferenceDB
   m_EditorClassIdentifier: 
   m_assets:
+  - m_assetDatabaseId: 1d081ca1b3ab10f4b83b885e106a17d1
+    m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetReferenceDB.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8c780839f4e0b0542992a555a74c5760
+    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/ArtAsset/AssetBundle/V2/AssetBundleMgrV2.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e0d43a5f0fefd2a44a57c8c54f0de839
+    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/ArtAsset/AssetBundle/V2/AssetbundleConfigLoder.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 378313d6f21247a282a431b8bb67190d
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/BuildAssetBundle.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dff0b2680f3f99941b7a426f1000a9a4
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/EditorWindow_GenAssetBundle.cs
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: bfcd26e55a55bd04f8a6f662bdde9abf
     m_importFrom: Assets/Resource_SVN/Runtime/Char/001.prefab
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 096dee19ab67ffc44ba3f8f790da67b4
-    m_importFrom: Assets/Resource_SVN/Runtime/CubeSVN.mat
+    m_importFrom: Assets/Resource_SVN/Runtime/CubeSVNMat.mat
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: ae37c57b09de2ec4399a3eceb62b77ea
@@ -157,6 +177,10 @@ MonoBehaviour:
     m_importFrom: Assets/Resource/Runtime/Mat/lwrp_lit_test.mat
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 9d59e1d84070e4c46a595b3112d75a40
+    m_importFrom: Assets/Resource/Runtime/Shader/AllShaders.shadervariants
+    m_exportTo: 
+    m_variantName: 
   - m_assetDatabaseId: 76c21518bd7f0e64ca49af74a4987cd9
     m_importFrom: Assets/Resource/Runtime/SpriteAtlas/SA2019.spriteatlas
     m_exportTo: 
@@ -233,12 +257,8 @@ MonoBehaviour:
     m_importFrom: Assets/Resource/Runtime/Windows/window_demoMain.prefab
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 1d081ca1b3ab10f4b83b885e106a17d1
-    m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetReferenceDB.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 826232c4a885a3441a21d73ba4048bea
-    m_importFrom: Assets/StreamingAssets/Android/Art/Config.json
+  - m_assetDatabaseId: 127a0d4a6b8e16145aa0371de3d86fab
+    m_importFrom: Assets/StreamingAssets/Android/Art/Config.Info
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 1cfa6e9ce36c19147835e400b734baa1
@@ -449,10 +469,6 @@ MonoBehaviour:
     m_importFrom: Assets/StreamingAssets/Android/Art/9d59e1d84070e4c46a595b3112d75a40
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 82cfd128e0212e6419a57cda4974dae3
-    m_importFrom: Assets/StreamingAssets/Android/Art/BuildInfo.json
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: e378b328671c21742a1ef55e42699caa
     m_importFrom: Assets/StreamingAssets/Android/Art/d1e9a6292667d134d8745300304b1824
     m_exportTo: 
@@ -491,6 +507,10 @@ MonoBehaviour:
     m_variantName: 
   - m_assetDatabaseId: 912a170be8ad89e4e88b947b09e24a77
     m_importFrom: Assets/StreamingAssets/Android/Art/0fab552ab15035e4d82bf9adc52725f6
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6a186e9b19e9f4b4fa431feead38c14c
+    m_importFrom: Assets/StreamingAssets/Android/Art/Build.Info
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 9f3f88acf78f67949832db3977b94d24
@@ -533,52 +553,8 @@ MonoBehaviour:
     m_importFrom: Assets/StreamingAssets/Android/Art/570885a00974e1d41b1f5d5b4dac96d6
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 0ad02c9a102914a48aee1cde2619ff7a
-    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/CLRBindings.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9c0e7c273b85c1f45af2c9f13b77dad4
-    m_importFrom: Assets/StreamingAssets/Android/Hotfix
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: a09a90a7ffd29774e8f56c5ac3b5a088
-    m_importFrom: Assets/StreamingAssets/Android/Hotfix/hotfix.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b6724b25278d2b14f81cc3df897db3f1
-    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Runtime_CompilerServices_AsyncTaskMet.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 7ee67d8784468064f9c7f761f9483103
-    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Type_t4.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 6123aa29db792d1499ec53271d7aeacf
-    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Int32_Bind.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8f748c9d7a29f4f458b32c1b0f7656de
-    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Runtime_CompilerServices_AsyncVoidMet.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: dfb7b95ae6c28e44dbaa0bc2a5cf9a5b
-    m_importFrom: Assets/StreamingAssets/Android/Local.db
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: dff0b2680f3f99941b7a426f1000a9a4
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/EditorWindow_GenAssetBundle.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1493bb1a310a1604a897a79989a0a471
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetBundleEditorToolsV2.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 709ffe0a86f9f0a418fd42875438b6f9
-    m_importFrom: Assets/Resource/Shaders/Tools.shadervariants
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9d59e1d84070e4c46a595b3112d75a40
-    m_importFrom: Assets/Resource/Runtime/Shader/AllShaders.shadervariants
+  - m_assetDatabaseId: 096dee19ab67ffc44ba3f8f790da67b4
+    m_importFrom: Assets/Resource_SVN/Runtime/CubeSVNMat.mat
     m_exportTo: 
     m_variantName: 
   m_version: 2

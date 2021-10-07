@@ -334,6 +334,12 @@
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.unity.render-pipelines.core@7.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
  </Reference>
+ <Reference Include="Microsoft.Bcl.AsyncInterfaces">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.1.1.1/lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+ </Reference>
+ <Reference Include="ServiceStack.Text">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Assets/Packages/ServiceStack.Text.5.12.0/lib/netstandard2.0/ServiceStack.Text.dll</HintPath>
+ </Reference>
  <Reference Include="nunit.framework">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
