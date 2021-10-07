@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.ResourceMgr;
 using LitJson;
@@ -50,8 +51,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
         }
 
-        public override void Prepare(BuildTarget target, NodeData nodeData,
-            IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput,
+        public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput,
             PerformGraph.Output outputFunc)
         {
 
@@ -64,7 +64,8 @@ namespace BDFramework.Editor.AssetGraph.Node
                 this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             }
             //加载上一次缓存的资源
-            var lastbuildInfoPath = IPath.Combine(this.BuildParams.OutputPath, BResources.ASSET_CONFIG_PATH);
+            var lastbuildInfoPath = string.Format("{0}/{1}/{2}",this.BuildParams.OutputPath, BDApplication.GetPlatformPath(target),BResources.ASSET_BUILD_INFO_PATH);
+            
             BuildInfo lastBuildInfo = new BuildInfo();
             if (File.Exists(lastbuildInfoPath))
             {

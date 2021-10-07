@@ -216,6 +216,7 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         static public void TestLoadAllAssetbundle(string abPath)
         {
+            
             UnityEngine.AssetBundle.UnloadAllAssetBundles(true);
             //初始化BResource
             BResources.Load(AssetLoadPath.StreamingAsset, abPath);
