@@ -1,15 +1,30 @@
-让游戏开发更专业！
-让专业开发更简单！
-让商业开发更高效！
-致力于打造简单、专业、高效的商业游戏工作流.
-                        - BDFramework.
+A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
-## V2.0.7 beta2
+## V2.0.7
+CN:
+【Editor】
+-重构部分类命名
+
+EN:
+【Editor】
+-Reconstruct class name
+
+## V2.0.7 bate2
+CN:
+【Nuget】
+-增加Nuget支持
+【Runtime】
+-修复bug: ios mac版本过高WWW不生效bug
+【Editor】
+-修复bug：mac版本下mono file.exsit() 操作失败.
+
+EN:
 【Nuget】
 -Add Nuget support.
-
 【Runtime】
--Fixed some on new ios 14.5 or m1 mac  bug.
+-Fixed bug: some on new ios 14.5 or m1 mac  bug.
+【Editor】
+-Fixed bug：Mono file.exsit() api excute fail.
 
 ## V2.0.7 beta1
 【Excel2Sqlite】
