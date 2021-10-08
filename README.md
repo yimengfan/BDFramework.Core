@@ -7,7 +7,6 @@
 
 # 简介(Introduction)
 Simple! Easy! Professional!  This‘s a powerful Unity3d game workflow!   
-Make game development easier!
 
 > 让游戏开发更专业！  
 > 让专业开发更简单！  
