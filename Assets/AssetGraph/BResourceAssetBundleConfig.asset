@@ -15,8 +15,8 @@ MonoBehaviour:
   m_allNodes:
   - m_name: Resource_SVN/Runtime
     m_id: 55f5366b-dbd1-403b-a6b0-54a43c16ec35
-    m_x: 84
-    m_y: 288
+    m_x: 48
+    m_y: 264
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -35,8 +35,8 @@ MonoBehaviour:
         height: 23
   - m_name: Resource/Runtime
     m_id: a059f8cb-da3d-4ec3-af2c-0db726d754fb
-    m_x: 84
-    m_y: 480
+    m_x: 36
+    m_y: 516
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -55,7 +55,7 @@ MonoBehaviour:
         height: 23
   - m_name: "\u641C\u96C6\u56FE\u96C6"
     m_id: 4e93d487-bd56-4bd3-a305-231aeed30565
-    m_x: 576
+    m_x: 540
     m_y: 384
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectSpriteAtlas, BDFramework.Editor,
@@ -85,8 +85,8 @@ MonoBehaviour:
         height: 23
   - m_name: "\u6253\u5305AssetBundle"
     m_id: 63fba693-49ce-4d28-87e4-a4d636cef6c1
-    m_x: 1476
-    m_y: 372
+    m_x: 1968
+    m_y: 276
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.BuildAssetBundle, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -105,8 +105,8 @@ MonoBehaviour:
     m_outputPoints: []
   - m_name: "\u641C\u96C6shader\u53D8\u4F53"
     m_id: ecbfb000-a67d-4e67-9eab-0fc9da0bfb6d
-    m_x: 780
-    m_y: 372
+    m_x: 744
+    m_y: 384
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectShaderKeyWord, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -135,7 +135,7 @@ MonoBehaviour:
         height: 23
   - m_name: "\u521D\u59CB\u5316\u6846\u67B6Assets\u73AF\u5883"
     m_id: 930cc3b6-804b-4b29-8590-6d63702cb695
-    m_x: 348
+    m_x: 288
     m_y: 384
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.BDFrameworkAssetsEnv, BDFramework.Editor,
@@ -165,7 +165,7 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u903B\u8F91]\u68C0\u67E5\u53D8\u66F4\u8D44\u6E90"
     m_id: eb301d9c-cb22-4ebd-af33-9491e9c6be33
-    m_x: 1056
+    m_x: 972
     m_y: 384
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectChangedAssets, BDFramework.Editor,
@@ -190,6 +190,266 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 147
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: "[\u7B5B\u9009]Group by Path"
+    m_id: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+    m_x: 1188
+    m_y: 276
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.FilterGroupByPath, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJncm91cEZpbHRlclBhdGhEYXRhTGlzdCI6W3siT3V0cHV0Tm9kZUlkIjoiZDZhZGJkYjgtNWI1YS00NDQ0LWI4NjAtOTA3ZGZjZGE3NTIxIiwiR3JvdXBQYXRoIjoiUnVudGltZSJ9LHsiT3V0cHV0Tm9kZUlkIjoiYjJkNjgwNDEtODY0Yy00MjA2LWJmMjctNjgxNWNiYjRjYjk2IiwiR3JvdXBQYXRoIjoiRGVwZW5kIn0seyJPdXRwdXROb2RlSWQiOiJkZjBhNTYxMC0zMGE5LTQxOWItOTA3My1lNjY4ZmZkMzMyOGEiLCJHcm91cFBhdGgiOiIyIn0seyJPdXRwdXROb2RlSWQiOiJhM2RlYTMxZC1mMTU3LTQ0MjctYjcyNy05ZWQ4M2QxZjY5M2MiLCJHcm91cFBhdGgiOiIzIn0seyJPdXRwdXROb2RlSWQiOiI4M2NlYjhjNi0zYjlmLTQ0NWItYmRiNy05ZTkxMjcxOTY2NmUiLCJHcm91cFBhdGgiOiI0In0seyJPdXRwdXROb2RlSWQiOiIzZjlmNDQyNy0wZWYyLTQ1MzItYmM2ZC00YzdkMmI4Y2RjYjgiLCJHcm91cFBhdGgiOiI1In1dfQ==
+    m_inputPoints:
+    - id: 471bee2e-e625-4d9e-9de0-db502d89950a
+      label: '-'
+      parentId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: d6adbdb8-5b5a-4444-b860-907dfcda7521
+      label: Runtime
+      parentId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 155
+        y: 33.5
+        width: 10
+        height: 23
+    - id: b2d68041-864c-4206-bf27-6815cbb4cb96
+      label: Depend
+      parentId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 155
+        y: 65.5
+        width: 10
+        height: 23
+    - id: df0a5610-30a9-419b-9073-e668ffd3328a
+      label: 2
+      parentId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 155
+        y: 97.5
+        width: 10
+        height: 23
+    - id: a3dea31d-f157-4427-b727-9ed83d1f693c
+      label: 3
+      parentId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 155
+        y: 129.5
+        width: 10
+        height: 23
+    - id: 83ceb8c6-3b9f-445b-bdb7-9e912719666e
+      label: 4
+      parentId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 155
+        y: 161.5
+        width: 10
+        height: 23
+    - id: 3f9f4427-0ef2-4532-bc6d-4c7d2b8cdcb8
+      label: 5
+      parentId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 155
+        y: 193.5
+        width: 10
+        height: 23
+  - m_name: "[\u9897\u7C92\u5EA6]\u6587\u4EF6\u5939\u89C4\u5219"
+    m_id: 1557fc8e-5e45-43e0-8bdf-d54e8a863ac6
+    m_x: 1560
+    m_y: 648
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFloder, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|e30=
+    m_inputPoints:
+    - id: 826a5910-cd49-47bf-9403-a578911fd03d
+      label: '-'
+      parentId: 1557fc8e-5e45-43e0-8bdf-d54e8a863ac6
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: c4763fb0-e512-4dde-97c0-222dbbdf7a2c
+      label: +
+      parentId: 1557fc8e-5e45-43e0-8bdf-d54e8a863ac6
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 147
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: "[\u9897\u7C92\u5EA6]\u6587\u4EF6\u5939\u89C4\u5219"
+    m_id: c605c2b2-1745-4973-988c-d2c831d0ff42
+    m_x: 1560
+    m_y: 552
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFloder, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|e30=
+    m_inputPoints:
+    - id: 49f9c8e7-0148-4be4-80ef-6fd99927938d
+      label: '-'
+      parentId: c605c2b2-1745-4973-988c-d2c831d0ff42
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 451bff7b-6ce5-42c5-86f2-fac6faf49914
+      label: +
+      parentId: c605c2b2-1745-4973-988c-d2c831d0ff42
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 147
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: "[\u9897\u7C92\u5EA6]\u6587\u4EF6\u5939\u89C4\u5219"
+    m_id: 92ad53a2-da30-4a26-b538-c1e92398452e
+    m_x: 1560
+    m_y: 468
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFloder, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|e30=
+    m_inputPoints:
+    - id: 23d3e38f-7f9f-4396-9d35-f25784d7a407
+      label: '-'
+      parentId: 92ad53a2-da30-4a26-b538-c1e92398452e
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 09128c15-f84d-4ad6-912e-46c6dec7b9e4
+      label: +
+      parentId: 92ad53a2-da30-4a26-b538-c1e92398452e
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 147
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: "[\u9897\u7C92\u5EA6]\u6587\u4EF6\u5939\u89C4\u5219"
+    m_id: f0b53594-d23f-4e51-bff4-5917909302c9
+    m_x: 1560
+    m_y: 372
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFloder, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|e30=
+    m_inputPoints:
+    - id: ecd3a235-7336-4093-a871-0e76b53c3357
+      label: '-'
+      parentId: f0b53594-d23f-4e51-bff4-5917909302c9
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: df95032b-5885-4fc8-baad-afcaf1abcbaf
+      label: +
+      parentId: f0b53594-d23f-4e51-bff4-5917909302c9
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 147
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: "[\u9897\u7C92\u5EA6]\u7A7A"
+    m_id: f0a7e664-dc8c-4745-830d-bfcce59909a9
+    m_x: 1572
+    m_y: 156
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|e30=
+    m_inputPoints:
+    - id: 21c82471-9657-4918-9967-db793c38521e
+      label: '-'
+      parentId: f0a7e664-dc8c-4745-830d-bfcce59909a9
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: f6f54c0e-48d3-48d8-b15f-f9d8792f5d15
+      label: +
+      parentId: f0a7e664-dc8c-4745-830d-bfcce59909a9
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 111
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: "[\u9897\u7C92\u5EA6]\u7A7A"
+    m_id: 460afec8-50b3-466f-817f-680daba012d3
+    m_x: 1572
+    m_y: 276
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|e30=
+    m_inputPoints:
+    - id: 9e30d973-5a96-488e-8b03-33eac0a33967
+      label: '-'
+      parentId: 460afec8-50b3-466f-817f-680daba012d3
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 2c23ac88-c327-4d6c-a519-b4399f5ff6cc
+      label: +
+      parentId: 460afec8-50b3-466f-817f-680daba012d3
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 111
         y: 33.5
         width: 10
         height: 23
@@ -224,13 +484,85 @@ MonoBehaviour:
     m_toNodeId: eb301d9c-cb22-4ebd-af33-9491e9c6be33
     m_toNodeConnectionPoiontId: 33d45852-cc92-48b4-8d8f-b5a16902d618
     m_label: +
-  - m_id: 236de910-4fb9-4fc3-b09c-28b2d501f307
+  - m_id: 1eba1444-b4f8-4ce4-9f31-eade6f9849ed
     m_fromNodeId: eb301d9c-cb22-4ebd-af33-9491e9c6be33
     m_fromNodeConnectionPointId: 0a54c562-a2aa-47ca-8785-d69f57face34
+    m_toNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+    m_toNodeConnectionPoiontId: 471bee2e-e625-4d9e-9de0-db502d89950a
+    m_label: +
+  - m_id: c31d343c-4098-45b3-82c0-9d96f6f63498
+    m_fromNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+    m_fromNodeConnectionPointId: 3f9f4427-0ef2-4532-bc6d-4c7d2b8cdcb8
+    m_toNodeId: 1557fc8e-5e45-43e0-8bdf-d54e8a863ac6
+    m_toNodeConnectionPoiontId: 826a5910-cd49-47bf-9403-a578911fd03d
+    m_label: 5
+  - m_id: 587726a4-34a1-42dd-945e-20aec722abdb
+    m_fromNodeId: 1557fc8e-5e45-43e0-8bdf-d54e8a863ac6
+    m_fromNodeConnectionPointId: c4763fb0-e512-4dde-97c0-222dbbdf7a2c
     m_toNodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
     m_toNodeConnectionPoiontId: 1bc423f3-4588-44cd-b253-2aa8eec05a5d
     m_label: +
-  m_lastModified: 132780064596403466
+  - m_id: 89fa3c7f-c2b1-478a-b701-8495735d8b99
+    m_fromNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+    m_fromNodeConnectionPointId: 83ceb8c6-3b9f-445b-bdb7-9e912719666e
+    m_toNodeId: c605c2b2-1745-4973-988c-d2c831d0ff42
+    m_toNodeConnectionPoiontId: 49f9c8e7-0148-4be4-80ef-6fd99927938d
+    m_label: 4
+  - m_id: be7833bb-0999-441f-9130-a0bf09abfeb2
+    m_fromNodeId: c605c2b2-1745-4973-988c-d2c831d0ff42
+    m_fromNodeConnectionPointId: 451bff7b-6ce5-42c5-86f2-fac6faf49914
+    m_toNodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
+    m_toNodeConnectionPoiontId: 1bc423f3-4588-44cd-b253-2aa8eec05a5d
+    m_label: +
+  - m_id: d51499bc-e07f-4a2d-9c66-d573b666edb1
+    m_fromNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+    m_fromNodeConnectionPointId: a3dea31d-f157-4427-b727-9ed83d1f693c
+    m_toNodeId: 92ad53a2-da30-4a26-b538-c1e92398452e
+    m_toNodeConnectionPoiontId: 23d3e38f-7f9f-4396-9d35-f25784d7a407
+    m_label: 3
+  - m_id: 0438f058-864c-46e9-854c-86e4dc34b67b
+    m_fromNodeId: 92ad53a2-da30-4a26-b538-c1e92398452e
+    m_fromNodeConnectionPointId: 09128c15-f84d-4ad6-912e-46c6dec7b9e4
+    m_toNodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
+    m_toNodeConnectionPoiontId: 1bc423f3-4588-44cd-b253-2aa8eec05a5d
+    m_label: +
+  - m_id: 53914af6-0c2f-4b0d-ac49-dae4095cfdd9
+    m_fromNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+    m_fromNodeConnectionPointId: df0a5610-30a9-419b-9073-e668ffd3328a
+    m_toNodeId: f0b53594-d23f-4e51-bff4-5917909302c9
+    m_toNodeConnectionPoiontId: ecd3a235-7336-4093-a871-0e76b53c3357
+    m_label: 2
+  - m_id: 93329060-6140-48bf-9132-0d7bd1d03ca3
+    m_fromNodeId: f0b53594-d23f-4e51-bff4-5917909302c9
+    m_fromNodeConnectionPointId: df95032b-5885-4fc8-baad-afcaf1abcbaf
+    m_toNodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
+    m_toNodeConnectionPoiontId: 1bc423f3-4588-44cd-b253-2aa8eec05a5d
+    m_label: +
+  - m_id: 25fe9d2d-2d3e-4f4b-bb4d-aea40bf652ae
+    m_fromNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+    m_fromNodeConnectionPointId: d6adbdb8-5b5a-4444-b860-907dfcda7521
+    m_toNodeId: f0a7e664-dc8c-4745-830d-bfcce59909a9
+    m_toNodeConnectionPoiontId: 21c82471-9657-4918-9967-db793c38521e
+    m_label: Runtime
+  - m_id: ff40f2f6-2617-41e6-83c8-9c86f83ff0a4
+    m_fromNodeId: f0a7e664-dc8c-4745-830d-bfcce59909a9
+    m_fromNodeConnectionPointId: f6f54c0e-48d3-48d8-b15f-f9d8792f5d15
+    m_toNodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
+    m_toNodeConnectionPoiontId: 1bc423f3-4588-44cd-b253-2aa8eec05a5d
+    m_label: +
+  - m_id: 580ce7f0-cca9-4734-ad4d-02890719b215
+    m_fromNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+    m_fromNodeConnectionPointId: b2d68041-864c-4206-bf27-6815cbb4cb96
+    m_toNodeId: 460afec8-50b3-466f-817f-680daba012d3
+    m_toNodeConnectionPoiontId: 9e30d973-5a96-488e-8b03-33eac0a33967
+    m_label: Depend
+  - m_id: 2f7f79c2-acec-4617-943c-d0836d0b79b7
+    m_fromNodeId: 460afec8-50b3-466f-817f-680daba012d3
+    m_fromNodeConnectionPointId: 2c23ac88-c327-4d6c-a519-b4399f5ff6cc
+    m_toNodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
+    m_toNodeConnectionPoiontId: 1bc423f3-4588-44cd-b253-2aa8eec05a5d
+    m_label: +
+  m_lastModified: 132781642814174794
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0
