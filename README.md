@@ -17,35 +17,36 @@ Simple! Easy! Professional!  This‘s a powerful Unity3d game workflow!
 If you find a bug or have some suggestions,please make issue! I'll get back to you!  
 任何问题直接提issue,24小时内必解决 （有时候邮件抽风，没收到，需要在群里at下我~）    
 github地址: https://github.com/yimengfan/BDFramework.Core  
-gitee地址: https://gitee.com/yimengfan/BDFramework.Core  ,速度慢下这个(顺便讨个赞)
+gitee地址: https://gitee.com/yimengfan/BDFramework.Core (国内比较快)
 
 ## 文档(Document)  
  ### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
  #### [English Wiki](http://www.nekosang.com)  
  #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
- #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
- ### [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  
-注:所有bug修复和新特性加入会先提交到Master分支。待审核期一个月，稳定则会提交Release版本 
+ #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)  
 
 # 安装使用(Start)
 #### OpenUPM(强烈推荐)：  
 https://openupm.cn/packages/com.popo.bdframework/?subPage=readme  
-或者:  
-手动复制框架文件夹到Package目录即可.  
 
 [安装教程](https://www.yuque.com/naipaopao/eg6gik/xy8dm4)  
+或者手动复制框架文件夹到Package目录亦可.  
 
 ## 贡献者名单
 [@gaojiexx](https://github.com/gaojiexx)  
 [@ricashao](https://github.com/ricashao)  
-如果需要项目方案定制、技术方案定制、技术培训,可以联系 QQ:755737878  
+如果需要项目方案定制、技术方案定制、项目支持,可以联系 QQ:755737878  
+
+## 发布（Publish）  
+### [Release版本](https://github.com/yimengfan/BDFramework.Core/releases)  
+注:所有bug修复和新特性加入会先提交到Master分支。待审核期通过，稳定则会发布Release版本 
 ### Demo：  
-九宫棋（带一套技能buff处理）:https://gitee.com/yimengfan/TheCatChess  
+九宫棋（带一套技能buff处理）:https://gitee.com/yimengfan/TheCatChess 
 ### v2.1版本计划: [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)   
  ##  V2版本已经发布!  
 #### 1.全面升级为UPM管理: [urp版本安装引导]( https://www.yuque.com/naipaopao/eg6gik/xy8dm4)  
       i.拷贝github中Package的BDFrame包到项目的Package下,导入Package中的Asset.package到工程Asset目录下即可   
-      ii.通过UPM安装,不过npm源更新较慢  
+      ii.通过OpenUPM安装
       iii.旧版本转移到Unity2019LTS_2021.04.06分支上  
 #### 2.全面适配URP管线工作流  
 #### 3.全面定制Unity Editor环境，升级编辑器操作。更便捷、人性化的开发体验  
