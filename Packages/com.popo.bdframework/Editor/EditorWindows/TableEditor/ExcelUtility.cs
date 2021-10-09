@@ -24,7 +24,7 @@ namespace BDFramework.Editor.TableData
         /// <param name="excelFile">Excel file.</param>
         public ExcelUtility(string excelFile)
         {
-            FileStream       mStream      = File.Open(excelFile, FileMode.Open, FileAccess.Read);
+            FileStream       mStream      = File.Open(excelFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             IExcelDataReader mExcelReader = ExcelReaderFactory.CreateOpenXmlReader(mStream);
             mResultSet = mExcelReader.AsDataSet();
         }
