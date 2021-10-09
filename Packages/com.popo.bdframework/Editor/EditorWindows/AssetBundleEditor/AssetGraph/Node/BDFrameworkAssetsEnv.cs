@@ -20,7 +20,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         public enum FloderType
         {
             Runtime,
-            Depend, //runtime依赖的目录
+            Depend,      //runtime依赖的目录
             SpriteAtlas, //图集
             Shaders,
         }
@@ -45,11 +45,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="isUseHash"></param>
         public void SetBuildParams(string outpath, bool isUseHash)
         {
-            BuildParams = new BuildAssetBundleParams()
-            {
-                OutputPath = outpath,
-                IsUseHashName = isUseHash,
-            };
+            BuildParams = new BuildAssetBundleParams() { OutputPath = outpath, IsUseHashName = isUseHash, };
         }
 
 
@@ -118,7 +114,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //生成所有资源
-            AllfileHashMap = new Dictionary<string, string>();
+            AllfileHashMap  = new Dictionary<string, string>();
             DependenciesMap = new Dictionary<string, List<string>>();
             this.GenBuildInfo(runtimeAssetList);
 
@@ -139,8 +135,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             //输出
             var outMap = new Dictionary<string, List<AssetReference>>
             {
-                {nameof(FloderType.Runtime), runtimeAssetList.ToList()}, //传递新容器
-                {nameof(FloderType.Depend), dependAssetList.ToList()}
+                { nameof(FloderType.Runtime), runtimeAssetList.ToList() }, //传递新容器
+                { nameof(FloderType.Depend), dependAssetList.ToList() }
             };
 
 
@@ -174,13 +170,13 @@ namespace BDFramework.Editor.AssetGraph.Node
                 foreach (var subAssetPath in dependeAssetsPath)
                 {
                     var assetData = new BuildInfo.BuildAssetData();
-                    assetData.Id = id;
-                    assetData.Hash = GetHashFromAssets(subAssetPath);
+                    assetData.Id     = id;
+                    assetData.Hash   = GetHashFromAssets(subAssetPath);
                     assetData.ABName = subAssetPath;
-                    
+
                     //判断资源类型
-                    assetData.Type = (int) AssetBundleEditorToolsV2.GetAssetType(subAssetPath);
-                    
+                    assetData.Type = (int)AssetBundleEditorToolsV2.GetAssetType(subAssetPath);
+
                     //获取依赖
                     var dependeAssetList = GetDependencies(subAssetPath);
                     assetData.DependAssetList.AddRange(dependeAssetList);
@@ -234,8 +230,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="allDependObjectPaths"></param>
         static private void CheckAssetsPath(List<string> list)
         {
-            if (list.Count == 0)
-                return;
+            if (list.Count == 0) return;
 
             for (int i = list.Count - 1; i >= 0; i--)
             {
@@ -289,13 +284,13 @@ namespace BDFramework.Editor.AssetGraph.Node
             try
             {
                 //这里使用 asset + meta 生成hash,防止其中一个修改导致的文件变动 没更新
-                var assetBytes = File.ReadAllBytes(fileName);
-                var metaBytes = File.ReadAllBytes(fileName + ".meta");
-                List<byte> byteList = new List<byte>();
+                var        assetBytes = File.ReadAllBytes(fileName);
+                var        metaBytes  = File.ReadAllBytes(fileName + ".meta");
+                List<byte> byteList   = new List<byte>();
                 byteList.AddRange(assetBytes);
                 byteList.AddRange(metaBytes);
                 //这里为了防止碰撞 考虑Sha256 512 但是速度会更慢
-                var sha1 = SHA256.Create();
+                var    sha1   = SHA256.Create();
                 byte[] retVal = sha1.ComputeHash(byteList.ToArray());
                 //hash
                 StringBuilder sb = new StringBuilder();
@@ -318,5 +313,30 @@ namespace BDFramework.Editor.AssetGraph.Node
         #endregion
 
         #endregion
+
+
+        /// <summary>
+        /// 刷新节点值
+        /// </summary>
+        /// <param name="nodeGUI"></param>
+        static public void UpdateNodeGraph(NodeGUI nodeGUI)
+        {
+            NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_NODE_UPDATED, nodeGUI));
+        }
+
+        /// <summary>
+        /// 更新连接线
+        /// </summary>
+        /// <param name="nodeGUI"></param>
+        /// <param name="outputConnect"></param>
+        static public void UpdateConnectLine(NodeGUI nodeGUI, ConnectionPointData outputConnect)
+        {
+            if (outputConnect == null)
+            {
+                return;
+            }
+
+            NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_CONNECTIONPOINT_LABELCHANGED, nodeGUI, Vector2.zero, outputConnect));
+        }
     }
 }

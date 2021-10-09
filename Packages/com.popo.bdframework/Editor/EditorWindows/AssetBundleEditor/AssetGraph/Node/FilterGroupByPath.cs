@@ -125,7 +125,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 //移除连接线
                 NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_CONNECTIONPOINT_DELETED, this.selfNodeGUI, Vector2.zero, rOutputNode));
                 //刷新
-                this.UpdateNodeGraph();
+                BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
             }
         }
 
@@ -152,8 +152,10 @@ namespace BDFramework.Editor.AssetGraph.Node
                 //更新
                 UpdateGroupPathData(idx);
                 var outputConnect = this.selfNodeGUI.Data.OutputPoints.Find((node) => node.Id == gp.OutputNodeId);
-                NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_CONNECTIONPOINT_LABELCHANGED, selfNodeGUI, Vector2.zero, outputConnect));
-                this.UpdateNodeGraph();
+
+
+                BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, outputConnect);
+                BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
             }
             if (idx < 2)
             {
@@ -214,10 +216,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 刷新节点渲染
         /// </summary>
-        private void UpdateNodeGraph()
-        {
-            NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_NODE_UPDATED, this.selfNodeGUI));
-        }
+    
 
         #endregion
 
@@ -249,7 +248,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
             }
 
-            //在depend 和runtime内进行筛选
+            //把depend、runtime内包含的移除掉 
             foreach (var ags in incoming)
             {
                 foreach (var group in ags.assetGroups)
@@ -269,7 +268,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                                     if (assetRef.importFrom.StartsWith(groupFilter.GroupPath, StringComparison.OrdinalIgnoreCase))
                                     {
                                         assetList.RemoveAt(i);
-                                        //添加到输出
+                                        //依次按分组输出
                                         outMap[groupFilter.GroupPath].Add(assetRef);
                                     }
                                 }
@@ -282,7 +281,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
 
-            //输出
+            //一次
             if (connectionsToOutput != null)
             {
                 foreach (var outpointNode in connectionsToOutput)
