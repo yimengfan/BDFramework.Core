@@ -49,6 +49,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         /// <summary>
         /// 所有输出路径
+        /// 这里的值一定要public，不然sg 用json序列化判断值未变化，则不会刷新
         /// </summary>
         [SerializeField]
         public List<GroupPathData> groupFilterPathDataList = new List<GroupPathData>();

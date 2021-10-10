@@ -17,7 +17,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/[颗粒度]文件夹规则", 30)]
     public class SetGranularityByFolder : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo              BuildInfo   { get; set; }
+        public BuildInfo BuildInfo { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
 
 
@@ -39,22 +39,10 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         /// <summary>
         /// 设置规则
+        /// 这里的值一定要public，不然sg 用json序列化判断值未变化，则不会刷新
         /// </summary>
-        private FolderAssetBundleRule BuildRule = FolderAssetBundleRule.用该目录路径设置AB名;
+        public int SetAssetBundleNameRule = (int) FolderAssetBundleRule.用该目录路径设置AB名;
 
-        public FolderAssetBundleRule SetWarpper_BuildRule
-        {
-            set
-            {
-                if (value != BuildRule)
-                {
-                    BuildRule = value;
-                    //刷新输出
-                    BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, this.selfNodeGUI.Data.OutputPoints.FirstOrDefault());
-                    BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
-                }
-            }
-        }
 
         public override string ActiveStyle
         {
@@ -85,12 +73,12 @@ namespace BDFramework.Editor.AssetGraph.Node
         }
 
         private NodeGUI selfNodeGUI;
-        private Action  onInspectorValueChanged;
+        private Action onInspectorValueChanged;
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
             this.onInspectorValueChanged = onValueChanged;
-            this.selfNodeGUI             = node;
+            this.selfNodeGUI = node;
             //node.Name                 = EditorGUILayout.TextField("Tips:",  node.Name);
             editor.UpdateNodeName(node);
             if (!node.Name.StartsWith("[颗粒度]"))
@@ -98,7 +86,23 @@ namespace BDFramework.Editor.AssetGraph.Node
                 node.Name = "[颗粒度]" + node.Name;
             }
 
-            this.SetWarpper_BuildRule = (FolderAssetBundleRule)EditorGUILayout.EnumPopup("设置规则", this.BuildRule);
+            bool isupdateNode = false;
+
+            //包装一层 方便监听改动
+            var ret = EditorGUILayout.EnumPopup("设置规则", (FolderAssetBundleRule) this.SetAssetBundleNameRule).GetHashCode();
+
+            if (ret != this.SetAssetBundleNameRule)
+            {
+                this.SetAssetBundleNameRule = ret;
+                isupdateNode = true;
+            }
+
+            if (isupdateNode)
+            {
+                //触发
+                BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, this.selfNodeGUI.Data.OutputPoints.FirstOrDefault());
+                BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
+            }
         }
 
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
@@ -121,21 +125,21 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //
             var outMap = new Dictionary<string, List<AssetReference>>();
-            switch (this.BuildRule)
+            switch ((FolderAssetBundleRule) this.SetAssetBundleNameRule)
             {
                 case FolderAssetBundleRule.用该目录路径设置AB名:
                 {
                     outMap = SetABNameUseThisFolderName(incoming);
                 }
                     break;
-                
+
                 case FolderAssetBundleRule.用子目录路径设置AB名:
                 {
                     outMap = DoSetABNameUseSubFolderName(incoming);
                 }
                     break;
             }
-            
+
             var output = connectionsToOutput?.FirstOrDefault();
             if (output != null)
             {

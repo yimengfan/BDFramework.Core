@@ -335,6 +335,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+      
 
             NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_CONNECTIONPOINT_LABELCHANGED, nodeGUI, Vector2.zero, outputConnect));
         }
