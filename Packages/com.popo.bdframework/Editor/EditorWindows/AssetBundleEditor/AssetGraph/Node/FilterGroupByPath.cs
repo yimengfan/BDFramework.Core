@@ -223,7 +223,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
-            Debug.Log("执行group filter prepare");
+            Debug.Log("prepare:" + this.GetType().Name + "-" + DateTime.Now.ToLongTimeString());
             if (incoming == null)
             {
                 return;

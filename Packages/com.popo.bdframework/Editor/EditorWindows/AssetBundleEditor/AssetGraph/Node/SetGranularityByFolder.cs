@@ -17,7 +17,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/[颗粒度]文件夹规则", 30)]
     public class SetGranularityByFolder : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo BuildInfo { get; set; }
+        public BuildInfo              BuildInfo   { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
 
 
@@ -41,8 +41,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// 设置规则
         /// 这里的值一定要public，不然sg 用json序列化判断值未变化，则不会刷新
         /// </summary>
-        public int SetAssetBundleNameRule = (int) FolderAssetBundleRule.用该目录路径设置AB名;
-
+        public int SetAssetBundleNameRule = (int)FolderAssetBundleRule.用该目录路径设置AB名;
 
         public override string ActiveStyle
         {
@@ -73,12 +72,12 @@ namespace BDFramework.Editor.AssetGraph.Node
         }
 
         private NodeGUI selfNodeGUI;
-        private Action onInspectorValueChanged;
+        private Action  onInspectorValueChanged;
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
             this.onInspectorValueChanged = onValueChanged;
-            this.selfNodeGUI = node;
+            this.selfNodeGUI             = node;
             //node.Name                 = EditorGUILayout.TextField("Tips:",  node.Name);
             editor.UpdateNodeName(node);
             if (!node.Name.StartsWith("[颗粒度]"))
@@ -89,16 +88,17 @@ namespace BDFramework.Editor.AssetGraph.Node
             bool isupdateNode = false;
 
             //包装一层 方便监听改动
-            var ret = EditorGUILayout.EnumPopup("设置规则", (FolderAssetBundleRule) this.SetAssetBundleNameRule).GetHashCode();
+            var ret = EditorGUILayout.EnumPopup("设置规则", (FolderAssetBundleRule)this.SetAssetBundleNameRule).GetHashCode();
 
             if (ret != this.SetAssetBundleNameRule)
             {
                 this.SetAssetBundleNameRule = ret;
-                isupdateNode = true;
+                isupdateNode                = true;
             }
 
             if (isupdateNode)
             {
+                Debug.Log("更新node!");
                 //触发
                 BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, this.selfNodeGUI.Data.OutputPoints.FirstOrDefault());
                 BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
@@ -107,12 +107,12 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
-            Debug.Log("刷新值!" + DateTime.Now.ToLongTimeString());
             if (incoming == null)
             {
                 return;
             }
 
+            Debug.Log("prepare:" + this.GetType().Name + "-" + DateTime.Now.ToLongTimeString());
             if (this.BuildInfo == null)
             {
                 this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
@@ -125,7 +125,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //
             var outMap = new Dictionary<string, List<AssetReference>>();
-            switch ((FolderAssetBundleRule) this.SetAssetBundleNameRule)
+            switch ((FolderAssetBundleRule)this.SetAssetBundleNameRule)
             {
                 case FolderAssetBundleRule.用该目录路径设置AB名:
                 {
@@ -191,13 +191,14 @@ namespace BDFramework.Editor.AssetGraph.Node
                 foreach (var ag in ags.assetGroups)
                 {
                     var floderPath = ag.Key;
-                    var subFolders = Directory.GetDirectories(floderPath, "", SearchOption.TopDirectoryOnly);
+                    var subFolders = Directory.GetDirectories(floderPath, "*", SearchOption.TopDirectoryOnly);
                     for (int i = 0; i < subFolders.Length; i++)
                     {
-                        subFolders[i] = subFolders[i] + "/";
-
-                        var guid = AssetDatabase.AssetPathToGUID(subFolders[i]);
-                        Debug.Log(guid);
+                        var subFolder = subFolders[i];
+                        var guid      = AssetDatabase.AssetPathToGUID(subFolder);
+                        outMap[subFolder] = new List<AssetReference>();
+                        //打印文件夹hash
+                        Debug.Log(subFolders[i] + " - " + guid);
                     }
 
                     foreach (var ar in ag.Value)
@@ -205,7 +206,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                         //设置ab名为子目录名,不覆盖在此之前的规则
                         foreach (var subFolder in subFolders)
                         {
-                            if (ar.importFrom.StartsWith(subFolder))
+                            if (ar.importFrom.StartsWith(subFolder + "/", StringComparison.OrdinalIgnoreCase))
                             {
                                 var ret = BuildInfo.SetABName(ar.importFrom, subFolder);
                                 if (!ret)

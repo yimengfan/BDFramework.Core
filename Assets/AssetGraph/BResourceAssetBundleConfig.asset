@@ -35,8 +35,8 @@ MonoBehaviour:
         height: 23
   - m_name: Resource/Runtime
     m_id: a059f8cb-da3d-4ec3-af2c-0db726d754fb
-    m_x: 72
-    m_y: 504
+    m_x: 48
+    m_y: 528
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -55,8 +55,8 @@ MonoBehaviour:
         height: 23
   - m_name: "\u641C\u96C6\u56FE\u96C6"
     m_id: 4e93d487-bd56-4bd3-a305-231aeed30565
-    m_x: 540
-    m_y: 384
+    m_x: 504
+    m_y: 408
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectSpriteAtlas, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -85,8 +85,8 @@ MonoBehaviour:
         height: 23
   - m_name: "\u6253\u5305AssetBundle"
     m_id: 63fba693-49ce-4d28-87e4-a4d636cef6c1
-    m_x: 2016
-    m_y: 348
+    m_x: 2064
+    m_y: 360
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.BuildAssetBundle, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -105,8 +105,8 @@ MonoBehaviour:
     m_outputPoints: []
   - m_name: "\u641C\u96C6shader\u53D8\u4F53"
     m_id: ecbfb000-a67d-4e67-9eab-0fc9da0bfb6d
-    m_x: 744
-    m_y: 384
+    m_x: 732
+    m_y: 408
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectShaderKeyWord, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -135,8 +135,8 @@ MonoBehaviour:
         height: 23
   - m_name: "\u521D\u59CB\u5316\u6846\u67B6Assets\u73AF\u5883"
     m_id: 930cc3b6-804b-4b29-8590-6d63702cb695
-    m_x: 288
-    m_y: 384
+    m_x: 240
+    m_y: 408
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.BDFrameworkAssetsEnv, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -165,8 +165,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u903B\u8F91]\u68C0\u67E5\u53D8\u66F4\u8D44\u6E90"
     m_id: eb301d9c-cb22-4ebd-af33-9491e9c6be33
-    m_x: 972
-    m_y: 384
+    m_x: 960
+    m_y: 396
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectChangedAssets, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -195,12 +195,12 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u7B5B\u9009]Group by Path"
     m_id: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
-    m_x: 1224
-    m_y: 300
+    m_x: 1176
+    m_y: 324
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.FilterGroupByPath, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|eyJncm91cEZpbHRlclBhdGhEYXRhTGlzdCI6W3siT3V0cHV0Tm9kZUlkIjoiZDZhZGJkYjgtNWI1YS00NDQ0LWI4NjAtOTA3ZGZjZGE3NTIxIiwiR3JvdXBQYXRoIjoiUnVudGltZSJ9LHsiT3V0cHV0Tm9kZUlkIjoiYjJkNjgwNDEtODY0Yy00MjA2LWJmMjctNjgxNWNiYjRjYjk2IiwiR3JvdXBQYXRoIjoiRGVwZW5kIn0seyJPdXRwdXROb2RlSWQiOiJkZjBhNTYxMC0zMGE5LTQxOWItOTA3My1lNjY4ZmZkMzMyOGEiLCJHcm91cFBhdGgiOiJBc3NldHMvUmVzb3VyY2VfU1ZOL01vZGVsLyJ9LHsiT3V0cHV0Tm9kZUlkIjoiYTNkZWEzMWQtZjE1Ny00NDI3LWI3MjctOWVkODNkMWY2OTNjIiwiR3JvdXBQYXRoIjoiMyJ9XX0=
+      m_instanceData: B64|eyJncm91cEZpbHRlclBhdGhEYXRhTGlzdCI6W3siT3V0cHV0Tm9kZUlkIjoiZDZhZGJkYjgtNWI1YS00NDQ0LWI4NjAtOTA3ZGZjZGE3NTIxIiwiR3JvdXBQYXRoIjoiUnVudGltZSJ9LHsiT3V0cHV0Tm9kZUlkIjoiYjJkNjgwNDEtODY0Yy00MjA2LWJmMjctNjgxNWNiYjRjYjk2IiwiR3JvdXBQYXRoIjoiRGVwZW5kIn0seyJPdXRwdXROb2RlSWQiOiJkZjBhNTYxMC0zMGE5LTQxOWItOTA3My1lNjY4ZmZkMzMyOGEiLCJHcm91cFBhdGgiOiJBc3NldHMvUmVzb3VyY2VfU1ZOL01vZGVsLyJ9XX0=
     m_inputPoints:
     - id: 471bee2e-e625-4d9e-9de0-db502d89950a
       label: '-'
@@ -243,76 +243,6 @@ MonoBehaviour:
         y: 97.5
         width: 10
         height: 23
-    - id: a3dea31d-f157-4427-b727-9ed83d1f693c
-      label: 3
-      parentId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 220
-        y: 129.5
-        width: 10
-        height: 23
-  - m_name: "[\u9897\u7C92\u5EA6]\u6587\u4EF6\u5939\u89C4\u5219"
-    m_id: 92ad53a2-da30-4a26-b538-c1e92398452e
-    m_x: 1632
-    m_y: 564
-    m_nodeInstance:
-      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFloder, BDFramework.Editor,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|e30=
-    m_inputPoints:
-    - id: 23d3e38f-7f9f-4396-9d35-f25784d7a407
-      label: '-'
-      parentId: 92ad53a2-da30-4a26-b538-c1e92398452e
-      isInput: 1
-      buttonRect:
-        serializedVersion: 2
-        x: 0
-        y: 30.5
-        width: 21
-        height: 29
-    m_outputPoints:
-    - id: 09128c15-f84d-4ad6-912e-46c6dec7b9e4
-      label: +
-      parentId: 92ad53a2-da30-4a26-b538-c1e92398452e
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 147
-        y: 33.5
-        width: 10
-        height: 23
-  - m_name: "[\u9897\u7C92\u5EA6]\u6D4B\u8BD53d\u6A21\u578B\u9897\u7C92\u5EA6"
-    m_id: f0b53594-d23f-4e51-bff4-5917909302c9
-    m_x: 1620
-    m_y: 432
-    m_nodeInstance:
-      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFloder, BDFramework.Editor,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|e30=
-    m_inputPoints:
-    - id: ecd3a235-7336-4093-a871-0e76b53c3357
-      label: '-'
-      parentId: f0b53594-d23f-4e51-bff4-5917909302c9
-      isInput: 1
-      buttonRect:
-        serializedVersion: 2
-        x: 0
-        y: 30.5
-        width: 21
-        height: 29
-    m_outputPoints:
-    - id: df95032b-5885-4fc8-baad-afcaf1abcbaf
-      label: +
-      parentId: f0b53594-d23f-4e51-bff4-5917909302c9
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 186
-        y: 33.5
-        width: 10
-        height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u7A7A"
     m_id: f0a7e664-dc8c-4745-830d-bfcce59909a9
     m_x: 1644
@@ -345,8 +275,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u7A7A"
     m_id: 460afec8-50b3-466f-817f-680daba012d3
-    m_x: 1644
-    m_y: 264
+    m_x: 1656
+    m_y: 372
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -370,6 +300,36 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: "[\u9897\u7C92\u5EA6]\u6D4B\u8BD5\u6A21\u578B\u5B50\u76EE\u5F55"
+    m_id: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
+    m_x: 1608
+    m_y: 588
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFolder, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJTZXRBc3NldEJ1bmRsZU5hbWVSdWxlIjoxfQ==
+    m_inputPoints:
+    - id: 04553e4a-d5e6-4d37-87bb-c10b717f8052
+      label: '-'
+      parentId: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 02582e32-2013-4817-87e3-019f839fe93d
+      label: +
+      parentId: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 171
         y: 33.5
         width: 10
         height: 23
@@ -410,30 +370,6 @@ MonoBehaviour:
     m_toNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
     m_toNodeConnectionPoiontId: 471bee2e-e625-4d9e-9de0-db502d89950a
     m_label: +
-  - m_id: d51499bc-e07f-4a2d-9c66-d573b666edb1
-    m_fromNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
-    m_fromNodeConnectionPointId: a3dea31d-f157-4427-b727-9ed83d1f693c
-    m_toNodeId: 92ad53a2-da30-4a26-b538-c1e92398452e
-    m_toNodeConnectionPoiontId: 23d3e38f-7f9f-4396-9d35-f25784d7a407
-    m_label: 3
-  - m_id: 0438f058-864c-46e9-854c-86e4dc34b67b
-    m_fromNodeId: 92ad53a2-da30-4a26-b538-c1e92398452e
-    m_fromNodeConnectionPointId: 09128c15-f84d-4ad6-912e-46c6dec7b9e4
-    m_toNodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
-    m_toNodeConnectionPoiontId: 1bc423f3-4588-44cd-b253-2aa8eec05a5d
-    m_label: +
-  - m_id: 53914af6-0c2f-4b0d-ac49-dae4095cfdd9
-    m_fromNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
-    m_fromNodeConnectionPointId: df0a5610-30a9-419b-9073-e668ffd3328a
-    m_toNodeId: f0b53594-d23f-4e51-bff4-5917909302c9
-    m_toNodeConnectionPoiontId: ecd3a235-7336-4093-a871-0e76b53c3357
-    m_label: Assets/Resource_SVN/Model/
-  - m_id: 93329060-6140-48bf-9132-0d7bd1d03ca3
-    m_fromNodeId: f0b53594-d23f-4e51-bff4-5917909302c9
-    m_fromNodeConnectionPointId: df95032b-5885-4fc8-baad-afcaf1abcbaf
-    m_toNodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
-    m_toNodeConnectionPoiontId: 1bc423f3-4588-44cd-b253-2aa8eec05a5d
-    m_label: +
   - m_id: 25fe9d2d-2d3e-4f4b-bb4d-aea40bf652ae
     m_fromNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
     m_fromNodeConnectionPointId: d6adbdb8-5b5a-4444-b860-907dfcda7521
@@ -458,7 +394,19 @@ MonoBehaviour:
     m_toNodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
     m_toNodeConnectionPoiontId: 1bc423f3-4588-44cd-b253-2aa8eec05a5d
     m_label: +
-  m_lastModified: 132782371608837000
+  - m_id: 0f3c3a2b-032d-4dfb-99cc-9f08fc561fcf
+    m_fromNodeId: c8eea466-3f9f-4a0e-ad76-9ef9eaa3c4b8
+    m_fromNodeConnectionPointId: df0a5610-30a9-419b-9073-e668ffd3328a
+    m_toNodeId: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
+    m_toNodeConnectionPoiontId: 04553e4a-d5e6-4d37-87bb-c10b717f8052
+    m_label: Assets/Resource_SVN/Model/
+  - m_id: dc4117d3-557b-4387-af5b-487f5c7e1d99
+    m_fromNodeId: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
+    m_fromNodeConnectionPointId: 02582e32-2013-4817-87e3-019f839fe93d
+    m_toNodeId: 63fba693-49ce-4d28-87e4-a4d636cef6c1
+    m_toNodeConnectionPoiontId: 1bc423f3-4588-44cd-b253-2aa8eec05a5d
+    m_label: +
+  m_lastModified: 132784129301544680
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0

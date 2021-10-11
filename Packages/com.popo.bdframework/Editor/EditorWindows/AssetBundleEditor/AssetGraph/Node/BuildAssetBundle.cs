@@ -20,7 +20,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/打包AssetBundle", 100)]
     public class BuildAssetBundle : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo BuildInfo { get; set; }
+        public BuildInfo              BuildInfo   { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
 
         public override string ActiveStyle
@@ -49,15 +49,47 @@ namespace BDFramework.Editor.AssetGraph.Node
             return new BuildAssetBundle();
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager,
-            NodeGUIEditor editor,
-            Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
         }
 
-        public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc,
-            Action<NodeData, string, float> progressFunc)
+
+        public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
+            Debug.Log("执行Build AB Prepare");
+
+            //这里只做临时的输出，预览用，不做实际更改
+            BuildInfo tempBuildInfo = null;
+            if (this.BuildInfo == null)
+            {
+                var json = JsonMapper.ToJson(BDFrameworkAssetsEnv.BuildInfo);
+                tempBuildInfo = JsonMapper.ToObject<BuildInfo>(json);
+            }
+
+            if (this.BuildParams == null)
+            {
+                this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
+            }
+
+            var platform = AssetBundleEditorToolsV2.GetRuntimePlatform(target);
+            this.MergeABName(tempBuildInfo, BuildParams);
+            var artConfig = this.GenArtConfig(tempBuildInfo, BuildParams, platform);
+            
+            //输出节点 预览
+            var outMap = new Dictionary<string, List<AssetReference>>();
+            
+            
+            
+            var output = connectionsToOutput?.FirstOrDefault();
+            if (output != null)
+            {
+                outputFunc(output, outMap);
+            }
+        }
+
+        public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc, Action<NodeData, string, float> progressFunc)
+        {
+            Debug.Log("执行Build AB!");
             if (this.BuildInfo == null)
             {
                 this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
@@ -70,8 +102,17 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //-----------------------开始打包AssetBundle逻辑---------------------------
             var platform = AssetBundleEditorToolsV2.GetRuntimePlatform(buildTarget);
+            //1.整理abname
             this.MergeABName(BuildInfo, BuildParams);
-            this.GenArtConfig(BuildInfo, BuildParams, platform);
+
+            //2.生成artconfig
+            var artConfig  = this.GenArtConfig(BuildInfo, BuildParams, platform);
+            var outputPath = Path.Combine(BuildParams.OutputPath, BDApplication.GetPlatformPath(platform));
+            var configPath = IPath.Combine(outputPath, BResources.ASSET_CONFIG_PATH);
+            var csv        = CsvSerializer.SerializeToString(artConfig);
+            FileHelper.WriteAllText(configPath, csv);
+
+            //3.打包
             this.BuildAB(incoming, BuildInfo, BuildParams, platform);
         }
 
@@ -173,24 +214,24 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         ///生成Runtime下的Art.Config
         /// </summary>
-        private void GenArtConfig(BuildInfo buildInfo, BuildAssetBundleParams buildParams, RuntimePlatform platform)
+        private List<AssetBundleItem> GenArtConfig(BuildInfo buildInfo, BuildAssetBundleParams buildParams, RuntimePlatform platform)
         {
             //根据buildinfo 生成加载用的 Config
             //1.导出配置
-            var saveAssetBundleDataList = new List<AssetBundleItem>();
+            var artConfig = new List<AssetBundleItem>();
             //占位，让id和idx恒相等
-            saveAssetBundleDataList.Add(new AssetBundleItem(0, null, null, AssetBundleItem.AssetTypeEnum.Others, new List<int>()));
+            artConfig.Add(new AssetBundleItem(0, null, null, AssetBundleItem.AssetTypeEnum.Others, new List<int>()));
             //先搜集非runtime的
             foreach (var item in buildInfo.AssetDataMaps)
             {
                 //非runtime的只需要被索引AB
                 if (!item.Key.Contains(RUNTIME_PATH))
                 {
-                    var ret = saveAssetBundleDataList.FirstOrDefault((ab) => ab.AssetBundlePath == item.Value.ABName);
+                    var ret = artConfig.FirstOrDefault((ab) => ab.AssetBundlePath == item.Value.ABName);
                     if (ret == null) //不保存重复内容
                     {
-                        var mi = new AssetBundleItem(saveAssetBundleDataList.Count, null, item.Value.ABName, (AssetBundleItem.AssetTypeEnum) item.Value.Type, new List<int>());
-                        saveAssetBundleDataList.Add(mi);
+                        var mi = new AssetBundleItem(artConfig.Count, null, item.Value.ABName, (AssetBundleItem.AssetTypeEnum)item.Value.Type, new List<int>());
+                        artConfig.Add(mi);
                     }
                 }
             }
@@ -220,13 +261,13 @@ namespace BDFramework.Editor.AssetGraph.Node
                     }
 
                     //添加
-                    var mi = new AssetBundleItem(saveAssetBundleDataList.Count, key, item.Value.ABName, (AssetBundleItem.AssetTypeEnum) item.Value.Type, new List<int>());
-                    saveAssetBundleDataList.Add(mi); //.ManifestMap[key] = mi;
+                    var mi = new AssetBundleItem(artConfig.Count, key, item.Value.ABName, (AssetBundleItem.AssetTypeEnum)item.Value.Type, new List<int>());
+                    artConfig.Add(mi); //.ManifestMap[key] = mi;
                 }
             }
 
             //将depend替换成Id
-            foreach (var assetbundleData in saveAssetBundleDataList)
+            foreach (var assetbundleData in artConfig)
             {
                 if (!string.IsNullOrEmpty(assetbundleData.LoadPath))
                 {
@@ -236,31 +277,28 @@ namespace BDFramework.Editor.AssetGraph.Node
                     {
                         var dependAssetName = buildAssetData.DependAssetList[i];
                         //寻找保存列表中依赖的id（可以认为是下标）
-                        var dependAssetBuildData = saveAssetBundleDataList.FirstOrDefault((asset) => asset.AssetBundlePath == dependAssetName);
+                        var dependAssetBuildData = artConfig.FirstOrDefault((asset) => asset.AssetBundlePath == dependAssetName);
                         assetbundleData.DependAssetIds.Add(dependAssetBuildData.Id);
                     }
                 }
             }
 
             //检查同名文件
-            foreach (var abi in saveAssetBundleDataList)
+            foreach (var abi in artConfig)
             {
                 if (string.IsNullOrEmpty(abi.LoadPath))
                 {
                     continue;
                 }
-                var result = saveAssetBundleDataList.FindAll((ab) => ab.LoadPath == abi.LoadPath);
+
+                var result = artConfig.FindAll((ab) => ab.LoadPath == abi.LoadPath);
                 if (result.Count > 1)
                 {
                     Debug.LogError("【AssetbundleV2】有同名文件(不包含后缀)，加载存在不确定性，请修改! -" + abi.LoadPath);
                 }
             }
 
-            //AssetBundle list写入本地
-            var outputPath = Path.Combine(buildParams.OutputPath, BDApplication.GetPlatformPath(platform));
-            var configPath = IPath.Combine(outputPath, BResources.ASSET_CONFIG_PATH);
-            var csv = CsvSerializer.SerializeToString(saveAssetBundleDataList);
-            FileHelper.WriteAllText(configPath, csv);
+            return artConfig;
         }
 
 
@@ -292,8 +330,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //----------------------------生成AssetBundle-------------------------------
-            var platformOutputPath = Path.Combine(buildParams.OutputPath, BDApplication.GetPlatformPath(platform));
-            string artOutputPath = IPath.Combine(platformOutputPath, BResources.ASSET_ROOT_PATH);
+            var    platformOutputPath = Path.Combine(buildParams.OutputPath, BDApplication.GetPlatformPath(platform));
+            string artOutputPath      = IPath.Combine(platformOutputPath, BResources.ASSET_ROOT_PATH);
             try
             {
                 AssetDatabase.RemoveUnusedAssetBundleNames();
@@ -303,7 +341,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
 
                 var buildTarget = AssetBundleEditorToolsV2.GetBuildTarget(platform);
-                var buildOpa = BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.DeterministicAssetBundle;
+                var buildOpa    = BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.DeterministicAssetBundle;
                 BuildPipeline.BuildAssetBundles(artOutputPath, buildOpa, buildTarget);
             }
             catch (Exception e)
@@ -360,7 +398,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             AssetImporter ai = null;
             if (!AssetImpoterCacheMap.TryGetValue(path, out ai))
             {
-                ai = AssetImporter.GetAtPath(path);
+                ai                         = AssetImporter.GetAtPath(path);
                 AssetImpoterCacheMap[path] = ai;
                 if (!ai)
                 {
