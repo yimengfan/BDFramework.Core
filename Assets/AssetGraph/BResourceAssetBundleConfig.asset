@@ -235,8 +235,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u6D4B\u8BD5\u6A21\u578B\u5B50\u76EE\u5F55"
     m_id: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
-    m_x: 1692
-    m_y: 720
+    m_x: 1716
+    m_y: 660
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFolder, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -265,7 +265,7 @@ MonoBehaviour:
         height: 23
   - m_name: "\u6253\u5305AssetBundle"
     m_id: 5c54f429-2e9d-45d5-ad93-29577e3649bb
-    m_x: 2136
+    m_x: 2112
     m_y: 456
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.BuildAssetBundle, BDFramework.Editor,

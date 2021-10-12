@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using BDFramework.Editor.Tools;
@@ -119,6 +120,8 @@ namespace BDFramework.Editor.AssetBundle
             if (GUILayout.Button("AssetBundle SG打包测试(StreamingAsset)", GUILayout.Width(380), GUILayout.Height(30)))
             {
                 var outputpath = BDApplication.ProjectRoot + "/CI_TEMP";
+                //删除目录里面资源
+                Directory.Delete(Application.streamingAssetsPath,true);
                 var outputpath2 = Application.streamingAssetsPath;
                 AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath2, true);
             }

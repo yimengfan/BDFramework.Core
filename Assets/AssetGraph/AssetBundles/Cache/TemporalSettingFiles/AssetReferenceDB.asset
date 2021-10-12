@@ -482,4 +482,24 @@ MonoBehaviour:
     m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/SetGranularityNull.cs
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: e657a36e31c0482283046f0907623fa5
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/BuildInfo.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e60d994d666b43d99949499d5929d960
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/CollectSpriteAtlas.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: baec4592e177461dbefd69b60866d6b1
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/CollectShaderKeyWord.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c88cbaa6cd08422e84b8aeb87e7dfebd
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/CollectChangedAssets.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dff0b2680f3f99941b7a426f1000a9a4
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/EditorWindow_GenAssetBundle.cs
+    m_exportTo: 
+    m_variantName: 
   m_version: 2

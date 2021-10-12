@@ -241,13 +241,13 @@ namespace BDFramework.Editor.AssetBundle
                             sw.Start();
                             var obj = BResources.Load<GameObject>(runtimePath);
                             sw.Stop();
-                            var loadtime = sw.ElapsedMilliseconds;
+                            var loadtime = sw.ElapsedTicks/10000f;
                             //实例化
                             sw.Restart();
                             var gobj = GameObject.Instantiate(obj);
                             sw.Stop();
-                            var instantTime = sw.ElapsedMilliseconds;
-                            Debug.LogFormat("<color=yellow>【LoadTest】:{0}</color> <color=green>【加载耗时】:{1};【初始化耗时】:{2}</color>", runtimePath, loadtime, instantTime);
+                            var instantTime = sw.ElapsedTicks/10000f;
+                            Debug.LogFormat("<color=yellow>【LoadTest】:{0}</color> <color=green>【加载耗时】:{1}ms;【初始化耗时】:{2}ms</color>", runtimePath, loadtime, instantTime);
                         }
                         catch (Exception e)
                         {
