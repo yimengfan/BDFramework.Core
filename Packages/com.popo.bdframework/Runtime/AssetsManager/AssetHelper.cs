@@ -266,8 +266,8 @@ namespace BDFramework.AssetHelper
                 BDebug.Log("【母包资源检测】失败，没有db文件!");
             }
             //复制ArtConfig
-            var persistentArtConfigPath = string.Format("{0}/{1}", persistent, BResources.ART_CONFIG_PATH);
-            var  streamingArtConfigPath =  string.Format("{0}/{1}", streamingAsset,  BResources.ART_CONFIG_PATH);
+            var persistentArtConfigPath = string.Format("{0}/{1}", persistent, BResources.ASSET_CONFIG_PATH);
+            var  streamingArtConfigPath =  string.Format("{0}/{1}", streamingAsset,  BResources.ASSET_CONFIG_PATH);
             if (File.Exists(streamingArtConfigPath))
             {
                 FileHelper.WriteAllBytes(persistentArtConfigPath,File.ReadAllBytes(streamingArtConfigPath));
