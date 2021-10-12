@@ -17,7 +17,7 @@ using Debug = UnityEngine.Debug;
 
 namespace BDFramework.Editor.AssetGraph.Node
 {
-    [CustomNode("BDFramework/打包AssetBundle", 100)]
+    [CustomNode("BDFramework/[Build]打包AssetBundle", 100)]
     public class BuildAssetBundle : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
         public BuildInfo              BuildInfo   { get; set; }
@@ -41,7 +41,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         public override void Initialize(NodeData data)
         {
             data.AddDefaultInputPoint();
-            //data.AddDefaultOutputPoint();
+            data.AddOutputPoint("预览打包结果");
         }
 
         public override UnityEngine.AssetGraph.Node Clone(NodeData newData)
@@ -71,15 +71,67 @@ namespace BDFramework.Editor.AssetGraph.Node
                 this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             }
 
+            //预计算输出,不直接修改buildinfo
             var platform = AssetBundleEditorToolsV2.GetRuntimePlatform(target);
             this.MergeABName(tempBuildInfo, BuildParams);
-            var artConfig = this.GenArtConfig(tempBuildInfo, BuildParams, platform);
-            
+            var abConfig = this.GenAssetBundleConfig(tempBuildInfo, BuildParams, platform);
+
+            //搜集所有的 asset reference 
+            List<AssetReference> assetReferenceList = new List<AssetReference>();
+            foreach (var ags in incoming)
+            {
+                foreach (var ag in ags.assetGroups)
+                {
+                    assetReferenceList.AddRange(ag.Value);
+                }
+            }
+
             //输出节点 预览
             var outMap = new Dictionary<string, List<AssetReference>>();
-            
-            
-            
+            // for (int i = 1; i < abConfig.Count; i++)
+            // {
+            //     var abi = abConfig[i];
+            //
+            //     List<AssetReference> list;
+            //     if (!outMap.TryGetValue(abi.AssetBundlePath, out list))
+            //     {
+            //         list                        = new List<AssetReference>();
+            //         outMap[abi.AssetBundlePath] = list;
+            //     }
+            //
+            //     //找到资源的assetref
+            //     var ar = assetReferenceList.Find((a) => a.importFrom.Equals(abi.EditorAssetPath, StringComparison.OrdinalIgnoreCase));
+            //     if (ar != null)
+            //     {
+            //         list.Add(ar);
+            //     }
+            //     else
+            //     {
+            //         Debug.LogError("资源没有inComing:" + abi.EditorAssetPath);
+            //     }
+            // }
+
+            foreach (var buildAssetItem in tempBuildInfo.AssetDataMaps)
+            {
+                List<AssetReference> list;
+                if (!outMap.TryGetValue(buildAssetItem.Value.ABName, out list))
+                {
+                    list                                = new List<AssetReference>();
+                    outMap[buildAssetItem.Value.ABName] = list;
+                }
+
+                //找到资源的assetref
+                var ar = assetReferenceList.Find((a) => a.importFrom.Equals(buildAssetItem.Key, StringComparison.OrdinalIgnoreCase));
+                if (ar != null)
+                {
+                    list.Add(ar);
+                }
+                else
+                {
+                    Debug.LogError("资源没有inComing:" + buildAssetItem.Key);
+                }
+            }
+
             var output = connectionsToOutput?.FirstOrDefault();
             if (output != null)
             {
@@ -106,16 +158,18 @@ namespace BDFramework.Editor.AssetGraph.Node
             this.MergeABName(BuildInfo, BuildParams);
 
             //2.生成artconfig
-            var artConfig  = this.GenArtConfig(BuildInfo, BuildParams, platform);
+            var assetbundleConfig = this.GenAssetBundleConfig(BuildInfo, BuildParams, platform);
+
+
+            //保存config
             var outputPath = Path.Combine(BuildParams.OutputPath, BDApplication.GetPlatformPath(platform));
             var configPath = IPath.Combine(outputPath, BResources.ASSET_CONFIG_PATH);
-            var csv        = CsvSerializer.SerializeToString(artConfig);
+            var csv        = CsvSerializer.SerializeToString(assetbundleConfig);
             FileHelper.WriteAllText(configPath, csv);
 
             //3.打包
             this.BuildAB(incoming, BuildInfo, BuildParams, platform);
         }
-
 
         static string RUNTIME_PATH = "/runtime/";
 
@@ -214,24 +268,26 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         ///生成Runtime下的Art.Config
         /// </summary>
-        private List<AssetBundleItem> GenArtConfig(BuildInfo buildInfo, BuildAssetBundleParams buildParams, RuntimePlatform platform)
+        private List<AssetBundleItem> GenAssetBundleConfig(BuildInfo buildInfo, BuildAssetBundleParams buildParams, RuntimePlatform platform)
         {
             //根据buildinfo 生成加载用的 Config
+            //runtime下的全部保存配置，其他的只保留一个ab名即可
             //1.导出配置
-            var artConfig = new List<AssetBundleItem>();
+            var assetDataItemList = new List<AssetBundleItem>();
             //占位，让id和idx恒相等
-            artConfig.Add(new AssetBundleItem(0, null, null, AssetBundleItem.AssetTypeEnum.Others, new List<int>()));
+            assetDataItemList.Add(new AssetBundleItem(0, null, null, AssetBundleItem.AssetTypeEnum.Others, new List<int>()));
             //先搜集非runtime的
             foreach (var item in buildInfo.AssetDataMaps)
             {
                 //非runtime的只需要被索引AB
                 if (!item.Key.Contains(RUNTIME_PATH))
                 {
-                    var ret = artConfig.FirstOrDefault((ab) => ab.AssetBundlePath == item.Value.ABName);
+                    var ret = assetDataItemList.FirstOrDefault((ab) => ab.AssetBundlePath == item.Value.ABName);
                     if (ret == null) //不保存重复内容
                     {
-                        var mi = new AssetBundleItem(artConfig.Count, null, item.Value.ABName, (AssetBundleItem.AssetTypeEnum)item.Value.Type, new List<int>());
-                        artConfig.Add(mi);
+                        var abi = new AssetBundleItem(assetDataItemList.Count, null, item.Value.ABName, (AssetBundleItem.AssetTypeEnum)item.Value.Type, new List<int>());
+                        abi.EditorAssetPath = item.Key;
+                        assetDataItemList.Add(abi);
                     }
                 }
             }
@@ -242,32 +298,33 @@ namespace BDFramework.Editor.AssetGraph.Node
                 //runtime路径下，写入配置
                 if (item.Key.Contains(RUNTIME_PATH))
                 {
-                    var key = item.Key;
+                    var loadPath = item.Key;
                     //移除runtime之前的路径、后缀
-                    var index = key.IndexOf(RUNTIME_PATH);
+                    var index = loadPath.IndexOf(RUNTIME_PATH);
                     if (buildParams.IsUseHashName)
                     {
-                        key = key.Substring(index + RUNTIME_PATH.Length); //hash要去掉runtime
+                        loadPath = loadPath.Substring(index + RUNTIME_PATH.Length); //hash要去掉runtime
                     }
                     else
                     {
-                        key = key.Substring(index + 1); // 保留runtime
+                        loadPath = loadPath.Substring(index + 1); // 保留runtime
                     }
 
-                    var exten = Path.GetExtension(key);
+                    var exten = Path.GetExtension(loadPath);
                     if (!string.IsNullOrEmpty(exten))
                     {
-                        key = key.Replace(exten, "");
+                        loadPath = loadPath.Replace(exten, "");
                     }
 
                     //添加
-                    var mi = new AssetBundleItem(artConfig.Count, key, item.Value.ABName, (AssetBundleItem.AssetTypeEnum)item.Value.Type, new List<int>());
-                    artConfig.Add(mi); //.ManifestMap[key] = mi;
+                    var abi = new AssetBundleItem(assetDataItemList.Count, loadPath, item.Value.ABName, (AssetBundleItem.AssetTypeEnum)item.Value.Type, new List<int>());
+                    abi.EditorAssetPath = item.Key;
+                    assetDataItemList.Add(abi); //.ManifestMap[key] = mi;
                 }
             }
 
-            //将depend替换成Id
-            foreach (var assetbundleData in artConfig)
+            //将depend替换成Id,减少序列化数据量
+            foreach (var assetbundleData in assetDataItemList)
             {
                 if (!string.IsNullOrEmpty(assetbundleData.LoadPath))
                 {
@@ -277,28 +334,40 @@ namespace BDFramework.Editor.AssetGraph.Node
                     {
                         var dependAssetName = buildAssetData.DependAssetList[i];
                         //寻找保存列表中依赖的id（可以认为是下标）
-                        var dependAssetBuildData = artConfig.FirstOrDefault((asset) => asset.AssetBundlePath == dependAssetName);
+                        var dependAssetBuildData = assetDataItemList.FirstOrDefault((asset) => asset.AssetBundlePath == dependAssetName);
                         assetbundleData.DependAssetIds.Add(dependAssetBuildData.Id);
                     }
                 }
             }
 
             //检查同名文件
-            foreach (var abi in artConfig)
+            foreach (var abi in assetDataItemList)
             {
                 if (string.IsNullOrEmpty(abi.LoadPath))
                 {
                     continue;
                 }
 
-                var result = artConfig.FindAll((ab) => ab.LoadPath == abi.LoadPath);
+                var result = assetDataItemList.FindAll((ab) => ab.LoadPath == abi.LoadPath);
                 if (result.Count > 1)
                 {
                     Debug.LogError("【AssetbundleV2】有同名文件(不包含后缀)，加载存在不确定性，请修改! -" + abi.LoadPath);
                 }
             }
 
-            return artConfig;
+
+            //验证config是否遗漏
+            foreach (var assetDataItem in buildInfo.AssetDataMaps)
+            {
+                var ret = assetDataItemList.Find((abi) => abi.AssetBundlePath == assetDataItem.Value.ABName);
+                if (ret == null)
+                {
+                    Debug.LogError("【生成配置】ab配置遗漏 - " + assetDataItem.Key + " ab:"+ assetDataItem.Value.ABName);
+                }
+            }
+
+            //
+            return assetDataItemList;
         }
 
 

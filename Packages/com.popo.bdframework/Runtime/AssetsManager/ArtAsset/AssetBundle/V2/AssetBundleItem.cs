@@ -45,10 +45,15 @@ namespace BDFramework.ResourceMgr.V2
 
 
         /// <summary>
-        /// 映射，加载资源名
+        /// 映射，加载资源名。一般为程序调用加载的路径
         /// </summary>
         public string LoadPath { get; private set; }
 
+        /// <summary>
+        /// asset路径 【不序列化】
+        /// </summary>
+        public string EditorAssetPath { get; set; }
+        
         /// <summary>
         /// ab的资源路径名
         /// </summary>

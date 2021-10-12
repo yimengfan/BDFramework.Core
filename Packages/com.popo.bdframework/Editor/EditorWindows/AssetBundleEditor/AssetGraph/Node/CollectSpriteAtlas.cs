@@ -50,14 +50,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
-            if (this.BuildInfo == null)
-            {
-                this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
-            }
-            if (this.BuildParams == null)
-            {
-                this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
-            }
+            this.BuildInfo   = BDFrameworkAssetsEnv.BuildInfo;
+            this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             //找到runtime
             List<AssetReference> runtimeAssetReferenceList = null;
             incoming.FirstOrDefault()?.assetGroups.TryGetValue(nameof(BDFrameworkAssetsEnv.FloderType.Runtime), out runtimeAssetReferenceList);

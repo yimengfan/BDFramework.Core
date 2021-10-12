@@ -100,11 +100,17 @@ namespace BDFramework.Editor.AssetGraph.Node
                 e_groupList.elementHeight     = EditorGUIUtility.singleLineHeight + 8f;
                 e_groupList.headerHeight      = 3;
                 e_groupList.index             = this.groupFilterPathDataList.Count - 1;
-
-                //添加两个默认两个输出节点
-                this.AddOutputNode(nameof(BDFrameworkAssetsEnv.FloderType.Runtime));
-                this.AddOutputNode(nameof(BDFrameworkAssetsEnv.FloderType.Depend));
             }
+
+            //添加输出节点
+            if (incommingAssetGroup != null)
+            {
+                foreach (var ag in incommingAssetGroup.assetGroups)
+                {
+                    this.AddOutputNode(ag.Key);
+                }
+            }
+
 
             GUILayout.Label("路径匹配:建议以\"/\"结尾,不然路径中包含这一段path都会被匹配上.");
             e_groupList.DoLayoutList();
@@ -137,13 +143,12 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         private void DrawFilterEntryListElement(Rect rect, int idx, bool isactive, bool isfocused)
         {
+            var gp = this.groupFilterPathDataList[idx];
             //渲染数据
-            if (idx < 2)
-            {
-               EditorGUI.BeginDisabledGroup(true);
-            }
-            
-            var gp     = this.groupFilterPathDataList[idx];
+            bool isDisable = this.incommingAssetGroup.assetGroups.ContainsKey(gp.GroupPath);
+            EditorGUI.BeginDisabledGroup(isDisable);
+
+
             var output = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, rect.height * 0.9f), gp.GroupPath);
             //检测改动
             if (output != gp.GroupPath)
@@ -158,7 +163,8 @@ namespace BDFramework.Editor.AssetGraph.Node
                 BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, outputConnect);
                 BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
             }
-            if (idx < 2)
+
+            if (isDisable)
             {
                 EditorGUI.EndDisabledGroup();
             }
@@ -213,11 +219,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             outputNode.Label = gpd.GroupPath;
         }
 
+        private PerformGraph.AssetGroups incommingAssetGroup = null;
 
         /// <summary>
         /// 刷新节点渲染
         /// </summary>
-    
 
         #endregion
 
@@ -229,14 +235,17 @@ namespace BDFramework.Editor.AssetGraph.Node
                 return;
             }
 
-            if (this.BuildInfo == null)
+            //prepare传入的资源
+            this.incommingAssetGroup = incoming.FirstOrDefault();
+            this.BuildInfo           = BDFrameworkAssetsEnv.BuildInfo;
+            this.BuildParams         = BDFrameworkAssetsEnv.BuildParams;
+            //初始化输出节点
+            foreach (var ags in incoming)
             {
-                this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
-            }
-
-            if (this.BuildParams == null)
-            {
-                this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
+                foreach (var ag in ags.assetGroups)
+                {
+                    this.AddOutputNode(ag.Key);
+                }
             }
 
             //初始化输出列表
@@ -254,30 +263,27 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 foreach (var group in ags.assetGroups)
                 {
-                    if (group.Key == nameof(BDFrameworkAssetsEnv.FloderType.Runtime) || group.Key == nameof(BDFrameworkAssetsEnv.FloderType.Depend))
+                    var assetList = group.Value.ToList();
+                    for (int i = assetList.Count - 1; i >= 0; i--)
                     {
-                        var assetList = group.Value.ToList();
-                        for (int i = assetList.Count - 1; i >= 0; i--)
-                        {
-                            var assetRef = assetList[i];
+                        var assetRef = assetList[i];
 
-                            foreach (var groupFilter in this.groupFilterPathDataList)
+                        foreach (var groupFilter in this.groupFilterPathDataList)
+                        {
+                            if (!string.IsNullOrEmpty(groupFilter.GroupPath))
                             {
-                                if (!string.IsNullOrEmpty(groupFilter.GroupPath))
+                                //匹配路径
+                                if (assetRef.importFrom.StartsWith(groupFilter.GroupPath, StringComparison.OrdinalIgnoreCase))
                                 {
-                                    //匹配路径
-                                    if (assetRef.importFrom.StartsWith(groupFilter.GroupPath, StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        assetList.RemoveAt(i);
-                                        //依次按分组输出
-                                        outMap[groupFilter.GroupPath].Add(assetRef);
-                                    }
+                                    assetList.RemoveAt(i);
+                                    //依次按分组输出
+                                    outMap[groupFilter.GroupPath].Add(assetRef);
                                 }
                             }
                         }
-
-                        outMap[group.Key] = assetList;
                     }
+
+                    outMap[group.Key] = assetList;
                 }
             }
 

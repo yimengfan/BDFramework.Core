@@ -402,4 +402,84 @@ MonoBehaviour:
     m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/BuildAssetBundle.cs
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 20da2732c56f0694d88f8b96d5657f0e
+    m_importFrom: Assets/AssetGraph/Cache/AssetBundleBuildMap.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 28157152edff2d34aaf47123a03414a0
+    m_importFrom: Assets/Resource_SVN/Model/002/Char_Patrick.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1b1f04b2ae699c342b01c3a07b2e5e03
+    m_importFrom: Assets/Resource/Image/Test2/5.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 36363df2082242a4596a6b8c7dda8abb
+    m_importFrom: Assets/Resource/Image/Test2/3.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 324b5c460daed5b4ea93aa9d690b508c
+    m_importFrom: Assets/Resource/Image/Test2/4.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: edfb1f96cfbf3b043b10d110680ff91f
+    m_importFrom: Assets/Resource/Image/Test2/10.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 669f7a674010020419c1b821194b8c39
+    m_importFrom: Assets/Resource/Image/Test2/9.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d2abdb77f35d37c4c9469630d1f22e50
+    m_importFrom: Assets/Resource/Image/Test/timg (1).jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f115e32a822af8543951c631e48baa80
+    m_importFrom: Assets/Resource_SVN/Model/002/pat.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 205e91aa2d4ef4f43a82556c9beffc58
+    m_importFrom: Assets/Resource/Image/Test2/2.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9870713b13aaf0b4b92d39098c620dea
+    m_importFrom: Assets/Resource_SVN/Model/001/Spongebob_SquarePants.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4047254b0a2e9014f8f66466fb6c8ab4
+    m_importFrom: Assets/Resource/Image/Test2/6.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8ceea3fb7e2fbf6408e844086568c2ad
+    m_importFrom: Assets/Resource_SVN/Model/002/patrick.obj
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9b458a2c447d300438ddb8fdec4f52e6
+    m_importFrom: Assets/Resource/Image/Test2/1.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 45b4a2ac7b8750046825d3fdbfa50a79
+    m_importFrom: Assets/Resource/Image/Test2/8.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 30d051dc134b45a43904d6bfbef14c38
+    m_importFrom: Assets/Resource_SVN/Model/001/sb.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: affae40fcce2824448f082b077ee1eae
+    m_importFrom: Assets/Resource/Image/Test2/7.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 05756a93302f9564fb5a100be356e8bd
+    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/ArtAsset/AssetBundle/V2/AssetBundleItem.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a02a6108c98c48b5bead63eb9fd0b5f3
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/BuildAssetBundlePreView.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c17344e918b14346b220ccc9a7a10548
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/SetGranularityNull.cs
+    m_exportTo: 
+    m_variantName: 
   m_version: 2

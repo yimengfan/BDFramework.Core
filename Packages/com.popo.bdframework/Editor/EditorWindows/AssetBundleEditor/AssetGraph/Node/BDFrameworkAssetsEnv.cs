@@ -86,21 +86,15 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
-            if (incoming == null)
-            {
-                return;
-            }
 
             //构建对象
-            BuildInfo = new BuildInfo();
-            if (BuildParams == null)
-            {
-                BuildParams = new BuildAssetBundleParams();
-            }
+            if (incoming == null) return;
+            BuildInfo   = new BuildInfo();
+            BuildParams  = new BuildAssetBundleParams();
 
 
             //设置所有节点参数请求,依次传参
-            Debug.Log("outpath:" + BuildParams.OutputPath);
+            Debug.Log("[初始化Env]outpath:" + BuildParams.OutputPath);
 
             //搜集runtime资源
             var runtimeAssetList = new List<AssetReference>();
@@ -163,9 +157,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             BuildInfo.Time = DateTime.Now.ToShortDateString();
             int id = 0;
             //搜集所有的依赖
-            foreach (var mainAsses in assets)
+            foreach (var mainAssets in assets)
             {
-                var dependeAssetsPath = GetDependencies(mainAsses.importFrom);
+                var dependeAssetsPath = GetDependencies(mainAssets.importFrom);
                 //获取依赖 并加入build info
                 foreach (var subAssetPath in dependeAssetsPath)
                 {

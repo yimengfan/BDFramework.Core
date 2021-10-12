@@ -54,15 +54,9 @@ namespace BDFramework.Editor.AssetGraph.Node
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput,
             PerformGraph.Output outputFunc)
         {
-
-            if (this.BuildInfo == null)
-            {
-                this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
-            }
-            if (this.BuildParams == null)
-            {
-                this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
-            }
+            if (incoming == null) return;
+            this.BuildInfo   = BDFrameworkAssetsEnv.BuildInfo;
+            this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             //加载上一次缓存的资源
             var lastbuildInfoPath = string.Format("{0}/{1}/{2}",this.BuildParams.OutputPath, BDEditorApplication.GetPlatformPath(target),BResources.ASSET_BUILD_INFO_PATH);
             

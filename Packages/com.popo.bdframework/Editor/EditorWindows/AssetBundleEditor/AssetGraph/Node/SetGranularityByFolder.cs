@@ -113,15 +113,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             Debug.Log("prepare:" + this.GetType().Name + "-" + DateTime.Now.ToLongTimeString());
-            if (this.BuildInfo == null)
-            {
-                this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
-            }
+            this.BuildInfo   = BDFrameworkAssetsEnv.BuildInfo;
+            this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
 
-            if (this.BuildParams == null)
-            {
-                this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
-            }
 
             //
             var outMap = new Dictionary<string, List<AssetReference>>();
@@ -191,6 +185,12 @@ namespace BDFramework.Editor.AssetGraph.Node
                 foreach (var ag in ags.assetGroups)
                 {
                     var floderPath = ag.Key;
+                    if (!Directory.Exists(floderPath))
+                    {
+                        continue;
+                    }
+
+                    //搜集子目录
                     var subFolders = Directory.GetDirectories(floderPath, "*", SearchOption.TopDirectoryOnly);
                     for (int i = 0; i < subFolders.Length; i++)
                     {
@@ -198,7 +198,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                         var guid      = AssetDatabase.AssetPathToGUID(subFolder);
                         outMap[subFolder] = new List<AssetReference>();
                         //打印文件夹hash
-                        Debug.Log(subFolders[i] + " - " + guid);
+                        Debug.Log("子目录:" + subFolders[i] + " - " + guid);
                     }
 
                     foreach (var ar in ag.Value)

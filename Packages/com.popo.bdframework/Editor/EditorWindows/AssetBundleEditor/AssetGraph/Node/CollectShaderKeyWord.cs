@@ -11,7 +11,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/[逻辑]搜集shader变体", 60)]
     public class CollectShaderKeyWord : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo BuildInfo { get;  set; }
+        public BuildInfo              BuildInfo   { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
 
         public override string ActiveStyle
@@ -45,27 +45,17 @@ namespace BDFramework.Editor.AssetGraph.Node
         }
 
         //后缀和ab名
-        private List<string> FileExtens = new List<string>() {".shader", ".shadervariants"};
-        private string AssetBundleName = ShaderCollection.ALL_SHADER_VARAINT_PATH;
+        private List<string> FileExtens      = new List<string>() { ".shader", ".shadervariants" };
+        private string       AssetBundleName = ShaderCollection.ALL_SHADER_VARAINT_PATH;
 
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
-            if (incoming == null)
-            {
-                return;
-            }
-
-            if (this.BuildInfo == null)
-            {
-                this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
-            }
-            if (this.BuildParams == null)
-            {
-                this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
-            }
+            if (incoming == null) return;
+            this.BuildInfo   = BDFrameworkAssetsEnv.BuildInfo;
+            this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
 
             //开始搜集shader varint
-            var outMap = new Dictionary<string, List<AssetReference>>();
+            var outMap               = new Dictionary<string, List<AssetReference>>();
             var shaderAndVariantList = new List<AssetReference>();
             foreach (var ags in incoming)
             {
