@@ -200,7 +200,9 @@ namespace BDFramework.Editor.AssetGraph.Node
                         //打印文件夹hash
                         Debug.Log("子目录:" + subFolders[i] + " - " + guid);
                     }
-
+                    outMap[floderPath] = new List<AssetReference>();
+                    var subfiles = Directory.GetFiles(floderPath, "*", SearchOption.TopDirectoryOnly);
+                    
                     foreach (var ar in ag.Value)
                     {
                         //设置ab名为子目录名,不覆盖在此之前的规则
@@ -216,7 +218,11 @@ namespace BDFramework.Editor.AssetGraph.Node
 
                                 //添加到输出分组
                                 outMap[subFolder].Add(ar);
-                                break;
+                            }
+                            else
+                            {
+                                //剩下全都打进父目录
+                                outMap[floderPath].Add(ar);
                             }
                         }
                     }
