@@ -2721,4 +2721,196 @@ MonoBehaviour:
     m_importFrom: Assets/StreamingAssets/Android/PackageBuild.Info
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: f9811440761fc4488912ad64cee08e5b
+    m_importFrom: Assets/StreamingAssets/iOS/Art/bfcd26e55a55bd04f8a6f662bdde9abf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8e2cf1601d0b342eda9c52207a403681
+    m_importFrom: Assets/StreamingAssets/iOS/Art/e157959f9c83caa419fd530f402b54f8
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5a71eb7080757410ba8d12c69c4cae0c
+    m_importFrom: Assets/StreamingAssets/iOS/Art/7d3eab7902fddd347af42de5a0958047
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b887be31aaef0436495004e401d2534a
+    m_importFrom: Assets/StreamingAssets/iOS/Hotfix
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 81257051a1fcb41f5a41b9392cedb696
+    m_importFrom: Assets/StreamingAssets/iOS/Art/ae37c57b09de2ec4399a3eceb62b77ea
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 83dbd191750dd4211ae33840d60fb689
+    m_importFrom: Assets/StreamingAssets/iOS/Local.db
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8c185ab14e958446d8b925b25d5fa71f
+    m_importFrom: Assets/StreamingAssets/iOS/Art/22d5ca41200316741aaa39b9c265eb9b
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 151c65f11399149c2b6091c9bb37f0dc
+    m_importFrom: Assets/StreamingAssets/iOS/Art/51f5616e141ad98478c3557ebbf2b999
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 350a2902699394baf91d50130f398234
+    m_importFrom: Assets/StreamingAssets/iOS/Art/0fab552ab15035e4d82bf9adc52725f6
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9e5785626c8ad48809c51cd355bbb637
+    m_importFrom: Assets/StreamingAssets/iOS/Art/f43f8753e3c3460499a09f37075d54cf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b53860e2c075c49db8e26887d199f7a1
+    m_importFrom: Assets/StreamingAssets/iOS/Art/635df57f674eda446b0d64328236e858
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9dd5ad137d4384ab1b00f18294fa925a
+    m_importFrom: Assets/StreamingAssets/iOS/Art/e5ef808d32e88b243bd0521877b3b07a
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f50a558359a81477e9131d6211b2956f
+    m_importFrom: Assets/StreamingAssets/iOS/Art/7c6f5172672ac234a85467bc91e5283f
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e1fd60c340d7744a2bd49e3f4d4a90c7
+    m_importFrom: Assets/StreamingAssets/iOS/Art/d2abdb77f35d37c4c9469630d1f22e50
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 15510214243984c50ad989e41e1183a6
+    m_importFrom: Assets/StreamingAssets/iOS/Art/36c26bcd10b840e4f9868d6a6b9b6b37
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 69bccfa48861940338c949fb20706b50
+    m_importFrom: Assets/StreamingAssets/iOS/Art/d5430f7acac73bb4eaa529db1d8b763a
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e9c967f43b6d146c1b7848180d5777a3
+    m_importFrom: Assets/StreamingAssets/iOS/Art/9e1ccbb85029ae447b779059c47e8da6
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d0926da56effc4ba09371d128ac59731
+    m_importFrom: Assets/StreamingAssets/iOS/Art/a68e48a29a930504a9ca43956d727eed
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 23227da52d5ba4857add9c689af592f0
+    m_importFrom: Assets/StreamingAssets/iOS/Hotfix/hotfix.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9ee7c4166bba448808e583955d89be7f
+    m_importFrom: Assets/StreamingAssets/iOS/Art/d4a88a73900de024eb62d0da15c80841
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b8ebfa16cd5fd4abc8efdfb9d546d36e
+    m_importFrom: Assets/StreamingAssets/iOS/Art/362a42798cd38c844bb6e946a9266c8a
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d41a0326f2db146deb9f07709c18be7b
+    m_importFrom: Assets/StreamingAssets/iOS/PackageBuild.Info
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0c589d469dbee4cb19bd8b9f8b74c9a0
+    m_importFrom: Assets/StreamingAssets/iOS/Art/a7feec6462d3d3249936655cf4e31de5
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c0407d87ffa8c43b3bc100051bd3de18
+    m_importFrom: Assets/StreamingAssets/iOS/Art/70ed25d8f6269304483b716d4ffd3434
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 36d660c8bbc094f3eb4853af557da930
+    m_importFrom: Assets/StreamingAssets/iOS/Art/8fb6653cf0d095a4da38233e10efdb41
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1b649909792a94cd3afce6fee7425914
+    m_importFrom: Assets/StreamingAssets/iOS/Art/0cd1aa33ffab96440974e3fd84b4e99f
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1a917b19de2504d69b97e8a19500f8a8
+    m_importFrom: Assets/StreamingAssets/iOS/Art/2612b115ce3857f45833e28c2325fdbb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5ef9d0396beb441798e8bf68694423d6
+    m_importFrom: Assets/StreamingAssets/iOS/Art/3b35ba17053b1d34792c38b1d32a4a12
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 74052269c52c04da5b1706edb8d23034
+    m_importFrom: Assets/StreamingAssets/iOS/Art/BuildInfo.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 784e6b99eb6a6498282f8cfab9e27458
+    m_importFrom: Assets/StreamingAssets/iOS/Art/7ab40f5c94bb46c4d8bdc9719471a0ea
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e428bef94a854428d91321858a644732
+    m_importFrom: Assets/StreamingAssets/iOS/Art/76c21518bd7f0e64ca49af74a4987cd9
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2738914a49112412987c7d7cbf9fb67f
+    m_importFrom: Assets/StreamingAssets/iOS/Art/Art
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 04d723aa0be3240f6b5604982020477e
+    m_importFrom: Assets/StreamingAssets/iOS/Art/ec429a586bfac5f4284f3a31749303e7
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bb1ff25b122c44421b867550623aae64
+    m_importFrom: Assets/StreamingAssets/iOS/Art/Config.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d1d1307c09a65448cb0f0ba09f0a9cfd
+    m_importFrom: Assets/StreamingAssets/iOS/Art/2090e433e199dc549aae632bee6b20d9
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 59824c8c86c8a4d9c8167e5e777d28a0
+    m_importFrom: Assets/StreamingAssets/iOS/Art/3d1d74f67a3b7b54ba46fec8ab67f807
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3521a69cccbf244d98f8250046e613e2
+    m_importFrom: Assets/StreamingAssets/iOS/Art/9d59e1d84070e4c46a595b3112d75a40
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 880fbb3d4453343d89b8dd3d013e27e9
+    m_importFrom: Assets/StreamingAssets/iOS/Art/f69fe24036fa721438c98fb52af11c6b
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0311557d8b2a5467782bd742dfb9b95d
+    m_importFrom: Assets/StreamingAssets/iOS/Art
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ace67c7d5e45140218af56e54baab5eb
+    m_importFrom: Assets/StreamingAssets/iOS/Art/bab9d97529bb5b547ac8856fca3f85ef
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 267ea0fd6222c44f0a71a7f8ab6f9ec5
+    m_importFrom: Assets/StreamingAssets/iOS/Art/890171c9213476c4487fdfe8320fed47
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5b005e1e329bc423794f4dbe0b715b41
+    m_importFrom: Assets/StreamingAssets/iOS/Art/c0d661c42cc867d46887fa3b94908542
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f879447ec0cf04df5b2b359502884ab5
+    m_importFrom: Assets/StreamingAssets/iOS/Art/5db1852abb9a1a6458bd981cd87dd3ab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b24168ceac1fa45a0b8691a677652b37
+    m_importFrom: Assets/StreamingAssets/iOS
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 07a3bc21edb3c584b9883497db29bfcd
+    m_importFrom: Assets/Scenes/Config/Debug.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 76c21518bd7f0e64ca49af74a4987cd9
+    m_importFrom: Assets/Resource/Runtime/SpriteAtlas/SA2019.spriteatlas
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ec429a586bfac5f4284f3a31749303e7
+    m_importFrom: Assets/Resource/Runtime/SpriteAtlas/SA2019_NotInRuntime.spriteatlas
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 517ff72e71a574546a91d76ad65770c9
+    m_importFrom: Assets/Scenes/Config/Release.json
+    m_exportTo: 
+    m_variantName: 
   m_version: 2
