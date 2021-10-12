@@ -110,15 +110,24 @@ public class ScriptBuildTools
         }
 
         //剔除不存的dll
-        for (int i = dllFileList.Count - 1; i >= 0; i--)
+        //TODO 这里是File 接口mac下有bug 会判断文件不存在
+        if (Application.platform == RuntimePlatform.WindowsEditor)
         {
-            var dll = dllFileList[i];
-            if (!File.Exists(dll))
+            for (int i = dllFileList.Count - 1; i >= 0; i--)
             {
-                dllFileList.RemoveAt(i);
-                Debug.Log("剔除:" + dll);
+                var dll = dllFileList[i];
+                if (! File.Exists(dll))
+                {
+                    dllFileList.RemoveAt(i);
+                    Debug.Log("剔除:" + dll);
+                }
             }
         }
+        else if(Application.platform == RuntimePlatform.OSXEditor)
+        {
+            
+        }
+
         #endregion
 
 

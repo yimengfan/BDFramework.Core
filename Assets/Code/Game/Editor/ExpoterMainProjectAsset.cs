@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework;
-using BDFramework.Core.Tools;
-using BDFramework.Editor;
 using LitJson;
 using UnityEditor;
 using UnityEngine;
@@ -25,7 +22,6 @@ public class ExpoterMainProjectAsset
         {
             Directory.Delete(targetPath, true);
         }
-
         var fileContent = @"
         namespace ILRuntime.Runtime.Generated
         {
@@ -43,12 +39,14 @@ public class ExpoterMainProjectAsset
         FileHelper.WriteAllText(targetPath + "/CLRBindings.cs", fileContent);
 
         AssetDatabase.Refresh();
-
-        var exporterDirectoryList = new string[]
-        {
-            "Assets/Code/BDFramework.Game", //Game
-            "Assets/Scenes", //Scene
-            "Assets/Packages", //Nuget
+            
+        var exporterDirectoryList = new string[] {
+            
+            "Assets/3rdPlugins/Dotween",// 第三方查件
+            "Assets/Code/BDFramework.Game",//Game
+            "Assets/Scenes",//Scene
+            "Assets/Packages",//Nuget
+            
         };
         var exportAssets = new List<string>();
         foreach (var direct in exporterDirectoryList)
