@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
+using LitJson;
 using UnityEditor;
 using UnityEngine;
 
 public class ExpoterMainProjectAsset
 {
+    public class PackageData
+    {
+        public string version = "null";
+    }
+
     [MenuItem("BDFrame开发辅助/导出主工程资源")]
     static void Exprot()
     {
@@ -18,6 +25,7 @@ public class ExpoterMainProjectAsset
         {
             Directory.Delete(targetPath, true);
         }
+
         var fileContent = @"
         namespace ILRuntime.Runtime.Generated
         {
@@ -35,27 +43,46 @@ public class ExpoterMainProjectAsset
         FileHelper.WriteAllText(targetPath + "/CLRBindings.cs", fileContent);
 
         AssetDatabase.Refresh();
-            
-        var exporterDirectoryList = new string[] {
-            "Assets/Code/BDFramework.Game",//Game
-            "Assets/Scenes",//Scene
-            "Assets/Packages",//Nuget
-            
+
+        var exporterDirectoryList = new string[]
+        {
+            "Assets/Code/BDFramework.Game", //Game
+            "Assets/Scenes", //Scene
+            "Assets/Packages", //Nuget
         };
-        var exportAssets          = new List<string>();
+        var exportAssets = new List<string>();
         foreach (var direct in exporterDirectoryList)
         {
             var fs = Directory.GetFiles(direct, "*.*", SearchOption.AllDirectories);
             exportAssets.AddRange(fs);
         }
+
         var exportfs = exportAssets.Where((ex) => !ex.EndsWith(".meta")).ToArray();
-        //版本信息添加
-        var path = AssetDatabase.GUIDToAssetPath("924d970067c935c4f8b818e6b4ab9e07");
-        File.WriteAllText(path,BDEditorApplication.BDFrameConfig.Version);
+        //版本信息修改
+
+        #region version管理
+
+        //package 版本
+        var packageDataPath = AssetDatabase.GUIDToAssetPath("e56f3b41caab3304194319691ec2ebbb");
+        var packageContent = File.ReadAllText(packageDataPath);
+        var pckage = JsonMapper.ToObject<PackageData>(packageContent);
+
+        //Editor Runtime版本
+        var editorRuntimeVersionPath = AssetDatabase.GUIDToAssetPath("996622d6f14afc44dbd42c1cdfa8a362");
+        var config = new BDFrameConfig();
+        config.Version = pckage.version;
+        File.WriteAllText(editorRuntimeVersionPath, JsonMapper.ToJson(config));
+        //Asset目录版本
+        var assetPathPath = AssetDatabase.GUIDToAssetPath("924d970067c935c4f8b818e6b4ab9e07");
+        File.WriteAllText(assetPathPath, pckage.version);
         AssetDatabase.Refresh();
-        //导出
-        ExportPackageOptions op          = ExportPackageOptions.Default;
-        var                  packagePath = AssetDatabase.GUIDToAssetPath("69227cf6ea5304641ae95ffb93874014");
+        
+        #endregion
+
+
+        //最后,导出Asset.Package
+        ExportPackageOptions op = ExportPackageOptions.Default;
+        var packagePath = AssetDatabase.GUIDToAssetPath("69227cf6ea5304641ae95ffb93874014");
         //AssetDatabase.ImportPackage(packagePath,true);
         AssetDatabase.ExportPackage(exportfs, packagePath, op);
         //重新生成clr分析文件

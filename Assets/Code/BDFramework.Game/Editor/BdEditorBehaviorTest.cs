@@ -32,36 +32,6 @@ namespace BDFramework.Editor.EditorLife
         public override void OnBeginBuildAssetBundle(BuildInfo buildInfo)
         {
             Debug.Log("【BDFrameEditorBehavior】打包Asset时,回调测试!");
-            //测试1：Runtime/Char 下prefab依赖 打包成一个ab
-            List<string> charList = new List<string>();
-            var          path     = "/Runtime/Char/".ToLower();
-            foreach (var key in buildInfo.AssetDataMaps.Keys)
-            {
-                if (key.Contains(path))
-                {
-                    charList.Add(key);
-                }
-            }
-
-            //角色列表
-            foreach (var charPath in charList)
-            {
-                var charAssetData = buildInfo.AssetDataMaps[charPath];
-                //所有依赖的资源
-                foreach (var dependAssetKey in charAssetData.DependAssetList)
-                {
-                    //
-                    buildInfo.SetABName(dependAssetKey, charAssetData.ABName, BuildInfo.SetABNameMode.Simple);
-
-                    var dependAsset = buildInfo.AssetDataMaps[dependAssetKey];
-                    //判断是否被其他资源引用，ab名是否被其他规则修改
-                    if (!dependAsset.IsRefrenceByOtherAsset() && dependAssetKey == dependAsset.ABName)
-                    {
-                        //打包到一个ab中
-                        dependAsset.ABName = charAssetData.ABName;
-                    }
-                }
-            }
         }
 
         public override void OnEndBuildAssetBundle(string outputPath)
