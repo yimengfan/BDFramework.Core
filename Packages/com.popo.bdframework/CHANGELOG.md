@@ -1,5 +1,14 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+## V2.0.8 beta1
+CN:
+【Editor】
+-AssetBundleV2: 增加assetgraph打包assetbundle支持
+
+EN:
+【Editor】
+-AssetBundleV2: Add assergraph node build assetbundle.
+
 ## V2.0.7
 CN:
 【Editor】
@@ -9,7 +18,7 @@ EN:
 【Editor】
 -Reconstruct class name
 
-## V2.0.7 bate2
+## V2.0.7 beta2
 CN:
 【Nuget】
 -增加Nuget支持
