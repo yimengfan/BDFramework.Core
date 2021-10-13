@@ -2913,4 +2913,756 @@ MonoBehaviour:
     m_importFrom: Assets/Scenes/Config/Release.json
     m_exportTo: 
     m_variantName: 
+  - m_assetDatabaseId: 8e62dc4096fb4cb48a75b69241b1fba9
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t13.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6cbb99600051ec84297acddc97728aef
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Activator_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 21c88a605b649ff4faed10b055fb04f6
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Array_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: aad2e3a002d8f9e41baf55b990e01c25
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t11.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6971a4a02a9bb2c41ab82e3c266edd81
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_GameObject_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 818866b07a14e72439354238d0c28d42
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Int32_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7050cce0a035894499a7c24e12e38d33
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/BDebug_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 863029f003aed5545b64409a1f8beeba
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_Transform_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dce06141a55b52444a189f0d827cac29
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/BDFramework_ResourceMgr_IResMgr_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 44ff9541f556d8e41af9376f699739b2
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Int3.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2d679451673a13d41b032750c9030456
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t9.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f8b4b651155e29441850c301daaa1457
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Type.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a6377e61a2befa24e8e76317eabcac55
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/ILRuntime_Runtime_Enviorment_AppDomain_Bindi.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 65a428a189069564ea80c9cb44f1e569
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Reflection_ParameterInfo_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 76e168a1ab56a8a469a795e5fa01ee7c
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/BDFramework_Core_Debugger_Debugger_NetworkSe.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f82a73c153b210943a2325df31992048
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Type_t3.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f6de12122b476a44081844bf5dbe72b4
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_GameObject_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 40bf3e1233adf1a4087f246df5ee471f
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Enum_Bindi.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9fe5ee121ba4ab54e8f5bfa23bcb72f5
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Reflection_FieldInfo_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9bc09a2205362b541987b1235b2433af
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Runtime_CompilerServices_AsyncVoidMet.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 413e5d327332aca4e803e9f525859feb
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t10.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 15b16e72f13e1974f974284224d7fe98
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Type_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2f291882de69ddc42b709ef24ad2d032
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/Cysharp_Text_ZString_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 70d4b292cbe6e0547a875075673c8745
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t15.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 36a129a2dbe38ac4b9209c32b2878188
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_ILTypeInst_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 702652c2513c6a344b42bc3161697dd2
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/BDFramework_BDLauncher_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5babf5d29e9f4914a95bd58acb62be73
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/Google_Protobuf_ProtoPreconditions_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2ef816e261db0624f801ab187396b9b9
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_MemberInfo.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 465c8503a9191b347a94d0f407dd27c4
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/SQLite4Unity3d_SQLiteConnection_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bd3c8e33e1349044b898b23b6a7de09e
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/Google_Protobuf_MessageParser_1_IMessageAdap.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2918cf436ae8c70428cd194d84d10768
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/Google_Protobuf_CodedInputStream_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cbccc7534551a5444b932294a2b8203e
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Type_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a66409630dc0d7e49901d554528476dc
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Action_2_Int32_ILTypeInstance_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 19278c738bea3d84690d9437f41ca0a8
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Runtime_CompilerServices_AsyncTaskMet.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8f8ad393840768b4ca80d98cdbac8af0
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_KeyValuePair_2_St_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4709d5a3259fe854a9820dff30900eda
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Threading_Tasks_Task_1_String_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: eb6fb0d312c4e7243ae1028a5624b8ec
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_KeyValuePair_2_St.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1ce57ce337ff2d74daf15097572cef65
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_Debug_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 578b6724ecc88054fb45dd8c91509e5e
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_KeyValuePair_2_In.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c62ad64499d188c4c98583be37b5b5b9
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/SQLite4Unity3d_SQLiteCommand_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fdb2a1543d9fd88429b09075c38f2359
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Single_Bin.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a9449664f9bd9dc45b00426fff9b7812
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t6.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9fee0984255139a44a3d7e79e45ca3d1
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_IO_MemoryStream_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 12c4a8945c59e884fac8479bec346e4a
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/BDFramework_VersionContrller_VersionContorll.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 09452f9406ce3b54083e6336b7b64afc
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_IEnumerator_1_Key.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 28d76615777c981408c0c3ef86d9a43b
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Object_Bin_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ebc88815146a9214a8c76c3454d83526
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_String_Bin.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ef1ddd15d93a1724d9a2ce99f7d4ab39
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_KeyValuePair_2_Ty.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 46792435b35e9444cb269030b9f38a13
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/Google_Protobuf_FieldCodec_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 6f80d645bcf557b498a5b0c709238dc4
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Int3_t2.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: abf52865731a2204f8c302db52b073c5
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Net_WebClient_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 63999b06b677a61448ebb64e7f80e14a
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Int32_Bind_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ad86b226bf84c5844ae0ea7c84ae875f
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/BDFramework_Sql_SqliteLoder_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f933bd26960fd7c4491dfe03e394917e
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_UI_Graphic_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 73ca5d36a03716c4895277fff0d9a7f7
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Action_1_S_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 80371a4672a15bc449dc377d91a5c608
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_IEnumerable_1_Key.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f0b126661f751934dbd754d2dab6adb1
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t7.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 897c5e864b8d9014b93c81719763b836
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/LitJson_JsonMapper_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a0091da6b8296a5419a113bba372222a
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Type_Bindi_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2958d0b6669cb8f4db36c58a13da6b0a
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t12.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7c9ed8b61b48d11469ccf15930255724
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Type_t4.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e044d6d646166b049882ed72a3e0b04f
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/Google_Protobuf_MessageExtensions_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fce739d6960eda246914c7ed5002ea44
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_Object_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f579a1370d19f7b49bbf3de1ca8177c1
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t14.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5e312347dbafbd046abfa069a1c6df2e
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/BDFramework_ResourceMgr_BResources_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3f7e59671c36b2440aa28fddd1ef53f5
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/BDFramework_UFlux_IComponentOnClick_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 040a5d77733c18c4b988685c0b3fcce9
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Action_1_Single_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b43b90c7fa675004ab630ffae36d9f5c
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_Component_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 670322d7c68396841b4a91159f96f607
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_IO_Stream_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c8c20058b546e9c47b4903686968f60f
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Enum_Bindi_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a790d688777782f4c9a3597a08a5f154
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Int32_Bind.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 017c48a80096ef44aaa9c12f1421e972
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Int3_t3.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 58dd4aa8c0bb58345b011dff007fc02f
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Reflection_MethodBase_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 95f0dba82b4cf164c9bfebc20081c1f0
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_Color_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 48adcca86ce5fc14ba651432d71064b8
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_UI_Text_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 01d869c8933bffe4c8318cd6bd11081d
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Object_Bin.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 73f273d84f633cf4cb1ca24ff7ec17b2
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_String_Bin_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 403e2b1919d95f649a0183ef8bac56f9
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1794962927cc5ea49b16177ea566d38f
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Reflection_PropertyInfo_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ba1c80390edcc0c41bb512870f7f5770
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Exception_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1f504239748355d45b7e2b5d0f882a5b
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/IEnumeratorTool_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bc3414397a581f3418f7e6d76310a4e4
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_String_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 757f85a9a547cae4a8773a9f8bb26586
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_IEnumerable_1_ILT.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a966eca94fbb1b14bb7113e40b9863d8
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t4.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8df80fb95fd08d346b5e55e3fd04fc41
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Type_t2.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8d465ef91801cef4b900e8e063c367b4
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_Events_UnityEventBase_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e32e8f0adcb13d9428772361ccc4d74f
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_GameObject.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c37bff2a503697d45a8ceb6d27b21bdb
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Tran.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 28f8fd3a9279fc14daf2e3af14ece2a6
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Reflection_MemberInfo_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 62662f4ab460008478fcb8377be16ee6
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t2.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 44ba225ac8bee91439f3ba621a9e2824
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_WaitForSeconds_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d6cda27a68d19e24f8783bc6a9a6cfa9
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_IEnumerator_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c26980aa1d652e8479daed6749841e09
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_UI_ScrollRect_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c59f15aa7029e574da929bcab6060675
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t5.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8463a5aacf17feb4d98967fb6604b725
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/BDFramework_UFlux_IButton_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b1a831baeecca7b428d963de9ddcb3e9
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_Application_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b6511dbaa99b2fa4c906e7ed53a72548
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_IDisposable_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 04c0e4ca39d486242ba3e4c6a0dd3c6d
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_Behaviour_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9aa184da947fe7540b2420f127cac1fa
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/Google_Protobuf_CodedOutputStream_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d81465ea7da1ab949bb336ad923ce5f6
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Runtime_CompilerServices_TaskAwaiter_.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9ce4712b4e6d61c4496e0f131338ed07
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/BDFramework_ILRuntimeHelper_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ab03ee4b615f25a4d95b9488a2b2428d
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Linq_Enumerable_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 74ab11cbf0a7f81479f62445819d7eb8
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/ILRuntime_Mono_Cecil_MemberReference_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: fd461eeb25e4cf34da3250f1e96f39ed
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_MemberInfo_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e48005fb1c97174419b0ad924b933e62
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Action_1_ILTypeInstance_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 59ee7a0c267104c4cb568136402f0590
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_NotSupportedException_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8fa0311c689413849bf86f04e91fa0f6
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_Events_UnityEvent_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 04a30a1c39d141f4bb5f6a873c462fae
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Action_1_S.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f637056c67273c04992ac3f4c5a36525
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t8.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 645eef7c7b6708643a876afa51024609
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c48d978c1bea57847822aa3e54dbc721
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/ILRuntime_CLR_TypeSystem_IType_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c4d5f88c4f69dbe4587c2b9e5f5e0110
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_Random_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7ed5429c5290fb448982be5b24b6c12f
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Action_2_Int32_Int32_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ab8271ac9e4966e489fe7fc2488cd6ce
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Type_Bindi.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4eebeaacd9e8b654390632772f9db500
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_ILTy.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 521f54dca3ec84942895817f45e78ce0
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Reflection_Assembly_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 19cb736d5fe76a544bbbf6dd79389f2d
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_UI_Button_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7719986de26297e4aaceb73ea71d0585
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Stri_t3.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4db3ae9d97022e948a4ac5412c5a47d2
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Single_Bin_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d8e4d7adcc3672f45b632791b451ce21
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/Google_Protobuf_Collections_RepeatedField_1_.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a3030fbd55445ae418a8623e239f58d8
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_IEnumerator_1_ILT.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2c8aacdde17442e4794dd409c62bcf26
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_ILTypeInst.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 609f614e47db4124b8fef5b7bd05e8b5
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Int3_t1.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c6899abe0e6515149a324f794fabe5bd
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Dictionary_2_Int3_t4.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a10afdfec71054a4fbb20b931eb2e98f
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_DateTime_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 87e5cf1f75f4465428bdf4e06e192232
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Reflection_MethodInfo_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: af20ef1f9c1936745a7334bb633ab098
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_Queue_1_ILTypeIns.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 36e7de2f10e48d04baa18575e2888c11
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Object_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bf04f24f126e7a64c835ff5cb5bb3e93
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Action_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8178155fb5c9bbf4cb5d671e4849684b
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Action_1_String_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 69e743af4aade884882d87116347fff4
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/UnityEngine_UI_Image_Binding.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 899777ffb7a6e494cae4a689f94bbedc
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Transform_.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7194b7ffbfc99504582d570621c5f303
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Collections_Generic_List_1_Double_Bin.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bfcd26e55a55bd04f8a6f662bdde9abf
+    m_importFrom: Assets/Resource_SVN/Runtime/Char/001.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0bfcd856254d3f34b87bb6f99b9f3dfb
+    m_importFrom: Assets/Resource_SVN/Runtime/Char/002.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ae37c57b09de2ec4399a3eceb62b77ea
+    m_importFrom: Assets/Resource_SVN/Runtime/CubeSVN.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 096dee19ab67ffc44ba3f8f790da67b4
+    m_importFrom: Assets/Resource_SVN/Runtime/CubeSVNMat.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 70ed25d8f6269304483b716d4ffd3434
+    m_importFrom: Assets/Resource_SVN/Runtime/TestMat_ForKeyWordCollect/arrow 1.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c0d661c42cc867d46887fa3b94908542
+    m_importFrom: Assets/Resource_SVN/Runtime/TestMat_ForKeyWordCollect/arrow.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8fb6653cf0d095a4da38233e10efdb41
+    m_importFrom: Assets/Resource_SVN/Runtime/TestMat_ForKeyWordCollect/H_Role_LanZhan_ClothA_000.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d2a3862f18046f54eb8d3a4da64aa3a4
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/Archive.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d1e9a6292667d134d8745300304b1824
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/AudioClip.mp3
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d64edb7b5e83d3247b9bbd478715e5a6
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/Font1.otf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 051e691b99a9cb84784ea93c99bcb967
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/Font2.ttf
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 17c174d5584b1694b85f182dd46d03f6
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/mesh.mesh
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 570885a00974e1d41b1f5d5b4dac96d6
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/New Sprite Atlas.spriteatlas
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f9c24efe9caac82418f78b87f9ec7e2d
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/Prefab.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 16dd6483913a3c244b1a552e76dda7a7
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/Tex/Tex.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3aff20989927e43438ccb6a3304de4bb
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/TextAsset_Json.json
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 654c8f5bda70b1540b7bfb67bdaf5624
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/TextAsset_Txt.txt
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e36c1226daad07342ab8c716b22e75a7
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/TextAsset_xml.xml
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f43f8753e3c3460499a09f37075d54cf
+    m_importFrom: Assets/Resource/Runtime/AssetTest/Cube.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bab9d97529bb5b547ac8856fca3f85ef
+    m_importFrom: Assets/Resource/Runtime/AssetTest/logo.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d4a88a73900de024eb62d0da15c80841
+    m_importFrom: Assets/Resource/Runtime/AssetTest/m_cube.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e5ef808d32e88b243bd0521877b3b07a
+    m_importFrom: Assets/Resource/Runtime/AssetTest/Particle.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 635df57f674eda446b0d64328236e858
+    m_importFrom: Assets/Resource/Runtime/AssetTest/ParticleTest.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9e1ccbb85029ae447b779059c47e8da6
+    m_importFrom: Assets/Resource/Runtime/AssetTest/Smoke_Tex_012.png
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2612b115ce3857f45833e28c2325fdbb
+    m_importFrom: Assets/Resource/Runtime/AssetTest/timg.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: af8afac1060027d47a8cc75d2fe620f2
+    m_importFrom: Assets/Resource/Runtime/Image/1.jpeg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1f433eab888c98b4f89dc81c8a5dbdcf
+    m_importFrom: Assets/Resource/Runtime/Image/2.jpeg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d0528a1f2ccc35b47b50d2c86c9f2d81
+    m_importFrom: Assets/Resource/Runtime/Image/3.jpeg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7c485af2c7b6ef743b74f557ed3a6c78
+    m_importFrom: Assets/Resource/Runtime/Image/4.jpeg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b2e724e95bc1b2949a0c885ae9ac706c
+    m_importFrom: Assets/Resource/Runtime/Image/5.jpeg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 44b48269b08f8b14f877d701eb4db5c0
+    m_importFrom: Assets/Resource/Runtime/Image/6.jpeg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 47288d62745a0de4686ed133ccea974d
+    m_importFrom: Assets/Resource/Runtime/Image/7.jpeg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 54c56be4b2db31a478162c026395a4bc
+    m_importFrom: Assets/Resource/Runtime/Image/8.jpeg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 43dc9b46d20ad6646ab98251fe2cb5e4
+    m_importFrom: Assets/Resource/Runtime/Image/9.jpeg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ded86f45cdc94524fbce023e2a5fe6c3
+    m_importFrom: Assets/Resource/Runtime/Image/10.jpeg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5db1852abb9a1a6458bd981cd87dd3ab
+    m_importFrom: Assets/Resource/Runtime/LoadAllTest/timg.jpg
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 51f5616e141ad98478c3557ebbf2b999
+    m_importFrom: Assets/Resource/Runtime/Mat/lwrp_lit_test.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9d59e1d84070e4c46a595b3112d75a40
+    m_importFrom: Assets/Resource/Runtime/Shader/AllShaders.shadervariants
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a7feec6462d3d3249936655cf4e31de5
+    m_importFrom: Assets/Resource/Runtime/Test/Cube.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 362a42798cd38c844bb6e946a9266c8a
+    m_importFrom: Assets/Resource/Runtime/Test/New Material.mat
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 36c26bcd10b840e4f9868d6a6b9b6b37
+    m_importFrom: Assets/Resource/Runtime/Windows/grid.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e157959f9c83caa419fd530f402b54f8
+    m_importFrom: Assets/Resource/Runtime/Windows/UFlux/01Component/Component_test01.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0fab552ab15035e4d82bf9adc52725f6
+    m_importFrom: Assets/Resource/Runtime/Windows/UFlux/01Component/Window_Test003.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7ab40f5c94bb46c4d8bdc9719471a0ea
+    m_importFrom: Assets/Resource/Runtime/Windows/UFlux/02CustomComponentBindAdator/01/item.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: a68e48a29a930504a9ca43956d727eed
+    m_importFrom: Assets/Resource/Runtime/Windows/UFlux/02CustomComponentBindAdator/01/Window_Test.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: f69fe24036fa721438c98fb52af11c6b
+    m_importFrom: Assets/Resource/Runtime/Windows/UFlux/02CustomComponentBindAdator/02/Window_Test.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2090e433e199dc549aae632bee6b20d9
+    m_importFrom: Assets/Resource/Runtime/Windows/UFlux/demo004/Window_SimpleWindow.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7d3eab7902fddd347af42de5a0958047
+    m_importFrom: Assets/Resource/Runtime/Windows/UFlux/demo005/Window_PropsDemo.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 22d5ca41200316741aaa39b9c265eb9b
+    m_importFrom: Assets/Resource/Runtime/Windows/UFlux/demo006/Window_Reducer.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 7c6f5172672ac234a85467bc91e5283f
+    m_importFrom: Assets/Resource/Runtime/Windows/UFlux/demo007/Window_DI.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0cd1aa33ffab96440974e3fd84b4e99f
+    m_importFrom: Assets/Resource/Runtime/Windows/UFlux/Window_FluxMain.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 890171c9213476c4487fdfe8320fed47
+    m_importFrom: Assets/Resource/Runtime/Windows/Window_DataListener.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3b35ba17053b1d34792c38b1d32a4a12
+    m_importFrom: Assets/Resource/Runtime/Windows/window_demo1.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d5430f7acac73bb4eaa529db1d8b763a
+    m_importFrom: Assets/Resource/Runtime/Windows/window_demo5_SpriteAtlas.prefab
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3d1d74f67a3b7b54ba46fec8ab67f807
+    m_importFrom: Assets/Resource/Runtime/Windows/window_demoMain.prefab
+    m_exportTo: 
+    m_variantName: 
   m_version: 2

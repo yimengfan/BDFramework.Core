@@ -27,11 +27,6 @@ namespace BDFramework
         ByReflection,
     }
 
-    public enum AssetBundleManagerVersion
-    {
-        V1,
-        V2,
-    }
 
     [Serializable]
     public class GameConfig
@@ -51,10 +46,7 @@ namespace BDFramework
 
         [LabelText("热更代码执行模式")]
         public HotfixCodeRunMode CodeRunMode = HotfixCodeRunMode.ByILRuntime;
-
-        [LabelText("AssetBundleManager版本")]
-        public AssetBundleManagerVersion AssetBundleManagerVersion = AssetBundleManagerVersion.V1;
-
+        
         [LabelText("是否开启ILRuntime调试")]
         public bool IsDebuggerILRuntime = false;
 
