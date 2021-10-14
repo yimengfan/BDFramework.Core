@@ -1907,7 +1907,7 @@ namespace NugetForUnity
                     string providerDestination = Environment.GetEnvironmentVariable("NUGET_CREDENTIALPROVIDERS_PATH");
                     if (string.IsNullOrEmpty(providerDestination))
                     {
-                        providerDestination = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Nuget/CredentialProviders");
+                        providerDestination = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "BDFrameWork工具箱/NuGet/CredentialProviders");
                     }
 
                     // Unzip the bundle and extract any credential provider exes
