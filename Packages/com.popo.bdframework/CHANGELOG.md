@@ -1,5 +1,16 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+## V2.0.8 beta2
+CN:
+【Editor】
+-Nuget: 修改nugetdll目录.
+-Nuget：修改Nuget MenuItem.
+
+EN:
+【Editor】
+-Nuget: Move nugetdll folder.
+-Nuget：Change Nuget menuitem name.
+
 ## V2.0.8 beta1
 CN:
 【Editor】
