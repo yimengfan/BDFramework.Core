@@ -286,7 +286,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     if (ret == null) //不保存重复内容
                     {
                         var abi = new AssetBundleItem(assetDataItemList.Count, null, item.Value.ABName, (AssetBundleItem.AssetTypeEnum)item.Value.Type, new List<int>());
-                        abi.EditorAssetPath = item.Key;
+                        // abi.EditorAssetPath = item.Key;
                         assetDataItemList.Add(abi);
                     }
                 }
@@ -318,7 +318,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
                     //添加
                     var abi = new AssetBundleItem(assetDataItemList.Count, loadPath, item.Value.ABName, (AssetBundleItem.AssetTypeEnum)item.Value.Type, new List<int>());
-                    abi.EditorAssetPath = item.Key;
+                    // abi.EditorAssetPath = item.Key;
                     assetDataItemList.Add(abi); //.ManifestMap[key] = mi;
                 }
             }
@@ -340,6 +340,8 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
             }
 
+
+            #region 检查生成的数据
             //检查同名文件
             foreach (var abi in assetDataItemList)
             {
@@ -347,7 +349,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 {
                     continue;
                 }
-
+                
                 var result = assetDataItemList.FindAll((ab) => ab.LoadPath == abi.LoadPath);
                 if (result.Count > 1)
                 {
@@ -356,15 +358,18 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
 
-            //验证config是否遗漏
+            //检查config是否遗漏
             foreach (var assetDataItem in buildInfo.AssetDataMaps)
             {
                 var ret = assetDataItemList.Find((abi) => abi.AssetBundlePath == assetDataItem.Value.ABName);
                 if (ret == null)
                 {
-                    Debug.LogError("【生成配置】ab配置遗漏 - " + assetDataItem.Key + " ab:"+ assetDataItem.Value.ABName);
+                    Debug.LogError("【生成配置】ab配置遗漏 - " + assetDataItem.Key + " ab:" + assetDataItem.Value.ABName);
                 }
             }
+
+            #endregion
+
 
             //
             return assetDataItemList;

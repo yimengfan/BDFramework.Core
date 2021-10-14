@@ -23,6 +23,9 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             get { return "[颗粒度]后缀名"; }
         }
+
+        public string Extension = ".txt;.json;.xml;";
+        public string ABName    = "TestABName";
         
         public override void Initialize(NodeData data)
         {
@@ -41,6 +44,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             NodeGUIEditor editor,
             Action onValueChanged)
         {
+            
+            
         }
     }
 }

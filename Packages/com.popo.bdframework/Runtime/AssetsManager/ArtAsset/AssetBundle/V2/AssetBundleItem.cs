@@ -52,7 +52,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// asset路径 【不序列化】
         /// </summary>
-        public string EditorAssetPath { get; set; }
+       // public string EditorAssetPath { get; set; }
         
         /// <summary>
         /// ab的资源路径名

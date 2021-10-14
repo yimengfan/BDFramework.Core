@@ -50,8 +50,8 @@ namespace BDFramework.Editor.AssetBundle
             {AssetBundleItem.AssetTypeEnum.Mesh, new List<string>() {".mesh"}}, //sound
             {AssetBundleItem.AssetTypeEnum.Font, new List<string>() {".fnt", ".fon", ".font", ".ttf", ".ttc", ".otf", ".eot",}}, //sound
         };
-
-
+        
+        
         #region 依赖关系
 
         static Dictionary<string, List<string>> DependenciesMap = new Dictionary<string, List<string>>();
@@ -115,8 +115,7 @@ namespace BDFramework.Editor.AssetBundle
         }
 
         #endregion
-
-
+        
         #region BuildTarget 和RuntimePlatform互转
 
         /// <summary>
