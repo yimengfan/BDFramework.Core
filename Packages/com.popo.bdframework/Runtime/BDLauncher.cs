@@ -26,11 +26,17 @@ namespace BDFramework
         public static BDFrameConfig Load()
         {
             var content = Resources.Load<TextAsset>("BDFrameConfig")?.text;
-            var config  = JsonMapper.ToObject<BDFrameConfig>(content);
-
 #if UNITY_EDITOR
-            BDebug.Log("框架版本:" + config.Version, "red");
+            if (content != null)
+            {
+                BDebug.Log("框架版本:" + content, "red");
+            }
+            else
+            {
+                BDebug.Log("框架版本: 未加载到!", "red");
+            }
 #endif
+            var config = JsonMapper.ToObject<BDFrameConfig>(content);
             return config;
         }
     }
@@ -59,7 +65,7 @@ namespace BDFramework
 
         public delegate void GameLauncherDelegate();
 
-        static public GameLauncherDelegate OnUpdate     { get; set; }
+        static public GameLauncherDelegate OnUpdate { get; set; }
         static public GameLauncherDelegate OnLateUpdate { get; set; }
 
         /// <summary>
@@ -122,7 +128,7 @@ namespace BDFramework
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
         public void Launch(Type[] mainProjectTypes, Action<bool> clrBindingAction, string gameId = "default")
         {
-            BDebug.Log("Persistent:"     + Application.persistentDataPath);
+            BDebug.Log("Persistent:" + Application.persistentDataPath);
             BDebug.Log("StreamingAsset:" + Application.streamingAssetsPath);
             //主工程启动
             IGameStart mainStart;
@@ -133,7 +139,7 @@ namespace BDFramework
                     mainStart = Activator.CreateInstance(type) as IGameStart;
                     //注册
                     mainStart.Start();
-                    OnUpdate     += mainStart.Update;
+                    OnUpdate += mainStart.Update;
                     OnLateUpdate += mainStart.LateUpdate;
                     break;
                 }
