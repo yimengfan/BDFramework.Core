@@ -63,8 +63,8 @@
         {
             XDocument configFile = new XDocument();
 
-            XElement packageSources = new XElement("packageSources");
-            XElement disabledPackageSources = new XElement("disabledPackageSources");
+            XElement packageSources           = new XElement("packageSources");
+            XElement disabledPackageSources   = new XElement("disabledPackageSources");
             XElement packageSourceCredentials = new XElement("packageSourceCredentials");
 
             XElement addElement;
@@ -185,8 +185,8 @@
         public static NugetConfigFile Load(string filePath)
         {
             NugetConfigFile configFile = new NugetConfigFile();
-            configFile.PackageSources = new List<NugetPackageSource>();
-            configFile.InstallFromCache = true;
+            configFile.PackageSources       = new List<NugetPackageSource>();
+            configFile.InstallFromCache     = true;
             configFile.ReadOnlyPackageFiles = false;
 
             XDocument file = XDocument.Load(filePath);
@@ -220,7 +220,7 @@
                 var adds = disabledPackageSources.Elements("add");
                 foreach (var add in adds)
                 {
-                    string name = add.Attribute("key").Value;
+                    string name     = add.Attribute("key").Value;
                     string disabled = add.Attribute("value").Value;
                     if (String.Equals(disabled, "true", StringComparison.OrdinalIgnoreCase))
                     {
@@ -239,8 +239,8 @@
             {
                 foreach (var sourceElement in packageSourceCredentials.Elements())
                 {
-                    string name = sourceElement.Name.LocalName;
-                    var source = configFile.PackageSources.FirstOrDefault(p => p.Name == name);
+                    string name   = sourceElement.Name.LocalName;
+                    var    source = configFile.PackageSources.FirstOrDefault(p => p.Name == name);
                     if (source != null)
                     {
                         var adds = sourceElement.Elements("add");
@@ -269,18 +269,17 @@
                 var adds = config.Elements("add");
                 foreach (var add in adds)
                 {
-                    string key = add.Attribute("key").Value;
+                    string key   = add.Attribute("key").Value;
                     string value = add.Attribute("value").Value;
 
                     if (String.Equals(key, "repositoryPath", StringComparison.OrdinalIgnoreCase))
                     {
                         configFile.savedRepositoryPath = value;
-                        configFile.RepositoryPath = Environment.ExpandEnvironmentVariables(value);
+                        configFile.RepositoryPath      = value;
 
                         if (!Path.IsPathRooted(configFile.RepositoryPath))
                         {
-                            string repositoryPath = Path.Combine(UnityEngine.Application.dataPath, configFile.RepositoryPath);
-                            repositoryPath = Path.GetFullPath(repositoryPath);
+                            var repositoryPath = Path.GetFullPath(configFile.RepositoryPath);
 
                             configFile.RepositoryPath = repositoryPath;
                         }
@@ -314,8 +313,7 @@
         /// <returns>The loaded <see cref="NugetConfigFile"/> loaded off of the newly created default file.</returns>
         public static NugetConfigFile CreateDefaultFile(string filePath)
         {
-            const string contents =
-@"<?xml version=""1.0"" encoding=""utf-8""?>
+            const string contents = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <configuration>
     <packageSources>
        <clear/>

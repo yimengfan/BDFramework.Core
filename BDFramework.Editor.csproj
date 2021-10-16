@@ -333,42 +333,6 @@
  <Reference Include="DOTweenEditor">
  <HintPath>F:/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/Editor/DOTweenEditor.dll</HintPath>
  </Reference>
- <Reference Include="Microsoft.Bcl.AsyncInterfaces">
- <HintPath>F:/BDFramework.Core/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.1.1.1/lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
- </Reference>
- <Reference Include="Microsoft.CodeAnalysis.Analyzers">
- <HintPath>F:/BDFramework.Core/Assets/Packages/Microsoft.CodeAnalysis.Analyzers.3.3.2/analyzers/dotnet/cs/Microsoft.CodeAnalysis.Analyzers.dll</HintPath>
- </Reference>
- <Reference Include="Microsoft.CodeAnalysis.CSharp.Analyzers">
- <HintPath>F:/BDFramework.Core/Assets/Packages/Microsoft.CodeAnalysis.Analyzers.3.3.2/analyzers/dotnet/cs/Microsoft.CodeAnalysis.CSharp.Analyzers.dll</HintPath>
- </Reference>
- <Reference Include="Microsoft.CodeAnalysis">
- <HintPath>F:/BDFramework.Core/Assets/Packages/Microsoft.CodeAnalysis.Common.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.dll</HintPath>
- </Reference>
- <Reference Include="Microsoft.CodeAnalysis.CSharp">
- <HintPath>F:/BDFramework.Core/Assets/Packages/Microsoft.CodeAnalysis.CSharp.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
- </Reference>
- <Reference Include="ServiceStack.Text">
- <HintPath>F:/BDFramework.Core/Assets/Packages/ServiceStack.Text.5.12.0/lib/netstandard2.0/ServiceStack.Text.dll</HintPath>
- </Reference>
- <Reference Include="System.Buffers">
- <HintPath>F:/BDFramework.Core/Assets/Packages/System.Buffers.4.5.1/lib/netstandard2.0/System.Buffers.dll</HintPath>
- </Reference>
- <Reference Include="System.Collections.Immutable">
- <HintPath>F:/BDFramework.Core/Assets/Packages/System.Collections.Immutable.5.0.0/lib/netstandard2.0/System.Collections.Immutable.dll</HintPath>
- </Reference>
- <Reference Include="System.Memory">
- <HintPath>F:/BDFramework.Core/Assets/Packages/System.Memory.4.5.4/lib/netstandard2.0/System.Memory.dll</HintPath>
- </Reference>
- <Reference Include="System.Reflection.Metadata">
- <HintPath>F:/BDFramework.Core/Assets/Packages/System.Reflection.Metadata.5.0.0/lib/netstandard2.0/System.Reflection.Metadata.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.CompilerServices.Unsafe">
- <HintPath>F:/BDFramework.Core/Assets/Packages/System.Runtime.CompilerServices.Unsafe.5.0.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading.Tasks.Extensions">
- <HintPath>F:/BDFramework.Core/Assets/Packages/System.Threading.Tasks.Extensions.4.5.4/lib/netstandard2.0/System.Threading.Tasks.Extensions.dll</HintPath>
- </Reference>
  <Reference Include="ILRuntim.Mono.Cecil">
  <HintPath>F:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@1.6.6/Plugins/ILRuntim.Mono.Cecil.dll</HintPath>
  </Reference>
@@ -398,6 +362,45 @@
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>F:/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Threading.Tasks.Extensions">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Threading.Tasks.Extensions.4.5.4/lib/netstandard2.0/System.Threading.Tasks.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.Bcl.AsyncInterfaces">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/Microsoft.Bcl.AsyncInterfaces.1.1.1/lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.CodeAnalysis.Analyzers">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.Analyzers.3.3.2/analyzers/dotnet/cs/Microsoft.CodeAnalysis.Analyzers.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.CodeAnalysis.CSharp.Analyzers">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.Analyzers.3.3.2/analyzers/dotnet/cs/Microsoft.CodeAnalysis.CSharp.Analyzers.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Buffers">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Buffers.4.5.1/lib/netstandard2.0/System.Buffers.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Memory">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Memory.4.5.4/lib/netstandard2.0/System.Memory.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Collections.Immutable">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Collections.Immutable.5.0.0/lib/netstandard2.0/System.Collections.Immutable.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Reflection.Metadata">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Reflection.Metadata.5.0.0/lib/netstandard2.0/System.Reflection.Metadata.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Text.Encoding.CodePages">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Text.Encoding.CodePages.4.5.1/lib/netstandard2.0/System.Text.Encoding.CodePages.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Runtime.CompilerServices.Unsafe">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Runtime.CompilerServices.Unsafe.5.0.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.CodeAnalysis">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.Common.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.CodeAnalysis.CSharp">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.CSharp.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+ </Reference>
+ <Reference Include="ServiceStack.Text">
+ <HintPath>F:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/ServiceStack.Text.5.12.0/lib/netstandard2.0/ServiceStack.Text.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
  <HintPath>F:/BDFramework.Core/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>

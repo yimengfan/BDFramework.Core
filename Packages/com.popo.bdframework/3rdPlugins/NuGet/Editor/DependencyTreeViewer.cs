@@ -13,7 +13,7 @@
         /// <summary>
         /// Opens the NuGet Package Manager Window.
         /// </summary>
-        [MenuItem("NuGet/Show Dependency Tree", false, 5)]
+        [MenuItem("BDFrameWork工具箱/NuGet/Show Dependency Tree", false, 5)]
         protected static void DisplayDependencyTree()
         {
             GetWindow<DependencyTreeViewer>();

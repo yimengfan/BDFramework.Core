@@ -123,17 +123,21 @@ namespace NugetForUnity
         {
             get
             {
-                if (installedSearchTerm == "Search")
-                    return NugetHelper.InstalledPackages;
+                if (installedSearchTerm == "Search") return NugetHelper.InstalledPackages;
 
                 return NugetHelper.InstalledPackages.Where(x => x.Id.ToLower().Contains(installedSearchTerm) || x.Title.ToLower().Contains(installedSearchTerm)).ToList();
             }
         }
 
+        [MenuItem("BDFrameWork工具箱/NuGet/", false, 200)]
+        static void NULL()
+        {
+        }
+
         /// <summary>
         /// Opens the NuGet Package Manager Window.
         /// </summary>
-        [MenuItem("NuGet/Manage NuGet Packages", false, 0)]
+        [MenuItem("BDFrameWork工具箱/NuGet/Manage NuGet Packages", false, 0)]
         protected static void DisplayNugetWindow()
         {
             GetWindow<NugetWindow>();
@@ -142,7 +146,7 @@ namespace NugetForUnity
         /// <summary>
         /// Restores all packages defined in packages.config
         /// </summary>
-        [MenuItem("NuGet/Restore Packages", false, 1)]
+        [MenuItem("BDFrameWork工具箱/NuGet/Restore Packages", false, 1)]
         protected static void RestorePackages()
         {
             NugetHelper.Restore();
@@ -151,14 +155,13 @@ namespace NugetForUnity
         /// <summary>
         /// Displays the version number of NuGetForUnity.
         /// </summary>
-        [MenuItem("NuGet/Version " + NugetPreferences.NuGetForUnityVersion, false, 10)]
+        [MenuItem("BDFrameWork工具箱/NuGet/Version " + NugetPreferences.NuGetForUnityVersion, false, 10)]
         protected static void DisplayVersion()
         {
             // open the preferences window
 #if UNITY_2018_1_OR_NEWER
             SettingsService.OpenUserPreferences("Preferences/NuGet For Unity");
 #else
-
             var assembly = System.Reflection.Assembly.GetAssembly(typeof(EditorWindow));
             var preferencesWindow = assembly.GetType("UnityEditor.PreferencesWindow");
             var preferencesWindowSection = assembly.GetType("UnityEditor.PreferencesWindow+Section"); // access nested class via + instead of .     
@@ -214,16 +217,14 @@ namespace NugetForUnity
 #endif
         }
 
-        [MenuItem("NuGet/TestNUPKG2", false, 10)]
+        [MenuItem("BDFrameWork工具箱/NuGet/TestNUPKG2", false, 10)]
         protected static void TestNUPKG()
         {
+            var files = Directory.GetFiles("C:/Users/Administrator/AppData/Local/NuGet/Cache", "*.nupkg", SearchOption.AllDirectories);
 
-            var files = Directory.GetFiles("C:/Users/Administrator/AppData/Local/NuGet/Cache","*.nupkg",
-                SearchOption.AllDirectories);
-            
             foreach (var f in files)
             {
-                UnityEngine.Debug.Log("==============>" + Path.GetFileName(f) );
+                UnityEngine.Debug.Log("==============>" + Path.GetFileName(f));
                 //解析Npkg，剔除无用的dll
                 var nupkg = NuspecFile.FromNupkgFile(f);
                 foreach (var nf in nupkg.Files)
@@ -231,21 +232,14 @@ namespace NugetForUnity
                     UnityEngine.Debug.Log(nf.Source + "\n" + nf.Target);
                 }
             }
-         
-           // typeof(int).Assembly.GetReferencedAssemblies()
 
-
-       
-                
-                
-                
-           
+            // typeof(int).Assembly.GetReferencedAssemblies()
         }
 
         /// <summary>
         /// Checks/launches the Releases page to update NuGetForUnity with a new version.
         /// </summary>
-        [MenuItem("NuGet/Check for Updates...", false, 10)]
+        [MenuItem("BDFrameWork工具箱/NuGet/Check for Updates...", false, 10)]
         protected static void CheckForUpdates()
         {
             const string url = "https://github.com/GlitchEnzo/NuGetForUnity/releases";
@@ -263,9 +257,10 @@ namespace NugetForUnity
                 {
                     EditorUtility.DisplayProgressBar("Checking updates", null, 0.0f);
                 }
+
                 EditorUtility.ClearProgressBar();
 
-                string latestVersion = null;
+                string latestVersion            = null;
                 string latestVersionDownloadUrl = null;
 
                 string response = null;
@@ -288,34 +283,27 @@ namespace NugetForUnity
 
                 if (latestVersion == null)
                 {
-                    EditorUtility.DisplayDialog(
-                            "Unable to Determine Updates",
-                            string.Format("Couldn't find release information at {0}.", url),
-                            "OK");
+                    EditorUtility.DisplayDialog("Unable to Determine Updates", string.Format("Couldn't find release information at {0}.", url), "OK");
                     return;
                 }
 
                 NugetPackageIdentifier current = new NugetPackageIdentifier("NuGetForUnity", NugetPreferences.NuGetForUnityVersion);
-                NugetPackageIdentifier latest = new NugetPackageIdentifier("NuGetForUnity", latestVersion);
+                NugetPackageIdentifier latest  = new NugetPackageIdentifier("NuGetForUnity", latestVersion);
                 if (current >= latest)
                 {
-                    EditorUtility.DisplayDialog(
-                            "No Updates Available",
-                            string.Format("Your version of NuGetForUnity is up to date.\nVersion {0}.", NugetPreferences.NuGetForUnityVersion),
-                            "OK");
+                    EditorUtility.DisplayDialog("No Updates Available", string.Format("Your version of NuGetForUnity is up to date.\nVersion {0}.", NugetPreferences.NuGetForUnityVersion), "OK");
                     return;
                 }
 
                 // New version is available. Give user options for installing it.
-                switch (EditorUtility.DisplayDialogComplex(
-                        "Update Available",
-                        string.Format("Current Version: {0}\nLatest Version: {1}", NugetPreferences.NuGetForUnityVersion, latestVersion),
-                        "Install Latest",
-                        "Open Releases Page",
-                        "Cancel"))
+                switch (EditorUtility.DisplayDialogComplex("Update Available", string.Format("Current Version: {0}\nLatest Version: {1}", NugetPreferences.NuGetForUnityVersion, latestVersion), "Install Latest", "Open Releases Page", "Cancel"))
                 {
-                    case 0: Application.OpenURL(latestVersionDownloadUrl); break;
-                    case 1: Application.OpenURL(url); break;
+                    case 0:
+                        Application.OpenURL(latestVersionDownloadUrl);
+                        break;
+                    case 1:
+                        Application.OpenURL(url);
+                        break;
                     case 2: break;
                 }
             }
@@ -324,12 +312,13 @@ namespace NugetForUnity
         private static string GetLatestVersonFromReleasesHtml(string response, out string url)
         {
             Regex hrefRegex = new Regex(@"<a href=""(?<url>.*NuGetForUnity\.(?<version>\d+\.\d+\.\d+)\.unitypackage)""");
-            Match match = hrefRegex.Match(response);
+            Match match     = hrefRegex.Match(response);
             if (!match.Success)
             {
                 url = null;
                 return null;
             }
+
             url = "https://github.com/" + match.Groups["url"].Value;
             return match.Groups["version"].Value;
         }
@@ -416,7 +405,7 @@ namespace NugetForUnity
         private void UpdateUpdatePackages()
         {
             // get any available updates for the installed packages
-            updatePackages = NugetHelper.GetUpdates(NugetHelper.InstalledPackages, showPrereleaseUpdates, showAllUpdateVersions);
+            updatePackages         = NugetHelper.GetUpdates(NugetHelper.InstalledPackages, showPrereleaseUpdates, showAllUpdateVersions);
             filteredUpdatePackages = updatePackages;
 
             if (updatesSearchTerm != "Search")
@@ -436,8 +425,7 @@ namespace NugetForUnity
         {
             Color[] pix = new Color[width * height];
 
-            for (int i = 0; i < pix.Length; i++)
-                pix[i] = col;
+            for (int i = 0; i < pix.Length; i++) pix[i] = col;
 
             Texture2D result = new Texture2D(width, height);
             result.SetPixels(pix);
@@ -453,8 +441,7 @@ namespace NugetForUnity
         {
             int selectedTab = GUILayout.Toolbar(currentTab, tabTitles);
 
-            if (selectedTab != currentTab)
-                OnTabChanged();
+            if (selectedTab != currentTab) OnTabChanged();
 
             currentTab = selectedTab;
 
@@ -483,8 +470,8 @@ namespace NugetForUnity
         /// <returns>A GUI style with the appropriate background color set.</returns>
         private GUIStyle GetContrastStyle()
         {
-            GUIStyle style = new GUIStyle();
-            Color backgroundColor = EditorGUIUtility.isProSkin ? new Color(0.3f, 0.3f, 0.3f) : new Color(0.6f, 0.6f, 0.6f);
+            GUIStyle style           = new GUIStyle();
+            Color    backgroundColor = EditorGUIUtility.isProSkin ? new Color(0.3f, 0.3f, 0.3f) : new Color(0.6f, 0.6f, 0.6f);
             style.normal.background = MakeTex(16, 16, backgroundColor);
             return style;
         }
@@ -495,8 +482,8 @@ namespace NugetForUnity
         /// <returns>A GUI style with the appropriate background color set.</returns>
         private GUIStyle GetBackgroundStyle()
         {
-            GUIStyle style = new GUIStyle();
-            Color32 backgroundColor = EditorGUIUtility.isProSkin ? new Color32(56, 56, 56, 255) : new Color32(194, 194, 194, 255);
+            GUIStyle style           = new GUIStyle();
+            Color32  backgroundColor = EditorGUIUtility.isProSkin ? new Color32(56, 56, 56, 255) : new Color32(194, 194, 194, 255);
             style.normal.background = MakeTex(16, 16, backgroundColor);
             return style;
         }
@@ -521,9 +508,9 @@ namespace NugetForUnity
             else
             {
                 EditorStyles.label.fontStyle = FontStyle.Bold;
-                EditorStyles.label.fontSize = 14;
+                EditorStyles.label.fontSize  = 14;
                 EditorGUILayout.LabelField("There are no updates available!", GUILayout.Height(20));
-                EditorStyles.label.fontSize = 10;
+                EditorStyles.label.fontSize  = 10;
                 EditorStyles.label.fontStyle = FontStyle.Normal;
             }
 
@@ -550,9 +537,9 @@ namespace NugetForUnity
             else
             {
                 EditorStyles.label.fontStyle = FontStyle.Bold;
-                EditorStyles.label.fontSize = 14;
+                EditorStyles.label.fontSize  = 14;
                 EditorGUILayout.LabelField("There are no packages installed!", GUILayout.Height(20));
-                EditorStyles.label.fontSize = 10;
+                EditorStyles.label.fontSize  = 10;
                 EditorStyles.label.fontStyle = FontStyle.Normal;
             }
 
@@ -593,6 +580,7 @@ namespace NugetForUnity
                 numberToSkip += numberToGet;
                 availablePackages.AddRange(NugetHelper.Search(onlineSearchTerm != "Search" ? onlineSearchTerm : string.Empty, showAllOnlineVersions, showOnlinePrerelease, numberToGet, numberToSkip));
             }
+
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.EndVertical();
@@ -602,7 +590,7 @@ namespace NugetForUnity
         private void DrawPackages(List<NugetPackage> packages)
         {
             GUIStyle backgroundStyle = GetBackgroundStyle();
-            GUIStyle contrastStyle = GetContrastStyle();
+            GUIStyle contrastStyle   = GetContrastStyle();
 
             for (int i = 0; i < packages.Count; i++)
             {
@@ -613,7 +601,7 @@ namespace NugetForUnity
                 // swap styles
                 GUIStyle tempStyle = backgroundStyle;
                 backgroundStyle = contrastStyle;
-                contrastStyle = tempStyle;
+                contrastStyle   = tempStyle;
             }
         }
 
@@ -663,7 +651,7 @@ namespace NugetForUnity
                 {
                     int oldFontSize = GUI.skin.textField.fontSize;
                     GUI.skin.textField.fontSize = 25;
-                    onlineSearchTerm = EditorGUILayout.TextField(onlineSearchTerm, GUILayout.Height(30));
+                    onlineSearchTerm            = EditorGUILayout.TextField(onlineSearchTerm, GUILayout.Height(30));
 
                     if (GUILayout.Button("Search", GUILayout.Width(100), GUILayout.Height(28)))
                     {
@@ -709,7 +697,7 @@ namespace NugetForUnity
                 {
                     int oldFontSize = GUI.skin.textField.fontSize;
                     GUI.skin.textField.fontSize = 25;
-                    installedSearchTermEditBox = EditorGUILayout.TextField(installedSearchTermEditBox, GUILayout.Height(30));
+                    installedSearchTermEditBox  = EditorGUILayout.TextField(installedSearchTermEditBox, GUILayout.Height(30));
 
                     if (GUILayout.Button("Search", GUILayout.Width(100), GUILayout.Height(28)))
                     {
@@ -783,7 +771,7 @@ namespace NugetForUnity
                 {
                     int oldFontSize = GUI.skin.textField.fontSize;
                     GUI.skin.textField.fontSize = 25;
-                    updatesSearchTerm = EditorGUILayout.TextField(updatesSearchTerm, GUILayout.Height(30));
+                    updatesSearchTerm           = EditorGUILayout.TextField(updatesSearchTerm, GUILayout.Height(30));
 
                     if (GUILayout.Button("Search", GUILayout.Width(100), GUILayout.Height(28)))
                     {
@@ -816,7 +804,7 @@ namespace NugetForUnity
         private void DrawPackage(NugetPackage package, GUIStyle packageStyle, GUIStyle contrastStyle)
         {
             IEnumerable<NugetPackage> installedPackages = NugetHelper.InstalledPackages;
-            var installed = installedPackages.FirstOrDefault(p => p.Id == package.Id);
+            var                       installed         = installedPackages.FirstOrDefault(p => p.Id == package.Id);
 
             EditorGUILayout.BeginHorizontal();
             {
@@ -828,14 +816,14 @@ namespace NugetForUnity
                 EditorGUILayout.BeginHorizontal();
                 {
                     const int iconSize = 32;
-                    int padding = EditorStyles.label.padding.vertical;
-                    Rect rect = GUILayoutUtility.GetRect(iconSize, iconSize);
+                    int       padding  = EditorStyles.label.padding.vertical;
+                    Rect      rect     = GUILayoutUtility.GetRect(iconSize, iconSize);
                     // only use GetRect's Y position.  It doesn't correctly set the width, height or X position.
 
-                    rect.x = padding;
-                    rect.y += padding;
-                    rect.width = iconSize;
-                    rect.height = iconSize;
+                    rect.x      =  padding;
+                    rect.y      += padding;
+                    rect.width  =  iconSize;
+                    rect.height =  iconSize;
 
                     if (package.Icon != null)
                     {
@@ -846,20 +834,20 @@ namespace NugetForUnity
                         GUI.DrawTexture(rect, defaultIcon, ScaleMode.StretchToFill);
                     }
 
-                    rect.x = iconSize + 2 * padding;
-                    rect.width = position.width / 2 - (iconSize + padding);
-                    rect.y -= padding; // This will leave the text aligned with the top of the image
+                    rect.x     =  iconSize + 2   * padding;
+                    rect.width =  position.width / 2 - (iconSize + padding);
+                    rect.y     -= padding; // This will leave the text aligned with the top of the image
 
 
                     EditorStyles.label.fontStyle = FontStyle.Bold;
-                    EditorStyles.label.fontSize = 16;
+                    EditorStyles.label.fontSize  = 16;
 
                     Vector2 idSize = EditorStyles.label.CalcSize(new GUIContent(package.Id));
                     rect.y += (iconSize / 2 - idSize.y / 2) + padding;
                     GUI.Label(rect, package.Id, EditorStyles.label);
                     rect.x += idSize.x;
 
-                    EditorStyles.label.fontSize = 10;
+                    EditorStyles.label.fontSize  = 10;
                     EditorStyles.label.fontStyle = FontStyle.Normal;
 
                     Vector2 versionSize = EditorStyles.label.CalcSize(new GUIContent(package.Version));
@@ -867,16 +855,16 @@ namespace NugetForUnity
 
                     if (!string.IsNullOrEmpty(package.Authors))
                     {
-                        string authorLabel = string.Format("by {0}", package.Authors);
-                        Vector2 size = EditorStyles.label.CalcSize(new GUIContent(authorLabel));
+                        string  authorLabel = string.Format("by {0}", package.Authors);
+                        Vector2 size        = EditorStyles.label.CalcSize(new GUIContent(authorLabel));
                         GUI.Label(rect, authorLabel, EditorStyles.label);
                         rect.x += size.x;
                     }
 
                     if (package.DownloadCount > 0)
                     {
-                        string downloadLabel = string.Format("{0} downloads", package.DownloadCount.ToString("#,#"));
-                        Vector2 size = EditorStyles.label.CalcSize(new GUIContent(downloadLabel));
+                        string  downloadLabel = string.Format("{0} downloads", package.DownloadCount.ToString("#,#"));
+                        Vector2 size          = EditorStyles.label.CalcSize(new GUIContent(downloadLabel));
                         GUI.Label(rect, downloadLabel, EditorStyles.label);
                         rect.x += size.x;
                     }
@@ -887,6 +875,7 @@ namespace NugetForUnity
                 {
                     GUILayout.Label(string.Format("Current Version {0}", installed.Version));
                 }
+
                 GUILayout.Label(string.Format("Version {0}", package.Version));
 
 
@@ -937,6 +926,7 @@ namespace NugetForUnity
                         }
                     }
                 }
+
                 EditorGUILayout.EndHorizontal();
             }
             EditorGUILayout.EndHorizontal();
@@ -947,7 +937,7 @@ namespace NugetForUnity
                 EditorGUILayout.BeginVertical();
                 {
                     // Show the package details
-                    EditorStyles.label.wordWrap = true;
+                    EditorStyles.label.wordWrap  = true;
                     EditorStyles.label.fontStyle = FontStyle.Normal;
 
                     string summary = package.Summary;
@@ -968,13 +958,14 @@ namespace NugetForUnity
 
                     EditorGUILayout.LabelField(summary);
 
-                    bool detailsFoldout;
+                    bool   detailsFoldout;
                     string detailsFoldoutId = string.Format("{0}.{1}", package.Id, "Details");
                     if (!foldouts.TryGetValue(detailsFoldoutId, out detailsFoldout))
                     {
                         foldouts[detailsFoldoutId] = detailsFoldout;
                     }
-                    detailsFoldout = EditorGUILayout.Foldout(detailsFoldout, "Details");
+
+                    detailsFoldout             = EditorGUILayout.Foldout(detailsFoldout, "Details");
                     foldouts[detailsFoldoutId] = detailsFoldout;
 
                     if (detailsFoldout)
@@ -1004,7 +995,7 @@ namespace NugetForUnity
                         // Show the dependencies
                         if (package.Dependencies.Count > 0)
                         {
-                            EditorStyles.label.wordWrap = true;
+                            EditorStyles.label.wordWrap  = true;
                             EditorStyles.label.fontStyle = FontStyle.Italic;
                             StringBuilder builder = new StringBuilder();
 
@@ -1013,6 +1004,7 @@ namespace NugetForUnity
                             {
                                 builder.Append(string.Format(" {0} {1};", dependency.Id, dependency.Version));
                             }
+
                             EditorGUILayout.Space();
                             EditorGUILayout.LabelField(string.Format("Depends on:{0}", builder.ToString()));
                             EditorStyles.label.fontStyle = FontStyle.Normal;
@@ -1020,9 +1012,9 @@ namespace NugetForUnity
 
                         // Create the style for putting a box around the 'Clone' button
                         var cloneButtonBoxStyle = new GUIStyle("box");
-                        cloneButtonBoxStyle.stretchWidth = false;
-                        cloneButtonBoxStyle.margin.top = 0;
-                        cloneButtonBoxStyle.margin.bottom = 0;
+                        cloneButtonBoxStyle.stretchWidth   = false;
+                        cloneButtonBoxStyle.margin.top     = 0;
+                        cloneButtonBoxStyle.margin.bottom  = 0;
                         cloneButtonBoxStyle.padding.bottom = 4;
 
                         var normalButtonBoxStyle = new GUIStyle(cloneButtonBoxStyle);
@@ -1069,6 +1061,7 @@ namespace NugetForUnity
                                 {
                                     Application.OpenURL(package.LicenseUrl);
                                 }
+
                                 EditorGUILayout.EndHorizontal();
                             }
                         }
@@ -1128,6 +1121,7 @@ namespace NugetForUnity
                             }
                             EditorGUILayout.EndVertical();
                         }
+
                         EditorGUI.indentLevel--;
                     }
 
@@ -1135,8 +1129,6 @@ namespace NugetForUnity
                     EditorGUILayout.Separator();
                 }
                 EditorGUILayout.EndVertical();
-
-
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -1145,22 +1137,22 @@ namespace NugetForUnity
         {
             GUIStyle hyperLinkStyle = new GUIStyle(GUI.skin.label);
             hyperLinkStyle.stretchWidth = false;
-            hyperLinkStyle.richText = true;
+            hyperLinkStyle.richText     = true;
 
             string colorFormatString = "<color=#add8e6ff>{0}</color>";
 
             string underline = new string('_', url.Length);
 
-            string formattedUrl = string.Format(colorFormatString, url);
+            string formattedUrl       = string.Format(colorFormatString, url);
             string formattedUnderline = string.Format(colorFormatString, underline);
-            var urlRect = GUILayoutUtility.GetRect(new GUIContent(url), hyperLinkStyle);
+            var    urlRect            = GUILayoutUtility.GetRect(new GUIContent(url), hyperLinkStyle);
 
             // Update rect for indentation
             {
-                var indentedUrlRect = EditorGUI.IndentedRect(urlRect);
-                float delta = indentedUrlRect.x - urlRect.x;
+                var   indentedUrlRect = EditorGUI.IndentedRect(urlRect);
+                float delta           = indentedUrlRect.x - urlRect.x;
                 indentedUrlRect.width += delta;
-                urlRect = indentedUrlRect;
+                urlRect               =  indentedUrlRect;
             }
 
             GUI.Label(urlRect, formattedUrl, hyperLinkStyle);
@@ -1169,8 +1161,7 @@ namespace NugetForUnity
             EditorGUIUtility.AddCursorRect(urlRect, MouseCursor.Link);
             if (urlRect.Contains(Event.current.mousePosition))
             {
-                if (Event.current.type == EventType.MouseUp)
-                    Application.OpenURL(url);
+                if (Event.current.type == EventType.MouseUp) Application.OpenURL(url);
             }
         }
     }
