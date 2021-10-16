@@ -9,20 +9,20 @@ namespace BDFramework.Editor
 {
     public class EditorWindow_BDFrameworkConfig : OdinEditorWindow
     {
-        [MenuItem("BDFrameWork工具箱/框架设置", false, (int) BDEditorMenuEnum.BDSetting)]
+        [MenuItem("BDFrameWork工具箱/框架设置", false, (int) BDEditorGlobalMenuItemOrderEnum.BDSetting)]
         public static void Open()
         {
             var window = GetWindow<EditorWindow_BDFrameworkConfig>(false, "BDFrame设置");
             window.maxSize = window.minSize = new Vector2(600, 800);
-            window.EditorSetting = BDEditorApplication.BdFrameEditorSetting;
+            window.FrameWorkEditorSetting = BDEditorApplication.BDFrameWorkFrameEditorSetting;
             window.Show();
         }
 
         public void OnDestroy()
         {
             base.OnDestroy();
-            if (EditorSetting != null)
-                EditorSetting.Save();
+            if (FrameWorkEditorSetting != null)
+                FrameWorkEditorSetting.Save();
         }
 
         [InlinePropertyAttribute]
@@ -30,15 +30,15 @@ namespace BDFramework.Editor
         [LabelText("")]
         [LabelWidth(1)]
       
-        public BDEditorSetting EditorSetting;
+        public BDFrameWorkEditorSetting FrameWorkEditorSetting;
 
         [Button(ButtonSizes.Medium, Name = "保存")]
         [PropertySpace(20)]
         public void Save()
         {
-            if (EditorSetting != null)
+            if (FrameWorkEditorSetting != null)
             {
-                EditorSetting.Save();
+                FrameWorkEditorSetting.Save();
             }
         }
     }

@@ -59,7 +59,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public void AutoOpen()
         {
-            if (!IsTodayOpened() //今天没打开过,保证一天只打开一次
+             if (!IsTodayOpened() //今天没打开过,保证一天只打开一次
                 && (IsHaveNewVerison() //新版本
                 || !IsExsitOdin()  //缺少odin
                 || !IsImportedAsset() //缺少文件
@@ -69,7 +69,8 @@ namespace BDFramework.Editor
                 Open();
             }
         }
-
+        
+        
         /// <summary>
         /// 检测今天是否打开过
         /// </summary>
@@ -96,7 +97,7 @@ namespace BDFramework.Editor
             base.Show();
             //执行各种任务
             this.GetNewChangeLog();
-            this.Focus();
+	 		this.Focus();
         }
 
         /// <summary>
@@ -251,7 +252,7 @@ namespace BDFramework.Editor
             if (File.Exists(path))
             {
                 var version = File.ReadAllText(path);
-                if (version == BDEditorApplication.BDFrameConfig?.Version)
+                if (version == BDEditorApplication.BDFrameWorkConfig?.Version)
                 {
                     return true;
                 }
@@ -280,9 +281,9 @@ namespace BDFramework.Editor
             DrawLine();
             GUI.color = Color.green;
             var version = "2.0.0";
-            if (BDEditorApplication.BDFrameConfig != null)
+            if (BDEditorApplication.BDFrameWorkConfig != null)
             {
-                version = BDEditorApplication.BDFrameConfig.Version;
+                version = BDEditorApplication.BDFrameWorkConfig.Version;
             }
             GUILayout.Label("当前版本:" + version);
             //
@@ -313,14 +314,14 @@ namespace BDFramework.Editor
             {
                 WebClient wc = new WebClient();
                 var ret = wc.DownloadString(VERSION_URL);
-                var config = JsonMapper.ToObject<BDFrameConfig>(ret);
+                var config = JsonMapper.ToObject<BDFrameWorkConfig>(ret);
                 if (config != null)
                 {
                     NewVersionNum = config.Version;
                 }
             }
 
-            return BDEditorApplication.BDFrameConfig?.Version != NewVersionNum;
+            return BDEditorApplication.BDFrameWorkConfig?.Version != NewVersionNum;
         }
 
         #endregion

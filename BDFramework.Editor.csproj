@@ -50,9 +50,12 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\CI\AssetUploadToServer.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\CI\BuildPipeLine_CI.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\DevOps_SVN.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\BDFrameworkServerTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\EditorAssetHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\BuildPackageTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\CI\PublishPipeLineCI.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorWindow_BuildAssetsGuide.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorWindow_CICD.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutines.cs" />
@@ -76,15 +79,13 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\ShaderCollection.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDAssetImporter.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDFrameEditorLife.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BuildPackage\EditorMenu_BuildPackage.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorBehavior\ABDEditorBehavior.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorBehavior\BDEditorBehaviorHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorBuiltinStyle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorGuide\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDEditorApplication.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDEditorSetting.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDFrameWorkEditorSetting.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\EditorWindow_BDFrameworkConfig.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorWindow_BuildAssetsGuide.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\GlobalEditorMenuItems.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\NetProtocolEditor\Protobuf2ClassTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\ScriptEditor\EditorWindow_ScriptBuildDll.cs" />
@@ -98,6 +99,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\TableEditor\ExcelTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\TableEditor\ExcelUtility.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\TableEditor\GenCodeTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\SVN\SVNProcessor.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\UIComponent\OverrideUIComponent.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\WorkFollow\HotfixCodeWorkFollow.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\WorkFollow\MSBuildTest.cs" />

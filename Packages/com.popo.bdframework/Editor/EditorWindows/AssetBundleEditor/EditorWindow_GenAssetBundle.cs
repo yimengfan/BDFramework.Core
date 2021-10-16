@@ -10,7 +10,7 @@ namespace BDFramework.Editor.AssetBundle
 {
     public class EditorWindow_GenAssetBundle : EditorWindow
     {
-        [MenuItem("BDFrameWork工具箱/2.AssetBundle打包", false, (int) BDEditorMenuEnum.BuildPackage_Assetbundle)]
+        [MenuItem("BDFrameWork工具箱/2.AssetBundle打包", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Assetbundle)]
         public static void Open()
         {
             var window = EditorWindow.GetWindow<EditorWindow_GenAssetBundle>(false, "AB打包工具");
@@ -74,7 +74,7 @@ namespace BDFramework.Editor.AssetBundle
 
             GUILayout.Label(string.Format("AB输出目录:{0}", exportPath));
 
-            var assetConfig = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
+            var assetConfig = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
             //assetConfig.AESCode = EditorGUILayout.TextField("AES密钥(V2 only):", assetConfig.AESCode);
             assetConfig.IsUseHashName = EditorGUILayout.Toggle("hash命名:", assetConfig.IsUseHashName);
         }
@@ -83,7 +83,7 @@ namespace BDFramework.Editor.AssetBundle
         private void OnDestroy()
         {
             //保存
-            BDEditorApplication.BdFrameEditorSetting?.Save();
+            BDEditorApplication.BDFrameWorkFrameEditorSetting?.Save();
         }
 
 
@@ -152,7 +152,7 @@ namespace BDFramework.Editor.AssetBundle
                 platform = RuntimePlatform.IPhonePlayer;
             }
 
-            var assetConfig = BDEditorApplication.BdFrameEditorSetting.BuildAssetBundle;
+            var assetConfig = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
             //生成Assetbundlebunle
             AssetBundleEditorToolsV2.GenAssetBundle(exportPath, platform, assetConfig.IsUseHashName);
             AssetDatabase.Refresh();

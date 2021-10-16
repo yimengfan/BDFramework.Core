@@ -74,7 +74,7 @@ public class ExpoterMainProjectAsset
 
         //Editor Runtime版本
         var editorRuntimeVersionPath = AssetDatabase.GUIDToAssetPath("996622d6f14afc44dbd42c1cdfa8a362");
-        var config                   = new BDFrameConfig();
+        var config                   = new BDFrameWorkConfig();
         config.Version = pckage.version;
         File.WriteAllText(editorRuntimeVersionPath, JsonMapper.ToJson(config));
         //Asset目录版本

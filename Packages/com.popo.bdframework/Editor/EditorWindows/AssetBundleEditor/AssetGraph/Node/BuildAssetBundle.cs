@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using BDFramework.Asset;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.ResourceMgr;
@@ -452,7 +453,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             FileHelper.WriteAllText(buildinfoPath, json);
             //BD生命周期触发
             BDEditorBehaviorHelper.OnEndBuildAssetBundle(platformOutputPath);
-            AssetHelper.AssetHelper.GenPackageBuildInfo(buildParams.OutputPath, platform);
+            GameAssetHelper.GenPackageBuildInfo(buildParams.OutputPath, platform);
         }
 
         #region asset缓存、辅助等

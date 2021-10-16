@@ -4,7 +4,9 @@
   "WorkFollow" : {
     "HotfixCodeFloderType" : 1,
     "IsAutoBuildDll"       : true,
-    "AssetBundleFileServerUrl" : "http://127.0.0.1:20001"
+    "AssetBundleSVNUrl"    : "http://127.0.0.1:20001",
+    "AssetBundleSVNAccount" : "root",
+    "AssetBundleSVNPsw"     : "root"
   },
   "BuildAssetBundle" : {
     "IsUseHashName" : true

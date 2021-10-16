@@ -9,10 +9,18 @@ namespace BDFramework.Sql
 {
     static public class SqliteLoder
     {
-        public readonly static string           LOCAL_DB_PATH = "Local.db";
-        public readonly static string           SERVER_DB_PATH  = "Server.db";
+        /// <summary>
+        /// 本地DB Path
+        /// </summary>
+        public readonly static string           LOCAL_DB_PATH  = "Local.db";
+        /// <summary>
+        /// ServerDB Path
+        /// </summary>
+        public readonly static string           SERVER_DB_PATH = "Server.db";
+        /// <summary>
+        /// sql驱动对象
+        /// </summary>
         static public          SQLiteConnection Connection { get; private set; }
-
         /// <summary>
         /// 编辑器下加载DB，可读写|创建
         /// </summary>
@@ -38,6 +46,7 @@ namespace BDFramework.Sql
                 BDebug.Log("DB加载路径:" + path, "red");
             }
         }
+
         /// <summary>
         /// 编辑器下加载DB，可读写|创建
         /// </summary>
@@ -63,6 +72,7 @@ namespace BDFramework.Sql
                 BDebug.Log("DB加载路径:" + path, "red");
             }
         }
+
         /// <summary>
         /// runtime下加载，只读
         /// </summary>
@@ -100,7 +110,7 @@ namespace BDFramework.Sql
                 Debug.LogError("DB不存在:" + path);
             }
         }
-        
+
         /// <summary>
         /// 关闭
         /// </summary>
@@ -118,7 +128,7 @@ namespace BDFramework.Sql
         {
             return IPath.Combine(root, BDApplication.GetPlatformPath(platform), LOCAL_DB_PATH);
         }
-        
+
         /// <summary>
         /// 获取DB路径
         /// </summary>

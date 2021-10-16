@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using BDFramework;
-using BDFramework.AssetHelper;
+using BDFramework.Asset;
 using Debug = UnityEngine.Debug;
 using BDFramework.Core.Tools;
 using Microsoft.CodeAnalysis;
@@ -27,7 +27,7 @@ public class ScriptBuildTools
 
 
     private static Dictionary<int, string> csFilesMap;
-    private static string DLLPATH { get; set; } = ScriptLoder.DLLPATH; // "Hotfix/hotfix.dll";
+    private static string DLLPATH { get; set; } = ScriptLoder.DLL_PATH; // "Hotfix/hotfix.dll";
 
 
     private static bool IsShowTips;
@@ -154,7 +154,7 @@ public class ScriptBuildTools
             Build(baseCs, hotfixCs, dllFileList, outHotfixPath, true);
         }
 
-        AssetHelper.GenPackageBuildInfo(outPath, platform);
+        GameAssetHelper.GenPackageBuildInfo(outPath, platform);
     }
 
     /// <summary>

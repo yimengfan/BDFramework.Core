@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.Asset;
 using LitJson;
 using BDFramework.Sql;
 using UnityEditor;
@@ -17,7 +18,7 @@ namespace BDFramework.Editor.TableData
     static public class Excel2SQLiteTools
     {
 
-        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, (int) BDEditorMenuEnum.BuildPackage_Table_GenSqlite)]
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_GenSqlite)]
         public static void ExecuteGenSqlite()
         {
             //生成sql
@@ -26,7 +27,7 @@ namespace BDFramework.Editor.TableData
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite[Server]", false, (int) BDEditorMenuEnum.BuildPackage_Table_Json2Sqlite)]
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite[Server]", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Json2Sqlite)]
         public static void ExecuteJsonToSqlite()
         {
             AllExcel2SQLite(Application.streamingAssetsPath, Application.platform, DBType.Server);
@@ -102,7 +103,7 @@ namespace BDFramework.Editor.TableData
             EditorUtility.ClearProgressBar();
             //触发bd环境周期
             BDEditorBehaviorHelper.OnEndBuildSqlite(ouptputPath);
-            AssetHelper.AssetHelper.GenPackageBuildInfo(ouptputPath, platform);
+            GameAssetHelper.GenPackageBuildInfo(ouptputPath, platform);
             Debug.Log("导出Sqlite完成!");
         }
 

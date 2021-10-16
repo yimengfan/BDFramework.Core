@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using BDFramework.Asset;
 using BDFramework.GameStart;
 using UnityEngine;
 using BDFramework.ResourceMgr;
@@ -13,7 +14,7 @@ namespace BDFramework
     /// <summary>
     /// 框架的配置
     /// </summary>
-    public class BDFrameConfig
+    public class BDFrameWorkConfig
     {
         /// <summary>
         /// 版本号
@@ -23,7 +24,7 @@ namespace BDFramework
         /// <summary>
         /// 加载框架配置
         /// </summary>
-        public static BDFrameConfig Load()
+        public static BDFrameWorkConfig Load()
         {
             var content = Resources.Load<TextAsset>("BDFrameConfig")?.text;
 #if UNITY_EDITOR
@@ -36,7 +37,7 @@ namespace BDFramework
                 BDebug.Log("框架版本: 未加载到!", "red");
             }
 #endif
-            var config = JsonMapper.ToObject<BDFrameConfig>(content);
+            var config = JsonMapper.ToObject<BDFrameWorkConfig>(content);
             return config;
         }
     }
@@ -47,7 +48,7 @@ namespace BDFramework
         /// <summary>
         /// 框架的相关配置
         /// </summary>
-        public BDFrameConfig FrameConfig { get; private set; }
+        public BDFrameWorkConfig FrameWorkConfig { get; private set; }
 
         /// <summary>
         /// GameConfig
@@ -110,9 +111,9 @@ namespace BDFramework
         private void LoadFrameConfig()
         {
             var content = Resources.Load<TextAsset>("BDFrameConfig").text;
-            FrameConfig = JsonMapper.ToObject<BDFrameConfig>(content);
+            FrameWorkConfig = JsonMapper.ToObject<BDFrameWorkConfig>(content);
             //框架版本
-            BDebug.Log("框架版本:" + FrameConfig.Version, "red");
+            BDebug.Log("框架版本:" + FrameWorkConfig.Version, "red");
         }
 
 
@@ -146,7 +147,7 @@ namespace BDFramework
             }
 
             //开始资源检测
-            AssetHelper.AssetHelper.CheckAssetPackageVersion(Application.platform, () =>
+            GameAssetHelper.CheckAssetPackageVersion(Application.platform, () =>
             {
                 //1.美术目录
                 BResources.Load(GameConfig.ArtRoot, GameConfig.CustomArtRoot);
