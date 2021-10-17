@@ -9,6 +9,10 @@ namespace marijnz.EditorCoroutines
 		{
 			return EditorCoroutines.StartCoroutine(coroutine, thisRef);
 		}
+		public static EditorCoroutines.EditorCoroutine StartCoroutine(IEnumerator coroutine,object obj)
+		{
+			return EditorCoroutines.StartCoroutine(coroutine, obj);
+		}
 
 		public static EditorCoroutines.EditorCoroutine StartCoroutine(this EditorWindow thisRef, string methodName)
 		{
@@ -23,6 +27,11 @@ namespace marijnz.EditorCoroutines
 		public static void StopCoroutine(this EditorWindow thisRef, IEnumerator coroutine)
 		{
 			EditorCoroutines.StopCoroutine(coroutine, thisRef);
+		}
+		
+		public static void StopCoroutine( IEnumerator coroutine ,object obj)
+		{
+			EditorCoroutines.StopCoroutine(coroutine, obj);
 		}
 
 		public static void StopCoroutine(this EditorWindow thisRef, string methodName)

@@ -18,7 +18,7 @@ namespace BDFramework.Editor.AssetBundle
 {
     static public class AssetBundleEditorToolsV2
     {
-        static string RUNTIME_PATH = "/runtime/";
+        static  public string RUNTIME_PATH = "/runtime/";
 
         /// <summary>
         /// 生成AssetBundle
@@ -210,61 +210,7 @@ namespace BDFramework.Editor.AssetBundle
 
             return AssetBundleItem.AssetTypeEnum.Others;
         }
-
-        /// <summary>
-        /// 测试加载所有的AssetBundle
-        /// </summary>
-        static public void TestLoadAllAssetbundle(string abPath)
-        {
-            
-            UnityEngine.AssetBundle.UnloadAllAssetBundles(true);
-            //初始化BResource
-            BResources.Load(AssetLoadPath.StreamingAsset, abPath);
-            //加载
-            var allRuntimeAssets = BDApplication.GetAllRuntimeAssetsPath();
-            foreach (var asset in allRuntimeAssets)
-            {
-                var type = GetAssetType(asset);
-                var idx = asset.IndexOf(RUNTIME_PATH, StringComparison.OrdinalIgnoreCase);
-                var runtimePath = asset.Substring(idx + RUNTIME_PATH.Length);
-                runtimePath = runtimePath.Replace(Path.GetExtension(runtimePath), "");
-                //Debug.Log("【LoadTest】:" + runtimePath);
-                switch (type)
-                {
-                    case AssetBundleItem.AssetTypeEnum.Prefab:
-                    {
-                        try
-                        {
-                            //加载
-                            Stopwatch sw = new Stopwatch();
-                            sw.Start();
-                            var obj = BResources.Load<GameObject>(runtimePath);
-                            sw.Stop();
-                            var loadtime = sw.ElapsedTicks/10000f;
-                            //实例化
-                            sw.Restart();
-                            var gobj = GameObject.Instantiate(obj);
-                            sw.Stop();
-                            var instantTime = sw.ElapsedTicks/10000f;
-                            Debug.LogFormat("<color=yellow>【LoadTest】:{0}</color> <color=green>【加载耗时】:{1}ms;【初始化耗时】:{2}ms</color>", runtimePath, loadtime, instantTime);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogError("【LoadTest】加载失败:" + runtimePath);
-                        }
-                    }
-                        break;
-                    case AssetBundleItem.AssetTypeEnum.TextAsset:
-                    {
-                        //测试打印AssetText资源
-                        var textAsset = BResources.Load<TextAsset>(runtimePath);
-                        Debug.Log(textAsset.text);
-                    }
-                        break;
-                }
-            }
-        }
-
+        
         #endregion
     }
 }
