@@ -12,5 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4bc21567f434b598a3c96ba4946372, type: 3}
   m_Name: AssetReferenceDB
   m_EditorClassIdentifier: 
-  m_assets: []
+  m_assets:
+  - m_assetDatabaseId: 1d081ca1b3ab10f4b83b885e106a17d1
+    m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetReferenceDB.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5f57780e25654ee792a9dc07776a6e5e
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetBundleEditorToolsV2CheckAssetbundle.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 570885a00974e1d41b1f5d5b4dac96d6
+    m_importFrom: Assets/Resource/Runtime/AllAssetType/New Sprite Atlas.spriteatlas
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 76c21518bd7f0e64ca49af74a4987cd9
+    m_importFrom: Assets/Resource/Runtime/SpriteAtlas/SA2019.spriteatlas
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ec429a586bfac5f4284f3a31749303e7
+    m_importFrom: Assets/Resource/Runtime/SpriteAtlas/SA2019_NotInRuntime.spriteatlas
+    m_exportTo: 
+    m_variantName: 
   m_version: 2

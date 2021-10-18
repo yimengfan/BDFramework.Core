@@ -18,8 +18,8 @@ namespace BDFramework.Editor.AssetBundle
     /// </summary>
     static public class AssetBundleEditorToolsV2CheckAssetbundle
     {
-        static private GameObject UI_ROOT;
-        static private GameObject SCENE_ROOT;
+        static private Transform UI_ROOT;
+        static private Transform SCENE_ROOT;
         static private DevResourceMgr DevLoder;
         static private AssetBundleMgrV2 AssetBundleLoader;
         static private Camera Camera;
@@ -30,8 +30,12 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         static public void TestLoadAssetbundle(string abPath)
         {
-            //打开场景
-            EditorSceneManager.OpenScene("Assets/Scenes/AssetBundleTest.unity");
+            //打开场景、运行
+            EditorSceneManager.OpenScene("Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/Scene/AssetBundleTest.unity");
+            //运行场景
+            //EditorApplication.ExecuteMenuItem("Edit/Play");
+
+
             //初始化加载环境
             UnityEngine.AssetBundle.UnloadAllAssetBundles(true);
             BResources.Load(AssetLoadPath.StreamingAsset, abPath);
@@ -41,8 +45,8 @@ namespace BDFramework.Editor.AssetBundle
             AssetBundleLoader = new AssetBundleMgrV2();
             AssetBundleLoader.Init(Application.streamingAssetsPath);
             //节点
-            UI_ROOT = GameObject.Find("UIRoot");
-            SCENE_ROOT = GameObject.Find("3dRoot");
+            UI_ROOT = GameObject.Find("UIRoot").transform;
+            SCENE_ROOT = GameObject.Find("3dRoot").transform;
             //相机
             Camera = GameObject.Find("Camera").GetComponent<Camera>();
             Camera.cullingMask = -1;
@@ -53,8 +57,7 @@ namespace BDFramework.Editor.AssetBundle
             GameView = EditorWindow.GetWindow(GameViewType);
 
             //开始加载
-            var croutine = EditorCoroutineExtensions.StartCoroutine(IE_LoadAll(), new object());
-            EditorCoroutineExtensions.StopCoroutine(IE_LoadAll(), new object());
+            EditorCoroutineExtensions.StartCoroutine(IE_LoadAll(), new object());
         }
 
 
@@ -64,8 +67,10 @@ namespace BDFramework.Editor.AssetBundle
         /// <returns></returns>
         static IEnumerator IE_LoadAll()
         {
+            var outpath = BDApplication.BDEditorCachePath + "/AssetBundle";
             //加载
             var allRuntimeAssets = BDApplication.GetAllRuntimeAssetsPath();
+
             foreach (var asset in allRuntimeAssets)
             {
                 var type = AssetBundleEditorToolsV2.GetAssetType(asset);
@@ -74,6 +79,7 @@ namespace BDFramework.Editor.AssetBundle
                 runtimePath = runtimePath.Replace(Path.GetExtension(runtimePath), "");
                 runtimePath = runtimePath.Replace("\\", "/");
                 //Debug.Log("【LoadTest】:" + runtimePath);
+
                 switch (type)
                 {
                     case AssetBundleItem.AssetTypeEnum.Prefab:
@@ -87,21 +93,37 @@ namespace BDFramework.Editor.AssetBundle
                         //实例化
                         sw.Restart();
                         var gobj = GameObject.Instantiate(obj);
+
+                        //UI
+                        var rectTransform = gobj.GetComponentInChildren<RectTransform>();
+                        if (rectTransform != null)
+                        {
+                            gobj.transform.SetParent(UI_ROOT, false);
+                        }
+                        else
+                        {
+                            gobj.transform.SetParent(SCENE_ROOT);
+                        }
+
                         sw.Stop();
                         var instantTime = sw.ElapsedTicks / 10000f;
                         UnityEngine.Debug.LogFormat("<color=yellow>【LoadTest】:{0}</color> <color=green>【加载耗时】:{1}ms;【初始化耗时】:{2}ms</color>", runtimePath, loadtime, instantTime);
 
                         //抓屏
-                        var outpath = BDApplication.BDEditorCachePath + "/AssetBundle";
+
                         var outpng = string.Format("{0}/{1}_ab.png", outpath, runtimePath.Replace("/", "_"));
                         UnityEngine.Debug.Log(outpng);
-                         yield return null;
+                        yield return null;
                         //渲染
-                         GameView.Repaint();
-                         yield return null;
-                        //抓屏
-                        CaptureCamera(Camera, new Rect(0, 0, Screen.width, Screen.height), outpng);
+                        GameView.Repaint();
+                        GameView.Focus();
+
+                        yield return null;
+                        //抓屏 
+                        //TODO 这里有时候能抓到 有时候抓不到
+                        ScreenCapture.CaptureScreenshot(outpng);
                         //删除
+                        GameObject.DestroyImmediate(gobj);
                     }
                         break;
                     case AssetBundleItem.AssetTypeEnum.TextAsset:
@@ -115,39 +137,8 @@ namespace BDFramework.Editor.AssetBundle
 
                 yield return null;
             }
-        }
 
-
-        /// <summary>
-        /// 对相机截图。 
-        /// </summary>
-        /// <returns>The screenshot2.</returns>
-        /// <param name="camera">Camera.要被截屏的相机</param>
-        /// <param name="rect">Rect.截屏的区域</param>
-        static Texture2D CaptureCamera(Camera camera, Rect rect, string outPath)
-        {
-            // 创建一个RenderTexture对象
-            RenderTexture rt = new RenderTexture((int) rect.width, (int) rect.height, 0);
-            // 临时设置相关相机的targetTexture为rt, 并手动渲染相关相机
-            camera.targetTexture = rt;
-            camera.Render();
-
-            // 激活这个rt, 并从中中读取像素。
-            RenderTexture.active = rt;
-            Texture2D screenShot = new Texture2D((int) rect.width, (int) rect.height, TextureFormat.RGB24, false);
-            screenShot.ReadPixels(rect, 0, 0); // 注：这个时候，它是从RenderTexture.active中读取像素
-            screenShot.Apply();
-
-            // 重置相关参数，以使用camera继续在屏幕上显示
-            camera.targetTexture = null;
-            //ps: camera2.targetTexture = null;
-            RenderTexture.active = null; // JC: added to avoid errors
-            GameObject.DestroyImmediate(rt);
-            // 最后将这些纹理数据，成一个png图片文件
-            byte[] bytes = screenShot.EncodeToPNG();
-            FileHelper.WriteAllBytes(outPath, bytes);
-
-            return screenShot;
+            EditorUtility.RevealInFinder(outpath);
         }
     }
 }
