@@ -130,7 +130,7 @@ namespace BDFramework.Editor.AssetBundle
             {
                 var outputpath = BDApplication.ProjectRoot + "/CI_TEMP";
                 var outputpath2 = Application.streamingAssetsPath;
-                AssetBundleEditorToolsV2.TestLoadAllAssetbundle(outputpath2);
+                AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundle(outputpath2);
             }
 
             GUILayout.EndVertical();
