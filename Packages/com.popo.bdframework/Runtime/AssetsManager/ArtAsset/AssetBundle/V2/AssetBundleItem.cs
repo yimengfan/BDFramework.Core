@@ -9,26 +9,28 @@ namespace BDFramework.ResourceMgr.V2
     {
         public enum AssetTypeEnum
         {
-            Others = 0,
-            Prefab = 1,
-            TextAsset = 2,
-            Texture = 3,
-            SpriteAtlas = 4,
-            Mat,
-            Shader,
-            AudioClip,
-            AnimationClip,
-            Mesh,
-            Font
+            Others        = 0,
+            Prefab        = 1,
+            TextAsset     = 2,
+            Texture       = 3,
+            SpriteAtlas   = 4,
+            Mat           = 5,
+            Shader        = 6,
+            AudioClip     = 7,
+            AnimationClip = 8,
+            Mesh          = 9,
+            Font          = 10,
+            Sprite        = 11,
+            ScriptObjects = 100, //各种序列化相关的，比如.playable
         }
 
         public AssetBundleItem(int id, string loadPath, string assetbundlePath, AssetTypeEnum @enum, List<int> depend = null)
         {
-            this.Id = id;
-            this.LoadPath = loadPath;
+            this.Id              = id;
+            this.LoadPath        = loadPath;
             this.AssetBundlePath = assetbundlePath;
-            this.Type = (int) @enum;
-            this.DependAssetIds = depend;
+            this.Type            = (int)@enum;
+            this.DependAssetIds  = depend;
         }
 
         /// <summary>
@@ -52,8 +54,8 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// asset路径 【不序列化】
         /// </summary>
-       // public string EditorAssetPath { get; set; }
-        
+        // public string EditorAssetPath { get; set; }
+
         /// <summary>
         /// ab的资源路径名
         /// </summary>

@@ -64,8 +64,8 @@ namespace BDFramework.ResourceMgr
             allTaskList   = new List<LoaderTaskGroup>();
             objsMap       = new Dictionary<string, UnityEngine.Object>();
         }
-        
-        
+
+
         //
         private List<string> allRuntimeDirectList = new List<string>();
 
@@ -82,7 +82,7 @@ namespace BDFramework.ResourceMgr
         /// AssetBundle 
         /// </summary>
         public Dictionary<string, AssetBundleWapper> AssetbundleMap { get; set; }
-        
+
         /// <summary>
         /// 卸载
         /// </summary>
@@ -130,21 +130,48 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public T Load<T>(string path) where T : UnityEngine.Object
         {
-            if (objsMap.ContainsKey(path))
+            var assetPaths = FindAssets(path);
+            if (assetPaths == null)
             {
-                return objsMap[path] as T;
+                return null;
+            }
+
+            string assetPath = null;
+            if (assetPaths.Count == 1)
+            {
+                assetPath = assetPaths[0];
             }
             else
             {
-                var rets = FindAssets(path);
-                if (rets == null)
+                var type = typeof(T);
+                //这里是有同名文件
+                var ret = AssetConfig.AssetTypeConfigMap.TryGetValue(type, out var extenlist);
+                if (ret)
                 {
-                    return null;
+                    for (int i = 0; i < assetPaths.Count; i++)
+                    {
+                        var ap = assetPaths[i];
+
+                        for (int j = 0; j < extenlist.Count; j++)
+                        {
+                            var ext = extenlist[j];
+                            if (ap.EndsWith(ext, StringComparison.OrdinalIgnoreCase))
+                            {
+                                assetPath = ap;
+                                break;
+                                
+                            }
+                        }
+
+                        if (assetPath != null)
+                        {
+                            break;
+                        }
+                    }
                 }
-                var resPath = rets[0];
-                objsMap[path] = AssetDatabase.LoadAssetAtPath<T>(resPath);
-                return objsMap[path] as T;
             }
+            objsMap[path] = AssetDatabase.LoadAssetAtPath<T>(assetPath);
+            return objsMap[path] as T;
         }
 
 
@@ -155,23 +182,20 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         private List<string> FindAssets(string path)
         {
-
-            List<string > rets =new List<string>();
+            List<string> rets = new List<string>();
             //每个文件下判断
             foreach (var direct in this.allRuntimeDirectList)
             {
-                var filePath = IPath.Combine(direct, path);
-                var filename = Path.GetFileName(filePath);
+                var filePath   = IPath.Combine(direct, path);
+                var filename   = Path.GetFileName(filePath);
                 var fileDierct = Path.GetDirectoryName(filePath);
                 //
                 if (!Directory.Exists(fileDierct)) continue;
                 //
-                var res = Directory.GetFiles(fileDierct, filename + ".*", SearchOption.TopDirectoryOnly)
-                    .Where((r)=>
-                               !r.EndsWith(".meta"));
+                var res = Directory.GetFiles(fileDierct, filename + ".*", SearchOption.TopDirectoryOnly).Where((r) => !r.EndsWith(".meta"));
                 rets.AddRange(res);
             }
-            
+
             if (rets.Count == 0)
             {
                 Debug.LogError("未找到资源:" + path);
@@ -245,9 +269,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="onLoadProcess"></param>
         /// <param name="onLoadComplete"></param>
         /// <returns></returns>
-        public List<int> AsyncLoad(List<string> assetNameList,
-            Action<int, int> onLoadProcess,
-            Action<IDictionary<string, Object>> onLoadComplete)
+        public List<int> AsyncLoad(List<string> assetNameList, Action<int, int> onLoadProcess, Action<IDictionary<string, Object>> onLoadComplete)
         {
             //var list = assetsPath.Distinct().ToList();
 
@@ -307,8 +329,8 @@ namespace BDFramework.ResourceMgr
         public string[] GetAssets(string floder, string searchPattern = null)
         {
             //判断是否存在这个目录
-           
-            List<string > rets =new List<string>();
+
+            List<string> rets = new List<string>();
             //每个文件下判断
             foreach (var direct in this.allRuntimeDirectList)
             {
@@ -316,16 +338,15 @@ namespace BDFramework.ResourceMgr
                 //
                 if (!Directory.Exists(fileDierct)) continue;
                 //
-                var res = Directory.GetFiles(fileDierct, "*.*", SearchOption.TopDirectoryOnly)
-                    .Where((r)=>
-                               !r.EndsWith(".meta"));
+                var res = Directory.GetFiles(fileDierct, "*.*", SearchOption.TopDirectoryOnly).Where((r) => !r.EndsWith(".meta"));
                 rets.AddRange(res);
             }
+
             //
             var splitStr = "/Runtime/";
             for (int i = 0; i < rets.Count; i++)
             {
-                var r     = rets[i].Replace("\\","/");
+                var r     = rets[i].Replace("\\", "/");
                 var index = r.IndexOf(splitStr);
                 var rs    = r.Substring(index + splitStr.Length).Split('.');
                 rets[i] = rs[0];
@@ -368,7 +389,10 @@ namespace BDFramework.ResourceMgr
                 {
                     var resPath = loads[count];
 
-                    AsyncLoad<UnityEngine.Object>(resPath, (o) => { callback(resPath, o); });
+                    AsyncLoad<UnityEngine.Object>(resPath, (o) =>
+                    {
+                        callback(resPath, o);
+                    });
                     count++;
                 }
 

@@ -344,19 +344,19 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             #region 检查生成的数据
             //检查同名文件
-            foreach (var abi in assetDataItemList)
-            {
-                if (string.IsNullOrEmpty(abi.LoadPath))
-                {
-                    continue;
-                }
-                
-                var result = assetDataItemList.FindAll((ab) => ab.LoadPath == abi.LoadPath);
-                if (result.Count > 1)
-                {
-                    Debug.LogError("【AssetbundleV2】有同名文件(不包含后缀)，加载存在不确定性，请修改! -" + abi.LoadPath);
-                }
-            }
+            // foreach (var abi in assetDataItemList)
+            // {
+            //     if (string.IsNullOrEmpty(abi.LoadPath))
+            //     {
+            //         continue;
+            //     }
+            //     
+            //     var result = assetDataItemList.FindAll((ab) => ab.LoadPath == abi.LoadPath);
+            //     if (result.Count > 1)
+            //     {
+            //         Debug.LogError("【AssetbundleV2】有同名文件(不包含后缀)，加载存在不确定性，请修改! -" + abi.LoadPath);
+            //     }
+            // }
 
 
             //检查config是否遗漏

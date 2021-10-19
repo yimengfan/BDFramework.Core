@@ -18,12 +18,12 @@ namespace BDFramework.Editor.AssetBundle
     /// </summary>
     static public class AssetBundleEditorToolsV2CheckAssetbundle
     {
-        static private Transform UI_ROOT;
-        static private Transform SCENE_ROOT;
-        static private DevResourceMgr DevLoder;
+        static private Transform        UI_ROOT;
+        static private Transform        SCENE_ROOT;
+        static private DevResourceMgr   DevLoder;
         static private AssetBundleMgrV2 AssetBundleLoader;
-        static private Camera Camera;
-        static private EditorWindow GameView;
+        static private Camera           Camera;
+        static private EditorWindow     GameView;
 
         /// <summary>
         /// 测试加载所有的AssetBundle
@@ -36,6 +36,7 @@ namespace BDFramework.Editor.AssetBundle
             //EditorApplication.ExecuteMenuItem("Edit/Play");
 
 
+            //执行
             //初始化加载环境
             UnityEngine.AssetBundle.UnloadAllAssetBundles(true);
             BResources.Load(AssetLoadPath.StreamingAsset, abPath);
@@ -45,14 +46,14 @@ namespace BDFramework.Editor.AssetBundle
             AssetBundleLoader = new AssetBundleMgrV2();
             AssetBundleLoader.Init(Application.streamingAssetsPath);
             //节点
-            UI_ROOT = GameObject.Find("UIRoot").transform;
+            UI_ROOT    = GameObject.Find("UIRoot").transform;
             SCENE_ROOT = GameObject.Find("3dRoot").transform;
             //相机
-            Camera = GameObject.Find("Camera").GetComponent<Camera>();
-            Camera.cullingMask = -1;
+            Camera                      = GameObject.Find("Camera").GetComponent<Camera>();
+            Camera.cullingMask          = -1;
             Camera.gameObject.hideFlags = HideFlags.DontSave;
             //获取gameview
-            var assembly = typeof(UnityEditor.EditorWindow).Assembly;
+            var         assembly     = typeof(UnityEditor.EditorWindow).Assembly;
             System.Type GameViewType = assembly.GetType("UnityEditor.GameView");
             GameView = EditorWindow.GetWindow(GameViewType);
 
@@ -68,18 +69,26 @@ namespace BDFramework.Editor.AssetBundle
         static IEnumerator IE_LoadAll()
         {
             var outpath = BDApplication.BDEditorCachePath + "/AssetBundle";
+            if (!Directory.Exists(outpath))
+            {
+                Directory.CreateDirectory(outpath);
+            }
+
+            
+            
             //加载
             var allRuntimeAssets = BDApplication.GetAllRuntimeAssetsPath();
 
             foreach (var asset in allRuntimeAssets)
             {
-                var type = AssetBundleEditorToolsV2.GetAssetType(asset);
-                var idx = asset.IndexOf(AssetBundleEditorToolsV2.RUNTIME_PATH, StringComparison.OrdinalIgnoreCase);
+                var type        = AssetBundleEditorToolsV2.GetAssetType(asset);
+                var idx         = asset.IndexOf(AssetBundleEditorToolsV2.RUNTIME_PATH, StringComparison.OrdinalIgnoreCase);
                 var runtimePath = asset.Substring(idx + AssetBundleEditorToolsV2.RUNTIME_PATH.Length);
                 runtimePath = runtimePath.Replace(Path.GetExtension(runtimePath), "");
                 runtimePath = runtimePath.Replace("\\", "/");
                 //Debug.Log("【LoadTest】:" + runtimePath);
-
+                
+              
                 switch (type)
                 {
                     case AssetBundleItem.AssetTypeEnum.Prefab:
@@ -133,8 +142,69 @@ namespace BDFramework.Editor.AssetBundle
                         UnityEngine.Debug.Log(textAsset.text);
                     }
                         break;
+                    case AssetBundleItem.AssetTypeEnum.Texture:
+                    {
+                        var tex = BResources.Load<Texture>(runtimePath);
+                        if (!tex)
+                        {
+                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                        }
+                        break;
+                    }
+                        break;
+                    case AssetBundleItem.AssetTypeEnum.Mat:
+                        var mat = BResources.Load<Material>(runtimePath);
+                        if (!mat)
+                        {
+                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                        }
+                        break;
+                    case AssetBundleItem.AssetTypeEnum.Shader:
+                        var shader = BResources.Load<Shader>(runtimePath);
+                        if (!shader)
+                        {
+                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                        }
+                        break;
+                    case AssetBundleItem.AssetTypeEnum.AudioClip:
+                        var ac = BResources.Load<AudioClip>(runtimePath);
+                        if (!ac)
+                        {
+                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                        }
+                        break;
+                    case AssetBundleItem.AssetTypeEnum.AnimationClip:
+                        var anic = BResources.Load<AnimationClip>(runtimePath);
+                        if (!anic)
+                        {
+                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                        }
+                        break;
+                    case AssetBundleItem.AssetTypeEnum.Mesh:
+                        var mesh = BResources.Load<Mesh>(runtimePath);
+                        if (!mesh)
+                        {
+                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                        }
+                        break;
+                    case AssetBundleItem.AssetTypeEnum.Font:
+                        var font = BResources.Load<Font>(runtimePath);
+                        if (!font)
+                        {
+                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                        }
+                        break;
+                    case AssetBundleItem.AssetTypeEnum.Sprite:
+                        var sp = BResources.Load<Sprite>(runtimePath);
+                        if (!sp)
+                        {
+                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                        }
+                        break;
+        
                 }
 
+                yield return null;
                 yield return null;
             }
 

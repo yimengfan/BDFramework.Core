@@ -6,6 +6,7 @@ using System.IO;
 using BDFramework.ResourceMgr.V2;
 using BDFramework.Core.Tools;
 using UnityEngine.Rendering;
+using UnityEngine.U2D;
 
 namespace BDFramework.ResourceMgr
 
@@ -28,6 +29,9 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         readonly static public string ASSET_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/Build.Info";
         readonly static public string ASSET_OLD_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/OldBuild.Info";
+        
+
+        
         /// <summary>
         /// 初始化
         /// </summary>

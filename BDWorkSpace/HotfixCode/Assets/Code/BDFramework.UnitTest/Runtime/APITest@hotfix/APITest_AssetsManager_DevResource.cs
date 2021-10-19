@@ -32,9 +32,17 @@ namespace BDFramework.UnitTest
             o = BResources.Load<GameObject>("null");
             
         }
-        
+        [UnitTest(des: "加载测试-同名")]
+        static public void LoadSameNameAsset()
+        {
+            //同个目录
+            var o   = BResources.Load<GameObject>("AssetTest/Cube");
+            var mat = BResources.Load<Material>("AssetTest/Cube");
+            
+            Assert.IsPass(o!=null&&mat!=null,"加载同名文件失败!");
+        }
                 
-        [UnitTest(des: "加载测试2")]
+        [UnitTest(des: "加载测试所有")]
         static public void LoadALL()
         {
             //同个目录

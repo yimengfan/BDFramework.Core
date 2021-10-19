@@ -1,6 +1,6 @@
 
 {
-  "Time" : "2021/10/16",
+  "Time" : "2021/10/19",
   "AssetDataMaps" : {
     "assets/resource_svn/model/001/spongebob.obj" : {
       "Id" : 0,
@@ -291,8 +291,18 @@
       "DependAssetList" : [
       ]
     },
+    "assets/resource/runtime/assettest/cube.mat"                                                  : {
+      "Id" : 41,
+      "Type" : 5,
+      "ABName" : "d4a88a73900de024eb62d0da15c80841",
+      "ReferenceCount" : 0,
+      "Hash"           : "280b9aa83c85d1f0131327aad7511d343942797f44d6208c0fc4e2a5ef8daee6",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ]
+    },
     "assets/resource/runtime/assettest/cube.prefab"                                               : {
-      "Id" : 38,
+      "Id" : 40,
       "Type" : 1,
       "ABName" : "f43f8753e3c3460499a09f37075d54cf",
       "ReferenceCount" : 0,
@@ -302,18 +312,8 @@
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
-    "assets/resource/runtime/assettest/m_cube.mat"                                                : {
-      "Id" : 42,
-      "Type" : 5,
-      "ABName" : "d4a88a73900de024eb62d0da15c80841",
-      "ReferenceCount" : 0,
-      "Hash"           : "280b9aa83c85d1f0131327aad7511d343942797f44d6208c0fc4e2a5ef8daee6",
-      "DependAssetList" : [
-        "9d59e1d84070e4c46a595b3112d75a40"
-      ]
-    },
     "assets/resource/runtime/assettest/logo.png"                                                  : {
-      "Id" : 41,
+      "Id" : 43,
       "Type" : 3,
       "ABName" : "bab9d97529bb5b547ac8856fca3f85ef",
       "ReferenceCount" : 0,

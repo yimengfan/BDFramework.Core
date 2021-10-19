@@ -35,21 +35,7 @@ namespace BDFramework.Editor.AssetBundle
         }
 
 
-        /// <summary>
-        /// 资源类型配置
-        /// </summary>
-        static public Dictionary<AssetBundleItem.AssetTypeEnum, List<string>> AssetTypeConfigMap = new Dictionary<AssetBundleItem.AssetTypeEnum, List<string>>()
-        {
-            {AssetBundleItem.AssetTypeEnum.Prefab, new List<string>() {".prefab"}},                                                     //Prefab
-            {AssetBundleItem.AssetTypeEnum.SpriteAtlas, new List<string>() {".spriteatlas"}},                                           //Atlas
-            {AssetBundleItem.AssetTypeEnum.Texture, new List<string>() {".jpg", ".jpeg", ".png", ".tga",".psd",".bmp",".iff",".pict"}}, //Tex
-            {AssetBundleItem.AssetTypeEnum.Mat, new List<string>() {".mat"}},                                                           //mat
-            {AssetBundleItem.AssetTypeEnum.Shader, new List<string>() {".shader"}},                                                     //mat
-            {AssetBundleItem.AssetTypeEnum.TextAsset, new List<string>() {".json", ".xml", ".info", ".txt"}},                           //TextAsset
-            {AssetBundleItem.AssetTypeEnum.AudioClip, new List<string>() {".mp3", ".ogg", ".wav"}},                                     //sound
-            {AssetBundleItem.AssetTypeEnum.Mesh, new List<string>() {".mesh"}},                                                         //mesh
-            {AssetBundleItem.AssetTypeEnum.Font, new List<string>() {".otf",".fnt", ".fon", ".font", ".ttf", ".ttc",  ".eot",}},        //sound
-        };
+
         
         
         #region 依赖关系
@@ -200,7 +186,7 @@ namespace BDFramework.Editor.AssetBundle
         static public AssetBundleItem.AssetTypeEnum GetAssetType(string assetPath)
         {
             var ext = Path.GetExtension(assetPath);
-            foreach (var item in AssetTypeConfigMap)
+            foreach (var item in AssetConfig.AssetEnumTypeConfigMap)
             {
                 if (item.Value.Contains(ext))
                 {

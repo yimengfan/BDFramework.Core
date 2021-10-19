@@ -27,9 +27,13 @@ namespace BDFramework.UnitTest
         {
             APITest_AssetsManager_DevResource.Load();
         }
-        
+        [UnitTest(des: "加载测试-同名")]
+        static public void LoadSameNameAsset()
+        {
+            APITest_AssetsManager_DevResource.LoadSameNameAsset();
+        }
                 
-        [UnitTest(des:  "加载测试2")]
+        [UnitTest(des:  "加载测试所有")]
         static public void LoadALL()
         {
             APITest_AssetsManager_DevResource.LoadALL();

@@ -22,8 +22,8 @@ namespace BDFramework.Editor.TestRunner
         [MenuItem("BDFrameWork工具箱/执行框架UnitTest-API", false, (int) BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
         public static void UnitTest()
         {
-           // BDFramework.UnitTest.TestRunner.RunAPIUnitTest();
-           // TestRunner.TestRunnerEditor.RunILRuntimeTest();
+           // TestRunner.RunMonoCLRUnitTest();
+           //TestRunner.TestRunnerEditor.RunILRuntimeTest();
             
         }
 
