@@ -12,5 +12,149 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4bc21567f434b598a3c96ba4946372, type: 3}
   m_Name: AssetReferenceDB
   m_EditorClassIdentifier: 
-  m_assets: []
+  m_assets:
+  - m_assetDatabaseId: 06d8072032799a943910401e73639a1e
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/ScriptEditor/ScriptBuildTools.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 8ac38e31dbd3d1a4da6d6d7480c4893c
+    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/EditorAssetHelper.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e705a161e62eaa447973d3675d12289d
+    m_importFrom: Packages/com.popo.bdframework/Editor/SVN
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 977ecfb1ef6ba534ca4c4f2cf6e7a3c8
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/EditorSetting/BDEditorApplication.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4452412241d82774986cf038d6ad32dc
+    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/GameAssetHelper.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c6cfc062227d280409a745b27e9209c6
+    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/PublishPipeline
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2b7a02d2757164147959db0911d95ce6
+    m_importFrom: Assets/Code/BDFramework.UnitTest/Editor/TestRunner/TestRunnerEditor.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: cb2c89e2ca14c174b84ccbe62fec247f
+    m_importFrom: Packages/com.popo.bdframework/Editor/SVN/SVNProcessor.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dc71d553d83548dc820350750e5148d2
+    m_importFrom: Packages/com.popo.bdframework/Editor/WorkFollow/HotfixCodeWorkFollow.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 05756a93302f9564fb5a100be356e8bd
+    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/ArtAsset/AssetBundle/V2/AssetBundleItem.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: df542fa3b2c40ef4e9beabdc36726d12
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/ScriptEditor/EditorWindow_ScriptBuildDll.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: e36ddee3fdb66484b982267e854eef0b
+    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/PublishPipeline/BuildPackageTools.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 432f9674367ec1c48b3f0508f65d561e
+    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/Script/ScriptLoder.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 53901f56d09f96d4886992ff20f43b1b
+    m_importFrom: Packages/com.popo.bdframework/Runtime/BDLauncher.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 530b7ab64476a934fb92bbf41c78aa4d
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/GlobalEditorMenuItems.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 378313d6f21247a282a431b8bb67190d
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/BuildAssetBundle.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: b7f82bd6736e4a247b49f53d46577531
+    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/PublishPipeline/CI/PublishPipeLineCI.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: dff0b2680f3f99941b7a426f1000a9a4
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/EditorWindow_GenAssetBundle.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3072f398382779e488cb0236ad25cd06
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/EditorSetting/BDFrameWorkEditorSetting.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3b2924d85fa727643a976eafbe265f04
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/TableEditor/Excel2SQLiteTools.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1493bb1a310a1604a897a79989a0a471
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetBundleEditorToolsV2.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1962e50b8eea4c6893696ffa88f98a7f
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/NetProtocolEditor/Protobuf2ClassTools.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: d381c58b16cb4bc58ebc726076328a7b
+    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/BDFrameworkServerTools.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3f7cc0cbd51b41b7ad3854d901300523
+    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/PublishPipeline/CI
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 852fafdc89b0d4447b7a1b97297657d2
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/EditorSetting/EditorWindow_BDFrameworkConfig.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 3717aa4dd4627e542bad4558b02ce975
+    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/PublishPipeline/EditorWindow_BuildAssetsGuide.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 60e6356d575249e408a32320d556e6d5
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/TableEditor/Excel2CodeTools.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ff0304bd51f15054e81a2ef9fe35ccfd
+    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/Sql/Sqlite/SqliteLoder.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2eca6cae5f529084a97a9d14a6daba34
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/ShaderCollection.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 48d65b2f00ac4a81a2e043a9f72c3bca
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/SetGranularityByExtension.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 2e75d14f02e7471d8a263c0b720f6e9d
+    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/PublishPipeline/EditorWindow_CICD.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 55d63c7f4278de4418e7111ce8f19b54
+    m_importFrom: Assets/Code/Game/Editor/ExpoterMainProjectAsset.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: bac20aaf3c3041868d3a3998d65deab4
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/EditorGuide/EditorWindow_BDFrameworkStart.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 1d081ca1b3ab10f4b83b885e106a17d1
+    m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetReferenceDB.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 76c21518bd7f0e64ca49af74a4987cd9
+    m_importFrom: Assets/Resource/Runtime/SpriteAtlas/SA2019.spriteatlas
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: ec429a586bfac5f4284f3a31749303e7
+    m_importFrom: Assets/Resource/Runtime/SpriteAtlas/SA2019_NotInRuntime.spriteatlas
+    m_exportTo: 
+    m_variantName: 
   m_version: 2

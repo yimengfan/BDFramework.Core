@@ -40,15 +40,15 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         static public Dictionary<AssetBundleItem.AssetTypeEnum, List<string>> AssetTypeConfigMap = new Dictionary<AssetBundleItem.AssetTypeEnum, List<string>>()
         {
-            {AssetBundleItem.AssetTypeEnum.Prefab, new List<string>() {".prefab"}}, //Prefab
-            {AssetBundleItem.AssetTypeEnum.SpriteAtlas, new List<string>() {".spriteatlas"}}, //Atlas
-            {AssetBundleItem.AssetTypeEnum.Texture, new List<string>() {".jpg", ".jpeg", ".png", ".tga"}}, //Tex
-            {AssetBundleItem.AssetTypeEnum.Mat, new List<string>() {".mat"}}, //mat
-            {AssetBundleItem.AssetTypeEnum.Shader, new List<string>() {".shader"}}, //mat
-            {AssetBundleItem.AssetTypeEnum.TextAsset, new List<string>() {".json", ".xml", ".info", ".txt"}}, //TextAsset
-            {AssetBundleItem.AssetTypeEnum.AudioClip, new List<string>() {".mp3", ".ogg", ".wav"}}, //sound
-            {AssetBundleItem.AssetTypeEnum.Mesh, new List<string>() {".mesh"}}, //sound
-            {AssetBundleItem.AssetTypeEnum.Font, new List<string>() {".fnt", ".fon", ".font", ".ttf", ".ttc", ".otf", ".eot",}}, //sound
+            {AssetBundleItem.AssetTypeEnum.Prefab, new List<string>() {".prefab"}},                                                     //Prefab
+            {AssetBundleItem.AssetTypeEnum.SpriteAtlas, new List<string>() {".spriteatlas"}},                                           //Atlas
+            {AssetBundleItem.AssetTypeEnum.Texture, new List<string>() {".jpg", ".jpeg", ".png", ".tga",".psd",".bmp",".iff",".pict"}}, //Tex
+            {AssetBundleItem.AssetTypeEnum.Mat, new List<string>() {".mat"}},                                                           //mat
+            {AssetBundleItem.AssetTypeEnum.Shader, new List<string>() {".shader"}},                                                     //mat
+            {AssetBundleItem.AssetTypeEnum.TextAsset, new List<string>() {".json", ".xml", ".info", ".txt"}},                           //TextAsset
+            {AssetBundleItem.AssetTypeEnum.AudioClip, new List<string>() {".mp3", ".ogg", ".wav"}},                                     //sound
+            {AssetBundleItem.AssetTypeEnum.Mesh, new List<string>() {".mesh"}},                                                         //mesh
+            {AssetBundleItem.AssetTypeEnum.Font, new List<string>() {".otf",".fnt", ".fon", ".font", ".ttf", ".ttc",  ".eot",}},        //sound
         };
         
         
