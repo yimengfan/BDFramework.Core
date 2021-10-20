@@ -73,7 +73,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //预计算输出,不直接修改buildinfo
-            var platform = AssetBundleEditorToolsV2.GetRuntimePlatform(target);
+            var platform = BDApplication.GetRuntimePlatform(target);
             this.MergeABName(tempBuildInfo, BuildParams);
             var abConfig = this.GenAssetBundleConfig(tempBuildInfo, BuildParams, platform);
 
@@ -154,7 +154,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //-----------------------开始打包AssetBundle逻辑---------------------------
-            var platform = AssetBundleEditorToolsV2.GetRuntimePlatform(buildTarget);
+            var platform = BDApplication.GetRuntimePlatform(buildTarget);
             //1.整理abname
             this.MergeABName(BuildInfo, BuildParams);
 
@@ -415,7 +415,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     Directory.CreateDirectory(artOutputPath);
                 }
 
-                var buildTarget = AssetBundleEditorToolsV2.GetBuildTarget(platform);
+                var buildTarget = BDApplication.GetBuildTarget(platform);
                 var buildOpa    = BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.DeterministicAssetBundle;
                 BuildPipeline.BuildAssetBundles(artOutputPath, buildOpa, buildTarget);
             }

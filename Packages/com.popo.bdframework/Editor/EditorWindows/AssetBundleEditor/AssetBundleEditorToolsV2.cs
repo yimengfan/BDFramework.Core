@@ -29,14 +29,11 @@ namespace BDFramework.Editor.AssetBundle
         /// <param name="isUseHashName">是否为hash name</param>
         public static bool GenAssetBundle(string outputPath, RuntimePlatform platform, bool isUseHashName = false)
         {
-            var buildTarget = GetBuildTarget(platform);
+            var buildTarget = BDApplication.GetBuildTarget(platform);
             AssetBundleEditorToolsV2ForAssetGraph.Build(buildTarget, outputPath, isUseHashName);
             return true;
         }
 
-
-
-        
         
         #region 依赖关系
 
@@ -102,79 +99,7 @@ namespace BDFramework.Editor.AssetBundle
 
         #endregion
         
-        #region BuildTarget 和RuntimePlatform互转
 
-        /// <summary>
-        /// 获取AB构建平台
-        /// </summary>
-        /// <param name="platform"></param>
-        /// <returns></returns>
-        public static BuildTarget GetBuildTarget(RuntimePlatform platform)
-        {
-            //构建平台
-            BuildTarget target = BuildTarget.Android;
-            switch (platform)
-            {
-                case RuntimePlatform.Android:
-                    target = BuildTarget.Android;
-                    break;
-                case RuntimePlatform.IPhonePlayer:
-                    target = BuildTarget.iOS;
-                    break;
-                case RuntimePlatform.WindowsEditor:
-                case RuntimePlatform.WindowsPlayer:
-                {
-                    target = BuildTarget.StandaloneWindows64;
-                }
-                    break;
-                case RuntimePlatform.OSXEditor:
-                case RuntimePlatform.OSXPlayer:
-                {
-                    target = BuildTarget.StandaloneOSX;
-                }
-                    break;
-            }
-
-            return target;
-        }
-
-        /// <summary>
-        /// 获取runtimeplatform
-        /// </summary>
-        /// <param name="buildTarget"></param>
-        /// <returns></returns>
-        public static RuntimePlatform GetRuntimePlatform(BuildTarget buildTarget)
-        {
-            var platform = RuntimePlatform.Android;
-            switch (buildTarget)
-            {
-                case BuildTarget.Android:
-                {
-                    platform = RuntimePlatform.Android;
-                }
-                    break;
-                case BuildTarget.iOS:
-                {
-                    platform = RuntimePlatform.IPhonePlayer;
-                }
-                    break;
-                case BuildTarget.StandaloneWindows:
-                case BuildTarget.StandaloneWindows64:
-                {
-                    platform = RuntimePlatform.WindowsPlayer;
-                }
-                    break;
-                case BuildTarget.StandaloneOSX:
-                {
-                    platform = RuntimePlatform.OSXPlayer;
-                }
-                    break;
-            }
-
-            return platform;
-        }
-
-        #endregion
 
         #region 资源测试相关
 

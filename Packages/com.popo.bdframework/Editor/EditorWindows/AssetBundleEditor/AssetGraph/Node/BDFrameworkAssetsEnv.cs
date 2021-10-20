@@ -4,9 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.ResourceMgr;
 using BDFramework.ResourceMgr.V2;
+using ServiceStack.Text;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AssetGraph;
@@ -86,11 +88,10 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
-
             //构建对象
             if (incoming == null) return;
             BuildInfo   = new BuildInfo();
-            BuildParams  = new BuildAssetBundleParams();
+            BuildParams = new BuildAssetBundleParams();
 
 
             //设置所有节点参数请求,依次传参
@@ -110,7 +111,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //生成所有资源
             AllfileHashMap  = new Dictionary<string, string>();
             DependenciesMap = new Dictionary<string, List<string>>();
-            this.GenBuildInfo(runtimeAssetList);
+            this.GenBuildInfo(target, runtimeAssetList);
 
             //依赖的资源
             var dependAssetList = new List<AssetReference>();
@@ -147,7 +148,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 生成BuildInfo信息
         /// </summary>
-        public void GenBuildInfo(List<AssetReference> assets)
+        public void GenBuildInfo(BuildTarget target, List<AssetReference> assets)
         {
             if (BuildInfo == null)
             {
@@ -156,6 +157,9 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             BuildInfo.Time = DateTime.Now.ToShortDateString();
             int id = 0;
+
+            //资源类型列表
+            List<string> AssetTypeList = new List<string>();
             //搜集所有的依赖
             foreach (var mainAssets in assets)
             {
@@ -169,8 +173,15 @@ namespace BDFramework.Editor.AssetGraph.Node
                     assetData.ABName = subAssetPath;
 
                     //判断资源类型
-                    assetData.Type = (int)AssetBundleEditorToolsV2.GetAssetType(subAssetPath);
+                    var type = AssetDatabase.GetMainAssetTypeAtPath(subAssetPath);
+                    var idx  = AssetTypeList.FindIndex((a) => a == type.FullName);
+                    if (idx == -1)
+                    {
+                        AssetTypeList.Add(type.FullName);
+                        idx = AssetTypeList.Count - 1;
+                    }
 
+                    assetData.Type = idx;
                     //获取依赖
                     var dependeAssetList = GetDependencies(subAssetPath);
                     assetData.DependAssetList.AddRange(dependeAssetList);
@@ -180,6 +191,12 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
             }
 
+            //保存AssetTypeConfig
+            var configPath = string.Format("{0}/{1}/{2}", BuildParams.OutputPath, BDApplication.GetPlatformPath(target), BResources.ASSET_TYPE_PATH);
+            var csv        = CsvSerializer.SerializeToString(AssetTypeList);
+            FileHelper.WriteAllText(configPath, csv);
+            Debug.Log(csv);
+            
 
             //TODO AB依赖关系纠正
             /// 已知Unity,bug/设计缺陷：
@@ -190,6 +207,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 //依赖中不包含自己
                 asset.Value.DependAssetList.Remove(asset.Value.ABName);
             }
+            
         }
 
 
@@ -329,7 +347,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
-      
+
 
             NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_CONNECTIONPOINT_LABELCHANGED, nodeGUI, Vector2.zero, outputConnect));
         }

@@ -144,32 +144,18 @@ namespace BDFramework.ResourceMgr
             else
             {
                 var type = typeof(T);
-                //这里是有同名文件
-                var ret = AssetConfig.AssetTypeConfigMap.TryGetValue(type, out var extenlist);
-                if (ret)
+                //这里是有同名文件依次匹配类型
+                foreach (var p in assetPaths)
                 {
-                    for (int i = 0; i < assetPaths.Count; i++)
+                    var assetType = AssetDatabase.GetMainAssetTypeAtPath(p);
+                    if (type == assetType)
                     {
-                        var ap = assetPaths[i];
-
-                        for (int j = 0; j < extenlist.Count; j++)
-                        {
-                            var ext = extenlist[j];
-                            if (ap.EndsWith(ext, StringComparison.OrdinalIgnoreCase))
-                            {
-                                assetPath = ap;
-                                break;
-                                
-                            }
-                        }
-
-                        if (assetPath != null)
-                        {
-                            break;
-                        }
+                        assetPath = p;
+                        break;
                     }
                 }
             }
+
             objsMap[path] = AssetDatabase.LoadAssetAtPath<T>(assetPath);
             return objsMap[path] as T;
         }

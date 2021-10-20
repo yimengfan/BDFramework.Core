@@ -3,6 +3,10 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace BDFramework.Core.Tools
 {
     /// <summary>
@@ -63,15 +67,15 @@ namespace BDFramework.Core.Tools
 
         static public void Init()
         {
-            ProjectRoot = Application.dataPath.Replace("/Assets", "");
-            Library = ProjectRoot + "/Library";
-            Package = ProjectRoot + "/Package";
-            BDWorkSpace = ProjectRoot + "/BDWorkSpace";
+            ProjectRoot             = Application.dataPath.Replace("/Assets", "");
+            Library                 = ProjectRoot + "/Library";
+            Package                 = ProjectRoot + "/Package";
+            BDWorkSpace             = ProjectRoot + "/BDWorkSpace";
             RuntimeResourceLoadPath = "Assets/Resource/Runtime";
             //editor相关目录
-            EditorResourcePath = "Assets/Resource_SVN";
+            EditorResourcePath        = "Assets/Resource_SVN";
             EditorResourceRuntimePath = EditorResourcePath + "/Runtime";
-            BDEditorCachePath = Library + "/BDFrameCache";
+            BDEditorCachePath         = Library            + "/BDFrameCache";
         }
 
         /// <summary>
@@ -108,12 +112,11 @@ namespace BDFramework.Core.Tools
         public static List<string> GetAllRuntimeAssetsPath()
         {
             List<string> allAssetsList = new List<string>();
-            var directories = GetAllRuntimeDirects();
+            var          directories   = GetAllRuntimeDirects();
             //所有资源列表
             foreach (var dir in directories)
             {
-                var rets = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
-                    .Where((s) => !s.EndsWith(".meta"));
+                var rets = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories).Where((s) => !s.EndsWith(".meta"));
                 allAssetsList.AddRange(rets);
             }
 
@@ -135,7 +138,6 @@ namespace BDFramework.Core.Tools
         {
             switch (platform)
             {
-
                 case RuntimePlatform.WindowsEditor:
                 case RuntimePlatform.WindowsPlayer:
                 // return "Windows";
@@ -149,6 +151,96 @@ namespace BDFramework.Core.Tools
 
             return "";
         }
+
+
+#if  UNITY_EDITOR
+
+        #region BuildTarget 和RuntimePlatform互转
+
+        /// <summary>
+        /// 通过buildTarget获取platform
+        /// </summary>
+        /// <param name="buildTarget"></param>
+        /// <returns></returns>
+        public static string GetPlatformPath(BuildTarget buildTarget)
+        {
+            var platform = GetRuntimePlatform(buildTarget);
+            return GetPlatformPath(platform);
+        }
+        
+        
+        /// <summary>
+        /// 获取AB构建平台
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        public static BuildTarget GetBuildTarget(RuntimePlatform platform)
+        {
+            //构建平台
+            BuildTarget target = BuildTarget.Android;
+            switch (platform)
+            {
+                case RuntimePlatform.Android:
+                    target = BuildTarget.Android;
+                    break;
+                case RuntimePlatform.IPhonePlayer:
+                    target = BuildTarget.iOS;
+                    break;
+                case RuntimePlatform.WindowsEditor:
+                case RuntimePlatform.WindowsPlayer:
+                {
+                    target = BuildTarget.StandaloneWindows64;
+                }
+                    break;
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
+                {
+                    target = BuildTarget.StandaloneOSX;
+                }
+                    break;
+            }
+
+            return target;
+        }
+
+        /// <summary>
+        /// 获取runtimeplatform
+        /// </summary>
+        /// <param name="buildTarget"></param>
+        /// <returns></returns>
+        public static RuntimePlatform GetRuntimePlatform(BuildTarget buildTarget)
+        {
+            var platform = RuntimePlatform.Android;
+            switch (buildTarget)
+            {
+                case BuildTarget.Android:
+                {
+                    platform = RuntimePlatform.Android;
+                }
+                    break;
+                case BuildTarget.iOS:
+                {
+                    platform = RuntimePlatform.IPhonePlayer;
+                }
+                    break;
+                case BuildTarget.StandaloneWindows:
+                case BuildTarget.StandaloneWindows64:
+                {
+                    platform = RuntimePlatform.WindowsPlayer;
+                }
+                    break;
+                case BuildTarget.StandaloneOSX:
+                {
+                    platform = RuntimePlatform.OSXPlayer;
+                }
+                    break;
+            }
+
+            return platform;
+        }
+
+        #endregion
+#endif
 
         #endregion
     }
