@@ -143,9 +143,9 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 取消单个任务
         /// </summary>
-        public static void LoadCancel(int id)
+        public static void LoadCancel(int taskId)
         {
-            ResLoader.LoadCancel(id);
+            ResLoader.LoadCancel(taskId);
         }
 
         /// <summary>

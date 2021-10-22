@@ -1,4 +1,4 @@
-Id,LoadPath,AssetBundlePath,Type,DependAssetIds
+Id,LoadPath,AssetBundlePath,AssetType,DependAssetIds
 0,,,0,"[]"
 1,,9ae31c8b351113b44a663362fc4f41e9,0,"[]"
 2,,9d59e1d84070e4c46a595b3112d75a40,1,"[]"

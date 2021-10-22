@@ -81,7 +81,7 @@ namespace BDFramework.Editor.AssetBundle
 
             foreach (var asset in allRuntimeAssets)
             {
-                var type        = AssetBundleEditorToolsV2.GetAssetType(asset);
+                var type        =  AssetDatabase.GetMainAssetTypeAtPath(asset);
                 var idx         = asset.IndexOf(AssetBundleEditorToolsV2.RUNTIME_PATH, StringComparison.OrdinalIgnoreCase);
                 var runtimePath = asset.Substring(idx + AssetBundleEditorToolsV2.RUNTIME_PATH.Length);
                 runtimePath = runtimePath.Replace(Path.GetExtension(runtimePath), "");
@@ -89,9 +89,8 @@ namespace BDFramework.Editor.AssetBundle
                 //Debug.Log("【LoadTest】:" + runtimePath);
                 
               
-                switch (type)
-                {
-                    case AssetBundleItem.AssetTypeEnum.Prefab:
+                
+                   if(type== typeof(GameObject))
                     {
                         //加载
                         Stopwatch sw = new Stopwatch();
@@ -134,15 +133,13 @@ namespace BDFramework.Editor.AssetBundle
                         //删除
                         GameObject.DestroyImmediate(gobj);
                     }
-                        break;
-                    case AssetBundleItem.AssetTypeEnum.TextAsset:
+                   else if(type == typeof(TextAsset))
                     {
                         //测试打印AssetText资源
                         var textAsset = BResources.Load<TextAsset>(runtimePath);
                         UnityEngine.Debug.Log(textAsset.text);
                     }
-                        break;
-                    case AssetBundleItem.AssetTypeEnum.Texture:
+                   else if(type == typeof(Texture))
                     {
                         var tex = BResources.Load<Texture>(runtimePath);
                         if (!tex)
@@ -151,58 +148,84 @@ namespace BDFramework.Editor.AssetBundle
                         }
                         break;
                     }
-                        break;
-                    case AssetBundleItem.AssetTypeEnum.Mat:
+                   else if(type == typeof(Texture2D))
+                   {
+                       var tex = BResources.Load<Texture2D>(runtimePath);
+                       if (!tex)
+                       {
+                           UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                       }
+                    
+                   }
+                   
+                   else if (type == typeof(Sprite))
+                   {
+                       var sp = BResources.Load<Sprite>(runtimePath);
+                       if (!sp)
+                       {
+                           UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                       }
+                   }
+                   else if(type == typeof(Material))
+                   {
                         var mat = BResources.Load<Material>(runtimePath);
                         if (!mat)
                         {
                             UnityEngine.Debug.LogError("加载失败:" + runtimePath);
                         }
-                        break;
-                    case AssetBundleItem.AssetTypeEnum.Shader:
+
+                   }
+                   else if(type == typeof(Shader))
+                   {
                         var shader = BResources.Load<Shader>(runtimePath);
                         if (!shader)
                         {
                             UnityEngine.Debug.LogError("加载失败:" + runtimePath);
                         }
-                        break;
-                    case AssetBundleItem.AssetTypeEnum.AudioClip:
+
+                        }
+                   else if(type == typeof(AudioClip))
+                   {
                         var ac = BResources.Load<AudioClip>(runtimePath);
                         if (!ac)
                         {
                             UnityEngine.Debug.LogError("加载失败:" + runtimePath);
                         }
-                        break;
-                    case AssetBundleItem.AssetTypeEnum.AnimationClip:
+
+                   }
+                   else if(type == typeof(AnimationClip))
+                   {
                         var anic = BResources.Load<AnimationClip>(runtimePath);
                         if (!anic)
                         {
                             UnityEngine.Debug.LogError("加载失败:" + runtimePath);
                         }
-                        break;
-                    case AssetBundleItem.AssetTypeEnum.Mesh:
-                        var mesh = BResources.Load<Mesh>(runtimePath);
-                        if (!mesh)
-                        {
-                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
-                        }
-                        break;
-                    case AssetBundleItem.AssetTypeEnum.Font:
-                        var font = BResources.Load<Font>(runtimePath);
-                        if (!font)
-                        {
-                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
-                        }
-                        break;
-                    case AssetBundleItem.AssetTypeEnum.Sprite:
-                        var sp = BResources.Load<Sprite>(runtimePath);
-                        if (!sp)
-                        {
-                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
-                        }
-                        break;
-        
-                }
+
+                   }
+                   else if (type == typeof(Mesh))
+                   {
+                       var mesh = BResources.Load<Mesh>(runtimePath);
+                       if (!mesh)
+                       {
+                           UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                       }
+                   }
+
+                 
+                   else if (type == typeof(Font))
+                   {
+                       var font = BResources.Load<Font>(runtimePath);
+                       if (!font)
+                       {
+                           UnityEngine.Debug.LogError("加载失败:" + runtimePath);
+                       }
+                   }
+
+                   else
+                   {
+                       UnityEngine.Debug.LogError("没有测试到资源类型:" + type.FullName);
+                   }
+                
 
                 yield return null;
                 yield return null;

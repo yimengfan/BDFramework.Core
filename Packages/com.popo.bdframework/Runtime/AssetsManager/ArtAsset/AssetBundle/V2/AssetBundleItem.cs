@@ -29,7 +29,7 @@ namespace BDFramework.ResourceMgr.V2
             this.Id              = id;
             this.LoadPath        = loadPath;
             this.AssetBundlePath = assetbundlePath;
-            this.Type            = (int)@enum;
+            this.AssetType            = (int)@enum;
             this.DependAssetIds  = depend;
         }
 
@@ -64,7 +64,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 资源类型
         /// </summary>
-        public int Type { get; private set; }
+        public int AssetType { get; private set; }
 
         /// <summary>
         /// 依赖
