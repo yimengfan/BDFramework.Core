@@ -9,6 +9,7 @@ using marijnz.EditorCoroutines;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.U2D;
 using Debug = System.Diagnostics.Debug;
 
 namespace BDFramework.Editor.AssetBundle
@@ -136,12 +137,12 @@ namespace BDFramework.Editor.AssetBundle
                    else if(type == typeof(TextAsset))
                     {
                         //测试打印AssetText资源
-                        var textAsset = BResources.Load<TextAsset>(runtimePath);
+                        var textAsset = AssetBundleLoader.Load<TextAsset>(runtimePath);
                         UnityEngine.Debug.Log(textAsset.text);
                     }
                    else if(type == typeof(Texture))
                     {
-                        var tex = BResources.Load<Texture>(runtimePath);
+                        var tex = AssetBundleLoader.Load<Texture>(runtimePath);
                         if (!tex)
                         {
                             UnityEngine.Debug.LogError("加载失败:" + runtimePath);
@@ -150,7 +151,7 @@ namespace BDFramework.Editor.AssetBundle
                     }
                    else if(type == typeof(Texture2D))
                    {
-                       var tex = BResources.Load<Texture2D>(runtimePath);
+                       var tex = AssetBundleLoader.Load<Texture2D>(runtimePath);
                        if (!tex)
                        {
                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
@@ -160,7 +161,7 @@ namespace BDFramework.Editor.AssetBundle
                    
                    else if (type == typeof(Sprite))
                    {
-                       var sp = BResources.Load<Sprite>(runtimePath);
+                       var sp = AssetBundleLoader.Load<Sprite>(runtimePath);
                        if (!sp)
                        {
                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
@@ -168,7 +169,7 @@ namespace BDFramework.Editor.AssetBundle
                    }
                    else if(type == typeof(Material))
                    {
-                        var mat = BResources.Load<Material>(runtimePath);
+                        var mat = AssetBundleLoader.Load<Material>(runtimePath);
                         if (!mat)
                         {
                             UnityEngine.Debug.LogError("加载失败:" + runtimePath);
@@ -177,7 +178,7 @@ namespace BDFramework.Editor.AssetBundle
                    }
                    else if(type == typeof(Shader))
                    {
-                        var shader = BResources.Load<Shader>(runtimePath);
+                        var shader = AssetBundleLoader.Load<Shader>(runtimePath);
                         if (!shader)
                         {
                             UnityEngine.Debug.LogError("加载失败:" + runtimePath);
@@ -186,7 +187,7 @@ namespace BDFramework.Editor.AssetBundle
                         }
                    else if(type == typeof(AudioClip))
                    {
-                        var ac = BResources.Load<AudioClip>(runtimePath);
+                        var ac = AssetBundleLoader.Load<AudioClip>(runtimePath);
                         if (!ac)
                         {
                             UnityEngine.Debug.LogError("加载失败:" + runtimePath);
@@ -195,7 +196,7 @@ namespace BDFramework.Editor.AssetBundle
                    }
                    else if(type == typeof(AnimationClip))
                    {
-                        var anic = BResources.Load<AnimationClip>(runtimePath);
+                        var anic = AssetBundleLoader.Load<AnimationClip>(runtimePath);
                         if (!anic)
                         {
                             UnityEngine.Debug.LogError("加载失败:" + runtimePath);
@@ -204,30 +205,31 @@ namespace BDFramework.Editor.AssetBundle
                    }
                    else if (type == typeof(Mesh))
                    {
-                       var mesh = BResources.Load<Mesh>(runtimePath);
+                       var mesh = AssetBundleLoader.Load<Mesh>(runtimePath);
                        if (!mesh)
                        {
                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
                        }
                    }
-
-                 
+                   
                    else if (type == typeof(Font))
                    {
-                       var font = BResources.Load<Font>(runtimePath);
+                       var font = AssetBundleLoader.Load<Font>(runtimePath);
                        if (!font)
                        {
                            UnityEngine.Debug.LogError("加载失败:" + runtimePath);
                        }
                    }
-
+                   else if (type == typeof(SpriteAtlas))
+                   {
+                       UnityEngine.Debug.LogError("【图集】待编写测试! -" + type.FullName);
+                   }
                    else
                    {
                        UnityEngine.Debug.LogError("没有测试到资源类型:" + type.FullName);
                    }
                 
 
-                yield return null;
                 yield return null;
             }
 
