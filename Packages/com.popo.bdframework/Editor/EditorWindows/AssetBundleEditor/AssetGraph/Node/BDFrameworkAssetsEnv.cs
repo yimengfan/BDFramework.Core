@@ -173,7 +173,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     assetData.ABName = subAssetPath;
 
                     //判断资源类型
-                    var type = AssetDatabase.GetMainAssetTypeAtPath(subAssetPath);
+                    var type = AssetBundleEditorToolsV2.GetMainAssetTypeAtPath(subAssetPath);
                     var idx  = AssetTypeList.FindIndex((a) => a == type.FullName);
                     if (idx == -1)
                     {

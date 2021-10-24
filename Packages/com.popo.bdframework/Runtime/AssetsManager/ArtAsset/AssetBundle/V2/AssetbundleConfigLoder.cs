@@ -5,6 +5,7 @@ using System.IO;
 using LitJson;
 using ServiceStack.Text;
 using UnityEngine;
+using UnityEngine.U2D;
 using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr.V2
@@ -25,6 +26,20 @@ namespace BDFramework.ResourceMgr.V2
     /// </summary>
     public class AssetbundleConfigLoder
     {
+
+
+        #region 
+        /// <summary>
+        /// Prefab
+        /// </summary>
+        public int TYPE_PREFAB = -1;
+        /// <summary>
+        /// 图集
+        /// </summary>
+        public int TYPE_SPRITE_ATLAS = -1;
+        #endregion
+
+        
         /// <summary>
         /// 是否为hash命名
         /// </summary>
@@ -91,6 +106,11 @@ namespace BDFramework.ResourceMgr.V2
             {
                 BDebug.LogError("配置文件不存在:" + configPath);
             }
+            //项目类型；判断
+            var typecls = typeof(GameObject).FullName;
+            this.TYPE_PREFAB = this.AssetTypeList.FindIndex((at) => at == typecls);
+            typecls = typeof(SpriteAtlas).FullName;
+            this.TYPE_SPRITE_ATLAS = this.AssetTypeList.FindIndex((at) => at == typecls); 
         }
 
 
@@ -101,6 +121,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns>这个list外部不要修改</returns>
         public (AssetBundleItem, List<string>) GetDependAssetsByName<T>(string assetName) where T : Object
         {
+            //1.优先用类型匹配
             var assetbundleItem = GetAssetBundleData<T>(assetName);
             if (assetbundleItem != null)
             {
@@ -115,6 +136,13 @@ namespace BDFramework.ResourceMgr.V2
 
                 return (assetbundleItem, retlist);
             }
+            else
+            {
+                //2.强行搜路径匹配即可
+                return GetDependAssetsByName(assetName);
+
+            }
+            
 
             BDebug.LogError("【config】不存在资源:" + assetName);
             return (null, null);

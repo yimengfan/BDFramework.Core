@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.StringEx;
 using Cysharp.Text;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -28,7 +29,7 @@ namespace BDFramework.ResourceMgr.V2
 
         #region 各种加载接口
 
-        Dictionary<string, string> assetNameMap = new Dictionary<string, string>();
+        Dictionary<string, string> assetNameMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// 加载图集资源
@@ -53,29 +54,32 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public Object LoadAsset(string name, Type type)
         {
-            string realname = "";
-            if (!assetNameMap.TryGetValue(name, out realname))
+            string fullName = "";
+            if (!assetNameMap.TryGetValue(name, out fullName))
             {
                 var fs = this.AssetBundle.GetAllAssetNames();
                 if (fs.Length == 1)
                 {
-                    realname = fs[0];
+                    fullName = fs[0];
                 }
                 else
                 {
-                    var lname = ZString.Concat(name, ".").ToLower();
-                    realname = fs.FirstOrDefault((p) => p.Contains(lname));
+                    var subPath = ZString.Concat("/", name, ".");
+                    fullName = fs.FirstOrDefault((p) => p.Contains(subPath, StringComparison.OrdinalIgnoreCase));
                 }
 
-                assetNameMap[name] = realname;
+                assetNameMap[name] = fullName;
             }
 
-            if (realname == null)
+            if (fullName == null)
             {
                 return null;
             }
 
-            return this.AssetBundle.LoadAsset(realname, type);
+
+            var gobj = this.AssetBundle.LoadAsset(fullName, type);
+            var gobj2 = this.AssetBundle.LoadAsset(fullName, typeof(Sprite));
+            return gobj;
         }
 
         #endregion

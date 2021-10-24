@@ -34,6 +34,36 @@ namespace BDFramework.Editor.AssetBundle
             return true;
         }
 
+        /// <summary>
+        /// 获取主资源类型
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static Type GetMainAssetTypeAtPath(string path)
+        {
+            var type = AssetDatabase.GetMainAssetTypeAtPath(path);
+            if (type == typeof(Texture2D))
+            {
+                var sp = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+                if (sp != null)
+                {
+                  return typeof(Sprite);
+                }
+                
+                var tex2d = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+                if (tex2d != null)
+                {
+                    return typeof(Texture2D);
+                }
+                
+                var tex3d = AssetDatabase.LoadAssetAtPath<Texture3D>(path);
+                if (tex3d != null)
+                {
+                    return typeof(Texture2D);
+                }
+            }
+            return type;
+        }
         
         #region 依赖关系
 
@@ -97,31 +127,6 @@ namespace BDFramework.Editor.AssetBundle
             }
         }
 
-        #endregion
-        
-
-
-        #region 资源测试相关
-
-        /// <summary>
-        /// 获取资源类型
-        /// </summary>
-        /// <param name="assetPath"></param>
-        /// <returns></returns>
-        static public AssetBundleItem.AssetTypeEnum GetAssetType(string assetPath)
-        {
-            var ext = Path.GetExtension(assetPath);
-            foreach (var item in AssetConfig.AssetEnumTypeConfigMap)
-            {
-                if (item.Value.Contains(ext))
-                {
-                    return item.Key;
-                }
-            }
-
-            return AssetBundleItem.AssetTypeEnum.Others;
-        }
-        
         #endregion
     }
 }

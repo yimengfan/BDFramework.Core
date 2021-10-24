@@ -88,26 +88,26 @@ namespace BDFramework.ResourceMgr.V2
                 case RuntimePlatform.WindowsPlayer:
                 {
                     firstArtDirectory = firstArtDirectory.Replace("\\", "/");
-                    secArtDirectory   = secArtDirectory.Replace("\\", "/");
+                    secArtDirectory = secArtDirectory.Replace("\\", "/");
                 }
                     break;
             }
 
             //加载Config
             var assetconfigPath = "";
-            var assetTypePath   = "";
+            var assetTypePath = "";
 
             this.assetConfigLoder = new AssetbundleConfigLoder();
             if (Application.isEditor)
             {
                 assetconfigPath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_CONFIG_PATH);
-                assetTypePath   = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_TYPE_PATH);
+                assetTypePath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_TYPE_PATH);
             }
             else
             {
                 //真机环境config在persistent，跟dll和db保持一致
                 assetconfigPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_CONFIG_PATH);
-                assetTypePath   = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_TYPE_PATH);
+                assetTypePath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_TYPE_PATH);
             }
 
             this.assetConfigLoder.Load(assetconfigPath, assetTypePath);
@@ -174,8 +174,8 @@ namespace BDFramework.ResourceMgr.V2
 
             if (ab != null)
             {
-                var    assetNames = ab.GetAllAssetNames();
-                string relname    = "";
+                var assetNames = ab.GetAllAssetNames();
+                string relname = "";
                 if (assetNames.Length == 1)
                 {
                     relname = assetNames[0];
@@ -255,8 +255,8 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns>taskid</returns>
         public List<int> AsyncLoad(List<string> assetNameList, Action<int, int> onLoadProcess, Action<IDictionary<string, Object>> onLoadComplete)
         {
-            var taskIdList   = new List<int>();
-            int taskCounter  = 0;
+            var taskIdList = new List<int>();
+            int taskCounter = 0;
             var loadAssetMap = new Dictionary<string, Object>();
             assetNameList = assetNameList.Distinct().ToList(); //去重
             int total = assetNameList.Count;
@@ -331,7 +331,7 @@ namespace BDFramework.ResourceMgr.V2
             }
             else
             {
-                var p  = FindMultiAddressAsset(path);
+                var p = FindMultiAddressAsset(path);
                 var ab = AssetBundle.LoadFromFile(p);
                 //添加
                 this.AddAssetBundle(path, ab);
@@ -353,7 +353,7 @@ namespace BDFramework.ResourceMgr.V2
             //
             if (!AssetbundleMap.TryGetValue(assetPath, out abw))
             {
-                abw                       = new AssetBundleWapper(ab);
+                abw = new AssetBundleWapper(ab);
                 AssetbundleMap[assetPath] = abw;
             }
 
@@ -375,7 +375,8 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (item != null)
             {
-                return LoadFormAssetBundle(assetName, item, typeof(T)) as T;
+                var gobj = LoadFormAssetBundle(assetName, item, typeof(T));
+                return gobj as T;
             }
 
             BDebug.LogError("不存在:" + assetName);
@@ -392,16 +393,15 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         private Object LoadFormAssetBundle(string assetName, AssetBundleItem item, Type t)
         {
-            Object            o   = null;
+            Object o = null;
             AssetBundleWapper abr = null;
             if (AssetbundleMap.TryGetValue(item.AssetBundlePath, out abr))
             {
-
-                var assetType = this.assetConfigLoder.AssetTypeList[item.AssetType];
+                //var assetType = this.assetConfigLoder.AssetTypeList[item.AssetType];
 
                 //优先处理图集
                 //TODO 这里需要优化成int或者枚举判断，效率更高
-                if (assetType == typeof(SpriteAtlas).FullName)
+                if (item.AssetType == this.assetConfigLoder.TYPE_SPRITE_ATLAS)
                 {
                     o = abr.LoadTextureFormAtlas(assetName);
                 }
@@ -410,7 +410,7 @@ namespace BDFramework.ResourceMgr.V2
                 {
                     o = abr.LoadAsset(assetName, t);
                 }
-                
+
                 // switch ((AssetBundleItem.AssetTypeEnum)item.AssetType)
                 // {
                 //     //暂时需要特殊处理的只有一个
@@ -483,7 +483,7 @@ namespace BDFramework.ResourceMgr.V2
         public string[] GetAssets(string floder, string searchPattern = null)
         {
             List<string> rets = new List<string>();
-            string       str;
+            string str;
 
             str = ZString.Concat(floder, "/");
             if (!this.assetConfigLoder.IsHashName)
@@ -588,8 +588,8 @@ namespace BDFramework.ResourceMgr.V2
             //卸载
             for (int i = 0; i < dependAssetList.Count; i++)
             {
-                var               assetPath = dependAssetList[i];
-                AssetBundleWapper abw       = null;
+                var assetPath = dependAssetList[i];
+                AssetBundleWapper abw = null;
 
                 if (AssetbundleMap.TryGetValue(assetPath, out abw))
                 {

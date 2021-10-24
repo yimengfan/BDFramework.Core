@@ -276,7 +276,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //1.导出配置
             var assetDataItemList = new List<AssetBundleItem>();
             //占位，让id和idx恒相等
-            assetDataItemList.Add(new AssetBundleItem(0, null, null, AssetBundleItem.AssetTypeEnum.Others, new List<int>()));
+            assetDataItemList.Add(new AssetBundleItem(0, null, null, -1, new List<int>()));
             //先搜集非runtime的
             foreach (var item in buildInfo.AssetDataMaps)
             {
@@ -286,7 +286,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     var ret = assetDataItemList.FirstOrDefault((ab) => ab.AssetBundlePath == item.Value.ABName);
                     if (ret == null) //不保存重复内容
                     {
-                        var abi = new AssetBundleItem(assetDataItemList.Count, null, item.Value.ABName, (AssetBundleItem.AssetTypeEnum)item.Value.Type, new List<int>());
+                        var abi = new AssetBundleItem(assetDataItemList.Count, null, item.Value.ABName, item.Value.Type, new List<int>());
                         // abi.EditorAssetPath = item.Key;
                         assetDataItemList.Add(abi);
                     }
@@ -318,7 +318,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     }
 
                     //添加
-                    var abi = new AssetBundleItem(assetDataItemList.Count, loadPath, item.Value.ABName, (AssetBundleItem.AssetTypeEnum)item.Value.Type, new List<int>());
+                    var abi = new AssetBundleItem(assetDataItemList.Count, loadPath, item.Value.ABName, item.Value.Type, new List<int>());
                     // abi.EditorAssetPath = item.Key;
                     assetDataItemList.Add(abi); //.ManifestMap[key] = mi;
                 }

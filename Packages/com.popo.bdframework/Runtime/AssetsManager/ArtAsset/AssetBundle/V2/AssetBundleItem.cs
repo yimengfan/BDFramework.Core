@@ -7,29 +7,14 @@ namespace BDFramework.ResourceMgr.V2
     /// </summary>
     public class AssetBundleItem
     {
-        public enum AssetTypeEnum
-        {
-            Others        = 0,
-            Prefab        = 1,
-            TextAsset     = 2,
-            Texture       = 3,
-            SpriteAtlas   = 4,
-            Mat           = 5,
-            Shader        = 6,
-            AudioClip     = 7,
-            AnimationClip = 8,
-            Mesh          = 9,
-            Font          = 10,
-            Sprite        = 11,
-            ScriptObjects = 100, //各种序列化相关的，比如.playable
-        }
 
-        public AssetBundleItem(int id, string loadPath, string assetbundlePath, AssetTypeEnum @enum, List<int> depend = null)
+
+        public AssetBundleItem(int id, string loadPath, string assetbundlePath, int assetType, List<int> depend = null)
         {
             this.Id              = id;
             this.LoadPath        = loadPath;
             this.AssetBundlePath = assetbundlePath;
-            this.AssetType            = (int)@enum;
+            this.AssetType            = assetType;
             this.DependAssetIds  = depend;
         }
 

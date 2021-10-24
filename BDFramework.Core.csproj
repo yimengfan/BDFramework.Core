@@ -90,7 +90,6 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleMgrV2.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleWapper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetbundleConfigLoder.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetConfig.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\BResources.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
@@ -124,6 +123,10 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\core\DebuggerNetworkTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\core\Debugger_NetworkClient.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\core\Debugger_NetworkServer.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\FileHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\HashHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\Path.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\String.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\GameStart\IGameStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\GameStart\IHotfixGameStart@hotfix.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\ManagerBase\@hotfix\IMgr.cs" />
@@ -137,10 +140,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\Adaptor\@hotfix\ActionAdaptor.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\BDApplication.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\BGameObjectPools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\FileHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\HashHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\IEnumerator\IEnumeratorTool.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\Path.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\Collections\PropsList.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\Extension\ObjectsExtension.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\State\AStateBase.cs" />
