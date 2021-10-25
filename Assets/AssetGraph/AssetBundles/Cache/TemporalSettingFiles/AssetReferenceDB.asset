@@ -12,5 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4bc21567f434b598a3c96ba4946372, type: 3}
   m_Name: AssetReferenceDB
   m_EditorClassIdentifier: 
-  m_assets: []
+  m_assets:
+  - m_assetDatabaseId: 1d081ca1b3ab10f4b83b885e106a17d1
+    m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetReferenceDB.asset
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 5f57780e25654ee792a9dc07776a6e5e
+    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetBundleEditorToolsV2CheckAssetbundle.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 0ad02c9a102914a48aee1cde2619ff7a
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/CLRBindings.cs
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 69227cf6ea5304641ae95ffb93874014
+    m_importFrom: Packages/com.popo.bdframework/Resource/Asset.unitypackage
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9b272a52ad6ec44438156514d0a23ac7
+    m_importFrom: Assets/StreamingAssets/Android/Hotfix/hotfix.dll
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 096fcd7bbbb4325488df822b4724bdaf
+    m_importFrom: Assets/StreamingAssets/Android/Hotfix
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: c258dc7d680de8a4f978e6af15be71eb
+    m_importFrom: Assets/StreamingAssets/Android/Hotfix/hotfix.dll.pdb
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 4ab4c2f4961cc8f4a94b548be2007adc
+    m_importFrom: Assets/StreamingAssets/Android/PackageBuild.Info
+    m_exportTo: 
+    m_variantName: 
   m_version: 2
