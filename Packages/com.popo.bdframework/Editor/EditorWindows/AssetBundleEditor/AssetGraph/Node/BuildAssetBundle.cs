@@ -384,6 +384,10 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="buildParams"></param>
         private void BuildAB(IEnumerable<PerformGraph.AssetGroups> incomingAssets, BuildInfo buildInfo, BuildAssetBundleParams buildParams, RuntimePlatform platform)
         {
+
+            //设置状态
+            BDEditorApplication.EditorStatus = BDFrameworkEditorStatus.BuildAssetBundle;
+            
             //----------------------------开始设置build ab name-------------------------------
             //根据传进来的资源,设置AB name
             foreach (var incoming in incomingAssets)
@@ -454,6 +458,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             //BD生命周期触发
             BDEditorBehaviorHelper.OnEndBuildAssetBundle(platformOutputPath);
             GameAssetHelper.GenPackageBuildInfo(buildParams.OutputPath, platform);
+            //恢复状态
+            BDEditorApplication.EditorStatus = BDFrameworkEditorStatus.Idle;
         }
 
         #region asset缓存、辅助等

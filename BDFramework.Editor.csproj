@@ -86,6 +86,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorGuide\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDEditorApplication.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDFrameWorkEditorSetting.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDFrameworkEditorStatus.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\EditorWindow_BDFrameworkConfig.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\GlobalEditorMenuItems.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\NetProtocolEditor\Protobuf2ClassTools.cs" />

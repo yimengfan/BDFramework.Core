@@ -24,6 +24,12 @@ namespace BDFramework.Editor
         static public BDFrameWorkConfig BDFrameWorkConfig { get; private set; }
 
         /// <summary>
+        /// Editor工作状态
+        /// </summary>
+        static public BDFrameworkEditorStatus EditorStatus { get; set; }
+        
+        
+        /// <summary>
         /// 初始化
         /// </summary>
         static public void Init()
