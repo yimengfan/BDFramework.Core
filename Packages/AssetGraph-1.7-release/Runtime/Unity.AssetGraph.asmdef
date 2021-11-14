@@ -1,0 +1,24 @@
+{
+    "name": "Unity.AssetGraph",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.assetbundlebrowser",
+            "expression": "1.7.0",
+            "define": "ASSETBUNDLEBROWSER_1_7_OR_NEWER"
+        },
+        {
+            "name": "com.unity.addressables",
+            "expression": "1.6.0",
+            "define": "ADDRESSABLES_1_6_OR_NEWER"
+        }
+    ],
+    "noEngineReferences": false
+}

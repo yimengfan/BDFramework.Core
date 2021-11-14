@@ -1,0 +1,100 @@
+using UnityEngine;
+using UnityEditor;
+
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.AssetGraph;
+
+[System.Serializable]
+[CustomAssetGenerator("My Generator", "v1.0")]
+public class MyGenerator : IAssetGenerator {
+
+	[SerializeField] private float m_scale = 1.0f;
+
+    public void OnValidate () {
+    }
+
+    public string GetAssetExtension (AssetReference asset) {
+        return ".jpg";
+    }
+
+    public Type GetAssetType(AssetReference asset) {
+        return typeof(TextureImporter);
+    }
+
+	public bool CanGenerateAsset (AssetReference asset, out string message) {
+		if (asset.filterType != typeof(TextureImporter)) {
+			message = string.Format ("My Generator needs texture source asset. Source: {0} ", asset.importFrom);
+			return false;
+		}
+
+		message = "";
+		return true;
+	}
+
+	public bool CanGenerateAsset(AssetReference asset)
+	{
+		var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(asset.importFrom);
+		return tex != null;
+	}
+	
+	/**
+	 * Generate asset.
+	 */ 
+	public bool GenerateAsset (AssetReference asset, string generateAssetPath) {
+
+		var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(asset.importFrom);
+		if (tex == null) {
+			return false;
+		}
+
+		var output = CreateScaledTexture (tex);
+		Resources.UnloadAsset(tex);
+
+		// Encode texture into the EXR
+		byte[] bytes = output.EncodeToJPG();
+		UnityEngine.Object.DestroyImmediate(output);
+
+		string fullPath = FileUtility.PathCombine (Directory.GetParent(Application.dataPath).ToString(), generateAssetPath);
+		File.WriteAllBytes(fullPath, bytes);
+
+		return true;
+	}
+
+	private Texture2D CreateScaledTexture(Texture2D src){
+		int width  = (int)(src.width * m_scale);
+		int height = (int)(src.height * m_scale);
+		var dst = new Texture2D (width, height);
+		var dstPix = new Color[dst.width * dst.height];
+		int y = 0;
+		while (y < dst.height) {
+			int x = 0;
+			while (x < dst.width) {
+				float xFrac = x * 1.0F / (dst.width - 1);
+				float yFrac = y * 1.0F / (dst.height - 1);
+				dstPix[y * dst.width + x] = src.GetPixelBilinear(xFrac, yFrac);
+				++x;
+			}
+			++y;
+		}
+		dst.SetPixels(dstPix);
+		dst.Apply();
+
+		return dst;
+	}
+
+	/**
+	 * Draw Inspector GUI for this AssetGenerator.
+	 */ 
+	public void OnInspectorGUI (Action onValueChanged) {
+
+		var newScale = EditorGUILayout.Slider ("Scale(%)", m_scale * 100f, 1.0f, 100.0f);
+		newScale = newScale / 100f;
+		if (m_scale != newScale) {
+			m_scale = newScale;
+			onValueChanged();
+		}
+	}
+}

@@ -1,0 +1,47 @@
+using UnityEngine;
+using UnityEditor;
+
+using System;
+using System.Linq;
+using System.IO;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Text.RegularExpressions;
+
+using UnityEngine.AssetGraph;
+using Model=UnityEngine.AssetGraph.DataModel.Version2;
+
+[CustomFilter("My Filter")]
+public class MyFilter : IFilter {
+
+	[SerializeField] private string m_filterKeyword;
+
+	public string Label { 
+		get {
+			return m_filterKeyword;
+		}
+	}
+
+	public MyFilter() {
+		m_filterKeyword = Model.Settings.DEFAULT_FILTER_KEYWORD;
+	}
+
+	public bool FilterAsset(AssetReference a) {
+		return Regex.IsMatch(a.importFrom, m_filterKeyword, 
+			RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace);	
+	}
+
+	public void OnInspectorGUI (Rect rect, Action onValueChanged) {
+
+		var keyword = m_filterKeyword;
+
+		using (new EditorGUILayout.HorizontalScope()) {
+            GUIStyle s = new GUIStyle((GUIStyle)"TextFieldDropDownText");
+            keyword = EditorGUI.TextField(rect, m_filterKeyword, s);
+			if (keyword != m_filterKeyword) {
+				m_filterKeyword = keyword;
+				onValueChanged();
+			}
+		}
+	}
+}

@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec4882d68a9346b3b5f8ecf1e38a534, type: 3}
+  m_Name: __hidden__ErrorTest_TestNoError
+  m_EditorClassIdentifier: 
+  m_allNodes:
+  - m_name: Load
+    m_id: 1a84b212-aaa6-4aeb-b9fa-f817805c64b4
+    m_x: 128
+    m_y: 188
+    m_nodeInstance:
+      m_className: Unity.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2xvYWRQYXRoIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJFcnJvclRlc3RfQXNzZXRzVG9EZWxldGUifSx7InRhcmdldEdyb3VwIjoxLCJ2YWx1ZSI6IkVycm9yVGVzdF9Bc3NldHNUb0RlbGV0ZSJ9XX0sIm1fbG9hZFBhdGhHdWlkIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJkZTRhOGMxMWM0ZmQxNGU5OWJjNjlkN2MzYmM4MmU5OCJ9LHsidGFyZ2V0R3JvdXAiOjEsInZhbHVlIjoiNGFjNDdiNGY1NmJhMjQwZWVhNDk2YWFmMjc4YzY4NDQifV19LCJtX2lnbm9yZVBhdHRlcm5zIjpbXSwibV9yZXNwb25kVG9Bc3NldENoYW5nZSI6ZmFsc2V9
+    m_inputPoints: []
+    m_outputPoints:
+    - id: 034dd691-0ef1-4788-9c4f-af865232be6c
+      label: +
+      parentId: 1a84b212-aaa6-4aeb-b9fa-f817805c64b4
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 111
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Split By Filter
+    m_id: 0752e561-725c-4159-a47e-b818c58fe4dd
+    m_x: 348
+    m_y: 192
+    m_nodeInstance:
+      m_className: Unity.AssetGraph.Filter, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2ZpbHRlciI6W3sibV9pbnN0YW5jZSI6eyJtX2NsYXNzTmFtZSI6IlVuaXR5LkFzc2V0R3JhcGguRmlsdGVyQnlOYW1lQW5kVHlwZSwgVW5pdHkuQXNzZXRHcmFwaC5FZGl0b3IsIFZlcnNpb249MC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIiwibV9pbnN0YW5jZURhdGEiOiJCNjR8ZXlKdFgyWnBiSFJsY2t0bGVYZHZjbVFpT2lJaUxDSnRYMlpwYkhSbGNrdGxlWFI1Y0dVaU9pSlFjbVZtWVdJaUxDSnRYM1psY25OcGIyNGlPakY5In0sIm1fcG9pbnRJZCI6ImY0MDIxMWQ4LTgzY2QtNDVmMi1iNGU2LTMyYjQxZTEyZDNjOCJ9LHsibV9pbnN0YW5jZSI6eyJtX2NsYXNzTmFtZSI6IlVuaXR5LkFzc2V0R3JhcGguRmlsdGVyQnlOYW1lQW5kVHlwZSwgVW5pdHkuQXNzZXRHcmFwaC5FZGl0b3IsIFZlcnNpb249MC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIiwibV9pbnN0YW5jZURhdGEiOiJCNjR8ZXlKdFgyWnBiSFJsY2t0bGVYZHZjbVFpT2lJaUxDSnRYMlpwYkhSbGNrdGxlWFI1Y0dVaU9pSkJibmtpTENKdFgzWmxjbk5wYjI0aU9qRjkifSwibV9wb2ludElkIjoiNGJiNjg4MWMtNjkwNC00ZjQ2LWI2ZWItMWFhNzgzZjg1NTY3In1dfQ==
+    m_inputPoints:
+    - id: 706ac52c-46ec-4539-826d-e0f3511157f0
+      label: '-'
+      parentId: 0752e561-725c-4159-a47e-b818c58fe4dd
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: f40211d8-83cd-45f2-b4e6-32b41e12d3c8
+      label: '[Prefab]'
+      parentId: 0752e561-725c-4159-a47e-b818c58fe4dd
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 112
+        y: 32.5
+        width: 10
+        height: 23
+    - id: 4bb6881c-6904-4f46-b6eb-1aa783f85567
+      label: 
+      parentId: 0752e561-725c-4159-a47e-b818c58fe4dd
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 112
+        y: 64.5
+        width: 10
+        height: 23
+  - m_name: Error
+    m_id: 2b83c7cf-8bb6-4d17-bc0a-a27e255eec8c
+    m_x: 576
+    m_y: 288
+    m_nodeInstance:
+      m_className: Unity.AssetGraph.Error, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2Rlc2NyaXB0aW9uIjoiRXJyb3Igb2NjdXJlZC4iLCJtX2hvd3RvRml4IjoiVGhpcyBFcnJvciBzaG91bGQgbm90IGhhcHBlbi4ifQ==
+    m_inputPoints:
+    - id: 45e68378-b033-4a07-b6d1-05641e9c0dce
+      label: '-'
+      parentId: 2b83c7cf-8bb6-4d17-bc0a-a27e255eec8c
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints: []
+  - m_name: Test Regression with Input
+    m_id: 0f5c2323-3b66-4638-91aa-21b7552b57fa
+    m_x: 564
+    m_y: 192
+    m_nodeInstance:
+      m_className: RegressionTestNode, Unity.AssetGraph.Editor, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      m_instanceData: B64|eyJtX3Jlc3VsdCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoie1wiaW5jb21pbmdcIjpbe1wiY29ubmVjdGlvbklkXCI6XCI5NTMwYWMyOS0zOTk1LTQ3ZDYtYTdhZi01ZDA0ZjQxNzkzMDNcIixcImdyb3Vwc1wiOlt7XCJuYW1lXCI6XCIwXCIsXCJlbnRpcmVzXCI6W3tcImltcG9ydEZyb21cIjpcIkFzc2V0cy9FcnJvclRlc3RfQXNzZXRzVG9EZWxldGUvcHJlZmFiMDEucHJlZmFiXCIsXCJhc3NldFR5cGVcIjpcIlVuaXR5RW5naW5lLkdhbWVPYmplY3RcIixcImltcG9ydGVyVHlwZVwiOlwiVW5pdHlFZGl0b3IuUHJlZmFiSW1wb3J0ZXJcIn1dfV19XX0ifV19fQ==
+    m_inputPoints:
+    - id: 437fbe65-8b9e-4dc9-a840-14461bb2a99e
+      label: '-'
+      parentId: 0f5c2323-3b66-4638-91aa-21b7552b57fa
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 66465482-f646-487a-971c-526fa1719876
+      label: +
+      parentId: 0f5c2323-3b66-4638-91aa-21b7552b57fa
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 185
+        y: 32.5
+        width: 10
+        height: 23
+  m_allConnections:
+  - m_id: 547f17fb-6a33-4a03-828d-0d03560a5fe2
+    m_fromNodeId: 1a84b212-aaa6-4aeb-b9fa-f817805c64b4
+    m_fromNodeConnectionPointId: 034dd691-0ef1-4788-9c4f-af865232be6c
+    m_toNodeId: 0752e561-725c-4159-a47e-b818c58fe4dd
+    m_toNodeConnectionPoiontId: 706ac52c-46ec-4539-826d-e0f3511157f0
+    m_label: +
+  - m_id: 9530ac29-3995-47d6-a7af-5d04f4179303
+    m_fromNodeId: 0752e561-725c-4159-a47e-b818c58fe4dd
+    m_fromNodeConnectionPointId: f40211d8-83cd-45f2-b4e6-32b41e12d3c8
+    m_toNodeId: 0f5c2323-3b66-4638-91aa-21b7552b57fa
+    m_toNodeConnectionPoiontId: 437fbe65-8b9e-4dc9-a840-14461bb2a99e
+    m_label: '[Prefab]'
+  - m_id: a8929bd5-b86a-44a0-bee9-dd9355c1c5a5
+    m_fromNodeId: 0752e561-725c-4159-a47e-b818c58fe4dd
+    m_fromNodeConnectionPointId: 4bb6881c-6904-4f46-b6eb-1aa783f85567
+    m_toNodeId: 2b83c7cf-8bb6-4d17-bc0a-a27e255eec8c
+    m_toNodeConnectionPoiontId: 45e68378-b033-4a07-b6d1-05641e9c0dce
+    m_label: 
+  m_lastModified: 132103436244016850
+  m_version: 2
+  m_graphDescription: '<size=16>Test: </size>
+
+
+    Test: Try Error node with no input.
+
+    Test is successful if graph produces no issue.'
+  m_useAsAssetPostprocessor: 0
+  m_graphExecOrderPriority: 0

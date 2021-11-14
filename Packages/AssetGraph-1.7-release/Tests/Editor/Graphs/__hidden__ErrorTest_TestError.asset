@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec4882d68a9346b3b5f8ecf1e38a534, type: 3}
+  m_Name: __hidden__ErrorTest_TestError
+  m_EditorClassIdentifier: 
+  m_allNodes:
+  - m_name: Load
+    m_id: 6609e138-c174-46e2-ad4d-aa17220385d3
+    m_x: 108
+    m_y: 168
+    m_nodeInstance:
+      m_className: Unity.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2xvYWRQYXRoIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJFcnJvclRlc3RfQXNzZXRzVG9EZWxldGUifSx7InRhcmdldEdyb3VwIjoxLCJ2YWx1ZSI6IkVycm9yVGVzdF9Bc3NldHNUb0RlbGV0ZSJ9XX0sIm1fbG9hZFBhdGhHdWlkIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJkZTRhOGMxMWM0ZmQxNGU5OWJjNjlkN2MzYmM4MmU5OCJ9LHsidGFyZ2V0R3JvdXAiOjEsInZhbHVlIjoiNGFjNDdiNGY1NmJhMjQwZWVhNDk2YWFmMjc4YzY4NDQifV19LCJtX2lnbm9yZVBhdHRlcm5zIjpbXSwibV9yZXNwb25kVG9Bc3NldENoYW5nZSI6ZmFsc2V9
+    m_inputPoints: []
+    m_outputPoints:
+    - id: 0c0ed461-1ab6-4ca3-93fe-ea3a765a6d13
+      label: +
+      parentId: 6609e138-c174-46e2-ad4d-aa17220385d3
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 111
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Split By Filter
+    m_id: 5665e0f0-54b1-4ce4-b7de-c372f82aea86
+    m_x: 324
+    m_y: 168
+    m_nodeInstance:
+      m_className: Unity.AssetGraph.Filter, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2ZpbHRlciI6W3sibV9pbnN0YW5jZSI6eyJtX2NsYXNzTmFtZSI6IlVuaXR5LkFzc2V0R3JhcGguRmlsdGVyQnlOYW1lQW5kVHlwZSwgVW5pdHkuQXNzZXRHcmFwaC5FZGl0b3IsIFZlcnNpb249MC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIiwibV9pbnN0YW5jZURhdGEiOiJCNjR8ZXlKdFgyWnBiSFJsY2t0bGVYZHZjbVFpT2lJaUxDSnRYMlpwYkhSbGNrdGxlWFI1Y0dVaU9pSkJibmtpTENKdFgzWmxjbk5wYjI0aU9qRjkifSwibV9wb2ludElkIjoiZTgxNjI5MTctMjRiMS00NmUzLWI2ODYtYmU0MTI5MDhlOTRmIn1dfQ==
+    m_inputPoints:
+    - id: 2e7b07c4-15e0-4e35-9242-4b3eac5f1520
+      label: '-'
+      parentId: 5665e0f0-54b1-4ce4-b7de-c372f82aea86
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: e8162917-24b1-46e3-b686-be412908e94f
+      label: 
+      parentId: 5665e0f0-54b1-4ce4-b7de-c372f82aea86
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 112
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Error
+    m_id: a596077c-cf57-4286-99c2-7cbb9bd9ffb5
+    m_x: 552
+    m_y: 168
+    m_nodeInstance:
+      m_className: Unity.AssetGraph.Error, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2Rlc2NyaXB0aW9uIjoiRXJyb3Igb2NjdXJlZC4iLCJtX2hvd3RvRml4IjoiVGhpcyBFcnJvciBzaG91bGQgaGFwcGVuIGZvciB0aGUgdGVzdC4ifQ==
+    m_inputPoints:
+    - id: 2b8da87b-b74a-4b8a-95d0-c5f4dd02c10a
+      label: '-'
+      parentId: a596077c-cf57-4286-99c2-7cbb9bd9ffb5
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints: []
+  m_allConnections:
+  - m_id: 69a5fa90-f2bf-43ac-a175-0271ec455e28
+    m_fromNodeId: 6609e138-c174-46e2-ad4d-aa17220385d3
+    m_fromNodeConnectionPointId: 0c0ed461-1ab6-4ca3-93fe-ea3a765a6d13
+    m_toNodeId: 5665e0f0-54b1-4ce4-b7de-c372f82aea86
+    m_toNodeConnectionPoiontId: 2e7b07c4-15e0-4e35-9242-4b3eac5f1520
+    m_label: +
+  - m_id: 13cbfe38-492f-4e1c-8733-b4d54155432c
+    m_fromNodeId: 5665e0f0-54b1-4ce4-b7de-c372f82aea86
+    m_fromNodeConnectionPointId: e8162917-24b1-46e3-b686-be412908e94f
+    m_toNodeId: a596077c-cf57-4286-99c2-7cbb9bd9ffb5
+    m_toNodeConnectionPoiontId: 2b8da87b-b74a-4b8a-95d0-c5f4dd02c10a
+    m_label: 
+  m_lastModified: 131771591115944860
+  m_version: 2
+  m_graphDescription: '<size=16>Test: </size>
+
+
+    Test: Error node get input and graph should fail.
+
+    Test is successful if graph produces an issue from Error node.'
+  m_useAsAssetPostprocessor: 0
+  m_graphExecOrderPriority: 0

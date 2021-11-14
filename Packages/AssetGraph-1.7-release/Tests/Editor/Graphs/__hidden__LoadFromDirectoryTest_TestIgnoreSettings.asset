@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec4882d68a9346b3b5f8ecf1e38a534, type: 3}
+  m_Name: __hidden__LoadFromDirectoryTest_TestIgnoreSettings
+  m_EditorClassIdentifier: 
+  m_allNodes:
+  - m_name: Test Regression with Input
+    m_id: 020f0833-33cf-4e1d-9ed1-d58b890fa2ed
+    m_x: 552
+    m_y: 144
+    m_nodeInstance:
+      m_className: RegressionTestNode, Unity.AssetGraph.Editor, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      m_instanceData: B64|eyJtX3Jlc3VsdCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoie1wiaW5jb21pbmdcIjpbe1wiY29ubmVjdGlvbklkXCI6XCJmNzFkMjc2NC1iOTg0LTQxZDMtYmRmOS0wNGU2YTI2MmFmYmVcIixcImdyb3Vwc1wiOlt7XCJuYW1lXCI6XCIwXCIsXCJlbnRpcmVzXCI6W3tcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Mb2FkRnJvbURpcmVjdG9yeVRlc3RfQXNzZXRzVG9EZWxldGUvcHJlZmFiMDEucHJlZmFiXCIsXCJhc3NldFR5cGVcIjpcIlVuaXR5RW5naW5lLkdhbWVPYmplY3RcIixcImltcG9ydGVyVHlwZVwiOlwiVW5pdHlFZGl0b3IuUHJlZmFiSW1wb3J0ZXJcIn0se1wiaW1wb3J0RnJvbVwiOlwiQXNzZXRzL0xvYWRGcm9tRGlyZWN0b3J5VGVzdF9Bc3NldHNUb0RlbGV0ZS9wcmVmYWIwMi5wcmVmYWJcIixcImFzc2V0VHlwZVwiOlwiVW5pdHlFbmdpbmUuR2FtZU9iamVjdFwiLFwiaW1wb3J0ZXJUeXBlXCI6XCJVbml0eUVkaXRvci5QcmVmYWJJbXBvcnRlclwifSx7XCJpbXBvcnRGcm9tXCI6XCJBc3NldHMvTG9hZEZyb21EaXJlY3RvcnlUZXN0X0Fzc2V0c1RvRGVsZXRlL3ByZWZhYjA0LnByZWZhYlwiLFwiYXNzZXRUeXBlXCI6XCJVbml0eUVuZ2luZS5HYW1lT2JqZWN0XCIsXCJpbXBvcnRlclR5cGVcIjpcIlVuaXR5RWRpdG9yLlByZWZhYkltcG9ydGVyXCJ9XX1dfV19In1dfX0=
+    m_inputPoints:
+    - id: ce760b13-5460-4472-aba4-6ca8ebb58ae0
+      label: '-'
+      parentId: 020f0833-33cf-4e1d-9ed1-d58b890fa2ed
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 52d497c6-6bbd-4ddc-aa6d-97fe6df01c8c
+      label: +
+      parentId: 020f0833-33cf-4e1d-9ed1-d58b890fa2ed
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 185
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Load From Directory
+    m_id: 74e67339-88d5-40e3-b88d-af7f30458740
+    m_x: 228
+    m_y: 144
+    m_nodeInstance:
+      m_className: Unity.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2xvYWRQYXRoIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJMb2FkRnJvbURpcmVjdG9yeVRlc3RfQXNzZXRzVG9EZWxldGUifSx7InRhcmdldEdyb3VwIjoxLCJ2YWx1ZSI6IkxvYWRGcm9tRGlyZWN0b3J5VGVzdF9Bc3NldHNUb0RlbGV0ZSJ9XX0sIm1fbG9hZFBhdGhHdWlkIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJjZDFjY2RjNTYxNzYxNDAwYjg1ODgxYzdiYmI3NzZjYSJ9LHsidGFyZ2V0R3JvdXAiOjEsInZhbHVlIjoiMjcwNjk2MzA2MjUzNTRkMWI5NjBiZWVjMTViMWEyZGYifV19LCJtX2lnbm9yZVBhdHRlcm5zIjpbeyJtX2ZpbGVUeXBlTWFzayI6MSwibV9pZ25vcmVQYXR0ZXJuIjoicHJlZmFiMDMifSx7Im1fZmlsZVR5cGVNYXNrIjoyLCJtX2lnbm9yZVBhdHRlcm4iOiJJZ25vcmUifV0sIm1fcmVzcG9uZFRvQXNzZXRDaGFuZ2UiOmZhbHNlfQ==
+    m_inputPoints: []
+    m_outputPoints:
+    - id: 451f3d84-89e5-41e7-9bc6-26a88040a4f7
+      label: +
+      parentId: 74e67339-88d5-40e3-b88d-af7f30458740
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 152.5
+        y: 32.5
+        width: 10
+        height: 23
+  m_allConnections:
+  - m_id: f71d2764-b984-41d3-bdf9-04e6a262afbe
+    m_fromNodeId: 74e67339-88d5-40e3-b88d-af7f30458740
+    m_fromNodeConnectionPointId: 451f3d84-89e5-41e7-9bc6-26a88040a4f7
+    m_toNodeId: 020f0833-33cf-4e1d-9ed1-d58b890fa2ed
+    m_toNodeConnectionPoiontId: ce760b13-5460-4472-aba4-6ca8ebb58ae0
+    m_label: +
+  m_lastModified: 131770746069680580
+  m_version: 2
+  m_graphDescription: '<size=16>Test: </size>
+
+
+    Test: node to load assets, with respect to ignore settings, compare with pre-generated
+    result.
+
+    Final State: Graph should produce no error.'
+  m_useAsAssetPostprocessor: 0
+  m_graphExecOrderPriority: 0

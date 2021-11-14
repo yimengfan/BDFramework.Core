@@ -1,0 +1,15 @@
+artifacts/**
+build/**
+.build_script/**
+node_modules/**
+Documentation/ApiDocs/**
+Documentation~/ApiDocs/**
+AssetGraph~/**
+.DS_Store
+.npmrc
+.npmignore
+.gitignore
+CONTRIBUTING.md
+CONTRIBUTING.md.meta
+QAReport.md
+QAReport.md.meta

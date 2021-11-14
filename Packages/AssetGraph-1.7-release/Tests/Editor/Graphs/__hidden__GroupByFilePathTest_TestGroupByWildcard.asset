@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec4882d68a9346b3b5f8ecf1e38a534, type: 3}
+  m_Name: __hidden__GroupByFilePathTest_TestGroupByWildcard
+  m_EditorClassIdentifier: 
+  m_allNodes:
+  - m_name: Load
+    m_id: 9bb86d65-4c32-41d2-b036-fddd2df8f406
+    m_x: 72
+    m_y: 180
+    m_nodeInstance:
+      m_className: Unity.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2xvYWRQYXRoIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJHcm91cEJ5RmlsZVBhdGhUZXN0X0Fzc2V0c1RvRGVsZXRlIn0seyJ0YXJnZXRHcm91cCI6MSwidmFsdWUiOiJHcm91cEJ5RmlsZVBhdGhUZXN0X0Fzc2V0c1RvRGVsZXRlIn1dfSwibV9sb2FkUGF0aEd1aWQiOnsibV92YWx1ZXMiOlt7InRhcmdldEdyb3VwIjowLCJ2YWx1ZSI6IjQ2MjQwZWZmN2MwODY0MWQ1YjI2MTQyZDIwMmRlNzMwIn0seyJ0YXJnZXRHcm91cCI6MSwidmFsdWUiOiI3Y2FhZGZlMzBkM2Q5NDFkYzgyZjQ3ZTVmYTU1YWY3ZCJ9XX0sIm1faWdub3JlUGF0dGVybnMiOltdLCJtX3Jlc3BvbmRUb0Fzc2V0Q2hhbmdlIjpmYWxzZX0=
+    m_inputPoints: []
+    m_outputPoints:
+    - id: 769f100f-f161-4918-96dd-b7a52257feb5
+      label: +
+      parentId: 9bb86d65-4c32-41d2-b036-fddd2df8f406
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 111
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Wildcard
+    m_id: 6a3526b8-9ec2-4ab6-baff-ae58043cf1a8
+    m_x: 312
+    m_y: 180
+    m_nodeInstance:
+      m_className: Unity.AssetGraph.Grouping, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2dyb3VwaW5nS2V5d29yZCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoidiovIn1dfSwibV9wYXR0ZXJuVHlwZSI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjowfV19LCJtX2FsbG93U2xhc2giOmZhbHNlLCJtX2dyb3VwTmFtZUZvcm1hdCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoiIn1dfX0=
+    m_inputPoints:
+    - id: 8e1ab58b-8330-4c39-a037-9a69a05c959f
+      label: '-'
+      parentId: 6a3526b8-9ec2-4ab6-baff-ae58043cf1a8
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: e86b1fdf-f94e-458a-8a26-7862d2984e53
+      label: +
+      parentId: 6a3526b8-9ec2-4ab6-baff-ae58043cf1a8
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 111
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Test Regression with Input
+    m_id: ed502a93-3c0b-47a1-8b96-f69ee51f4e6c
+    m_x: 552
+    m_y: 180
+    m_nodeInstance:
+      m_className: RegressionTestNode, Unity.AssetGraph.Editor, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      m_instanceData: B64|eyJtX3Jlc3VsdCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoie1wiaW5jb21pbmdcIjpbe1wiY29ubmVjdGlvbklkXCI6XCJhZmQzMWVlZS0wY2Q0LTQzNDAtOTc3ZC04ZmVjZWM3MmFhZTJcIixcImdyb3Vwc1wiOlt7XCJuYW1lXCI6XCIwMDAxXCIsXCJlbnRpcmVzXCI6W3tcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Hcm91cEJ5RmlsZVBhdGhUZXN0X0Fzc2V0c1RvRGVsZXRlL2MwMDAxL3YwMDAxL2JvZHkucHJlZmFiXCIsXCJhc3NldFR5cGVcIjpcIlVuaXR5RW5naW5lLkdhbWVPYmplY3RcIixcImltcG9ydGVyVHlwZVwiOlwiVW5pdHlFZGl0b3IuUHJlZmFiSW1wb3J0ZXJcIn0se1wiaW1wb3J0RnJvbVwiOlwiQXNzZXRzL0dyb3VwQnlGaWxlUGF0aFRlc3RfQXNzZXRzVG9EZWxldGUvYzAwMDEvdjAwMDEvaGVhZDAxLnByZWZhYlwiLFwiYXNzZXRUeXBlXCI6XCJVbml0eUVuZ2luZS5HYW1lT2JqZWN0XCIsXCJpbXBvcnRlclR5cGVcIjpcIlVuaXR5RWRpdG9yLlByZWZhYkltcG9ydGVyXCJ9LHtcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Hcm91cEJ5RmlsZVBhdGhUZXN0X0Fzc2V0c1RvRGVsZXRlL2MxODM0L3YwMDAxL2JvZHkucHJlZmFiXCIsXCJhc3NldFR5cGVcIjpcIlVuaXR5RW5naW5lLkdhbWVPYmplY3RcIixcImltcG9ydGVyVHlwZVwiOlwiVW5pdHlFZGl0b3IuUHJlZmFiSW1wb3J0ZXJcIn0se1wiaW1wb3J0RnJvbVwiOlwiQXNzZXRzL0dyb3VwQnlGaWxlUGF0aFRlc3RfQXNzZXRzVG9EZWxldGUvYzE4MzQvdjAwMDEvaGVhZDAxLnByZWZhYlwiLFwiYXNzZXRUeXBlXCI6XCJVbml0eUVuZ2luZS5HYW1lT2JqZWN0XCIsXCJpbXBvcnRlclR5cGVcIjpcIlVuaXR5RWRpdG9yLlByZWZhYkltcG9ydGVyXCJ9LHtcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Hcm91cEJ5RmlsZVBhdGhUZXN0X0Fzc2V0c1RvRGVsZXRlL2MxODM0L3YwMDAxL2hlYWQwMi5wcmVmYWJcIixcImFzc2V0VHlwZVwiOlwiVW5pdHlFbmdpbmUuR2FtZU9iamVjdFwiLFwiaW1wb3J0ZXJUeXBlXCI6XCJVbml0eUVkaXRvci5QcmVmYWJJbXBvcnRlclwifSx7XCJpbXBvcnRGcm9tXCI6XCJBc3NldHMvR3JvdXBCeUZpbGVQYXRoVGVzdF9Bc3NldHNUb0RlbGV0ZS9jMTgzNC92MDAwMS93ZWFwb24ucHJlZmFiXCIsXCJhc3NldFR5cGVcIjpcIlVuaXR5RW5naW5lLkdhbWVPYmplY3RcIixcImltcG9ydGVyVHlwZVwiOlwiVW5pdHlFZGl0b3IuUHJlZmFiSW1wb3J0ZXJcIn1dfSx7XCJuYW1lXCI6XCIwMDAyXCIsXCJlbnRpcmVzXCI6W3tcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Hcm91cEJ5RmlsZVBhdGhUZXN0X0Fzc2V0c1RvRGVsZXRlL2MwMDAxL3YwMDAyL2JvZHkucHJlZmFiXCIsXCJhc3NldFR5cGVcIjpcIlVuaXR5RW5naW5lLkdhbWVPYmplY3RcIixcImltcG9ydGVyVHlwZVwiOlwiVW5pdHlFZGl0b3IuUHJlZmFiSW1wb3J0ZXJcIn0se1wiaW1wb3J0RnJvbVwiOlwiQXNzZXRzL0dyb3VwQnlGaWxlUGF0aFRlc3RfQXNzZXRzVG9EZWxldGUvYzAwMDEvdjAwMDIvaGVhZDAxLnByZWZhYlwiLFwiYXNzZXRUeXBlXCI6XCJVbml0eUVuZ2luZS5HYW1lT2JqZWN0XCIsXCJpbXBvcnRlclR5cGVcIjpcIlVuaXR5RWRpdG9yLlByZWZhYkltcG9ydGVyXCJ9LHtcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Hcm91cEJ5RmlsZVBhdGhUZXN0X0Fzc2V0c1RvRGVsZXRlL2MxODM0L3YwMDAyL2JvZHkucHJlZmFiXCIsXCJhc3NldFR5cGVcIjpcIlVuaXR5RW5naW5lLkdhbWVPYmplY3RcIixcImltcG9ydGVyVHlwZVwiOlwiVW5pdHlFZGl0b3IuUHJlZmFiSW1wb3J0ZXJcIn0se1wiaW1wb3J0RnJvbVwiOlwiQXNzZXRzL0dyb3VwQnlGaWxlUGF0aFRlc3RfQXNzZXRzVG9EZWxldGUvYzE4MzQvdjAwMDIvaGVhZDAxLnByZWZhYlwiLFwiYXNzZXRUeXBlXCI6XCJVbml0eUVuZ2luZS5HYW1lT2JqZWN0XCIsXCJpbXBvcnRlclR5cGVcIjpcIlVuaXR5RWRpdG9yLlByZWZhYkltcG9ydGVyXCJ9XX0se1wibmFtZVwiOlwiMDAwM1wiLFwiZW50aXJlc1wiOlt7XCJpbXBvcnRGcm9tXCI6XCJBc3NldHMvR3JvdXBCeUZpbGVQYXRoVGVzdF9Bc3NldHNUb0RlbGV0ZS9jMDAwMS92MDAwMy9ib2R5LnByZWZhYlwiLFwiYXNzZXRUeXBlXCI6XCJVbml0eUVuZ2luZS5HYW1lT2JqZWN0XCIsXCJpbXBvcnRlclR5cGVcIjpcIlVuaXR5RWRpdG9yLlByZWZhYkltcG9ydGVyXCJ9LHtcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Hcm91cEJ5RmlsZVBhdGhUZXN0X0Fzc2V0c1RvRGVsZXRlL2MwMDAxL3YwMDAzL2hlYWQwMS5wcmVmYWJcIixcImFzc2V0VHlwZVwiOlwiVW5pdHlFbmdpbmUuR2FtZU9iamVjdFwiLFwiaW1wb3J0ZXJUeXBlXCI6XCJVbml0eUVkaXRvci5QcmVmYWJJbXBvcnRlclwifSx7XCJpbXBvcnRGcm9tXCI6XCJBc3NldHMvR3JvdXBCeUZpbGVQYXRoVGVzdF9Bc3NldHNUb0RlbGV0ZS9jMDAwMS92MDAwMy9oZWFkMDIucHJlZmFiXCIsXCJhc3NldFR5cGVcIjpcIlVuaXR5RW5naW5lLkdhbWVPYmplY3RcIixcImltcG9ydGVyVHlwZVwiOlwiVW5pdHlFZGl0b3IuUHJlZmFiSW1wb3J0ZXJcIn1dfV19XX0ifV19fQ==
+    m_inputPoints:
+    - id: a78eada1-e418-479d-a263-2f96ff035582
+      label: '-'
+      parentId: ed502a93-3c0b-47a1-8b96-f69ee51f4e6c
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: c85d25a8-38e9-4eaf-b8b6-6c9e527fb1d7
+      label: +
+      parentId: ed502a93-3c0b-47a1-8b96-f69ee51f4e6c
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 185
+        y: 32.5
+        width: 10
+        height: 23
+  m_allConnections:
+  - m_id: 512c2a66-574a-4a16-bf04-a4e6f8b02078
+    m_fromNodeId: 9bb86d65-4c32-41d2-b036-fddd2df8f406
+    m_fromNodeConnectionPointId: 769f100f-f161-4918-96dd-b7a52257feb5
+    m_toNodeId: 6a3526b8-9ec2-4ab6-baff-ae58043cf1a8
+    m_toNodeConnectionPoiontId: 8e1ab58b-8330-4c39-a037-9a69a05c959f
+    m_label: +
+  - m_id: afd31eee-0cd4-4340-977d-8fecec72aae2
+    m_fromNodeId: 6a3526b8-9ec2-4ab6-baff-ae58043cf1a8
+    m_fromNodeConnectionPointId: e86b1fdf-f94e-458a-8a26-7862d2984e53
+    m_toNodeId: ed502a93-3c0b-47a1-8b96-f69ee51f4e6c
+    m_toNodeConnectionPoiontId: a78eada1-e418-479d-a263-2f96ff035582
+    m_label: +
+  m_lastModified: 131772059068798110
+  m_version: 2
+  m_graphDescription: '<size=16>Test: </size>
+
+
+    Test: node get input and produce groups using Wildcard matching rule, compare
+    with pre-generated result.
+
+    Final State: Graph should produce no error.'
+  m_useAsAssetPostprocessor: 0
+  m_graphExecOrderPriority: 0
