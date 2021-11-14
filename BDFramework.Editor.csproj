@@ -114,9 +114,6 @@
  <Reference Include="ILRuntime">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/ScriptAssemblies/ILRuntime.dll</HintPath>
  </Reference>
- <Reference Include="Unity.AssetGraph.Editor">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/ScriptAssemblies/Unity.AssetGraph.Editor.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
@@ -767,6 +764,10 @@
     <ProjectReference Include="BDFramework.Core.csproj">
       <Project>{5fa14b88-bf26-510e-d02a-583f03ea6e9a}</Project>
       <Name>BDFramework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.AssetGraph.Editor.csproj">
+      <Project>{9386260e-eeea-6e7f-a05a-6b51a2def496}</Project>
+      <Name>Unity.AssetGraph.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

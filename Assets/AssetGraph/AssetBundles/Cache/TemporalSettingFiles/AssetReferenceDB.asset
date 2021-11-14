@@ -17,220 +17,32 @@ MonoBehaviour:
     m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetReferenceDB.asset
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 00000000000000004000000000000000
-    m_importFrom: ProjectSettings/ProjectSettings.asset
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 8230003217d1e554da76c9d6d864ded0
     m_importFrom: Assets/Scenes/BDFrame.unity
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 709ffe0a86f9f0a418fd42875438b6f9
+    m_importFrom: Assets/Resource/Shaders/Tools.shadervariants
+    m_exportTo: 
+    m_variantName: 
+  - m_assetDatabaseId: 9d59e1d84070e4c46a595b3112d75a40
+    m_importFrom: Assets/Resource/Runtime/Shader/AllShaders.shadervariants
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 00000000000000006100000000000000
     m_importFrom: ProjectSettings/GraphicsSettings.asset
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 570885a00974e1d41b1f5d5b4dac96d6
-    m_importFrom: Assets/Resource/Runtime/AllAssetType/New Sprite Atlas.spriteatlas
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 76c21518bd7f0e64ca49af74a4987cd9
-    m_importFrom: Assets/Resource/Runtime/SpriteAtlas/SA2019.spriteatlas
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ec429a586bfac5f4284f3a31749303e7
-    m_importFrom: Assets/Resource/Runtime/SpriteAtlas/SA2019_NotInRuntime.spriteatlas
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 05aabb004c9832446b4319cabb23d628
-    m_importFrom: Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.Analyzers.3.3.2/analyzers/dotnet/cs/Microsoft.CodeAnalysis.Analyzers.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3de36f30d8d9c934c8da57ff3ec2fd94
-    m_importFrom: Packages/com.popo.bdframework/Runtime/UI(UFlux)/@hotfix/View/Windows/UIManager.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9fe03061be6a62f48b51de27b620bf73
-    m_importFrom: Packages/com.popo.bdframework/Runtime/UI(UFlux)/@hotfix/View/Atrribute/AutoInitComponent/TransformPathAttribute.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2c55bb42676de1c4993dc7ec9b884229
-    m_importFrom: Packages/com.popo.bdframework/Runtime/Config.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: baec4592e177461dbefd69b60866d6b1
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/CollectShaderKeyWord.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 07b68be28d2d4d4db199aa735aa2cb70
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/StopwatchTools.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 96168413bbd4fa648afde93610042817
-    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/ArtAsset/BResources.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e36ddee3fdb66484b982267e854eef0b
-    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/PublishPipeline/BuildPackageTools.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: aba81215f1cebeb49bde71119446d02b
-    m_importFrom: Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.Analyzers.3.3.2/analyzers/dotnet/cs/Microsoft.CodeAnalysis.CSharp.Analyzers.dll
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8a60d66584bfba740a8202259c091fab
-    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/ArtAsset/DevAssets/DevResourceMgr.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: be8bd1f5a3414bd398add4ea2a4f1300
-    m_importFrom: Packages/com.popo.bdframework/Editor/Unity3dEx
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 53901f56d09f96d4886992ff20f43b1b
-    m_importFrom: Packages/com.popo.bdframework/Runtime/BDLauncher.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 82d7db8630024bfbb3cf6f1ce48e608c
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/BDFrameworkAssetsEnv.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: c88cbaa6cd08422e84b8aeb87e7dfebd
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/CollectChangedAssets.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 378313d6f21247a282a431b8bb67190d
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/BuildAssetBundle.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b7f82bd6736e4a247b49f53d46577531
-    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/PublishPipeline/CI/PublishPipeLineCI.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 425cfde707d6e7047b91c1ae0a86bace
-    m_importFrom: Packages/com.popo.bdframework/Runtime/Tools/BDApplication.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e48ab25819492ac469cd268fca3ed4f0
-    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/UnitTest/AssetBundleBenchmark.unity
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: dff0b2680f3f99941b7a426f1000a9a4
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/EditorWindow_GenAssetBundle.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3072f398382779e488cb0236ad25cd06
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/EditorSetting/BDFrameWorkEditorSetting.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: faab6c298267470d8f5314947ea698b8
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/Loder.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8c780839f4e0b0542992a555a74c5760
-    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/ArtAsset/AssetBundle/V2/AssetBundleMgrV2.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b63535c929e5d1840ba6882ee49d92e7
-    m_importFrom: Packages/com.popo.bdframework/Runtime/DotNetExtension/FileHelper.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 91e6359a585d5804283431cc15ea4942
-    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/ArtAsset/IResMgr.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 9c5c81abd1f70b54a8b4493b2873814e
-    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/UnitTest/AssetBundleBenchmark01.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: de0a6b6cbcf94eefad0949fc2fbb2a49
-    m_importFrom: Packages/com.popo.bdframework/Editor/Unity3dEx/ShaderUtilImpl.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 82dc047c706c456f8c405f80e6db5ba6
-    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/DevOpsTools.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 04054f1d27784ff281251946049a0d53
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/ShaderVaraintCollectWindows.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e60d994d666b43d99949499d5929d960
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/CollectSpriteAtlas.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3717aa4dd4627e542bad4558b02ce975
-    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/PublishPipeline/EditorWindow_BuildAssetsGuide.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 5f57780e25654ee792a9dc07776a6e5e
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetBundleEditorToolsV2CheckAssetbundle.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b63f4a6e59a5c924c8a9add8eb2db1c9
-    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/UnitTest
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2eca6cae5f529084a97a9d14a6daba34
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/ShaderCollection.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2e75d14f02e7471d8a263c0b720f6e9d
-    m_importFrom: Packages/com.popo.bdframework/Editor/DevOps/PublishPipeline/EditorWindow_CICD.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 480e195f4f0949ee93fbf76bb53813f5
-    m_importFrom: Packages/com.popo.bdframework/Editor/EditorWindows/AssetBundleEditor/AssetGraph/Node/FilterGroupByPath.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e0d43a5f0fefd2a44a57c8c54f0de839
-    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/ArtAsset/AssetBundle/V2/AssetbundleConfigLoder.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: fc6f8adfd9658b04d8afefd14390af5b
-    m_importFrom: Packages/com.popo.bdframework/Runtime/AssetsManager/ArtAsset/AssetBundle/V2/AssetBundleWapper.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 48d3455260f25b242ba46325b82b68f1
-    m_importFrom: Assets/AssetGraph/BResourceAssetBundleConfig.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b072c123447549fa81bb03f3ddebec80
-    m_importFrom: Packages/com.popo.bdframework/Runtime/OdinHelper/NoOdinHelper.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 152a6be6018340e5815b03e31218a862
-    m_importFrom: Packages/com.popo.bdframework/Runtime/OdinHelper
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f2a6a38608360fa4bb89aacd441e2b97
-    m_importFrom: Packages/com.popo.bdframework/Resource/BDFrame.prefab
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: e56f3b41caab3304194319691ec2ebbb
-    m_importFrom: Packages/com.popo.bdframework/package.json
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 0ad02c9a102914a48aee1cde2619ff7a
     m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/CLRBindings.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 9b272a52ad6ec44438156514d0a23ac7
-    m_importFrom: Assets/StreamingAssets/Android/Hotfix/hotfix.dll
+  - m_assetDatabaseId: 9bc09a2205362b541987b1235b2433af
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Runtime_CompilerServices_AsyncVoidMet.cs
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: c258dc7d680de8a4f978e6af15be71eb
-    m_importFrom: Assets/StreamingAssets/Android/Hotfix/hotfix.dll.pdb
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 4ab4c2f4961cc8f4a94b548be2007adc
-    m_importFrom: Assets/StreamingAssets/Android/PackageBuild.Info
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 924d970067c935c4f8b818e6b4ab9e07
-    m_importFrom: Assets/Code/BDFramework.Game/AssetVersion
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 996622d6f14afc44dbd42c1cdfa8a362
-    m_importFrom: Packages/com.popo.bdframework/Runtime/Resources/BDFrameConfig.Json
+  - m_assetDatabaseId: 19278c738bea3d84690d9437f41ca0a8
+    m_importFrom: Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/System_Runtime_CompilerServices_AsyncTaskMet.cs
     m_exportTo: 
     m_variantName: 
   m_version: 2

@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 2569960544
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a411aa36835902397c125de36d58dae2
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 55d48f4ad9c3b13330b9eb5ee5686477
+HashAppended: 0
+ClassTypes:
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Shaders/TestShader/shader/PBR_Silk.shader
+Dependencies: []

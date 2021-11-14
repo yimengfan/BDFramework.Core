@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 962345565
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4e2a2260239adff1fb072dbecc9c897e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 10a6a558690295dadb3dd990eda0821a
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource_SVN/Runtime/TestMat_ForKeyWordCollect/H_Role_LanZhan_ClothA_000.mat
+Dependencies:
+- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/d053233f84bf8c047bef2431d30a7eb7

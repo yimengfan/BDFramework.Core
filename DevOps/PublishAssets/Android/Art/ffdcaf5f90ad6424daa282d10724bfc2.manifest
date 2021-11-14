@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+CRC: 369647044
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3196c87d3796dd5f62bc8a46948ecc0c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: cebd26c401dfcf68672d11935d8a1fff
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource_SVN/Model/002/Char_Patrick.png
+- Assets/Resource_SVN/Model/002/pat.mat
+- Assets/Resource_SVN/Model/002/patrick.obj
+Dependencies: []

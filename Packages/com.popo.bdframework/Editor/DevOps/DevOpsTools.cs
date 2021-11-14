@@ -18,7 +18,10 @@ namespace BDFramework.Editor.DevOps
         {
             List<string> blackFile = new List<string>() { "/Build.info", ".manifest" };
             //清空目标文件夹
-            Directory.Delete(targetpath,true);
+            if (Directory.Exists(targetpath))
+            {
+                Directory.Delete(targetpath,true);
+            }
             //合并路径
             var sourcepath = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, BDApplication.GetPlatformPath(platform));
             targetpath = IPath.Combine(targetpath, BDApplication.GetPlatformPath(platform));

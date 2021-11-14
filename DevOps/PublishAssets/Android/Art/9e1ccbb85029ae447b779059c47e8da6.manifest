@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 745729872
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2bc457759d94ec60b3d1d271219c4d9e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0a6f9ca6de27cedd10f0532db8ca5f17
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/AssetTest/Smoke_Tex_012.png
+Dependencies: []
