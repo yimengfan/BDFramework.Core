@@ -50,6 +50,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+            StopwatchTools.Begin();
             this.BuildInfo   = BDFrameworkAssetsEnv.BuildInfo;
             this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             //找到runtime
@@ -81,7 +82,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     }
                 }
             }
-
+            StopwatchTools.End("【搜集图集】");
             //atlas
             outMap[nameof(BDFrameworkAssetsEnv.FloderType.SpriteAtlas)] = atlasAssetReferenceList.ToList();
             var output = connectionsToOutput?.FirstOrDefault();

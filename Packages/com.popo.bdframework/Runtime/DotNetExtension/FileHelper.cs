@@ -42,10 +42,45 @@ namespace System.IO
             File.WriteAllText(path,contents);
         }
         
+        /// <summary>
+        /// 拷贝一个文件
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="targetPath"></param>
+        /// <param name="overwrite"></param>
         static public void Copy(string path, string targetPath,bool overwrite)
         {
             CheckDirectory(targetPath);
             File.Copy(path,targetPath, overwrite);
+        }
+
+        /// <summary>
+        /// 拷贝文件夹
+        /// </summary>
+        /// <param name="sourceDirt"></param>
+        /// <param name="targetDirt"></param>
+        static public void CopyAllFolderFiles(string sourceDirt, string targetDirt)
+        {
+            var sourceFilePaths = Directory.GetFiles(sourceDirt, "*", SearchOption.AllDirectories);
+            var sourceDirts = Directory.GetDirectories(sourceDirt, "*", SearchOption.TopDirectoryOnly);
+            //创建文件夹
+            foreach (var dirt in sourceDirts)
+            {
+                var _targetDirt = dirt.Replace(sourceDirt, targetDirt);
+                if (!Directory.Exists(_targetDirt))
+                {
+                    Directory.CreateDirectory(_targetDirt);
+                }
+            }
+            
+            //复制
+            foreach (var sfp in sourceFilePaths)
+            {
+                var targetfilePath = sfp.Replace(sourceDirt, targetDirt);
+                //复制
+                File.Copy(sfp,targetfilePath);
+            }
+            
         }
 
         /// <summary>

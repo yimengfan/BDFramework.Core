@@ -98,6 +98,7 @@ namespace Sirenix.OdinInspector
     public class FilePath : Attribute
     {
         public string Extensions;
+        public string ParentFolder;
     }
 
     public class InfoBox : Attribute

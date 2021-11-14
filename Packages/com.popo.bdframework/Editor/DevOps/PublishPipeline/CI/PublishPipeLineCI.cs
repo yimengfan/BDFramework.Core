@@ -113,15 +113,20 @@ namespace BDFramework.Editor.PublishPipeline
 
         #region 代码打包检查
 
+        public static void CheckEditorCode()
+        {
+            //检查下打包前的代码错
+            UnityEditor.BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, BuildAssetBundleOptions.DeterministicAssetBundle, BuildTarget.Android);
+        }
+        
         /// <summary>
         /// 构建dll
         /// </summary>
         public static void BuildDLL()
         {
+            
             //检查打包脚本
             EditorWindow_ScriptBuildDll.RoslynBuild(CI_ROOT_PATH, RuntimePlatform.Android, ScriptBuildTools.BuildMode.Release);
-            //检查下打包前的代码错
-            UnityEditor.BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, BuildAssetBundleOptions.DeterministicAssetBundle, BuildTarget.Android);
         }
 
         #endregion

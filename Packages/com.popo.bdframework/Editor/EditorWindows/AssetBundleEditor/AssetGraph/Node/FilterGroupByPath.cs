@@ -286,8 +286,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     outMap[group.Key] = assetList;
                 }
             }
-
-
+            
             //一次
             if (connectionsToOutput != null)
             {

@@ -13,27 +13,9 @@ using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr
 {
-    // public class OnAssetInmpoter_DevResourceMgr : AssetPostprocessor
-    // {
-    //     /// <summary>
-    //     /// 资源更新完的时候重新刷新下文件列表
-    //     /// </summary>
-    //     /// <param name="importedAssets"></param>
-    //     /// <param name="deletedAssets"></param>
-    //     /// <param name="movedAssets"></param>
-    //     /// <param name="movedFromAssetPaths"></param>
-    //     private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
-    //                                                string[] movedAssets,    string[] movedFromAssetPaths)
-    //     {
-    //         //重新刷新下
-    //         var mgr = BResources.ResLoader as DevResourceMgr;
-    //         mgr?.Init("",null);
-    //     }
-    // }
-
-
+    
     /// <summary>
-    /// ab包管理器
+    /// 开发模式下的加载
     /// </summary>
     public class DevResourceMgr : IResMgr
     {
@@ -353,9 +335,15 @@ namespace BDFramework.ResourceMgr
                     return false;
                 });
             }
-
-
             return rets.ToArray();
+        }
+
+        /// <summary>
+        /// 预热shader
+        /// </summary>
+        public void WarmUpShaders()
+        {
+            
         }
 
 

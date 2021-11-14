@@ -67,7 +67,12 @@ namespace BDFramework.Editor.PublishPipeline
                 GUILayout.Label("[代码检查]");
                 GUILayout.BeginHorizontal();
                 {
-                    if (GUILayout.Button("DLL", GUILayout.Width(Width)))
+                    if (GUILayout.Button("MainCode", GUILayout.Width(Width)))
+                    {
+                        PublishPipeLineCI.CheckEditorCode();
+                    }
+                    
+                    if (GUILayout.Button("HotfixCode", GUILayout.Width(Width)))
                     {
                         PublishPipeLineCI.BuildDLL();
                     }

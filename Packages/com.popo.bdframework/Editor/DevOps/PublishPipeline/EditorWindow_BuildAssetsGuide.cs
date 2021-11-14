@@ -102,7 +102,7 @@ namespace BDFramework.Editor.PublishPipeline
         }
 
         public  string exportPath         = "";
-        private bool   isGenIosAssets     = false;
+        private bool   isGenIOSAssets     = false;
         private bool   isGenAndroidAssets = true;
 
         private bool isBuilding = false;
@@ -114,10 +114,10 @@ namespace BDFramework.Editor.PublishPipeline
         {
             GUILayout.BeginVertical();
             {
-                GUILayout.Label("注:上面按钮操作,会默认生成到StreamingAssets", GUILayout.Width(500), GUILayout.Height(30));
+                GUILayout.Label("注:上面按钮操作,会默认生成到DevOps", GUILayout.Width(500), GUILayout.Height(30));
                 //isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
                 isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源(Windows共用)");
-                isGenIosAssets     = GUILayout.Toggle(isGenIosAssets, "生成Ios资源");
+                isGenIOSAssets     = GUILayout.Toggle(isGenIOSAssets, "生成Ios资源");
 
                 //
                 GUILayout.Label("导出地址:" + exportPath, GUILayout.Width(500));
@@ -128,7 +128,7 @@ namespace BDFramework.Editor.PublishPipeline
                     isBuilding = true;
 
                     //选择目录
-                    exportPath = EditorUtility.OpenFolderPanel("选择导出目录", exportPath, "");
+                    exportPath = BDApplication.DevOpsPublishAssetsPath;
                     if (string.IsNullOrEmpty(exportPath))
                     {
                         return;
@@ -142,7 +142,7 @@ namespace BDFramework.Editor.PublishPipeline
                     }
 
                     //生成ios资源
-                    if (isGenIosAssets)
+                    if (isGenIOSAssets)
                     {
                         GenAllAssets(exportPath, RuntimePlatform.IPhonePlayer);
                     }

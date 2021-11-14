@@ -41,9 +41,17 @@ namespace BDFramework.ResourceMgr.V2
             //默认一个ab中只有一个atlas
             var fs = AssetBundle.GetAllAssetNames();
             var atlas = this.AssetBundle.LoadAsset<SpriteAtlas>(fs[fs.Length - 1]);
-            texName = Path.GetFileName(texName);
-            var sp = atlas.GetSprite(texName);
-            return sp;
+            if (atlas != null)
+            {
+                texName = Path.GetFileName(texName);
+                var sp = atlas.GetSprite(texName);
+                return sp;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         /// <summary>

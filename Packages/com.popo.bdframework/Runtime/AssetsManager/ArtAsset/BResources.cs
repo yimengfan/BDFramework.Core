@@ -20,26 +20,39 @@ namespace BDFramework.ResourceMgr
         /// 美术根目录
         /// </summary>
         readonly static public string ASSET_ROOT_PATH = "Art";
+
         /// <summary>
         /// 美术config配置
         /// </summary>
         readonly static public string ASSET_CONFIG_PATH = ASSET_ROOT_PATH + "/Config.Info";
+
         /// <summary>
         /// 资源信息
         /// </summary>
         readonly static public string ASSET_TYPE_PATH = ASSET_ROOT_PATH + "/AssetTypeConfig.Info";
+
         /// <summary>
         /// 构建时的信息
         /// </summary>
         readonly static public string ASSET_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/Build.Info";
+
         readonly static public string ASSET_OLD_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/OldBuild.Info";
 
+        /// <summary>
+        /// ShaderVariant加载地址
+        /// </summary>
+        readonly public static string ALL_SHADER_VARAINT_RUNTIME_PATH = "Shader/AllShaders";
+        /// <summary>
+        /// Shadervariant资源地址
+        /// </summary>
+        readonly public static string ALL_SHADER_VARAINT_ASSET_PATH = "Assets/Resource/Runtime/"+ALL_SHADER_VARAINT_RUNTIME_PATH+".shadervariants";
+       
         /// <summary>
         /// 初始化
         /// </summary>
         /// <param name="abModel"></param>
         /// <param name="callback"></param>
-        static public void Load(AssetLoadPath loadPath, string customRoot = null)
+        static public void Load(AssetLoadPath loadPath)
         {
             if (loadPath == AssetLoadPath.Editor)
             {
@@ -53,20 +66,23 @@ namespace BDFramework.ResourceMgr
                 var path = "";
                 if (Application.isEditor)
                 {
-                    if (!string.IsNullOrEmpty(customRoot))
+                    switch (loadPath)
                     {
-                        path = customRoot;
-                    }
-                    else
-                    {
-                        if (loadPath == AssetLoadPath.Persistent)
+                        case AssetLoadPath.Persistent:
                         {
                             path = Application.persistentDataPath;
                         }
-                        else if (loadPath == AssetLoadPath.StreamingAsset)
+                            break;
+                        case AssetLoadPath.StreamingAsset:
                         {
                             path = Application.streamingAssetsPath;
                         }
+                            break;
+                        case AssetLoadPath.DevOpsPublish:
+                        {
+                            path = BDApplication.DevOpsPublishAssetsPath;
+                        }
+                            break;
                     }
                 }
                 else
@@ -85,7 +101,7 @@ namespace BDFramework.ResourceMgr
         /// 加载器
         /// </summary>
         static public IResMgr ResLoader { get; private set; }
-        
+
         #region 加载、取消加载
 
         /// <summary>
@@ -96,8 +112,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public static T Load<T>(string name) where T : UnityEngine.Object
         {
-            if (string.IsNullOrEmpty(name))
-                return null;
+            if (string.IsNullOrEmpty(name)) return null;
             return ResLoader.Load<T>(name);
         }
 
@@ -110,8 +125,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public static T[] LoadALL<T>(string name) where T : UnityEngine.Object
         {
-            if (string.IsNullOrEmpty(name))
-                return null;
+            if (string.IsNullOrEmpty(name)) return null;
             return ResLoader.LoadAll_TestAPI_2020_5_23<T>(name);
         }
 
@@ -132,9 +146,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="objlist"></param>
         /// <param name="onLoadEnd"></param>
-        public static List<int> AsyncLoad(List<string> objlist,
-            Action<int, int> onProcess = null,
-            Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
+        public static List<int> AsyncLoad(List<string> objlist, Action<int, int> onProcess = null, Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
         {
             return ResLoader.AsyncLoad(objlist, onProcess, onLoadEnd);
         }
@@ -171,7 +183,7 @@ namespace BDFramework.ResourceMgr
         }
 
         #endregion
-        
+
         #region 卸载资源
 
         /// <summary>
@@ -194,8 +206,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="asset"></param>
         public static void UnloadAsset(UnityEngine.Object asset)
         {
-            if (asset is GameObject || asset is Component)
-                return;
+            if (asset is GameObject || asset is Component) return;
             Resources.UnloadAsset(asset);
             asset = null;
         }
@@ -209,7 +220,7 @@ namespace BDFramework.ResourceMgr
         }
 
         #endregion
-        
+
         #region 实例化、删除管理
 
         /// <summary>

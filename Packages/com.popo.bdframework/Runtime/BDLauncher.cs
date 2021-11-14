@@ -100,7 +100,8 @@ namespace BDFramework
             {
                 BDebug.LogError("GameConfig配置为null,请检查!");
             }
-
+            
+            
             //日志打印
             debug.IsLog = this.GameConfig.IsDebugLog;
         }
@@ -150,7 +151,7 @@ namespace BDFramework
             GameAssetHelper.CheckAssetPackageVersion(Application.platform, () =>
             {
                 //1.美术目录
-                BResources.Load(GameConfig.ArtRoot, GameConfig.CustomArtRoot);
+                BResources.Load(GameConfig.ArtRoot);
                 //2.sql
                 SqliteLoder.Load(GameConfig.SQLRoot);
                 //3.脚本,这个启动会开启所有的逻辑

@@ -115,7 +115,7 @@ namespace BDFramework.Editor
     public class AndroidConfig
     {
         [LabelText("Keystore路径")]
-        [FilePath(Extensions = "keystore")]
+        [FilePath(ParentFolder = "../",Extensions = "keystore")]
         public string keystoreName;
 
         [LabelText("Keystore密码")]
@@ -177,7 +177,7 @@ namespace BDFramework.Editor
 
         [BoxGroup("热更")]
         [LabelText("自动编译热更DLL")]
-        public bool IsAutoBuildDll = true;
+        public bool IsAutoBuildDll = false;
 
         public bool IsNeedAutoBuildDll()
         {

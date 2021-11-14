@@ -89,5 +89,10 @@ namespace BDFramework.ResourceMgr
         /// 以runtime为根目录
         /// </summary>
         string[] GetAssets(string floder, string searchPattern = null);
+
+        /// <summary>
+        /// 预热sharder
+        /// </summary>
+        void WarmUpShaders();
     }
 }

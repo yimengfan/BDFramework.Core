@@ -159,10 +159,13 @@ namespace BDFramework.ResourceMgr.V2
             for (int i = 0; i < this.AssetbundleItemList.Count; i++)
             {
                 var abitem = this.AssetbundleItemList[i];
-                if (abitem.LoadPath.Equals(assetName, StringComparison.OrdinalIgnoreCase))
+                if (abitem.LoadPath != null)
                 {
-                    retABItem = abitem;
-                    break;
+                    if (abitem.LoadPath.Equals(assetName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        retABItem = abitem;
+                        break;
+                    }
                 }
             }
 

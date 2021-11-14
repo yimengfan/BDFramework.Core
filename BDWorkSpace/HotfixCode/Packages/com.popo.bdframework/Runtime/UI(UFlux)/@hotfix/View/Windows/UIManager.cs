@@ -345,7 +345,7 @@ namespace BDFramework.UFlux
         /// 关闭窗口
         /// </summary>
         /// <param name="uiIdx"></param>
-        private void CloseWindow(int uiIdx)
+        public void CloseWindow(int uiIdx)
         {
             if (windowMap.ContainsKey(uiIdx))
             {

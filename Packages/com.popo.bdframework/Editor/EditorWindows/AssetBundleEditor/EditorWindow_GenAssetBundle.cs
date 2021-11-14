@@ -50,11 +50,13 @@ namespace BDFramework.Editor.AssetBundle
         public void OnGUI()
         {
             GUILayout.BeginVertical(GUILayout.Height(220));
-            TipsGUI();
-            DrawToolsBar();
-            GUILayout.Space(10);
-            LastestGUI();
-            GUILayout.Space(75);
+            {
+                TipsGUI();
+                DrawToolsBar();
+                GUILayout.Space(10);
+                LastestGUI();
+                GUILayout.Space(75);
+            }
             GUILayout.EndVertical();
         }
 
@@ -117,20 +119,28 @@ namespace BDFramework.Editor.AssetBundle
             }
             
             GUILayout.Label("测试:");
-            if (GUILayout.Button("AssetBundle SG打包测试(StreamingAsset)", GUILayout.Width(380), GUILayout.Height(30)))
+            if (GUILayout.Button("AssetBundle SG打包测试(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
             {
-                var outputpath = BDApplication.ProjectRoot + "/CI_TEMP";
+                var outputpath = BDApplication.DevOpsPublishAssetsPath;
+                // outputpath2 = Application.streamingAssetsPath;
                 //删除目录里面资源
-                Directory.Delete(Application.streamingAssetsPath,true);
-                var outputpath2 = Application.streamingAssetsPath;
-                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath2, true);
+                if (Directory.Exists(outputpath))
+                {
+                    Directory.Delete(outputpath,true);
+                }
+                //打包AB
+                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath, true);
             }
 
-            if (GUILayout.Button("AssetBundle 加载测试(StreamingAsset)", GUILayout.Width(380), GUILayout.Height(30)))
+            if (GUILayout.Button("AssetBundle 加载测试Editor(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
             {
-                var outputpath = BDApplication.ProjectRoot + "/CI_TEMP";
-                var outputpath2 = Application.streamingAssetsPath;
-                AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundle(outputpath2);
+                var outputpath = BDApplication.DevOpsPublishAssetsPath;
+                //outputpath = Application.streamingAssetsPath;
+                AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleOnEditor(outputpath);
+            }
+            if (GUILayout.Button("AssetBundle 加载测试Scene(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
+            {
+                AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleRuntime();
             }
 
             GUILayout.EndVertical();

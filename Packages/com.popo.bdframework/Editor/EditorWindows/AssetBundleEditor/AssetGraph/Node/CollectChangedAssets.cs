@@ -57,6 +57,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             if (incoming == null) return;
             this.BuildInfo   = BDFrameworkAssetsEnv.BuildInfo;
             this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
+            StopwatchTools.Begin();
             //加载上一次缓存的资源
             var lastbuildInfoPath = string.Format("{0}/{1}/{2}",this.BuildParams.OutputPath, BDEditorApplication.GetPlatformPath(target),BResources.ASSET_BUILD_INFO_PATH);
             
@@ -98,7 +99,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
             }
 
-
+            StopwatchTools.End("【搜集变更文件】");
             var output = connectionsToOutput?.FirstOrDefault();
             if (output != null)
             {

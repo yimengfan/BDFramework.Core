@@ -211,7 +211,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.ResourceMgr.BResources.Load(@loadPath, @customRoot);
+           //BDFramework.ResourceMgr.BResources.Load(@loadPath, @customRoot);
 
             return __ret;
         }

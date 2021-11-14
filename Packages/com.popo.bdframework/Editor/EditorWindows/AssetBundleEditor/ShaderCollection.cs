@@ -8,14 +8,15 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using BDFramework.Core.Tools;
+using BDFramework.ResourceMgr;
 using LitJson;
 
 namespace BDFramework.Editor.AssetBundle
 {
     public class ShaderCollection : EditorWindow
     {
-        private                ShaderVariantCollection svc;
-        readonly public static string                  ALL_SHADER_VARAINT_PATH = "Assets/Resource/Runtime/Shader/AllShaders.shadervariants";
+        private ShaderVariantCollection svc;
+        static  string                  toolsSVCpath = "Assets/Resource/Shaders/Tools.shadervariants";
 
         #region FindMaterial
 
@@ -36,7 +37,7 @@ namespace BDFramework.Editor.AssetBundle
                 allShaderNameList.Add(shaderPath);
             }
 
-            var toolsSVCpath = "Assets/Resource/Shaders/Tools.shadervariants";
+
             //防空
             FileHelper.WriteAllText(toolsSVCpath, "");
             AssetDatabase.DeleteAsset(toolsSVCpath);
@@ -53,10 +54,10 @@ namespace BDFramework.Editor.AssetBundle
             //GUID to assetPath
             for (int i = 0; i < assets.Count; i++)
             {
-                var p = AssetDatabase.GUIDToAssetPath(assets[i]);
+                var path = AssetDatabase.GUIDToAssetPath(assets[i]);
                 //获取依赖中的mat
-                var dependenciesPath = AssetDatabase.GetDependencies(p, true);
-                var mats             = dependenciesPath.ToList().FindAll((dp) => dp.EndsWith(".mat"));
+                var dependenciesPath = AssetDatabase.GetDependencies(path, true);
+                var mats             = dependenciesPath.ToList().FindAll((dp)=> AssetDatabase.GetMainAssetTypeAtPath(dp) == typeof(Material));
                 allMats.AddRange(mats);
             }
 
@@ -65,14 +66,14 @@ namespace BDFramework.Editor.AssetBundle
 
 
             float count = 1;
-            foreach (var mat in allMats)
+            foreach (var matPath in allMats)
             {
-                var obj = AssetDatabase.LoadMainAssetAtPath(mat);
+                var obj = AssetDatabase.LoadMainAssetAtPath(matPath);
                 if (obj is Material)
                 {
-                    var _mat = obj as Material;
-                    EditorUtility.DisplayProgressBar("处理mat", string.Format("处理:{0} - {1}", Path.GetFileName(mat), _mat.shader.name), count / allMats.Count);
-                    AddToDict(_mat);
+                    var mat = obj as Material;
+//                    Debug.LogFormat("【搜集KeyWord】处理:{0} - {1}", Path.GetFileName(matPath), mat.shader.name);
+                    AddToDict(mat);
                 }
 
                 count++;
@@ -89,9 +90,15 @@ namespace BDFramework.Editor.AssetBundle
                 }
             }
 
-            AssetDatabase.DeleteAsset(ALL_SHADER_VARAINT_PATH);
-            AssetDatabase.CreateAsset(svc, ALL_SHADER_VARAINT_PATH);
+            AssetDatabase.DeleteAsset(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
+            AssetDatabase.CreateAsset(svc, BResources.ALL_SHADER_VARAINT_ASSET_PATH);
             AssetDatabase.Refresh();
+
+            // var dependencies = AssetDatabase.GetDependencies(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
+            // foreach (var guid in dependencies )
+            // {
+            //     Debug.Log("依赖shader:" + guid);
+            // }
         }
 
 
@@ -118,16 +125,24 @@ namespace BDFramework.Editor.AssetBundle
         {
             if (!curMat || !curMat.shader) return;
 
-            var path = AssetDatabase.GetAssetPath(curMat.shader);
-            if (!allShaderNameList.Contains(path))
+            var shaderPath = AssetDatabase.GetAssetPath(curMat.shader);
+
+            // var runtimeDirects = BDApplication.GetAllRuntimeDirects().Select((r)=>r.Replace( "/Runtime","")).ToList();
+            // var result         = runtimeDirects.Find((r) => shaderPath.StartsWith(r, StringComparison.OrdinalIgnoreCase));
+            // if (result == null)
+            // {
+            //     Debug.LogErrorFormat("【收集ShaderKW】shader有可能引用出错:{0}-{1}" , curMat.name,shaderPath);
+            // }
+            
+            if (!allShaderNameList.Contains(shaderPath))
             {
-                Debug.LogError("不存在shader:" + curMat.shader.name);
-                Debug.Log(path);
+              //  Debug.LogError("不存在shader:" + curMat.shader.name);
+               // Debug.Log(shaderPath);
                 return;
             }
 
-            ShaderData sd = null;
-            ShaderDataDict.TryGetValue(curMat.shader.name, out sd);
+         
+            ShaderDataDict.TryGetValue(curMat.shader.name, out  var sd);
             if (sd == null)
             {
                 //一次性取出所有的 passtypes 和  keywords

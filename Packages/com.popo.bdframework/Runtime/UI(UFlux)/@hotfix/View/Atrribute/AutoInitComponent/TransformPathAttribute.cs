@@ -33,7 +33,8 @@ namespace BDFramework.UFlux
 
             if (!node)
             {
-                BDebug.LogError("节点存在:" + this.Path);
+                BDebug.LogError("节点不存在:" + this.Path);
+                return;
             }
 
             if (uiType == typeof(Transform))

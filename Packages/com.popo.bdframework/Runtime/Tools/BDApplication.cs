@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -59,7 +59,19 @@ namespace BDFramework.Core.Tools
         /// </summary>
         public static string EditorResourceRuntimePath { get; private set; }
 
+        /// <summary>
+        /// Devops 路径
+        /// </summary>
+        public static string DevOpsPath { get; private set; }
 
+        /// <summary>
+        /// Devops 代码路径
+        /// </summary>
+        public static string DevOpsCodePath { get; private set; }
+        /// <summary>
+        /// Devops 资源路径
+        /// </summary>
+        public static string DevOpsPublishAssetsPath { get; private set; }
         /// <summary>
         /// 编辑器缓存目录
         /// </summary>
@@ -76,6 +88,9 @@ namespace BDFramework.Core.Tools
             EditorResourcePath        = "Assets/Resource_SVN";
             EditorResourceRuntimePath = EditorResourcePath + "/Runtime";
             BDEditorCachePath         = Library            + "/BDFrameCache";
+            //DevOps路径
+            DevOpsPath = ProjectRoot + "/DevOps";
+            DevOpsPublishAssetsPath = DevOpsPath + "/PublishAssets";
         }
 
         /// <summary>
@@ -86,23 +101,22 @@ namespace BDFramework.Core.Tools
         {
             //搜索所有资源
             var root = Application.dataPath;
-
             //获取根路径所有runtime
-            var directories = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly).ToList();
-            for (int i = directories.Count - 1; i >= 0; i--)
+            var          directories = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly).ToList();
+            
+            //ret
+            List<string> retList     = new List<string>();
+            foreach (var dirt in directories)
             {
-                var dir = directories[i].Replace(BDApplication.ProjectRoot + "/", "").Replace("\\", "/") + "/Runtime";
-                if (!Directory.Exists(dir))
+                //
+                var _dirt = dirt + "/Runtime";
+                if (Directory.Exists(_dirt))
                 {
-                    directories.RemoveAt(i);
-                }
-                else
-                {
-                    directories[i] = dir;
+                    _dirt = _dirt.Replace("\\","/").Replace(Application.dataPath,"Assets");
+                    retList.Add(_dirt);
                 }
             }
-
-            return directories;
+            return retList;
         }
 
         /// <summary>
