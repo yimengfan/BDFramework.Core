@@ -15,6 +15,10 @@ namespace BDFramework.Editor.AssetGraph.Node
     {
         public BuildInfo              BuildInfo   { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
+        public void Reset()
+        {
+            this.isCollectedShaderKW = false;
+        }
 
         public override string ActiveStyle
         {
@@ -50,6 +54,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         private List<string> FileExtens      = new List<string>() { ".shader", ".shadervariants" };
         private string       AssetBundleName = BResources.ALL_SHADER_VARAINT_ASSET_PATH;
 
+        private bool isCollectedShaderKW = false;
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             if (incoming == null) return;
@@ -57,7 +62,12 @@ namespace BDFramework.Editor.AssetGraph.Node
             this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             StopwatchTools.Begin();
             //收集变体
-            ShaderCollection.SimpleGenShaderVariant();
+            if (!isCollectedShaderKW) //防止GUI每次调用prepare时候都触发,真正打包时候 会重新构建
+            {
+                Debug.Log("------------>收集Key word");
+                ShaderCollection.SimpleGenShaderVariant();
+                isCollectedShaderKW = true;
+            }
             //开始搜集shader varint
             var outMap               = new Dictionary<string, List<AssetReference>>();
             var shaderAndVariantList = new List<AssetReference>();
@@ -97,7 +107,6 @@ namespace BDFramework.Editor.AssetGraph.Node
                     outMap[group.Key] = newList;
                 }
             }
-
             //依赖shader
             foreach (var dependShader in dependShaders)
             {

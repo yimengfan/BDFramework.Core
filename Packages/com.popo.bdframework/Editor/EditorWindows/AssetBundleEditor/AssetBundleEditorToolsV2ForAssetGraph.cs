@@ -61,6 +61,7 @@ namespace BDFramework.Editor.AssetBundle
                 {
                     envParams.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
                     envParams.BuildParams = BDFrameworkAssetsEnv.BuildParams;
+                    envParams.Reset();
                 }
             }
 
