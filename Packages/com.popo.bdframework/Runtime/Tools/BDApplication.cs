@@ -73,6 +73,10 @@ namespace BDFramework.Core.Tools
         /// </summary>
         public static string DevOpsPublishAssetsPath { get; private set; }
         /// <summary>
+        /// 发布包体路径
+        /// </summary>
+        public static string DevOpsPublishPackagePath { get; private set; }
+        /// <summary>
         /// 编辑器缓存目录
         /// </summary>
         public static string BDEditorCachePath { get; private set; }
@@ -90,7 +94,8 @@ namespace BDFramework.Core.Tools
             BDEditorCachePath         = Library            + "/BDFrameCache";
             //DevOps路径
             DevOpsPath = ProjectRoot + "/DevOps";
-            DevOpsPublishAssetsPath = DevOpsPath + "/PublishAssets";
+            DevOpsPublishAssetsPath  = DevOpsPath + "/PublishAssets";
+            DevOpsPublishPackagePath =  DevOpsPath + "/PublishPackages";
         }
 
         /// <summary>

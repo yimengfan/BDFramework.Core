@@ -1,0 +1,11 @@
+{
+    "name": "Unity.AssetGraph.Tests",
+    "references": [
+        "Unity.AssetGraph"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

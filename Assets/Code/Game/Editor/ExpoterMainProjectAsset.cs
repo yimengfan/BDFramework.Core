@@ -47,6 +47,8 @@ public class ExpoterMainProjectAsset
             "Assets/Code/BDFramework.Game",                       //Game
             "Assets/Scenes",                                      //Scene
             "Assets/AssetGraph/BResourceAssetBundleConfig.asset", //SG
+            "Assets/link.xml",
+
         };
         var exportAssets = new List<string>();
         foreach (var direct in exporterDirectoryList)

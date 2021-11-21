@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec4882d68a9346b3b5f8ecf1e38a534, type: 3}
+  m_Name: __hidden__LoadBySearchFilterTest_TestSearchFilterWithName
+  m_EditorClassIdentifier: 
+  m_allNodes:
+  - m_name: Test Regression with Input
+    m_id: 020f0833-33cf-4e1d-9ed1-d58b890fa2ed
+    m_x: 552
+    m_y: 144
+    m_nodeInstance:
+      m_className: RegressionTestNode, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX3Jlc3VsdCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoie1wiaW5jb21pbmdcIjpbe1wiY29ubmVjdGlvbklkXCI6XCJjNjRmODI4Yi0yM2M3LTQwMWUtODMzYi0wNmI3NjJmY2YyYjZcIixcImdyb3Vwc1wiOlt7XCJuYW1lXCI6XCIwXCIsXCJlbnRpcmVzXCI6W3tcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Mb2FkQnlTZWFyY2hGaWx0ZXJUZXN0X0Fzc2V0c1RvRGVsZXRlL0xvYWRCeVNlYXJjaEZpbHRlclRlc3RQcmVmYWIwMS5wcmVmYWJcIixcImFzc2V0VHlwZVwiOlwiVW5pdHlFbmdpbmUuR2FtZU9iamVjdFwiLFwiaW1wb3J0ZXJUeXBlXCI6XCJVbml0eUVkaXRvci5QcmVmYWJJbXBvcnRlclwifV19XX1dfSJ9XX19
+    m_inputPoints:
+    - id: ce760b13-5460-4472-aba4-6ca8ebb58ae0
+      label: '-'
+      parentId: 020f0833-33cf-4e1d-9ed1-d58b890fa2ed
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.7
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 52d497c6-6bbd-4ddc-aa6d-97fe6df01c8c
+      label: +
+      parentId: 020f0833-33cf-4e1d-9ed1-d58b890fa2ed
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 195.8
+        y: 33.7
+        width: 10
+        height: 23
+  - m_name: Load By Search Filter
+    m_id: e5d3fc35-32b7-40fa-b93f-c700c804f8e6
+    m_x: 204
+    m_y: 144
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.LoaderBySearch, Unity.AssetGraph.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX3NlYXJjaEZpbHRlciI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoiTG9hZEJ5U2VhcmNoRmlsdGVyVGVzdFByZWZhYjAxIn1dfSwibV9yZXNwb25kVG9Bc3NldENoYW5nZSI6ZmFsc2V9
+    m_inputPoints: []
+    m_outputPoints:
+    - id: 74f21689-076e-41d4-b4fc-9e063049ed22
+      label: +
+      parentId: e5d3fc35-32b7-40fa-b93f-c700c804f8e6
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 166.2
+        y: 33.7
+        width: 10
+        height: 23
+  m_allConnections:
+  - m_id: c64f828b-23c7-401e-833b-06b762fcf2b6
+    m_fromNodeId: e5d3fc35-32b7-40fa-b93f-c700c804f8e6
+    m_fromNodeConnectionPointId: 74f21689-076e-41d4-b4fc-9e063049ed22
+    m_toNodeId: 020f0833-33cf-4e1d-9ed1-d58b890fa2ed
+    m_toNodeConnectionPoiontId: ce760b13-5460-4472-aba4-6ca8ebb58ae0
+    m_label: +
+  m_lastModified: 131770769330372320
+  m_version: 2
+  m_graphDescription: '<size=16>Test: </size>
+
+
+    Test: node to load assets with
+    filename condition, and compare with pre-generated result.
+
+    Final State:
+    Graph should produce no error.'
+  m_useAsAssetPostprocessor: 0
+  m_graphExecOrderPriority: 0

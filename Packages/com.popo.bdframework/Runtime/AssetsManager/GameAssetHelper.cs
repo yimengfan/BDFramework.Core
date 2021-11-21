@@ -119,8 +119,8 @@ namespace BDFramework.Asset
                     var streamingPackageInfo  = JsonMapper.ToObject<PackageBuildInfo>(www.text);
                     if (persistentPackageInfo.BuildTime >= streamingPackageInfo.BuildTime)
                     {
-                        callback?.Invoke();
                         BDebug.Log("【母包资源检测】不复制，Streaming无新资源");
+                        callback?.Invoke();
                         yield break;
                     }
                     else
@@ -139,60 +139,36 @@ namespace BDFramework.Asset
                     FileHelper.WriteAllBytes(persistentPackageInfoPath, www.bytes);
                 }
             }
-
-            //复制新版本的DLL 
-            var persistentDLLPath = string.Format("{0}/{1}", persistent, ScriptLoder.DLL_PATH);
-            var streamingDLLPath  = string.Format("{0}/{1}", streamingAsset, ScriptLoder.DLL_PATH);
-            www = new WWW(streamingDLLPath);
-            yield return www;
-            if (www.error == null)
+            
+            //要拷贝的资源
+            string[] copyFiles = new string[]
             {
-                FileHelper.WriteAllBytes(persistentDLLPath, www.bytes);
-                BDebug.Log("【母包资源检测】复制dll成功!");
-            }
-
-            www = new WWW(streamingDLLPath + ".pdb");
-            yield return www;
-            if (www.error == null)
+                ScriptLoder.DLL_PATH, ScriptLoder.DLL_PATH + ".pdb", //Dll
+                SqliteLoder.LOCAL_DB_PATH,//db
+                BResources.ASSET_CONFIG_PATH,BResources.ASSET_TYPE_PATH, //ArtConfig
+            };
+            //开始拷贝逻辑
+            for (int i = 0; i < copyFiles.Length; i++)
             {
-                FileHelper.WriteAllBytes(persistentDLLPath + ".pdb", www.bytes);
-                BDebug.Log("【母包资源检测】复制dll.pdb成功!");
-            }
-            else
-            {
-                //删除persistent下的pdb防止跟dll不匹配
-                var pbdPath = persistentDLLPath + ".pdb";
-                if (File.Exists(pbdPath))
+                //拷贝逻辑
+                var copyFile = copyFiles[i];
+                var persistentPath = string.Format("{0}/{1}", persistent, copyFile);
+                var streamingPath  = string.Format("{0}/{1}", streamingAsset, copyFile);
+                www = new WWW(streamingPath);
+                yield return www;
+                if (www.error == null)
                 {
-                    File.Delete(pbdPath);
+                    FileHelper.WriteAllBytes(persistentPath, www.bytes);
+                    BDebug.Log("【母包资源检测】复制成功:" + copyFile);
+                }
+                else
+                {
+                    BDebug.LogError("【母包资源检测】复制失败:" + copyFile);
                 }
             }
-
-            //复制Sql
-            var persistentSQLPath = string.Format("{0}/{1}", persistent, SqliteLoder.LOCAL_DB_PATH);
-            var streamingSQLPath  = string.Format("{0}/{1}", streamingAsset, SqliteLoder.LOCAL_DB_PATH);
-            www = new WWW(streamingSQLPath);
-            yield return www;
-            if (www.error == null)
-            {
-                FileHelper.WriteAllBytes(persistentSQLPath, www.bytes);
-                BDebug.Log("【母包资源检测】复制db成功!");
-            }
-
-            //复制ArtConfig
-            var persistentArtConfigPath = string.Format("{0}/{1}", persistent, BResources.ASSET_BUILD_INFO_PATH);
-            var streamingArtConfigPath  = string.Format("{0}/{1}", streamingAsset, BResources.ASSET_BUILD_INFO_PATH);
-            www = new WWW(streamingArtConfigPath);
-            yield return www;
-            if (www.error == null)
-            {
-                FileHelper.WriteAllBytes(persistentArtConfigPath, www.bytes);
-                BDebug.Log("【母包资源检测】复制artconfig成功!");
-            }
-
-            callback?.Invoke();
-
             yield return null;
+            
+            callback?.Invoke();
         }
 
         /// <summary>
@@ -248,60 +224,33 @@ namespace BDFramework.Asset
                 }
             }
 
-            //复制新版本的DLL 
-            var persistentDLLPath = string.Format("{0}/{1}", persistent, ScriptLoder.DLL_PATH);
-            var streamingDLLPath  = string.Format("{0}/{1}", streamingAsset, ScriptLoder.DLL_PATH);
-
-            if (File.Exists(streamingDLLPath))
+            //要拷贝的资源
+            string[] copyFiles = new string[]
             {
-                FileHelper.WriteAllBytes(persistentDLLPath, File.ReadAllBytes(streamingDLLPath));
-                BDebug.Log("【母包资源检测】复制dll成功!");
-            }
+                ScriptLoder.DLL_PATH, ScriptLoder.DLL_PATH + ".pdb", //Dll
+                SqliteLoder.LOCAL_DB_PATH,//db
+                BResources.ASSET_CONFIG_PATH,BResources.ASSET_TYPE_PATH, //ArtConfig
+            };
 
-            var persistentPdbPath = persistentDLLPath + ".pdb";
-            var streamingPdbPath  = streamingDLLPath  + ".pdb";
+            //开始拷贝逻辑
+            for (int i = 0; i < copyFiles.Length; i++)
+            {
+                var copyFile = copyFiles[i];
+                //复制新版本的DLL 
+                var persistentPath = string.Format("{0}/{1}", persistent, copyFile);
+                var streamingPath  = string.Format("{0}/{1}", streamingAsset, copyFile);
 
-            if (File.Exists(streamingPdbPath))
-            {
-                FileHelper.WriteAllBytes(persistentPdbPath, File.ReadAllBytes(streamingPdbPath));
-                BDebug.Log("【母包资源检测】复制dll.pdb成功!");
-            }
-            else
-            {
-                //删除persistent下的pdb防止跟dll不匹配
-                var pbdPath = persistentDLLPath + ".pdb";
-                if (File.Exists(pbdPath))
+                if (File.Exists(streamingPath))
                 {
-                    File.Delete(pbdPath);
+                    FileHelper.WriteAllBytes(persistentPath, File.ReadAllBytes(streamingPath));
+                    BDebug.Log("【母包资源检测】复制成功:" + copyFile);
+                }
+                else
+                {
+                    BDebug.LogError("【母包资源检测】复制失败:" + copyFile);
                 }
             }
-
-            //复制Sql
-            var persistentSQLPath = string.Format("{0}/{1}", persistent, SqliteLoder.LOCAL_DB_PATH);
-            var streamingSQLPath  = string.Format("{0}/{1}", streamingAsset, SqliteLoder.LOCAL_DB_PATH);
-            if (File.Exists(streamingSQLPath))
-            {
-                FileHelper.WriteAllBytes(persistentSQLPath, File.ReadAllBytes(streamingSQLPath));
-                BDebug.Log("【母包资源检测】复制db成功!");
-            }
-            else
-            {
-                BDebug.Log("【母包资源检测】失败，没有db文件!");
-            }
-
-            //复制ArtConfig
-            var persistentArtConfigPath = string.Format("{0}/{1}", persistent, BResources.ASSET_CONFIG_PATH);
-            var streamingArtConfigPath  = string.Format("{0}/{1}", streamingAsset, BResources.ASSET_CONFIG_PATH);
-            if (File.Exists(streamingArtConfigPath))
-            {
-                FileHelper.WriteAllBytes(persistentArtConfigPath, File.ReadAllBytes(streamingArtConfigPath));
-                BDebug.Log("【母包资源检测】复制artconfig成功!");
-            }
-            else
-            {
-                BDebug.Log("【母包资源检测】失败，没有artconfig文件!");
-            }
-
+            
             //结束
             callback?.Invoke();
         }

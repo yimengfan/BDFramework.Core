@@ -16,5 +16,10 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// Build参数
         /// </summary>
         BuildAssetBundleParams BuildParams { get; set; }
+
+        /// <summary>
+        /// 重置
+        /// </summary>
+        void Reset();
     }
 }

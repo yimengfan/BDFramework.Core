@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec4882d68a9346b3b5f8ecf1e38a534, type: 3}
+  m_Name: __hidden__GroupByFileTest_TestGroupByFile
+  m_EditorClassIdentifier: 
+  m_allNodes:
+  - m_name: Load
+    m_id: 9bb86d65-4c32-41d2-b036-fddd2df8f406
+    m_x: 72
+    m_y: 180
+    m_nodeInstance:
+      m_className: Unity.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2xvYWRQYXRoIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJHcm91cEJ5RmlsZVBhdGhUZXN0X0Fzc2V0c1RvRGVsZXRlIn0seyJ0YXJnZXRHcm91cCI6MSwidmFsdWUiOiJHcm91cEJ5RmlsZVRlc3RfQXNzZXRzVG9EZWxldGUifV19LCJtX2xvYWRQYXRoR3VpZCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoiNDYyNDBlZmY3YzA4NjQxZDViMjYxNDJkMjAyZGU3MzAifSx7InRhcmdldEdyb3VwIjoxLCJ2YWx1ZSI6ImQwNGM0YmZlMTM0Y2Q0NzBkYjIyZjI1OTJjODM3ZjhjIn1dfSwibV9pZ25vcmVQYXR0ZXJucyI6W10sIm1fcmVzcG9uZFRvQXNzZXRDaGFuZ2UiOmZhbHNlfQ==
+    m_inputPoints: []
+    m_outputPoints:
+    - id: 769f100f-f161-4918-96dd-b7a52257feb5
+      label: +
+      parentId: 9bb86d65-4c32-41d2-b036-fddd2df8f406
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 111
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Test Regression with Input
+    m_id: ed502a93-3c0b-47a1-8b96-f69ee51f4e6c
+    m_x: 552
+    m_y: 180
+    m_nodeInstance:
+      m_className: RegressionTestNode, Unity.AssetGraph.Editor, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      m_instanceData: B64|eyJtX3Jlc3VsdCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoie1wiaW5jb21pbmdcIjpbe1wiY29ubmVjdGlvbklkXCI6XCI3YTBjNzAxNy02NTQyLTQ2M2MtYTYyNS1mNDE2MmU3YjEwYmJcIixcImdyb3Vwc1wiOlt7XCJuYW1lXCI6XCIwXCIsXCJlbnRpcmVzXCI6W3tcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Hcm91cEJ5RmlsZVRlc3RfQXNzZXRzVG9EZWxldGUvYzAwMDEvdjAwMDEvYm9keS5wcmVmYWJcIixcImFzc2V0VHlwZVwiOlwiVW5pdHlFbmdpbmUuR2FtZU9iamVjdFwiLFwiaW1wb3J0ZXJUeXBlXCI6XCJVbml0eUVkaXRvci5QcmVmYWJJbXBvcnRlclwifV19LHtcIm5hbWVcIjpcIjFcIixcImVudGlyZXNcIjpbe1wiaW1wb3J0RnJvbVwiOlwiQXNzZXRzL0dyb3VwQnlGaWxlVGVzdF9Bc3NldHNUb0RlbGV0ZS9jMDAwMS92MDAwMS9oZWFkMDEucHJlZmFiXCIsXCJhc3NldFR5cGVcIjpcIlVuaXR5RW5naW5lLkdhbWVPYmplY3RcIixcImltcG9ydGVyVHlwZVwiOlwiVW5pdHlFZGl0b3IuUHJlZmFiSW1wb3J0ZXJcIn1dfSx7XCJuYW1lXCI6XCIyXCIsXCJlbnRpcmVzXCI6W3tcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Hcm91cEJ5RmlsZVRlc3RfQXNzZXRzVG9EZWxldGUvYzAwMDEvdjAwMDIvYm9keS5wcmVmYWJcIixcImFzc2V0VHlwZVwiOlwiVW5pdHlFbmdpbmUuR2FtZU9iamVjdFwiLFwiaW1wb3J0ZXJUeXBlXCI6XCJVbml0eUVkaXRvci5QcmVmYWJJbXBvcnRlclwifV19LHtcIm5hbWVcIjpcIjNcIixcImVudGlyZXNcIjpbe1wiaW1wb3J0RnJvbVwiOlwiQXNzZXRzL0dyb3VwQnlGaWxlVGVzdF9Bc3NldHNUb0RlbGV0ZS9jMDAwMS92MDAwMi9oZWFkMDEucHJlZmFiXCIsXCJhc3NldFR5cGVcIjpcIlVuaXR5RW5naW5lLkdhbWVPYmplY3RcIixcImltcG9ydGVyVHlwZVwiOlwiVW5pdHlFZGl0b3IuUHJlZmFiSW1wb3J0ZXJcIn1dfSx7XCJuYW1lXCI6XCI0XCIsXCJlbnRpcmVzXCI6W3tcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Hcm91cEJ5RmlsZVRlc3RfQXNzZXRzVG9EZWxldGUvYzAwMDEvdjAwMDMvYm9keS5wcmVmYWJcIixcImFzc2V0VHlwZVwiOlwiVW5pdHlFbmdpbmUuR2FtZU9iamVjdFwiLFwiaW1wb3J0ZXJUeXBlXCI6XCJVbml0eUVkaXRvci5QcmVmYWJJbXBvcnRlclwifV19LHtcIm5hbWVcIjpcIjVcIixcImVudGlyZXNcIjpbe1wiaW1wb3J0RnJvbVwiOlwiQXNzZXRzL0dyb3VwQnlGaWxlVGVzdF9Bc3NldHNUb0RlbGV0ZS9jMDAwMS92MDAwMy9oZWFkMDEucHJlZmFiXCIsXCJhc3NldFR5cGVcIjpcIlVuaXR5RW5naW5lLkdhbWVPYmplY3RcIixcImltcG9ydGVyVHlwZVwiOlwiVW5pdHlFZGl0b3IuUHJlZmFiSW1wb3J0ZXJcIn1dfSx7XCJuYW1lXCI6XCI2XCIsXCJlbnRpcmVzXCI6W3tcImltcG9ydEZyb21cIjpcIkFzc2V0cy9Hcm91cEJ5RmlsZVRlc3RfQXNzZXRzVG9EZWxldGUvYzAwMDEvdjAwMDMvaGVhZDAyLnByZWZhYlwiLFwiYXNzZXRUeXBlXCI6XCJVbml0eUVuZ2luZS5HYW1lT2JqZWN0XCIsXCJpbXBvcnRlclR5cGVcIjpcIlVuaXR5RWRpdG9yLlByZWZhYkltcG9ydGVyXCJ9XX1dfV19In1dfX0=
+    m_inputPoints:
+    - id: a78eada1-e418-479d-a263-2f96ff035582
+      label: '-'
+      parentId: ed502a93-3c0b-47a1-8b96-f69ee51f4e6c
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: c85d25a8-38e9-4eaf-b8b6-6c9e527fb1d7
+      label: +
+      parentId: ed502a93-3c0b-47a1-8b96-f69ee51f4e6c
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 185
+        y: 32.5
+        width: 10
+        height: 23
+  - m_name: Group By File
+    m_id: f5df7806-7116-45ed-9606-3a57bc528697
+    m_x: 312
+    m_y: 180
+    m_nodeInstance:
+      m_className: Unity.AssetGraph.GroupingByFile, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2dyb3VwTmFtZUZvcm1hdCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoiIn1dfX0=
+    m_inputPoints:
+    - id: 69e16e0e-4585-4083-876a-fad23137b6b1
+      label: '-'
+      parentId: f5df7806-7116-45ed-9606-3a57bc528697
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 29.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: d82bde85-7e42-456d-bfcd-b01370eab72b
+      label: +
+      parentId: f5df7806-7116-45ed-9606-3a57bc528697
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 114
+        y: 32.5
+        width: 10
+        height: 23
+  m_allConnections:
+  - m_id: 0dbcbb4c-0bea-47df-83e9-2c07bc398cdd
+    m_fromNodeId: 9bb86d65-4c32-41d2-b036-fddd2df8f406
+    m_fromNodeConnectionPointId: 769f100f-f161-4918-96dd-b7a52257feb5
+    m_toNodeId: f5df7806-7116-45ed-9606-3a57bc528697
+    m_toNodeConnectionPoiontId: 69e16e0e-4585-4083-876a-fad23137b6b1
+    m_label: +
+  - m_id: 7a0c7017-6542-463c-a625-f4162e7b10bb
+    m_fromNodeId: f5df7806-7116-45ed-9606-3a57bc528697
+    m_fromNodeConnectionPointId: d82bde85-7e42-456d-bfcd-b01370eab72b
+    m_toNodeId: ed502a93-3c0b-47a1-8b96-f69ee51f4e6c
+    m_toNodeConnectionPoiontId: a78eada1-e418-479d-a263-2f96ff035582
+    m_label: +
+  m_lastModified: 131775854614947990
+  m_version: 2
+  m_graphDescription: '<size=16>Test: </size>
+
+
+    Test: node get input and produce groups per file, compare with pre-generated result.
+
+    Final State: Graph should produce no error.'
+  m_useAsAssetPostprocessor: 0
+  m_graphExecOrderPriority: 0

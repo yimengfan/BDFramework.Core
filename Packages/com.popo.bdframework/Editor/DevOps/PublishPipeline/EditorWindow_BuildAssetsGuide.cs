@@ -9,6 +9,7 @@ using AssetBundleEditorToolsV2 = BDFramework.Editor.AssetBundle.AssetBundleEdito
 #if ODIN_INSPECTOR
 using Sirenix.Utilities.Editor;
 #endif
+
 namespace BDFramework.Editor.PublishPipeline
 {
     /// <summary>
@@ -17,29 +18,28 @@ namespace BDFramework.Editor.PublishPipeline
     public class EditorWindow_BuildAssetsGuide : EditorWindow
 
     {
-        [MenuItem("BDFrameWork工具箱/【Publish Pipeline】", false, (int)BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildAsset)]
+        [MenuItem("BDFrameWork工具箱/【Publish Pipeline】", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildAsset)]
         static void NULL()
         {
-            
         }
-        
+
         [MenuItem("BDFrameWork工具箱/1.资源一键构建", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildAsset)]
         public static void Open()
         {
-            var window =  EditorWindow.GetWindow<EditorWindow_BuildAssetsGuide>( false, "一键构建资源");
+            var window = EditorWindow.GetWindow<EditorWindow_BuildAssetsGuide>(false, "一键构建资源");
 
             window.Show();
             window.Focus();
         }
-        
-        private EditorWindow_Table          editorTable;
+
+        private EditorWindow_Table editorTable;
         private EditorWindow_ScriptBuildDll editorScript;
         private EditorWindow_GenAssetBundle editorAsset;
 
         public void Show()
         {
-            this.editorTable  = new EditorWindow_Table();
-            this.editorAsset  = new EditorWindow_GenAssetBundle();
+            this.editorTable = new EditorWindow_Table();
+            this.editorAsset = new EditorWindow_GenAssetBundle();
             this.editorScript = new EditorWindow_ScriptBuildDll();
 
             this.minSize = this.maxSize = new Vector2(1100, 800);
@@ -50,12 +50,10 @@ namespace BDFramework.Editor.PublishPipeline
         {
             GUILayout.BeginHorizontal();
             {
-                
 #if !ODIN_INSPECTOR
-                
                 GUILayout.Label("缺少Odin!");
 #endif
-                
+
 #if ODIN_INSPECTOR
                 if (editorScript != null)
                 {
@@ -88,7 +86,7 @@ namespace BDFramework.Editor.PublishPipeline
             GUILayout.EndHorizontal();
 
             Layout_DrawLineH(Color.white);
-            
+
             GUILayout.BeginHorizontal();
             OnGUI_OneKeyExprot();
             GUILayout.EndHorizontal();
@@ -101,12 +99,11 @@ namespace BDFramework.Editor.PublishPipeline
             BDEditorApplication.BDFrameWorkFrameEditorSetting.Save();
         }
 
-        public  string exportPath         = "";
-        private bool   isGenIOSAssets     = false;
-        private bool   isGenAndroidAssets = true;
-
+        public string exportPath = "";
+        private bool isGenIOSAssets = false;
+        private bool isGenAndroidAssets = true;
         private bool isBuilding = false;
-
+        
         /// <summary>
         /// 一键导出
         /// </summary>
@@ -117,7 +114,7 @@ namespace BDFramework.Editor.PublishPipeline
                 GUILayout.Label("注:上面按钮操作,会默认生成到DevOps", GUILayout.Width(500), GUILayout.Height(30));
                 //isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
                 isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源(Windows共用)");
-                isGenIOSAssets     = GUILayout.Toggle(isGenIOSAssets, "生成Ios资源");
+                isGenIOSAssets = GUILayout.Toggle(isGenIOSAssets, "生成Ios资源");
 
                 //
                 GUILayout.Label("导出地址:" + exportPath, GUILayout.Width(500));
@@ -170,8 +167,6 @@ namespace BDFramework.Editor.PublishPipeline
         }
 
 
-
-
         /// <summary>
         /// 生成所有资源
         /// </summary>
@@ -186,22 +181,7 @@ namespace BDFramework.Editor.PublishPipeline
                 Directory.Delete(_outputPath, true);
             }
 
-            //1.打包资源
-            try
-            {
-                //1.搜集keywork
-                ShaderCollection.SimpleGenShaderVariant();
-                //2.打包模式
-                var config = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
-                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, config.IsUseHashName);
-
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
-            }
-
-            //2.编译脚本
+            //1.编译脚本
             try
             {
                 EditorWindow_ScriptBuildDll.RoslynBuild(outputPath, platform, ScriptBuildTools.BuildMode.Release);
@@ -211,10 +191,21 @@ namespace BDFramework.Editor.PublishPipeline
                 Debug.LogError(e.Message);
             }
 
-            //3.打包表格
+            //2.打包表格
             try
             {
                 Excel2SQLiteTools.AllExcel2SQLite(outputPath, platform);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
+
+            //3.打包资源
+            try
+            {
+                var config = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
+                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, config.IsUseHashName);
             }
             catch (Exception e)
             {

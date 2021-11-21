@@ -1,0 +1,120 @@
+using UnityEngine;
+using UnityEditor;
+
+using System;
+using System.IO;
+using System.Collections.Generic;
+using UnityEditor.Experimental.AssetImporters;
+
+using UnityEngine.AssetGraph;
+using Model=UnityEngine.AssetGraph.DataModel.Version2;
+
+/* 
+ * Instructions:
+ * To make AssetImporterConfigurator work, you need to do following:
+ * 1. Add your ScriptedImporter to project.
+ * 2. Add "SettingTemplate" folder somewhere in your project and add default
+ *      setting template asset for your ScriptedImporter type.
+ * 3. Configure CustomAssetImporterConfigurator to reflect 1 & 2.
+ * - Change "XYZImporter" to type of ScriptedImporter you want to support.
+ * - Change "XYZ" to GUI name of this asset type. (i.e "Animation Clip", "Material")
+ * - Change "setting.xyz" to setting file name this importer uses.
+ */ 
+[Serializable] 
+[CustomAssetImporterConfigurator(typeof(XYZImporter), "XYZ", "setting.xyz")]
+public class MyImportSettingsConfigurator : IAssetImporterConfigurator
+{
+    public void Initialize (ConfigurationOption option)
+    {
+    }
+
+    public bool IsModified (AssetImporter referenceImporter, AssetImporter importer, BuildTarget target, string group)
+    {
+        var r = referenceImporter as XYZImporter;
+        var t = importer as XYZImporter;
+        if (r == null || t == null) {
+            throw new AssetGraphException (string.Format ("Invalid AssetImporter assigned for {0}", importer.assetPath));
+        }
+        return !IsEqual (t, r);
+    }
+
+    public void Configure (AssetImporter referenceImporter, AssetImporter importer, BuildTarget target, string group)
+    {
+        var r = referenceImporter as XYZImporter;
+        var t = importer as XYZImporter;
+        if (r == null || t == null) {
+            throw new AssetGraphException (string.Format ("Invalid AssetImporter assigned for {0}", importer.assetPath));
+        }
+        OverwriteImportSettings (t, r);
+    }
+
+    public void OnInspectorGUI (AssetImporter referenceImporter, BuildTargetGroup target, Action onValueChanged)
+    {
+    }
+
+    private void OverwriteImportSettings (XYZImporter target, XYZImporter reference)
+    {
+        target.userData = reference.userData;
+    }
+
+    private bool IsEqual (XYZImporter target, XYZImporter reference)
+    {
+        if (target.userData != reference.userData) {
+            return false;
+        }
+
+        return true;
+    }
+}
+/*
+
+/**
+	ScriptedImporter Sample code
+	IMPORTANT:
+	XYZObject class must be placed in "XYZObject.cs" file to be properly serialized. 
+*/
+
+public class XYZObject : ScriptableObject {
+
+    [SerializeField] public List<List<string>> list;
+
+    public void Init() {
+        if (list == null) {
+            list = new List<List<string>> ();
+        }
+    }
+
+    public void Add(List<string> values) {
+        list.Add (values);
+    }
+
+    void OnEnable() {
+        Init ();
+    }
+}
+
+[ScriptedImporter(1, "xyz")]
+public class XYZImporter : ScriptedImporter
+{
+    static readonly char[] lineSplitter = new char[] { '\r', '\n' };
+    static readonly char[] valueSplitte = new char[] { ',', '\t'};
+
+    public override void OnImportAsset(AssetImportContext ctx)
+    {
+        var xyzobj = ScriptableObject.CreateInstance<XYZObject> ();
+        xyzobj.Init ();
+
+        var text = File.ReadAllText (ctx.assetPath);
+
+        var lines = text.Split(lineSplitter);
+
+        foreach (var line in lines) {
+            var values = line.Split (valueSplitte);
+            var l = new List<string> ();
+            l.AddRange (values);
+            xyzobj.Add (l);
+        }
+
+        ctx.SetMainObject (xyzobj);
+    }
+}

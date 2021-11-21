@@ -119,7 +119,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 continue;
             }
 
-            var typeName    = AssetBundleLoader.AssetConfigLoder.AssetTypeList[assetdata.AssetType];
+            var typeName    = AssetBundleLoader.AssetConfigLoder.AssetTypes.AssetTypeList[assetdata.AssetType];
             var runtimePath = assetdata.LoadPath;
             //加载
             //Debug.Log("【LoadTest】:" + runtimePath);

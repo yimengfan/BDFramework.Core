@@ -17,11 +17,10 @@
       }
     },
     "com.unity.assetgraph": {
-      "version": "1.7.2-preview",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.cn"
+      "version": "file:AssetGraph-1.7-release",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",

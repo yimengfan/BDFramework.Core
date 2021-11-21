@@ -41,9 +41,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// 打包Assetbundle的参数
         /// </summary>
         static public BuildAssetBundleParams BuildParams { get; set; }
-
-        private NodeGUI selfNode;
-
+        
         /// <summary>
         /// 设置Params
         /// </summary>
@@ -52,6 +50,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         public void SetBuildParams(string outpath, bool isUseHash)
         {
             BuildParams = new BuildAssetBundleParams() {OutputPath = outpath, IsUseHashName = isUseHash,};
+            this.isGenBuildInfo = false;
         }
 
 
@@ -84,11 +83,12 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
-            this.selfNode = node;
+            //this.selfNode = node;
         }
 
         #endregion
 
+        private bool isGenBuildInfo = false;
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             StopwatchTools.Begin();
@@ -103,8 +103,13 @@ namespace BDFramework.Editor.AssetGraph.Node
             //搜集runtime资源
             var allRuntimeAssetList = this.LoadAllRuntimeAssets();
             //生成buildinfo
-            BuildInfo = this.GenBuildInfo(target, allRuntimeAssetList);
-
+            if (!isGenBuildInfo) //防止GUI每次调用prepare时候都触发,真正打包时候 会重新构建
+            {
+                Debug.Log("------------>生成BuildInfo");
+                BuildInfo = this.GenBuildInfo(target, allRuntimeAssetList);
+                isGenBuildInfo = true;
+            }
+            
             //生成所有资源
             AllfileHashMap = new Dictionary<string, string>();
             DependenciesMap = new Dictionary<string, List<string>>();
@@ -115,9 +120,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             foreach (var assetDataItem in BuildInfo.AssetDataMaps)
             {
                 var assetdata = assetDataItem.Value;
-
-                var ret = runtimeDirects.Find((rd) => assetdata.ABName.StartsWith(rd, StringComparison.OrdinalIgnoreCase));
                 //不包含在runtime资源里面
+                var ret = allRuntimeAssetList.Find((ra) => ra.importFrom.Equals(assetDataItem.Key,StringComparison.OrdinalIgnoreCase));
                 if (ret == null)
                 {
                     var arf = AssetReference.CreateReference(assetDataItem.Key);
@@ -127,9 +131,20 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             StopwatchTools.End("【初始化框架资源环境】");
             //
-            if (BuildInfo.AssetDataMaps.Count != allRuntimeAssetList.Count + dependAssetList.Count)
+            var count = allRuntimeAssetList.Count + dependAssetList.Count;
+            if (BuildInfo.AssetDataMaps.Count != count)
             {
-                Debug.LogErrorFormat("【初始化框架资源环境】buildinfo:{0} output:{1}", BuildInfo.AssetDataMaps.Count, allRuntimeAssetList.Count + dependAssetList.Count);
+                Debug.LogErrorFormat("【初始化框架资源环境】buildinfo:{0} output:{1}", BuildInfo.AssetDataMaps.Count, count);
+                var map = JsonMapper.ToObject<Dictionary<string, BuildInfo.BuildAssetData>>(JsonMapper.ToJson(BuildInfo.AssetDataMaps));
+                foreach (var ra in allRuntimeAssetList)
+                {
+                    map.Remove(ra.importFrom);
+                }
+                foreach (var drf in dependAssetList)
+                {
+                    map.Remove(drf.importFrom);
+                }
+                Debug.Log(JsonMapper.ToJson(map,true));
             }
 
             //输出
@@ -160,6 +175,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             var assetPathList = new List<string>();
             var assetList = new List<AssetReference>();
             Stopwatch sw = new Stopwatch();
+            sw.Start();
             foreach (var runtimePath in allRuntimeDirects)
             {
                 //创建
@@ -187,7 +203,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 assetList.Add(outAR);
             }
 
-            Debug.LogFormat("创建asset reference耗时:{0}ms", sw.ElapsedMilliseconds);
+            Debug.LogFormat("LoadAllRuntimeAssets耗时:{0}ms", sw.ElapsedMilliseconds);
             return assetList;
         }
 
@@ -201,6 +217,8 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         public BuildInfo GenBuildInfo(BuildTarget target, List<AssetReference> runtimeAssetList)
         {
+            var sw = new Stopwatch();
+            sw.Start();
             var buildInfo = new BuildInfo();
             buildInfo.Time = DateTime.Now.ToShortDateString();
             int id = 0;
@@ -255,7 +273,15 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //保存AssetTypeConfig
             var asetTypePath = string.Format("{0}/{1}/{2}", BuildParams.OutputPath, BDApplication.GetPlatformPath(target), BResources.ASSET_TYPE_PATH);
-            var csv = CsvSerializer.SerializeToString(AssetTypeList);
+
+
+            //数据结构保存
+            AssetTypes at = new AssetTypes()
+            {
+                AssetTypeList = AssetTypeList,
+            };
+            var csv = CsvSerializer.SerializeToString(at);
+
             FileHelper.WriteAllText(asetTypePath, csv);
             Debug.LogFormat("AssetType写入到:{0} \n{1}" , asetTypePath,csv);
 
@@ -269,7 +295,6 @@ namespace BDFramework.Editor.AssetGraph.Node
                 //依赖中不包含自己
                 asset.Value.DependAssetList.Remove(asset.Value.ABName);
             }
-
             //检查
             foreach (var ar in runtimeAssetList)
             {
@@ -278,8 +303,8 @@ namespace BDFramework.Editor.AssetGraph.Node
                     Debug.LogError("AssetDataMaps遗漏资源:" + ar.importFrom);
                 }
             }
-
-
+            
+            Debug.LogFormat("【GenBuildInfo】耗时:{0}ms.", sw.ElapsedMilliseconds);
             return buildInfo;
         }
 
@@ -420,6 +445,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         #endregion
 
+     //   override 
 
         /// <summary>
         /// 刷新节点值

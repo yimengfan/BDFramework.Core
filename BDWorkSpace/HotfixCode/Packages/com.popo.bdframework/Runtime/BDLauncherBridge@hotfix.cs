@@ -25,14 +25,13 @@ public class BDLauncherBridge
     /// <param name="mainProjectTypes">游戏逻辑域传过来的所有type</param>
     static public void Start(Type[] mainProjectTypes = null, Type[] hotfixTypes = null)
     {
-        //获取DLL ALLtype
+        //Editor模式 或者非热更
         if (hotfixTypes == null)
         {
-            if (Application.isEditor)
-            {
-                hotfixTypes = mainProjectTypes;
-            }
+            hotfixTypes = mainProjectTypes;
         }
+
+      
 
 
         //UI组件类型注册
@@ -44,6 +43,7 @@ public class BDLauncherBridge
         {
             types = types.Distinct().ToList();
         }
+
 
         var uitype = typeof(UIBehaviour);
         foreach (var type in types)
@@ -64,6 +64,7 @@ public class BDLauncherBridge
             }
         }
 
+      
         //管理器列表
         var mgrList = new List<IMgr>();
         foreach (var type in hotfixTypes)
@@ -92,6 +93,7 @@ public class BDLauncherBridge
             }
         }
 
+      
         //遍历type执行逻辑
         foreach (var type in hotfixTypes)
         {
@@ -108,7 +110,7 @@ public class BDLauncherBridge
             }
         }
 
-
+      
         //管理器初始化
         foreach (var m in mgrList)
         {
@@ -131,6 +133,5 @@ public class BDLauncherBridge
         {
             m.Start();
         }
-        
     }
 }

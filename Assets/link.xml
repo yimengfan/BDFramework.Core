@@ -1,0 +1,4 @@
+<linker>
+  <assembly fullname="BDFramework.Core" preserve="all"/>
+  <assembly fullname="ServiceStack.Text" preserve="all"/>
+</linker>

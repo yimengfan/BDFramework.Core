@@ -1,0 +1,64 @@
+using UnityEngine;
+using UnityEditor;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using UnityEngine.AssetGraph;
+
+[CustomPrefabBuilder("MyPrefabBuilder")]
+public class MyPrefabBuilder : IPrefabBuilder
+{
+
+	[SerializeField] private Vector3 m_size;
+	
+    public void OnValidate () {
+    }
+
+	/**
+		 * Test if prefab can be created with incoming assets.
+		 * @result Name of prefab file if prefab can be created. null if not.
+		 */
+	public bool CanCreatePrefab (string groupKey, List<UnityEngine.Object> objects, ref PrefabCreateDescription description) {
+
+		var pMat = objects.Find(o => o.GetType() == typeof(PhysicMaterial));
+
+		if(pMat != null) {
+			description.prefabName = $"MyPrefab{groupKey}";
+		}
+
+		return pMat != null;
+	}
+
+	/**
+	 * Create Prefab.
+	 */ 
+	public GameObject CreatePrefab (string groupKey, List<UnityEngine.Object> objects, GameObject previous) {
+
+		var pMat = (PhysicMaterial)objects.Find(o => o.GetType() == typeof(PhysicMaterial));
+
+		var go = new GameObject($"MyPrefab{groupKey}");
+
+		var c = go.AddComponent<BoxCollider>();
+
+		c.size = m_size;
+		c.material = pMat;
+
+		return go;
+	}
+
+	/**
+	 * Draw Inspector GUI for this PrefabBuilder.
+	 */ 
+	public void OnInspectorGUI (Action onValueChanged) {
+
+		EditorGUILayout.HelpBox("This is the inspector of your custom PrefabBuilder. You can customize by implementing OnInspectorGUI().", MessageType.Info);
+
+		var newValue = EditorGUILayout.Vector3Field("Size", m_size);
+		if(newValue != m_size) {
+			m_size = newValue;
+			onValueChanged();
+		}
+	}
+}

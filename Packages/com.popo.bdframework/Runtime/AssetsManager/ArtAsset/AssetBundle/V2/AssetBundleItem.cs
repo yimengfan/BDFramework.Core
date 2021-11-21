@@ -23,6 +23,7 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public AssetBundleItem()
         {
+            
         }
 
         /// <summary>

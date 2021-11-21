@@ -19,6 +19,10 @@ namespace BDFramework.Editor.AssetGraph.Node
     {
         public BuildInfo              BuildInfo   { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
+        public void Reset()
+        {
+            
+        }
 
 
         /// <summary>

@@ -1,0 +1,19 @@
+{
+    "name": "Unity.AssetGraph.EditorTests",
+    "references": [
+        "Unity.AssetGraph.Editor",
+        "Unity.AssetGraph"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
