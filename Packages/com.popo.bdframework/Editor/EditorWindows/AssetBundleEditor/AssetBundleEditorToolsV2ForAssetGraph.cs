@@ -64,7 +64,6 @@ namespace BDFramework.Editor.AssetBundle
                     envParams.Reset();
                 }
             }
-
             //执行
             AssetGraphUtility.ExecuteGraph(buildTarget, cg);
         }

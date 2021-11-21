@@ -43,7 +43,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 异步回调表
         /// </summary>
-        private List<LoaderTaskGroup> allTaskGroupList = new List<LoaderTaskGroup>();
+        private List<AsyncLoadTaskGroup> asyncTaskGroupList = new List<AsyncLoadTaskGroup>();
 
         /// <summary>
         /// 全局唯一的依赖
@@ -89,29 +89,32 @@ namespace BDFramework.ResourceMgr.V2
                 case RuntimePlatform.WindowsPlayer:
                 {
                     firstArtDirectory = firstArtDirectory.Replace("\\", "/");
-                    secArtDirectory   = secArtDirectory.Replace("\\", "/");
+                    secArtDirectory = secArtDirectory.Replace("\\", "/");
                 }
                     break;
             }
 
             //加载Config
             var assetconfigPath = "";
-            var assetTypePath   = "";
+            var assetTypePath = "";
 
             this.AssetConfigLoder = new AssetbundleConfigLoder();
             if (Application.isEditor)
             {
                 assetconfigPath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_CONFIG_PATH);
-                assetTypePath   = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_TYPE_PATH);
+                assetTypePath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_TYPE_PATH);
             }
             else
             {
                 //真机环境config在persistent，跟dll和db保持一致
                 assetconfigPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_CONFIG_PATH);
-                assetTypePath   = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_TYPE_PATH);
+                assetTypePath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_TYPE_PATH);
             }
 
             this.AssetConfigLoder.Load(assetconfigPath, assetTypePath);
+            //开始异步任务刷新
+            IEnumeratorTool.StartCoroutine(this.IE_AsyncTaskListUpdte());
+            //BDebug.Log("【AssetBundleV2】初始化成功,资源总量:" + this.AssetConfigLoder.AssetbundleItemList.Count);
         }
 
 
@@ -175,8 +178,8 @@ namespace BDFramework.ResourceMgr.V2
 
             if (ab != null)
             {
-                var    assetNames = ab.GetAllAssetNames();
-                string relname    = "";
+                var assetNames = ab.GetAllAssetNames();
+                string relname = "";
                 if (assetNames.Length == 1)
                 {
                     relname = assetNames[0];
@@ -209,7 +212,6 @@ namespace BDFramework.ResourceMgr.V2
                 assetName = ZString.Format(DEBUG_RUNTIME, assetName);
             }
 
-
             List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
             //获取依赖
             var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssetsByName<T>(assetName);
@@ -226,16 +228,16 @@ namespace BDFramework.ResourceMgr.V2
                 var mainTask = new LoaderTaskData(assetBundleItem.AssetBundlePath, typeof(Object), true);
                 taskQueue.Add(mainTask);
                 //添加任务组
-                var taskGroup = new LoaderTaskGroup(this, assetName, assetBundleItem, taskQueue, (p, obj) =>
+                var taskGroup = new AsyncLoadTaskGroup(this, assetName, assetBundleItem, taskQueue, (p, obj) =>
                 {
+                    BDebug.Log("【AssetbundleV2】完成异步加载:" + assetName);
                     //完成回调
                     callback(obj as T);
                 });
                 taskGroup.Id = this.taskIDCounter++;
-                AddTaskGroup(taskGroup);
-
+                AddAsyncTaskGroup(taskGroup);
                 //开始任务
-                DoNextTask();
+                // DoNextTask();
                 return taskGroup.Id;
             }
             else
@@ -256,31 +258,28 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns>taskid</returns>
         public List<int> AsyncLoad(List<string> assetNameList, Action<int, int> onLoadProcess, Action<IDictionary<string, Object>> onLoadComplete)
         {
-            var taskIdList   = new List<int>();
-            int taskCounter  = 0;
+            var taskIdList = new List<int>();
+            int taskCounter = 0;
             var loadAssetMap = new Dictionary<string, Object>();
             assetNameList = assetNameList.Distinct().ToList(); //去重
-            int total = assetNameList.Count;
-            //source
+            int totalNum = assetNameList.Count;
+            //依次添加异步任务
             foreach (var assetName in assetNameList)
             {
                 var taskid = AsyncLoad<Object>(assetName, (o) =>
                 {
                     loadAssetMap[assetName] = o;
                     //进度回调
-                    onLoadProcess?.Invoke(loadAssetMap.Count, total);
+                    onLoadProcess?.Invoke(loadAssetMap.Count, totalNum);
                     //完成回调
-                    if (loadAssetMap.Count == total)
+                    if (loadAssetMap.Count == totalNum)
                     {
                         onLoadComplete?.Invoke(loadAssetMap);
                     }
                 });
-
                 taskIdList.Add(taskid);
             }
 
-            //开始任务
-            DoNextTask();
             //
             return taskIdList;
         }
@@ -290,9 +289,9 @@ namespace BDFramework.ResourceMgr.V2
         /// 添加一个任务组
         /// </summary>
         /// <param name="taskGroup"></param>
-        public void AddTaskGroup(LoaderTaskGroup taskGroup)
+        public void AddAsyncTaskGroup(AsyncLoadTaskGroup taskGroup)
         {
-            this.allTaskGroupList.Add(taskGroup);
+            this.asyncTaskGroupList.Add(taskGroup);
         }
 
         /// <summary>
@@ -360,7 +359,7 @@ namespace BDFramework.ResourceMgr.V2
             //
             if (!AssetbundleMap.TryGetValue(assetPath, out abw))
             {
-                abw                       = new AssetBundleWapper(ab);
+                abw = new AssetBundleWapper(ab);
                 AssetbundleMap[assetPath] = abw;
             }
 
@@ -400,14 +399,13 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         private Object LoadFormAssetBundle(string assetName, AssetBundleItem item, Type t)
         {
-            Object            o   = null;
+            Object o = null;
             AssetBundleWapper abr = null;
             if (AssetbundleMap.TryGetValue(item.AssetBundlePath, out abr))
             {
                 //var assetType = this.assetConfigLoder.AssetTypeList[item.AssetType];
 
                 //优先处理图集
-                //TODO 这里需要优化成int或者枚举判断，效率更高
                 if (item.AssetType == this.AssetConfigLoder.TYPE_SPRITE_ATLAS)
                 {
                     o = abr.LoadTextureFormAtlas(assetName);
@@ -456,12 +454,12 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="taskid"></param>
         public void LoadCancel(int taskid)
         {
-            foreach (var tg in allTaskGroupList)
+            foreach (var tg in asyncTaskGroupList)
             {
                 if (tg.Id == taskid)
                 {
-                    tg.Stop();
-                    allTaskGroupList.Remove(tg);
+                    tg.Cancel();
+                    asyncTaskGroupList.Remove(tg);
                     break;
                 }
             }
@@ -473,12 +471,12 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public void LoadAllCancel()
         {
-            foreach (var tg in allTaskGroupList)
+            foreach (var tg in asyncTaskGroupList)
             {
-                tg.Stop();
+                tg.Cancel();
             }
 
-            this.allTaskGroupList.Clear();
+            this.asyncTaskGroupList.Clear();
         }
 
         /// <summary>
@@ -490,7 +488,7 @@ namespace BDFramework.ResourceMgr.V2
         public string[] GetAssets(string floder, string searchPattern = null)
         {
             List<string> rets = new List<string>();
-            string       str;
+            string str;
 
             str = ZString.Concat(floder, "/");
             if (!this.AssetConfigLoder.IsHashName)
@@ -549,43 +547,43 @@ namespace BDFramework.ResourceMgr.V2
 #if UNITY_EDITOR
             var (abd, list) = this.AssetConfigLoder.GetDependAssetsByName(BResources.ALL_SHADER_VARAINT_RUNTIME_PATH);
             this.AssetbundleMap.TryGetValue(abd.AssetBundlePath, out var ab);
-            Debug.Log("Shaders:\n" + JsonMapper.ToJson(ab.AssetBundle.GetAllAssetNames(),true));
+            Debug.Log("Shaders:\n" + JsonMapper.ToJson(ab.AssetBundle.GetAllAssetNames(), true));
 #endif
         }
 
         #endregion
 
-        #region 核心任务驱动
+        #region 异步任务检测
 
         /// <summary>
         /// 当前执行的任务组
         /// </summary>
-        private LoaderTaskGroup curDoTask = null;
+        private AsyncLoadTaskGroup curDoTask = null;
 
         /// <summary>
         /// 核心功能,所有任务靠这个推进度
         /// 执行下个任务
         /// </summary>
-        void DoNextTask()
+        IEnumerator IE_AsyncTaskListUpdte()
         {
-            if (this.allTaskGroupList.Count == 0)
+            while (true)
             {
-                return;
-            }
-
-            //当前任务组执行完毕，执行下一个
-            if ((curDoTask == null || curDoTask.IsComplete) && this.allTaskGroupList.Count > 0)
-            {
-                curDoTask = this.allTaskGroupList[0];
-                this.allTaskGroupList.RemoveAt(0);
-                //开始task
-                curDoTask.DoNextTask();
-                //注册完成回调
-                curDoTask.OnAllTaskCompleteCallback += (a, b) =>
+                //当前任务组执行完毕，执行下一个
+                if (curDoTask == null || curDoTask.IsComplete)
                 {
-                    //
-                    DoNextTask();
-                };
+                    if (this.asyncTaskGroupList.Count > 0)
+                    {
+                        //开始新任务
+                        curDoTask = this.asyncTaskGroupList[0];
+                        this.asyncTaskGroupList.RemoveAt(0);
+                        BDebug.Log("【AssetbundleV2】开始执行异步加载：" + curDoTask.MainAssetName);
+                        //开始task
+                        curDoTask.Do();
+                    }
+                }
+                
+               // BDebug.Log("【Assetbundlev2】检测 剩余任务:" + this.asyncTaskGroupList.Count + "   " + curDoTask.MainAssetName);
+                yield return null;
             }
         }
 
@@ -612,8 +610,8 @@ namespace BDFramework.ResourceMgr.V2
             //卸载
             for (int i = 0; i < dependAssetList.Count; i++)
             {
-                var               assetPath = dependAssetList[i];
-                AssetBundleWapper abw       = null;
+                var assetPath = dependAssetList[i];
+                AssetBundleWapper abw = null;
 
                 if (AssetbundleMap.TryGetValue(assetPath, out abw))
                 {

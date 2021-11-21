@@ -6,6 +6,7 @@ using BDFramework.DataListener;
 using UnityEngine;
 using BDFramework.Mgr;
 using BDFramework.UFlux.WindowStatus;
+using LitJson;
 
 
 namespace BDFramework.UFlux
@@ -37,9 +38,9 @@ namespace BDFramework.UFlux
         {
             //初始化
             windowMap = new Dictionary<int, IWindow>();
-            Bottom    = GameObject.Find("UIRoot/Bottom").transform;
-            Center    = GameObject.Find("UIRoot/Center").transform;
-            Top       = GameObject.Find("UIRoot/Top").transform;
+            Bottom = GameObject.Find("UIRoot/Bottom").transform;
+            Center = GameObject.Find("UIRoot/Center").transform;
+            Top = GameObject.Find("UIRoot/Top").transform;
         }
 
         /// <summary>
@@ -57,16 +58,13 @@ namespace BDFramework.UFlux
             }
 
             //根据attribute创建窗口
-            var attr   = classData.Attribute as UIAttribute;
-            var window = Activator.CreateInstance(classData.Type, new object[] { attr.ResourcePath }) as IWindow;
+            var attr = classData.Attribute as UIAttribute;
+            var window = Activator.CreateInstance(classData.Type, new object[] {attr.ResourcePath}) as IWindow;
             //设置DI
             SetWindowDI(window);
 
             //添加窗口关闭消息
-            window.State.AddListener<OnWindowClose>((o) =>
-            {
-                this.OnWindowClose(uiIdx, window);
-            });
+            window.State.AddListener<OnWindowClose>((o) => { this.OnWindowClose(uiIdx, window); });
 
             return window;
         }
@@ -83,7 +81,7 @@ namespace BDFramework.UFlux
 
             if (windowMap.ContainsKey(index))
             {
-                var win    = windowMap[index] as IComponent;
+                var win = windowMap[index] as IComponent;
                 var winCom = win as IComponent;
                 if (winCom.IsLoad)
                 {
@@ -158,14 +156,15 @@ namespace BDFramework.UFlux
         /// 异步加载窗口
         /// Todo 这里list<enum>  ilr解释下会报错，所以用list int传参
         /// </summary>
-        /// <param name="indexes"></param>
+        /// <param name="idxs"></param>
         /// <param name="loadProcessAction"></param>
-        public void AsyncLoadWindows(List<int> indexes, Action<int, int> loadProcessAction)
+        public void AsyncLoadWindows(List<int> idxs, Action<int, int> loadProcessAction)
         {
+            BDebug.Log("异步加载窗口:" + JsonMapper.ToJson(idxs));
             //
-            int allCount     = indexes.Count;
+            int totalWindowsNum = idxs.Count;
             int curTaskCount = 0;
-            foreach (var index in indexes)
+            foreach (var index in idxs)
             {
                 if (windowMap.ContainsKey(index))
                 {
@@ -175,7 +174,7 @@ namespace BDFramework.UFlux
                         Debug.LogError("已经加载过并未卸载" + index);
                         //任务直接完成
                         curTaskCount++;
-                        loadProcessAction(allCount, curTaskCount);
+                        loadProcessAction(totalWindowsNum, curTaskCount);
                     }
                 }
                 else
@@ -186,7 +185,7 @@ namespace BDFramework.UFlux
                     {
                         Debug.LogErrorFormat("不存在UI:{0}", index);
                         curTaskCount++;
-                        loadProcessAction(allCount, curTaskCount);
+                        loadProcessAction(totalWindowsNum, curTaskCount);
                     }
                     else
                     {
@@ -205,14 +204,12 @@ namespace BDFramework.UFlux
                             //推送缓存的数据
                             PushCaheData(index);
                             //回调
-                            loadProcessAction?.Invoke(allCount, curTaskCount);
+                            loadProcessAction?.Invoke(totalWindowsNum, curTaskCount);
                         });
                     }
                 }
             }
         }
-
-
 
 
         /// <summary>
@@ -291,7 +288,7 @@ namespace BDFramework.UFlux
         {
             if (windowMap.ContainsKey(uiIdx))
             {
-                var win    = windowMap[uiIdx];
+                var win = windowMap[uiIdx];
                 var winCom = win as IComponent;
 
                 if (!winCom.IsOpen && winCom.IsLoad)
@@ -349,7 +346,7 @@ namespace BDFramework.UFlux
         {
             if (windowMap.ContainsKey(uiIdx))
             {
-                var win    = windowMap[uiIdx];
+                var win = windowMap[uiIdx];
                 var winCom = win as IComponent;
                 if (winCom.IsOpen && winCom.IsLoad)
                 {
@@ -390,7 +387,7 @@ namespace BDFramework.UFlux
             if (curForwardBackUI != uiIdex)
             {
                 curForwardBackUIIdx = HistoryList.Count - 1;
-                curForwardBackUI    = HistoryList[curForwardBackUIIdx];
+                curForwardBackUI = HistoryList[curForwardBackUIIdx];
             }
 
             if (curForwardBackUIIdx < HistoryList.Count - 1)
@@ -415,7 +412,7 @@ namespace BDFramework.UFlux
             if (curForwardBackUI != uiIdex)
             {
                 curForwardBackUIIdx = HistoryList.Count - 1;
-                curForwardBackUI    = HistoryList[curForwardBackUIIdx];
+                curForwardBackUI = HistoryList[curForwardBackUIIdx];
             }
 
             if (curForwardBackUIIdx > 0)
@@ -452,6 +449,7 @@ namespace BDFramework.UFlux
             {
                 HistoryList.RemoveAt(0);
             }
+
             //保证不会有重复列表
             HistoryList.Remove(uiIdx);
             HistoryList.Add(uiIdx);
@@ -468,8 +466,8 @@ namespace BDFramework.UFlux
                 bool isCheckFocus = false;
                 for (int i = HistoryList.Count - 1; i >= 0; i--)
                 {
-                    var idx    = HistoryList[i];
-                    var win    = this.windowMap[idx];
+                    var idx = HistoryList[i];
+                    var win = this.windowMap[idx];
                     var winCom = win as IComponent;
                     //判断栈顶是否有关闭的,有则继续搜索第一个打开的执行focus，
                     if (!winCom.IsOpen)
@@ -527,7 +525,7 @@ namespace BDFramework.UFlux
         /// <param name="uiMsg"></param>
         public void SendMessage(Enum index, UIMsgData uiMsg)
         {
-            var     uiIndex = index.GetHashCode();
+            var uiIndex = index.GetHashCode();
             IWindow win;
             if (windowMap.TryGetValue(uiIndex, out win))
             {
@@ -541,7 +539,7 @@ namespace BDFramework.UFlux
             //
             if (list == null)
             {
-                list                    = new List<UIMsgData>();
+                list = new List<UIMsgData>();
                 uiDataCacheMap[uiIndex] = list;
             }
 
@@ -559,8 +557,8 @@ namespace BDFramework.UFlux
         /// <returns></returns>
         public IWindow GetWindow(Enum uiIndex)
         {
-            var     index = uiIndex.GetHashCode();
-            IWindow win   = null;
+            var index = uiIndex.GetHashCode();
+            IWindow win = null;
             this.windowMap.TryGetValue(index, out win);
             return win;
         }

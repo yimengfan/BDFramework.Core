@@ -1,5 +1,4 @@
 using UnityEditor;
-
 using System;
 using System.IO;
 using System.Linq;
@@ -20,105 +19,111 @@ namespace UnityEngine.AssetGraph
 
             static readonly float kPasteOffset = 20.0f;
 
-            public SavedSelection (SavedSelection s)
+            public SavedSelection(SavedSelection s)
             {
-                nodes = new List<NodeGUI> (s.nodes);
-                connections = new List<ConnectionGUI> (s.connections);
+                nodes = new List<NodeGUI>(s.nodes);
+                connections = new List<ConnectionGUI>(s.connections);
             }
 
-            public SavedSelection ()
+            public SavedSelection()
             {
-                nodes = new List<NodeGUI> ();
-                connections = new List<ConnectionGUI> ();
+                nodes = new List<NodeGUI>();
+                connections = new List<ConnectionGUI>();
             }
 
-            public SavedSelection (IEnumerable<NodeGUI> n, IEnumerable<ConnectionGUI> c)
+            public SavedSelection(IEnumerable<NodeGUI> n, IEnumerable<ConnectionGUI> c)
             {
-                nodes = new List<NodeGUI> (n);
-                connections = new List<ConnectionGUI> (c);
+                nodes = new List<NodeGUI>(n);
+                connections = new List<ConnectionGUI>(c);
             }
 
-            public bool IsSelected {
-                get {
-                    return (nodes.Count + connections.Count) > 0;
-                }
+            public bool IsSelected
+            {
+                get { return (nodes.Count + connections.Count) > 0; }
             }
 
-            public float PasteOffset {
-                get {
-                    return m_pasteOffset;
-                }
+            public float PasteOffset
+            {
+                get { return m_pasteOffset; }
             }
 
-            public void IncrementPasteOffset ()
+            public void IncrementPasteOffset()
             {
                 m_pasteOffset += kPasteOffset;
             }
 
-            public void Add (NodeGUI n)
+            public void Add(NodeGUI n)
             {
-                nodes.Add (n);
+                nodes.Add(n);
             }
 
-            public void Add (ConnectionGUI c)
+            public void Add(ConnectionGUI c)
             {
-                connections.Add (c);
+                connections.Add(c);
             }
 
-            public void AddRange (IEnumerable<NodeGUI> n)
+            public void AddRange(IEnumerable<NodeGUI> n)
             {
-                nodes.AddRange (n);
+                nodes.AddRange(n);
             }
 
-            public void AddRange (IEnumerable<ConnectionGUI> c)
+            public void AddRange(IEnumerable<ConnectionGUI> c)
             {
-                connections.AddRange (c);
+                connections.AddRange(c);
             }
 
 
-            public void Remove (NodeGUI n)
+            public void Remove(NodeGUI n)
             {
-                nodes.Remove (n);
+                nodes.Remove(n);
             }
 
-            public void Remove (ConnectionGUI c)
+            public void Remove(ConnectionGUI c)
             {
-                connections.Remove (c);
+                connections.Remove(c);
             }
 
-            public void Toggle (NodeGUI n)
+            public void Toggle(NodeGUI n)
             {
-                if (nodes.Contains (n)) {
-                    nodes.Remove (n);
-                } else {
-                    nodes.Add (n);
+                if (nodes.Contains(n))
+                {
+                    nodes.Remove(n);
+                }
+                else
+                {
+                    nodes.Add(n);
                 }
             }
 
-            public void Toggle (ConnectionGUI c)
+            public void Toggle(ConnectionGUI c)
             {
-                if (connections.Contains (c)) {
-                    connections.Remove (c);
-                } else {
-                    connections.Add (c);
+                if (connections.Contains(c))
+                {
+                    connections.Remove(c);
+                }
+                else
+                {
+                    connections.Add(c);
                 }
             }
 
-            public void Clear (bool deactivate = false)
+            public void Clear(bool deactivate = false)
             {
-
-                if (deactivate) {
-                    foreach (var n in nodes) {
-                        n.SetActive (false);
+                if (deactivate)
+                {
+                    foreach (var n in nodes)
+                    {
+                        n.SetActive(false);
                     }
 
-                    foreach (var c in connections) {
-                        c.SetActive (false);
+                    foreach (var c in connections)
+                    {
+                        c.SetActive(false);
                     }
                 }
 
-                nodes.Clear ();
-                connections.Clear ();
+                nodes.Clear();
+                connections.Clear();
             }
         }
 
@@ -128,7 +133,7 @@ namespace UnityEngine.AssetGraph
             public readonly float x;
             public readonly float y;
 
-            public SelectPoint (Vector2 position)
+            public SelectPoint(Vector2 position)
             {
                 this.x = position.x;
                 this.y = position.y;
@@ -142,55 +147,68 @@ namespace UnityEngine.AssetGraph
             private int m_nNodes;
             private int m_nConnections;
 
-            public UndoUtility ()
+            public UndoUtility()
             {
-                m_objects = new List<UnityEngine.Object> ();
+                m_objects = new List<UnityEngine.Object>();
                 m_nNodes = 0;
                 m_nConnections = 0;
             }
 
-            public void Clear ()
+            public void Clear()
             {
-                m_objects.Clear ();
+                m_objects.Clear();
                 m_nNodes = 0;
                 m_nConnections = 0;
                 m_cachedUndoObjects = null;
             }
 
-            public void RecordUndo (AssetGraphEditorWindow w, List<NodeGUI> n, List<ConnectionGUI> c, string msg)
+            public void RecordUndo(AssetGraphEditorWindow w, List<NodeGUI> n, List<ConnectionGUI> c, string msg)
             {
                 if (m_cachedUndoObjects == null ||
-                m_nNodes != (n == null ? 0 : n.Count) ||
-                m_nConnections != (c == null ? 0 : c.Count) ||
-                ArrayUtility.Contains (m_cachedUndoObjects, null)) {
-                    UpdateUndoCacheObject (w, n, c);
+                    m_nNodes != (n == null ? 0 : n.Count) ||
+                    m_nConnections != (c == null ? 0 : c.Count) ||
+                    ArrayUtility.Contains(m_cachedUndoObjects, null))
+                {
+                    UpdateUndoCacheObject(w, n, c);
                 }
-                if (m_cachedUndoObjects != null) {
-                    Undo.RecordObjects (m_cachedUndoObjects, msg);
+
+                if (m_cachedUndoObjects != null)
+                {
+                    Undo.RecordObjects(m_cachedUndoObjects, msg);
                 }
             }
 
-            private void UpdateUndoCacheObject (AssetGraphEditorWindow w, List<NodeGUI> nodes, List<ConnectionGUI> conns)
+            private void UpdateUndoCacheObject(AssetGraphEditorWindow w, List<NodeGUI> nodes, List<ConnectionGUI> conns)
             {
-                m_objects.Clear ();
-                if (w != null) {
-                    m_objects.Add (w);
+                m_objects.Clear();
+                if (w != null)
+                {
+                    m_objects.Add(w);
                 }
-                if (nodes != null) {
-                    foreach (var v in nodes) {
-                        if (v != null) {
-                            m_objects.Add (v);
+
+                if (nodes != null)
+                {
+                    foreach (var v in nodes)
+                    {
+                        if (v != null)
+                        {
+                            m_objects.Add(v);
                         }
                     }
                 }
-                if (conns != null) {
-                    foreach (var v in conns) {
-                        if (v != null) {
-                            m_objects.Add (v);
+
+                if (conns != null)
+                {
+                    foreach (var v in conns)
+                    {
+                        if (v != null)
+                        {
+                            m_objects.Add(v);
                         }
                     }
                 }
-                m_cachedUndoObjects = m_objects.ToArray ();
+
+                m_cachedUndoObjects = m_objects.ToArray();
                 m_nNodes = (nodes == null ? 0 : nodes.Count);
                 m_nConnections = (conns == null ? 0 : conns.Count);
             }
@@ -216,8 +234,8 @@ namespace UnityEngine.AssetGraph
             SCRIPT_IMPORTSETTINGSCONFIGURATOR
         }
 
-        [SerializeField] private List<NodeGUI> m_nodes = new List<NodeGUI> ();
-        [SerializeField] private List<ConnectionGUI> m_connections = new List<ConnectionGUI> ();
+        [SerializeField] private List<NodeGUI> m_nodes = new List<NodeGUI>();
+        [SerializeField] private List<ConnectionGUI> m_connections = new List<ConnectionGUI>();
         [SerializeField] private string m_graphAssetPath;
         [SerializeField] private string m_graphAssetName;
 
@@ -231,13 +249,13 @@ namespace UnityEngine.AssetGraph
         private NodeEvent m_currentEventSource;
         private ModifyMode m_modifyMode;
         private Vector2 m_spacerRectRightBottom;
-        private Vector2 m_scrollPos = new Vector2 (1500, 0);
-        private Vector2 m_errorScrollPos = new Vector2 (0, 0);
-        private Rect m_graphRegion = new Rect ();
+        private Vector2 m_scrollPos = new Vector2(1500, 0);
+        private Vector2 m_errorScrollPos = new Vector2(0, 0);
+        private Rect m_graphRegion = new Rect();
         private SelectPoint m_selectStartMousePosition;
         private Texture2D m_selectionTex;
 
-        private GraphBackground m_background = new GraphBackground ();
+        private GraphBackground m_background = new GraphBackground();
         private GUIStyle m_descriptionStyle;
         private Texture2D m_miniInfoIcon;
         private Texture2D m_miniErrorIcon;
@@ -248,18 +266,22 @@ namespace UnityEngine.AssetGraph
 
         private Vector2 m_LastMousePosition;
         private Vector2 m_DragNodeDistance;
-        private Dictionary<NodeGUI, Vector2> m_initialDragNodePositions = new Dictionary<NodeGUI, Vector2> ();
+        private Dictionary<NodeGUI, Vector2> m_initialDragNodePositions = new Dictionary<NodeGUI, Vector2>();
 
         private UndoUtility m_undo;
 
         private static readonly string kPREFKEY_LASTEDITEDGRAPH = "AssetGraph.LastEditedGraph";
-        static readonly int kDragNodesControlID = "AssetGraph.HandleDragNodes".GetHashCode ();
+        static readonly int kDragNodesControlID = "AssetGraph.HandleDragNodes".GetHashCode();
 
-        private bool IsAnyIssueFound {
-            get {
-                if (m_controller == null) {
+        private bool IsAnyIssueFound
+        {
+            get
+            {
+                if (m_controller == null)
+                {
                     return true;
                 }
+
                 return m_controller.IsAnyIssueFound;
             }
         }
@@ -268,237 +290,249 @@ namespace UnityEngine.AssetGraph
 		 * An alternative way to get Window, becuase
 		 * GetWindow<AssetGraphEditorWindow>() forces window to be active and present
 		 */
-        private static AssetGraphEditorWindow Window {
-            get {
-                AssetGraphEditorWindow[] windows = Resources.FindObjectsOfTypeAll<AssetGraphEditorWindow> ();
-                if (windows.Length > 0) {
-                    return windows [0];
+        private static AssetGraphEditorWindow Window
+        {
+            get
+            {
+                AssetGraphEditorWindow[] windows = Resources.FindObjectsOfTypeAll<AssetGraphEditorWindow>();
+                if (windows.Length > 0)
+                {
+                    return windows[0];
                 }
 
                 return null;
             }
         }
 
-        public static void GenerateScript (ScriptType scriptType)
+        public static void GenerateScript(ScriptType scriptType)
         {
             var destinationBasePath = Model.Settings.Path.UserSpacePath;
 
             var sourceFileName = string.Empty;
             var destinationFileName = string.Empty;
 
-            switch (scriptType) {
-            case ScriptType.SCRIPT_MODIFIER:
+            switch (scriptType)
+            {
+                case ScriptType.SCRIPT_MODIFIER:
                 {
-                    sourceFileName = FileUtility.PathCombine (Model.Settings.Path.ScriptTemplatePath, "MyModifier.cs.template");
+                    sourceFileName = FileUtility.PathCombine(Model.Settings.Path.ScriptTemplatePath, "MyModifier.cs.template");
                     destinationFileName = "MyModifier{0}{1}";
                     break;
                 }
-            case ScriptType.SCRIPT_PREFABBUILDER:
+                case ScriptType.SCRIPT_PREFABBUILDER:
                 {
-                    sourceFileName = FileUtility.PathCombine (Model.Settings.Path.ScriptTemplatePath, "MyPrefabBuilder.cs.template");
+                    sourceFileName = FileUtility.PathCombine(Model.Settings.Path.ScriptTemplatePath, "MyPrefabBuilder.cs.template");
                     destinationFileName = "MyPrefabBuilder{0}{1}";
                     break;
                 }
-            case ScriptType.SCRIPT_POSTPROCESS:
+                case ScriptType.SCRIPT_POSTPROCESS:
                 {
-                    sourceFileName = FileUtility.PathCombine (Model.Settings.Path.ScriptTemplatePath, "MyPostprocess.cs.template");
+                    sourceFileName = FileUtility.PathCombine(Model.Settings.Path.ScriptTemplatePath, "MyPostprocess.cs.template");
                     destinationFileName = "MyPostprocess{0}{1}";
                     break;
                 }
-            case ScriptType.SCRIPT_FILTER:
+                case ScriptType.SCRIPT_FILTER:
                 {
-                    sourceFileName = FileUtility.PathCombine (Model.Settings.Path.ScriptTemplatePath, "MyFilter.cs.template");
+                    sourceFileName = FileUtility.PathCombine(Model.Settings.Path.ScriptTemplatePath, "MyFilter.cs.template");
                     destinationFileName = "MyFilter{0}{1}";
                     break;
                 }
-            case ScriptType.SCRIPT_NODE:
+                case ScriptType.SCRIPT_NODE:
                 {
-                    sourceFileName = FileUtility.PathCombine (Model.Settings.Path.ScriptTemplatePath, "MyNode.cs.template");
+                    sourceFileName = FileUtility.PathCombine(Model.Settings.Path.ScriptTemplatePath, "MyNode.cs.template");
                     destinationFileName = "MyNode{0}{1}";
                     break;
                 }
-            case ScriptType.SCRIPT_ASSETGENERATOR:
+                case ScriptType.SCRIPT_ASSETGENERATOR:
                 {
-                    sourceFileName = FileUtility.PathCombine (Model.Settings.Path.ScriptTemplatePath, "MyGenerator.cs.template");
+                    sourceFileName = FileUtility.PathCombine(Model.Settings.Path.ScriptTemplatePath, "MyGenerator.cs.template");
                     destinationFileName = "MyGenerator{0}{1}";
                     break;
                 }
-            case ScriptType.SCRIPT_IMPORTSETTINGSCONFIGURATOR:
+                case ScriptType.SCRIPT_IMPORTSETTINGSCONFIGURATOR:
                 {
-                    sourceFileName = FileUtility.PathCombine (Model.Settings.Path.ScriptTemplatePath, "MyImportSettingsConfigurator.cs.template");
+                    sourceFileName = FileUtility.PathCombine(Model.Settings.Path.ScriptTemplatePath, "MyImportSettingsConfigurator.cs.template");
                     destinationFileName = "MyImportSettingsConfigurator{0}{1}";
                     break;
                 }
-            default:
+                default:
                 {
-                    LogUtility.Logger.LogError (LogUtility.kTag, "Unknown script type found:" + scriptType);
+                    LogUtility.Logger.LogError(LogUtility.kTag, "Unknown script type found:" + scriptType);
                     break;
                 }
             }
 
-            if (string.IsNullOrEmpty (sourceFileName) || string.IsNullOrEmpty (destinationFileName)) {
+            if (string.IsNullOrEmpty(sourceFileName) || string.IsNullOrEmpty(destinationFileName))
+            {
                 return;
             }
 
-            var destinationPath = FileUtility.PathCombine (destinationBasePath, string.Format (destinationFileName, "", ".cs"));
+            var destinationPath = FileUtility.PathCombine(destinationBasePath, string.Format(destinationFileName, "", ".cs"));
             int count = 0;
-            while (File.Exists (destinationPath)) {
-                destinationPath = FileUtility.PathCombine (destinationBasePath, string.Format (destinationFileName, ++count, ".cs"));
+            while (File.Exists(destinationPath))
+            {
+                destinationPath = FileUtility.PathCombine(destinationBasePath, string.Format(destinationFileName, ++count, ".cs"));
             }
 
-            FileUtility.CopyTemplateFile (sourceFileName, destinationPath, string.Format (destinationFileName, "", ""), string.Format (destinationFileName, count == 0 ? "" : count.ToString (), ""));
+            FileUtility.CopyTemplateFile(sourceFileName, destinationPath, string.Format(destinationFileName, "", ""), string.Format(destinationFileName, count == 0 ? "" : count.ToString(), ""));
 
-            AssetDatabase.Refresh ();
+            AssetDatabase.Refresh();
 
             //Highlight in ProjectView
-            MonoScript s = AssetDatabase.LoadAssetAtPath<MonoScript> (destinationPath);
-            UnityEngine.Assertions.Assert.IsNotNull (s);
-            EditorGUIUtility.PingObject (s);
+            MonoScript s = AssetDatabase.LoadAssetAtPath<MonoScript>(destinationPath);
+            UnityEngine.Assertions.Assert.IsNotNull(s);
+            EditorGUIUtility.PingObject(s);
         }
 
         /*
 			menu items
 		*/
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_GENERATE_FILTER, priority = 14500)]
-        public static void GenerateCustomFilter ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_GENERATE_FILTER, priority = 14500)]
+        public static void GenerateCustomFilter()
         {
-            GenerateScript (ScriptType.SCRIPT_FILTER);
+            GenerateScript(ScriptType.SCRIPT_FILTER);
         }
 
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_GENERATE_MODIFIER, priority = 14500)]
-        public static void GenerateModifier ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_GENERATE_MODIFIER, priority = 14500)]
+        public static void GenerateModifier()
         {
-            GenerateScript (ScriptType.SCRIPT_MODIFIER);
+            GenerateScript(ScriptType.SCRIPT_MODIFIER);
         }
 
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_GENERATE_PREFABBUILDER, priority = 14500)]
-        public static void GeneratePrefabBuilder ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_GENERATE_PREFABBUILDER, priority = 14500)]
+        public static void GeneratePrefabBuilder()
         {
-            GenerateScript (ScriptType.SCRIPT_PREFABBUILDER);
+            GenerateScript(ScriptType.SCRIPT_PREFABBUILDER);
         }
 
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_GENERATE_POSTPROCESS, priority = 14500)]
-        public static void GeneratePostprocess ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_GENERATE_POSTPROCESS, priority = 14500)]
+        public static void GeneratePostprocess()
         {
-            GenerateScript (ScriptType.SCRIPT_POSTPROCESS);
+            GenerateScript(ScriptType.SCRIPT_POSTPROCESS);
         }
 
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_GENERATE_NODE, priority = 14500)]
-        public static void GenerateCustomNode ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_GENERATE_NODE, priority = 14500)]
+        public static void GenerateCustomNode()
         {
-            GenerateScript (ScriptType.SCRIPT_NODE);
+            GenerateScript(ScriptType.SCRIPT_NODE);
         }
 
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_GENERATE_ASSETGENERATOR, priority = 14500)]
-        public static void GenerateAssetGenerator ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_GENERATE_ASSETGENERATOR, priority = 14500)]
+        public static void GenerateAssetGenerator()
         {
-            GenerateScript (ScriptType.SCRIPT_ASSETGENERATOR);
+            GenerateScript(ScriptType.SCRIPT_ASSETGENERATOR);
         }
 
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_GENERATE_IMPORTSETTINGSCONFIGURATOR, priority = 14500)]
-        public static void GenerateImportSettingsConfigurator ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_GENERATE_IMPORTSETTINGSCONFIGURATOR, priority = 14500)]
+        public static void GenerateImportSettingsConfigurator()
         {
-            GenerateScript (ScriptType.SCRIPT_IMPORTSETTINGSCONFIGURATOR);
+            GenerateScript(ScriptType.SCRIPT_IMPORTSETTINGSCONFIGURATOR);
         }
 
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_OPEN, priority = 14000)]
-        public static void Open ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_OPEN, priority = 14000)]
+        public static void Open()
         {
-            GetWindow<AssetGraphEditorWindow> ();
+            GetWindow<AssetGraphEditorWindow>();
         }
 
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_DELETE_CACHE, priority = 14500)]
-        public static void DeleteCache ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_DELETE_CACHE, priority = 14500)]
+        public static void DeleteCache()
         {
-            FileUtility.RemakeDirectory (Model.Settings.Path.CachePath);
+            FileUtility.RemakeDirectory(Model.Settings.Path.CachePath);
 
-            AssetDatabase.Refresh ();
+            AssetDatabase.Refresh();
         }
 
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_CLEANUP_SAVEDSETTINGS, priority = 14500)]
-        public static void CleanupSavedSettings ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_CLEANUP_SAVEDSETTINGS, priority = 14500)]
+        public static void CleanupSavedSettings()
         {
-
-            if (!Directory.Exists (Model.Settings.Path.SavedSettingsPath)) {
+            if (!Directory.Exists(Model.Settings.Path.SavedSettingsPath))
+            {
                 return;
             }
 
-            var guids = AssetDatabase.FindAssets (Model.Settings.GRAPH_SEARCH_CONDITION);
+            var guids = AssetDatabase.FindAssets(Model.Settings.GRAPH_SEARCH_CONDITION);
 
-            var validNodeIds = new List<string> ();
+            var validNodeIds = new List<string>();
 
-            foreach (var guid in guids) {
-                var graphPath = AssetDatabase.GUIDToAssetPath (guid);
-                var graph = AssetDatabase.LoadAssetAtPath<Model.ConfigGraph> (graphPath);
-                validNodeIds.AddRange (graph.Nodes.Select (n => n.Id));
+            foreach (var guid in guids)
+            {
+                var graphPath = AssetDatabase.GUIDToAssetPath(guid);
+                var graph = AssetDatabase.LoadAssetAtPath<Model.ConfigGraph>(graphPath);
+                validNodeIds.AddRange(graph.Nodes.Select(n => n.Id));
             }
 
-            var saveSettingRoots = Directory.GetDirectories (Model.Settings.Path.SavedSettingsPath);
-            foreach (var dir in saveSettingRoots) {
-                var nodeSettings = Directory.GetDirectories (dir);
+            var saveSettingRoots = Directory.GetDirectories(Model.Settings.Path.SavedSettingsPath);
+            foreach (var dir in saveSettingRoots)
+            {
+                var nodeSettings = Directory.GetDirectories(dir);
 
-                foreach (var nodeSettingPath in nodeSettings) {
-                    var dirName = Path.GetFileName (nodeSettingPath);
+                foreach (var nodeSettingPath in nodeSettings)
+                {
+                    var dirName = Path.GetFileName(nodeSettingPath);
 
-                    if (!validNodeIds.Contains (dirName)) {
-                        FileUtility.DeleteDirectory (nodeSettingPath, true);
+                    if (!validNodeIds.Contains(dirName))
+                    {
+                        FileUtility.DeleteDirectory(nodeSettingPath, true);
                     }
                 }
             }
 
-            AssetDatabase.Refresh ();
+            AssetDatabase.Refresh();
         }
 
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_BUILD, true, priority = 14000 + 101)]
-        public static bool BuildFromMenuValidator ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_BUILD, true, priority = 14000 + 101)]
+        public static bool BuildFromMenuValidator()
         {
             // Calling GetWindow<>() will force open window
             // That's not what we want to do in validator function,
             // so just reference s_currentController directly
             var w = Window;
-            if (w == null) {
+            if (w == null)
+            {
                 return false;
             }
+
             return !w.IsAnyIssueFound;
         }
 
-        [MenuItem (Model.Settings.GUI_TEXT_MENU_BUILD, priority = 14000 + 101)]
-        public static void BuildFromMenu ()
+        [MenuItem(Model.Settings.GUI_TEXT_MENU_BUILD, priority = 14000 + 101)]
+        public static void BuildFromMenu()
         {
-            var window = GetWindow<AssetGraphEditorWindow> ();
-            window.SaveGraph ();
-            window.Run ();
+            var window = GetWindow<AssetGraphEditorWindow>();
+            window.SaveGraph();
+            window.Run();
         }
 
 
-        public void OnFocus ()
+        public void OnFocus()
         {
             // update handlers. these static handlers are erase when window is full-screened and badk to normal window.
             m_modifyMode = ModifyMode.NONE;
             NodeGUIUtility.NodeEventHandler = HandleNodeEvent;
             ConnectionGUIUtility.ConnectionEventHandler = HandleConnectionEvent;
 
-            HandleSelectionChange ();
+            HandleSelectionChange();
         }
 
-        public void OnLostFocus ()
+        public void OnLostFocus()
         {
             m_modifyMode = ModifyMode.NONE;
         }
 
-        public void OnProjectChange ()
+        public void OnProjectChange()
         {
-            HandleSelectionChange ();
-            Repaint ();
+            HandleSelectionChange();
+            Repaint();
         }
 
-        public void OnSelectionChange ()
+        public void OnSelectionChange()
         {
-            HandleSelectionChange ();
-            Repaint ();
+            HandleSelectionChange();
+            Repaint();
         }
 
-        public void HandleSelectionChange ()
+        public void HandleSelectionChange()
         {
             Model.ConfigGraph selectedGraph = null;
 
@@ -507,218 +541,249 @@ namespace UnityEngine.AssetGraph
             //				controller = null;
             //			}
 
-            if (Selection.activeObject is Model.ConfigGraph && EditorUtility.IsPersistent (Selection.activeObject)) {
+            if (Selection.activeObject is Model.ConfigGraph && EditorUtility.IsPersistent(Selection.activeObject))
+            {
                 selectedGraph = Selection.activeObject as Model.ConfigGraph;
             }
 
-            if (selectedGraph != null && (m_controller == null || selectedGraph != m_controller.TargetGraph)) {
-                OpenGraph (selectedGraph);
+            if (selectedGraph != null && (m_controller == null || selectedGraph != m_controller.TargetGraph))
+            {
+                OpenGraph(selectedGraph);
             }
         }
 
-        public void SelectNode (string nodeId)
+        public void SelectNode(string nodeId)
         {
-            RecordUndo ("Select Node");
+            RecordUndo("Select Node");
 
-            if (m_activeSelection == null) {
-                m_activeSelection = new SavedSelection ();
+            if (m_activeSelection == null)
+            {
+                m_activeSelection = new SavedSelection();
             }
-            m_activeSelection.Clear ();
 
-            var selectObject = m_nodes.Find (node => node.Id == nodeId);
+            m_activeSelection.Clear();
 
-            foreach (var node in m_nodes) {
+            var selectObject = m_nodes.Find(node => node.Id == nodeId);
+
+            foreach (var node in m_nodes)
+            {
                 bool isActive = node == selectObject;
-                node.SetActive (isActive);
-                if (isActive) {
-                    m_activeSelection.Add (node);
+                node.SetActive(isActive);
+                if (isActive)
+                {
+                    m_activeSelection.Add(node);
                 }
             }
         }
 
-        private void Init ()
+        private void Init()
         {
             var windowIcon = (EditorGUIUtility.isProSkin) ? NodeGUIUtility.windowIconPro : NodeGUIUtility.windowIcon;
 
-            this.titleContent = new GUIContent ("AssetGraph", windowIcon);
-            this.minSize = new Vector2 (600f, 300f);
+            this.titleContent = new GUIContent("AssetGraph", windowIcon);
+            this.minSize = new Vector2(600f, 300f);
             this.wantsMouseMove = true;
 
-            m_undo = new UndoUtility ();
+            m_undo = new UndoUtility();
 
             m_showDescription = true;
-            m_miniInfoIcon = EditorGUIUtility.Load ("icons/console.infoicon.sml.png") as Texture2D;
-            m_miniErrorIcon = EditorGUIUtility.Load ("icons/console.erroricon.sml.png") as Texture2D;
-            m_refreshIcon = EditorGUIUtility.Load ((EditorGUIUtility.isProSkin) ? "icons/d_Refresh.png" : "icons/Refresh.png") as Texture2D;
+            m_miniInfoIcon = EditorGUIUtility.Load("icons/console.infoicon.sml.png") as Texture2D;
+            m_miniErrorIcon = EditorGUIUtility.Load("icons/console.erroricon.sml.png") as Texture2D;
+            m_refreshIcon = EditorGUIUtility.Load((EditorGUIUtility.isProSkin) ? "icons/d_Refresh.png" : "icons/Refresh.png") as Texture2D;
 
             m_target = EditorUserBuildSettings.activeBuildTarget;
 
             this.m_showVerboseLog = UserPreference.DefaultVerboseLog;
-            LogUtility.ShowVerboseLog (m_showVerboseLog);
+            LogUtility.ShowVerboseLog(m_showVerboseLog);
 
             Undo.undoRedoPerformed += OnUndoRedoPerformed;
-            EditorApplication.playModeStateChanged += (PlayModeStateChange s) => {
-                OnPlaymodeChanged (s);
-            };
+            EditorApplication.playModeStateChanged += (PlayModeStateChange s) => { OnPlaymodeChanged(s); };
 
             m_modifyMode = ModifyMode.NONE;
             NodeGUIUtility.NodeEventHandler = HandleNodeEvent;
             ConnectionGUIUtility.ConnectionEventHandler = HandleConnectionEvent;
 
-            string lastGraphAssetPath = EditorPrefs.GetString (kPREFKEY_LASTEDITEDGRAPH);
+            string lastGraphAssetPath = EditorPrefs.GetString(kPREFKEY_LASTEDITEDGRAPH);
 
-            if (!string.IsNullOrEmpty (lastGraphAssetPath)) {
-                var graph = AssetDatabase.LoadAssetAtPath<Model.ConfigGraph> (lastGraphAssetPath);
-                if (graph != null) {
-                    OpenGraph (graph);
+            if (!string.IsNullOrEmpty(lastGraphAssetPath))
+            {
+                var graph = AssetDatabase.LoadAssetAtPath<Model.ConfigGraph>(lastGraphAssetPath);
+                if (graph != null)
+                {
+                    OpenGraph(graph);
                 }
             }
         }
 
-        private void OnPlaymodeChanged (PlayModeStateChange s)
+        private void OnPlaymodeChanged(PlayModeStateChange s)
         {
-            if (m_controller != null && m_controller.TargetGraph != null) {
-                SaveGraph ();
+            if (m_controller != null && m_controller.TargetGraph != null)
+            {
+                SaveGraph();
             }
-            if (s == PlayModeStateChange.EnteredEditMode || s == PlayModeStateChange.EnteredPlayMode) {
-                CloseGraph ();
-                Init ();
-                Repaint ();
+
+            if (s == PlayModeStateChange.EnteredEditMode || s == PlayModeStateChange.EnteredPlayMode)
+            {
+                CloseGraph();
+                Init();
+                Repaint();
             }
         }
 
-        private void OnUndoRedoPerformed ()
+        private void OnUndoRedoPerformed()
         {
-
-            if (m_controller != null) {
-                if (string.IsNullOrEmpty (m_graphAssetPath)) {
-                    CloseGraph ();
-                } else {
-                    var graphPath = AssetDatabase.GetAssetPath (m_controller.TargetGraph);
+            if (m_controller != null)
+            {
+                if (string.IsNullOrEmpty(m_graphAssetPath))
+                {
+                    CloseGraph();
+                }
+                else
+                {
+                    var graphPath = AssetDatabase.GetAssetPath(m_controller.TargetGraph);
 
                     // if Undo/Redo changes target graph, m_controller needs recreating
-                    if (graphPath != m_graphAssetPath) {
-                        OpenGraph (m_graphAssetPath);
+                    if (graphPath != m_graphAssetPath)
+                    {
+                        OpenGraph(m_graphAssetPath);
                     }
 
-					// otherwise, each node need OnUndoObject event
-					else {
-                        foreach (var n in m_nodes) {
-                            if (n != null) {
-                                n.OnUndoObject (m_controller);
+                    // otherwise, each node need OnUndoObject event
+                    else
+                    {
+                        foreach (var n in m_nodes)
+                        {
+                            if (n != null)
+                            {
+                                n.OnUndoObject(m_controller);
                             }
                         }
                     }
                 }
             }
 
-            if (m_activeSelection == null) {
-                m_activeSelection = new SavedSelection ();
+            if (m_activeSelection == null)
+            {
+                m_activeSelection = new SavedSelection();
             }
-            UpdateActiveObjects (m_activeSelection);
 
-            m_initialDragNodePositions.Clear ();
+            UpdateActiveObjects(m_activeSelection);
 
-            Setup ();
-            Repaint ();
+            m_initialDragNodePositions.Clear();
+
+            Setup();
+            Repaint();
         }
 
-        private void ShowErrorOnNodes ()
+        private void ShowErrorOnNodes()
         {
-            foreach (var node in m_nodes) {
-                node.ResetErrorStatus ();
-                var errorsForeachNode = m_controller.Issues.Where (e => e.NodeId == node.Id).Select (e =>
-                    $"{e.Reason}\n{e.HowToFix}").ToList ();
-                if (errorsForeachNode.Any ()) {
-                    node.AppendErrorSources (errorsForeachNode);
+            foreach (var node in m_nodes)
+            {
+                node.ResetErrorStatus();
+                var errorsForeachNode = m_controller.Issues.Where(e => e.NodeId == node.Id).Select(e =>
+                    $"{e.Reason}\n{e.HowToFix}").ToList();
+                if (errorsForeachNode.Any())
+                {
+                    node.AppendErrorSources(errorsForeachNode);
                 }
             }
         }
 
-        private void SetGraphAssetPath (string newPath)
+        private void SetGraphAssetPath(string newPath)
         {
-            if (newPath == null) {
+            if (newPath == null)
+            {
                 m_graphAssetPath = null;
                 m_graphAssetName = null;
-            } else {
+            }
+            else
+            {
                 m_graphAssetPath = newPath;
-                m_graphAssetName = Path.GetFileNameWithoutExtension (m_graphAssetPath);
-                if (m_graphAssetName.Length > Model.Settings.GUI.TOOLBAR_GRAPHNAMEMENU_CHAR_LENGTH) {
-                    m_graphAssetName = m_graphAssetName.Substring (0, Model.Settings.GUI.TOOLBAR_GRAPHNAMEMENU_CHAR_LENGTH) + "...";
+                m_graphAssetName = Path.GetFileNameWithoutExtension(m_graphAssetPath);
+                if (m_graphAssetName.Length > Model.Settings.GUI.TOOLBAR_GRAPHNAMEMENU_CHAR_LENGTH)
+                {
+                    m_graphAssetName = m_graphAssetName.Substring(0, Model.Settings.GUI.TOOLBAR_GRAPHNAMEMENU_CHAR_LENGTH) + "...";
                 }
 
-                EditorPrefs.SetString (kPREFKEY_LASTEDITEDGRAPH, m_graphAssetPath);
+                EditorPrefs.SetString(kPREFKEY_LASTEDITEDGRAPH, m_graphAssetPath);
             }
         }
 
-        [UnityEditor.Callbacks.OnOpenAsset ()]
-        public static bool OnOpenAsset (int instanceID, int line)
+        [UnityEditor.Callbacks.OnOpenAsset()]
+        public static bool OnOpenAsset(int instanceID, int line)
         {
-            var graph = EditorUtility.InstanceIDToObject (instanceID) as Model.ConfigGraph;
-            if (graph != null) {
-                var window = GetWindow<AssetGraphEditorWindow> ();
-                window.OpenGraph (graph);
+            var graph = EditorUtility.InstanceIDToObject(instanceID) as Model.ConfigGraph;
+            if (graph != null)
+            {
+                var window = GetWindow<AssetGraphEditorWindow>();
+                window.OpenGraph(graph);
                 return true;
-            } 
+            }
+
             return false;
         }
 
-        public void OpenGraph (string path)
+        public void OpenGraph(string path)
         {
-            Model.ConfigGraph graph = AssetDatabase.LoadAssetAtPath<Model.ConfigGraph> (path);
-            if (graph == null) {
-                throw new AssetGraphException ("Could not open graph:" + path);
+            Model.ConfigGraph graph = AssetDatabase.LoadAssetAtPath<Model.ConfigGraph>(path);
+            if (graph == null)
+            {
+                throw new AssetGraphException("Could not open graph:" + path);
             }
-            OpenGraph (graph);
+
+            OpenGraph(graph);
         }
 
-        public void OpenGraph (Model.ConfigGraph graph)
+        public void OpenGraph(Model.ConfigGraph graph)
         {
-            if (m_controller != null && m_controller.TargetGraph == graph) {
+            if (m_controller != null && m_controller.TargetGraph == graph)
+            {
                 // do nothing
                 return;
             }
 
-            var graphName = Path.GetFileNameWithoutExtension (AssetDatabase.GetAssetPath (graph));
+            var graphName = Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(graph));
 
-            RecordUndo ("Open " + graphName);
+            RecordUndo("Open " + graphName);
 
-            CloseGraph ();
+            CloseGraph();
 
-            SetGraphAssetPath (AssetDatabase.GetAssetPath (graph));
+            SetGraphAssetPath(AssetDatabase.GetAssetPath(graph));
 
             m_modifyMode = ModifyMode.NONE;
 
-            m_scrollPos = new Vector2 (0, 0);
-            m_errorScrollPos = new Vector2 (0, 0);
+            m_scrollPos = new Vector2(0, 0);
+            m_errorScrollPos = new Vector2(0, 0);
 
             m_selectStartMousePosition = null;
             m_activeSelection = null;
             m_currentEventSource = null;
 
-            m_controller = new AssetGraphController (graph);
-            ConstructGraphGUI ();
+            m_controller = new AssetGraphController(graph);
+            ConstructGraphGUI();
             Stopwatch sw = new Stopwatch();
             //--------测试1---------
             sw.Start();
-            Setup ();
+            Setup();
             sw.Stop();
-            Debug.LogFormat("<color=red>打开SG->Setup耗时:{0}ms</color>",sw.ElapsedMilliseconds);
+            Debug.LogFormat("<color=red>打开SG->Setup耗时:{0}ms</color>", sw.ElapsedMilliseconds);
             //--------测试2---------
             sw.Restart();
-            if (m_nodes.Any ()) {
-                UpdateSpacerRect ();
+            if (m_nodes.Any())
+            {
+                UpdateSpacerRect();
             }
+
             sw.Stop();
-            Debug.LogFormat("<color=red>打开SG->Update耗时:{0}ms</color>",sw.ElapsedMilliseconds);
+            Debug.LogFormat("<color=red>打开SG->Update耗时:{0}ms</color>", sw.ElapsedMilliseconds);
             //设置
             Selection.activeObject = graph;
         }
 
-        private void CloseGraph ()
+        private void CloseGraph()
         {
             m_modifyMode = ModifyMode.NONE;
-            SetGraphAssetPath (null);
+            SetGraphAssetPath(null);
             m_controller = null;
             m_nodes = null;
             m_connections = null;
@@ -726,185 +791,209 @@ namespace UnityEngine.AssetGraph
             m_selectStartMousePosition = null;
             m_activeSelection = null;
             m_currentEventSource = null;
-
         }
 
-        private void CreateNewGraphFromDialog ()
+        private void CreateNewGraphFromDialog()
         {
             string path =
-                EditorUtility.SaveFilePanelInProject (
-                    "Create New Asset Graph", 
-                    "Asset Graph", "asset", 
+                EditorUtility.SaveFilePanelInProject(
+                    "Create New Asset Graph",
+                    "Asset Graph", "asset",
                     "Create a new asset graph:");
-            if (string.IsNullOrEmpty (path)) {
+            if (string.IsNullOrEmpty(path))
+            {
                 return;
             }
 
-            Model.ConfigGraph graph = Model.ConfigGraph.CreateNewGraph (path);
-            OpenGraph (graph);
+            Model.ConfigGraph graph = Model.ConfigGraph.CreateNewGraph(path);
+            OpenGraph(graph);
         }
 
-        private void CreateNewGraphFromImport ()
+        private void CreateNewGraphFromImport()
         {
             var path =
-                EditorUtility.OpenFilePanel (
-                    "Select previous version file", 
+                EditorUtility.OpenFilePanel(
+                    "Select previous version file",
                     "Assets", "");
-            if (string.IsNullOrEmpty (path)) {
+            if (string.IsNullOrEmpty(path))
+            {
                 return;
             }
 
-            var graph = Model.ConfigGraph.CreateNewGraphFromImport (path);
-            OpenGraph (graph);
+            var graph = Model.ConfigGraph.CreateNewGraphFromImport(path);
+            OpenGraph(graph);
         }
 
         /**
 		 * Get WindowId does not collide with other nodeGUIs
-		 */ 
-        private static int GetSafeWindowId (List<NodeGUI> nodeGUIs)
+		 */
+        private static int GetSafeWindowId(List<NodeGUI> nodeGUIs)
         {
             int id = -1;
 
-            foreach (var nodeGui in nodeGUIs) {
-                if (nodeGui.WindowId > id) {
+            foreach (var nodeGui in nodeGUIs)
+            {
+                if (nodeGui.WindowId > id)
+                {
                     id = nodeGui.WindowId;
                 }
             }
+
             return id + 1;
         }
 
         /**
 		 * Creates Graph structure with NodeGUI and ConnectionGUI from SaveData
-		 */ 
-        private void ConstructGraphGUI ()
+		 */
+        private void ConstructGraphGUI()
         {
-
             var activeGraph = m_controller.TargetGraph;
 
-            var currentNodes = new List<NodeGUI> ();
-            var currentConnections = new List<ConnectionGUI> ();
+            var currentNodes = new List<NodeGUI>();
+            var currentConnections = new List<ConnectionGUI>();
 
-            foreach (var node in activeGraph.Nodes) {
-                var newNodeGUI = NodeGUI.CreateNodeGUI (m_controller, node);
-                newNodeGUI.WindowId = GetSafeWindowId (currentNodes);
-                currentNodes.Add (newNodeGUI);
+            foreach (var node in activeGraph.Nodes)
+            {
+                var newNodeGUI = NodeGUI.CreateNodeGUI(m_controller, node);
+                newNodeGUI.WindowId = GetSafeWindowId(currentNodes);
+                currentNodes.Add(newNodeGUI);
             }
 
             // load connections
-            foreach (var c in activeGraph.Connections) {
-                var startNode = currentNodes.Find (node => node.Id == c.FromNodeId);
-                if (startNode == null) {
+            foreach (var c in activeGraph.Connections)
+            {
+                var startNode = currentNodes.Find(node => node.Id == c.FromNodeId);
+                if (startNode == null)
+                {
                     continue;
                 }
 
-                var endNode = currentNodes.Find (node => node.Id == c.ToNodeId);
-                if (endNode == null) {
+                var endNode = currentNodes.Find(node => node.Id == c.ToNodeId);
+                if (endNode == null)
+                {
                     continue;
                 }
-                var startPoint = startNode.Data.FindConnectionPoint (c.FromNodeConnectionPointId);
-                var endPoint = endNode.Data.FindConnectionPoint (c.ToNodeConnectionPointId);
 
-                currentConnections.Add (ConnectionGUI.LoadConnection (c, startPoint, endPoint));
+                var startPoint = startNode.Data.FindConnectionPoint(c.FromNodeConnectionPointId);
+                var endPoint = endNode.Data.FindConnectionPoint(c.ToNodeConnectionPointId);
+
+                currentConnections.Add(ConnectionGUI.LoadConnection(c, startPoint, endPoint));
             }
 
             m_nodes = currentNodes;
             m_connections = currentConnections;
         }
 
-        private void SaveGraph ()
+        private void SaveGraph()
         {
-            UnityEngine.Assertions.Assert.IsNotNull (m_controller);
-            m_controller.TargetGraph.ApplyGraph (m_nodes, m_connections);
+            UnityEngine.Assertions.Assert.IsNotNull(m_controller);
+            m_controller.TargetGraph.ApplyGraph(m_nodes, m_connections);
         }
 
         /**
 		 * Save Graph and update all nodes & connections
-		 */ 
-        private void Setup (bool forceVisitAll = false)
+		 */
+        private void Setup(bool forceVisitAll = false)
         {
-
-            EditorUtility.ClearProgressBar ();
-            if (m_controller == null) {
+            EditorUtility.ClearProgressBar();
+            if (m_controller == null)
+            {
                 return;
             }
 
-            try {
-                foreach (var node in m_nodes) {
-                    node.HideProgress ();
+            try
+            {
+                foreach (var node in m_nodes)
+                {
+                    node.HideProgress();
                 }
 
-                SaveGraph ();
+                SaveGraph();
 
                 // update static all node names.
-                NodeGUIUtility.allNodeNames = new List<string> (m_nodes.Select (node => node.Name).ToList ());
+                NodeGUIUtility.allNodeNames = new List<string>(m_nodes.Select(node => node.Name).ToList());
 
-                m_controller.Perform (m_target, false, false, forceVisitAll, null);
+                m_controller.Perform(m_target, false, false, forceVisitAll, null);
 
-                RefreshInspector (m_controller.StreamManager);
-                ShowErrorOnNodes ();
-            } catch (Exception e) {
-                LogUtility.Logger.LogError (LogUtility.kTag, e);
-            } finally {
-                EditorUtility.ClearProgressBar ();
+                RefreshInspector(m_controller.StreamManager);
+                ShowErrorOnNodes();
+            }
+            catch (Exception e)
+            {
+                LogUtility.Logger.LogError(LogUtility.kTag, e);
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
             }
         }
 
-        private void Validate (NodeGUI node)
+        private void Validate(NodeGUI node)
         {
-
-            EditorUtility.ClearProgressBar ();
-            if (m_controller == null) {
+            EditorUtility.ClearProgressBar();
+            if (m_controller == null)
+            {
                 return;
             }
 
-            try {
-                node.ResetErrorStatus ();
-                node.HideProgress ();
+            try
+            {
+                node.ResetErrorStatus();
+                node.HideProgress();
 
-                SaveGraph ();
+                SaveGraph();
 
-                m_controller.Validate (node, m_target);
+                m_controller.Validate(node, m_target);
 
-                RefreshInspector (m_controller.StreamManager);
-                ShowErrorOnNodes ();
-            } catch (Exception e) {
-                LogUtility.Logger.LogError (LogUtility.kTag, e);
-            } finally {
-                EditorUtility.ClearProgressBar ();
-                Repaint ();
+                RefreshInspector(m_controller.StreamManager);
+                ShowErrorOnNodes();
+            }
+            catch (Exception e)
+            {
+                LogUtility.Logger.LogError(LogUtility.kTag, e);
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
+                Repaint();
             }
         }
 
         /**
 		 * Execute the build.
 		 */
-        private void Run ()
+        private void Run()
         {
-
-            if (m_controller == null) {
+            if (m_controller == null)
+            {
                 return;
             }
 
-            try {
-                AssetDatabase.SaveAssets ();
-                AssetBundleBuildMap.GetBuildMap ().Clear ();
+            try
+            {
+                AssetDatabase.SaveAssets();
+                AssetBundleBuildMap.GetBuildMap().Clear();
 
-                if (UserPreference.ClearAssetLogOnBuild) {
-                    AssetProcessEventRecord.GetRecord ().Clear (false);
+                if (UserPreference.ClearAssetLogOnBuild)
+                {
+                    AssetProcessEventRecord.GetRecord().Clear(false);
                 }
 
                 float currentCount = 0f;
-                float totalCount = (float)m_controller.TargetGraph.Nodes.Count;
+                float totalCount = (float) m_controller.TargetGraph.Nodes.Count;
                 Model.NodeData lastNode = null;
 
-                Action<Model.NodeData, string, float> updateHandler = (node, message, progress) => {
-
-                    if (lastNode != node) {
+                Action<Model.NodeData, string, float> updateHandler = (node, message, progress) =>
+                {
+                    if (lastNode != node)
+                    {
                         // do not add count on first node visit to 
                         // calcurate percantage correctly
-                        if (lastNode != null) {
+                        if (lastNode != null)
+                        {
                             ++currentCount;
                         }
+
                         lastNode = node;
                     }
 
@@ -914,193 +1003,215 @@ namespace UnityEngine.AssetGraph
                     string title = $"Processing Asset Graph[{currentCount}/{totalCount}]";
                     string info = $"{node.Name}:{message}";
 
-                    EditorUtility.DisplayProgressBar (title, "Processing " + info, currentTotalProgress);
+                    EditorUtility.DisplayProgressBar(title, "Processing " + info, currentTotalProgress);
                 };
 
                 // perform setup. Fails if any exception raises.
-                m_controller.Perform (m_target, false, true, true, null);				 
+                m_controller.Perform(m_target, false, true, true, null);
 
                 // if there is not error reported, then run
-                if (!m_controller.IsAnyIssueFound) {
-                    m_controller.Perform (m_target, true, true, true, updateHandler);
+                if (!m_controller.IsAnyIssueFound)
+                {
+                    m_controller.Perform(m_target, true, true, true, updateHandler);
                 }
-                RefreshInspector (m_controller.StreamManager);
-                AssetDatabase.Refresh ();
 
-                ShowErrorOnNodes ();
-            } catch (Exception e) {
-                if (LogUtility.Logger != null) {
-                    LogUtility.Logger.LogError (LogUtility.kTag, e.ToString());
+                RefreshInspector(m_controller.StreamManager);
+                AssetDatabase.Refresh();
+
+                ShowErrorOnNodes();
+            }
+            catch (Exception e)
+            {
+                if (LogUtility.Logger != null)
+                {
+                    LogUtility.Logger.LogError(LogUtility.kTag, e.ToString());
                 }
-            } finally {
-                EditorUtility.ClearProgressBar ();
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
             }
         }
 
-        private static void RefreshInspector (AssetReferenceStreamManager streamManager)
+        private static void RefreshInspector(AssetReferenceStreamManager streamManager)
         {
-            if (Selection.activeObject == null) {
+            if (Selection.activeObject == null)
+            {
                 return;
             }
 
-            if (Selection.activeObject.GetType () == typeof(ConnectionGUI)) {
+            if (Selection.activeObject.GetType() == typeof(ConnectionGUI))
+            {
                 var con = Selection.activeObject as ConnectionGUI;
 
                 // null when multiple connection deleted.
-                if (string.IsNullOrEmpty (con.Id)) {
-                    return; 
-                }
-
-                con.AssetGroups = streamManager.FindAssetGroup (con.Id);
-            }
-        }
-
-        private void OnAssetsReimported (AssetPostprocessorContext ctx)
-        {
-            if (m_controller != null) {
-                m_controller.OnAssetsReimported (ctx);
-            }
-
-            if (!string.IsNullOrEmpty (m_graphAssetPath)) {
-                if (ctx.DeletedAssetPaths.Contains (m_graphAssetPath)) {
-                    CloseGraph ();
+                if (string.IsNullOrEmpty(con.Id))
+                {
                     return;
                 }
 
-                int moveIndex = Array.FindIndex (ctx.MovedFromAssetPaths, p => p == m_graphAssetPath);
-                if (moveIndex >= 0) {
-                    SetGraphAssetPath (ctx.MovedAssetPaths [moveIndex]);
+                con.AssetGroups = streamManager.FindAssetGroup(con.Id);
+            }
+        }
+
+        private void OnAssetsReimported(AssetPostprocessorContext ctx)
+        {
+            if (m_controller != null)
+            {
+                m_controller.OnAssetsReimported(ctx);
+            }
+
+            if (!string.IsNullOrEmpty(m_graphAssetPath))
+            {
+                if (ctx.DeletedAssetPaths.Contains(m_graphAssetPath))
+                {
+                    CloseGraph();
+                    return;
+                }
+
+                int moveIndex = Array.FindIndex(ctx.MovedFromAssetPaths, p => p == m_graphAssetPath);
+                if (moveIndex >= 0)
+                {
+                    SetGraphAssetPath(ctx.MovedAssetPaths[moveIndex]);
                 }
             }
         }
 
-        public static void NotifyAssetsReimportedToAllWindows (AssetPostprocessorContext ctx)
+        public static void NotifyAssetsReimportedToAllWindows(AssetPostprocessorContext ctx)
         {
             var w = Window;
-            if (w != null) {
-                w.OnAssetsReimported (ctx);
+            if (w != null)
+            {
+                w.OnAssetsReimported(ctx);
             }
         }
 
-        private void DrawGUIToolBar ()
+        private void DrawGUIToolBar()
         {
-            using (new EditorGUILayout.HorizontalScope (EditorStyles.toolbar)) {
+            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
+            {
+                if (GUILayout.Button(new GUIContent(m_graphAssetName, "Select graph"), EditorStyles.toolbarPopup, GUILayout.Width(Model.Settings.GUI.TOOLBAR_GRAPHNAMEMENU_WIDTH), GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT)))
+                {
+                    GenericMenu menu = new GenericMenu();
 
-                if (GUILayout.Button (new GUIContent (m_graphAssetName, "Select graph"), EditorStyles.toolbarPopup, GUILayout.Width (Model.Settings.GUI.TOOLBAR_GRAPHNAMEMENU_WIDTH), GUILayout.Height (Model.Settings.GUI.TOOLBAR_HEIGHT))) {
-                    GenericMenu menu = new GenericMenu ();
+                    var guids = AssetDatabase.FindAssets(Model.Settings.GRAPH_SEARCH_CONDITION);
+                    var nameList = new List<string>();
 
-                    var guids = AssetDatabase.FindAssets (Model.Settings.GRAPH_SEARCH_CONDITION);
-                    var nameList = new List<string> ();
-
-                    foreach (var guid in guids) {
-                        string path = AssetDatabase.GUIDToAssetPath (guid);
-                        string name = Path.GetFileNameWithoutExtension (path);
+                    foreach (var guid in guids)
+                    {
+                        string path = AssetDatabase.GUIDToAssetPath(guid);
+                        string name = Path.GetFileNameWithoutExtension(path);
 
                         // exclude graphs with hidden prefix
                         if (name.StartsWith(Model.Settings.HIDE_GRAPH_PREFIX))
                         {
                             continue;
                         }
-                        
+
                         // GenericMenu can't have multiple menu item with the same name
                         // Avoid name overlap
                         string menuName = name;
                         int i = 1;
-                        while (nameList.Contains (menuName)) {
+                        while (nameList.Contains(menuName))
+                        {
                             menuName = $"{name} ({i++})";
                         }
 
-                        menu.AddItem (new GUIContent (menuName), false, () => {
-                            if (path != m_graphAssetPath) {
-                                var graph = AssetDatabase.LoadAssetAtPath<Model.ConfigGraph> (path);
-                                OpenGraph (graph);
+                        menu.AddItem(new GUIContent(menuName), false, () =>
+                        {
+                            if (path != m_graphAssetPath)
+                            {
+                                var graph = AssetDatabase.LoadAssetAtPath<Model.ConfigGraph>(path);
+                                OpenGraph(graph);
                             }
                         });
-                        nameList.Add (menuName);
+                        nameList.Add(menuName);
                     }
 
-                    menu.AddSeparator ("");
-                    menu.AddItem (new GUIContent ("Create New..."), false, () => {
-                        CreateNewGraphFromDialog ();
-                    });
+                    menu.AddSeparator("");
+                    menu.AddItem(new GUIContent("Create New..."), false, () => { CreateNewGraphFromDialog(); });
 
-                    menu.AddSeparator ("");
-                    menu.AddItem (new GUIContent ("Import/Import JSON Graph to current graph..."), false, () => {
-                        var graph = JSONGraphUtility.ImportJSONToGraphFromDialog (m_controller.TargetGraph);
-                        if (graph != null) {
-                            OpenGraph (graph);
+                    menu.AddSeparator("");
+                    menu.AddItem(new GUIContent("Import/Import JSON Graph to current graph..."), false, () =>
+                    {
+                        var graph = JSONGraphUtility.ImportJSONToGraphFromDialog(m_controller.TargetGraph);
+                        if (graph != null)
+                        {
+                            OpenGraph(graph);
                         }
                     });
-                    menu.AddSeparator ("Import/");
-                    menu.AddItem (new GUIContent ("Import/Import JSON Graph and create new..."), false, () => {
-                        var graph = JSONGraphUtility.ImportJSONToGraphFromDialog (null);
-                        if (graph != null) {
-                            OpenGraph (graph);
+                    menu.AddSeparator("Import/");
+                    menu.AddItem(new GUIContent("Import/Import JSON Graph and create new..."), false, () =>
+                    {
+                        var graph = JSONGraphUtility.ImportJSONToGraphFromDialog(null);
+                        if (graph != null)
+                        {
+                            OpenGraph(graph);
                         }
                     });
-                    menu.AddItem (new GUIContent ("Import/Import JSON Graphs in folder..."), false, () => {
-                        JSONGraphUtility.ImportAllJSONInDirectoryToGraphFromDialog ();
-                    });
-                    menu.AddItem (new GUIContent ("Export/Export current graph to JSON..."), false, () => {
-                        JSONGraphUtility.ExportGraphToJSONFromDialog (m_controller.TargetGraph);
-                    });
-                    menu.AddItem (new GUIContent ("Export/Export all graphs to JSON..."), false, () => {
-                        JSONGraphUtility.ExportAllGraphsToJSONFromDialog ();
-                    });
+                    menu.AddItem(new GUIContent("Import/Import JSON Graphs in folder..."), false, () => { JSONGraphUtility.ImportAllJSONInDirectoryToGraphFromDialog(); });
+                    menu.AddItem(new GUIContent("Export/Export current graph to JSON..."), false, () => { JSONGraphUtility.ExportGraphToJSONFromDialog(m_controller.TargetGraph); });
+                    menu.AddItem(new GUIContent("Export/Export all graphs to JSON..."), false, () => { JSONGraphUtility.ExportAllGraphsToJSONFromDialog(); });
 
-                    menu.AddSeparator ("Import/");
-                    menu.AddItem (new GUIContent ("Import/Import previous version(>1.2)..."), false, CreateNewGraphFromImport);
+                    menu.AddSeparator("Import/");
+                    menu.AddItem(new GUIContent("Import/Import previous version(>1.2)..."), false, CreateNewGraphFromImport);
 
-                    menu.DropDown (new Rect (4f, 8f, 0f, 0f));
+                    menu.DropDown(new Rect(4f, 8f, 0f, 0f));
                 }
-                
-                if(GUILayout.Button(new GUIContent ("Edit", "Edit Graph Description"), EditorStyles.toolbarButton, GUILayout.Height (Model.Settings.GUI.TOOLBAR_HEIGHT)))
+
+                if (GUILayout.Button(new GUIContent("Edit", "Edit Graph Description"), EditorStyles.toolbarButton, GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT)))
                 {
                     Selection.activeObject = m_controller.TargetGraph;
                 }
 
-                GUILayout.Space (4);
+                GUILayout.Space(4);
 
-                if (GUILayout.Button (new GUIContent ("Refresh", m_refreshIcon, "Refresh graph status"), EditorStyles.toolbarButton, GUILayout.Width (80), GUILayout.Height (Model.Settings.GUI.TOOLBAR_HEIGHT))) {
-                    Setup ();
+                if (GUILayout.Button(new GUIContent("Refresh", m_refreshIcon, "Refresh graph status"), EditorStyles.toolbarButton, GUILayout.Width(80), GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT)))
+                {
+                    Setup();
                 }
-                GUILayout.Space (4);
 
-                m_showErrors = GUILayout.Toggle (m_showErrors, new GUIContent (m_miniErrorIcon, "Show errors"), EditorStyles.toolbarButton, GUILayout.Height (Model.Settings.GUI.TOOLBAR_HEIGHT));
-                m_showDescription = GUILayout.Toggle (m_showDescription, new GUIContent (m_miniInfoIcon, "Show graph description"), EditorStyles.toolbarButton, GUILayout.Height (Model.Settings.GUI.TOOLBAR_HEIGHT));
-                m_showVerboseLog = GUILayout.Toggle (m_showVerboseLog, new GUIContent ("Verbose Log", "Increse console log messages"), EditorStyles.toolbarButton, GUILayout.Height (Model.Settings.GUI.TOOLBAR_HEIGHT));
-                LogUtility.ShowVerboseLog (m_showVerboseLog);
-                
-                GUILayout.Space (4);
+                GUILayout.Space(4);
 
-                m_controller.TargetGraph.UseAsAssetPostprocessor = GUILayout.Toggle (m_controller.TargetGraph.UseAsAssetPostprocessor, new GUIContent ("Use As Postprocessor", "Graph will be used as asset postprocessor if enabled"), EditorStyles.toolbarButton, GUILayout.Height (Model.Settings.GUI.TOOLBAR_HEIGHT));
+                m_showErrors = GUILayout.Toggle(m_showErrors, new GUIContent(m_miniErrorIcon, "Show errors"), EditorStyles.toolbarButton, GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT));
+                m_showDescription = GUILayout.Toggle(m_showDescription, new GUIContent(m_miniInfoIcon, "Show graph description"), EditorStyles.toolbarButton, GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT));
+                m_showVerboseLog = GUILayout.Toggle(m_showVerboseLog, new GUIContent("Verbose Log", "Increse console log messages"), EditorStyles.toolbarButton, GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT));
+                LogUtility.ShowVerboseLog(m_showVerboseLog);
 
-                GUILayout.Space (4);
-                
-                GUILayout.FlexibleSpace ();
+                GUILayout.Space(4);
 
-                GUIStyle tbLabel = new GUIStyle (EditorStyles.toolbar);
+                m_controller.TargetGraph.UseAsAssetPostprocessor = GUILayout.Toggle(m_controller.TargetGraph.UseAsAssetPostprocessor, new GUIContent("Use As Postprocessor", "Graph will be used as asset postprocessor if enabled"),
+                    EditorStyles.toolbarButton, GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT));
+
+                GUILayout.Space(4);
+
+                GUILayout.FlexibleSpace();
+
+                GUIStyle tbLabel = new GUIStyle(EditorStyles.toolbar);
 
                 tbLabel.alignment = TextAnchor.MiddleCenter;
 
-                GUIStyle tbLabelTarget = new GUIStyle (tbLabel);
+                GUIStyle tbLabelTarget = new GUIStyle(tbLabel);
                 tbLabelTarget.fontStyle = FontStyle.Bold;
 
-                GUILayout.Label ("Platform:", tbLabel, GUILayout.Height (Model.Settings.GUI.TOOLBAR_HEIGHT));
+                GUILayout.Label("Platform:", tbLabel, GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT));
 
                 var supportedTargets = NodeGUIUtility.SupportedBuildTargets;
-                int currentIndex = Mathf.Max (0, supportedTargets.FindIndex (t => t == m_target));
+                int currentIndex = Mathf.Max(0, supportedTargets.FindIndex(t => t == m_target));
 
-                int newIndex = EditorGUILayout.Popup (currentIndex, NodeGUIUtility.supportedBuildTargetNames, 
-                                   EditorStyles.toolbarPopup, GUILayout.Width (150), GUILayout.Height (Model.Settings.GUI.TOOLBAR_HEIGHT));
+                int newIndex = EditorGUILayout.Popup(currentIndex, NodeGUIUtility.supportedBuildTargetNames,
+                    EditorStyles.toolbarPopup, GUILayout.Width(150), GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT));
 
-                if (newIndex != currentIndex) {
-                    m_target = supportedTargets [newIndex];
-                    Setup (true);
+                if (newIndex != currentIndex)
+                {
+                    m_target = supportedTargets[newIndex];
+                    Setup(true);
                 }
 
-                using (new EditorGUI.DisabledScope (m_controller.IsAnyIssueFound)) {
-                    if (GUILayout.Button ("Execute", EditorStyles.toolbarButton, GUILayout.Height (Model.Settings.GUI.TOOLBAR_HEIGHT))) {
+                using (new EditorGUI.DisabledScope(m_controller.IsAnyIssueFound))
+                {
+                    if (GUILayout.Button("Execute", EditorStyles.toolbarButton, GUILayout.Height(Model.Settings.GUI.TOOLBAR_HEIGHT)))
+                    {
                         EditorApplication.delayCall += BuildFromMenu;
                     }
                 }
@@ -1110,188 +1221,215 @@ namespace UnityEngine.AssetGraph
         private const string kGUIDELINETEXT = "To configure asset workflow, create an asset graph.";
         private const string kCREATEBUTTON = "Create";
 
-        private void DrawNoGraphGUI ()
+        private void DrawNoGraphGUI()
         {
-            using (new EditorGUILayout.HorizontalScope ()) {
-                GUILayout.FlexibleSpace ();
-                using (new EditorGUILayout.VerticalScope ()) {
-                    GUILayout.FlexibleSpace ();
-                    var guideline = new GUIContent (kGUIDELINETEXT);
-                    var size = GUI.skin.label.CalcSize (guideline);
-                    GUILayout.Label (kGUIDELINETEXT);
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                GUILayout.FlexibleSpace();
+                using (new EditorGUILayout.VerticalScope())
+                {
+                    GUILayout.FlexibleSpace();
+                    var guideline = new GUIContent(kGUIDELINETEXT);
+                    var size = GUI.skin.label.CalcSize(guideline);
+                    GUILayout.Label(kGUIDELINETEXT);
 
-                    using (new EditorGUILayout.HorizontalScope ()) {
-
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
                         var spaceWidth = (size.x - 100f) / 2f;
 
-                        GUILayout.Space (spaceWidth);
-                        if (GUILayout.Button (kCREATEBUTTON, GUILayout.Width (100f), GUILayout.ExpandWidth (false))) {
-                            CreateNewGraphFromDialog ();
+                        GUILayout.Space(spaceWidth);
+                        if (GUILayout.Button(kCREATEBUTTON, GUILayout.Width(100f), GUILayout.ExpandWidth(false)))
+                        {
+                            CreateNewGraphFromDialog();
                         }
                     }
-                    GUILayout.FlexibleSpace ();
+
+                    GUILayout.FlexibleSpace();
                 }
-                GUILayout.FlexibleSpace ();
+
+                GUILayout.FlexibleSpace();
             }
         }
 
-        private void DrawGUINodeErrors ()
+        private void DrawGUINodeErrors()
         {
-
-            m_errorScrollPos = EditorGUILayout.BeginScrollView (m_errorScrollPos, GUI.skin.box, GUILayout.Width (200));
+            m_errorScrollPos = EditorGUILayout.BeginScrollView(m_errorScrollPos, GUI.skin.box, GUILayout.Width(200));
             {
-                using (new EditorGUILayout.VerticalScope ()) {
-                    foreach (NodeException e in m_controller.Issues) {
-                        EditorGUILayout.HelpBox ($"{e.Reason}\n{e.HowToFix}", MessageType.Error);
-                        if (GUILayout.Button ("Go to Node")) {
-                            SelectNode (e.NodeId);
+                using (new EditorGUILayout.VerticalScope())
+                {
+                    foreach (NodeException e in m_controller.Issues)
+                    {
+                        EditorGUILayout.HelpBox($"{e.Reason}\n{e.HowToFix}", MessageType.Error);
+                        if (GUILayout.Button("Go to Node"))
+                        {
+                            SelectNode(e.NodeId);
                         }
                     }
                 }
             }
-            EditorGUILayout.EndScrollView ();
+            EditorGUILayout.EndScrollView();
         }
 
-        private void DrawGUINodeGraph ()
+        private void DrawGUINodeGraph()
         {
+            m_background.Draw(m_graphRegion, m_scrollPos);
 
-            m_background.Draw (m_graphRegion, m_scrollPos);
-
-            using (var scrollScope = new EditorGUILayout.ScrollViewScope (m_scrollPos)) {
+            using (var scrollScope = new EditorGUILayout.ScrollViewScope(m_scrollPos))
+            {
                 m_scrollPos = scrollScope.scrollPosition;
 
-                if (m_showDescription) {
-                    if (m_descriptionStyle == null) {
-                        m_descriptionStyle = new GUIStyle (EditorStyles.whiteMiniLabel);
+                if (m_showDescription)
+                {
+                    if (m_descriptionStyle == null)
+                    {
+                        m_descriptionStyle = new GUIStyle(EditorStyles.whiteMiniLabel);
                         m_descriptionStyle.wordWrap = true;
                         m_descriptionStyle.richText = true;
-                        var styleState = new GUIStyleState ();
+                        var styleState = new GUIStyleState();
                         styleState.textColor = Color.white;
                         m_descriptionStyle.normal = styleState;
                     }
-                    var content = new GUIContent (m_controller.TargetGraph.Descrption);
-                    var height = m_descriptionStyle.CalcHeight (content, position.width - 12f);
+
+                    var content = new GUIContent(m_controller.TargetGraph.Descrption);
+                    var height = m_descriptionStyle.CalcHeight(content, position.width - 12f);
                     var oldContentColor = GUI.contentColor;
 
-                    GUI.Label (new Rect (12f, 12f, position.width - 12f, height), content, m_descriptionStyle);
+                    GUI.Label(new Rect(12f, 12f, position.width - 12f, height), content, m_descriptionStyle);
                 }
 
                 // draw connections.
-                foreach (var con in m_connections) {
-                    con.DrawConnection (m_nodes, m_controller.StreamManager.FindAssetGroup (con.Id));
+                foreach (var con in m_connections)
+                {
+                    con.DrawConnection(m_nodes, m_controller.StreamManager.FindAssetGroup(con.Id));
                 }
 
                 // draw node window x N.
                 {
-                    BeginWindows ();
+                    BeginWindows();
 
-                    m_nodes.ForEach (node => node.DrawNode ());
+                    m_nodes.ForEach(node => node.DrawNode());
 
-                    HandleDragNodes ();
+                    HandleDragNodes();
 
-                    EndWindows ();
+                    EndWindows();
                 }
-					
+
                 // draw connection input point marks.
-                foreach (var node in m_nodes) {
-                    node.DrawConnectionInputPointMark (m_currentEventSource, m_modifyMode == ModifyMode.CONNECTING);
+                foreach (var node in m_nodes)
+                {
+                    node.DrawConnectionInputPointMark(m_currentEventSource, m_modifyMode == ModifyMode.CONNECTING);
                 }
 
                 // draw connection output point marks.
-                foreach (var node in m_nodes) {
-                    node.DrawConnectionOutputPointMark (m_currentEventSource, m_modifyMode == ModifyMode.CONNECTING, Event.current);
+                foreach (var node in m_nodes)
+                {
+                    node.DrawConnectionOutputPointMark(m_currentEventSource, m_modifyMode == ModifyMode.CONNECTING, Event.current);
                 }
 
                 // draw connecting line if modifing connection.
-                switch (m_modifyMode) {
-                case ModifyMode.CONNECTING:
+                switch (m_modifyMode)
+                {
+                    case ModifyMode.CONNECTING:
                     {
                         // from start node to mouse.
-                        DrawStraightLineFromCurrentEventSourcePointTo (Event.current.mousePosition, m_currentEventSource);
+                        DrawStraightLineFromCurrentEventSourcePointTo(Event.current.mousePosition, m_currentEventSource);
                         break;
                     }
-                case ModifyMode.SELECTING:
+                    case ModifyMode.SELECTING:
                     {
-                        float lx = Mathf.Max (m_selectStartMousePosition.x, Event.current.mousePosition.x);
-                        float ly = Mathf.Max (m_selectStartMousePosition.y, Event.current.mousePosition.y);
-                        float sx = Mathf.Min (m_selectStartMousePosition.x, Event.current.mousePosition.x);
-                        float sy = Mathf.Min (m_selectStartMousePosition.y, Event.current.mousePosition.y);
+                        float lx = Mathf.Max(m_selectStartMousePosition.x, Event.current.mousePosition.x);
+                        float ly = Mathf.Max(m_selectStartMousePosition.y, Event.current.mousePosition.y);
+                        float sx = Mathf.Min(m_selectStartMousePosition.x, Event.current.mousePosition.x);
+                        float sy = Mathf.Min(m_selectStartMousePosition.y, Event.current.mousePosition.y);
 
-                        Rect sel = new Rect (sx, sy, lx - sx, ly - sy);
-                        GUI.Label (sel, string.Empty, "SelectionRect");
+                        Rect sel = new Rect(sx, sy, lx - sx, ly - sy);
+                        GUI.Label(sel, string.Empty, "SelectionRect");
                         break;
                     }
                 }
 
                 // handle Graph GUI events
-                HandleGraphGUIEvents ();
-                HandleDragAndDropGUI (m_graphRegion);
+                HandleGraphGUIEvents();
+                HandleDragAndDropGUI(m_graphRegion);
 
                 // set rect for scroll.
-                if (m_nodes.Any ()) {
-                    if (Event.current.type == EventType.Layout) {
-                        GUILayoutUtility.GetRect (new GUIContent (string.Empty), GUIStyle.none, GUILayout.Width (m_spacerRectRightBottom.x), GUILayout.Height (m_spacerRectRightBottom.y));
+                if (m_nodes.Any())
+                {
+                    if (Event.current.type == EventType.Layout)
+                    {
+                        GUILayoutUtility.GetRect(new GUIContent(string.Empty), GUIStyle.none, GUILayout.Width(m_spacerRectRightBottom.x), GUILayout.Height(m_spacerRectRightBottom.y));
                     }
                 }
             }
-            if (Event.current.type == EventType.Repaint) {
-                var newRgn = GUILayoutUtility.GetLastRect ();
-                if (newRgn != m_graphRegion) {
+
+            if (Event.current.type == EventType.Repaint)
+            {
+                var newRgn = GUILayoutUtility.GetLastRect();
+                if (newRgn != m_graphRegion)
+                {
                     m_graphRegion = newRgn;
-                    Repaint ();
+                    Repaint();
                 }
             }
         }
 
-        private void HandleGraphGUIEvents ()
+        private void HandleGraphGUIEvents()
         {
-			
             //mouse drag event handling.
-            switch (Event.current.type) {
-            // draw line while dragging.
-            case EventType.MouseDrag:
+            switch (Event.current.type)
+            {
+                // draw line while dragging.
+                case EventType.MouseDrag:
                 {
-                    switch (m_modifyMode) {
-                    case ModifyMode.NONE:
+                    switch (m_modifyMode)
+                    {
+                        case ModifyMode.NONE:
                         {
-                            switch (Event.current.button) {
-                            case 0:
-                                {// left click
-                                    if (m_graphRegion.Contains (Event.current.mousePosition - m_scrollPos)) {
-                                        m_selectStartMousePosition = new SelectPoint (Event.current.mousePosition);
+                            switch (Event.current.button)
+                            {
+                                case 0:
+                                {
+                                    // left click
+                                    if (m_graphRegion.Contains(Event.current.mousePosition - m_scrollPos))
+                                    {
+                                        m_selectStartMousePosition = new SelectPoint(Event.current.mousePosition);
                                         m_modifyMode = ModifyMode.SELECTING;
                                     }
+
                                     break;
                                 }
                             }
+
                             break;
                         }
-                    case ModifyMode.SELECTING:
+                        case ModifyMode.SELECTING:
                         {
                             // do nothing.
                             break;
                         }
                     }
 
-                    HandleUtility.Repaint ();
-                    Event.current.Use ();
+                    HandleUtility.Repaint();
+                    Event.current.Use();
                     break;
                 }
             }
 
             // mouse up event handling.
             // use rawType for detect for detectiong mouse-up which raises outside of window.
-            switch (Event.current.rawType) {
-            case EventType.MouseUp:
+            switch (Event.current.rawType)
+            {
+                case EventType.MouseUp:
                 {
-                    switch (m_modifyMode) {
-                    /*
-						select contained nodes & connections.
-					*/
-                    case ModifyMode.SELECTING:
+                    switch (m_modifyMode)
+                    {
+                        /*
+                            select contained nodes & connections.
+                        */
+                        case ModifyMode.SELECTING:
                         {
-
-                            if (m_selectStartMousePosition == null) {
+                            if (m_selectStartMousePosition == null)
+                            {
                                 break;
                             }
 
@@ -1300,163 +1438,197 @@ namespace UnityEngine.AssetGraph
                             var width = 0f;
                             var height = 0f;
 
-                            if (Event.current.mousePosition.x < m_selectStartMousePosition.x) {
+                            if (Event.current.mousePosition.x < m_selectStartMousePosition.x)
+                            {
                                 x = Event.current.mousePosition.x;
                                 width = m_selectStartMousePosition.x - Event.current.mousePosition.x;
                             }
-                            if (m_selectStartMousePosition.x < Event.current.mousePosition.x) {
+
+                            if (m_selectStartMousePosition.x < Event.current.mousePosition.x)
+                            {
                                 x = m_selectStartMousePosition.x;
                                 width = Event.current.mousePosition.x - m_selectStartMousePosition.x;
                             }
 
-                            if (Event.current.mousePosition.y < m_selectStartMousePosition.y) {
+                            if (Event.current.mousePosition.y < m_selectStartMousePosition.y)
+                            {
                                 y = Event.current.mousePosition.y;
                                 height = m_selectStartMousePosition.y - Event.current.mousePosition.y;
                             }
-                            if (m_selectStartMousePosition.y < Event.current.mousePosition.y) {
+
+                            if (m_selectStartMousePosition.y < Event.current.mousePosition.y)
+                            {
                                 y = m_selectStartMousePosition.y;
                                 height = Event.current.mousePosition.y - m_selectStartMousePosition.y;
                             }
 
-                            RecordUndo ("Select Objects");
+                            RecordUndo("Select Objects");
 
-                            if (m_activeSelection == null) {
-                                m_activeSelection = new SavedSelection ();
+                            if (m_activeSelection == null)
+                            {
+                                m_activeSelection = new SavedSelection();
                             }
 
                             // if shift key is not pressed, clear current selection
-                            if (!Event.current.shift) {
-                                m_activeSelection.Clear ();
+                            if (!Event.current.shift)
+                            {
+                                m_activeSelection.Clear();
                             }
 
-                            var selectedRect = new Rect (x, y, width, height);
+                            var selectedRect = new Rect(x, y, width, height);
 
-                            foreach (var node in m_nodes) {
-                                if (node.GetRect ().Overlaps (selectedRect)) {
-                                    m_activeSelection.Add (node);
+                            foreach (var node in m_nodes)
+                            {
+                                if (node.GetRect().Overlaps(selectedRect))
+                                {
+                                    m_activeSelection.Add(node);
                                 }
                             }
 
-                            foreach (var connection in m_connections) {
+                            foreach (var connection in m_connections)
+                            {
                                 // get contained connection badge.
-                                if (connection.GetRect ().Overlaps (selectedRect)) {
-                                    m_activeSelection.Add (connection);
+                                if (connection.GetRect().Overlaps(selectedRect))
+                                {
+                                    m_activeSelection.Add(connection);
                                 }
                             }
 
-                            UpdateActiveObjects (m_activeSelection);
+                            UpdateActiveObjects(m_activeSelection);
 
                             m_selectStartMousePosition = null;
                             m_modifyMode = ModifyMode.NONE;
 
-                            HandleUtility.Repaint ();
-                            Event.current.Use ();
+                            HandleUtility.Repaint();
+                            Event.current.Use();
                             break;
                         }
                     }
+
                     break;
                 }
             }
         }
 
-        private void RecordUndo (string msg)
+        private void RecordUndo(string msg)
         {
-            if (m_undo == null) {
-                m_undo = new UndoUtility ();
+            if (m_undo == null)
+            {
+                m_undo = new UndoUtility();
             }
-            m_undo.RecordUndo (this, m_nodes, m_connections, msg);
+
+            m_undo.RecordUndo(this, m_nodes, m_connections, msg);
         }
 
-        private void HandleDragAndDropGUI (Rect dragdropArea)
+        private void HandleDragAndDropGUI(Rect dragdropArea)
         {
             Event evt = Event.current;
 
-            switch (evt.type) {
-            case EventType.DragUpdated:
-            case EventType.DragPerform:
-                if (!dragdropArea.Contains (evt.mousePosition))
-                    return;
+            switch (evt.type)
+            {
+                case EventType.DragUpdated:
+                case EventType.DragPerform:
+                    if (!dragdropArea.Contains(evt.mousePosition))
+                        return;
 
-                foreach (var obj in DragAndDrop.objectReferences) {
-                    var path = AssetDatabase.GetAssetPath (obj);
-                    if (!string.IsNullOrEmpty (path)) {
-                        FileAttributes attr = File.GetAttributes (path);
+                    foreach (var obj in DragAndDrop.objectReferences)
+                    {
+                        var path = AssetDatabase.GetAssetPath(obj);
+                        if (!string.IsNullOrEmpty(path))
+                        {
+                            FileAttributes attr = File.GetAttributes(path);
 
-                        if ((attr & FileAttributes.Directory) == FileAttributes.Directory) {
-                            DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
-                            break;
-                        } else {
-                            DragAndDrop.visualMode = DragAndDropVisualMode.Rejected;
-                            break;
+                            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                            {
+                                DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+                                break;
+                            }
+                            else
+                            {
+                                DragAndDrop.visualMode = DragAndDropVisualMode.Rejected;
+                                break;
+                            }
                         }
                     }
-                }
 
-                if (evt.type == EventType.DragPerform) {
-                    DragAndDrop.AcceptDrag ();
+                    if (evt.type == EventType.DragPerform)
+                    {
+                        DragAndDrop.AcceptDrag();
 
-                    foreach (var obj in DragAndDrop.objectReferences) {
-                        var path = AssetDatabase.GetAssetPath (obj);
-                        FileAttributes attr = File.GetAttributes (path);
+                        foreach (var obj in DragAndDrop.objectReferences)
+                        {
+                            var path = AssetDatabase.GetAssetPath(obj);
+                            FileAttributes attr = File.GetAttributes(path);
 
-                        if ((attr & FileAttributes.Directory) == FileAttributes.Directory) {
-                            AddNodeFromGUI (new Loader (path),
-                                $"Load from {Path.GetFileName(path)}", 
-                                evt.mousePosition.x, evt.mousePosition.y);
-                            Setup ();
-                            Repaint ();
+                            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                            {
+                                AddNodeFromGUI(new Loader(path),
+                                    $"Load from {Path.GetFileName(path)}",
+                                    evt.mousePosition.x, evt.mousePosition.y);
+                                Setup();
+                                Repaint();
+                            }
                         }
                     }
-                }
-                break;
+
+                    break;
             }
         }
 
-        public void OnEnable ()
+        public void OnEnable()
         {
-            Init ();
+            Init();
         }
 
-        public void OnDisable ()
+        public void OnDisable()
         {
-            LogUtility.Logger.Log ("OnDisable");
-            if (m_controller != null) {
-                m_controller.TargetGraph.Save ();
+            LogUtility.Logger.Log("OnDisable");
+            if (m_controller != null)
+            {
+                m_controller.TargetGraph.Save();
             }
         }
 
-        public void OnGUI ()
+        public void OnGUI()
         {
+            //return;
+            if (m_controller == null)
+            {
+                DrawNoGraphGUI();
+            }
+            else
+            {
+                DrawGUIToolBar();
 
-            if (m_controller == null) {
-                DrawNoGraphGUI ();
-            } else {
-                DrawGUIToolBar ();
-
-                using (new EditorGUILayout.HorizontalScope ()) {
-                    DrawGUINodeGraph ();
-                    if (m_showErrors) {
-                        DrawGUINodeErrors ();
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    DrawGUINodeGraph();
+                    if (m_showErrors)
+                    {
+                        DrawGUINodeErrors();
                     }
                 }
 
-                if (!string.IsNullOrEmpty (m_graphAssetPath)) {
-                    using (new EditorGUILayout.HorizontalScope ()) {
-                        GUILayout.FlexibleSpace ();
-                        GUILayout.Label (m_graphAssetPath, "MiniLabel");
+                if (!string.IsNullOrEmpty(m_graphAssetPath))
+                {
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
+                        GUILayout.FlexibleSpace();
+                        GUILayout.Label(m_graphAssetPath, "MiniLabel");
                     }
                 }
 
-                if (m_controller.IsAnyIssueFound) {
-                    Rect msgRgn = new Rect ((m_graphRegion.width - 250f) / 2f, m_graphRegion.y + 8f, 250f, 36f);
-                    EditorGUI.HelpBox (msgRgn, "All errors needs to be fixed before building.", MessageType.Error);
+                if (m_controller.IsAnyIssueFound)
+                {
+                    Rect msgRgn = new Rect((m_graphRegion.width - 250f) / 2f, m_graphRegion.y + 8f, 250f, 36f);
+                    EditorGUI.HelpBox(msgRgn, "All errors needs to be fixed before building.", MessageType.Error);
                 }
 
-                HandleGUIEvent ();
+                HandleGUIEvent();
             }
         }
 
-        private void HandleGUIEvent ()
+        private void HandleGUIEvent()
         {
             var isValidSelection = m_activeSelection != null && m_activeSelection.IsSelected;
             var isValidCopy = m_copiedSelection != null && m_copiedSelection.IsSelected;
@@ -1468,549 +1640,618 @@ namespace UnityEngine.AssetGraph
 				- NodeGUI connection.
 				- Command(Delete, Copy, etc...)
 			*/
-            switch (Event.current.type) {
-            // show context menu
-            case EventType.ContextClick:
+            switch (Event.current.type)
+            {
+                // show context menu
+                case EventType.ContextClick:
                 {
-                    ShowNodeCreateContextMenu (Event.current.mousePosition);
+                    ShowNodeCreateContextMenu(Event.current.mousePosition);
                     break;
                 }
 
-            /*
-					Handling mouseUp at empty space. 
-				*/
-            case EventType.MouseUp:
+                /*
+                        Handling mouseUp at empty space. 
+                    */
+                case EventType.MouseUp:
                 {
                     m_modifyMode = ModifyMode.NONE;
-                    HandleUtility.Repaint ();
+                    HandleUtility.Repaint();
 
-                    if (m_activeSelection != null && m_activeSelection.IsSelected) {
-                        RecordUndo ("Unselect");
+                    if (m_activeSelection != null && m_activeSelection.IsSelected)
+                    {
+                        RecordUndo("Unselect");
 
-                        m_activeSelection.Clear ();
-                        UpdateActiveObjects (m_activeSelection);
+                        m_activeSelection.Clear();
+                        UpdateActiveObjects(m_activeSelection);
                     }
 
                     // clear inspector
-                    if (Selection.activeObject is NodeGUI || Selection.activeObject is ConnectionGUI) {
+                    if (Selection.activeObject is NodeGUI || Selection.activeObject is ConnectionGUI)
+                    {
                         Selection.activeObject = null;
                     }
+
                     break;
                 }
 
-            case EventType.ValidateCommand: 
+                case EventType.ValidateCommand:
                 {
-                    switch (Event.current.commandName) {
-                    case "Delete":
+                    switch (Event.current.commandName)
+                    {
+                        case "Delete":
                         {
-                            if (isValidSelection) {
-                                Event.current.Use ();
+                            if (isValidSelection)
+                            {
+                                Event.current.Use();
                             }
+
                             break;
                         }
 
-                    case "Copy":
+                        case "Copy":
                         {
-                            if (isValidSelection) {
-                                Event.current.Use ();
+                            if (isValidSelection)
+                            {
+                                Event.current.Use();
                             }
+
                             break;
                         }
 
-                    case "Cut":
+                        case "Cut":
                         {
-                            if (isValidSelection) {
-                                Event.current.Use ();
+                            if (isValidSelection)
+                            {
+                                Event.current.Use();
                             }
+
                             break;
                         }
 
-                    case "Paste":
+                        case "Paste":
                         {
-                            if (isValidCopy) {
-                                Event.current.Use ();
+                            if (isValidCopy)
+                            {
+                                Event.current.Use();
                             }
+
                             break;
                         }
 
-                    case "SelectAll":
+                        case "SelectAll":
                         {
-                            Event.current.Use ();
+                            Event.current.Use();
                             break;
                         }
                     }
+
                     break;
                 }
 
-            case EventType.ExecuteCommand: 
+                case EventType.ExecuteCommand:
                 {
-                    switch (Event.current.commandName) {
-                    // Delete active node or connection.
-                    case "Delete":
+                    switch (Event.current.commandName)
+                    {
+                        // Delete active node or connection.
+                        case "Delete":
                         {
-                            if (!isValidSelection) {
+                            if (!isValidSelection)
+                            {
                                 break;
                             }
-                            DeleteSelected ();
 
-                            Event.current.Use ();
+                            DeleteSelected();
+
+                            Event.current.Use();
                             break;
                         }
 
-                    case "Copy":
+                        case "Copy":
                         {
-                            if (!isValidSelection) {
+                            if (!isValidSelection)
+                            {
                                 break;
                             }
 
-                            m_copiedSelection = new SavedSelection (m_activeSelection);
+                            m_copiedSelection = new SavedSelection(m_activeSelection);
 
-                            Event.current.Use ();
+                            Event.current.Use();
                             break;
                         }
 
-                    case "Cut":
+                        case "Cut":
                         {
-                            if (!isValidSelection) {
+                            if (!isValidSelection)
+                            {
                                 break;
                             }
 
-                            RecordUndo ("Cut Selected");
+                            RecordUndo("Cut Selected");
 
-                            m_copiedSelection = new SavedSelection (m_activeSelection);
+                            m_copiedSelection = new SavedSelection(m_activeSelection);
 
-                            foreach (var n in m_activeSelection.nodes) {
-                                DeleteNode (n.Id);
+                            foreach (var n in m_activeSelection.nodes)
+                            {
+                                DeleteNode(n.Id);
                             }
 
-                            foreach (var c in m_activeSelection.connections) {
-                                DeleteConnection (c.Id);
+                            foreach (var c in m_activeSelection.connections)
+                            {
+                                DeleteConnection(c.Id);
                             }
-                            m_activeSelection.Clear ();
-                            UpdateActiveObjects (m_activeSelection);
 
-                            Setup ();
+                            m_activeSelection.Clear();
+                            UpdateActiveObjects(m_activeSelection);
+
+                            Setup();
                             //InitializeGraph();
 
-                            Event.current.Use ();
+                            Event.current.Use();
                             break;
                         }
 
-                    case "Paste":
+                        case "Paste":
                         {
-                            if (!isValidCopy) {
+                            if (!isValidCopy)
+                            {
                                 break;
                             }
 
-                            RecordUndo ("Paste");
+                            RecordUndo("Paste");
 
-                            Dictionary<NodeGUI, NodeGUI> nodeLookup = new Dictionary<NodeGUI, NodeGUI> ();
+                            Dictionary<NodeGUI, NodeGUI> nodeLookup = new Dictionary<NodeGUI, NodeGUI>();
 
-                            foreach (var copiedNode in m_copiedSelection.nodes) {
-                                var newNode = DuplicateNode (copiedNode, m_copiedSelection.PasteOffset);
-                                nodeLookup.Add (copiedNode, newNode);
+                            foreach (var copiedNode in m_copiedSelection.nodes)
+                            {
+                                var newNode = DuplicateNode(copiedNode, m_copiedSelection.PasteOffset);
+                                nodeLookup.Add(copiedNode, newNode);
                             }
 
-                            foreach (var copiedConnection in m_copiedSelection.connections) {
-                                DuplicateConnection (copiedConnection, nodeLookup);
+                            foreach (var copiedConnection in m_copiedSelection.connections)
+                            {
+                                DuplicateConnection(copiedConnection, nodeLookup);
                             }
 
 
-                            m_copiedSelection.IncrementPasteOffset ();
+                            m_copiedSelection.IncrementPasteOffset();
 
-                            Setup ();
+                            Setup();
                             //InitializeGraph();
 
-                            Event.current.Use ();
+                            Event.current.Use();
                             break;
                         }
 
-                    case "SelectAll":
+                        case "SelectAll":
                         {
-                            RecordUndo ("Select All Objects");
+                            RecordUndo("Select All Objects");
 
-                            if (m_activeSelection == null) {
-                                m_activeSelection = new SavedSelection ();
+                            if (m_activeSelection == null)
+                            {
+                                m_activeSelection = new SavedSelection();
                             }
 
-                            m_activeSelection.Clear ();
-                            m_nodes.ForEach (n => m_activeSelection.Add (n));
-                            m_connections.ForEach (c => m_activeSelection.Add (c));
+                            m_activeSelection.Clear();
+                            m_nodes.ForEach(n => m_activeSelection.Add(n));
+                            m_connections.ForEach(c => m_activeSelection.Add(c));
 
-                            UpdateActiveObjects (m_activeSelection);
+                            UpdateActiveObjects(m_activeSelection);
 
-                            Event.current.Use ();
+                            Event.current.Use();
                             break;
                         }
 
-                    default:
+                        default:
                         {
                             break;
                         }
                     }
+
                     break;
                 }
             }
         }
 
-        private void DeleteSelected ()
+        private void DeleteSelected()
         {
-            RecordUndo ("Delete Selected");
+            RecordUndo("Delete Selected");
 
-            foreach (var n in m_activeSelection.nodes) {
-                DeleteNode (n.Id);
+            foreach (var n in m_activeSelection.nodes)
+            {
+                DeleteNode(n.Id);
             }
 
-            foreach (var c in m_activeSelection.connections) {
-                DeleteConnection (c.Id);
+            foreach (var c in m_activeSelection.connections)
+            {
+                DeleteConnection(c.Id);
             }
 
-            m_activeSelection.Clear ();
-            UpdateActiveObjects (m_activeSelection);
+            m_activeSelection.Clear();
+            UpdateActiveObjects(m_activeSelection);
 
-            Setup ();
+            Setup();
         }
 
-        private void ShowNodeCreateContextMenu (Vector2 pos)
+        private void ShowNodeCreateContextMenu(Vector2 pos)
         {
-            var menu = new GenericMenu ();
+            var menu = new GenericMenu();
             var customNodes = NodeUtility.CustomNodeTypes;
-            for (int i = 0; i < customNodes.Count; ++i) {
+            for (int i = 0; i < customNodes.Count; ++i)
+            {
                 // workaround: avoiding compilier closure bug
                 var index = i;
-                var name = customNodes [index].node.Name;
-                menu.AddItem (
-                    new GUIContent (name),
-                    false, 
-                    () => {
-                        AddNodeFromGUI (customNodes [index].CreateInstance (), GetNodeNameFromMenu (name), pos.x + m_scrollPos.x, pos.y + m_scrollPos.y);
-                        Setup ();
-                        Repaint ();
+                var name = customNodes[index].node.Name;
+                menu.AddItem(
+                    new GUIContent(name),
+                    false,
+                    () =>
+                    {
+                        AddNodeFromGUI(customNodes[index].CreateInstance(), GetNodeNameFromMenu(name), pos.x + m_scrollPos.x, pos.y + m_scrollPos.y);
+                        Setup();
+                        Repaint();
                     }
                 );
             }
 
-            menu.ShowAsContext ();
+            menu.ShowAsContext();
         }
 
-        private string GetNodeNameFromMenu (string nodeMenuName)
+        private string GetNodeNameFromMenu(string nodeMenuName)
         {
-            var slashIndex = nodeMenuName.LastIndexOf ('/');
-            return nodeMenuName.Substring (slashIndex + 1);
+            var slashIndex = nodeMenuName.LastIndexOf('/');
+            return nodeMenuName.Substring(slashIndex + 1);
         }
 
-        private void AddNodeFromGUI (Node n, string guiName, float x, float y)
+        private void AddNodeFromGUI(Node n, string guiName, float x, float y)
         {
-
             string nodeName = guiName;
-            NodeGUI newNode = NodeGUI.CreateNodeGUI (m_controller, new Model.NodeData (nodeName, n, x, y));
+            NodeGUI newNode = NodeGUI.CreateNodeGUI(m_controller, new Model.NodeData(nodeName, n, x, y));
 
-            RecordUndo ("Add " + guiName + " Node");
+            RecordUndo("Add " + guiName + " Node");
 
-            AddNodeGUI (newNode);
+            AddNodeGUI(newNode);
         }
 
-        private void DrawStraightLineFromCurrentEventSourcePointTo (Vector2 to, NodeEvent eventSource)
+        private void DrawStraightLineFromCurrentEventSourcePointTo(Vector2 to, NodeEvent eventSource)
         {
-            if (eventSource == null) {
+            if (eventSource == null)
+            {
                 return;
             }
-            var p = eventSource.point.GetGlobalPosition (eventSource.eventSourceNode);
-            Handles.DrawLine (new Vector3 (p.x, p.y, 0f), new Vector3 (to.x, to.y, 0f));
+
+            var p = eventSource.point.GetGlobalPosition(eventSource.eventSourceNode);
+            Handles.DrawLine(new Vector3(p.x, p.y, 0f), new Vector3(to.x, to.y, 0f));
         }
 
         /**
 		 * Handle Node Event
 		*/
-        private void HandleNodeEvent (NodeEvent e)
+        private void HandleNodeEvent(NodeEvent e)
         {
-
-            switch (m_modifyMode) {
-            /*
-			 * During Mouse-drag opration to connect to other node
-			 */
-            case ModifyMode.CONNECTING: 
-                switch (e.eventType) {
+            switch (m_modifyMode)
+            {
                 /*
-						connection established between 2 nodes
-					*/
-                case NodeEvent.EventType.EVENT_CONNECTION_ESTABLISHED:
+                 * During Mouse-drag opration to connect to other node
+                 */
+                case ModifyMode.CONNECTING:
+                    switch (e.eventType)
                     {
-                        // finish connecting mode.
-                        m_modifyMode = ModifyMode.NONE;
-						
-                        if (m_currentEventSource == null) {
-                            break;
-                        }
-
-                        var sourceNode = m_currentEventSource.eventSourceNode;
-                        var sourceConnectionPoint = m_currentEventSource.point;
-						
-                        var targetNode = e.eventSourceNode;
-                        var targetConnectionPoint = e.point;
-
-                        if (sourceNode.Id == targetNode.Id) {
-                            break;
-                        }
-
-                        if (!IsConnectablePointFromTo (sourceConnectionPoint, targetConnectionPoint)) {
-                            break;
-                        }
-
-                        var startNode = sourceNode;
-                        var startConnectionPoint = sourceConnectionPoint;
-                        var endNode = targetNode;
-                        var endConnectionPoint = targetConnectionPoint;
-
-                        // reverse if connected from input to output.
-                        if (sourceConnectionPoint.IsInput) {
-                            startNode = targetNode;
-                            startConnectionPoint = targetConnectionPoint;
-                            endNode = sourceNode;
-                            endConnectionPoint = sourceConnectionPoint;
-                        }
-
-                        var outputPoint = startConnectionPoint;
-                        var inputPoint = endConnectionPoint;							
-                        var label = startConnectionPoint.Label;
-
-                        // if two nodes are not supposed to connect, dismiss
-                        if (!Model.ConnectionData.CanConnect (startNode.Data, endNode.Data)) {
-                            break;
-                        }
-
-                        AddConnection (label, startNode, outputPoint, endNode, inputPoint);
-                        Setup ();
-                        break;
-                    }
-
-                /*
-						connecting operation ended.
-					*/
-                case NodeEvent.EventType.EVENT_CONNECTING_END:
-                    {
-                        // finish connecting mode.
-                        m_modifyMode = ModifyMode.NONE;
-						
                         /*
-							connect when dropped target is connectable from start connectionPoint.
-						*/
-                        var node = FindNodeByPosition (e.globalMousePosition);
-                        if (node == null) {
-                            break;
-                        }
-					
-                        // ignore if target node is source itself.
-                        if (node == e.eventSourceNode) {
-                            break;
-                        }
+                                connection established between 2 nodes
+                            */
+                        case NodeEvent.EventType.EVENT_CONNECTION_ESTABLISHED:
+                        {
+                            // finish connecting mode.
+                            m_modifyMode = ModifyMode.NONE;
 
-                        var pointAtPosition = node.FindConnectionPointByPosition (e.globalMousePosition);
-                        if (pointAtPosition == null) {
-                            break;
-                        }
-
-                        var sourcePoint = m_currentEventSource.point;
-						
-                        // limit by connectable or not.
-                        if (!IsConnectablePointFromTo (sourcePoint, pointAtPosition)) {
-                            break;
-                        }
-
-                        var isInput = m_currentEventSource.point.IsInput;
-                        var startNode = (isInput) ? node : e.eventSourceNode;
-                        var endNode = (isInput) ? e.eventSourceNode : node;
-                        var startConnectionPoint = (isInput) ? pointAtPosition : m_currentEventSource.point;
-                        var endConnectionPoint = (isInput) ? m_currentEventSource.point : pointAtPosition;
-                        var outputPoint = startConnectionPoint;
-                        var inputPoint = endConnectionPoint;							
-                        var label = startConnectionPoint.Label;
-
-                        // if two nodes are not supposed to connect, dismiss
-                        if (!Model.ConnectionData.CanConnect (startNode.Data, endNode.Data)) {
-                            break;
-                        }
-
-                        AddConnection (label, startNode, outputPoint, endNode, inputPoint);
-                        Setup ();
-                        break;
-                    }
-
-                default:
-                    {
-                        m_modifyMode = ModifyMode.NONE;
-                        break;
-                    }
-                }
-                break;
-            /*
-			 * 
-			 */ 
-            case ModifyMode.NONE:
-                switch (e.eventType) {
-                /*
-					start connection handling.
-				*/
-                case NodeEvent.EventType.EVENT_CONNECTING_BEGIN: 
-                    m_modifyMode = ModifyMode.CONNECTING;
-                    m_currentEventSource = e;
-                    break;
-
-                case NodeEvent.EventType.EVENT_NODE_DELETE: 
-                    DeleteSelected ();
-                    break;
-
-                /*
-					node clicked.
-				*/
-                case NodeEvent.EventType.EVENT_NODE_CLICKED:
-                    {
-                        var clickedNode = e.eventSourceNode;
-
-                        if (m_activeSelection != null && m_activeSelection.nodes.Contains (clickedNode)) {
-                            break;
-                        }
-
-                        if (Event.current.shift) {
-                            RecordUndo ("Toggle " + clickedNode.Name + " Selection");
-                            if (m_activeSelection == null) {
-                                m_activeSelection = new SavedSelection ();
+                            if (m_currentEventSource == null)
+                            {
+                                break;
                             }
-                            m_activeSelection.Toggle (clickedNode);
-                        } else {
-                            RecordUndo ("Select " + clickedNode.Name);
-                            if (m_activeSelection == null) {
-                                m_activeSelection = new SavedSelection ();
+
+                            var sourceNode = m_currentEventSource.eventSourceNode;
+                            var sourceConnectionPoint = m_currentEventSource.point;
+
+                            var targetNode = e.eventSourceNode;
+                            var targetConnectionPoint = e.point;
+
+                            if (sourceNode.Id == targetNode.Id)
+                            {
+                                break;
                             }
-                            m_activeSelection.Clear ();
-                            m_activeSelection.Add (clickedNode);
+
+                            if (!IsConnectablePointFromTo(sourceConnectionPoint, targetConnectionPoint))
+                            {
+                                break;
+                            }
+
+                            var startNode = sourceNode;
+                            var startConnectionPoint = sourceConnectionPoint;
+                            var endNode = targetNode;
+                            var endConnectionPoint = targetConnectionPoint;
+
+                            // reverse if connected from input to output.
+                            if (sourceConnectionPoint.IsInput)
+                            {
+                                startNode = targetNode;
+                                startConnectionPoint = targetConnectionPoint;
+                                endNode = sourceNode;
+                                endConnectionPoint = sourceConnectionPoint;
+                            }
+
+                            var outputPoint = startConnectionPoint;
+                            var inputPoint = endConnectionPoint;
+                            var label = startConnectionPoint.Label;
+
+                            // if two nodes are not supposed to connect, dismiss
+                            if (!Model.ConnectionData.CanConnect(startNode.Data, endNode.Data))
+                            {
+                                break;
+                            }
+
+                            AddConnection(label, startNode, outputPoint, endNode, inputPoint);
+                            Setup();
+                            break;
                         }
-					
-                        UpdateActiveObjects (m_activeSelection);
-                        break;
-                    }
-                case NodeEvent.EventType.EVENT_NODE_UPDATED:
-                    {
-                        break;
+
+                        /*
+                                connecting operation ended.
+                            */
+                        case NodeEvent.EventType.EVENT_CONNECTING_END:
+                        {
+                            // finish connecting mode.
+                            m_modifyMode = ModifyMode.NONE;
+
+                            /*
+                                connect when dropped target is connectable from start connectionPoint.
+                            */
+                            var node = FindNodeByPosition(e.globalMousePosition);
+                            if (node == null)
+                            {
+                                break;
+                            }
+
+                            // ignore if target node is source itself.
+                            if (node == e.eventSourceNode)
+                            {
+                                break;
+                            }
+
+                            var pointAtPosition = node.FindConnectionPointByPosition(e.globalMousePosition);
+                            if (pointAtPosition == null)
+                            {
+                                break;
+                            }
+
+                            var sourcePoint = m_currentEventSource.point;
+
+                            // limit by connectable or not.
+                            if (!IsConnectablePointFromTo(sourcePoint, pointAtPosition))
+                            {
+                                break;
+                            }
+
+                            var isInput = m_currentEventSource.point.IsInput;
+                            var startNode = (isInput) ? node : e.eventSourceNode;
+                            var endNode = (isInput) ? e.eventSourceNode : node;
+                            var startConnectionPoint = (isInput) ? pointAtPosition : m_currentEventSource.point;
+                            var endConnectionPoint = (isInput) ? m_currentEventSource.point : pointAtPosition;
+                            var outputPoint = startConnectionPoint;
+                            var inputPoint = endConnectionPoint;
+                            var label = startConnectionPoint.Label;
+
+                            // if two nodes are not supposed to connect, dismiss
+                            if (!Model.ConnectionData.CanConnect(startNode.Data, endNode.Data))
+                            {
+                                break;
+                            }
+
+                            AddConnection(label, startNode, outputPoint, endNode, inputPoint);
+                            Setup();
+                            break;
+                        }
+
+                        default:
+                        {
+                            m_modifyMode = ModifyMode.NONE;
+                            break;
+                        }
                     }
 
-                default: 
                     break;
-                }
-                break;
+                /*
+                 * 
+                 */
+                case ModifyMode.NONE:
+                    switch (e.eventType)
+                    {
+                        /*
+                            start connection handling.
+                        */
+                        case NodeEvent.EventType.EVENT_CONNECTING_BEGIN:
+                            m_modifyMode = ModifyMode.CONNECTING;
+                            m_currentEventSource = e;
+                            break;
+
+                        case NodeEvent.EventType.EVENT_NODE_DELETE:
+                            DeleteSelected();
+                            break;
+
+                        /*
+                            node clicked.
+                        */
+                        case NodeEvent.EventType.EVENT_NODE_CLICKED:
+                        {
+                            var clickedNode = e.eventSourceNode;
+
+                            if (m_activeSelection != null && m_activeSelection.nodes.Contains(clickedNode))
+                            {
+                                break;
+                            }
+
+                            if (Event.current.shift)
+                            {
+                                RecordUndo("Toggle " + clickedNode.Name + " Selection");
+                                if (m_activeSelection == null)
+                                {
+                                    m_activeSelection = new SavedSelection();
+                                }
+
+                                m_activeSelection.Toggle(clickedNode);
+                            }
+                            else
+                            {
+                                RecordUndo("Select " + clickedNode.Name);
+                                if (m_activeSelection == null)
+                                {
+                                    m_activeSelection = new SavedSelection();
+                                }
+
+                                m_activeSelection.Clear();
+                                m_activeSelection.Add(clickedNode);
+                            }
+
+                            UpdateActiveObjects(m_activeSelection);
+                            break;
+                        }
+                        case NodeEvent.EventType.EVENT_NODE_UPDATED:
+                        {
+                            break;
+                        }
+
+                        default:
+                            break;
+                    }
+
+                    break;
             }
 
-            switch (e.eventType) {
-            case NodeEvent.EventType.EVENT_DELETE_ALL_CONNECTIONS_TO_POINT:
+            switch (e.eventType)
+            {
+                case NodeEvent.EventType.EVENT_DELETE_ALL_CONNECTIONS_TO_POINT:
                 {
                     // deleting all connections to this point
-                    m_connections.RemoveAll (c => (c.InputPoint == e.point || c.OutputPoint == e.point));
-                    Repaint ();
+                    m_connections.RemoveAll(c => (c.InputPoint == e.point || c.OutputPoint == e.point));
+                    Repaint();
                     break;
                 }
-            case NodeEvent.EventType.EVENT_CONNECTIONPOINT_DELETED:
+                case NodeEvent.EventType.EVENT_CONNECTIONPOINT_DELETED:
                 {
                     // deleting point is handled by caller, so we are deleting connections associated with it.
-                    m_connections.RemoveAll (c => (c.InputPoint == e.point || c.OutputPoint == e.point));
-                    Repaint ();
+                    m_connections.RemoveAll(c => (c.InputPoint == e.point || c.OutputPoint == e.point));
+                    Repaint();
                     break;
                 }
-            case NodeEvent.EventType.EVENT_CONNECTIONPOINT_LABELCHANGED:
+                case NodeEvent.EventType.EVENT_CONNECTIONPOINT_LABELCHANGED:
                 {
                     // point label change is handled by caller, so we are changing label of connection associated with it.
-                    var affectingConnections = m_connections.FindAll (c => c.OutputPoint.Id == e.point.Id);
-                    affectingConnections.ForEach (c => c.Label = e.point.Label);
-                    Repaint ();
+                    var affectingConnections = m_connections.FindAll(c => c.OutputPoint.Id == e.point.Id);
+                    affectingConnections.ForEach(c => c.Label = e.point.Label);
+                    Repaint();
                     break;
                 }
-            case NodeEvent.EventType.EVENT_NODE_UPDATED:
+                case NodeEvent.EventType.EVENT_NODE_UPDATED:
                 {
-                    Validate (e.eventSourceNode);
+                    Validate(e.eventSourceNode);
                     break;
                 }
 
-            case NodeEvent.EventType.EVENT_RECORDUNDO:
+                case NodeEvent.EventType.EVENT_RECORDUNDO:
                 {
-                    RecordUndo (e.message);
+                    RecordUndo(e.message);
                     break;
                 }
-            case NodeEvent.EventType.EVENT_SAVE: 
-                Setup ();
-                Repaint ();
-                break;
+                case NodeEvent.EventType.EVENT_SAVE:
+                    Setup();
+                    Repaint();
+                    break;
             }
         }
 
-        private void HandleDragNodes ()
+        private void HandleDragNodes()
         {
-
             Event evt = Event.current;
-            int id = GUIUtility.GetControlID (kDragNodesControlID, FocusType.Passive);
+            int id = GUIUtility.GetControlID(kDragNodesControlID, FocusType.Passive);
 
-            switch (evt.GetTypeForControl (id)) {
-            case EventType.MouseDown:
-                if (m_modifyMode == ModifyMode.NONE) {
-                    if (evt.button == 0) {
-                        if (m_activeSelection != null && m_activeSelection.nodes.Count > 0) {
-                            bool mouseInSelectedNode = false;
-                            foreach (var n in m_activeSelection.nodes) {
-                                if (n.GetRect ().Contains (evt.mousePosition)) {
-                                    mouseInSelectedNode = true;
-                                    break;
-                                }
-                            }
-
-                            if (mouseInSelectedNode) {
-                                m_modifyMode = ModifyMode.DRAGGING;
-                                m_LastMousePosition = evt.mousePosition;
-                                m_DragNodeDistance = Vector2.zero;
-
-                                foreach (var n in m_activeSelection.nodes) {
-                                    m_initialDragNodePositions [n] = n.GetPos ();
+            switch (evt.GetTypeForControl(id))
+            {
+                case EventType.MouseDown:
+                    if (m_modifyMode == ModifyMode.NONE)
+                    {
+                        if (evt.button == 0)
+                        {
+                            if (m_activeSelection != null && m_activeSelection.nodes.Count > 0)
+                            {
+                                bool mouseInSelectedNode = false;
+                                foreach (var n in m_activeSelection.nodes)
+                                {
+                                    if (n.GetRect().Contains(evt.mousePosition))
+                                    {
+                                        mouseInSelectedNode = true;
+                                        break;
+                                    }
                                 }
 
-                                GUIUtility.hotControl = id;
-                                evt.Use ();
+                                if (mouseInSelectedNode)
+                                {
+                                    m_modifyMode = ModifyMode.DRAGGING;
+                                    m_LastMousePosition = evt.mousePosition;
+                                    m_DragNodeDistance = Vector2.zero;
+
+                                    foreach (var n in m_activeSelection.nodes)
+                                    {
+                                        m_initialDragNodePositions[n] = n.GetPos();
+                                    }
+
+                                    GUIUtility.hotControl = id;
+                                    evt.Use();
+                                }
                             }
                         }
                     }
-                }
-                break;
-            case EventType.MouseUp:
-                if (GUIUtility.hotControl == id) {
-                    UpdateSpacerRect ();
-                    m_initialDragNodePositions.Clear ();
-                    GUIUtility.hotControl = 0;
-                    m_modifyMode = ModifyMode.NONE;
-                    evt.Use ();
-                }
-                break;
-            case EventType.MouseDrag:
-                if (GUIUtility.hotControl == id) {
-                    RecordUndo ("Move Objects");
 
-                    m_DragNodeDistance += evt.mousePosition - m_LastMousePosition;
-                    m_LastMousePosition = evt.mousePosition;
-
-                    foreach (var n in m_activeSelection.nodes) {
-                        Vector2 newPosition = n.GetPos ();
-                        Vector2 initialPosition = m_initialDragNodePositions [n];
-                        newPosition.x = initialPosition.x + m_DragNodeDistance.x;
-                        newPosition.y = initialPosition.y + m_DragNodeDistance.y;
-                        n.SetPos (SnapPositionToGrid (newPosition));
+                    break;
+                case EventType.MouseUp:
+                    if (GUIUtility.hotControl == id)
+                    {
+                        UpdateSpacerRect();
+                        m_initialDragNodePositions.Clear();
+                        GUIUtility.hotControl = 0;
+                        m_modifyMode = ModifyMode.NONE;
+                        evt.Use();
                     }
-                    evt.Use ();
-                }
-                break;
+
+                    break;
+                case EventType.MouseDrag:
+                    if (GUIUtility.hotControl == id)
+                    {
+                        RecordUndo("Move Objects");
+
+                        m_DragNodeDistance += evt.mousePosition - m_LastMousePosition;
+                        m_LastMousePosition = evt.mousePosition;
+
+                        foreach (var n in m_activeSelection.nodes)
+                        {
+                            Vector2 newPosition = n.GetPos();
+                            Vector2 initialPosition = m_initialDragNodePositions[n];
+                            newPosition.x = initialPosition.x + m_DragNodeDistance.x;
+                            newPosition.y = initialPosition.y + m_DragNodeDistance.y;
+                            n.SetPos(SnapPositionToGrid(newPosition));
+                        }
+
+                        evt.Use();
+                    }
+
+                    break;
             }
         }
 
-        protected static Vector2 SnapPositionToGrid (Vector2 position)
+        protected static Vector2 SnapPositionToGrid(Vector2 position)
         {
             float gridSize = UserPreference.EditorWindowGridSize;
-			
-            int xCell = Mathf.RoundToInt (position.x / gridSize);
-            int yCell = Mathf.RoundToInt (position.y / gridSize);
+
+            int xCell = Mathf.RoundToInt(position.x / gridSize);
+            int yCell = Mathf.RoundToInt(position.y / gridSize);
 
             position.x = xCell * gridSize;
             position.y = yCell * gridSize;
@@ -2018,197 +2259,216 @@ namespace UnityEngine.AssetGraph
             return position;
         }
 
-        private void UpdateSpacerRect ()
+        private void UpdateSpacerRect()
         {
-            var rightPoint = m_nodes.OrderByDescending (node => node.GetRightPos ()).First ().GetRightPos () + Model.Settings.WINDOW_SPAN;
-            var bottomPoint = m_nodes.OrderByDescending (node => node.GetBottomPos ()).First ().GetBottomPos () + Model.Settings.WINDOW_SPAN;
+            var rightPoint = m_nodes.OrderByDescending(node => node.GetRightPos()).First().GetRightPos() + Model.Settings.WINDOW_SPAN;
+            var bottomPoint = m_nodes.OrderByDescending(node => node.GetBottomPos()).First().GetBottomPos() + Model.Settings.WINDOW_SPAN;
 
-            m_spacerRectRightBottom = new Vector2 (rightPoint, bottomPoint);
+            m_spacerRectRightBottom = new Vector2(rightPoint, bottomPoint);
         }
 
-        public NodeGUI DuplicateNode (NodeGUI node, float offset)
+        public NodeGUI DuplicateNode(NodeGUI node, float offset)
         {
-            var newNode = node.Duplicate (
-                              m_controller,
-                              node.GetX () + offset,
-                              node.GetY () + offset
-                          );
-            AddNodeGUI (newNode);
+            var newNode = node.Duplicate(
+                m_controller,
+                node.GetX() + offset,
+                node.GetY() + offset
+            );
+            AddNodeGUI(newNode);
             return newNode;
         }
 
-        public void DuplicateConnection (ConnectionGUI con, Dictionary<NodeGUI, NodeGUI> nodeLookup)
+        public void DuplicateConnection(ConnectionGUI con, Dictionary<NodeGUI, NodeGUI> nodeLookup)
         {
-
             var srcNodes = nodeLookup.Keys;
 
-            var srcFrom = srcNodes.Where (n => n.Id == con.Data.FromNodeId).FirstOrDefault ();
-            var srcTo = srcNodes.Where (n => n.Id == con.Data.ToNodeId).FirstOrDefault ();
+            var srcFrom = srcNodes.Where(n => n.Id == con.Data.FromNodeId).FirstOrDefault();
+            var srcTo = srcNodes.Where(n => n.Id == con.Data.ToNodeId).FirstOrDefault();
 
-            if (srcFrom == null || srcTo == null) {
+            if (srcFrom == null || srcTo == null)
+            {
                 return;
             }
 
-            var fromPointIndex = srcFrom.Data.OutputPoints.FindIndex (p => p.Id == con.Data.FromNodeConnectionPointId);
-            var inPointIndex = srcTo.Data.InputPoints.FindIndex (p => p.Id == con.Data.ToNodeConnectionPointId);
+            var fromPointIndex = srcFrom.Data.OutputPoints.FindIndex(p => p.Id == con.Data.FromNodeConnectionPointId);
+            var inPointIndex = srcTo.Data.InputPoints.FindIndex(p => p.Id == con.Data.ToNodeConnectionPointId);
 
-            if (fromPointIndex < 0 || inPointIndex < 0) {
+            if (fromPointIndex < 0 || inPointIndex < 0)
+            {
                 return;
             }
 
-            var dstFrom = nodeLookup [srcFrom];
-            var dstTo = nodeLookup [srcTo];
-            var dstFromPoint = dstFrom.Data.OutputPoints [fromPointIndex];
-            var dstToPoint = dstTo.Data.InputPoints [inPointIndex];
+            var dstFrom = nodeLookup[srcFrom];
+            var dstTo = nodeLookup[srcTo];
+            var dstFromPoint = dstFrom.Data.OutputPoints[fromPointIndex];
+            var dstToPoint = dstTo.Data.InputPoints[inPointIndex];
 
-            AddConnection (con.Label, dstFrom, dstFromPoint, dstTo, dstToPoint);
+            AddConnection(con.Label, dstFrom, dstFromPoint, dstTo, dstToPoint);
         }
 
-        private void AddNodeGUI (NodeGUI newNode)
+        private void AddNodeGUI(NodeGUI newNode)
         {
-
             int id = -1;
 
-            foreach (var node in m_nodes) {
-                if (node.WindowId > id) {
+            foreach (var node in m_nodes)
+            {
+                if (node.WindowId > id)
+                {
                     id = node.WindowId;
                 }
             }
 
             newNode.WindowId = id + 1;
-				
-            m_nodes.Add (newNode);
+
+            m_nodes.Add(newNode);
         }
 
-        public void DeleteNode (string deletingNodeId)
+        public void DeleteNode(string deletingNodeId)
         {
-            var deletedNodeIndex = m_nodes.FindIndex (node => node.Id == deletingNodeId);
-            if (0 <= deletedNodeIndex) {
-                var n = m_nodes [deletedNodeIndex];
-                n.Data.Operation.Object.OnNodeDelete (n.Data);
-                n.SetActive (false);
-                m_nodes.RemoveAt (deletedNodeIndex);
+            var deletedNodeIndex = m_nodes.FindIndex(node => node.Id == deletingNodeId);
+            if (0 <= deletedNodeIndex)
+            {
+                var n = m_nodes[deletedNodeIndex];
+                n.Data.Operation.Object.OnNodeDelete(n.Data);
+                n.SetActive(false);
+                m_nodes.RemoveAt(deletedNodeIndex);
             }
-
         }
 
-        public void HandleConnectionEvent (ConnectionEvent e)
+        public void HandleConnectionEvent(ConnectionEvent e)
         {
-            switch (m_modifyMode) {
-            case ModifyMode.NONE:
+            switch (m_modifyMode)
+            {
+                case ModifyMode.NONE:
                 {
-                    switch (e.eventType) {
-						
-                    case ConnectionEvent.EventType.EVENT_CONNECTION_TAPPED:
+                    switch (e.eventType)
+                    {
+                        case ConnectionEvent.EventType.EVENT_CONNECTION_TAPPED:
                         {
+                            if (Event.current.shift)
+                            {
+                                RecordUndo("Toggle Select Connection");
+                                if (m_activeSelection == null)
+                                {
+                                    m_activeSelection = new SavedSelection();
+                                }
 
-                            if (Event.current.shift) {
-                                RecordUndo ("Toggle Select Connection");
-                                if (m_activeSelection == null) {
-                                    m_activeSelection = new SavedSelection ();
-                                }
-                                m_activeSelection.Toggle (e.eventSourceCon);
-                                UpdateActiveObjects (m_activeSelection);
+                                m_activeSelection.Toggle(e.eventSourceCon);
+                                UpdateActiveObjects(m_activeSelection);
                                 break;
-                            } else {
-                                RecordUndo ("Select Connection");
-                                if (m_activeSelection == null) {
-                                    m_activeSelection = new SavedSelection ();
+                            }
+                            else
+                            {
+                                RecordUndo("Select Connection");
+                                if (m_activeSelection == null)
+                                {
+                                    m_activeSelection = new SavedSelection();
                                 }
-                                m_activeSelection.Clear ();
-                                m_activeSelection.Add (e.eventSourceCon);
-                                UpdateActiveObjects (m_activeSelection);
+
+                                m_activeSelection.Clear();
+                                m_activeSelection.Add(e.eventSourceCon);
+                                UpdateActiveObjects(m_activeSelection);
                                 break;
                             }
                         }
-                    case ConnectionEvent.EventType.EVENT_CONNECTION_DELETED:
+                        case ConnectionEvent.EventType.EVENT_CONNECTION_DELETED:
                         {
-                            RecordUndo ("Delete Connection");
+                            RecordUndo("Delete Connection");
 
                             var deletedConnectionId = e.eventSourceCon.Id;
 
-                            DeleteConnection (deletedConnectionId);
-                            m_activeSelection.Clear ();
-                            UpdateActiveObjects (m_activeSelection);
+                            DeleteConnection(deletedConnectionId);
+                            m_activeSelection.Clear();
+                            UpdateActiveObjects(m_activeSelection);
 
-                            Setup ();
-                            Repaint ();
+                            Setup();
+                            Repaint();
                             break;
                         }
-                    default:
+                        default:
                         {
                             break;
                         }
                     }
+
                     break;
                 }
             }
         }
 
-        private void UpdateActiveObjects (SavedSelection selection)
+        private void UpdateActiveObjects(SavedSelection selection)
         {
-
-            foreach (var n in m_nodes) {
-                n.SetActive (selection.nodes.Contains (n));
+            foreach (var n in m_nodes)
+            {
+                n.SetActive(selection.nodes.Contains(n));
             }
 
-            foreach (var c in m_connections) {
-                c.SetActive (selection.connections.Contains (c));
+            foreach (var c in m_connections)
+            {
+                c.SetActive(selection.connections.Contains(c));
             }
         }
 
         /**
 			create new connection if same relationship is not exist yet.
 		*/
-        private void AddConnection (string label, NodeGUI startNode, Model.ConnectionPointData startPoint, NodeGUI endNode, Model.ConnectionPointData endPoint)
+        private void AddConnection(string label, NodeGUI startNode, Model.ConnectionPointData startPoint, NodeGUI endNode, Model.ConnectionPointData endPoint)
         {
-            RecordUndo ("Add Connection");
+            RecordUndo("Add Connection");
 
             var connectionsFromThisNode = m_connections
-				.Where (con => con.OutputNodeId == startNode.Id)
-				.Where (con => con.OutputPoint == startPoint)
-				.ToList ();
-            if (connectionsFromThisNode.Any ()) {
-                var alreadyExistConnection = connectionsFromThisNode [0];
-                DeleteConnection (alreadyExistConnection.Id);
-                if (m_activeSelection != null) {
-                    m_activeSelection.Remove (alreadyExistConnection);
+                .Where(con => con.OutputNodeId == startNode.Id)
+                .Where(con => con.OutputPoint == startPoint)
+                .ToList();
+            if (connectionsFromThisNode.Any())
+            {
+                var alreadyExistConnection = connectionsFromThisNode[0];
+                DeleteConnection(alreadyExistConnection.Id);
+                if (m_activeSelection != null)
+                {
+                    m_activeSelection.Remove(alreadyExistConnection);
                 }
             }
 
-            if (!m_connections.ContainsConnection (startPoint, endPoint)) {
-                m_connections.Add (ConnectionGUI.CreateConnection (label, startPoint, endPoint));
+            if (!m_connections.ContainsConnection(startPoint, endPoint))
+            {
+                m_connections.Add(ConnectionGUI.CreateConnection(label, startPoint, endPoint));
             }
         }
 
-        private NodeGUI FindNodeByPosition (Vector2 globalPos)
+        private NodeGUI FindNodeByPosition(Vector2 globalPos)
         {
-            return m_nodes.Find (n => n.Conitains (globalPos));
+            return m_nodes.Find(n => n.Conitains(globalPos));
         }
 
-        private bool IsConnectablePointFromTo (Model.ConnectionPointData sourcePoint, Model.ConnectionPointData destPoint)
+        private bool IsConnectablePointFromTo(Model.ConnectionPointData sourcePoint, Model.ConnectionPointData destPoint)
         {
-            if (sourcePoint.IsInput) {
+            if (sourcePoint.IsInput)
+            {
                 return destPoint.IsOutput;
-            } else {
+            }
+            else
+            {
                 return destPoint.IsInput;
             }
         }
 
-        private void DeleteConnection (string id)
+        private void DeleteConnection(string id)
         {
-            var deletedConnectionIndex = m_connections.FindIndex (con => con.Id == id);
-            if (0 <= deletedConnectionIndex) {
-                var c = m_connections [deletedConnectionIndex];
-                c.SetActive (false);
-                m_connections.RemoveAt (deletedConnectionIndex);
+            var deletedConnectionIndex = m_connections.FindIndex(con => con.Id == id);
+            if (0 <= deletedConnectionIndex)
+            {
+                var c = m_connections[deletedConnectionIndex];
+                c.SetActive(false);
+                m_connections.RemoveAt(deletedConnectionIndex);
             }
         }
 
-        public int GetUnusedWindowId ()
+        public int GetUnusedWindowId()
         {
             int highest = 0;
-            m_nodes.ForEach ((NodeGUI n) => {
+            m_nodes.ForEach((NodeGUI n) =>
+            {
                 if (n.WindowId > highest)
                     highest = n.WindowId;
             });

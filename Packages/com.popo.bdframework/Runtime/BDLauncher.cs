@@ -21,6 +21,7 @@ namespace BDFramework
         /// </summary>
         public string Version { get; set; }
 
+
         /// <summary>
         /// 加载框架配置
         /// </summary>
@@ -100,8 +101,8 @@ namespace BDFramework
             {
                 BDebug.LogError("GameConfig配置为null,请检查!");
             }
-            
-            
+
+
             //日志打印
             debug.IsLog = this.GameConfig.IsDebugLog;
         }
@@ -111,8 +112,7 @@ namespace BDFramework
         /// </summary>
         private void LoadFrameConfig()
         {
-            var content = Resources.Load<TextAsset>("BDFrameConfig").text;
-            FrameWorkConfig = JsonMapper.ToObject<BDFrameWorkConfig>(content);
+            FrameWorkConfig = BDFrameWorkConfig.Load();
             //框架版本
             BDebug.Log("框架版本:" + FrameWorkConfig.Version, "red");
         }
@@ -130,23 +130,31 @@ namespace BDFramework
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
         public void Launch(Type[] mainProjectTypes, Action<bool> clrBindingAction, string gameId = "default")
         {
-            BDebug.Log("Persistent:" + Application.persistentDataPath);
-            BDebug.Log("StreamingAsset:" + Application.streamingAssetsPath);
+            BDebug.Log("【Launch】Persistent:" + Application.persistentDataPath);
+            BDebug.Log("【Launch】StreamingAsset:" + Application.streamingAssetsPath);
             //主工程启动
             IGameStart mainStart;
+
             foreach (var type in mainProjectTypes)
             {
-                if (type.GetInterface(nameof(IGameStart)) != null)
+                //TODO 这里有可能先访问到 IGamestart的Adaptor
+                if (type.IsClass && type.GetInterface(nameof(IGameStart)) != null)
                 {
+                    BDebug.Log("【Launch】主工程Start! " + type.FullName);
                     mainStart = Activator.CreateInstance(type) as IGameStart;
-                    //注册
-                    mainStart.Start();
-                    OnUpdate += mainStart.Update;
-                    OnLateUpdate += mainStart.LateUpdate;
-                    break;
+                    if (mainStart != null)
+                    {
+                        //注册
+                        mainStart.Start();
+                        OnUpdate += mainStart.Update;
+                        OnLateUpdate += mainStart.LateUpdate;
+                        break;
+                    }
                 }
             }
 
+
+            BDebug.Log("【Launch】框架资源版本验证!");
             //开始资源检测
             GameAssetHelper.CheckAssetPackageVersion(Application.platform, () =>
             {

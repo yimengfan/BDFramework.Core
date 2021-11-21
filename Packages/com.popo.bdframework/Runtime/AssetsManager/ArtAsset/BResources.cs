@@ -32,10 +32,9 @@ namespace BDFramework.ResourceMgr
         readonly static public string ASSET_TYPE_PATH = ASSET_ROOT_PATH + "/AssetTypeConfig.Info";
 
         /// <summary>
-        /// 构建时的信息
+        /// 构建时的信息(Editor用)
         /// </summary>
         readonly static public string ASSET_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/Build.Info";
-
         readonly static public string ASSET_OLD_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/OldBuild.Info";
 
         /// <summary>
@@ -54,6 +53,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="callback"></param>
         static public void Load(AssetLoadPath loadPath)
         {
+            BDebug.Log("【BResource】加载路径:" + loadPath.ToString());
             if (loadPath == AssetLoadPath.Editor)
             {
 #if UNITY_EDITOR //防止编译报错

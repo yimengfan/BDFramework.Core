@@ -273,7 +273,15 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //保存AssetTypeConfig
             var asetTypePath = string.Format("{0}/{1}/{2}", BuildParams.OutputPath, BDApplication.GetPlatformPath(target), BResources.ASSET_TYPE_PATH);
-            var csv = CsvSerializer.SerializeToString(AssetTypeList);
+
+
+            //数据结构保存
+            AssetTypes at = new AssetTypes()
+            {
+                AssetTypeList = AssetTypeList,
+            };
+            var csv = CsvSerializer.SerializeToString(at);
+
             FileHelper.WriteAllText(asetTypePath, csv);
             Debug.LogFormat("AssetType写入到:{0} \n{1}" , asetTypePath,csv);
 
