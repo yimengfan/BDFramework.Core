@@ -1,0 +1,28 @@
+ManifestFileVersion: 0
+CRC: 764859867
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: fd770e44650941f541e6a01ea3075422
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 767a59f8de390d2354823e760c737a44
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource_SVN/Runtime/Char/002.prefab
+Dependencies:
+- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/ffdcaf5f90ad6424daa282d10724bfc2

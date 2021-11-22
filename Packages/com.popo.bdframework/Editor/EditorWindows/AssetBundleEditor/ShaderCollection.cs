@@ -39,8 +39,12 @@ namespace BDFramework.Editor.AssetBundle
 
 
             //防空
-            FileHelper.WriteAllText(toolsSVCpath, "");
-            AssetDatabase.DeleteAsset(toolsSVCpath);
+            var dirt = Path.GetDirectoryName(toolsSVCpath);
+            if (!Directory.Exists(dirt))
+            {
+                Directory.CreateDirectory(dirt);
+            }
+            
             AssetDatabase.CreateAsset(toolSVC, toolsSVCpath);
 
 
@@ -90,6 +94,12 @@ namespace BDFramework.Editor.AssetBundle
                 }
             }
 
+            var  targetDir = Path.GetDirectoryName(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
+            if (!Directory.Exists(targetDir))
+            {
+                Directory.CreateDirectory(targetDir);
+            }
+            
             AssetDatabase.DeleteAsset(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
             AssetDatabase.CreateAsset(svc, BResources.ALL_SHADER_VARAINT_ASSET_PATH);
             AssetDatabase.Refresh();

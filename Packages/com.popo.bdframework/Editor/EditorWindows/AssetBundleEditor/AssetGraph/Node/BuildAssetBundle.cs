@@ -69,6 +69,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 var json = JsonMapper.ToJson(BDFrameworkAssetsEnv.BuildInfo);
                 tempBuildInfo = JsonMapper.ToObject<BuildInfo>(json);
+                Debug.Log("Buildinfo 数量:" + tempBuildInfo.AssetDataMaps.Count);
             }
 
             if (this.BuildParams == null)
@@ -78,7 +79,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //预计算输出,不直接修改buildinfo
             // var platform = BDApplication.GetRuntimePlatform(target);
-            Debug.Log("Buildinfo 数量:" + tempBuildInfo.AssetDataMaps.Count);
+        
             this.MergeABName(tempBuildInfo, BuildParams);
             // var abConfig = this.GenAssetBundleConfig(tempBuildInfo, BuildParams, platform);
 

@@ -189,11 +189,11 @@ namespace BDFramework.Editor.PublishPipeline
             Debug.Log("【keystore】" + PlayerSettings.Android.keystoreName);
             //具体安卓的配置
             PlayerSettings.gcIncremental = true;
-            PlayerSettings.stripEngineCode = true;
             PlayerSettings.Android.preferredInstallLocation = AndroidPreferredInstallLocation.Auto;
+            //PlayerSettings.stripEngineCode = true;
             // if (PlayerSettings.GetManagedStrippingLevel(BuildTargetGroup.Android) == ManagedStrippingLevel.High)
             // {
-            PlayerSettings.SetManagedStrippingLevel(BuildTargetGroup.Android, ManagedStrippingLevel.Low);
+            //PlayerSettings.SetManagedStrippingLevel(BuildTargetGroup.Android, ManagedStrippingLevel.Low);
             // }
 
             //开启符号表
@@ -305,14 +305,11 @@ namespace BDFramework.Editor.PublishPipeline
             DeleteIL2cppCache();
             //具体IOS的的配置
             PlayerSettings.gcIncremental = true;
-            PlayerSettings.stripEngineCode = true;
+            //PlayerSettings.stripEngineCode = true;
             // if (PlayerSettings.GetManagedStrippingLevel(BuildTargetGroup.iOS) == ManagedStrippingLevel.High)
             // {
-                PlayerSettings.SetManagedStrippingLevel(BuildTargetGroup.iOS, ManagedStrippingLevel.Low);
+                // PlayerSettings.SetManagedStrippingLevel(BuildTargetGroup.iOS, ManagedStrippingLevel.Low);
             //}
-
-            //开启符号表
-            EditorUserBuildSettings.androidCreateSymbolsZip = true;
             //
             var outdir = BDApplication.DevOpsPublishPackagePath;
             var outputPath = IPath.Combine(outdir, string.Format("{0}_{1}_{2}", Application.identifier, mode.ToString(), DateTimeEx.GetTotalSeconds()));
