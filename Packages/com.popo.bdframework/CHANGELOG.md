@@ -1,5 +1,32 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.0.8 beta3.5
+ CN:
+【Editor】
+- BuildPipeline: 优化打包流程
+- Runtime:优化启动代码流程，修复部分beta3 bug.
+
+【Editor】
+- BuildPipeline: Optimize build  pipeline.
+- Runtime:Optimize luanch pipeline,fixed some bug on mobile from beta3.
+
+ ##V2.0.8 beta3
+ CN:
+【Editor】
+- BuildPipeline: 增加一些AssetGraph节点 
+- BuildPipeline: 增加assetbundle检测逻辑
+- BuildPipeline: 增加一个新的收集keyword的方案
+- PublishPipeline: 增加 “PublishPipeline”.
+- PublishPipeline: 增加Publish目录
+- PublishPipeline: 增加CI、CD相关支持
+【Editor】
+- BuildPipeline: Add new node for build assetbundle.
+- BuildPipeline: Add AssetBundle Check logic.
+- BuildPipeline: Add new collect shader keywords.
+- PublishPipeline: Add “Publish Pipeline”.
+- PublishPipeline: Add “publish” folder.
+- PublishPipeline: Add CI、CD support.
+
 ## V2.0.8 beta2
 CN:
 【Editor】
@@ -103,4 +130,3 @@ V2.0.5
 
 ## V2.0.0
  - 全面流程优化全新升级，部分业务重构.
-
