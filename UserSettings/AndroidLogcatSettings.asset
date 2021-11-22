@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "127.0.0.1:62001",
         "name": "com.Popo.BDFrameworkTest",
-        "processId": 4086,
+        "processId": 3588,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -18,6 +18,24 @@
             "deviceId": "127.0.0.1:62001",
             "name": "com.Popo.BDFrameworkTest",
             "processId": 4086,
+            "exited": true
+        },
+        {
+            "deviceId": "127.0.0.1:62001",
+            "name": "com.vphone.launcher",
+            "processId": 2070,
+            "exited": true
+        },
+        {
+            "deviceId": "127.0.0.1:62001",
+            "name": "com.Popo.BDFrameworkTest",
+            "processId": 3113,
+            "exited": true
+        },
+        {
+            "deviceId": "127.0.0.1:62001",
+            "name": "com.Popo.BDFrameworkTest",
+            "processId": 3588,
             "exited": false
         }
     ],
