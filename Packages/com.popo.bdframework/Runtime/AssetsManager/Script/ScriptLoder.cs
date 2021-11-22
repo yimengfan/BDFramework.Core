@@ -19,19 +19,19 @@ namespace BDFramework
         /// <summary>
         /// 脚本加载入口
         /// </summary>
-        /// <param name="loadPath"></param>
+        /// <param name="loadPathTypeType"></param>
         /// <param name="runMode"></param>
         /// <param name="mainProjectTypes">UPM隔离了dll,需要手动传入</param>
-        static public void Load(AssetLoadPath loadPath,
+        static public void Load(AssetLoadPathType loadPathTypeType,
             HotfixCodeRunMode runMode,
             Type[] mainProjectTypes,
             Action<bool> clrBindingAction)
         {
             CLRBindAction = clrBindingAction;
 
-            if (loadPath == AssetLoadPath.Editor)
+            if (loadPathTypeType == AssetLoadPathType.Editor)
             {
-                BDebug.Log("【ScriptLaunch】Editor模式!");
+                BDebug.Log("【ScriptLaunch】Editor(非热更)模式!");
                 //反射调用，防止编译报错
                 var assembly = Assembly.GetExecutingAssembly();
                 var type = assembly.GetType("BDLauncherBridge");
@@ -44,27 +44,9 @@ namespace BDFramework
             }
             else
             {
-                var path = "";
-                if (Application.isEditor)
-                {
-                    if (loadPath == AssetLoadPath.Persistent)
-                    {
-                        path = Path.Combine(Application.persistentDataPath,
-                            BDApplication.GetPlatformPath(Application.platform));
-                    }
-                    else if (loadPath == AssetLoadPath.StreamingAsset)
-                    {
-                        path = Path.Combine(Application.streamingAssetsPath,
-                            BDApplication.GetPlatformPath(Application.platform));
-                    }
-                }
-                else
-                {
-                    //真机环境，代码在persistent下，因为需要io
-                    path = Path.Combine(Application.persistentDataPath,
-                        BDApplication.GetPlatformPath(Application.platform));
-                }
-
+                BDebug.Log("【ScriptLaunch】热更模式!");
+                var path = GameConfig.GetLoadPath(loadPathTypeType);
+                path = Path.Combine(path, BDApplication.GetPlatformPath(Application.platform));
                 //加载dll
                 var dllPath = Path.Combine(path, DLL_PATH);
                 LoadHotfixDLL(dllPath, runMode, mainProjectTypes);

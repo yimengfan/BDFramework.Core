@@ -76,9 +76,9 @@ namespace BDFramework.Asset
             var path = string.Format("{0}/{1}/{2}", ouptputPath, BDApplication.GetPlatformPath(platform), PACKAGE_BUILD_INFO_PATH);
 
             //写入buildinfo内容
-            var      buildinfo = new PackageBuildInfo();
+            var buildinfo = new PackageBuildInfo();
             DateTime startTime = TimeZoneInfo.ConvertTime(new System.DateTime(1970, 1, 1), TimeZoneInfo.Utc, TimeZoneInfo.Local); // 当地时区
-            long     timeStamp = (long)(DateTime.Now - startTime).TotalSeconds;
+            long timeStamp = (long) (DateTime.Now - startTime).TotalSeconds;
             buildinfo.BuildTime = timeStamp;
             var content = JsonMapper.ToJson(buildinfo);
             //写入本地
@@ -86,6 +86,7 @@ namespace BDFramework.Asset
             {
                 File.Delete(path);
             }
+
             FileHelper.WriteAllText(path, content);
         }
 
@@ -96,12 +97,23 @@ namespace BDFramework.Asset
         static private IEnumerator AndroidCheckAssetPackageVersion(RuntimePlatform platform, Action callback)
         {
             BDebug.Log("【资源包】执行母包资源检测逻辑！");
-            var persistent     = string.Format("{0}/{1}", Application.persistentDataPath, BDApplication.GetPlatformPath(platform));
-            var streamingAsset = string.Format("{0}/{1}", Application.streamingAssetsPath, BDApplication.GetPlatformPath(platform));
-
-            var persistentPackageInfoPath = string.Format("{0}/{1}", persistent, PACKAGE_BUILD_INFO_PATH);
-            var streamingPackageinfoPath  = string.Format("{0}/{1}", streamingAsset, PACKAGE_BUILD_INFO_PATH);
-            WWW www                       = new WWW(streamingPackageinfoPath);
+            //路径初始化
+            var targetPath = string.Format("{0}/{1}", Application.persistentDataPath, BDApplication.GetPlatformPath(platform));
+            string source = "";
+            if (Application.isEditor)
+            {
+                //编辑器下 从加载目标拷贝
+                source = GameConfig.GetLoadPath(BDLauncher.Inst.GameConfig.ArtRoot);
+            }
+            else
+            {
+                source = Application.streamingAssetsPath;
+            }
+            var sourcePath = string.Format("{0}/{1}", source, BDApplication.GetPlatformPath(platform));
+            //PackageInfo
+            var persistentPackageInfoPath = string.Format("{0}/{1}", targetPath, PACKAGE_BUILD_INFO_PATH);
+            var streamingPackageinfoPath = string.Format("{0}/{1}", sourcePath, PACKAGE_BUILD_INFO_PATH);
+            WWW www = new WWW(streamingPackageinfoPath);
             yield return www;
             if (www.error != null)
             {
@@ -114,9 +126,9 @@ namespace BDFramework.Asset
                 //判断版本
                 if (File.Exists(persistentPackageInfoPath))
                 {
-                    var content               = File.ReadAllText(persistentPackageInfoPath);
+                    var content = File.ReadAllText(persistentPackageInfoPath);
                     var persistentPackageInfo = JsonMapper.ToObject<PackageBuildInfo>(content);
-                    var streamingPackageInfo  = JsonMapper.ToObject<PackageBuildInfo>(www.text);
+                    var streamingPackageInfo = JsonMapper.ToObject<PackageBuildInfo>(www.text);
                     if (persistentPackageInfo.BuildTime >= streamingPackageInfo.BuildTime)
                     {
                         BDebug.Log("【母包资源检测】不复制，Streaming无新资源");
@@ -139,21 +151,21 @@ namespace BDFramework.Asset
                     FileHelper.WriteAllBytes(persistentPackageInfoPath, www.bytes);
                 }
             }
-            
+
             //要拷贝的资源
             string[] copyFiles = new string[]
             {
                 ScriptLoder.DLL_PATH, ScriptLoder.DLL_PATH + ".pdb", //Dll
-                SqliteLoder.LOCAL_DB_PATH,//db
-                BResources.ASSET_CONFIG_PATH,BResources.ASSET_TYPE_PATH, //ArtConfig
+                SqliteLoder.LOCAL_DB_PATH, //db
+                BResources.ASSET_CONFIG_PATH, BResources.ASSET_TYPE_PATH, //ArtConfig
             };
             //开始拷贝逻辑
             for (int i = 0; i < copyFiles.Length; i++)
             {
                 //拷贝逻辑
                 var copyFile = copyFiles[i];
-                var persistentPath = string.Format("{0}/{1}", persistent, copyFile);
-                var streamingPath  = string.Format("{0}/{1}", streamingAsset, copyFile);
+                var persistentPath = string.Format("{0}/{1}", targetPath, copyFile);
+                var streamingPath = string.Format("{0}/{1}", sourcePath, copyFile);
                 www = new WWW(streamingPath);
                 yield return www;
                 if (www.error == null)
@@ -166,8 +178,9 @@ namespace BDFramework.Asset
                     BDebug.LogError("【母包资源检测】复制失败:" + copyFile);
                 }
             }
+
             yield return null;
-            
+
             callback?.Invoke();
         }
 
@@ -178,11 +191,23 @@ namespace BDFramework.Asset
         static private void IOSCheckAssetPackageVersion(RuntimePlatform platform, Action callback)
         {
             BDebug.Log("【资源包】执行母包资源检测逻辑！");
-            var persistent     = string.Format("{0}/{1}", Application.persistentDataPath, BDApplication.GetPlatformPath(platform));
-            var streamingAsset = string.Format("{0}/{1}", Application.streamingAssetsPath, BDApplication.GetPlatformPath(platform));
+            //路径初始化
+            var targetPath = string.Format("{0}/{1}", Application.persistentDataPath, BDApplication.GetPlatformPath(platform));
+            string source = "";
+            if (Application.isEditor)
+            {
+                //编辑器下 从加载目标拷贝
+                source = GameConfig.GetLoadPath(BDLauncher.Inst.GameConfig.ArtRoot);
+            }
+            else
+            {
+                source = Application.streamingAssetsPath;
+            }
+            var sourcePath = string.Format("{0}/{1}", source, BDApplication.GetPlatformPath(platform));
 
-            var persistentPackageInfoPath = string.Format("{0}/{1}", persistent, PACKAGE_BUILD_INFO_PATH);
-            var streamingPackageinfoPath  = string.Format("{0}/{1}", streamingAsset, PACKAGE_BUILD_INFO_PATH);
+            //packageinfo
+            var persistentPackageInfoPath = string.Format("{0}/{1}", targetPath, PACKAGE_BUILD_INFO_PATH);
+            var streamingPackageinfoPath = string.Format("{0}/{1}", sourcePath, PACKAGE_BUILD_INFO_PATH);
             if (!File.Exists(streamingPackageinfoPath))
             {
                 //不存在Streaming配置
@@ -195,7 +220,7 @@ namespace BDFramework.Asset
                 //persitent存在，判断版本
                 if (File.Exists(persistentPackageInfoPath))
                 {
-                    var content               = File.ReadAllText(persistentPackageInfoPath);
+                    var content = File.ReadAllText(persistentPackageInfoPath);
                     var persistentPackageInfo = JsonMapper.ToObject<PackageBuildInfo>(content);
 
                     var streamingPackageInfo = JsonMapper.ToObject<PackageBuildInfo>(streamingPackageInfoContent);
@@ -228,8 +253,8 @@ namespace BDFramework.Asset
             string[] copyFiles = new string[]
             {
                 ScriptLoder.DLL_PATH, ScriptLoder.DLL_PATH + ".pdb", //Dll
-                SqliteLoder.LOCAL_DB_PATH,//db
-                BResources.ASSET_CONFIG_PATH,BResources.ASSET_TYPE_PATH, //ArtConfig
+                SqliteLoder.LOCAL_DB_PATH, //db
+                BResources.ASSET_CONFIG_PATH, BResources.ASSET_TYPE_PATH, //ArtConfig
             };
 
             //开始拷贝逻辑
@@ -237,8 +262,8 @@ namespace BDFramework.Asset
             {
                 var copyFile = copyFiles[i];
                 //复制新版本的DLL 
-                var persistentPath = string.Format("{0}/{1}", persistent, copyFile);
-                var streamingPath  = string.Format("{0}/{1}", streamingAsset, copyFile);
+                var persistentPath = string.Format("{0}/{1}", targetPath, copyFile);
+                var streamingPath = string.Format("{0}/{1}", sourcePath, copyFile);
 
                 if (File.Exists(streamingPath))
                 {
@@ -250,7 +275,7 @@ namespace BDFramework.Asset
                     BDebug.LogError("【母包资源检测】复制失败:" + copyFile);
                 }
             }
-            
+
             //结束
             callback?.Invoke();
         }

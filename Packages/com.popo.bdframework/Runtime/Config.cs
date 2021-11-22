@@ -1,18 +1,18 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using BDFramework.Core.Tools;
 using LitJson;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 #if UNITY_EDITOR
-using System.Collections;
 using UnityEditor;
 #endif
 
 namespace BDFramework
 {
-    public enum AssetLoadPath
+    public enum AssetLoadPathType
     {
         Editor = 0,
 
@@ -31,6 +31,7 @@ namespace BDFramework
         /// </summary>
         DevOpsPublish
     }
+
     /// <summary>
     /// 热更代码执行模式
     /// </summary>
@@ -40,6 +41,7 @@ namespace BDFramework
         /// ILRuntime解释执行
         /// </summary>
         ByILRuntime = 0,
+
         /// <summary>
         /// 反射执行
         /// </summary>
@@ -52,13 +54,13 @@ namespace BDFramework
     public class GameConfig
     {
         [LabelText("代码路径")]
-        public AssetLoadPath CodeRoot = AssetLoadPath.Editor;
+        public AssetLoadPathType CodeRoot = AssetLoadPathType.Editor;
 
         [LabelText("SQLite路径")]
-        public AssetLoadPath SQLRoot = AssetLoadPath.Editor;
+        public AssetLoadPathType SQLRoot = AssetLoadPathType.Editor;
 
         [LabelText("资源路径")]
-        public AssetLoadPath ArtRoot = AssetLoadPath.Editor;
+        public AssetLoadPathType ArtRoot = AssetLoadPathType.Editor;
 
 
         [LabelText("热更代码执行模式")]
@@ -84,6 +86,43 @@ namespace BDFramework
 
         [LabelText("是否联网")]
         public bool IsNeedNet = false;
+
+        /// <summary>
+        /// 获取加载路径
+        /// </summary>
+        /// <param name="assetLoadPathType"></param>
+        static public string GetLoadPath(AssetLoadPathType assetLoadPathType)
+        {
+            var path = "";
+            //Editor下按照加载路径区分
+            if (Application.isEditor)
+            {
+                switch (assetLoadPathType)
+                {
+                    case AssetLoadPathType.Persistent:
+                        path = Application.persistentDataPath;
+                        break;
+                    case AssetLoadPathType.Editor:
+                    case AssetLoadPathType.StreamingAsset:
+                    {
+                        path = Application.streamingAssetsPath;
+                    }
+                        break;
+                    case AssetLoadPathType.DevOpsPublish:
+                    {
+                        path = BDApplication.DevOpsPublishAssetsPath;
+                    }
+                        break;
+                }
+            }
+            else
+            {
+                //真机环境默认都在persistent下，因为需要io.不在的各个模块会自行拷贝
+                path = Application.persistentDataPath;
+            }
+
+            return path;
+        }
     }
 
     /// <summary>
@@ -123,7 +162,7 @@ namespace BDFramework
             {
                 //
                 var asset = this.gameObject.GetComponent<BDLauncher>().ConfigText;
-                var path  = AssetDatabase.GetAssetPath(asset.GetInstanceID());
+                var path = AssetDatabase.GetAssetPath(asset.GetInstanceID());
                 GenGameConfig(Path.GetDirectoryName(path), asset.name);
                 isChangedData = false;
             }
@@ -151,8 +190,8 @@ namespace BDFramework
             }
 
             var curFilePath = AssetDatabase.GetAssetPath(launcher.ConfigText.GetInstanceID());
-            var direct      = Path.GetDirectoryName(curFilePath);
-            var fs          = Directory.GetFiles(direct, "*.json", SearchOption.AllDirectories).Select((s) => s.Replace("\\", "/")).ToList();
+            var direct = Path.GetDirectoryName(curFilePath);
+            var fs = Directory.GetFiles(direct, "*.json", SearchOption.AllDirectories).Select((s) => s.Replace("\\", "/")).ToList();
             var configNames = fs.Select((s) => Path.GetFileName(s)).ToArray();
             if (curSlectConfigIdx == -1)
             {
@@ -192,8 +231,6 @@ namespace BDFramework
         }
 
 
-
-
         /// <summary>
         /// 生成GameConfig
         /// </summary>
@@ -220,7 +257,7 @@ namespace BDFramework
             FileHelper.WriteAllText(fs, json);
             AssetDatabase.Refresh();
             //
-            var content  = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
+            var content = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
             var bdconfig = GameObject.FindObjectOfType<BDLauncher>();
             if (bdconfig.ConfigText.name != filename)
             {
@@ -239,7 +276,7 @@ namespace BDFramework
             if (text)
             {
                 var configData = JsonMapper.ToObject<GameConfig>(text.text);
-                var config     = GameObject.FindObjectOfType<Config>();
+                var config = GameObject.FindObjectOfType<Config>();
                 config.Data = configData;
             }
 

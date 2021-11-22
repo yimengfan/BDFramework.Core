@@ -16,7 +16,7 @@ namespace BDFramework.UnitTest
         [UnitTest(des:  "初始化")]
         static public void Register()
         {
-            BResources.Load(AssetLoadPath.Editor);
+            BResources.Load(AssetLoadPathType.Editor);
         }
         
         

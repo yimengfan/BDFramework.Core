@@ -51,10 +51,10 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="abModel"></param>
         /// <param name="callback"></param>
-        static public void Load(AssetLoadPath loadPath)
+        static public void Load(AssetLoadPathType loadPathType)
         {
-            BDebug.Log("【BResource】加载路径:" + loadPath.ToString());
-            if (loadPath == AssetLoadPath.Editor)
+            BDebug.Log("【BResource】加载路径:" + loadPathType.ToString());
+            if (loadPathType == AssetLoadPathType.Editor)
             {
 #if UNITY_EDITOR //防止编译报错
                 ResLoader = new DevResourceMgr();
@@ -63,35 +63,7 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                var path = "";
-                if (Application.isEditor)
-                {
-                    switch (loadPath)
-                    {
-                        case AssetLoadPath.Persistent:
-                        {
-                            path = Application.persistentDataPath;
-                        }
-                            break;
-                        case AssetLoadPath.StreamingAsset:
-                        {
-                            path = Application.streamingAssetsPath;
-                        }
-                            break;
-                        case AssetLoadPath.DevOpsPublish:
-                        {
-                            path = BDApplication.DevOpsPublishAssetsPath;
-                        }
-                            break;
-                    }
-                }
-                else
-                {
-                    //真机环境config在persistent，跟dll和db保持一致
-                    path = Application.persistentDataPath;
-                }
-
-                //
+                var path = GameConfig.GetLoadPath(loadPathType);
                 ResLoader = new AssetBundleMgrV2();
                 ResLoader.Init(path);
             }

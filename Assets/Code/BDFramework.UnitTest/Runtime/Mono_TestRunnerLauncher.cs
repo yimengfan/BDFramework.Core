@@ -24,7 +24,7 @@ namespace BDFramework.UnitTest
 
             yield return new WaitForSeconds(2f);
             
-            if (BDLauncher.Inst.GameConfig.CodeRoot!= AssetLoadPath.Editor && ILRuntimeHelper.IsRunning)
+            if (BDLauncher.Inst.GameConfig.CodeRoot!= AssetLoadPathType.Editor && ILRuntimeHelper.IsRunning)
             {
                 //执行热更单元测试
                 ILRuntimeHelper.AppDomain.Invoke("BDFramework.UnitTest.TestRunner", "RunHotfixUnitTest", null, new object[] { });

@@ -67,7 +67,7 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Collections.Generic.List<System.String>), typeof(System.Action<System.Int32, System.Int32>), typeof(System.Action<System.Collections.Generic.IDictionary<System.String, UnityEngine.Object>>)};
             method = type.GetMethod("AsyncLoad", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, AsyncLoad_2);
-            args = new Type[]{typeof(BDFramework.AssetLoadPath)};
+            args = new Type[]{typeof(BDFramework.AssetLoadPathType)};
             method = type.GetMethod("Load", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Load_3);
             args = new Type[]{};
@@ -203,11 +203,11 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            BDFramework.AssetLoadPath @loadPath = (BDFramework.AssetLoadPath)typeof(BDFramework.AssetLoadPath).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            BDFramework.AssetLoadPathType @loadPathType = (BDFramework.AssetLoadPathType)typeof(BDFramework.AssetLoadPathType).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.ResourceMgr.BResources.Load(@loadPath);
+            BDFramework.ResourceMgr.BResources.Load(@loadPathType);
 
             return __ret;
         }

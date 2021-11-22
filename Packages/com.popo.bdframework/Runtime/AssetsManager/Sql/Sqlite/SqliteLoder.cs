@@ -77,26 +77,10 @@ namespace BDFramework.Sql
         /// runtime下加载，只读
         /// </summary>
         /// <param name="str"></param>
-        static public void Load(AssetLoadPath loadPath)
+        static public void Load(AssetLoadPathType assetLoadPathTypeType)
         {
             Connection?.Dispose();
-            var path = "";
-            if (Application.isEditor)
-            {
-                if (loadPath == AssetLoadPath.Persistent)
-                {
-                    path = Application.persistentDataPath;
-                }
-                else if (loadPath == AssetLoadPath.Editor || loadPath == AssetLoadPath.StreamingAsset)
-                {
-                    path = Application.streamingAssetsPath;
-                }
-            }
-            else
-            {
-                //真机环境db在persistent下，因为需要io
-                path = Application.persistentDataPath;
-            }
+            var path = GameConfig.GetLoadPath(assetLoadPathTypeType);
 
             //用当前平台目录进行加载
             path = GetLocalDBPath(path, Application.platform);

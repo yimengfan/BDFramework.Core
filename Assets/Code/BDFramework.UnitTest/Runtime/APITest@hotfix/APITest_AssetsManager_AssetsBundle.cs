@@ -13,7 +13,7 @@ namespace BDFramework.UnitTest
         static public void Register()
         {
             //这里开启Assetbundle模式
-            BResources.Load(AssetLoadPath.StreamingAsset);
+            BResources.Load(AssetLoadPathType.StreamingAsset);
         }
         
         [UnitTest(10000,"关闭")]

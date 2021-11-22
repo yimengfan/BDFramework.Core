@@ -74,7 +74,7 @@ namespace BDFramework.Editor
             BDApplication.Init();
             BDEditorApplication.Init();
             //编辑器下加载初始化
-            BResources.Load(AssetLoadPath.Editor);
+            BResources.Load(AssetLoadPathType.Editor);
             //加载主工程的DLL Type
             var assemblyPath = BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll";
             var editorAssemlyPath = BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp-Editor.dll";

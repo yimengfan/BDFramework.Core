@@ -77,10 +77,18 @@ namespace BDFramework.ResourceMgr.V2
 
             var platformPath = BDApplication.GetPlatformPath(Application.platform);
             //1.设置加载路径  
-            firstArtDirectory = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_ROOT_PATH);
-            //当路径为persistent时，第二路径生效
-            secArtDirectory = ZString.Format("{0}/{1}/{2}", Application.streamingAssetsPath, platformPath, BResources.ASSET_ROOT_PATH); //
-            //路径替换
+            if (Application.isEditor)
+            {
+                firstArtDirectory = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_ROOT_PATH);
+                secArtDirectory = ZString.Format("{0}/{1}/{2}", Application.streamingAssetsPath, platformPath, BResources.ASSET_ROOT_PATH); //
+            }
+            else
+            {
+                firstArtDirectory = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_ROOT_PATH);
+                secArtDirectory = ZString.Format("{0}/{1}/{2}", Application.streamingAssetsPath, platformPath, BResources.ASSET_ROOT_PATH); //
+            }
+
+            //2.路径替换
             switch (Application.platform)
             {
                 case RuntimePlatform.OSXEditor:
