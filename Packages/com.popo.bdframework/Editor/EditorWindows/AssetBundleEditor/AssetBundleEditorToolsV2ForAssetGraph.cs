@@ -49,11 +49,11 @@ namespace BDFramework.Editor.AssetBundle
         /// <param name="buildTarget"></param>
         /// <param name="outPath"></param>
         /// <param name="isUseHash"></param>
-        static public void Build(BuildTarget buildTarget, string outPath, bool isUseHash)
+        static public void Build(BuildTarget buildTarget, string outPath)
         {
             var (cg, bdenvNode) = GetBDFrameExAssetGraph();
             var bdenv = (bdenvNode.Operation.Object as BDFrameworkAssetsEnv);
-            bdenv.SetBuildParams(outPath, isUseHash);
+            bdenv.SetBuildParams(outPath);
             //
             foreach (var node in cg.Nodes)
             {

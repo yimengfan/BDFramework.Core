@@ -88,7 +88,7 @@ namespace BDFramework.Editor.PublishPipeline
             ShaderCollection.SimpleGenShaderVariant();
             //2.打包模式
             var config = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
-            return AssetBundleEditorToolsV2.GenAssetBundle(CI_ROOT_PATH, platform, true);
+            return AssetBundleEditorToolsV2.GenAssetBundle(CI_ROOT_PATH, platform);
         }
 
         #endregion

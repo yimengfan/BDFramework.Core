@@ -47,9 +47,9 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         /// <param name="outpath"></param>
         /// <param name="isUseHash"></param>
-        public void SetBuildParams(string outpath, bool isUseHash)
+        public void SetBuildParams(string outpath)
         {
-            BuildParams = new BuildAssetBundleParams() {OutputPath = outpath, IsUseHashName = isUseHash,};
+            BuildParams = new BuildAssetBundleParams() {OutputPath = outpath};
             this.isGenBuildInfo = false;
         }
 

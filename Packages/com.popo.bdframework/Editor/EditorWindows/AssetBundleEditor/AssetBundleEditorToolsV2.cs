@@ -27,10 +27,10 @@ namespace BDFramework.Editor.AssetBundle
         /// <param name="target">平台</param>
         /// <param name="options">打包参数</param>
         /// <param name="isUseHashName">是否为hash name</param>
-        public static bool GenAssetBundle(string outputPath, RuntimePlatform platform, bool isUseHashName = false)
+        public static bool GenAssetBundle(string outputPath, RuntimePlatform platform)
         {
             var buildTarget = BDApplication.GetBuildTarget(platform);
-            AssetBundleEditorToolsV2ForAssetGraph.Build(buildTarget, outputPath, isUseHashName);
+            AssetBundleEditorToolsV2ForAssetGraph.Build(buildTarget, outputPath);
             return true;
         }
 
