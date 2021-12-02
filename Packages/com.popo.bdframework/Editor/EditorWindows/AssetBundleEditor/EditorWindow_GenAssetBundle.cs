@@ -111,15 +111,15 @@ namespace BDFramework.Editor.AssetBundle
             }
             
             GUILayout.Label("测试:");
-            if (GUILayout.Button("AssetBundle SG打包测试(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
+            if (GUILayout.Button("AssetBundle SG打包(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
             {
                 var outputpath = BDApplication.DevOpsPublishAssetsPath;
                 // outputpath2 = Application.streamingAssetsPath;
                 //删除目录里面资源
-                if (Directory.Exists(outputpath))
-                {
-                    Directory.Delete(outputpath,true);
-                }
+                // if (Directory.Exists(outputpath))
+                // {
+                //     Directory.Delete(outputpath,true);
+                // }
                 //打包AB
                 AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath);
             }

@@ -68,7 +68,6 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\BDFrameworkAssetsEnv.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\BuildAssetBundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\BuildAssetBundlePreView.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\CollectChangedAssets.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\CollectShaderKeyWord.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\CollectSpriteAtlas.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\AssetGraph\Node\FilterGroupByPath.cs" />
@@ -81,7 +80,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\BuildInfo.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\EditorWindow_GenAssetBundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\ShaderCollection.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\ShaderVaraintCollectWindows.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\ShaderVariantsCollectionTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDAssetImporter.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDFrameEditorLife.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorBehavior\ABDEditorBehavior.cs" />
