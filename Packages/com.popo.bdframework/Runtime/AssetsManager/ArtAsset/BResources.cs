@@ -20,17 +20,18 @@ namespace BDFramework.ResourceMgr
         /// 美术根目录
         /// </summary>
         readonly static public string ASSET_ROOT_PATH = "Art";
-
         /// <summary>
         /// 美术config配置
         /// </summary>
         readonly static public string ASSET_CONFIG_PATH = ASSET_ROOT_PATH + "/Config.Info";
-
+        /// <summary>
+        /// 美术分包config配置
+        /// </summary>
+        readonly static public string ASSET_PACKAGE_CONFIG_PATH = ASSET_ROOT_PATH + "/PackageConfig.Info";
         /// <summary>
         /// 资源信息
         /// </summary>
         readonly static public string ASSET_TYPE_PATH = ASSET_ROOT_PATH + "/AssetTypeConfig.Info";
-
         /// <summary>
         /// 构建时的信息(Editor用)
         /// </summary>

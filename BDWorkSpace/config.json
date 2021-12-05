@@ -9,7 +9,6 @@
     "AssetBundleSVNPsw"     : "root"
   },
   "BuildAssetBundle" : {
-    "IsUseHashName" : true
   },
   "Android"          : {
     "keystoreName" : "BDWorkSpace/SDK/user.keystore",
