@@ -188,14 +188,14 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 foreach (var ag in ags.assetGroups)
                 {
-                    var floderPath = ag.Key;
-                    if (!Directory.Exists(floderPath))
+                    var rootfloderPath = ag.Key;
+                    if (!Directory.Exists(rootfloderPath))
                     {
                         continue;
                     }
 
                     //搜集子目录
-                    var subFolders = Directory.GetDirectories(floderPath, "*", SearchOption.TopDirectoryOnly);
+                    var subFolders = Directory.GetDirectories(rootfloderPath, "*", SearchOption.TopDirectoryOnly);
                     for (int i = 0; i < subFolders.Length; i++)
                     {
                         var subFolder = subFolders[i];
@@ -204,8 +204,8 @@ namespace BDFramework.Editor.AssetGraph.Node
                         //打印文件夹hash
                         Debug.Log("子目录:" + subFolders[i] + " - " + guid);
                     }
-                    outMap[floderPath] = new List<AssetReference>();
-                    var subfiles = Directory.GetFiles(floderPath, "*", SearchOption.TopDirectoryOnly);
+                    outMap[rootfloderPath] = new List<AssetReference>();
+                    var rootfiles = Directory.GetFiles(rootfloderPath, "*", SearchOption.TopDirectoryOnly);
                     
                     foreach (var ar in ag.Value)
                     {
@@ -225,8 +225,12 @@ namespace BDFramework.Editor.AssetGraph.Node
                             }
                             else
                             {
+                                var ret = rootfiles.FirstOrDefault((f) => ar.importFrom.Equals(f, StringComparison.OrdinalIgnoreCase));
                                 //剩下全都打进父目录
-                                outMap[floderPath].Add(ar);
+                                if (ret != null)
+                                {
+                                    outMap[rootfloderPath].Add(ar);
+                                }
                             }
                         }
                     }

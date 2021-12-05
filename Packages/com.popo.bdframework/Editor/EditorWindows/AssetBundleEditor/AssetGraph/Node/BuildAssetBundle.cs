@@ -69,9 +69,13 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //这里只做临时的输出，预览用，不做实际更改
-            BuildInfo tempBuildInfo = null;
+            BuildInfo tempBuildInfo = new BuildInfo();
             var json = JsonMapper.ToJson(BDFrameworkAssetsEnv.BuildInfo);
-            tempBuildInfo = JsonMapper.ToObject<BuildInfo>(json);
+            var temp = JsonMapper.ToObject<BuildInfo>(json);
+            foreach (var item in temp.AssetDataMaps)
+            {
+                tempBuildInfo.AssetDataMaps[item.Key] = item.Value;
+            }
             Debug.Log("Buildinfo 数量:" + tempBuildInfo.AssetDataMaps.Count);
 
             //预计算输出,不直接修改buildinfo
@@ -105,17 +109,42 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
             else
             {
+                var list = new List<string>();
+                if (assetReferenceList.Count > tempBuildInfo.AssetDataMaps.Count)
+                {
+                    foreach (var ar in assetReferenceList)
+                    {
+                        if (!tempBuildInfo.AssetDataMaps.ContainsKey(ar.importFrom))
+                        {
+                            list.Add(ar.importFrom);
+                        }
+                    }
+
+                    Debug.Log("Buildinfo缺少资源:\n " + JsonMapper.ToJson(list));
+                }
+                else
+                {
+                    foreach (var key in tempBuildInfo.AssetDataMaps.Keys)
+                    {
+                        var ret = assetReferenceList.Find((ar) => ar.importFrom.Equals(key, StringComparison.OrdinalIgnoreCase));
+                        if (ret == null)
+                        {
+                            list.Add(key);
+                        }
+                    }
+
+                    Debug.Log("Buildinfo多余资源:\n " + JsonMapper.ToJson(list,true));
+                }
+
                 Debug.LogErrorFormat("【资源验证】coming资源和Buildinfo资源数量不相等!{0}-{1}", assetReferenceList.Count, tempBuildInfo.AssetDataMaps.Count);
             }
-            
-            
-            
+
+
             //输出节点 预览
             var outMap = new Dictionary<string, List<AssetReference>>();
             foreach (var buildAssetItem in tempBuildInfo.AssetDataMaps)
             {
-                List<AssetReference> list;
-                if (!outMap.TryGetValue(buildAssetItem.Value.ABName, out list))
+                if (!outMap.TryGetValue(buildAssetItem.Value.ABName, out var list))
                 {
                     list = new List<AssetReference>();
                     outMap[buildAssetItem.Value.ABName] = list;
@@ -140,7 +169,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
         }
 
-        public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc, Action<NodeData, string, float> progressFunc)
+        public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc,
+            Action<NodeData, string, float> progressFunc)
         {
             Debug.Log("【BuildAssetbundle】执行Build...");
             //设置编辑器状态
