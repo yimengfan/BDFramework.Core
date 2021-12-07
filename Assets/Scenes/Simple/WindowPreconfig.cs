@@ -10,9 +10,9 @@ using UnityEngine.UI;
 public class WindowPreconfig : MonoBehaviour
 {
     private InputField inputField;
-    private Text       text_DownloadProcess;
-    private Button     btn_Download;
-    private Button     btn_Pass;
+    private Text text_DownloadProcess;
+    private Button btn_Download;
+    private Button btn_Pass;
 
 
     /// <summary>
@@ -21,10 +21,10 @@ public class WindowPreconfig : MonoBehaviour
     void Start()
     {
         //节点发现
-        inputField           = this.transform.Find("InputField").GetComponent<InputField>();
+        inputField = this.transform.Find("InputField").GetComponent<InputField>();
         text_DownloadProcess = this.transform.Find("text_DownloadProcess").GetComponent<Text>();
-        btn_Download         = this.transform.Find("btn_Download").GetComponent<Button>();
-        btn_Pass             = this.transform.Find("btn_Pass").GetComponent<Button>();
+        btn_Download = this.transform.Find("btn_Download").GetComponent<Button>();
+        btn_Pass = this.transform.Find("btn_Pass").GetComponent<Button>();
         //
         this.btn_Pass.onClick.AddListener(Onclick_PassAndLaunch);
         this.btn_Download.onClick.AddListener(Onclick_DownLoadAndLaunch);
@@ -38,12 +38,10 @@ public class WindowPreconfig : MonoBehaviour
     void Onclick_PassAndLaunch()
     {
         //直接启动
-        BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(),GameLogicCLRBinding.Bind);
+        BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(), GameLogicCLRBinding.Bind);
         //
         this.StartCoroutine(IE_Destroy());
     }
-
-
 
 
     private void Onclick_DownLoadAndLaunch()
@@ -56,31 +54,29 @@ public class WindowPreconfig : MonoBehaviour
         }
 
         var url = "http://" + this.inputField.text;
-        VersionContorller.Start(UpdateMode.Repair, url, Application.persistentDataPath, (i, j) =>
-        {
-            this.text_DownloadProcess.text = string.Format("{0}/{1}", i, j);
-            //下载完毕
-            if (i == j)
+        AssetsVersionContorller.Start(UpdateMode.Repair, url, Application.persistentDataPath, null,
+            (i, j) =>
             {
-                this.text_DownloadProcess.text = "下载完毕";
-                //启动
-                BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(),GameLogicCLRBinding.Bind);
-            }
-        }, (e) =>
-        {
-            this.text_DownloadProcess.text = e;
-        });
+                this.text_DownloadProcess.text = string.Format("{0}/{1}", i, j);
+                //下载完毕
+                if (i == j)
+                {
+                    this.text_DownloadProcess.text = "下载完毕";
+                    //启动
+                    BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(), GameLogicCLRBinding.Bind);
+                }
+            }, //进度通知
+            (e) => { this.text_DownloadProcess.text = e; }); //错误
     }
-    
-    
+
+
     /// <summary>
     /// 删除
     /// </summary>
     /// <returns></returns>
     IEnumerator IE_Destroy()
     {
-        yield return  new WaitForSeconds(3);
+        yield return new WaitForSeconds(3);
         Destroy(this.gameObject);
     }
-
 }

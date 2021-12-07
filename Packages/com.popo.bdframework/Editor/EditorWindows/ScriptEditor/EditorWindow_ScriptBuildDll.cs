@@ -91,7 +91,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     static public void RoslynBuild(string outpath, RuntimePlatform platform, ScriptBuildTools.BuildMode mode,bool isShowTips =true)
     {
         //触发bd环境周期
-        BDEditorBehaviorHelper.OnBeginBuildDLL();
+        BDFrameworkPublishPipelineHelper.OnBeginBuildHotfixDLL();
 
         var targetPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
         //1.分析之前先删除,然后生成临时文件防止报错
@@ -126,7 +126,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         GenCLRBindingByAnalysis(platform, outpath);
         AssetDatabase.Refresh();
         //触发bd环境周期
-        BDEditorBehaviorHelper.OnEndBuildDLL(outpath);
+        BDFrameworkPublishPipelineHelper.OnEndBuildDLL(outpath);
     }
 
     /// <summary>

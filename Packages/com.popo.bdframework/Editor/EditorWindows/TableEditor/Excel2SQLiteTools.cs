@@ -73,7 +73,7 @@ namespace BDFramework.Editor.TableData
         public static void AllExcel2SQLite(string ouptputPath, RuntimePlatform platform,DBType dbType = DBType.Local )
         {
             //触发bd环境周期
-            BDEditorBehaviorHelper.OnBeginBuildSqlite();
+            BDFrameworkPublishPipelineHelper.OnBeginBuildSqlite();
             var xlslFiles = GetAllConfigFiles();
             switch (dbType)
             {
@@ -102,7 +102,7 @@ namespace BDFramework.Editor.TableData
             //
             EditorUtility.ClearProgressBar();
             //触发bd环境周期
-            BDEditorBehaviorHelper.OnEndBuildSqlite(ouptputPath);
+            BDFrameworkPublishPipelineHelper.OnEndBuildSqlite(ouptputPath);
             GameAssetHelper.GenPackageBuildInfo(ouptputPath, platform);
             Debug.Log("导出Sqlite完成!");
         }
@@ -173,7 +173,7 @@ namespace BDFramework.Editor.TableData
                 }
             }
             //回调通知
-            BDEditorBehaviorHelper.OnExportExcel(type);
+            BDFrameworkPublishPipelineHelper.OnExportExcel(type);
             //
             EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.Name, jsonObj.Count), 1);
         }

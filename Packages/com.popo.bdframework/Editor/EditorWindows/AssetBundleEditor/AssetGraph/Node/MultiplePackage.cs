@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.Versioning;
 using BDFramework.Editor.AssetBundle;
+using BDFramework.VersionContrller;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         public BuildInfo BuildInfo { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
 
-        static public Dictionary<string, List<string>> PackageNameMap = new Dictionary<string, List<string>>();
+        static public List<AssetMultiplePackageConfigItem> AssetMultiplePackageConfigList = new List<AssetMultiplePackageConfigItem>();
 
         public void Reset()
         {
@@ -233,7 +234,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //
-            PackageNameMap = new Dictionary<string, List<string>>();
+            AssetMultiplePackageConfigList = new List<AssetMultiplePackageConfigItem>();
             //prepare传入的资源
             this.incommingAssetGroup = incoming.FirstOrDefault();
             this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;

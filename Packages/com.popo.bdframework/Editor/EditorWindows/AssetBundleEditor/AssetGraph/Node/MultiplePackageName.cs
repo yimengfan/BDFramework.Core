@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
+using BDFramework.VersionContrller;
 using LitJson;
+using ServiceStack.Text;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AssetGraph;
@@ -53,7 +55,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             this.PacakgeName = EditorGUILayout.TextField("分包名:", this.PacakgeName);
             node.Name = "分包名:" + this.PacakgeName;
-                //editor.UpdateNodeName(node);
+            //editor.UpdateNodeName(node);
         }
 
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
@@ -62,29 +64,40 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
-            
+
             foreach (var ag in incoming)
             {
                 foreach (var ags in ag.assetGroups)
                 {
-                    var ret = MultiplePackage.PackageNameMap.TryGetValue(this.PacakgeName, out var list);
-                    if (!ret)
+                    var ret = MultiplePackage.AssetMultiplePackageConfigList.FindIndex((mp) => mp.PackageName == this.PacakgeName);
+                    AssetMultiplePackageConfigItem item = new AssetMultiplePackageConfigItem();
+                    if (ret == -1)
                     {
-                        list = new List<string>();
-                        MultiplePackage.PackageNameMap[this.PacakgeName] = list;
+                        item.AssetsDirectPathList = new List<string>();
+
+                        MultiplePackage.AssetMultiplePackageConfigList.Add(item);
+                    }
+                    else
+                    {
+                        item = MultiplePackage.AssetMultiplePackageConfigList[ret];
                     }
 
                     //添加package的路径
-                    list.Add(ags.Key);
+                    item.AssetsDirectPathList.Add(ags.Key);
                 }
             }
         }
 
-        public override void Build(NodeBuildContext ctx)
+        /// <summary>
+        /// 保存分包设置
+        /// </summary>
+        /// <param name="ctx"></param>
+        public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc,
+            Action<NodeData, string, float> progressFunc)
         {
-            var path = BDFrameworkAssetsEnv.BuildParams.OutputPath + "/" + BDApplication.GetPlatformPath(ctx.target) + "/" + BResources.ASSET_PACKAGE_CONFIG_PATH;
-            FileHelper.WriteAllText(path, JsonMapper.ToJson(MultiplePackage.PackageNameMap));
-            Debug.Log("保存分包:" + path);
+            var path = string.Format("{0}/{1}/{2}/{3}", BDFrameworkAssetsEnv.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.ASSET_ROOT_PATH, BResources.SERVER_ASSETS_MULTIPLE_PACKAGE_CONFIG);
+            FileHelper.WriteAllText(path, CsvSerializer.SerializeToString(MultiplePackage.AssetMultiplePackageConfigList));
+            Debug.Log("保存分包设置:" + path);
         }
     }
 }

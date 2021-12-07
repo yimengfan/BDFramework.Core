@@ -1,7 +1,10 @@
 using System;
 using System.IO;
 using System.Text;
+using BDFramework.Core.Tools;
+using BDFramework.ResourceMgr;
 using BDFramework.VersionContrller;
+using DotNetExtension;
 using LitJson;
 using UnityEditor;
 using UnityEngine;
@@ -17,28 +20,20 @@ namespace BDFramework.Editor
         /// <param name="uploadHttpApi"></param>
         static public void Assets2Hash(string path)
         {
-            var ios = IPath.Combine(path, "iOS");
-            var android = IPath.Combine(path, "Android");
-            var windows = IPath.Combine(path, "Windows");
+            var plarforms = new RuntimePlatform[] {RuntimePlatform.Android, RuntimePlatform.IPhonePlayer, RuntimePlatform.WindowsPlayer};
 
-            DateTime startTime = TimeZoneInfo.ConvertTime(new System.DateTime(1970, 1, 1), TimeZoneInfo.Utc,TimeZoneInfo.Local);  // 当地时区
-            long timeStamp = (long)(DateTime.Now - startTime).TotalSeconds;
-         
-            if (Directory.Exists(ios))
+            long timeStamp = DateTimeEx.GetTotalSeconds();
+            foreach (var platform in plarforms)
             {
-                File2Hash("iOS", timeStamp.ToString(), ios);
+                var platformPath = IPath.Combine(path, BDApplication.GetPlatformPath(platform));
+                if (Directory.Exists(platformPath))
+                {
+                    var outdir = PublishAssetsToHash(platformPath, platform, timeStamp.ToString());
+                    //通知回调
+                    BDFrameworkPublishPipelineHelper.ReadyPublishAssetsToServer(platform, outdir);
+                }
             }
-            if (Directory.Exists(android))
-            {
-                File2Hash("Android", timeStamp.ToString(), android);
-            }
-
-            if (Directory.Exists(windows))
-            {
-                File2Hash("Windows", timeStamp.ToString(), windows);
-            }
-
-            EditorUtility.ClearProgressBar();
+            
 
             File.WriteAllText(path + "/_Hash目录提交到服务器(并去除_Hash后缀)", "");
         }
@@ -46,45 +41,43 @@ namespace BDFramework.Editor
         /// <summary>
         /// 文件转hash
         /// </summary>
-        /// <param name="Platform"></param>
+        /// <param name="outRootPath"></param>
+        /// <param name="platform"></param>
         /// <param name="version"></param>
-        /// <param name="path"></param>
         /// <returns></returns>
-
-        static public string File2Hash(string Platform, string version, string path)
+        static public string PublishAssetsToHash(string outRootPath, RuntimePlatform platform, string version)
         {
-            path = path.Replace("\\", "/");
+            outRootPath = outRootPath.Replace("\\", "/");
             //
-            var files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
-            var tempDirect = path + "_Hash";
-
+            var assets = Directory.GetFiles(outRootPath, "*", SearchOption.AllDirectories);
+            var outputDir = outRootPath + "_Hash";
             //文件准备
-            if (Directory.Exists(tempDirect))
+            if (Directory.Exists(outputDir))
             {
-                Directory.Delete(tempDirect, true);
+                Directory.Delete(outputDir, true);
             }
 
-            Directory.CreateDirectory(tempDirect);
+            Directory.CreateDirectory(outputDir);
             //生成配置
             var config = new AssetConfig();
-            config.Platfrom = Platform;
+            config.Platfrom = BDApplication.GetPlatformPath(platform);
             config.Version = version;
             float count = 0;
-            foreach (var f in files)
+            foreach (var asset in assets)
             {
                 count++;
-                EditorUtility.DisplayProgressBar(Platform + " 资源处理",
-                    string.Format("生成文件hash:{0}/{1}", count, files.Length), count / files.Length);
-                var ext = Path.GetExtension(f).ToLower();
+                EditorUtility.DisplayProgressBar(platform + " 资源处理",
+                    string.Format("生成文件hash:{0}/{1}", count, assets.Length), count / assets.Length);
+                var ext = Path.GetExtension(asset).ToLower();
                 if (ext == ".manifest" || ext == ".meta")
                 {
                     continue;
                 }
 
                 //
-                var hash = GetMD5HashFromFile(f);
+                var hash = GetMD5HashFromFile(asset);
 
-                var localPath = f.Replace("\\", "/").Replace(path + "/", "");
+                var localPath = asset.Replace("\\", "/").Replace(outRootPath + "/", "");
 
                 var item = new AssetItem() {HashName = hash, LocalPath = localPath};
 
@@ -93,20 +86,20 @@ namespace BDFramework.Editor
                 //开始拷贝
                 try
                 {
-                    File.Copy(f, IPath.Combine(tempDirect, hash));
+                    File.Copy(asset, IPath.Combine(outputDir, hash));
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError("error file:" + f);
+                    Debug.LogError("error file:" + asset);
                     Debug.LogError(e);
                     throw;
                 }
             }
 
             //生成配置
-            File.WriteAllText(IPath.Combine(tempDirect, Platform + "_VersionConfig.json"), JsonMapper.ToJson(config));
+            File.WriteAllText(IPath.Combine(outputDir, BResources.SERVER_ASSETS_VERSION_CONFIG), JsonMapper.ToJson(config));
             //
-            return tempDirect;
+            return outputDir;
         }
 
 

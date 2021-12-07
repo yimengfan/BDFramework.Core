@@ -229,6 +229,8 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //恢复编辑器状态
             BDEditorApplication.EditorStatus = BDFrameworkEditorStatus.Idle;
+            //BD生命周期触发
+            BDFrameworkPublishPipelineHelper.OnEndBuildAssetBundle(this.BuildParams,this.BuildInfo);
         }
 
 
@@ -317,9 +319,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //
             //     var depend = AssetDatabase.GetAssetBundleDependencies(abpath,true);
             // }
-
-            //BD生命周期触发
-            BDEditorBehaviorHelper.OnEndBuildAssetBundle(platformOutputPath);
+            
             GameAssetHelper.GenPackageBuildInfo(buildParams.OutputPath, platform);
         }
 

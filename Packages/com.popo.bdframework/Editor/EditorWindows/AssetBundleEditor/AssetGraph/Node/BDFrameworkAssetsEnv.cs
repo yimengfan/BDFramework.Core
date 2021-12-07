@@ -97,7 +97,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             if (BuildParams == null)
             {
                 BuildParams = new BuildAssetBundleParams();
+                
             }
+            BuildParams.BuildTarget = target;
 
             //设置所有节点参数请求,依次传参
             Debug.Log("【初始化框架资源环境】配置:\n" + JsonMapper.ToJson(BuildParams));
@@ -169,10 +171,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc,
             Action<NodeData, string, float> progressFunc)
         {
- 
-
             #region 保存AssetTypeConfig
-
             var asetTypePath = string.Format("{0}/{1}/{2}", BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.ASSET_TYPE_PATH);
             //数据结构保存
             AssetTypes at = new AssetTypes()
@@ -184,6 +183,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             Debug.LogFormat("AssetType写入到:{0} \n{1}", asetTypePath, csv);
             
             #endregion
+            
+            //BD生命周期触发
+            BDFrameworkPublishPipelineHelper.OnBeginBuildAssetBundle(BuildParams,BuildInfo);
         }
 
 

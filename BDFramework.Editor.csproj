@@ -55,6 +55,8 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\EditorAssetHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\BuildPackageTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\CI\PublishPipeLineCI.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorBehavior\ABDFrameworkPublishPipelineBehaviour.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorBehavior\BDFrameworkPublishPipelineHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorWindow_BuildAssetsGuide.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorWindow_CICD.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
@@ -84,8 +86,6 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\ShaderVariantsCollectionTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDAssetImporter.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDFrameEditorLife.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorBehavior\ABDEditorBehavior.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorBehavior\BDEditorBehaviorHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorBuiltinStyle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorGuide\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDEditorApplication.cs" />

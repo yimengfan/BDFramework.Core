@@ -163,7 +163,7 @@ namespace BDFramework.Editor
         {
             RegisterEditorMgrbase(Types);
             //Editor的管理器初始化
-            BDEditorBehaviorHelper.Init();
+            BDFrameworkPublishPipelineHelper.Init();
             //调试器启动
             DebuggerServerProcessManager.Inst.Start();
 

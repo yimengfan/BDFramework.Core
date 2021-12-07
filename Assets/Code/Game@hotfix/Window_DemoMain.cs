@@ -147,8 +147,8 @@ public class Window_DemoMain : AWindow
             foreach (var r in map)
             {
                 BDebug.Log(string.Format("--> {0} ： {1}", r.Key, r.Value.name));
-                var _go = GameObject.Instantiate(r.Value) ;
-                golist.Add(_go as  GameObject);
+                var _go = GameObject.Instantiate(r.Value);
+                golist.Add(_go as GameObject);
             }
         });
 
@@ -166,9 +166,17 @@ public class Window_DemoMain : AWindow
     private void btn_07()
     {
         var path = Application.persistentDataPath;
-
-        VersionContorller.Start(UpdateMode.Repair, "http://127.0.0.1", path,
-            (i, j) => { Debug.LogFormat("资源更新进度：{0}/{1}", i, j); }, (error) => { Debug.LogError("错误:" + error); });
+        //开始下载
+        AssetsVersionContorller.Start(UpdateMode.Repair, "http://127.0.0.1", path, null,
+            (idx, totalNum) =>
+            {
+                Debug.LogFormat("资源更新进度：{0}/{1}", idx, totalNum); 
+                
+            }, //进度通知
+            (error) =>
+            {
+                Debug.LogError("错误:" + error);
+            });//错误通知
     }
 
     [ButtonOnclick("Grid/btn_8")]

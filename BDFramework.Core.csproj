@@ -94,6 +94,8 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\BResources.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\AssetsVersionController\AssetsVersionContorller.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\AssetsVersionController\HotAssetsMap.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\GameAssetHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />
@@ -106,8 +108,6 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite@hotfix\TableQuery.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite@hotfix\TableQueryRuntime.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\AssetBundleBenchmark01.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\VersionController\HotAssetsMap.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\VersionController\VersionContorller.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncher.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncherBridge@hotfix.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Config.cs" />
