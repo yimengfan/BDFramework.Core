@@ -4,6 +4,7 @@ using System.IO;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.Core.Tools;
+using Cysharp.Text;
 using LitJson;
 using UnityEngine;
 
@@ -194,13 +195,33 @@ namespace BDFramework.Asset
             {
                 //编辑器下 从加载目标拷贝
                 source = GameConfig.GetLoadPath(BDLauncher.Inst.GameConfig.ArtRoot);
+                if (source == Application.persistentDataPath)
+                {
+                    var s1= ZString.Format("{0}/{1}", Application.streamingAssetsPath, BDApplication.GetPlatformPath(platform));
+                    if (Directory.Exists(s1))
+                    {
+                        source = Application.streamingAssetsPath;
+                    }
+                    else
+                    {
+                        var s2 =ZString.Format("{0}/{1}", BDApplication.DevOpsPublishAssetsPath, BDApplication.GetPlatformPath(platform));
+                        if (Directory.Exists(s2))
+                        {
+                            source = BDApplication.DevOpsPublishAssetsPath;
+                        }
+                        else
+                        {
+                            Debug.LogError("【资源包】本地无资源,可能逻辑出错,请检查!");
+                        }
+                    }
+                }
             }
             else
             {
                 source = Application.streamingAssetsPath;
             }
 
-            var sourcePath = string.Format("{0}/{1}", source, BDApplication.GetPlatformPath(platform));
+            var sourcePath = ZString.Format("{0}/{1}", source, BDApplication.GetPlatformPath(platform));
 
             //packageinfo
             var persistentPackageInfoPath = string.Format("{0}/{1}", targetPath, BResources.PACKAGE_BUILD_INFO_PATH);
@@ -208,7 +229,7 @@ namespace BDFramework.Asset
             if (!File.Exists(streamingPackageinfoPath))
             {
                 //不存在Streaming配置
-                BDebug.Log("【资源包】不存在：" + streamingPackageinfoPath);
+                BDebug.LogError("【资源包】拷贝失败,不存在：" + streamingPackageinfoPath);
                 callback?.Invoke();
             }
             else

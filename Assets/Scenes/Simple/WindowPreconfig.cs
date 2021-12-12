@@ -51,14 +51,13 @@ public class WindowPreconfig : MonoBehaviour
     private void Onclick_DownLoadAndLaunch()
     {
         //删除本地的文件，这不是正式环境逻辑，请勿参考
-        var cachedir = IPath.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
-        if (Directory.Exists(cachedir))
-        {
-            Directory.Delete(cachedir, true);
-        }
+        // var cachedir = IPath.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
+        // if (Directory.Exists(cachedir))
+        // {
+        //     Directory.Delete(cachedir, true);
+        // }
 
         Debug.Log(Application.persistentDataPath);
-
         var url = "http://" + this.inputField.text;
         float totalSize = -1;
         float curDoanloadSize = -1;
@@ -104,13 +103,6 @@ public class WindowPreconfig : MonoBehaviour
     /// </summary>
     private void Onclick_DownloadSubPackageLoadAndLaunch()
     {
-        //删除本地的文件，这不是正式环境逻辑，请勿参考
-        var cachedir = IPath.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
-        if (Directory.Exists(cachedir))
-        {
-            Directory.Delete(cachedir, true);
-        }
-
         Debug.Log(Application.persistentDataPath);
 
         var url = "http://" + this.inputField.text;

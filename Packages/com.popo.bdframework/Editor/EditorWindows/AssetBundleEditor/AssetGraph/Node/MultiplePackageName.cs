@@ -135,7 +135,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             var path = string.Format("{0}/{1}/{2}", BDFrameworkAssetsEnv.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG_PATH);
             var csv = CsvSerializer.SerializeToString(MultiplePackage.AssetMultiplePackageConfigList);
             FileHelper.WriteAllText(path, csv);
-            Debug.Log("保存分包设置:" + Path.GetFileName(path) + " -" + buildTarget.ToString());
+            Debug.Log("保存分包设置:" + this.PacakgeName + " -" + buildTarget.ToString());
         }
     }
 }

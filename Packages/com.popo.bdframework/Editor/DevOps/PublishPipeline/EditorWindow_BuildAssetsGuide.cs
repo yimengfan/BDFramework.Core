@@ -5,6 +5,8 @@ using UnityEngine;
 using BDFramework.Editor.TableData;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Core.Tools;
+using BDFramework.ResourceMgr;
+using ServiceStack.Text;
 using AssetBundleEditorToolsV2 = BDFramework.Editor.AssetBundle.AssetBundleEditorToolsV2;
 #if ODIN_INSPECTOR
 using Sirenix.Utilities.Editor;
@@ -130,12 +132,7 @@ namespace BDFramework.Editor.PublishPipeline
 
                     //选择目录
                     exportPath = BDApplication.DevOpsPublishAssetsPath;
-                    if (string.IsNullOrEmpty(exportPath))
-                    {
-                        return;
-                    }
-
-
+                    
                     //生成android资源
                     if (isGenAndroidAssets)
                     {
@@ -148,7 +145,7 @@ namespace BDFramework.Editor.PublishPipeline
                         GenAllAssets(exportPath, RuntimePlatform.IPhonePlayer);
                     }
 
-                    EditorUtility.DisplayDialog("提示", "资源导出完成", "OK");
+                    //EditorUtility.DisplayDialog("提示", "资源导出完成", "OK");
 
                     isBuilding = false;
                 }
@@ -208,6 +205,12 @@ namespace BDFramework.Editor.PublishPipeline
             {
                 Debug.LogError(e.Message);
             }
+            
+            //4.生成本地assetinfo配置
+            var allServerAssetItemList = PublishAssetHelper.GetAssetsHashData(outputPath, platform);
+            var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
+            var assetsInfoPath = string.Format("{0}/{1}/{2}",outputPath,BDApplication.GetPlatformPath(platform),BResources.SERVER_ASSETS_INFO_PATH);
+            File.WriteAllText(assetsInfoPath, csv);
         }
 
 

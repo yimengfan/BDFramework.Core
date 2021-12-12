@@ -59,6 +59,7 @@ namespace BDFramework.Editor
             List<string> blackFileList = new List<string>()
             {
                 BResources.EDITOR_ASSET_BUILD_INFO_PATH,
+                BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG_PATH,
                 string.Format("{0}/{0}",BResources.ASSET_ROOT_PATH),
             };
 

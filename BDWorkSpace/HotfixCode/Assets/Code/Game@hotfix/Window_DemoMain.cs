@@ -116,23 +116,41 @@ public class Window_DemoMain : AWindow
         List<GameObject> golist = new List<GameObject>();
         //1.同步加载
         var go = BResources.Load<GameObject>("AssetTest/Cube");
-        var load1 = GameObject.Instantiate(go);
-        go = BResources.Load<GameObject>("Test/Cube");
-        var load2 = GameObject.Instantiate(go);
-        go = BResources.Load<GameObject>("AssetTest/Particle");
-        var load3 = GameObject.Instantiate(go);
-        go = BResources.Load<GameObject>("Char/001");
-        var loadModel = GameObject.Instantiate(go);
+        if (go)
+        {
+            var load1 = GameObject.Instantiate(go);
+            golist.Add(load1);
+        }
 
-        golist.Add(load1);
-        golist.Add(load2);
-        golist.Add(load3);
-        golist.Add(loadModel);
+        go = BResources.Load<GameObject>("Test/Cube");
+        if (go)
+        {
+            var load2 = GameObject.Instantiate(go);
+            golist.Add(load2);
+        }
+
+        go = BResources.Load<GameObject>("AssetTest/Particle");
+        if (go)
+        {
+            var load3 = GameObject.Instantiate(go);
+            golist.Add(load3);
+        }
+
+        go = BResources.Load<GameObject>("Char/001");
+        if (go)
+        {
+            var loadModel = GameObject.Instantiate(go);
+            golist.Add(loadModel);
+        }
+
         //2.异步加载单个
         var id = BResources.AsyncLoad<GameObject>("Test/Cube", (o) =>
         {
-            var load4 = GameObject.Instantiate(o);
-            golist.Add(load4);
+            if (o)
+            {
+                var load4 = GameObject.Instantiate(o);
+                golist.Add(load4);
+            }
         });
 
         //3.异步加载多个
@@ -147,8 +165,11 @@ public class Window_DemoMain : AWindow
             foreach (var r in map)
             {
                 BDebug.Log(string.Format("--> {0} ： {1}", r.Key, r.Value.name));
-                var _go = GameObject.Instantiate(r.Value);
-                golist.Add(_go as GameObject);
+                if (r.Value)
+                {
+                    var _go = GameObject.Instantiate(r.Value);
+                    golist.Add(_go as GameObject);
+                }
             }
         });
 
