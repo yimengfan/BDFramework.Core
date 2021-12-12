@@ -97,6 +97,11 @@ namespace BDFramework.VersionContrller
         /// 数据库热更
         /// </summary>
         public List<string> TablePathList { get; set; } = new List<string>();
+        
+        /// <summary>
+        /// 必须存在的相关配置表
+        /// </summary>
+        public List<string> ConfAndInfoList { get; set; } = new List<string>();
     }
 
     /// <summary>
@@ -253,7 +258,7 @@ namespace BDFramework.VersionContrller
             string localAssetsInfoFileContent = null;
             if (File.Exists(localAssetInfoPath))
             {
-                var steamingAssetsInfoPath = string.Format("{0}/{1}", Application.platform, BResources.SERVER_ASSETS_INFO);
+                var steamingAssetsInfoPath = string.Format("{0}/{1}", Application.platform, BResources.SERVER_ASSETS_INFO_PATH);
                 if (BetterStreamingAssets.FileExists(steamingAssetsInfoPath))
                 {
                     localAssetsInfoFileContent = BetterStreamingAssets.ReadAllText(steamingAssetsInfoPath);
@@ -457,12 +462,12 @@ namespace BDFramework.VersionContrller
         /// <returns></returns>
         static public string GetServerAssetsVersionConfigPath(string rootPath, RuntimePlatform platform)
         {
-            return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_VERSION_CONFIG);
+            return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_VERSION_CONFIG_PATH);
         }
 
         static public string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
         {
-            return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_INFO);
+            return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_INFO_PATH);
         }
 
         /// <summary>
@@ -473,7 +478,7 @@ namespace BDFramework.VersionContrller
         /// <returns></returns>
         static public string GetServerAssetsMultipleConfigPath(string rootPath, RuntimePlatform platform)
         {
-            return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG);
+            return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG_PATH);
         }
     }
 }

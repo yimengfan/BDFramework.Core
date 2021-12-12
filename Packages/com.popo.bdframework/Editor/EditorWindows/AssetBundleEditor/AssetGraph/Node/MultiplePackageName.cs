@@ -100,7 +100,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 //依次把加入资源和依赖资源
                 foreach (var dependHash in buildAssetData.DependAssetList)
                 {
-                    var dependAsset = BuildAssetBundle.BuildInfoCache.AssetDataMaps.Values.FirstOrDefault((value) =>value.ArtConfigIdx!=-1&&  value.ABName == dependHash );
+                    var dependAsset = BuildAssetBundle.BuildInfoCache.AssetDataMaps.Values.FirstOrDefault((value) => value.ArtConfigIdx != -1 && value.ABName == dependHash);
                     if (dependAsset != null)
                     {
                         assetIdList.Add(dependAsset.ArtConfigIdx);
@@ -110,9 +110,9 @@ namespace BDFramework.Editor.AssetGraph.Node
                         BDebug.LogError("分包依赖失败:" + dependHash);
                     }
                 }
+
                 //符合分包路径
                 assetIdList.Add(buildAssetData.ArtConfigIdx);
-               
             }
 
             //新建package描述表
@@ -125,12 +125,16 @@ namespace BDFramework.Editor.AssetGraph.Node
             subPackage.HotfixCodePathList.Add(ScriptLoder.DLL_PATH);
             //热更表格
             subPackage.TablePathList.Add(SqliteLoder.LOCAL_DB_PATH);
+            //配置表
+            subPackage.ConfAndInfoList.Add(BResources.ASSET_CONFIG_PATH);
+            subPackage.ConfAndInfoList.Add(BResources.ASSET_TYPES_PATH);
+
             MultiplePackage.AssetMultiplePackageConfigList.Add(subPackage);
             //
-            var path = string.Format("{0}/{1}/{2}", BDFrameworkAssetsEnv.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG);
+            var path = string.Format("{0}/{1}/{2}", BDFrameworkAssetsEnv.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG_PATH);
             var csv = CsvSerializer.SerializeToString(MultiplePackage.AssetMultiplePackageConfigList);
             FileHelper.WriteAllText(path, csv);
-            Debug.Log("保存分包设置:" + path);
+            Debug.Log("保存分包设置:" + Path.GetFileName(path) + " -" + buildTarget.ToString());
         }
     }
 }

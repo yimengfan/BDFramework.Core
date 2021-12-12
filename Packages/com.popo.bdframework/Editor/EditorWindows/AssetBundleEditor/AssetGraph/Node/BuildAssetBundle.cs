@@ -231,7 +231,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             FileHelper.WriteAllText(configPath, csv);
 
             //II:保存BuildInfo配置
-            var buildinfoPath = IPath.Combine(platformOutputPath, BResources.ASSET_BUILD_INFO_PATH);
+            var buildinfoPath = IPath.Combine(platformOutputPath, BResources.EDITOR_ASSET_BUILD_INFO_PATH);
             // //移动老配置
             // if (File.Exists(buildinfoPath))
             // {
@@ -543,7 +543,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             Debug.Log("<color=red>【增量资源】开始变动资源分析...</color>");
             BuildInfo lastBuildInfo = null;
-            var configPath = this.BuildParams.OutputPath + "/" + BDApplication.GetPlatformPath(buildTarget) + "/" + BResources.ASSET_BUILD_INFO_PATH;
+            var configPath = this.BuildParams.OutputPath + "/" + BDApplication.GetPlatformPath(buildTarget) + "/" + BResources.EDITOR_ASSET_BUILD_INFO_PATH;
             Debug.Log("旧资源地址:" + configPath);
             if (File.Exists(configPath))
             {

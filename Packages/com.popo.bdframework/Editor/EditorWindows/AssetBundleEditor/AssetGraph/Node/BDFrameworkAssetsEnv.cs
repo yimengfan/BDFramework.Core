@@ -172,7 +172,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             Action<NodeData, string, float> progressFunc)
         {
             #region 保存AssetTypeConfig
-            var asetTypePath = string.Format("{0}/{1}/{2}", BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.ASSET_TYPE_PATH);
+            var asetTypePath = string.Format("{0}/{1}/{2}", BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.ASSET_TYPES_PATH);
             //数据结构保存
             AssetTypes at = new AssetTypes()
             {

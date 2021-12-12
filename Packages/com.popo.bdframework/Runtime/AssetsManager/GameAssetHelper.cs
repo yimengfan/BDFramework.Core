@@ -157,7 +157,7 @@ namespace BDFramework.Asset
             {
                 ScriptLoder.DLL_PATH, ScriptLoder.DLL_PATH + ".pdb", //Dll
                 SqliteLoder.LOCAL_DB_PATH, //db
-                BResources.ASSET_CONFIG_PATH, BResources.ASSET_TYPE_PATH, //ArtConfig
+                BResources.ASSET_CONFIG_PATH, BResources.ASSET_TYPES_PATH, //ArtConfig
             };
             //开始拷贝逻辑
             for (int i = 0; i < copyFiles.Length; i++)
@@ -254,7 +254,7 @@ namespace BDFramework.Asset
             {
                 ScriptLoder.DLL_PATH, ScriptLoder.DLL_PATH + ".pdb", //Dll
                 SqliteLoder.LOCAL_DB_PATH, //db
-                BResources.ASSET_CONFIG_PATH, BResources.ASSET_TYPE_PATH, //ArtConfig
+                BResources.ASSET_CONFIG_PATH, BResources.ASSET_TYPES_PATH, //ArtConfig
             };
 
             //开始拷贝逻辑

@@ -83,7 +83,7 @@ namespace BDFramework.Editor
         {
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.OnBeginBuildAssetBundle(@params,buildInfo);
+                behavior.OnBuildAssetBundleBegin(@params,buildInfo);
             }
         }
 
@@ -91,7 +91,7 @@ namespace BDFramework.Editor
         {
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.OnEndBuildAssetBundle(@params,buildInfo);
+                behavior.OnBuildAssetBundleEnd(@params,buildInfo);
             }
         }
         
@@ -109,13 +109,25 @@ namespace BDFramework.Editor
         
         
         /// <summary>
-        /// 资源准备提交到服务器
+        /// 发布资源处理前
         /// </summary>
-        static public void ReadyPublishAssetsToServer(RuntimePlatform platform,string outputPath)
+        static public void OnPublishAssetsProccessBegin(RuntimePlatform platform, string outputPath, out string versionNum)
+        {
+            versionNum = "version-null";
+            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            {
+                behavior.OnPublishAssetsProccessBegin(platform, outputPath,out versionNum);
+            }
+        }
+        
+        /// <summary>
+        /// 发布资源处理后
+        /// </summary>
+        static public void OnPublishAssetsProccessEnd(RuntimePlatform platform,string outputPath)
         {
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.ReadyPublishAssetsToServer(platform, outputPath);
+                behavior.OnPublishAssetsProccessEnd(platform, outputPath);
             }
         }
     }
