@@ -50,6 +50,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_BetterStreamingAssets.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_PathUtil.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_SubReadOnlyStream.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_TestSceneGUI.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_ZipArchive.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\IJsonWrapper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonData.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonException.cs" />
@@ -95,7 +100,6 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\AssetsVersionController\AssetsVersionContorller.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\AssetsVersionController\HotAssetsMap.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\GameAssetHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />
@@ -189,6 +193,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\PageList\PageList.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\PageList\PageListDemo.cs" />
      <None Include="Packages\com.popo.bdframework\Runtime\BDFramework.Core.asmdef" />
+     <None Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\README.txt" />
      <None Include="Packages\com.popo.bdframework\Runtime\DataListener\readme.txt" />
  <Reference Include="ILRuntime">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/ScriptAssemblies/ILRuntime.dll</HintPath>

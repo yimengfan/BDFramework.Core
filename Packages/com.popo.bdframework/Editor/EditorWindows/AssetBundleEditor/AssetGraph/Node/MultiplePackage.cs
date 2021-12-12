@@ -22,7 +22,10 @@ namespace BDFramework.Editor.AssetGraph.Node
         public BuildInfo BuildInfo { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
 
-        static public List<AssetMultiplePackageConfigItem> AssetMultiplePackageConfigList = new List<AssetMultiplePackageConfigItem>();
+        /// <summary>
+        /// 分包配置表
+        /// </summary>
+        static public List<SubPackageConfigItem> AssetMultiplePackageConfigList = new List<SubPackageConfigItem>();
 
         public void Reset()
         {
@@ -119,7 +122,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             // }
 
 
-            GUILayout.Label("路径匹配:建议以\"/\"结尾,不然路径中包含这一段path都会被匹配上.");
+            GUILayout.Label("1.路径匹配:建议以\"/\"结尾,不然路径中包含这一段path都会被匹配上.");
+            GUILayout.Label("2.分包路径原则上需要包含/Runtime/");
             e_groupList.DoLayoutList();
         }
 
@@ -234,7 +238,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //
-            AssetMultiplePackageConfigList = new List<AssetMultiplePackageConfigItem>();
+            AssetMultiplePackageConfigList = new List<SubPackageConfigItem>();
             //prepare传入的资源
             this.incommingAssetGroup = incoming.FirstOrDefault();
             this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
@@ -250,14 +254,21 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             var assetABNameList = new List<string>();
-            //buildAssetbundle 是传过来 abname = arlist 这样的结构.
+            var assetRefenceList = new List<AssetReference>();
+            //buildAssetbundle节点传过来是 abname = arlist 这样的结构.
             foreach (var ags in incoming)
             {
                 foreach (var group in ags.assetGroups)
                 {
                     assetABNameList.Add(group.Key);
+                    assetRefenceList.AddRange(group.Value);
                 }
             }
+            // //遍历分组
+            // foreach (var groupFilter in this.groupFilterPathDataList)
+            // {
+            //     outMap[groupFilter.GroupPath].Add(assetPath, new List<AssetReference>(group.Value));
+            // }
 
             //
             foreach (var abname in assetABNameList)
@@ -278,7 +289,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                                 {
                                     if (group.Key.Equals(abname, StringComparison.OrdinalIgnoreCase))
                                     {
-                                        //输出
+                                        //这里是以前面传来的 分组颗粒进行添加
                                         outMap[groupFilter.GroupPath].Add(assetPath, new List<AssetReference>(group.Value));
                                     }
                                 }

@@ -17,6 +17,10 @@ namespace BDFramework.Editor.AssetBundle
             public int Id { get; set; } = -1;
 
             /// <summary>
+            /// 在artConfig中的idx,用以辅助其他模块逻辑
+            /// </summary>
+            public int ArtConfigIdx { get; set; } = -1;
+            /// <summary>
             /// 资源类型
             /// </summary>
             public int Type { get; set; } = -1;

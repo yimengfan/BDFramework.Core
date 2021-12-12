@@ -54,7 +54,7 @@ public class WindowPreconfig : MonoBehaviour
         }
 
         var url = "http://" + this.inputField.text;
-        AssetsVersionContorller.Start(UpdateMode.Repair, url, Application.persistentDataPath, null,
+        AssetsVersionContorller.Start(UpdateMode.Repair, url, null,
             (i, j) =>
             {
                 this.text_DownloadProcess.text = string.Format("{0}/{1}", i, j);

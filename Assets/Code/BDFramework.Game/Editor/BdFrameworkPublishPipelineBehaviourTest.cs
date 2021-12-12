@@ -56,7 +56,7 @@ namespace BDFramework.Editor.EditorLife
         /// <param name="outputPath"></param>
         public override void ReadyPublishAssetsToServer(RuntimePlatform platform, string outputPath)
         {
-            Debug.Log("资源转hash完毕,等待提交!  目录:" + outputPath);
+            Debug.Log("资源转hash完毕,等待提交! \n 目录:" + outputPath);
         }
     }
 }

@@ -16,6 +16,7 @@ using UnityEngine;
 using UnityEngine.AssetGraph;
 using UnityEngine.AssetGraph.DataModel.Version2;
 using Debug = UnityEngine.Debug;
+using String = System.String;
 
 namespace BDFramework.Editor.AssetGraph.Node
 {
@@ -76,6 +77,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 tempBuildInfo.AssetDataMaps[item.Key] = item.Value;
             }
+
             Debug.Log("Buildinfo 数量:" + tempBuildInfo.AssetDataMaps.Count);
 
             //预计算输出,不直接修改buildinfo
@@ -133,7 +135,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                         }
                     }
 
-                    Debug.Log("Buildinfo多余资源:\n " + JsonMapper.ToJson(list,true));
+                    Debug.Log("Buildinfo多余资源:\n " + JsonMapper.ToJson(list, true));
                 }
 
                 Debug.LogErrorFormat("【资源验证】coming资源和Buildinfo资源数量不相等!{0}-{1}", assetReferenceList.Count, tempBuildInfo.AssetDataMaps.Count);
@@ -169,6 +171,17 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
         }
 
+
+        /// <summary>
+        /// 生成的assetbundleitem 列表
+        /// </summary>
+        public static List<AssetBundleItem> GenAssetBundleItemCacheList { get; private set; } = null;
+
+        /// <summary>
+        /// buildinfo 缓存列表
+        /// </summary>
+        public static BuildInfo BuildInfoCache { get; private set; } = null;
+
         public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc,
             Action<NodeData, string, float> progressFunc)
         {
@@ -195,6 +208,14 @@ namespace BDFramework.Editor.AssetGraph.Node
             //3.生成artconfig
             var abConfigList = this.GenAssetBundleConfig(BuildInfo, BuildParams, platform);
 
+            // foreach (var item in abConfigList)
+            // {
+            //     if (!item.LoadPath.Contains(RUNTIME_PATH, StringComparison.OrdinalIgnoreCase))
+            //     {
+            //         
+            //     }
+            // }
+
             //4.打包
             AssetDatabase.StartAssetEditing(); //禁止自动导入
             {
@@ -203,21 +224,21 @@ namespace BDFramework.Editor.AssetGraph.Node
             AssetDatabase.StopAssetEditing(); //恢复自动导入
 
             //3.BuildInfo配置处理
-            var platformOutputPath = BuildParams.OutputPath + "/" + BDApplication.GetPlatformPath(platform);
-            //I:保存config
-            var configPath = platformOutputPath + "/" + BResources.ASSET_CONFIG_PATH;
+            var platformOutputPath = String.Format("{0}/{1}", BuildParams.OutputPath, BDApplication.GetPlatformPath(platform));
+            //保存artconfig.info
+            var configPath = String.Format("{0}/{1}", platformOutputPath, BResources.ASSET_CONFIG_PATH);
             var csv = CsvSerializer.SerializeToString(abConfigList);
             FileHelper.WriteAllText(configPath, csv);
 
-            //II:保存配置
+            //II:保存BuildInfo配置
             var buildinfoPath = IPath.Combine(platformOutputPath, BResources.ASSET_BUILD_INFO_PATH);
-            //移动老配置
-            if (File.Exists(buildinfoPath))
-            {
-                string oldBuildInfoPath = Path.Combine(platformOutputPath, BResources.ASSET_OLD_BUILD_INFO_PATH);
-                File.Delete(oldBuildInfoPath);
-                File.Move(buildinfoPath, oldBuildInfoPath);
-            }
+            // //移动老配置
+            // if (File.Exists(buildinfoPath))
+            // {
+            //     string oldBuildInfoPath = Path.Combine(platformOutputPath, BResources.ASSET_OLD_BUILD_INFO_PATH);
+            //     File.Delete(oldBuildInfoPath);
+            //     File.Move(buildinfoPath, oldBuildInfoPath);
+            // }
 
             //缓存buildinfo
             var json = JsonMapper.ToJson(BuildInfo, true);
@@ -230,7 +251,19 @@ namespace BDFramework.Editor.AssetGraph.Node
             //恢复编辑器状态
             BDEditorApplication.EditorStatus = BDFrameworkEditorStatus.Idle;
             //BD生命周期触发
-            BDFrameworkPublishPipelineHelper.OnEndBuildAssetBundle(this.BuildParams,this.BuildInfo);
+            BDFrameworkPublishPipelineHelper.OnEndBuildAssetBundle(this.BuildParams, this.BuildInfo);
+
+
+            //缓存
+            BuildInfoCache = new BuildInfo();
+            var cachejson = JsonMapper.ToJson(BDFrameworkAssetsEnv.BuildInfo);
+            var temp = JsonMapper.ToObject<BuildInfo>(cachejson);
+            foreach (var item in temp.AssetDataMaps)
+            {
+                BuildInfoCache.AssetDataMaps[item.Key] = item.Value;
+            }
+
+            GenAssetBundleItemCacheList = abConfigList.ToList();
         }
 
 
@@ -319,7 +352,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //
             //     var depend = AssetDatabase.GetAssetBundleDependencies(abpath,true);
             // }
-            
+
             GameAssetHelper.GenPackageBuildInfo(buildParams.OutputPath, platform);
         }
 
@@ -404,7 +437,23 @@ namespace BDFramework.Editor.AssetGraph.Node
             var assetDataItemList = new List<AssetBundleItem>();
             //占位，让id和idx恒相等
             assetDataItemList.Add(new AssetBundleItem(0, null, null, -1, new List<int>()));
-            //先搜集非runtime的
+         
+            //搜集runtime的 ,分两个for 让序列化后的数据更好审查
+            foreach (var item in buildInfo.AssetDataMaps)
+            {
+                //runtime路径下，写入配置
+                if (item.Key.Contains(RUNTIME_PATH, StringComparison.OrdinalIgnoreCase))
+                {
+                    var loadPath = GetAbsPathFormRuntime(item.Key);
+                    //添加
+                    var abi = new AssetBundleItem(assetDataItemList.Count, loadPath, item.Value.ABName, item.Value.Type, new List<int>());
+                    // abi.EditorAssetPath = item.Key;
+                    assetDataItemList.Add(abi); //.ManifestMap[key] = mi;
+                    item.Value.ArtConfigIdx = abi.Id;
+                }
+            }
+            
+            //搜集非runtime的,进一步防止重复
             foreach (var item in buildInfo.AssetDataMaps)
             {
                 //非runtime的只需要被索引AB
@@ -416,32 +465,12 @@ namespace BDFramework.Editor.AssetGraph.Node
                         var abi = new AssetBundleItem(assetDataItemList.Count, null, item.Value.ABName, item.Value.Type, new List<int>());
                         // abi.EditorAssetPath = item.Key;
                         assetDataItemList.Add(abi);
+                        item.Value.ArtConfigIdx = abi.Id;
                     }
                 }
             }
 
-            //再搜集runtime的
-            foreach (var item in buildInfo.AssetDataMaps)
-            {
-                //runtime路径下，写入配置
-                if (item.Key.Contains(RUNTIME_PATH))
-                {
-                    var loadPath = item.Key;
-                    //移除runtime之前的路径、后缀
-                    var index = loadPath.IndexOf(RUNTIME_PATH);
-                    loadPath = loadPath.Substring(index + RUNTIME_PATH.Length); //hash要去掉runtime
-                    var exten = Path.GetExtension(loadPath);
-                    if (!string.IsNullOrEmpty(exten))
-                    {
-                        loadPath = loadPath.Replace(exten, "");
-                    }
 
-                    //添加
-                    var abi = new AssetBundleItem(assetDataItemList.Count, loadPath, item.Value.ABName, item.Value.Type, new List<int>());
-                    // abi.EditorAssetPath = item.Key;
-                    assetDataItemList.Add(abi); //.ManifestMap[key] = mi;
-                }
-            }
 
             //将depend替换成Id,减少序列化数据量
             foreach (var assetbundleData in assetDataItemList)
@@ -478,6 +507,28 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //
             return assetDataItemList;
+        }
+
+        /// <summary>
+        /// 获取runtime后的相对路径
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        static public string GetAbsPathFormRuntime(string loadPath)
+        {
+            //移除runtime之前的路径、后缀
+            if (loadPath.Contains(RUNTIME_PATH, StringComparison.OrdinalIgnoreCase))
+            {
+                var index = loadPath.IndexOf(RUNTIME_PATH);
+                loadPath = loadPath.Substring(index + RUNTIME_PATH.Length); //hash要去掉runtime
+                var exten = Path.GetExtension(loadPath);
+                if (!string.IsNullOrEmpty(exten))
+                {
+                    loadPath = loadPath.Replace(exten, "");
+                }
+            }
+
+            return loadPath;
         }
 
         #endregion

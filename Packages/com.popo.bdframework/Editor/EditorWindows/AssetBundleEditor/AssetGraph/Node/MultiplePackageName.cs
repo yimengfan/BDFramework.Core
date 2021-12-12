@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
+using BDFramework.Sql;
 using BDFramework.VersionContrller;
 using LitJson;
 using ServiceStack.Text;
@@ -58,6 +59,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             //editor.UpdateNodeName(node);
         }
 
+        /// <summary>
+        /// 包目录列表
+        /// </summary>
+        private List<string> packageAssetList = new List<string>();
+
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             if (incoming == null)
@@ -65,25 +71,15 @@ namespace BDFramework.Editor.AssetGraph.Node
                 return;
             }
 
+            packageAssetList = new List<string>();
             foreach (var ag in incoming)
             {
                 foreach (var ags in ag.assetGroups)
                 {
-                    var ret = MultiplePackage.AssetMultiplePackageConfigList.FindIndex((mp) => mp.PackageName == this.PacakgeName);
-                    AssetMultiplePackageConfigItem item = new AssetMultiplePackageConfigItem();
-                    if (ret == -1)
+                    foreach (var ar in ags.Value)
                     {
-                        item.AssetsDirectPathList = new List<string>();
-
-                        MultiplePackage.AssetMultiplePackageConfigList.Add(item);
+                        packageAssetList.Add(ar.importFrom);
                     }
-                    else
-                    {
-                        item = MultiplePackage.AssetMultiplePackageConfigList[ret];
-                    }
-
-                    //添加package的路径
-                    item.AssetsDirectPathList.Add(ags.Key);
                 }
             }
         }
@@ -95,8 +91,45 @@ namespace BDFramework.Editor.AssetGraph.Node
         public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc,
             Action<NodeData, string, float> progressFunc)
         {
-            var path = string.Format("{0}/{1}/{2}/{3}", BDFrameworkAssetsEnv.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.ASSET_ROOT_PATH, BResources.SERVER_ASSETS_MULTIPLE_PACKAGE_CONFIG);
-            FileHelper.WriteAllText(path, CsvSerializer.SerializeToString(MultiplePackage.AssetMultiplePackageConfigList));
+            var assetIdList = new List<int>();
+            //寻找当前分包,包含的资源
+            foreach (var asset in this.packageAssetList)
+            {
+                BuildAssetBundle.BuildInfoCache.AssetDataMaps.TryGetValue(asset, out var buildAssetData);
+
+                //依次把加入资源和依赖资源
+                foreach (var dependHash in buildAssetData.DependAssetList)
+                {
+                    var dependAsset = BuildAssetBundle.BuildInfoCache.AssetDataMaps.Values.FirstOrDefault((value) =>value.ArtConfigIdx!=-1&&  value.ABName == dependHash );
+                    if (dependAsset != null)
+                    {
+                        assetIdList.Add(dependAsset.ArtConfigIdx);
+                    }
+                    else
+                    {
+                        BDebug.LogError("分包依赖失败:" + dependHash);
+                    }
+                }
+                //符合分包路径
+                assetIdList.Add(buildAssetData.ArtConfigIdx);
+               
+            }
+
+            //新建package描述表
+            var subPackage = new SubPackageConfigItem();
+            subPackage.PackageName = this.PacakgeName;
+            //热更资源
+            subPackage.ArtAssetsIdList = assetIdList.Distinct().ToList();
+            subPackage.ArtAssetsIdList.Sort();
+            //热更代码
+            subPackage.HotfixCodePathList.Add(ScriptLoder.DLL_PATH);
+            //热更表格
+            subPackage.TablePathList.Add(SqliteLoder.LOCAL_DB_PATH);
+            MultiplePackage.AssetMultiplePackageConfigList.Add(subPackage);
+            //
+            var path = string.Format("{0}/{1}/{2}", BDFrameworkAssetsEnv.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG);
+            var csv = CsvSerializer.SerializeToString(MultiplePackage.AssetMultiplePackageConfigList);
+            FileHelper.WriteAllText(path, csv);
             Debug.Log("保存分包设置:" + path);
         }
     }

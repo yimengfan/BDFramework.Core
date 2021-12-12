@@ -107,8 +107,8 @@ namespace System.IO
             {
                 var bytes = File.ReadAllBytes(fileName);
                 //这里为了防止碰撞 考虑Sha256 512 但是速度会更慢
-                var    sha1   = SHA1.Create();
-                byte[] retVal = sha1.ComputeHash(bytes.ToArray());
+                var    sha   = SHA256.Create();
+                byte[] retVal = sha.ComputeHash(bytes.ToArray());
                 //hash
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < retVal.Length; i++)

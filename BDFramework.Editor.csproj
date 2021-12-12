@@ -52,13 +52,13 @@
   <ItemGroup>
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\BDFrameworkServerTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\DevOpsTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\EditorAssetHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\BuildPackageTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\CI\PublishPipeLineCI.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorBehavior\ABDFrameworkPublishPipelineBehaviour.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorBehavior\BDFrameworkPublishPipelineHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorWindow_BuildAssetsGuide.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\EditorWindow_CICD.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\PublishPipeline\PublishAssetHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutines.cs" />

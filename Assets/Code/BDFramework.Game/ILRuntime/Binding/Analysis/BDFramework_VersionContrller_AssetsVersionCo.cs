@@ -14,7 +14,7 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class BDFramework_VersionContrller_VersionContorller_Binding
+    unsafe class BDFramework_VersionContrller_AssetsVersionContorller_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
@@ -45,7 +45,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            System.String @localConfigPath = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.String @assetPackageName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
@@ -57,7 +57,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            //BDFramework.VersionContrller.AssetsVersionContorller.Start(@mode, @serverConfigPath, @localConfigPath, @onProcess, @onError);
+            BDFramework.VersionContrller.AssetsVersionContorller.Start(@mode, @serverConfigPath, @assetPackageName, @onProcess, @onError);
 
             return __ret;
         }

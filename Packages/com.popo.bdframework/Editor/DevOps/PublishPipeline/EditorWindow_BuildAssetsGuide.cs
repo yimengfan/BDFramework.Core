@@ -103,7 +103,7 @@ namespace BDFramework.Editor.PublishPipeline
         private bool isGenIOSAssets = false;
         private bool isGenAndroidAssets = true;
         private bool isBuilding = false;
-        
+
         /// <summary>
         /// 一键导出
         /// </summary>
@@ -121,7 +121,11 @@ namespace BDFramework.Editor.PublishPipeline
                 //
                 if (GUILayout.Button("一键导出", GUILayout.Width(350), GUILayout.Height(30)))
                 {
-                    if (isBuilding) return;
+                    if (isBuilding)
+                    {
+                        return;
+                    }
+
                     isBuilding = true;
 
                     //选择目录
@@ -152,15 +156,8 @@ namespace BDFramework.Editor.PublishPipeline
                 //
                 if (GUILayout.Button("热更资源转hash(生成服务器配置)", GUILayout.Width(350), GUILayout.Height(30)))
                 {
-                    //选择目录
-                    exportPath = EditorUtility.OpenFolderPanel("选择导出目录", exportPath, "");
-                    if (string.IsNullOrEmpty(exportPath))
-                    {
-                        return;
-                    }
-
                     //自动转hash
-                    EditorAssetHelper.Assets2Hash(exportPath);
+                    PublishAssetHelper.PublishAssetsToServer(BDApplication.DevOpsPublishAssetsPath);
                 }
             }
             GUILayout.EndVertical();

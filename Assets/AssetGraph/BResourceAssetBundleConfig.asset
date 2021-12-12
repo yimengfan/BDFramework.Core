@@ -75,8 +75,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u6D4B\u8BD5\u6A21\u578B\u5B50\u76EE\u5F55"
     m_id: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
-    m_x: 1200
-    m_y: 804
+    m_x: 1188
+    m_y: 792
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFolder, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -345,12 +345,12 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u5206\u5305]\u8D44\u6E90\u8DEF\u5F84\u5206\u5305"
     m_id: 11c7368e-660b-4bc6-956d-791ee29cd6b8
-    m_x: 1836
-    m_y: 576
+    m_x: 1812
+    m_y: 588
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackage, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|eyJncm91cEZpbHRlclBhdGhEYXRhTGlzdCI6W3siT3V0cHV0Tm9kZUlkIjoiYjYyMmQyZjAtMWM5Ny00MTYzLTg3MGMtNWFhZDJlMmYxZDFkIiwiR3JvdXBQYXRoIjoiQXNzZXRzL1Jlc291cmNlX1NWTi9Nb2RlbC8ifSx7Ik91dHB1dE5vZGVJZCI6ImE3N2FiYWMyLTg3ZjQtNDUzOC1hNWNhLWY5ZDZhMTc0YjkwMSIsIkdyb3VwUGF0aCI6IkFzc2V0cy9SZXNvdXJjZV9TVk4vTW9kZWwyLyJ9LHsiT3V0cHV0Tm9kZUlkIjoiZTNmMDUwYTMtNTY4MC00YTA2LWE0Y2UtODlkZjk2NTc4Mjc3IiwiR3JvdXBQYXRoIjoiQXNzZXRzL1Jlc291cmNlX1NWTi9Nb2RlbDMvIn1dfQ==
+      m_instanceData: B64|eyJncm91cEZpbHRlclBhdGhEYXRhTGlzdCI6W3siT3V0cHV0Tm9kZUlkIjoiYjYyMmQyZjAtMWM5Ny00MTYzLTg3MGMtNWFhZDJlMmYxZDFkIiwiR3JvdXBQYXRoIjoiQXNzZXRzL1Jlc291cmNlX1NWTi9SdW50aW1lL0NoYXIvIn0seyJPdXRwdXROb2RlSWQiOiJhNzdhYmFjMi04N2Y0LTQ1MzgtYTVjYS1mOWQ2YTE3NGI5MDEiLCJHcm91cFBhdGgiOiJBc3NldHMvUmVzb3VyY2VfU1ZOL01vZGVsMi8ifSx7Ik91dHB1dE5vZGVJZCI6ImUzZjA1MGEzLTU2ODAtNGEwNi1hNGNlLTg5ZGY5NjU3ODI3NyIsIkdyb3VwUGF0aCI6IkFzc2V0cy9SZXNvdXJjZV9TVk4vTW9kZWwzLyJ9XX0=
     m_inputPoints:
     - id: 5395cff0-0426-4c68-8543-278f21171c93
       label: '-'
@@ -364,12 +364,12 @@ MonoBehaviour:
         height: 29
     m_outputPoints:
     - id: b622d2f0-1c97-4163-870c-5aad2e2f1d1d
-      label: Assets/Resource_SVN/Model/
+      label: Assets/Resource_SVN/Runtime/Char/
       parentId: 11c7368e-660b-4bc6-956d-791ee29cd6b8
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 231
+        x: 266.2
         y: 33.7
         width: 10
         height: 23
@@ -379,7 +379,7 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 231
+        x: 266.2
         y: 65.7
         width: 10
         height: 23
@@ -389,18 +389,18 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 231
+        x: 266.2
         y: 97.7
         width: 10
         height: 23
-  - m_name: "\u5206\u5305\u540D:Test1"
+  - m_name: "\u5206\u5305\u540D:TestChar"
     m_id: 2f5a7eba-f63a-4769-9d76-1d3b7951d455
-    m_x: 2232
-    m_y: 456
+    m_x: 2256
+    m_y: 432
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackageName, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|eyJQYWNha2dlTmFtZSI6IlRlc3QxIn0=
+      m_instanceData: B64|eyJQYWNha2dlTmFtZSI6IlRlc3RDaGFyIn0=
     m_inputPoints:
     - id: d3bf21e9-99bd-43f2-88a6-df7bcdca8113
       label: '-'
@@ -543,7 +543,7 @@ MonoBehaviour:
     m_fromNodeConnectionPointId: b622d2f0-1c97-4163-870c-5aad2e2f1d1d
     m_toNodeId: 2f5a7eba-f63a-4769-9d76-1d3b7951d455
     m_toNodeConnectionPoiontId: d3bf21e9-99bd-43f2-88a6-df7bcdca8113
-    m_label: Assets/Resource_SVN/Model/
+    m_label: Assets/Resource_SVN/Runtime/Char/
   - m_id: 1b2a05e2-122d-4b91-83d0-8650249bb1c3
     m_fromNodeId: 11c7368e-660b-4bc6-956d-791ee29cd6b8
     m_fromNodeConnectionPointId: a77abac2-87f4-4538-a5ca-f9d6a174b901
