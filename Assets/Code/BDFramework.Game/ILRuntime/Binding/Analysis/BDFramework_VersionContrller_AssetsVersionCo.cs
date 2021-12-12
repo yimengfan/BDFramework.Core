@@ -45,7 +45,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            System.String @assetPackageName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.String @assetsPackageName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
@@ -53,11 +53,11 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 5);
-            BDFramework.VersionContrller.UpdateMode @mode = (BDFramework.VersionContrller.UpdateMode)typeof(BDFramework.VersionContrller.UpdateMode).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            BDFramework.VersionContrller.UpdateMode @updateMode = (BDFramework.VersionContrller.UpdateMode)typeof(BDFramework.VersionContrller.UpdateMode).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.VersionContrller.AssetsVersionContrller.Start(@mode, @serverConfigPath, @assetPackageName, @onDownloadProccess, @onTaskEndCallback);
+            BDFramework.VersionContrller.AssetsVersionContrller.Start(@updateMode, @serverConfigPath, @assetsPackageName, @onDownloadProccess, @onTaskEndCallback);
 
             return __ret;
         }

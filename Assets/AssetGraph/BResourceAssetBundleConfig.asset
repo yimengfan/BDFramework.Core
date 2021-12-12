@@ -395,8 +395,8 @@ MonoBehaviour:
         height: 23
   - m_name: "\u5206\u5305\u540D:TestChar"
     m_id: 2f5a7eba-f63a-4769-9d76-1d3b7951d455
-    m_x: 2256
-    m_y: 480
+    m_x: 2232
+    m_y: 444
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackageName, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -415,8 +415,8 @@ MonoBehaviour:
     m_outputPoints: []
   - m_name: "\u5206\u5305\u540D:TestNull"
     m_id: a48b9bc3-7590-480b-b1ef-41ac4e3878b3
-    m_x: 2268
-    m_y: 708
+    m_x: 2232
+    m_y: 600
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackageName, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
