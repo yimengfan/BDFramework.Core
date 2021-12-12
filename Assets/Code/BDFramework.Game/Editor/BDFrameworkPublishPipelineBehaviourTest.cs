@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace BDFramework.Editor.EditorLife
 {
-    public class BdFrameworkPublishPipelineBehaviourTest : ABDFrameworkPublishPipelineBehaviour
+    public class BDFrameworkPublishPipelineBehaviourTest : ABDFrameworkPublishPipelineBehaviour
     {
         public override void OnBeginBuildDLL()
         {

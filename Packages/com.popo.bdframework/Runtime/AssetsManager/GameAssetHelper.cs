@@ -41,11 +41,6 @@ namespace BDFramework.Asset
     static public class GameAssetHelper
     {
         /// <summary>
-        /// 包构建信息路径
-        /// </summary>
-        static private string PACKAGE_BUILD_INFO_PATH = "PackageBuild.Info";
-
-        /// <summary>
         /// 检测StreamingAsset下的资源包版本
         /// StreamingAsset 和 Persistent对比
         /// </summary>
@@ -73,7 +68,7 @@ namespace BDFramework.Asset
         /// </summary>
         static public void GenPackageBuildInfo(string ouptputPath, RuntimePlatform platform, string assetSVC = "", string scriptSVC = "", string tableSVC = "")
         {
-            var path = string.Format("{0}/{1}/{2}", ouptputPath, BDApplication.GetPlatformPath(platform), PACKAGE_BUILD_INFO_PATH);
+            var path = string.Format("{0}/{1}/{2}", ouptputPath, BDApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
 
             //写入buildinfo内容
             var buildinfo = new PackageBuildInfo();
@@ -109,10 +104,11 @@ namespace BDFramework.Asset
             {
                 source = Application.streamingAssetsPath;
             }
+
             var sourcePath = string.Format("{0}/{1}", source, BDApplication.GetPlatformPath(platform));
             //PackageInfo
-            var persistentPackageInfoPath = string.Format("{0}/{1}", targetPath, PACKAGE_BUILD_INFO_PATH);
-            var streamingPackageinfoPath = string.Format("{0}/{1}", sourcePath, PACKAGE_BUILD_INFO_PATH);
+            var persistentPackageInfoPath = string.Format("{0}/{1}", targetPath, BResources.PACKAGE_BUILD_INFO_PATH);
+            var streamingPackageinfoPath = string.Format("{0}/{1}", sourcePath, BResources.PACKAGE_BUILD_INFO_PATH);
             WWW www = new WWW(streamingPackageinfoPath);
             yield return www;
             if (www.error != null)
@@ -203,11 +199,12 @@ namespace BDFramework.Asset
             {
                 source = Application.streamingAssetsPath;
             }
+
             var sourcePath = string.Format("{0}/{1}", source, BDApplication.GetPlatformPath(platform));
 
             //packageinfo
-            var persistentPackageInfoPath = string.Format("{0}/{1}", targetPath, PACKAGE_BUILD_INFO_PATH);
-            var streamingPackageinfoPath = string.Format("{0}/{1}", sourcePath, PACKAGE_BUILD_INFO_PATH);
+            var persistentPackageInfoPath = string.Format("{0}/{1}", targetPath, BResources.PACKAGE_BUILD_INFO_PATH);
+            var streamingPackageinfoPath = string.Format("{0}/{1}", sourcePath, BResources.PACKAGE_BUILD_INFO_PATH);
             if (!File.Exists(streamingPackageinfoPath))
             {
                 //不存在Streaming配置

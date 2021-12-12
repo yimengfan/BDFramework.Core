@@ -64,7 +64,10 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         readonly public static string ALL_SHADER_VARAINT_ASSET_PATH = "Assets/Resource/Runtime/" + ALL_SHADER_VARAINT_RUNTIME_PATH + ".shadervariants";
 
-
+        /// <summary>
+        /// 包构建信息路径
+        /// </summary>
+        readonly static public string PACKAGE_BUILD_INFO_PATH = "PackageBuild.Info";
 
         /// <summary>
         /// 初始化

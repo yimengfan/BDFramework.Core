@@ -128,6 +128,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //配置表
             subPackage.ConfAndInfoList.Add(BResources.ASSET_CONFIG_PATH);
             subPackage.ConfAndInfoList.Add(BResources.ASSET_TYPES_PATH);
+            subPackage.ConfAndInfoList.Add(BResources.PACKAGE_BUILD_INFO_PATH);
 
             MultiplePackage.AssetMultiplePackageConfigList.Add(subPackage);
             //
