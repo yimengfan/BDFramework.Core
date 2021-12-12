@@ -99,7 +99,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\BResources.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\AssetsVersionController\AssetsVersionContorller.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\AssetsVersionController\AssetsVersionContrller.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\GameAssetHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />

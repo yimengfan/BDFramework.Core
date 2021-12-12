@@ -167,16 +167,13 @@ public class Window_DemoMain : AWindow
     {
         var path = Application.persistentDataPath;
         //开始下载
-        AssetsVersionContorller.Start(UpdateMode.Repair, "http://127.0.0.1", null,
-            (idx, totalNum) =>
+        AssetsVersionContrller.Start(UpdateMode.Repair, "http://127.0.0.1", null,
+            (idx, totalNum) => { Debug.LogFormat("资源更新进度：{0}/{1}", idx, totalNum); }, //进度通知
+            (status, msg) =>
             {
-                Debug.LogFormat("资源更新进度：{0}/{1}", idx, totalNum); 
-                
-            }, //进度通知
-            (error) =>
-            {
-                Debug.LogError("错误:" + error);
-            });//错误通知
+                //错误通知
+                Debug.LogError("结果:" + status + " - " + msg);
+            });
     }
 
     [ButtonOnclick("Grid/btn_8")]

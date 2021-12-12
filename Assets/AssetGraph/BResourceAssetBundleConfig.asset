@@ -345,12 +345,12 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u5206\u5305]\u8D44\u6E90\u8DEF\u5F84\u5206\u5305"
     m_id: 11c7368e-660b-4bc6-956d-791ee29cd6b8
-    m_x: 1812
-    m_y: 588
+    m_x: 1740
+    m_y: 492
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackage, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|eyJncm91cEZpbHRlclBhdGhEYXRhTGlzdCI6W3siT3V0cHV0Tm9kZUlkIjoiYjYyMmQyZjAtMWM5Ny00MTYzLTg3MGMtNWFhZDJlMmYxZDFkIiwiR3JvdXBQYXRoIjoiQXNzZXRzL1Jlc291cmNlX1NWTi9SdW50aW1lL0NoYXIvIn0seyJPdXRwdXROb2RlSWQiOiJhNzdhYmFjMi04N2Y0LTQ1MzgtYTVjYS1mOWQ2YTE3NGI5MDEiLCJHcm91cFBhdGgiOiJBc3NldHMvUmVzb3VyY2VfU1ZOL01vZGVsMi8ifSx7Ik91dHB1dE5vZGVJZCI6ImUzZjA1MGEzLTU2ODAtNGEwNi1hNGNlLTg5ZGY5NjU3ODI3NyIsIkdyb3VwUGF0aCI6IkFzc2V0cy9SZXNvdXJjZV9TVk4vTW9kZWwzLyJ9XX0=
+      m_instanceData: B64|eyJncm91cEZpbHRlclBhdGhEYXRhTGlzdCI6W3siT3V0cHV0Tm9kZUlkIjoiYjYyMmQyZjAtMWM5Ny00MTYzLTg3MGMtNWFhZDJlMmYxZDFkIiwiR3JvdXBQYXRoIjoiQXNzZXRzL1Jlc291cmNlX1NWTi9SdW50aW1lL0NoYXIvIn0seyJPdXRwdXROb2RlSWQiOiJhNzdhYmFjMi04N2Y0LTQ1MzgtYTVjYS1mOWQ2YTE3NGI5MDEiLCJHcm91cFBhdGgiOiJBc3NldHMvUmVzb3VyY2UvUnVudGltZS9XaW5kb3dzLyJ9LHsiT3V0cHV0Tm9kZUlkIjoiZTNmMDUwYTMtNTY4MC00YTA2LWE0Y2UtODlkZjk2NTc4Mjc3IiwiR3JvdXBQYXRoIjoiQXNzZXRzL1Jlc291cmNlX1NWTi9Nb2RlbDMvIn1dfQ==
     m_inputPoints:
     - id: 5395cff0-0426-4c68-8543-278f21171c93
       label: '-'
@@ -374,7 +374,7 @@ MonoBehaviour:
         width: 10
         height: 23
     - id: a77abac2-87f4-4538-a5ca-f9d6a174b901
-      label: Assets/Resource_SVN/Model2/
+      label: Assets/Resource/Runtime/Windows/
       parentId: 11c7368e-660b-4bc6-956d-791ee29cd6b8
       isInput: 0
       buttonRect:
@@ -396,7 +396,7 @@ MonoBehaviour:
   - m_name: "\u5206\u5305\u540D:TestChar"
     m_id: 2f5a7eba-f63a-4769-9d76-1d3b7951d455
     m_x: 2256
-    m_y: 432
+    m_y: 480
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackageName, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -413,34 +413,14 @@ MonoBehaviour:
         width: 21
         height: 29
     m_outputPoints: []
-  - m_name: "\u5206\u5305\u540D:Test2"
-    m_id: 1c368b07-0291-45e7-b8f6-4c66280dbc28
-    m_x: 2256
-    m_y: 576
-    m_nodeInstance:
-      m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackageName, BDFramework.Editor,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|eyJQYWNha2dlTmFtZSI6IlRlc3QyIn0=
-    m_inputPoints:
-    - id: db353442-7007-451d-89fb-a7806d935efd
-      label: '-'
-      parentId: 1c368b07-0291-45e7-b8f6-4c66280dbc28
-      isInput: 1
-      buttonRect:
-        serializedVersion: 2
-        x: 0
-        y: 30.7
-        width: 21
-        height: 29
-    m_outputPoints: []
-  - m_name: "\u5206\u5305\u540D:Test3"
+  - m_name: "\u5206\u5305\u540D:TestNull"
     m_id: a48b9bc3-7590-480b-b1ef-41ac4e3878b3
     m_x: 2268
     m_y: 708
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackageName, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|eyJQYWNha2dlTmFtZSI6IlRlc3QzIn0=
+      m_instanceData: B64|eyJQYWNha2dlTmFtZSI6IlRlc3ROdWxsIn0=
     m_inputPoints:
     - id: 5433a767-74f3-4584-8c26-f78dd94823ca
       label: '-'
@@ -544,19 +524,19 @@ MonoBehaviour:
     m_toNodeId: 2f5a7eba-f63a-4769-9d76-1d3b7951d455
     m_toNodeConnectionPoiontId: d3bf21e9-99bd-43f2-88a6-df7bcdca8113
     m_label: Assets/Resource_SVN/Runtime/Char/
-  - m_id: 1b2a05e2-122d-4b91-83d0-8650249bb1c3
-    m_fromNodeId: 11c7368e-660b-4bc6-956d-791ee29cd6b8
-    m_fromNodeConnectionPointId: a77abac2-87f4-4538-a5ca-f9d6a174b901
-    m_toNodeId: 1c368b07-0291-45e7-b8f6-4c66280dbc28
-    m_toNodeConnectionPoiontId: db353442-7007-451d-89fb-a7806d935efd
-    m_label: Assets/Resource_SVN/Model2/
   - m_id: 25278fdd-e841-420b-8e6b-d173b0250ead
     m_fromNodeId: 11c7368e-660b-4bc6-956d-791ee29cd6b8
     m_fromNodeConnectionPointId: e3f050a3-5680-4a06-a4ce-89df96578277
     m_toNodeId: a48b9bc3-7590-480b-b1ef-41ac4e3878b3
     m_toNodeConnectionPoiontId: 5433a767-74f3-4584-8c26-f78dd94823ca
     m_label: Assets/Resource_SVN/Model3/
-  m_lastModified: 132831912325670419
+  - m_id: 410f5820-8405-434f-ac70-3f142f1b4e81
+    m_fromNodeId: 11c7368e-660b-4bc6-956d-791ee29cd6b8
+    m_fromNodeConnectionPointId: a77abac2-87f4-4538-a5ca-f9d6a174b901
+    m_toNodeId: 2f5a7eba-f63a-4769-9d76-1d3b7951d455
+    m_toNodeConnectionPoiontId: d3bf21e9-99bd-43f2-88a6-df7bcdca8113
+    m_label: Assets/Resource/Runtime/Windows/
+  m_lastModified: 132838107156420910
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0

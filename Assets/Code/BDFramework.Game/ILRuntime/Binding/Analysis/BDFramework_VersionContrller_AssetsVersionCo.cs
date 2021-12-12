@@ -21,7 +21,7 @@ namespace ILRuntime.Runtime.Generated
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(BDFramework.VersionContrller.AssetsVersionContorller);
+            Type type = typeof(BDFramework.VersionContrller.AssetsVersionContrller);
             args = new Type[]{typeof(BDFramework.VersionContrller.UpdateMode), typeof(System.String), typeof(System.String), typeof(System.Action<System.Int32, System.Int32>), typeof(System.Action<System.String>)};
             method = type.GetMethod("Start", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Start_0);
@@ -57,7 +57,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.VersionContrller.AssetsVersionContorller.Start(@mode, @serverConfigPath, @assetPackageName, @onProcess, @onError);
+           // BDFramework.VersionContrller.AssetsVersionContrller.Start(@mode, @serverConfigPath, @assetPackageName, @onProcess, @onError);
 
             return __ret;
         }
