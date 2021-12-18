@@ -84,15 +84,14 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\EditorWindow_GenAssetBundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\ShaderCollection.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\AssetBundleEditor\ShaderVariantsCollectionTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDAssetImporter.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDFrameEditorLife.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorBuiltinStyle.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorGuide\EditorWindow_BDFrameworkStart.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDFrameworkEditorBehaviour.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorAssetImpoter\BDFrameworkEditorAssetImporter.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDEditorApplication.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDFrameWorkEditorSetting.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDFrameworkEditorStatus.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\EditorWindow_BDFrameworkConfig.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\GlobalEditorMenuItems.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\Menuitems\EditorBuiltinStyle.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\Menuitems\GlobalEditorMenuItems.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\NetProtocolEditor\Protobuf2ClassTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\ScriptEditor\EditorWindow_ScriptBuildDll.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\ScriptEditor\GenAdapter.cs" />
@@ -105,6 +104,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\TableEditor\ExcelTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\TableEditor\ExcelUtility.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\TableEditor\GenCodeTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\UserGuide\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\SVN\SVNProcessor.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\UIComponent\OverrideUIComponent.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Unity3dEx\ShaderUtilImpl.cs" />

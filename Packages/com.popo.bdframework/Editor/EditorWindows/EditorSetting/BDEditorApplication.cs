@@ -45,7 +45,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public string[] GetLeastHotfixCodes()
         {
-            return BDAssetImporter.CacheData?.HotfixList.ToArray();
+            return BDFrameworkEditorAssetImporter.CacheData?.HotfixList.ToArray();
         }
         
         /// <summary>

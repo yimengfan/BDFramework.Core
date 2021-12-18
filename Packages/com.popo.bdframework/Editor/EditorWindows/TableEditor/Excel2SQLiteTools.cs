@@ -143,10 +143,10 @@ namespace BDFramework.Editor.TableData
             var jsonObj    = JsonMapper.ToObject(jsonContent);
             var dbname     = Path.GetFileNameWithoutExtension(SqliteHelper.DB.DBPath);
             var @namespace = "Game.Data." + dbname + ".";
-            var type       = BDFrameEditorLife.Types.FirstOrDefault((t) => t.FullName.StartsWith(@namespace) && t.Name.ToLower() == table.ToLower());
+            var type       = BDFrameworkEditorBehaviour.Types.FirstOrDefault((t) => t.FullName.StartsWith(@namespace) && t.Name.ToLower() == table.ToLower());
             if (type == null)
             {
-                type = BDFrameEditorLife.Types.FirstOrDefault((t) => t.FullName.StartsWith( "Game.Data.") && t.Name.ToLower() == table.ToLower());
+                type = BDFrameworkEditorBehaviour.Types.FirstOrDefault((t) => t.FullName.StartsWith( "Game.Data.") && t.Name.ToLower() == table.ToLower());
             }
             if (type == null)
             {

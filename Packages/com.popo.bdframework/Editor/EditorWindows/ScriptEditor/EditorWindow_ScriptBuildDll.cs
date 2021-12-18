@@ -181,7 +181,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         var outputPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
         //游戏工程的Bind
         Action<bool> mainProjectIlrBindAction = null;
-        var type = BDFrameEditorLife.Types.FirstOrDefault((t) => t.FullName == "Game.ILRuntime.GameLogicCLRBinding");
+        var type = BDFrameworkEditorBehaviour.Types.FirstOrDefault((t) => t.FullName == "Game.ILRuntime.GameLogicCLRBinding");
         if (type != null)
         {
             var method = type.GetMethod("Bind", BindingFlags.Public | BindingFlags.Static);

@@ -18,7 +18,7 @@ namespace BDFramework.Editor
         static public void Init()
         {
             var type = typeof(ABDFrameworkPublishPipelineBehaviour);
-            var types = BDFrameEditorLife.Types;
+            var types = BDFrameworkEditorBehaviour.Types;
             foreach (var t in types)
             {
                 if (t.IsSubclassOf(type))
