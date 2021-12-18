@@ -196,6 +196,7 @@ namespace BDFramework.Editor.PublishPipeline
             //PlayerSettings.SetManagedStrippingLevel(BuildTargetGroup.Android, ManagedStrippingLevel.Low);
             // }
 
+
             //开启符号表
             EditorUserBuildSettings.androidCreateSymbolsZip = true;
             //不同模式的设置
