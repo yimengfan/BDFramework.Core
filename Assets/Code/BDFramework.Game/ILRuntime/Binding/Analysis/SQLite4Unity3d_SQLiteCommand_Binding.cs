@@ -37,11 +37,11 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Type @t = (System.Type)typeof(System.Type).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Type @t = (System.Type)typeof(System.Type).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite4Unity3d.SQLiteCommand instance_of_this_method = (SQLite4Unity3d.SQLiteCommand)typeof(SQLite4Unity3d.SQLiteCommand).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            SQLite4Unity3d.SQLiteCommand instance_of_this_method = (SQLite4Unity3d.SQLiteCommand)typeof(SQLite4Unity3d.SQLiteCommand).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.ExecuteQuery(@t);

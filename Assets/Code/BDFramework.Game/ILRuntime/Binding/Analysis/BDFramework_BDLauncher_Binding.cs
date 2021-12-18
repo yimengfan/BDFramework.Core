@@ -63,7 +63,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            BDFramework.BDLauncher.GameLauncherDelegate @value = (BDFramework.BDLauncher.GameLauncherDelegate)typeof(BDFramework.BDLauncher.GameLauncherDelegate).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            BDFramework.BDLauncher.GameLauncherDelegate @value = (BDFramework.BDLauncher.GameLauncherDelegate)typeof(BDFramework.BDLauncher.GameLauncherDelegate).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)8);
             __intp.Free(ptr_of_this_method);
 
 
@@ -90,7 +90,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            BDFramework.BDLauncher.GameLauncherDelegate @value = (BDFramework.BDLauncher.GameLauncherDelegate)typeof(BDFramework.BDLauncher.GameLauncherDelegate).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            BDFramework.BDLauncher.GameLauncherDelegate @value = (BDFramework.BDLauncher.GameLauncherDelegate)typeof(BDFramework.BDLauncher.GameLauncherDelegate).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)8);
             __intp.Free(ptr_of_this_method);
 
 

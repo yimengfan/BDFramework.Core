@@ -37,23 +37,23 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 5);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Action<BDFramework.VersionContrller.AssetsVersionContrller.VersionControllerStatus, System.String> @onTaskEndCallback = (System.Action<BDFramework.VersionContrller.AssetsVersionContrller.VersionControllerStatus, System.String>)typeof(System.Action<BDFramework.VersionContrller.AssetsVersionContrller.VersionControllerStatus, System.String>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Action<BDFramework.VersionContrller.AssetsVersionContrller.VersionControllerStatus, System.String> @onTaskEndCallback = (System.Action<BDFramework.VersionContrller.AssetsVersionContrller.VersionControllerStatus, System.String>)typeof(System.Action<BDFramework.VersionContrller.AssetsVersionContrller.VersionControllerStatus, System.String>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)8);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.Action<BDFramework.VersionContrller.ServerAssetItem, System.Collections.Generic.List<BDFramework.VersionContrller.ServerAssetItem>> @onDownloadProccess = (System.Action<BDFramework.VersionContrller.ServerAssetItem, System.Collections.Generic.List<BDFramework.VersionContrller.ServerAssetItem>>)typeof(System.Action<BDFramework.VersionContrller.ServerAssetItem, System.Collections.Generic.List<BDFramework.VersionContrller.ServerAssetItem>>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Action<BDFramework.VersionContrller.ServerAssetItem, System.Collections.Generic.List<BDFramework.VersionContrller.ServerAssetItem>> @onDownloadProccess = (System.Action<BDFramework.VersionContrller.ServerAssetItem, System.Collections.Generic.List<BDFramework.VersionContrller.ServerAssetItem>>)typeof(System.Action<BDFramework.VersionContrller.ServerAssetItem, System.Collections.Generic.List<BDFramework.VersionContrller.ServerAssetItem>>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)8);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            System.String @assetsPackageName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.String @assetsPackageName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
-            System.String @serverConfigPath = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.String @serverConfigPath = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 5);
-            BDFramework.VersionContrller.UpdateMode @updateMode = (BDFramework.VersionContrller.UpdateMode)typeof(BDFramework.VersionContrller.UpdateMode).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            BDFramework.VersionContrller.UpdateMode @updateMode = (BDFramework.VersionContrller.UpdateMode)typeof(BDFramework.VersionContrller.UpdateMode).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)20);
             __intp.Free(ptr_of_this_method);
 
 

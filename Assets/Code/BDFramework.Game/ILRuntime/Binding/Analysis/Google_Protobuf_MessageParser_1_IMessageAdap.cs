@@ -43,11 +43,11 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Byte[] @data = (System.Byte[])typeof(System.Byte[]).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Byte[] @data = (System.Byte[])typeof(System.Byte[]).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.ParseFrom(@data);
@@ -67,11 +67,11 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.IO.Stream @input = (System.IO.Stream)typeof(System.IO.Stream).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.IO.Stream @input = (System.IO.Stream)typeof(System.IO.Stream).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.MessageParser<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.ParseFrom(@input);
@@ -91,7 +91,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Func<global::IMessageAdapter.Adaptor> @factory = (System.Func<global::IMessageAdapter.Adaptor>)typeof(System.Func<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Func<global::IMessageAdapter.Adaptor> @factory = (System.Func<global::IMessageAdapter.Adaptor>)typeof(System.Func<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)8);
             __intp.Free(ptr_of_this_method);
 
 
