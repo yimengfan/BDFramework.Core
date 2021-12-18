@@ -23,9 +23,18 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core (国内比较快)
 
 # 安装使用(Start)
 #### OpenUPM(强烈推荐)：  
-https://openupm.cn/packages/com.popo.bdframework/?subPage=readme  
+安装教程: https://www.yuque.com/naipaopao/eg6gik/xy8dm4  
+### Step：  
+● open Edit/Project Settings/Package Manager  
+● add a new Scoped Registry (or edit the existing OpenUPM entry)  
+####  ○ Name: package.openupm.cn  
+####  ○ URL: https://package.openupm.cn  
+####  ○ Scope: com.ourpalm.ilruntime  com.popo.bdframework  
+● click Save (or Apply)  
+Then open the "Package Manger" editor windows.   
+Switch  menuitem to "My Registries ".  
+You can see the BDFramework ,you can select the new version.  
 
-[安装教程](https://www.yuque.com/naipaopao/eg6gik/xy8dm4)  
 或者手动复制框架文件夹到Package目录亦可.  
 
 ## 贡献者名单
