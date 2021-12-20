@@ -1,6 +1,4 @@
 ﻿using System;
-using BDFramework.ScreenView;
-using BDFramework.UFlux;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 //这里的命名空间必须为：BDFramework.Uflux

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using BDFramework.Hotfix.ScreenView;
 using UnityEngine;
-using BDFramework.ScreenView;
-using BDFramework.Sql;
 using BDFramework.UFlux;
 using BDFramework.UI;
 using Game;

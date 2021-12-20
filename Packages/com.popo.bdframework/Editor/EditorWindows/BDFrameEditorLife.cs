@@ -6,7 +6,7 @@ using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
 using BDFramework.Core.Tools;
-using BDFramework.Reflection;
+using BDFramework.Hotfix.Reflection;
 using LitJson;
 using UnityEditor;
 using UnityEngine;
@@ -149,7 +149,7 @@ namespace BDFramework.Editor
                 //1.类型注册到管理器
                 foreach (var mgr in mgrs)
                 {
-                    mgr.CheckType(type, attr);
+                    mgr?.CheckType(type, attr);
                 }
             }
         }

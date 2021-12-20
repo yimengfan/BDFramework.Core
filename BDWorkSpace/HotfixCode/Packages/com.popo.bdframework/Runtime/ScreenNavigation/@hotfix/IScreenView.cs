@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BDFramework.ScreenView
+﻿
+namespace BDFramework.Hotfix.ScreenView
 {
     /// <summary>
     /// IScreenView接口

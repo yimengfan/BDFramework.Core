@@ -16,7 +16,9 @@ namespace BDFramework.Editor.TableData
         /// <summary>
         /// 表格数据集合
         /// </summary>
-        private DataSet mResultSet;
+        // private DataSet mResultSet;
+
+        private DataTable mSheet = null;
 
         /// <summary>
         /// 构造函数
@@ -26,7 +28,17 @@ namespace BDFramework.Editor.TableData
         {
             FileStream       mStream      = File.Open(excelFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             IExcelDataReader mExcelReader = ExcelReaderFactory.CreateOpenXmlReader(mStream);
-            mResultSet = mExcelReader.AsDataSet();
+            var mResultSet = mExcelReader.AsDataSet();
+            if (mResultSet.Tables.Count > 0)
+            {
+                //默认读取第一个数据表
+                mSheet = mResultSet.Tables[0];
+            }
+        }
+
+        public ExcelUtility(DataTable sheet)
+        {
+            mSheet = sheet;
         }
 
         /// <summary>
@@ -35,9 +47,7 @@ namespace BDFramework.Editor.TableData
         public List<T> ConvertToList<T>()
         {
             //判断Excel文件中是否存在数据表
-            if (mResultSet.Tables.Count < 1) return null;
-            //默认读取第一个数据表
-            DataTable mSheet = mResultSet.Tables[0];
+            if (mSheet == null) return null;
 
             //判断数据表内是否存在数据
             if (mSheet.Rows.Count < 1) return null;
@@ -115,13 +125,12 @@ namespace BDFramework.Editor.TableData
             IdX = -1;
             IdY = -1;
             //判断Excel文件中是否存在数据表
-            if (mResultSet.Tables.Count < 1)
+            if (mSheet==null)
             {
                 return "";
             }
 
             //默认读取第一个数据表
-            DataTable mSheet = mResultSet.Tables[0];
 
             //判断数据表内是否存在数据
             if (mSheet.Rows.Count < 1)
@@ -402,13 +411,13 @@ namespace BDFramework.Editor.TableData
             List<object> list = new List<object>();
 
             //判断Excel文件中是否存在数据表
-            if (mResultSet.Tables.Count < 1)
+            if (mSheet==null)
             {
                 return list;
             }
 
             //默认读取第一个数据表
-            DataTable mSheet = mResultSet.Tables[0];
+            
             //判断数据表内是否存在数据
             if (mSheet.Rows.Count <= index)
             {
@@ -433,10 +442,9 @@ namespace BDFramework.Editor.TableData
         public void ConvertToCSV(string CSVPath, Encoding encoding)
         {
             //判断Excel文件中是否存在数据表
-            if (mResultSet.Tables.Count < 1) return;
+            if (mSheet == null) return;
 
             //默认读取第一个数据表
-            DataTable mSheet = mResultSet.Tables[0];
 
             //判断数据表内是否存在数据
             if (mSheet.Rows.Count < 1) return;
@@ -477,10 +485,9 @@ namespace BDFramework.Editor.TableData
         public void ConvertToXml(string XmlFile)
         {
             //判断Excel文件中是否存在数据表
-            if (mResultSet.Tables.Count < 1) return;
+            if (mSheet==null) return;
 
             //默认读取第一个数据表
-            DataTable mSheet = mResultSet.Tables[0];
 
             //判断数据表内是否存在数据
             if (mSheet.Rows.Count < 1) return;

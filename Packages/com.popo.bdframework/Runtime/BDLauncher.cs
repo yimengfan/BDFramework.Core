@@ -69,17 +69,7 @@ namespace BDFramework
 
         static public GameLauncherDelegate OnUpdate { get; set; }
         static public GameLauncherDelegate OnLateUpdate { get; set; }
-
-        /// <summary>
-        /// 当框架初始化完成
-        /// </summary>
-        static public Action OnBDFrameInitialized { get; set; }
-
-        /// <summary>
-        /// 当框架初始化完成
-        /// </summary>
-        static public Action OnBDFrameInitializedForTest { get; set; }
-
+        
         #endregion
 
         static public BDLauncher Inst { get; private set; }
@@ -134,7 +124,6 @@ namespace BDFramework
             BDebug.Log("【Launch】StreamingAsset:" + Application.streamingAssetsPath);
             //主工程启动
             IGameStart mainStart;
-
             foreach (var type in mainProjectTypes)
             {
                 //TODO 这里有可能先访问到 IGamestart的Adaptor

@@ -32,7 +32,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 非Hash命名时，runtime目录的都放在一起，方便调试
         /// </summary>
-        static readonly public string DEBUG_RUNTIME = "runtime/{0}";
+       // static readonly public string DEBUG_RUNTIME = "runtime/{0}";
 
 
         /// <summary>
@@ -137,10 +137,10 @@ namespace BDFramework.ResourceMgr.V2
         public T Load<T>(string path) where T : UnityEngine.Object
         {
             //非hash模式，需要debugRuntime
-            if (!this.AssetConfigLoder.IsHashName)
-            {
-                path = ZString.Format(DEBUG_RUNTIME, path);
-            }
+            // if (!this.AssetConfigLoder.IsHashName)
+            // {
+            //     path = ZString.Format(DEBUG_RUNTIME, path);
+            // }
 
             //1.依赖路径
             var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssetsByName<T>(path);
@@ -174,10 +174,10 @@ namespace BDFramework.ResourceMgr.V2
         public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
         {
             //非hash模式，需要debugRuntime
-            if (!this.AssetConfigLoder.IsHashName)
-            {
-                path = ZString.Format(DEBUG_RUNTIME, path);
-            }
+            // if (!this.AssetConfigLoder.IsHashName)
+            // {
+            //     path = ZString.Format(DEBUG_RUNTIME, path);
+            // }
 
 
             var item = AssetConfigLoder.GetAssetBundleData<T>(path);
@@ -215,10 +215,10 @@ namespace BDFramework.ResourceMgr.V2
         public int AsyncLoad<T>(string assetName, Action<T> callback) where T : UnityEngine.Object
         {
             //非hash模式，需要debugRuntime
-            if (!this.AssetConfigLoder.IsHashName)
-            {
-                assetName = ZString.Format(DEBUG_RUNTIME, assetName);
-            }
+            // if (!this.AssetConfigLoder.IsHashName)
+            // {
+            //     assetName = ZString.Format(DEBUG_RUNTIME, assetName);
+            // }
 
             List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
             //获取依赖
@@ -499,10 +499,10 @@ namespace BDFramework.ResourceMgr.V2
             string str;
 
             str = ZString.Concat(floder, "/");
-            if (!this.AssetConfigLoder.IsHashName)
-            {
-                str = ZString.Format(DEBUG_RUNTIME, str);
-            }
+            // if (!this.AssetConfigLoder.IsHashName)
+            // {
+            //     str = ZString.Format(DEBUG_RUNTIME, str);
+            // }
 
 
             foreach (var abItem in this.AssetConfigLoder.AssetbundleItemList)
@@ -529,14 +529,14 @@ namespace BDFramework.ResourceMgr.V2
                 });
             }
 
-            if (!this.AssetConfigLoder.IsHashName)
-            {
-                var count = "runtime/".Length;
-                for (int i = 0; i < rets.Count; i++)
-                {
-                    rets[i] = rets[i].Substring(count);
-                }
-            }
+            // if (!this.AssetConfigLoder.IsHashName)
+            // {
+            //     var count = "runtime/".Length;
+            //     for (int i = 0; i < rets.Count; i++)
+            //     {
+            //         rets[i] = rets[i].Substring(count);
+            //     }
+            // }
 
 
             return rets.ToArray();
@@ -607,10 +607,10 @@ namespace BDFramework.ResourceMgr.V2
         public void UnloadAsset(string assetName, bool isForceUnload = false)
         {
             //非hash模式，需要debugRuntime
-            if (!this.AssetConfigLoder.IsHashName)
-            {
-                assetName = ZString.Format(DEBUG_RUNTIME, assetName);
-            }
+            // if (!this.AssetConfigLoder.IsHashName)
+            // {
+            //     assetName = ZString.Format(DEBUG_RUNTIME, assetName);
+            // }
 
             var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssetsByName(assetName);
             //添加主资源一起卸载

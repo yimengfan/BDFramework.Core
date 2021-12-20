@@ -1,6 +1,6 @@
 using System;
 
-namespace BDFramework.Adaptor
+namespace BDFramework.Hotfix.Adaptor
 {
     /// <summary>
     /// action的Base

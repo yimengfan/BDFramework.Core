@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using BDFramework.DataListener;
-using BDFramework.ResourceMgr;
-using BDFramework.ScreenView;
 using BDFramework.UFlux;
 using UnityEngine;
 using BDFramework.UI;

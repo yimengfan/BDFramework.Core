@@ -33,7 +33,7 @@ namespace BDFramework.UFlux
 
             if (!node)
             {
-                BDebug.LogError("节点不存在:" + this.Path);
+                BDebug.LogError($"窗口:{com} 不存在节点:{ this.Path}");
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace BDFramework.UFlux
                 }
                 else
                 {
-                    BDebug.LogError("组件不存在:" + uiType.FullName + " - " + this.Path);
+                    BDebug.LogError($"窗口:{com} 节点:{ this.Path} 不存在:{uiType.FullName}");
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace BDFramework.UFlux
                 }
                 else
                 {
-                    BDebug.LogError("组件不存在:" + uiType.FullName + " - " + this.Path);
+                    BDebug.LogError("窗口:" + com + "组件不存在:" + uiType.FullName + " - " + this.Path);
                 }
             }
         }

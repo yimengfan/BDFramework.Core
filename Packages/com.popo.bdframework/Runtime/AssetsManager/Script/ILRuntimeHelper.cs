@@ -54,9 +54,9 @@ namespace BDFramework
 #if UNITY_EDITOR
             AppDomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
 #endif
-            //
+            //clrbinding
             gamelogicBindAction?.Invoke(isDoCLRBinding);
-            //
+            //jsonmapperbinding
             JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);
             if (BDLauncher.Inst != null && BDLauncher.Inst.GameConfig.IsDebuggerILRuntime)
             {

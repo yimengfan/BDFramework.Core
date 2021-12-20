@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using BDFramework.ScreenView;
+﻿using System.Collections.Generic;
 using BDFramework.Sql;
 using UnityEngine;
 using BDFramework.UI;
@@ -11,6 +7,7 @@ using LitJson;
 using UnityEngine.UI;
 using BDFramework;
 using BDFramework.DataListener;
+using BDFramework.Hotfix.ScreenView;
 using BDFramework.ResourceMgr;
 using BDFramework.UFlux;
 using BDFramework.VersionContrller;

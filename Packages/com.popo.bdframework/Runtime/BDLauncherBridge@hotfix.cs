@@ -5,7 +5,8 @@ using System;
 using System.Linq;
 using BDFramework.Mgr;
 using BDFramework.GameStart;
-using BDFramework.Reflection;
+using BDFramework.HotFix.Mgr;
+using BDFramework.Hotfix.Reflection;
 using BDFramework.UFlux;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,36 +19,27 @@ public class BDLauncherBridge
 {
     static private IHotfixGameStart hotfixStart = null;
 
-
     /// <summary>
     /// 整个游戏的启动器
     /// </summary>
     /// <param name="mainProjectTypes">游戏逻辑域传过来的所有type</param>
     static public void Start(Type[] mainProjectTypes = null, Type[] hotfixTypes = null)
     {
-        //Editor模式 或者非热更
-        if (hotfixTypes == null)
-        {
-            hotfixTypes = mainProjectTypes;
-        }
-
-      
-
-
         //UI组件类型注册
         List<Type> types = new List<Type>();
         types.AddRange(typeof(Button).Assembly.GetTypes()); //Unity
-        types.AddRange(typeof(IButton).Assembly.GetTypes()); //BDFramework.component
+        types.AddRange(typeof(IButton).Assembly.GetTypes()); //BDFramework.Core
         types.AddRange(mainProjectTypes); //游戏业务逻辑
         if (Application.isEditor)
         {
             types = types.Distinct().ToList();
         }
 
-
+        //ui类型
         var uitype = typeof(UIBehaviour);
-        foreach (var type in types)
+        for (int i = 0; i < types.Count; i++)
         {
+            var type = types[i];
             //注册所有uiComponent
             bool ret = type.IsSubclassOf(uitype);
             if (ret)
@@ -64,57 +56,55 @@ public class BDLauncherBridge
             }
         }
 
-      
-        //管理器列表
-        var mgrList = new List<IMgr>();
-        foreach (var type in hotfixTypes)
+
+        //执行主工程逻辑
+        BDebug.Log("主工程Instance初始化...","red");
+        ManagerInstHelper.Load(mainProjectTypes);
+        //执行热更逻辑
+        if (hotfixTypes != null)
         {
-            if (type != null
-                && type.BaseType != null
-                && type.BaseType.FullName != null)
+            TriggerHotFixGameStart(hotfixTypes);
+            //获取管理器列表，开始工作
+            BDebug.Log("热更Instance初始化...","red");
+            var hotfixMgrList = ILRuntimeManagerInstHelper.LoadManagerInstance(hotfixTypes);
+            //启动热更管理器
+            foreach (var hotfixMgr in hotfixMgrList)
             {
-                if (type.BaseType.FullName.Contains(".ManagerBase`2")) //这里ILR里面只能这么做，丑但有效
-                {
-                    BDebug.Log("加载管理器-" + type, "green");
-                    var i = type.BaseType.GetProperty("Inst").GetValue(null, null) as IMgr;
-                    mgrList.Add(i);
-                }
-                else
-                {
-                    // 2.游戏启动器
-                    if (hotfixStart == null)
-                    {
-                        if (type.IsClass && type.GetInterface(nameof(IHotfixGameStart)) != null)
-                        {
-                            hotfixStart = Activator.CreateInstance(type) as IHotfixGameStart;
-                        }
-                    }
-                }
+                hotfixMgr.Start();
             }
         }
-
-      
-        //遍历type执行逻辑
-        foreach (var type in hotfixTypes)
+        else
         {
-            var mgrAttribute = type.GetAttributeInILRuntime<ManagerAttribute>();
-            if (mgrAttribute == null)
-            {
-                continue;
-            }
-
-            //1.类型注册到管理器
-            foreach (var iMgr in mgrList)
-            {
-                iMgr.CheckType(type, mgrAttribute);
-            }
+            //热更逻辑为空,触发HotfixGamestart
+            TriggerHotFixGameStart(mainProjectTypes);
+            //启动著工程的管理器
+            ManagerInstHelper.Start();
         }
+    }
 
-      
-        //管理器初始化
-        foreach (var m in mgrList)
+    /// <summary>
+    /// 热更启动
+    /// </summary>
+    /// <param name="types"></param>
+    static private void TriggerHotFixGameStart(Type[] types)
+    {
+        //寻找IGameStart
+        for (int i = 0; i < types.Length; i++)
         {
-            m.Init();
+            // 游戏启动器
+            var type = types[i];
+            if (!type.IsClass) continue;
+
+            var interfaceTypes = type.GetInterfaces();
+            for (int j = 0; j < interfaceTypes.Length; j++)
+            {
+                var interfaceType = interfaceTypes[j];
+                if (interfaceType.Name.Contains(nameof(IHotfixGameStart)))
+                {
+                    hotfixStart = Activator.CreateInstance(type) as IHotfixGameStart;
+                    break;
+                }
+            }
         }
 
         //gamestart生命注册
@@ -123,15 +113,6 @@ public class BDLauncherBridge
             hotfixStart.Start();
             BDLauncher.OnUpdate += hotfixStart.Update;
             BDLauncher.OnLateUpdate += hotfixStart.LateUpdate;
-        }
-
-        //执行框架初始化完成的测试
-        BDLauncher.OnBDFrameInitialized?.Invoke();
-        BDLauncher.OnBDFrameInitializedForTest?.Invoke();
-        //所有管理器开始工作
-        foreach (var m in mgrList)
-        {
-            m.Start();
         }
     }
 }

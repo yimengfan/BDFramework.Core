@@ -2,8 +2,11 @@
 using System.Reflection;
 using UnityEngine;
 
-namespace BDFramework.Reflection
+namespace BDFramework.Hotfix.Reflection
 {
+    /// <summary>
+    /// 反射扩展
+    /// </summary>
     static public class ReflectionExtension
     {
         

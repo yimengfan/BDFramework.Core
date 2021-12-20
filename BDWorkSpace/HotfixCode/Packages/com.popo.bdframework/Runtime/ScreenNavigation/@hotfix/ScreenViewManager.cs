@@ -1,14 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using BDFramework.Mgr;
-//using UnityEditor.Graphs;
 using UnityEngine;
 
-namespace BDFramework.ScreenView
+namespace BDFramework.Hotfix.ScreenView
 {
+    /// <summary>
+    /// 导航管理器标签
+    /// </summary>
+    public class ScreenViewAttribute : ManagerAttribute
+    {
+        public ScreenViewAttribute(int intTag) : base(intTag)
+        {
+        }
+    }
+
+    /// <summary>
+    /// 导航管理器
+    /// </summary>
     public class ScreenViewManager : ManagerBase<ScreenViewManager, ScreenViewAttribute>
     {
+        /// <summary>
+        /// 所有的导航列表
+        /// </summary>
         public List<ScreenViewLayer> screenViewList = new List<ScreenViewLayer>();
 
         /// <summary>
@@ -16,7 +29,10 @@ namespace BDFramework.ScreenView
         /// </summary>
         public ScreenViewLayer MainLayer { get; private set; }
 
-        private int defaultScreenTag =0;
+        /// <summary>
+        /// 默认导航到
+        /// </summary>
+        private int defaultScreenTag = 0;
 
         #region Mgr管理
 
@@ -52,13 +68,11 @@ namespace BDFramework.ScreenView
 
         public override void Start()
         {
-
             MainLayer.BeginNavTo(this.defaultScreenTag);
         }
 
-
         #endregion
-        
+
         #region Screen管理
 
         public ScreenViewLayer AddLayer()

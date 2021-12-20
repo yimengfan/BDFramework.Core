@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BDFramework.ResourceMgr;
-using BDFramework.ScreenView;
+﻿using BDFramework.Hotfix.ScreenView;
 using BDFramework.UFlux;
-using UnityEngine;
 using BDFramework.UI;
 using Game;
-using UnityEngine.UI;
 
 /// <summary>
 /// 这个是ui的标签，

@@ -176,9 +176,9 @@ namespace BDFramework.Editor.PublishPipeline
         static public void GenAllAssets(string outputPath, RuntimePlatform platform)
         {
             var _outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform)); //  + "/" + ;
-            if (Directory.Exists(_outputPath))
+            if (!Directory.Exists(_outputPath))
             {
-                Directory.Delete(_outputPath, true);
+                Directory.CreateDirectory(_outputPath);
             }
 
             //1.编译脚本
@@ -204,8 +204,8 @@ namespace BDFramework.Editor.PublishPipeline
             //3.打包资源
             try
             {
-                var config = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
-                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform, config.IsUseHashName);
+                //var config = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
+                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform);
             }
             catch (Exception e)
             {

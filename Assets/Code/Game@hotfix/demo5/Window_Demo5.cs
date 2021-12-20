@@ -1,11 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BDFramework.ScreenView;
-using UnityEngine;
-using BDFramework.UI;
-using DG.Tweening;
-using UnityEngine.UI;
-using BDFramework;
+﻿using BDFramework.UI;
 using BDFramework.UFlux;
 
 //using UnityEditor.Graphs;

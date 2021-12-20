@@ -105,9 +105,9 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
 
-            var result_of_this_method = BDFramework.BDLauncher.OnBDFrameInitialized;
+            //var result_of_this_method = BDFramework.BDLauncher.OnBDFrameInitialized;
 
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+            return null;
         }
 
         static StackObject* get_OnBDFrameInitializedForTest_5(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
@@ -116,9 +116,8 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
 
-            var result_of_this_method = BDFramework.BDLauncher.OnBDFrameInitializedForTest;
 
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+            return null;
         }
 
 

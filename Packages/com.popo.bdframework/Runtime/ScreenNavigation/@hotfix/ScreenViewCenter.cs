@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-namespace BDFramework.ScreenView
+namespace BDFramework.Hotfix.ScreenView
 {
     /// <summary>
     /// 导航层，一个导航层管理若干ScreenView,ScreenView之间可以多个同时出现，是一种层叠的关系

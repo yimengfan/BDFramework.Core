@@ -46,7 +46,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 是否为hash命名
         /// </summary>
-        public bool IsHashName { get; set; } = true;
+        // public bool IsHashName { get; set; } = true;
 
 
         /// <summary>

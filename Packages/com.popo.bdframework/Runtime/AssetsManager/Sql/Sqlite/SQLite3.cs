@@ -77,7 +77,11 @@ namespace SQLite4Unity3d
         /// <summary>
         /// is open
         /// </summary>
-        public bool IsOpen { get { return _open; } }
+        public bool IsOpen
+        {
+            get { return _open; }
+        }
+
         // Dictionary of synchronization objects.
         //
         // To prevent database disruption, a database file must be accessed *synchronously*.
@@ -138,8 +142,7 @@ namespace SQLite4Unity3d
         /// only here for backwards compatibility. There is a *significant* speed advantage, with no
         /// down sides, when setting storeDateTimeAsTicks = true.
         /// </param>
-        public SQLiteConnection(string databasePath, bool storeDateTimeAsTicks = false)
-            : this(databasePath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, storeDateTimeAsTicks)
+        public SQLiteConnection(string databasePath, bool storeDateTimeAsTicks = false) : this(databasePath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, storeDateTimeAsTicks)
         {
         }
 
@@ -305,9 +308,8 @@ namespace SQLite4Unity3d
                 _mappings[key] = maps;
             }
 
-            //获取具体map
-            TableMapping map;
-            if (!maps.TryGetValue(type.FullName, out map))
+            //获取具体tableMap
+            if (!maps.TryGetValue(type.FullName, out var map))
             {
                 map = new TableMapping(type, createFlags);
                 maps[type.FullName] = map;
@@ -457,8 +459,7 @@ namespace SQLite4Unity3d
                     }
 
                     if (i.Unique != iinfo.Unique)
-                        throw new Exception(
-                            "All the columns in an index must have the same value for their Unique property");
+                        throw new Exception("All the columns in an index must have the same value for their Unique property");
 
                     iinfo.Columns.Add(new IndexedColumn {Order = i.Order, ColumnName = c.Name});
                 }
@@ -497,8 +498,7 @@ namespace SQLite4Unity3d
         public int CreateIndex(string indexName, string tableName, string[] columnNames, bool unique = false)
         {
             const string sqlFormat = "create {2} index if not exists \"{3}\" on \"{0}\"(\"{1}\")";
-            var sql = String.Format(sqlFormat, tableName, string.Join("\", \"", columnNames), unique ? "unique" : "",
-                indexName);
+            var sql = String.Format(sqlFormat, tableName, string.Join("\", \"", columnNames), unique ? "unique" : "", indexName);
             return Execute(sql);
         }
 
@@ -1128,8 +1128,7 @@ namespace SQLite4Unity3d
                 }
             }
 
-            throw new ArgumentException(
-                "savePoint is not valid, and should be the result of a call to SaveTransactionPoint.", "savePoint");
+            throw new ArgumentException("savePoint is not valid, and should be the result of a call to SaveTransactionPoint.", "savePoint");
         }
 
         /// <summary>
@@ -1514,16 +1513,11 @@ namespace SQLite4Unity3d
                 throw new NotSupportedException("Cannot update " + map.TableName + ": it has no PK");
             }
 
-            var cols = from p in map.Columns
-                where p != pk
-                select p;
-            var vals = from c in cols
-                select c.GetValue(obj);
+            var cols = from p in map.Columns where p != pk select p;
+            var vals = from c in cols select c.GetValue(obj);
             var ps = new List<object>(vals);
             ps.Add(pk.GetValue(obj));
-            var q = string.Format("update \"{0}\" set {1} where {2} = ? ", map.TableName, string.Join(",",
-                (from c in cols
-                    select "\"" + c.Name + "\" = ? ").ToArray()), pk.Name);
+            var q = string.Format("update \"{0}\" set {1} where {2} = ? ", map.TableName, string.Join(",", (from c in cols select "\"" + c.Name + "\" = ? ").ToArray()), pk.Name);
 
             try
             {
@@ -1531,8 +1525,7 @@ namespace SQLite4Unity3d
             }
             catch (SQLiteException ex)
             {
-                if (ex.Result == SQLite3.Result.Constraint &&
-                    SQLite3.ExtendedErrCode(this.Handle) == SQLite3.ExtendedResult.ConstraintNotNull)
+                if (ex.Result == SQLite3.Result.Constraint && SQLite3.ExtendedErrCode(this.Handle) == SQLite3.ExtendedResult.ConstraintNotNull)
                 {
                     throw NotNullConstraintViolationException.New(ex, map, obj);
                 }
@@ -1845,8 +1838,7 @@ namespace SQLite4Unity3d
         public static string SqlType(TableMapping.Column p, bool storeDateTimeAsTicks)
         {
             var clrType = p.ColumnType;
-            if (clrType == typeof(Boolean) || clrType == typeof(Byte) || clrType == typeof(UInt16) ||
-                clrType == typeof(SByte) || clrType == typeof(Int16) || clrType == typeof(Int32))
+            if (clrType == typeof(Boolean) || clrType == typeof(Byte) || clrType == typeof(UInt16) || clrType == typeof(SByte) || clrType == typeof(Int16) || clrType == typeof(Int32))
             {
                 return "integer";
             }
@@ -2044,7 +2036,8 @@ namespace SQLite4Unity3d
         public List<object> ExecuteQuery(Type t)
         {
             var mapping = _conn.GetMapping(t);
-            if (ILRuntimeHelper.IsRunning)
+            //For Ilruntime
+            if (t is ILRuntime.Reflection.ILRuntimeWrapperType)
             {
                 return ExecuteDeferredQuery_ILRuntime(mapping).ToList();
             }
@@ -2342,8 +2335,7 @@ namespace SQLite4Unity3d
                     }
                     else
                     {
-                        SQLite3.BindText(stmt, index, ((DateTime) value).ToString("yyyy-MM-dd HH:mm:ss"), -1,
-                            NegativePointer);
+                        SQLite3.BindText(stmt, index, ((DateTime) value).ToString("yyyy-MM-dd HH:mm:ss"), -1, NegativePointer);
                     }
                 }
                 else if (value is DateTimeOffset)
@@ -2551,8 +2543,7 @@ namespace SQLite4Unity3d
                 SQLite3.Reset(Statement);
                 throw SQLiteException.New(r, msg);
             }
-            else if (r == SQLite3.Result.Constraint &&
-                     SQLite3.ExtendedErrCode(Connection.Handle) == SQLite3.ExtendedResult.ConstraintNotNull)
+            else if (r == SQLite3.Result.Constraint && SQLite3.ExtendedErrCode(Connection.Handle) == SQLite3.ExtendedResult.ConstraintNotNull)
             {
                 SQLite3.Reset(Statement);
                 throw NotNullConstraintViolationException.New(r, SQLite3.GetErrmsg(Connection.Handle));
@@ -2603,21 +2594,15 @@ namespace SQLite4Unity3d
     {
         public IEnumerable<TableMapping.Column> Columns { get; protected set; }
 
-        protected NotNullConstraintViolationException(SQLite3.Result r, string message)
-            : this(r, message, null, null)
+        protected NotNullConstraintViolationException(SQLite3.Result r, string message) : this(r, message, null, null)
         {
         }
 
-        protected NotNullConstraintViolationException(SQLite3.Result r,
-            string message,
-            TableMapping mapping,
-            object obj)
+        protected NotNullConstraintViolationException(SQLite3.Result r, string message, TableMapping mapping, object obj)
         {
             if (mapping != null && obj != null)
             {
-                this.Columns = from c in mapping.Columns
-                    where c.IsNullable == false && c.GetValue(obj) == null
-                    select c;
+                this.Columns = from c in mapping.Columns where c.IsNullable == false && c.GetValue(obj) == null select c;
             }
         }
 
@@ -2626,17 +2611,12 @@ namespace SQLite4Unity3d
             return new NotNullConstraintViolationException(r, message);
         }
 
-        public static NotNullConstraintViolationException New(SQLite3.Result r,
-            string message,
-            TableMapping mapping,
-            object obj)
+        public static NotNullConstraintViolationException New(SQLite3.Result r, string message, TableMapping mapping, object obj)
         {
             return new NotNullConstraintViolationException(r, message, mapping, obj);
         }
 
-        public static NotNullConstraintViolationException New(SQLiteException exception,
-            TableMapping mapping,
-            object obj)
+        public static NotNullConstraintViolationException New(SQLiteException exception, TableMapping mapping, object obj)
         {
             return new NotNullConstraintViolationException(exception.Result, exception.Message, mapping, obj);
         }

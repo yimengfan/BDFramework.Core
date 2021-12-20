@@ -74,11 +74,11 @@ namespace BDFramework.Editor.AssetBundle
                 GUILayout.Label(root);
             }
 
-            GUILayout.Label(string.Format("AB输出目录:{0}", exportPath));
+            GUILayout.Label(string.Format("AB输出目录:{0}", BDApplication.DevOpsPublishAssetsPath));
 
-            var assetConfig = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
+            //var assetConfig = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
             //assetConfig.AESCode = EditorGUILayout.TextField("AES密钥(V2 only):", assetConfig.AESCode);
-            assetConfig.IsUseHashName = EditorGUILayout.Toggle("hash命名:", assetConfig.IsUseHashName);
+            //assetConfig.IsUseHashName = EditorGUILayout.Toggle("hash命名:", assetConfig.IsUseHashName);
         }
 
 
@@ -89,7 +89,7 @@ namespace BDFramework.Editor.AssetBundle
         }
 
 
-        private string exportPath = "";
+
 
         /// <summary>
         /// 最新包
@@ -106,30 +106,22 @@ namespace BDFramework.Editor.AssetBundle
 
             if (GUILayout.Button("一键打包[美术资源]", GUILayout.Width(380), GUILayout.Height(30)))
             {
-                exportPath = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath, "");
-                if (string.IsNullOrEmpty(exportPath))
-                {
-                    return;
-                }
-
-                //搜集keyword
-                ShaderCollection.SimpleGenShaderVariant();
                 //开始打包
-                BuildAsset();
+                BuildAssetBundle(BDApplication.DevOpsPublishAssetsPath);
             }
             
             GUILayout.Label("测试:");
-            if (GUILayout.Button("AssetBundle SG打包测试(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
+            if (GUILayout.Button("AssetBundle SG打包(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
             {
                 var outputpath = BDApplication.DevOpsPublishAssetsPath;
                 // outputpath2 = Application.streamingAssetsPath;
                 //删除目录里面资源
-                if (Directory.Exists(outputpath))
-                {
-                    Directory.Delete(outputpath,true);
-                }
+                // if (Directory.Exists(outputpath))
+                // {
+                //     Directory.Delete(outputpath,true);
+                // }
                 //打包AB
-                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath, true);
+                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath);
             }
 
             if (GUILayout.Button("AssetBundle 加载测试Editor(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
@@ -150,8 +142,11 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 打包资源
         /// </summary>
-        public void BuildAsset()
+        public void BuildAssetBundle(string outputPath)
         {
+            //搜集keyword
+            ShaderCollection.SimpleGenShaderVariant();
+            //打包
             RuntimePlatform platform = RuntimePlatform.Android;
             if (isSelectAndroid)
             {
@@ -164,7 +159,7 @@ namespace BDFramework.Editor.AssetBundle
 
             var assetConfig = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
             //生成Assetbundlebunle
-            AssetBundleEditorToolsV2.GenAssetBundle(exportPath, platform, assetConfig.IsUseHashName);
+            AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform);
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕");
         }
