@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.Sql;
 using ILRuntime.Mono.Cecil.Pdb;
+using ILRuntime.Runtime;
 using LitJson;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -14,7 +16,7 @@ namespace BDFramework
     static public class ILRuntimeHelper
     {
         public static AppDomain AppDomain { get; private set; }
-        public static bool      IsRunning { get; private set; } = false;
+        public static bool IsRunning { get; private set; } = false;
 
         static private FileStream fsDll = null;
         static private FileStream fsPdb = null;
@@ -26,16 +28,15 @@ namespace BDFramework
         /// <param name="dllPath"></param>
         /// <param name="gamelogicBindAction">游戏逻辑测注册</param>
         /// <param name="isDoCLRBinding"></param>
-        public static void LoadHotfix(string dllPath,
-            Action<bool> gamelogicBindAction = null,
-            bool isDoCLRBinding = true)
+        public static void LoadHotfix(string dllPath, Action<bool> gamelogicBindAction = null, bool isDoCLRBinding = true)
         {
             //
             IsRunning = true;
             BDebug.Log("DLL加载路径:" + dllPath, "red");
             //
             string pdbPath = dllPath + ".pdb";
-            AppDomain = new AppDomain();
+            //按需jit
+            AppDomain = new AppDomain(ILRuntimeJITFlags.JITOnDemand);
             if (File.Exists(pdbPath))
             {
                 //这里的流不能释放，头铁的老哥别试了
@@ -58,6 +59,7 @@ namespace BDFramework
             gamelogicBindAction?.Invoke(isDoCLRBinding);
             //jsonmapperbinding
             JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);
+            SqliteHelper.RegisterILRuntimeCLRRedirection(AppDomain);
             if (BDLauncher.Inst != null && BDLauncher.Inst.GameConfig.IsDebuggerILRuntime)
             {
                 AppDomain.DebugService.StartDebugService(56000);
@@ -98,7 +100,7 @@ namespace BDFramework
             if (hotfixTypeList == null)
             {
                 hotfixTypeList = new List<Type>();
-                var values = ILRuntimeHelper.AppDomain.LoadedTypes.Values.ToList();
+                var values = AppDomain.LoadedTypes.Values.ToList();
                 foreach (var v in values)
                 {
                     hotfixTypeList.Add(v.ReflectionType);
@@ -132,20 +134,21 @@ namespace BDFramework
         /// </summary>
         /// <param name="value_type"></param>
         /// <returns></returns>
-        static public object CreateILRuntimeInstance(Type value_type)
+        static public object CreateInstance(Type value_type)
         {
-            object instance;
-            if (value_type is ILRuntime.Reflection.ILRuntimeType)
+            object instance = null;
+            if (value_type is ILRuntime.Reflection.ILRuntimeType ilrType)
             {
-                instance = ((ILRuntime.Reflection.ILRuntimeType) value_type).ILType.Instantiate();
+                instance = ilrType.ILType.Instantiate();
+            }
+            else if (value_type is ILRuntime.Reflection.ILRuntimeWrapperType ilrWrapperType)
+            {
+                instance = Activator.CreateInstance(ilrWrapperType.RealType);
             }
             else
             {
-                if (value_type is ILRuntime.Reflection.ILRuntimeWrapperType)
-                    value_type = ((ILRuntime.Reflection.ILRuntimeWrapperType) value_type).RealType;
                 instance = Activator.CreateInstance(value_type);
             }
-
             return instance;
         }
 

@@ -37,7 +37,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            BDFramework.Core.Debugger.Debugger_NetworkServer.OnReceiveMsg @callback = (BDFramework.Core.Debugger.Debugger_NetworkServer.OnReceiveMsg)typeof(BDFramework.Core.Debugger.Debugger_NetworkServer.OnReceiveMsg).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            BDFramework.Core.Debugger.Debugger_NetworkServer.OnReceiveMsg @callback = (BDFramework.Core.Debugger.Debugger_NetworkServer.OnReceiveMsg)typeof(BDFramework.Core.Debugger.Debugger_NetworkServer.OnReceiveMsg).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)8);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);

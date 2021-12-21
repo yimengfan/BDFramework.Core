@@ -10,6 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using BDFramework;
+using ILRuntime.Reflection;
 using LitJson;
 using Debug = UnityEngine.Debug;
 #if USE_CSHARP_SQLITE
@@ -25,6 +26,7 @@ using Sqlite3DatabaseHandle = System.IntPtr;
 using Sqlite3Statement = System.IntPtr;
 
 #endif
+
 namespace SQLite4Unity3d
 {
     public class TableMapping
@@ -57,8 +59,7 @@ namespace SQLite4Unity3d
             TableName = tableAttr != null ? tableAttr.Name : MappedType.Name;
 
 #if !NETFX_CORE
-            var props = MappedType.GetProperties(BindingFlags.Public | BindingFlags.Instance |
-                                                 BindingFlags.SetProperty);
+            var props = MappedType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty);
 #else
 			var props = from p in MappedType.GetRuntimeProperties()
 						where ((p.GetMethod != null && p.GetMethod.IsPublic) || (p.SetMethod != null && p.SetMethod.IsPublic) || (p.GetMethod != null && p.GetMethod.IsStatic) || (p.SetMethod != null && p.SetMethod.IsStatic))
@@ -190,11 +191,7 @@ namespace SQLite4Unity3d
                     cols = InsertOrReplaceColumns;
                 }
 
-                insertSql = string.Format("insert {3} into \"{0}\"({1}) values ({2})", TableName,
-                    string.Join(",", (from c in cols
-                        select "\"" + c.Name + "\"").ToArray()),
-                    string.Join(",", (from c in cols
-                        select "?").ToArray()), extra);
+                insertSql = string.Format("insert {3} into \"{0}\"({1}) values ({2})", TableName, string.Join(",", (from c in cols select "\"" + c.Name + "\"").ToArray()), string.Join(",", (from c in cols select "?").ToArray()), extra);
             }
 
             var insertCommand = new PreparedSqlLiteInsertCommand(conn);
@@ -239,14 +236,13 @@ namespace SQLite4Unity3d
 
             public Column(PropertyInfo prop, CreateFlags createFlags = CreateFlags.None)
             {
-                var colAttr =
-                    (ColumnAttribute) prop.GetCustomAttributes(typeof(ColumnAttribute), true).FirstOrDefault();
+                var colAttr = (ColumnAttribute) prop.GetCustomAttributes(typeof(ColumnAttribute), true).FirstOrDefault();
 
                 _prop = prop;
                 Name = colAttr == null ? prop.Name : colAttr.Name;
                 //If this type is Nullable<T> then Nullable.GetUnderlyingType returns the T, otherwise it returns null, so get the actual type instead
 
-                if (ILRuntimeHelper.IsRunning)
+                if (prop.PropertyType is ILRuntimeType)
                 {
                     ColumnType = prop.PropertyType;
                 }
@@ -257,21 +253,14 @@ namespace SQLite4Unity3d
 
                 Collation = Orm.Collation(prop);
 
-                IsPK = Orm.IsPK(prop) ||
-                       (((createFlags & CreateFlags.ImplicitPK) == CreateFlags.ImplicitPK) &&
-                        string.Compare(prop.Name, Orm.ImplicitPkName, StringComparison.OrdinalIgnoreCase) == 0);
+                IsPK = Orm.IsPK(prop) || (((createFlags & CreateFlags.ImplicitPK) == CreateFlags.ImplicitPK) && string.Compare(prop.Name, Orm.ImplicitPkName, StringComparison.OrdinalIgnoreCase) == 0);
 
-                var isAuto = Orm.IsAutoInc(prop) ||
-                             (IsPK && ((createFlags & CreateFlags.AutoIncPK) == CreateFlags.AutoIncPK));
+                var isAuto = Orm.IsAutoInc(prop) || (IsPK && ((createFlags & CreateFlags.AutoIncPK) == CreateFlags.AutoIncPK));
                 IsAutoGuid = isAuto && ColumnType == typeof(Guid);
                 IsAutoInc = isAuto && !IsAutoGuid;
 
                 Indices = Orm.GetIndices(prop);
-                if (!Indices.Any()
-                    && !IsPK
-                    && ((createFlags & CreateFlags.ImplicitIndex) == CreateFlags.ImplicitIndex)
-                    && Name.EndsWith(Orm.ImplicitIndexSuffix, StringComparison.OrdinalIgnoreCase)
-                )
+                if (!Indices.Any() && !IsPK && ((createFlags & CreateFlags.ImplicitIndex) == CreateFlags.ImplicitIndex) && Name.EndsWith(Orm.ImplicitIndexSuffix, StringComparison.OrdinalIgnoreCase))
                 {
                     Indices = new IndexedAttribute[] {new IndexedAttribute()};
                 }

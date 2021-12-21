@@ -10,7 +10,7 @@ namespace BDFramework.UFlux
     [ComponentBindAdaptor(typeof(Button))]
     public class CBA_Button : AComponentBindAdaptor
     {
-        public override void Init()
+        public override void Init()   
         {
             base.Init();
             

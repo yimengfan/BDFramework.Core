@@ -33,6 +33,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using BDFramework;
+using ILRuntime.Reflection;
 using LitJson;
 using Debug = UnityEngine.Debug;
 #if USE_CSHARP_SQLITE
@@ -2036,15 +2037,8 @@ namespace SQLite4Unity3d
         public List<object> ExecuteQuery(Type t)
         {
             var mapping = _conn.GetMapping(t);
-            //For Ilruntime
-            if (t is ILRuntime.Reflection.ILRuntimeWrapperType)
-            {
-                return ExecuteDeferredQuery_ILRuntime(mapping).ToList();
-            }
-            else
-            {
-                return ExecuteDeferredQuery(mapping).ToList();
-            }
+
+            return ExecuteDeferredQuery(mapping).ToList();
         }
 
         public List<T> ExecuteQuery<T>(TableMapping map)
@@ -2091,7 +2085,15 @@ namespace SQLite4Unity3d
 
                     while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                     {
-                        var obj = Activator.CreateInstance(map.MappedType);
+                        object obj = null;
+                        if (map.MappedType is ILRuntimeType ilrType)
+                        {
+                            obj = ilrType.ILType.Instantiate();
+                        }
+                        else
+                        {
+                            obj = Activator.CreateInstance(map.MappedType);
+                        }
                         for (int i = 0; i < cols.Length; i++)
                         {
                             if (cols[i] == null)
@@ -2112,47 +2114,7 @@ namespace SQLite4Unity3d
             }
         }
 
-        public IEnumerable<object> ExecuteDeferredQuery_ILRuntime(TableMapping map)
-        {
-            if (_conn.Trace)
-            {
-                _conn.InvokeTrace("Executing Query: " + this);
-            }
 
-            lock (_conn.SyncObject)
-            {
-                var stmt = Prepare();
-                try
-                {
-                    var cols = new TableMapping.Column[SQLite3.ColumnCount(stmt)];
-
-                    for (int i = 0; i < cols.Length; i++)
-                    {
-                        var name = SQLite3.ColumnName16(stmt, i);
-                        cols[i] = map.FindColumn(name);
-                    }
-
-                    while (SQLite3.Step(stmt) == SQLite3.Result.Row)
-                    {
-                        var obj = ILRuntimeHelper.CreateILRuntimeInstance(map.MappedType);
-                        for (int i = 0; i < cols.Length; i++)
-                        {
-                            if (cols[i] == null)
-                                continue;
-                            var colType = SQLite3.ColumnType(stmt, i);
-                            var val = ReadCol(stmt, i, colType, cols[i].ColumnType);
-                            cols[i].SetValue(obj, val);
-                        }
-
-                        yield return obj;
-                    }
-                }
-                finally
-                {
-                    SQLite3.Finalize(stmt);
-                }
-            }
-        }
 
         public IEnumerable<object> ExecuteDeferredQuery(TableMapping map)
         {
@@ -2176,7 +2138,8 @@ namespace SQLite4Unity3d
 
                     while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                     {
-                        var obj = map.MappedType.Assembly.CreateInstance(map.MappedType.FullName);
+                        object obj = ILRuntimeHelper.CreateInstance(map.MappedType);
+                        
                         for (int i = 0; i < cols.Length; i++)
                         {
                             if (cols[i] == null)
@@ -2185,8 +2148,7 @@ namespace SQLite4Unity3d
                             var val = ReadCol(stmt, i, colType, cols[i].ColumnType);
                             cols[i].SetValue(obj, val);
                         }
-
-
+                        
                         yield return obj;
                     }
                 }

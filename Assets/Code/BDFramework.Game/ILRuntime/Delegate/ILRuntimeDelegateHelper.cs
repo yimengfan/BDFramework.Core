@@ -58,6 +58,15 @@ public class ILRuntimeDelegateHelper
                     return ((Func<ILRuntime.Runtime.Intepreter.ILTypeInstance, System.Boolean>) act)(obj);
                 });
             });
+        appdomain.DelegateManager.RegisterDelegateConvertor<BDFramework.BDLauncher.GameLauncherDelegate>((act) =>
+        {
+            //
+            return new BDFramework.BDLauncher.GameLauncherDelegate(() =>
+            {
+                ((Action)act)();
+            });
+        });
+
 
 //[insert]
     }

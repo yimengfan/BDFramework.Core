@@ -90,7 +90,7 @@ namespace SQLite4Unity3d
             return q;
         }
 
-        #region  数据库操作  后面得重改一版
+        #region  数据库操作
 
         public TableQuery<T> Where(Expression<Func<T, bool>> predExpr)
         {
@@ -611,21 +611,6 @@ namespace SQLite4Unity3d
             return GenerateCommand("*").ExecuteDeferredQuery<T>().GetEnumerator();
         }
 
-
-        #region 数据库操作  by BDFramework
-
-       
-
-        /// <summary>
-        /// forilruntime
-        /// </summary>
-        /// <returns></returns>
-        public List<T> ToSearch(string sql = "")
-        {
-            //数据缓存
-            return GenerateCommand("*").ExecuteQuery<T>();
-        }
-
-        #endregion
+        
     }
 }

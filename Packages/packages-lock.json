@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.ourpalm.ilruntime": {
-      "version": "1.6.7",
+      "version": "2.0.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -12,7 +12,7 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ourpalm.ilruntime": "1.6.7",
+        "com.ourpalm.ilruntime": "2.0.1",
         "com.unity.assetgraph": "1.7.2-preview"
       }
     },

@@ -55,15 +55,15 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 3);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor> @codec = (Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor> @codec = (Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            Google.Protobuf.CodedOutputStream @output = (Google.Protobuf.CodedOutputStream)typeof(Google.Protobuf.CodedOutputStream).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.CodedOutputStream @output = (Google.Protobuf.CodedOutputStream)typeof(Google.Protobuf.CodedOutputStream).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.WriteTo(@output, @codec);
@@ -78,11 +78,11 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor> @codec = (Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor> @codec = (Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.CalculateSize(@codec);
@@ -99,15 +99,15 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 3);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor> @codec = (Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor> @codec = (Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.FieldCodec<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            Google.Protobuf.CodedInputStream @input = (Google.Protobuf.CodedInputStream)typeof(Google.Protobuf.CodedInputStream).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.CodedInputStream @input = (Google.Protobuf.CodedInputStream)typeof(Google.Protobuf.CodedInputStream).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.AddEntriesFrom(@input, @codec);
@@ -122,11 +122,11 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            global::IMessageAdapter.Adaptor @item = (global::IMessageAdapter.Adaptor)typeof(global::IMessageAdapter.Adaptor).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            global::IMessageAdapter.Adaptor @item = (global::IMessageAdapter.Adaptor)typeof(global::IMessageAdapter.Adaptor).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.Add(@item);
@@ -141,7 +141,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.Count;
@@ -161,7 +161,7 @@ namespace ILRuntime.Runtime.Generated
             System.Int32 @index = ptr_of_this_method->Value;
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>)typeof(Google.Protobuf.Collections.RepeatedField<global::IMessageAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method[index];

@@ -29,7 +29,7 @@ namespace BDFramework.Mgr
                 var type = types[i];
                 if (type != null  && type.IsClass&& typeof(IMgr).IsAssignableFrom(type))
                 {
-                    BDebug.Log("加载管理器-" + type, "green");
+                    BDebug.Log("[main]加载管理器-" + type, "green");
                     var inst = type.BaseType.GetProperty("Inst", BindingFlags.Static | BindingFlags.Public);
                     if (inst != null)
                     {

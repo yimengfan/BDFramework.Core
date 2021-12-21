@@ -6,12 +6,17 @@ using System.Collections;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using BDFramework;
 using Cysharp.Text;
+using ILRuntime.CLR.Method;
+using ILRuntime.CLR.Utils;
+using ILRuntime.Runtime.Intepreter;
+using ILRuntime.Runtime.Stack;
 using LitJson;
 using Debug = UnityEngine.Debug;
 #if USE_CSHARP_SQLITE
@@ -171,7 +176,6 @@ namespace SQLite4Unity3d
         /// </summary>
         public TableQueryILRuntime WhereIn(string field, params object[] objs)
         {
-           
             var sqlIn = string.Join(",", objs);
             this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlIn);
 
@@ -248,7 +252,7 @@ namespace SQLite4Unity3d
         /// forilruntime
         /// </summary>
         /// <returns></returns>
-        public T From<T>(string selection = "*") where T : class, new()
+        public T From<T>(string selection = "*")
         {
             var rets = this.Limit(1).FromAll<T>(selection);
 
@@ -257,27 +261,47 @@ namespace SQLite4Unity3d
                 return rets[0];
             }
 
-            return null;
+            return default(T);
+        }
+        
+        
+        
+        /// <summary>
+        /// 查询所有的数据
+        /// </summary>
+        /// <param name="selection"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public List<T> FromAll<T>(string selection = "*")
+        {
+            //查询
+            var list = this.FormAll(typeof(T), selection);
+            
+            var retList = new List<T>(list.Count);
+            //映射并返回T
+            for (int i = 0; i < list.Count; i++)
+            {
+                retList[i] = (T)list[i];
+            }
+            return retList;
         }
 
-        public List<T> FromAll<T>(string selection = "*") where T : new()
+        /// <summary>
+        /// 非泛型方法
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="selection"></param>
+        /// <returns></returns>
+        public List<object> FormAll(Type type, string selection = "*")
         {
-            var type = typeof(T);
-            var results = new List<T>();
-            //查询所有数据
             var cmd = GenerateCommand(selection, type.Name);
-
-            var list = cmd.ExecuteQuery(typeof(T));
-            foreach (var o in list)
-            {
-                var t = (T) o;
-                results.Add(t);
-            }
-
-            Debug.Log(cmd.CommandText);
-            return results;
+            var list = cmd.ExecuteQuery(type);
+            BDebug.Log(cmd.CommandText);
+            return list;
         }
 
         #endregion
+
+  
     }
 }

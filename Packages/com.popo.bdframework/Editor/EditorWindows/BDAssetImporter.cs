@@ -97,7 +97,7 @@ namespace BDFramework.Editor
                 if (str.Contains("Sirenix.OdinInspector.Attributes.dll"))
                 {
                     //导入odin要删除fake Odinclass
-                    var path = AssetDatabase.GUIDToAssetPath("b072c123447549fa81bb03f3ddebec80");
+                    var path = AssetDatabase.GUIDToAssetPath("b6b84d955fba9664585ec04f47e7fc3f");
                     if (File.Exists(path))
                     {
                         AssetDatabase.DeleteAsset(path);
