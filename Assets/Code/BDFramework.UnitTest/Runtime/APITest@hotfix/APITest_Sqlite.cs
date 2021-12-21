@@ -87,7 +87,29 @@ namespace BDFramework.UnitTest
             Assert.Equals(ds[0].Id, 2d);
             Assert.Equals(ds[1].Id, 3d);
         }
+        
+        [UnitTest(des:  "Where In 批量查询")]
+        static public void MultiSelect_WhereIn()
+        {
+            var ds = SqliteHelper.DB.GetTableRuntime().WhereIn("id", 2, 3).FromAll<APITestHero>();
+            Assert.Equals(ds.Count, 2);
+            Assert.Equals(ds[0].Id, 2d);
+            Assert.Equals(ds[1].Id, 3d);
+        }
 
+        [UnitTest(des:  "OrderByDesc 批量查询")]
+        static public void MultiSelect_OrderByDesc()
+        {
+            var ds = SqliteHelper.DB.GetTableRuntime().Where("Id >= 1").OrderByDesc("Id").FromAll<APITestHero>();
+            Debug.Log(JsonMapper.ToJson(ds));
+        }
+        
+        [UnitTest(des:  "OrderBy 批量查询")]
+        static public void MultiSelect_OrderBy()
+        {
+            var ds = SqliteHelper.DB.GetTableRuntime().Where("Id >= 1").OrderBy("Id").FromAll<APITestHero>();
+            Debug.Log(JsonMapper.ToJson(ds));
+        }
 
         [UnitTest(10000, "关闭")]
         static public void Close()
