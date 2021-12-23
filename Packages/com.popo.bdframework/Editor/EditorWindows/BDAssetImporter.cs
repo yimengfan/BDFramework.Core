@@ -68,19 +68,18 @@ namespace BDFramework.Editor
         {
             _CacheData = new BDAssetImpoterCache();
             //1.搜集热更脚本变更
-            foreach (string str in importedAssets)
+            foreach (string assetPath in importedAssets)
             {
-                if (str.Contains("@hotfix") && str.EndsWith(".cs"))
+                if ( ScriptBuildTools.IsHotfixScript(assetPath))
                 {
-                    CacheData.HotfixList.Add(str);
+                    CacheData.HotfixList.Add(assetPath);
                 }
             }
-
-            foreach (string str in movedAssets)
+            foreach (string assetPath in movedAssets)
             {
-                if (str.Contains("@hotfix") && str.EndsWith(".cs"))
+                if ( ScriptBuildTools.IsHotfixScript(assetPath))
                 {
-                    CacheData.HotfixList.Add(str);
+                    CacheData.HotfixList.Add(assetPath);
                 }
             }
 

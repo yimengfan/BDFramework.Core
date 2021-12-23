@@ -149,6 +149,7 @@ namespace BDFramework.Editor
                 //1.类型注册到管理器
                 foreach (var mgr in mgrs)
                 {
+                    
                     mgr?.CheckType(type, attr);
                 }
             }

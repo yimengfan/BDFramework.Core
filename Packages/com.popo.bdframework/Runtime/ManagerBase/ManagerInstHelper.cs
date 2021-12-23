@@ -57,23 +57,23 @@ namespace BDFramework.Mgr
             for (int i = 0; i < types.Length; i++)
             {
                 var type = types[i];
-                var mgrAttribute = type.GetCustomAttribute<ManagerAttribute>();
+                var mgrAttribute = type.GetCustomAttribute<ManagerAttribute>(false);
                 if (mgrAttribute == null)
                 {
                     continue;
                 }
                 //注册类型
-                foreach (var iMgr in mgrList)
+                foreach (var mgr in mgrList)
                 {
-                    iMgr.CheckType(type, mgrAttribute);
+                    mgr.CheckType(type, mgrAttribute);
                 }
             }
 
 
             //管理器初始化
-            foreach (var m in mgrList)
+            foreach (var mgr in mgrList)
             {
-                m.Init();
+                mgr.Init();
             }
         }
 

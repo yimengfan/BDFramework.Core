@@ -66,10 +66,13 @@ namespace BDFramework.Mgr
         virtual public void CheckType(Type type, ManagerAttribute attribute)
         {
             //var vAttr = attribute as V;
-            
+            if (attribute == null)
+            {
+                Debug.LogError("attr is null---------------------------");
+            }
             if (attribute is V vAttr)
             {
-                
+               
                 if (vAttr.IntTag != -1)
                 {
                     SaveAttribute(vAttr.IntTag, new ClassData() {Attribute = vAttr, Type = type});

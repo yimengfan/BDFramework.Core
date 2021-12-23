@@ -10,6 +10,7 @@ using BDFramework.Asset;
 using Debug = UnityEngine.Debug;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Unity3dEx;
+using BDFramework.StringEx;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
@@ -54,6 +55,22 @@ public class ScriptBuildTools
     /// 宏
     /// </summary>
     private static List<string> defineList;
+
+    /// <summary>
+    ///  判断是否为热更脚本
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    static public bool IsHotfixScript(string path)
+    {
+        if (path.EndsWith(".cs") //判断是否为cs
+            && (path.Contains(STR_HOTFIX, StringComparison.OrdinalIgnoreCase) || path.Contains(STR_HALF_HOTFIX, StringComparison.OrdinalIgnoreCase))) //判断是否为热更
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     /// <summary>
     /// 编译DLL

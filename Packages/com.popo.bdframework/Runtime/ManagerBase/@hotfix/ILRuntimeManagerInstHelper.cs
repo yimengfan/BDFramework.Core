@@ -40,7 +40,7 @@ namespace BDFramework.HotFix.Mgr
                     }
                 }
             }
-
+            BDebug.Log("[hotfix]管理器加载完成" , "green");
             //遍历type执行逻辑
             for (int i = 0; i < types.Length; i++)
             {
