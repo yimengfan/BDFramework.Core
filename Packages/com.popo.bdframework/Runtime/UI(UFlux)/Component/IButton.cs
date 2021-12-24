@@ -271,6 +271,11 @@ namespace BDFramework.UFlux
         /// <param name="eventData"></param>
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (img != null && img.sprite != null)
+            {
+                img.color = this.normalColor;
+            }
+            
             onUpClick.Invoke(eventData);
             LongPressEnd();
         }

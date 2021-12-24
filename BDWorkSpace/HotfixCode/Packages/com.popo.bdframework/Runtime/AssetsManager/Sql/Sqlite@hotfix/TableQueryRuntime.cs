@@ -36,7 +36,7 @@ namespace SQLite4Unity3d
 
 
         private string @where = null;
-        private string @sql   = null;
+        private string @sql = null;
         private string @limit = null;
 
         public TableQueryILRuntime(SQLiteConnection connection)
@@ -49,39 +49,38 @@ namespace SQLite4Unity3d
 
         private SQLiteCommand GenerateCommand(string @select, string tablename)
         {
-            string cmdText = "";
+            string sqlCmdText = "";
 
             //select where语句
 
             if (@sql == null)
             {
+                //基本语句
+                sqlCmdText = ZString.Format("select {0} from {1}", @select, tablename);
+                //Where语句
                 if (!string.IsNullOrEmpty(@where))
                 {
-                    cmdText = ZString.Format("select {0} from {1} where {2}", @select, tablename, @where);
-
-                    //limit语句
-                    if (!string.IsNullOrEmpty(this.limit))
-                    {
-                        cmdText = ZString.Concat(cmdText, " Limit ", limit);
-                    }
+                    sqlCmdText = ZString.Concat(sqlCmdText, " where", @where);
                 }
-                else
+
+                //limit语句
+                if (!string.IsNullOrEmpty(this.limit))
                 {
-                    cmdText = ZString.Format("select {0} from {1}", @select, tablename);
+                    sqlCmdText = ZString.Concat(sqlCmdText, " Limit ", limit);
                 }
             }
             else
             {
                 //直接执行sql
-                cmdText = @sql;
+                sqlCmdText = @sql;
             }
 
 
 #if UNITY_EDITOR
-            BDebug.Log("sql:" + cmdText);
+            //BDebug.Log("sql:" + cmdText);
 #endif
 
-            return Connection.CreateCommand(cmdText);
+            return Connection.CreateCommand(sqlCmdText);
         }
 
         #endregion
@@ -99,7 +98,6 @@ namespace SQLite4Unity3d
         }
 
 
-
         #region Where、or、And 、Limit
 
         /// <summary>
@@ -111,10 +109,10 @@ namespace SQLite4Unity3d
         {
             if (value is string)
             {
-                value = string.Format("'{0}'", value);
+                value = ZString.Format("'{0}'", value);
             }
 
-            this.@where += string.Format((" " + where), value);
+            this.@where = ZString.Concat(this.@where, " ", ZString.Format(where, value));
             return this;
         }
 
@@ -125,10 +123,30 @@ namespace SQLite4Unity3d
         /// <returns></returns>
         public TableQueryILRuntime Where(string where)
         {
-            this.@where += string.Format((" " + where), where);
+            this.@where = ZString.Concat(this.@where, " ", where); // string.Format((" " + where), where);
             return this;
         }
 
+        /// <summary>
+        /// 降序排序
+        /// </summary>
+        public TableQueryILRuntime OrderByDesc(string field)
+        {
+            var query = ZString.Format(" Order By {0} Desc", field);
+            this.@where = ZString.Concat(this.@where, query);
+            return this;
+        }
+        
+        /// <summary>
+        /// 升序排序
+        /// </summary>
+        public TableQueryILRuntime OrderBy(string field)
+        {
+            var query = ZString.Format(" Order By {0}", field);
+            this.@where = ZString.Concat(this.@where, query);
+            return this;
+        }
+        
         /// <summary>
         /// and语句
         /// </summary>
@@ -139,7 +157,7 @@ namespace SQLite4Unity3d
         {
             get
             {
-                this.@where += " and";
+                this.@where = ZString.Concat(this.@where, " and");
                 return this;
             }
         }
@@ -152,11 +170,33 @@ namespace SQLite4Unity3d
         {
             get
             {
-                this.@where += " or";
+                this.@where = ZString.Concat(this.@where, " or");
                 return this;
             }
         }
 
+        /// <summary>
+        /// In语句查询
+        /// </summary>
+        public TableQueryILRuntime WhereIn<T>(string field, IEnumerable<T> values)
+        {
+            var sqlIn = string.Join(",", values);
+            this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlIn);
+
+            return this;
+        }
+
+        /// <summary>
+        /// In语句查询
+        /// </summary>
+        public TableQueryILRuntime WhereIn(string field, params object[] objs)
+        {
+           
+            var sqlIn = string.Join(",", objs);
+            this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlIn);
+
+            return this;
+        }
 
         /// <summary>
         /// 
@@ -171,11 +211,11 @@ namespace SQLite4Unity3d
                 var value = objs[i].ToString();
                 if (sql == "")
                 {
-                    sql += string.Format(" {0} {1} {2}", field, operation, value);
+                    sql = ZString.Format(" {0} {1} {2}", field, operation, value);
                 }
                 else
                 {
-                    sql += string.Format(" or {0} {1} {2}", field, operation, value);
+                    sql += ZString.Format(" or {0} {1} {2}", field, operation, value);
                 }
             }
 
@@ -196,11 +236,11 @@ namespace SQLite4Unity3d
                 var value = objs[i].ToString();
                 if (sql == "")
                 {
-                    sql += string.Format(" {0} {1} {2}", field, operation, value);
+                    sql += ZString.Format(" {0} {1} {2}", field, operation, value);
                 }
                 else
                 {
-                    sql += string.Format(" and {0} {1} {2}", field, operation, value);
+                    sql += ZString.Format(" and {0} {1} {2}", field, operation, value);
                 }
             }
 
@@ -242,14 +282,15 @@ namespace SQLite4Unity3d
 
         public List<T> FromAll<T>(string selection = "*") where T : new()
         {
-            var type    = typeof(T);
+            var type = typeof(T);
             var results = new List<T>();
             //查询所有数据
-            var cmd  = GenerateCommand(selection, type.Name);
+            var cmd = GenerateCommand(selection, type.Name);
+
             var list = cmd.ExecuteQuery(typeof(T));
             foreach (var o in list)
             {
-                var t = (T)o;
+                var t = (T) o;
                 results.Add(t);
             }
 
