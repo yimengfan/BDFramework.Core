@@ -28,10 +28,7 @@ namespace BDFramework.Editor
         /// </summary>
         private static string ImporterCahcePath
         {
-            get
-            {
-                return BDApplication.BDEditorCachePath + "/ImporterCache";
-            }
+            get { return BDApplication.BDEditorCachePath + "/ImporterCache"; }
         }
 
         static private BDAssetImpoterCache _CacheData;
@@ -61,23 +58,21 @@ namespace BDFramework.Editor
         /// <param name="deletedAssets"></param>
         /// <param name="movedAssets"></param>
         /// <param name="movedFromAssetPaths"></param>
-        static void OnPostprocessAllAssets(string[] importedAssets,
-            string[] deletedAssets,
-            string[] movedAssets,
-            string[] movedFromAssetPaths)
+        static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
             _CacheData = new BDAssetImpoterCache();
             //1.搜集热更脚本变更
             foreach (string assetPath in importedAssets)
             {
-                if ( ScriptBuildTools.IsHotfixScript(assetPath))
+                if (ScriptBuildTools.IsHotfixScript(assetPath))
                 {
                     CacheData.HotfixList.Add(assetPath);
                 }
             }
+
             foreach (string assetPath in movedAssets)
             {
-                if ( ScriptBuildTools.IsHotfixScript(assetPath))
+                if (ScriptBuildTools.IsHotfixScript(assetPath))
                 {
                     CacheData.HotfixList.Add(assetPath);
                 }
@@ -91,15 +86,36 @@ namespace BDFramework.Editor
             }
 
             //2.判断是否导入Odin
-            foreach (string str in importedAssets)
+            foreach (string asset in importedAssets)
             {
-                if (str.Contains("Sirenix.OdinInspector.Attributes.dll"))
+                if (asset.Contains("Sirenix.OdinInspector.Attributes.dll"))
                 {
-                    //导入odin要删除fake Odinclass
-                    var path = AssetDatabase.GUIDToAssetPath("b6b84d955fba9664585ec04f47e7fc3f");
-                    if (File.Exists(path))
+                    var btg = new BuildTargetGroup[] {BuildTargetGroup.Android, BuildTargetGroup.iOS, BuildTargetGroup.Standalone};
+                    foreach (var bt in btg)
                     {
-                        AssetDatabase.DeleteAsset(path);
+                        var symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(bt);
+                        if (!symbols.Contains("ODIN_INSPECTOR"))
+                        {
+                            string str = "";
+                            if (!string.IsNullOrEmpty(symbols))
+                            {
+                                if (!str.EndsWith(";"))
+                                {
+                                    str = symbols + ";ODIN_INSPECTOR";
+                                }
+                                else
+                                {
+                                    str = symbols + "ODIN_INSPECTOR";
+                                }
+                            }
+                            else
+                            {
+                                str = "ODIN_INSPECTOR";
+                            }
+
+
+                            PlayerSettings.SetScriptingDefineSymbolsForGroup(bt, str);
+                        }
                     }
 
                     break;
