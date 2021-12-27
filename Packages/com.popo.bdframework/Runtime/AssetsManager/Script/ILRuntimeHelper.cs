@@ -36,7 +36,8 @@ namespace BDFramework
             //
             string pdbPath = dllPath + ".pdb";
             //按需jit
-            AppDomain = new AppDomain(ILRuntimeJITFlags.JITOnDemand);
+            //AppDomain = new AppDomain(ILRuntimeJITFlags.JITOnDemand);
+            AppDomain = new AppDomain();
             if (File.Exists(pdbPath))
             {
                 //这里的流不能释放，头铁的老哥别试了

@@ -48,12 +48,12 @@ namespace BDFramework.Sql
         {
             foreach (var mi in typeof(TableQueryILRuntime).GetMethods())
             {
-                if (mi.Name == "FormAll" && mi.IsGenericMethodDefinition)
+                if (mi.Name == "FromAll" && mi.IsGenericMethodDefinition)
                 {
                     var param = mi.GetParameters();
                     if (param[0].ParameterType == typeof(string))
                     {
-                        appdomain.RegisterCLRMethodRedirection(mi, CLRRedir_FromAll);
+                        appdomain.RegisterCLRMethodRedirection(mi, ReDirFromAll);
                     }
                 }
             }
@@ -68,7 +68,7 @@ namespace BDFramework.Sql
         /// <param name="method"></param>
         /// <param name="isNewObj"></param>
         /// <returns></returns>
-        public unsafe static StackObject* CLRRedir_FromAll(ILIntepreter intp, StackObject* esp, IList<object> mStack, CLRMethod method, bool isNewObj)
+        public unsafe static StackObject* ReDirFromAll(ILIntepreter intp, StackObject* esp, IList<object> mStack, CLRMethod method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -80,8 +80,15 @@ namespace BDFramework.Sql
             var type = method.GenericArguments[0].ReflectionType;
             //调用
             var result_of_this_method = DB.GetTableRuntime().FormAll(type, selection);
+            //转成ilrTypeInstance
+            var retList = new List<ILTypeInstance>(result_of_this_method.Count);
+            for (int i = 0; i < result_of_this_method.Count; i++)
+            {
+                var hotfixObj = result_of_this_method[i] as ILTypeInstance;
+                retList.Add(hotfixObj);
+            }
 
-            return ILIntepreter.PushObject(__ret, mStack, result_of_this_method);
+            return ILIntepreter.PushObject(__ret, mStack, retList);
         }
 
         #endregion

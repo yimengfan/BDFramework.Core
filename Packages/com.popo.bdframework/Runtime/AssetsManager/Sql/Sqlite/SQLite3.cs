@@ -2138,7 +2138,7 @@ namespace SQLite4Unity3d
 
                     while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                     {
-                        object obj = ILRuntimeHelper.CreateInstance(map.MappedType);
+                        var obj = ILRuntimeHelper.CreateInstance(map.MappedType);
                         
                         for (int i = 0; i < cols.Length; i++)
                         {
