@@ -2,14 +2,13 @@
 {
   "pageType" : 0,
   "WorkFollow" : {
-    "HotfixCodeFloderType" : 1,
+    "HotfixCodeFloderType" : 0,
     "IsAutoBuildDll"       : true,
     "AssetBundleSVNUrl"    : "http://127.0.0.1:20001",
     "AssetBundleSVNAccount" : "root",
     "AssetBundleSVNPsw"     : "root"
   },
   "BuildAssetBundle" : {
-    "IsUseHashName" : true
   },
   "Android"          : {
     "keystoreName" : "BDWorkSpace/SDK/user.keystore",

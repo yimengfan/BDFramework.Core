@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.ourpalm.ilruntime": "1.6.6",
+    "com.ourpalm.ilruntime": "1.6.7",
     "com.unity.ide.rider": "1.2.1",
     "com.unity.ide.vscode": "1.2.4",
     "com.unity.mobile.android-logcat": "1.2.3",
