@@ -36,7 +36,7 @@ namespace SQLite4Unity3d
 
 
         private string @where = null;
-        private string @sql = null;
+        private string @sql   = null;
         private string @limit = null;
 
         public TableQueryILRuntime(SQLiteConnection connection)
@@ -77,7 +77,7 @@ namespace SQLite4Unity3d
 
 
 #if UNITY_EDITOR
-            //BDebug.Log("sql:" + cmdText);
+            BDebug.Log("sql:" + cmdText);
 #endif
 
             return Connection.CreateCommand(sqlCmdText);
@@ -111,7 +111,7 @@ namespace SQLite4Unity3d
             {
                 value = ZString.Format("'{0}'", value);
             }
-
+      
             this.@where = ZString.Concat(this.@where, " ", ZString.Format(where, value));
             return this;
         }

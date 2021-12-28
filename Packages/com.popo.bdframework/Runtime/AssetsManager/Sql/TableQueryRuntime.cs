@@ -114,7 +114,7 @@ namespace SQLite4Unity3d
         {
             if (value is string)
             {
-                value = ZString.Concat("'{0}'", value);
+                value = ZString.Format("'{0}'", value);
             }
 
             this.@where = ZString.Concat(this.@where, " ", ZString.Format(where, value));
@@ -246,6 +246,30 @@ namespace SQLite4Unity3d
         #endregion
 
 
+        #region 排序
+
+        /// <summary>
+        /// 降序排序
+        /// </summary>
+        public TableQueryILRuntime OrderByDesc(string field)
+        {
+            var query = ZString.Format(" Order By {0} Desc", field);
+            this.@where = ZString.Concat(this.@where, query);
+            return this;
+        }
+
+        /// <summary>
+        /// 升序排序
+        /// </summary>
+        public TableQueryILRuntime OrderBy(string field)
+        {
+            var query = ZString.Format(" Order By {0}", field);
+            this.@where = ZString.Concat(this.@where, query);
+            return this;
+        }
+        #endregion
+
+
         #region Select语句
 
         /// <summary>
@@ -263,9 +287,8 @@ namespace SQLite4Unity3d
 
             return default(T);
         }
-        
-        
-        
+
+
         /// <summary>
         /// 查询所有的数据
         /// </summary>
@@ -276,13 +299,14 @@ namespace SQLite4Unity3d
         {
             //查询
             var list = this.FormAll(typeof(T), selection);
-            
+
             var retList = new List<T>(list.Count);
             //映射并返回T
             for (int i = 0; i < list.Count; i++)
             {
-                retList[i] = (T)list[i];
+                retList[i] = (T) list[i];
             }
+
             return retList;
         }
 
@@ -301,7 +325,5 @@ namespace SQLite4Unity3d
         }
 
         #endregion
-
-  
     }
 }
