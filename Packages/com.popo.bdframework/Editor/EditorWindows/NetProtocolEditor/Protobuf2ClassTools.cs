@@ -56,10 +56,16 @@ namespace BDFramework.Editor.Protocol
                     BDebug.Log($"{_namespace} 不符合命名规范!");
                     return false;
                 }
+                
+                _namespace = $"{prefixName}.{_namespace}";
+            }
+            else
+            {
+                // 解决 因非url package 问题
+                _namespace = prefixName;
             }
             
-            // 解决 因非url package 问题
-            _namespace = $"{prefixName}.{_namespace}";
+
             
             // 替换proto包名 对应 生成的Class名
             var regex = new Regex(@"(?<=package ).*?(?=;)");
@@ -155,7 +161,7 @@ namespace BDFramework.Editor.Protocol
             if (Directory.Exists(folderPath))
             {
                 DirectoryInfo directoryInfo = new DirectoryInfo(folderPath);
-                FileInfo[] fileInfos = directoryInfo.GetFiles("*.proto", SearchOption.AllDirectories);
+                FileInfo[] fileInfos = directoryInfo.GetFiles("*", SearchOption.AllDirectories);
                 foreach (var fileInfo in fileInfos)
                 {
                     var destFileName = cachePath + fileInfo.Name;
