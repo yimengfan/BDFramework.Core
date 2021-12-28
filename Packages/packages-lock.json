@@ -5,7 +5,7 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.com"
+      "url": "https://package.openupm.cn"
     },
     "com.popo.bdframework": {
       "version": "file:com.popo.bdframework",

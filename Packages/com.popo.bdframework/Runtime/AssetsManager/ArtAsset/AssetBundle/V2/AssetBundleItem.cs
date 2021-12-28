@@ -35,7 +35,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 映射，加载资源名。一般为程序调用加载的路径
         /// </summary>
-        public string LoadPath { get; private set; }
+        public string LoadPath { get; private set; } = "";
 
         /// <summary>
         /// asset路径 【不序列化】
@@ -45,12 +45,12 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// ab的资源路径名
         /// </summary>
-        public string AssetBundlePath { get; private set; }
+        public string AssetBundlePath { get; private set; } = "";
 
         /// <summary>
         /// 资源类型
         /// </summary>
-        public int AssetType { get; private set; }
+        public int AssetType { get; private set; } = -1;
 
         /// <summary>
         /// 依赖

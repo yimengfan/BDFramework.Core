@@ -12,15 +12,18 @@ namespace BDFramework.Sql
         /// <summary>
         /// 本地DB Path
         /// </summary>
-        public readonly static string           LOCAL_DB_PATH  = "Local.db";
+        public readonly static string LOCAL_DB_PATH = "Local.db";
+
         /// <summary>
         /// ServerDB Path
         /// </summary>
-        public readonly static string           SERVER_DB_PATH = "Server.db";
+        public readonly static string SERVER_DB_PATH = "Server.db";
+
         /// <summary>
         /// sql驱动对象
         /// </summary>
-        static public          SQLiteConnection Connection { get; private set; }
+        static public SQLiteConnection Connection { get; private set; }
+
         /// <summary>
         /// 编辑器下加载DB，可读写|创建
         /// </summary>

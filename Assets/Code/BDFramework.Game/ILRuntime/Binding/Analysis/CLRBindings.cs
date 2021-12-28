@@ -45,7 +45,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_String_Binding.Register(app);
             IEnumeratorTool_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
-            BDFramework_VersionContrller_VersionContorller_Binding.Register(app);
+            BDFramework_VersionContrller_AssetsVersionContrller_Binding.Register(app);
             BDebug_Binding.Register(app);
             System_String_Binding.Register(app);
             System_Collections_Generic_IEnumerable_1_KeyValuePair_2_String_Object_Binding.Register(app);

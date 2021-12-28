@@ -1,5 +1,24 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.0.8 beta4
+ CN:
+【Editor】
+- PublishPipeline:增加分包功能
+- PublishPipeline:增加分包节点在AssetGraph中
+- PublishPipeline:增加资源构建生命周期
+- PublishPipeline:修复部分beta3 bug.
+【Runtime】
+- PublishPipeline:重构版本控制功能
+
+EN:
+【Editor】
+- PublishPipeline:Add assetgsSubPackage for download.
+- PublishPipeline:Add subpackage node in asset graph.
+- PublishPipeline:Add  "AssetsProccess" in publish behavior.
+- PublishPipeline:fixed some bug for beta3 bug.
+【Runtime】
+- PublishPipeline:Reconstruct VersionController.
+
 ##V2.0.8 beta3.5
  CN:
 【Editor】

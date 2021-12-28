@@ -17,6 +17,10 @@ namespace BDFramework.Editor.AssetBundle
             public int Id { get; set; } = -1;
 
             /// <summary>
+            /// 在artConfig中的idx,用以辅助其他模块逻辑
+            /// </summary>
+            public int ArtConfigIdx { get; set; } = -1;
+            /// <summary>
             /// 资源类型
             /// </summary>
             public int Type { get; set; } = -1;
@@ -77,7 +81,7 @@ namespace BDFramework.Editor.AssetBundle
             //1.如果ab名被修改过,说明有其他规则影响，需要理清打包规则。（比如散图打成图集名）
             //2.如果资源被其他资源引用，修改ab名，需要修改所有引用该ab的名字
 
-            bool isSetABName      = false;
+            bool isSetABName = false;
             bool isSetAllDependAB = false;
 
             this.AssetDataMaps.TryGetValue(assetName, out var assetData);
@@ -89,7 +93,7 @@ namespace BDFramework.Editor.AssetBundle
                     //未被其他规则设置过abname,可以直接修改
                     case SetABNameMode.Simple:
                     {
-                        if (assetData.ABName.Equals(assetName, StringComparison.OrdinalIgnoreCase))
+                        if (assetData.ABName.Equals(assetName, StringComparison.OrdinalIgnoreCase) || assetData.ABName == newABName)
                         {
                             isSetABName = true;
                         }
@@ -105,7 +109,7 @@ namespace BDFramework.Editor.AssetBundle
                     //强行修改 并且修改所有AB引用
                     case SetABNameMode.ForceAndFixAllRef:
                     {
-                        isSetABName      = true;
+                        isSetABName = true;
                         isSetAllDependAB = true;
                     }
                         break;

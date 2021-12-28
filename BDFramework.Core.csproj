@@ -50,6 +50,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_BetterStreamingAssets.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_PathUtil.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_SubReadOnlyStream.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_TestSceneGUI.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_ZipArchive.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\IJsonWrapper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonData.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonException.cs" />
@@ -94,6 +99,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\BResources.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\AssetsVersionController\AssetsVersionContrller.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\GameAssetHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />
@@ -106,8 +112,6 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQuery.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQueryRuntime.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\AssetBundleBenchmark01.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\VersionController\HotAssetsMap.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\VersionController\VersionContorller.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncher.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncherBridge@hotfix.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Config.cs" />
@@ -191,6 +195,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\PageList\PageList.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\PageList\PageListDemo.cs" />
      <None Include="Packages\com.popo.bdframework\Runtime\BDFramework.Core.asmdef" />
+     <None Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\README.txt" />
      <None Include="Packages\com.popo.bdframework\Runtime\Event\@half_hotfix\readme.txt" />
  <Reference Include="ILRuntime">
  <HintPath>E:/BDFrameworkMaster/Library/ScriptAssemblies/ILRuntime.dll</HintPath>

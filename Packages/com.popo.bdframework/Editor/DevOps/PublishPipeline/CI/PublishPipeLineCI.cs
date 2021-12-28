@@ -25,7 +25,7 @@ namespace BDFramework.Editor.PublishPipeline
         static PublishPipeLineCI()
         {
             //初始化编辑器
-            BDFrameEditorLife.InitBDFrameworkEditor();
+            BDFrameworkEditorBehaviour.InitBDFrameworkEditor();
             CI_ROOT_PATH    = IPath.Combine(BDApplication.ProjectRoot, "CI_TEMP");
             CI_PACKAGE_PATH = IPath.Combine(CI_ROOT_PATH, "Publish_Package");
             if (!Directory.Exists(CI_ROOT_PATH))

@@ -45,7 +45,7 @@ namespace BDFramework.Editor.PublishPipeline
         static BuildPackageTools()
         {
             //初始化框架编辑器下
-            BDFrameEditorLife.InitBDFrameworkEditor();
+            BDFrameworkEditorBehaviour.InitBDFrameworkEditor();
         }
 
         [MenuItem("BDFrameWork工具箱/2.发布母包/Android/Build(当前配置Debug)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
@@ -195,6 +195,7 @@ namespace BDFramework.Editor.PublishPipeline
             // {
             //PlayerSettings.SetManagedStrippingLevel(BuildTargetGroup.Android, ManagedStrippingLevel.Low);
             // }
+
 
             //开启符号表
             EditorUserBuildSettings.androidCreateSymbolsZip = true;

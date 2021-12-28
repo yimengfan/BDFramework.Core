@@ -73,7 +73,7 @@ namespace BDFramework.ResourceMgr.V2
         public void Load(string configPath, string assetTypePath)
         {
             //资源类型配置
-            if (File.Exists(assetTypePath))
+            if (!string.IsNullOrEmpty(assetTypePath) && File.Exists(assetTypePath))
             {
                 var content = File.ReadAllText(assetTypePath);
                 // var list = CsvSerializer.DeserializeFromString<List<string>>(content);
@@ -102,14 +102,14 @@ namespace BDFramework.ResourceMgr.V2
             }
 
             //资源配置
-            if (File.Exists(configPath))
+            if (!string.IsNullOrEmpty(configPath) && File.Exists(configPath))
             {
 #if UNITY_EDITOR
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
 #endif
                 var content = File.ReadAllText(configPath);
-                this.AssetbundleItemList =  CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(content);
+                this.AssetbundleItemList = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(content);
 #if UNITY_EDITOR
                 sw.Stop();
                 BDebug.LogFormat("【AssetbundleV2】加载Config耗时{0}ms!", sw.ElapsedTicks / 10000L);
@@ -119,7 +119,7 @@ namespace BDFramework.ResourceMgr.V2
                 foreach (var abItem in this.AssetbundleItemList)
                 {
                     //可以被加载的资源
-                    if (!string.IsNullOrEmpty(abItem.LoadPath))
+                    if (!string.IsNullOrEmpty(abItem.LoadPath) && this.AssetTypes != null)
                     {
                         var assettype = this.AssetTypes.AssetTypeList[abItem.AssetType];
                         var map = this.assetTypeIdxMap[assettype];
@@ -132,15 +132,18 @@ namespace BDFramework.ResourceMgr.V2
                 BDebug.LogError("配置文件不存在:" + configPath);
             }
 
-            //项目类型；判断
-            var typecls = typeof(GameObject).FullName;
-            this.TYPE_PREFAB = this.AssetTypes.AssetTypeList.FindIndex((at) => at == typecls);
-            typecls = typeof(SpriteAtlas).FullName;
-            this.TYPE_SPRITE_ATLAS = this.AssetTypes.AssetTypeList.FindIndex((at) => at == typecls);
+            //判断常用资源类型
+            if (this.AssetTypes != null)
+            {
+                var typecls = typeof(GameObject).FullName;
+                this.TYPE_PREFAB = this.AssetTypes.AssetTypeList.FindIndex((at) => at == typecls);
+                typecls = typeof(SpriteAtlas).FullName;
+                this.TYPE_SPRITE_ATLAS = this.AssetTypes.AssetTypeList.FindIndex((at) => at == typecls);
+            }
 
             if (this.AssetTypes != null && this.AssetbundleItemList.Count > 0)
             {
-                BDebug.Log("【AssetbundleV2】资源加载初始化完成,资源数量:" +  this.AssetbundleItemList.Count);
+                BDebug.Log("【AssetbundleV2】资源加载初始化完成,资源数量:" + this.AssetbundleItemList.Count);
             }
         }
 

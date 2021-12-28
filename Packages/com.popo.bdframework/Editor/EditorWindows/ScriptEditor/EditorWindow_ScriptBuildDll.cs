@@ -91,7 +91,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     static public void RoslynBuild(string outpath, RuntimePlatform platform, ScriptBuildTools.BuildMode mode,bool isShowTips =true)
     {
         //触发bd环境周期
-        BDEditorBehaviorHelper.OnBeginBuildDLL();
+        BDFrameworkPublishPipelineHelper.OnBeginBuildHotfixDLL();
 
         var targetPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
         //1.分析之前先删除,然后生成临时文件防止报错
@@ -126,7 +126,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         GenCLRBindingByAnalysis(platform, outpath);
         AssetDatabase.Refresh();
         //触发bd环境周期
-        BDEditorBehaviorHelper.OnEndBuildDLL(outpath);
+        BDFrameworkPublishPipelineHelper.OnEndBuildDLL(outpath);
     }
 
     /// <summary>
@@ -181,7 +181,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         var outputPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
         //游戏工程的Bind
         Action<bool> mainProjectIlrBindAction = null;
-        var type = BDFrameEditorLife.Types.FirstOrDefault((t) => t.FullName == "Game.ILRuntime.GameLogicCLRBinding");
+        var type = BDFrameworkEditorBehaviour.Types.FirstOrDefault((t) => t.FullName == "Game.ILRuntime.GameLogicCLRBinding");
         if (type != null)
         {
             var method = type.GetMethod("Bind", BindingFlags.Public | BindingFlags.Static);

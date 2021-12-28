@@ -110,13 +110,13 @@ namespace BDFramework.ResourceMgr.V2
             if (Application.isEditor)
             {
                 assetconfigPath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_CONFIG_PATH);
-                assetTypePath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_TYPE_PATH);
+                assetTypePath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_TYPES_PATH);
             }
             else
             {
                 //真机环境config在persistent，跟dll和db保持一致
                 assetconfigPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_CONFIG_PATH);
-                assetTypePath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_TYPE_PATH);
+                assetTypePath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_TYPES_PATH);
             }
 
             this.AssetConfigLoder.Load(assetconfigPath, assetTypePath);

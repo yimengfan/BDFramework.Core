@@ -20,32 +20,55 @@ namespace BDFramework.ResourceMgr
         /// 美术根目录
         /// </summary>
         readonly static public string ASSET_ROOT_PATH = "Art";
-
         /// <summary>
-        /// 美术config配置
+        /// 美术资源config配置
         /// </summary>
-        readonly static public string ASSET_CONFIG_PATH = ASSET_ROOT_PATH + "/Config.Info";
+        readonly static public string ASSET_CONFIG_PATH = ASSET_ROOT_PATH + "/ArtConfig.Info";
 
         /// <summary>
         /// 资源信息
         /// </summary>
-        readonly static public string ASSET_TYPE_PATH = ASSET_ROOT_PATH + "/AssetTypeConfig.Info";
-
+        readonly static public string ASSET_TYPES_PATH = ASSET_ROOT_PATH + "/AssetTypeConfig.Info";
         /// <summary>
         /// 构建时的信息(Editor用)
         /// </summary>
-        readonly static public string ASSET_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/Build.Info";
+        readonly static public string EDITOR_ASSET_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/EditorBuild.Info";
+        /// <summary>
+        /// 旧打包资源配置
+        /// </summary>
         readonly static public string ASSET_OLD_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/OldBuild.Info";
 
+        /// <summary>
+        /// 资源包服务器版本配置
+        /// </summary>
+        readonly static public string SERVER_ASSETS_VERSION_CONFIG_PATH = "ServerAssetsVersion.Conf";
+        /// <summary>
+        /// 资源包服务器信息
+        /// </summary>
+        readonly static public string SERVER_ASSETS_INFO_PATH = "ServerAssets.Info";
+        /// <summary>
+        /// 美术资源分包-配置
+        /// </summary>
+        readonly static public string SERVER_ASSETS_SUB_PACKAGE_CONFIG_PATH = "ServerAssetsSubPackage.Conf";
+        /// <summary>
+        /// 美术资源分包信息
+        /// </summary>
+        readonly static public string SERVER_ART_ASSETS_SUB_PACKAGE_INFO_PATH = "ServerAssetsSubPackage_{0}.Info";
         /// <summary>
         /// ShaderVariant加载地址
         /// </summary>
         readonly public static string ALL_SHADER_VARAINT_RUNTIME_PATH = "Shader/AllShaders";
+
         /// <summary>
         /// Shadervariant资源地址
         /// </summary>
-        readonly public static string ALL_SHADER_VARAINT_ASSET_PATH = "Assets/Resource/Runtime/"+ALL_SHADER_VARAINT_RUNTIME_PATH+".shadervariants";
-       
+        readonly public static string ALL_SHADER_VARAINT_ASSET_PATH = "Assets/Resource/Runtime/" + ALL_SHADER_VARAINT_RUNTIME_PATH + ".shadervariants";
+
+        /// <summary>
+        /// 包构建信息路径
+        /// </summary>
+        readonly static public string PACKAGE_BUILD_INFO_PATH = "PackageBuild.Info";
+
         /// <summary>
         /// 初始化
         /// </summary>
