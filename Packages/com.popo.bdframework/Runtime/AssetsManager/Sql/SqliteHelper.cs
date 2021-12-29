@@ -38,7 +38,17 @@ namespace BDFramework.Sql
         }
 
 
-        #region ILRuntime
+        /// <summary>
+        /// 设置sql 缓存触发参数
+        /// </summary>
+        /// <param name="triggerCacheNum"></param>
+        /// <param name="triggerChacheTimer"></param>
+        static public void SetSqlCacheTrigger(int triggerCacheNum = 5, float triggerChacheTimer = 0.05f)
+        {
+            DB.TableRuntime.EnableSqlCahce(triggerCacheNum,triggerChacheTimer);
+        }
+
+        #region ILRuntime 重定向
 
         /// <summary>
         /// 注册SqliteHelper的ILR重定向
@@ -46,7 +56,7 @@ namespace BDFramework.Sql
         /// <param name="appdomain"></param>
         public unsafe static void RegisterILRuntimeCLRRedirection(ILRuntime.Runtime.Enviorment.AppDomain appdomain)
         {
-            foreach (var mi in typeof(TableQueryILRuntime).GetMethods())
+            foreach (var mi in typeof(TableQueryCustom).GetMethods())
             {
                 if (mi.Name == "FromAll" && mi.IsGenericMethodDefinition)
                 {

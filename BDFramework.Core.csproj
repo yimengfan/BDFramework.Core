@@ -110,7 +110,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite\TableMaping.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SqliteHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQuery.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQueryRuntime.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQueryCustom.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\AssetBundleBenchmark01.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncher.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncherBridge@hotfix.cs" />

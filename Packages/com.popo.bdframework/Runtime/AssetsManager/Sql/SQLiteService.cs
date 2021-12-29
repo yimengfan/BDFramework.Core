@@ -6,6 +6,10 @@ namespace BDFramework.Sql
 {
     public class SQLiteService
     {
+        //db connect
+        private SQLiteConnection Connection { get; set; }
+
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -13,22 +17,15 @@ namespace BDFramework.Sql
         public SQLiteService(SQLiteConnection con)
         {
             this.Connection = con;
+            this.tableRuntime = new TableQueryCustom(this.Connection);
         }
-
-        //db connect
-        private SQLiteConnection Connection { get; set; }
-
-        
 
         /// <summary>
         /// 是否关闭
         /// </summary>
         public bool IsClose
         {
-            get
-            {
-                return Connection == null || !Connection.IsOpen;
-            }
+            get { return Connection == null || !Connection.IsOpen; }
         }
 
         /// <summary>
@@ -36,11 +33,10 @@ namespace BDFramework.Sql
         /// </summary>
         public string DBPath
         {
-            get
-            {
-                return this.Connection.DatabasePath;
-            }
+            get { return this.Connection.DatabasePath; }
         }
+
+        #region 常见的表格操作
 
         /// <summary>
         /// 创建db
@@ -80,7 +76,6 @@ namespace BDFramework.Sql
             Connection.Insert(@object);
         }
 
-
         /// <summary>
         /// 插入所有
         /// </summary>
@@ -88,7 +83,7 @@ namespace BDFramework.Sql
         /// <param name="objTypes"></param>
         public void InsertAll<T>(List<T> obj)
         {
-            Connection.Insert(@obj,typeof(T));
+            Connection.Insert(@obj, typeof(T));
         }
 
         /// <summary>
@@ -101,16 +96,30 @@ namespace BDFramework.Sql
             return new TableQuery<T>(Connection);
         }
 
+        #endregion
+
+        #region 二次封装的表格操作
+
+        private TableQueryCustom tableRuntime;
 
         /// <summary>
-        /// Runtime获取表
+        /// 获取TableRuntime
+        /// </summary>
+        public TableQueryCustom TableRuntime
+        {
+            get { return tableRuntime; }
+        }
+
+        /// <summary>
+        /// 获取TableRuntime
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public TableQueryILRuntime GetTableRuntime()
+        public TableQueryCustom GetTableRuntime()
         {
-            var table = new TableQueryILRuntime(this.Connection);
-            return table;
+            return tableRuntime;
         }
+
+        #endregion
     }
 }

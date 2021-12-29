@@ -18,6 +18,7 @@ using ILRuntime.CLR.Utils;
 using ILRuntime.Runtime.Intepreter;
 using ILRuntime.Runtime.Stack;
 using LitJson;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 #if USE_CSHARP_SQLITE
 using Sqlite3 = Community.CsharpSqlite.Sqlite3;
@@ -35,24 +36,49 @@ using Sqlite3Statement = System.IntPtr;
 
 namespace SQLite4Unity3d
 {
-    public class TableQueryILRuntime : BaseTableQuery
+    /// <summary>
+    /// 自定义版本的 TableQuery
+    /// </summary>
+    public class TableQueryCustom : BaseTableQuery
     {
         public SQLiteConnection Connection { get; private set; }
 
+
+        #region 语句缓存
 
         private string @where = "";
         private string @sql = "";
         private string @limit = "";
 
-        public TableQueryILRuntime(SQLiteConnection connection)
+        #endregion
+
+        private int TRIGGER_CHACHE_NUM = 3;
+        private float TRIGGER_CHACHE_TIMER = 0.05f;
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="connection">sql连接器</param>
+        /// <param name="triggerCacheNum">触发缓存次数</param>
+        public TableQueryCustom(SQLiteConnection connection)
         {
             this.Connection = connection;
         }
 
+        /// <summary>
+        /// 设置sql 缓存触发参数
+        /// </summary>
+        /// <param name="triggerCacheNum"></param>
+        /// <param name="triggerChacheTimer"></param>
+        public void EnableSqlCahce(int triggerCacheNum = 5, float triggerChacheTimer = 0.05f)
+        {
+            this.TRIGGER_CHACHE_NUM = triggerCacheNum;
+            this.TRIGGER_CHACHE_TIMER = triggerChacheTimer;
+        }
 
-        #region 数据库直接操作
+        #region 生成sql cmd
 
-        private SQLiteCommand GenerateCommand(string @select, string tablename)
+        private string GenerateCommand(string @select, string tablename)
         {
             string sqlCmdText = "";
 
@@ -85,7 +111,8 @@ namespace SQLite4Unity3d
 #if UNITY_EDITOR
             Debug.Log("sql:" + sqlCmdText);
 #endif
-            return Connection.CreateCommand(sqlCmdText);
+
+            return sqlCmdText;
         }
 
         #endregion
@@ -96,7 +123,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public TableQueryILRuntime Exec(string sql)
+        public TableQueryCustom Exec(string sql)
         {
             this.@sql = sql;
             return this;
@@ -110,7 +137,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime Where(string where, object value)
+        public TableQueryCustom Where(string where, object value)
         {
             if (value is string)
             {
@@ -126,7 +153,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime Where(string where)
+        public TableQueryCustom Where(string where)
         {
             this.@where = ZString.Concat(this.@where, " ", where); // string.Format((" " + where), where);
             return this;
@@ -138,7 +165,7 @@ namespace SQLite4Unity3d
         /// <param name="where"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public TableQueryILRuntime And
+        public TableQueryCustom And
         {
             get
             {
@@ -151,7 +178,7 @@ namespace SQLite4Unity3d
         /// Or 语句
         /// </summary>
         /// <returns></returns>
-        public TableQueryILRuntime Or
+        public TableQueryCustom Or
         {
             get
             {
@@ -163,7 +190,7 @@ namespace SQLite4Unity3d
         /// <summary>
         /// In语句查询
         /// </summary>
-        public TableQueryILRuntime WhereIn<T>(string field, IEnumerable<T> values)
+        public TableQueryCustom WhereIn<T>(string field, IEnumerable<T> values)
         {
             var sqlIn = string.Join(",", values);
             this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlIn);
@@ -174,7 +201,7 @@ namespace SQLite4Unity3d
         /// <summary>
         /// In语句查询
         /// </summary>
-        public TableQueryILRuntime WhereIn(string field, params object[] objs)
+        public TableQueryCustom WhereIn(string field, params object[] objs)
         {
             var sqlIn = string.Join(",", objs);
             this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlIn);
@@ -187,7 +214,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime WhereOr(string field, string operation = "", params object[] objs)
+        public TableQueryCustom WhereOr(string field, string operation = "", params object[] objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Length; i++)
@@ -212,7 +239,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryILRuntime WhereAnd(string field, string operation = "", params object[] objs)
+        public TableQueryCustom WhereAnd(string field, string operation = "", params object[] objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Length; i++)
@@ -232,11 +259,15 @@ namespace SQLite4Unity3d
             return this;
         }
 
+        #endregion
+
+        #region Limit语句
+
         /// <summary>
         /// Limit 语句
         /// </summary>
         /// <param name="limitValue"></param>
-        public TableQueryILRuntime Limit(int limitValue)
+        public TableQueryCustom Limit(int limitValue)
         {
             this.limit = limitValue.ToString();
 
@@ -245,13 +276,12 @@ namespace SQLite4Unity3d
 
         #endregion
 
-
         #region 排序
 
         /// <summary>
         /// 降序排序
         /// </summary>
-        public TableQueryILRuntime OrderByDesc(string field)
+        public TableQueryCustom OrderByDesc(string field)
         {
             var query = ZString.Format(" Order By {0} Desc", field);
             this.@where = ZString.Concat(this.@where, query);
@@ -261,7 +291,7 @@ namespace SQLite4Unity3d
         /// <summary>
         /// 升序排序
         /// </summary>
-        public TableQueryILRuntime OrderBy(string field)
+        public TableQueryCustom OrderBy(string field)
         {
             var query = ZString.Format(" Order By {0}", field);
             this.@where = ZString.Concat(this.@where, query);
@@ -270,8 +300,7 @@ namespace SQLite4Unity3d
 
         #endregion
 
-
-        #region Select语句
+        #region Select、From语句
 
         /// <summary>
         /// forilruntime
@@ -314,6 +343,7 @@ namespace SQLite4Unity3d
             return retList;
         }
 
+
         /// <summary>
         /// 非泛型方法
         /// </summary>
@@ -322,11 +352,109 @@ namespace SQLite4Unity3d
         /// <returns></returns>
         public List<object> FormAll(Type type, string selection = "*")
         {
-            var cmd = GenerateCommand(selection, type.Name);
-            var list = cmd.ExecuteQuery(type);
-            return list;
+            var sqlCmdText = GenerateCommand(selection, type.Name);
+            List<object> retlist = null;
+            
+            if (this.TRIGGER_CHACHE_NUM > 0 || this.TRIGGER_CHACHE_TIMER > 0)
+            {
+                //判断是否在缓存中
+                var ret = sqlResultCacheMap.TryGetValue(sqlCmdText, out retlist);
+                if (!ret)
+                {
+                    var st = Time.realtimeSinceStartup;
+                    //查询
+                    {
+                        var cmd = this.Connection.CreateCommand(sqlCmdText);
+                        retlist = cmd.ExecuteQuery(type);
+                    }
+                    var intelval = Time.realtimeSinceStartup - st;
+                    //缓存判断
+                    var counter = GetSqlExecCount(sqlCmdText);
+                    if (counter >= this.TRIGGER_CHACHE_NUM || intelval >= this.TRIGGER_CHACHE_TIMER)
+                    {
+                        this.AddSqlCache(sqlCmdText, retlist);
+                    }
+                    else
+                    {
+                        this.AddSqlExecCounter(sqlCmdText, counter);
+                    }
+                }
+            }
+            else
+            {
+                //查询
+                var cmd = this.Connection.CreateCommand(sqlCmdText);
+                retlist = cmd.ExecuteQuery(type);
+            }
+            
+            //重置状态
+            this.Reset();
+            return retlist;
         }
 
         #endregion
+
+        #region 缓存
+
+        /// <summary>
+        /// 缓存列表
+        /// </summary>
+        public Dictionary<string, List<object>> sqlResultCacheMap = new Dictionary<string, List<object>>();
+
+        /// <summary>
+        /// 添加sql缓存
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="ret"></param>
+        public void AddSqlCache(string cmd, List<object> ret)
+        {
+            sqlResultCacheMap[cmd] = ret;
+
+            BDebug.Log("【添加缓存】 " + cmd);
+        }
+
+        /// <summary>
+        /// 缓存列表
+        /// </summary>
+        public Dictionary<string, int> sqlExecCounterMap = new Dictionary<string, int>();
+
+        /// <summary>
+        /// 获取sql执行次数
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        private int GetSqlExecCount(string cmd)
+        {
+            int counter = 0;
+            var ret = sqlExecCounterMap.TryGetValue(cmd, out counter);
+            if (!ret)
+            {
+                sqlExecCounterMap[cmd] = 0;
+            }
+
+            return counter;
+        }
+
+        /// <summary>
+        /// 增加sql exec次数
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="counter"></param>
+        private void AddSqlExecCounter(string cmd, int counter = 0)
+        {
+            sqlExecCounterMap[cmd] = counter + 1;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 重置
+        /// </summary>
+        private void Reset()
+        {
+            this.@where = "";
+            this.@sql = "";
+            this.@limit = "";
+        }
     }
 }
