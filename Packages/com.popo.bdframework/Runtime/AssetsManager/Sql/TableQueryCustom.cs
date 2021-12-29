@@ -52,7 +52,15 @@ namespace SQLite4Unity3d
 
         #endregion
 
+        /// <summary>
+        /// sql缓存的触发次数
+        /// 不能为0
+        /// </summary>
         private int TRIGGER_CHACHE_NUM = 3;
+        /// <summary>
+        /// sql缓存触发消耗时间
+        /// 不能为0
+        /// </summary>
         private float TRIGGER_CHACHE_TIMER = 0.05f;
 
         /// <summary>
