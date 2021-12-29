@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿using System;
+using System.Reflection;
+using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -22,9 +24,21 @@ namespace BDFramework.Editor.TestRunner
         [MenuItem("BDFrameWork工具箱/执行框架UnitTest-API", false, (int) BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
         public static void UnitTest()
         {
-           // TestRunner.RunMonoCLRUnitTest();
-           //TestRunner.TestRunnerEditor.RunILRuntimeTest();
-            
+            var assemblys = AppDomain.CurrentDomain.GetAssemblies();
+            //反射执行
+            foreach (var assembly in assemblys)
+            {
+                var type = assembly.GetType("BDFramework.UnitTest.TestRunner");
+                if (type != null)
+                {
+                    var mi = type.GetMethod("RunMonoCLRUnitTest", BindingFlags.Public | BindingFlags.Static);
+                    if (mi != null)
+                    {
+                        mi.Invoke(null, new object[] { });
+                        break;
+                    }
+                }
+            }
         }
 
 
@@ -45,14 +59,14 @@ namespace BDFramework.Editor.TestRunner
         {
             RunILRuntimeTest();
         }
-        
+
         /// <summary>
         /// ilrutnime的逻辑测试
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int)BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
+        [MenuItem("BDFrameWork工具箱/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int) BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
         public static void UnitTestILRuntimeWithRebuildDll()
         {
-            EditorWindow_ScriptBuildDll.RoslynBuild( Application.streamingAssetsPath,Application.platform,ScriptBuildTools.BuildMode.Debug);
+            EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, Application.platform, ScriptBuildTools.BuildMode.Debug);
             RunILRuntimeTest();
         }
 
@@ -63,7 +77,7 @@ namespace BDFramework.Editor.TestRunner
         {
             //启动场景
             EditorSceneManager.OpenScene("Assets/Code/BDFramework.UnitTest/MonoCLR.unity");
-            
+
             //执行
             EditorApplication.ExecuteMenuItem("Edit/Play");
         }

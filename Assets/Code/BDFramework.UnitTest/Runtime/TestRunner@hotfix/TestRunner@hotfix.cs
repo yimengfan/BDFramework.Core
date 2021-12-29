@@ -199,7 +199,7 @@ namespace BDFramework.UnitTest
                     catch (Exception e)
                     {
                         isFail  = true;
-                        failMsg = e.Message;
+                        Debug.LogError(e);
                     }
 
                     if (!isFail)
@@ -208,7 +208,8 @@ namespace BDFramework.UnitTest
                     }
                     else
                     {
-                        Debug.LogErrorFormat("<color=red>执行 {0}: 失败! - {1}</color> \n {2}", methodData.TestData.Des, methodData.MethodInfo.Name, failMsg);
+                        Debug.LogFormat("<color=red>执行 {0}: 失败! - {1}</color>", methodData.TestData.Des, methodData.MethodInfo.Name);
+                     
                     }
                 }
             }

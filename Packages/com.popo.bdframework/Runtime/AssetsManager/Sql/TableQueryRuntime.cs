@@ -40,9 +40,9 @@ namespace SQLite4Unity3d
         public SQLiteConnection Connection { get; private set; }
 
 
-        private string @where = null;
-        private string @sql = null;
-        private string @limit = null;
+        private string @where = "";
+        private string @sql = "";
+        private string @limit = "";
 
         public TableQueryILRuntime(SQLiteConnection connection)
         {
@@ -58,10 +58,11 @@ namespace SQLite4Unity3d
 
             //select where语句
 
-            if (@sql == null)
+            if (string.IsNullOrEmpty(@sql))
             {
                 //基本语句
                 sqlCmdText = ZString.Format("select {0} from {1}", @select, tablename);
+
                 //Where语句
                 if (!string.IsNullOrEmpty(@where))
                 {
@@ -82,9 +83,8 @@ namespace SQLite4Unity3d
 
 
 #if UNITY_EDITOR
-            //BDebug.Log("sql:" + cmdText);
+            Debug.Log("sql:" + sqlCmdText);
 #endif
-
             return Connection.CreateCommand(sqlCmdText);
         }
 
@@ -267,6 +267,7 @@ namespace SQLite4Unity3d
             this.@where = ZString.Concat(this.@where, query);
             return this;
         }
+
         #endregion
 
 
@@ -304,7 +305,10 @@ namespace SQLite4Unity3d
             //映射并返回T
             for (int i = 0; i < list.Count; i++)
             {
-                retList[i] = (T) list[i];
+                if (list[i] is T tObj)
+                {
+                    retList.Add(tObj);
+                }
             }
 
             return retList;
@@ -320,7 +324,6 @@ namespace SQLite4Unity3d
         {
             var cmd = GenerateCommand(selection, type.Name);
             var list = cmd.ExecuteQuery(type);
-            BDebug.Log(cmd.CommandText);
             return list;
         }
 

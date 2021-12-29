@@ -102,6 +102,18 @@ namespace BDFramework.UnitTest
         {
             var ds = SqliteHelper.DB.GetTableRuntime().Where("Id >= 1").OrderByDesc("Id").FromAll<APITestHero>();
             Debug.Log(JsonMapper.ToJson(ds));
+
+            //降序检测
+            bool isPass = true;
+            for (int i = 0; i < ds.Count-1; i++)
+            {
+                if (ds[i].Id < ds[i + 1].Id)
+                {
+                    isPass = false;
+                    break;
+                }
+            }
+            Assert.IsPass(isPass);
         }
         
         [UnitTest(des:  "OrderBy 批量查询")]
@@ -109,6 +121,17 @@ namespace BDFramework.UnitTest
         {
             var ds = SqliteHelper.DB.GetTableRuntime().Where("Id >= 1").OrderBy("Id").FromAll<APITestHero>();
             Debug.Log(JsonMapper.ToJson(ds));
+            //升序检测
+            bool isPass = true;
+            for (int i = 0; i < ds.Count-1; i++)
+            {
+                if (ds[i].Id > ds[i + 1].Id)
+                {
+                    isPass = false;
+                    break;
+                }
+            }
+            Assert.IsPass(isPass);
         }
 
         [UnitTest(10000, "关闭")]
