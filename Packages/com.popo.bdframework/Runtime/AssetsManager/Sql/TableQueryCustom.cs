@@ -56,7 +56,7 @@ namespace SQLite4Unity3d
         /// sql缓存的触发次数
         /// 不能为0
         /// </summary>
-        private int TRIGGER_CHACHE_NUM = 3;
+        private int TRIGGER_CHACHE_NUM = 5;
         /// <summary>
         /// sql缓存触发消耗时间
         /// 不能为0

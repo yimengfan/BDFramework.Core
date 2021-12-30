@@ -35,7 +35,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_Int32_Binding.Register(app);
             BDFramework_Sql_SqliteHelper_Binding.Register(app);
             BDFramework_Sql_SQLiteService_Binding.Register(app);
-            SQLite4Unity3d_TableQueryILRuntime_Binding.Register(app);
+            SQLite4Unity3d_TableQueryCustom_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_IDisposable_Binding.Register(app);

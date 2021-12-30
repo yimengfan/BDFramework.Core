@@ -14,7 +14,7 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class SQLite4Unity3d_TableQueryILRuntime_Binding
+    unsafe class SQLite4Unity3d_TableQueryCustom_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
