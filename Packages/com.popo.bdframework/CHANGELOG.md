@@ -1,5 +1,19 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.0.9-preview.1
+ CN:
+ 【Runtime】
+ -Sqlite: 修改热更代码到主工程
+ -Sqlite: 增加sqlite缓存功能.
+ 
+ EN:
+ 【Runtime】
+ -Sqlite: Change hotfixcode to main project.
+ -Sqlite: Add Sqlite cache func.
+
+##V2.0.8
+-Reconstruct Assetbundle mode.
+-Merge beta code.
 ##V2.0.8 beta4
  CN:
 【Editor】
