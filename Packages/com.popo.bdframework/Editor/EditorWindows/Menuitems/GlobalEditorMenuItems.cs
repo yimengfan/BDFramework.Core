@@ -19,8 +19,9 @@ namespace BDFramework.Editor
         //
         BuildPipeline=100,
         BuildPipeline_BuildAsset =101,
-        BuildPipeline_CICD=102,
-        BuildPipeline_PublishPackage =103,
+        BuildPipeline_PublishPackage =102,
+        BuildPipeline_CICD=103,
+
         
         //测试用例
         //Testrunner

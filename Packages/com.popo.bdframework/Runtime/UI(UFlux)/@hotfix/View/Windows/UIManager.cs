@@ -36,11 +36,11 @@ namespace BDFramework.UFlux
         {
             //初始化
             windowMap = new Dictionary<int, IWindow>();
-            Bottom = GameObject.Find("UIRoot/Bottom").transform;
-            Center = GameObject.Find("UIRoot/Center").transform;
-            Top = GameObject.Find("UIRoot/Top").transform;
+            Bottom = GameObject.Find("UIRoot/Bottom")?.transform;
+            Center = GameObject.Find("UIRoot/Center")?.transform;
+            Top = GameObject.Find("UIRoot/Top")?.transform;
         }
-
+        
         /// <summary>
         /// 创建一个窗口
         /// </summary>

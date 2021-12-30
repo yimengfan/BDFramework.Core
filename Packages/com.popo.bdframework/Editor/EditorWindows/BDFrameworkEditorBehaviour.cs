@@ -94,7 +94,8 @@ namespace BDFramework.Editor
                 }
 
                 //最后，完成初始化
-                IsInited = true;
+                IsInited = true; 
+                //  Debug.Log("框架编辑器环境初始化成功!");
             }
             catch (Exception e)
             {
