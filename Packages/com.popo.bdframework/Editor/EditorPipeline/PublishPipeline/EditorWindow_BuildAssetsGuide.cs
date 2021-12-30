@@ -20,12 +20,9 @@ namespace BDFramework.Editor.PublishPipeline
     public class EditorWindow_BuildAssetsGuide : EditorWindow
 
     {
-        [MenuItem("BDFrameWork工具箱/【Publish Pipeline】", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildAsset)]
-        static void NULL()
-        {
-        }
 
-        [MenuItem("BDFrameWork工具箱/1.资源一键构建", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildAsset)]
+
+        [MenuItem("BDFrameWork工具箱/PublishPipeline/1.一键发布资源", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_BuildAsset)]
         public static void Open()
         {
             var window = EditorWindow.GetWindow<EditorWindow_BuildAssetsGuide>(false, "一键构建资源");

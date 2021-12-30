@@ -10,7 +10,7 @@ namespace BDFramework.Editor.TestRunner
     // {
     //     //测试用例
     //     //Testrunner
-    //     TestRunnerEditor =151,
+    //     TestPepelineEditor =151,
     // }
 
     /// <summary>
@@ -21,7 +21,7 @@ namespace BDFramework.Editor.TestRunner
         /// <summary>
         /// 测试所有
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/执行框架UnitTest-API", false, (int) BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
+        [MenuItem("BDFrameWork工具箱/TestPipeline/执行框架UnitTest-API", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTest()
         {
             var assemblys = AppDomain.CurrentDomain.GetAssemblies();
@@ -45,7 +45,7 @@ namespace BDFramework.Editor.TestRunner
         /// <summary>
         /// editor的逻辑测试
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/执行逻辑测试-Editor", false, (int) BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
+        [MenuItem("BDFrameWork工具箱/TestPipeline/执行逻辑测试-Editor", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTestEditor()
         {
             RunMonoOrCLRTest();
@@ -54,7 +54,7 @@ namespace BDFramework.Editor.TestRunner
         /// <summary>
         /// ilrutnime的逻辑测试
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/执行逻辑测试-ILRuntime", false, (int) BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
+        [MenuItem("BDFrameWork工具箱/TestPipeline/执行逻辑测试-ILRuntime", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTestILRuntime()
         {
             RunILRuntimeTest();
@@ -63,7 +63,7 @@ namespace BDFramework.Editor.TestRunner
         /// <summary>
         /// ilrutnime的逻辑测试
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int) BDEditorGlobalMenuItemOrderEnum.TestRunnerEditor)]
+        [MenuItem("BDFrameWork工具箱/TestPipeline/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTestILRuntimeWithRebuildDll()
         {
             EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, Application.platform, ScriptBuildTools.BuildMode.Debug);

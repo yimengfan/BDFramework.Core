@@ -1,5 +1,8 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.0.9-preview.2
+【Editor】
+-Fixed some Editor Bug.
 ##V2.0.9-preview.1
  CN:
  【Runtime】

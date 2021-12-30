@@ -9,7 +9,7 @@ namespace BDFramework.Editor
 {
     public class EditorWindow_BDFrameworkConfig : OdinEditorWindow
     {
-        [MenuItem("BDFrameWork工具箱/框架设置", false, (int) BDEditorGlobalMenuItemOrderEnum.BDSetting)]
+        [MenuItem("BDFrameWork工具箱/框架设置", false, (int) BDEditorGlobalMenuItemOrderEnum.BDFrameworkSetting)]
         public static void Open()
         {
             var window = GetWindow<EditorWindow_BDFrameworkConfig>(false, "BDFrame设置");

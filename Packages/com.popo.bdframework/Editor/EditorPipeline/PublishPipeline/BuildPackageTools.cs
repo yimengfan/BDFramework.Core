@@ -48,19 +48,19 @@ namespace BDFramework.Editor.PublishPipeline
             BDFrameworkEditorBehaviour.InitBDFrameworkEditor();
         }
 
-        [MenuItem("BDFrameWork工具箱/2.发布母包/Android/Build(当前配置Debug)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
+        [MenuItem("BDFrameWork工具箱/PublishPipeline/2.发布母包/Android/Build(当前配置Debug)", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_PublishPackage)]
         public static void EditorBuildAPKUseCurrentAssets()
         {
             BuildAPK(BuildMode.UseCurrentConfigDebug, false);
         }
 
-        [MenuItem("BDFrameWork工具箱/2.发布母包/Android/Build(当前配置Release)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
+        [MenuItem("BDFrameWork工具箱/PublishPipeline/2.发布母包/Android/Build(当前配置Release)", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_PublishPackage)]
         public static void EditorBuildAPKUseCurrentAssetsRelease()
         {
             BuildAPK(BuildMode.UseCurrentConfigRelease, false);
         }
 
-        [MenuItem("BDFrameWork工具箱/2.发布母包/Android/Build(加载Debug.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
+        [MenuItem("BDFrameWork工具箱/PublishPipeline/2.发布母包/Android/Build(加载Debug.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_PublishPackage)]
         public static void EditorBuildAPK_Debug()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
@@ -69,7 +69,7 @@ namespace BDFramework.Editor.PublishPipeline
             }
         }
 
-        [MenuItem("BDFrameWork工具箱/2.发布母包/Android/Build(加载Release.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
+        [MenuItem("BDFrameWork工具箱/PublishPipeline/2.发布母包/Android/Build(加载Release.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_PublishPackage)]
         public static void EditorBuildAPK()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
@@ -79,19 +79,19 @@ namespace BDFramework.Editor.PublishPipeline
         }
 
 
-        [MenuItem("BDFrameWork工具箱/2.发布母包/iOS/Build(当前配置Debug)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
+        [MenuItem("BDFrameWork工具箱/PublishPipeline/2.发布母包/iOS/Build(当前配置Debug)", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_PublishPackage)]
         public static void EditorBuildIpaUseCurrentAssets()
         {
             BuildIpa(BuildMode.UseCurrentConfigDebug, false);
         }
 
-        [MenuItem("BDFrameWork工具箱/2.发布母包/iOS/Build(当前配置Release)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
+        [MenuItem("BDFrameWork工具箱/PublishPipeline/2.发布母包/iOS/Build(当前配置Release)", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_PublishPackage)]
         public static void EditorBuildIpaUseCurrentAssetsRelease()
         {
             BuildIpa(BuildMode.UseCurrentConfigRelease, false);
         }
 
-        [MenuItem("BDFrameWork工具箱/2.发布母包/iOS/Build(加载Debug.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
+        [MenuItem("BDFrameWork工具箱/PublishPipeline/2.发布母包/iOS/Build(加载Debug.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_PublishPackage)]
         public static void EditorBuildIpa_Debug()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
@@ -100,7 +100,7 @@ namespace BDFramework.Editor.PublishPipeline
             }
         }
 
-        [MenuItem("BDFrameWork工具箱/2.发布母包/iOS/Build(加载Release.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_PublishPackage)]
+        [MenuItem("BDFrameWork工具箱/PublishPipeline/2.发布母包/iOS/Build(加载Release.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_PublishPackage)]
         public static void EditorBuildIpa()
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))

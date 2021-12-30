@@ -46,9 +46,10 @@ namespace BDFramework.Editor
         private static GUIStyle errorStyle;
 
 
-        //[MenuItem("Assets/测试111")]
+        [MenuItem("BDFrameWork工具箱/框架引导", false, (int) BDEditorGlobalMenuItemOrderEnum.BDFrameworkGuid)]
         static public void Open()
         {
+           
             var win = GetWindow<EditorWindow_BDFrameworkStart>("BDFramework使用引导");
             win.minSize = win.maxSize = new Vector2(400, 500);
             win.Show();

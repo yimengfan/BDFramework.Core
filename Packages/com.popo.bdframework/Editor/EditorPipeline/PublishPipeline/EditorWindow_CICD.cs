@@ -10,7 +10,7 @@ namespace BDFramework.Editor.PublishPipeline
     public class EditorWindow_CICD : EditorWindow
     {
 
-        [MenuItem("BDFrameWork工具箱/3.CI、CD", false, (int)BDEditorGlobalMenuItemOrderEnum.BuildPipeline_CICD)]
+        [MenuItem("BDFrameWork工具箱/PublishPipeline/3.CI、CD", false, (int)BDEditorGlobalMenuItemOrderEnum.PublishPipeline_CICD)]
         public static void Open()
         {
             var window =  EditorWindow.GetWindow<EditorWindow_CICD>( false, "CI、CD");

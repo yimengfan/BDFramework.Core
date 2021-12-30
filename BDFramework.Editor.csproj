@@ -78,7 +78,6 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\EditorWindow_GenAssetBundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\ShaderCollection.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\ShaderVariantsCollectionTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\BuildPackageTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\ScriptEditor\EditorWindow_ScriptBuildDll.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\ScriptEditor\GenAdapter.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\ScriptEditor\ScriptBuildTools.cs" />
@@ -90,6 +89,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\ExcelTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\ExcelUtility.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\GenCodeTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\BuildPackageTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\ABDFrameworkPublishPipelineBehaviour.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\BDFrameworkPublishPipelineHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorWindow_BuildAssetsGuide.cs" />
@@ -113,6 +113,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\WorkFollow\HotfixCodeWorkFollow.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\WorkFollow\MSBuildTest.cs" />
      <None Include="Packages\com.popo.bdframework\Editor\BDFramework.Editor.asmdef" />
+     <None Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\HotfixPipeline.txt" />
  <Reference Include="ILRuntime">
  <HintPath>E:/BDFrameworkMaster/Library/ScriptAssemblies/ILRuntime.dll</HintPath>
  </Reference>

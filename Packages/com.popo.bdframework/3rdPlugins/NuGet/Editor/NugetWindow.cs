@@ -129,15 +129,11 @@ namespace NugetForUnity
             }
         }
 
-        [MenuItem("BDFrameWork工具箱/NuGet/", false, 200)]
-        static void NULL()
-        {
-        }
 
         /// <summary>
         /// Opens the NuGet Package Manager Window.
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/NuGet/Manage NuGet Packages", false, 0)]
+        [MenuItem("Window/NuGet/Manage NuGet Packages", false, 500)]
         protected static void DisplayNugetWindow()
         {
             GetWindow<NugetWindow>();
@@ -146,7 +142,7 @@ namespace NugetForUnity
         /// <summary>
         /// Restores all packages defined in packages.config
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/NuGet/Restore Packages", false, 1)]
+        [MenuItem("Window/NuGet/Restore Packages", false, 500)]
         protected static void RestorePackages()
         {
             NugetHelper.Restore();
@@ -155,7 +151,7 @@ namespace NugetForUnity
         /// <summary>
         /// Displays the version number of NuGetForUnity.
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/NuGet/Version " + NugetPreferences.NuGetForUnityVersion, false, 10)]
+        [MenuItem("Window/NuGet/Version " + NugetPreferences.NuGetForUnityVersion, false, 500)]
         protected static void DisplayVersion()
         {
             // open the preferences window
@@ -217,7 +213,7 @@ namespace NugetForUnity
 #endif
         }
 
-        [MenuItem("BDFrameWork工具箱/NuGet/TestNUPKG2", false, 10)]
+        [MenuItem("Window/NuGet/TestNUPKG2", false, 500)]
         protected static void TestNUPKG()
         {
             var files = Directory.GetFiles("C:/Users/Administrator/AppData/Local/NuGet/Cache", "*.nupkg", SearchOption.AllDirectories);
@@ -239,7 +235,7 @@ namespace NugetForUnity
         /// <summary>
         /// Checks/launches the Releases page to update NuGetForUnity with a new version.
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/NuGet/Check for Updates...", false, 10)]
+        [MenuItem("Window/NuGet/Check for Updates...", false, 500)]
         protected static void CheckForUpdates()
         {
             const string url = "https://github.com/GlitchEnzo/NuGetForUnity/releases";
