@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.IO;
 using System.Net;
@@ -17,22 +17,21 @@ namespace BDFramework.Editor
     /// </summary>
     public class EditorWindow_BDFrameworkStart : EditorWindow
     {
+        //版本号标记
+private const string Version = "2.0.9-preview.2";
+        //URL 相关
         private static string WIKI_URL = "https://www.yuque.com/naipaopao/eg6gik";
         private static string GITHUB_URL = "https://github.com/yimengfan/BDFramework.Core";
 
-        private static string Odin_URL =
-            "https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041";
+        private static string Odin_URL = "https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041";
 
-        private static string QQGroup_URL =
-            "http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f";
+        private static string QQGroup_URL = "http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f";
 
         //更新日志
-        private static string CHANGEDLOG_URL =
-            "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/CHANGELOG.md";
+        private static string CHANGEDLOG_URL = "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/CHANGELOG.md";
 
         //版本号
-        private static string VERSION_URL =
-            "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/Runtime/Resources/BDFrameConfig.Json";
+        private static string VERSION_URL = "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/Runtime/Resources/BDFrameConfig.Json";
 
         private static Texture webIcon; //= EditorGUIUtility.IconContent( "BuildSettings.Web.Small" ).image;
 
@@ -46,10 +45,9 @@ namespace BDFramework.Editor
         private static GUIStyle errorStyle;
 
 
-        [MenuItem("BDFrameWork工具箱/框架引导", false, (int) BDEditorGlobalMenuItemOrderEnum.BDFrameworkGuid)]
+        [MenuItem(("BDFrameWork工具箱/框架引导 "+Version), false, (int) BDEditorGlobalMenuItemOrderEnum.BDFrameworkGuid)]
         static public void Open()
         {
-           
             var win = GetWindow<EditorWindow_BDFrameworkStart>("BDFramework使用引导");
             win.minSize = win.maxSize = new Vector2(400, 500);
             win.Show();
@@ -60,18 +58,17 @@ namespace BDFramework.Editor
         /// </summary>
         static public void AutoOpen()
         {
-             if (!IsTodayOpened() //今天没打开过,保证一天只打开一次
+            if (!IsTodayOpened() //今天没打开过,保证一天只打开一次
                 && (IsHaveNewVerison() //新版本
-                || !IsExsitOdin()  //缺少odin
-                || !IsImportedAsset() //缺少文件
-                    )
-            )
+                    || !IsExsitOdin() //缺少odin
+                    || !IsImportedAsset() //缺少文件
+                ))
             {
                 Open();
             }
         }
-        
-        
+
+
         /// <summary>
         /// 检测今天是否打开过
         /// </summary>
@@ -98,7 +95,7 @@ namespace BDFramework.Editor
             base.Show();
             //执行各种任务
             this.GetNewChangeLog();
-	 		this.Focus();
+            this.Focus();
         }
 
         /// <summary>
@@ -199,7 +196,7 @@ namespace BDFramework.Editor
                     GUILayout.Label("1.已存在Odin");
                     GUI.color = GUI.contentColor;
                 }
-                
+
                 GUILayout.EndHorizontal();
             }
 
@@ -224,7 +221,6 @@ namespace BDFramework.Editor
                     GUI.color = GUI.contentColor;
                 }
 
-              
 
                 GUILayout.EndHorizontal();
             }
@@ -286,6 +282,7 @@ namespace BDFramework.Editor
             {
                 version = BDEditorApplication.BDFrameWorkConfig.Version;
             }
+
             GUILayout.Label("当前版本:" + version);
             //
             if (IsHaveNewVerison())
@@ -341,8 +338,7 @@ namespace BDFramework.Editor
         {
             GUILayout.Space(10);
             GUILayout.Label("更新日志", titleStyle);
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, "ProgressBarBack",
-                GUILayout.Height(200), GUILayout.ExpandWidth(true));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, "ProgressBarBack", GUILayout.Height(200), GUILayout.ExpandWidth(true));
             GUILayout.Label(FrameUpdateNote, "WordWrappedMiniLabel", GUILayout.ExpandHeight(true));
             GUILayout.EndScrollView();
         }

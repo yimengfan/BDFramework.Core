@@ -71,18 +71,32 @@ public class ExpoterMainProjectAsset
 
         //package 版本
         var packageDataPath = AssetDatabase.GUIDToAssetPath("e56f3b41caab3304194319691ec2ebbb");
+        var editorGuideWindowCSPath = AssetDatabase.GUIDToAssetPath("bac20aaf3c3041868d3a3998d65deab4");
         var packageContent  = File.ReadAllText(packageDataPath);
-        var pckage          = JsonMapper.ToObject<PackageData>(packageContent);
+        var package          = JsonMapper.ToObject<PackageData>(packageContent);
 
         //Editor Runtime版本
         var editorRuntimeVersionPath = AssetDatabase.GUIDToAssetPath("996622d6f14afc44dbd42c1cdfa8a362");
         var config                   = new BDFrameWorkConfig();
-        config.Version = pckage.version;
+        config.Version = package.version;
         File.WriteAllText(editorRuntimeVersionPath, JsonMapper.ToJson(config));
         //Asset目录版本
         var assetPathPath = AssetDatabase.GUIDToAssetPath("924d970067c935c4f8b818e6b4ab9e07");
-        File.WriteAllText(assetPathPath, pckage.version);
+        File.WriteAllText(assetPathPath, package.version);
         AssetDatabase.Refresh();
+        //脚本
+        string versioncode = @"private const string Version";
+        var filelines = File.ReadAllLines(editorGuideWindowCSPath);
+        for (int i = 0; i < filelines.Length; i++)
+        {
+            var line = filelines[i];
+            if (line.Contains(versioncode))
+            {
+                filelines[i] = string.Format("{0} = \"{1}\";", versioncode, package.version); // versioncode + " = " + package.version;
+                break;
+            }
+        }
+        File.WriteAllLines(editorGuideWindowCSPath,filelines);
 
         #endregion
 
