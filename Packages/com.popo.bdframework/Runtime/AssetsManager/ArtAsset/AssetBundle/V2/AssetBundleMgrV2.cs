@@ -32,7 +32,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 非Hash命名时，runtime目录的都放在一起，方便调试
         /// </summary>
-       // static readonly public string DEBUG_RUNTIME = "runtime/{0}";
+        // static readonly public string DEBUG_RUNTIME = "runtime/{0}";
 
 
         /// <summary>
@@ -142,8 +142,18 @@ namespace BDFramework.ResourceMgr.V2
             //     path = ZString.Format(DEBUG_RUNTIME, path);
             // }
 
+            var obj = Load(typeof(T), path);
+            if (obj)
+            {
+                return obj as T;
+            }
+            return null;
+        }
+
+        public Object Load(Type type, string path)
+        {
             //1.依赖路径
-            var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssetsByName<T>(path);
+            var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssetsByName(type, path);
             if (assetBundleItem != null)
             {
                 //加载依赖
@@ -151,11 +161,10 @@ namespace BDFramework.ResourceMgr.V2
                 {
                     LoadAssetBundle(dependAssetBundle);
                 }
-
                 //加载主资源
                 LoadAssetBundle(assetBundleItem.AssetBundlePath);
                 //
-                return LoadFormAssetBundle<T>(path, assetBundleItem);
+                return LoadFormAssetBundle(type, path, assetBundleItem);
             }
 
             return null;
@@ -171,7 +180,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
+        public T[] LoadAll<T>(string path) where T : Object
         {
             //非hash模式，需要debugRuntime
             // if (!this.AssetConfigLoder.IsHashName)
@@ -387,16 +396,34 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public T LoadFormAssetBundle<T>(string assetName, AssetBundleItem item) where T : UnityEngine.Object
         {
+            var obj = LoadFormAssetBundle(typeof(T), assetName, item);
+            if (obj)
+            {
+                return (obj as T);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 加载资源
+        /// Type版本
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="assetName"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public Object LoadFormAssetBundle(Type type, string assetName, AssetBundleItem item)
+        {
             if (item != null)
             {
-                var gobj = LoadFormAssetBundle(assetName, item, typeof(T));
-                return gobj as T;
+                var gobj = LoadFormAssetBundle(assetName, item, type);
+                return gobj;
             }
 
             BDebug.LogError("不存在:" + assetName);
             return null;
         }
-
 
         /// <summary>
         /// 加载资源
@@ -589,8 +616,8 @@ namespace BDFramework.ResourceMgr.V2
                         curDoTask.Do();
                     }
                 }
-                
-               // BDebug.Log("【Assetbundlev2】检测 剩余任务:" + this.asyncTaskGroupList.Count + "   " + curDoTask.MainAssetName);
+
+                // BDebug.Log("【Assetbundlev2】检测 剩余任务:" + this.asyncTaskGroupList.Count + "   " + curDoTask.MainAssetName);
                 yield return null;
             }
         }

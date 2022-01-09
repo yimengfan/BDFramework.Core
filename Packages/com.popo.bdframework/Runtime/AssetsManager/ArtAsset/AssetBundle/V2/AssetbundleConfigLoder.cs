@@ -155,8 +155,19 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns>这个list外部不要修改</returns>
         public (AssetBundleItem, List<string>) GetDependAssetsByName<T>(string assetName) where T : Object
         {
+            return GetDependAssetsByName(typeof(T), assetName);
+        }
+        
+        /// <summary>
+        /// 获取单个依赖
+        /// Type版本
+        /// </summary>
+        /// <param name="menifestName"></param>
+        /// <returns>这个list外部不要修改</returns>
+        public (AssetBundleItem, List<string>) GetDependAssetsByName(Type type ,string assetName)
+        {
             //1.优先用类型匹配
-            var assetbundleItem = GetAssetBundleData<T>(assetName);
+            var assetbundleItem = GetAssetBundleData(type,assetName);
             if (assetbundleItem != null)
             {
                 var retlist = new List<string>(assetbundleItem.DependAssetIds.Count);
@@ -170,16 +181,13 @@ namespace BDFramework.ResourceMgr.V2
 
                 return (assetbundleItem, retlist);
             }
+            //2.强行搜路径匹配即可
             else
             {
-                //2.强行搜路径匹配即可
                 return GetDependAssetsByName(assetName);
             }
-
-
-            BDebug.LogError("【config】不存在资源:" + assetName);
-            return (null, null);
         }
+        
 
         /// <summary>
         /// 获取单个依赖
@@ -229,11 +237,20 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public AssetBundleItem GetAssetBundleData<T>(string assetLoadPath) where T : Object
         {
+            return GetAssetBundleData(typeof(T), assetLoadPath);
+        }
+
+        /// <summary>
+        /// 获取单个menifestItem
+        /// Type版本
+        /// </summary>
+        /// <param name="assetLoadPath"></param>
+        /// <returns></returns>
+        public AssetBundleItem GetAssetBundleData(Type type, string assetLoadPath)
+        {
             if (!string.IsNullOrEmpty(assetLoadPath))
             {
-                var type = typeof(T).FullName;
-
-                if (this.assetTypeIdxMap.TryGetValue(type, out var assetMap))
+                if (this.assetTypeIdxMap.TryGetValue(type.FullName, out var assetMap))
                 {
                     if (assetMap.TryGetValue(assetLoadPath, out var idx))
                     {

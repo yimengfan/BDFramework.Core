@@ -107,11 +107,28 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public static T Load<T>(string name) where T : UnityEngine.Object
         {
-            if (string.IsNullOrEmpty(name)) return null;
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
             return ResLoader.Load<T>(name);
         }
 
-
+        /// <summary>
+        /// 同步加载
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static  UnityEngine.Object Load(Type type,string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+            return ResLoader.Load(type,name);
+        }
+        
         /// <summary>
         /// 同步加载ALL
         /// </summary>
@@ -121,7 +138,7 @@ namespace BDFramework.ResourceMgr
         public static T[] LoadALL<T>(string name) where T : UnityEngine.Object
         {
             if (string.IsNullOrEmpty(name)) return null;
-            return ResLoader.LoadAll_TestAPI_2020_5_23<T>(name);
+            return ResLoader.LoadAll<T>(name);
         }
 
 

@@ -43,13 +43,22 @@ namespace BDFramework.ResourceMgr
         T Load<T>(string path) where T : UnityEngine.Object;
 
         /// <summary>
+        /// 加载资源
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="abName"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        UnityEngine.Object Load(Type type, string path);
+
+        /// <summary>
         /// 加载所有资源
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>
         /// <param name="abName"></param>
         /// <returns></returns>
-        T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : UnityEngine.Object;
+        T[] LoadAll<T>(string path) where T : UnityEngine.Object;
 
         /// <summary>
         /// 异步加载资源
