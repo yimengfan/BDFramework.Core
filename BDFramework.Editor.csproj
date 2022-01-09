@@ -343,13 +343,13 @@
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Assets/3rdPlugins/Dotween/DOTween/Editor/DOTweenEditor.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.ourpalm.ilruntime@2.0.1/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Mdb">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.ourpalm.ilruntime@2.0.1/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Pdb">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.ourpalm.ilruntime@2.0.1/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
  </Reference>
  <Reference Include="System.IO.Compression">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.dll</HintPath>
