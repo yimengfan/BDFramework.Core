@@ -58,8 +58,7 @@ namespace BDFramework.Hotfix.ScreenView
 
                 var sv = CreateInstance<IScreenView>(attr.IntTag);
                 //设置name属性
-                var t = sv.GetType();
-                t.GetProperty("Name").SetValue(sv, attr.IntTag, null);
+                sv.Name = attr.IntTag;
                 MainLayer.RegisterScreen(sv);
                 //
                 BDebug.Log("创建screen:" + attr.IntTag, "green");

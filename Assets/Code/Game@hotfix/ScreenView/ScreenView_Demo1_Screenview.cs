@@ -7,7 +7,7 @@ using Game;
 [ScreenView((int)ScreenViewEnum.Demo1)]
 public class ScreenView_Demo1_Screenview : IScreenView
 {
-    public int Name { get; private set; }
+    public int Name { get;  set; }
     public bool IsLoad { get; private set;     }
 
     public void BeginInit()

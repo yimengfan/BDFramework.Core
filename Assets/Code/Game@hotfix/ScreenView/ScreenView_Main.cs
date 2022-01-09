@@ -11,7 +11,7 @@ using UnityEditor;
 [ScreenView((int)ScreenViewEnum.Main)]
 public class ScreenView_Main : IScreenView
 {
-    public int Name { get; private set; }
+    public int Name { get;  set; }
     public bool IsLoad { get; private set;     }
 
     public void BeginInit()
