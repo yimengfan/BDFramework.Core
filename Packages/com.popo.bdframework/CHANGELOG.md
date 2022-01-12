@@ -1,5 +1,11 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.0.9-preview.4
+【Editor】
+-
+【Runtime】
+- BResource  : Add Load(Type t) for Load<T>
+- Screenview : Add set func for IScreenview.Name
 ##V2.0.9-preview.3
 【Editor】
 -Change Framework Packge publish workflow.

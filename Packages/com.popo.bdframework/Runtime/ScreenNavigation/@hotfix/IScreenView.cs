@@ -9,11 +9,11 @@ namespace BDFramework.Hotfix.ScreenView
         /// <summary>
         /// IScreenView名称
         /// </summary>
-        int Name { get; }
+        int Name { get; set; }
         /// <summary>
         /// IScreenView是否加载
         /// </summary>
-        bool IsLoad { get;  }
+        bool IsLoad { get; }
         /// <summary>
         /// IScreenView 初始化
         /// </summary>

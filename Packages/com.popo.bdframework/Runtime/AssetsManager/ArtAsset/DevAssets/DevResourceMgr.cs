@@ -13,7 +13,6 @@ using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr
 {
-    
     /// <summary>
     /// 开发模式下的加载
     /// </summary>
@@ -43,8 +42,8 @@ namespace BDFramework.ResourceMgr
         public DevResourceMgr()
         {
             willdoTaskSet = new HashSet<int>();
-            allTaskList   = new List<AsyncLoadTaskGroup>();
-            objsMap       = new Dictionary<string, UnityEngine.Object>();
+            allTaskList = new List<AsyncLoadTaskGroup>();
+            objsMap = new Dictionary<string, UnityEngine.Object>();
         }
 
 
@@ -112,6 +111,18 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public T Load<T>(string path) where T : UnityEngine.Object
         {
+            return Load(typeof(T), path) as T;
+        }
+
+        /// <summary>
+        /// 加载
+        /// Type版本
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public Object Load(Type type, string path)
+        {
             var assetPaths = FindAssets(path);
             if (assetPaths == null)
             {
@@ -125,7 +136,6 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                var type = typeof(T);
                 //这里是有同名文件依次匹配类型
                 foreach (var p in assetPaths)
                 {
@@ -138,8 +148,9 @@ namespace BDFramework.ResourceMgr
                 }
             }
 
-            objsMap[path] = AssetDatabase.LoadAssetAtPath<T>(assetPath);
-            return objsMap[path] as T;
+            var obj = AssetDatabase.LoadAssetAtPath(assetPath, type);
+            objsMap[path] = obj;
+            return obj;
         }
 
 
@@ -154,8 +165,8 @@ namespace BDFramework.ResourceMgr
             //每个文件下判断
             foreach (var direct in this.allRuntimeDirectList)
             {
-                var filePath   = IPath.Combine(direct, path);
-                var filename   = Path.GetFileName(filePath);
+                var filePath = IPath.Combine(direct, path);
+                var filename = Path.GetFileName(filePath);
                 var fileDierct = Path.GetDirectoryName(filePath);
                 //
                 if (!Directory.Exists(fileDierct)) continue;
@@ -189,7 +200,7 @@ namespace BDFramework.ResourceMgr
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public T[] LoadAll_TestAPI_2020_5_23<T>(string path) where T : Object
+        public T[] LoadAll<T>(string path) where T : Object
         {
             var rets = FindAssets(path);
             var objs = AssetDatabase.LoadAllAssetsAtPath(rets[0]);
@@ -241,8 +252,8 @@ namespace BDFramework.ResourceMgr
         {
             //var list = assetsPath.Distinct().ToList();
 
-            IDictionary<string, UnityEngine.Object> map        = new Dictionary<string, Object>();
-            int                                     curProcess = 0;
+            IDictionary<string, UnityEngine.Object> map = new Dictionary<string, Object>();
+            int curProcess = 0;
             //每帧加载1个
             IEnumeratorTool.StartCoroutine(TaskUpdate(1, assetNameList, (s, o) =>
             {
@@ -314,9 +325,9 @@ namespace BDFramework.ResourceMgr
             var splitStr = "/Runtime/";
             for (int i = 0; i < rets.Count; i++)
             {
-                var r     = rets[i].Replace("\\", "/");
+                var r = rets[i].Replace("\\", "/");
                 var index = r.IndexOf(splitStr);
-                var rs    = r.Substring(index + splitStr.Length).Split('.');
+                var rs = r.Substring(index + splitStr.Length).Split('.');
                 rets[i] = rs[0];
             }
 
@@ -335,6 +346,7 @@ namespace BDFramework.ResourceMgr
                     return false;
                 });
             }
+
             return rets.ToArray();
         }
 
@@ -343,7 +355,6 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public void WarmUpShaders()
         {
-            
         }
 
 
@@ -363,10 +374,7 @@ namespace BDFramework.ResourceMgr
                 {
                     var resPath = loads[count];
 
-                    AsyncLoad<UnityEngine.Object>(resPath, (o) =>
-                    {
-                        callback(resPath, o);
-                    });
+                    AsyncLoad<UnityEngine.Object>(resPath, (o) => { callback(resPath, o); });
                     count++;
                 }
 
