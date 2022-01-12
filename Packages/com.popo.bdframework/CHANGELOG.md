@@ -1,5 +1,9 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.0.9-preview.5
+【Editor】
+ - HotfixPipeline: Add hotifoxfileconfig.
+ - Sqlite ：Add hotfix file check for excel gen class.
 ##V2.0.9-preview.4
 【Editor】
 -
