@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using BDFramework.Asset;
 using BDFramework.GameStart;
@@ -11,45 +11,13 @@ using Sirenix.OdinInspector;
 
 namespace BDFramework
 {
-    /// <summary>
-    /// 框架的配置
-    /// </summary>
-    public class BDFrameWorkConfig
-    {
-        /// <summary>
-        /// 版本号
-        /// </summary>
-        public string Version { get; set; }
-
-
-        /// <summary>
-        /// 加载框架配置
-        /// </summary>
-        public static BDFrameWorkConfig Load()
-        {
-            var content = Resources.Load<TextAsset>("BDFrameConfig")?.text;
-#if UNITY_EDITOR
-            if (content != null)
-            {
-                BDebug.Log("框架版本:" + content, "red");
-            }
-            else
-            {
-                BDebug.Log("框架版本: 未加载到!", "red");
-            }
-#endif
-            var config = JsonMapper.ToObject<BDFrameWorkConfig>(content);
-            return config;
-        }
-    }
-
     [RequireComponent(typeof(Config))]
     public class BDLauncher : MonoBehaviour
     {
         /// <summary>
-        /// 框架的相关配置
+        /// 框架版本号
         /// </summary>
-        public BDFrameWorkConfig FrameWorkConfig { get; private set; }
+        public const string Version  = "2.0.9-preview.5";
 
         /// <summary>
         /// GameConfig
@@ -69,7 +37,7 @@ namespace BDFramework
 
         static public GameLauncherDelegate OnUpdate { get; set; }
         static public GameLauncherDelegate OnLateUpdate { get; set; }
-        
+
         #endregion
 
         static public BDLauncher Inst { get; private set; }
@@ -80,8 +48,6 @@ namespace BDFramework
             Inst = this;
             this.gameObject.AddComponent<IEnumeratorTool>();
             var debug = this.gameObject.GetComponent<BDebug>();
-            //框架配置
-            LoadFrameConfig();
             //游戏配置
             if (this.ConfigText)
             {
@@ -95,16 +61,6 @@ namespace BDFramework
 
             //日志打印
             debug.IsLog = this.GameConfig.IsDebugLog;
-        }
-
-        /// <summary>
-        /// 加载框架配置
-        /// </summary>
-        private void LoadFrameConfig()
-        {
-            FrameWorkConfig = BDFrameWorkConfig.Load();
-            //框架版本
-            BDebug.Log("框架版本:" + FrameWorkConfig.Version, "red");
         }
 
 

@@ -43,12 +43,11 @@ public class ExpoterMainProjectAsset
 
         var exporterDirectoryList = new string[]
         {
-            "Assets/3rdPlugins/Dotween",                          // 第三方插件
-            "Assets/Code/BDFramework.Game",                       //Game
-            "Assets/Scenes",                                      //Scene
+            "Assets/3rdPlugins/Dotween", // 第三方插件
+            "Assets/Code/BDFramework.Game", //Game
+            "Assets/Scenes", //Scene
             "Assets/AssetGraph/BResourceAssetBundleConfig.asset", //SG
             "Assets/link.xml",
-
         };
         var exportAssets = new List<string>();
         foreach (var direct in exporterDirectoryList)
@@ -58,7 +57,7 @@ public class ExpoterMainProjectAsset
                 var fs = Directory.GetFiles(direct, "*.*", SearchOption.AllDirectories);
                 exportAssets.AddRange(fs);
             }
-            else if(File.Exists(direct))
+            else if (File.Exists(direct))
             {
                 exportAssets.Add(direct);
             }
@@ -71,22 +70,22 @@ public class ExpoterMainProjectAsset
 
         //package 版本
         var packageDataPath = AssetDatabase.GUIDToAssetPath("e56f3b41caab3304194319691ec2ebbb");
-        var editorGuideWindowCSPath = AssetDatabase.GUIDToAssetPath("bac20aaf3c3041868d3a3998d65deab4");
-        var packageContent  = File.ReadAllText(packageDataPath);
-        var package          = JsonMapper.ToObject<PackageData>(packageContent);
+        var bdLauncherCSPath = AssetDatabase.GUIDToAssetPath("53901f56d09f96d4886992ff20f43b1b");
+        var packageContent = File.ReadAllText(packageDataPath);
+        var package = JsonMapper.ToObject<PackageData>(packageContent);
 
         //Editor Runtime版本
-        var editorRuntimeVersionPath = AssetDatabase.GUIDToAssetPath("996622d6f14afc44dbd42c1cdfa8a362");
-        var config                   = new BDFrameWorkConfig();
-        config.Version = package.version;
-        File.WriteAllText(editorRuntimeVersionPath, JsonMapper.ToJson(config));
+        // var editorRuntimeVersionPath = AssetDatabase.GUIDToAssetPath("996622d6f14afc44dbd42c1cdfa8a362");
+        // var config                   = new BDFrameWorkConfig();
+        // config.Version = package.version;
+        // File.WriteAllText(editorRuntimeVersionPath, JsonMapper.ToJson(config));
         //Asset目录版本
         var assetPathPath = AssetDatabase.GUIDToAssetPath("924d970067c935c4f8b818e6b4ab9e07");
         File.WriteAllText(assetPathPath, package.version);
         AssetDatabase.Refresh();
-        //脚本
-        string versioncode = @"private const string Version";
-        var filelines = File.ReadAllLines(editorGuideWindowCSPath);
+        //脚本 Editor
+        string versioncode = @"        public const string Version ";
+        var filelines = File.ReadAllLines(bdLauncherCSPath);
         for (int i = 0; i < filelines.Length; i++)
         {
             var line = filelines[i];
@@ -96,14 +95,15 @@ public class ExpoterMainProjectAsset
                 break;
             }
         }
-        File.WriteAllLines(editorGuideWindowCSPath,filelines);
+
+        File.WriteAllLines(bdLauncherCSPath, filelines);
 
         #endregion
 
 
         //最后,导出Asset.Package
-        ExportPackageOptions op          = ExportPackageOptions.Default;
-        var                  packagePath = AssetDatabase.GUIDToAssetPath("69227cf6ea5304641ae95ffb93874014");
+        ExportPackageOptions op = ExportPackageOptions.Default;
+        var packagePath = AssetDatabase.GUIDToAssetPath("69227cf6ea5304641ae95ffb93874014");
         //AssetDatabase.ImportPackage(packagePath,true);
         AssetDatabase.ExportPackage(exportfs, packagePath, op);
         //重新生成clr分析文件

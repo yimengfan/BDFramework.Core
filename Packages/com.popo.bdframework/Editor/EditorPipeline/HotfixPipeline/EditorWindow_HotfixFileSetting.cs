@@ -1,7 +1,6 @@
 ﻿using System;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Unity3dEx;
-using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 

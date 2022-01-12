@@ -18,7 +18,7 @@ namespace BDFramework.Editor
     public class EditorWindow_BDFrameworkStart : EditorWindow
     {
         //版本号标记
-private const string Version = "2.0.9-preview.5";
+    
         //URL 相关
         private static string WIKI_URL = "https://www.yuque.com/naipaopao/eg6gik";
         private static string GITHUB_URL = "https://github.com/yimengfan/BDFramework.Core";
@@ -31,7 +31,7 @@ private const string Version = "2.0.9-preview.5";
         private static string CHANGEDLOG_URL = "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/CHANGELOG.md";
 
         //版本号
-        private static string VERSION_URL = "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/Runtime/Resources/BDFrameConfig.Json";
+        private static string PCKAGE_URL = "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/package.json";
 
         private static Texture webIcon; //= EditorGUIUtility.IconContent( "BuildSettings.Web.Small" ).image;
 
@@ -45,7 +45,7 @@ private const string Version = "2.0.9-preview.5";
         private static GUIStyle errorStyle;
 
 
-        [MenuItem(("BDFrameWork工具箱/框架引导 "+Version), false, (int) BDEditorGlobalMenuItemOrderEnum.BDFrameworkGuid)]
+        [MenuItem(("BDFrameWork工具箱/框架引导 "+BDLauncher.Version), false, (int) BDEditorGlobalMenuItemOrderEnum.BDFrameworkGuid)]
         static public void Open()
         {
             var win = GetWindow<EditorWindow_BDFrameworkStart>("BDFramework使用引导");
@@ -249,7 +249,7 @@ private const string Version = "2.0.9-preview.5";
             if (File.Exists(path))
             {
                 var version = File.ReadAllText(path);
-                if (version == BDEditorApplication.BDFrameWorkConfig?.Version)
+                if (version == BDLauncher.Version)
                 {
                     return true;
                 }
@@ -277,13 +277,8 @@ private const string Version = "2.0.9-preview.5";
             GUILayout.Label("版本信息", titleStyle);
             DrawLine();
             GUI.color = Color.green;
-            var version = "2.0.0";
-            if (BDEditorApplication.BDFrameWorkConfig != null)
-            {
-                version = BDEditorApplication.BDFrameWorkConfig.Version;
-            }
 
-            GUILayout.Label("当前版本:" + version);
+            GUILayout.Label("当前版本:" + BDLauncher.Version);
             //
             if (IsHaveNewVerison())
             {
@@ -301,6 +296,12 @@ private const string Version = "2.0.9-preview.5";
 
             GUI.color = GUI.contentColor;
         }
+        
+        public class PackageData
+        {
+            public string version = "null";
+        }
+
 
         // <summary>
         /// 是否有新版本
@@ -311,15 +312,15 @@ private const string Version = "2.0.9-preview.5";
             if (NewVersionNum == null)
             {
                 WebClient wc = new WebClient();
-                var ret = wc.DownloadString(VERSION_URL);
-                var config = JsonMapper.ToObject<BDFrameWorkConfig>(ret);
+                var ret = wc.DownloadString(PCKAGE_URL);
+                var config = JsonMapper.ToObject<PackageData>(ret);
                 if (config != null)
                 {
-                    NewVersionNum = config.Version;
+                    NewVersionNum = config.version;
                 }
             }
-
-            return BDEditorApplication.BDFrameWorkConfig?.Version != NewVersionNum;
+            
+            return BDLauncher.Version != NewVersionNum;
         }
 
         #endregion
