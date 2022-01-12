@@ -2,7 +2,6 @@
 using BDFramework.Sql;
 using UnityEngine;
 using BDFramework.UI;
-using Game.Data;
 using LitJson;
 using UnityEngine.UI;
 using BDFramework;

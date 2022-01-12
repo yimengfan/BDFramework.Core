@@ -81,11 +81,11 @@ namespace Game.Data.[NameSpace]
         /// 保存
         /// </summary>
         /// <param name="filePath"></param>
-        public string GenClass(string NameSpace)
+        public string GenClass(string @namespace)
         {
             this.CalssContent = CalssContent.Replace("[ClsName]", clsName) //
                 .Replace("[Fields]", fieldContents);
-            this.CalssContent = this.CalssContent.Replace("[NameSpace]", NameSpace);
+            this.CalssContent = this.CalssContent.Replace("[NameSpace]", @namespace);
             return this.CalssContent;
         }
     }

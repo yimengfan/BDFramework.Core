@@ -5,6 +5,7 @@ using UnityEngine;
 using BDFramework.Editor.TableData;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.Unity3dEx;
 using BDFramework.ResourceMgr;
 using ServiceStack.Text;
 using AssetBundleEditorToolsV2 = BDFramework.Editor.AssetBundle.AssetBundleEditorToolsV2;
@@ -84,7 +85,7 @@ namespace BDFramework.Editor.PublishPipeline
             }
             GUILayout.EndHorizontal();
 
-            Layout_DrawLineH(Color.white);
+            EditorGUILayoutEx.Layout_DrawLineH(Color.white);
 
             GUILayout.BeginHorizontal();
             OnGUI_OneKeyExprot();
@@ -151,7 +152,7 @@ namespace BDFramework.Editor.PublishPipeline
                 if (GUILayout.Button("热更资源转hash(生成服务器配置)", GUILayout.Width(350), GUILayout.Height(30)))
                 {
                     //自动转hash
-                    PublishAssetHelper.PublishAssetsToServer(BDApplication.DevOpsPublishAssetsPath);
+                    PublishPipelineTools.PublishAssetsToServer(BDApplication.DevOpsPublishAssetsPath);
                 }
             }
             GUILayout.EndVertical();
@@ -204,29 +205,13 @@ namespace BDFramework.Editor.PublishPipeline
             }
             
             //4.生成本地assetinfo配置
-            var allServerAssetItemList = PublishAssetHelper.GetAssetsHashData(outputPath, platform);
+            var allServerAssetItemList = PublishPipelineTools.GetAssetsHashData(outputPath, platform);
             var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
             var assetsInfoPath = string.Format("{0}/{1}/{2}",outputPath,BDApplication.GetPlatformPath(platform),BResources.SERVER_ASSETS_INFO_PATH);
             File.WriteAllText(assetsInfoPath, csv);
         }
 
 
-        public static void Layout_DrawLineH(Color color, float height = 4f)
-        {
-            Rect rect = GUILayoutUtility.GetLastRect();
-            GUI.color = color;
-            GUI.DrawTexture(new Rect(rect.xMin, rect.yMax, rect.width, height), EditorGUIUtility.whiteTexture);
-            GUI.color = Color.white;
-            GUILayout.Space(height);
-        }
 
-        public static void Layout_DrawLineV(Color color, float width = 4f)
-        {
-            Rect rect = GUILayoutUtility.GetLastRect();
-            GUI.color = color;
-            GUI.DrawTexture(new Rect(rect.xMax, rect.yMin, width, rect.height), EditorGUIUtility.whiteTexture);
-            GUI.color = Color.white;
-            GUILayout.Space(width);
-        }
     }
 }

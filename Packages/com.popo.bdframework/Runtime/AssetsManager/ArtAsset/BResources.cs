@@ -201,9 +201,12 @@ namespace BDFramework.ResourceMgr
         /// <param name="asset"></param>
         public static void UnloadAsset(UnityEngine.Object asset)
         {
-            if (asset is GameObject || asset is Component) return;
+            if (asset is GameObject || asset is Component)
+            {
+                return;
+            }
+            
             Resources.UnloadAsset(asset);
-            asset = null;
         }
 
         /// <summary>

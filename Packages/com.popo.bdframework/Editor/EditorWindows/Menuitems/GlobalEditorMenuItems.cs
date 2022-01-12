@@ -23,13 +23,16 @@ namespace BDFramework.Editor
 
         //**********************PublishPipeline**************************
         PublishPipeline = 100,
-        PublishPipeline_BuildAsset = 101,
-        PublishPipeline_PublishPackage = 102,
-        PublishPipeline_CICD = 103,
+        PublishPipeline_BuildAsset = PublishPipeline + 1,
+        PublishPipeline_PublishPackage = PublishPipeline + 2,
+        PublishPipeline_CICD = PublishPipeline + 3,
+
+        //**********************HotfixPipeline**************************
+        HotfixPipeline = 151,
 
         //**********************TestPipeline**************************
-        TestPepeline = 150,
-        TestPepelineEditor = 151,
+        TestPepeline = 201,
+        TestPepelineEditor = TestPepeline + 1,
     }
 
     /// <summary>
@@ -37,7 +40,6 @@ namespace BDFramework.Editor
     /// </summary>
     static public class MenuItems
     {
-       
         public static void Open()
         {
             EditorWindow_BDFrameworkStart.Open();

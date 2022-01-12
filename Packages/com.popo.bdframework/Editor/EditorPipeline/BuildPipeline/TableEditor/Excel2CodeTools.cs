@@ -12,12 +12,18 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.HotfixPipeline;
 
 
 namespace BDFramework.Editor.TableData
 {
     static public class Excel2CodeTools
     {
+        private static string OldGameTableCodePath = "Assets/Code/Game@hotfix/Table";
+        private static string GameTableCodePath = "Assets/Code/Game/Table";
+        private static string OldGameResourceTableCodePath = "Assets/Resource_SVN/Table/Code@hotfix";
+        private static string GameResourceTableCodePath = "Assets/Resource_SVN/Table/Code";
+
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class[程序目录]", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Table2Class)]
         public static void Gen()
         {
@@ -28,7 +34,11 @@ Excel格式如下:
 3.所有表格字段名必须以Id开始，即第二或第三行首列必须是Id", "OK");
             if (ret)
             {
-                GenCode("Assets/Code/Game@hotfix/Table");
+                if (Directory.Exists(OldGameTableCodePath))
+                {
+                    Directory.Delete(OldGameTableCodePath,true);
+                }
+                GenCode(GameTableCodePath);
             }
         }
 
@@ -42,7 +52,11 @@ Excel格式如下:
 3.所有表格字段名必须以Id开始，即第二或第三行首列必须是Id", "OK");
             if (ret)
             {
-                GenCode("Assets/Resource_SVN/Table/Code@hotfix");
+                if (Directory.Exists(OldGameResourceTableCodePath))
+                {
+                    Directory.Delete(OldGameResourceTableCodePath,true);
+                }
+                GenCode(GameResourceTableCodePath);
             }
         }
 
@@ -76,7 +90,7 @@ Excel格式如下:
             //导出excel
             foreach (var f in xlslFiles)
             {
-                GenClassByExcel(outputPath,f, "Local");
+                GenClassByExcel(outputPath, f, "Local");
                 GenClassByExcel(outputPath, f, "Server");
             }
 
@@ -89,14 +103,14 @@ Excel格式如下:
         /// 通过excel生成class
         /// </summary>
         /// <param name="excelFilePath"></param>
-        static private void GenClassByExcel(string outputDirectory, string excelFilePath, string localOrServer)
+        static private void GenClassByExcel(string outputDirectory, string excelFilePath, string @namespace)
         {
-            Debug.LogFormat("[{0}]正在生成：" + excelFilePath, localOrServer);
-            var          excel         = new ExcelUtility(excelFilePath);
-            int          idX           = -1;
-            int          idY           = -1;
+            Debug.LogFormat("[{0}]正在生成：" + excelFilePath, @namespace);
+            var excel = new ExcelUtility(excelFilePath);
+            int idX = -1;
+            int idY = -1;
             List<object> keepFieldList = new List<object>();
-            string       json          = excel.GetJson(localOrServer, ref idX, ref idY, ref keepFieldList);
+            string json = excel.GetJson(@namespace, ref idX, ref idY, ref keepFieldList);
             if (idX != -1 && idY != -1)
             {
                 if (idY < 2)
@@ -130,15 +144,24 @@ Excel格式如下:
                     }
                 }
 
-                var clsContent = Json2Class(excelFilePath, json, localOrServer, statements, fieldTypes);
+                var clsContent = Json2Class(excelFilePath, json, @namespace, statements, fieldTypes);
 
                 //输出目录控制
-                string outputFile = outputDirectory + "/" + localOrServer;
-                outputFile = Path.Combine(outputFile, Path.GetFileName(excelFilePath) + ".cs");
+                string outputFile = outputDirectory + "/" + @namespace;
+                var config = HotfixPipelineTools.HotfixFileConfig.GetConfig("excel");
+                //判断是否热更
+                if (config.IsHotfixFile(excelFilePath))
+                {
+                    outputFile = Path.Combine(outputFile, Path.GetFileName(excelFilePath) + "@hotfix.cs");
+                }
+                else
+                {
+                    outputFile = Path.Combine(outputFile, Path.GetFileName(excelFilePath) + ".cs");
+                }
                 FileHelper.WriteAllText(outputFile, clsContent);
 
 
-                Debug.LogFormat("<color=red> [{0} 成功] </color>：{1}", localOrServer, excelFilePath);
+                Debug.LogFormat("<color=red> [{0} 成功] </color>：{1}", @namespace, excelFilePath);
             }
             else
             {
@@ -147,25 +170,24 @@ Excel格式如下:
         }
 
 
-
         /// <summary>
         /// Json2Class
         /// 自动分析字段
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="json"></param>
-        /// <param name="localOrServer"></param>
+        /// <param name="namespace"></param>
         /// <param name="statements"></param>
         /// <param name="fieldTypes"></param>
         /// <returns></returns>
-        private static string Json2Class(string fileName, string json, string localOrServer, List<object> statements, List<object> fieldTypes)
+        private static string Json2Class(string fileName, string json, string @namespace, List<object> statements, List<object> fieldTypes)
         {
             string clsName = "";
             clsName = Path.GetFileNameWithoutExtension(fileName);
             //生成类服务
             GenCodeTool genCodeTool = new GenCodeTool(clsName);
-            var         jsonData    = JsonMapper.ToObject(json)[0];
-            int         i           = 0;
+            var jsonData = JsonMapper.ToObject(json)[0];
+            int i = 0;
             foreach (var key in jsonData.Keys)
             {
                 //字段
@@ -193,7 +215,7 @@ Excel格式如下:
             }
 
             //生成代码       
-            return genCodeTool.GenClass(localOrServer);
+            return genCodeTool.GenClass(@namespace);
         }
 
 
@@ -205,31 +227,37 @@ Excel格式如下:
             if (!path.EndsWith(".xlsx")) return false;
             return true;
         }
-        
-        [MenuItem("Assets/Excel导出脚本[程序目录]")]
+
+        [MenuItem("Assets/Excel生成脚本[程序目录]")]
         public static void SingleExcel2Class()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            GenClassByExcel("Assets/Code/Game@hotfix/Table",path, "Local");
-            GenClassByExcel("Assets/Code/Game@hotfix/Table",path, "Server");
+            GenClassByExcel(GameTableCodePath, path, "Local");
+            GenClassByExcel(GameTableCodePath, path, "Server");
             AssetDatabase.Refresh();
         }
-        
-        [MenuItem("Assets/Excel导出脚本[策划目录]", true)]
-        private static bool SingleExcel2ClassValidation_2()
+
+        [MenuItem("Assets/Excel生成脚本[策划目录]", true)]
+        private static bool SingleExcel2ClassValidation_SVN()
         {
-            if (Selection.activeObject == null) return false;
+            if (Selection.activeObject == null)
+            {
+                return false;
+            }
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            if (!path.EndsWith(".xlsx")) return false;
+            if (!path.EndsWith(".xlsx"))
+            {
+                return false;
+            }
             return true;
         }
-        
+
         [MenuItem("Assets/Excel导出脚本[策划目录]")]
-        public static void SingleExcel2Class_2()
+        public static void SingleExcel2Class_SVN()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            GenClassByExcel("Assets/Resource_SVN/Table/Code@hotfix",path, "Local");
-            GenClassByExcel("Assets/Resource_SVN/Table/Code@hotfix",path, "Server");
+            GenClassByExcel(GameResourceTableCodePath, path, "Local");
+            GenClassByExcel(GameResourceTableCodePath, path, "Server");
             AssetDatabase.Refresh();
         }
     }

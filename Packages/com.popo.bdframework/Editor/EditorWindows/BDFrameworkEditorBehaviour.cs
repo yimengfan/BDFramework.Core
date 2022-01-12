@@ -6,6 +6,7 @@ using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.HotfixPipeline;
 using BDFramework.Hotfix.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -92,6 +93,8 @@ namespace BDFramework.Editor
                     var eAssemlby = Assembly.LoadFile(editorAssemlyPath);
                     RegisterMainProjectAssembly(gAssembly, eAssemlby);
                 }
+                //Pipeline初始化
+                HotfixPipelineTools.Init();
 
                 //最后，完成初始化
                 IsInited = true; 

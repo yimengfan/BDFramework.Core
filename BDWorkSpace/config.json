@@ -1,6 +1,6 @@
 
 {
-  "pageType" : 2,
+  "pageType" : 1,
   "WorkFollow" : {
     "HotfixCodeFloderType" : 0,
     "IsAutoBuildDll"       : true,

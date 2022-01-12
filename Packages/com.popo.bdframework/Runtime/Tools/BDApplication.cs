@@ -73,6 +73,10 @@ namespace BDFramework.Core.Tools
         /// </summary>
         public static string DevOpsPublishAssetsPath { get; private set; }
         /// <summary>
+        /// Devops 配置文件路径
+        /// </summary>
+        public static string DevOpsConfigPath { get; private set; }
+        /// <summary>
         /// 发布包体路径
         /// </summary>
         public static string DevOpsPublishPackagePath { get; private set; }
@@ -88,7 +92,7 @@ namespace BDFramework.Core.Tools
             Package                 = ProjectRoot + "/Package";
             BDWorkSpace             = ProjectRoot + "/BDWorkSpace";
             RuntimeResourceLoadPath = "Assets/Resource/Runtime";
-            //editor相关目录
+            //Editor相关目录
             EditorResourcePath        = "Assets/Resource_SVN";
             EditorResourceRuntimePath = EditorResourcePath + "/Runtime";
             BDEditorCachePath         = Library            + "/BDFrameCache";
@@ -96,6 +100,7 @@ namespace BDFramework.Core.Tools
             DevOpsPath = ProjectRoot + "/DevOps";
             DevOpsPublishAssetsPath  = DevOpsPath + "/PublishAssets";
             DevOpsPublishPackagePath =  DevOpsPath + "/PublishPackages";
+            DevOpsConfigPath = DevOpsPath + "/Config";
         }
 
         /// <summary>

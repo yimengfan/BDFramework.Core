@@ -89,31 +89,34 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\ExcelTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\ExcelUtility.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\GenCodeTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\EditorWindow_HotfixFileSetting.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\HotfixFileConfigLogic.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\HotfixPipelineTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\BuildPackageTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\ABDFrameworkPublishPipelineBehaviour.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\BDFrameworkPublishPipelineHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorWindow_BuildAssetsGuide.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorWindow_CICD.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\PublishAssetHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\PublishPipelineTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDFrameworkEditorBehaviour.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorAssetImpoter\BDFrameworkEditorAssetImporter.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDEditorApplication.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDFrameWorkEditorSetting.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDFrameworkEditorStatus.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\EditorWindow_BDFrameworkConfig.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorUserGuide\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\Menuitems\EditorBuiltinStyle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\Menuitems\GlobalEditorMenuItems.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\NetProtocolEditor\Protobuf2ClassTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\UserGuide\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\SVN\SVNProcessor.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\UIComponent\OverrideUIComponent.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Unity3dEx\DebugUtilImpl.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\Unity3dEx\EditorGUILayoutEx.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Unity3dEx\ShaderUtilImpl.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\Unity3dEx\Win32FileEx.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\WorkFollow\HotfixCodeWorkFollow.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\WorkFollow\MSBuildTest.cs" />
      <None Include="Packages\com.popo.bdframework\Editor\BDFramework.Editor.asmdef" />
-     <None Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\HotfixPipeline.txt" />
  <Reference Include="ILRuntime">
  <HintPath>E:/BDFrameworkMaster/Library/ScriptAssemblies/ILRuntime.dll</HintPath>
  </Reference>
