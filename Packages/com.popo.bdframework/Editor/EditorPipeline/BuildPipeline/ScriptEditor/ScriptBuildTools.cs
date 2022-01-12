@@ -124,9 +124,17 @@ public class ScriptBuildTools
         //所有宏
         defineList = new List<string>();
 
-        var gameLogicCsproj = "Assembly-CSharp.csproj"; //游戏逻辑的代码
-        var frameworkCsproj = "BDFramework.Core.csproj"; //框架部分的代码
-        ParseCsprojFile(gameLogicCsproj, new List<string>() {frameworkCsproj}, ref csFileList, ref dllFileList);
+        var gameLogicCsproj = BDApplication.ProjectRoot + "/Assembly-CSharp.csproj"; //游戏逻辑的代码
+        var frameworkCsproj = BDApplication.ProjectRoot + "/BDFramework.Core.csproj"; //框架部分的代码
+
+        if (!File.Exists(gameLogicCsproj) || !File.Exists(frameworkCsproj))
+        {
+            EditorUtility.DisplayDialog("警告", "请保证csproj存在:\n Assembly-CSharp.csproj \n BDFramework.Core.csproj.\n 请在Preferces/ExternalTools 选择 Generate.csproj文件", "OK");
+            return;
+        }
+
+
+        ParseCsprojFile(gameLogicCsproj, new List<string>() {"BDFramework.Core.csproj"}, ref csFileList, ref dllFileList);
         ParseCsprojFile(frameworkCsproj, new List<string>(), ref csFileList, ref dllFileList);
         //去重
         dllFileList = dllFileList.Distinct().ToList();
@@ -252,9 +260,8 @@ public class ScriptBuildTools
     /// 获取里面的dll和cs
     /// </summary>
     /// <returns></returns>
-    static void ParseCsprojFile(string projName, List<string> blackCspList, ref List<string> csList, ref List<string> dllList)
+    static void ParseCsprojFile(string projpath, List<string> blackCspList, ref List<string> csList, ref List<string> dllList)
     {
-        var projpath = BDApplication.ProjectRoot + "/" + projName;
         List<string> csprojList = new List<string>();
 
         #region 解析xml
