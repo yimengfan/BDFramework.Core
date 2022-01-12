@@ -16,17 +16,17 @@ using Sirenix.Utilities.Editor;
 namespace BDFramework.Editor.PublishPipeline
 {
     /// <summary>
-    /// 资源构建引导界面
+    ///  发布资源页面
     /// </summary>
-    public class EditorWindow_BuildAssetsGuide : EditorWindow
+    public class EditorWindow_PublishAssets : EditorWindow
 
     {
 
 
-        [MenuItem("BDFrameWork工具箱/PublishPipeline/1.一键发布资源", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_BuildAsset)]
+        [MenuItem("BDFrameWork工具箱/PublishPipeline/1.发布资源", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_BuildAsset)]
         public static void Open()
         {
-            var window = EditorWindow.GetWindow<EditorWindow_BuildAssetsGuide>(false, "一键构建资源");
+            var window = EditorWindow.GetWindow<EditorWindow_PublishAssets>(false, "一键构建资源");
 
             window.Show();
             window.Focus();

@@ -144,7 +144,7 @@ namespace BDFramework.Editor.PublishPipeline
             //1.生成资源
             if (isGenAssets)
             {
-                EditorWindow_BuildAssetsGuide.GenAllAssets(BDApplication.DevOpsPublishAssetsPath, RuntimePlatform.Android);
+                EditorWindow_PublishAssets.GenAllAssets(BDApplication.DevOpsPublishAssetsPath, RuntimePlatform.Android);
             }
 
             //2.拷贝资源并打包
@@ -274,7 +274,7 @@ namespace BDFramework.Editor.PublishPipeline
             //1.生成资源
             if (isGenAssets)
             {
-                EditorWindow_BuildAssetsGuide.GenAllAssets(BDApplication.DevOpsPublishAssetsPath, RuntimePlatform.IPhonePlayer);
+                EditorWindow_PublishAssets.GenAllAssets(BDApplication.DevOpsPublishAssetsPath, RuntimePlatform.IPhonePlayer);
             }
 
             //2.拷贝资源打包

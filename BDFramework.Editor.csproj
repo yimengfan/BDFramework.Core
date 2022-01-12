@@ -95,8 +95,8 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\BuildPackageTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\ABDFrameworkPublishPipelineBehaviour.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\BDFrameworkPublishPipelineHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorWindow_BuildAssetsGuide.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorWindow_CICD.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorWindow_PublishAssets.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\PublishPipelineTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDFrameworkEditorBehaviour.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorAssetImpoter\BDFrameworkEditorAssetImporter.cs" />
