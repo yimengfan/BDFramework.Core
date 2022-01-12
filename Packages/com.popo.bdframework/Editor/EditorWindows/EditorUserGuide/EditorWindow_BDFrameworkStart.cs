@@ -18,7 +18,7 @@ namespace BDFramework.Editor
     public class EditorWindow_BDFrameworkStart : EditorWindow
     {
         //版本号标记
-private const string Version = "2.0.9-preview.2";
+private const string Version = "2.0.9-preview.5";
         //URL 相关
         private static string WIKI_URL = "https://www.yuque.com/naipaopao/eg6gik";
         private static string GITHUB_URL = "https://github.com/yimengfan/BDFramework.Core";
