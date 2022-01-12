@@ -17,7 +17,7 @@ namespace BDFramework
         /// <summary>
         /// 框架版本号
         /// </summary>
-        public const string Version  = "2.0.9-preview.5";
+        public const string Version  = "2.0.9-preview.6";
 
         /// <summary>
         /// GameConfig

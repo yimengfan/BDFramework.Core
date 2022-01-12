@@ -1,5 +1,9 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.0.9-preview.6
+【Editor】
+ - Editor: Change framework version function.
+ - BuildDLL ：Add csproj file check.
 ##V2.0.9-preview.5
 【Editor】
  - HotfixPipeline: Add hotifoxfileconfig.
