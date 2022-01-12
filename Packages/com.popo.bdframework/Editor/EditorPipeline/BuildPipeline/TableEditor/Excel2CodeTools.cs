@@ -19,9 +19,12 @@ namespace BDFramework.Editor.TableData
 {
     static public class Excel2CodeTools
     {
+        //旧目录,会被新目录替代
         private static string OldGameTableCodePath = "Assets/Code/Game@hotfix/Table";
-        private static string GameTableCodePath = "Assets/Code/Game/Table";
         private static string OldGameResourceTableCodePath = "Assets/Resource_SVN/Table/Code@hotfix";
+        //程序目录
+        private static string GameTableCodePath = "Assets/Code/Game/Table";
+        //策划or美术目录
         private static string GameResourceTableCodePath = "Assets/Resource_SVN/Table/Code";
 
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class[程序目录]", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Table2Class)]
@@ -222,9 +225,15 @@ Excel格式如下:
         [MenuItem("Assets/Excel导出脚本[程序目录]", true)]
         private static bool SingleExcel2ClassValidation()
         {
-            if (Selection.activeObject == null) return false;
+            if (Selection.activeObject == null)
+            {
+                return false;
+            }
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            if (!path.EndsWith(".xlsx")) return false;
+            if (!path.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
             return true;
         }
 
@@ -245,7 +254,7 @@ Excel格式如下:
                 return false;
             }
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            if (!path.EndsWith(".xlsx"))
+            if (!path.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
