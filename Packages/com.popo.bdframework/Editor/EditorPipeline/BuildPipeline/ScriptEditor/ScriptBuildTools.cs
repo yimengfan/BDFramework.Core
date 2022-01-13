@@ -124,22 +124,35 @@ public class ScriptBuildTools
         //所有宏
         defineList = new List<string>();
 
-        var gameLogicCsproj = BDApplication.ProjectRoot + "/Assembly-CSharp.csproj"; //游戏逻辑的代码
-        var frameworkCsproj = BDApplication.ProjectRoot + "/BDFramework.Core.csproj"; //框架部分的代码
-
-        if (!File.Exists(gameLogicCsproj) || !File.Exists(frameworkCsproj))
+        string[] parseCsprojList = new string[] {"Assembly-CSharp.csproj", "BDFramework.Core.csproj"};
+        foreach (var csproj in parseCsprojList)
         {
-            EditorUtility.DisplayDialog("警告", "请保证csproj存在:\n Assembly-CSharp.csproj \n BDFramework.Core.csproj.\n 请在Preferces/ExternalTools 选择 Generate.csproj文件", "OK");
-            return;
+            var path = Path.Combine(BDApplication.ProjectRoot,csproj);
+            if (!File.Exists(path))
+            {
+                EditorUtility.DisplayDialog("警告", $"请保证csproj存在:\n {csproj}.\n 请在Preferces/ExternalTools 选择 Generate.csproj文件", "OK");
+                return;
+            }
+            ParseCsprojFile(path, new List<string>() {}, ref csFileList, ref dllFileList);
         }
-
-
-        ParseCsprojFile(gameLogicCsproj, new List<string>() {"BDFramework.Core.csproj"}, ref csFileList, ref dllFileList);
-        ParseCsprojFile(frameworkCsproj, new List<string>(), ref csFileList, ref dllFileList);
+        
         //去重
         dllFileList = dllFileList.Distinct().ToList();
         csFileList = csFileList.Distinct().ToList();
         defineList = defineList.Distinct().ToList();
+
+        //移除参与分析csproj的dll,因为已经解析 包含在cs
+        foreach (var csproj in parseCsprojList)
+        {
+            var dll = csproj.Replace(".csproj", ".dll");
+            
+            var idx= dllFileList.FindIndex((d) => d.EndsWith(dll, StringComparison.OrdinalIgnoreCase));
+            if (idx >= 0)
+            {
+                dllFileList.RemoveAt(idx);
+                Debug.Log("[Build DLL]剔除:" + dll);
+            }
+        }
 
         //宏解析
         //移除editor相关宏
