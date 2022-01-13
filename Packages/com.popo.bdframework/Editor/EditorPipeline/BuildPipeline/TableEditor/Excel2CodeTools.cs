@@ -151,8 +151,9 @@ Excel格式如下:
 
                 //输出目录控制
                 string outputFile = outputDirectory + "/" + @namespace;
+                //获取热更config
                 var config = HotfixPipelineTools.HotfixFileConfig.GetConfig("excel");
-                //判断是否热更
+                //判断配置是否热更
                 if (config.IsHotfixFile(excelFilePath))
                 {
                     outputFile = Path.Combine(outputFile, Path.GetFileName(excelFilePath) + "@hotfix.cs");

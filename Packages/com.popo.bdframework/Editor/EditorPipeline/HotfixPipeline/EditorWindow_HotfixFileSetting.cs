@@ -14,7 +14,7 @@ namespace BDFramework.Editor.HotfixPipeline
         private static int w = 800;
         private static int h = 900;
 
-        [MenuItem("BDFrameWork工具箱/HotfixPipeline/配置热更文件", false, (int) BDEditorGlobalMenuItemOrderEnum.HotfixPipeline)]
+        [MenuItem("BDFrameWork工具箱/HotfixPipeline/1.配置热更文件", false, (int) BDEditorGlobalMenuItemOrderEnum.HotfixPipeline)]
         public static void Open()
         {
             var window = EditorWindow.GetWindow<EditorWindow_HotfixFileSetting>(false, "热更配置");
@@ -169,7 +169,7 @@ namespace BDFramework.Editor.HotfixPipeline
                             var ret = EditorUtility.DisplayDialog("提示", "是否添加到非热更列表？", "OK", "Cancel");
                             if (ret)
                             {
-                                curSlectConfigItem.NotHotFixFileList.Add(file);
+                                curSlectConfigItem.AddNotHotfixFile(file);
                             }
                         }
                     }
@@ -195,7 +195,7 @@ namespace BDFramework.Editor.HotfixPipeline
                             var ret = EditorUtility.DisplayDialog("提示", "是否从非热更列表移除？", "OK", "Cancel");
                             if (ret)
                             {
-                                curSlectConfigItem.NotHotFixFileList.Remove(file);
+                                curSlectConfigItem.RemoveNotHotfixFile(file);
                                 break;
                             }
                         }

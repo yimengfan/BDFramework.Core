@@ -36,7 +36,7 @@ namespace BDFramework.Editor.HotfixPipeline
             /// <summary>
             /// 热更文件
             /// </summary>
-            public List<string> HotFixFileList = new List<string>();
+            private List<string> HotFixFileList = new List<string>();
 
             /// <summary>
             /// 非热更目录
@@ -48,7 +48,7 @@ namespace BDFramework.Editor.HotfixPipeline
             /// </summary>
             /// <param name="Tag"></param>
             /// <param name="filePath"></param>
-            public void AddNotHotfixFileConfig(string filePath)
+            public void AddNotHotfixFile(string filePath)
             {
                 this.NotHotFixFileList.Add(filePath);
             }
@@ -58,7 +58,7 @@ namespace BDFramework.Editor.HotfixPipeline
             /// </summary>
             /// <param name="Tag"></param>
             /// <param name="filePath"></param>
-            public void RemoveNotHotfixFileConfig(string filePath)
+            public void RemoveNotHotfixFile(string filePath)
             {
                 this.NotHotFixFileList.Remove(filePath);
             }
