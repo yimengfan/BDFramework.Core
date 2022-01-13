@@ -200,14 +200,14 @@ namespace BDFramework.Editor.PublishPipeline
             //
             if (platform == RuntimePlatform.Android)
             {
-                BuildPackageTools.BuildAPK(buildMode);
+                BuildPackageTools.BuildAPK(buildMode,BDApplication.DevOpsPublishPackagePath);
                 //上传APK
                 BDFrameworkServerTools.UploadAPK();
             }
             else if (platform == RuntimePlatform.IPhonePlayer)
             {
                 //构建xcode
-                BuildPackageTools.BuildIpa(buildMode);
+                BuildPackageTools.BuildIpa(buildMode,BDApplication.DevOpsPublishPackagePath);
             }
 
             //最后上传

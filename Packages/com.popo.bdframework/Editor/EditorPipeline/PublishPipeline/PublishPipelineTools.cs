@@ -35,11 +35,11 @@ namespace BDFramework.Editor
                 {
                     string versionNum = "testVersion";
                     //发布资源处理前,处理前回调
-                    BDFrameworkPublishPipelineHelper.OnPublishAssetsProccessBegin(platform, platformPath, out versionNum);
+                    BDFrameworkPublishPipelineHelper.OnBeginPublishAssets(platform, platformPath, out versionNum);
                     //处理资源
                     var outdir = AssetsToHash(path, platform, versionNum);
                     //发布资源处理后,通知回调
-                    BDFrameworkPublishPipelineHelper.OnPublishAssetsProccessEnd(platform, outdir);
+                    BDFrameworkPublishPipelineHelper.OnEndPublishAssets(platform, outdir);
                     
                 }
             }

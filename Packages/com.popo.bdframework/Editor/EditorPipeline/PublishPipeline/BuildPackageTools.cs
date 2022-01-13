@@ -137,6 +137,9 @@ namespace BDFramework.Editor.PublishPipeline
         /// </summary>
         static public void BuildAPK(BuildMode buildMode, bool isGenAssets)
         {
+            var outdir = BDApplication.DevOpsPublishPackagePath;
+            
+            BDFrameworkPublishPipelineHelper.OnBeginBuildPackage(BuildTarget.Android, outdir);
             //0.加载场景和配置
             LoadConfig(buildMode);
 
@@ -154,7 +157,8 @@ namespace BDFramework.Editor.PublishPipeline
                 DevOpsTools.CopyPublishAssetsTo(Application.streamingAssetsPath, RuntimePlatform.Android);
                 try
                 {
-                    BuildAPK(buildMode);
+                   var outputpath =  BuildAPK(buildMode,outdir);
+                   BDFrameworkPublishPipelineHelper.OnEndBuildPackage(BuildTarget.Android, outputpath);
                 }
                 catch (Exception e)
                 {
@@ -169,7 +173,7 @@ namespace BDFramework.Editor.PublishPipeline
         /// <summary>
         /// 打包APK
         /// </summary>
-        static public void BuildAPK(BuildMode mode)
+        static public string BuildAPK(BuildMode mode ,string outdir)
         {
             //删除il2cpp缓存
             DeleteIL2cppCache();
@@ -177,7 +181,7 @@ namespace BDFramework.Editor.PublishPipeline
             if (!BDEditorApplication.BDFrameWorkFrameEditorSetting.IsSetConfig())
             {
                 Debug.LogError("请注意设置apk keystore账号密码");
-                return;
+                return "";
             }
 
             var androidConfig = BDEditorApplication.BDFrameWorkFrameEditorSetting.Android;
@@ -214,7 +218,7 @@ namespace BDFramework.Editor.PublishPipeline
             //         break;
             // }
             //
-            var outdir = BDApplication.DevOpsPublishPackagePath;
+         
             var outputPath = IPath.Combine(outdir, string.Format("{0}_{1}_{2}.apk", Application.identifier, mode.ToString(), DateTimeEx.GetTotalSeconds()));
             //文件夹处理
             if (!Directory.Exists(outdir))
@@ -257,6 +261,8 @@ namespace BDFramework.Editor.PublishPipeline
             {
                 Debug.LogError(new Exception("Build Fail! Please Check the log! "));
             }
+
+            return outputPath;
         }
 
         #endregion
@@ -268,6 +274,8 @@ namespace BDFramework.Editor.PublishPipeline
         /// </summary>
         static public void BuildIpa(BuildMode buildMode, bool isGenAssets)
         {
+            var outdir = BDApplication.DevOpsPublishPackagePath;
+            BDFrameworkPublishPipelineHelper.OnBeginBuildPackage(BuildTarget.iOS, outdir);
             //0.加载场景和配置
             LoadConfig(buildMode);
 
@@ -284,7 +292,9 @@ namespace BDFramework.Editor.PublishPipeline
                 DevOpsTools.CopyPublishAssetsTo(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer);
                 try
                 {
-                    BuildIpa(buildMode);
+                    var outputpath = BuildIpa(buildMode, outdir);
+                    
+                    BDFrameworkPublishPipelineHelper.OnEndBuildPackage(BuildTarget.iOS, outputpath);
                 }
                 catch (Exception e)
                 {
@@ -301,7 +311,7 @@ namespace BDFramework.Editor.PublishPipeline
         /// 编译Xcode（这里是出母包版本）
         /// </summary>
         /// <param name="mode"></param>
-        static public void BuildIpa(BuildMode mode)
+        static public string BuildIpa(BuildMode mode, string outdir)
         {
             DeleteIL2cppCache();
             //具体IOS的的配置
@@ -309,10 +319,9 @@ namespace BDFramework.Editor.PublishPipeline
             //PlayerSettings.stripEngineCode = true;
             // if (PlayerSettings.GetManagedStrippingLevel(BuildTargetGroup.iOS) == ManagedStrippingLevel.High)
             // {
-                // PlayerSettings.SetManagedStrippingLevel(BuildTargetGroup.iOS, ManagedStrippingLevel.Low);
+            // PlayerSettings.SetManagedStrippingLevel(BuildTargetGroup.iOS, ManagedStrippingLevel.Low);
             //}
             //
-            var outdir = BDApplication.DevOpsPublishPackagePath;
             var outputPath = IPath.Combine(outdir, string.Format("{0}_{1}_{2}", Application.identifier, mode.ToString(), DateTimeEx.GetTotalSeconds()));
             //文件夹处理
             if (File.Exists(outputPath))
@@ -352,6 +361,8 @@ namespace BDFramework.Editor.PublishPipeline
             {
                 Debug.LogError(new Exception("【BDFRamework】Build Fail! Please Check the log! "));
             }
+
+            return outputPath;
         }
 
         #endregion
@@ -377,7 +388,7 @@ namespace BDFramework.Editor.PublishPipeline
                     {
                         Debug.LogError("文件被占用，可能导致il2cpp沿用老的缓存!");
                     }
-                    
+
                     Debug.Log("【删除il2cpp cache】" + dirt);
                 }
             }
@@ -386,7 +397,7 @@ namespace BDFramework.Editor.PublishPipeline
             var tempdirt = Path.Combine(BDApplication.ProjectRoot, "Temp/StagingArea");
             if (Directory.Exists(tempdirt))
             {
-                Directory.Delete(tempdirt,true);
+                Directory.Delete(tempdirt, true);
             }
 #endif
         }

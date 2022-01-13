@@ -163,19 +163,11 @@ namespace BDFramework.ResourceMgr
             return ResLoader.AsyncLoad(objlist, onProcess, onLoadEnd);
         }
 
-
-        /// <summary>
-        /// 取消单个任务
-        /// </summary>
-        public static void LoadCancel(int taskId)
-        {
-            ResLoader.LoadCancel(taskId);
-        }
-
+        
         /// <summary>
         /// 取消一组任务
         /// </summary>
-        public static void LoadCancel(List<int> ids)
+        public static void LoadCancel(params int[] ids)
         {
             if (ids != null)
             {

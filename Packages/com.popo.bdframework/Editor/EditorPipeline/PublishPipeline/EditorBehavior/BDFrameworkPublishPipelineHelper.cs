@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.AssetGraph.Node;
+using UnityEditor;
 using UnityEngine;
 
 namespace BDFramework.Editor
@@ -83,7 +84,7 @@ namespace BDFramework.Editor
         {
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.OnBuildAssetBundleBegin(@params,buildInfo);
+                behavior.OnBeginBuildAssetBundle(@params,buildInfo);
             }
         }
 
@@ -91,7 +92,7 @@ namespace BDFramework.Editor
         {
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.OnBuildAssetBundleEnd(@params,buildInfo);
+                behavior.OnEndBuildAssetBundle(@params,buildInfo);
             }
         }
         
@@ -111,23 +112,51 @@ namespace BDFramework.Editor
         /// <summary>
         /// 发布资源处理前
         /// </summary>
-        static public void OnPublishAssetsProccessBegin(RuntimePlatform platform, string outputPath, out string versionNum)
+        static public void OnBeginPublishAssets(RuntimePlatform platform, string outputPath, out string versionNum)
         {
             versionNum = "version-null";
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.OnPublishAssetsProccessBegin(platform, outputPath,out versionNum);
+                behavior.OnBeginPublishAssets(platform, outputPath,out versionNum);
             }
         }
         
         /// <summary>
         /// 发布资源处理后
         /// </summary>
-        static public void OnPublishAssetsProccessEnd(RuntimePlatform platform,string outputPath)
+        static public void OnEndPublishAssets(RuntimePlatform platform,string outputPath)
         {
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.OnPublishAssetsProccessEnd(platform, outputPath);
+                behavior.OnEndPublishAssets(platform, outputPath);
+            }
+        }
+        
+        
+        
+        /// <summary>
+        /// 构建母包开始
+        /// </summary>
+        /// <param name="buildTarget"></param>
+        /// <param name="outputpath"></param>
+        static public void OnBeginBuildPackage(BuildTarget buildTarget, string outputpath)
+        {
+            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            {
+                behavior.OnBeginBuildPackage(buildTarget, outputpath);
+            }
+        }
+
+        /// <summary>
+        /// 构建母包结束
+        /// </summary>
+        /// <param name="buildTarget"></param>
+        /// <param name="outputpath"></param>
+        static public void OnEndBuildPackage( BuildTarget buildTarget, string outputpath)
+        {
+            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            {
+                behavior.OnEndBuildPackage(buildTarget, outputpath);
             }
         }
     }
