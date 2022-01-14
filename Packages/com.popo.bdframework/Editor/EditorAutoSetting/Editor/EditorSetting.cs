@@ -6,9 +6,8 @@ using UnityEngine;
 /// 框架导入的自动设置
 /// </summary>
 [InitializeOnLoad]
-static public class EditorSetting 
+static public class EditorSetting
 {
-
     static EditorSetting()
     {
         if (!PlayerSettings.allowUnsafeCode)
@@ -20,6 +19,7 @@ static public class EditorSetting
         if (PlayerSettings.assemblyVersionValidation)
         {
             PlayerSettings.assemblyVersionValidation = false;
+
             Debug.Log("【AutoSetting】assemblyVersionValidation = false.");
         }
     }
