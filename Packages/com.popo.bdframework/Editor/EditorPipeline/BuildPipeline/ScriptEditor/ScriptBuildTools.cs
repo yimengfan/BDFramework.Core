@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -251,6 +252,14 @@ public class ScriptBuildTools
         {
             //这里编译 不能使用宏
             BuildByRoslyn(dllFiles.ToArray(), hotfixCS.ToArray(), outHotfixDllPath, isdebug, false);
+
+            //检测输出的dll是否正确
+            var assem = Assembly.LoadFrom(outHotfixDllPath);
+            var result = assem.GetTypes().FirstOrDefault((t) => t.Name == "UIManager");
+            if (result == null)
+            {
+                Debug.LogError("打包hotfix出错,请检查是否完整收集hotfix相关脚本!  如开启了生成player .csproj等，或删除所有csproj,重启unity重新尝试打包.");
+            }
         }
         catch (Exception e)
         {

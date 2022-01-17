@@ -14,7 +14,7 @@ public static class GameViewUtils
     {
         
         // gameViewSizesInstance  = ScriptableSingleton<GameViewSizes>.instance;
-        var sizesType = typeof(Editor).Assembly.GetType("UnityEditor.GameViewSizes");
+        var sizesType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameViewSizes");
         var singleType = typeof(ScriptableSingleton<>).MakeGenericType(sizesType);
         var instanceProp = singleType.GetProperty("instance");
         getGroup = sizesType.GetMethod("GetGroup");
@@ -29,7 +29,7 @@ public static class GameViewUtils
 
     public static void SetSize(int index)
     {
-        var gvWndType = typeof(Editor).Assembly.GetType("UnityEditor.GameView");
+        var gvWndType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameView");
         var selectedSizeIndexProp = gvWndType.GetProperty("selectedSizeIndex",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
         var gvWnd = EditorWindow.GetWindow(gvWndType);
@@ -67,7 +67,7 @@ public static class GameViewUtils
 
         var group = GetGroup(sizeGroupType);
         var addCustomSize = getGroup.ReturnType.GetMethod("AddCustomSize"); // or group.GetType().
-        var gvsType = typeof(Editor).Assembly.GetType("UnityEditor.GameViewSize");
+        var gvsType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameViewSize");
         var ctor = gvsType.GetConstructor(new Type[] { typeof(int), typeof(int), typeof(int), typeof(string) });
         var newSize = ctor.Invoke(new object[] { (int)viewSizeType, width, height, text });
         addCustomSize.Invoke(group, new object[] { newSize });

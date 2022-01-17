@@ -22,5 +22,8 @@ static public class EditorSetting
 
             Debug.Log("【AutoSetting】assemblyVersionValidation = false.");
         }
+        
+        //设置生成所有的csproj
+        EditorPrefs.SetBool("unity_generate_all_csproj",true);
     }
 }
