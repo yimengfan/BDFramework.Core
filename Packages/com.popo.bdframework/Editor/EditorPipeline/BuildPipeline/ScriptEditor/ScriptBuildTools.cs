@@ -128,15 +128,16 @@ public class ScriptBuildTools
         string[] parseCsprojList = new string[] {"Assembly-CSharp.csproj", "BDFramework.Core.csproj"};
         foreach (var csproj in parseCsprojList)
         {
-            var path = Path.Combine(BDApplication.ProjectRoot,csproj);
+            var path = Path.Combine(BDApplication.ProjectRoot, csproj);
             if (!File.Exists(path))
             {
                 EditorUtility.DisplayDialog("警告", $"请保证csproj存在:\n {csproj}.\n 请在Preferces/ExternalTools 选择 Generate.csproj文件", "OK");
                 return;
             }
-            ParseCsprojFile(path, new List<string>() {}, ref csFileList, ref dllFileList);
+
+            ParseCsprojFile(path, new List<string>() { }, ref csFileList, ref dllFileList);
         }
-        
+
         //去重
         dllFileList = dllFileList.Distinct().ToList();
         csFileList = csFileList.Distinct().ToList();
@@ -146,8 +147,8 @@ public class ScriptBuildTools
         foreach (var csproj in parseCsprojList)
         {
             var dll = csproj.Replace(".csproj", ".dll");
-            
-            var idx= dllFileList.FindIndex((d) => d.EndsWith(dll, StringComparison.OrdinalIgnoreCase));
+
+            var idx = dllFileList.FindIndex((d) => d.EndsWith(dll, StringComparison.OrdinalIgnoreCase));
             if (idx >= 0)
             {
                 dllFileList.RemoveAt(idx);
@@ -254,8 +255,7 @@ public class ScriptBuildTools
             BuildByRoslyn(dllFiles.ToArray(), hotfixCS.ToArray(), outHotfixDllPath, isdebug, false);
 
             //检测输出的dll是否正确
-            var assem = Assembly.LoadFrom(outHotfixDllPath);
-            var result = assem.GetTypes().FirstOrDefault((t) => t.Name == "UIManager");
+            var result = hotfixCS.FirstOrDefault((t) => t.Contains( "UIManager"));
             if (result == null)
             {
                 Debug.LogError("打包hotfix出错,请检查是否完整收集hotfix相关脚本!  如开启了生成player .csproj等，或删除所有csproj,重启unity重新尝试打包.");
