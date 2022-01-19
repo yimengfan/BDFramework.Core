@@ -62,8 +62,8 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 StripCode.GenLinkXml();
             }
 
-            BDEditorApplication.BDFrameWorkFrameEditorSetting.WorkFollow.IsAutoBuildDll =
-                EditorGUILayout.Toggle("是否自动编译热更DLL",BDEditorApplication.BDFrameWorkFrameEditorSetting.WorkFollow.IsAutoBuildDll );
+            BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll =
+                EditorGUILayout.Toggle("是否自动编译热更DLL",BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll );
 
             GUI.color = Color.green;
             GUILayout.Label(@"

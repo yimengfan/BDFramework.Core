@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
+using Editor.EditorPipeline.DevOps;
 using UnityEngine;
 
 namespace BDFramework.Editor.DevOps
@@ -12,6 +14,7 @@ namespace BDFramework.Editor.DevOps
     /// </summary>
     static public class DevOpsTools
     {
+        #region 资产操作类
         /// <summary>
         /// 拷贝发布资源
         /// </summary>
@@ -37,7 +40,7 @@ namespace BDFramework.Editor.DevOps
                 var ret = blackFile.Find((blackstr) => _f.EndsWith(blackstr, StringComparison.OrdinalIgnoreCase));
                 if (ret != null)
                 {
-                   // Debug.Log("[黑名单]" + _f);
+                    // Debug.Log("[黑名单]" + _f);
                     continue;
                 }
 
@@ -62,5 +65,36 @@ namespace BDFramework.Editor.DevOps
                 Directory.Delete(copyArtPath, true);
             }
         }
+
+        #endregion
+
+
+        #region CI相关接口
+
+        /// <summary>
+        /// 获取所有的Ci接口
+        /// </summary>
+        static public List<MethodInfo> GetCIApis()
+        {
+            var assembly = typeof(BDFrameworkEditorBehaviour).Assembly;
+            var ciMethodList = new List<MethodInfo>();
+            //Type
+            foreach (var type in assembly.GetTypes())
+            {
+                var methods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                foreach (var method in methods)
+                {
+                    var attr = method.GetCustomAttribute<CIAttribute>(false);
+                    if (attr != null)
+                    {
+                        ciMethodList.Add(method);
+                    }
+                }
+            }
+
+            return ciMethodList;
+        }
+
+        #endregion
     }
 }

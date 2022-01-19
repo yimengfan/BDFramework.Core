@@ -30,10 +30,10 @@ namespace BDFramework.Editor
 
 
         [ShowIf(nameof(pageType), PageType.工作流)]
-        [BoxGroup("WorkFollow设置")]
+        [BoxGroup("DevOps设置")]
         [HideLabel]
         [InlineProperty]
-        public WorkFollowSetting WorkFollow = new WorkFollowSetting();
+        public DevOpsSetting DevOpsSetting = new DevOpsSetting();
 
         [ShowIf(nameof(pageType), PageType.资源构建)]
         [BoxGroup("资源设置")]
@@ -155,7 +155,7 @@ namespace BDFramework.Editor
     /// <summary>
     /// 工作流设置
     /// </summary>
-    public class WorkFollowSetting
+    public class DevOpsSetting
     {
         public enum HotfixCodeFloderTypeEnum
         {

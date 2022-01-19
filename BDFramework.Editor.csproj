@@ -50,9 +50,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\BDFrameworkServerTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\CI\PublishPipeLineCI.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\DevOps\DevOpsTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutines.cs" />
@@ -89,14 +86,17 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\ExcelTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\ExcelUtility.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\GenCodeTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\BDFrameworkServerTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\CI\CI.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\CI\EditorWindow_CICD.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\CI\PublishPipeLineCI.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\DevOpsTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\EditorWindow_HotfixFileSetting.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\HotfixFileConfigLogic.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\HotfixPipelineTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\BuildPackageTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\CITools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\ABDFrameworkPublishPipelineBehaviour.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\BDFrameworkPublishPipelineHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorWindow_CICD.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorWindow_PublishAssets.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\PublishPipelineTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDFrameworkEditorBehaviour.cs" />

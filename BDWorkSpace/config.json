@@ -1,9 +1,9 @@
 
 {
   "pageType" : 1,
-  "WorkFollow" : {
+  "DevOpsSetting" : {
     "HotfixCodeFloderType" : 0,
-    "IsAutoBuildDll"       : true,
+    "IsAutoBuildDll"       : false,
     "AssetBundleSVNUrl"    : "http://127.0.0.1:20001",
     "AssetBundleSVNAccount" : "root",
     "AssetBundleSVNPsw"     : "root"

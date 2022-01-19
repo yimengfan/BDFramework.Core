@@ -114,7 +114,7 @@ namespace BDFramework.Editor
         public static bool DownloadAssetBundle(RuntimePlatform platform ,string localPath)
         {
             var platformStr = BDApplication.GetPlatformPath(platform);
-            var url         = BDEditorApplication.BDFrameWorkFrameEditorSetting.WorkFollow.AssetBundleSVNUrl + "/Assetbundle";
+            var url         = BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.AssetBundleSVNUrl + "/Assetbundle";
             var webclient   = new WebClient();
 
             //获取最新版本的文件 //url + 协议 +参数 
@@ -191,7 +191,7 @@ namespace BDFramework.Editor
         public static void UploadFormFileServer(RuntimePlatform platform, string localPath)
         {
             var platformStr = BDApplication.GetPlatformPath(platform);
-            var url         = BDEditorApplication.BDFrameWorkFrameEditorSetting.WorkFollow.AssetBundleSVNUrl + "/Assetbundle";
+            var url         = BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.AssetBundleSVNUrl + "/Assetbundle";
             ;
             var webclient = new WebClient();
             //获取版本号
@@ -265,7 +265,7 @@ namespace BDFramework.Editor
                 return;
             }
 
-            var  url           = BDEditorApplication.BDFrameWorkFrameEditorSetting.WorkFollow.AssetBundleSVNUrl + "/APK";
+            var  url           = BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.AssetBundleSVNUrl + "/APK";
             var  protocol      = $"{url}/{nameof(Protocol.UploadAPK)}";
             var  webclient     = new WebClient();
             int  maxErrorCount = 10;

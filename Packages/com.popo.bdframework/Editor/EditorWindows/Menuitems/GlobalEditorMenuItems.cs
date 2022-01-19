@@ -33,6 +33,8 @@ namespace BDFramework.Editor
         //**********************TestPipeline**************************
         TestPepeline = 201,
         TestPepelineEditor = TestPepeline + 1,
+        /**************************/
+        DevOps = 251,
     }
 
     /// <summary>

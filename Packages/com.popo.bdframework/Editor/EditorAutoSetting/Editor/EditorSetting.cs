@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// 框架导入的自动设置
+/// 框架导入的编辑器自动设置
 /// </summary>
 [InitializeOnLoad]
 static public class EditorSetting
@@ -22,8 +22,14 @@ static public class EditorSetting
 
             Debug.Log("【AutoSetting】assemblyVersionValidation = false.");
         }
-        
+
         //设置生成所有的csproj
-        EditorPrefs.SetBool("unity_generate_all_csproj",true);
+        var settingName = "unity_generate_all_csproj";
+        var value = EditorPrefs.GetBool(settingName);
+        if (!value)
+        {
+            EditorPrefs.SetBool(settingName, true);
+            Debug.Log($"【AutoSetting】{settingName}= true.");
+        }
     }
 }

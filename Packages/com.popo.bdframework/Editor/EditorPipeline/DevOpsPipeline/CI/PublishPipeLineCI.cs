@@ -1,24 +1,18 @@
 ﻿using System.IO;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
+using BDFramework.Editor.PublishPipeline;
+using Editor.EditorPipeline.DevOps;
 using UnityEditor;
 using UnityEngine;
 
-namespace BDFramework.Editor.PublishPipeline
+namespace BDFramework.Editor.DevOps
 {
     /// <summary>
     /// 构建相关的CI接口
     /// </summary>
     static public class PublishPipeLineCI
     {
-        //CI相关接口
-        // BDFramework.Editor.PublishPipeline.PublishPipeLineCI.BuildAssetBundle_iOS                   //打包iOS AssetBundle
-        // BDFramework.Editor.PublishPipeline.PublishPipeLineCI.BuildAssetBundle_Android               //打包Android AssetBundle
-        // BDFramework.Editor.PublishPipeline.PublishPipeLineCI.PublishPackage_AndroidDebug            //发布Android包体
-        // BDFramework.Editor.PublishPipeline.PublishPipeLineCI.PublishPackage_AndroidRelease
-        // BDFramework.Editor.PublishPipeline.PublishPipeLineCI.PublishPackage_iOSDebug                //发布iOS包体
-        // BDFramework.Editor.PublishPipeline.PublishPipeLineCI.PublishPackage_iOSRelease
-        
         static public string CI_ROOT_PATH    = "";
         static public string CI_PACKAGE_PATH = "";
 
@@ -40,6 +34,7 @@ namespace BDFramework.Editor.PublishPipeline
         /// <summary>
         /// 构建iOS
         /// </summary>
+        [CI(Des = "构建资源iOS")]
         public static void BuildAssetBundle_iOS()
         {
             var localPath = string.Format("{0}/{1}/Art", CI_ROOT_PATH, BDApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer));
@@ -61,6 +56,7 @@ namespace BDFramework.Editor.PublishPipeline
         /// <summary>
         /// 构建Android
         /// </summary>
+        [CI(Des = "构建资源Android")]
         public static void BuildAssetBundle_Android()
         {
             var localPath = string.Format("{0}/{1}/Art", CI_ROOT_PATH, BDApplication.GetPlatformPath(RuntimePlatform.Android));
@@ -93,26 +89,11 @@ namespace BDFramework.Editor.PublishPipeline
 
         #endregion
         
-        #region 构建增量资源
 
-        /// <summary>
-        /// 构建增量iOS AssetBundle
-        /// </summary>
-        static public void BuildAdditionAssetBundle_iOS()
-        {
-        }
-
-        /// <summary>
-        /// 构建增量Android AssetBundle
-        /// </summary>
-        static public void BuildAdditionAssetBundle_Android()
-        {
-        }
-
-        #endregion
 
         #region 代码打包检查
 
+        [CI(Des = "代码检查")]
         public static void CheckEditorCode()
         {
             //检查下打包前的代码错
@@ -136,6 +117,7 @@ namespace BDFramework.Editor.PublishPipeline
         /// <summary>
         /// 发布包体 AndroidDebug
         /// </summary>
+        [CI(Des = "发布母包Android-Debug")]
         static public void PublishPackage_AndroidDebug()
         {
             CI_ROOT_PATH = Application.streamingAssetsPath;
@@ -145,6 +127,7 @@ namespace BDFramework.Editor.PublishPipeline
         /// <summary>
         /// 发布包体 AndroidRelease
         /// </summary>
+        [CI(Des = "发布母包Android-Release")]
         static public void PublishPackage_AndroidRelease()
         {
             CI_ROOT_PATH = Application.streamingAssetsPath;
@@ -154,6 +137,7 @@ namespace BDFramework.Editor.PublishPipeline
         /// <summary>
         /// 发布包体 iOSDebug
         /// </summary>
+        [CI(Des = "发布母包iOS-Debug")]
         static public void PublishPackage_iOSDebug()
         {
             CI_ROOT_PATH = Application.streamingAssetsPath;
@@ -163,6 +147,7 @@ namespace BDFramework.Editor.PublishPipeline
         /// <summary>
         /// 发布包体 iOSRelease
         /// </summary>
+        [CI(Des = "发布母包iOS-Release")]
         static public void PublishPackage_iOSRelease()
         {
             CI_ROOT_PATH = Application.streamingAssetsPath;
