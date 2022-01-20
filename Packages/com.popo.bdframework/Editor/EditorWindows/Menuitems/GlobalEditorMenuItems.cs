@@ -20,21 +20,19 @@ namespace BDFramework.Editor
         BuildPackage_Table_GenSqlite = 55,
         BuildPackage_Table_Json2Sqlite = 56,
         BuildPackage_NetProtocol_Proto2Class = 57,
-
         //**********************PublishPipeline**************************
         PublishPipeline = 100,
         PublishPipeline_BuildAsset = PublishPipeline + 1,
         PublishPipeline_PublishPackage = PublishPipeline + 2,
-        PublishPipeline_CICD = PublishPipeline + 3,
 
         //**********************HotfixPipeline**************************
-        HotfixPipeline = 151,
-
+        HotfixPipeline = 111,
+        /****************DevOps***************************/
+        DevOps = 121,
         //**********************TestPipeline**************************
         TestPepeline = 201,
         TestPepelineEditor = TestPepeline + 1,
-        /**************************/
-        DevOps = 251,
+
     }
 
     /// <summary>
