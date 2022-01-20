@@ -47,7 +47,7 @@ You can see the BDFramework ,you can select the new version.
 手动将框架放置在Package目录下
 ps:只移动**com.popo.bdframework文件夹**到项目即可
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/338267/1632731115669-05c15202-b644-4605-be01-0c779d3ff9ea.png#clientId=u9755688d-e120-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=234&id=u9349f951&margin=%5Bobject%20Object%5D&name=image.png&originHeight=234&originWidth=648&originalType=binary&ratio=1&rotation=0&showTitle=false&size=14315&status=done&style=none&taskId=u0bf01b11-5384-41ff-a1fd-0fcfbc63622&title=&width=648)
-#### PS：因为项目引入了Nuget管理，所以需要关闭Assembly Version validation！！！  
+
 ## 贡献者名单
 [@gaojiexx](https://github.com/gaojiexx)  
 [@ricashao](https://github.com/ricashao)  
