@@ -56,6 +56,9 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_Button_Binding.Register(app);
             UnityEngine_Events_UnityEvent_Binding.Register(app);
             UnityEngine_UI_Text_Binding.Register(app);
+            Game_Demo_M_StatusListenerTest_Binding.Register(app);
+            DotNetExtension_DateTimeEx_Binding.Register(app);
+            System_Int64_Binding.Register(app);
             System_Int32_Binding.Register(app);
             System_DateTime_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding.Register(app);
@@ -94,6 +97,7 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_Adaptor_AActionAdaptor_Binding.Register(app);
             BDFramework_Adaptor_ActionAdaptor_1_ILTypeInstance_Binding.Register(app);
             BDFramework_Adaptor_ActionAdaptor_1_String_Binding.Register(app);
+            BDFramework_Adaptor_ActionAdaptor_1_M_StatusListenerTest_Binding.Register(app);
             System_Reflection_FieldInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             BDFramework_Core_Debugger_Debugger_NetworkServer_Binding.Register(app);

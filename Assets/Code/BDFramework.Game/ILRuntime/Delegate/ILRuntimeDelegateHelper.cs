@@ -67,6 +67,7 @@ public class ILRuntimeDelegateHelper
             });
         });
 
+        appdomain.DelegateManager.RegisterMethodDelegate<Game.Demo.M_StatusListenerTest>();
 
 //[insert]
     }

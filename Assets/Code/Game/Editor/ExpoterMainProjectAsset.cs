@@ -45,6 +45,7 @@ public class ExpoterMainProjectAsset
         {
             "Assets/3rdPlugins/Dotween", // 第三方插件
             "Assets/Code/BDFramework.Game", //Game
+            "Assets/Code/Game/Demo", //Game demo
             "Assets/Scenes", //Scene
             "Assets/AssetGraph/BResourceAssetBundleConfig.asset", //SG
             "Assets/link.xml",
