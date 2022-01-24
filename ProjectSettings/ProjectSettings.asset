@@ -729,7 +729,7 @@ PlayerSettings:
     1: 
     4: 
     7: 
-    33: ODIN_INSPECTOR;ODIN_INSPECTOR_3
+    33:
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
