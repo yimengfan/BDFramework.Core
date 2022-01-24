@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.HotfixPipeline;
 using UnityEditor;
 
 namespace BDFramework.Editor.Protocol
@@ -12,7 +13,7 @@ namespace BDFramework.Editor.Protocol
     public static class Protobuf2ClassTools
     {
         private static readonly string protoPath = BDApplication.ProjectRoot + "/Assets/Resource/NetProtocol/Protobuf/";
-        private static readonly string classPath = BDApplication.ProjectRoot + "/Assets/Code/Game@hotfix/NetProtocol/Protobuf/";
+        private static readonly string classPath = BDApplication.ProjectRoot + "/Assets/Code/Game/NetProtocol/Protobuf/";
         private static readonly string cachePath = BDApplication.BDEditorCachePath + "/ProtoCache/";
         private static readonly string execPath = BDApplication.ProjectRoot + "/Packages/com.popo.bdframework/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
         private static readonly string prefixName = "Com";
@@ -64,8 +65,6 @@ namespace BDFramework.Editor.Protocol
                 // 解决 因非url package 问题
                 _namespace = prefixName;
             }
-            
-
             
             // 替换proto包名 对应 生成的Class名
             var regex = new Regex(@"(?<=package ).*?(?=;)");
@@ -121,8 +120,18 @@ namespace BDFramework.Editor.Protocol
                 var fileInfo = fileInfos[0];
                 if (fileInfo.Exists)
                 {
+                    //获取热更config
+                    var config = HotfixPipelineTools.HotfixFileConfig.GetConfig("proto");
+                    
                     var newName = fileName.Replace(".proto", ".cs");
+                    //判断配置是否热更
+                    if (config.IsHotfixFile(fileName))
+                    {
+                        newName = fileName.Replace(".proto", "@hotfix.cs");
+                    }
+
                     var newPath = Path.Combine(outputPath, newName);
+                    
                     fileInfo.MoveTo(newPath);
                 }
             }
