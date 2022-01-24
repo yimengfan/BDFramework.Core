@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using ILRuntime.CLR.Method;
+using ILRuntime.CLR.TypeSystem;
 using ILRuntime.CLR.Utils;
 using ILRuntime.Runtime.Intepreter;
 using ILRuntime.Runtime.Stack;
@@ -87,18 +90,37 @@ namespace BDFramework.Sql
             //
             System.String selection = (System.String) typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, mStack));
             intp.Free(ptr_of_this_method);
-            var type = method.GenericArguments[0].ReflectionType;
+            var generic = method.GenericArguments[0];
             //调用
-            var result_of_this_method = DB.GetTableRuntime().FormAll(type, selection);
-            //转成ilrTypeInstance
-            var retList = new List<ILTypeInstance>(result_of_this_method.Count);
-            for (int i = 0; i < result_of_this_method.Count; i++)
+            var result_of_this_method = DB.GetTableRuntime().FormAll(generic.ReflectionType, selection);
+            
+            if (generic is CLRType)
             {
-                var hotfixObj = result_of_this_method[i] as ILTypeInstance;
-                retList.Add(hotfixObj);
-            }
+                // 创建clrTypeInstance
+                var clrType = generic.TypeForCLR;
+                var genericType = typeof(List<>).MakeGenericType(clrType);
+                var retList = (IList)Activator.CreateInstance(genericType);
 
-            return ILIntepreter.PushObject(__ret, mStack, retList);
+                for (int i = 0; i < result_of_this_method.Count; i++)
+                {
+                    var obj = result_of_this_method[i];
+                    retList.Add(obj);
+                }
+                
+                return ILIntepreter.PushObject(__ret, mStack, retList);
+            }
+            else
+            {
+                // 转成ilrTypeInstance
+                var retList = new List<ILTypeInstance>(result_of_this_method.Count);
+                for (int i = 0; i < result_of_this_method.Count; i++)
+                {
+                    var hotfixObj = result_of_this_method[i] as ILTypeInstance;
+                    retList.Add(hotfixObj);
+                }
+
+                return ILIntepreter.PushObject(__ret, mStack, retList);
+            }
         }
 
         #endregion

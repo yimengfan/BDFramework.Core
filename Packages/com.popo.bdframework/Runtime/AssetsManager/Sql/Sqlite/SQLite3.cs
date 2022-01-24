@@ -2085,15 +2085,7 @@ namespace SQLite4Unity3d
 
                     while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                     {
-                        object obj = null;
-                        if (map.MappedType is ILRuntimeType ilrType)
-                        {
-                            obj = ilrType.ILType.Instantiate();
-                        }
-                        else
-                        {
-                            obj = Activator.CreateInstance(map.MappedType);
-                        }
+                        var obj = ILRuntimeHelper.CreateInstance(map.MappedType);
                         for (int i = 0; i < cols.Length; i++)
                         {
                             if (cols[i] == null)
