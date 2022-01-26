@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.ResourceMgr;
-using Editor.EditorPipeline.DevOps;
 using UnityEngine;
 
 namespace BDFramework.Editor.DevOps

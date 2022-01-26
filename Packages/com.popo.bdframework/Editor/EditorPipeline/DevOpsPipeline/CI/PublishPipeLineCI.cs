@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
+using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.Editor.PublishPipeline;
-using Editor.EditorPipeline.DevOps;
 using UnityEditor;
 using UnityEngine;
 

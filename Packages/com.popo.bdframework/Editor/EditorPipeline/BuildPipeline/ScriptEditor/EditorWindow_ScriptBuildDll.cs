@@ -21,8 +21,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     [MenuItem("BDFrameWork工具箱/1.DLL打包", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_DLL)]
     public static void Open()
     {
-        var window =
-            (EditorWindow_ScriptBuildDll) EditorWindow.GetWindow(typeof(EditorWindow_ScriptBuildDll), false, "DLL打包工具");
+        var window = (EditorWindow_ScriptBuildDll) EditorWindow.GetWindow(typeof(EditorWindow_ScriptBuildDll), false, "DLL打包工具");
         window.Show();
     }
 
@@ -40,14 +39,12 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 //
                 if (GUILayout.Button("1.编译dll(Roslyn-Release)", GUILayout.Width(155), GUILayout.Height(30)))
                 {
-                    RoslynBuild(Application.streamingAssetsPath, Application.platform,
-                        ScriptBuildTools.BuildMode.Release);
+                    RoslynBuild(Application.streamingAssetsPath, Application.platform, ScriptBuildTools.BuildMode.Release);
                 }
 
                 if (GUILayout.Button("编译dll(Roslyn-Debug)", GUILayout.Width(150), GUILayout.Height(30)))
                 {
-                    RoslynBuild(Application.streamingAssetsPath, Application.platform,
-                        ScriptBuildTools.BuildMode.Debug);
+                    RoslynBuild(Application.streamingAssetsPath, Application.platform, ScriptBuildTools.BuildMode.Debug);
                 }
             }
             GUILayout.EndHorizontal();
@@ -62,8 +59,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 StripCode.GenLinkXml();
             }
 
-            BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll =
-                EditorGUILayout.Toggle("是否自动编译热更DLL",BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll );
+            BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll = EditorGUILayout.Toggle("是否自动编译热更DLL", BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll);
 
             GUI.color = Color.green;
             GUILayout.Label(@"
@@ -82,13 +78,19 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     }
 
 
+    private void OnDisable()
+    {
+        //保存
+        BDEditorApplication.BDFrameWorkFrameEditorSetting.Save();
+    }
+
     /// <summary>
     /// 编译模式
     /// </summary>
     /// <param name="outpath"></param>
     /// <param name="platform"></param>
     /// <param name="mode"></param>
-    static public void RoslynBuild(string outpath, RuntimePlatform platform, ScriptBuildTools.BuildMode mode,bool isShowTips =true)
+    static public void RoslynBuild(string outpath, RuntimePlatform platform, ScriptBuildTools.BuildMode mode, bool isShowTips = true)
     {
         //触发bd环境周期
         BDFrameworkPublishPipelineHelper.OnBeginBuildHotfixDLL();
@@ -99,7 +101,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         // {
         //     Directory.Delete(targetPath, true);
         // }
-        
+
         var fileContent = @"
         namespace ILRuntime.Runtime.Generated
         {
@@ -118,7 +120,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         AssetDatabase.Refresh(); //这里必须要刷新
 
         //2.生成DLL
-        ScriptBuildTools.BuildDll(outpath, platform, mode,isShowTips);
+        ScriptBuildTools.BuildDll(outpath, platform, mode, isShowTips);
 
         //3.预绑定
         //GenPreCLRBinding();
@@ -191,6 +193,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         {
             Debug.LogError("Not find CLRBinding logic!!!");
         }
+
         //注册
         ILRuntimeHelper.LoadHotfix(dllpath, mainProjectIlrBindAction, false);
         BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain, outputPath);

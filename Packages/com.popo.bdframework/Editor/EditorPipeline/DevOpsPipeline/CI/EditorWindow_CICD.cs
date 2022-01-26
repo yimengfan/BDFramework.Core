@@ -1,6 +1,6 @@
 ﻿using System;
 using BDFramework.Editor.DevOps;
-using Editor.EditorPipeline.DevOps;
+using BDFramework.Editor.EditorPipeline.DevOps;
 using UnityEditor;
 using UnityEngine;
 
