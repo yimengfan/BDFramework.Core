@@ -218,6 +218,16 @@ namespace SQLite4Unity3d
         }
 
         /// <summary>
+        /// 仿MyBatis CRUD 更符合nameof规范
+        /// </summary>
+        public TableQueryCustom WhereEqual(string where, object value)
+        {
+            var query = ZString.Format("{0} = {1}", where, value);
+            this.@where = ZString.Concat(this.@where, " ", query);
+            return this;
+        }
+        
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="where"></param>
