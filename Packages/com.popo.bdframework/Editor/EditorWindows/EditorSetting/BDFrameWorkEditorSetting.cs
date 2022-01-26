@@ -79,7 +79,7 @@ namespace BDFramework.Editor
         {
             return File.Exists(SETTING_PATH);
         }
-
+        
         /// <summary>
         /// 加载
         /// </summary>
@@ -89,7 +89,7 @@ namespace BDFramework.Editor
         {
             if (string.IsNullOrEmpty(SETTING_PATH))
             {
-                SETTING_PATH = IPath.Combine(BDApplication.BDWorkSpace, "config.json");
+                SETTING_PATH = IPath.Combine(BDApplication.DevOpsConfigPath, "BDFrameworkSetting.conf");
             }
 
             var setting = new BDFrameWorkEditorSetting();
