@@ -13,6 +13,7 @@ namespace Game
             // Application.targetFrameRate = 24;
             BDebug.Log("热更启动成功!", "red");
             IsAwake = true;
+            Client.Init();
         }
 
         public void Update()

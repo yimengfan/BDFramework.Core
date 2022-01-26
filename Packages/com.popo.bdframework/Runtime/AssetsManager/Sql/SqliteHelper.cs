@@ -54,7 +54,7 @@ namespace BDFramework.Sql
         /// 注册SqliteHelper的ILR重定向
         /// </summary>
         /// <param name="appdomain"></param>
-        public unsafe static void RegisterILRuntimeCLRRedirection(ILRuntime.Runtime.Enviorment.AppDomain appdomain)
+        public unsafe static void RegisterCLRRedirection(ILRuntime.Runtime.Enviorment.AppDomain appdomain)
         {
             foreach (var mi in typeof(TableQueryCustom).GetMethods())
             {

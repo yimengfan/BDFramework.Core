@@ -1,5 +1,5 @@
-﻿using BDFramework.DataListener;
-using BDFramework.UFlux.View.Props;
+﻿
+using BDFramework.DataListener;
 
 namespace BDFramework.UFlux
 {

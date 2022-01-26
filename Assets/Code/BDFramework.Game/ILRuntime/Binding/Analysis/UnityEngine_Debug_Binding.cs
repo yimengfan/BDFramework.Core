@@ -31,12 +31,12 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Object)};
             method = type.GetMethod("LogError", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, LogError_2);
-            args = new Type[]{typeof(System.String), typeof(System.Object[])};
-            method = type.GetMethod("LogErrorFormat", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, LogErrorFormat_3);
             args = new Type[]{};
             method = type.GetMethod("ClearDeveloperConsole", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, ClearDeveloperConsole_4);
+            app.RegisterCLRMethodRedirection(method, ClearDeveloperConsole_3);
+            args = new Type[]{typeof(System.String), typeof(System.Object[])};
+            method = type.GetMethod("LogErrorFormat", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, LogErrorFormat_4);
 
 
         }
@@ -94,7 +94,18 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* LogErrorFormat_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* ClearDeveloperConsole_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
+
+
+            UnityEngine.Debug.ClearDeveloperConsole();
+
+            return __ret;
+        }
+
+        static StackObject* LogErrorFormat_4(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -110,17 +121,6 @@ namespace ILRuntime.Runtime.Generated
 
 
             UnityEngine.Debug.LogErrorFormat(@format, @args);
-
-            return __ret;
-        }
-
-        static StackObject* ClearDeveloperConsole_4(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
-
-
-            UnityEngine.Debug.ClearDeveloperConsole();
 
             return __ret;
         }

@@ -5,6 +5,7 @@ using System.Linq;
 using BDFramework.Sql;
 using ILRuntime.Mono.Cecil.Pdb;
 using ILRuntime.Runtime;
+using ILRuntime.Runtime.Generated;
 using LitJson;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -56,15 +57,19 @@ namespace BDFramework
 #if UNITY_EDITOR
             AppDomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
 #endif
+
+            //其他模块的binding，后注册的相同函数签名 会被跳过
+            JsonMapper.RegisterCLRRedirection(AppDomain);
+            SqliteHelper.RegisterCLRRedirection(AppDomain);
+            StatusListenerEnumHelper.RegisterCLRRedirection(AppDomain);
+            StatusListenerTHelper.RegisterCLRRedirection(AppDomain);
             //clrbinding
             gamelogicBindAction?.Invoke(isDoCLRBinding);
-            //jsonmapperbinding
-            JsonMapper.RegisterILRuntimeCLRRedirection(AppDomain);
-            SqliteHelper.RegisterILRuntimeCLRRedirection(AppDomain);
+            //开启debuger
             if (BDLauncher.Inst != null && BDLauncher.Inst.GameConfig.IsDebuggerILRuntime)
             {
                 AppDomain.DebugService.StartDebugService(56000);
-                Debug.Log("热更调试器 准备待命~");
+                Debug.Log("[ILRuntime]调试端口:56000");
             }
         }
 

@@ -1,7 +1,7 @@
 {
   "name": "com.popo.bdframework",
   "displayName": "BDFramework",
-  "version": "2.0.9",
+  "version": "2.1.0-preview.1",
   "unity": "2019.4",
   "description": "A Simple\u3001Eesy\u3001Profassional Game workflow!   - BDFramework.\r\n\n##V2.0.9-preview.6\r\n\u3010Editor\u3011\r\n - Editor: Change framework version function.\r\n - BuildDLL \uff1aAdd csproj file check.\r\n##V2.0.9-preview.5\r\n\u3010Editor\u3011\r\n - HotfixPipeline: Add hotifoxfileconfig.\r\n - Sqlite \uff1aAdd hotfix file check for excel gen class.\r\n##V2.0.9-preview.4\r\n\u3010Editor\u3011\r\n-\r\n\u3010Runtime\u3011\r\n- BResource  : Add Load(Type t) for Load<T>\r\n- Screenview : Add set func for IScreenview.Name\r\n##V2.0.9-preview.3\r\n\u3010Editor\u3011\r\n-Change Framework Packge publish workflow.\r\n##V2.0.9-preview.2\r\n\u3010Editor\u3011\r\n-Fixed some Editor Bug.\r\n##V2.0.9-preview.1\r\n CN:\r\n \u3010Runtime\u3011\r\n -Sqlite: \u4fee\u6539\u70ed\u66f4\u4ee3\u7801\u5230\u4e3b\u5de5\u7a0b\r\n -Sqlite: \u589e\u52a0sqlite\u7f13\u5b58\u529f\u80fd.\r\n \r\n EN:\r\n \u3010Runtime\u3011\r\n -Sqlite: Change hotfixcode to main project.\r\n -Sqlite: Add Sqlite cache func.",
   "dependencies": {

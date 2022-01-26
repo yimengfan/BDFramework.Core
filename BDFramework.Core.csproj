@@ -126,14 +126,15 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\HashHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\Path.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\String.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@half_hotfix\ADataListenerT.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@half_hotfix\ADataListenerTBase.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@half_hotfix\AStatusListener.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@half_hotfix\StatusListenerExtensionEnum.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@half_hotfix\StatusListenerExtensionT.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@half_hotfix\StatusListenerJson.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@half_hotfix\StatusListenerServer.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@half_hotfix\StatusListenerService.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@main\ADataListenerT.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@main\ADataListenerTBase.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@main\AStatusListener.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@main\StatusListenerEnumHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@main\StatusListenerExtensionEnum.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@main\StatusListenerExtensionT.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@main\StatusListenerServer.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@main\StatusListenerService.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\@main\StatusListenerTHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\GameStart\IGameStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\GameStart\IHotfixGameStart@hotfix.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\ManagerBase\@half_hotfix\IMgr.cs" />
@@ -196,7 +197,6 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\PageList\PageListDemo.cs" />
      <None Include="Packages\com.popo.bdframework\Runtime\BDFramework.Core.asmdef" />
      <None Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\README.txt" />
-     <None Include="Packages\com.popo.bdframework\Runtime\Event\@half_hotfix\readme.txt" />
  <Reference Include="ILRuntime">
  <HintPath>E:/BDFrameworkMaster/Library/ScriptAssemblies/ILRuntime.dll</HintPath>
  </Reference>

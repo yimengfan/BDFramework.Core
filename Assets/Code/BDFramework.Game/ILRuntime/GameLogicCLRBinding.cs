@@ -26,8 +26,10 @@ namespace Game.ILRuntime
             //是否注册各种binding
             if (isRegisterBindings)
             {
-                CLRBindings.Initialize(AppDomain);
+                //手动绑定放前
                 ManualCLRBindings.Initialize(AppDomain);
+                //自动绑定最后
+                CLRBindings.Initialize(AppDomain);
                 //PreCLRBinding.Initialize(AppDomain);
                 BDebug.Log("[ILRuntime] CLR Binding Success!!!");
             }

@@ -4,8 +4,6 @@ using UnityEngine;
 using BDFramework.UI;
 using LitJson;
 using UnityEngine.UI;
-using BDFramework;
-using BDFramework.DataListener;
 using BDFramework.Hotfix.ScreenView;
 using BDFramework.ResourceMgr;
 using BDFramework.UFlux;
@@ -13,7 +11,7 @@ using BDFramework.VersionContrller;
 using Game;
 using Game.Data.Local;
 using Game.demo_EventManager;
-using Game.demo6_UFlux;
+
 
 /// <summary>
 /// 这个是ui的标签，
@@ -32,18 +30,12 @@ public class Window_DemoMain : AWindow
     {
     }
 
-    public enum DataListenerEnum
-    {
-        test,
-    }
+
 
     public override void Init()
     {
         base.Init();
-
-        //增加覆盖测试
-        var service = StatusListenerServer.Create(nameof(DataListenerEnum));
-        service.AddListener(DataListenerEnum.test, (o) => { Debug.Log(o.ToString()); });
+        
     }
 
 
@@ -184,8 +176,11 @@ public class Window_DemoMain : AWindow
     {
         var path = Application.persistentDataPath;
         //开始下载
-        AssetsVersionContrller.Start(UpdateMode.Repair, "http://127.0.0.1", null,
-            (idx, totalNum) => { Debug.LogFormat("资源更新进度：{0}/{1}", idx, totalNum); }, //进度通知
+        AssetsVersionContrller.Start(UpdateMode.Repair, "http://127.0.0.1", null, (idx, totalNum) =>
+            {
+                //进度通知
+                Debug.LogFormat("资源更新进度：{0}/{1}", idx, totalNum);
+            }, 
             (status, msg) =>
             {
                 //错误通知

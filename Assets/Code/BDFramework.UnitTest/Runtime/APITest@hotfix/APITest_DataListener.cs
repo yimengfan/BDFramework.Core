@@ -1,6 +1,5 @@
 ﻿using System;
 using BDFramework.DataListener;
-using BDFramework.UnitTest;
 using UnityEngine;
 
 namespace BDFramework.UnitTest
