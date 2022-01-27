@@ -7,6 +7,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 #if UNITY_EDITOR
+using DotNetExtension;
 using UnityEditor;
 #endif
 
@@ -132,6 +133,9 @@ namespace BDFramework
     {
         [HideLabel]
         [InlinePropertyAttribute]
+#if UNITY_EDITOR
+        [OnInspectorGUI("_ONGUI")]
+#endif
         public GameConfig Data;
 
         /// <summary>
@@ -146,25 +150,23 @@ namespace BDFramework
         #region 编辑器
 
 #if UNITY_EDITOR
-        [HideInInspector]
-        [OnInspectorGUI("_ONGUI")]
-        private bool isChangedData = false;
+        static bool isChangedData = false;
 
         private void OnValidate()
         {
             isChangedData = true;
         }
 
-        //触发这个函数的时候，有些值没被修改，暂时这样让他刷新
+        //TODO 触发这个函数的时候，有些值没被修改，暂时这样让他刷新
         public void _ONGUI()
         {
             if (isChangedData)
             {
+                isChangedData = false;
                 //
                 var asset = this.gameObject.GetComponent<BDLauncher>().ConfigText;
                 var path = AssetDatabase.GetAssetPath(asset.GetInstanceID());
                 GenGameConfig(Path.GetDirectoryName(path), asset.name);
-                isChangedData = false;
             }
         }
 
@@ -179,7 +181,10 @@ namespace BDFramework
         //选择配置
         static public void ONGUI_SelcectConfig()
         {
-            if (Application.isPlaying) return;
+            if (Application.isPlaying)
+            {
+                return;
+            }
 
             GUI.color = Color.green;
             var launcher = GameObject.FindObjectOfType<BDLauncher>();
@@ -201,7 +206,6 @@ namespace BDFramework
             curSlectConfigIdx = EditorGUILayout.Popup("选择配置:", curSlectConfigIdx, configNames);
             if (fs[curSlectConfigIdx] != curFilePath)
             {
-                Debug.Log("选择配置:" + fs[curSlectConfigIdx]);
                 var assetText = AssetDatabase.LoadAssetAtPath<TextAsset>(fs[curSlectConfigIdx]);
                 launcher.ConfigText = assetText;
                 //设置新的配置内容
@@ -264,7 +268,7 @@ namespace BDFramework
                 bdconfig.ConfigText = content;
             }
 
-            Debug.Log("修改配置保存成功:" + filename);
+            Debug.Log("修改配置保存成功:" + filename + " -" + DateTimeEx.GetTotalSeconds());
         }
 
         /// <summary>
