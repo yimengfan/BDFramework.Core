@@ -1,6 +1,6 @@
 
 {
-  "Time" : "2022/1/17",
+  "Time" : "2022/1/28",
   "AssetDataMaps" : {
     "assets/resource/runtime/allassettype/archive.jpg" : {
       "Id" : 0,
@@ -60,7 +60,7 @@
       "Type"         : 4,
       "ABName"       : "570885a00974e1d41b1f5d5b4dac96d6",
       "ReferenceCount" : 0,
-      "Hash"           : "6c68ed2fffa0d2bc051164151eb2b351276bc409846ce339bca968125c1f6a63",
+      "Hash"           : "87b90e5acf9e5a4c58264c069d29632f48c78098a513737a6a2fec1cb7cac0eb",
       "DependAssetList" : [
       ]
     },
@@ -382,7 +382,7 @@
       "Type"         : 4,
       "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
       "ReferenceCount" : 0,
-      "Hash"           : "f31ebd4cfe063310112ee8cec430b7af26a5068d26039fea9e9dcebac85088eb",
+      "Hash"           : "8645587d49478b95a574902d3da1a67c1b0dd2c77adb8d63036a88beb779e7d6",
       "DependAssetList" : [
         "76c21518bd7f0e64ca49af74a4987cd9"
       ]
@@ -443,7 +443,7 @@
       "Type"         : 4,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
       "ReferenceCount" : 0,
-      "Hash"           : "99f5c9b134841169be7a8c130d6897e0f5607867928178a3aa67f0c2128b3961",
+      "Hash"           : "d77c8a123e6eadf2aabded2199552fae37369ae575bccb3d5688394d4333c7e6",
       "DependAssetList" : [
         "ec429a586bfac5f4284f3a31749303e7"
       ]
@@ -628,7 +628,7 @@
       "Type"         : 6,
       "ABName"       : "890171c9213476c4487fdfe8320fed47",
       "ReferenceCount" : 0,
-      "Hash"           : "505f8ba8bceaec1de91ac2e053b224309a9c40fd4fcdb39bc960d859ff18c8cc",
+      "Hash"           : "d7f4a40956e5986fcfb6deece298c32bb6fb18e8fed1f86495a7c7b6a7b74bfe",
       "DependAssetList" : [
       ]
     },
@@ -672,7 +672,7 @@
       "Type"         : 6,
       "ABName"       : "3d1d74f67a3b7b54ba46fec8ab67f807",
       "ReferenceCount" : 0,
-      "Hash"           : "fd884a99687ed567620cb04cb878e07799b210648c9b6946b87228ec23966431",
+      "Hash"           : "ab7062aca805c9a7f958ee6ade766181393c65f46f860fe81f260c19b4036788",
       "DependAssetList" : [
       ]
     },

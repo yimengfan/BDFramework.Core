@@ -176,6 +176,16 @@ namespace BDFramework.Core.Tools
             return "";
         }
 
+        /// <summary>
+        /// 获取支持的平台
+        /// </summary>
+        /// <returns></returns>
+        public static RuntimePlatform[] GetSupportPlatform()
+        {
+
+            return new RuntimePlatform[] {RuntimePlatform.Android, RuntimePlatform.IPhonePlayer};
+        }
+
 
 #if  UNITY_EDITOR
 

@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Web;
+using BDFramework.Core.Tools;
 using UnityEngine;
 
 namespace BDFramework.Editor.EditorPipeline.PublishPipeline
@@ -128,7 +129,15 @@ namespace BDFramework.Editor.EditorPipeline.PublishPipeline
                 #region 文件请求
 
                 {
-                    string filePath = WebHomeDir + rawUrl.Replace("/", directorySeparatorChar);
+                    string filePath = WebHomeDir + rawUrl;
+                    //替换
+                    var platforms = BDApplication.GetSupportPlatform();
+                    foreach (var platform in platforms)
+                    {
+                        var platformStr = BDApplication.GetPlatformPath(platform);
+                        filePath = filePath.Replace(platformStr, platformStr + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
+                    }
+
                     if (!File.Exists(filePath))
                     {
                         response.ContentLength64 = 0;

@@ -18,7 +18,7 @@ namespace BDFramework.Editor
 {
     static public class PublishPipelineTools
     {
-        static public string FOLDER_SUFFIX = "_ReadyToUpload";
+        static public string UPLOAD_FOLDER_SUFFIX = "_ReadyToUpload";
         /// <summary>
         /// 资源转hash
         /// </summary>
@@ -148,7 +148,7 @@ namespace BDFramework.Editor
         static public string GenServerHashAssets(string assetsRootPath, RuntimePlatform platform, string version)
         {
             //文件夹准备
-            var outputDir = string.Format("{0}/{1}", assetsRootPath.Replace("\\", "/"), BDApplication.GetPlatformPath(platform)) + FOLDER_SUFFIX;
+            var outputDir = string.Format("{0}/{1}", assetsRootPath.Replace("\\", "/"), BDApplication.GetPlatformPath(platform)) + UPLOAD_FOLDER_SUFFIX;
             if (Directory.Exists(outputDir))
             {
                 Directory.Delete(outputDir, true);
@@ -162,7 +162,8 @@ namespace BDFramework.Editor
             {
                 var localpath = string.Format("{0}/{1}/{2}", assetsRootPath, BDApplication.GetPlatformPath(platform), assetItem.LocalPath);
                 var copytoPath = string.Format("{0}/{1}", outputDir, assetItem.HashName);
-                File.Copy(localpath, copytoPath, true);
+                File.Copy(localpath, copytoPath);
+                
             }
 
             //生成分包信息

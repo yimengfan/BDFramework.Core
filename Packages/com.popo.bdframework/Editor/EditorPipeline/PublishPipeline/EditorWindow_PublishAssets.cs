@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using BDFramework.Editor.TableData;
@@ -121,7 +122,7 @@ namespace BDFramework.Editor.PublishPipeline
                 //
                 GUILayout.Label("导出地址:" + exportPath);
                 //
-                if (GUILayout.Button("一键导出", GUILayout.Width(350), GUILayout.Height(30)))
+                if (GUILayout.Button("一键导出所有资源", GUILayout.Width(350), GUILayout.Height(30)))
                 {
                     if (isBuilding)
                     {
@@ -170,22 +171,34 @@ namespace BDFramework.Editor.PublishPipeline
         {
             GUILayout.BeginVertical();
             {
+                GUILayout.Label("文件服务器:", GUILayout.Height(30));
                 GUILayout.Box("在本机Devops搭建文件服务器，提供测试下载功能");
-
-              
-                if (EditorHttpListener == null && GUILayout.Button("启动本机文件服务器"))
+                if (EditorHttpListener == null)
                 {
-                    EditorHttpListener = new EditorHttpListener();
-                    EditorHttpListener.Start("127.0.0.1", "8081", BDApplication.DevOpsPublishPackagePath);
+                    GUI.color = Color.green;
+                    if (GUILayout.Button("启动本机文件服务器"))
+                    {
+                        if (EditorUtility.DisplayDialog("提示", "请保证已经一键导出所有资源,并生成SeverHash文件!", "OK"))
+                        {
+                            //自动转hash
+                            EditorHttpListener = new EditorHttpListener();
+                            EditorHttpListener.Start("*", "8081", BDApplication.DevOpsPublishAssetsPath);
+                        }
+                    }
+
+                    GUI.color = GUI.backgroundColor;
                 }
-
-                if (EditorHttpListener != null)
+                else
                 {
+                    GUI.color = Color.red;
+
                     if (GUILayout.Button("关闭本机文件服务器"))
                     {
                         EditorHttpListener.Stop();
                         EditorHttpListener = null;
                     }
+
+                    GUI.color = GUI.backgroundColor;
                 }
 
                 GUILayout.Space(10);
@@ -207,7 +220,7 @@ namespace BDFramework.Editor.PublishPipeline
                 }
                 GUILayout.EndHorizontal();
                 //
-                GUILayout.Label("资源地址: " + BDApplication.DevOpsPublishPackagePath + "/*" + PublishPipelineTools.FOLDER_SUFFIX);
+                GUILayout.Label("资源地址: " + BDApplication.DevOpsPublishPackagePath + "/*" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
             }
             GUILayout.EndVertical();
         }

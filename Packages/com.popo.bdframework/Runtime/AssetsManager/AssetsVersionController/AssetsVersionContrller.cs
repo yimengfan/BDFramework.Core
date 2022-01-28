@@ -31,7 +31,7 @@ namespace BDFramework.VersionContrller
         /// 资源子包的版本
         /// 暂未启用,后续考虑子包的自动版本更新
         /// </summary>
-        public Dictionary<string, string> AssetsSubPackageVersionMap = new Dictionary<string, string>();
+        public Dictionary<string, string> SubPckMap = new Dictionary<string, string>();
     }
 
     /// <summary>
