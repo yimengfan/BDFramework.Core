@@ -18,6 +18,7 @@ namespace BDFramework.Editor
 {
     static public class PublishPipelineTools
     {
+        static public string FOLDER_SUFFIX = "_ReadyToUpload";
         /// <summary>
         /// 资源转hash
         /// </summary>
@@ -37,14 +38,14 @@ namespace BDFramework.Editor
                     //发布资源处理前,处理前回调
                     BDFrameworkPublishPipelineHelper.OnBeginPublishAssets(platform, platformPath, out versionNum);
                     //处理资源
-                    var outdir = AssetsToHash(path, platform, versionNum);
+                    var outdir = GenServerHashAssets(path, platform, versionNum);
                     //发布资源处理后,通知回调
                     BDFrameworkPublishPipelineHelper.OnEndPublishAssets(platform, outdir);
                     
                 }
             }
 
-            Debug.Log("发布资源处理完成,请继承PublishPipeline生命周期,完成后续自动化处理!");
+            Debug.Log("发布资源处理完成,请继承PublishPipeline生命周期,完成后续自动化部署到自己的文件服务器!");
         }
 
 
@@ -144,10 +145,10 @@ namespace BDFramework.Editor
         /// <param name="platform"></param>
         /// <param name="version"></param>
         /// <returns></returns>
-        static public string AssetsToHash(string assetsRootPath, RuntimePlatform platform, string version)
+        static public string GenServerHashAssets(string assetsRootPath, RuntimePlatform platform, string version)
         {
             //文件夹准备
-            var outputDir = string.Format("{0}/{1}", assetsRootPath.Replace("\\", "/"), BDApplication.GetPlatformPath(platform)) + "_ReadyToUpload";
+            var outputDir = string.Format("{0}/{1}", assetsRootPath.Replace("\\", "/"), BDApplication.GetPlatformPath(platform)) + FOLDER_SUFFIX;
             if (Directory.Exists(outputDir))
             {
                 Directory.Delete(outputDir, true);

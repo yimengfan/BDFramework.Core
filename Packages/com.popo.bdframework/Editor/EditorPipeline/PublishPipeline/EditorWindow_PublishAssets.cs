@@ -5,6 +5,7 @@ using UnityEngine;
 using BDFramework.Editor.TableData;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.EditorPipeline.PublishPipeline;
 using BDFramework.Editor.Unity3dEx;
 using BDFramework.ResourceMgr;
 using ServiceStack.Text;
@@ -21,8 +22,6 @@ namespace BDFramework.Editor.PublishPipeline
     public class EditorWindow_PublishAssets : EditorWindow
 
     {
-
-
         [MenuItem("BDFrameWork工具箱/PublishPipeline/1.发布资源", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_BuildAsset)]
         public static void Open()
         {
@@ -42,7 +41,7 @@ namespace BDFramework.Editor.PublishPipeline
             this.editorAsset = new EditorWindow_GenAssetBundle();
             this.editorScript = new EditorWindow_ScriptBuildDll();
 
-            this.minSize = this.maxSize = new Vector2(1100, 800);
+            this.minSize = this.maxSize = new Vector2(1050, 800);
             base.Show();
         }
 
@@ -87,8 +86,11 @@ namespace BDFramework.Editor.PublishPipeline
 
             EditorGUILayoutEx.Layout_DrawLineH(Color.white);
 
+            //绘制一键导出和构建Editor WebServer
             GUILayout.BeginHorizontal();
             OnGUI_OneKeyExprot();
+            EditorGUILayoutEx.Layout_DrawLineV(Color.white);
+            OnGUI_PublishEditorService();
             GUILayout.EndHorizontal();
         }
 
@@ -109,15 +111,15 @@ namespace BDFramework.Editor.PublishPipeline
         /// </summary>
         public void OnGUI_OneKeyExprot()
         {
-            GUILayout.BeginVertical();
+            GUILayout.BeginVertical(GUILayout.Width(550), GUILayout.Height(350));
             {
-                GUILayout.Label("注:上面按钮操作,会默认生成到DevOps", GUILayout.Width(500), GUILayout.Height(30));
+                GUILayout.Label("注:上面按钮操作,会默认生成到DevOps", GUILayout.Height(30));
                 //isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
                 isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源(Windows共用)");
                 isGenIOSAssets = GUILayout.Toggle(isGenIOSAssets, "生成Ios资源");
 
                 //
-                GUILayout.Label("导出地址:" + exportPath, GUILayout.Width(500));
+                GUILayout.Label("导出地址:" + exportPath);
                 //
                 if (GUILayout.Button("一键导出", GUILayout.Width(350), GUILayout.Height(30)))
                 {
@@ -130,7 +132,7 @@ namespace BDFramework.Editor.PublishPipeline
 
                     //选择目录
                     exportPath = BDApplication.DevOpsPublishAssetsPath;
-                    
+
                     //生成android资源
                     if (isGenAndroidAssets)
                     {
@@ -154,6 +156,58 @@ namespace BDFramework.Editor.PublishPipeline
                     //自动转hash
                     PublishPipelineTools.PublishAssetsToServer(BDApplication.DevOpsPublishAssetsPath);
                 }
+            }
+            GUILayout.EndVertical();
+        }
+
+
+        private EditorHttpListener EditorHttpListener;
+
+        /// <summary>
+        /// 文件服务器
+        /// </summary>
+        public void OnGUI_PublishEditorService()
+        {
+            GUILayout.BeginVertical();
+            {
+                GUILayout.Box("在本机Devops搭建文件服务器，提供测试下载功能");
+
+              
+                if (EditorHttpListener == null && GUILayout.Button("启动本机文件服务器"))
+                {
+                    EditorHttpListener = new EditorHttpListener();
+                    EditorHttpListener.Start("127.0.0.1", "8081", BDApplication.DevOpsPublishPackagePath);
+                }
+
+                if (EditorHttpListener != null)
+                {
+                    if (GUILayout.Button("关闭本机文件服务器"))
+                    {
+                        EditorHttpListener.Stop();
+                        EditorHttpListener = null;
+                    }
+                }
+
+                GUILayout.Space(10);
+                string weburl = "";
+                if (EditorHttpListener != null)
+                {
+                    weburl = "http://" + IPHelper.GetIP(IPHelper.ADDRESSFAM.IPv4) + ":" + EditorHttpListener.port;
+                }
+
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("weburl:  " + weburl);
+
+                    if (GUILayout.Button("复制", GUILayout.Width(40)))
+                    {
+                        GUIUtility.systemCopyBuffer = weburl;
+                        EditorUtility.DisplayDialog("提示", "复制成功!", "OK");
+                    }
+                }
+                GUILayout.EndHorizontal();
+                //
+                GUILayout.Label("资源地址: " + BDApplication.DevOpsPublishPackagePath + "/*" + PublishPipelineTools.FOLDER_SUFFIX);
             }
             GUILayout.EndVertical();
         }
@@ -203,15 +257,19 @@ namespace BDFramework.Editor.PublishPipeline
             {
                 Debug.LogError(e.Message);
             }
-            
+
             //4.生成本地assetinfo配置
             var allServerAssetItemList = PublishPipelineTools.GetAssetsHashData(outputPath, platform);
             var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
-            var assetsInfoPath = string.Format("{0}/{1}/{2}",outputPath,BDApplication.GetPlatformPath(platform),BResources.SERVER_ASSETS_INFO_PATH);
+            var assetsInfoPath = string.Format("{0}/{1}/{2}", outputPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_INFO_PATH);
             File.WriteAllText(assetsInfoPath, csv);
         }
 
 
-
+        private void OnDestroy()
+        {
+            this.EditorHttpListener?.Stop();
+            EditorHttpListener = null;
+        }
     }
 }

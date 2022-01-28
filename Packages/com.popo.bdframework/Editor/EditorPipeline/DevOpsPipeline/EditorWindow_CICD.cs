@@ -1,6 +1,7 @@
 ﻿using System;
 using BDFramework.Editor.DevOps;
 using BDFramework.Editor.EditorPipeline.DevOps;
+using BDFramework.Editor.Unity3dEx;
 using UnityEditor;
 using UnityEngine;
 
@@ -40,12 +41,6 @@ namespace BDFramework.Editor.DevOps
             GUILayout.BeginVertical();
             {
                 GUILayout.Label("CI相关测试:");
-                EditorGUILayout.HelpBox(@"服务器CI建议:
-1.每次美术资源提交，自动构建AB，并且建议编写资源检测脚本,通过允许提交.
-2.AssetBundle建议使用SVN版本管理.
-3.发布母包会从SVN的资源到StreamingAsset.
-4.发布增量资源，从SVN全部推送到资源服务器，客户端会对比两个版本Config下载本地没有的资源到Persistent下.客户端会进行可寻址加载.
-", MessageType.Info);
                 var devops_setting = BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting;
                 devops_setting.AssetBundleSVNUrl = EditorGUILayout.TextField("SVN地址", devops_setting.AssetBundleSVNUrl, GUILayout.Width(350));
                 devops_setting.AssetBundleSVNAccount = EditorGUILayout.TextField("SVN账号", devops_setting.AssetBundleSVNAccount, GUILayout.Width(350));
@@ -79,6 +74,21 @@ namespace BDFramework.Editor.DevOps
                     }
                     GUILayout.EndHorizontal();
                 }
+                
+                
+                GUILayout.Space(10);
+                EditorGUILayoutEx.Layout_DrawLineH(Color.white);
+                
+                GUILayout.Label(@"服务器CI流程:
+一般Git管理代码，SVN或P4管理美术资产。
+Git master分支作为稳定发布版本分支，工作都在子分支，测试通过后会合并到主分支。
+SVN资产也会用hook实现同步到Git assets分支，供程序使用. 程序也会将测试通过的资产随着code提交到主分支.
+CI一般监听Git Master分支，定时一键构建所有资产:AB包、脚本、Sql
+
+1.资源流程: 每次美术提交=》更新老资产=》AB性能测试=》WebHook通知到内部=》提交到SVN
+2.母包流程: 更新美术SVN，更新Git=>构建母包=》自动测试=》通知测试结果
+3.资源更新: 直接将SVN资源发布到资源服务器，客户端会自行下载
+");
             }
             GUILayout.EndVertical();
         }
