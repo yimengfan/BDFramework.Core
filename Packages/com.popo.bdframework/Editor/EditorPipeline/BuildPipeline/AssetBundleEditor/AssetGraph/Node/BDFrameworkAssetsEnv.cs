@@ -106,7 +106,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //搜集runtime资源
             var allRuntimeAssetList = this.LoadAllRuntimeAssets();
             //生成buildinfo
-            if (!isGenBuildInfo) //防止GUI每次调用prepare时候都触发,真正打包时候 会重新构建
+            if (!isGenBuildInfo || BuildInfo==null) //防止GUI每次调用prepare时候都触发,真正打包时候 会重新构建
             {
                 Debug.Log("------------>生成BuildInfo");
                 BuildInfo = this.GenBuildInfo(target, allRuntimeAssetList);

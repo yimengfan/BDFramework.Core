@@ -264,6 +264,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             GenAssetBundleItemCacheList = abConfigList.ToList();
+
+
+            BDFrameworkAssetsEnv.BuildInfo = null;
         }
 
 

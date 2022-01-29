@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1335706783
+CRC: 3194188810
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 91811d1c99fce4d68553b57966721d49
+    Hash: ee5ee0f7fe2288ff6376da8186cbc252
   TypeTreeHash:
     serializedVersion: 2
     Hash: 56013de3af6e2e588ae4e6815219a7a6
@@ -17,7 +17,6 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Shaders/TestShader/DefaultResourcesExtra/Standard.shader
 - Assets/Resource/Runtime/Shader/AllShaders.shadervariants
-- Assets/Resource/Shaders/builtin_shaders-2019/DefaultResourcesExtra/Normal-VertexLit.shader
 - Assets/Resource/Shaders/TestShader/shader/PBR_Silk.shader
 - Assets/Resource/Shaders/builtin_shaders-2019/DefaultResourcesExtra/Unlit/Unlit-Color.shader
 Dependencies: []

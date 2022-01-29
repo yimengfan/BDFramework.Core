@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3578078248
+CRC: 2740443560
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8eecbd2baf2ce59894f8e964633c8b30
+    Hash: f1a4190c958a943cbeb207e2dd503d25
   TypeTreeHash:
     serializedVersion: 2
     Hash: 08e5839e4db477429ed20d28d657089e
@@ -23,4 +23,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/AssetTest/Particle.prefab
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/635df57f674eda446b0d64328236e858
+- E:/BDFrameworkMaster/DevOps/PublishAssets/Android/Art/635df57f674eda446b0d64328236e858

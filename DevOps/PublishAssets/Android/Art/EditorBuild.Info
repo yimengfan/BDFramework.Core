@@ -1,6 +1,6 @@
 
 {
-  "Time" : "2022/1/28",
+  "Time" : "2022/1/29",
   "AssetDataMaps" : {
     "assets/resource/runtime/allassettype/archive.jpg" : {
       "Id" : 0,
@@ -143,7 +143,7 @@
       "Type"         : 5,
       "ABName"       : "d4a88a73900de024eb62d0da15c80841",
       "ReferenceCount" : 0,
-      "Hash"           : "d29950ca63640c039a0ddd308596c1c3cf00f1a4d90de29e68f1e8e6aec9ac9f",
+      "Hash"           : "c3133a36a2df66fc277010e67d46a1c738eb98620f95820fb5f54315da9dac8b",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
@@ -186,7 +186,7 @@
       "Type"         : 6,
       "ABName"       : "e5ef808d32e88b243bd0521877b3b07a",
       "ReferenceCount" : 0,
-      "Hash"           : "5ad554e2e85164f329acf604a0b0ecaee76b4e2250b0240914a4c9770e650ef2",
+      "Hash"           : "209588260280baaf2e0c868e477e63f6c8df31421e5e1a7969de528b8b38b2ec",
       "DependAssetList" : [
         "2612b115ce3857f45833e28c2325fdbb",
         "9d59e1d84070e4c46a595b3112d75a40",
@@ -199,7 +199,7 @@
       "Type"         : 5,
       "ABName"       : "635df57f674eda446b0d64328236e858",
       "ReferenceCount" : 0,
-      "Hash"           : "754deaf2599e9aed4bc8c2b8b52b21b611d56175b6ed9266b6673af7e8fa9e73",
+      "Hash"           : "b69be9ed4256147c195dae61835921ed761e10f6a4f4515c7337ad85a8386d00",
       "DependAssetList" : [
         "2612b115ce3857f45833e28c2325fdbb",
         "9d59e1d84070e4c46a595b3112d75a40"
@@ -362,7 +362,7 @@
       "Type"         : 10,
       "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
       "ReferenceCount" : 0,
-      "Hash"           : "348eb407e612a44a4606c3abf703090d670a5e93b5e9a33e9296e9cace46d89a",
+      "Hash"           : "19b6bc3f976b722d51732bbc7f872b915f698eed2488749058afc038051c9152",
       "DependAssetList" : [
       ]
     },

@@ -241,8 +241,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             AssetMultiplePackageConfigList = new List<SubPackageConfigItem>();
             //prepare传入的资源
             this.incommingAssetGroup = incoming.FirstOrDefault();
-            this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
-            this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
+           // this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+           //this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             //初始化输出列表
             var outMap = new Dictionary<string, Dictionary<string, List<AssetReference>>>();
             foreach (var group in this.groupFilterPathDataList)
