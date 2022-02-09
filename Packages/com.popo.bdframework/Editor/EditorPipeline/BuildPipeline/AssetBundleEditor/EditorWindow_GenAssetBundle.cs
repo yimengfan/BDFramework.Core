@@ -99,7 +99,7 @@ namespace BDFramework.Editor.AssetBundle
             GUILayout.BeginVertical();
 
 
-            if (GUILayout.Button("简单收集Shader keyword[无光照]", GUILayout.Width(200)))
+            if (GUILayout.Button("收集Keyword[Shader Feature]", GUILayout.Width(200)))
             {
                 ShaderCollection.SimpleGenShaderVariant();
             }
