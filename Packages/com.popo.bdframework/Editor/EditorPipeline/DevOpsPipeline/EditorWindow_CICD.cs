@@ -33,6 +33,9 @@ namespace BDFramework.Editor.DevOps
             BDEditorApplication.BDFrameWorkFrameEditorSetting.Save();
         }
 
+
+        Vector2 pos = Vector2.zero;
+
         /// <summary>
         /// CI 相关
         /// </summary>
@@ -47,38 +50,41 @@ namespace BDFramework.Editor.DevOps
                 devops_setting.AssetBundleSVNPsw = EditorGUILayout.TextField("SVN密码", devops_setting.AssetBundleSVNPsw, GUILayout.Width(350));
 
                 GUILayout.Space(20);
-                
-                GUILayout.Label("支持CI列表:");
 
+                GUILayout.Label("支持CI列表:");
+                EditorGUILayoutEx.Layout_DrawLineH(Color.white, 2f);
                 //获取所有ciapi
                 var ciMethods = DevOpsTools.GetCIApis();
-
-                foreach (var cim in ciMethods)
+                pos = EditorGUILayout.BeginScrollView(pos, GUILayout.Width(800), GUILayout.Height(500));
                 {
-                    var attrs = cim.GetCustomAttributes(false);
-                    var ciAttr = attrs[0] as CIAttribute;
-                    GUILayout.BeginHorizontal();
+                    foreach (var cim in ciMethods)
                     {
-                        //描述
-                        GUILayout.Label(ciAttr.Des+":", GUILayout.Width(150));
-                        
-                        //函数
-                        var ciName = cim.ReflectedType.FullName + "." + cim.Name;
-                        GUILayout.Label(ciName,GUILayout.Width(580));
-                        //按钮
-                        if (GUILayout.Button("复制",GUILayout.Width(50)))
+                        var attrs = cim.GetCustomAttributes(false);
+                        var ciAttr = attrs[0] as CIAttribute;
+                        GUILayout.BeginHorizontal();
                         {
-                            GUIUtility.systemCopyBuffer = ciName;
-                            EditorUtility.DisplayDialog("提示", "复制成功!", "OK");
+                            //描述
+                            GUILayout.Label(ciAttr.Des + ":", GUILayout.Width(150));
+                            //函数
+                            var ciName = cim.ReflectedType.FullName + "." + cim.Name;
+                            GUILayout.Label(ciName, GUILayout.Width(580));
+                            //按钮
+                            if (GUILayout.Button("复制", GUILayout.Width(50)))
+                            {
+                                GUIUtility.systemCopyBuffer = ciName;
+                                EditorUtility.DisplayDialog("提示", "复制成功!", "OK");
+                            }
                         }
+                        GUILayout.EndHorizontal();
                     }
-                    GUILayout.EndHorizontal();
                 }
+                EditorGUILayout.EndScrollView();
+                EditorGUILayoutEx.Layout_DrawLineH(Color.white);
                 
                 
                 GUILayout.Space(10);
                 EditorGUILayoutEx.Layout_DrawLineH(Color.white);
-                
+
                 GUILayout.Label(@"服务器CI流程:
 一般Git管理代码，SVN或P4管理美术资产。
 Git master分支作为稳定发布版本分支，工作都在子分支，测试通过后会合并到主分支。

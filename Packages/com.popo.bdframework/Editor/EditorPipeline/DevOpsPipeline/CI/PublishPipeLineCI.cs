@@ -18,10 +18,11 @@ namespace BDFramework.Editor.DevOps
 
         static PublishPipeLineCI()
         {
-            //初始化编辑器
+            //TODO : 初始化编辑器,必须
             BDFrameworkEditorBehaviour.InitBDFrameworkEditor();
-            CI_ROOT_PATH    = IPath.Combine(BDApplication.ProjectRoot, "CI_TEMP");
-            CI_PACKAGE_PATH = IPath.Combine(CI_ROOT_PATH, "Publish_Package");
+            //
+            CI_ROOT_PATH    = IPath.Combine(BDApplication.DevOpsPath, "CI_TEMP");
+            CI_PACKAGE_PATH = IPath.Combine(CI_ROOT_PATH, "CI_BUILD_PCK");
             if (!Directory.Exists(CI_ROOT_PATH))
             {
                 Directory.CreateDirectory(CI_ROOT_PATH);
