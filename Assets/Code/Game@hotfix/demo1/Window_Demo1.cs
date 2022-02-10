@@ -1,4 +1,4 @@
-﻿using BDFramework.Hotfix.ScreenView;
+﻿using BDFramework.ScreenView;
 using BDFramework.UFlux;
 using BDFramework.UI;
 using Game;

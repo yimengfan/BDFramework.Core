@@ -1,4 +1,4 @@
-﻿using BDFramework.Hotfix.ScreenView;
+﻿using BDFramework.ScreenView;
 using UnityEngine;
 using BDFramework.UFlux;
 using BDFramework.UI;

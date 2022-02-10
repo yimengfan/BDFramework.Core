@@ -1,5 +1,5 @@
 ﻿
-namespace BDFramework.Hotfix.ScreenView
+namespace BDFramework.ScreenView
 {
     /// <summary>
     /// IScreenView接口

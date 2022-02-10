@@ -2,7 +2,7 @@
 using BDFramework.Mgr;
 using UnityEngine;
 
-namespace BDFramework.Hotfix.ScreenView
+namespace BDFramework.ScreenView
 {
     /// <summary>
     /// 导航管理器标签

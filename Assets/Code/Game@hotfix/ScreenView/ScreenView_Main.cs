@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using BDFramework.Hotfix.ScreenView;
+using BDFramework.ScreenView;
 using UnityEngine;
 using BDFramework.UFlux;
 using BDFramework.UI;

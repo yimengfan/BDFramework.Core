@@ -4,7 +4,7 @@ using UnityEngine;
 using BDFramework.UI;
 using LitJson;
 using UnityEngine.UI;
-using BDFramework.Hotfix.ScreenView;
+using BDFramework.ScreenView;
 using BDFramework.ResourceMgr;
 using BDFramework.UFlux;
 using BDFramework.VersionContrller;
