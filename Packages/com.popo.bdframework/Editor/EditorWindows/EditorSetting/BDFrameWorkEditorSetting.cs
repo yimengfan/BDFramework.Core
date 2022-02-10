@@ -79,7 +79,6 @@ namespace BDFramework.Editor
         {
             return File.Exists(SETTING_PATH);
         }
-        
         /// <summary>
         /// 加载
         /// </summary>
@@ -94,10 +93,14 @@ namespace BDFramework.Editor
                 var oldpath =   IPath.Combine(BDApplication.BDWorkSpace, "config.json");
                 if (File.Exists(oldpath))
                 {
+                    var dirt = Path.GetDirectoryName(SETTING_PATH);
+                    if (!Directory.Exists(dirt))
+                    {
+                        Directory.CreateDirectory(dirt);
+                    }
                     File.Move(oldpath,SETTING_PATH);
                 }
             }
-
             var setting = new BDFrameWorkEditorSetting();
 
             if (File.Exists(SETTING_PATH))
