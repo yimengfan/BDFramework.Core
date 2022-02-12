@@ -5,13 +5,24 @@
 [![Badge](https://img.shields.io/badge/link-996.icu-%23FF4D5B.svg?style=flat-square)](https://996.icu/#/zh_CN)
 [![LICENSE](https://img.shields.io/github/license/yimengfan/BDFramework.Core)](https://github.com/yimengfan/BDFramework.Core/blob/master/LICENSE)
 
-# 简介(Introduction)
+# 作者寄语(Introduction)  
 Simple! Easy! Professional!  This‘s a powerful Unity3d game workflow!   
-> BDFramework的设计理念永远是：工业化、流水线化、专业化！致力于打造简单、专业、高效的商业游戏工作流.  
-> 大部分功能开发都是围绕一整条工作流，以Pipeline的形式放出.如:BuildPipeline、PublishPipeline、DevOpsPipeline 等...
-> 对于第三方库也都是为了Pipeline深度定制，很多时候为了一些业务上的一点体验优化会增加大量的Editor编码.
-> 因为一些原因，只能放出一些游戏基础方案Pipeline的实现，不会放出对具体业务逻辑的解决方案，所以整套workflow更像是一套脚手架.  
-
+> BDFramework的设计理念永远是：**工业化、流水线化、专业化！**  
+> 永远致力于打造简单、专业、高效的商业游戏工作流.
+> 
+> 大部分功能开发都是围绕一整条工作流，以**Pipeline**的形式放出.  
+> 如:**BuildPipeline、PublishPipeline、DevOps** 等...  
+> 对于第三方库使用也都是为了Pipeline深度定制，很多时候为了一些使用体验优化会编写大量的Editor编码.  
+> 
+> 这也是BDFramework的设计理念之一：**能编辑器解决的，就不要业务层解决！能自动化的，就不要手动!**  
+>  BDFramework没有什么看上去很酷炫的功能，大都是一点一滴的积累，一点点的增加自动化，一点点的增加业务编码的体验.  
+> 也正是因为有这样的坚持，才会有这套框架的出现.  
+> 
+> 最后因为一些原因，只能放出一些游戏基础方案Pipeline的实现，  
+> 不会放出对具体业务逻辑的解决方案，所以整套workflow更像是一套游戏开发脚手架.
+> 望理解!  
+>　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　-奶泡泡.                                                                                                                              
+# 交流方式(Community)
 #### 第九第十艺术交流:763141410 （QQ Group:763141410）  [点击加群](http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f)
 If you find a bug or have some suggestions,please make issue! I'll get back to you!  
 任何问题直接提issue,24小时内必解决 （有时候邮件抽风，没收到，需要在群里at下我~）    
