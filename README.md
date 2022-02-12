@@ -7,7 +7,10 @@
 
 # 简介(Introduction)
 Simple! Easy! Professional!  This‘s a powerful Unity3d game workflow!   
-> 致力于打造简单、专业、高效的商业游戏工作流.  
+> BDFramework的设计理念永远是：工业化、流水线化、专业化！致力于打造简单、专业、高效的商业游戏工作流.  
+> 大部分功能开发都是围绕一整条工作流，以Pipeline的形式放出.如:BuildPipeline、PublishPipeline、DevOpsPipeline 等...
+> 对于第三方库也都是为了Pipeline深度定制，很多时候为了一些业务上的一点体验优化会增加大量的Editor编码.
+> 因为一些原因，只能放出一些游戏基础方案Pipeline的实现，不会放出对具体业务逻辑的解决方案，所以整套workflow更像是一套脚手架.  
 
 #### 第九第十艺术交流:763141410 （QQ Group:763141410）  [点击加群](http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f)
 If you find a bug or have some suggestions,please make issue! I'll get back to you!  
