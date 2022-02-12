@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
@@ -8,6 +9,7 @@ using BDFramework.ResourceMgr;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.HotfixPipeline;
 using BDFramework.Hotfix.Reflection;
+using BDFramework.ScreenView;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,56 +25,58 @@ namespace BDFramework.Editor
         /// 是否完成初始化
         /// </summary>
         static public bool IsInited { get; private set; } = false;
-
         static BDFrameworkEditorBehaviour()
         {
-            //直接初始化
-            InitBDFrameworkEditor();
-            EditorApplication.playModeStateChanged += OnPlayExit;
+            //TODO 
+            //一般情况下 打开unity.或者reloadAssembly 会重新初始化框架
+            //但是ExitPlaymode后不会触发ReloadAssembly,所以有些静态对象会缓存
+            //非播放模式，初始化框架编辑器
+            if (!EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                InitBDFrameworkEditor();
+            }  
+            //防止重复注册事件
+            EditorApplication.update -= EditorUpdate_CheckGuideWindow;
             EditorApplication.update += EditorUpdate_CheckGuideWindow;
+            EditorApplication.playModeStateChanged -= OnPlayModeChanged;
+            EditorApplication.playModeStateChanged += OnPlayModeChanged;
         }
-
+        
         /// <summary>
         /// 代码编译完成后
         /// </summary>
-        [UnityEditor.Callbacks.DidReloadScripts(0)]
-        static void OnScriptReload()
-        {
-            OnCodeBuildComplete();
-        }
+        // [UnityEditor.Callbacks.DidReloadScripts(0)]
+        // static void OnScriptReload()
+        // {
+        //     OnCodeBuildComplete();
+        // }
 
         /// <summary>
         /// 退出播放模式
         /// </summary>
         /// <param name="state"></param>
-        static private void OnPlayExit(PlayModeStateChange state)
+        static private void OnPlayModeChanged(PlayModeStateChange state)
         {
-            if (state == PlayModeStateChange.ExitingPlayMode)
+            //非播放模式,初始化框架~
+            switch (state)
             {
-                InitBDFrameworkEditor();
+                case PlayModeStateChange.EnteredEditMode:
+                {
+                    InitBDFrameworkEditor();
+                }
+                    break;
+                
             }
         }
 
-        /// <summary>
-        /// Editor代码刷新后执行
-        /// </summary>
-        static public void OnCodeBuildComplete()
-        {
-            if (EditorApplication.isPlaying)
-            {
-                return;
-            }
-
-            //初始化框架编辑器
-            InitBDFrameworkEditor();
-        }
-
+        
         /// <summary>
         /// 初始化框架编辑器
         /// </summary>
         static public void InitBDFrameworkEditor()
         {
-            if (IsInited)
+            //只有在非Playing的时候才初始化
+            if (EditorApplication.isPlayingOrWillChangePlaymode || IsInited)
             {
                 return;
             }
@@ -93,11 +97,12 @@ namespace BDFramework.Editor
                     var eAssemlby = Assembly.LoadFile(editorAssemlyPath);
                     RegisterMainProjectAssembly(gAssembly, eAssemlby);
                 }
+
                 //Pipeline初始化
                 HotfixPipelineTools.Init();
 
                 //最后，完成初始化
-                IsInited = true; 
+                IsInited = true;
                 //  Debug.Log("框架编辑器环境初始化成功!");
             }
             catch (Exception e)
@@ -172,5 +177,7 @@ namespace BDFramework.Editor
                 EditorWindow_BDFrameworkStart.AutoOpen();
             }
         }
+
+        
     }
 }
