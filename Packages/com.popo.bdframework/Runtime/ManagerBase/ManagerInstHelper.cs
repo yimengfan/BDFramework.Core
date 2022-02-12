@@ -27,7 +27,7 @@ namespace BDFramework.Mgr
             for (int i = 0; i < types.Length; i++)
             {
                 var type = types[i];
-                if (type != null  && type.IsClass&& typeof(IMgr).IsAssignableFrom(type))
+                if (type != null && type.IsClass && (!type.IsAbstract) && typeof(IMgr).IsAssignableFrom(type))
                 {
                     BDebug.Log("[main]加载管理器-" + type, "green");
                     var inst = type.BaseType.GetProperty("Inst", BindingFlags.Static | BindingFlags.Public);
@@ -36,7 +36,6 @@ namespace BDFramework.Mgr
                         var mgr = inst.GetValue(null, null) as IMgr;
                         if (mgr != null)
                         {
-                           
                             mgrList.Add(mgr);
                         }
                         else
@@ -48,8 +47,6 @@ namespace BDFramework.Mgr
                     {
                         BDebug.LogError("加载管理器失败,-" + type);
                     }
-
-
                 }
             }
 
@@ -62,6 +59,7 @@ namespace BDFramework.Mgr
                 {
                     continue;
                 }
+
                 //注册类型
                 foreach (var mgr in mgrList)
                 {
@@ -83,7 +81,6 @@ namespace BDFramework.Mgr
         /// </summary>
         static public void Start()
         {
-
             foreach (var mgr in mgrList)
             {
                 mgr.Start();

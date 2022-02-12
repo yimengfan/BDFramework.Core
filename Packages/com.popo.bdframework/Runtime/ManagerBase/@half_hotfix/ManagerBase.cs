@@ -32,7 +32,7 @@ namespace BDFramework.Mgr
     /// </summary>
     /// <typeparam name="T">是管理器实例</typeparam>
     /// <typeparam name="V">标签属性</typeparam>
-    public class ManagerBase<T, V> : IMgr where T : IMgr, new() where V : ManagerAttribute
+   abstract public class ManagerBase<T, V> : IMgr where T : IMgr, new() where V : ManagerAttribute
     {
         static private T i;
 

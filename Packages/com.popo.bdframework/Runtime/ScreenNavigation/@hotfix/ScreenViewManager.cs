@@ -41,9 +41,12 @@ namespace BDFramework.ScreenView
         /// </summary>
         public override void Init()
         {
+            //TODO 
+            //一般情况下 打开unity.或者reloadAssembly 会重新初始化框架
+            //但是ExitPlaymode后不会触发ReloadAssembly,所以有些静态对象会缓存
             if (MainLayer != null)
             {
-                Debug.LogError("已经执行过Awake");
+                // Debug.LogError("已经执行过Awake -" + this.GetHashCode());
                 return;
             }
 
