@@ -66,13 +66,14 @@ ps:只移动**com.popo.bdframework文件夹**到项目即可
 ## 贡献者名单
 [@gaojiexx](https://github.com/gaojiexx)  
 [@ricashao](https://github.com/ricashao)  
+[@瞎哥](https://github.com/AfarMiss)  
 如果需要项目方案定制、技术方案定制、项目支持,可以联系 QQ:755737878  
 
 ## 发布（Publish）  
 ### [Release版本](https://github.com/yimengfan/BDFramework.Core/releases)  
 注:所有bug修复和新特性加入会先提交到Master分支。待审核期通过，稳定则会发布Release版本 
 ### Demo：  
-九宫棋（带一套技能buff处理）:https://gitee.com/yimengfan/TheCatChess 
+九宫棋（带一套精简的技能系统）:https://gitee.com/yimengfan/TheCatChess  
 ### v2.1版本计划: [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)   
  ##  V2版本已经发布!  
 #### 1.全面升级为UPM管理: [urp版本安装引导]( https://www.yuque.com/naipaopao/eg6gik/xy8dm4)  
