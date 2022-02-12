@@ -19,9 +19,8 @@ Simple! Easy! Professional!  This‘s a powerful Unity3d game workflow!
 > 也正是因为有这样的坚持，才会有这套框架的出现.  
 > 
 > 最后因为一些原因，只能放出一些游戏基础方案Pipeline的实现，  
-> 不会放出对具体业务逻辑的解决方案，所以整套workflow更像是一套游戏开发脚手架.
-> 望理解!  
->　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　-奶泡泡.                                                                                                                              
+> 不会有对具体业务逻辑的解决方案，所以整套workflow更像是一套游戏开发脚手架.望理解！     
+>　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　by 奶泡泡.                        
 # 交流方式(Community)
 #### 第九第十艺术交流:763141410 （QQ Group:763141410）  [点击加群](http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f)
 If you find a bug or have some suggestions,please make issue! I'll get back to you!  
