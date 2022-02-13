@@ -57,10 +57,13 @@ namespace BDFramework
             {
                 BDebug.LogError("GameConfig配置为null,请检查!");
             }
-
-
             //日志打印
             debug.IsLog = this.GameConfig.IsDebugLog;
+            //添加不删除的组件
+            if (Application.isPlaying)
+            {
+                DontDestroyOnLoad(this);
+            }
         }
 
 

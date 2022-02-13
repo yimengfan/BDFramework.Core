@@ -31,14 +31,22 @@ namespace BDFramework.UFlux
         /// </summary>
         private Transform Bottom, Center, Top;
 
-
         override public void Init()
         {
             //初始化
             windowMap = new Dictionary<int, IWindow>();
-            Bottom = GameObject.Find("UIRoot/Bottom")?.transform;
-            Center = GameObject.Find("UIRoot/Center")?.transform;
-            Top = GameObject.Find("UIRoot/Top")?.transform;
+            var uiroot = GameObject.Find("UIRoot")?.transform;
+            if (uiroot)
+            {
+                Bottom = uiroot.Find("Bottom")?.transform;
+                Center = uiroot.Find("Center")?.transform;
+                Top = uiroot.Find("Top")?.transform;
+                //不删除uiroot
+                if (Application.isPlaying)
+                {
+                    GameObject.DontDestroyOnLoad(uiroot.gameObject);
+                }
+            }
         }
         
         /// <summary>
