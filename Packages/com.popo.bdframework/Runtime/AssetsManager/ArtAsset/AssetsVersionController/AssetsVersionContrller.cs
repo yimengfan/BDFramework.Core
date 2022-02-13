@@ -149,7 +149,7 @@ namespace BDFramework.VersionContrller
         /// <param name="onDownloadProccess"></param>
         /// <param name="onError">返回失败后，只需要重试重新调用该函数即可</param>
         /// 返回码: -1：error  0：success
-        static private IEnumerator IE_StartVersionControl(UpdateMode mode, string serverUrl, string localDownloadAssetsRootPath, string subPackageName, Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess,
+        static public IEnumerator IE_StartVersionControl(UpdateMode mode, string serverUrl, string localDownloadAssetsRootPath, string subPackageName, Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess,
             Action<VersionControllerStatus, string> onTaskEndCallback)
         {
             //目录准备
@@ -426,7 +426,7 @@ namespace BDFramework.VersionContrller
         /// <summary>
         /// 对比版本配置
         /// </summary>
-        static public Queue<ServerAssetItem> CompareVersionConfig(List<ServerAssetItem> localAssetsInfo, List<ServerAssetItem> serverAssetsInfo)
+        static private Queue<ServerAssetItem> CompareVersionConfig(List<ServerAssetItem> localAssetsInfo, List<ServerAssetItem> serverAssetsInfo)
         {
             if (localAssetsInfo == null || localAssetsInfo.Count == 0)
             {
@@ -454,7 +454,7 @@ namespace BDFramework.VersionContrller
         /// <summary>
         /// 修复模式,是要对比本地文件是否存在
         /// </summary>
-        static public Queue<ServerAssetItem> Repair(string localRootPath, List<ServerAssetItem> localAssetsInfo, List<ServerAssetItem> serverAssetsInfo)
+        static private Queue<ServerAssetItem> Repair(string localRootPath, List<ServerAssetItem> localAssetsInfo, List<ServerAssetItem> serverAssetsInfo)
         {
             if (localAssetsInfo == null || localAssetsInfo.Count == 0)
             {
@@ -506,12 +506,12 @@ namespace BDFramework.VersionContrller
         /// <param name="rootPath"></param>
         /// <param name="platform"></param>
         /// <returns></returns>
-        static public string GetServerAssetsVersionConfigPath(string rootPath, RuntimePlatform platform)
+        static private string GetServerAssetsVersionConfigPath(string rootPath, RuntimePlatform platform)
         {
             return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_VERSION_CONFIG_PATH);
         }
 
-        static public string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
+        static private string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
         {
             return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_INFO_PATH);
         }
@@ -522,7 +522,7 @@ namespace BDFramework.VersionContrller
         /// <param name="rootPath"></param>
         /// <param name="platform"></param>
         /// <returns></returns>
-        static public string GetServerAssetsSubPackageInfoPath(string rootPath, RuntimePlatform platform, string subPackageName)
+        static private string GetServerAssetsSubPackageInfoPath(string rootPath, RuntimePlatform platform, string subPackageName)
         {
             var subPackagePath = string.Format(BResources.SERVER_ART_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageName);
             return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), subPackagePath);

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using BDFramework.ResourceMgr.V2;
 using BDFramework.Core.Tools;
+using BDFramework.VersionContrller;
 using UnityEngine.Rendering;
 using UnityEngine.U2D;
 
@@ -20,6 +21,7 @@ namespace BDFramework.ResourceMgr
         /// 美术根目录
         /// </summary>
         readonly static public string ASSET_ROOT_PATH = "Art";
+
         /// <summary>
         /// 美术资源config配置
         /// </summary>
@@ -29,10 +31,12 @@ namespace BDFramework.ResourceMgr
         /// 资源信息
         /// </summary>
         readonly static public string ASSET_TYPES_PATH = ASSET_ROOT_PATH + "/AssetTypeConfig.Info";
+
         /// <summary>
         /// 构建时的信息(Editor用)
         /// </summary>
         readonly static public string EDITOR_ASSET_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/EditorBuild.Info";
+
         /// <summary>
         /// 旧打包资源配置
         /// </summary>
@@ -42,18 +46,22 @@ namespace BDFramework.ResourceMgr
         /// 资源包服务器版本配置
         /// </summary>
         readonly static public string SERVER_ASSETS_VERSION_CONFIG_PATH = "ServerAssetsVersion.Conf";
+
         /// <summary>
         /// 资源包服务器信息
         /// </summary>
         readonly static public string SERVER_ASSETS_INFO_PATH = "ServerAssets.Info";
+
         /// <summary>
         /// 美术资源分包-配置
         /// </summary>
         readonly static public string SERVER_ASSETS_SUB_PACKAGE_CONFIG_PATH = "ServerAssetsSubPackage.Conf";
+
         /// <summary>
         /// 美术资源分包信息
         /// </summary>
         readonly static public string SERVER_ART_ASSETS_SUB_PACKAGE_INFO_PATH = "ServerAssetsSubPackage_{0}.Info";
+
         /// <summary>
         /// ShaderVariant加载地址
         /// </summary>
@@ -111,6 +119,7 @@ namespace BDFramework.ResourceMgr
             {
                 return null;
             }
+
             return ResLoader.Load<T>(name);
         }
 
@@ -120,15 +129,16 @@ namespace BDFramework.ResourceMgr
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static  UnityEngine.Object Load(Type type,string name)
+        public static UnityEngine.Object Load(Type type, string name)
         {
             if (string.IsNullOrEmpty(name))
             {
                 return null;
             }
-            return ResLoader.Load(type,name);
+
+            return ResLoader.Load(type, name);
         }
-        
+
         /// <summary>
         /// 同步加载ALL
         /// </summary>
@@ -163,7 +173,7 @@ namespace BDFramework.ResourceMgr
             return ResLoader.AsyncLoad(objlist, onProcess, onLoadEnd);
         }
 
-        
+
         /// <summary>
         /// 取消一组任务
         /// </summary>
@@ -214,7 +224,7 @@ namespace BDFramework.ResourceMgr
             {
                 return;
             }
-            
+
             Resources.UnloadAsset(asset);
         }
 
@@ -264,6 +274,28 @@ namespace BDFramework.ResourceMgr
                 go = null;
             }
         }
+
+        #endregion
+
+        #region 版本控制
+        /// <summary>
+        /// 开始版本控制
+        /// </summary>
+        /// <param name="updateMode"></param>
+        /// <param name="serverConfigPath"></param>
+        /// <param name="assetsPackageName">分包名,如果不填则为下载所有</param>
+        /// <param name="onProccess">下载进度</param>
+        /// <param name="onTaskEndCallback">结果回调</param>
+        static public void StartAssetsVersionControl(UpdateMode updateMode, string serverConfigPath, string assetsPackageName = "", Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess = null,
+            Action<AssetsVersionContrller.VersionControllerStatus, string> onTaskEndCallback = null)
+        {
+            AssetsVersionContrller.Start(updateMode, serverConfigPath, assetsPackageName, onDownloadProccess, onTaskEndCallback);
+        }
+
+        #endregion
+
+
+        #region 对象池
 
         #endregion
     }

@@ -61,7 +61,7 @@ public class WindowPreconfig : MonoBehaviour
         var url = "http://" + this.inputField.text;
         float totalSize = -1;
         float curDoanloadSize = -1;
-        AssetsVersionContrller.Start(UpdateMode.CompareVersionConfig, url, null, (curDownload, allDownloadList) =>
+        BResources.StartAssetsVersionControl(UpdateMode.CompareVersionConfig, url, null, (curDownload, allDownloadList) =>
             {
                 if (totalSize == -1)
                 {
@@ -74,11 +74,12 @@ public class WindowPreconfig : MonoBehaviour
                 }
 
                 curDoanloadSize += curDownload.FileSize;
-                //进度通知
+                //进度通知,显示下载的
                 this.text_DownloadProcess.text = string.Format("{0}KB / {1}KB", curDoanloadSize, totalSize);
             },
             (status, msg) =>
             {
+                //下载状态
                 switch (status)
                 {
                     case AssetsVersionContrller.VersionControllerStatus.Success:
@@ -120,6 +121,7 @@ public class WindowPreconfig : MonoBehaviour
 
                     curDoanloadSize = 0;
                 }
+
                 curDoanloadSize += curDownload.FileSize;
                 //进度通知
                 this.text_DownloadProcess.text = string.Format("{0}KB / {1}KB", curDoanloadSize, totalSize);
