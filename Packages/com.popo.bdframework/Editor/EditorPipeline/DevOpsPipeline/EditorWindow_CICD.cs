@@ -16,7 +16,7 @@ namespace BDFramework.Editor.DevOps
         public static void Open()
         {
             var window = EditorWindow.GetWindow<EditorWindow_CICD>(false, "CI");
-            window.maxSize = window.minSize = new Vector2(800, 800);
+            window.maxSize = window.minSize = new Vector2(850, 800);
             window.Show();
             window.Focus();
         }
@@ -45,9 +45,9 @@ namespace BDFramework.Editor.DevOps
             {
                 GUILayout.Label("CI相关测试:");
                 var devops_setting = BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting;
-                devops_setting.AssetBundleSVNUrl = EditorGUILayout.TextField("SVN地址", devops_setting.AssetBundleSVNUrl, GUILayout.Width(350));
-                devops_setting.AssetBundleSVNAccount = EditorGUILayout.TextField("SVN账号", devops_setting.AssetBundleSVNAccount, GUILayout.Width(350));
-                devops_setting.AssetBundleSVNPsw = EditorGUILayout.TextField("SVN密码", devops_setting.AssetBundleSVNPsw, GUILayout.Width(350));
+                devops_setting.AssetService_SVNUrl = EditorGUILayout.TextField("SVN地址", devops_setting.AssetService_SVNUrl, GUILayout.Width(350));
+                devops_setting.AssetService_SVNAccount = EditorGUILayout.TextField("SVN账号", devops_setting.AssetService_SVNAccount, GUILayout.Width(350));
+                devops_setting.AssetService_SVNPSW = EditorGUILayout.TextField("SVN密码", devops_setting.AssetService_SVNPSW, GUILayout.Width(350));
 
                 GUILayout.Space(20);
 
@@ -55,7 +55,7 @@ namespace BDFramework.Editor.DevOps
                 EditorGUILayoutEx.Layout_DrawLineH(Color.white, 2f);
                 //获取所有ciapi
                 var ciMethods = DevOpsTools.GetCIApis();
-                pos = EditorGUILayout.BeginScrollView(pos, GUILayout.Width(800), GUILayout.Height(500));
+                pos = EditorGUILayout.BeginScrollView(pos, GUILayout.Width(850), GUILayout.Height(500));
                 {
                     foreach (var cim in ciMethods)
                     {
@@ -72,7 +72,16 @@ namespace BDFramework.Editor.DevOps
                             if (GUILayout.Button("复制", GUILayout.Width(50)))
                             {
                                 GUIUtility.systemCopyBuffer = ciName;
-                                EditorUtility.DisplayDialog("提示", "复制成功!", "OK");
+                                EditorUtility.DisplayDialog("提示", "复制成功!\n" + cim.Name, "OK");
+                            }
+                            if (GUILayout.Button("执行", GUILayout.Width(50)))
+                            {
+                               var ret= EditorUtility.DisplayDialog("提示", "是否执行:" + cim.Name, "OK","Cancel");
+                               if (ret)
+                               {
+                                   //执行
+                                   cim.Invoke(null, new object[] { });
+                               }
                             }
                         }
                         GUILayout.EndHorizontal();
@@ -91,9 +100,9 @@ Git master分支作为稳定发布版本分支，工作都在子分支，测试�
 SVN资产也会用hook实现同步到Git assets分支，供程序使用. 程序也会将测试通过的资产随着code提交到主分支.
 CI一般监听Git Master分支，定时一键构建所有资产:AB包、脚本、Sql
 
-1.资源流程: 每次美术提交=>更新老资产=>AB性能测试=>WebHook通知到内部=>提交到SVN
-2.母包流程: 更新美术SVN，更新Git=>构建母包=>自动测试=>通知测试结果
-3.资源更新: 直接将SVN资源=>转hash=>发布到资源服务器，客户端会自行下载
+1.资源流程: master提交=>生成AB、热更脚本、sql=>AB性能测试=>WebHook通知到内部=>提交到资产SVN
+2.母包流程: 更新资产SVN、更新Git master=>构建母包=>自动包体测试=>通知测试结果
+3.资源发布: 更新资产SVN=>发布到资源服务器
 ");
             }
             GUILayout.EndVertical();
