@@ -74,8 +74,12 @@ ps:只移动**com.popo.bdframework文件夹**到项目即可
 注:所有bug修复和新特性加入会先提交到Master分支。待审核期通过，稳定则会发布Release版本 
 ### Demo：  
 九宫棋（带一套精简的技能系统）:https://gitee.com/yimengfan/TheCatChess  
-### v2.1版本计划: [To do List]( https://github.com/yimengfan/BDFramework.Core/projects/1)   
- ##  V2版本已经发布!  
+ ##  V2.1版本计划  
+#### -增加BuildPipeline！  
+#### -增加PublishPipeline！  
+#### -增加HotfixPipeline！  
+#### -全面支持DevOps工作流.
+ ##  V2版本:
 #### 1.全面升级为UPM管理: [urp版本安装引导]( https://www.yuque.com/naipaopao/eg6gik/xy8dm4)  
       i.拷贝github中Package的BDFrame包到项目的Package下,导入Package中的Asset.package到工程Asset目录下即可   
       ii.通过OpenUPM安装
