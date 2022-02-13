@@ -3,7 +3,7 @@ CRC: 852486440
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f8c500a7b7a96449864e09084484d184
+    Hash: b8363e1021399742dc2eaa37758566a9
   TypeTreeHash:
     serializedVersion: 2
     Hash: 10a6a558690295dadb3dd990eda0821a
@@ -17,4 +17,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/Test/New Material.mat
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/9d59e1d84070e4c46a595b3112d75a40
+- E:/Unity3d Project/Github/BDFramework/DevOps/PublishAssets/Android/Art/9d59e1d84070e4c46a595b3112d75a40

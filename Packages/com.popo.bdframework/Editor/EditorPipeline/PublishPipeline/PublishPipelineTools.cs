@@ -19,6 +19,7 @@ namespace BDFramework.Editor
     static public class PublishPipelineTools
     {
         static public string UPLOAD_FOLDER_SUFFIX = "_ReadyToUpload";
+
         /// <summary>
         /// 资源转hash
         /// </summary>
@@ -41,7 +42,6 @@ namespace BDFramework.Editor
                     var outdir = GenServerHashAssets(path, platform, versionNum);
                     //发布资源处理后,通知回调
                     BDFrameworkPublishPipelineHelper.OnEndPublishAssets(platform, outdir);
-                    
                 }
             }
 
@@ -61,7 +61,7 @@ namespace BDFramework.Editor
             {
                 BResources.EDITOR_ASSET_BUILD_INFO_PATH,
                 BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG_PATH,
-                string.Format("{0}/{0}",BResources.ASSET_ROOT_PATH),
+                string.Format("{0}/{0}", BResources.ASSET_ROOT_PATH),
             };
 
             //加载assetbundle配置
@@ -99,7 +99,8 @@ namespace BDFramework.Editor
                 }
 
                 //文件信息
-                var fileHash = FileHelper.GetHash32(assetPath);
+                var fileHash = FileHelper.GetMurmurHash3(assetPath);
+                //  var fileHash2 = FileHelper.GetMurmurHash2(assetPath);
                 var fileInfo = new FileInfo(assetPath);
                 //
                 var abpath = Path.GetFileName(assetPath);
@@ -163,7 +164,6 @@ namespace BDFramework.Editor
                 var localpath = string.Format("{0}/{1}/{2}", assetsRootPath, BDApplication.GetPlatformPath(platform), assetItem.LocalPath);
                 var copytoPath = string.Format("{0}/{1}", outputDir, assetItem.HashName);
                 File.Copy(localpath, copytoPath);
-                
             }
 
             //生成分包信息

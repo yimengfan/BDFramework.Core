@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using MurmurHash.Net;
+using ServiceStack.Text;
 
 namespace System.IO
 {
@@ -105,13 +106,16 @@ namespace System.IO
             File.WriteAllLines(path, contents);
         }
 
+
+        #region 文件hash
+
         /// <summary>
         /// 获取文件的md5
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static string GetHash32(string filePath)
+        public static string GetMurmurHash3(string filePath)
         {
             string hash = "null";
             if (File.Exists(filePath))
@@ -134,5 +138,61 @@ namespace System.IO
 
             return hash;
         }
+
+        /// <summary>
+        /// 获取文件的md5
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static string GetMurmurHash3(byte[] bytes)
+        {
+            var hash32 = MurmurHash3.Hash32(bytes);
+            return hash32.ToString();
+        }
+
+        /// <summary>
+        /// 获取文件的md5
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static string GetMurmurHash2(string filePath)
+        {
+            string hash = "null";
+            if (File.Exists(filePath))
+            {
+                var bytes = File.ReadAllBytes(filePath);
+                var hash32 = MurmurHash2.Hash(bytes, 12345678);
+                return hash32.ToString();
+                // //这里为了防止碰撞 考虑Sha256 512 但是速度会更慢
+                // var sha = SHA256.Create();
+                // byte[] retVal = sha.ComputeHash(bytes.ToArray());
+                // //hash
+                // StringBuilder sb = new StringBuilder();
+                // for (int i = 0; i < retVal.Length; i++)
+                // {
+                //     sb.Append(retVal[i].ToString("x2"));
+                // }
+                //
+                // hash = sb.ToString();
+            }
+
+            return hash;
+        }
+
+        /// <summary>
+        /// 获取文件的md5
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static string GetMurmurHash2(byte[] bytes)
+        {
+            var hash32 = MurmurHash2.Hash(bytes, 12345678);
+            return hash32.ToString();
+        }
+
+        #endregion
     }
 }

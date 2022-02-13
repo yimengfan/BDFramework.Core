@@ -3,7 +3,7 @@ CRC: 1867692394
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 620a0a0409722e889ab73317310c41d9
+    Hash: 210ec12919ab45825cb21cdc4f5a5eba
   TypeTreeHash:
     serializedVersion: 2
     Hash: a136c8ea3dbaa7e1bf6892a13884fcb0
@@ -35,4 +35,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/Windows/UFlux/01Component/Component_test01.prefab
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/76c21518bd7f0e64ca49af74a4987cd9
+- E:/Unity3d Project/Github/BDFramework/DevOps/PublishAssets/Android/Art/76c21518bd7f0e64ca49af74a4987cd9

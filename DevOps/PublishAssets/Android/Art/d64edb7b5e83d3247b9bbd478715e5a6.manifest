@@ -3,7 +3,7 @@ CRC: 2532350609
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5e008d1e8ae3d0b7311602c321e111a0
+    Hash: 7fe51249b4cd84ef7cfdcada7e3e2bf9
   TypeTreeHash:
     serializedVersion: 2
     Hash: e36048bbb9197ab44559674e1f6c2697
@@ -21,4 +21,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/AllAssetType/Font1.otf
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/051e691b99a9cb84784ea93c99bcb967
+- E:/Unity3d Project/Github/BDFramework/DevOps/PublishAssets/Android/Art/051e691b99a9cb84784ea93c99bcb967

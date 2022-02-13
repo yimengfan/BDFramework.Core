@@ -6,6 +6,7 @@ using System.Linq;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
 using Cysharp.Text;
+using MurmurHash.Net;
 using ServiceStack.Text;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -239,8 +240,6 @@ namespace BDFramework.VersionContrller
             var serverAssetsInfoWebReq = UnityWebRequest.Get(serverAssetInfosUrl);
             if (!string.IsNullOrEmpty(serverAssetInfosUrl))
             {
-
-
                 for (int i = 0; i < RETRY_COUNT; i++)
                 {
                     yield return serverAssetsInfoWebReq.SendWebRequest();
@@ -262,6 +261,7 @@ namespace BDFramework.VersionContrller
                     yield break;
                 }
             }
+
             /**************处理本地配置*************/
             if (isDownloadSubPackageMode)
             {
@@ -354,8 +354,18 @@ namespace BDFramework.VersionContrller
                     yield return assetDownloadWebReq.SendWebRequest();
                     if (assetDownloadWebReq.error == null)
                     {
-                        BDebug.Log("下载成功：" + serverAssetUrl);
-                        break;
+                        var downloadFileHash = FileHelper.GetMurmurHash3(assetDownloadWebReq.downloadHandler.data);
+                        if (downloadFileHash.ToString() == downloadItem.HashName)
+                        {
+                            BDebug.Log("下载成功：" + serverAssetUrl);
+                            break;
+                        }
+                        else
+                        {
+                            BDebug.LogError("下载失败 hash不一致：server-" + downloadItem.HashName + " local-" + downloadFileHash);
+                        }
+
+                      
                     }
                 }
 

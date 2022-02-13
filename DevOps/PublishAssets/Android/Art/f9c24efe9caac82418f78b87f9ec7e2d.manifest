@@ -3,7 +3,7 @@ CRC: 2295772875
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0742596747de27203f8ba136462b7ab6
+    Hash: 8877743e611620fbe297eb915c643a2a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7652f69dff3dcd0741269161f69220a7
@@ -27,4 +27,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/AllAssetType/Prefab.prefab
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/362a42798cd38c844bb6e946a9266c8a
+- E:/Unity3d Project/Github/BDFramework/DevOps/PublishAssets/Android/Art/362a42798cd38c844bb6e946a9266c8a

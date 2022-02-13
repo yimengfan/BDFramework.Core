@@ -435,17 +435,18 @@ namespace BDFramework.Editor.AssetGraph.Node
                 List<byte> byteList = new List<byte>();
                 byteList.AddRange(assetBytes);
                 byteList.AddRange(metaBytes);
-                //这里为了防止碰撞 考虑Sha256 512 但是速度会更慢
-                var sha1 = SHA256.Create();
-                byte[] retVal = sha1.ComputeHash(byteList.ToArray());
-                //hash
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < retVal.Length; i++)
-                {
-                    sb.Append(retVal[i].ToString("x2"));
-                }
-
-                var hash = sb.ToString();
+                var hash = FileHelper.GetMurmurHash3(byteList.ToArray());
+                // //这里为了防止碰撞 考虑Sha256 512 但是速度会更慢
+                // var sha1 = SHA256.Create();
+                // byte[] retVal = sha1.ComputeHash(byteList.ToArray());
+                // //hash
+                // StringBuilder sb = new StringBuilder();
+                // for (int i = 0; i < retVal.Length; i++)
+                // {
+                //     sb.Append(retVal[i].ToString("x2"));
+                // }
+                //
+                // var hash = sb.ToString();
                 AllfileHashMap[fileName] = hash;
                 return hash;
             }
