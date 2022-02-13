@@ -12,6 +12,7 @@ using Debug = UnityEngine.Debug;
 using BDFramework.DataListener;
 using BDFramework.Editor;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.PublishPipeline;
 using BDFramework.Tool;
 using ILRuntime.Runtime.CLRBinding;
 using UnityEngine.UI;
@@ -21,8 +22,9 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     [MenuItem("BDFrameWork工具箱/1.DLL打包", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_DLL)]
     public static void Open()
     {
-        var window = (EditorWindow_ScriptBuildDll) EditorWindow.GetWindow(typeof(EditorWindow_ScriptBuildDll), false, "DLL打包工具");
+        var window = EditorWindow.GetWindow<EditorWindow_PublishAssets>(false, "发布资源");
         window.Show();
+        window.Focus();
     }
 
     private static string DLLPATH = "/Hotfix/hotfix.dll";

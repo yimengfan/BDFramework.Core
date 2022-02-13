@@ -195,12 +195,12 @@ namespace BDFramework.Editor
         
         [PropertySpace(10)]
         [BoxGroup("DevOps")]
-        [LabelText("AssetBundle SVN地址")]
-        public string AssetBundleSVNUrl = "http://127.0.0.1:20001";
+        [LabelText("资源服务 SVN地址")]
+        public string AssetService_SVNUrl = "http://127.0.0.1:20001";
         [BoxGroup("DevOps")]
         [LabelText("SVN账号")]
-        public string AssetBundleSVNAccount = "root";
+        public string AssetService_SVNAccount = "root";
         [LabelText("SVN密码")]
-        public string AssetBundleSVNPsw = "root";
+        public string AssetService_SVNPSW = "root";
     }
 }

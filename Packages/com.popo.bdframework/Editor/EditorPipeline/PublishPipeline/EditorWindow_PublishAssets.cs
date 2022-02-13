@@ -26,8 +26,7 @@ namespace BDFramework.Editor.PublishPipeline
         [MenuItem("BDFrameWork工具箱/PublishPipeline/1.发布资源", false, (int) BDEditorGlobalMenuItemOrderEnum.PublishPipeline_BuildAsset)]
         public static void Open()
         {
-            var window = EditorWindow.GetWindow<EditorWindow_PublishAssets>(false, "一键构建资源");
-
+            var window = EditorWindow.GetWindow<EditorWindow_PublishAssets>(false, "发布资源");
             window.Show();
             window.Focus();
         }
@@ -42,7 +41,7 @@ namespace BDFramework.Editor.PublishPipeline
             this.editorAsset = new EditorWindow_GenAssetBundle();
             this.editorScript = new EditorWindow_ScriptBuildDll();
 
-            this.minSize = this.maxSize = new Vector2(1050, 800);
+            this.minSize = this.maxSize = new Vector2(1200, 800);
             base.Show();
         }
 
@@ -85,8 +84,8 @@ namespace BDFramework.Editor.PublishPipeline
             }
             GUILayout.EndHorizontal();
 
+            GUILayout.Label("资源发布:");
             EditorGUILayoutEx.Layout_DrawLineH(Color.white);
-
             //绘制一键导出和构建Editor WebServer
             GUILayout.BeginHorizontal();
             OnGUI_OneKeyExprot();

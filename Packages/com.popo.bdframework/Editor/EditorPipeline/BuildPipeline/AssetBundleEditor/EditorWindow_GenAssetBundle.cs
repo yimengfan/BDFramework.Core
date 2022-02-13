@@ -5,6 +5,7 @@ using UnityEngine;
 using BDFramework.Editor.Tools;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
+using BDFramework.Editor.PublishPipeline;
 
 namespace BDFramework.Editor.AssetBundle
 {
@@ -13,8 +14,9 @@ namespace BDFramework.Editor.AssetBundle
         [MenuItem("BDFrameWork工具箱/2.AssetBundle打包", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Assetbundle)]
         public static void Open()
         {
-            var window = EditorWindow.GetWindow<EditorWindow_GenAssetBundle>(false, "AB打包工具");
+            var window = EditorWindow.GetWindow<EditorWindow_PublishAssets>(false, "发布资源");
             window.Show();
+            window.Focus();
         }
 
         /// <summary>
