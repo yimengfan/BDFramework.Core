@@ -99,7 +99,7 @@ namespace BDFramework.Editor
                 }
 
                 //文件信息
-                var fileHash = FileHelper.GetHashFromFile(assetPath);
+                var fileHash = FileHelper.GetHash32(assetPath);
                 var fileInfo = new FileInfo(assetPath);
                 //
                 var abpath = Path.GetFileName(assetPath);

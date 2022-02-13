@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using MurmurHash.Net;
 
 namespace System.IO
 {
@@ -107,26 +108,28 @@ namespace System.IO
         /// <summary>
         /// 获取文件的md5
         /// </summary>
-        /// <param name="fileName"></param>
+        /// <param name="filePath"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static string GetHashFromFile(string fileName)
+        public static string GetHash32(string filePath)
         {
             string hash = "null";
-            if (File.Exists(fileName))
+            if (File.Exists(filePath))
             {
-                var bytes = File.ReadAllBytes(fileName);
-                //这里为了防止碰撞 考虑Sha256 512 但是速度会更慢
-                var sha = SHA256.Create();
-                byte[] retVal = sha.ComputeHash(bytes.ToArray());
-                //hash
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < retVal.Length; i++)
-                {
-                    sb.Append(retVal[i].ToString("x2"));
-                }
-
-                hash = sb.ToString();
+                var bytes = File.ReadAllBytes(filePath);
+                var hash32 = MurmurHash3.Hash32(bytes);
+                return hash32.ToString();
+                // //这里为了防止碰撞 考虑Sha256 512 但是速度会更慢
+                // var sha = SHA256.Create();
+                // byte[] retVal = sha.ComputeHash(bytes.ToArray());
+                // //hash
+                // StringBuilder sb = new StringBuilder();
+                // for (int i = 0; i < retVal.Length; i++)
+                // {
+                //     sb.Append(retVal[i].ToString("x2"));
+                // }
+                //
+                // hash = sb.ToString();
             }
 
             return hash;
