@@ -85,8 +85,14 @@ public class ScriptBuildTools
             EditorUtility.DisplayProgressBar("编译服务", "准备编译环境...", 0.1f);
         }
 
-        //生成CSProj
-        EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
+        try
+        {
+            //生成CSProj
+            EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
+        }
+        catch
+        {
+        }
 
 
         //准备输出环境
@@ -255,7 +261,7 @@ public class ScriptBuildTools
             BuildByRoslyn(dllFiles.ToArray(), hotfixCS.ToArray(), outHotfixDllPath, isdebug, false);
 
             //检测输出的dll是否正确
-            var result = hotfixCS.FirstOrDefault((t) => t.Contains( "UIManager"));
+            var result = hotfixCS.FirstOrDefault((t) => t.Contains("UIManager"));
             if (result == null)
             {
                 Debug.LogError("打包hotfix出错,请检查是否完整收集hotfix相关脚本!  如开启了生成player .csproj等，或删除所有csproj,重启unity重新尝试打包.");

@@ -193,14 +193,30 @@ namespace BDFramework.Editor
             return  IsAutoBuildDll && HotfixCodeFloderType == HotfixCodeFloderTypeEnum.InUnityAssets;
         }
         
+        
+        /// <summary>
+        /// VCS仓库信息
+        /// </summary>
+        [Serializable]
+        public class VCSData
+        {    
+            [LabelText("仓库地址")]
+            public string Url = "http://127.0.0.1:20001";
+            [LabelText("账号")]
+            public string UserName = "root";
+            [LabelText("密码")]
+            public string Psw = "root";
+        }
+
         [PropertySpace(10)]
         [BoxGroup("DevOps")]
-        [LabelText("资源服务 SVN地址")]
-        public string AssetService_SVNUrl = "http://127.0.0.1:20001";
+        [InlineProperty]
+        [LabelText("资源仓库")]
+        public VCSData AssetServiceVCSData = new VCSData();
+        
         [BoxGroup("DevOps")]
-        [LabelText("SVN账号")]
-        public string AssetService_SVNAccount = "root";
-        [LabelText("SVN密码")]
-        public string AssetService_SVNPSW = "root";
+        [InlineProperty]
+        [LabelText("母包仓库")]
+        public VCSData PackageServiceVCSData = new VCSData();
     }
 }

@@ -103,7 +103,7 @@ namespace BDFramework.Editor.AssetBundle
 
             if (GUILayout.Button("收集Keyword[Shader Feature]", GUILayout.Width(200)))
             {
-                ShaderCollection.SimpleGenShaderVariant();
+                ShaderCollection.CollectShaderVariant();
             }
 
             if (GUILayout.Button("一键打包[美术资源]", GUILayout.Width(380), GUILayout.Height(30)))
@@ -147,7 +147,7 @@ namespace BDFramework.Editor.AssetBundle
         public void BuildAssetBundle(string outputPath)
         {
             //搜集keyword
-            ShaderCollection.SimpleGenShaderVariant();
+            ShaderCollection.CollectShaderVariant();
             //打包
             RuntimePlatform platform = RuntimePlatform.Android;
             if (isSelectAndroid)

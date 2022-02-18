@@ -43,11 +43,25 @@ namespace BDFramework.Editor.DevOps
         {
             GUILayout.BeginVertical();
             {
-                GUILayout.Label("CI相关测试:");
                 var devops_setting = BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting;
-                devops_setting.AssetService_SVNUrl = EditorGUILayout.TextField("SVN地址", devops_setting.AssetService_SVNUrl, GUILayout.Width(350));
-                devops_setting.AssetService_SVNAccount = EditorGUILayout.TextField("SVN账号", devops_setting.AssetService_SVNAccount, GUILayout.Width(350));
-                devops_setting.AssetService_SVNPSW = EditorGUILayout.TextField("SVN密码", devops_setting.AssetService_SVNPSW, GUILayout.Width(350));
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.BeginVertical();
+                    GUILayout.Label("资源仓库地址:");
+
+                    devops_setting.AssetServiceVCSData.Url = EditorGUILayout.TextField("地址", devops_setting.AssetServiceVCSData.Url, GUILayout.Width(350));
+                    devops_setting.AssetServiceVCSData.UserName = EditorGUILayout.TextField("账号", devops_setting.AssetServiceVCSData.UserName, GUILayout.Width(350));
+                    devops_setting.AssetServiceVCSData.Psw = EditorGUILayout.TextField("密码", devops_setting.AssetServiceVCSData.Psw, GUILayout.Width(350));
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginVertical();
+                    GUILayout.Label("母包仓库地址:");
+                    devops_setting.PackageServiceVCSData.Url = EditorGUILayout.TextField("地址", devops_setting.PackageServiceVCSData.Url, GUILayout.Width(350));
+                    devops_setting.PackageServiceVCSData.UserName = EditorGUILayout.TextField("账号", devops_setting.PackageServiceVCSData.UserName, GUILayout.Width(350));
+                    devops_setting.PackageServiceVCSData.Psw = EditorGUILayout.TextField("密码", devops_setting.PackageServiceVCSData.Psw, GUILayout.Width(350));
+                    GUILayout.EndHorizontal();
+                }
+                GUILayout.EndHorizontal();
 
                 GUILayout.Space(20);
 
@@ -74,14 +88,15 @@ namespace BDFramework.Editor.DevOps
                                 GUIUtility.systemCopyBuffer = ciName;
                                 EditorUtility.DisplayDialog("提示", "复制成功!\n" + cim.Name, "OK");
                             }
+
                             if (GUILayout.Button("执行", GUILayout.Width(50)))
                             {
-                               var ret= EditorUtility.DisplayDialog("提示", "是否执行:" + cim.Name, "OK","Cancel");
-                               if (ret)
-                               {
-                                   //执行
-                                   cim.Invoke(null, new object[] { });
-                               }
+                                var ret = EditorUtility.DisplayDialog("提示", "是否执行:" + cim.Name, "OK", "Cancel");
+                                if (ret)
+                                {
+                                    //执行
+                                    cim.Invoke(null, new object[] { });
+                                }
                             }
                         }
                         GUILayout.EndHorizontal();
@@ -89,8 +104,8 @@ namespace BDFramework.Editor.DevOps
                 }
                 EditorGUILayout.EndScrollView();
                 EditorGUILayoutEx.Layout_DrawLineH(Color.white);
-                
-                
+
+
                 GUILayout.Space(10);
                 EditorGUILayoutEx.Layout_DrawLineH(Color.white);
 
