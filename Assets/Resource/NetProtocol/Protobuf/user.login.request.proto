@@ -1,6 +1,5 @@
 syntax="proto3";
-//用户登录请求proto结构
-package com.xiaoxing.proto;
+package com.user.login;
 option java_outer_classname = "UserLoginRequestEntity";
 
 message UserLoginRequest {

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using BDFramework.Core.Tools;
-using BDFramework.Editor.HotfixPipeline;
 using UnityEditor;
 
 namespace BDFramework.Editor.Protocol
@@ -14,8 +13,12 @@ namespace BDFramework.Editor.Protocol
     {
         private static readonly string protoPath = BDApplication.ProjectRoot + "/Assets/Resource/NetProtocol/Protobuf/";
         private static readonly string classPath = BDApplication.ProjectRoot + "/Assets/Code/Game/NetProtocol/Protobuf/";
-        private static readonly string cachePath = BDApplication.BDEditorCachePath + "/ProtoCache/";
+        private static readonly string cacheProtoPath = BDApplication.BDEditorCachePath + "/ProtoCache/Proto/";
+        private static readonly string cacheScriptPath = BDApplication.BDEditorCachePath + "/ProtoCache/Script/";
         private static readonly string execPath = BDApplication.ProjectRoot + "/Packages/com.popo.bdframework/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
+        /// <summary>
+        /// 全局父命名空间
+        /// </summary>
         private static readonly string prefixName = "Com";
         
         [MenuItem("BDFrameWork工具箱/4.网络协议/Protobuf->生成Class", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_NetProtocol_Proto2Class)]
@@ -23,74 +26,96 @@ namespace BDFramework.Editor.Protocol
         {
             // 重新创建文件夹 确保不会产生冲突
             RebuildDirectory(classPath);
-            RebuildDirectory(cachePath);
+            RebuildDirectory(cacheProtoPath);
+            RebuildDirectory(cacheScriptPath);
 
-            var protoPaths = GetProtoAndCopyFiles(protoPath);
-            foreach (var toPath in protoPaths)
-            {
-                if (ReplaceNamespace(toPath))
-                {
-                    RunProtobufExe(toPath);
-                }
-            }
+            CopyAllProtoToCachePath();
+            // 生成主工程脚本
+            ReplaceGenScript(prefixName);
+            // 生成热更层脚本
+            ReplaceGenScript(prefixName + ".hotfix", "@hotfix");
             
             AssetDatabase.Refresh();
-            BDebug.Log("Protobuf 转换完成");
+            BDebug.LogError("Protobuf 转换完成");
+        }
+
+        /// <summary>
+        /// 复制所有Proto文件到缓存目录
+        /// </summary>
+        private static void CopyAllProtoToCachePath()
+        {
+            var protoPaths = Directory.GetFiles(protoPath, "*.proto", SearchOption.AllDirectories);
+            foreach (var filePath in protoPaths)
+            {
+                var fileName = Path.GetFileName(filePath);
+                var newFilePath = Path.Combine(cacheProtoPath, fileName);
+                File.Copy(filePath, newFilePath);
+            }
         }
         
         /// <summary>
-        /// 缓存区替换proto命名空间
+        /// 替换Proto命名空间并生成脚本
         /// </summary>
-        private static bool ReplaceNamespace(string filePath)
+        private static void ReplaceGenScript(string replace, string suffix = "")
         {
-            var newFilePath = Path.Combine(cachePath, Path.GetFileName(filePath));
-            var _namespace = Path.GetFileNameWithoutExtension(filePath);
-            
-            // 文件名是否符合命名规范(namespace.xxx.proto)
-            if (_namespace.Contains(".response") || _namespace.Contains(".request"))
+            var copyProtoPath = Directory.GetFiles(cacheProtoPath, "*.proto", SearchOption.AllDirectories).ToList();
+            foreach (var filePath in copyProtoPath)
             {
-                _namespace = _namespace.Replace(".response", "");
-                _namespace = _namespace.Replace(".request", "");
+                var fileName = Path.GetFileNameWithoutExtension(filePath);
+                var newFilePath = $"{cacheProtoPath}/{fileName}.proto";
                 
-                if (string.IsNullOrEmpty(_namespace))
-                {
-                    BDebug.Log($"{_namespace} 不符合命名规范!");
-                    return false;
-                }
+                var genFileName = fileName.Replace(".", "");
+                var genFilePath = $"{cacheScriptPath}/{genFileName}.cs";
                 
-                _namespace = $"{prefixName}.{_namespace}";
+                ReplacePackageWriteText(newFilePath, replace);
+                RunProtoc2Class(newFilePath, cacheProtoPath, cacheScriptPath);
+                File.Move(genFilePath, $"{classPath}{fileName}{suffix}.cs");
             }
-            else
-            {
-                // 解决 因非url package 问题
-                _namespace = prefixName;
-            }
-            
-            // 替换proto包名 对应 生成的Class名
-            var regex = new Regex(@"(?<=package ).*?(?=;)");
+        }
+        
+        /// <summary>
+        /// 正则匹配写入文件
+        /// </summary>
+        private static void ReplacePackageWriteText(string filePath, string replace)
+        {
+            var packageRegex = new Regex(@"(?<=package ).*?(?=;)");
             var lines = File.ReadLines(filePath).ToArray();
             for (int i = 0; i < lines.Length; i++)
             {
-                var package = regex.Match(lines[i]).Value;
+                var package = RegexReplace(packageRegex, lines[i], replace);
                 if (!string.IsNullOrEmpty(package))
                 {
-                    lines[i] = lines[i].Replace(package, _namespace);
+                    lines[i] = package;
                     break;
                 }
             }
             
-            File.WriteAllLines(newFilePath, lines);
-            return true;
+            File.WriteAllLines(filePath, lines);
         }
+        
+        /// <summary>
+        /// 正则匹配替换字符串
+        /// </summary>
+        private static string RegexReplace(Regex regex, string str, string replace)
+        {
+            var match =  regex.Match(str).Value;
+            if (!string.IsNullOrEmpty(match))
+            {
+                var substring = match.Substring(prefixName.Length);
+                return str.Replace(match, $"{replace}{substring}");
+            }
 
+            return null;
+        }
+        
         /// <summary>
         /// 执行proto转换程序
         /// </summary>
-        private static void RunProtobufExe(string filePath)
+        private static void RunProtoc2Class(string filePath, string protoPath, string scriptPath)
         {
             var fileName = Path.GetFileName(filePath);
 
-            var args = $" --csharp_out={cachePath} --proto_path={cachePath} {fileName}";
+            var args = $" --csharp_out={scriptPath} --proto_path={protoPath} {fileName}";
             Process process = new Process();
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.FileName = execPath;;
@@ -99,87 +124,18 @@ namespace BDFramework.Editor.Protocol
             process.Start();
             process.WaitForExit();
             process.Close();
-            
-            // 提取相对路径
-            var newPath = filePath.Replace(cachePath, "");
-            newPath = newPath.Replace(fileName, "");
-            ReplaceFileName(fileName, classPath + newPath);
         }
-
-        /// <summary>
-        /// 替换生成的class 文件名
-        /// </summary>
-        private static void ReplaceFileName(string fileName, string outputPath)
-        {
-            CheckDirectory(outputPath);
-            
-            var directoryInfo = new DirectoryInfo(cachePath);
-            var fileInfos = directoryInfo.GetFiles("*.cs");
-            if (fileInfos.Length > 0)
-            {
-                var fileInfo = fileInfos[0];
-                if (fileInfo.Exists)
-                {
-                    //获取热更config
-                    var config = HotfixPipelineTools.HotfixFileConfig.GetConfig("proto");
-                    
-                    var newName = fileName.Replace(".proto", ".cs");
-                    //判断配置是否热更
-                    if (config.IsHotfixFile(fileName))
-                    {
-                        newName = fileName.Replace(".proto", "@hotfix.cs");
-                    }
-
-                    var newPath = Path.Combine(outputPath, newName);
-                    
-                    fileInfo.MoveTo(newPath);
-                }
-            }
-        }
-
+        
         /// <summary>
         /// 重新生成目录
         /// </summary>
         private static void RebuildDirectory(string path)
         {
-            var directoryInfo = new DirectoryInfo(path);
-            if (directoryInfo.Exists)
+            if (Directory.Exists(path))
             {
-                directoryInfo.Delete(true);
+                Directory.Delete(path, true);
             }
             Directory.CreateDirectory(path);
-        }
-        
-        /// <summary>
-        /// 创建目录
-        /// </summary>
-        private static void CheckDirectory(string path)
-        { 
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-        }
-        
-        /// <summary>
-        /// 获取目录下所有proto 并复制到缓存目录
-        /// </summary>
-        private static List<string> GetProtoAndCopyFiles(string folderPath)
-        {
-            List<string> protoList = new List<string>();
-            if (Directory.Exists(folderPath))
-            {
-                DirectoryInfo directoryInfo = new DirectoryInfo(folderPath);
-                FileInfo[] fileInfos = directoryInfo.GetFiles("*", SearchOption.AllDirectories);
-                foreach (var fileInfo in fileInfos)
-                {
-                    var destFileName = cachePath + fileInfo.Name;
-                    fileInfo.CopyTo(destFileName);
-                    protoList.Add(destFileName);
-                }
-            }
-
-            return protoList;
         }
     }
 }
