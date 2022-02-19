@@ -3,7 +3,7 @@ A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 
 ##V2.1.0-preview.2
 -部分编辑器配合重构到DevOps工作流
-
+-增加excel2class对热更配置的支持
 
 ##V2.1.0-preview.1
 -整理DevOps、添加CI、CD工作流
