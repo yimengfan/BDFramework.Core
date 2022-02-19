@@ -21,9 +21,12 @@ namespace BDFramework.Editor.TableData
     {
         //旧目录,会被新目录替代
         private static string OldGameTableCodePath = "Assets/Code/Game@hotfix/Table";
+
         private static string OldGameResourceTableCodePath = "Assets/Resource_SVN/Table/Code@hotfix";
+
         //程序目录
         private static string GameTableCodePath = "Assets/Code/Game/Table";
+
         //策划or美术目录
         private static string GameResourceTableCodePath = "Assets/Resource_SVN/Table/Code";
 
@@ -39,8 +42,9 @@ Excel格式如下:
             {
                 if (Directory.Exists(OldGameTableCodePath))
                 {
-                    Directory.Delete(OldGameTableCodePath,true);
+                    Directory.Delete(OldGameTableCodePath, true);
                 }
+
                 GenCode(GameTableCodePath);
             }
         }
@@ -57,8 +61,9 @@ Excel格式如下:
             {
                 if (Directory.Exists(OldGameResourceTableCodePath))
                 {
-                    Directory.Delete(OldGameResourceTableCodePath,true);
+                    Directory.Delete(OldGameResourceTableCodePath, true);
                 }
+
                 GenCode(GameResourceTableCodePath);
             }
         }
@@ -154,18 +159,33 @@ Excel格式如下:
                 //获取热更config
                 var config = HotfixPipelineTools.HotfixFileConfig.GetConfig("excel");
                 //判断配置是否热更
-                if (config.IsHotfixFile(excelFilePath))
+                var outputHotfixFile = Path.Combine(outputFile, Path.GetFileName(excelFilePath) + "@hotfix.cs");
+                outputFile = Path.Combine(outputFile, Path.GetFileName(excelFilePath) + ".cs");
+
+                //删除旧文件
+                if (File.Exists(outputHotfixFile))
                 {
-                    outputFile = Path.Combine(outputFile, Path.GetFileName(excelFilePath) + "@hotfix.cs");
+                    File.Delete(outputHotfixFile);
+                }
+                if (File.Exists(outputFile))
+                {
+                    File.Delete(outputFile);
+                }
+
+                //写入
+                if (config != null && config.IsHotfixFile(excelFilePath))
+                {
+                    FileHelper.WriteAllText(outputHotfixFile, clsContent);
+                    Debug.LogFormat("<color=red> [{0} 成功@hotfix] </color>：{1}", @namespace, excelFilePath);
                 }
                 else
                 {
-                    outputFile = Path.Combine(outputFile, Path.GetFileName(excelFilePath) + ".cs");
+                    FileHelper.WriteAllText(outputFile, clsContent);
+                    Debug.LogFormat("<color=green> [{0} 成功@main] </color>：{1}", @namespace, excelFilePath);
                 }
-                FileHelper.WriteAllText(outputFile, clsContent);
 
 
-                Debug.LogFormat("<color=red> [{0} 成功] </color>：{1}", @namespace, excelFilePath);
+               
             }
             else
             {
@@ -230,11 +250,13 @@ Excel格式如下:
             {
                 return false;
             }
+
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             if (!path.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
+
             return true;
         }
 
@@ -254,11 +276,13 @@ Excel格式如下:
             {
                 return false;
             }
+
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             if (!path.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
+
             return true;
         }
 

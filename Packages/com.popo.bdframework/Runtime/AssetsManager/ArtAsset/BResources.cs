@@ -140,11 +140,12 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
-        /// 同步加载ALL
+        /// 同步加载文件夹下所有资源ALL
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
         /// <returns></returns>
+        [Obsolete("已废弃,不建议项目使用!")]
         public static T[] LoadALL<T>(string name) where T : UnityEngine.Object
         {
             if (string.IsNullOrEmpty(name)) return null;

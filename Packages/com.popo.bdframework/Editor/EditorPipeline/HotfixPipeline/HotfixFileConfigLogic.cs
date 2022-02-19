@@ -27,12 +27,12 @@ namespace BDFramework.Editor.HotfixPipeline
                 /// <summary>
                 /// 文件夹路径
                 /// </summary>
-                public string FloderPath="null";
+                public string FloderPath = "null";
 
                 /// <summary>
                 /// 文件后缀名
                 /// </summary>
-                public string FileExtensionName=".xls";
+                public string FileExtensionName = ".xls";
             }
 
             public enum DefeaultConfigTypeEnum
@@ -40,20 +40,21 @@ namespace BDFramework.Editor.HotfixPipeline
                 /// <summary>
                 /// 热更
                 /// </summary>
-                热更,
+                Hotfix,
 
                 /// <summary>
                 /// 非热更
                 /// </summary>
-                非热更,
+                NotHotfix,
             }
+
 
             /// <summary>
             /// 默认配置类型
             /// 默认hotfix 排除的文件则为nothotfix
             /// 默认为notHotfix 排除的文件则为hotfix
             /// </summary>
-            public DefeaultConfigTypeEnum DefeaultConfigType = DefeaultConfigTypeEnum.热更;
+            public DefeaultConfigTypeEnum DefeaultConfigType = DefeaultConfigTypeEnum.Hotfix;
 
             /// <summary>
             /// Tag
@@ -63,27 +64,33 @@ namespace BDFramework.Editor.HotfixPipeline
 
             /// <summary>
             /// 文件夹列表
+            /// 这里public 仅为序列化用，不建议直接使用
             /// </summary>
-            private List<FloderFilter> filterFloderList { get; set; } = new List<FloderFilter>();
-
-            public FloderFilter[] GetFloderFilters()
-            {
-                return this.filterFloderList.ToArray();
-            }
+            public List<FloderFilter> FilterFloderList { get; set; } = new List<FloderFilter>();
 
             /// <summary>
             /// 排除文件
             /// </summary>
-            private List<string> filterFileList { get; set; } = new List<string>();
+            public List<string> FilterFileList { get; set; } = new List<string>();
+
+            /// <summary>
+            /// 获取文件夹
+            /// </summary>
+            /// <returns></returns>
+            public FloderFilter[] GetFloderFilters()
+            {
+                return this.FilterFloderList.ToArray();
+            }
+
 
             /// <summary>
             /// 添加筛除的文件
             /// </summary>
             /// <param name="Tag"></param>
             /// <param name="filePath"></param>
-            public void AddFilterFile(string filePath)
+            private void AddFilterFile(string filePath)
             {
-                this.filterFileList.Add(filePath);
+                this.FilterFileList.Add(filePath);
             }
 
             /// <summary>
@@ -91,9 +98,51 @@ namespace BDFramework.Editor.HotfixPipeline
             /// </summary>
             /// <param name="Tag"></param>
             /// <param name="filePath"></param>
-            public void RemoveFilterFile(string filePath)
+            private void RemoveFilterFile(string filePath)
             {
-                this.filterFileList.Remove(filePath);
+                this.FilterFileList.Remove(filePath);
+            }
+
+
+            /// <summary>
+            /// 添加hotfix文件
+            /// </summary>
+            public void AddHotfixFile(string filePath)
+            {
+                switch (this.DefeaultConfigType)
+                {
+                    case DefeaultConfigTypeEnum.Hotfix:
+                    {
+                        this.RemoveFilterFile(filePath);
+                    }
+                        break;
+                    case DefeaultConfigTypeEnum.NotHotfix:
+                    {
+                        this.AddFilterFile(filePath);
+                    }
+                        break;
+                }
+            }
+
+
+            /// <summary>
+            /// 移除hotfix文件
+            /// </summary>
+            public void RemoveHotfixFile(string filePath)
+            {
+                switch (this.DefeaultConfigType)
+                {
+                    case DefeaultConfigTypeEnum.Hotfix:
+                    {
+                        this.AddFilterFile(filePath);
+                    }
+                        break;
+                    case DefeaultConfigTypeEnum.NotHotfix:
+                    {
+                        this.RemoveFilterFile(filePath);
+                    }
+                        break;
+                }
             }
 
 
@@ -105,14 +154,18 @@ namespace BDFramework.Editor.HotfixPipeline
             {
                 //搜集所有目录下的文件
                 List<string> fileList = new List<string>();
-                foreach (var floderFilter in this.filterFloderList)
+                foreach (var floderFilter in this.FilterFloderList)
                 {
                     if (Directory.Exists(floderFilter.FloderPath))
                     {
                         var files = Directory.GetFiles(floderFilter.FloderPath, "*", SearchOption.AllDirectories).Where((f) => f.EndsWith(floderFilter.FileExtensionName, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                        for (int i = 0; i < files.Count; i++)
+                        {
+                            files[i]=files[i].Replace("\\","/");
+                        }
                         fileList.AddRange(files);
                     }
-
                 }
 
                 return fileList;
@@ -126,17 +179,17 @@ namespace BDFramework.Editor.HotfixPipeline
             {
                 var fileList = GetFloderFiles();
 
-                if (this.DefeaultConfigType == DefeaultConfigTypeEnum.热更)
+                if (this.DefeaultConfigType == DefeaultConfigTypeEnum.Hotfix)
                 {
-                    var hotfixFiles = fileList.Except(this.filterFileList);
+                    var hotfixFiles = fileList.Except(this.FilterFileList);
                     return hotfixFiles.Select((f) => f).ToArray();
                 }
-                else  if (this.DefeaultConfigType == DefeaultConfigTypeEnum.非热更)
+                else if (this.DefeaultConfigType == DefeaultConfigTypeEnum.NotHotfix)
                 {
-                    return this.filterFileList.Select((f) => f).ToArray();
+                    return this.FilterFileList.Select((f) => f).ToArray();
                 }
-                
-                return new string[]{};
+
+                return new string[] { };
             }
 
             /// <summary>
@@ -147,17 +200,16 @@ namespace BDFramework.Editor.HotfixPipeline
             {
                 var fileList = GetFloderFiles();
 
-                if (this.DefeaultConfigType == DefeaultConfigTypeEnum.非热更)
+                if (this.DefeaultConfigType == DefeaultConfigTypeEnum.NotHotfix)
                 {
-                    var hotfixFiles = fileList.Except(this.filterFileList);
-                    return hotfixFiles.Select((f) => Path.GetFileName(f)).ToArray();
+                    var hotfixFiles = fileList.Except(this.FilterFileList);
+                    return hotfixFiles.Select((f) => f).ToArray();
                 }
-                else  if (this.DefeaultConfigType == DefeaultConfigTypeEnum.热更)
+                else if (this.DefeaultConfigType == DefeaultConfigTypeEnum.Hotfix)
                 {
-                    return this.filterFileList.Select((f) => Path.GetFileName(f)).ToArray();
+                    return this.FilterFileList.Select((f) => f).ToArray();
                 }
-
-                return new string[]{};
+                return new string[] { };
             }
 
 
@@ -167,22 +219,22 @@ namespace BDFramework.Editor.HotfixPipeline
             /// <returns></returns>
             public bool IsHotfixFile(string filePath)
             {
-                filePath = Path.GetFileName(filePath);
-
-                //默认热更，则为排除文件
-                if (this.DefeaultConfigType == DefeaultConfigTypeEnum.热更)
+                filePath = filePath.Replace("\\", "/").Replace(Application.dataPath, "Assets");
+                //默认热更，排除文件=非热更文件
+                if (this.DefeaultConfigType == DefeaultConfigTypeEnum.Hotfix)
                 {
-                    return this.filterFileList.Contains(filePath);
+                    var ret = this.FilterFileList.FirstOrDefault((f) => f.Equals(filePath, StringComparison.OrdinalIgnoreCase));
+                    return ret==null;
                 }
-                //默认非热更，则不为排除文件
-                else if (this.DefeaultConfigType == DefeaultConfigTypeEnum.非热更)
+                //默认非热更，排除文件=热更文件
+                else if (this.DefeaultConfigType == DefeaultConfigTypeEnum.NotHotfix)
                 {
-                    return !this.filterFileList.Contains(filePath);
+                    var ret = this.FilterFileList.FirstOrDefault((f) => f.Equals(filePath, StringComparison.OrdinalIgnoreCase));
+                    return ret!=null;
                 }
 
                 return false;
             }
-
 
 
             /// <summary>
@@ -192,35 +244,35 @@ namespace BDFramework.Editor.HotfixPipeline
             /// <param name="extName"></param>
             public void AddFolderFilter(string folder, string extName)
             {
-                this.filterFloderList.Add(new FloderFilter()
+                this.FilterFloderList.Add(new FloderFilter()
                 {
                     FloderPath = folder,
-                    FileExtensionName =  extName
+                    FileExtensionName = extName
                 });
             }
-            
+
             /// <summary>
             /// 移除目录
             /// </summary>
             public void RemoveFloderFilter(string folder)
             {
-                var idx = this.filterFloderList.FindIndex((f) => f.FloderPath.Equals(folder, StringComparison.OrdinalIgnoreCase));
+                var idx = this.FilterFloderList.FindIndex((f) => f.FloderPath.Equals(folder, StringComparison.OrdinalIgnoreCase));
 
                 //移除排除文件
-                for (int i = this.filterFileList.Count - 1; i >= 0; i--)
+                for (int i = this.FilterFileList.Count - 1; i >= 0; i--)
                 {
-                    var file = this.filterFileList[i];
-                    
+                    var file = this.FilterFileList[i];
+
                     if (file.StartsWith(folder, StringComparison.OrdinalIgnoreCase))
                     {
-                        this.filterFileList.RemoveAt(i);
+                        this.FilterFileList.RemoveAt(i);
                     }
                 }
 
                 //移除自身
                 if (idx >= 0)
                 {
-                    this.filterFloderList.RemoveAt(idx);
+                    this.FilterFloderList.RemoveAt(idx);
                 }
             }
         }
