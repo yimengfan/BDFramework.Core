@@ -75,6 +75,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\EditorWindow_GenAssetBundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\ShaderCollection.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\ShaderVariantsCollectionTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\BuildPackageTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\ScriptEditor\EditorWindow_ScriptBuildDll.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\ScriptEditor\GenAdapter.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\ScriptEditor\ScriptBuildTools.cs" />
@@ -93,7 +94,6 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\EditorWindow_HotfixFileSetting.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\HotfixFileConfigLogic.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\HotfixPipelineTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\BuildPackageTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\ABDFrameworkPublishPipelineBehaviour.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\BDFrameworkPublishPipelineHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorHttpListener.cs" />

@@ -308,9 +308,8 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             var buildTarget = BDApplication.GetBuildTarget(platform);
             var buildOpa = BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.DeterministicAssetBundle;
-
-            BuildPipeline.BuildAssetBundles(abOutputPath, buildOpa, buildTarget);
-
+            
+            UnityEditor.BuildPipeline.BuildAssetBundles(abOutputPath, buildOpa, buildTarget);
             Debug.LogFormat("【编译AssetBundle】 output:{0} ,buildTarget:{1}", abOutputPath, buildTarget.ToString());
             // }
             // catch (Exception e)

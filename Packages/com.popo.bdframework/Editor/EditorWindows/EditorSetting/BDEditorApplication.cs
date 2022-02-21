@@ -24,7 +24,6 @@ namespace BDFramework.Editor
         /// </summary>
         static public BDFrameworkEditorStatus EditorStatus { get; set; }
         
-        
         /// <summary>
         /// 初始化
         /// </summary>

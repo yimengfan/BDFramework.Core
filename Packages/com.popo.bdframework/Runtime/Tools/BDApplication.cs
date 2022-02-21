@@ -73,13 +73,19 @@ namespace BDFramework.Core.Tools
         /// </summary>
         public static string DevOpsPublishAssetsPath { get; private set; }
         /// <summary>
-        /// Devops 配置文件路径
-        /// </summary>
-        public static string DevOpsConfigPath { get; private set; }
-        /// <summary>
         /// 发布包体路径
         /// </summary>
         public static string DevOpsPublishPackagePath { get; private set; }
+        /// <summary>
+        /// Devops 配置文件路径
+        /// </summary>
+        public static string DevOpsConfigPath { get; private set; }
+
+        /// <summary>
+        /// Devops CI路径
+        /// </summary>
+        public static string DevOpsCIPath { get; private set; }
+        
         /// <summary>
         /// 编辑器缓存目录
         /// </summary>
@@ -101,6 +107,7 @@ namespace BDFramework.Core.Tools
             DevOpsPublishAssetsPath  = DevOpsPath + "/PublishAssets";
             DevOpsPublishPackagePath =  DevOpsPath + "/PublishPackages";
             DevOpsConfigPath = DevOpsPath + "/Config";
+            DevOpsCIPath = DevOpsPath + "/CI";
         }
 
         /// <summary>

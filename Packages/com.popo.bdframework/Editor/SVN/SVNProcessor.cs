@@ -191,7 +191,16 @@ namespace BDFramework.Editor.SVN
             cmdList.Add(cmd);
         }
 
-        Process svnProcess = null;
+        /// <summary>
+        /// 获取最新版本号
+        /// </summary>
+        /// <returns></returns>
+        public string GetLeastVersion()
+        {
+            return "";
+        }
+
+            Process svnProcess = null;
         /// <summary>
         /// 执行SVN命令
         /// </summary>
@@ -225,7 +234,7 @@ namespace BDFramework.Editor.SVN
             {
                 if (!string.IsNullOrEmpty(e.Data))
                 {
-                    Debug.LogError("[Error]" + e.Data);
+                    Debug.Log("[Error]" + e.Data);
                 }
             };
 

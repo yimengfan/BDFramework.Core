@@ -17,52 +17,52 @@ namespace BDFramework.Editor
 
         public enum PageType
         {
-            工作流,
+            DevOps,
 
-            资源构建,
+            HotfixPipeline,
 
-            打包设置
+            BuildPipeline
         }
 
 
         [EnumToggleButtons]
-        public PageType pageType = PageType.工作流;
+        public PageType pageType = PageType.DevOps;
 
 
-        [ShowIf(nameof(pageType), PageType.工作流)]
+        [ShowIf(nameof(pageType), PageType.DevOps)]
         [BoxGroup("DevOps设置")]
         [HideLabel]
         [InlineProperty]
         public DevOpsSetting DevOpsSetting = new DevOpsSetting();
 
-        [ShowIf(nameof(pageType), PageType.资源构建)]
+        [ShowIf(nameof(pageType), PageType.HotfixPipeline)]
         [BoxGroup("资源设置")]
         [HideLabel]
         [InlineProperty]
         public BuildAssetConfig BuildAssetBundle = new BuildAssetConfig();
 
 
-        [ShowIf(nameof(pageType), PageType.打包设置)]
+        [ShowIf(nameof(pageType), PageType.BuildPipeline)]
         [BoxGroup("Android设置")]
         [HideLabel]
         [InlineProperty]
         public AndroidConfig Android = new AndroidConfig();
 
 
-        [ShowIf(nameof(pageType), PageType.打包设置)]
+        [ShowIf(nameof(pageType), PageType.BuildPipeline)]
         [BoxGroup("Ios设置")]
         [HideLabel]
         [InlineProperty]
         public IosConfig IOSConfig = new IosConfig();
 
 
-        [ShowIf(nameof(pageType), PageType.打包设置)]
+        [ShowIf(nameof(pageType), PageType.BuildPipeline)]
         [BoxGroup("Android设置[debug]")]
         [HideLabel]
         [InlineProperty]
         public AndroidConfig AndroidDebug = new AndroidConfig();
 
-        [ShowIf(nameof(pageType), PageType.打包设置)]
+        [ShowIf(nameof(pageType), PageType.BuildPipeline)]
         [BoxGroup("Ios设置[debug]")]
         [HideLabel]
         [InlineProperty]
@@ -124,7 +124,7 @@ namespace BDFramework.Editor
     public class AndroidConfig
     {
         [LabelText("Keystore路径")]
-        [FilePath(ParentFolder = "../",Extensions = "keystore")]
+        [FilePath(ParentFolder = "",Extensions = "keystore")]
         public string keystoreName;
 
         [LabelText("Keystore密码")]

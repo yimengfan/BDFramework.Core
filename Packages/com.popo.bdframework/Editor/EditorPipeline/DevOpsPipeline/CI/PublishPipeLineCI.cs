@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
+using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.Editor.PublishPipeline;
 using BDFramework.Editor.SVN;
@@ -135,7 +136,10 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包Android-Debug")]
         static public void PublishPackage_AndroidDebug()
         {
+            //更新
+
             BuildPackage(RuntimePlatform.Android, BuildPackageTools.BuildMode.Debug);
+
         }
 
         /// <summary>
@@ -144,7 +148,9 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包Android-Release")]
         static public void PublishPackage_AndroidRelease()
         {
+
             BuildPackage(RuntimePlatform.Android, BuildPackageTools.BuildMode.Release);
+
         }
 
         /// <summary>
@@ -153,7 +159,9 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包iOS-Debug")]
         static public void PublishPackage_iOSDebug()
         {
+
             BuildPackage(RuntimePlatform.IPhonePlayer, BuildPackageTools.BuildMode.Debug);
+
         }
 
         /// <summary>
@@ -162,7 +170,9 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包iOS-Release")]
         static public void PublishPackage_iOSRelease()
         {
+
             BuildPackage(RuntimePlatform.IPhonePlayer, BuildPackageTools.BuildMode.Release);
+
         }
 
 
@@ -171,37 +181,41 @@ namespace BDFramework.Editor.DevOps
         /// </summary>
         static private void BuildPackage(RuntimePlatform platform, BuildPackageTools.BuildMode buildMode)
         {
-            var localPath = string.Format("{0}/{1}/Art", CI_ASSETS_PATH, BDApplication.GetPlatformPath(platform));
-            //1.下载资源已有、Sql
-
-            //2.打包dll
-            ScriptBuildTools.BuildMode mode = buildMode == BuildPackageTools.BuildMode.Debug ? ScriptBuildTools.BuildMode.Debug : ScriptBuildTools.BuildMode.Release;
-            EditorWindow_ScriptBuildDll.RoslynBuild(CI_ASSETS_PATH, platform, mode);
-            //3.构建空包即可
-
+            //默认下载svn管理的仓库
+            SVNUpdate(AssetsSvnProcessor);
+            //更新包体仓库
+            SVNUpdate(PackageSvnProcessor);
+            // var localPath = string.Format("{0}/{1}/Art", CI_ASSETS_PATH, BDApplication.GetPlatformPath(platform));
+            // //1.下载资源已有、Sql
+            // //2.打包dll
+            // ScriptBuildTools.BuildMode mode = buildMode == BuildPackageTools.BuildMode.Debug ? ScriptBuildTools.BuildMode.Debug : ScriptBuildTools.BuildMode.Release;
+            // EditorWindow_ScriptBuildDll.RoslynBuild(CI_ASSETS_PATH, platform, mode);
+            // //3.构建空包即可
             //构建资源
-            if (platform == RuntimePlatform.Android)
-            {
-                BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
-            }
-            else if (platform == RuntimePlatform.IPhonePlayer)
-            {
-                BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
-            }
-
-
+            // if (platform == RuntimePlatform.Android)
+            // {
+            //     BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
+            // }
+            // else if (platform == RuntimePlatform.IPhonePlayer)
+            // {
+            //     BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
+            // }
             //加载配置
             BuildPackageTools.LoadConfig(buildMode);
             //
             if (platform == RuntimePlatform.Android)
             {
-                BuildPackageTools.BuildAPK(buildMode, BDApplication.DevOpsPublishPackagePath);
+                var outpath = IPath.Combine(CI_PACKAGE_PATH, BDApplication.GetPlatformPath(RuntimePlatform.Android));
+                BuildPackageTools.BuildAPK(buildMode, outpath);
             }
             else if (platform == RuntimePlatform.IPhonePlayer)
             {
                 //构建xcode
-                BuildPackageTools.BuildIpa(buildMode, BDApplication.DevOpsPublishPackagePath);
+                var outpath = IPath.Combine(CI_PACKAGE_PATH, BDApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer));
+                BuildPackageTools.BuildIpa(buildMode, outpath);
             }
+            
+            SVNCommit(PackageSvnProcessor);
         }
 
         #endregion
