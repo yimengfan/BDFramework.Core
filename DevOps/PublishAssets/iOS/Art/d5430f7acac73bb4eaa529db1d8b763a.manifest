@@ -1,0 +1,43 @@
+ManifestFileVersion: 0
+CRC: 2736160900
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 1e963641cfd175034f05d60f2b2e5ffb
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 69ecd4052c6917b17b4f252f71d8c8e8
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/Windows/window_demo5_SpriteAtlas.prefab
+Dependencies:
+- E:/BDFrameworkMaster/DevOps/PublishAssets/iOS/Art/36c26bcd10b840e4f9868d6a6b9b6b37
+- E:/BDFrameworkMaster/DevOps/PublishAssets/iOS/Art/ec429a586bfac5f4284f3a31749303e7

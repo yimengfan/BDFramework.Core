@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1909969869
+CRC: 2658604699
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: db90dda49018d4d9e6c45133b85e111f
+    Hash: 24c29f412685ab9f97a2d41d686a58eb
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 05833362ce7ad1bd7c6766baa565d54a
+    Hash: 69ecd4052c6917b17b4f252f71d8c8e8
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -22,9 +22,9 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -39,5 +39,5 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/Windows/window_demo5_SpriteAtlas.prefab
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework/DevOps/PublishAssets/Android/Art/36c26bcd10b840e4f9868d6a6b9b6b37
-- E:/Unity3d Project/Github/BDFramework/DevOps/PublishAssets/Android/Art/ec429a586bfac5f4284f3a31749303e7
+- E:/BDFrameworkMaster/DevOps/PublishAssets/Android/Art/36c26bcd10b840e4f9868d6a6b9b6b37
+- E:/BDFrameworkMaster/DevOps/PublishAssets/Android/Art/ec429a586bfac5f4284f3a31749303e7

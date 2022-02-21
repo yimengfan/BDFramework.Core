@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 38178366
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4063c807becebd7d0ad54b869db48f43
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0a6f9ca6de27cedd10f0532db8ca5f17
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/AllAssetType/Archive.jpg
+Dependencies: []

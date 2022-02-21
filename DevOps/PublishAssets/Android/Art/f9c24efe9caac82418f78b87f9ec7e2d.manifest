@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2295772875
+CRC: 3618620257
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8877743e611620fbe297eb915c643a2a
+    Hash: d2aa2e41b020495a72ee67d09ee21487
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7652f69dff3dcd0741269161f69220a7
@@ -27,4 +27,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/AllAssetType/Prefab.prefab
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework/DevOps/PublishAssets/Android/Art/362a42798cd38c844bb6e946a9266c8a
+- E:/BDFrameworkMaster/DevOps/PublishAssets/Android/Art/362a42798cd38c844bb6e946a9266c8a

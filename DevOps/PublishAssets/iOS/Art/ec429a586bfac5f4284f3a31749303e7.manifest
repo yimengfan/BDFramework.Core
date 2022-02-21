@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 862083623
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: cf10ae6231af06d9733af1b9a97d72a6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 8f482d1115e1803eb3af0f87c71223fd
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 687078895
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Image/Test2/5.jpg
+- Assets/Resource/Image/Test2/3.jpg
+- Assets/Resource/Image/Test2/4.jpg
+- Assets/Resource/Image/Test2/10.jpg
+- Assets/Resource/Image/Test2/9.jpg
+- Assets/Resource/Runtime/SpriteAtlas/SA2019_NotInRuntime.spriteatlas
+- Assets/Resource/Image/Test2/2.jpg
+- Assets/Resource/Image/Test2/6.jpg
+- Assets/Resource/Image/Test2/1.jpg
+- Assets/Resource/Image/Test2/8.jpg
+- Assets/Resource/Image/Test2/7.jpg
+Dependencies: []

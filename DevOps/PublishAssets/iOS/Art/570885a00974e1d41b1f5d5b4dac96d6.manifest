@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 3999141750
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3194e8a259c1f6ee15c0272eb01f79f4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9d8edfb6caf8a24e1ba0dc21bf067938
+HashAppended: 0
+ClassTypes:
+- Class: 687078895
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/AllAssetType/New Sprite Atlas.spriteatlas
+Dependencies: []

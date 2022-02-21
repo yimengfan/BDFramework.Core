@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 2442931509
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6932226f3d8b5ae30afa7984b10aaf7e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0a6f9ca6de27cedd10f0532db8ca5f17
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/AssetTest/timg.jpg
+Dependencies: []

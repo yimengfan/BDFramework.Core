@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3370895749
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7f87a832a85be7b1fee847c268be4873
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 10a6a558690295dadb3dd990eda0821a
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource_SVN/Runtime/CubeSVNMat.mat
+Dependencies: []

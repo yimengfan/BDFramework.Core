@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1204411358
+CRC: 3953324436
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: af2193bb0b7c49fdac09bf46e234ad3a
+    Hash: 4886f18ccd27122c7a7121207526b9c5
   TypeTreeHash:
     serializedVersion: 2
     Hash: 50f10a6bba1e7b337fe6847d8d2bfe29
@@ -27,4 +27,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/Windows/grid.prefab
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework/DevOps/PublishAssets/Android/Art/76c21518bd7f0e64ca49af74a4987cd9
+- E:/BDFrameworkMaster/DevOps/PublishAssets/Android/Art/76c21518bd7f0e64ca49af74a4987cd9

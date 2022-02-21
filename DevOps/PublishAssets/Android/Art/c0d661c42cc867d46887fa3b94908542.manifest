@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 812185914
+CRC: 1004306111
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 97aa572261b6b62959174f56dd7e8edb
+    Hash: 58aebd5d5518ecd5400b675625ba7413
   TypeTreeHash:
     serializedVersion: 2
     Hash: 10a6a558690295dadb3dd990eda0821a
@@ -17,4 +17,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource_SVN/Runtime/TestMat_ForKeyWordCollect/arrow.mat
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework/DevOps/PublishAssets/Android/Art/9d59e1d84070e4c46a595b3112d75a40
+- E:/BDFrameworkMaster/DevOps/PublishAssets/Android/Art/9d59e1d84070e4c46a595b3112d75a40

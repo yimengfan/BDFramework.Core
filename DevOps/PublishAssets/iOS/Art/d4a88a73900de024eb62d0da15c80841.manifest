@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 1882464602
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 34411a653bd1f61e75b811aa48ffe0b2
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 10a6a558690295dadb3dd990eda0821a
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/AssetTest/Cube.mat
+Dependencies:
+- E:/BDFrameworkMaster/DevOps/PublishAssets/iOS/Art/9d59e1d84070e4c46a595b3112d75a40
