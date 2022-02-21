@@ -67,7 +67,7 @@ namespace BDFramework.Editor.HotfixPipeline
                     if (ret)
                     {
                         var config = HotfixPipelineTools.HotfixFileConfig.GetConfig(addTag);
-                        config.AddFolderFilter("Assets", ".xls");
+                        config.AddFolderFilter("Assets", ".xxx");
                     }
 
                     EditorUtility.DisplayDialog("提示", "添加:" + (ret ? "成功" : "失败"), "OK");
@@ -94,22 +94,27 @@ namespace BDFramework.Editor.HotfixPipeline
                 }
                 else
                 {
-                    GUILayout.Label("无配置",GUILayout.Width(200));
+                    GUILayout.Label("无配置", GUILayout.Width(200));
                 }
 
                 this.curSlectConfigItem = configs.FirstOrDefault((c) => c.Tag == tags[curSelectTagIdx]);
+                if (curSlectConfigItem == null)
+                {
+                    this.curSlectConfigItem = new HotfixFileConfigLogic.HotfixFileConfigItem();
+                }
 
-                this.curSlectConfigItem.DefeaultConfigType = (HotfixFileConfigLogic.HotfixFileConfigItem.DefeaultConfigTypeEnum)EditorGUILayout.EnumPopup(this.curSlectConfigItem.DefeaultConfigType, GUILayout.Width(200));
+                this.curSlectConfigItem.DefeaultConfigType = (HotfixFileConfigLogic.HotfixFileConfigItem.DefeaultConfigTypeEnum) EditorGUILayout.EnumPopup(this.curSlectConfigItem.DefeaultConfigType, GUILayout.Width(200));
                 //添加按钮
                 GUILayout.Space(20);
 
                 GUI.color = Color.green;
                 if (GUILayout.Button("添加目录", GUILayout.Width(75)))
                 {
-                    curSlectConfigItem.AddFolderFilter("null","xx");
+                    curSlectConfigItem.AddFolderFilter("null", "xx");
                 }
+
                 GUI.color = GUI.backgroundColor;
-                
+
                 GUILayout.Space(20);
                 GUI.color = Color.red;
                 if (GUILayout.Button("删除", GUILayout.Width(75)))
@@ -120,6 +125,7 @@ namespace BDFramework.Editor.HotfixPipeline
                         HotfixPipelineTools.HotfixFileConfig.RemoveConfigItem(this.curSlectConfigItem.Tag);
                     }
                 }
+
                 GUI.color = GUI.backgroundColor;
             }
             GUILayout.EndHorizontal();
@@ -143,8 +149,14 @@ namespace BDFramework.Editor.HotfixPipeline
                     if (GUILayout.Button("...", GUILayout.Width(20)))
                     {
                         var folder = EditorUtility.OpenFolderPanel("选择文件夹", Application.dataPath, "");
-
                         floderFilter.FloderPath = folder.Replace(BDApplication.ProjectRoot + "/", "");
+
+                        var files = Directory.GetFiles(floderFilter.FloderPath, "*", SearchOption.AllDirectories);
+
+                        if (files.Length > 0)
+                        {
+                            floderFilter.FileExtensionName = Path.GetExtension(files[0]);
+                        }
                     }
 
                     GUILayout.Space(10);
@@ -196,9 +208,9 @@ namespace BDFramework.Editor.HotfixPipeline
             }
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("热更文件:", GUILayout.Width(395));
+            GUILayout.Label("非热更文件:", GUILayout.Width(395));
             EditorGUILayoutEx.Layout_DrawLineV(Color.white, 2f);
-            GUILayout.Label("非热更文件:", GUILayout.Width(400));
+            GUILayout.Label("热更文件:", GUILayout.Width(400));
             GUILayout.EndHorizontal();
 
             EditorGUILayoutEx.Layout_DrawLineH(Color.white, 2f);
@@ -206,18 +218,18 @@ namespace BDFramework.Editor.HotfixPipeline
             //左边
             pos1 = EditorGUILayout.BeginScrollView(pos1, false, false, GUILayout.Width(398), GUILayout.Height(700));
             {
-                var hotfixfiles = curSlectConfigItem.GetHotfixFiles();
+                var hotfixfiles = curSlectConfigItem.GetNotHotfixFiles();
                 foreach (var file in hotfixfiles)
                 {
                     GUILayout.BeginHorizontal(GUILayout.Width(398));
                     {
-                        GUILayout.Label(Path.GetFileName(file), GUILayout.Width(370));
+                        GUILayout.Label(file, GUILayout.Width(370));
                         if (GUILayout.Button(">"))
                         {
-                            var ret = EditorUtility.DisplayDialog("提示", "是否添加到非热更列表？", "OK", "Cancel");
+                            var ret = EditorUtility.DisplayDialog("提示", "是否添加热更文件？", "OK", "Cancel");
                             if (ret)
                             {
-                                curSlectConfigItem.AddFilterFile(file);
+                                curSlectConfigItem.AddHotfixFile(file);
                             }
                         }
                     }
@@ -227,28 +239,29 @@ namespace BDFramework.Editor.HotfixPipeline
             }
             EditorGUILayout.EndScrollView();
 
-           
+
             EditorGUILayoutEx.Layout_DrawLineV(Color.white, 2f);
             //右边
             pos2 = EditorGUILayout.BeginScrollView(pos2, false, false, GUILayout.Width(398), GUILayout.Height(700));
             {
-                var nothotfixFiles = curSlectConfigItem.GetNotHotfixFiles();
+                var nothotfixFiles = curSlectConfigItem.GetHotfixFiles();
                 for (int i = 0; i < nothotfixFiles.Length; i++)
                 {
                     var file = nothotfixFiles[i];
 
                     GUILayout.BeginHorizontal();
                     {
-                        GUILayout.Label(file, GUILayout.Width(370));
-                        if (GUILayout.Button("X"))
+                        if (GUILayout.Button("<"))
                         {
-                            var ret = EditorUtility.DisplayDialog("提示", "是否从非热更列表移除？", "OK", "Cancel");
+                            var ret = EditorUtility.DisplayDialog("提示", "是否移除热更列表？", "OK", "Cancel");
                             if (ret)
                             {
-                                curSlectConfigItem.RemoveFilterFile(file);
+                                curSlectConfigItem.RemoveHotfixFile(file);
                                 break;
                             }
                         }
+
+                        GUILayout.Label(file, GUILayout.Width(370));
                     }
                     GUILayout.EndHorizontal();
                     EditorGUILayoutEx.Layout_DrawLineH(Color.grey, 1f);

@@ -1,5 +1,17 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+
+##V2.1.0-preview.2
+-部分编辑器配合重构到DevOps工作流
+-调整部分编辑器排版
+-增加Excel2class对热更配置的支持
+
+##V2.1.0-preview.1
+-整理DevOps、添加CI、CD工作流
+-增加HotfixPipeline
+-增加BuildPipeline
+-增加PublishPipeline
+---------------------------------------------------------------------------
 ##V2.0.9-preview.6
 【Editor】
  - Editor: Change framework version function.
