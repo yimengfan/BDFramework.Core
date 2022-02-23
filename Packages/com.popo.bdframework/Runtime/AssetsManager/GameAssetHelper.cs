@@ -229,8 +229,9 @@ namespace BDFramework.Asset
             if (!File.Exists(streamingPackageinfoPath))
             {
                 //不存在Streaming配置
-                BDebug.LogError("【资源包】拷贝失败,不存在：" + streamingPackageinfoPath);
+                BDebug.LogError("【母包资源检测】拷贝失败,不存在：" + streamingPackageinfoPath);
                 callback?.Invoke();
+                return;
             }
             else
             {
@@ -247,7 +248,6 @@ namespace BDFramework.Asset
                         //跳出，检测结束
                         BDebug.Log("【母包资源检测】不复制，Streaming 无新资源");
                         callback?.Invoke();
-
                         return;
                     }
                     else
