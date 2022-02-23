@@ -158,7 +158,7 @@ public class ScriptBuildTools
             if (idx >= 0)
             {
                 dllFileList.RemoveAt(idx);
-                Debug.Log("[Build DLL]剔除:" + dll);
+                //Debug.Log("[Build DLL]剔除:" + dll);
             }
         }
 

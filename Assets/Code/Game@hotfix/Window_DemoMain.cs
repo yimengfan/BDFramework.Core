@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using BDFramework.ScreenView;
 using BDFramework.ResourceMgr;
 using BDFramework.UFlux;
-using BDFramework.VersionContrller;
+using BDFramework.VersionController;
 using Game;
 using Game.Data.Local;
 using Game.demo_EventManager;
@@ -176,7 +176,7 @@ public class Window_DemoMain : AWindow
     {
         var path = Application.persistentDataPath;
         //开始下载
-        AssetsVersionContrller.Start(UpdateMode.Repair, "http://127.0.0.1", null, (idx, totalNum) =>
+        AssetsVersionController.Start(UpdateMode.Repair, "http://127.0.0.1", null, (idx, totalNum) =>
             {
                 //进度通知
                 Debug.LogFormat("资源更新进度：{0}/{1}", idx, totalNum);

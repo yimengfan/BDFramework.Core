@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.IO;
 using BDFramework;
-using BDFramework.VersionContrller;
+using BDFramework.VersionController;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
+using BDFramework.VersionController;
 using Game.ILRuntime;
 using UnityEngine;
 using UnityEngine.UI;
@@ -82,14 +83,14 @@ public class WindowPreconfig : MonoBehaviour
                 //下载状态
                 switch (status)
                 {
-                    case AssetsVersionContrller.VersionControllerStatus.Success:
+                    case AssetsVersionController.VersionControllerStatus.Success:
                     {
                         this.text_DownloadProcess.text = "下载完毕";
                         //启动
                         this.Onclick_PassAndLaunch();
                     }
                         break;
-                    case AssetsVersionContrller.VersionControllerStatus.Error:
+                    case AssetsVersionController.VersionControllerStatus.Error:
                     {
                         //错误
                         this.text_DownloadProcess.text = msg;
@@ -110,7 +111,7 @@ public class WindowPreconfig : MonoBehaviour
         var subPackageName = "TestChar";
         float totalSize = -1;
         float curDoanloadSize = -1;
-        AssetsVersionContrller.Start(UpdateMode.CompareVersionConfig, url, subPackageName, (curDownload, allDownloadList) =>
+        AssetsVersionController.Start(UpdateMode.CompareVersionConfig, url, subPackageName, (curDownload, allDownloadList) =>
             {
                 if (totalSize == -1)
                 {
@@ -130,14 +131,14 @@ public class WindowPreconfig : MonoBehaviour
             {
                 switch (status)
                 {
-                    case AssetsVersionContrller.VersionControllerStatus.Success:
+                    case AssetsVersionController.VersionControllerStatus.Success:
                     {
                         this.text_DownloadProcess.text = "下载完毕";
                         //启动
                         this.Onclick_PassAndLaunch();
                     }
                         break;
-                    case AssetsVersionContrller.VersionControllerStatus.Error:
+                    case AssetsVersionController.VersionControllerStatus.Error:
                     {
                         //错误
                         this.text_DownloadProcess.text = msg;
