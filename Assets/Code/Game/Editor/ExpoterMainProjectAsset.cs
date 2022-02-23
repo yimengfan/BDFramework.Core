@@ -101,6 +101,18 @@ public class ExpoterMainProjectAsset
 
         #endregion
 
+        #region 场景配置
+
+        var bdlauncher = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
+        bdlauncher.ConfigText = AssetDatabase.LoadAssetAtPath<TextAsset>(AssetDatabase.GUIDToAssetPath("517ff72e71a574546a91d76ad65770c9"));
+        var config = GameObject.Find("BDFrame").GetComponent<Config>();
+        config.Data.CodeRoot = AssetLoadPathType.Persistent;
+        config.Data.SQLRoot = AssetLoadPathType.Persistent;
+        config.Data.ArtRoot = AssetLoadPathType.Persistent;
+        AssetDatabase.SaveAssets();
+
+        #endregion
+
 
         //最后,导出Asset.Package
         ExportPackageOptions op = ExportPackageOptions.Default;

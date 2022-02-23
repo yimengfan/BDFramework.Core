@@ -354,9 +354,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data:
-    CodeRoot: 1
-    SQLRoot: 1
-    ArtRoot: 1
+    CodeRoot: 0
+    SQLRoot: 0
+    ArtRoot: 0
     CodeRunMode: 0
     IsDebuggerILRuntime: 0
     IsDebugLog: 1

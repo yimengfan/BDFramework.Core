@@ -1,9 +1,9 @@
 {
   "name": "com.popo.bdframework",
   "displayName": "BDFramework",
-  "version": "2.1.0-preview.2",
+  "version": "2.1.0-preview.3",
   "unity": "2019.4",
-  "description": "A Simple\u3001Eesy\u3001Profassional Game workflow!   - BDFramework.\r\n---\u66f4\u65b0\u8bb0\u5f55---\r\n\r\n##V2.1.0-preview.2\r\n-\u90e8\u5206\u7f16\u8f91\u5668\u914d\u5408\u91cd\u6784\u5230DevOps\u5de5\u4f5c\u6d41\r\n-\u589e\u52a0excel2class\u5bf9\u70ed\u66f4\u914d\u7f6e\u7684\u652f\u6301\r\n\r\n##V2.1.0-preview.1\r\n-\u6574\u7406DevOps\u3001\u6dfb\u52a0CI\u3001CD\u5de5\u4f5c\u6d41\r\n-\u589e\u52a0HotfixPipeline\r\n-\u589e\u52a0BuildPipeline\r\n-\u589e\u52a0PublishPipeline",
+  "description": "A Simple\u3001Eesy\u3001Profassional Game workflow!   - BDFramework.\r\n---\u66f4\u65b0\u8bb0\u5f55---\r\n##V2.1.0-preview.3\r\n-\u4fee\u590d\u90e8\u5206\u7f16\u8f91\u5668bug.\r\n-\u91cd\u6784\u90e8\u5206\u7c7b\u540d.\r\n\r\n##V2.1.0-preview.2\r\n-\u90e8\u5206\u7f16\u8f91\u5668\u914d\u5408\u91cd\u6784\u5230DevOps\u5de5\u4f5c\u6d41\r\n-\u8c03\u6574\u90e8\u5206\u7f16\u8f91\u5668\u6392\u7248\r\n-\u589e\u52a0Excel2class\u5bf9\u70ed\u66f4\u914d\u7f6e\u7684\u652f\u6301\r\n\r\n##V2.1.0-preview.1\r\n-\u6574\u7406DevOps\u3001\u6dfb\u52a0CI\u3001CD\u5de5\u4f5c\u6d41\r\n-\u589e\u52a0HotfixPipeline\r\n-\u589e\u52a0BuildPipeline\r\n-\u589e\u52a0PublishPipeline\r\n---------------------------------------------------------------------------",
   "dependencies": {
     "com.ourpalm.ilruntime": "2.0.2",
     "com.unity.assetgraph": "1.7.2-preview"
