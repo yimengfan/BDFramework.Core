@@ -11,7 +11,7 @@ using ServiceStack.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace BDFramework.VersionContrller
+namespace BDFramework.VersionController
 {
     /// <summary>
     /// 服务器Asset的Config
@@ -109,7 +109,7 @@ namespace BDFramework.VersionContrller
     /// <summary>
     /// 版本控制
     /// </summary>
-    static public class AssetsVersionContrller
+    static public class AssetsVersionController
     {
         /// <summary>
         /// 服务器错误码

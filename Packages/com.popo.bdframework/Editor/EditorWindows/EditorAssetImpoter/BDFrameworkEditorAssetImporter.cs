@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using BDFramework.Core.Tools;
-using BDFramework.Editor.WorkFollow;
+using BDFramework.Editor.WorkFlow;
 using LitJson;
 using UnityEditor;
 using UnityEngine;
@@ -82,13 +82,13 @@ namespace BDFramework.Editor
             //编译dll
             if (CacheData.HotfixList.Count > 0)
             {
-                HotfixCodeWorkFollow.OnCodeChanged();
+                HotfixCodeWorkFlow.OnCodeChanged();
             }
 
-            //2.判断是否导入Odin
-            foreach (string asset in importedAssets)
+            //2.判断是否导入Odin，是则加入命名空间
+            foreach (string impoter in importedAssets)
             {
-                if (asset.Contains("Sirenix.OdinInspector.Attributes.dll"))
+                if (impoter.Contains("Sirenix.OdinInspector.Attributes.dll"))
                 {
                     var btg = new BuildTargetGroup[] {BuildTargetGroup.Android, BuildTargetGroup.iOS, BuildTargetGroup.Standalone};
                     foreach (var bt in btg)

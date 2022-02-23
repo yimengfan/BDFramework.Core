@@ -6,7 +6,7 @@ using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetGraph.Node;
 using BDFramework.ResourceMgr;
 using BDFramework.ResourceMgr.V2;
-using BDFramework.VersionContrller;
+using BDFramework.VersionController;
 using DotNetExtension;
 using LitJson;
 using ServiceStack.Text;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using BDFramework.ResourceMgr.V2;
 using BDFramework.Core.Tools;
-using BDFramework.VersionContrller;
+using BDFramework.VersionController;
 using UnityEngine.Rendering;
 using UnityEngine.U2D;
 
@@ -288,9 +288,9 @@ namespace BDFramework.ResourceMgr
         /// <param name="onProccess">下载进度</param>
         /// <param name="onTaskEndCallback">结果回调</param>
         static public void StartAssetsVersionControl(UpdateMode updateMode, string serverConfigPath, string assetsPackageName = "", Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess = null,
-            Action<AssetsVersionContrller.VersionControllerStatus, string> onTaskEndCallback = null)
+            Action<AssetsVersionController.VersionControllerStatus, string> onTaskEndCallback = null)
         {
-            AssetsVersionContrller.Start(updateMode, serverConfigPath, assetsPackageName, onDownloadProccess, onTaskEndCallback);
+            AssetsVersionController.Start(updateMode, serverConfigPath, assetsPackageName, onDownloadProccess, onTaskEndCallback);
         }
 
         #endregion
