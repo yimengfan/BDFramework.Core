@@ -182,7 +182,7 @@ namespace BDFramework.Editor.BuildPipeline
 
             if (!BDEditorApplication.BDFrameWorkFrameEditorSetting.IsSetConfig())
             {
-                Debug.LogError("请注意设置apk keystore账号密码");
+                Debug.LogException(new Exception( "请注意设置apk keystore账号密码"));
                 return "";
             }
 
@@ -209,7 +209,7 @@ namespace BDFramework.Editor.BuildPipeline
             var keystorePath = IPath.Combine(BDApplication.ProjectRoot, androidConfig.keystoreName);
             if (!File.Exists(keystorePath))
             {
-                Debug.LogError("【keystore】不存在:" + keystorePath);
+                Debug.LogException(new Exception( "【keystore】不存在:" + keystorePath));
                 return "";
             }
 
@@ -285,7 +285,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
             else
             {
-                Debug.LogError(new Exception("Build Fail! Please Check the log! "));
+                Debug.LogException(new Exception("Build Fail! Please Check the log! "));
             }
 
             return outputPath;
@@ -402,14 +402,14 @@ namespace BDFramework.Editor.BuildPipeline
                 }
                 else
                 {
-                    Debug.Log("没找到编译xcode脚本! 后续请配合Jekins/Teamcity出包!");
+                    Debug.LogException(new Exception( "没找到编译xcode脚本! 后续请配合Jekins/Teamcity出包!"));
                 }
 
                 EditorUtility.RevealInFinder(outputPath);
             }
             else
             {
-                Debug.LogError(new Exception("【BDFramework】Build Fail! Please Check the log! "));
+                Debug.LogException(new Exception( "【BDFramework】Build Fail! Please Check the log! "));
             }
 
             return outputPath;
