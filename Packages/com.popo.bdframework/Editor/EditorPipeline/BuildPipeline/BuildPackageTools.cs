@@ -182,7 +182,8 @@ namespace BDFramework.Editor.BuildPipeline
 
             if (!BDEditorApplication.BDFrameWorkFrameEditorSetting.IsSetConfig())
             {
-                Debug.LogException(new Exception( "请注意设置apk keystore账号密码"));
+                //For ci
+                throw new Exception("请注意设置apk keystore账号密码");
                 return "";
             }
 
@@ -209,11 +210,13 @@ namespace BDFramework.Editor.BuildPipeline
             var keystorePath = IPath.Combine(BDApplication.ProjectRoot, androidConfig.keystoreName);
             if (!File.Exists(keystorePath))
             {
-                Debug.LogException(new Exception( "【keystore】不存在:" + keystorePath));
+                //For ci
+                throw new Exception("【keystore】不存在:" + keystorePath);
                 return "";
             }
 
-            PlayerSettings.Android.keystoreName = PlayerSettings.keystorePass = androidConfig.keystorePass;
+            PlayerSettings.Android.keystoreName = keystorePath;
+            PlayerSettings.keystorePass = androidConfig.keystorePass;
             PlayerSettings.Android.keyaliasName = androidConfig.keyaliasName;
             PlayerSettings.keyaliasPass = androidConfig.keyaliasPass;
             Debug.Log("【keystore】" + PlayerSettings.Android.keystoreName);
@@ -277,7 +280,10 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //开始构建
+            Debug.Log("------------->Begin build<------------");
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.Android, opa);
+            Debug.Log("------------->End build<------------");
+            //
             if (File.Exists(outputPath))
             {
                 Debug.Log("Build Success :" + outputPath);
@@ -285,7 +291,8 @@ namespace BDFramework.Editor.BuildPipeline
             }
             else
             {
-                Debug.LogException(new Exception("Build Fail! Please Check the log! "));
+                //For ci
+                throw new Exception("【BDFramework】Package not exsit！ -" + outputPath);
             }
 
             return outputPath;
@@ -324,7 +331,8 @@ namespace BDFramework.Editor.BuildPipeline
                 }
                 catch (Exception e)
                 {
-                    Debug.LogException(e);
+                    //For ci
+                    throw e;
                 }
 
                 DevOpsTools.DeleteCopyAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer);
@@ -352,7 +360,7 @@ namespace BDFramework.Editor.BuildPipeline
             var outputPath = IPath.Combine(outdir, string.Format("{0}_{1}", Application.identifier, mode.ToString()));
             if (Directory.Exists(outputPath))
             {
-                Directory.Delete(outputPath);
+                Directory.Delete(outputPath, true);
             }
 
             Directory.CreateDirectory(outputPath);
@@ -380,7 +388,10 @@ namespace BDFramework.Editor.BuildPipeline
                     break;
             }
 
+            Debug.Log("------------->Begin build<------------");
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.iOS, opa);
+            Debug.Log("------------->End build<------------");
+            //检测xcode
             if (File.Exists(outputPath + "/Info.plist"))
             {
                 var shellPath = "";
@@ -395,6 +406,7 @@ namespace BDFramework.Editor.BuildPipeline
 
                 if (File.Exists(shellPath))
                 {
+                    //执行BuildIpa的shell
                     Debug.Log("即将执行:" + shellPath);
                     ExecuteShell(shellPath);
                     //删除xcode项目
@@ -402,14 +414,16 @@ namespace BDFramework.Editor.BuildPipeline
                 }
                 else
                 {
-                    Debug.LogException(new Exception( "没找到编译xcode脚本! 后续请配合Jekins/Teamcity出包!"));
+                    //For ci
+                    throw new Exception("没找到编译xcode脚本! 后续请配合Jekins/Teamcity出包!");
                 }
 
                 EditorUtility.RevealInFinder(outputPath);
             }
             else
             {
-                Debug.LogException(new Exception( "【BDFramework】Build Fail! Please Check the log! "));
+                //For ci
+                throw new Exception("【BDFramework】Package not exsit！ -" + outputPath);
             }
 
             return outputPath;

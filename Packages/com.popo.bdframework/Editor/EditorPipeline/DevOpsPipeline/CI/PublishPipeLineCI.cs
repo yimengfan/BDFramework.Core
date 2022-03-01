@@ -21,12 +21,12 @@ namespace BDFramework.Editor.DevOps
         /// <summary>
         /// 资源svn仓库处理器
         /// </summary>
-        static private SVNProcessor AssetsSvnProcessor = null;
+        static private SVNProcessor AssetsSvnProcessor { get; set; } = null;
 
         /// <summary>
         /// 包体svn仓库处理器
         /// </summary>
-        static private SVNProcessor PackageSvnProcessor = null;
+        static private SVNProcessor PackageSvnProcessor { get; set; } = null;
 
         static PublishPipeLineCI()
         {
@@ -181,9 +181,9 @@ namespace BDFramework.Editor.DevOps
         /// </summary>
         static private void BuildPackage(RuntimePlatform platform, BuildPackageTools.BuildMode buildMode)
         {
-            //默认下载svn管理的仓库
+            //-默认下载svn管理的仓库,用来打包
             SVNUpdate(AssetsSvnProcessor);
-            //更新包体仓库
+            //-更新包体仓库
             SVNUpdate(PackageSvnProcessor);
             // var localPath = string.Format("{0}/{1}/Art", CI_ASSETS_PATH, BDApplication.GetPlatformPath(platform));
             // //1.下载资源已有、Sql
@@ -206,12 +206,14 @@ namespace BDFramework.Editor.DevOps
             if (platform == RuntimePlatform.Android)
             {
                 var outpath = IPath.Combine(CI_PACKAGE_PATH, BDApplication.GetPlatformPath(RuntimePlatform.Android));
+                Debug.Log("【CI】 outdir:" + outpath);
                 BuildPackageTools.BuildAPK(buildMode, outpath);
             }
             else if (platform == RuntimePlatform.IPhonePlayer)
             {
-                //构建xcode
+                //构建xcode、ipa
                 var outpath = IPath.Combine(CI_PACKAGE_PATH, BDApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer));
+                Debug.Log("【CI】 outdir:" + outpath);
                 BuildPackageTools.BuildIpa(buildMode, outpath);
             }
             
