@@ -115,7 +115,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// 加载场景配置
         /// </summary>
         /// <param name="mode"></param>
-        static public void LoadConfig(BuildMode mode)
+        static  void LoadConfig(BuildMode mode)
         {
             var scene = EditorSceneManager.OpenScene(SCENEPATH);
             TextAsset textContent = null;

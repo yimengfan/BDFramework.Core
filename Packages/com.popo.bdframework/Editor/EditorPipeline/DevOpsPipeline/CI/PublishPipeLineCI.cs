@@ -201,7 +201,7 @@ namespace BDFramework.Editor.DevOps
             //     BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
             // }
             //加载配置
-            BuildPackageTools.LoadConfig(buildMode);
+            // BuildPackageTools.LoadConfig(buildMode);
             //
             if (platform == RuntimePlatform.Android)
             {
