@@ -165,6 +165,27 @@ namespace BDFramework.Editor.SVN
 
             return files;
         }
+        
+        /// <summary>
+        /// 获取删除的文件
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetChangedFiles()
+        {
+            var statusPath = this.LocalSVNRootPath + "/status.txt";
+            var cmd = $"status {this.LocalSVNRootPath} {statusPath}";
+            //
+            this.ExecuteSVN(cmd);
+            //
+            string[] files = new string[] { };
+            if (File.Exists(statusPath))
+            {
+                files = File.ReadLines(statusPath).Where(s => s.Contains("!")).ToArray();
+                // File.Delete(statusPath);
+            }
+
+            return files;
+        }
 
 
         /// <summary>
@@ -213,6 +234,7 @@ namespace BDFramework.Editor.SVN
             {
                 Debug.LogError("Svn.exe不存在!");
             }
+   
 
             svnProcess.StartInfo.FileName = exePath;
             svnProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;

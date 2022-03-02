@@ -73,7 +73,7 @@ namespace BDFramework.Editor.DevOps
 
             //构建
             var ret = BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
-            
+
             //提交
             SVNCommit(AssetsSvnProcessor);
         }
@@ -89,7 +89,7 @@ namespace BDFramework.Editor.DevOps
 
             //构建
             var ret = BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
-            
+
             //提交
             SVNCommit(AssetsSvnProcessor);
         }
@@ -139,7 +139,6 @@ namespace BDFramework.Editor.DevOps
             //更新
 
             BuildPackage(RuntimePlatform.Android, BuildPackageTools.BuildMode.Debug);
-
         }
 
         /// <summary>
@@ -148,9 +147,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包Android-Release")]
         static public void PublishPackage_AndroidRelease()
         {
-
             BuildPackage(RuntimePlatform.Android, BuildPackageTools.BuildMode.Release);
-
         }
 
         /// <summary>
@@ -159,9 +156,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包iOS-Debug")]
         static public void PublishPackage_iOSDebug()
         {
-
             BuildPackage(RuntimePlatform.IPhonePlayer, BuildPackageTools.BuildMode.Debug);
-
         }
 
         /// <summary>
@@ -170,9 +165,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包iOS-Release")]
         static public void PublishPackage_iOSRelease()
         {
-
             BuildPackage(RuntimePlatform.IPhonePlayer, BuildPackageTools.BuildMode.Release);
-
         }
 
 
@@ -206,15 +199,15 @@ namespace BDFramework.Editor.DevOps
             if (platform == RuntimePlatform.Android)
             {
                 Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
-                BuildPackageTools.BuildAPK(buildMode,false, CI_PACKAGE_PATH);
+                BuildPackageTools.BuildAPK(buildMode, false, CI_PACKAGE_PATH);
             }
             else if (platform == RuntimePlatform.IPhonePlayer)
             {
                 //构建xcode、ipa
                 Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
-                BuildPackageTools.BuildIpa(buildMode,false, CI_PACKAGE_PATH);
+                BuildPackageTools.BuildIpa(buildMode, false, CI_PACKAGE_PATH);
             }
-            
+
             SVNCommit(PackageSvnProcessor);
         }
 
@@ -257,7 +250,7 @@ namespace BDFramework.Editor.DevOps
                     svnProcessor.Delete(df);
                 }
 
-                //获取支持的目录，提交
+                //2.获取支持的目录，提交
                 var platforms = BDApplication.GetSupportPlatform();
                 foreach (var platform in platforms)
                 {
@@ -265,7 +258,11 @@ namespace BDFramework.Editor.DevOps
                     var path = Path.Combine(svnProcessor.LocalSVNRootPath, p);
                     if (Directory.Exists(path))
                     {
-                        svnProcessor.AddFloder(path, true);
+                        //添加文件夹
+                        svnProcessor.AddFloder(path);
+                        //添加所有文件
+                        var fs = Directory.GetDirectories(path, "*", SearchOption.AllDirectories);
+                        svnProcessor.Add(fs);
                     }
                 }
 
@@ -280,18 +277,15 @@ namespace BDFramework.Editor.DevOps
         #region Git操作
 
         #endregion
-        
+
         /// <summary>
         /// 发布包体 iOSRelease
         /// </summary>
         [CI(Des = "Test")]
         static public void Test()
         {
-
             Debug.Log("Test CI passed!");
-            var b = BDEditorApplication.IsPlatformModuleInstalled( BuildTargetGroup.Android, BuildTarget.Android);
-
+            var b = BDEditorApplication.IsPlatformModuleInstalled(BuildTargetGroup.Android, BuildTarget.Android);
         }
-
     }
 }
