@@ -205,16 +205,14 @@ namespace BDFramework.Editor.DevOps
             //
             if (platform == RuntimePlatform.Android)
             {
-                var outpath = IPath.Combine(CI_PACKAGE_PATH, BDApplication.GetPlatformPath(RuntimePlatform.Android));
-                Debug.Log("【CI】 outdir:" + outpath);
-                BuildPackageTools.BuildAPK(buildMode, outpath);
+                Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
+                BuildPackageTools.BuildAPK(buildMode,false, CI_PACKAGE_PATH);
             }
             else if (platform == RuntimePlatform.IPhonePlayer)
             {
                 //构建xcode、ipa
-                var outpath = IPath.Combine(CI_PACKAGE_PATH, BDApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer));
-                Debug.Log("【CI】 outdir:" + outpath);
-                BuildPackageTools.BuildIpa(buildMode, outpath);
+                Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
+                BuildPackageTools.BuildIpa(buildMode,false, CI_PACKAGE_PATH);
             }
             
             SVNCommit(PackageSvnProcessor);
@@ -282,5 +280,18 @@ namespace BDFramework.Editor.DevOps
         #region Git操作
 
         #endregion
+        
+        /// <summary>
+        /// 发布包体 iOSRelease
+        /// </summary>
+        [CI(Des = "Test")]
+        static public void Test()
+        {
+
+            Debug.Log("Test CI passed!");
+            var b = BDEditorApplication.IsPlatformModuleInstalled( BuildTargetGroup.Android, BuildTarget.Android);
+
+        }
+
     }
 }

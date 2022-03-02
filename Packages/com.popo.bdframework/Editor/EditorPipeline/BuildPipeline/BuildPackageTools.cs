@@ -53,13 +53,13 @@ namespace BDFramework.Editor.BuildPipeline
         [MenuItem("BDFrameWork工具箱/5.发布母包/Android/Build(当前配置Debug)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
         public static void EditorBuildAPKUseCurrentAssets()
         {
-            BuildAPK(BuildMode.UseCurrentConfigDebug, false);
+            BuildAPK(BuildMode.UseCurrentConfigDebug, false, BDApplication.DevOpsPublishPackagePath);
         }
 
         [MenuItem("BDFrameWork工具箱/5.发布母包/Android/Build(当前配置Release)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
         public static void EditorBuildAPKUseCurrentAssetsRelease()
         {
-            BuildAPK(BuildMode.UseCurrentConfigRelease, false);
+            BuildAPK(BuildMode.UseCurrentConfigRelease, false, BDApplication.DevOpsPublishPackagePath);
         }
 
         [MenuItem("BDFrameWork工具箱/5.发布母包/Android/Build(加载Debug.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
@@ -67,7 +67,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildAPK(BuildMode.Debug, true);
+                BuildAPK(BuildMode.Debug, true, BDApplication.DevOpsPublishPackagePath);
             }
         }
 
@@ -76,7 +76,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildAPK(BuildMode.Release, true);
+                BuildAPK(BuildMode.Release, true, BDApplication.DevOpsPublishPackagePath);
             }
         }
 
@@ -84,13 +84,13 @@ namespace BDFramework.Editor.BuildPipeline
         [MenuItem("BDFrameWork工具箱/5.发布母包/iOS/Build(当前配置Debug)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
         public static void EditorBuildIpaUseCurrentAssets()
         {
-            BuildIpa(BuildMode.UseCurrentConfigDebug, false);
+            BuildIpa(BuildMode.UseCurrentConfigDebug, false, BDApplication.DevOpsPublishPackagePath);
         }
 
         [MenuItem("BDFrameWork工具箱/5.发布母包/iOS/Build(当前配置Release)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
         public static void EditorBuildIpaUseCurrentAssetsRelease()
         {
-            BuildIpa(BuildMode.UseCurrentConfigRelease, false);
+            BuildIpa(BuildMode.UseCurrentConfigRelease, false, BDApplication.DevOpsPublishPackagePath);
         }
 
         [MenuItem("BDFrameWork工具箱/5.发布母包/iOS/Build(加载Debug.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
@@ -98,7 +98,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildIpa(BuildMode.Debug, true);
+                BuildIpa(BuildMode.Debug, true, BDApplication.DevOpsPublishPackagePath);
             }
         }
 
@@ -107,7 +107,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildIpa(BuildMode.Release, true);
+                BuildIpa(BuildMode.Release, true, BDApplication.DevOpsPublishPackagePath);
             }
         }
 
@@ -137,10 +137,8 @@ namespace BDFramework.Editor.BuildPipeline
         /// <summary>
         /// 构建包体，使用当前配置、资源
         /// </summary>
-        static public void BuildAPK(BuildMode buildMode, bool isGenAssets)
+        static public void BuildAPK(BuildMode buildMode, bool isGenAssets, string outdir)
         {
-            var outdir = BDApplication.DevOpsPublishPackagePath;
-
             BDFrameworkPublishPipelineHelper.OnBeginBuildPackage(BuildTarget.Android, outdir);
             //0.加载场景和配置
             LoadConfig(buildMode);
@@ -175,8 +173,10 @@ namespace BDFramework.Editor.BuildPipeline
         /// <summary>
         /// 打包APK
         /// </summary>
-        static public string BuildAPK(BuildMode mode, string outdir)
+        static private string BuildAPK(BuildMode mode, string outdir)
         {
+            //切换到Android
+            BDEditorApplication.SwitchToAndroid();
             //删除il2cpp缓存
             DeleteIL2cppCache();
 
@@ -305,9 +305,8 @@ namespace BDFramework.Editor.BuildPipeline
         /// <summary>
         /// 构建包体，使用当前配置、资源
         /// </summary>
-        static public void BuildIpa(BuildMode buildMode, bool isGenAssets)
+        static public void BuildIpa(BuildMode buildMode, bool isGenAssets, string outdir)
         {
-            var outdir = BDApplication.DevOpsPublishPackagePath;
             BDFrameworkPublishPipelineHelper.OnBeginBuildPackage(BuildTarget.iOS, outdir);
             //0.加载场景和配置
             LoadConfig(buildMode);
@@ -345,8 +344,9 @@ namespace BDFramework.Editor.BuildPipeline
         /// 编译Xcode（这里是出母包版本）
         /// </summary>
         /// <param name="mode"></param>
-        static public string BuildIpa(BuildMode mode, string outdir)
+        static private string BuildIpa(BuildMode mode, string outdir)
         {
+            BDEditorApplication.SwitchToiOS();
             DeleteIL2cppCache();
             //具体IOS的的配置
             PlayerSettings.gcIncremental = true;
