@@ -261,7 +261,7 @@ namespace BDFramework.Editor.DevOps
                         //添加文件夹
                         svnProcessor.AddFloder(path);
                         //添加所有文件
-                        var fs = Directory.GetDirectories(path, "*", SearchOption.AllDirectories);
+                        var fs = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
                         svnProcessor.Add(fs);
                     }
                 }
@@ -285,7 +285,8 @@ namespace BDFramework.Editor.DevOps
         static public void Test()
         {
             Debug.Log("Test CI passed!");
-            var b = BDEditorApplication.IsPlatformModuleInstalled(BuildTargetGroup.Android, BuildTarget.Android);
+            SVNCommit(PackageSvnProcessor);
+            //var b = BDEditorApplication.IsPlatformModuleInstalled(BuildTargetGroup.Android, BuildTarget.Android);
         }
     }
 }

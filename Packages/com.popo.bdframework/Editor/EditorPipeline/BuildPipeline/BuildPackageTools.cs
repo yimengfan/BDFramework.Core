@@ -180,7 +180,7 @@ namespace BDFramework.Editor.BuildPipeline
             //切换到Android
             BDEditorApplication.SwitchToAndroid();
             //删除il2cpp缓存
-            DeleteIL2cppCache();
+            //DeleteIL2cppCache();
 
             if (!BDEditorApplication.BDFrameWorkFrameEditorSetting.IsSetConfig())
             {
@@ -281,11 +281,13 @@ namespace BDFramework.Editor.BuildPipeline
                     break;
             }
 
-            //开始构建
+      
+            //构建包体
             Debug.Log("------------->Begin build<------------");
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.Android, opa);
             Debug.Log("------------->End build<------------");
-            //
+            
+            //构建出判断
             if (File.Exists(outputPath))
             {
                 Debug.Log("Build Success :" + outputPath);
@@ -351,7 +353,7 @@ namespace BDFramework.Editor.BuildPipeline
         static private string BuildIpa(BuildMode mode, string outdir)
         {
             BDEditorApplication.SwitchToiOS();
-            DeleteIL2cppCache();
+            //DeleteIL2cppCache();
             //具体IOS的的配置
             PlayerSettings.gcIncremental = true;
             //PlayerSettings.stripEngineCode = true;
@@ -392,9 +394,12 @@ namespace BDFramework.Editor.BuildPipeline
                     break;
             }
 
+            //构建包体
             Debug.Log("------------->Begin build<------------");
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.iOS, opa);
             Debug.Log("------------->End build<------------");
+            
+            
             //检测xcode
             if (File.Exists(outputPath + "/Info.plist"))
             {
@@ -442,7 +447,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static private void DeleteIL2cppCache()
         {
-#if UNITY_2019 || UNITY_2020
+#if UNITY_2019
             var directs = Directory.GetDirectories(BDApplication.Library, "*", SearchOption.TopDirectoryOnly);
             foreach (var dirt in directs)
             {
