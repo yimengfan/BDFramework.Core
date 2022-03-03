@@ -139,6 +139,8 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static public void BuildAPK(BuildMode buildMode, bool isGenAssets, string outdir)
         {
+            //增加平台路径
+            outdir = IPath.Combine(outdir, BDApplication.GetPlatformPath(BuildTarget.Android));
             BDFrameworkPublishPipelineHelper.OnBeginBuildPackage(BuildTarget.Android, outdir);
             //0.加载场景和配置
             LoadConfig(buildMode);
@@ -307,6 +309,8 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static public void BuildIpa(BuildMode buildMode, bool isGenAssets, string outdir)
         {
+            //增加平台路径
+            outdir = IPath.Combine(outdir, BDApplication.GetPlatformPath(BuildTarget.iOS));
             BDFrameworkPublishPipelineHelper.OnBeginBuildPackage(BuildTarget.iOS, outdir);
             //0.加载场景和配置
             LoadConfig(buildMode);
