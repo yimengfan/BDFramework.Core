@@ -25,6 +25,7 @@ namespace BDFramework.Editor
         /// 是否完成初始化
         /// </summary>
         static public bool IsInited { get; private set; } = false;
+
         static BDFrameworkEditorBehaviour()
         {
             //TODO 
@@ -34,14 +35,15 @@ namespace BDFramework.Editor
             if (!EditorApplication.isPlayingOrWillChangePlaymode)
             {
                 InitBDFrameworkEditor();
-            }  
+            }
+
             //防止重复注册事件
             EditorApplication.update -= EditorUpdate_CheckGuideWindow;
             EditorApplication.update += EditorUpdate_CheckGuideWindow;
             EditorApplication.playModeStateChanged -= OnPlayModeChanged;
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
         }
-        
+
         /// <summary>
         /// 代码编译完成后
         /// </summary>
@@ -65,16 +67,21 @@ namespace BDFramework.Editor
                     InitBDFrameworkEditor();
                 }
                     break;
-                
             }
         }
 
-        
+
         /// <summary>
         /// 初始化框架编辑器
         /// </summary>
         static public void InitBDFrameworkEditor()
         {
+            //是否为batchmode
+            if (Application.isBatchMode)
+            {
+                Debug.Log("BDFramework version:" + BDLauncher.Version);
+            }
+
             //只有在非Playing的时候才初始化
             if (EditorApplication.isPlayingOrWillChangePlaymode || IsInited)
             {
@@ -177,7 +184,5 @@ namespace BDFramework.Editor
                 EditorWindow_BDFrameworkStart.AutoOpen();
             }
         }
-
-        
     }
 }

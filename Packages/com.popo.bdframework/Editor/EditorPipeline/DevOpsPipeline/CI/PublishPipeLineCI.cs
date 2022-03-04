@@ -196,19 +196,28 @@ namespace BDFramework.Editor.DevOps
             //加载配置
             // BuildPackageTools.LoadConfig(buildMode);
             //
+            bool ret = false;
             if (platform == RuntimePlatform.Android)
             {
                 Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
-                BuildPackageTools.BuildAPK(buildMode, false, CI_PACKAGE_PATH);
+                ret = BuildPackageTools.BuildAPK(buildMode, false, CI_PACKAGE_PATH);
             }
             else if (platform == RuntimePlatform.IPhonePlayer)
             {
                 //构建xcode、ipa
                 Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
-                BuildPackageTools.BuildIpa(buildMode, false, CI_PACKAGE_PATH);
+                ret=  BuildPackageTools.BuildIpa(buildMode, false, CI_PACKAGE_PATH);
             }
 
-            SVNCommit(PackageSvnProcessor);
+            if (ret)
+            {
+                Debug.Log("【CI】Build package success，begin commit!");
+                SVNCommit(PackageSvnProcessor);
+            }
+            else
+            {
+                Debug.Log("【CI】Build package fail，dont commit!");
+            }
         }
 
         #endregion

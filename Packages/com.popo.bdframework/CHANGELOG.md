@@ -1,5 +1,8 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.1.0-preview.4
+-修复CI系统部分bug.
+
 ##V2.1.0-preview.3
 -修复部分编辑器bug.
 -重构部分类名.

@@ -137,8 +137,9 @@ namespace BDFramework.Editor.BuildPipeline
         /// <summary>
         /// 构建包体，使用当前配置、资源
         /// </summary>
-        static public void BuildAPK(BuildMode buildMode, bool isGenAssets, string outdir)
+        static public bool BuildAPK(BuildMode buildMode, bool isGenAssets, string outdir)
         {
+            bool ret = false;
             //增加平台路径
             outdir = IPath.Combine(outdir, BDApplication.GetPlatformPath(BuildTarget.Android));
             BDFrameworkPublishPipelineHelper.OnBeginBuildPackage(BuildTarget.Android, outdir);
@@ -159,8 +160,10 @@ namespace BDFramework.Editor.BuildPipeline
                 DevOpsTools.CopyPublishAssetsTo(Application.streamingAssetsPath, RuntimePlatform.Android);
                 try
                 {
-                    var outputpath = BuildAPK(buildMode, outdir);
+                    var  (_ret,outputpath) = BuildAPK(buildMode, outdir);
+                    ret = _ret;
                     BDFrameworkPublishPipelineHelper.OnEndBuildPackage(BuildTarget.Android, outputpath);
+                    
                 }
                 catch (Exception e)
                 {
@@ -170,13 +173,16 @@ namespace BDFramework.Editor.BuildPipeline
                 DevOpsTools.DeleteCopyAssets(Application.streamingAssetsPath, RuntimePlatform.Android);
             }
             AssetDatabase.StopAssetEditing(); //恢复触发资源导入
+
+            return ret;
         }
 
         /// <summary>
         /// 打包APK
         /// </summary>
-        static private string BuildAPK(BuildMode mode, string outdir)
+        static private (bool,string) BuildAPK(BuildMode mode, string outdir)
         {
+            bool ret = false;
             //切换到Android
             BDEditorApplication.SwitchToAndroid();
             //删除il2cpp缓存
@@ -186,7 +192,7 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 //For ci
                 throw new Exception("请注意设置apk keystore账号密码");
-                return "";
+                
             }
 
             //模式
@@ -214,7 +220,7 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 //For ci
                 throw new Exception("【keystore】不存在:" + keystorePath);
-                return "";
+              
             }
 
             PlayerSettings.Android.keystoreName = keystorePath;
@@ -280,8 +286,7 @@ namespace BDFramework.Editor.BuildPipeline
                 }
                     break;
             }
-
-      
+            
             //构建包体
             Debug.Log("------------->Begin build<------------");
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.Android, opa);
@@ -291,6 +296,7 @@ namespace BDFramework.Editor.BuildPipeline
             if (File.Exists(outputPath))
             {
                 Debug.Log("Build Success :" + outputPath);
+                ret = true;
                 EditorUtility.RevealInFinder(outputPath);
             }
             else
@@ -299,7 +305,7 @@ namespace BDFramework.Editor.BuildPipeline
                 throw new Exception("【BDFramework】Package not exsit！ -" + outputPath);
             }
 
-            return outputPath;
+            return (ret,outputPath);
         }
 
         #endregion
@@ -309,8 +315,9 @@ namespace BDFramework.Editor.BuildPipeline
         /// <summary>
         /// 构建包体，使用当前配置、资源
         /// </summary>
-        static public void BuildIpa(BuildMode buildMode, bool isGenAssets, string outdir)
+        static public bool BuildIpa(BuildMode buildMode, bool isGenAssets, string outdir)
         {
+            bool ret = false;
             //增加平台路径
             outdir = IPath.Combine(outdir, BDApplication.GetPlatformPath(BuildTarget.iOS));
             BDFrameworkPublishPipelineHelper.OnBeginBuildPackage(BuildTarget.iOS, outdir);
@@ -330,9 +337,9 @@ namespace BDFramework.Editor.BuildPipeline
                 DevOpsTools.CopyPublishAssetsTo(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer);
                 try
                 {
-                    var outputpath = BuildIpa(buildMode, outdir);
-
+                    var (_ret,outputpath) = BuildIpa(buildMode, outdir);
                     BDFrameworkPublishPipelineHelper.OnEndBuildPackage(BuildTarget.iOS, outputpath);
+                    ret = _ret;
                 }
                 catch (Exception e)
                 {
@@ -343,6 +350,8 @@ namespace BDFramework.Editor.BuildPipeline
                 DevOpsTools.DeleteCopyAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer);
             }
             AssetDatabase.StopAssetEditing(); //恢复触发资源导入
+
+            return ret;
         }
 
 
@@ -350,8 +359,9 @@ namespace BDFramework.Editor.BuildPipeline
         /// 编译Xcode（这里是出母包版本）
         /// </summary>
         /// <param name="mode"></param>
-        static private string BuildIpa(BuildMode mode, string outdir)
+        static private (bool,string) BuildIpa(BuildMode mode, string outdir)
         {
+            bool ret = false;
             BDEditorApplication.SwitchToiOS();
             //DeleteIL2cppCache();
             //具体IOS的的配置
@@ -420,11 +430,22 @@ namespace BDFramework.Editor.BuildPipeline
                     ExecuteShell(shellPath);
                     //删除xcode项目
                     Directory.Delete(outputPath, true);
+
+                    var ipaPath = outputPath + ".ipa";
+                    if (File.Exists(ipaPath))
+                    {
+                        ret = true;
+                    }
+                    else
+                    {
+                        Debug.LogError("【BDFramework】 not found:" + ipaPath);
+                    }
                 }
                 else
                 {
                     //For ci
                     throw new Exception("没找到编译xcode脚本! 后续请配合Jekins/Teamcity出包!");
+                    
                 }
 
                 EditorUtility.RevealInFinder(outputPath);
@@ -435,7 +456,7 @@ namespace BDFramework.Editor.BuildPipeline
                 throw new Exception("【BDFramework】Package not exsit！ -" + outputPath);
             }
 
-            return outputPath;
+            return (ret,outputPath);
         }
 
         #endregion
