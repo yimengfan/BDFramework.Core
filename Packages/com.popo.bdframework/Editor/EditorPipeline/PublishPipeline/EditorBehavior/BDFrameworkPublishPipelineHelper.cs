@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.AssetGraph.Node;
+using BDFramework.Editor.Environment;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace BDFramework.Editor
         static public void Init()
         {
             var type = typeof(ABDFrameworkPublishPipelineBehaviour);
-            var types = BDFrameworkEditorBehaviour.Types;
+            var types = BDFrameworkEditorEnvironment.Types;
             foreach (var t in types)
             {
                 if (t.IsSubclassOf(type))

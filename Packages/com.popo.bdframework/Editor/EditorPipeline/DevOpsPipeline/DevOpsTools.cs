@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.AssetGraph.Node;
 using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.ResourceMgr;
 using UnityEngine;
@@ -76,7 +77,7 @@ namespace BDFramework.Editor.DevOps
         /// </summary>
         static public List<MethodInfo> GetCIApis()
         {
-            var assembly = typeof(BDFrameworkEditorBehaviour).Assembly;
+            var assembly = typeof(BDFrameworkAssetsEnv).Assembly;
             var ciMethodList = new List<MethodInfo>();
             //Type
             foreach (var type in assembly.GetTypes())

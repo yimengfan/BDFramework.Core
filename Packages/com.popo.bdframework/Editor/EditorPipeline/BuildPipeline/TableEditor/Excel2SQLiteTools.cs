@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Asset;
+using BDFramework.Editor.Environment;
 using LitJson;
 using BDFramework.Sql;
 using UnityEditor;
@@ -143,10 +144,10 @@ namespace BDFramework.Editor.TableData
             var jsonObj    = JsonMapper.ToObject(jsonContent);
             var dbname     = Path.GetFileNameWithoutExtension(SqliteHelper.DB.DBPath);
             var @namespace = "Game.Data." + dbname + ".";
-            var type       = BDFrameworkEditorBehaviour.Types.FirstOrDefault((t) => t.FullName.StartsWith(@namespace) && t.Name.ToLower() == table.ToLower());
+            var type       = BDFrameworkEditorEnvironment.Types.FirstOrDefault((t) => t.FullName.StartsWith(@namespace) && t.Name.ToLower() == table.ToLower());
             if (type == null)
             {
-                type = BDFrameworkEditorBehaviour.Types.FirstOrDefault((t) => t.FullName.StartsWith( "Game.Data.") && t.Name.ToLower() == table.ToLower());
+                type = BDFrameworkEditorEnvironment.Types.FirstOrDefault((t) => t.FullName.StartsWith( "Game.Data.") && t.Name.ToLower() == table.ToLower());
             }
             if (type == null)
             {

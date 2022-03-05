@@ -53,6 +53,13 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutines.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorEnvironment\BDFrameworkEditorAssetImporter.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorEnvironment\BDFrameworkEditorEnvironment.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorEnvironment\EditorSetting\BDEditorApplication.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorEnvironment\EditorSetting\BDFrameWorkEditorSetting.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorEnvironment\EditorSetting\BDFrameworkEditorStatus.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorEnvironment\EditorSetting\EditorWindow_BDFrameworkConfig.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorEnvironment\EditorUserGuide\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorGUIHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleEditorToolsV2.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleEditorToolsV2CheckAssetbundle.cs" />
@@ -89,6 +96,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\GenCodeTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\CI\CI.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\CI\PublishPipeLineCI.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\DevOpsEditorTasks.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\DevOpsTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\EditorWindow_CICD.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\EditorWindow_HotfixFileSetting.cs" />
@@ -101,13 +109,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorHttpListener.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorWindow_PublishAssets.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\PublishPipelineTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\BDFrameworkEditorBehaviour.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorAssetImpoter\BDFrameworkEditorAssetImporter.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDEditorApplication.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDFrameWorkEditorSetting.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\BDFrameworkEditorStatus.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorSetting\EditorWindow_BDFrameworkConfig.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\EditorUserGuide\EditorWindow_BDFrameworkStart.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorTask\EditorTask.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\Menuitems\EditorBuiltinStyle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\Menuitems\GlobalEditorMenuItems.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\NetProtocolEditor\Protobuf2ClassTools.cs" />

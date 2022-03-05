@@ -3,6 +3,7 @@ using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.EditorPipeline.DevOps;
+using BDFramework.Editor.Environment;
 using BDFramework.Editor.PublishPipeline;
 using BDFramework.Editor.SVN;
 using UnityEditor;
@@ -31,7 +32,7 @@ namespace BDFramework.Editor.DevOps
         static PublishPipeLineCI()
         {
             //TODO : 初始化编辑器,必须
-            BDFrameworkEditorBehaviour.InitBDFrameworkEditor();
+            BDFrameworkEditorEnvironment.InitEditorEnvironment();
 
             //
             CI_ASSETS_PATH = BDApplication.DevOpsPublishAssetsPath; // IPath.Combine(BDApplication.DevOpsPath, "CI_TEMP");

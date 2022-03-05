@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.DevOps;
+using BDFramework.Editor.Environment;
 using BDFramework.Editor.PublishPipeline;
 using UnityEditor.SceneManagement;
 using Debug = UnityEngine.Debug;
@@ -42,7 +43,7 @@ namespace BDFramework.Editor.BuildPipeline
         static BuildPackageTools()
         {
             //初始化框架编辑器下
-            BDFrameworkEditorBehaviour.InitBDFrameworkEditor();
+            BDFrameworkEditorEnvironment.InitEditorEnvironment();
         }
 
         [MenuItem("BDFrameWork工具箱/【BuildPipeline】", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline)]
