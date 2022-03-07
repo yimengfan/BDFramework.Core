@@ -113,14 +113,14 @@ namespace BDFramework.ResourceMgr
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static T Load<T>(string name) where T : UnityEngine.Object
+        public static T Load<T>(string name,LoadPathType pathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
         {
             if (string.IsNullOrEmpty(name))
             {
                 return null;
             }
 
-            return ResLoader.Load<T>(name);
+            return ResLoader.Load<T>(name,pathType);
         }
 
         /// <summary>

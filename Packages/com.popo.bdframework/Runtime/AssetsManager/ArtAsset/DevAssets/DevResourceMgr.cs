@@ -18,6 +18,8 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     public class DevResourceMgr : IResMgr
     {
+        static string RUNTIME_STR = "/Runtime/";
+
         /// <summary>
         /// 全局的任务计数器
         /// </summary>
@@ -103,14 +105,30 @@ namespace BDFramework.ResourceMgr
             return null;
         }
 
+        private Dictionary<string, string> guidPathChacheMap = new Dictionary<string, string>();
+
         /// <summary>
         /// 加载
         /// </summary>
         /// <param name="path"></param>
+        /// <param name="pathType"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Load<T>(string path) where T : UnityEngine.Object
+        public T Load<T>(string path, LoadPathType pathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
         {
+            //guid转短路径
+
+            if (pathType == LoadPathType.GUID)
+            {
+                var ret = guidPathChacheMap.TryGetValue(path, out var guidpath);
+                if (!ret)
+                {
+                    guidpath = AssetDatabase.GUIDToAssetPath(path);
+                    path = FullAssetPathToRuntimePath(guidpath);
+                }
+            }
+
+
             return Load(typeof(T), path) as T;
         }
 
@@ -169,7 +187,11 @@ namespace BDFramework.ResourceMgr
                 var filename = Path.GetFileName(filePath);
                 var fileDierct = Path.GetDirectoryName(filePath);
                 //
-                if (!Directory.Exists(fileDierct)) continue;
+                if (!Directory.Exists(fileDierct))
+                {
+                    continue;
+                }
+
                 //
                 var res = Directory.GetFiles(fileDierct, filename + ".*", SearchOption.TopDirectoryOnly).Where((r) => !r.EndsWith(".meta"));
                 rets.AddRange(res);
@@ -299,6 +321,7 @@ namespace BDFramework.ResourceMgr
             willdoTaskSet.Clear();
         }
 
+
         /// <summary>
         /// 获取符合条件的资源名
         /// </summary>
@@ -322,13 +345,9 @@ namespace BDFramework.ResourceMgr
             }
 
             //
-            var splitStr = "/Runtime/";
             for (int i = 0; i < rets.Count; i++)
             {
-                var r = rets[i].Replace("\\", "/");
-                var index = r.IndexOf(splitStr);
-                var rs = r.Substring(index + splitStr.Length).Split('.');
-                rets[i] = rs[0];
+                rets[i] = FullAssetPathToRuntimePath(rets[i]);
             }
 
             //寻找符合条件的
@@ -356,8 +375,7 @@ namespace BDFramework.ResourceMgr
         public void WarmUpShaders()
         {
         }
-
-
+        
         /// <summary>
         /// 任务帧
         /// </summary>
@@ -381,6 +399,20 @@ namespace BDFramework.ResourceMgr
                 yield return new WaitForEndOfFrame();
             }
         }
+        
+        /// <summary>
+        /// 全路径转 runtime短路径
+        /// </summary>
+        /// <returns></returns>
+        public static string FullAssetPathToRuntimePath(string fullAssetPath)
+        {
+            fullAssetPath = fullAssetPath.Replace("\\", "/");
+            var index = fullAssetPath.IndexOf(RUNTIME_STR);
+            var rs = fullAssetPath.Substring(index + RUNTIME_STR.Length).Split('.');
+            return rs[0];
+        }
+
+
     }
 }
 #endif

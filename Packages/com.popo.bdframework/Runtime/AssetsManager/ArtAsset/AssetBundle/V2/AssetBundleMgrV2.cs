@@ -127,20 +127,27 @@ namespace BDFramework.ResourceMgr.V2
 
 
         #region 对外加载接口
-
+        
         /// <summary>
         /// 同步加载
         /// </summary>
+        /// <param name="path"></param>
+        /// <param name="pathType"></param>
         /// <param name="fullPath"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Load<T>(string path) where T : UnityEngine.Object
+        public T Load<T>(string path, LoadPathType pathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
         {
-            //非hash模式，需要debugRuntime
-            // if (!this.AssetConfigLoder.IsHashName)
-            // {
-            //     path = ZString.Format(DEBUG_RUNTIME, path);
-            // }
+            //这里首次会耗时，主要是需要关联查询依赖文件
+            if (pathType == LoadPathType.GUID)
+            {
+                var abi = AssetConfigLoder.GetAssetBundleDataByGUID(path);
+                if (abi != null)
+                {
+                    path = abi.LoadPath;
+                }
+            }
+            
 
             var obj = Load(typeof(T), path);
             if (obj)

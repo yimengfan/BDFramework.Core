@@ -9,6 +9,14 @@ using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr
 {
+    /// <summary>
+    /// load path传参类型
+    /// </summary>
+    public enum LoadPathType
+    {
+        RuntimePath,
+        GUID
+    }
     public interface IResMgr
     {
         /// <summary>
@@ -33,14 +41,16 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         void UnloadAllAsset();
 
+
         /// <summary>
         /// 加载资源
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="abName"></param>
         /// <param name="path"></param>
+        /// <param name="pathType"></param>
+        /// <param name="abName"></param>
         /// <returns></returns>
-        T Load<T>(string path) where T : UnityEngine.Object;
+        T Load<T>(string path, LoadPathType pathType = LoadPathType.RuntimePath) where T : UnityEngine.Object;
 
         /// <summary>
         /// 加载资源
