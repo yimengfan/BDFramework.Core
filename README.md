@@ -67,7 +67,8 @@ ps:只移动**com.popo.bdframework文件夹**到项目即可
 [@gaojiexx](https://github.com/gaojiexx)  
 [@ricashao](https://github.com/ricashao)  
 [@瞎哥](https://github.com/AfarMiss)  
-如果需要项目方案定制、技术方案定制、项目支持,可以联系 QQ:755737878  
+如果需要项目方案定制、企业支持,可以联系 QQ:755737878  
+也随时欢迎交流各种技术.    
 
 ## 发布（Publish）  
 ### [Release版本](https://github.com/yimengfan/BDFramework.Core/releases)  
