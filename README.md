@@ -8,7 +8,7 @@
 # 作者寄语(Introduction)  
 Simple! Easy! Professional!  This‘s a powerful Unity3d game workflow!   
 > BDFramework的设计理念永远是：**工业化、流水线化、专业化！**  
-> 永远致力于打造简单、专业、高效的商业游戏工作流.
+> 永远致力于打造高效的商业游戏工作流.
 > 
 > BDFramework大部分功能开发都是围绕一整条工作流，以**Pipeline**的形式放出.  
 > 如:**BuildPipeline、PublishPipeline、DevOps** 等...  
