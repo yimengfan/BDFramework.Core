@@ -126,12 +126,12 @@ namespace BDFramework.Editor.AssetBundle
                 AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath);
             }
 
-            if (GUILayout.Button("AssetBundle 加载测试Editor(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
-            {
-                var outputpath = BDApplication.DevOpsPublishAssetsPath;
-                //outputpath = Application.streamingAssetsPath;
-                AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleOnEditor(outputpath);
-            }
+            // if (GUILayout.Button("AssetBundle 加载测试Editor(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
+            // {
+            //     var outputpath = BDApplication.DevOpsPublishAssetsPath;
+            //     //outputpath = Application.streamingAssetsPath;
+            //     AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleOnEditor(outputpath);
+            // }
             if (GUILayout.Button("AssetBundle 加载测试Scene(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
             {
                 AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleRuntime();

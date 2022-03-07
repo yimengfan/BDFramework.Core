@@ -62,7 +62,10 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 StripCode.GenLinkXml();
             }
 
-            BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll = EditorGUILayout.Toggle("是否自动编译热更DLL", BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll);
+            if (BDEditorApplication.BDFrameWorkFrameEditorSetting != null)
+            {
+                BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll = EditorGUILayout.Toggle("是否自动编译热更DLL", BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll);
+            }
 
             GUI.color = Color.green;
             GUILayout.Label(@"
@@ -84,7 +87,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     private void OnDisable()
     {
         //保存
-        BDEditorApplication.BDFrameWorkFrameEditorSetting.Save();
+        BDEditorApplication.BDFrameWorkFrameEditorSetting?.Save();
     }
 
     /// <summary>
