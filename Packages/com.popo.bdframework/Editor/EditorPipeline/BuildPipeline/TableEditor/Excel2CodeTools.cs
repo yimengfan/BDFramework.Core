@@ -28,7 +28,7 @@ namespace BDFramework.Editor.TableData
         private static string GameTableCodePath = "Assets/Code/Game/Table";
 
         //策划or美术目录
-        private static string GameResourceTableCodePath = "Assets/Resource_SVN/Table/Code";
+     //   private static string GameResourceTableCodePath = "Assets/Resource_SVN/Table/Code";
 
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class[程序目录]", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Table2Class)]
         public static void Gen()
@@ -49,24 +49,24 @@ Excel格式如下:
             }
         }
 
-        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class[策划目录]", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Table2Class)]
-        public static void Gen2()
-        {
-            var ret = EditorUtility.DisplayDialog("提示", @"
-Excel格式如下:
-1.第一行为备注
-2.第二行可以自定义字段类型，如没检测到则自动分析字段类型
-3.所有表格字段名必须以Id开始，即第二或第三行首列必须是Id", "OK");
-            if (ret)
-            {
-                if (Directory.Exists(OldGameResourceTableCodePath))
-                {
-                    Directory.Delete(OldGameResourceTableCodePath, true);
-                }
-
-                GenCode(GameResourceTableCodePath);
-            }
-        }
+//         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成Class[策划目录]", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Table2Class)]
+//         public static void Gen2()
+//         {
+//             var ret = EditorUtility.DisplayDialog("提示", @"
+// Excel格式如下:
+// 1.第一行为备注
+// 2.第二行可以自定义字段类型，如没检测到则自动分析字段类型
+// 3.所有表格字段名必须以Id开始，即第二或第三行首列必须是Id", "OK");
+//             if (ret)
+//             {
+//                 if (Directory.Exists(OldGameResourceTableCodePath))
+//                 {
+//                     Directory.Delete(OldGameResourceTableCodePath, true);
+//                 }
+//
+//                 GenCode(GameResourceTableCodePath);
+//             }
+//         }
 
 
         /// <summary>
@@ -269,30 +269,30 @@ Excel格式如下:
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("Assets/Excel生成脚本[策划目录]", true)]
-        private static bool SingleExcel2ClassValidation_SVN()
-        {
-            if (Selection.activeObject == null)
-            {
-                return false;
-            }
-
-            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            if (!path.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        [MenuItem("Assets/Excel导出脚本[策划目录]")]
-        public static void SingleExcel2Class_SVN()
-        {
-            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            GenClassByExcel(GameResourceTableCodePath, path, "Local");
-            GenClassByExcel(GameResourceTableCodePath, path, "Server");
-            AssetDatabase.Refresh();
-        }
+        // [MenuItem("Assets/Excel生成脚本[策划目录]", true)]
+        // private static bool SingleExcel2ClassValidation_SVN()
+        // {
+        //     if (Selection.activeObject == null)
+        //     {
+        //         return false;
+        //     }
+        //
+        //     string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+        //     if (!path.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
+        //     {
+        //         return false;
+        //     }
+        //
+        //     return true;
+        // }
+        //
+        // [MenuItem("Assets/Excel导出脚本[策划目录]")]
+        // public static void SingleExcel2Class_SVN()
+        // {
+        //     string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+        //     GenClassByExcel(GameResourceTableCodePath, path, "Local");
+        //     GenClassByExcel(GameResourceTableCodePath, path, "Server");
+        //     AssetDatabase.Refresh();
+        // }
     }
 }
