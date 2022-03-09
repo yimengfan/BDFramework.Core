@@ -18,12 +18,7 @@ namespace BDFramework.Editor.AssetBundle
             window.Show();
             window.Focus();
         }
-
-        /// <summary>
-        /// 资源下面根节点
-        /// </summary>
-        public string rootResourceDir = "Resource/Runtime/";
-
+        
         private bool isSelectIOS = false;
 
         private bool isSelectAndroid = true;
@@ -32,6 +27,7 @@ namespace BDFramework.Editor.AssetBundle
         //
         void DrawToolsBar()
         {
+            GUILayout.Space(5);
             GUILayout.Label("平台选择:");
             GUILayout.BeginHorizontal();
             {
@@ -70,14 +66,15 @@ namespace BDFramework.Editor.AssetBundle
         {
             GUILayout.Label("2.资源打包", EditorGUIHelper.TitleStyle);
             GUILayout.Space(5);
-            GUILayout.Label("资源根目录:");
+            GUILayout.Label("Runtime目录:");
             foreach (var root in BDApplication.GetAllRuntimeDirects())
             {
                 GUILayout.Label(root);
             }
 
-            GUILayout.Label(string.Format("AB输出目录:{0}", BDApplication.DevOpsPublishAssetsPath));
-
+            GUILayout.Space(3);
+            GUILayout.Label("AssetBundle输出目录:");
+            GUILayout.Label(BDApplication.DevOpsPublishAssetsPath);
             //var assetConfig = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
             //assetConfig.AESCode = EditorGUILayout.TextField("AES密钥(V2 only):", assetConfig.AESCode);
             //assetConfig.IsUseHashName = EditorGUILayout.Toggle("hash命名:", assetConfig.IsUseHashName);
