@@ -14,7 +14,14 @@ namespace System.IO
         /// <returns></returns>
         static public string Combine(string a, string b)
         {
-            return ZString.Concat(a, "/", b);
+            if (a.EndsWith("/"))
+            {
+                return ZString.Concat(a, b);
+            }
+            else
+            {
+                return ZString.Concat(a, "/", b);
+            }
         }
 
         /// <summary>

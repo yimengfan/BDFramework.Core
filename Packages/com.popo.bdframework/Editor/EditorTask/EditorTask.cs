@@ -91,10 +91,16 @@ namespace BDFramework.Editor.Task
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where((assembly) => assembly.FullName.ToLower().Contains("editor")).ToList();
             foreach (var assembly in assemblies)
             {
+                var editortypes = assembly.GetTypes();
                 //只搜集editor
-                foreach (var type in assembly.GetTypes())
+                foreach (var type in  editortypes)
                 {
-                    if (type != null && type.IsClass && !type.IsAbstract)
+                    if (type.Name.Contains("DevEnvironmentCheck"))
+                    {
+                        int i = 0;
+                    }
+                    //
+                    if (type != null && type.IsClass)
                     {
                         foreach (var mi in type.GetMethods())
                         {
