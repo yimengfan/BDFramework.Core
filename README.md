@@ -36,7 +36,9 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core (国内比较快)
  #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
  #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)  
 
-# 安装使用(Start)
+# 安装使用(Start)  
+#### 推荐Unity版本: 2019.4LTS、
+
 #### OpenUPM(强烈推荐)：  
 **​**
 教程 https://www.yuque.com/naipaopao/eg6gik/xy8dm4  
