@@ -36,10 +36,10 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core (国内比较快)
  #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
  #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)  
  
-# Unity3d支持(Unity3d support )   
-#### * Unity2019 - Master    
+# Unity3d支持(Unity3d support )  
 #### Unity2018 - [ObsoleteBranch](https://github.com/yimengfan/BDFramework.Core/tree/2018.4.23LTS)  
-#### Unity2020 - Waiting 2021LTS publish!    
+#### *Unity2019 - Master* （推荐）      
+#### Unity2020 - [TestBranch](https://github.com/yimengfan/BDFramework.Core/tree/2020.4LTS)  
 #### Unity2021 - [TestBranch](https://github.com/yimengfan/BDFramework.Core/tree/2021.2.13f1)  
 # 安装使用(Start)  
 #### 推荐Unity版本: 2019.4LTS.
