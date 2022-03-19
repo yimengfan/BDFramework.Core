@@ -473,7 +473,12 @@ namespace BDFramework.UFlux
                 for (int i = HistoryList.Count - 1; i >= 0; i--)
                 {
                     var idx = HistoryList[i];
-                    var win = this.windowMap[idx];
+                    this.windowMap.TryGetValue(idx, out var win);
+                    if (win == null)
+                    {
+                        continue;
+                    }
+                    win = this.windowMap[idx];
                     var winCom = win as IComponent;
                     //判断栈顶是否有关闭的,有则继续搜索第一个打开的执行focus，
                     if (!winCom.IsOpen)
