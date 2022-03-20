@@ -30,10 +30,10 @@ namespace BDFramework.Editor
 
 
         [ShowIf(nameof(pageType), PageType.DevOps)]
-        [BoxGroup("DevOps设置")]
+        [BoxGroup("Build 设置")]
         [HideLabel]
         [InlineProperty]
-        public DevOpsSetting DevOpsSetting = new DevOpsSetting();
+        public BuildSetting BuildSetting = new BuildSetting();
 
         [ShowIf(nameof(pageType), PageType.HotfixPipeline)]
         [BoxGroup("资源设置")]
@@ -164,7 +164,7 @@ namespace BDFramework.Editor
     /// <summary>
     /// 工作流设置
     /// </summary>
-    public class DevOpsSetting
+    public class BuildSetting
     {
         public enum HotfixCodeFloderTypeEnum
         {
@@ -172,7 +172,7 @@ namespace BDFramework.Editor
             BDWorkSpace
         }
 
-        [BoxGroup("热更", true)]
+        [BoxGroup("脚本", true)]
         [LabelText("热更代码模式")]
         public HotfixCodeFloderTypeEnum HotfixCodeFloderType = HotfixCodeFloderTypeEnum.InUnityAssets;
 
@@ -184,10 +184,15 @@ namespace BDFramework.Editor
             return HotfixCodeFloderType != HotfixCodeFloderTypeEnum.InUnityAssets;
         }
 
-        [BoxGroup("热更")]
+        [BoxGroup("脚本", true)]
         [LabelText("自动编译热更DLL")]
         public bool IsAutoBuildDll = false;
 
+        
+        [BoxGroup("脚本", true)]
+        [LabelText("play模式前强制导入变更Excel")]
+        public bool IsForceImportChangedExcelOnWillEnterPlaymode = false;
+        
         public bool IsNeedAutoBuildDll()
         {
             return  IsAutoBuildDll && HotfixCodeFloderType == HotfixCodeFloderTypeEnum.InUnityAssets;

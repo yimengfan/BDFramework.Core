@@ -46,7 +46,21 @@ namespace BDFramework.Editor.Task
             }
         }
 
+        /// <summary>
+        /// 当进入playmode
+        /// </summary>
+        public class EditorTaskOnWillEnterPlaymodeAttribute : EditorTaskAttribute
+        {
+            /// <summary>
+            /// 描述
+            /// </summary>
+            public string Des { get; set; }
 
+            public EditorTaskOnWillEnterPlaymodeAttribute(string des)
+            {
+                this.Des = des;
+            }
+        }
         /// <summary>
         /// 每天都执行，定时
         /// </summary>
@@ -95,10 +109,6 @@ namespace BDFramework.Editor.Task
                 //只搜集editor
                 foreach (var type in  editortypes)
                 {
-                    if (type.Name.Contains("DevEnvironmentCheck"))
-                    {
-                        int i = 0;
-                    }
                     //
                     if (type != null && type.IsClass)
                     {
@@ -158,6 +168,14 @@ namespace BDFramework.Editor.Task
         /// </summary>
         public void OnEditorUpdate()
         {
+        }
+
+        /// <summary>
+        /// 当进入playmode
+        /// </summary>
+        public void OnEnterWillPlayMode()
+        {
+            DoEditorTasks<EditorTaskOnWillEnterPlaymodeAttribute>();
         }
     }
 }

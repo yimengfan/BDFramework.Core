@@ -5,7 +5,7 @@ namespace BDFramework.Editor.Tools
    static public class EditorGUIHelper
     {
         
-       readonly static public  GUIStyle TitleStyle =new GUIStyle()
+       readonly static public  GUIStyle LabelH3 =new GUIStyle()
         {
             fontSize = 25,
             normal = new GUIStyleState()
@@ -15,14 +15,6 @@ namespace BDFramework.Editor.Tools
         };
        
        
-       readonly static public  GUIStyle OnGUITitleStyle =new GUIStyle()
-       {
-           fontSize = 25,
-           normal = new GUIStyleState()
-           {
-               textColor = Color.red
-           }
-       };
         
     }
 }

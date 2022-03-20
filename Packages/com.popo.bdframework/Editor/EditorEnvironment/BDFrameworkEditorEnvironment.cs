@@ -8,6 +8,7 @@ using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.HotfixPipeline;
+using BDFramework.Editor.Table;
 using BDFramework.Editor.Task;
 using BDFramework.Hotfix.Reflection;
 using BDFramework.ScreenView;
@@ -19,7 +20,7 @@ namespace BDFramework.Editor.Environment
     /// <summary>
     /// Editor下框架环境创建
     /// </summary>
-   // [InitializeOnLoad]
+    // [InitializeOnLoad]
     static public class BDFrameworkEditorEnvironment
     {
         /// <summary>
@@ -31,6 +32,7 @@ namespace BDFramework.Editor.Environment
         /// 编辑器任务的
         /// </summary>
         static public EditorTask EditorTaskInstance { get; private set; } = null;
+
         [InitializeOnLoadMethod]
         static void BDFrameworkEditorEnvironmentInit()
         {
@@ -50,9 +52,6 @@ namespace BDFramework.Editor.Environment
             EditorApplication.update += EditorUpdate_CheckGuideWindow;
             EditorApplication.playModeStateChanged -= OnPlayModeChanged;
             EditorApplication.playModeStateChanged += OnPlayModeChanged;
-
-          
-            
         }
 
         /// <summary>
@@ -73,9 +72,25 @@ namespace BDFramework.Editor.Environment
             //非播放模式,初始化框架~
             switch (state)
             {
+                //-------------Editor mode--------------
                 case PlayModeStateChange.EnteredEditMode:
                 {
                     InitEditorEnvironment();
+                }
+                    break;
+                case PlayModeStateChange.ExitingEditMode:
+                {
+                }
+                    break;
+                //-------------Play mode--------------
+                case PlayModeStateChange.EnteredPlayMode:
+                {
+                    OnEnterPlayMode();
+                }
+                    break;
+                case PlayModeStateChange.ExitingPlayMode:
+                {
+                    OnExitPlayMode();
                 }
                     break;
             }
@@ -101,11 +116,6 @@ namespace BDFramework.Editor.Environment
 
             try
             {
-                //BD生命周期启动
-                BDApplication.Init();
-                BDEditorApplication.Init();
-                //编辑器下加载初始化
-                BResources.Load(AssetLoadPathType.Editor);
                 //加载主工程的DLL Type
                 var assemblyPath = BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll";
                 var editorAssemlyPath = BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp-Editor.dll";
@@ -113,16 +123,25 @@ namespace BDFramework.Editor.Environment
                 {
                     var gAssembly = Assembly.LoadFile(assemblyPath);
                     var eAssemlby = Assembly.LoadFile(editorAssemlyPath);
-                    RegisterMainProjectAssembly(gAssembly, eAssemlby);
+                    CollectTypes(gAssembly, eAssemlby);
                 }
+                
+                //BD初始化
+                BDApplication.Init();
+                //BDEditor初始化
+                BDEditorApplication.Init();
+                //编辑器下加载初始化
+                BResources.Load(AssetLoadPathType.Editor);
+                //编辑器下管理器注册
+                ManagerInstHelper.Load(Types);
+                //Editor的管理器初始化
+                BDFrameworkPublishPipelineHelper.Init();
+                //调试器启动
+                DebuggerServerProcessManager.Inst.Start();
                 //Pipeline初始化
                 HotfixPipelineTools.Init();
-                //编辑器任务执行
-                if (EditorTaskInstance == null)
-                {
-                    EditorTaskInstance = new EditorTask();
-                    EditorTaskInstance.CollectEditorTaskMedthod();
-                }
+                //编辑器初始化
+                InitEditorTask();
                 EditorTaskInstance.OnUnityLoadOrCodeRecompiled();
                 //最后，完成初始化
                 IsInited = true;
@@ -149,7 +168,7 @@ namespace BDFramework.Editor.Environment
         /// </summary>
         /// <param name="gameLogicAssembly"></param>
         /// <param name="gameEditorAssembly"></param>
-        static public void RegisterMainProjectAssembly(Assembly gameLogicAssembly, Assembly gameEditorAssembly)
+        static public void CollectTypes(Assembly gameLogicAssembly, Assembly gameEditorAssembly)
         {
             //编辑器所有类
             List<Type> typeList = new List<Type>();
@@ -161,32 +180,14 @@ namespace BDFramework.Editor.Environment
             typeList.AddRange(typeof(BDLauncher).Assembly.GetTypes());
             Types = typeList.ToArray();
             //
-            OnMainProjectReady();
+ 
         }
 
-        /// <summary>
-        /// 注册所有管理器，让管理器在编辑器下生效
-        /// </summary>
-        static private void RegisterEditorMgrbase(Type[] types)
-        {
-            //编辑器下管理器注册
-            ManagerInstHelper.Load(types);
-        }
+
 
         #endregion
 
-        /// <summary>
-        /// 当主工程准备好
-        /// </summary>
-        public static void OnMainProjectReady()
-        {
-            RegisterEditorMgrbase(Types);
-            //Editor的管理器初始化
-            BDFrameworkPublishPipelineHelper.Init();
-            //调试器启动
-            DebuggerServerProcessManager.Inst.Start();
-        }
-
+     
         /// <summary>
         /// 编辑器的Update
         /// </summary>
@@ -194,6 +195,24 @@ namespace BDFramework.Editor.Environment
         {
             //编辑器任务的update
             EditorTaskInstance?.OnEditorUpdate();
+        }
+
+
+        /// <summary>
+        /// 当进入paymode
+        /// </summary>
+        static private void OnEnterPlayMode()
+        {
+            BDEditorApplication.Init();
+            InitEditorTask();
+            EditorTaskInstance.OnEnterWillPlayMode();
+        }
+
+        /// <summary>
+        /// 当进入paymode
+        /// </summary>
+        static private void OnExitPlayMode()
+        {
         }
 
         /// <summary>
@@ -206,6 +225,19 @@ namespace BDFramework.Editor.Environment
             if (!EditorApplication.isPlayingOrWillChangePlaymode)
             {
                 EditorWindow_BDFrameworkStart.AutoOpen();
+            }
+        }
+
+        /// <summary>
+        /// 初始化editor task
+        /// </summary>
+        static private void InitEditorTask()
+        {
+            //编辑器任务执行
+            if (EditorTaskInstance == null)
+            {
+                EditorTaskInstance = new EditorTask();
+                EditorTaskInstance.CollectEditorTaskMedthod();
             }
         }
     }
