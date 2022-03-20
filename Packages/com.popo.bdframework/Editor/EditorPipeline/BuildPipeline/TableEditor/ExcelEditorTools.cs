@@ -72,6 +72,8 @@ namespace BDFramework.Editor.Table
         /// <summary>
         /// 获取修改的Excel文件
         /// 路径为Unity assets GUID
+        /// 
+        /// 该接口执行1次后就会将新配置覆盖本地
         /// </summary>
         public static List<string> GetChangedExcels()
         {
@@ -90,6 +92,8 @@ namespace BDFramework.Editor.Table
                     retExchangedInfoList.Add(excelInfoItem.Key);
                 }
             }
+            //新配置覆盖本地
+            SaveExcelCacheInfo(lastestExcelCacheMap);
 
             return retExchangedInfoList;
         }

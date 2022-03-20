@@ -17,8 +17,9 @@ namespace BDFramework.Editor.Table
 
         public void OnGUI()
         {
+            var setting = BDEditorApplication.BDFrameWorkFrameEditorSetting;
             GUILayout.BeginVertical();
-            GUILayout.Label("3.表格打包", EditorGUIHelper.TitleStyle);
+            GUILayout.Label("3.表格打包", EditorGUIHelper.LabelH3);
             GUILayout.Space(5);
             if (GUILayout.Button("表格导出成Sqlite", GUILayout.Width(300), GUILayout.Height(30)))
             {
@@ -27,6 +28,8 @@ namespace BDFramework.Editor.Table
                 Excel2SQLiteTools.CopySqlToOther(Application.streamingAssetsPath, Application.platform);
             }
 
+            GUILayout.Space(10);
+            setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode = EditorGUILayout.Toggle("Playmode导入变动Excel", setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode);
             GUILayout.EndVertical();
         }
 
@@ -38,29 +41,35 @@ namespace BDFramework.Editor.Table
             //计算hash
             var (hash, hashmap) = ExcelEditorTools.GetExcelsHash();
             Debug.Log(hash);
-            Debug.Log(JsonMapper.ToJson(hashmap, true));
-            //获取差异文件
-            var changeExcelList = ExcelEditorTools.GetChangedExcels();
-
-            //保存
-            if (changeExcelList.Count > 0)
-            {
-
-                for (int i = 0; i < changeExcelList.Count; i++)
-                {
-                    changeExcelList[i] = AssetDatabase.GUIDToAssetPath(changeExcelList[i]);
-                }
-                
-                Debug.Log("变动的Excel文件:" + JsonMapper.ToJson(changeExcelList, true));
-                ExcelEditorTools.SaveExcelCacheInfo(hashmap);
-            }
-            else
-            {
-                Debug.Log("无变动的文件:" + JsonMapper.ToJson(changeExcelList, true));
-            }
+            Debug.Log("表格hash预览:"+JsonMapper.ToJson(hashmap, true));
+            // //获取差异文件
+            // var changeExcelList = ExcelEditorTools.GetChangedExcels();
+            //
+            // //保存
+            // if (changeExcelList.Count > 0)
+            // {
+            //
+            //     for (int i = 0; i < changeExcelList.Count; i++)
+            //     {
+            //         changeExcelList[i] = AssetDatabase.GUIDToAssetPath(changeExcelList[i]);
+            //     }
+            //     
+            //     Debug.Log("变动的Excel文件:" + JsonMapper.ToJson(changeExcelList, true));
+            //     ExcelEditorTools.SaveExcelCacheInfo(hashmap);
+            // }
+            // else
+            // {
+            //     Debug.Log("无变动的文件:" + JsonMapper.ToJson(changeExcelList, true));
+            // }
 
             //显示
             base.Show();
+        }
+
+
+        private void OnDisable()
+        {
+            BDEditorApplication.BDFrameWorkFrameEditorSetting.Save();
         }
     }
 }
