@@ -4,14 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BDFramework.Editor.TableData
+namespace BDFramework.Editor.Table
 {
-	public class ExcelTools : EditorWindow
+	public class EditorWindow_ExcelExchange : EditorWindow
 	{
 		/// <summary>
 		/// 当前编辑器窗口实例
 		/// </summary>
-		private static ExcelTools instance;
+		private static EditorWindow_ExcelExchange instance;
 
 		/// <summary>
 		/// Excel文件列表
@@ -132,7 +132,7 @@ namespace BDFramework.Editor.TableData
 				//获取Excel文件的绝对路径
 				string excelPath = pathRoot + "/" + assetsPath;
 				//构造Excel工具类
-				ExcelUtility excel = new ExcelUtility(excelPath);
+				ExcelExchangeTools excel = new ExcelExchangeTools(excelPath);
 
 				//判断编码类型
 				Encoding encoding = null;
@@ -206,12 +206,10 @@ namespace BDFramework.Editor.TableData
 		private static void Init()
 		{
 			//获取当前实例
-			instance = EditorWindow.GetWindow<ExcelTools>();
+			instance = EditorWindow.GetWindow<EditorWindow_ExcelExchange>();
 			//初始化
 			pathRoot = Application.dataPath;
 			//注意这里需要对路径进行处理
-			//目的是去除Assets这部分字符以获取项目目录
-			//我表示Windows的/符号一直没有搞懂
 			pathRoot = pathRoot.Substring(0, pathRoot.LastIndexOf("/"));
 			excelList = new List<string>();
 			scrollPos = new Vector2(instance.position.x, instance.position.y + 75);

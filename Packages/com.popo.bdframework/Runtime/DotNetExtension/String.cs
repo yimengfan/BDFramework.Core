@@ -1,4 +1,6 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BDFramework.StringEx
 {
@@ -18,5 +20,23 @@ namespace BDFramework.StringEx
         {
             return (source.IndexOf(value, comparisonType) >= 0);
         }
-    }
+
+        /// <summary>
+        /// string转md5
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string ToMD5(this string source)
+        {
+            MD5 md5Hash = MD5.Create();
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(source));
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                str.Append(data[i].ToString("x2")); //加密结果"x2"结果为32位,"x3"结果为48位,"x4"结果为64位
+            }
+            // 返回十六进制字符串  
+            return str.ToString();
+        }
+}
 }

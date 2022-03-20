@@ -9,9 +9,12 @@ using LitJson;
 using UnityEngine;
 
 
-namespace BDFramework.Editor.TableData
+namespace BDFramework.Editor.Table
 {
-    public class ExcelUtility
+    /// <summary>
+    /// Excel转换工具
+    /// </summary>
+    public class ExcelExchangeTools
     {
         /// <summary>
         /// 表格数据集合
@@ -24,7 +27,7 @@ namespace BDFramework.Editor.TableData
         /// 构造函数
         /// </summary>
         /// <param name="excelFile">Excel file.</param>
-        public ExcelUtility(string excelFile)
+        public ExcelExchangeTools(string excelFile)
         {
             FileStream       mStream      = File.Open(excelFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             IExcelDataReader mExcelReader = ExcelReaderFactory.CreateOpenXmlReader(mStream);
@@ -36,7 +39,7 @@ namespace BDFramework.Editor.TableData
             }
         }
 
-        public ExcelUtility(DataTable sheet)
+        public ExcelExchangeTools(DataTable sheet)
         {
             mSheet = sheet;
         }

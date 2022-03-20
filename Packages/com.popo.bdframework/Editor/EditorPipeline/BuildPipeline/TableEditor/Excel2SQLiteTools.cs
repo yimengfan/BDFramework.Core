@@ -9,13 +9,16 @@ using BDFramework.Sql;
 using UnityEditor;
 using UnityEngine;
 
-namespace BDFramework.Editor.TableData
+namespace BDFramework.Editor.Table
 {
     public enum DBType
     {
       Local,
       Server,
     }
+    /// <summary>
+    /// Excel转Sqlite工具
+    /// </summary>
     static public class Excel2SQLiteTools
     {
 
@@ -36,33 +39,7 @@ namespace BDFramework.Editor.TableData
             Debug.Log("表格导出完毕");
         }
 
-        /// <summary>
-        /// 获取所有的xlsx文件
-        /// </summary>
-        /// <returns></returns>
-        public static List<string> GetAllConfigFiles(string filetype = "*.xlsx")
-        {
-            List<string> tableRoot = new List<string>();
-            foreach (var path in Directory.GetDirectories(Application.dataPath, "*", SearchOption.TopDirectoryOnly))
-            {
-                var tableDir = path + "/Table";
-                if (!Directory.Exists(tableDir))
-                {
-                    continue;
-                }
-                tableRoot.Add(tableDir);
-            }
 
-            //table发现
-            List<string> xlslFiles = new List<string>();
-            foreach (var r in tableRoot)
-            {
-                var fs = Directory.GetFiles(r, filetype, SearchOption.AllDirectories);
-                xlslFiles.AddRange(fs);
-            }
-
-            return xlslFiles;
-        }
 
         #region Excel2Sql
 
@@ -75,7 +52,7 @@ namespace BDFramework.Editor.TableData
         {
             //触发bd环境周期
             BDFrameworkPublishPipelineHelper.OnBeginBuildSqlite();
-            var xlslFiles = GetAllConfigFiles();
+            var xlslFiles = ExcelEditorTools.GetAllExcelFiles();
             switch (dbType)
             {
                 case DBType.Local:
@@ -115,7 +92,7 @@ namespace BDFramework.Editor.TableData
         /// <param name="filePath"></param>
         public static void Excel2SQLite(string filePath,DBType dbType)
         {
-            var excel = new ExcelUtility(filePath);
+            var excel = new ExcelExchangeTools(filePath);
             var json  = excel.GetJson(dbType);
             try
             {

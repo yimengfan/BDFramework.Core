@@ -3,9 +3,9 @@ using BDFramework.Sql;
 using UnityEditor;
 using UnityEngine;
 
-namespace BDFramework.Editor.TableData
+namespace BDFramework.Editor.Table
 {
-    public class ExcelImporter : AssetPostprocessor
+    public class OnExcelImporter : AssetPostprocessor
     {
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {

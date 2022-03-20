@@ -726,10 +726,10 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
-    1: 
-    4: 
-    7: 
-    33:
+    1: ODIN_INSPECTOR
+    4: ODIN_INSPECTOR
+    7: ODIN_INSPECTOR;ODIN_INSPECTOR_3
+    33: 
   platformArchitecture: {}
   scriptingBackend:
     Android: 1

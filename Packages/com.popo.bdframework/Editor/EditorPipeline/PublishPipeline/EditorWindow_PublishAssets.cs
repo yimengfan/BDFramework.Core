@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using BDFramework.Editor.TableData;
+using BDFramework.Editor.Table;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.EditorPipeline.PublishPipeline;
