@@ -41,7 +41,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.MatchGenericParameters(args, typeof(UnityEngine.GameObject), typeof(System.String)))
+                    if(m.MatchGenericParameters(args, typeof(UnityEngine.GameObject), typeof(System.String), typeof(BDFramework.ResourceMgr.LoadPathType)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, Load_0);
@@ -78,7 +78,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.MatchGenericParameters(args, typeof(UnityEngine.Material), typeof(System.String)))
+                    if(m.MatchGenericParameters(args, typeof(UnityEngine.Material), typeof(System.String), typeof(BDFramework.ResourceMgr.LoadPathType)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, Load_5);
@@ -95,7 +95,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.MatchGenericParameters(args, typeof(UnityEngine.Sprite), typeof(System.String)))
+                    if(m.MatchGenericParameters(args, typeof(UnityEngine.Sprite), typeof(System.String), typeof(BDFramework.ResourceMgr.LoadPathType)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, Load_7);
@@ -119,14 +119,18 @@ namespace ILRuntime.Runtime.Generated
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            BDFramework.ResourceMgr.LoadPathType @pathType = (BDFramework.ResourceMgr.LoadPathType)typeof(BDFramework.ResourceMgr.LoadPathType).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)20);
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             System.String @name = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = BDFramework.ResourceMgr.BResources.Load<UnityEngine.GameObject>(@name);
+            var result_of_this_method = BDFramework.ResourceMgr.BResources.Load<UnityEngine.GameObject>(@name, @pathType);
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
@@ -213,14 +217,18 @@ namespace ILRuntime.Runtime.Generated
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            BDFramework.ResourceMgr.LoadPathType @pathType = (BDFramework.ResourceMgr.LoadPathType)typeof(BDFramework.ResourceMgr.LoadPathType).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)20);
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             System.String @name = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = BDFramework.ResourceMgr.BResources.Load<UnityEngine.Material>(@name);
+            var result_of_this_method = BDFramework.ResourceMgr.BResources.Load<UnityEngine.Material>(@name, @pathType);
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
@@ -240,14 +248,18 @@ namespace ILRuntime.Runtime.Generated
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            BDFramework.ResourceMgr.LoadPathType @pathType = (BDFramework.ResourceMgr.LoadPathType)typeof(BDFramework.ResourceMgr.LoadPathType).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)20);
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             System.String @name = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = BDFramework.ResourceMgr.BResources.Load<UnityEngine.Sprite>(@name);
+            var result_of_this_method = BDFramework.ResourceMgr.BResources.Load<UnityEngine.Sprite>(@name, @pathType);
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }

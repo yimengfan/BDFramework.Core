@@ -12,6 +12,7 @@ using BDFramework.Editor.Table;
 using BDFramework.Editor.Task;
 using BDFramework.Hotfix.Reflection;
 using BDFramework.ScreenView;
+using ServiceStack;
 using UnityEditor;
 using UnityEngine;
 
@@ -116,6 +117,10 @@ namespace BDFramework.Editor.Environment
 
             try
             {
+                //BD初始化
+                BDApplication.Init();
+                //BDEditor初始化
+                BDEditorApplication.Init();
                 //加载主工程的DLL Type
                 var assemblyPath = BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll";
                 var editorAssemlyPath = BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp-Editor.dll";
@@ -123,13 +128,9 @@ namespace BDFramework.Editor.Environment
                 {
                     var gAssembly = Assembly.LoadFile(assemblyPath);
                     var eAssemlby = Assembly.LoadFile(editorAssemlyPath);
-                    CollectTypes(gAssembly, eAssemlby);
+                    Types = CollectTypes(gAssembly, eAssemlby).ToArray();
                 }
                 
-                //BD初始化
-                BDApplication.Init();
-                //BDEditor初始化
-                BDEditorApplication.Init();
                 //编辑器下加载初始化
                 BResources.Load(AssetLoadPathType.Editor);
                 //编辑器下管理器注册
@@ -168,7 +169,7 @@ namespace BDFramework.Editor.Environment
         /// </summary>
         /// <param name="gameLogicAssembly"></param>
         /// <param name="gameEditorAssembly"></param>
-        static public void CollectTypes(Assembly gameLogicAssembly, Assembly gameEditorAssembly)
+        static public List<Type> CollectTypes(Assembly gameLogicAssembly, Assembly gameEditorAssembly)
         {
             //编辑器所有类
             List<Type> typeList = new List<Type>();
@@ -178,16 +179,14 @@ namespace BDFramework.Editor.Environment
             typeList.AddRange(typeof(BDFrameworkEditorEnvironment).Assembly.GetTypes());
             //BDRuntime下所有类
             typeList.AddRange(typeof(BDLauncher).Assembly.GetTypes());
-            Types = typeList.ToArray();
+
             //
- 
+            return typeList;
         }
-
-
 
         #endregion
 
-     
+
         /// <summary>
         /// 编辑器的Update
         /// </summary>
