@@ -51,7 +51,7 @@ namespace BDFramework.Editor.DevOps
         static private void CreateSVNProccesor()
         {
             //获取设置
-            var devops_setting = BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting;
+            var devops_setting = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting;
             //资源仓库
             var store = devops_setting.AssetServiceVCSData;
             AssetsSvnProcessor = SVNProcessor.CreateSVNProccesor(store.Url, store.UserName, store.Psw, CI_ASSETS_PATH);

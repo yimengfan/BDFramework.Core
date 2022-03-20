@@ -34,7 +34,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     {
         GUILayout.BeginVertical();
         {
-            GUILayout.Label("1.脚本打包", EditorGUIHelper.TitleStyle);
+            GUILayout.Label("1.脚本打包", EditorGUIHelper.LabelH3);
             GUILayout.Space(5);
             //第二排
             GUILayout.BeginHorizontal();
@@ -64,7 +64,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
 
             if (BDEditorApplication.BDFrameWorkFrameEditorSetting != null)
             {
-                BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll = EditorGUILayout.Toggle("是否自动编译热更DLL", BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting.IsAutoBuildDll);
+                BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting.IsAutoBuildDll = EditorGUILayout.Toggle("是否自动编译热更DLL", BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting.IsAutoBuildDll);
             }
 
             GUI.color = Color.green;

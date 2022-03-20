@@ -13,15 +13,15 @@ namespace BDFramework.Editor.Table
 {
     public enum DBType
     {
-      Local,
-      Server,
+        Local,
+        Server,
     }
+
     /// <summary>
     /// Excel转Sqlite工具
     /// </summary>
     static public class Excel2SQLiteTools
     {
-
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_GenSqlite)]
         public static void ExecuteGenSqlite()
         {
@@ -40,7 +40,6 @@ namespace BDFramework.Editor.Table
         }
 
 
-
         #region Excel2Sql
 
         /// <summary>
@@ -48,7 +47,7 @@ namespace BDFramework.Editor.Table
         /// 默认导出到当前平台目录下
         /// </summary>
         /// <param name="ouptputPath">自定义路径</param>
-        public static void AllExcel2SQLite(string ouptputPath, RuntimePlatform platform,DBType dbType = DBType.Local )
+        public static void AllExcel2SQLite(string ouptputPath, RuntimePlatform platform, DBType dbType = DBType.Local)
         {
             //触发bd环境周期
             BDFrameworkPublishPipelineHelper.OnBeginBuildSqlite();
@@ -62,12 +61,13 @@ namespace BDFramework.Editor.Table
                     SqliteLoder.LoadServerDBOnEditor(ouptputPath, platform);
                     break;
             }
+
             {
                 foreach (var f in xlslFiles)
                 {
                     try
                     {
-                        Excel2SQLite(f,dbType);
+                        Excel2SQLite(f, dbType);
                     }
                     catch (Exception e)
                     {
@@ -90,10 +90,13 @@ namespace BDFramework.Editor.Table
         /// 需要主动连接数据库
         /// </summary>
         /// <param name="filePath"></param>
-        public static void Excel2SQLite(string filePath,DBType dbType)
+        public static void Excel2SQLite(string filePath, DBType dbType)
         {
+            //收集所有的类型
+            CollectTableTypes();
+
             var excel = new ExcelExchangeTools(filePath);
-            var json  = excel.GetJson(dbType);
+            var json = excel.GetJson(dbType);
             try
             {
                 Json2Sqlite(filePath, json);
@@ -103,10 +106,41 @@ namespace BDFramework.Editor.Table
                 Debug.LogError(e);
                 EditorUtility.ClearProgressBar();
             }
-          
         }
 
         #endregion
+
+        static private Type[] TABLE_TYPES = null;
+
+        /// <summary>
+        /// 搜集table类型
+        /// </summary>
+        static public void CollectTableTypes()
+        {
+            if (TABLE_TYPES != null)
+            {
+                return;
+            }
+
+            List<Type> retTypeList = new List<Type>();
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblies)
+            {
+                var types = assembly.GetTypes();
+                //只搜集editor
+                foreach (var type in types)
+                {
+                    //
+                    if (type != null && type.IsClass && type.Namespace != null && type.Namespace.StartsWith("Game.Data."))
+                    {
+                        retTypeList.Add(type);
+                    }
+                }
+            }
+
+            TABLE_TYPES = retTypeList.ToArray();
+        }
 
         #region Json2Sql
 
@@ -115,45 +149,48 @@ namespace BDFramework.Editor.Table
         /// </summary>
         /// <param name="filePath"></param>
         /// <param name="jsonContent"></param>
-        static public void Json2Sqlite(string filePath, string jsonContent)
+        static private void Json2Sqlite(string filePath, string jsonContent)
         {
-            var table      = Path.GetFileName(filePath).Replace(Path.GetExtension(filePath), "");
-            var jsonObj    = JsonMapper.ToObject(jsonContent);
-            var dbname     = Path.GetFileNameWithoutExtension(SqliteHelper.DB.DBPath);
+            var table = Path.GetFileName(filePath).Replace(Path.GetExtension(filePath), "");
+            var jsonObj = JsonMapper.ToObject(jsonContent);
+            var dbname = Path.GetFileNameWithoutExtension(SqliteHelper.DB.DBPath);
             var @namespace = "Game.Data." + dbname + ".";
-            var type       = BDFrameworkEditorEnvironment.Types.FirstOrDefault((t) => t.FullName.StartsWith(@namespace) && t.Name.ToLower() == table.ToLower());
+            var type = TABLE_TYPES.FirstOrDefault((t) => t.FullName.StartsWith(@namespace) && t.Name.ToLower() == table.ToLower());
             if (type == null)
             {
-                type = BDFrameworkEditorEnvironment.Types.FirstOrDefault((t) => t.FullName.StartsWith( "Game.Data.") && t.Name.ToLower() == table.ToLower());
+                type = TABLE_TYPES.FirstOrDefault((t) => t.FullName.StartsWith("Game.Data.") && t.Name.ToLower() == table.ToLower());
             }
+
             if (type == null)
             {
                 Debug.LogError(table + "类不存在，请检查!");
                 return;
             }
+
             //
-            EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.FullName, jsonObj.Count), 0);
-            Debug.LogFormat("导出 [{0}]:{1}"  ,dbname, filePath.Replace(Application.dataPath + "\\", "") + "=>【" + type.FullName + "】");
+            EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.FullName, jsonObj.Count), 1);
+            Debug.LogFormat("导出 [{0}]:{1}", dbname, filePath.Replace(Application.dataPath + "\\", "") + "=>【" + type.FullName + "】");
             //数据库创建表
             SqliteHelper.DB.CreateTable(type);
             for (int i = 0; i < jsonObj.Count; i++)
             {
-               
                 try
                 {
                     var json = jsonObj[i].ToJson();
-                    var jobj    = JsonMapper.ToObject(type, json);
+                    var jobj = JsonMapper.ToObject(type, json);
                     SqliteHelper.DB.Insert(jobj);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    Debug.LogError("导出数据有错,跳过! 错误位置:" + type.Name + ":" + i + "/" + jsonObj.Count + "\n" +e);
+                    Debug.LogError("导出数据有错,跳过! 错误位置:" + type.Name + ":" + i + "/" + jsonObj.Count + "\n" + e);
                 }
             }
+
             //回调通知
             BDFrameworkPublishPipelineHelper.OnExportExcel(type);
             //
-            EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.Name, jsonObj.Count), 1);
+            EditorUtility.ClearProgressBar();
+           // EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.Name, jsonObj.Count), 1);
         }
 
         #endregion
@@ -167,7 +204,7 @@ namespace BDFramework.Editor.Table
             RuntimePlatform[] ps = new RuntimePlatform[] {RuntimePlatform.WindowsEditor, RuntimePlatform.IPhonePlayer, RuntimePlatform.Android};
 
             var target = SqliteLoder.GetLocalDBPath(root, sourcePlatform);
-            var bytes  = File.ReadAllBytes(target);
+            var bytes = File.ReadAllBytes(target);
             //拷贝当前到其他目录
 
             foreach (var p in ps)
@@ -177,7 +214,6 @@ namespace BDFramework.Editor.Table
                 FileHelper.WriteAllBytes(outpath, bytes);
             }
         }
-
 
 
         #region 按钮 Excel2Sqlite
