@@ -41,7 +41,7 @@ namespace BDFramework.Editor.DevOps
         {
             GUILayout.BeginVertical();
             {
-                var devops_setting = BDEditorApplication.BDFrameWorkFrameEditorSetting.DevOpsSetting;
+                var devops_setting = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting;
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.BeginVertical();

@@ -64,7 +64,7 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         void TipsGUI()
         {
-            GUILayout.Label("2.资源打包", EditorGUIHelper.TitleStyle);
+            GUILayout.Label("2.资源打包", EditorGUIHelper.LabelH3);
             GUILayout.Space(5);
             GUILayout.Label("Runtime目录:");
             foreach (var root in BDApplication.GetAllRuntimeDirects())

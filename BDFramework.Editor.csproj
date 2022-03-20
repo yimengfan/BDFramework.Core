@@ -94,6 +94,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\ExcelEditorTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\ExcelExchangeTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\OnExcelImporter.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\TableEditorTask.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\CI\CI.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\CI\PublishPipeLineCI.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\DevOpsEditorTasks.cs" />
