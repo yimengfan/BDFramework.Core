@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1719641923
+CRC: 2499514076
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -21,4 +21,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/AllAssetType/Font2.ttf
 Dependencies:
-- E:/BDFrameworkMaster/DevOps/PublishAssets/iOS/Art/d64edb7b5e83d3247b9bbd478715e5a6
+- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/iOS/Art/d64edb7b5e83d3247b9bbd478715e5a6

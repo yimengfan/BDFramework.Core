@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1894617693
+CRC: 3026071294
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b31a84d89f4a837754133ae47ed7c629
+    Hash: 8fa0765d5e7472508ad432066c3cdb3c
   TypeTreeHash:
     serializedVersion: 2
     Hash: a136c8ea3dbaa7e1bf6892a13884fcb0
@@ -35,4 +35,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/Windows/UFlux/01Component/Component_test01.prefab
 Dependencies:
-- E:/BDFrameworkMaster/DevOps/PublishAssets/iOS/Art/76c21518bd7f0e64ca49af74a4987cd9
+- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/iOS/Art/76c21518bd7f0e64ca49af74a4987cd9

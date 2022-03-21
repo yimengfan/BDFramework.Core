@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1836403367
+CRC: 2683396920
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -21,4 +21,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/AllAssetType/Font2.ttf
 Dependencies:
-- E:/BDFrameworkMaster/DevOps/PublishAssets/Android/Art/d64edb7b5e83d3247b9bbd478715e5a6
+- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/d64edb7b5e83d3247b9bbd478715e5a6

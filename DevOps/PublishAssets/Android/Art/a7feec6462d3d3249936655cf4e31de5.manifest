@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3092122102
+CRC: 1822057694
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: cccc85ce544aebd8e20c8aff3c57e20c
+    Hash: c7d6cb2a3c857d929bdd632d3c0de8d8
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7652f69dff3dcd0741269161f69220a7
@@ -27,4 +27,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/Test/Cube.prefab
 Dependencies:
-- E:/BDFrameworkMaster/DevOps/PublishAssets/Android/Art/362a42798cd38c844bb6e946a9266c8a
+- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/362a42798cd38c844bb6e946a9266c8a

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2347791875
+CRC: 1987678810
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a6075d3ae3d120893d319115dc59640b
+    Hash: f5b5b539b70dafb14e1d278dbd5e39fb
   TypeTreeHash:
     serializedVersion: 2
     Hash: cc27a7c2b7aeda57fe404097db2213c0
@@ -19,4 +19,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/AssetTest/ParticleTest.mat
 Dependencies:
-- E:/BDFrameworkMaster/DevOps/PublishAssets/iOS/Art/2612b115ce3857f45833e28c2325fdbb
+- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/iOS/Art/2612b115ce3857f45833e28c2325fdbb

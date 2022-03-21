@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 391347192
+CRC: 1126839465
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4b58e608c8c453e9e82c285eaccfb49f
+    Hash: ad9b70422fa6517417143f23fdafd90b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 767a59f8de390d2354823e760c737a44
@@ -25,4 +25,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource_SVN/Runtime/Char/001.prefab
 Dependencies:
-- E:/BDFrameworkMaster/DevOps/PublishAssets/iOS/Art/9ae31c8b351113b44a663362fc4f41e9
+- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/iOS/Art/9ae31c8b351113b44a663362fc4f41e9
