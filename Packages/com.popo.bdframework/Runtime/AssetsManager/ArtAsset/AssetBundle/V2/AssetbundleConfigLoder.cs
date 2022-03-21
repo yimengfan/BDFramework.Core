@@ -156,77 +156,42 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns>这个list外部不要修改</returns>
         public (AssetBundleItem, List<string>) GetDependAssetsByName<T>(string assetName) where T : Object
         {
-            return GetDependAssetsByName(typeof(T), assetName);
+            return GetDependAssetsByName(assetName, typeof(T));
         }
 
         /// <summary>
         /// 获取单个依赖
         /// Type版本
         /// </summary>
+        /// <param name="assetName"></param>
+        /// <param name="type"></param>
         /// <param name="menifestName"></param>
         /// <returns>这个list外部不要修改</returns>
-        public (AssetBundleItem, List<string>) GetDependAssetsByName(Type type, string assetName)
+        public (AssetBundleItem, List<string>) GetDependAssetsByName(string assetName, Type type = null)
         {
             //1.优先用类型匹配
-            var assetbundleItem = GetAssetBundleData(type, assetName);
-            if (assetbundleItem != null)
-            {
-                var retlist = new List<string>(assetbundleItem.DependAssetIds.Count);
-                //找到依赖资源
-                for (int i = 0; i < assetbundleItem.DependAssetIds.Count; i++)
-                {
-                    var idx = assetbundleItem.DependAssetIds[i];
-                    var abItem = this.AssetbundleItemList[idx];
-                    retlist.Add(abItem.AssetBundlePath);
-                }
-
-                return (assetbundleItem, retlist);
-            }
-            //2.强行搜路径匹配即可
-            else
-            {
-                return GetDependAssetsByName(assetName);
-            }
-        }
-
-
-        /// <summary>
-        /// 获取单个依赖
-        /// </summary>
-        /// <param name="menifestName"></param>
-        /// <returns>这个list外部不要修改</returns>
-        public (AssetBundleItem, List<string>) GetDependAssetsByName(string assetName)
-        {
-            AssetBundleItem retABItem = null;
-            for (int i = 0; i < this.AssetbundleItemList.Count; i++)
-            {
-                var abitem = this.AssetbundleItemList[i];
-                if (abitem.LoadPath != null)
-                {
-                    if (abitem.LoadPath.Equals(assetName, StringComparison.OrdinalIgnoreCase))
-                    {
-                        retABItem = abitem;
-                        break;
-                    }
-                }
-            }
+            AssetBundleItem retABItem = GetAssetBundleData(assetName, type);
 
             if (retABItem != null)
             {
-                var retlist = new List<string>(retABItem.DependAssetIds.Count);
-                //找到依赖资源
-                for (int i = 0; i < retABItem.DependAssetIds.Count; i++)
+                List<string> retlist = new List<string>();
+
+                if (retABItem.DependAssetIds != null && retABItem.DependAssetIds.Length > 0)
                 {
-                    var idx = retABItem.DependAssetIds[i];
-                    var abItem = this.AssetbundleItemList[idx];
-                    retlist.Add(abItem.AssetBundlePath);
+                    int len = retABItem.DependAssetIds.Length;
+                    retlist = new List<string>(len);
+                    //找到依赖资源
+                    for (int i = 0; i < len; i++)
+                    {
+                        var idx = retABItem.DependAssetIds[i];
+                        var abItem = this.AssetbundleItemList[idx];
+                        retlist.Add(abItem.AssetBundlePath);
+                    }
                 }
 
                 return (retABItem, retlist);
             }
 
-
-            BDebug.LogError("【config】不存在资源:" + assetName);
             return (null, null);
         }
 
@@ -238,7 +203,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public AssetBundleItem GetAssetBundleData<T>(string assetLoadPath) where T : Object
         {
-            return GetAssetBundleData(typeof(T), assetLoadPath);
+            return GetAssetBundleData(assetLoadPath, typeof(T));
         }
 
 
@@ -259,6 +224,7 @@ namespace BDFramework.ResourceMgr.V2
                 assetBundleItem = this.AssetbundleItemList.Find((abi) => abi.AssetBundlePath.Equals(guid));
                 guildAssetBundleItemCahceMap[guid] = assetBundleItem;
             }
+
             return assetBundleItem;
         }
 
@@ -267,16 +233,36 @@ namespace BDFramework.ResourceMgr.V2
         /// Type版本
         /// </summary>
         /// <param name="assetLoadPath"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
-        public AssetBundleItem GetAssetBundleData(Type type, string assetLoadPath)
+        public AssetBundleItem GetAssetBundleData(string assetLoadPath, Type type = null)
         {
             if (!string.IsNullOrEmpty(assetLoadPath))
             {
-                if (this.assetTypeIdxMap.TryGetValue(type.FullName, out var assetMap))
+                if (type != null && type != typeof(Object))
                 {
-                    if (assetMap.TryGetValue(assetLoadPath, out var idx))
+                    //指定T Map搜索
+                    if (this.assetTypeIdxMap.TryGetValue(type.FullName, out var assetMap))
                     {
-                        return this.AssetbundleItemList[idx];
+                        if (assetMap.TryGetValue(assetLoadPath, out var idx))
+                        {
+                            return this.AssetbundleItemList[idx];
+                        }
+                    }
+                }
+                else
+                {
+                    //全局搜索,效率略低
+                    for (int i = 0; i < this.AssetbundleItemList.Count; i++)
+                    {
+                        var abitem = this.AssetbundleItemList[i];
+                        if (abitem.LoadPath != null)
+                        {
+                            if (abitem.LoadPath.Equals(assetLoadPath, StringComparison.OrdinalIgnoreCase))
+                            {
+                                return abitem;
+                            }
+                        }
                     }
                 }
             }
