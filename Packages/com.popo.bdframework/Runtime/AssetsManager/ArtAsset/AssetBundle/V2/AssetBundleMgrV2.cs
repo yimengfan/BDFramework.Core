@@ -43,7 +43,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 异步回调表
         /// </summary>
-        private List<AsyncLoadTaskGroup> asyncTaskGroupList = new List<AsyncLoadTaskGroup>();
+        private List<AsyncLoadTaskGroupResult> asyncTaskGroupList { get; set; } = new List<AsyncLoadTaskGroupResult>(50);
 
         /// <summary>
         /// 全局唯一的依赖
@@ -127,7 +127,7 @@ namespace BDFramework.ResourceMgr.V2
 
 
         #region 对外加载接口
-        
+
         /// <summary>
         /// 同步加载
         /// </summary>
@@ -147,13 +147,14 @@ namespace BDFramework.ResourceMgr.V2
                     path = abi.LoadPath;
                 }
             }
-            
+
 
             var obj = Load(typeof(T), path);
             if (obj)
             {
                 return obj as T;
             }
+
             return null;
         }
 
@@ -168,6 +169,7 @@ namespace BDFramework.ResourceMgr.V2
                 {
                     LoadAssetBundle(dependAssetBundle);
                 }
+
                 //加载主资源
                 LoadAssetBundle(assetBundleItem.AssetBundlePath);
                 //
@@ -227,7 +229,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <typeparam name="T"></typeparam>
         /// <param name="assetName"></param>
         /// <param name="callback"></param>
-        /// <returns></returns>
+        /// <returns>异步任务id</returns>
         public int AsyncLoad<T>(string assetName, Action<T> callback) where T : UnityEngine.Object
         {
             //非hash模式，需要debugRuntime
@@ -236,7 +238,7 @@ namespace BDFramework.ResourceMgr.V2
             //     assetName = ZString.Format(DEBUG_RUNTIME, assetName);
             // }
 
-            List<LoaderTaskData> taskQueue = new List<LoaderTaskData>();
+            var taskQueue = new List<LoaderTaskData>();
             //获取依赖
             var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssetsByName<T>(assetName);
             if (assetBundleItem != null)
@@ -252,9 +254,8 @@ namespace BDFramework.ResourceMgr.V2
                 var mainTask = new LoaderTaskData(assetBundleItem.AssetBundlePath, typeof(Object), true);
                 taskQueue.Add(mainTask);
                 //添加任务组
-                var taskGroup = new AsyncLoadTaskGroup(this, assetName, assetBundleItem, taskQueue, (p, obj) =>
+                var taskGroup = new AsyncLoadTaskGroupResult(this, assetName, assetBundleItem, taskQueue, (p, obj) =>
                 {
-                    BDebug.Log("【AssetbundleV2】完成异步加载:" + assetName);
                     //完成回调
                     callback(obj as T);
                 });
@@ -279,7 +280,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="assetNameList">资源</param>
         /// <param name="onLoadProcess">进度</param>
         /// <param name="onLoadComplete">加载结束</param>
-        /// <returns>taskid</returns>
+        /// <returns>任务id列表</returns>
         public List<int> AsyncLoad(List<string> assetNameList, Action<int, int> onLoadProcess, Action<IDictionary<string, Object>> onLoadComplete)
         {
             var taskIdList = new List<int>();
@@ -312,10 +313,10 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 添加一个任务组
         /// </summary>
-        /// <param name="taskGroup"></param>
-        public void AddAsyncTaskGroup(AsyncLoadTaskGroup taskGroup)
+        /// <param name="taskGroupResult"></param>
+        public void AddAsyncTaskGroup(AsyncLoadTaskGroupResult taskGroupResult)
         {
-            this.asyncTaskGroupList.Add(taskGroup);
+            this.asyncTaskGroupList.Add(taskGroupResult);
         }
 
         /// <summary>
@@ -598,11 +599,6 @@ namespace BDFramework.ResourceMgr.V2
         #region 异步任务检测
 
         /// <summary>
-        /// 当前执行的任务组
-        /// </summary>
-        private AsyncLoadTaskGroup curDoTask = null;
-
-        /// <summary>
         /// 核心功能,所有任务靠这个推进度
         /// 执行下个任务
         /// </summary>
@@ -610,20 +606,21 @@ namespace BDFramework.ResourceMgr.V2
         {
             while (true)
             {
-                //当前任务组执行完毕，执行下一个
-                if (curDoTask == null || curDoTask.IsComplete)
+                if (this.asyncTaskGroupList.Count > 0)
                 {
-                    if (this.asyncTaskGroupList.Count > 0)
-                    {
-                        //开始新任务
-                        curDoTask = this.asyncTaskGroupList[0];
-                        this.asyncTaskGroupList.RemoveAt(0);
-                        BDebug.Log("【AssetbundleV2】开始执行异步加载：" + curDoTask.MainAssetName);
-                        //开始task
-                        curDoTask.Do();
-                    }
-                }
+                    //开始新任务
+                    var curDoTask = this.asyncTaskGroupList[0];
+                    this.asyncTaskGroupList.RemoveAt(0);
+                    BDebug.Log("【AssetbundleV2】开始执行异步加载：" + curDoTask.MainAssetName);
 
+                    yield return curDoTask;
+
+                    if (curDoTask.IsComplete)
+                    {
+                        BDebug.Log("【AssetbundleV2】加载完成：" + curDoTask.MainAssetName);
+                    }
+
+                }
                 // BDebug.Log("【Assetbundlev2】检测 剩余任务:" + this.asyncTaskGroupList.Count + "   " + curDoTask.MainAssetName);
                 yield return null;
             }

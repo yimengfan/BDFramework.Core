@@ -33,7 +33,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 所有任务的集合
         /// </summary>
-        private List<AsyncLoadTaskGroup> allTaskList;
+        private List<AsyncLoadTaskGroupResult> allTaskList;
 
         /// <summary>
         /// 对象map
@@ -44,7 +44,7 @@ namespace BDFramework.ResourceMgr
         public DevResourceMgr()
         {
             willdoTaskSet = new HashSet<int>();
-            allTaskList = new List<AsyncLoadTaskGroup>();
+            allTaskList = new List<AsyncLoadTaskGroupResult>();
             objsMap = new Dictionary<string, UnityEngine.Object>();
         }
 
