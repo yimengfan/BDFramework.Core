@@ -160,7 +160,7 @@ namespace BDFramework.ResourceMgr.V2
         public Object Load(Type type, string path)
         {
             //1.依赖路径
-            var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssetsByName(type, path);
+            var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssetsByName(path, type);
             if (assetBundleItem != null)
             {
                 //加载依赖

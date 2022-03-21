@@ -9,13 +9,13 @@ namespace BDFramework.ResourceMgr.V2
     {
 
 
-        public AssetBundleItem(int id, string loadPath, string assetbundlePath, int assetType, List<int> depend = null)
+        public AssetBundleItem(int id, string loadPath, string assetbundlePath, int assetType, int[] dependAssetIds = null)
         {
             this.Id              = id;
             this.LoadPath        = loadPath;
             this.AssetBundlePath = assetbundlePath;
             this.AssetType            = assetType;
-            this.DependAssetIds  = depend;
+            this.DependAssetIds  = dependAssetIds;
         }
 
         /// <summary>
@@ -55,6 +55,6 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 依赖
         /// </summary>
-        public List<int> DependAssetIds { get; private set; } = new List<int>();
+        public int[] DependAssetIds { get;  set; } = new int[] { };
     }
 }

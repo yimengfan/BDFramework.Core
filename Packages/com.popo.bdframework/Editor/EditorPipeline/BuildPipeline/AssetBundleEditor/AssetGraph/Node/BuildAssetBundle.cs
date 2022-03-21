@@ -438,7 +438,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //1.导出配置
             var assetDataItemList = new List<AssetBundleItem>();
             //占位，让id和idx恒相等
-            assetDataItemList.Add(new AssetBundleItem(0, null, null, -1, new List<int>()));
+            assetDataItemList.Add(new AssetBundleItem(0, null, null, -1, new int[]{}));
          
             //搜集runtime的 ,分两个for 让序列化后的数据更好审查
             foreach (var item in buildInfo.AssetDataMaps)
@@ -448,7 +448,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 {
                     var loadPath = GetAbsPathFormRuntime(item.Key);
                     //添加
-                    var abi = new AssetBundleItem(assetDataItemList.Count, loadPath, item.Value.ABName, item.Value.Type, new List<int>());
+                    var abi = new AssetBundleItem(assetDataItemList.Count, loadPath, item.Value.ABName, item.Value.Type, new int[]{});
                     // abi.EditorAssetPath = item.Key;
                     assetDataItemList.Add(abi); //.ManifestMap[key] = mi;
                     item.Value.ArtConfigIdx = abi.Id;
@@ -464,7 +464,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     var ret = assetDataItemList.FirstOrDefault((ab) => ab.AssetBundlePath == item.Value.ABName);
                     if (ret == null) //不保存重复内容
                     {
-                        var abi = new AssetBundleItem(assetDataItemList.Count, null, item.Value.ABName, item.Value.Type, new List<int>());
+                        var abi = new AssetBundleItem(assetDataItemList.Count, null, item.Value.ABName, item.Value.Type, new int[]{});
                         // abi.EditorAssetPath = item.Key;
                         assetDataItemList.Add(abi);
                         item.Value.ArtConfigIdx = abi.Id;
@@ -486,7 +486,10 @@ namespace BDFramework.Editor.AssetGraph.Node
                         var dependAssetName = buildAssetData.DependAssetList[i];
                         //寻找保存列表中依赖的id（可以认为是下标）
                         var dependAssetBuildData = assetDataItemList.FirstOrDefault((asset) => asset.AssetBundlePath == dependAssetName);
-                        assetbundleData.DependAssetIds.Add(dependAssetBuildData.Id);
+                        //向array添加元素，editor 略冗余，目的是为了保护 runtime 数据源readonly
+                        var templist = assetbundleData.DependAssetIds.ToList();
+                        templist.Add(dependAssetBuildData.Id);
+                        assetbundleData.DependAssetIds =templist.ToArray();
                     }
                 }
             }

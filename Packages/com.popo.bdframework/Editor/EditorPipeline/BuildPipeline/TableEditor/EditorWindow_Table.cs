@@ -29,7 +29,10 @@ namespace BDFramework.Editor.Table
             }
 
             GUILayout.Space(10);
-            setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode = EditorGUILayout.Toggle("Playmode导入变动Excel", setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode);
+            if (setting != null)
+            {
+                setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode = EditorGUILayout.Toggle("Playmode导入变动Excel", setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode);
+            }
             GUILayout.EndVertical();
         }
 
