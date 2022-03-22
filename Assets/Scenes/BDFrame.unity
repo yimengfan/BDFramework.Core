@@ -356,7 +356,7 @@ MonoBehaviour:
   Data:
     CodeRoot: 0
     SQLRoot: 0
-    ArtRoot: 2
+    ArtRoot: 3
     CodeRunMode: 0
     IsDebuggerILRuntime: 0
     IsDebugLog: 1
@@ -392,7 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53901f56d09f96d4886992ff20f43b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConfigText: {fileID: 4900000, guid: 07a3bc21edb3c584b9883497db29bfcd, type: 3}
+  ConfigText: {fileID: 4900000, guid: dac4b223fdff90143ac6a3d1980e120b, type: 3}
 --- !u!1 &865066839
 GameObject:
   m_ObjectHideFlags: 0
