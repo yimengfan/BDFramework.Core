@@ -34,7 +34,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     {
         GUILayout.BeginVertical();
         {
-            GUILayout.Label("1.脚本打包", EditorGUIHelper.LabelH3);
+            GUILayout.Label("1.脚本打包", EditorGUIHelper.LabelH2);
             GUILayout.Space(5);
             //第二排
             GUILayout.BeginHorizontal();

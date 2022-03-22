@@ -19,7 +19,7 @@ namespace BDFramework.Editor.Table
         {
             var setting = BDEditorApplication.BDFrameWorkFrameEditorSetting;
             GUILayout.BeginVertical();
-            GUILayout.Label("3.表格打包", EditorGUIHelper.LabelH3);
+            GUILayout.Label("3.表格打包", EditorGUIHelper.LabelH2);
             GUILayout.Space(5);
             if (GUILayout.Button("表格导出成Sqlite", GUILayout.Width(300), GUILayout.Height(30)))
             {

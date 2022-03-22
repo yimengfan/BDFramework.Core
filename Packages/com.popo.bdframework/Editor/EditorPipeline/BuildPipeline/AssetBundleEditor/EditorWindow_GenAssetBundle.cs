@@ -18,7 +18,7 @@ namespace BDFramework.Editor.AssetBundle
             window.Show();
             window.Focus();
         }
-        
+
         private bool isSelectIOS = false;
 
         private bool isSelectAndroid = true;
@@ -64,7 +64,7 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         void TipsGUI()
         {
-            GUILayout.Label("2.资源打包", EditorGUIHelper.LabelH3);
+            GUILayout.Label("2.资源打包", EditorGUIHelper.LabelH2);
             GUILayout.Space(5);
             GUILayout.Label("Runtime目录:");
             foreach (var root in BDApplication.GetAllRuntimeDirects())
@@ -88,8 +88,6 @@ namespace BDFramework.Editor.AssetBundle
         }
 
 
-
-
         /// <summary>
         /// 最新包
         /// </summary>
@@ -108,8 +106,8 @@ namespace BDFramework.Editor.AssetBundle
                 //开始打包
                 BuildAssetBundle(BDApplication.DevOpsPublishAssetsPath);
             }
-            
-            GUILayout.Label("测试:");
+            GUILayout.Space(10);//();
+            GUILayout.Label("打包测试:", EditorGUIHelper.LabelH4);
             if (GUILayout.Button("AssetBundle SG打包(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
             {
                 var outputpath = BDApplication.DevOpsPublishAssetsPath;
@@ -129,11 +127,29 @@ namespace BDFramework.Editor.AssetBundle
             //     //outputpath = Application.streamingAssetsPath;
             //     AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleOnEditor(outputpath);
             // }
-            if (GUILayout.Button("AssetBundle 加载测试Scene(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
+            GUILayout.Space(10);//();
+            GUILayout.Label("资源验证:", EditorGUIHelper.LabelH4);
+            //加载ab
+            GUILayout.BeginHorizontal();
             {
-                AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleRuntime();
+                GUILayout.Label("AssetBundle验证: 加载所有 (DevOps目录)",EditorGUIHelper.GetFontStyle(Color.white,12));
+                if (GUILayout.Button("Play", GUILayout.Width(50), GUILayout.Height(20)))
+                {
+                    AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleRuntime();
+                }
             }
-
+            GUILayout.EndHorizontal();
+            GUILayout.Space(5);//();
+            //加载ab异步
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Label("AssetBundle验证: 加载所有-Async (DevOps目录)",EditorGUIHelper.GetFontStyle(Color.white,12));
+                if (GUILayout.Button("Play", GUILayout.Width(50), GUILayout.Height(20)))
+                {
+                    AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleRuntimeAsync();
+                }
+            }
+            GUILayout.EndHorizontal();
             GUILayout.EndVertical();
         }
 

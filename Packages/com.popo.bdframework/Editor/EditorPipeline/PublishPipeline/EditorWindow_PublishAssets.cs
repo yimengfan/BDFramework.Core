@@ -7,6 +7,7 @@ using BDFramework.Editor.Table;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.EditorPipeline.PublishPipeline;
+using BDFramework.Editor.Tools;
 using BDFramework.Editor.Unity3dEx;
 using BDFramework.ResourceMgr;
 using ServiceStack.Text;
@@ -84,7 +85,7 @@ namespace BDFramework.Editor.PublishPipeline
             }
             GUILayout.EndHorizontal();
 
-            GUILayout.Label("资源发布:");
+          
             EditorGUILayoutEx.Layout_DrawLineH(Color.white);
             //绘制一键导出和构建Editor WebServer
             GUILayout.BeginHorizontal();
@@ -113,6 +114,7 @@ namespace BDFramework.Editor.PublishPipeline
         {
             GUILayout.BeginVertical(GUILayout.Width(550), GUILayout.Height(350));
             {
+                GUILayout.Label("资源发布:",EditorGUIHelper.GetFontStyle(Color.red,15));
                 GUILayout.Label("注:上面按钮操作,会默认生成到DevOps", GUILayout.Height(30));
                 //isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
                 isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源(Windows共用)");
@@ -170,8 +172,9 @@ namespace BDFramework.Editor.PublishPipeline
         {
             GUILayout.BeginVertical();
             {
-                GUILayout.Label("文件服务器:", GUILayout.Height(30));
-                GUILayout.Box("在本机Devops搭建文件服务器，提供测试下载功能");
+                GUILayout.Label("AB文件服务器:",EditorGUIHelper.GetFontStyle(Color.red,15));
+                EditorGUILayout.HelpBox("在本机Devops搭建文件服务器，提供测试下载功能", MessageType.Info);
+                
                 if (EditorHttpListener == null)
                 {
                     GUI.color = Color.green;

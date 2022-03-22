@@ -29,7 +29,8 @@ namespace BDFramework.Editor.AssetBundle
         static private Camera Camera;
         static private EditorWindow GameView;
         
-        private static string ScenePath = "Packages/com.popo.bdframework/Runtime/AssetsManager/UnitTest/AssetBundleBenchmark.unity";
+        private static string ScenePath = "Packages/com.popo.bdframework/Runtime/AssetsManager/UnitTest/AssetBundleBenchmark_01.unity";
+        private static string ScenePath2 = "Packages/com.popo.bdframework/Runtime/AssetsManager/UnitTest/AssetBundleBenchmark_Async.unity";
         /// <summary>
         /// 测试加载所有的AssetBundle
         /// </summary>
@@ -45,7 +46,21 @@ namespace BDFramework.Editor.AssetBundle
             EditorApplication.ExecuteMenuItem("Edit/Play");
 
         }
+        /// <summary>
+        /// 测试加载所有的AssetBundle_Async
+        /// </summary>
+        static public void TestLoadAssetbundleRuntimeAsync()
+        {
+            if (EditorApplication.isPlaying)
+            {
+                EditorApplication.ExecuteMenuItem("Edit/Play");
+            }
+            //打开场景、运行
+            EditorSceneManager.OpenScene(ScenePath2);
+            //运行场景
+            EditorApplication.ExecuteMenuItem("Edit/Play");
 
+        }
         /// <summary>
         /// 测试加载所有的AssetBundle
         /// </summary>
