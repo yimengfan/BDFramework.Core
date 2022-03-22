@@ -146,11 +146,11 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.String @objName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            System.String @assetName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = BDFramework.ResourceMgr.BResources.AsyncLoad<UnityEngine.GameObject>(@objName, @action);
+            var result_of_this_method = BDFramework.ResourceMgr.BResources.AsyncLoad<UnityEngine.GameObject>(@assetName, @action);
 
             __ret->ObjectType = ObjectTypes.Integer;
             __ret->Value = result_of_this_method;
@@ -172,11 +172,11 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            System.Collections.Generic.List<System.String> @objlist = (System.Collections.Generic.List<System.String>)typeof(System.Collections.Generic.List<System.String>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            System.Collections.Generic.List<System.String> @assetlist = (System.Collections.Generic.List<System.String>)typeof(System.Collections.Generic.List<System.String>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = BDFramework.ResourceMgr.BResources.AsyncLoad(@objlist, @onProcess, @onLoadEnd);
+            var result_of_this_method = BDFramework.ResourceMgr.BResources.AsyncLoad(@assetlist, @onProcess, @onLoadEnd);
 
             object obj_result_of_this_method = result_of_this_method;
             if(obj_result_of_this_method is CrossBindingAdaptorType)

@@ -1,12 +1,17 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.1.0-preview.6
+-AssetbundleV2: 重构异步加载逻辑
+-Assetbundlev2: 重新绘制Build Assetbundle 编辑器
+-AssetbundleV2: 增加AsyncLoadAssetbundle资源验证
+
 ##V2.1.0-preview.5
-- 增加EditorTask:OnEnterPlayMode.
-- 修改DevOpsSetting为BuildSetting.
-- TableEditor: 移除策划权限按钮
-- TableEdtior: 增加Excel缓存数据
-- TableEditor：支持获取差异Excel数据
-- TableEditor：增加EnterPlaymode前导入变更表格的功能
+-增加EditorTask:OnEnterPlayMode.
+-修改DevOpsSetting为BuildSetting.
+-TableEditor: 移除策划权限按钮
+-TableEdtior: 增加Excel缓存数据
+-TableEditor：支持获取差异Excel数据
+-TableEditor：增加EnterPlaymode前导入变更表格的功能
 
 ##V2.1.0-preview.4
 -修复CI系统部分bug.
