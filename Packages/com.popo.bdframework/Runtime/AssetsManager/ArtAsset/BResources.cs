@@ -146,32 +146,48 @@ namespace BDFramework.ResourceMgr
         /// <param name="name"></param>
         /// <returns></returns>
         [Obsolete("已废弃,不建议项目使用!")]
-        public static T[] LoadALL<T>(string name) where T : UnityEngine.Object
+        public static T[] LoadALL<T>(string assetName) where T : UnityEngine.Object
         {
-            if (string.IsNullOrEmpty(name)) return null;
-            return ResLoader.LoadAll<T>(name);
+            if (string.IsNullOrEmpty(assetName))
+            {
+                return null;
+            }
+            return ResLoader.LoadAll<T>(assetName);
         }
 
 
+        
+        /// <summary>
+        /// 创建异步任务
+        /// </summary>
+        /// <param name="assetName"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static AsyncLoadTaskGroupResult CreateAsyncLoadTask<T>(string assetName) where T :  UnityEngine.Object
+        {
+            return ResLoader.CreateAsyncLoadTask<T>(assetName);
+        }
+
+        
         /// <summary>
         /// 异步加载
         /// </summary>
         /// <typeparam name="T">类型</typeparam>
         /// <param name="objName">名称</param>
         /// <param name="action">回调函数</param>
-        public static int AsyncLoad<T>(string objName, Action<T> action) where T : UnityEngine.Object
+        public static int AsyncLoad<T>(string assetName, Action<T> action) where T : UnityEngine.Object
         {
-            return ResLoader.AsyncLoad<T>(objName, action);
+            return ResLoader.AsyncLoad<T>(assetName, action);
         }
 
         /// <summary>
         /// 批量加载
         /// </summary>
-        /// <param name="objlist"></param>
+        /// <param name="assetlist"></param>
         /// <param name="onLoadEnd"></param>
-        public static List<int> AsyncLoad(List<string> objlist, Action<int, int> onProcess = null, Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
+        public static List<int> AsyncLoad(List<string> assetlist, Action<int, int> onProcess = null, Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
         {
-            return ResLoader.AsyncLoad(objlist, onProcess, onLoadEnd);
+            return ResLoader.AsyncLoad(assetlist, onProcess, onLoadEnd);
         }
 
 

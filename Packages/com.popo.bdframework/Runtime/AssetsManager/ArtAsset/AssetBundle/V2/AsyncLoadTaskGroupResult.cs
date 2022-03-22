@@ -16,8 +16,19 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     public struct LoaderTaskData
     {
+        /// <summary>
+        /// asset path
+        /// </summary>
         public string AssetPath { get; private set; }
+
+        /// <summary>
+        /// 加载类型
+        /// </summary>
         public Type LoadType { get; private set; }
+
+        /// <summary>
+        /// 是否为主资源
+        /// </summary>
         public bool IsMainAsset { get; private set; }
 
         public LoaderTaskData(string assetPath, Type t, bool isMainAsset = false)
@@ -33,24 +44,8 @@ namespace BDFramework.ResourceMgr
     /// 加载任务组，每个组，负责一个load资源的操作
     /// 可能含有多个依赖资源
     /// </summary>
-    public class AsyncLoadTaskGroupResult : CustomYieldInstruction
+    public class AsyncLoadTaskGroupResult : CustomYieldInstruction, IDisposable
     {
-        public int Id { get; set; }
-
-        /// <summary>
-        /// is complete
-        /// </summary>
-        public bool IsComplete { get; private set; }
-
-
-        public delegate void OnTaskCompleteCallbackDelegate(string s, Object o);
-
-        /// <summary>
-        /// 任务完成回调
-        /// </summary>
-        public OnTaskCompleteCallbackDelegate OnAllTaskCompleteCallback { get; set; } = null;
-
-
         /// <summary>
         /// 异步任务颗粒度，每帧执行多少个
         /// </summary>
@@ -61,39 +56,68 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         private static Dictionary<string, AssetBundleCreateRequest> AB_LOAD_LOCK_MAP = new Dictionary<string, AssetBundleCreateRequest>();
 
-
-
+        public int Id { get; set; }
 
         /// <summary>
-        /// main asset path
+        /// 是否成功
+        /// 完成加载 且 没被取消
         /// </summary>
-        public string MainAssetName { get; private set; }
+        public bool IsSuccess
+        {
+            get { return this.isCompleteLoad && !this.isCancel; }
+        }
+
+        /// <summary>
+        /// 是否取消
+        /// </summary>
+        public bool IsCancel
+        {
+            get { return this.isCancel; }
+        }
+
+        /// <summary>
+        /// 是否完成
+        /// </summary>
+        private bool isCompleteLoad { get; set; }
+
+        public delegate void OnTaskCompleteCallbackDelegate(string s);
+
+        /// <summary>
+        /// 任务完成回调
+        /// </summary>
+        public OnTaskCompleteCallbackDelegate OnAllTaskCompleteCallback { get; set; } = null;
+
 
         /// <summary>
         /// 加载的manifest
         /// </summary>
-        private AssetBundleItem AssetBundleItem { get; set; }
+        public AssetBundleItem AssetBundleItem { get; private set; }
 
         /// <summary>
         /// 加载管理器
         /// </summary>
         private AssetBundleMgrV2 loder { get; set; }
 
-        public AsyncLoadTaskGroupResult(AssetBundleMgrV2 loder,
-            string mainAssetName,
-            AssetBundleItem assetBundleItem,
-            List<LoaderTaskData> taskList,
-            OnTaskCompleteCallbackDelegate onAllTaskCompleteCallbackDelegate)
+        public AsyncLoadTaskGroupResult(AssetBundleMgrV2 loder, AssetBundleItem assetBundleItem)
         {
+            //赋值
             this.loder = loder;
-            this.taskList = taskList;
-            //主资源
-            this.MainAssetName = mainAssetName;
             this.AssetBundleItem = assetBundleItem;
-            
-            this.OnAllTaskCompleteCallback += onAllTaskCompleteCallbackDelegate;
-        }
 
+            //1.依赖资源队列
+            this.taskQueue = new Queue<LoaderTaskData>();
+            var dependAssetList = loder.AssetConfigLoder.GetDependAssets(assetBundleItem);
+
+            foreach (var dependAsset in dependAssetList)
+            {
+                var task = new LoaderTaskData(dependAsset, typeof(Object));
+                this.taskQueue.Enqueue(task);
+            }
+
+            //2.主资源添加队列
+            var mainTask = new LoaderTaskData(assetBundleItem.AssetBundlePath, typeof(Object), true);
+            this.taskQueue.Enqueue(mainTask);
+        }
 
 
         /// <summary>
@@ -112,10 +136,8 @@ namespace BDFramework.ResourceMgr
         public void Cancel()
         {
             isCancel = true;
-            IsComplete = true;
+            isCompleteLoad = true;
         }
-
-
 
 
         /// <summary>
@@ -125,7 +147,7 @@ namespace BDFramework.ResourceMgr
         {
             get
             {
-                if (isCancel || IsComplete)
+                if (isCancel || IsSuccess)
                 {
                     return false;
                 }
@@ -134,15 +156,17 @@ namespace BDFramework.ResourceMgr
                 return DoLoadAssetBundle();
             }
         }
+
         /// <summary>
         /// Load assetbundle状态管理
         /// </summary>
         List<KeyValuePair<string, AssetBundleCreateRequest>> loadABStatusList = new List<KeyValuePair<string, AssetBundleCreateRequest>>(ASYNC_TASK_NUM);
-        
+
         /// <summary>
         /// 任务列表
         /// </summary>
-        private List<LoaderTaskData> taskList = null;
+        private Queue<LoaderTaskData> taskQueue = null;
+
         /// <summary>
         /// 执行加载 Assetbundle
         /// </summary>
@@ -150,13 +174,12 @@ namespace BDFramework.ResourceMgr
         private bool DoLoadAssetBundle()
         {
             //有加载任务或者任务未完成
-            if (loadABStatusList.Count > 0 || taskList.Count > 0)
+            if (loadABStatusList.Count > 0 || taskQueue.Count > 0)
             {
                 //1.循环添加任务
-                while (taskList.Count > 0 && loadABStatusList.Count < ASYNC_TASK_NUM)
+                while (taskQueue.Count > 0 && loadABStatusList.Count < ASYNC_TASK_NUM)
                 {
-                    var task = taskList[0];
-                    taskList.RemoveAt(0);
+                    var task = taskQueue.Dequeue();
                     //没有被加载过
                     if (!loder.AssetbundleMap.ContainsKey(task.AssetPath))
                     {
@@ -212,32 +235,47 @@ namespace BDFramework.ResourceMgr
                     }
                 }
 
-                BDebug.LogFormat("【AsyncLoadTaskGroup】剩余未完成任务:{0} - frame: {1}", loadABStatusList.Count + taskList.Count, Time.renderedFrameCount);
+                BDebug.LogFormat("【AsyncLoadTaskGroup】剩余未完成任务:{0} - frame: {1}", loadABStatusList.Count + taskQueue.Count, Time.renderedFrameCount);
             }
             else
             {
-                this.IsComplete = true;
+                this.isCompleteLoad = true;
                 //加载完成,主资源只要保证在 实例化之前加载完毕即可
-                this.OnAllTaskCompleteCallback?.Invoke(MainAssetName, GetAssetBundleInstance());
+                if (!isCancel)
+                {
+                    this.OnAllTaskCompleteCallback?.Invoke(this.AssetBundleItem.LoadPath);
+                }
             }
 
             //是否继续执行
-            return !this.IsComplete;
+            return !this.IsSuccess;
         }
 
 
         /// <summary>
         /// 获取Instance实例
         /// </summary>
-        public Object GetAssetBundleInstance()
+        public T GetAssetBundleInstance<T>() where T : UnityEngine.Object
         {
-            if (IsComplete && !isCancel)
+            if (IsSuccess)
             {
-                var instObj = loder.LoadFormAssetBundle<Object>(this.MainAssetName, this.AssetBundleItem);
+                var instObj = loder.LoadFormAssetBundle<T>(this.AssetBundleItem.LoadPath, this.AssetBundleItem);
+
                 return instObj;
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 销毁
+        /// </summary>
+        public void Dispose()
+        {
+            this.AssetBundleItem = null;
+            this.taskQueue = null;
+            this.loadABStatusList = null;
+            this.OnAllTaskCompleteCallback = null;
         }
     }
 }

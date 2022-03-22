@@ -154,9 +154,9 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         /// <param name="menifestName"></param>
         /// <returns>这个list外部不要修改</returns>
-        public (AssetBundleItem, List<string>) GetDependAssetsByName<T>(string assetName) where T : Object
+        public (AssetBundleItem, List<string>) GetDependAssets<T>(string assetName) where T : Object
         {
-            return GetDependAssetsByName(assetName, typeof(T));
+            return GetDependAssets(assetName, typeof(T));
         }
 
         /// <summary>
@@ -167,32 +167,39 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="type"></param>
         /// <param name="menifestName"></param>
         /// <returns>这个list外部不要修改</returns>
-        public (AssetBundleItem, List<string>) GetDependAssetsByName(string assetName, Type type = null)
+        public (AssetBundleItem, List<string>) GetDependAssets(string assetName, Type type = null)
         {
-            //1.优先用类型匹配
-            AssetBundleItem retABItem = GetAssetBundleData(assetName, type);
+            //获取资源信息
+            var retABItem = GetAssetBundleData(assetName, type);
+            //回去依赖列表
+            var retList = GetDependAssets(retABItem);
+            return (retABItem, retList);
+            return (null, null);
+        }
 
-            if (retABItem != null)
+
+        /// <summary>
+        /// 获取依赖文件
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetDependAssets(AssetBundleItem assetBundleItem)
+        {
+            var retlist = new List<string>();
+            if (assetBundleItem != null && assetBundleItem.DependAssetIds != null && assetBundleItem.DependAssetIds.Length > 0)
             {
-                List<string> retlist = new List<string>();
-
-                if (retABItem.DependAssetIds != null && retABItem.DependAssetIds.Length > 0)
+                int len = assetBundleItem.DependAssetIds.Length;
+                retlist = new List<string>(len);
+                //找到依赖资源
+                for (int i = 0; i < len; i++)
                 {
-                    int len = retABItem.DependAssetIds.Length;
-                    retlist = new List<string>(len);
-                    //找到依赖资源
-                    for (int i = 0; i < len; i++)
-                    {
-                        var idx = retABItem.DependAssetIds[i];
-                        var abItem = this.AssetbundleItemList[idx];
-                        retlist.Add(abItem.AssetBundlePath);
-                    }
+                    var idx = assetBundleItem.DependAssetIds[i];
+                    var abItem = this.AssetbundleItemList[idx];
+                    retlist.Add(abItem.AssetBundlePath);
                 }
-
-                return (retABItem, retlist);
             }
 
-            return (null, null);
+
+            return retlist;
         }
 
 

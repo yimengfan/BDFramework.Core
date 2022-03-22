@@ -239,6 +239,11 @@ namespace BDFramework.ResourceMgr
             return list.ToArray();
         }
 
+        public AsyncLoadTaskGroupResult CreateAsyncLoadTask<T>(string assetName) where T : Object
+        {
+            return null;
+        }
+
         /// <summary>
         /// AssetDataBase 不支持异步加载
         /// </summary>

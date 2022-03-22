@@ -71,6 +71,15 @@ namespace BDFramework.ResourceMgr
         T[] LoadAll<T>(string path) where T : UnityEngine.Object;
 
         /// <summary>
+        /// 异步加载接口
+        /// 需要自行外部yield,这里不进行管理 防止逻辑冲突
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="assetName"></param>
+        /// <param name="callback"></param>
+        /// <returns>异步任务id</returns>
+        AsyncLoadTaskGroupResult CreateAsyncLoadTask<T>(string assetName) where T : UnityEngine.Object;
+        /// <summary>
         /// 异步加载资源
         /// </summary>
         /// <typeparam name="T"></typeparam>

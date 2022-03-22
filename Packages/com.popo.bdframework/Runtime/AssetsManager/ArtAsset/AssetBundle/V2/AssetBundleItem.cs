@@ -33,7 +33,8 @@ namespace BDFramework.ResourceMgr.V2
 
 
         /// <summary>
-        /// 映射，加载资源名。一般为程序调用加载的路径
+        /// 映射，加载资源名。
+        /// 一般为程序调用加载的路径
         /// </summary>
         public string LoadPath { get; private set; } = "";
 

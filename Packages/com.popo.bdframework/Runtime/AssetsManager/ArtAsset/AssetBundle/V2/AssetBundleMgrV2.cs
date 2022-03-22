@@ -38,12 +38,12 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 全局的任务id
         /// </summary>
-        private int taskIDCounter;
+        private int taskIdxCounter;
 
         /// <summary>
         /// 异步回调表
         /// </summary>
-        private List<AsyncLoadTaskGroupResult> asyncTaskGroupList { get; set; } = new List<AsyncLoadTaskGroupResult>(50);
+        private Queue<AsyncLoadTaskGroupResult> asyncTaskGroupQueue { get; set; } = new Queue<AsyncLoadTaskGroupResult>(50);
 
         /// <summary>
         /// 全局唯一的依赖
@@ -161,7 +161,7 @@ namespace BDFramework.ResourceMgr.V2
         public Object Load(Type type, string path)
         {
             //1.依赖路径
-            var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssetsByName(path, type);
+            var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssets(path, type);
             if (assetBundleItem != null)
             {
                 //加载依赖
@@ -232,47 +232,55 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns>异步任务id</returns>
         public int AsyncLoad<T>(string assetName, Action<T> callback) where T : UnityEngine.Object
         {
-            //非hash模式，需要debugRuntime
-            // if (!this.AssetConfigLoder.IsHashName)
-            // {
-            //     assetName = ZString.Format(DEBUG_RUNTIME, assetName);
-            // }
-
-            var taskQueue = new List<LoaderTaskData>();
-            //获取依赖
-            var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssetsByName<T>(assetName);
-            if (assetBundleItem != null)
+            var taskGroup = CreateAsyncLoadTask<T>(assetName);
+            if (taskGroup != null)
             {
-                //依赖资源
-                foreach (var dependAsset in dependAssetList)
+                //添加完成回调
+                taskGroup.OnAllTaskCompleteCallback += (p) =>
                 {
-                    var task = new LoaderTaskData(dependAsset, typeof(Object));
-                    taskQueue.Add(task);
-                }
-
-                //主资源，
-                var mainTask = new LoaderTaskData(assetBundleItem.AssetBundlePath, typeof(Object), true);
-                taskQueue.Add(mainTask);
-                //添加任务组
-                var taskGroup = new AsyncLoadTaskGroupResult(this, assetName, assetBundleItem, taskQueue, (p, obj) =>
-                {
-                    //完成回调
-                    callback(obj as T);
-                });
-                taskGroup.Id = this.taskIDCounter++;
+                    var obj = taskGroup.GetAssetBundleInstance<T>();
+                    //回调
+                    callback(obj);
+                };
+                //添加到任务队列
                 AddAsyncTaskGroup(taskGroup);
-                //开始任务
-                // DoNextTask();
                 return taskGroup.Id;
             }
             else
             {
-                BDebug.LogError("资源不存在:" + assetName);
+                BDebug.LogError("不存在资源:" + assetName);
             }
 
             return -1;
         }
 
+        /// <summary>
+        /// 异步加载接口
+        /// 需要自行外部yield,这里不进行管理 防止逻辑冲突
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="assetName"></param>
+        /// <param name="callback"></param>
+        /// <returns>异步任务id</returns>
+        public AsyncLoadTaskGroupResult CreateAsyncLoadTask<T>(string assetName) where T : UnityEngine.Object
+        {
+            var assetBundleItem = AssetConfigLoder.GetAssetBundleData<T>(assetName);
+
+            if (assetBundleItem != null)
+            {
+                //添加任务组
+                var taskGroup = new AsyncLoadTaskGroupResult(this, assetBundleItem);
+                taskGroup.Id = this.taskIdxCounter++;
+                // AddAsyncTaskGroup(taskGroup);
+                return taskGroup;
+            }
+            else
+            {
+                BDebug.LogError("不存在资源:" + assetName);
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// 异步加载 多个
@@ -316,7 +324,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="taskGroupResult"></param>
         public void AddAsyncTaskGroup(AsyncLoadTaskGroupResult taskGroupResult)
         {
-            this.asyncTaskGroupList.Add(taskGroupResult);
+            this.asyncTaskGroupQueue.Enqueue(taskGroupResult);
         }
 
         /// <summary>
@@ -497,12 +505,11 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="taskid"></param>
         public void LoadCancel(int taskid)
         {
-            foreach (var tg in asyncTaskGroupList)
+            foreach (var tg in asyncTaskGroupQueue)
             {
                 if (tg.Id == taskid)
                 {
                     tg.Cancel();
-                    asyncTaskGroupList.Remove(tg);
                     break;
                 }
             }
@@ -514,12 +521,12 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public void LoadAllCancel()
         {
-            foreach (var tg in asyncTaskGroupList)
+            foreach (var tg in asyncTaskGroupQueue)
             {
                 tg.Cancel();
             }
 
-            this.asyncTaskGroupList.Clear();
+            this.asyncTaskGroupQueue.Clear();
         }
 
         /// <summary>
@@ -588,7 +595,7 @@ namespace BDFramework.ResourceMgr.V2
                 svc.WarmUp();
             }
 #if UNITY_EDITOR
-            var (abd, list) = this.AssetConfigLoder.GetDependAssetsByName(BResources.ALL_SHADER_VARAINT_RUNTIME_PATH);
+            var (abd, list) = this.AssetConfigLoder.GetDependAssets(BResources.ALL_SHADER_VARAINT_RUNTIME_PATH);
             this.AssetbundleMap.TryGetValue(abd.AssetBundlePath, out var ab);
             Debug.Log("Shaders:\n" + JsonMapper.ToJson(ab.AssetBundle.GetAllAssetNames(), true));
 #endif
@@ -606,21 +613,31 @@ namespace BDFramework.ResourceMgr.V2
         {
             while (true)
             {
-                if (this.asyncTaskGroupList.Count > 0)
+                if (this.asyncTaskGroupQueue.Count > 0)
                 {
                     //开始新任务
-                    var curDoTask = this.asyncTaskGroupList[0];
-                    this.asyncTaskGroupList.RemoveAt(0);
-                    BDebug.Log("【AssetbundleV2】开始执行异步加载：" + curDoTask.MainAssetName);
+                    AsyncLoadTaskGroupResult task = null;
 
-                    yield return curDoTask;
-
-                    if (curDoTask.IsComplete)
+                    do
                     {
-                        BDebug.Log("【AssetbundleV2】加载完成：" + curDoTask.MainAssetName);
-                    }
+                        task = this.asyncTaskGroupQueue.Dequeue();
+                    } while (task.IsCancel && this.asyncTaskGroupQueue.Count > 0);
 
+                    //执行任务
+                    if (!task.IsCancel)
+                    {
+                        BDebug.Log("【AssetbundleV2】开始执行异步加载：" + task.AssetBundleItem.LoadPath);
+
+                        yield return task;
+
+                        if (task.IsSuccess)
+                        {
+                            BDebug.Log("【AssetbundleV2】加载完成：" + task.AssetBundleItem.LoadPath);
+                            task.Dispose();
+                        }
+                    }
                 }
+
                 // BDebug.Log("【Assetbundlev2】检测 剩余任务:" + this.asyncTaskGroupList.Count + "   " + curDoTask.MainAssetName);
                 yield return null;
             }
@@ -643,7 +660,7 @@ namespace BDFramework.ResourceMgr.V2
             //     assetName = ZString.Format(DEBUG_RUNTIME, assetName);
             // }
 
-            var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssetsByName(assetName);
+            var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssets(assetName);
             //添加主资源一起卸载
             dependAssetList.Add(assetBundleItem.AssetBundlePath);
             //卸载
