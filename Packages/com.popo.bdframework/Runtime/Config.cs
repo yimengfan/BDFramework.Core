@@ -9,6 +9,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 using DotNetExtension;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 #endif
 
 namespace BDFramework
@@ -176,8 +177,12 @@ namespace BDFramework
         [OnInspectorGUI("ONGUI_SelcectConfig")]
         public string ConfigFileName = "Default";
 
+        /// <summary>
+        /// 当前选择的idx
+        /// </summary>
         private static int curSlectConfigIdx = -1;
-
+        //上次打开scene名
+        private static string lastSceneName = "";
         //选择配置
         static public void ONGUI_SelcectConfig()
         {
@@ -185,7 +190,7 @@ namespace BDFramework
             {
                 return;
             }
-
+            
             GUI.color = Color.green;
             var launcher = GameObject.FindObjectOfType<BDLauncher>();
             if (launcher == null)
@@ -193,24 +198,34 @@ namespace BDFramework
                 BDebug.LogError("场景上没找到BDLauncher");
                 return;
             }
-
+            //判断是否切换场景，防止数据污染！
+            var activeScene = EditorSceneManager.GetActiveScene();
+            if (!lastSceneName.Equals(activeScene.name))
+            {
+                curSlectConfigIdx = -1;
+                lastSceneName = activeScene.name;
+            }
+            //开始赋值
             var curFilePath = AssetDatabase.GetAssetPath(launcher.ConfigText.GetInstanceID());
             var direct = Path.GetDirectoryName(curFilePath);
-            var fs = Directory.GetFiles(direct, "*.json", SearchOption.AllDirectories).Select((s) => s.Replace("\\", "/")).ToList();
-            var configNames = fs.Select((s) => Path.GetFileName(s)).ToArray();
+            var configList = Directory.GetFiles(direct, "*.json", SearchOption.AllDirectories).Select((s) => s.Replace("\\", "/")).ToList();
+            var configNames = configList.Select((s) => Path.GetFileName(s)).ToArray();
             if (curSlectConfigIdx == -1)
             {
-                curSlectConfigIdx = fs.FindIndex((s) => s == curFilePath);
+                curSlectConfigIdx = configList.FindIndex((s) => s == curFilePath);
             }
 
             curSlectConfigIdx = EditorGUILayout.Popup("选择配置:", curSlectConfigIdx, configNames);
-            if (fs[curSlectConfigIdx] != curFilePath)
+            if (configList[curSlectConfigIdx] != curFilePath)
             {
-                var assetText = AssetDatabase.LoadAssetAtPath<TextAsset>(fs[curSlectConfigIdx]);
+                var assetText = AssetDatabase.LoadAssetAtPath<TextAsset>(configList[curSlectConfigIdx]);
                 launcher.ConfigText = assetText;
                 //设置新的配置内容
                 var config = GameObject.FindObjectOfType<Config>();
                 config.SetNewConfig(assetText.text);
+                
+                //设置脏数据
+                EditorUtility.SetDirty(config.gameObject);
             }
 
             GUI.color = GUI.backgroundColor;
@@ -261,14 +276,14 @@ namespace BDFramework
             FileHelper.WriteAllText(fs, json);
             AssetDatabase.Refresh();
             //
-            var content = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
+            var textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
             var bdconfig = GameObject.FindObjectOfType<BDLauncher>();
             if (bdconfig.ConfigText.name != filename)
             {
-                bdconfig.ConfigText = content;
+                bdconfig.ConfigText = textAsset;
             }
 
-            Debug.Log("修改配置保存成功:" + filename + " -" + DateTimeEx.GetTotalSeconds());
+            Debug.LogFormat("[{0}] 修改配置保存成功: {1}.json - {2}", EditorSceneManager.GetActiveScene().name, filename, Time.frameCount);
         }
 
         /// <summary>
