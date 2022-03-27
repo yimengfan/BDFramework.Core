@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -65,17 +66,9 @@ namespace BDFramework.Editor.SVN
         /// 更新一个仓库
         /// </summary>
         /// <param name="downloadpath"></param>
-        public void Update(string subFloder = "")
+        public void Update(string workpath = "./")
         {
-            var cmd = "";
-            if (string.IsNullOrEmpty(subFloder))
-            {
-                cmd = $"update {this.LocalSVNRootPath}  --username {this.UserName} --password {this.Password}";
-            }
-            else
-            {
-                cmd = $"update {this.LocalSVNRootPath}/{subFloder}  --username {this.UserName} --password {this.Password}";
-            }
+            var cmd = $"update {workpath}  --username {this.UserName} --password {this.Password}";
 
             this.ExecuteSVN(cmd);
         }
@@ -84,9 +77,9 @@ namespace BDFramework.Editor.SVN
         /// <summary>
         /// 强制Revert
         /// </summary>
-        public void RevertForce()
+        public void RevertForce(string workpath = "./")
         {
-            var cmd = $"revert --recursive  {this.LocalSVNRootPath}";
+            var cmd = $"revert --recursive  {workpath}";
             this.ExecuteSVN(cmd);
         }
 
@@ -106,11 +99,13 @@ namespace BDFramework.Editor.SVN
         /// <param name="file"></param>
         public void Add(params string[] paths)
         {
-            foreach (var path in paths)
+            for (int i = 0; i < paths.Length; i++)
             {
-                var cmd = $"add {path}";
-                this.ExecuteSVN(cmd);
+                paths[i] = $"add {paths[i]}";
             }
+
+            //批量添加cmd
+            this.ExecuteSVN(paths);
         }
 
         /// <summary>
@@ -137,63 +132,201 @@ namespace BDFramework.Editor.SVN
         /// <param name="path"></param>
         public void Delete(params string[] paths)
         {
-            foreach (var path in paths)
+            for (int i = 0; i < paths.Length; i++)
             {
-                var cmd = $"delete {path}";
-                this.ExecuteSVN(cmd);
+                paths[i] = $"delete {paths[i]}";
             }
+
+            //批量添加cmd
+            this.ExecuteSVN(paths);
         }
 
 
         /// <summary>
-        /// 获取删除的文件
+        /// SVN状态
         /// </summary>
-        /// <returns></returns>
-        public string[] GetDeletedFiles()
+        public enum Status
         {
-            var statusPath = this.LocalSVNRootPath + "/status.txt";
-            var cmd = $"status {this.LocalSVNRootPath} {statusPath}";
-            //
-            this.ExecuteSVN(cmd);
-            //
+            /// <summary>
+            /// 删除
+            /// </summary>
+            Deleted,
+
+            /// <summary>
+            /// 冲突
+            /// </summary>
+            Conflict
+        }
+
+        /// <summary>
+        /// 获取Status
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="findStr"></param>
+        /// <returns></returns>
+        public string[] GetStatus(Status status, string workpath = "./")
+        {
+            //获取status
+            var statusInfos = GetStatus(workpath);
+            //获取文件信息
             string[] files = new string[] { };
-            if (File.Exists(statusPath))
+            if (statusInfos!=null)
             {
-                files = File.ReadLines(statusPath).Where(s => s.Contains("!")).ToArray();
-                // File.Delete(statusPath);
+                var findStr = "";
+                switch (status)
+                {
+                    case Status.Deleted:
+                        findStr = "!";
+                        break;
+                    case Status.Conflict:
+                    {
+                        findStr = "C";
+                    }
+                        break;
+                }
+                files = statusInfos.Where(s => s.StartsWith(findStr, StringComparison.OrdinalIgnoreCase)).ToArray();
             }
 
             return files;
         }
-        
+
         /// <summary>
-        /// 获取删除的文件
+        /// 获取Status
         /// </summary>
+        /// <param name="workpath"></param>
         /// <returns></returns>
-        public string[] GetChangedFiles()
+        public string[] GetStatus(string workpath = "./")
         {
+            // L    abc.c               # svn已经在.svn目录锁定了abc.c
+            // M      bar.c               # bar.c的内容已经在本地修改过了
+            // M     baz.c               # baz.c属性有修改，但没有内容修改
+            // X      3rd_party           # 这个目录是外部定义的一部分
+            // ?      foo.o               # svn并没有管理foo.o
+            // !      some_dir            # svn管理这个，但它可能丢失或者不完整
+            // ~      qux                 # 作为file/dir/link进行了版本控制，但类型已经改变
+            // I      .screenrc           # svn不管理这个，配置确定要忽略它
+            // A  +   moved_dir           # 包含历史的添加，历史记录了它的来历
+            // M  +   moved_dir/README    # 包含历史的添加，并有了本地修改
+            // D      stuff/fish.c        # 这个文件预定要删除
+            // A      stuff/loot/bloo.h   # 这个文件预定要添加
+            // C      stuff/loot/lump.c   # 这个文件在更新时发生冲突
+            // R      xyz.c               # 这个文件预定要被替换
+            // S  stuff/squawk        # 这个文件已经跳转到了分支
+
+            
             var statusPath = this.LocalSVNRootPath + "/status.txt";
-            var cmd = $"status {this.LocalSVNRootPath} {statusPath}";
-            //
+            var cmd = $"status \"{workpath}\" > \"{statusPath}\"";
             this.ExecuteSVN(cmd);
-            //
-            string[] files = new string[] { };
             if (File.Exists(statusPath))
             {
-                files = File.ReadLines(statusPath).Where(s => s.Contains("!")).ToArray();
+                return File.ReadLines(statusPath).ToArray();
                 // File.Delete(statusPath);
             }
 
-            return files;
+            return null;
+        }
+
+        #region 当前版本信息
+
+        /// <summary>
+        /// 获取版本
+        /// </summary>
+        /// <returns></returns>
+        public string GetInfo(string workpath = "./", string svnurl = null)
+        {
+            var infoPath = this.LocalSVNRootPath + "/info.txt";
+            string cmd = "";
+            if (string.IsNullOrEmpty(svnurl))
+            {
+                cmd = $"info {workpath}  > \"{infoPath}\"";
+            }
+            else
+            {
+                cmd = $"info {workpath} {svnurl} > \"{infoPath}\"";
+            }
+
+            //
+            this.ExecuteSVN(cmd);
+
+            return File.ReadAllText(infoPath);
+        }
+
+        /// <summary>
+        /// 获取当前版本
+        /// </summary>
+        /// <returns></returns>
+        public string GetRevision(string workpath = "./")
+        {
+            var infos = GetInfo(workpath).Split('\n', '\r');
+
+            foreach (var info in infos)
+            {
+                if (info.StartsWith("Revision:"))
+                {
+                    return info.Replace("Revision:", "");
+                }
+            }
+
+            return "null";
+        }
+
+
+        /// <summary>
+        /// 获取最新版本号
+        /// </summary>
+        /// <returns></returns>
+        public string GetLeastVersion(string workpath = "./")
+        {
+            var infos = GetInfo(workpath).Split('\n', '\r');
+            //获取远程仓库
+            var response_url = "";
+            foreach (var info in infos)
+            {
+                if (info.StartsWith("Repository Root:"))
+                {
+                    response_url = info.Replace("Repository Root:", "");
+                    break;
+                }
+            }
+
+            Debug.Log(response_url);
+            //解析
+            infos = GetInfo(response_url).Split('\n', '\r');
+
+            foreach (var info in infos)
+            {
+                if (info.StartsWith("Revision:"))
+                {
+                    return info.Replace("Revision:", "");
+                }
+            }
+
+            return "0";
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 获取日志
+        /// </summary>
+        /// <param name="len">日志条数</param>
+        public string GetLog(int len = 1)
+        {
+            var logPath = this.LocalSVNRootPath + "/log.txt";
+            var cmd = $"log  -q -l {len}  > \"{logPath}\"";
+            //
+            this.ExecuteSVN(cmd);
+
+            return File.ReadAllText(logPath, Encoding.UTF8);
         }
 
 
         /// <summary>
         /// 提交
         /// </summary>
-        public void Commit(string log = "")
+        public void Commit(string workpath = "./", string log = "")
         {
-            var cmd = $"commit  {this.LocalSVNRootPath} -m  \"BDFramework CI自动提交!\n {log}\"";
+            var cmd = $"commit  {workpath} -m  \"BDFramework CI自动提交!\n {log}\"";
             this.ExecuteSVN(cmd);
         }
 
@@ -212,87 +345,104 @@ namespace BDFramework.Editor.SVN
             cmdList.Add(cmd);
         }
 
-        /// <summary>
-        /// 获取最新版本号
-        /// </summary>
-        /// <returns></returns>
-        public string GetLeastVersion()
-        {
-            return "";
-        }
+        Process process = null;
 
-            Process svnProcess = null;
         /// <summary>
         /// 执行SVN命令
         /// </summary>
-        private void ExecuteSVN(string args)
+        private void ExecuteSVN(params string[] args)
         {
-            svnProcess = new Process();
-            //Exe包的路径
-            var exePath = BDApplication.ProjectRoot + "/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~/svn.exe";
-            if (!File.Exists(exePath))
+            var out_utf8 = "cmd /c chcp 65001"; //chcp 65001";
+            var cd_dir = $"cd /d \"{this.LocalSVNRootPath}\"";
+            
+            var svn_exe_path =$"{BDApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~/svn.exe";
+            if (!File.Exists(svn_exe_path))
             {
-                Debug.LogError("Svn.exe不存在!");
+                Debug.LogError("找不到svn.exe!");
+                return;
             }
-   
+            
+            var svn_dir = $"\"{svn_exe_path}\"";
 
-            svnProcess.StartInfo.FileName = exePath;
-            svnProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            svnProcess.StartInfo.CreateNoWindow = true;
-            svnProcess.StartInfo.UseShellExecute = false;
-            svnProcess.StartInfo.RedirectStandardInput = true;
-            svnProcess.StartInfo.RedirectStandardOutput = true;
-            svnProcess.StartInfo.RedirectStandardError = true;
-            svnProcess.StartInfo.StandardOutputEncoding = Encoding.UTF8;
-            //日志
-            svnProcess.OutputDataReceived += (s, e) =>
+            var argList = new List<string>() {out_utf8, cd_dir};
+            foreach (var arg in args)
             {
-                if (!string.IsNullOrEmpty(e.Data))
-                {
-                    Debug.Log("[Svn]" + e.Data);
-                }
-            };
-            svnProcess.ErrorDataReceived += (s, e) =>
-            {
-                if (!string.IsNullOrEmpty(e.Data))
-                {
-                    Debug.Log("[Error]" + e.Data);
-                }
-            };
+                //添加svn命名
+                argList.Add($"{svn_dir} " + arg);
+            }
 
-
-            //执行
-            Debug.Log("执行:\n" + args);
-            svnProcess.StartInfo.Arguments = args;
-            //开始
-            svnProcess.Start();
-            svnProcess.BeginOutputReadLine();
-            svnProcess.BeginErrorReadLine();
-            //
-            svnProcess.WaitForExit();
-            svnProcess.Close();
-            svnProcess.Dispose();
+            //执行cmd
+            RunCmd(argList.ToArray());
         }
 
-        private void ExecuteByCmd(string args = null)
+
+        private static string CmdPath = @"C:\Windows\System32\cmd.exe";
+
+        /// <summary>
+        /// 执行cmd命令 返回cmd窗口显示的信息
+        /// 多命令请使用批处理命令连接符：
+        /// <![CDATA[
+        /// &:同时执行两个命令
+        /// |:将上一个命令的输出,作为下一个命令的输入
+        /// &&：当&&前的命令成功时,才执行&&后的命令
+        /// ||：当||前的命令失败时,才执行||后的命令]]>
+        /// </summary>
+        /// <param name="cmd">执行的命令</param>
+        public static void RunCmd(string[] cmds)
         {
-            //获取cmd内容
-            if (string.IsNullOrEmpty(args))
+            //执行
+            using (Process p = new Process())
             {
-                for (int i = 0; i < this.cmdList.Count; i++)
+                p.StartInfo.FileName = CmdPath;
+
+                p.StartInfo.UseShellExecute = false; //是否使用操作系统shell启动
+                p.StartInfo.RedirectStandardInput = true; //接受来自调用程序的输入信息
+                p.StartInfo.RedirectStandardOutput = true; //由调用程序获取输出信息
+                p.StartInfo.RedirectStandardError = true; //重定向标准错误输出
+                p.StartInfo.CreateNoWindow = true; //不显示程序窗口
+                p.StartInfo.StandardOutputEncoding = Encoding.GetEncoding("gb2312");
+                p.StartInfo.StandardErrorEncoding = Encoding.GetEncoding("gb2312");
+
+                //日志
+                p.OutputDataReceived += (s, e) =>
                 {
-                    var cmd = this.cmdList[i];
-                    if (i > 0)
+                    if (!string.IsNullOrEmpty(e.Data))
                     {
-                        args += ("\r\n" + cmd);
+                        Debug.Log(e.Data);
                     }
-                    else
+                };
+                p.ErrorDataReceived += (s, e) =>
+                {
+                    if (!string.IsNullOrEmpty(e.Data))
                     {
-                        args = cmd;
+                        Debug.LogError(e.Data);
                     }
+                };
+
+                //提前输入参数，Unity中用这个 不会有首字符乱码问题
+                // p.StartInfo.Arguments = cmd;
+
+                p.Start(); //启动程序
+                p.BeginOutputReadLine();
+                p.BeginErrorReadLine();
+                //向cmd窗口写入命令
+                foreach (string com in cmds)
+                {
+                    p.StandardInput.WriteLine(com); //输入CMD命令
                 }
 
-                this.cmdList.Clear();
+                p.StandardInput.WriteLine("exit"); //结束执行，很重要的
+                // p.StandardInput.WriteLine(cmd);
+                // p.StandardInput.AutoFlush = true;
+
+
+                //获取cmd窗口的输出信息
+                // string output = p.StandardOutput.ReadToEnd();
+                p.WaitForExit(); //等待程序执行完退出进程
+                p.Close();
+
+                // Debug.LogWarning(output);
+                //return output;
             }
         }
     }

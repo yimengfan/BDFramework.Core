@@ -207,7 +207,7 @@ namespace BDFramework.Editor.DevOps
             {
                 //构建xcode、ipa
                 Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
-                ret=  BuildPackageTools.BuildIpa(buildMode, false, CI_PACKAGE_PATH);
+                ret = BuildPackageTools.BuildIpa(buildMode, false, CI_PACKAGE_PATH);
             }
 
             if (ret)
@@ -254,11 +254,9 @@ namespace BDFramework.Editor.DevOps
             if (Directory.Exists(svntag))
             {
                 //1.获取被删除文件提交
-                var delFiles = svnProcessor.GetDeletedFiles();
-                foreach (var df in delFiles)
-                {
-                    svnProcessor.Delete(df);
-                }
+                var delFiles = svnProcessor.GetStatus(SVNProcessor.Status.Deleted);
+                svnProcessor.Delete(delFiles);
+
 
                 //2.获取支持的目录，提交
                 var platforms = BDApplication.GetSupportPlatform();
