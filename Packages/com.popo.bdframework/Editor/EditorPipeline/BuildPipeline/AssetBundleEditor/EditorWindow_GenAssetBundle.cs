@@ -107,19 +107,19 @@ namespace BDFramework.Editor.AssetBundle
                 BuildAssetBundle(BDApplication.DevOpsPublishAssetsPath);
             }
             GUILayout.Space(10);//();
-            GUILayout.Label("打包测试:", EditorGUIHelper.LabelH4);
-            if (GUILayout.Button("AssetBundle SG打包(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
-            {
-                var outputpath = BDApplication.DevOpsPublishAssetsPath;
-                // outputpath2 = Application.streamingAssetsPath;
-                //删除目录里面资源
-                // if (Directory.Exists(outputpath))
-                // {
-                //     Directory.Delete(outputpath,true);
-                // }
-                //打包AB
-                AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath);
-            }
+            // GUILayout.Label("打包测试:", EditorGUIHelper.LabelH4);
+            // if (GUILayout.Button("AssetBundle SG打包(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
+            // {
+            //     var outputpath = BDApplication.DevOpsPublishAssetsPath;
+            //     // outputpath2 = Application.streamingAssetsPath;
+            //     //删除目录里面资源
+            //     // if (Directory.Exists(outputpath))
+            //     // {
+            //     //     Directory.Delete(outputpath,true);
+            //     // }
+            //     //打包AB
+            //     AssetBundleEditorToolsV2ForAssetGraph.Build(BuildTarget.Android, outputpath);
+            // }
 
             // if (GUILayout.Button("AssetBundle 加载测试Editor(DevOps)", GUILayout.Width(380), GUILayout.Height(30)))
             // {
@@ -171,8 +171,7 @@ namespace BDFramework.Editor.AssetBundle
             {
                 platform = RuntimePlatform.IPhonePlayer;
             }
-
-            var assetConfig = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
+            
             //生成Assetbundlebunle
             AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform);
             AssetDatabase.Refresh();
