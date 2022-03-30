@@ -42,9 +42,6 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core (国内比较快)
 #### -全面支持DevOps工作流.
  ##  V2版本:
 #### 1.全面升级为UPM管理: [urp版本安装引导]( https://www.yuque.com/naipaopao/eg6gik/xy8dm4)  
-      i.拷贝github中Package的BDFrame包到项目的Package下,导入Package中的Asset.package到工程Asset目录下即可   
-      ii.通过OpenUPM安装
-      iii.旧版本转移到Unity2019LTS_2021.04.06分支上  
 #### 2.全面适配URP管线工作流  
 #### 3.全面定制Unity Editor环境，升级编辑器操作。更便捷、人性化的开发体验  
 #### 4.全面优化框架启动速度,重构部分远古代码。  
@@ -52,18 +49,16 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core (国内比较快)
 #### 6.更全面的文档  
 #### 7.商业级的Demo加入，后续会开放免费商业级项目开发教程   
 
-## V1版本：框架特点(Feature)   
-  **·TDD工作流、完整的测试用例:**  
-  完整的测试用例，保证框架的稳定。  
-  
+## V1版本：  
+
   **一键C#热更:**  
-   BD中对ILRuntime进行了二次改造，不用分工程、并且写了一套完善的脚本编译机制,打包工具自动搜集热更代码进行打包。  
+   开发不需要再关心热更！BD中对ILRuntime进行了二次改造，不用分工程、并且写了一套完善的脚本编译机制,打包工具自动搜集热更代码进行打包。  
    并且对常用库进行了适配.  
  
    **一键版本发布:**  
    代码、资源、表格一键打包,版本管理自动下载  
    
-   **完善的资源管理系统，一套API各平台自动切换：**  
+   **完善的资源管理系统:**  
    BD抛弃了Resources目录，并且保留的用户Resources的开发习惯.  
    一套API自动切换，兼容AB和Editor模式.  
    而且有一套比较完善的AssetBundle管理机制：图集管理、自动搜集Shader、0冗余打包  
@@ -83,9 +78,12 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core (国内比较快)
    这套机制高度可扩展、可定制,使用者根据自己的需求可以实现其他的管理器  
    并且这个在编辑器环境下也生效的哦~ 写工具时候会很有帮助的哦~  
    
-   **模块管理、调度**  
+   **模块管理、调度、导航机制:**  
    BD给大家带来了一种开发思路，用户使用流程的Timeline（不是unity的那个timeline）,  
-   根据用户流程进行切分模块、调度,这里的模块并不是狭义的一个窗口哦~  
+   根据用户流程进行切分模块、调度!  
+   
+   **·TDD工作流、完整的测试用例:**  
+  完整的测试用例，保证框架的稳定。  
 
 ## 文档(Document)  
  ### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
