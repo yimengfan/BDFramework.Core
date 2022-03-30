@@ -30,54 +30,7 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 github地址: https://github.com/yimengfan/BDFramework.Core  
 gitee地址: https://gitee.com/yimengfan/BDFramework.Core (国内比较快)
 
-## 文档(Document)  
- ### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
- #### [English Wiki](http://www.nekosang.com)  
- #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
- #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)  
- 
-# Unity3d支持(Unity3d support )  
-#### Unity2018 - [ObsoleteBranch](https://github.com/yimengfan/BDFramework.Core/tree/2018.4.23LTS)  
-#### *Unity2019 - Master* （推荐）      
-#### Unity2020 - [TestBranch](https://github.com/yimengfan/BDFramework.Core/tree/2020.4LTS)  
-#### Unity2021 - [TestBranch](https://github.com/yimengfan/BDFramework.Core/tree/2021.2.13f1)  
-# 安装使用(Start)  
-#### 推荐Unity版本: 2019.4LTS.
-
-#### OpenUPM(强烈推荐)：  
-**​**
-教程 https://www.yuque.com/naipaopao/eg6gik/xy8dm4  
-#### Release版：
-**使用Open UPM更新框架：**  
-Step：
-- open **Edit/Project Settings/Package Manager**
-- add a new Scoped Registry (or edit the existing OpenUPM entry)
-   - **Name** package.openupm.cn
-   - **URL** https://package.openupm.cn
-   - **Scope(s)** com.ourpalm.ilruntime 、com.popo.bdframework
-- click Save (or Apply)
-
-Then open the "**Package Manger"** editor windows. 
-Switch  menuitem to "**My Registries** ".
-You can see the BDFramework ,you can select the new version.
-
-
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/338267/1639809205952-492144a5-5d1c-4d1b-8a73-e6cc2d7482b7.png#clientId=u119306b4-6d2b-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=226&id=uc5d79ed9&margin=%5Bobject%20Object%5D&name=image.png&originHeight=452&originWidth=402&originalType=binary&ratio=1&rotation=0&showTitle=false&size=31936&status=done&style=none&taskId=udcaf8962-ed23-40e3-9d83-57847c8a37f&title=&width=201)
-
-
-#### 预览版（紧急修复bug版）:
-手动将框架放置在Package目录下
-ps:只移动**com.popo.bdframework文件夹**到项目即可
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/338267/1632731115669-05c15202-b644-4605-be01-0c779d3ff9ea.png#clientId=u9755688d-e120-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=234&id=u9349f951&margin=%5Bobject%20Object%5D&name=image.png&originHeight=234&originWidth=648&originalType=binary&ratio=1&rotation=0&showTitle=false&size=14315&status=done&style=none&taskId=u0bf01b11-5384-41ff-a1fd-0fcfbc63622&title=&width=648)
-
-## 贡献者名单
-[@gaojiexx](https://github.com/gaojiexx)  
-[@ricashao](https://github.com/ricashao)  
-[@瞎哥](https://github.com/AfarMiss)  
-如果需要项目方案定制、企业支持,可以联系 QQ:755737878  
-也随时欢迎交流各种技术.    
-
-## 发布（Publish）  
+# 发布（Publish）  
 ### [Release版本](https://github.com/yimengfan/BDFramework.Core/releases)  
 注:所有bug修复和新特性加入会先提交到Master分支。待审核期通过，稳定则会发布Release版本 
 ### Demo：  
@@ -133,7 +86,55 @@ ps:只移动**com.popo.bdframework文件夹**到项目即可
    **模块管理、调度**  
    BD给大家带来了一种开发思路，用户使用流程的Timeline（不是unity的那个timeline）,  
    根据用户流程进行切分模块、调度,这里的模块并不是狭义的一个窗口哦~  
-   
+
+## 文档(Document)  
+ ### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
+ #### [English Wiki](http://www.nekosang.com)  
+ #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
+ #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)  
+ 
+# Unity3d支持(Unity3d support )  
+#### Unity2018 - [ObsoleteBranch](https://github.com/yimengfan/BDFramework.Core/tree/2018.4.23LTS)  
+#### *Unity2019 - Master* （推荐）      
+#### Unity2020 - [TestBranch](https://github.com/yimengfan/BDFramework.Core/tree/2020.4LTS)  
+#### Unity2021 - [TestBranch](https://github.com/yimengfan/BDFramework.Core/tree/2021.2.13f1)  
+# 安装使用(Start)  
+#### 推荐Unity版本: 2019.4LTS.
+
+#### OpenUPM(强烈推荐)：  
+**​**
+教程 https://www.yuque.com/naipaopao/eg6gik/xy8dm4  
+#### Release版：
+**使用Open UPM更新框架：**  
+Step：
+- open **Edit/Project Settings/Package Manager**
+- add a new Scoped Registry (or edit the existing OpenUPM entry)
+   - **Name** package.openupm.cn
+   - **URL** https://package.openupm.cn
+   - **Scope(s)** com.ourpalm.ilruntime 、com.popo.bdframework
+- click Save (or Apply)
+
+Then open the "**Package Manger"** editor windows. 
+Switch  menuitem to "**My Registries** ".
+You can see the BDFramework ,you can select the new version.
+
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/338267/1639809205952-492144a5-5d1c-4d1b-8a73-e6cc2d7482b7.png#clientId=u119306b4-6d2b-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=226&id=uc5d79ed9&margin=%5Bobject%20Object%5D&name=image.png&originHeight=452&originWidth=402&originalType=binary&ratio=1&rotation=0&showTitle=false&size=31936&status=done&style=none&taskId=udcaf8962-ed23-40e3-9d83-57847c8a37f&title=&width=201)
+
+
+#### 预览版（紧急修复bug版）:
+手动将框架放置在Package目录下
+ps:只移动**com.popo.bdframework文件夹**到项目即可
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/338267/1632731115669-05c15202-b644-4605-be01-0c779d3ff9ea.png#clientId=u9755688d-e120-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=234&id=u9349f951&margin=%5Bobject%20Object%5D&name=image.png&originHeight=234&originWidth=648&originalType=binary&ratio=1&rotation=0&showTitle=false&size=14315&status=done&style=none&taskId=u0bf01b11-5384-41ff-a1fd-0fcfbc63622&title=&width=648)
+
+## 贡献者名单
+[@gaojiexx](https://github.com/gaojiexx)  
+[@ricashao](https://github.com/ricashao)  
+[@瞎哥](https://github.com/AfarMiss)  
+如果需要项目方案定制、企业支持,可以联系 QQ:755737878  
+也随时欢迎交流各种技术.    
+
+
 
    
 
