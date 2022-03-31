@@ -42,13 +42,12 @@ namespace BDFramework
         /// <summary>
         /// ILRuntime解释执行
         /// </summary>
-        ByILRuntime = 0,
+        ILRuntime = 0,
 
         /// <summary>
-        /// 反射执行
+        /// 华佗执行
         /// </summary>
-        ByReflection,
-        Mono
+        Huatuo
     }
 
 
@@ -66,7 +65,7 @@ namespace BDFramework
 
 
         [LabelText("热更代码执行模式")]
-        public HotfixCodeRunMode CodeRunMode = HotfixCodeRunMode.ByILRuntime;
+        public HotfixCodeRunMode CodeRunMode = HotfixCodeRunMode.ILRuntime;
 
         [LabelText("是否开启ILRuntime调试")]
         public bool IsDebuggerILRuntime = false;

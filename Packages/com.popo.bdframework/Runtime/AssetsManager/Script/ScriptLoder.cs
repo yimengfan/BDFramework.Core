@@ -63,30 +63,31 @@ namespace BDFramework
         static void LoadHotfixDLL(string dllPath, HotfixCodeRunMode mode, Type[] mainProjecTypes)
         {
             //反射执行
-            if (mode == HotfixCodeRunMode.ByReflection)
+            if (mode == HotfixCodeRunMode.Huatuo)
             {
-                BDebug.Log("【ScriptLaunch】反射Dll路径:" + dllPath, "red");
-                Assembly Assembly;
-                var dllBytes = File.ReadAllBytes(dllPath);
-                var pdbPath = dllPath + ".pdb";
-                if (File.Exists(pdbPath))
-                {
-                    var pdbBytes = File.ReadAllBytes(pdbPath);
-                    Assembly = Assembly.Load(dllBytes, pdbBytes);
-                }
-                else
-                {
-                    Assembly = Assembly.Load(dllBytes);
-                }
-
-                BDebug.Log("【ScriptLaunch】反射加载成功,开始执行Start");
-                var type = typeof(ScriptLoder).Assembly.GetType("BDLauncherBridge");
-                var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-
-                method.Invoke(null, new object[] {mainProjecTypes, Assembly.GetTypes()});
+                new NotSupportedException("暂未实现");
+                // BDebug.Log("【ScriptLaunch】反射Dll路径:" + dllPath, "red");
+                // Assembly Assembly;
+                // var dllBytes = File.ReadAllBytes(dllPath);
+                // var pdbPath = dllPath + ".pdb";
+                // if (File.Exists(pdbPath))
+                // {
+                //     var pdbBytes = File.ReadAllBytes(pdbPath);
+                //     Assembly = Assembly.Load(dllBytes, pdbBytes);
+                // }
+                // else
+                // {
+                //     Assembly = Assembly.Load(dllBytes);
+                // }
+                //
+                // BDebug.Log("【ScriptLaunch】反射加载成功,开始执行Start");
+                // var type = typeof(ScriptLoder).Assembly.GetType("BDLauncherBridge");
+                // var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
+                //
+                // method.Invoke(null, new object[] {mainProjecTypes, Assembly.GetTypes()});
             }
             //解释执行
-            else if (mode == HotfixCodeRunMode.ByILRuntime)
+            else if (mode == HotfixCodeRunMode.ILRuntime)
             {
                 BDebug.Log("【ScriptLaunch】热更Dll路径:" + dllPath, "red");
                 //解释执行模式
