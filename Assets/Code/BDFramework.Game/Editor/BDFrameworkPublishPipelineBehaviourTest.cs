@@ -50,12 +50,12 @@ namespace BDFramework.Editor.EditorLife
 
 
         #region Assetbundle
-        public override void OnBeginBuildAssetBundle(BuildAssetBundleParams @params, BuildInfo buildInfo)
+        public override void OnBeginBuildAssetBundle(BuildAssetBundleParams @params, BuildAssetsInfo buildAssetsInfo)
         {
             Debug.Log("【BDFrameEditorBehavior生命周期测试】打包Asset时回调!");
         }
         
-        public override void OnEndBuildAssetBundle(BuildAssetBundleParams @params, BuildInfo buildInfo)
+        public override void OnEndBuildAssetBundle(BuildAssetBundleParams @params, BuildAssetsInfo buildAssetsInfo)
         {
             Debug.Log("【BDFrameEditorBehavior生命周期测试】打包Asset后回调!");
         }

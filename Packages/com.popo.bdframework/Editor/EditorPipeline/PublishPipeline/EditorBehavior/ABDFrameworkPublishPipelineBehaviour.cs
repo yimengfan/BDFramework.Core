@@ -66,8 +66,8 @@ namespace BDFramework.Editor
         /// <summary>
         /// 一键打包时，开始导出AssetBundle
         /// </summary>
-        /// <param name="buildInfo">自定义修改buildinfo内容 进行自定义的ab输出</param>
-        virtual public void OnBeginBuildAssetBundle(BuildAssetBundleParams @params, BuildInfo buildInfo)
+        /// <param name="buildAssetsInfo">自定义修改buildinfo内容 进行自定义的ab输出</param>
+        virtual public void OnBeginBuildAssetBundle(BuildAssetBundleParams @params, BuildAssetsInfo buildAssetsInfo)
         {
         }
 
@@ -75,7 +75,7 @@ namespace BDFramework.Editor
         ///  一键打包时，完成导出AssetBundle
         /// </summary>
         /// <param name="outputPath">dll输出路径</param>
-        virtual public void OnEndBuildAssetBundle(BuildAssetBundleParams @params, BuildInfo buildInfo)
+        virtual public void OnEndBuildAssetBundle(BuildAssetBundleParams @params, BuildAssetsInfo buildAssetsInfo)
         {
         }
 

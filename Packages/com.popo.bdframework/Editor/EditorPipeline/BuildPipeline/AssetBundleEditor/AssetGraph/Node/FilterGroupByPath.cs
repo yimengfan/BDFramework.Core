@@ -18,7 +18,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/[筛选]Group by Path", 10)]
     public class FilterGroupByPath : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo              BuildInfo   { get; set; }
+        public BuildAssetsInfo              BuildAssetsInfo   { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
         public void Reset()
         {
@@ -164,7 +164,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 var outputConnect = this.selfNodeGUI.Data.OutputPoints.Find((node) => node.Id == gp.OutputNodeId);
 
 
-                BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, outputConnect);
+                //BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, outputConnect);
                 BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
             }
 
@@ -231,6 +231,15 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         #endregion
 
+        /// <summary>
+        /// 预览结果 编辑器连线数据，但是build模式也会执行
+        /// 这里注意不要对BuildingCtx直接进行修改,修改需要在Build中进行
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="nodeData"></param>
+        /// <param name="incoming"></param>
+        /// <param name="connectionsToOutput"></param>
+        /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             Debug.Log("prepare:" + this.GetType().Name + "-" + DateTime.Now.ToLongTimeString());
@@ -241,7 +250,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //prepare传入的资源
             this.incommingAssetGroup = incoming.FirstOrDefault();
-            this.BuildInfo           = BDFrameworkAssetsEnv.BuildInfo;
+            this.BuildAssetsInfo           = BDFrameworkAssetsEnv.BuildAssetsInfo;
             this.BuildParams         = BDFrameworkAssetsEnv.BuildParams;
             //初始化输出节点
             foreach (var ags in incoming)

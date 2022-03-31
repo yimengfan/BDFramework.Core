@@ -94,12 +94,12 @@ namespace BDFramework.Editor.AssetGraph.Node
             //寻找当前分包,包含的资源
             foreach (var asset in this.packageAssetList)
             {
-                BuildAssetBundle.BuildInfoCache.AssetDataMaps.TryGetValue(asset, out var buildAssetData);
+                BuildAssetBundle.BuildAssetsInfoCache.AssetDataMaps.TryGetValue(asset, out var buildAssetData);
 
                 //依次把加入资源和依赖资源
                 foreach (var dependHash in buildAssetData.DependAssetList)
                 {
-                    var dependAsset = BuildAssetBundle.BuildInfoCache.AssetDataMaps.Values.FirstOrDefault((value) => value.ArtConfigIdx != -1 && value.ABName == dependHash);
+                    var dependAsset = BuildAssetBundle.BuildAssetsInfoCache.AssetDataMaps.Values.FirstOrDefault((value) => value.ArtConfigIdx != -1 && value.ABName == dependHash);
                     if (dependAsset != null)
                     {
                         assetIdList.Add(dependAsset.ArtConfigIdx);

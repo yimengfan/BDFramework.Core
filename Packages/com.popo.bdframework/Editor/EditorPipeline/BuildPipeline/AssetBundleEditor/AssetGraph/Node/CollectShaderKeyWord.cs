@@ -13,7 +13,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/[逻辑]搜集shader变体", 60)]
     public class CollectShaderKeyWord : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo BuildInfo { get; set; }
+        public BuildAssetsInfo BuildAssetsInfo { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
 
         public void Reset()
@@ -57,10 +57,19 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         private bool isCollectedShaderKW = false;
 
+        /// <summary>
+        /// 预览结果 编辑器连线数据，但是build模式也会执行
+        /// 这里注意不要对BuildingCtx直接进行修改,修改需要在Build中进行
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="nodeData"></param>
+        /// <param name="incoming"></param>
+        /// <param name="connectionsToOutput"></param>
+        /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             if (incoming == null) return;
-            this.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+            this.BuildAssetsInfo = BDFrameworkAssetsEnv.BuildAssetsInfo;
             this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             StopwatchTools.Begin();
             //收集变体
@@ -71,9 +80,9 @@ namespace BDFramework.Editor.AssetGraph.Node
                 isCollectedShaderKW = true;
             }
 
-            //开始搜集shader varint
+            //开始搜集传入的 shader varint
             var outMap = new Dictionary<string, List<AssetReference>>();
-            var shaderAndVariantList = new List<AssetReference>();
+            var incomingShaderAndVariantList = new List<AssetReference>();
 
             var dependShaders = AssetDatabase.GetDependencies(BResources.ALL_SHADER_VARAINT_ASSET_PATH).Where((depend) =>
             {
@@ -102,7 +111,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                         if (ret != null)
                         {
                             newList.RemoveAt(i);
-                            shaderAndVariantList.Add(af);
+                            incomingShaderAndVariantList.Add(af);
                         }
                         else
                         {
@@ -110,10 +119,10 @@ namespace BDFramework.Editor.AssetGraph.Node
                             if (af.assetType == typeof(Shader))
                             {
                                 Debug.LogError("【搜集KeyWord】遗漏shader:" + af.importFrom);
-                                this.BuildInfo.AssetDataMaps.TryGetValue(af.importFrom, out var shaderAssetData);
+                                this.BuildAssetsInfo.AssetDataMaps.TryGetValue(af.importFrom, out var shaderAssetData);
                                 if (shaderAssetData != null)
                                 {
-                                    var returnBD = this.BuildInfo.AssetDataMaps.FirstOrDefault((bd) => bd.Value.DependAssetList.Contains(shaderAssetData.ABName) || bd.Value.DependAssetList.Contains(af.importFrom, StringComparer.Ordinal));
+                                    var returnBD = this.BuildAssetsInfo.AssetDataMaps.FirstOrDefault((bd) => bd.Value.DependAssetList.Contains(shaderAssetData.ABName) || bd.Value.DependAssetList.Contains(af.importFrom, StringComparer.Ordinal));
                                     if (returnBD.Value != null)
                                     {
                                         Debug.Log("依赖资源:" + returnBD.Key);
@@ -129,26 +138,29 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //依赖shader
-            foreach (var dependShader in dependShaders)
+            if (incomingShaderAndVariantList.Count > 0) //0的情况一般为 调试模式~
             {
-                var retsult = shaderAndVariantList.Find((ar) => ar.importFrom.Equals(dependShader, StringComparison.OrdinalIgnoreCase));
-                if (retsult == null)
+                foreach (var dependShader in dependShaders)
                 {
-                    var af = AssetReference.CreateReference(dependShader);
-                    shaderAndVariantList.Add(af);
-                    Debug.LogError("没传入的依赖shader 单独添加：" + dependShader);
+                    var retsult = incomingShaderAndVariantList.Find((ar) => ar.importFrom.Equals(dependShader, StringComparison.OrdinalIgnoreCase));
+                    if (retsult == null)
+                    {
+                        var af = AssetReference.CreateReference(dependShader);
+                        incomingShaderAndVariantList.Add(af);
+                        Debug.LogError("没传入的依赖shader 单独添加：" + dependShader);
+                    }
                 }
-            }
 
+            }
             //设置ab
-            foreach (var sharder in shaderAndVariantList)
+            foreach (var sharder in incomingShaderAndVariantList)
             {
-                this.BuildInfo.SetABName(sharder.importFrom, AssetBundleName, BuildInfo.SetABNameMode.Force);
+                this.BuildAssetsInfo.SetABName(sharder.importFrom, AssetBundleName, BuildAssetsInfo.SetABNameMode.Force);
             }
 
             StopwatchTools.End("【搜集KeyWord】");
             //输出shader
-            outMap[nameof(BDFrameworkAssetsEnv.FloderType.Shaders)] = shaderAndVariantList;
+            outMap[nameof(BDFrameworkAssetsEnv.FloderType.Shaders)] = incomingShaderAndVariantList;
             //输出
             var output = connectionsToOutput?.FirstOrDefault();
             if (output != null)

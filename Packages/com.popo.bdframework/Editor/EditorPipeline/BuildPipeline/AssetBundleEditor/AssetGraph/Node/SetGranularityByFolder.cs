@@ -17,7 +17,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/[颗粒度]文件夹规则", 30)]
     public class SetGranularityByFolder : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo              BuildInfo   { get; set; }
+        public BuildAssetsInfo              BuildAssetsInfo   { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
         public void Reset()
         {
@@ -33,7 +33,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             /// <summary>
             /// 设置AB名为父文件夹路径
             /// </summary>
-            用该目录路径设置AB名,
+            用该目录路径设置AB名 = 1,
 
             /// <summary>
             /// 设置所有子文件夹中的文件，AB名为子文件夹名
@@ -76,11 +76,9 @@ namespace BDFramework.Editor.AssetGraph.Node
         }
 
         private NodeGUI selfNodeGUI;
-        private Action  onInspectorValueChanged;
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
-            this.onInspectorValueChanged = onValueChanged;
             this.selfNodeGUI             = node;
             //node.Name                 = EditorGUILayout.TextField("Tips:",  node.Name);
             editor.UpdateNodeName(node);
@@ -100,15 +98,42 @@ namespace BDFramework.Editor.AssetGraph.Node
                 isupdateNode                = true;
             }
 
+            
+            //根据不同的枚举进行提示
+            switch ((FolderAssetBundleRule)this.SetAssetBundleNameRule)
+            {
+                case FolderAssetBundleRule.用该目录路径设置AB名:
+                {
+                    EditorGUILayout.HelpBox("将该目录下所有文件,打包成一个AB!", MessageType.Info);
+                }
+                    break;
+
+                case FolderAssetBundleRule.用子目录路径设置AB名:
+                {
+                    var label = "将该目录下所有子目录,按子目录分别打包AB! \n 如:A文件夹下有 A/a1,A/a2,A/a3三个文件夹, 则会打包为a1、a2、a3 三个AB包,\n 若存在类似A/1.txt文件, 额外会生成AssetBundle - A,包含1.txt";
+                    EditorGUILayout.HelpBox(label, MessageType.Info);
+                }
+                    break;
+                
+            }
+
             if (isupdateNode)
             {
                 Debug.Log("更新node!");
                 //触发
-                BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, this.selfNodeGUI.Data.OutputPoints.FirstOrDefault());
+                //BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, this.selfNodeGUI.Data.OutputPoints.FirstOrDefault());
                 BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
             }
         }
-
+        /// <summary>
+        /// 预览结果 编辑器连线数据，但是build模式也会执行
+        /// 这里注意不要对BuildingCtx直接进行修改,修改需要在Build中进行
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="nodeData"></param>
+        /// <param name="incoming"></param>
+        /// <param name="connectionsToOutput"></param>
+        /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             if (incoming == null)
@@ -117,7 +142,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             Debug.Log("prepare:" + this.GetType().Name + "-" + DateTime.Now.ToLongTimeString());
-            this.BuildInfo   = BDFrameworkAssetsEnv.BuildInfo;
+            this.BuildAssetsInfo   = BDFrameworkAssetsEnv.BuildAssetsInfo;
             this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
 
 
@@ -161,7 +186,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     foreach (var ar in ag.Value)
                     {
                         //设置当前ab名为文件夹名,不覆盖在此之前的规则
-                        var ret = BuildInfo.SetABName(ar.importFrom, folderPath);
+                        var ret = BuildAssetsInfo.SetABName(ar.importFrom, folderPath);
                         if (!ret)
                         {
                             Debug.LogError($"【颗粒度】设置AB失败 [{folderPath}] -" + ar.importFrom);
@@ -177,7 +202,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         }
 
         /// <summary>
-        /// 
+        /// 将该目录下 所有子文件夹打包
         /// </summary>
         /// <param name="incoming"></param>
         /// <returns></returns>
@@ -214,7 +239,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                         {
                             if (ar.importFrom.StartsWith(subFolder + "/", StringComparison.OrdinalIgnoreCase))
                             {
-                                var ret = BuildInfo.SetABName(ar.importFrom, subFolder);
+                                var ret = BuildAssetsInfo.SetABName(ar.importFrom, subFolder);
                                 if (!ret)
                                 {
                                     Debug.LogError($"【颗粒度】设置AB失败 [{subFolder}] -" + ar.importFrom);

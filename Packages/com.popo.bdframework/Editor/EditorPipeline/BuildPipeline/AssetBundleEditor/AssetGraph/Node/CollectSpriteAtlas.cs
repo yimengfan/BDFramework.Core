@@ -11,7 +11,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/[逻辑]搜集图集", 60)]
     public class CollectSpriteAtlas : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo BuildInfo { get; set; }
+        public BuildAssetsInfo BuildAssetsInfo { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
         public void Reset()
         {
@@ -47,6 +47,15 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
         }
 
+        /// <summary>
+        /// 预览结果 编辑器连线数据，但是build模式也会执行
+        /// 这里注意不要对BuildingCtx直接进行修改,修改需要在Build中进行
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="nodeData"></param>
+        /// <param name="incoming"></param>
+        /// <param name="connectionsToOutput"></param>
+        /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             if (incoming == null)
@@ -54,7 +63,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 return;
             }
             StopwatchTools.Begin();
-            this.BuildInfo   = BDFrameworkAssetsEnv.BuildInfo;
+            this.BuildAssetsInfo   = BDFrameworkAssetsEnv.BuildAssetsInfo;
             this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             //找到runtime
             List<AssetReference> runtimeAssetReferenceList = null;
@@ -104,12 +113,12 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 var atlasAR = atlasAssetReferenceList[i];
                 //获取依赖中的tex,并设置AB名为atlas名
-                if (this.BuildInfo.AssetDataMaps.TryGetValue(atlasAR.importFrom, out BuildInfo.BuildAssetData atlasAssetData))
+                if (this.BuildAssetsInfo.AssetDataMaps.TryGetValue(atlasAR.importFrom, out BuildAssetsInfo.BuildAssetData atlasAssetData))
                 {
                     //设置tex ab
                     foreach (var dependTex in atlasAssetData.DependAssetList)
                     {
-                        var ret = this.BuildInfo.SetABName(dependTex, atlasAR.importFrom, BuildInfo.SetABNameMode.Force);
+                        var ret = this.BuildAssetsInfo.SetABName(dependTex, atlasAR.importFrom, BuildAssetsInfo.SetABNameMode.Force);
                     }
                 }
             }

@@ -11,7 +11,6 @@ using BDFramework.Editor.Tools;
 using BDFramework.Editor.Unity3dEx;
 using BDFramework.ResourceMgr;
 using ServiceStack.Text;
-using AssetBundleEditorToolsV2 = BDFramework.Editor.AssetBundle.AssetBundleEditorToolsV2;
 #if ODIN_INSPECTOR
 using Sirenix.Utilities.Editor;
 #endif
@@ -266,7 +265,7 @@ namespace BDFramework.Editor.PublishPipeline
             try
             {
                 //var config = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
-                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform);
+                AssetBundleBuildToolsV2.GenAssetBundle(outputPath, platform);
             }
             catch (Exception e)
             {

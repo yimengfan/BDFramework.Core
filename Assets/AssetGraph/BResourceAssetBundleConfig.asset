@@ -29,7 +29,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -40,7 +40,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "\u641C\u96C6shader\u53D8\u4F53"
@@ -59,7 +59,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -69,18 +69,18 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 128.7143
-        y: 32.785713
+        x: 130.2
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u6D4B\u8BD5\u6A21\u578B\u5B50\u76EE\u5F55"
     m_id: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
-    m_x: 1188
-    m_y: 792
+    m_x: 1176
+    m_y: 696
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFolder, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|eyJTZXRBc3NldEJ1bmRsZU5hbWVSdWxlIjoxfQ==
+      m_instanceData: B64|eyJTZXRBc3NldEJ1bmRsZU5hbWVSdWxlIjoyfQ==
     m_inputPoints:
     - id: 04553e4a-d5e6-4d37-87bb-c10b717f8052
       label: '-'
@@ -89,7 +89,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -100,12 +100,12 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 171
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "\u6253\u5305AssetBundle"
     m_id: 5c54f429-2e9d-45d5-ad93-29577e3649bb
-    m_x: 1512
+    m_x: 1536
     m_y: 576
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.BuildAssetBundle, BDFramework.Editor,
@@ -119,7 +119,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -129,14 +129,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 136.7143
-        y: 32.785713
+        x: 139
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u7B5B\u9009]Group by Path"
     m_id: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
     m_x: 732
-    m_y: 540
+    m_y: 492
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.FilterGroupByPath, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -149,7 +149,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -159,8 +159,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 220.14287
-        y: 32.785713
+        x: 223.79999
+        y: 33.7
         width: 10
         height: 23
     - id: 28d12738-0458-439a-b23a-d1faedd95f88
@@ -169,8 +169,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 220.14287
-        y: 64.78571
+        x: 223.79999
+        y: 65.7
         width: 10
         height: 23
     - id: a8562a02-4c4b-42db-8d61-e022a719de8a
@@ -179,8 +179,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 220.14287
-        y: 96.78571
+        x: 223.79999
+        y: 97.7
         width: 10
         height: 23
     - id: ee5e5d1a-eb6a-4914-8c14-02b36d1c1f15
@@ -189,8 +189,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 220.14287
-        y: 128.7857
+        x: 223.79999
+        y: 129.7
         width: 10
         height: 23
     - id: 8b9c0b86-d54c-4d1e-94c1-fe13e856936e
@@ -199,8 +199,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 220.14287
-        y: 160.7857
+        x: 223.79999
+        y: 161.7
         width: 10
         height: 23
   - m_name: "[*]\u521D\u59CB\u5316\u6846\u67B6Assets\u73AF\u5883"
@@ -210,7 +210,7 @@ MonoBehaviour:
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.BDFrameworkAssetsEnv, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|e30=
+      m_instanceData: B64|eyJBc3NldEdyYXBoV2luZG93c01vZGUiOjF9
     m_inputPoints: []
     m_outputPoints:
     - id: 103f0e06-ef26-4a12-801e-b2c8a1cdd491
@@ -219,14 +219,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 179
-        y: 32.785713
+        x: 179.8
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
     m_id: 514d1288-7246-484b-8a94-3075e3d1e8c3
-    m_x: 1200
-    m_y: 312
+    m_x: 1224
+    m_y: 204
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -239,7 +239,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -250,13 +250,13 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
     m_id: f891d383-3b03-469b-81e8-e99d9f36b03a
-    m_x: 1200
-    m_y: 444
+    m_x: 1212
+    m_y: 360
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -269,7 +269,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -280,13 +280,13 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
     m_id: dd864864-5e6f-4386-bd1c-8c4b29038c29
     m_x: 1200
-    m_y: 552
+    m_y: 492
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -299,7 +299,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -310,13 +310,13 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
     m_id: 4238358a-f55f-4a7d-a2ea-68110ab2808e
-    m_x: 1212
-    m_y: 672
+    m_x: 1200
+    m_y: 588
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -329,7 +329,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -340,13 +340,13 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u5206\u5305]\u8D44\u6E90\u8DEF\u5F84\u5206\u5305"
     m_id: 11c7368e-660b-4bc6-956d-791ee29cd6b8
-    m_x: 1740
-    m_y: 492
+    m_x: 1752
+    m_y: 516
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackage, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -359,7 +359,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -369,8 +369,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 262.42856
-        y: 32.785713
+        x: 266.2
+        y: 33.7
         width: 10
         height: 23
     - id: a77abac2-87f4-4538-a5ca-f9d6a174b901
@@ -379,8 +379,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 262.42856
-        y: 64.78571
+        x: 266.2
+        y: 65.7
         width: 10
         height: 23
     - id: e3f050a3-5680-4a06-a4ce-89df96578277
@@ -389,14 +389,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 262.42856
-        y: 96.78571
+        x: 266.2
+        y: 97.7
         width: 10
         height: 23
   - m_name: "\u5206\u5305\u540D:TestChar"
     m_id: 2f5a7eba-f63a-4769-9d76-1d3b7951d455
     m_x: 2208
-    m_y: 408
+    m_y: 360
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackageName, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -409,14 +409,14 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints: []
   - m_name: "\u5206\u5305\u540D:TestNull"
     m_id: a48b9bc3-7590-480b-b1ef-41ac4e3878b3
-    m_x: 2244
-    m_y: 648
+    m_x: 2220
+    m_y: 636
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackageName, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -429,7 +429,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints: []
@@ -536,7 +536,7 @@ MonoBehaviour:
     m_toNodeId: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
     m_toNodeConnectionPoiontId: 04553e4a-d5e6-4d37-87bb-c10b717f8052
     m_label: Assets/Resource_SVN/Model/
-  m_lastModified: 132928592551017595
+  m_lastModified: 132932150607639217
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0

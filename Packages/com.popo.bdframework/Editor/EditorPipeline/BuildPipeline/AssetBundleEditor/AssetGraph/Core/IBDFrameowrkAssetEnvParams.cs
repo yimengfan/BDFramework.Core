@@ -11,7 +11,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 当前buildinfo
         /// </summary>
-        BuildInfo BuildInfo { get; set; }
+        BuildAssetsInfo BuildAssetsInfo { get; set; }
         /// <summary>
         /// Build参数
         /// </summary>

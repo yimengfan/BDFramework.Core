@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
+using BDFramework.Editor.AssetGraph.Node;
 using BDFramework.ResourceMgr;
+using LitJson;
 
 namespace BDFramework.Editor.AssetBundle
 {
     /// <summary>
-    /// build信息
+    /// build资产信息
     /// </summary>
-    public class BuildInfo
+    public class BuildAssetsInfo
     {
         public class BuildAssetData
         {
@@ -74,14 +76,17 @@ namespace BDFramework.Editor.AssetBundle
         }
 
         /// <summary>
-        /// 设置AB名
+        /// 设置AB名(颗粒度)
+        /// Simple模式:如果AB名被修改，则不会再次修改.用以不覆盖先执行的AB颗粒度规则
+        /// Force模式:强制修改该AB名,即使有其他规则已经修改过该AB颗粒度
+        /// ForceAndFixAllRef:强制修改，并且也修改引用该资源的AB名
         /// </summary>
         public bool SetABName(string assetName, string newABName, SetABNameMode setNameMode = SetABNameMode.Simple)
         {
             //1.如果ab名被修改过,说明有其他规则影响，需要理清打包规则。（比如散图打成图集名）
             //2.如果资源被其他资源引用，修改ab名，需要修改所有引用该ab的名字
 
-            bool isSetABName = false;
+            bool isCanSetABName = false;
             bool isSetAllDependAB = false;
 
             this.AssetDataMaps.TryGetValue(assetName, out var assetData);
@@ -95,7 +100,7 @@ namespace BDFramework.Editor.AssetBundle
                     {
                         if (assetData.ABName.Equals(assetName, StringComparison.OrdinalIgnoreCase) || assetData.ABName == newABName)
                         {
-                            isSetABName = true;
+                            isCanSetABName = true;
                         }
                     }
                         break;
@@ -103,13 +108,13 @@ namespace BDFramework.Editor.AssetBundle
                     //强行修改
                     case SetABNameMode.Force:
                     {
-                        isSetABName = true;
+                        isCanSetABName = true;
                     }
                         break;
                     //强行修改 并且修改所有AB引用
                     case SetABNameMode.ForceAndFixAllRef:
                     {
-                        isSetABName = true;
+                        isCanSetABName = true;
                         isSetAllDependAB = true;
                     }
                         break;
@@ -117,7 +122,7 @@ namespace BDFramework.Editor.AssetBundle
             }
 
 
-            if (isSetABName)
+            if (isCanSetABName)
             {
                 assetData.ABName = newABName;
             }
@@ -140,7 +145,25 @@ namespace BDFramework.Editor.AssetBundle
             }
 
 
-            return isSetABName;
+            return isCanSetABName;
+        }
+        
+        
+        /// <summary>
+        /// 克隆
+        /// </summary>
+        public BuildAssetsInfo Clone()
+        {
+            //手动new防止内部map，防止构造传参失效
+            BuildAssetsInfo tempBuildAssetsInfo = new BuildAssetsInfo();
+            //
+            var json = JsonMapper.ToJson(this);
+            var temp = JsonMapper.ToObject<BuildAssetsInfo>(json);
+            foreach (var item in temp.AssetDataMaps)
+            {
+                tempBuildAssetsInfo.AssetDataMaps[item.Key] = item.Value;
+            }
+            return tempBuildAssetsInfo;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/[分包]资源路径分包", 20)]
     public class MultiplePackage : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildInfo BuildInfo { get; set; }
+        public BuildAssetsInfo BuildAssetsInfo { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 var outputConnect = this.selfNodeGUI.Data.OutputPoints.Find((node) => node.Id == gp.OutputNodeId);
 
 
-                BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, outputConnect);
+                //BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, outputConnect);
                 BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
             }
         }

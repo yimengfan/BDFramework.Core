@@ -59,7 +59,7 @@ namespace BDFramework.Editor.AssetBundle
             {
                 if (node.Operation.Object is IBDFrameowrkAssetEnvParams envParams)
                 {
-                    envParams.BuildInfo = BDFrameworkAssetsEnv.BuildInfo;
+                    envParams.BuildAssetsInfo = BDFrameworkAssetsEnv.BuildAssetsInfo;
                     envParams.BuildParams = BDFrameworkAssetsEnv.BuildParams;
                     envParams.Reset();
                 }

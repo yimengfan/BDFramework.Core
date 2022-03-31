@@ -80,20 +80,20 @@ namespace BDFramework.Editor
         /// 开始打包assetbundle
         /// </summary>
         /// <param name="params"></param>
-        /// <param name="buildInfo"></param>
-        static public void OnBeginBuildAssetBundle( BuildAssetBundleParams @params, BuildInfo buildInfo)
+        /// <param name="buildAssetsInfo"></param>
+        static public void OnBeginBuildAssetBundle( BuildAssetBundleParams @params, BuildAssetsInfo buildAssetsInfo)
         {
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.OnBeginBuildAssetBundle(@params,buildInfo);
+                behavior.OnBeginBuildAssetBundle(@params,buildAssetsInfo);
             }
         }
 
-        static public void OnEndBuildAssetBundle( BuildAssetBundleParams @params, BuildInfo buildInfo)
+        static public void OnEndBuildAssetBundle( BuildAssetBundleParams @params, BuildAssetsInfo buildAssetsInfo)
         {
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.OnEndBuildAssetBundle(@params,buildInfo);
+                behavior.OnEndBuildAssetBundle(@params,buildAssetsInfo);
             }
         }
         

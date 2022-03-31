@@ -138,15 +138,15 @@ namespace BDFramework.Editor.AssetBundle
 
             foreach (var asset in allRuntimeAssets)
             {
-                var type = AssetBundleEditorToolsV2.GetMainAssetTypeAtPath(asset);
+                var type = AssetBundleBuildToolsV2.GetMainAssetTypeAtPath(asset);
                 if (type == null)
                 {
                     Debug.LogError("无法获得资源类型:" + asset);
                     continue;
                 }
 
-                var idx = asset.IndexOf(AssetBundleEditorToolsV2.RUNTIME_PATH, StringComparison.OrdinalIgnoreCase);
-                var runtimePath = asset.Substring(idx + AssetBundleEditorToolsV2.RUNTIME_PATH.Length);
+                var idx = asset.IndexOf(AssetBundleBuildToolsV2.RUNTIME_PATH, StringComparison.OrdinalIgnoreCase);
+                var runtimePath = asset.Substring(idx + AssetBundleBuildToolsV2.RUNTIME_PATH.Length);
                 runtimePath = runtimePath.Replace(Path.GetExtension(runtimePath), "");
                 runtimePath = runtimePath.Replace("\\", "/");
                 //Debug.Log("【LoadTest】:" + runtimePath);
