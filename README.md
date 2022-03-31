@@ -30,6 +30,61 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 github地址: https://github.com/yimengfan/BDFramework.Core  
 gitee地址: https://gitee.com/yimengfan/BDFramework.Core (国内比较快)
 
+# 发布（Publish）  
+### [Release版本](https://github.com/yimengfan/BDFramework.Core/releases)  
+注:所有bug修复和新特性加入会先提交到Master分支。待审核期通过，稳定则会发布Release版本 
+### Demo：  
+九宫棋（带一套精简的技能系统）:https://gitee.com/yimengfan/TheCatChess  
+ ##  V2.1版本:
+#### -增加BuildPipeline！  
+#### -增加PublishPipeline！  
+#### -增加HotfixPipeline！  
+#### -全面支持DevOps工作流.
+ ##  V2版本:
+#### 1.全面升级为UPM管理: [urp版本安装引导]( https://www.yuque.com/naipaopao/eg6gik/xy8dm4)  
+#### 2.全面适配URP管线工作流  
+#### 3.全面定制Unity Editor环境，升级编辑器操作。更便捷、人性化的开发体验  
+#### 4.全面优化框架启动速度,重构部分远古代码。  
+#### 5.UFlux UI工作流全面升级：更智能的值绑定、更简单的工作流、更方便的自定义扩展、DI等...
+#### 6.更全面的文档  
+#### 7.商业级的Demo加入，后续会开放免费商业级项目开发教程   
+
+## V1版本：  
+
+  **一键C#热更:**  
+   开发不需要再关心热更！BD中对ILRuntime进行了二次改造，不用分工程、并且写了一套完善的脚本编译机制,打包工具自动搜集热更代码进行打包。  
+   并且对常用库进行了适配.  
+ 
+   **一键版本发布:**  
+   代码、资源、表格一键打包,版本管理自动下载  
+   
+   **完善的资源管理系统:**  
+   BD抛弃了Resources目录，并且保留的用户Resources的开发习惯.  
+   一套API自动切换，兼容AB和Editor模式.  
+   而且有一套比较完善的AssetBundle管理机制：图集管理、自动搜集Shader、0冗余打包  
+   并且bd做了一套精简版可寻址，无论你的Asset再Streaming或者persistent下，都能自动寻找并且加载  
+   
+   **完善的UI工作流UFlux:**  
+   BD中有一整套完善的UI工作流(这里我们只对UI逻辑进行管理，不考虑ui制作)，无论你是UGUI NGUI还是其他。  
+   我们提供了一套UI管理、值绑定、数据监听、数据流、状态管理等一系列机制.  
+   V2中添加了DI相关支持
+   
+   **SQL化表格管理:**   
+   BD中用Sqlite进行管理表格,并且提供了excel2code，excel2json，excel2sqlite等工具  
+   
+   **发现式业务注册:**  
+   BDFrame底层提供了一套发现式的业务注册.无需以前的各种Register,只要定制好自己的标签、管理器就能被自动注册.  
+   在此之上BD,实现了ScreenviewManger,UIManager,EventManager...等一些列管理器。  
+   这套机制高度可扩展、可定制,使用者根据自己的需求可以实现其他的管理器  
+   并且这个在编辑器环境下也生效的哦~ 写工具时候会很有帮助的哦~  
+   
+   **模块管理、调度、导航机制:**  
+   BD给大家带来了一种开发思路，用户使用流程的Timeline（不是unity的那个timeline）,  
+   根据用户流程进行切分模块、调度!  
+   
+   **·TDD工作流、完整的测试用例:**  
+  完整的测试用例，保证框架的稳定。  
+
 ## 文档(Document)  
  ### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
  #### [English Wiki](http://www.nekosang.com)  
@@ -77,63 +132,7 @@ ps:只移动**com.popo.bdframework文件夹**到项目即可
 如果需要项目方案定制、企业支持,可以联系 QQ:755737878  
 也随时欢迎交流各种技术.    
 
-## 发布（Publish）  
-### [Release版本](https://github.com/yimengfan/BDFramework.Core/releases)  
-注:所有bug修复和新特性加入会先提交到Master分支。待审核期通过，稳定则会发布Release版本 
-### Demo：  
-九宫棋（带一套精简的技能系统）:https://gitee.com/yimengfan/TheCatChess  
- ##  V2.1版本:
-#### -增加BuildPipeline！  
-#### -增加PublishPipeline！  
-#### -增加HotfixPipeline！  
-#### -全面支持DevOps工作流.
- ##  V2版本:
-#### 1.全面升级为UPM管理: [urp版本安装引导]( https://www.yuque.com/naipaopao/eg6gik/xy8dm4)  
-      i.拷贝github中Package的BDFrame包到项目的Package下,导入Package中的Asset.package到工程Asset目录下即可   
-      ii.通过OpenUPM安装
-      iii.旧版本转移到Unity2019LTS_2021.04.06分支上  
-#### 2.全面适配URP管线工作流  
-#### 3.全面定制Unity Editor环境，升级编辑器操作。更便捷、人性化的开发体验  
-#### 4.全面优化框架启动速度,重构部分远古代码。  
-#### 5.UFlux UI工作流全面升级：更智能的值绑定、更简单的工作流、更方便的自定义扩展、DI等...
-#### 6.更全面的文档  
-#### 7.商业级的Demo加入，后续会开放免费商业级项目开发教程   
 
-## V1版本：框架特点(Feature)   
-  **·TDD工作流、完整的测试用例:**  
-  完整的测试用例，保证框架的稳定。  
-  
-  **一键C#热更:**  
-   BD中对ILRuntime进行了二次改造，不用分工程、并且写了一套完善的脚本编译机制,打包工具自动搜集热更代码进行打包。  
-   并且对常用库进行了适配.  
- 
-   **一键版本发布:**  
-   代码、资源、表格一键打包,版本管理自动下载  
-   
-   **完善的资源管理系统，一套API各平台自动切换：**  
-   BD抛弃了Resources目录，并且保留的用户Resources的开发习惯.  
-   一套API自动切换，兼容AB和Editor模式.  
-   而且有一套比较完善的AssetBundle管理机制：图集管理、自动搜集Shader、0冗余打包  
-   并且bd做了一套精简版可寻址，无论你的Asset再Streaming或者persistent下，都能自动寻找并且加载  
-   
-   **完善的UI工作流UFlux:**  
-   BD中有一整套完善的UI工作流(这里我们只对UI逻辑进行管理，不考虑ui制作)，无论你是UGUI NGUI还是其他。  
-   我们提供了一套UI管理、值绑定、数据监听、数据流、状态管理等一系列机制.  
-   V2中添加了DI相关支持
-   
-   **SQL化表格管理:**   
-   BD中用Sqlite进行管理表格,并且提供了excel2code，excel2json，excel2sqlite等工具  
-   
-   **发现式业务注册:**  
-   BDFrame底层提供了一套发现式的业务注册.无需以前的各种Register,只要定制好自己的标签、管理器就能被自动注册.  
-   在此之上BD,实现了ScreenviewManger,UIManager,EventManager...等一些列管理器。  
-   这套机制高度可扩展、可定制,使用者根据自己的需求可以实现其他的管理器  
-   并且这个在编辑器环境下也生效的哦~ 写工具时候会很有帮助的哦~  
-   
-   **模块管理、调度**  
-   BD给大家带来了一种开发思路，用户使用流程的Timeline（不是unity的那个timeline）,  
-   根据用户流程进行切分模块、调度,这里的模块并不是狭义的一个窗口哦~  
-   
 
    
 
