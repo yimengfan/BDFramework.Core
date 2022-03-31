@@ -18,10 +18,10 @@ public class ExpoterMainProjectAsset
     {
         var targetPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
         //1.分析之前先删除,然后生成临时文件防止报错
-        if (Directory.Exists(targetPath))
-        {
-            Directory.Delete(targetPath, true);
-        }
+        // if (Directory.Exists(targetPath))
+        // {
+        //     Directory.Delete(targetPath, true);
+        // }
 
         var fileContent = @"
         namespace ILRuntime.Runtime.Generated

@@ -249,7 +249,6 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         //写入
         File.WriteAllLines(analysisClrBinding, analysisContent);
 
-        //Manual
 
         AssetDatabase.Refresh();
     }
