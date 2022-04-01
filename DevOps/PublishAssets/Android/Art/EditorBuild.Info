@@ -1,6 +1,6 @@
 
 {
-  "Time" : "2022/4/1",
+  "Time" : "2022/4/2",
   "AssetDataMaps" : {
     "assets/resource/runtime/allassettype/archive.jpg" : {
       "Id" : 0,
@@ -372,7 +372,7 @@
       "Type"         : 7,
       "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
       "ReferenceCount" : 0,
-      "Hash"           : "3279463598",
+      "Hash"           : "3676051459",
       "DependAssetList" : [
       ]
     },
@@ -655,7 +655,7 @@
     },
     "assets/resource/image/test/timg (1).jpg"                                                     : {
       "Id" : 63,
-      "ArtConfigIdx" : 57,
+      "ArtConfigIdx" : 58,
       "Type"         : 9,
       "ABName"       : "d2abdb77f35d37c4c9469630d1f22e50",
       "ReferenceCount" : 0,
@@ -688,9 +688,9 @@
     },
     "assets/resource_svn/model/001/spongebob.obj"                                                 : {
       "Id" : 66,
-      "ArtConfigIdx" : 58,
+      "ArtConfigIdx" : 59,
       "Type"         : 6,
-      "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
       "ReferenceCount" : 0,
       "Hash"           : "3478409111",
       "DependAssetList" : [
@@ -705,7 +705,7 @@
       "ReferenceCount" : 0,
       "Hash"           : "1065063218",
       "DependAssetList" : [
-        "9ae31c8b351113b44a663362fc4f41e9",
+        "68ce09b862773374cbf71b2566b5dfbb",
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
@@ -713,7 +713,7 @@
       "Id" : 68,
       "ArtConfigIdx" : -1,
       "Type"         : 0,
-      "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
       "ReferenceCount" : 0,
       "Hash"           : "3088286678",
       "DependAssetList" : [
@@ -723,7 +723,7 @@
       "Id" : 69,
       "ArtConfigIdx" : -1,
       "Type"         : 5,
-      "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
       "ReferenceCount" : 0,
       "Hash"           : "3123702750",
       "DependAssetList" : [
@@ -732,9 +732,9 @@
     },
     "assets/resource_svn/model/002/char_patrick.png"                                              : {
       "Id" : 70,
-      "ArtConfigIdx" : 59,
+      "ArtConfigIdx" : -1,
       "Type"         : 0,
-      "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
       "ReferenceCount" : 0,
       "Hash"           : "3474918932",
       "DependAssetList" : [
@@ -748,7 +748,7 @@
       "ReferenceCount" : 0,
       "Hash"           : "2895603248",
       "DependAssetList" : [
-        "ffdcaf5f90ad6424daa282d10724bfc2",
+        "68ce09b862773374cbf71b2566b5dfbb",
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
@@ -756,7 +756,7 @@
       "Id" : 72,
       "ArtConfigIdx" : -1,
       "Type"         : 5,
-      "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
       "ReferenceCount" : 0,
       "Hash"           : "2450914584",
       "DependAssetList" : [
@@ -767,16 +767,59 @@
       "Id" : 73,
       "ArtConfigIdx" : -1,
       "Type"         : 6,
-      "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
       "ReferenceCount" : 0,
       "Hash"           : "916651055",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
-    "assets/resource_svn/runtime/cubesvnmat.mat"                                                  : {
+    "assets/resource_svn/model/3dxy_material_1.mat"                                               : {
       "Id" : 74,
+      "ArtConfigIdx" : -1,
+      "Type"         : 5,
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ReferenceCount" : 0,
+      "Hash"           : "4177296927",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ]
+    },
+    "assets/resource_svn/model/3dxy_img_1.png"                                                    : {
+      "Id" : 75,
+      "ArtConfigIdx" : -1,
+      "Type"         : 0,
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ReferenceCount" : 0,
+      "Hash"           : "1189805930",
+      "DependAssetList" : [
+      ]
+    },
+    "assets/resource_svn/model/3dxy_geometry_001.mesh"                                            : {
+      "Id" : 76,
+      "ArtConfigIdx" : -1,
+      "Type"         : 3,
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ReferenceCount" : 0,
+      "Hash"           : "4105931160",
+      "DependAssetList" : [
+      ]
+    },
+    "assets/resource_svn/runtime/char/003.prefab"                                                 : {
+      "Id" : 77,
       "ArtConfigIdx" : 52,
+      "Type"         : 6,
+      "ABName"       : "00142fc9b13ce334d94e23f367a33d75",
+      "ReferenceCount" : 0,
+      "Hash"           : "3136605819",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40",
+        "68ce09b862773374cbf71b2566b5dfbb"
+      ]
+    },
+    "assets/resource_svn/runtime/cubesvnmat.mat"                                                  : {
+      "Id" : 78,
+      "ArtConfigIdx" : 53,
       "Type"         : 5,
       "ABName"       : "096dee19ab67ffc44ba3f8f790da67b4",
       "ReferenceCount" : 0,
@@ -786,8 +829,8 @@
       ]
     },
     "assets/resource_svn/runtime/cubesvn.prefab"                                                  : {
-      "Id" : 75,
-      "ArtConfigIdx" : 53,
+      "Id" : 79,
+      "ArtConfigIdx" : 54,
       "Type"         : 6,
       "ABName"       : "ae37c57b09de2ec4399a3eceb62b77ea",
       "ReferenceCount" : 0,
@@ -798,8 +841,8 @@
       ]
     },
     "assets/resource_svn/runtime/testmat_forkeywordcollect/arrow 1.mat"                           : {
-      "Id" : 76,
-      "ArtConfigIdx" : 54,
+      "Id" : 80,
+      "ArtConfigIdx" : 55,
       "Type"         : 5,
       "ABName"       : "70ed25d8f6269304483b716d4ffd3434",
       "ReferenceCount" : 0,
@@ -809,8 +852,8 @@
       ]
     },
     "assets/resource_svn/runtime/testmat_forkeywordcollect/arrow.mat"                             : {
-      "Id" : 77,
-      "ArtConfigIdx" : 55,
+      "Id" : 81,
+      "ArtConfigIdx" : 56,
       "Type"         : 5,
       "ABName"       : "c0d661c42cc867d46887fa3b94908542",
       "ReferenceCount" : 0,
@@ -820,8 +863,8 @@
       ]
     },
     "assets/resource_svn/runtime/testmat_forkeywordcollect/h_role_lanzhan_clotha_000.mat"         : {
-      "Id" : 78,
-      "ArtConfigIdx" : 56,
+      "Id" : 82,
+      "ArtConfigIdx" : 57,
       "Type"         : 5,
       "ABName"       : "8fb6653cf0d095a4da38233e10efdb41",
       "ReferenceCount" : 0,
