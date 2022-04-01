@@ -142,10 +142,10 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+
             this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
 
             Debug.Log("prepare:" + this.GetType().Name + "-" + DateTime.Now.ToLongTimeString());
-
 
 
             //
@@ -250,7 +250,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                         {
                             if (ar.importFrom.StartsWith(sf + "/", StringComparison.OrdinalIgnoreCase))
                             {
-                                var ret =  this.BuildingCtx.BuildAssetsInfo.SetABName(ar.importFrom, sf);
+                                var ret = this.BuildingCtx.BuildAssetsInfo.SetABName(ar.importFrom, sf);
                                 if (!ret)
                                 {
                                     Debug.LogError($"【颗粒度】设置AB失败 [{sf}] -" + ar.importFrom);
@@ -267,20 +267,31 @@ namespace BDFramework.Editor.AssetGraph.Node
                         if (!isInSubfolder)
                         {
                             //设置AB name
-                            var ret =  this.BuildingCtx.BuildAssetsInfo.SetABName(ar.importFrom, rootfloderPath);
+                            var ret = this.BuildingCtx.BuildAssetsInfo.SetABName(ar.importFrom, rootfloderPath);
                             if (!ret)
                             {
                                 Debug.LogError($"【颗粒度】设置AB失败 [{rootfloderPath}] -" + ar.importFrom);
                             }
-                            
+
                             //根目录判断
                             if (!outMap.ContainsKey(rootfloderPath))
                             {
                                 outMap[rootfloderPath] = new List<AssetReference>();
                             }
+
                             outMap[rootfloderPath].Add(ar);
                         }
                     }
+                }
+            }
+
+            //移除0元素的key
+            var keys = outMap.Keys.ToArray();
+            foreach (var key in keys)
+            {
+                if (outMap[key].Count == 0)
+                {
+                    outMap.Remove(key);
                 }
             }
 
