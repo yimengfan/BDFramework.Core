@@ -34,19 +34,10 @@ namespace BDFramework.Editor.AssetGraph.Node
 
 
         /// <summary>
-        /// Build AB包的信息
-        /// </summary>
-        static public BuildAssetsInfo BuildAssetsInfo { get; set; }
-
-        /// <summary>
         /// 打包AB的上下文工具
         /// </summary>
-        static public  AssetBundleBuildToolsV2 AssetbundleBuildingCtx { get; private set; }
-        
-        /// <summary>
-        /// 打包Assetbundle的参数
-        /// </summary>
-        static public BuildAssetBundleParams BuildParams { get; set; }
+        static public AssetBundleBuildingContext BuildingCtx { get; set; }
+
 
         /// <summary>
         /// 设置Params
@@ -55,8 +46,8 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="isUseHash"></param>
         public void SetBuildParams(string outpath)
         {
-            BuildParams = new BuildAssetBundleParams() {OutputPath = outpath};
-            this.isGenBuildInfo = false;
+            BuildingCtx = new AssetBundleBuildingContext();
+            BuildingCtx.BuildParams.OutputPath = outpath;
         }
 
 
@@ -122,7 +113,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// 节点缓存
         /// </summary>
         private NodeGUI selfNodeGUI;
-    
+
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
             GUILayout.Label("初始化打包框架", EditorGUIHelper.LabelH4);
@@ -137,7 +128,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 this.AssetGraphWindowsMode = ret;
                 isDirty = true;
             }
-            
+
             //根据不同的枚举进行提示
             switch ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode)
             {
@@ -153,8 +144,14 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
                     break;
             }
-            
-            
+
+            if (GUILayout.Button("刷新资源数据"))
+            {
+                isDirty = true;
+                GenBuildingCtx(true);
+            }
+
+
             if (isDirty)
             {
                 Debug.Log("更新node!");
@@ -162,12 +159,9 @@ namespace BDFramework.Editor.AssetGraph.Node
                 //BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, this.selfNodeGUI.Data.OutputPoints.FirstOrDefault());
                 BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
             }
-
         }
 
         #endregion
-
-        private bool isGenBuildInfo = false;
 
         /// <summary>
         /// 预览结果 编辑器连线数据，但是build模式也会执行
@@ -181,45 +175,40 @@ namespace BDFramework.Editor.AssetGraph.Node
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             StopwatchTools.Begin();
-            //构建打包参数
-            if (BuildParams == null)
+            if (BuildingCtx == null)
             {
-                BuildParams = new BuildAssetBundleParams();
+                BuildingCtx = new AssetBundleBuildingContext();
             }
 
-            BuildParams.BuildTarget = target;
+            BuildingCtx.BuildParams.BuildTarget = target;
             //设置所有节点参数请求,依次传参
-            Debug.Log("【初始化框架资源环境】配置:\n" + JsonMapper.ToJson(BuildParams));
+            Debug.Log("【初始化框架资源环境】配置:\n" + JsonMapper.ToJson(BuildingCtx.BuildParams));
+            var outMap = new Dictionary<string, List<AssetReference>>();
             //预览模式
             if ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode == AssetGraphWindowsModeEnum.预览节点模式)
             {
                 //生成buildinfo
-                if (!isGenBuildInfo || BuildAssetsInfo == null || BuildAssetsInfo.AssetDataMaps.Keys.Count == 0) //防止GUI每次调用prepare时候都触发,真正打包时候 会重新构建
-                {
-                    Debug.Log("------------>生成BuildInfo");
-                    AssetbundleBuildingCtx = new AssetBundleBuildToolsV2();
-                    AssetbundleBuildingCtx.GenBuildInfo();
 
-                    //赋值
-                    BuildAssetsInfo = AssetbundleBuildingCtx.BuildAssetsInfo;
-                    
-                    isGenBuildInfo = true;
-                }
+                //创建构建上下文信息
+                GenBuildingCtx();
+                //输出
+                outMap = new Dictionary<string, List<AssetReference>>()
+                {
+                    {nameof(FloderType.Runtime), BuildingCtx.RuntimeAssetsList.ToList()}, //传递新容器
+                    {nameof(FloderType.Depend), BuildingCtx.DependAssetList.ToList()}
+                };
             }
-            else
+            else if ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode == AssetGraphWindowsModeEnum.配置节点模式)
             {
-                BuildAssetsInfo = new BuildAssetsInfo();
+                //输出
+                outMap = new Dictionary<string, List<AssetReference>>()
+                {
+                    {nameof(FloderType.Runtime), new List<AssetReference>()}, //传递新容器
+                    {nameof(FloderType.Depend), new List<AssetReference>()}
+                };
             }
 
             StopwatchTools.End("【初始化框架资源环境】");
-            //
-
-            //输出
-            var outMap = new Dictionary<string, List<AssetReference>>
-            {
-                {nameof(FloderType.Runtime), AssetbundleBuildingCtx.RuntimeAssetsList.ToList()}, //传递新容器
-                {nameof(FloderType.Depend), AssetbundleBuildingCtx.DependAssetList.ToList()}
-            };
 
             var output = connectionsToOutput?.FirstOrDefault();
             if (output != null)
@@ -229,17 +218,39 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
         }
 
-        
+        /// <summary>
+        /// 生成BuildingCtx
+        /// </summary>
+        private void GenBuildingCtx(bool isRenew=false)
+        {
+            Debug.Log("------------>生成BuildInfo  :" + this.GetHashCode());
+            //新构建对象
+            if (isRenew)
+            {
+                string lastouput = BuildingCtx.BuildParams.OutputPath;
+                BuildingCtx = new AssetBundleBuildingContext();
+                BuildingCtx.BuildParams.OutputPath = lastouput;
+            }
+
+            //生成build资源信息
+            if (BuildingCtx.BuildAssetsInfo.AssetDataMaps.Count == 0)
+            {
+                BuildingCtx.GenBuildInfo();
+            }
+           
+        }
+
+
         public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc,
             Action<NodeData, string, float> progressFunc)
         {
             #region 保存AssetTypeConfig
 
-            var asetTypePath = string.Format("{0}/{1}/{2}", BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.ASSET_TYPES_PATH);
+            var asetTypePath = string.Format("{0}/{1}/{2}", BuildingCtx.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.ASSET_TYPES_PATH);
             //数据结构保存
             AssetTypes at = new AssetTypes()
             {
-                AssetTypeList =  AssetbundleBuildingCtx.AssetTypeList,
+                AssetTypeList = BuildingCtx.AssetTypeList,
             };
             var csv = CsvSerializer.SerializeToString(at);
             FileHelper.WriteAllText(asetTypePath, csv);
@@ -248,9 +259,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             #endregion
 
             //BD生命周期触发
-            BDFrameworkPublishPipelineHelper.OnBeginBuildAssetBundle(BuildParams, BuildAssetsInfo);
+            BDFrameworkPublishPipelineHelper.OnBeginBuildAssetBundle(BuildingCtx);
         }
-
 
 
         //   override 
@@ -277,6 +287,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+
             nodeGUI.Data.NeedsRevisit = true;
             NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_CONNECTIONPOINT_LABELCHANGED, nodeGUI, Vector2.zero, outputConnect));
         }

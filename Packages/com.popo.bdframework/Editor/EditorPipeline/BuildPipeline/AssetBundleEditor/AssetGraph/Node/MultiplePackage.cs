@@ -17,10 +17,9 @@ namespace BDFramework.Editor.AssetGraph.Node
     /// 筛选,排序10-30
     /// </summary>
     [CustomNode("BDFramework/[分包]资源路径分包", 20)]
-    public class MultiplePackage : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
+    public class MultiplePackage : UnityEngine.AssetGraph.Node
     {
-        public BuildAssetsInfo BuildAssetsInfo { get; set; }
-        public BuildAssetBundleParams BuildParams { get; set; }
+
 
         /// <summary>
         /// 分包配置表

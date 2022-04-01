@@ -265,7 +265,7 @@ namespace BDFramework.Editor.PublishPipeline
             try
             {
                 //var config = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
-                AssetBundleBuildToolsV2.GenAssetBundle(outputPath, platform);
+                AssetBundleBuildingContext.GenAssetBundle(outputPath, platform);
             }
             catch (Exception e)
             {

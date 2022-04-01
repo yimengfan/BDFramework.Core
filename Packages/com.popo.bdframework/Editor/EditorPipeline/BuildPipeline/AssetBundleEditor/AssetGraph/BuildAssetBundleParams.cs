@@ -14,7 +14,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 构建平台
         /// </summary>
-        public BuildTarget BuildTarget;
+        public BuildTarget BuildTarget = BuildTarget.NoTarget;
         /// <summary>
         /// 输出目录
         /// </summary>

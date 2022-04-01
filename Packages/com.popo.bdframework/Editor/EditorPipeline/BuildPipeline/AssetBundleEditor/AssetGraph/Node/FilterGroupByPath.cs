@@ -16,10 +16,13 @@ namespace BDFramework.Editor.AssetGraph.Node
     /// 筛选,排序10-30
     /// </summary>
     [CustomNode("BDFramework/[筛选]Group by Path", 10)]
-    public class FilterGroupByPath : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
+    public class FilterGroupByPath : UnityEngine.AssetGraph.Node
     {
-        public BuildAssetsInfo              BuildAssetsInfo   { get; set; }
-        public BuildAssetBundleParams BuildParams { get; set; }
+
+        /// <summary>
+        /// 构建的上下文信息
+        /// </summary>
+        public AssetBundleBuildingContext BuildingCtx { get; set; }
         public void Reset()
         {
             
@@ -247,11 +250,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+            this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
 
             //prepare传入的资源
             this.incommingAssetGroup = incoming.FirstOrDefault();
-            this.BuildAssetsInfo           = BDFrameworkAssetsEnv.BuildAssetsInfo;
-            this.BuildParams         = BDFrameworkAssetsEnv.BuildParams;
+
             //初始化输出节点
             foreach (var ags in incoming)
             {

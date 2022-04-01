@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using BDFramework.Editor.AssetBundle;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.AssetGraph;
 using UnityEngine.AssetGraph.DataModel.Version2;
 
 namespace BDFramework.Editor.AssetGraph.Node
 {
     [CustomNode("BDFramework/[逻辑]搜集图集", 60)]
-    public class CollectSpriteAtlas : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
+    public class CollectSpriteAtlas : UnityEngine.AssetGraph.Node
     {
-        public BuildAssetsInfo BuildAssetsInfo { get; set; }
-        public BuildAssetBundleParams BuildParams { get; set; }
+        /// <summary>
+        /// 构建的上下文信息
+        /// </summary>
+        public AssetBundleBuildingContext BuildingCtx { get; set; }
         public void Reset()
         {
         }
@@ -62,12 +65,18 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+            this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
+            
             StopwatchTools.Begin();
-            this.BuildAssetsInfo   = BDFrameworkAssetsEnv.BuildAssetsInfo;
-            this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
             //找到runtime
             List<AssetReference> runtimeAssetReferenceList = null;
             incoming.FirstOrDefault()?.assetGroups.TryGetValue(nameof(BDFrameworkAssetsEnv.FloderType.Runtime), out runtimeAssetReferenceList);
+
+            if (runtimeAssetReferenceList == null)
+            {
+                Debug.LogError("Runtime数据获取失败!请检查前置节点!");
+            }
+            
             //获取所有的图集设置
             var atlasAssetReferenceList = runtimeAssetReferenceList.FindAll((af) => af.extension == ".spriteatlas");
             this.SetAllSpriteAtlasAB(atlasAssetReferenceList);
@@ -113,12 +122,17 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 var atlasAR = atlasAssetReferenceList[i];
                 //获取依赖中的tex,并设置AB名为atlas名
-                if (this.BuildAssetsInfo.AssetDataMaps.TryGetValue(atlasAR.importFrom, out BuildAssetsInfo.BuildAssetData atlasAssetData))
+                if (this.BuildingCtx.BuildAssetsInfo.AssetDataMaps.TryGetValue(atlasAR.importFrom, out BuildAssetsInfo.BuildAssetData atlasAssetData))
                 {
                     //设置tex ab
                     foreach (var dependTex in atlasAssetData.DependAssetList)
                     {
-                        var ret = this.BuildAssetsInfo.SetABName(dependTex, atlasAR.importFrom, BuildAssetsInfo.SetABNameMode.Force);
+                        var ret = this.BuildingCtx.BuildAssetsInfo.SetABName(dependTex, atlasAR.importFrom, BuildAssetsInfo.SetABNameMode.Force);
+
+                        if (!ret)
+                        {
+                            Debug.LogError($"设置ab name失败: old-{dependTex} new-{atlasAR.importFrom}");
+                        }
                     }
                 }
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.AssetBundle;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.VersionController;
@@ -20,6 +21,10 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/[分包]设置分包名", 21)]
     public class MultiplePackageName : UnityEngine.AssetGraph.Node
     {
+        /// <summary>
+        /// 构建的上下文信息
+        /// </summary>
+        public AssetBundleBuildingContext BuildingCtx { get; set; }
         public override string ActiveStyle
         {
             get { return "node 3 on"; }
@@ -69,7 +74,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+            this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
 
+            //
             packageAssetList = new List<string>();
             foreach (var ag in incoming)
             {
@@ -94,12 +101,12 @@ namespace BDFramework.Editor.AssetGraph.Node
             //寻找当前分包,包含的资源
             foreach (var asset in this.packageAssetList)
             {
-                BuildAssetBundle.BuildAssetsInfoCache.AssetDataMaps.TryGetValue(asset, out var buildAssetData);
+                BuildAssetBundle.BuildAssetsResult.AssetDataMaps.TryGetValue(asset, out var buildAssetData);
 
                 //依次把加入资源和依赖资源
                 foreach (var dependHash in buildAssetData.DependAssetList)
                 {
-                    var dependAsset = BuildAssetBundle.BuildAssetsInfoCache.AssetDataMaps.Values.FirstOrDefault((value) => value.ArtConfigIdx != -1 && value.ABName == dependHash);
+                    var dependAsset = BuildAssetBundle.BuildAssetsResult.AssetDataMaps.Values.FirstOrDefault((value) => value.ArtConfigIdx != -1 && value.ABName == dependHash);
                     if (dependAsset != null)
                     {
                         assetIdList.Add(dependAsset.ArtConfigIdx);
@@ -131,7 +138,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             MultiplePackage.AssetMultiplePackageConfigList.Add(subPackage);
             //
-            var path = string.Format("{0}/{1}/{2}", BDFrameworkAssetsEnv.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG_PATH);
+            var path = string.Format("{0}/{1}/{2}", this.BuildingCtx.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG_PATH);
             var csv = CsvSerializer.SerializeToString(MultiplePackage.AssetMultiplePackageConfigList);
             FileHelper.WriteAllText(path, csv);
             Debug.Log("保存分包设置:" + this.PacakgeName + " -" + buildTarget.ToString());
