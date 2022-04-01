@@ -17,11 +17,11 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/[颗粒度]文件夹规则", 30)]
     public class SetGranularityByFolder : UnityEngine.AssetGraph.Node, IBDFrameowrkAssetEnvParams
     {
-        public BuildAssetsInfo              BuildAssetsInfo   { get; set; }
+        public BuildAssetsInfo BuildAssetsInfo { get; set; }
         public BuildAssetBundleParams BuildParams { get; set; }
+
         public void Reset()
         {
-            
         }
 
 
@@ -45,7 +45,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// 设置规则
         /// 这里的值一定要public，不然sg 用json序列化判断值未变化，则不会刷新
         /// </summary>
-        public int SetAssetBundleNameRule = (int)FolderAssetBundleRule.用该目录路径设置AB名;
+        public int SetAssetBundleNameRule = (int) FolderAssetBundleRule.用该目录路径设置AB名;
 
         public override string ActiveStyle
         {
@@ -79,7 +79,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
-            this.selfNodeGUI             = node;
+            this.selfNodeGUI = node;
             //node.Name                 = EditorGUILayout.TextField("Tips:",  node.Name);
             editor.UpdateNodeName(node);
             if (!node.Name.StartsWith("[颗粒度]"))
@@ -90,17 +90,17 @@ namespace BDFramework.Editor.AssetGraph.Node
             bool isupdateNode = false;
 
             //包装一层 方便监听改动
-            var ret = EditorGUILayout.EnumPopup("设置规则", (FolderAssetBundleRule)this.SetAssetBundleNameRule).GetHashCode();
+            var ret = EditorGUILayout.EnumPopup("设置规则", (FolderAssetBundleRule) this.SetAssetBundleNameRule).GetHashCode();
 
             if (ret != this.SetAssetBundleNameRule)
             {
                 this.SetAssetBundleNameRule = ret;
-                isupdateNode                = true;
+                isupdateNode = true;
             }
 
-            
+
             //根据不同的枚举进行提示
-            switch ((FolderAssetBundleRule)this.SetAssetBundleNameRule)
+            switch ((FolderAssetBundleRule) this.SetAssetBundleNameRule)
             {
                 case FolderAssetBundleRule.用该目录路径设置AB名:
                 {
@@ -114,7 +114,6 @@ namespace BDFramework.Editor.AssetGraph.Node
                     EditorGUILayout.HelpBox(label, MessageType.Info);
                 }
                     break;
-                
             }
 
             if (isupdateNode)
@@ -125,6 +124,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
             }
         }
+
         /// <summary>
         /// 预览结果 编辑器连线数据，但是build模式也会执行
         /// 这里注意不要对BuildingCtx直接进行修改,修改需要在Build中进行
@@ -142,13 +142,13 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             Debug.Log("prepare:" + this.GetType().Name + "-" + DateTime.Now.ToLongTimeString());
-            this.BuildAssetsInfo   = BDFrameworkAssetsEnv.BuildAssetsInfo;
+            this.BuildAssetsInfo = BDFrameworkAssetsEnv.BuildAssetsInfo;
             this.BuildParams = BDFrameworkAssetsEnv.BuildParams;
 
 
             //
             var outMap = new Dictionary<string, List<AssetReference>>();
-            switch ((FolderAssetBundleRule)this.SetAssetBundleNameRule)
+            switch ((FolderAssetBundleRule) this.SetAssetBundleNameRule)
             {
                 case FolderAssetBundleRule.用该目录路径设置AB名:
                 {
@@ -158,7 +158,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
                 case FolderAssetBundleRule.用子目录路径设置AB名:
                 {
-                    outMap = DoSetABNameUseSubFolderName(incoming);
+                    outMap = DoSetABNameUseSubfolderName(incoming);
                 }
                     break;
             }
@@ -206,7 +206,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         /// <param name="incoming"></param>
         /// <returns></returns>
-        private Dictionary<string, List<AssetReference>> DoSetABNameUseSubFolderName(IEnumerable<PerformGraph.AssetGroups> incoming)
+        private Dictionary<string, List<AssetReference>> DoSetABNameUseSubfolderName(IEnumerable<PerformGraph.AssetGroups> incoming)
         {
             var outMap = new Dictionary<string, List<AssetReference>>();
             foreach (var ags in incoming)
@@ -219,44 +219,64 @@ namespace BDFramework.Editor.AssetGraph.Node
                         continue;
                     }
 
-                    //搜集子目录
-                    var subFolders = Directory.GetDirectories(rootfloderPath, "*", SearchOption.TopDirectoryOnly);
-                    for (int i = 0; i < subFolders.Length; i++)
+                    //unity没有处理"/"，获取不到guid
+                    if (rootfloderPath.EndsWith("/"))
                     {
-                        var subFolder = subFolders[i];
-                        var guid      = AssetDatabase.AssetPathToGUID(subFolder);
+                        rootfloderPath = rootfloderPath.Remove(rootfloderPath.Length - 1);
+                    }
+
+                    var rootguid = AssetDatabase.AssetPathToGUID(rootfloderPath);
+                    Debug.Log($"父目录:{rootfloderPath} - {rootguid}");
+                    //搜集子目录
+                    var subfolders = Directory.GetDirectories(rootfloderPath, "*", SearchOption.TopDirectoryOnly);
+                    for (int i = 0; i < subfolders.Length; i++)
+                    {
+                        var subFolder = subfolders[i];
+                        var guid = AssetDatabase.AssetPathToGUID(subFolder);
                         outMap[subFolder] = new List<AssetReference>();
                         //打印文件夹hash
-                        Debug.Log("子目录:" + subFolders[i] + " - " + guid);
+                        Debug.Log("子目录:" + subfolders[i] + " - " + guid);
                     }
-                    outMap[rootfloderPath] = new List<AssetReference>();
-                    var rootfiles = Directory.GetFiles(rootfloderPath, "*", SearchOption.TopDirectoryOnly);
-                    
+
+
+                    //输出目录
                     foreach (var ar in ag.Value)
                     {
-                        //设置ab名为子目录名,不覆盖在此之前的规则
-                        foreach (var subFolder in subFolders)
+                        bool isInSubfolder = false;
+                        //判断子目录
+                        foreach (var sf in subfolders)
                         {
-                            if (ar.importFrom.StartsWith(subFolder + "/", StringComparison.OrdinalIgnoreCase))
+                            if (ar.importFrom.StartsWith(sf + "/", StringComparison.OrdinalIgnoreCase))
                             {
-                                var ret = BuildAssetsInfo.SetABName(ar.importFrom, subFolder);
+                                var ret = BuildAssetsInfo.SetABName(ar.importFrom, sf);
                                 if (!ret)
                                 {
-                                    Debug.LogError($"【颗粒度】设置AB失败 [{subFolder}] -" + ar.importFrom);
+                                    Debug.LogError($"【颗粒度】设置AB失败 [{sf}] -" + ar.importFrom);
                                 }
 
                                 //添加到输出分组
-                                outMap[subFolder].Add(ar);
+                                outMap[sf].Add(ar);
+                                isInSubfolder = true;
+                                break;
                             }
-                            else
+                        }
+
+                        //父目录//剩下全都打进父目录
+                        if (!isInSubfolder)
+                        {
+                            //设置AB name
+                            var ret = BuildAssetsInfo.SetABName(ar.importFrom, rootfloderPath);
+                            if (!ret)
                             {
-                                var ret = rootfiles.FirstOrDefault((f) => ar.importFrom.Equals(f, StringComparison.OrdinalIgnoreCase));
-                                //剩下全都打进父目录
-                                if (ret != null)
-                                {
-                                    outMap[rootfloderPath].Add(ar);
-                                }
+                                Debug.LogError($"【颗粒度】设置AB失败 [{rootfloderPath}] -" + ar.importFrom);
                             }
+                            
+                            //根目录判断
+                            if (!outMap.ContainsKey(rootfloderPath))
+                            {
+                                outMap[rootfloderPath] = new List<AssetReference>();
+                            }
+                            outMap[rootfloderPath].Add(ar);
                         }
                     }
                 }
