@@ -302,8 +302,11 @@ namespace BDFramework.Editor.AssetBundle
             var previewABUnitMap = BuildAssetsInfo.PreviewAssetbundleUnit();
             var manifestList = Directory.GetFiles(abRootPath, "*.manifest", SearchOption.AllDirectories);
             //解析 manifest
-            foreach (var manifest in manifestList)
+            for (int i = 0; i < manifestList.Length; i++)
             {
+                var manifest = manifestList[i].Replace("\\", "/");
+
+       
                 if (manifest.Equals(abRootPath + ".manifest"))
                 {
                     continue;
@@ -318,45 +321,37 @@ namespace BDFramework.Editor.AssetBundle
                     {
                         isStartRead = true;
                     }
-                    else if (isStartRead)
-                    {
-                        var file = line.Replace("- ", "");
-                        manifestDependList.Add(file);
-                    }
                     else if (line.Contains("Dependencies:"))
                     {
                         break;
+                    }
+                    else if (isStartRead)
+                    {
+                        var file = line.Replace("- ", "");
+                        manifestDependList.Add(file.ToLower());
                     }
                 }
 
                 //对比依赖
                 var abname = Path.GetFileNameWithoutExtension(manifest);
                 previewABUnitMap.TryGetValue(abname, out var previewABDependList);
-                bool isEquals = true;
-                if (manifestDependList.Count == previewABDependList.Count)
+                if (previewABDependList == null)
                 {
-                    foreach (var guid in previewABDependList)
-                    {
-                        var asset = AssetDatabase.GUIDToAssetPath(guid);
-
-                        if (!manifestList.Contains(asset))
-                        {
-                            isEquals = false;
-                            break;
-                        }
-                    }
+                    Debug.LogError("【AssetbundleV2-验证】本地ab的配置不不存在:" + abname);
                 }
                 else
                 {
-                    isEquals = false;
+                    //求差集
+                    var except = manifestDependList.Except(previewABDependList);
+                    if (except.Count()!=0)
+                    {
+                        var local = JsonMapper.ToJson(manifestDependList);
+                        var preview = JsonMapper.ToJson(previewABDependList);
+                        Debug.LogError($"【AssetbundleV2-验证】本地AssetBundle依赖与预期不符:\n 本地:{local} \n 预期:{preview}");
+                    }
                 }
 
-                if (!isEquals)
-                {
-                    var local = JsonMapper.ToJson(manifestDependList);
-                    var preview = JsonMapper.ToJson(previewABDependList);
-                    Debug.LogError($"【AssetbundleV2】本地AssetBundle依赖与预期不符:\n 本地:{local} \n 预期:{preview}");
-                }
+
             }
 
 
@@ -664,8 +659,8 @@ namespace BDFramework.Editor.AssetBundle
                         if (lastAssetItem.Hash == newAssetItem.Value.Hash)
                         {
                             //依赖完全相同
-                            if (lastAssetItem.DependAssetList.Count == newAssetItem.Value.DependAssetList.Count &&
-                                lastAssetItem.DependAssetList.All(newAssetItem.Value.DependAssetList.Contains))
+                            var except = lastAssetItem.DependAssetList.Except(newAssetItem.Value.DependAssetList);
+                            if (except.Count()==0)
                             {
                                 continue;
                             }
@@ -709,7 +704,8 @@ namespace BDFramework.Editor.AssetBundle
                             var lastABUnit = lastABUnitMap[lastAssetItem.ABName];
                             var newABUnit = newABUnitMap[newAssetItem.Value.ABName];
                             //颗粒度修改
-                            if (lastABUnit.Count != newABUnit.Count || !lastABUnit.All(newABUnit.Contains))
+                            var except = lastABUnit.Except(newABUnit);//差集
+                            if (except.Count()!=0)
                             {
                                 changedAssetBundleAssetList.Add(newAssetItem);
                             }
