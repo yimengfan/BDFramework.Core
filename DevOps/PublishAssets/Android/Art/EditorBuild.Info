@@ -1,6 +1,6 @@
 
 {
-  "Time" : "2022/4/2",
+  "Time" : "2022/4/3",
   "AssetDataMaps" : {
     "assets/resource/runtime/allassettype/archive.jpg" : {
       "Id" : 0,
@@ -690,7 +690,7 @@
       "Id" : 66,
       "ArtConfigIdx" : 59,
       "Type"         : 6,
-      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
       "ReferenceCount" : 0,
       "Hash"           : "3478409111",
       "DependAssetList" : [
@@ -705,7 +705,7 @@
       "ReferenceCount" : 0,
       "Hash"           : "1065063218",
       "DependAssetList" : [
-        "68ce09b862773374cbf71b2566b5dfbb",
+        "9ae31c8b351113b44a663362fc4f41e9",
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
@@ -713,7 +713,7 @@
       "Id" : 68,
       "ArtConfigIdx" : -1,
       "Type"         : 0,
-      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
       "ReferenceCount" : 0,
       "Hash"           : "3088286678",
       "DependAssetList" : [
@@ -723,7 +723,7 @@
       "Id" : 69,
       "ArtConfigIdx" : -1,
       "Type"         : 5,
-      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
       "ReferenceCount" : 0,
       "Hash"           : "3123702750",
       "DependAssetList" : [
@@ -732,9 +732,9 @@
     },
     "assets/resource_svn/model/002/char_patrick.png"                                              : {
       "Id" : 70,
-      "ArtConfigIdx" : -1,
+      "ArtConfigIdx" : 60,
       "Type"         : 0,
-      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
       "ReferenceCount" : 0,
       "Hash"           : "3474918932",
       "DependAssetList" : [
@@ -748,7 +748,7 @@
       "ReferenceCount" : 0,
       "Hash"           : "2895603248",
       "DependAssetList" : [
-        "68ce09b862773374cbf71b2566b5dfbb",
+        "ffdcaf5f90ad6424daa282d10724bfc2",
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
@@ -756,7 +756,7 @@
       "Id" : 72,
       "ArtConfigIdx" : -1,
       "Type"         : 5,
-      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
       "ReferenceCount" : 0,
       "Hash"           : "2450914584",
       "DependAssetList" : [
@@ -767,7 +767,7 @@
       "Id" : 73,
       "ArtConfigIdx" : -1,
       "Type"         : 6,
-      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
       "ReferenceCount" : 0,
       "Hash"           : "916651055",
       "DependAssetList" : [
@@ -776,7 +776,7 @@
     },
     "assets/resource_svn/model/3dxy_material_1.mat"                                               : {
       "Id" : 74,
-      "ArtConfigIdx" : -1,
+      "ArtConfigIdx" : 61,
       "Type"         : 5,
       "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
       "ReferenceCount" : 0,
