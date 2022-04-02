@@ -22,6 +22,7 @@ namespace BDFramework.Editor.AssetBundle
             /// 在artConfig中的idx,用以辅助其他模块逻辑
             /// </summary>
             public int ArtConfigIdx { get; set; } = -1;
+
             /// <summary>
             /// 资源类型
             /// </summary>
@@ -147,8 +148,32 @@ namespace BDFramework.Editor.AssetBundle
 
             return isCanSetABName;
         }
-        
-        
+
+        /// <summary>
+        /// 预览 assetbundle颗粒度
+        /// </summary>
+        /// <returns>ab - 所有</returns>
+        public Dictionary<string, List<string>> PreviewAssetbundleUnit()
+        {
+            var retMap = new Dictionary<string, List<string>>();
+
+            foreach (var item in AssetDataMaps)
+            {
+                //增加索引
+                var key = item.Value.ABName;
+                if (!retMap.ContainsKey(key))
+                {
+                    retMap[key] = new List<string>();
+                }
+
+                //添加
+                retMap[key].Add(item.Key);
+            }
+
+            return retMap;
+        }
+
+
         /// <summary>
         /// 克隆
         /// </summary>
@@ -163,6 +188,7 @@ namespace BDFramework.Editor.AssetBundle
             {
                 tempBuildAssetsInfo.AssetDataMaps[item.Key] = item.Value;
             }
+
             return tempBuildAssetsInfo;
         }
     }

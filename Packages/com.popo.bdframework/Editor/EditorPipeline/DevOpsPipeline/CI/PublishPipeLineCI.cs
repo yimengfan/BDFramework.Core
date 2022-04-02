@@ -103,7 +103,7 @@ namespace BDFramework.Editor.DevOps
             //1.搜集keyword
             ShaderCollection.CollectShaderVariant();
             //2.打包模式
-            return AssetBundleBuildingContext.GenAssetBundle(CI_ASSETS_PATH, platform);
+            return AssetBundleEditorToolsV2.GenAssetBundle(CI_ASSETS_PATH, platform);
         }
 
         #endregion

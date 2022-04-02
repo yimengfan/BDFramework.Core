@@ -88,7 +88,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             // var platform = BDApplication.GetRuntimePlatform(target);
             BDFrameworkAssetsEnv.BuildingCtx.MergeABName(tempBuildAssetsInfo);
             //对比差异文件
-            var changedBuildInfo =    BDFrameworkAssetsEnv.BuildingCtx.GetChangedAssets(tempBuildAssetsInfo, target);
+            BDFrameworkAssetsEnv.BuildingCtx.GetChangedAssets(tempBuildAssetsInfo, target);
 
             //搜集所有的 asset reference 
             List<AssetReference> assetReferenceList = new List<AssetReference>();
@@ -184,6 +184,15 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         public static BuildAssetsInfo BuildAssetsResult { get; private set; } = null;
 
+        /// <summary>
+        /// 构建时候触发
+        /// </summary>
+        /// <param name="buildTarget"></param>
+        /// <param name="nodeData"></param>
+        /// <param name="incoming"></param>
+        /// <param name="connectionsToOutput"></param>
+        /// <param name="outputFunc"></param>
+        /// <param name="progressFunc"></param>
         public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc,
             Action<NodeData, string, float> progressFunc)
         {

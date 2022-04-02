@@ -47,5 +47,31 @@ namespace System.IO
         {
             return ZString.Concat(a, "/", b, "/", c, "/", d);
         }
+
+        /// <summary>
+        /// 路径合并
+        /// 这里是修复Mac下的 Path.Combine的Bug
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        // static public string Combine(params string[] paths)
+        // {
+        //     var ret = "";
+        //
+        //     for (int i = 0; i < paths.Length; i++)
+        //     {
+        //         var str = paths[i];
+        //         if (str.EndsWith("/"))
+        //         {
+        //             return ZString.Concat(ret, str);
+        //         }
+        //         else
+        //         {
+        //             return ZString.Concat(ret, "/", str);
+        //         }
+        //     }
+        //     return ret;
+        // }
     }
 }

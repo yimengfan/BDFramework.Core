@@ -32,6 +32,7 @@ namespace BDFramework.Editor.AssetBundle
         /// 构建参数
         /// </summary>
         public BuildAssetBundleParams BuildParams { get; set; } = new BuildAssetBundleParams();
+
         /// <summary>
         /// 构建资产的数据
         /// </summary>
@@ -61,7 +62,6 @@ namespace BDFramework.Editor.AssetBundle
         /// 依赖列表
         /// </summary>
         Dictionary<string, List<string>> DependenciesMap = new Dictionary<string, List<string>>();
-
 
 
         #region 获取可打包资源信息
@@ -99,7 +99,7 @@ namespace BDFramework.Editor.AssetBundle
                     }
 
                     //判断资源类型
-                    var type = GetMainAssetTypeAtPath(dependPath);
+                    var type = AssetBundleEditorToolsV2.GetMainAssetTypeAtPath(dependPath);
                     if (type == null)
                     {
                         Debug.LogError("获取资源类型失败:" + dependPath);
@@ -273,9 +273,9 @@ namespace BDFramework.Editor.AssetBundle
             AssetDatabase.StopAssetEditing(); //恢复自动导入
 
             //3.BuildInfo配置处理
-            var platformOutputPath = string.Format("{0}/{1}", BuildParams.OutputPath, BDApplication.GetPlatformPath(platform));
+            var platformOutputPath = IPath.Combine(BuildParams.OutputPath, BDApplication.GetPlatformPath(platform));
             //保存artconfig.info
-            var configPath = string.Format("{0}/{1}", platformOutputPath, BResources.ASSET_CONFIG_PATH);
+            var configPath = IPath.Combine(platformOutputPath, BResources.ASSET_CONFIG_PATH);
             var csv = CsvSerializer.SerializeToString(abConfigList);
             FileHelper.WriteAllText(configPath, csv);
 
@@ -297,13 +297,74 @@ namespace BDFramework.Editor.AssetBundle
             //4.备份Artifacts
             //this.BackupArtifacts(buildTarget);
 
+            //5.检测别的本地的Manifest和构建预期对比
+            var abRootPath = IPath.Combine(BuildParams.OutputPath, BDApplication.GetPlatformPath(platform), BResources.ASSET_ROOT_PATH);
+            var previewABUnitMap = BuildAssetsInfo.PreviewAssetbundleUnit();
+            var manifestList = Directory.GetFiles(abRootPath, "*.manifest", SearchOption.AllDirectories);
+            //解析 manifest
+            foreach (var manifest in manifestList)
+            {
+                if (manifest.Equals(abRootPath + ".manifest"))
+                {
+                    continue;
+                }
+
+                var lines = File.ReadLines(manifest);
+                List<string> manifestDependList = new List<string>();
+                bool isStartRead = false;
+                foreach (var line in lines)
+                {
+                    if (!isStartRead && line.Equals("Assets:"))
+                    {
+                        isStartRead = true;
+                    }
+                    else if (isStartRead)
+                    {
+                        var file = line.Replace("- ", "");
+                        manifestDependList.Add(file);
+                    }
+                    else if (line.Contains("Dependencies:"))
+                    {
+                        break;
+                    }
+                }
+
+                //对比依赖
+                var abname = Path.GetFileNameWithoutExtension(manifest);
+                previewABUnitMap.TryGetValue(abname, out var previewABDependList);
+                bool isEquals = true;
+                if (manifestDependList.Count == previewABDependList.Count)
+                {
+                    foreach (var guid in previewABDependList)
+                    {
+                        var asset = AssetDatabase.GUIDToAssetPath(guid);
+
+                        if (!manifestList.Contains(asset))
+                        {
+                            isEquals = false;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    isEquals = false;
+                }
+
+                if (!isEquals)
+                {
+                    var local = JsonMapper.ToJson(manifestDependList);
+                    var preview = JsonMapper.ToJson(previewABDependList);
+                    Debug.LogError($"【AssetbundleV2】本地AssetBundle依赖与预期不符:\n 本地:{local} \n 预期:{preview}");
+                }
+            }
+
+
             //恢复编辑器状态
             BDEditorApplication.EditorStatus = BDFrameworkEditorStatus.Idle;
             //BD生命周期触发
             BDFrameworkPublishPipelineHelper.OnEndBuildAssetBundle(this);
 
-
-            
 
             //GenAssetBundleItemCacheList = abConfigList.ToList();
         }
@@ -337,9 +398,6 @@ namespace BDFramework.Editor.AssetBundle
             //----------------------------生成AssetBundle-------------------------------
             var platformOutputPath = Path.Combine(buildParams.OutputPath, BDApplication.GetPlatformPath(platform));
             string abOutputPath = IPath.Combine(platformOutputPath, BResources.ASSET_ROOT_PATH);
-            // try
-            // {
-
             if (!Directory.Exists(abOutputPath))
             {
                 Directory.CreateDirectory(abOutputPath);
@@ -350,12 +408,7 @@ namespace BDFramework.Editor.AssetBundle
 
             UnityEditor.BuildPipeline.BuildAssetBundles(abOutputPath, buildOpa, buildTarget);
             Debug.LogFormat("【编译AssetBundle】 output:{0} ,buildTarget:{1}", abOutputPath, buildTarget.ToString());
-            // }
-            // catch (Exception e)
-            // {
-            //     Debug.LogException(e);
-            //     throw;
-            // }
+
 
             //----------------------------清理-------------------------------------
             //1.移除所有的ab
@@ -437,7 +490,7 @@ namespace BDFramework.Editor.AssetBundle
             foreach (var mainAsset in buildAssetsInfo.AssetDataMaps)
             {
                 var guid = AssetDatabase.AssetPathToGUID(mainAsset.Value.ABName);
-                if (!string.IsNullOrEmpty(guid)) //不存在的资源（如ab.shader之类）,则用原名
+                if (!string.IsNullOrEmpty(guid))
                 {
                     mainAsset.Value.ABName = guid;
                 }
@@ -584,11 +637,11 @@ namespace BDFramework.Editor.AssetBundle
         {
             Debug.Log("<color=red>【增量资源】开始变动资源分析...</color>");
             BuildAssetsInfo lastBuildAssetsInfo = null;
-            var configPath = this.BuildParams.OutputPath + "/" + BDApplication.GetPlatformPath(buildTarget) + "/" + BResources.EDITOR_ASSET_BUILD_INFO_PATH;
-            Debug.Log("旧资源地址:" + configPath);
-            if (File.Exists(configPath))
+            var buildinfoPath = IPath.Combine(this.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.EDITOR_ASSET_BUILD_INFO_PATH);
+            Debug.Log("旧资源地址:" + buildinfoPath);
+            if (File.Exists(buildinfoPath))
             {
-                var configContent = File.ReadAllText(configPath);
+                var configContent = File.ReadAllText(buildinfoPath);
                 lastBuildAssetsInfo = JsonMapper.ToObject<BuildAssetsInfo>(configContent);
             }
 
@@ -602,15 +655,20 @@ namespace BDFramework.Editor.AssetBundle
 
                 var changedAssetList = new List<KeyValuePair<string, BuildAssetsInfo.BuildAssetData>>();
                 var changedAssetNameList = new List<string>();
-                //1.找出差异文件
+                //1.找出差异文件：不一致  或者没有
                 foreach (var newAssetItem in newBuildAssetsInfo.AssetDataMaps)
                 {
                     if (lastBuildAssetsInfo.AssetDataMaps.TryGetValue(newAssetItem.Key, out var lastAssetItem))
                     {
-                        //文件修改打包
+                        //文件hash相同
                         if (lastAssetItem.Hash == newAssetItem.Value.Hash)
                         {
-                            continue;
+                            //依赖完全相同
+                            if (lastAssetItem.DependAssetList.Count == newAssetItem.Value.DependAssetList.Count &&
+                                lastAssetItem.DependAssetList.All(newAssetItem.Value.DependAssetList.Contains))
+                            {
+                                continue;
+                            }
                         }
                     }
 
@@ -618,70 +676,84 @@ namespace BDFramework.Editor.AssetBundle
                 }
 
                 Debug.LogFormat("<color=red>【增量资源】变动文件数:{0}</color>", changedAssetList.Count);
-                var changedContentFiles = new List<string>();
+                var changedAssetContentFiles = new List<string>();
                 foreach (var item in changedAssetList)
                 {
-                    changedContentFiles.Add(item.Key);
+                    changedAssetContentFiles.Add(item.Key + " - " + item.Value.Hash);
                 }
 
-                Debug.Log(JsonMapper.ToJson(changedContentFiles, true));
+                Debug.Log(JsonMapper.ToJson(changedAssetContentFiles, true));
 
                 #endregion
 
-                #region ABName修改 （abName修改会导致引用该ab的所有资源重新构建 才能保证正常引用关系 上线项目尽量不要有ab修改的情况）
+                #region ABName修改、颗粒度修改
 
-                var changedABNameAssetList = new List<KeyValuePair<string, BuildAssetsInfo.BuildAssetData>>();
-                //1.找出AB修改的文件
+                //abName修改会导致引用该ab的所有资源重新构建 才能保证正常引用关系 上线项目尽量不要有ab修改的情况
+                var changedAssetBundleAssetList = new List<KeyValuePair<string, BuildAssetsInfo.BuildAssetData>>();
+                //AB颗粒度
+                var lastABUnitMap = lastBuildAssetsInfo.PreviewAssetbundleUnit();
+                var newABUnitMap = newBuildAssetsInfo.PreviewAssetbundleUnit();
+                //遍历处理
                 foreach (var newAssetItem in newBuildAssetsInfo.AssetDataMaps)
                 {
                     if (lastBuildAssetsInfo.AssetDataMaps.TryGetValue(newAssetItem.Key, out var lastAssetItem))
                     {
-                        //ABName 修改打包
+                        //AB名修改
                         if (lastAssetItem.ABName != newAssetItem.Value.ABName)
                         {
-                            changedABNameAssetList.Add(newAssetItem);
+                            changedAssetBundleAssetList.Add(newAssetItem);
+                        }
+                        //AB 颗粒度修改
+                        else
+                        {
+                            var lastABUnit = lastABUnitMap[lastAssetItem.ABName];
+                            var newABUnit = newABUnitMap[newAssetItem.Value.ABName];
+                            //颗粒度修改
+                            if (lastABUnit.Count != newABUnit.Count || !lastABUnit.All(newABUnit.Contains))
+                            {
+                                changedAssetBundleAssetList.Add(newAssetItem);
+                            }
                         }
                     }
                 }
 
-                Debug.LogFormat("<color=red>【增量资源】修改ABName文件数:{0}</color>", changedABNameAssetList.Count);
+
+                Debug.LogFormat("<color=red>【增量资源】修改ABName(颗粒度) 文件数:{0}</color>", changedAssetBundleAssetList.Count);
                 var changeABNameFiles = new List<string>();
-                foreach (var item in changedABNameAssetList)
+                foreach (var item in changedAssetBundleAssetList)
                 {
                     changeABNameFiles.Add(item.Key);
                 }
 
                 Debug.Log(JsonMapper.ToJson(changeABNameFiles, true));
                 //引用该资源的也要重打,以保证AB正确的引用关系
-                var changedCount = changedABNameAssetList.Count;
+                var changedCount = changedAssetBundleAssetList.Count;
                 for (int i = 0; i < changedCount; i++)
                 {
-                    var asset = changedABNameAssetList[i];
+                    var asset = changedAssetBundleAssetList[i];
                     var abname = asset.Value.ABName;
                     foreach (var item in newBuildAssetsInfo.AssetDataMaps)
                     {
                         if (item.Value.DependAssetList.Contains(abname))
                         {
-                            changedABNameAssetList.Add(item);
+                            changedAssetBundleAssetList.Add(item);
                         }
                     }
                 }
 
-                changedABNameAssetList = changedABNameAssetList.Distinct().ToList();
+                changedAssetBundleAssetList = changedAssetBundleAssetList.Distinct().ToList();
                 //log
-                Debug.LogFormat("<color=red>【增量资源】修改ABName影响文件数:{0}，{1}</color>", changedABNameAssetList.Count, "线上项目不建议修改abname！！！");
+                Debug.LogFormat("<color=red>【增量资源】修改ABName(颗粒度)影响文件数:{0}，{1}</color>", changedAssetBundleAssetList.Count, "线上修改谨慎!");
                 changeABNameFiles = new List<string>();
-                foreach (var item in changedABNameAssetList)
+                foreach (var item in changedAssetBundleAssetList)
                 {
                     changeABNameFiles.Add(item.Key);
                 }
 
-                Debug.Log(JsonMapper.ToJson(changeABNameFiles, true));
-
                 #endregion
 
                 //合并
-                changedAssetList.AddRange(changedABNameAssetList);
+                changedAssetList.AddRange(changedAssetBundleAssetList);
 
                 //2.依赖资源也要重新打，不然会在这次导出过程中unity默认会把依赖和该资源打到一个ab中
                 foreach (var changedAsset in changedAssetList)
@@ -935,56 +1007,6 @@ namespace BDFramework.Editor.AssetBundle
 
 
         #region 静态辅助函数
-
-        
-        /// <summary>
-        /// 生成AssetBundle
-        /// </summary>
-        /// <param name="outputPath">导出目录</param>
-        /// <param name="target">平台</param>
-        /// <param name="options">打包参数</param>
-        /// <param name="isUseHashName">是否为hash name</param>
-        public static bool GenAssetBundle(string outputPath, RuntimePlatform platform)
-        {
-            var buildTarget = BDApplication.GetBuildTarget(platform);
-            AssetBundleEditorToolsV2ForAssetGraph.Build(buildTarget, outputPath);
-            return true;
-        }
-
-
-        /// <summary>
-        /// 获取主资源类型
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static Type GetMainAssetTypeAtPath(string path)
-        {
-            var type = AssetDatabase.GetMainAssetTypeAtPath(path);
-            //图片类型得特殊判断具体的实例类型
-            if (type == typeof(Texture2D))
-            {
-                var sp = AssetDatabase.LoadAssetAtPath<Sprite>(path);
-                if (sp != null)
-                {
-                    return typeof(Sprite);
-                }
-
-                var tex2d = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-                if (tex2d != null)
-                {
-                    return typeof(Texture2D);
-                }
-
-                var tex3d = AssetDatabase.LoadAssetAtPath<Texture3D>(path);
-                if (tex3d != null)
-                {
-                    return typeof(Texture3D);
-                }
-            }
-
-            return type;
-        }
-
 
         #endregion
     }

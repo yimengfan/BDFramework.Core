@@ -173,7 +173,7 @@ namespace BDFramework.Editor.AssetBundle
             }
             
             //生成Assetbundlebunle
-            AssetBundleBuildingContext.GenAssetBundle(outputPath, platform);
+            AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform);
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕");
         }

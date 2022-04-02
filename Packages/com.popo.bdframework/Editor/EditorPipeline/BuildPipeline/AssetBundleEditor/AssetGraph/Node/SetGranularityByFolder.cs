@@ -234,6 +234,9 @@ namespace BDFramework.Editor.AssetGraph.Node
                     for (int i = 0; i < subfolders.Length; i++)
                     {
                         var subFolder = subfolders[i];
+                        subFolder = subFolder.Replace("\\", "/");
+                        subfolders[i] = subFolder;
+                        //
                         var guid = AssetDatabase.AssetPathToGUID(subFolder);
                         outMap[subFolder] = new List<AssetReference>();
                         //打印文件夹hash

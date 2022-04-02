@@ -138,7 +138,7 @@ namespace BDFramework.Editor.AssetBundle
 
             foreach (var asset in allRuntimeAssets)
             {
-                var type = AssetBundleBuildingContext.GetMainAssetTypeAtPath(asset);
+                var type = AssetBundleEditorToolsV2.GetMainAssetTypeAtPath(asset);
                 if (type == null)
                 {
                     Debug.LogError("无法获得资源类型:" + asset);

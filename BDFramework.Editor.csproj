@@ -62,8 +62,8 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorEnvironment\EditorUserGuide\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorGUIHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleBuildingContext.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleEditorToolsV2.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleEditorToolsV2CheckAssetbundle.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleEditorToolsV2ForAssetGraph.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\BuildAssetBundleParams.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\BDFrameworkAssetsEnv.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\BuildAssetBundle.cs" />
