@@ -122,6 +122,7 @@ public class ExpoterMainProjectAsset
         //重新生成clr分析文件
         EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis();
         //debug
-        Debug.Log("导出成功:" + packagePath);
+
+        EditorUtility.DisplayDialog("提示", packagePath, "ok");
     }
 }

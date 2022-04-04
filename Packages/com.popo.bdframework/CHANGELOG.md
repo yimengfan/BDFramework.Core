@@ -4,6 +4,7 @@ A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 -AssetbundleV2: 重构异步加载逻辑
 -Assetbundlev2: 重新绘制Build Assetbundle 编辑器
 -AssetbundleV2: 增加AsyncLoadAssetbundle资源验证
+-AssetbundleV2: 增加拓展节点演示
 
 ##V2.1.0-preview.5
 -增加EditorTask:OnEnterPlayMode.
