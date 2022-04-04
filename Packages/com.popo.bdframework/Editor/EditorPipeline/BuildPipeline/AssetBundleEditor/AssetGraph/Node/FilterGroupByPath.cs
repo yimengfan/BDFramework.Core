@@ -236,7 +236,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         /// <summary>
         /// 预览结果 编辑器连线数据，但是build模式也会执行
-        /// 这里注意不要对BuildingCtx直接进行修改,修改需要在Build中进行
+        /// 这里只建议设置BuildingCtx的ab颗粒度
         /// </summary>
         /// <param name="target"></param>
         /// <param name="nodeData"></param>
