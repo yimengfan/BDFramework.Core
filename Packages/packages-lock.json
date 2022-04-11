@@ -12,15 +12,8 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ourpalm.ilruntime": "2.0.2",
-        "com.unity.assetgraph": "1.7.2-preview"
+        "com.ourpalm.ilruntime": "2.0.2"
       }
-    },
-    "com.unity.assetgraph": {
-      "version": "file:AssetGraph-1.7-release",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",

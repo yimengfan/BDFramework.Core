@@ -438,59 +438,59 @@
  <Reference Include="ILRuntime.Mono.Cecil.Pdb">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
  </Reference>
- <Reference Include="System.IO.Compression">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.Compression.FileSystem">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.FileSystem.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.Compression.ZipFile">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.ZipFile.dll</HintPath>
- </Reference>
- <Reference Include="Excel">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Editor/Plugins/Excel/Excel.dll</HintPath>
- </Reference>
- <Reference Include="ICSharpCode.SharpZipLib">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Editor/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
- </Reference>
- <Reference Include="Microsoft.Bcl.AsyncInterfaces">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/Microsoft.Bcl.AsyncInterfaces.1.1.1/lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
- </Reference>
- <Reference Include="Microsoft.CodeAnalysis">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.Common.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.dll</HintPath>
- </Reference>
- <Reference Include="Microsoft.CodeAnalysis.CSharp">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.CSharp.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+ <Reference Include="ICSharpCode.NRefactory">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.unity.render-pipelines.core@7.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
  </Reference>
  <Reference Include="ServiceStack.Text">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/ServiceStack.Text.5.12.0/lib/netstandard2.0/ServiceStack.Text.dll</HintPath>
  </Reference>
- <Reference Include="System.Buffers">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/System.Buffers.4.5.1/lib/netstandard2.0/System.Buffers.dll</HintPath>
+ <Reference Include="ICSharpCode.SharpZipLib">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Editor/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
  </Reference>
  <Reference Include="System.Collections.Immutable">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/System.Collections.Immutable.5.0.0/lib/netstandard2.0/System.Collections.Immutable.dll</HintPath>
  </Reference>
- <Reference Include="System.Memory">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/System.Memory.4.5.4/lib/netstandard2.0/System.Memory.dll</HintPath>
+ <Reference Include="System.Buffers">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/System.Buffers.4.5.1/lib/netstandard2.0/System.Buffers.dll</HintPath>
+ </Reference>
+ <Reference Include="Microsoft.Bcl.AsyncInterfaces">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/Microsoft.Bcl.AsyncInterfaces.1.1.1/lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
  </Reference>
  <Reference Include="System.Reflection.Metadata">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/System.Reflection.Metadata.5.0.0/lib/netstandard2.0/System.Reflection.Metadata.dll</HintPath>
  </Reference>
- <Reference Include="System.Runtime.CompilerServices.Unsafe">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/System.Runtime.CompilerServices.Unsafe.5.0.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ <Reference Include="Microsoft.CodeAnalysis.CSharp">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.CSharp.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
  </Reference>
- <Reference Include="System.Text.Encoding.CodePages">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/System.Text.Encoding.CodePages.4.5.1/lib/netstandard2.0/System.Text.Encoding.CodePages.dll</HintPath>
+ <Reference Include="Excel">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Editor/Plugins/Excel/Excel.dll</HintPath>
  </Reference>
  <Reference Include="System.Threading.Tasks.Extensions">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/System.Threading.Tasks.Extensions.4.5.4/lib/netstandard2.0/System.Threading.Tasks.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="Microsoft.CodeAnalysis">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.Common.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Text.Encoding.CodePages">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/System.Text.Encoding.CodePages.4.5.1/lib/netstandard2.0/System.Text.Encoding.CodePages.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Runtime.CompilerServices.Unsafe">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/System.Runtime.CompilerServices.Unsafe.5.0.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Memory">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Nuget/System.Memory.4.5.4/lib/netstandard2.0/System.Memory.dll</HintPath>
+ </Reference>
  <Reference Include="Debug.log">
  <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/Plugins/Debug/Debug.log.dll</HintPath>
  </Reference>
- <Reference Include="ICSharpCode.NRefactory">
- <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Library/PackageCache/com.unity.render-pipelines.core@7.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ <Reference Include="System.IO.Compression.ZipFile">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.ZipFile.dll</HintPath>
+ </Reference>
+ <Reference Include="System.IO.Compression.FileSystem">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.FileSystem.dll</HintPath>
+ </Reference>
+ <Reference Include="System.IO.Compression">
+ <HintPath>E:/Unity3d Project/Github/BDFramework.EnvCheck/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.36f1c1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

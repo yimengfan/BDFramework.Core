@@ -62,7 +62,6 @@ namespace UnityEngine.AssetGraph.DataModel.Version2 {
 			        }
 			        return baseDir;
 		        }
-
 		        set {
 			        EditorUserSettings.SetConfigValue (PREFKEY_CONFIG_BASE_DIR, value);
 		        }
@@ -114,7 +113,7 @@ namespace UnityEngine.AssetGraph.DataModel.Version2 {
         public static class Path
         {
 
-	        public static string PackagePath => "Packages/com.unity.assetgraph";
+	        public static string PackagePath => AssetDatabase.GUIDToAssetPath("8549600cb67d5234aa836c3f0e2f221f");//"Packages/com.unity.assetgraph";
 	        
 	        public static string DefaultBasePath => "Assets/3rdPlugins/AssetGraph";
 

@@ -29,7 +29,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -40,7 +40,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "\u641C\u96C6shader\u53D8\u4F53"
@@ -59,7 +59,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -69,8 +69,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 128.7143
-        y: 32.785713
+        x: 130.2
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u6D4B\u8BD5\u6A21\u578B\u5B50\u76EE\u5F55"
@@ -89,7 +89,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -100,7 +100,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 171
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "\u6253\u5305AssetBundle"
@@ -119,7 +119,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -129,8 +129,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 136.7143
-        y: 32.785713
+        x: 139
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u7B5B\u9009]Group by Path"
@@ -149,7 +149,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -159,8 +159,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 225.28572
-        y: 32.785713
+        x: 228.59999
+        y: 33.7
         width: 10
         height: 23
     - id: 28d12738-0458-439a-b23a-d1faedd95f88
@@ -169,8 +169,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 225.28572
-        y: 64.78571
+        x: 228.59999
+        y: 65.7
         width: 10
         height: 23
     - id: a8562a02-4c4b-42db-8d61-e022a719de8a
@@ -179,8 +179,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 225.28572
-        y: 96.78571
+        x: 228.59999
+        y: 97.7
         width: 10
         height: 23
     - id: ee5e5d1a-eb6a-4914-8c14-02b36d1c1f15
@@ -189,8 +189,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 225.28572
-        y: 128.7857
+        x: 228.59999
+        y: 129.7
         width: 10
         height: 23
     - id: 8b9c0b86-d54c-4d1e-94c1-fe13e856936e
@@ -199,8 +199,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 225.28572
-        y: 160.7857
+        x: 228.59999
+        y: 161.7
         width: 10
         height: 23
     - id: 2641a0b5-693e-49f6-a871-30ab4fa06a47
@@ -209,8 +209,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 225.28572
-        y: 192.7857
+        x: 228.59999
+        y: 193.7
         width: 10
         height: 23
     - id: e36f7b61-b947-4d92-ad94-ed4918e4f4d8
@@ -219,8 +219,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 225.28572
-        y: 224.7857
+        x: 228.59999
+        y: 225.7
         width: 10
         height: 23
     - id: c40b9412-50d2-4db8-9a66-ce790c486e35
@@ -229,8 +229,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 225.28572
-        y: 256.7857
+        x: 228.59999
+        y: 257.7
         width: 10
         height: 23
   - m_name: "[*]\u521D\u59CB\u5316\u6846\u67B6Assets\u73AF\u5883"
@@ -249,8 +249,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 179
-        y: 32.785713
+        x: 179.8
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
@@ -269,7 +269,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -280,7 +280,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
@@ -299,7 +299,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -310,7 +310,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
@@ -329,7 +329,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -340,7 +340,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
@@ -359,7 +359,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -370,7 +370,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u5206\u5305]\u8D44\u6E90\u8DEF\u5F84\u5206\u5305"
@@ -389,7 +389,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -399,8 +399,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 262.42856
-        y: 32.785713
+        x: 266.2
+        y: 33.7
         width: 10
         height: 23
     - id: a77abac2-87f4-4538-a5ca-f9d6a174b901
@@ -409,8 +409,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 262.42856
-        y: 64.78571
+        x: 266.2
+        y: 65.7
         width: 10
         height: 23
     - id: e3f050a3-5680-4a06-a4ce-89df96578277
@@ -419,8 +419,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 262.42856
-        y: 96.78571
+        x: 266.2
+        y: 97.7
         width: 10
         height: 23
   - m_name: "\u5206\u5305\u540D:TestChar"
@@ -439,7 +439,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints: []
@@ -459,7 +459,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints: []
@@ -479,7 +479,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints: []
@@ -499,7 +499,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -510,7 +510,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 135
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u5730\u56FE\u8D44\u6E90"
@@ -529,7 +529,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -540,17 +540,17 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 135
-        y: 32.785713
+        y: 33.7
         width: 10
         height: 23
   - m_name: "[\u7B5B\u9009]Group Split Directory"
     m_id: 43cb2e8d-2227-49f3-9a44-4ebc55f263f3
-    m_x: 1428
-    m_y: 876
+    m_x: 1332
+    m_y: 864
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.FilterGroupSplitDirectory,
         BDFramework.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|eyJncm91cEZpbHRlclBhdGhEYXRhTGlzdCI6W3siT3V0cHV0Tm9kZUlkIjoiNDNjYjJlOGQtMjIyNy00OWYzLTlhNDQtNGViYzU1ZjI2M2YzIiwiR3JvdXBQYXRoIjoiQXNzZXRzL1Jlc291cmNlX1NWTi9Nb2RlbC8wMDEvIn0seyJPdXRwdXROb2RlSWQiOiI0M2NiMmU4ZC0yMjI3LTQ5ZjMtOWE0NC00ZWJjNTVmMjYzZjMiLCJHcm91cFBhdGgiOiJBc3NldHMvUmVzb3VyY2VfU1ZOL01vZGVsLzAwMi8ifSx7Ik91dHB1dE5vZGVJZCI6IjQzY2IyZThkLTIyMjctNDlmMy05YTQ0LTRlYmM1NWYyNjNmMyIsIkdyb3VwUGF0aCI6IkFzc2V0cy9SZXNvdXJjZV9TVk4vTW9kZWwvIn1dfQ==
+      m_instanceData: B64|eyJncm91cEZpbHRlclBhdGhEYXRhTGlzdCI6W3siT3V0cHV0Tm9kZUlkIjoiMzY3ODI0NDktODFjZi00MTVkLWJhOTEtNDMwZDUzOGE0MTNjIiwiR3JvdXBQYXRoIjoiQXNzZXRzL1Jlc291cmNlX1NWTi9NYXAvMDAxLyJ9LHsiT3V0cHV0Tm9kZUlkIjoiNjJkMGIxM2UtYTQ4Ny00ZTc4LWEyODAtYmNlZTU3NWQyYTk2IiwiR3JvdXBQYXRoIjoiQXNzZXRzL1Jlc291cmNlX1NWTi9NYXAvMDAyLyJ9XX0=
     m_inputPoints:
     - id: 3ee5dd7a-17e2-426f-acfb-20e3f2deee72
       label: '-'
@@ -559,10 +559,30 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
-    m_outputPoints: []
+    m_outputPoints:
+    - id: 36782449-81cf-415d-ba91-430d538a413c
+      label: Assets/Resource_SVN/Map/001/
+      parentId: 43cb2e8d-2227-49f3-9a44-4ebc55f263f3
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 239.79999
+        y: 33.7
+        width: 10
+        height: 23
+    - id: 62d0b13e-a487-4e78-a280-bcee575d2a96
+      label: Assets/Resource_SVN/Map/002/
+      parentId: 43cb2e8d-2227-49f3-9a44-4ebc55f263f3
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 239.79999
+        y: 65.7
+        width: 10
+        height: 23
   - m_name: "[\u7B5B\u9009]Group Split Directory"
     m_id: d72e0967-f94a-4e39-83eb-4b27d99d8f82
     m_x: 1392
@@ -579,7 +599,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints: []
