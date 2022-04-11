@@ -194,11 +194,11 @@ namespace UnityEngine.AssetGraph {
 			}
 
 			string connectionLabel;
-			if(totalGroups > 1) {
+			//if(totalGroups > 1) {
 				connectionLabel = $"{totalAssets}:{totalGroups}";
-			} else {
-				connectionLabel = $"{totalAssets}";
-			}
+			// } else {
+			// 	connectionLabel = $"{totalAssets}";
+			// }
 
 			var style = new GUIStyle(m_connectionButtonStyle);
 
