@@ -256,7 +256,8 @@ namespace BDFramework.ResourceMgr.V2
 
         /// <summary>
         /// 异步加载接口
-        /// 需要自行外部yield,这里不进行管理 防止逻辑冲突
+        /// 外部创建 需要自己管理yield,防止逻辑冲突
+        /// 开放该接口，主要用于各种批量测试控制逻辑.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="assetName"></param>
