@@ -51,39 +51,60 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core (国内比较快)
 
 ## V1版本：  
 
-  **一键C#热更:**  
-   开发不需要再关心热更！BD中对ILRuntime进行了二次改造，不用分工程、并且写了一套完善的脚本编译机制,打包工具自动搜集热更代码进行打包。  
-   并且对常用库进行了适配.  
+  **C#热更(C# hotfix):**  
+  - 自定义编译服务  
+  - 可选工程剥离(热更可以不拆工程)  
+  - 一键打包热更DLL  
+  - 兼容DevOps、CI、CD.   
+  
+  **表格管理(Table Manage):**   
+  - Excel一键生成Class  
+  - Excel生成Sqlite、Json、Xml等  
+  - SQLite ORM工具(兼容热更)  
+  - 自定义表格逻辑检测.  
+  - 兼容DevOps、CI、CD.      
  
-   **一键版本发布:**  
-   代码、资源、表格一键打包,版本管理自动下载  
+  **资源管理（Assets Manage）:**  
+  - 重新定制目录管理规范  
+  - 一套API自动切换AB和Editor模式，保留Resources.load习惯.
+  - 可视化连线打包逻辑、0冗余打包.
+  - 打包逻辑纠错机制.  
+  - 内置增量打包逻辑，防止不同机器、工程打包AB不同情况.
+  - 自动图集管理.  
+  - 自动搜集Keyword.  
+  - 可寻址加载系统.
+  - Assetbundle 同、异步加载验证.
+  - Assetbundle加载性能检测.
+  - Editor下可用.
+  - 兼容DevOps、CI、CD.   
+  
+   **一键版本发布（Publish）:**  
+   - 代码、资源、表格一键打包,版本管理自动下载.  
+   - 内置本机AB文件服务器  
+   - 兼容DevOps、CI、CD.   
    
-   **完善的资源管理系统:**  
-   BD抛弃了Resources目录，并且保留的用户Resources的开发习惯.  
-   一套API自动切换，兼容AB和Editor模式.  
-   而且有一套比较完善的AssetBundle管理机制：图集管理、自动搜集Shader、0冗余打包  
-   并且bd做了一套精简版可寻址，无论你的Asset再Streaming或者persistent下，都能自动寻找并且加载  
+   **UI工作流(UFlux):**  
+  - 提供一套Flux ui管理机制(类似MVI)  
+  - 完善的UI管理和Windows容器,可配合任意NGUI、UGUI、FairyGUI等使用  
+  - 支持UI管理、值绑定、数据监听、数据流、状态管理等  
+  - 支持DI依赖注入.  
    
-   **完善的UI工作流UFlux:**  
-   BD中有一整套完善的UI工作流(这里我们只对UI逻辑进行管理，不考虑ui制作)，无论你是UGUI NGUI还是其他。  
-   我们提供了一套UI管理、值绑定、数据监听、数据流、状态管理等一系列机制.  
-   V2中添加了DI相关支持
+   **业务管理（Logic Manage）:**  
+  - 管理器和被管理类自动注册  
+  - 在此之上BD实现了ScreenviewManger,UIManager,EventManager...等一些管理器.使用者根据自己的需求可以实现其他的管理器.  
+  - Editor下可用.  
    
-   **SQL化表格管理:**   
-   BD中用Sqlite进行管理表格,并且提供了excel2code，excel2json，excel2sqlite等工具  
+   **导航机制（Navication）:**  
+   - 模块、用户Timeline等导航机制.  
+   - 方便做模块调度、划分等逻辑...   
    
-   **发现式业务注册:**  
-   BDFrame底层提供了一套发现式的业务注册.无需以前的各种Register,只要定制好自己的标签、管理器就能被自动注册.  
-   在此之上BD,实现了ScreenviewManger,UIManager,EventManager...等一些列管理器。  
-   这套机制高度可扩展、可定制,使用者根据自己的需求可以实现其他的管理器  
-   并且这个在编辑器环境下也生效的哦~ 写工具时候会很有帮助的哦~  
-   
-   **模块管理、调度、导航机制:**  
-   BD给大家带来了一种开发思路，用户使用流程的Timeline（不是unity的那个timeline）,  
-   根据用户流程进行切分模块、调度!  
-   
-   **·TDD工作流、完整的测试用例:**  
-  完整的测试用例，保证框架的稳定。  
+   **全面定制Editor:**
+   - 提供完整的编辑器生命周期，方便可定制、拓展.
+   - **完整的测试用例，保证框架的稳定.**  
+   - 所有功能全面兼容DevOps、CI、CD等工具.  
+   - 其他大量的定制Editor，以保证使用体验...(太多了统计不过来)  
+  
+   **有很多细枝末节的系统就不一一列举了...**
 
 ## 文档(Document)  
  ### [中文 Wiki](https://www.yuque.com/naipaopao/eg6gik)  
