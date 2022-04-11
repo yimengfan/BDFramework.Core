@@ -85,7 +85,8 @@ gitee地址: https://gitee.com/yimengfan/BDFramework.Core (国内比较快)
    
    **UI工作流(UFlux):**  
   - 提供一套Flux ui管理机制(类似MVI)  
-  - 完善的UI管理和Windows容器,可配合任意NGUI、UGUI、FairyGUI等使用  
+  - 完善的UI管理,可配合任意NGUI、UGUI、FairyGUI等使用  
+  - 完整的UI抽象：Windows、Component、State、Props...  
   - 支持UI管理、值绑定、数据监听、数据流、状态管理等  
   - 支持DI依赖注入.  
    
