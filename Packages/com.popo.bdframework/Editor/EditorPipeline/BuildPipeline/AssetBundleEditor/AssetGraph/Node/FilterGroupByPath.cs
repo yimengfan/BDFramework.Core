@@ -23,10 +23,6 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// 构建的上下文信息
         /// </summary>
         public AssetBundleBuildingContext BuildingCtx { get; set; }
-        public void Reset()
-        {
-            
-        }
 
         public override string ActiveStyle
         {
@@ -83,9 +79,14 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         private NodeGUI selfNodeGUI;
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnDrawNodeGUIContent(NodeGUI node)
         {
             this.selfNodeGUI = node;
+        }
+
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        {
+
             //初始化group list
             if (e_groupList == null)
             {
@@ -136,10 +137,9 @@ namespace BDFramework.Editor.AssetGraph.Node
                 var rOutputNode = this.selfNodeGUI.Data.OutputPoints.Find((node) => node.Id == rItem.OutputNodeId);
                 this.selfNodeGUI.Data.OutputPoints.Remove(rOutputNode);
                 list.index--;
-                //移除连接线
-                NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_CONNECTIONPOINT_DELETED, this.selfNodeGUI, Vector2.zero, rOutputNode));
                 //刷新
-                BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
+                GraphNodeHelper.RemoveOutputNode(this.selfNodeGUI, rOutputNode);
+                GraphNodeHelper.UpdateNodeGraph(this.selfNodeGUI);
             }
         }
 
@@ -168,7 +168,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
 
                 //BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, outputConnect);
-                BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
+                GraphNodeHelper.UpdateNodeGraph(this.selfNodeGUI);
             }
 
             if (isDisable)

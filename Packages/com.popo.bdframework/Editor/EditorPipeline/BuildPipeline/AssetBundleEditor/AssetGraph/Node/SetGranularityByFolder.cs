@@ -77,8 +77,12 @@ namespace BDFramework.Editor.AssetGraph.Node
             return new SetGranularityByFolder();
         }
 
+       
         private NodeGUI selfNodeGUI;
-
+        public override void OnDrawNodeGUIContent(NodeGUI node)
+        {
+            this.selfNodeGUI = node;
+        }
         /// <summary>
         /// 预览结果 编辑器连线数据，但是build模式也会执行
         /// 这里只建议设置BuildingCtx的ab颗粒度
@@ -90,7 +94,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="outputFunc"></param>
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
-            this.selfNodeGUI = node;
+            // this.selfNodeGUI = node;
             //node.Name                 = EditorGUILayout.TextField("Tips:",  node.Name);
             editor.UpdateNodeName(node);
             if (!node.Name.StartsWith("[颗粒度]"))
@@ -132,7 +136,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 Debug.Log("更新node!");
                 //触发
                 //BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, this.selfNodeGUI.Data.OutputPoints.FirstOrDefault());
-                BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
+                GraphNodeHelper.UpdateNodeGraph(this.selfNodeGUI);
             }
         }
 

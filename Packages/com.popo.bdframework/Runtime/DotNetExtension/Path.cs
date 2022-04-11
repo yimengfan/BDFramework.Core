@@ -48,6 +48,22 @@ namespace System.IO
             return ZString.Concat(a, "/", b, "/", c, "/", d);
         }
 
+
+
+        /// <summary>
+        /// 添加/
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        static public string AddEndSymbol(string path)
+        {
+            if (!path.EndsWith("/"))
+            {
+                path = ZString.Concat(path, "/");
+            }
+
+            return path;
+        }
         /// <summary>
         /// 路径合并
         /// 这里是修复Mac下的 Path.Combine的Bug

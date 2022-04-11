@@ -18,7 +18,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     /// <summary>
     /// 颗粒度,不修改 只作为连线查看用 避免线到一坨了
     /// </summary>
-    [CustomNode("BDFramework/[分包]设置分包名", 21)]
+    [CustomNode("BDFramework/[分包]设置分包名", 111)]
     public class MultiplePackageName : UnityEngine.AssetGraph.Node
     {
         /// <summary>

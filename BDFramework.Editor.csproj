@@ -65,12 +65,14 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleEditorToolsV2.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleEditorToolsV2CheckAssetbundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\BuildAssetBundleParams.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\GraphNodeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\BDFrameworkAssetsEnv.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\BuildAssetBundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\BuildAssetBundlePreView.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\CollectShaderKeyWord.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\CollectSpriteAtlas.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\FilterGroupByPath.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\FilterGroupSplitDirectory.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\MultiplePackage.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\MultiplePackageName.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\SetGranularityByExtension.cs" />

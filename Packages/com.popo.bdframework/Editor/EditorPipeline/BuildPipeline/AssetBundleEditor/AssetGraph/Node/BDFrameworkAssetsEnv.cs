@@ -157,7 +157,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 Debug.Log("更新node!");
                 //触发
                 //BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, this.selfNodeGUI.Data.OutputPoints.FirstOrDefault());
-                BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
+                GraphNodeHelper.UpdateNodeGraph(this.selfNodeGUI);
             }
         }
 
@@ -221,7 +221,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 生成BuildingCtx
         /// </summary>
-        private void GenBuildingCtx(bool isRenew=false)
+        private void GenBuildingCtx(bool isRenew = false)
         {
             Debug.Log("------------>生成BuildInfo  :" + this.GetHashCode());
             //新构建对象
@@ -237,7 +237,6 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 BuildingCtx.GenBuildInfo();
             }
-           
         }
 
 
@@ -263,33 +262,11 @@ namespace BDFramework.Editor.AssetGraph.Node
         }
 
 
-        //   override 
 
-        /// <summary>
-        /// 刷新节点值
-        /// </summary>
-        /// <param name="nodeGUI"></param>
-        static public void UpdateNodeGraph(NodeGUI nodeGUI)
-        {
-            //强制刷新
-            nodeGUI.Data.NeedsRevisit = true;
-            NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_NODE_UPDATED, nodeGUI));
-        }
+        #region 
 
-        /// <summary>
-        /// 更新连接线
-        /// </summary>
-        /// <param name="nodeGUI"></param>
-        /// <param name="outputConnect"></param>
-        static public void UpdateConnectLine(NodeGUI nodeGUI, ConnectionPointData outputConnect)
-        {
-            if (outputConnect == null)
-            {
-                return;
-            }
+        
 
-            nodeGUI.Data.NeedsRevisit = true;
-            NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_CONNECTIONPOINT_LABELCHANGED, nodeGUI, Vector2.zero, outputConnect));
-        }
+        #endregion
     }
 }

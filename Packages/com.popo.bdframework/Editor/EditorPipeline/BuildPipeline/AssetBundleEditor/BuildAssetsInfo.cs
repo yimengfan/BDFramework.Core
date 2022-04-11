@@ -71,18 +71,16 @@ namespace BDFramework.Editor.AssetBundle
 
         public enum SetABNameMode
         {
-            Simple,
-            Force,
-            ForceAndFixAllRef
+            Simple, //如果AB名被修改，则不会再次修改.用以不覆盖先执行的AB颗粒度规则
+            Force,  //强制修改该AB名,即使有其他规则已经修改过该AB颗粒度
+            ForceAndFixAllRef,// ForceAndFixAllRef:强制修改，并且也修改引用该资源的AB名
+            Lock //锁住，修改完不允许其他规则再次修改
         }
 
         /// <summary>
         /// 设置AB名(颗粒度)
-        /// Simple模式:如果AB名被修改，则不会再次修改.用以不覆盖先执行的AB颗粒度规则
-        /// Force模式:强制修改该AB名,即使有其他规则已经修改过该AB颗粒度
-        /// ForceAndFixAllRef:强制修改，并且也修改引用该资源的AB名
         /// </summary>
-        public bool SetABName(string assetName, string newABName, SetABNameMode setNameMode = SetABNameMode.Simple)
+        public bool SetABName(string assetName, string newABName, SetABNameMode setNameMode = SetABNameMode.Simple ,string changelog ="")
         {
             //1.如果ab名被修改过,说明有其他规则影响，需要理清打包规则。（比如散图打成图集名）
             //2.如果资源被其他资源引用，修改ab名，需要修改所有引用该ab的名字
@@ -99,6 +97,7 @@ namespace BDFramework.Editor.AssetBundle
                     //未被其他规则设置过abname,可以直接修改
                     case SetABNameMode.Simple:
                     {
+                        //AB名和资源名相等说明没有被修改过
                         if (assetData.ABName.Equals(assetName, StringComparison.OrdinalIgnoreCase) || assetData.ABName == newABName)
                         {
                             isCanSetABName = true;

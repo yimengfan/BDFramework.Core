@@ -328,6 +328,8 @@ namespace UnityEngine.AssetGraph {
 			UpdateNodeRect ();
 			HandleNodeMouseEvent ();
 			DrawNodeContents();
+			//绘制NodeGUI
+			Data.Operation.Object.OnDrawNodeGUIContent(this);
 		}
 			
 		private void DrawNodeContents () {

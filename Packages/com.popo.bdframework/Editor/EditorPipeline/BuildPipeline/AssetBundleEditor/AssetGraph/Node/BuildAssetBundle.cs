@@ -173,11 +173,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
         }
 
-
-        /// <summary>
-        /// 生成的assetbundleitem 列表
-        /// </summary>
-        public static List<AssetBundleItem> GenAssetBundleItemCacheList { get; private set; } = null;
+        
 
         /// <summary>
         /// build assetbundle的结果，用以给后续流程使用

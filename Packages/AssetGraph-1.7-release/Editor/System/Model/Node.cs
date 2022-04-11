@@ -147,6 +147,16 @@ namespace UnityEngine.AssetGraph {
 		public virtual void OnContextMenuGUI(GenericMenu menu) {
 			// Do nothing
 		}
+
+        /// <summary>
+        /// 绘制NodeGUI
+        /// </summary>
+        /// <param name="node"></param>
+        public virtual void OnDrawNodeGUIContent(NodeGUI node)
+        {
+	        
+        }
+        
 		#endregion
 
         #region Events

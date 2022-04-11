@@ -16,7 +16,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     /// <summary>
     /// 筛选,排序10-30
     /// </summary>
-    [CustomNode("BDFramework/[分包]资源路径分包", 20)]
+    [CustomNode("BDFramework/[分包]资源路径分包", 110)]
     public class MultiplePackage : UnityEngine.AssetGraph.Node
     {
 
@@ -84,10 +84,14 @@ namespace BDFramework.Editor.AssetGraph.Node
         #region 渲染 list Inspector
 
         private NodeGUI selfNodeGUI;
+        public override void OnDrawNodeGUIContent(NodeGUI node)
+        {
+            this.selfNodeGUI = node;
+        }
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
-            this.selfNodeGUI = node;
+          
             //初始化group list
             if (e_groupList == null)
             {
@@ -142,7 +146,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 //移除连接线
                 NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_CONNECTIONPOINT_DELETED, this.selfNodeGUI, Vector2.zero, rOutputNode));
                 //刷新
-                BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
+                GraphNodeHelper.UpdateNodeGraph(this.selfNodeGUI);
             }
         }
 
@@ -167,7 +171,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
 
                 //BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, outputConnect);
-                BDFrameworkAssetsEnv.UpdateNodeGraph(this.selfNodeGUI);
+                GraphNodeHelper.UpdateNodeGraph(this.selfNodeGUI);
             }
         }
 
