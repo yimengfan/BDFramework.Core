@@ -545,7 +545,7 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u7B5B\u9009]Group Split Directory"
     m_id: 43cb2e8d-2227-49f3-9a44-4ebc55f263f3
-    m_x: 1332
+    m_x: 1344
     m_y: 864
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.FilterGroupSplitDirectory,
