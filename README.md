@@ -152,7 +152,7 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 <a name="LVozC"></a>
 #### OpenUPM(强烈推荐)： 
 <a name="IPx5B"></a>
-#### [链接]()
+#### [链接](https://www.yuque.com/naipaopao/eg6gik/xy8dm4)
 <a name="oGh5G"></a>
 #### Release版：
 **使用Open UPM更新框架：**<br />Step：
