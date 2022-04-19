@@ -78,6 +78,10 @@ namespace BDFramework.ResourceMgr
         readonly static public string PACKAGE_BUILD_INFO_PATH = "PackageBuild.Info";
 
         /// <summary>
+        /// 混淆ab的资源路径
+        /// </summary>
+        readonly static public string OBFUSCATION_AB_PATH = "Assets/Resource/Runtime/ObfuscationAssetbundle.txt";
+        /// <summary>
         /// 初始化
         /// </summary>
         /// <param name="abModel"></param>
@@ -159,6 +163,7 @@ namespace BDFramework.ResourceMgr
         
         /// <summary>
         /// 创建异步任务
+        /// 该接口主要作为加载测试用，非内部创建任务不接受AssetbundleV2系统调度
         /// </summary>
         /// <param name="assetName"></param>
         /// <typeparam name="T"></typeparam>
@@ -293,8 +298,8 @@ namespace BDFramework.ResourceMgr
         }
 
         #endregion
-
-        #region 版本控制
+        
+        #region 版本控制、资源下载
         /// <summary>
         /// 开始版本控制
         /// </summary>
@@ -310,7 +315,6 @@ namespace BDFramework.ResourceMgr
         }
 
         #endregion
-
 
         #region 对象池
 

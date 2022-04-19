@@ -78,9 +78,9 @@ namespace BDFramework.ResourceMgr
                 if (objsMap.ContainsKey(assetName))
                 {
                     var obj = objsMap[assetName];
-                    //
                     objsMap.Remove(assetName);
-                    Resources.UnloadUnusedAssets();
+                    //
+                    Resources.UnloadAsset(obj);
                 }
             }
             catch (Exception e)
@@ -105,8 +105,6 @@ namespace BDFramework.ResourceMgr
             return null;
         }
 
-        private Dictionary<string, string> guidPathChacheMap = new Dictionary<string, string>();
-
         /// <summary>
         /// 加载
         /// </summary>
@@ -120,12 +118,7 @@ namespace BDFramework.ResourceMgr
 
             if (pathType == LoadPathType.GUID)
             {
-                var ret = guidPathChacheMap.TryGetValue(path, out var guidpath);
-                if (!ret)
-                {
-                    guidpath = AssetDatabase.GUIDToAssetPath(path);
-                    path = FullAssetPathToRuntimePath(guidpath);
-                }
+                path = AssetDatabase.GUIDToAssetPath(path);
             }
 
 
@@ -141,34 +134,51 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         public Object Load(Type type, string path)
         {
-            var assetPaths = FindAssets(path);
-            if (assetPaths == null)
+            //读取缓存
+            var ret = objsMap.TryGetValue(path, out var retobj);
+            //走新加载逻辑
+            if (!ret)
             {
-                return null;
-            }
-
-            string assetPath = null;
-            if (assetPaths.Count == 1)
-            {
-                assetPath = assetPaths[0];
-            }
-            else
-            {
-                //这里是有同名文件依次匹配类型
-                foreach (var p in assetPaths)
+                string assetPath = null;
+                //全路径
+                if (path.StartsWith("Assets", StringComparison.OrdinalIgnoreCase))
                 {
-                    var assetType = AssetDatabase.GetMainAssetTypeAtPath(p);
-                    if (type == assetType)
+                    assetPath = path;
+                }
+                //短路径
+                else
+                {
+                    var assetPaths = FindAssets(path);
+                    if (assetPaths == null)
                     {
-                        assetPath = p;
-                        break;
+                        return null;
+                    }
+
+
+                    if (assetPaths.Count == 1)
+                    {
+                        assetPath = assetPaths[0];
+                    }
+                    else
+                    {
+                        //这里是有同名文件依次匹配类型
+                        foreach (var p in assetPaths)
+                        {
+                            var assetType = AssetDatabase.GetMainAssetTypeAtPath(p);
+                            if (type == assetType)
+                            {
+                                assetPath = p;
+                                break;
+                            }
+                        }
                     }
                 }
+
+                retobj = AssetDatabase.LoadAssetAtPath(assetPath, type);
+                objsMap[path] = retobj;
             }
 
-            var obj = AssetDatabase.LoadAssetAtPath(assetPath, type);
-            objsMap[path] = obj;
-            return obj;
+            return retobj;
         }
 
 
@@ -254,15 +264,11 @@ namespace BDFramework.ResourceMgr
         public int AsyncLoad<T>(string assetName, Action<T> callback) where T : UnityEngine.Object
         {
             this.TaskCounter++;
-            if (objsMap.ContainsKey(assetName))
-            {
-                callback(objsMap[assetName] as T);
-            }
-            else
-            {
-                var res = Load<T>(assetName);
-                callback(res);
-            }
+
+
+            var res = Load<T>(assetName);
+            callback(res);
+
 
             return this.TaskCounter;
         }
@@ -380,7 +386,7 @@ namespace BDFramework.ResourceMgr
         public void WarmUpShaders()
         {
         }
-        
+
         /// <summary>
         /// 任务帧
         /// </summary>
@@ -397,14 +403,18 @@ namespace BDFramework.ResourceMgr
                 {
                     var resPath = loads[count];
 
-                    AsyncLoad<UnityEngine.Object>(resPath, (o) => { callback(resPath, o); });
+                    AsyncLoad<UnityEngine.Object>(resPath, (o) =>
+                    {
+                        //异步加载回调
+                        callback(resPath, o);
+                    });
                     count++;
                 }
 
                 yield return new WaitForEndOfFrame();
             }
         }
-        
+
         /// <summary>
         /// 全路径转 runtime短路径
         /// </summary>
@@ -413,11 +423,16 @@ namespace BDFramework.ResourceMgr
         {
             fullAssetPath = fullAssetPath.Replace("\\", "/");
             var index = fullAssetPath.IndexOf(RUNTIME_STR);
-            var rs = fullAssetPath.Substring(index + RUNTIME_STR.Length).Split('.');
-            return rs[0];
+            if (index > 0)
+            {
+                var rs = fullAssetPath.Substring(index + RUNTIME_STR.Length).Split('.');
+                return rs[0];
+            }
+            else
+            {
+                return fullAssetPath;
+            }
         }
-
-
     }
 }
 #endif
