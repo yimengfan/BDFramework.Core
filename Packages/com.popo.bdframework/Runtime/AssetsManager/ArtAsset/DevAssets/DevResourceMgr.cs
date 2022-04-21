@@ -80,7 +80,7 @@ namespace BDFramework.ResourceMgr
                     var obj = objsMap[assetName];
                     objsMap.Remove(assetName);
                     //
-                    Resources.UnloadAsset(obj);
+                    //Resources.UnloadAsset(obj);
                 }
             }
             catch (Exception e)
