@@ -13,13 +13,13 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class StatusListenerTHelper
+    unsafe class EventListenerEx_ILRuntimeAdaptor
     {
         public static void RegisterCLRRedirection(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             MethodBase method;
             Type[] args;
-            Type type = typeof(BDFramework.DataListener.StatusListenerExtensionT);
+            Type type = typeof(BDFramework.DataListener.EventListenerEx);
             Dictionary<string, List<MethodInfo>> genericMethods = new Dictionary<string, List<MethodInfo>>();
             List<MethodInfo> lst = null;
             foreach (var m in type.GetMethods())

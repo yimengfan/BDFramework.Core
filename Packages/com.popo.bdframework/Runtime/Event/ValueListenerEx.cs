@@ -3,11 +3,11 @@
 namespace BDFramework.DataListener
 {
     /// <summary>
-    /// 状态事件监听扩展版本
+    /// 值监听扩展版本
     /// </summary>
-    static public class StatusListenerExtensionEnum
+    static public class ValueListenerEx
     {
-        #region 枚举版本
+     
         /// <summary>
         /// 枚举版本
         /// </summary>
@@ -166,6 +166,5 @@ namespace BDFramework.DataListener
         {
             dl.RemoveListener(name);
         }
-        #endregion
     }
 }

@@ -3,12 +3,12 @@
 namespace BDFramework.DataListener
 {
     /// <summary>
-    /// 状态事件监听扩展版本
+    /// 状态(事件)监听扩展
     /// </summary>
-    unsafe static public class StatusListenerExtensionT
+    unsafe static public class EventListenerEx
     {
         /// <summary>
-        /// T版本监听一次
+        /// 监听一次
         /// </summary>
         /// <param name="name"></param>
         /// <param name="callback"></param>
@@ -20,7 +20,7 @@ namespace BDFramework.DataListener
 
         
         /// <summary>
-        /// 状态监听泛型版本
+        /// 状态(事件)监听 T
         /// </summary>
         /// <param name="dl"></param>
         /// <param name="name">监听数据名</param>
