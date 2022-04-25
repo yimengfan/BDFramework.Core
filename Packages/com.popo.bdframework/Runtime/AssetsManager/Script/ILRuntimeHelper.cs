@@ -61,8 +61,8 @@ namespace BDFramework
             //其他模块的binding，后注册的相同函数签名 会被跳过
             JsonMapper.RegisterCLRRedirection(AppDomain);
             SqliteHelper.RegisterCLRRedirection(AppDomain);
-            StatusListenerEnumHelper.RegisterCLRRedirection(AppDomain);
-            StatusListenerTHelper.RegisterCLRRedirection(AppDomain);
+            ValueListenerEX_ILRuntimeAdaptor.RegisterCLRRedirection(AppDomain);
+            EventListenerEx_ILRuntimeAdaptor.RegisterCLRRedirection(AppDomain);
             //clrbinding
             gamelogicBindAction?.Invoke(isDoCLRBinding);
             //开启debuger

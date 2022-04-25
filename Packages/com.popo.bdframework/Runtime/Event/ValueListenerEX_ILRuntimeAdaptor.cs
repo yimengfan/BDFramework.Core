@@ -11,7 +11,7 @@ namespace ILRuntime.Runtime.Generated
     /// <summary>
     /// 值监听的ilr拓展
     /// </summary>
-    unsafe class ValueListenerEnumHelper
+    unsafe class ValueListenerEX_ILRuntimeAdaptor
     {
         public static void RegisterCLRRedirection(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
