@@ -75,8 +75,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u6D4B\u8BD5\u6A21\u578B\u5B50\u76EE\u5F55"
     m_id: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
-    m_x: 1032
-    m_y: 744
+    m_x: 1020
+    m_y: 804
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFolder, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -225,8 +225,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
     m_id: 514d1288-7246-484b-8a94-3075e3d1e8c3
-    m_x: 1068
-    m_y: 300
+    m_x: 1080
+    m_y: 336
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -255,8 +255,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
     m_id: f891d383-3b03-469b-81e8-e99d9f36b03a
-    m_x: 1068
-    m_y: 408
+    m_x: 1080
+    m_y: 456
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -286,7 +286,7 @@ MonoBehaviour:
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
     m_id: dd864864-5e6f-4386-bd1c-8c4b29038c29
     m_x: 1068
-    m_y: 516
+    m_y: 540
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -315,8 +315,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
     m_id: 4238358a-f55f-4a7d-a2ea-68110ab2808e
-    m_x: 1068
-    m_y: 624
+    m_x: 1056
+    m_y: 672
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -345,7 +345,7 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u5206\u5305]\u8D44\u6E90\u8DEF\u5F84\u5206\u5305"
     m_id: 11c7368e-660b-4bc6-956d-791ee29cd6b8
-    m_x: 1596
+    m_x: 1608
     m_y: 600
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.MultiplePackage, BDFramework.Editor,
@@ -556,19 +556,7 @@ MonoBehaviour:
     m_toNodeId: c58ab6fd-f457-4f8d-a53e-38608b4b0a87
     m_toNodeConnectionPoiontId: b8b334b8-64e4-4cec-b27a-084bfdc7f20b
     m_label: Assets/Resource/Runtime/Windows/
-  - m_id: ddfe8b04-076f-4428-afb3-fb6c87b3f85e
-    m_fromNodeId: 05edc084-becb-4af3-ad8f-eb276ecc65fd
-    m_fromNodeConnectionPointId: 2859aa83-9c7b-4521-a6f4-3f5758523753
-    m_toNodeId: 5c54f429-2e9d-45d5-ad93-29577e3649bb
-    m_toNodeConnectionPoiontId: 61be3c33-746e-4d91-836b-095615bd3d94
-    m_label: +
-  - m_id: 30249cc5-6f1e-4e82-bb81-0d47f9e06894
-    m_fromNodeId: b43f2ad7-04da-4ce0-aa2b-1b86904f3fc3
-    m_fromNodeConnectionPointId: 6dc8404e-9c26-4f68-93db-c1e4d16a5589
-    m_toNodeId: 5c54f429-2e9d-45d5-ad93-29577e3649bb
-    m_toNodeConnectionPoiontId: 61be3c33-746e-4d91-836b-095615bd3d94
-    m_label: +
-  m_lastModified: 132941768150804394
+  m_lastModified: 132941769486455063
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0

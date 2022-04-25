@@ -5,7 +5,7 @@ using UnityEngine;
 namespace BDFramework.UFlux
 {
     /// <summary>
-    /// 自动初始化Component属性街垒
+    /// 自动初始化Component属性基类
     /// </summary>
     public class AutoInitComponentAttribute : Attribute
     {

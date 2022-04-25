@@ -8,9 +8,19 @@ using LitJson;
 namespace BDFramework.UFlux.Test
 {
     /// <summary>
+    /// 这里是逻辑状态，
+    /// 比如服务器返回，客户端计算状态数据
+    /// </summary>
+    public class S_HeroDataDemo6Test : StateBase
+    {
+        public string Name;
+        public int Hp;
+        public int MaxHp;
+    }
+    /// <summary>
     /// Reducer 函数处理的集合
     /// </summary>
-    public class Reducer_Demo06 : AReducers<Server_HeroData>
+    public class Reducer_Demo06Test : AReducers<S_HeroDataDemo6Test>
     {
         public enum Reducer06
         {
@@ -48,12 +58,12 @@ namespace BDFramework.UFlux.Test
         /// <param name="old"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        private Server_HeroData RequestServer(Server_HeroData old, object @param)
+        private S_HeroDataDemo6Test RequestServer(S_HeroDataDemo6Test old, object @param)
         {
             var api = url + "api/bdframework/getherodata";
             WebClient  wc=new WebClient();
             string ret =  wc.DownloadString(api);
-            var hero = JsonMapper.ToObject<Server_HeroData>(ret);
+            var hero = JsonMapper.ToObject<S_HeroDataDemo6Test>(ret);
             return hero;
         }
         
@@ -63,12 +73,12 @@ namespace BDFramework.UFlux.Test
         /// <param name="old"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        async private Task<Server_HeroData>RequestServerByAsync(Server_HeroData old, object @param)
+        async private Task<S_HeroDataDemo6Test>RequestServerByAsync(S_HeroDataDemo6Test old, object @param)
         {
             var api = url + "api/bdframework/getherodata";
             WebClient  wc=new WebClient();
             string ret = await  wc.DownloadStringTaskAsync(api);
-            var hero = JsonMapper.ToObject<Server_HeroData>(ret);
+            var hero = JsonMapper.ToObject<S_HeroDataDemo6Test>(ret);
             return hero;
         }
         
@@ -80,14 +90,14 @@ namespace BDFramework.UFlux.Test
         /// <param name="old"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        private void RequestServerByCallback (Store<Server_HeroData>.GetState getStateFunc, object @params = null, Action<Server_HeroData> callback = null)
+        private void RequestServerByCallback (Store<S_HeroDataDemo6Test>.GetState getStateFunc, object @params = null, Action<S_HeroDataDemo6Test> callback = null)
         {
             var api = url + "api/bdframework/getherodata";
             WebClient  wc=new WebClient();
             //提前注册回调
             wc.DownloadStringCompleted += (ret,e) =>
             {
-                var hero = JsonMapper.ToObject<Server_HeroData>(ret.ToString());
+                var hero = JsonMapper.ToObject<S_HeroDataDemo6Test>(ret.ToString());
                 callback?.Invoke(hero);
             };
             //开始异步下载

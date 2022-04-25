@@ -9,7 +9,7 @@ namespace BDFramework.UFlux.Contains
     /// <summary>
     /// 一个Store 对应一个 数据状态
     /// </summary>
-    public class Store<S> where S : AStateBase, new()
+    public class Store<S> :IStore  where S : AStateBase, new()
     {
         //最大的数据缓存数量
         static int MAX_STATE_NUM = 20;
@@ -79,7 +79,7 @@ namespace BDFramework.UFlux.Contains
         /// </summary>
         public class CallbackWarpper
         {
-            public Enum      Tag      = null;
+            public Enum Tag = null;
             public Action<S> Callback = null;
         }
 
@@ -109,9 +109,35 @@ namespace BDFramework.UFlux.Contains
         public void Subscribe(Enum tag, Action<S> callback)
         {
             var callbackWarpper = new CallbackWarpper();
-            callbackWarpper.Tag      = tag;
+            callbackWarpper.Tag = tag;
             callbackWarpper.Callback = callback;
             callbackList.Add(callbackWarpper);
+        }
+
+        /// <summary>
+        /// 订阅包装，不建议业务层直接调用
+        /// </summary>
+        /// <param name="callback"></param>
+        public void SubscribeWrapper(Action<object> callback)
+        {
+            this.Subscribe((s) =>
+            {
+                //包装用以外部方便做类型转换
+                callback?.Invoke(s);
+            });
+        }
+
+        /// <summary>
+        /// 订阅包装，不建议业务层直接调用
+        /// </summary>
+        /// <param name="callback"></param>
+        public void Subscribe(Enum tag, Action<object> callback)
+        {
+            this.Subscribe(tag,(s) =>
+            {
+                //包装用以外部方便做类型转换
+                callback?.Invoke(s);
+            });
         }
 
 
@@ -126,38 +152,41 @@ namespace BDFramework.UFlux.Contains
         /// <param name="actionEnum"></param>
         public void Dispatch(Enum actionEnum, object @params = null)
         {
-            var action = new UFluxAction() { ActionTag = actionEnum };
+            var action = new UFluxAction() {ActionTag = actionEnum};
             action.SetParams(@params);
             //分发
             Dispatch(action);
         }
+
 
         /// <summary>
         /// 调度
         /// 1.这里要处理好异步任务，并且组装好事件队列
         /// 2.异步会堵塞同步方法，同一时间只有1个dispatch能执行
         /// </summary>
-        async public void Dispatch(UFluxAction action)
+        async private void Dispatch(UFluxAction action)
         {
-            var oldState = GetCurrentState();
-
-            // foreach (var reducer in reducer)
+          
+            var executeType = reducer.GetExecuteType(action.ActionTag);
+            switch (executeType)
             {
-                var ret = reducer.IsAsyncLoad(action.ActionTag);
-                if (!ret) //同步模式
+                case AReducers<S>.ExecuteTypeEnum.Synchronization:
                 {
-                    //先执行await
+                    var oldState = GetCurrentState();
+                   var newstate = reducer.Excute(action.ActionTag, action.Params, oldState);
+                   //设置new state
+                   SetNewState(action.ActionTag, newstate);
+                }
+                    break;
+                case AReducers<S>.ExecuteTypeEnum.Async:
+                {
+                    var oldState = GetCurrentState();
                     var newstate = await reducer.ExcuteAsync(action.ActionTag, action.Params, oldState);
-                    //再执行普通
-                    if (newstate == null)
-                    {
-                        newstate = reducer.Excute(action.ActionTag, action.Params, oldState);
-                    }
-
                     //设置new state
                     SetNewState(action.ActionTag, newstate);
                 }
-                else //回调模式
+                    break;
+                case AReducers<S>.ExecuteTypeEnum.Callback:
                 {
                     reducer.ExcuteByCallback(action.ActionTag, action.Params, GetCurrentState, (newState) =>
                     {
@@ -165,7 +194,9 @@ namespace BDFramework.UFlux.Contains
                         SetNewState(action.ActionTag, newState);
                     });
                 }
+                    break;
             }
+
         }
 
         /// <summary>

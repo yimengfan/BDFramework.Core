@@ -2,6 +2,7 @@
 using BDFramework.UFlux.Reducer;
 using BDFramework.UFlux.View.Props;
 using BDFramework.UI;
+using LitJson;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,13 +40,28 @@ namespace BDFramework.UFlux.Test
         {
             base.Init();
 
+            //单Reducer监听
             store = StoreFactory.CreateStore(new Reducer_Demo06());
-
-            store.Subscribe((s) =>
+            store.Subscribe((newState) =>
             {
                 //刷新
-                StateToProps(s);
+                StateToProps(newState);
             });
+            
+            //多Reducer 监听演示
+           var storeWrapper = StoreFactory.CreateStore(new Reducer_Demo06(),new Reducer_Demo06Test());
+           //监听State:S_HeroDataDemo6Test
+           storeWrapper.Subscribe<S_HeroDataDemo6Test>((newState) =>
+           {
+               Debug.Log(JsonMapper.ToJson(newState));
+           });
+           //监听State:Server_HeroData
+           storeWrapper.Subscribe<Server_HeroData>((newState) =>
+           {
+               Debug.Log(JsonMapper.ToJson(newState));
+           });
+
+            
         }
         /// <summary>
         /// 这个是根据逻辑State
@@ -86,7 +102,7 @@ namespace BDFramework.UFlux.Test
         private void btn_RequestNet()
         {
             //触发Reducer
-            this.store.Dispatch(Reducer_Demo06.Reducer06.RequestHeroData);
+            this.store.Dispatch(Reducer_Demo06.Reducer06.RequestHeroDataAsync);
         }
     }
 }

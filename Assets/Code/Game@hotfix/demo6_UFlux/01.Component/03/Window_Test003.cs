@@ -58,6 +58,7 @@ namespace Game.demo6_UFlux.Comonent._03
             }
             //嵌套的父级Class最好，手动标记修改
             this.Props.SetPropertyChange(nameof(this.Props.ItemList));
+            
             this.CommitProps();
             
             Debug.Log("嵌套绑定多节点,点击跟踪代码");
