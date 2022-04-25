@@ -14,13 +14,13 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class BDFramework_DataListener_StatusListenerExtensionT_Binding
+    unsafe class BDFramework_DataListener_EventListenerEx_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             MethodBase method;
             Type[] args;
-            Type type = typeof(BDFramework.DataListener.StatusListenerExtensionT);
+            Type type = typeof(BDFramework.DataListener.EventListenerEx);
             Dictionary<string, List<MethodInfo>> genericMethods = new Dictionary<string, List<MethodInfo>>();
             List<MethodInfo> lst = null;                    
             foreach(var m in type.GetMethods())
@@ -176,7 +176,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionT.AddListener<Game.Demo.M_StatusListenerTest>(@dl, @action, @order, @triggerNum, @isTriggerCacheData);
+            BDFramework.DataListener.EventListenerEx.AddListener<Game.Demo.M_StatusListenerTest>(@dl, @action, @order, @triggerNum, @isTriggerCacheData);
 
             return __ret;
         }
@@ -202,7 +202,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionT.AddListenerOnce<Game.Demo.M_StatusListenerTest>(@dl, @callback, @order, @isTriggerCacheData);
+            BDFramework.DataListener.EventListenerEx.AddListenerOnce<Game.Demo.M_StatusListenerTest>(@dl, @callback, @order, @isTriggerCacheData);
 
             return __ret;
         }
@@ -231,7 +231,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionT.AddListener<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @action, @order, @triggerNum, @isTriggerCacheData);
+            BDFramework.DataListener.EventListenerEx.AddListener<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @action, @order, @triggerNum, @isTriggerCacheData);
 
             return __ret;
         }
@@ -257,7 +257,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionT.AddListenerOnce<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @callback, @order, @isTriggerCacheData);
+            BDFramework.DataListener.EventListenerEx.AddListenerOnce<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @callback, @order, @isTriggerCacheData);
 
             return __ret;
         }
@@ -277,7 +277,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionT.RemoveListener<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @callback);
+            BDFramework.DataListener.EventListenerEx.RemoveListener<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @callback);
 
             return __ret;
         }
@@ -293,7 +293,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionT.ClearListener<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl);
+            BDFramework.DataListener.EventListenerEx.ClearListener<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl);
 
             return __ret;
         }
@@ -313,7 +313,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionT.TriggerEvent<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @value);
+            BDFramework.DataListener.EventListenerEx.TriggerEvent<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @value);
 
             return __ret;
         }
@@ -333,7 +333,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionT.TriggerEvent<Game.Demo.M_StatusListenerTest>(@dl, @value);
+            BDFramework.DataListener.EventListenerEx.TriggerEvent<Game.Demo.M_StatusListenerTest>(@dl, @value);
 
             return __ret;
         }

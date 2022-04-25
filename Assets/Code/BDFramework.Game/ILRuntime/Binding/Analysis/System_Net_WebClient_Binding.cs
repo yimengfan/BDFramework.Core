@@ -25,6 +25,15 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.String)};
             method = type.GetMethod("DownloadStringTaskAsync", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, DownloadStringTaskAsync_0);
+            args = new Type[]{typeof(System.String)};
+            method = type.GetMethod("DownloadString", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, DownloadString_1);
+            args = new Type[]{typeof(System.Net.DownloadStringCompletedEventHandler)};
+            method = type.GetMethod("add_DownloadStringCompleted", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, add_DownloadStringCompleted_2);
+            args = new Type[]{typeof(System.Uri)};
+            method = type.GetMethod("DownloadStringAsync", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, DownloadStringAsync_3);
 
             args = new Type[]{};
             method = type.GetConstructor(flag, null, args, null);
@@ -55,6 +64,63 @@ namespace ILRuntime.Runtime.Generated
                 return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
             }
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* DownloadString_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.String @address = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            System.Net.WebClient instance_of_this_method = (System.Net.WebClient)typeof(System.Net.WebClient).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = instance_of_this_method.DownloadString(@address);
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* add_DownloadStringCompleted_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Net.DownloadStringCompletedEventHandler @value = (System.Net.DownloadStringCompletedEventHandler)typeof(System.Net.DownloadStringCompletedEventHandler).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)8);
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            System.Net.WebClient instance_of_this_method = (System.Net.WebClient)typeof(System.Net.WebClient).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            __intp.Free(ptr_of_this_method);
+
+            instance_of_this_method.DownloadStringCompleted += value;
+
+            return __ret;
+        }
+
+        static StackObject* DownloadStringAsync_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Uri @address = (System.Uri)typeof(System.Uri).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            System.Net.WebClient instance_of_this_method = (System.Net.WebClient)typeof(System.Net.WebClient).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            __intp.Free(ptr_of_this_method);
+
+            instance_of_this_method.DownloadStringAsync(@address);
+
+            return __ret;
         }
 
 

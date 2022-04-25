@@ -14,14 +14,14 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class BDFramework_DataListener_StatusListenerExtensionEnum_Binding
+    unsafe class BDFramework_DataListener_ValueListenerEx_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(BDFramework.DataListener.StatusListenerExtensionEnum);
+            Type type = typeof(BDFramework.DataListener.ValueListenerEx);
             args = new Type[]{typeof(BDFramework.DataListener.AStatusListener), typeof(System.Enum), typeof(System.Object), typeof(System.Boolean)};
             method = type.GetMethod("SetData", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, SetData_0);
@@ -154,7 +154,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionEnum.SetData(@dl, @enum, @value, @isTriggerCallback);
+            BDFramework.DataListener.ValueListenerEx.SetData(@dl, @enum, @value, @isTriggerCallback);
 
             return __ret;
         }
@@ -174,7 +174,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = BDFramework.DataListener.StatusListenerExtensionEnum.GetData<System.Int32>(@dl, @name);
+            var result_of_this_method = BDFramework.DataListener.ValueListenerEx.GetData<System.Int32>(@dl, @name);
 
             __ret->ObjectType = ObjectTypes.Integer;
             __ret->Value = result_of_this_method;
@@ -209,7 +209,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionEnum.AddListener(@dl, @name, @action, @order, @triggerNum, @isTriggerCacheData);
+            BDFramework.DataListener.ValueListenerEx.AddListener(@dl, @name, @action, @order, @triggerNum, @isTriggerCacheData);
 
             return __ret;
         }
@@ -239,7 +239,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionEnum.AddListenerOnce(@dl, @name, @callback, @oder, @isTriggerCacheData);
+            BDFramework.DataListener.ValueListenerEx.AddListenerOnce(@dl, @name, @callback, @oder, @isTriggerCacheData);
 
             return __ret;
         }
@@ -266,7 +266,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionEnum.TriggerEvent(@dl, @name, @value, @isTriggerCallback);
+            BDFramework.DataListener.ValueListenerEx.TriggerEvent(@dl, @name, @value, @isTriggerCallback);
 
             return __ret;
         }
@@ -286,7 +286,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionEnum.RemoveListener(@dl, @name);
+            BDFramework.DataListener.ValueListenerEx.RemoveListener(@dl, @name);
 
             return __ret;
         }
@@ -306,7 +306,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionEnum.ClearListener(@dl, @name);
+            BDFramework.DataListener.ValueListenerEx.ClearListener(@dl, @name);
 
             return __ret;
         }
@@ -339,7 +339,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionEnum.AddListener<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @name, @action, @order, @triggerNum, @isTriggerCacheData);
+            BDFramework.DataListener.ValueListenerEx.AddListener<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @name, @action, @order, @triggerNum, @isTriggerCacheData);
 
             return __ret;
         }
@@ -372,7 +372,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionEnum.AddListener<System.String>(@dl, @name, @action, @order, @triggerNum, @isTriggerCacheData);
+            BDFramework.DataListener.ValueListenerEx.AddListener<System.String>(@dl, @name, @action, @order, @triggerNum, @isTriggerCacheData);
 
             return __ret;
         }
@@ -405,7 +405,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionEnum.AddListener<System.Object>(@dl, @name, @action, @order, @triggerNum, @isTriggerCacheData);
+            BDFramework.DataListener.ValueListenerEx.AddListener<System.Object>(@dl, @name, @action, @order, @triggerNum, @isTriggerCacheData);
 
             return __ret;
         }
@@ -438,7 +438,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionEnum.AddListener<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @name, @action, @order, @triggerNum, @isTriggerCacheData);
+            BDFramework.DataListener.ValueListenerEx.AddListener<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@dl, @name, @action, @order, @triggerNum, @isTriggerCacheData);
 
             return __ret;
         }
@@ -462,7 +462,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerExtensionEnum.RemoveListener(@dl, @name, @callback);
+            BDFramework.DataListener.ValueListenerEx.RemoveListener(@dl, @name, @callback);
 
             return __ret;
         }
