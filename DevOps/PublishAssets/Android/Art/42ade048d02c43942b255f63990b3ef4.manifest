@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 2664021627
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f16d467e6cc87f20a96f58f4e06d53eb
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/MIX_AB_SOURCE/Obf006.txt
+Dependencies: []

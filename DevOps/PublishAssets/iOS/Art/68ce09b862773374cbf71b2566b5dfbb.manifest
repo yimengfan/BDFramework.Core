@@ -1,0 +1,25 @@
+ManifestFileVersion: 0
+CRC: 1661716481
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3fcecb3343713f50acb5f6d45c0125fc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 53f981be5ec971310d129764e188d70b
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource_SVN/Model/3DXY_Material_1.mat
+- Assets/Resource_SVN/Model/3Dxy_Img_1.png
+- Assets/Resource_SVN/Model/3DXY_geometry_001.mesh
+Dependencies: []

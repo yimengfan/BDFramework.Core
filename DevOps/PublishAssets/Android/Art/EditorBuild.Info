@@ -1,6 +1,6 @@
 
 {
-  "Time" : "2022/4/11",
+  "Time" : "2022/4/27",
   "AssetDataMaps" : {
     "assets/resource/runtime/allassettype/archive.jpg" : {
       "Id" : 0,
@@ -346,18 +346,108 @@
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
-    "assets/resource/runtime/mixassetbundle.txt"                                                  : {
+    "assets/resource/runtime/mix_ab_source/obf001.txt"                                            : {
       "Id" : 33,
       "ArtConfigIdx" : 31,
       "Type"         : 8,
       "ABName"       : "f7bebf224507bfc42975ec5a95b16160",
       "ReferenceCount" : 0,
-      "Hash"           : "2200868178",
+      "Hash"           : "13768519",
+      "DependAssetList" : [
+      ]
+    },
+    "assets/resource/runtime/mix_ab_source/obf002.txt"                                            : {
+      "Id" : 34,
+      "ArtConfigIdx" : 32,
+      "Type"         : 8,
+      "ABName"       : "179f46cdc961bcd4bbd50a7aa2721f80",
+      "ReferenceCount" : 0,
+      "Hash"           : "4125858197",
+      "DependAssetList" : [
+      ]
+    },
+    "assets/resource/runtime/mix_ab_source/obf003.txt"                                            : {
+      "Id" : 35,
+      "ArtConfigIdx" : 33,
+      "Type"         : 8,
+      "ABName"       : "759d8b554e3d37847a6d32a52c39ff46",
+      "ReferenceCount" : 0,
+      "Hash"           : "4196231823",
+      "DependAssetList" : [
+      ]
+    },
+    "assets/resource/runtime/mix_ab_source/obf004.txt"                                            : {
+      "Id" : 36,
+      "ArtConfigIdx" : 34,
+      "Type"         : 8,
+      "ABName"       : "faa9a0f13e41cad409f038f4fff2a228",
+      "ReferenceCount" : 0,
+      "Hash"           : "2050698193",
+      "DependAssetList" : [
+      ]
+    },
+    "assets/resource/runtime/mix_ab_source/obf005.txt"                                            : {
+      "Id" : 37,
+      "ArtConfigIdx" : 35,
+      "Type"         : 8,
+      "ABName"       : "3059f944eee2cbb4998bc4a6b7a0424a",
+      "ReferenceCount" : 0,
+      "Hash"           : "362425915",
+      "DependAssetList" : [
+      ]
+    },
+    "assets/resource/runtime/mix_ab_source/obf006.txt"                                            : {
+      "Id" : 38,
+      "ArtConfigIdx" : 36,
+      "Type"         : 8,
+      "ABName"       : "42ade048d02c43942b255f63990b3ef4",
+      "ReferenceCount" : 0,
+      "Hash"           : "3485556956",
+      "DependAssetList" : [
+      ]
+    },
+    "assets/resource/runtime/mix_ab_source/obf007.txt"                                            : {
+      "Id" : 39,
+      "ArtConfigIdx" : 37,
+      "Type"         : 8,
+      "ABName"       : "03261b91951820a40bec94cb7c5dde24",
+      "ReferenceCount" : 0,
+      "Hash"           : "2654574426",
+      "DependAssetList" : [
+      ]
+    },
+    "assets/resource/runtime/mix_ab_source/obf008.txt"                                            : {
+      "Id" : 40,
+      "ArtConfigIdx" : 38,
+      "Type"         : 8,
+      "ABName"       : "fb5ebad071fb43d4cba483e50f706da6",
+      "ReferenceCount" : 0,
+      "Hash"           : "1489719721",
+      "DependAssetList" : [
+      ]
+    },
+    "assets/resource/runtime/mix_ab_source/obf009.txt"                                            : {
+      "Id" : 41,
+      "ArtConfigIdx" : 39,
+      "Type"         : 8,
+      "ABName"       : "c75b9dcf9cd90f849932f8e894451482",
+      "ReferenceCount" : 0,
+      "Hash"           : "3869770087",
+      "DependAssetList" : [
+      ]
+    },
+    "assets/resource/runtime/mix_ab_source/obf010.txt"                                            : {
+      "Id" : 42,
+      "ArtConfigIdx" : 40,
+      "Type"         : 8,
+      "ABName"       : "888db6dc4d8fee245a31856655840a46",
+      "ReferenceCount" : 0,
+      "Hash"           : "3041036670",
       "DependAssetList" : [
       ]
     },
     "assets/resource/shaders/testshader/defaultresourcesextra/standard.shader"                    : {
-      "Id" : 34,
+      "Id" : 43,
       "ArtConfigIdx" : -1,
       "Type"         : 7,
       "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
@@ -367,8 +457,8 @@
       ]
     },
     "assets/resource/runtime/shader/allshaders.shadervariants"                                    : {
-      "Id" : 35,
-      "ArtConfigIdx" : 32,
+      "Id" : 44,
+      "ArtConfigIdx" : 41,
       "Type"         : 10,
       "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
       "ReferenceCount" : 0,
@@ -377,7 +467,7 @@
       ]
     },
     "assets/resource/shaders/builtin_shaders-2019/defaultresourcesextra/normal-vertexlit.shader"  : {
-      "Id" : 36,
+      "Id" : 45,
       "ArtConfigIdx" : -1,
       "Type"         : 7,
       "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
@@ -387,7 +477,7 @@
       ]
     },
     "assets/resource/shaders/testshader/shader/pbr_silk.shader"                                   : {
-      "Id" : 37,
+      "Id" : 46,
       "ArtConfigIdx" : -1,
       "Type"         : 7,
       "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
@@ -397,8 +487,8 @@
       ]
     },
     "assets/resource/runtime/spriteatlas/sa2019.spriteatlas"                                      : {
-      "Id" : 38,
-      "ArtConfigIdx" : 33,
+      "Id" : 47,
+      "ArtConfigIdx" : 42,
       "Type"         : 4,
       "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
       "ReferenceCount" : 0,
@@ -408,7 +498,7 @@
       ]
     },
     "assets/resource/image/test2/5.jpg"                                                           : {
-      "Id" : 39,
+      "Id" : 48,
       "ArtConfigIdx" : -1,
       "Type"         : 9,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -418,7 +508,7 @@
       ]
     },
     "assets/resource/image/test2/3.jpg"                                                           : {
-      "Id" : 40,
+      "Id" : 49,
       "ArtConfigIdx" : -1,
       "Type"         : 9,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -428,7 +518,7 @@
       ]
     },
     "assets/resource/image/test2/4.jpg"                                                           : {
-      "Id" : 41,
+      "Id" : 50,
       "ArtConfigIdx" : -1,
       "Type"         : 9,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -438,7 +528,7 @@
       ]
     },
     "assets/resource/image/test2/10.jpg"                                                          : {
-      "Id" : 42,
+      "Id" : 51,
       "ArtConfigIdx" : -1,
       "Type"         : 9,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -448,7 +538,7 @@
       ]
     },
     "assets/resource/image/test2/9.jpg"                                                           : {
-      "Id" : 43,
+      "Id" : 52,
       "ArtConfigIdx" : -1,
       "Type"         : 9,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -458,8 +548,8 @@
       ]
     },
     "assets/resource/runtime/spriteatlas/sa2019_notinruntime.spriteatlas"                         : {
-      "Id" : 44,
-      "ArtConfigIdx" : 34,
+      "Id" : 53,
+      "ArtConfigIdx" : 43,
       "Type"         : 4,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
       "ReferenceCount" : 0,
@@ -469,7 +559,7 @@
       ]
     },
     "assets/resource/image/test2/2.jpg"                                                           : {
-      "Id" : 45,
+      "Id" : 54,
       "ArtConfigIdx" : -1,
       "Type"         : 9,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -479,7 +569,7 @@
       ]
     },
     "assets/resource/image/test2/6.jpg"                                                           : {
-      "Id" : 46,
+      "Id" : 55,
       "ArtConfigIdx" : -1,
       "Type"         : 9,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -489,7 +579,7 @@
       ]
     },
     "assets/resource/image/test2/1.jpg"                                                           : {
-      "Id" : 47,
+      "Id" : 56,
       "ArtConfigIdx" : -1,
       "Type"         : 9,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -499,7 +589,7 @@
       ]
     },
     "assets/resource/image/test2/8.jpg"                                                           : {
-      "Id" : 48,
+      "Id" : 57,
       "ArtConfigIdx" : -1,
       "Type"         : 9,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -509,7 +599,7 @@
       ]
     },
     "assets/resource/image/test2/7.jpg"                                                           : {
-      "Id" : 49,
+      "Id" : 58,
       "ArtConfigIdx" : -1,
       "Type"         : 9,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -519,8 +609,8 @@
       ]
     },
     "assets/resource/runtime/test/cube.prefab"                                                    : {
-      "Id" : 50,
-      "ArtConfigIdx" : 35,
+      "Id" : 59,
+      "ArtConfigIdx" : 44,
       "Type"         : 6,
       "ABName"       : "a7feec6462d3d3249936655cf4e31de5",
       "ReferenceCount" : 0,
@@ -531,8 +621,8 @@
       ]
     },
     "assets/resource/runtime/windows/grid.prefab"                                                 : {
-      "Id" : 51,
-      "ArtConfigIdx" : 36,
+      "Id" : 60,
+      "ArtConfigIdx" : 45,
       "Type"         : 6,
       "ABName"       : "36c26bcd10b840e4f9868d6a6b9b6b37",
       "ReferenceCount" : 0,
@@ -542,8 +632,8 @@
       ]
     },
     "assets/resource/runtime/windows/uflux/01component/component_test01.prefab"                   : {
-      "Id" : 52,
-      "ArtConfigIdx" : 37,
+      "Id" : 61,
+      "ArtConfigIdx" : 46,
       "Type"         : 6,
       "ABName"       : "e157959f9c83caa419fd530f402b54f8",
       "ReferenceCount" : 0,
@@ -553,8 +643,8 @@
       ]
     },
     "assets/resource/runtime/windows/uflux/01component/window_test003.prefab"                     : {
-      "Id" : 53,
-      "ArtConfigIdx" : 38,
+      "Id" : 62,
+      "ArtConfigIdx" : 47,
       "Type"         : 6,
       "ABName"       : "0fab552ab15035e4d82bf9adc52725f6",
       "ReferenceCount" : 0,
@@ -563,8 +653,8 @@
       ]
     },
     "assets/resource/runtime/windows/uflux/02customcomponentbindadator/01/item.prefab"            : {
-      "Id" : 54,
-      "ArtConfigIdx" : 39,
+      "Id" : 63,
+      "ArtConfigIdx" : 48,
       "Type"         : 6,
       "ABName"       : "7ab40f5c94bb46c4d8bdc9719471a0ea",
       "ReferenceCount" : 0,
@@ -573,8 +663,8 @@
       ]
     },
     "assets/resource/runtime/windows/uflux/02customcomponentbindadator/01/window_test.prefab"     : {
-      "Id" : 55,
-      "ArtConfigIdx" : 40,
+      "Id" : 64,
+      "ArtConfigIdx" : 49,
       "Type"         : 6,
       "ABName"       : "a68e48a29a930504a9ca43956d727eed",
       "ReferenceCount" : 0,
@@ -583,8 +673,8 @@
       ]
     },
     "assets/resource/runtime/windows/uflux/02customcomponentbindadator/02/window_test.prefab"     : {
-      "Id" : 56,
-      "ArtConfigIdx" : 41,
+      "Id" : 65,
+      "ArtConfigIdx" : 50,
       "Type"         : 6,
       "ABName"       : "f69fe24036fa721438c98fb52af11c6b",
       "ReferenceCount" : 0,
@@ -593,8 +683,8 @@
       ]
     },
     "assets/resource/runtime/windows/uflux/demo004/window_simplewindow.prefab"                    : {
-      "Id" : 57,
-      "ArtConfigIdx" : 42,
+      "Id" : 66,
+      "ArtConfigIdx" : 51,
       "Type"         : 6,
       "ABName"       : "2090e433e199dc549aae632bee6b20d9",
       "ReferenceCount" : 0,
@@ -603,8 +693,8 @@
       ]
     },
     "assets/resource/runtime/windows/uflux/demo005/window_propsdemo.prefab"                       : {
-      "Id" : 58,
-      "ArtConfigIdx" : 43,
+      "Id" : 67,
+      "ArtConfigIdx" : 52,
       "Type"         : 6,
       "ABName"       : "7d3eab7902fddd347af42de5a0958047",
       "ReferenceCount" : 0,
@@ -613,18 +703,18 @@
       ]
     },
     "assets/resource/runtime/windows/uflux/demo006/window_reducer.prefab"                         : {
-      "Id" : 59,
-      "ArtConfigIdx" : 44,
+      "Id" : 68,
+      "ArtConfigIdx" : 53,
       "Type"         : 6,
       "ABName"       : "22d5ca41200316741aaa39b9c265eb9b",
       "ReferenceCount" : 0,
-      "Hash"           : "2029952661",
+      "Hash"           : "2932535669",
       "DependAssetList" : [
       ]
     },
     "assets/resource/runtime/windows/uflux/demo007/window_di.prefab"                              : {
-      "Id" : 60,
-      "ArtConfigIdx" : 45,
+      "Id" : 69,
+      "ArtConfigIdx" : 54,
       "Type"         : 6,
       "ABName"       : "7c6f5172672ac234a85467bc91e5283f",
       "ReferenceCount" : 0,
@@ -633,8 +723,8 @@
       ]
     },
     "assets/resource/runtime/windows/uflux/window_fluxmain.prefab"                                : {
-      "Id" : 61,
-      "ArtConfigIdx" : 46,
+      "Id" : 70,
+      "ArtConfigIdx" : 55,
       "Type"         : 6,
       "ABName"       : "0cd1aa33ffab96440974e3fd84b4e99f",
       "ReferenceCount" : 0,
@@ -643,8 +733,8 @@
       ]
     },
     "assets/resource/runtime/windows/window_datalistener.prefab"                                  : {
-      "Id" : 62,
-      "ArtConfigIdx" : 47,
+      "Id" : 71,
+      "ArtConfigIdx" : 56,
       "Type"         : 6,
       "ABName"       : "890171c9213476c4487fdfe8320fed47",
       "ReferenceCount" : 0,
@@ -653,8 +743,8 @@
       ]
     },
     "assets/resource/runtime/windows/window_demo1.prefab"                                         : {
-      "Id" : 63,
-      "ArtConfigIdx" : 48,
+      "Id" : 72,
+      "ArtConfigIdx" : 57,
       "Type"         : 6,
       "ABName"       : "3b35ba17053b1d34792c38b1d32a4a12",
       "ReferenceCount" : 0,
@@ -664,8 +754,8 @@
       ]
     },
     "assets/resource/image/test/timg (1).jpg"                                                     : {
-      "Id" : 64,
-      "ArtConfigIdx" : 59,
+      "Id" : 73,
+      "ArtConfigIdx" : 68,
       "Type"         : 9,
       "ABName"       : "d2abdb77f35d37c4c9469630d1f22e50",
       "ReferenceCount" : 0,
@@ -674,8 +764,8 @@
       ]
     },
     "assets/resource/runtime/windows/window_demo5_spriteatlas.prefab"                             : {
-      "Id" : 65,
-      "ArtConfigIdx" : 49,
+      "Id" : 74,
+      "ArtConfigIdx" : 58,
       "Type"         : 6,
       "ABName"       : "d5430f7acac73bb4eaa529db1d8b763a",
       "ReferenceCount" : 0,
@@ -687,8 +777,8 @@
       ]
     },
     "assets/resource/runtime/windows/window_demomain.prefab"                                      : {
-      "Id" : 66,
-      "ArtConfigIdx" : 50,
+      "Id" : 75,
+      "ArtConfigIdx" : 59,
       "Type"         : 6,
       "ABName"       : "3d1d74f67a3b7b54ba46fec8ab67f807",
       "ReferenceCount" : 0,
@@ -697,8 +787,8 @@
       ]
     },
     "assets/resource_svn/model/001/spongebob.obj"                                                 : {
-      "Id" : 67,
-      "ArtConfigIdx" : 60,
+      "Id" : 76,
+      "ArtConfigIdx" : 69,
       "Type"         : 6,
       "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
       "ReferenceCount" : 0,
@@ -708,8 +798,8 @@
       ]
     },
     "assets/resource_svn/runtime/char/001.prefab"                                                 : {
-      "Id" : 68,
-      "ArtConfigIdx" : 51,
+      "Id" : 77,
+      "ArtConfigIdx" : 60,
       "Type"         : 6,
       "ABName"       : "bfcd26e55a55bd04f8a6f662bdde9abf",
       "ReferenceCount" : 0,
@@ -720,7 +810,7 @@
       ]
     },
     "assets/resource_svn/model/001/spongebob_squarepants.png"                                     : {
-      "Id" : 69,
+      "Id" : 78,
       "ArtConfigIdx" : -1,
       "Type"         : 0,
       "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
@@ -730,7 +820,7 @@
       ]
     },
     "assets/resource_svn/model/001/sb.mat"                                                        : {
-      "Id" : 70,
+      "Id" : 79,
       "ArtConfigIdx" : -1,
       "Type"         : 5,
       "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
@@ -741,8 +831,8 @@
       ]
     },
     "assets/resource_svn/model/002/char_patrick.png"                                              : {
-      "Id" : 71,
-      "ArtConfigIdx" : 61,
+      "Id" : 80,
+      "ArtConfigIdx" : 70,
       "Type"         : 0,
       "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
       "ReferenceCount" : 0,
@@ -751,8 +841,8 @@
       ]
     },
     "assets/resource_svn/runtime/char/002.prefab"                                                 : {
-      "Id" : 72,
-      "ArtConfigIdx" : 52,
+      "Id" : 81,
+      "ArtConfigIdx" : 61,
       "Type"         : 6,
       "ABName"       : "0bfcd856254d3f34b87bb6f99b9f3dfb",
       "ReferenceCount" : 0,
@@ -763,7 +853,7 @@
       ]
     },
     "assets/resource_svn/model/002/pat.mat"                                                       : {
-      "Id" : 73,
+      "Id" : 82,
       "ArtConfigIdx" : -1,
       "Type"         : 5,
       "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
@@ -774,7 +864,7 @@
       ]
     },
     "assets/resource_svn/model/002/patrick.obj"                                                   : {
-      "Id" : 74,
+      "Id" : 83,
       "ArtConfigIdx" : -1,
       "Type"         : 6,
       "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
@@ -785,8 +875,8 @@
       ]
     },
     "assets/resource_svn/model/3dxy_material_1.mat"                                               : {
-      "Id" : 75,
-      "ArtConfigIdx" : 62,
+      "Id" : 84,
+      "ArtConfigIdx" : 71,
       "Type"         : 5,
       "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
       "ReferenceCount" : 0,
@@ -796,7 +886,7 @@
       ]
     },
     "assets/resource_svn/model/3dxy_img_1.png"                                                    : {
-      "Id" : 76,
+      "Id" : 85,
       "ArtConfigIdx" : -1,
       "Type"         : 0,
       "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
@@ -806,7 +896,7 @@
       ]
     },
     "assets/resource_svn/model/3dxy_geometry_001.mesh"                                            : {
-      "Id" : 77,
+      "Id" : 86,
       "ArtConfigIdx" : -1,
       "Type"         : 3,
       "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
@@ -816,8 +906,8 @@
       ]
     },
     "assets/resource_svn/runtime/char/003.prefab"                                                 : {
-      "Id" : 78,
-      "ArtConfigIdx" : 53,
+      "Id" : 87,
+      "ArtConfigIdx" : 62,
       "Type"         : 6,
       "ABName"       : "00142fc9b13ce334d94e23f367a33d75",
       "ReferenceCount" : 0,
@@ -828,8 +918,8 @@
       ]
     },
     "assets/resource_svn/runtime/cubesvnmat.mat"                                                  : {
-      "Id" : 79,
-      "ArtConfigIdx" : 54,
+      "Id" : 88,
+      "ArtConfigIdx" : 63,
       "Type"         : 5,
       "ABName"       : "096dee19ab67ffc44ba3f8f790da67b4",
       "ReferenceCount" : 0,
@@ -839,8 +929,8 @@
       ]
     },
     "assets/resource_svn/runtime/cubesvn.prefab"                                                  : {
-      "Id" : 80,
-      "ArtConfigIdx" : 55,
+      "Id" : 89,
+      "ArtConfigIdx" : 64,
       "Type"         : 6,
       "ABName"       : "ae37c57b09de2ec4399a3eceb62b77ea",
       "ReferenceCount" : 0,
@@ -851,8 +941,8 @@
       ]
     },
     "assets/resource_svn/runtime/testmat_forkeywordcollect/arrow 1.mat"                           : {
-      "Id" : 81,
-      "ArtConfigIdx" : 56,
+      "Id" : 90,
+      "ArtConfigIdx" : 65,
       "Type"         : 5,
       "ABName"       : "70ed25d8f6269304483b716d4ffd3434",
       "ReferenceCount" : 0,
@@ -862,8 +952,8 @@
       ]
     },
     "assets/resource_svn/runtime/testmat_forkeywordcollect/arrow.mat"                             : {
-      "Id" : 82,
-      "ArtConfigIdx" : 57,
+      "Id" : 91,
+      "ArtConfigIdx" : 66,
       "Type"         : 5,
       "ABName"       : "c0d661c42cc867d46887fa3b94908542",
       "ReferenceCount" : 0,
@@ -873,8 +963,8 @@
       ]
     },
     "assets/resource_svn/runtime/testmat_forkeywordcollect/h_role_lanzhan_clotha_000.mat"         : {
-      "Id" : 83,
-      "ArtConfigIdx" : 58,
+      "Id" : 92,
+      "ArtConfigIdx" : 67,
       "Type"         : 5,
       "ABName"       : "8fb6653cf0d095a4da38233e10efdb41",
       "ReferenceCount" : 0,
