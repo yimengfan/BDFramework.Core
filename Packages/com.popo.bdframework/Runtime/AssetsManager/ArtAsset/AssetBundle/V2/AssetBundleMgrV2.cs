@@ -170,7 +170,7 @@ namespace BDFramework.ResourceMgr.V2
                 }
 
                 //加载主资源
-                LoadAssetBundle(assetBundleItem.AssetBundlePath);
+                LoadAssetBundle(assetBundleItem.AssetBundlePath,assetBundleItem.Mix);
                 //
                 return LoadFormAssetBundle(type, path, assetBundleItem);
             }

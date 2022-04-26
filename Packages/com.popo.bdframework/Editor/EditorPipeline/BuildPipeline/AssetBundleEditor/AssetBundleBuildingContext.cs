@@ -361,7 +361,7 @@ namespace BDFramework.Editor.AssetBundle
             //6.资源混淆
             if ( BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle.IsEnableObfuscation)
             {
-                this.MixAssetBundle(BuildParams.OutputPath);
+                this.MixAssetBundle(BuildParams.OutputPath,platform);
             }
             
 
@@ -1059,8 +1059,8 @@ namespace BDFramework.Editor.AssetBundle
             {
                 //源AB
                 var sourceItem = abv2.AssetConfigLoder.AssetbundleItemList[i];
-                //非混合文件
-                if (mixAssetbundleItems.Contains(sourceItem))
+                //非混合文件、ab不存在、mix过
+                if (mixAssetbundleItems.Contains(sourceItem)|| sourceItem.AssetBundlePath==null || sourceItem.Mix>0)
                 {
                     continue;
                 }
@@ -1074,13 +1074,20 @@ namespace BDFramework.Editor.AssetBundle
                 var abBytes = File.ReadAllBytes(abpath);
 
                 //拼接
-                var mixLen = mixBytes.Length;
-                Array.Resize(ref mixBytes, mixBytes.Length + abBytes.Length);
-                Array.Copy(abBytes, 0, mixBytes, mixLen, abBytes.Length);
-                
+                var outbytes = new byte[mixBytes.Length + abBytes.Length];
+                Array.Copy(mixBytes, 0, outbytes, 0, mixBytes.Length);
+                Array.Copy(abBytes, 0, outbytes, mixBytes.Length, abBytes.Length);
                 //写入
-                File.WriteAllBytes(abpath,mixBytes);
-                sourceItem.Mix = mixLen;
+                File.WriteAllBytes(abpath,outbytes);
+                //相同ab的都进行赋值，避免下次重新被修改。
+                foreach (var item in abv2.AssetConfigLoder.AssetbundleItemList)
+                {
+                    if (sourceItem.AssetBundlePath.Equals(item.AssetBundlePath))
+                    {
+                        item.Mix = mixBytes.Length;
+                    }
+                }
+                sourceItem.Mix = mixBytes.Length;;
             }
             //
             abv2.AssetConfigLoder.OverrideConfig();
