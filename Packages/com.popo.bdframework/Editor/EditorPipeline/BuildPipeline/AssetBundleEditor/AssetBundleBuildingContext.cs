@@ -1044,12 +1044,12 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 添加混淆
         /// </summary>
-        public void MixAssetBundle(string path)
+        public void MixAssetBundle(string outpath,RuntimePlatform platform)
         {
             var mixAssets = GetMixAssets();
             //构建ab管理器对象
             AssetBundleMgrV2 abv2 = new AssetBundleMgrV2();
-            abv2.Init(path);
+            abv2.Init(outpath);
             //
             var mixAssetbundleItems = abv2.AssetConfigLoder.AssetbundleItemList.Where((i) => mixAssets.Contains(i.AssetBundlePath)).ToArray();
 
@@ -1068,8 +1068,9 @@ namespace BDFramework.Editor.AssetBundle
                 var idx = (int) (Random.Range(0, (mixAssetbundleItems.Length - 1) * 10000) / 10000);
                 var mixItem = mixAssetbundleItems[idx];
                 //
-                var mixBytes = File.ReadAllBytes(IPath.Combine(path, BResources.ASSET_ROOT_PATH, mixItem.AssetBundlePath));
-                var abpath = IPath.Combine(path, BResources.ASSET_ROOT_PATH, sourceItem.AssetBundlePath);
+                var mixBytes = File.ReadAllBytes(IPath.Combine(outpath, BDApplication.GetPlatformPath(platform),BResources.ASSET_ROOT_PATH, mixItem.AssetBundlePath));
+              
+                var abpath = IPath.Combine(outpath,BDApplication.GetPlatformPath(platform), BResources.ASSET_ROOT_PATH, sourceItem.AssetBundlePath);
                 var abBytes = File.ReadAllBytes(abpath);
 
                 //拼接
