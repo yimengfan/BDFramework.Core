@@ -175,7 +175,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             //检测混淆
-            AssetBundleEditorToolsV2.CheckABObfuscationSource();
+            BuildingCtx.CheckABObfuscationSource();
 
             StopwatchTools.Begin();
             if (BuildingCtx == null)

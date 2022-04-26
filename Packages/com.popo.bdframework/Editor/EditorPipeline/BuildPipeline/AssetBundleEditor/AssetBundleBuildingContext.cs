@@ -15,6 +15,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AssetGraph;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 
 namespace BDFramework.Editor.AssetBundle
@@ -298,7 +299,7 @@ namespace BDFramework.Editor.AssetBundle
             var abRootPath = IPath.Combine(BuildParams.OutputPath, BDApplication.GetPlatformPath(platform), BResources.ASSET_ROOT_PATH);
             var previewABUnitMap = BuildAssetsInfo.PreviewAssetbundleUnit();
             var manifestList = Directory.GetFiles(abRootPath, "*.manifest", SearchOption.AllDirectories);
-            //解析 manifest
+            //解析 manifestBuildParams.OutputPath
             for (int i = 0; i < manifestList.Length; i++)
             {
                 var manifest = manifestList[i].Replace("\\", "/");
@@ -356,6 +357,13 @@ namespace BDFramework.Editor.AssetBundle
 
             }
 
+            
+            //6.资源混淆
+            if ( BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle.IsEnableObfuscation)
+            {
+                this.MixAssetBundle(BuildParams.OutputPath);
+            }
+            
 
             //恢复编辑器状态
             BDEditorApplication.EditorStatus = BDFrameworkEditorStatus.Idle;
@@ -1005,6 +1013,77 @@ namespace BDFramework.Editor.AssetBundle
 
 
         #region 静态辅助函数
+
+        #endregion
+        
+        
+        #region Assetbundle混淆
+
+        /// <summary>
+        /// 获取混淆的资源
+        /// </summary>
+        /// <returns></returns>
+        static public string[] GetMixAssets()
+        {
+            return AssetDatabase.FindAssets("t:TextAsset", new string[] {BResources.MIX_SOURCE_FOLDER});
+        }
+
+        /// <summary>
+        /// 检测混淆资源
+        /// </summary>
+        public void CheckABObfuscationSource()
+        {
+            var mixAsset = GetMixAssets();
+            if (mixAsset.Length == 0)
+            {
+                Debug.LogError("【AssetBundle】不存在混淆源文件!");
+            }
+        }
+
+
+        /// <summary>
+        /// 添加混淆
+        /// </summary>
+        public void MixAssetBundle(string path)
+        {
+            var mixAssets = GetMixAssets();
+            //构建ab管理器对象
+            AssetBundleMgrV2 abv2 = new AssetBundleMgrV2();
+            abv2.Init(path);
+            //
+            var mixAssetbundleItems = abv2.AssetConfigLoder.AssetbundleItemList.Where((i) => mixAssets.Contains(i.AssetBundlePath)).ToArray();
+
+
+            //开始混淆AssetBundle
+            for (int i = 0; i < abv2.AssetConfigLoder.AssetbundleItemList.Count; i++)
+            {
+                //源AB
+                var sourceItem = abv2.AssetConfigLoder.AssetbundleItemList[i];
+                //非混合文件
+                if (mixAssetbundleItems.Contains(sourceItem))
+                {
+                    continue;
+                }
+
+                var idx = (int) (Random.Range(0, (mixAssetbundleItems.Length - 1) * 10000) / 10000);
+                var mixItem = mixAssetbundleItems[idx];
+                //
+                var mixBytes = File.ReadAllBytes(IPath.Combine(path, BResources.ASSET_ROOT_PATH, mixItem.AssetBundlePath));
+                var abpath = IPath.Combine(path, BResources.ASSET_ROOT_PATH, sourceItem.AssetBundlePath);
+                var abBytes = File.ReadAllBytes(abpath);
+
+                //拼接
+                var mixLen = mixBytes.Length;
+                Array.Resize(ref mixBytes, mixBytes.Length + abBytes.Length);
+                Array.Copy(abBytes, 0, mixBytes, mixLen, abBytes.Length);
+                
+                //写入
+                File.WriteAllBytes(abpath,mixBytes);
+                sourceItem.Mix = mixLen;
+            }
+            //
+            abv2.AssetConfigLoder.OverrideConfig();
+        }
 
         #endregion
     }
