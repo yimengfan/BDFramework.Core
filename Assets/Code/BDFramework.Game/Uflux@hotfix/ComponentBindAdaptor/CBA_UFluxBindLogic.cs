@@ -28,7 +28,7 @@ namespace BDFramework.UFlux
     }
 
     /// <summary>
-    /// 
+    /// Ulfux绑定逻辑
     /// </summary>
     [ComponentBindAdaptor(typeof(UFluxBindLogic))]
     public class CBA_UFluxBindLogic : AComponentBindAdaptor
@@ -47,6 +47,11 @@ namespace BDFramework.UFlux
         /// <param name="value"></param>
         private void BindChild(Transform transform, object value)
         {
+            if (value == null)
+            {
+                return;
+            }
+            
             var props = value as APropsBase;
             if (props == null)
             {
@@ -65,6 +70,11 @@ namespace BDFramework.UFlux
         /// <param name="value">Value必须为集合类型</param>
         private void BindChildren(Transform transform, object value)
         {
+            if (value == null)
+            {
+                return;
+            }
+            
             IPropsList propsList = value as IPropsList;
             if (!propsList.IsChanged)
             {

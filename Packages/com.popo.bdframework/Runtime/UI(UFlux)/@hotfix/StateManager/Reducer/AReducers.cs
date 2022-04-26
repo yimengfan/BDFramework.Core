@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using BDFramework.UFlux.Contains;
+using Cysharp.Text;
 
 namespace BDFramework.UFlux.Reducer
 {
@@ -30,17 +31,17 @@ namespace BDFramework.UFlux.Reducer
         /// <summary>
         /// 当前的Reducermap,同步Reducer，
         /// </summary>
-        protected Dictionary<int, Store<T>.Reducer> ReducersMap = new Dictionary<int, Store<T>.Reducer>();
+        protected Dictionary<string, Store<T>.Reducer> ReducersMap = new Dictionary<string, Store<T>.Reducer>();
 
         /// <summary>
         /// 当前的Reducermap,异步Reducer，
         /// </summary>
-        protected Dictionary<int, Store<T>.ReducerAsync> AsyncReducersMap = new Dictionary<int, Store<T>.ReducerAsync>();
+        protected Dictionary<string, Store<T>.ReducerAsync> AsyncReducersMap = new Dictionary<string, Store<T>.ReducerAsync>();
 
         /// <summary>
         /// 当前的Reducermap，callback模式
         /// </summary>
-        protected Dictionary<int, Store<T>.ReducerCallback> CallbackReducersMap = new Dictionary<int, Store<T>.ReducerCallback>();
+        protected Dictionary<string, Store<T>.ReducerCallback> CallbackReducersMap = new Dictionary<string, Store<T>.ReducerCallback>();
 
 
         /// <summary>
@@ -61,12 +62,23 @@ namespace BDFramework.UFlux.Reducer
 
 
         /// <summary>
+        /// 获取enum的key
+        /// </summary>
+        /// <param name="enum"></param>
+        /// <returns></returns>
+        private string GetEnumKey(Enum @enum)
+        {
+            var key = ZString.Concat( @enum.GetType().FullName ,".", @enum.ToString());
+            return key;
+        }
+
+        /// <summary>
         /// 添加同步 reducer
         /// </summary>
         /// <param name="enum"></param>
         protected void AddRecucer(Enum @enum, Store<T>.Reducer reducer)
         {
-            var key = @enum.GetHashCode();
+            var key =GetEnumKey(@enum);
             if (ReducersMap.ContainsKey(key))
             {
                 BDebug.LogError("重复添加key,请检查" + @enum);
@@ -83,7 +95,7 @@ namespace BDFramework.UFlux.Reducer
         /// <param name="enum"></param>
         protected void AddAsyncRecucer(Enum @enum, Store<T>.ReducerAsync reducer)
         {
-            var key = @enum.GetHashCode();
+            var key =GetEnumKey(@enum);;
             if (ReducersMap.ContainsKey(key))
             {
                 BDebug.LogError("重复添加key,请检查" + @enum);
@@ -100,7 +112,7 @@ namespace BDFramework.UFlux.Reducer
         /// <param name="enum"></param>
         protected void AddCallbackReducer(Enum @enum, Store<T>.ReducerCallback reducerCallback)
         {
-            var key = @enum.GetHashCode();
+            var key =GetEnumKey(@enum);
             if (CallbackReducersMap.ContainsKey(key))
             {
                 BDebug.LogError("重复添加key,请检查" + @enum);
@@ -118,7 +130,7 @@ namespace BDFramework.UFlux.Reducer
         /// <exception cref="Exception"></exception>
         public ExecuteTypeEnum GetExecuteType(Enum @enum)
         {
-            var key = @enum.GetHashCode();
+            var key =GetEnumKey(@enum);
 
             if (this.ReducersMap.ContainsKey(key))
             {
@@ -147,7 +159,7 @@ namespace BDFramework.UFlux.Reducer
         {
             //同步列表下寻找
             Store<T>.Reducer func = null;
-            var key = @enum.GetHashCode();
+            var key =GetEnumKey(@enum);
             if (this.ReducersMap.TryGetValue(key, out func))
             {
                 //同步接口
@@ -168,7 +180,7 @@ namespace BDFramework.UFlux.Reducer
         {
             //同步列表下寻找
             Store<T>.ReducerAsync func = null;
-            var key = @enum.GetHashCode();
+            var key =GetEnumKey(@enum);
             if (this.AsyncReducersMap.TryGetValue(key, out func))
             {
                 //同步接口
@@ -188,7 +200,7 @@ namespace BDFramework.UFlux.Reducer
         public void ExcuteByCallback(Enum @enum, object @params, Store<T>.GetState getStateFunc, Action<T> callback)
         {
             Store<T>.ReducerCallback func = null;
-            var key = @enum.GetHashCode();
+            var key =GetEnumKey(@enum);
             if (this.CallbackReducersMap.TryGetValue(key, out func))
             {
                 //异步接口

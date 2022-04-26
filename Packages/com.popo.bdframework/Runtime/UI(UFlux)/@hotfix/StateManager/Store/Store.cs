@@ -150,12 +150,22 @@ namespace BDFramework.UFlux.Contains
         /// 分发
         /// </summary>
         /// <param name="actionEnum"></param>
-        public void Dispatch(Enum actionEnum, object @params = null)
+        /// <param name="params"></param>
+        public bool Dispatch(Enum actionEnum, object @params = null)
         {
-            var action = new UFluxAction() {ActionTag = actionEnum};
-            action.SetParams(@params);
-            //分发
-            Dispatch(action);
+            var type = this.reducer.GetExecuteType(@actionEnum);
+            if (type != AReducers<S>.ExecuteTypeEnum.None)
+            {
+                var action = new UFluxAction() {ActionTag = actionEnum};
+                action.SetParams(@params);
+                //分发
+                Dispatch(action);
+
+                return true;
+            }
+
+            return false;
+
         }
 
 

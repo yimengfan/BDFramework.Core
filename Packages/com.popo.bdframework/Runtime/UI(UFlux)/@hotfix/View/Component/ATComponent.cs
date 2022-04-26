@@ -45,7 +45,7 @@ namespace BDFramework.UFlux
         /// </summary>
         public ATComponent()
         {
-            var t    = this.GetType();
+            var t = this.GetType();
             var attr = t.GetAttributeInILRuntime<ComponentAttribute>();
             if (attr == null)
             {
@@ -97,7 +97,7 @@ namespace BDFramework.UFlux
 
             var o = UFluxUtils.Load<GameObject>(resPath);
             this.Transform = GameObject.Instantiate(o).transform;
-            this.IsLoad    = true;
+            this.IsLoad = true;
             UFluxUtils.InitComponent(this);
             //初始化
             this.Init();
@@ -114,7 +114,7 @@ namespace BDFramework.UFlux
             UFluxUtils.AsyncLoad<GameObject>(resPath, obj =>
             {
                 this.Transform = GameObject.Instantiate(obj).transform;
-                this.IsLoad    = true;
+                this.IsLoad = true;
                 UFluxUtils.InitComponent(this);
                 //初始化
                 Init();
@@ -158,11 +158,19 @@ namespace BDFramework.UFlux
         }
 
         /// <summary>
-        /// 提交状态
+        ///  提交状态 刷新
         /// </summary>
-        protected void CommitProps()
+        /// <param name="transform">不为null，则指定一个Transform刷新.不然则刷新当前Window.Transform</param>
+        protected void CommitProps(Transform transform = null)
         {
-            UFluxUtils.SetComponentProps(this.Transform, this.Props);
+            if (transform)
+            {
+                UFluxUtils.SetComponentProps(transform, this.Props);
+            }
+            else
+            {
+                UFluxUtils.SetComponentProps(this.Transform, this.Props);
+            }
         }
 
         #endregion
@@ -203,8 +211,6 @@ namespace BDFramework.UFlux
             this.IsOpen = false;
             this.Transform.gameObject.SetActive(false);
         }
-
-
 
 
         /// <summary>

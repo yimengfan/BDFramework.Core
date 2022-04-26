@@ -64,6 +64,9 @@ namespace BDFramework.UFlux.Test
             WebClient  wc=new WebClient();
             string ret =  wc.DownloadString(api);
             var hero = JsonMapper.ToObject<S_HeroDataDemo6Test>(ret);
+            hero.Hp -= 5;
+            hero.Name += 2;
+            hero.MaxHp += 10;
             return hero;
         }
         
@@ -79,6 +82,9 @@ namespace BDFramework.UFlux.Test
             WebClient  wc=new WebClient();
             string ret = await  wc.DownloadStringTaskAsync(api);
             var hero = JsonMapper.ToObject<S_HeroDataDemo6Test>(ret);
+            hero.Hp -= 5;
+            hero.Name += 2;
+            hero.MaxHp += 10;
             return hero;
         }
         
@@ -95,9 +101,12 @@ namespace BDFramework.UFlux.Test
             var api = url + "api/bdframework/getherodata";
             WebClient  wc=new WebClient();
             //提前注册回调
-            wc.DownloadStringCompleted += (ret,e) =>
+            wc.DownloadStringCompleted += (sender,download) =>
             {
-                var hero = JsonMapper.ToObject<S_HeroDataDemo6Test>(ret.ToString());
+                var hero = JsonMapper.ToObject<S_HeroDataDemo6Test>(download.Result);
+                hero.Hp -= 5;
+                hero.Name += 2;
+                hero.MaxHp += 10;
                 callback?.Invoke(hero);
             };
             //开始异步下载

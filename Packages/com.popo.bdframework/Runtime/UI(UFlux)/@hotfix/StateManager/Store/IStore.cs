@@ -10,7 +10,7 @@ namespace BDFramework.UFlux.Contains
         /// </summary>
         /// <param name="actionEnum"></param>
         /// <param name="params"></param>
-        void Dispatch(Enum actionEnum, object @params = null);
+        bool Dispatch(Enum actionEnum, object @params = null);
 
         /// <summary>
         /// 订阅接口包装

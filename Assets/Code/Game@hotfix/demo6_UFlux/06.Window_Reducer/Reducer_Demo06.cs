@@ -15,11 +15,11 @@ namespace BDFramework.UFlux.Test
         public enum Reducer06
         {
             //同步请求
-            RequestHeroDataSynchronization,
+            InvokeSynchronizationTest,
             //异步请求
-            RequestHeroDataAsync,
+            InvokeAsyncTest,
             //回调请求
-            RequestHeroCallback,
+            InvokeCallbackTest,
         }
         
         /// <summary>
@@ -30,11 +30,11 @@ namespace BDFramework.UFlux.Test
             base.RegisterReducers();
             //这里用显式注册，避免函数签名错误
             //同步方法
-            this.AddRecucer(Reducer06.RequestHeroDataSynchronization, RequestServer);
+            this.AddRecucer(Reducer06.InvokeSynchronizationTest, RequestServer);
             //异步方法
-            this.AddAsyncRecucer(Reducer06.RequestHeroDataAsync, RequestServerByAsync);
+            this.AddAsyncRecucer(Reducer06.InvokeAsyncTest, RequestServerByAsync);
             //回调需要考虑乱序问题
-            this.AddCallbackReducer(Reducer06.RequestHeroCallback, RequestServerByCallback);
+            this.AddCallbackReducer(Reducer06.InvokeCallbackTest, RequestServerByCallback);
         }
         
         /// <summary>
@@ -85,9 +85,10 @@ namespace BDFramework.UFlux.Test
             var api = url + "api/bdframework/getherodata";
             WebClient  wc=new WebClient();
             //提前注册回调
-            wc.DownloadStringCompleted += (ret,e) =>
+            wc.DownloadStringCompleted += (sender,download) =>
             {
-                var hero = JsonMapper.ToObject<Server_HeroData>(ret.ToString());
+                
+                var hero = JsonMapper.ToObject<Server_HeroData>(download.Result);
                 callback?.Invoke(hero);
             };
             //开始异步下载

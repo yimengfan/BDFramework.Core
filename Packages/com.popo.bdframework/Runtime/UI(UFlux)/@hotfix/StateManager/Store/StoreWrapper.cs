@@ -4,10 +4,6 @@ using System.Reflection;
 
 namespace BDFramework.UFlux.Contains
 {
-    public class Test<T>
-    {
-    }
-
     /// <summary>
     /// 多个Store的包装类
     /// </summary>
@@ -47,7 +43,11 @@ namespace BDFramework.UFlux.Contains
         {
             foreach (var store in storeList)
             {
-                store.Dispatch(actionEnum, @params);
+                var ret =store.Dispatch(actionEnum, @params);
+                if (ret)
+                {
+                    break;
+                }
             }
         }
     }
