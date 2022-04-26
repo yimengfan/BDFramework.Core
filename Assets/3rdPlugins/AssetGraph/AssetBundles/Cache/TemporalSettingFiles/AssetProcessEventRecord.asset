@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AssetProcessEventRecord
   m_EditorClassIdentifier: 
   m_events: []
-  m_errorEventCount: 34
+  m_errorEventCount: 43
   m_infoEventCount: 0
   m_version: 1
   m_processStartIndex: 0

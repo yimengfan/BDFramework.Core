@@ -184,6 +184,11 @@ namespace BDFramework.Editor
                         //var assetbundleItem = abConfigLoader.AssetbundleItemList[id];
                         var serverAssetsItem = allServerAssetItemList.Find((item) => item.Id == id);
                         subPackageItemList.Add(serverAssetsItem);
+                        
+                        if (serverAssetsItem == null)
+                        {
+                            Debug.LogError("不存在art asset:" + id);
+                        }
                     }
 
                     //脚本
@@ -191,6 +196,10 @@ namespace BDFramework.Editor
                     {
                         var serverAssetsItem = allServerAssetItemList.Find((item) => item.LocalPath == hcName);
                         subPackageItemList.Add(serverAssetsItem);
+                        if (serverAssetsItem == null)
+                        {
+                            Debug.LogError("不存在code asset:" + hcName);
+                        }
                     }
 
                     //表格
@@ -198,13 +207,22 @@ namespace BDFramework.Editor
                     {
                         var serverAssetsItem = allServerAssetItemList.Find((item) => item.LocalPath == tpName);
                         subPackageItemList.Add(serverAssetsItem);
+                        
+                        if (serverAssetsItem == null)
+                        {
+                            Debug.LogError("不存在table asset:" + tpName);
+                        }
                     }
 
-                    //配置表
-                    foreach (var ciName in subPackageConfigItem.ConfAndInfoList)
+                    //配置
+                    foreach (var confName in subPackageConfigItem.ConfAndInfoList)
                     {
-                        var serverAssetsItem = allServerAssetItemList.Find((item) => item.LocalPath == ciName);
+                        var serverAssetsItem = allServerAssetItemList.Find((item) => item.LocalPath == confName);
                         subPackageItemList.Add(serverAssetsItem);
+                        if (serverAssetsItem == null)
+                        {
+                            Debug.LogError("不存在conf:" + confName);
+                        }
                     }
 
                     //

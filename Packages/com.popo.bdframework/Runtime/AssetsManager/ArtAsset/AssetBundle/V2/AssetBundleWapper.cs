@@ -86,7 +86,7 @@ namespace BDFramework.ResourceMgr.V2
 
 
             var gobj = this.AssetBundle.LoadAsset(fullName, type);
-            var gobj2 = this.AssetBundle.LoadAsset(fullName, typeof(Sprite));
+           // var gobj2 = this.AssetBundle.LoadAsset(fullName, typeof(Sprite));
             return gobj;
         }
 
@@ -94,6 +94,9 @@ namespace BDFramework.ResourceMgr.V2
 
         #region 引用计数
 
+        /// <summary>
+        /// 使用计数
+        /// </summary>
         public int UseCounter { get; private set; }
 
         /// <summary>

@@ -76,11 +76,11 @@ namespace BDFramework.ResourceMgr
         /// 包构建信息路径
         /// </summary>
         readonly static public string PACKAGE_BUILD_INFO_PATH = "PackageBuild.Info";
-
+        
         /// <summary>
         /// 混淆ab的资源路径
         /// </summary>
-        readonly static public string OBFUSCATION_AB_PATH = "Assets/Resource/Runtime/ObfuscationAssetbundle.txt";
+        readonly static public string MIX_SOURCE_FOLDER = "Assets/Resource/Runtime/MIX_AB_SOURCE";
         /// <summary>
         /// 初始化
         /// </summary>

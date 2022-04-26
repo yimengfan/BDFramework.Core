@@ -79,13 +79,13 @@ namespace BDFramework.ResourceMgr.V2
             //1.设置加载路径  
             if (Application.isEditor)
             {
-                firstArtDirectory = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_ROOT_PATH);
-                secArtDirectory = ZString.Format("{0}/{1}/{2}", Application.streamingAssetsPath, platformPath, BResources.ASSET_ROOT_PATH); //
+                firstArtDirectory = IPath.Combine(path, platformPath, BResources.ASSET_ROOT_PATH);
+                secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformPath, BResources.ASSET_ROOT_PATH); //
             }
             else
             {
-                firstArtDirectory = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_ROOT_PATH);
-                secArtDirectory = ZString.Format("{0}/{1}/{2}", Application.streamingAssetsPath, platformPath, BResources.ASSET_ROOT_PATH); //
+                firstArtDirectory = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ASSET_ROOT_PATH);
+                secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformPath, BResources.ASSET_ROOT_PATH); //
             }
 
             //2.路径替换
@@ -109,14 +109,14 @@ namespace BDFramework.ResourceMgr.V2
             this.AssetConfigLoder = new AssetbundleConfigLoder();
             if (Application.isEditor)
             {
-                assetconfigPath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_CONFIG_PATH);
-                assetTypePath = ZString.Format("{0}/{1}/{2}", path, platformPath, BResources.ASSET_TYPES_PATH);
+                assetconfigPath = IPath.Combine(path, platformPath, BResources.ASSET_CONFIG_PATH);
+                assetTypePath = IPath.Combine(path, platformPath, BResources.ASSET_TYPES_PATH);
             }
             else
             {
                 //真机环境config在persistent，跟dll和db保持一致
-                assetconfigPath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_CONFIG_PATH);
-                assetTypePath = ZString.Format("{0}/{1}/{2}", Application.persistentDataPath, platformPath, BResources.ASSET_TYPES_PATH);
+                assetconfigPath = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ASSET_CONFIG_PATH);
+                assetTypePath = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ASSET_TYPES_PATH);
             }
 
             this.AssetConfigLoder.Load(assetconfigPath, assetTypePath);
@@ -148,7 +148,6 @@ namespace BDFramework.ResourceMgr.V2
                 }
             }
 
-
             var obj = Load(typeof(T), path);
             if (obj)
             {
@@ -165,9 +164,9 @@ namespace BDFramework.ResourceMgr.V2
             if (assetBundleItem != null)
             {
                 //加载依赖
-                foreach (var dependAssetBundle in dependAssetList)
+                foreach (var dependABItem in dependAssetList)
                 {
-                    LoadAssetBundle(dependAssetBundle);
+                    LoadAssetBundle(dependABItem.AssetBundlePath, dependABItem.Mix);
                 }
 
                 //加载主资源
@@ -257,7 +256,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 异步加载接口
         /// 外部创建 需要自己管理yield,防止逻辑冲突
-        /// 开放该接口，主要用于各种批量测试控制逻辑.
+        /// 开放该接口，主要用于各种批量测试控制逻辑，一般情况下无需调用
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="assetName"></param>
@@ -353,28 +352,31 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 加载AssetBundle
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="abPath"></param>
         /// <returns></returns>
-        public AssetBundle LoadAssetBundle(string path)
+        public AssetBundle LoadAssetBundle(string abPath, int offset = 0)
         {
             AssetBundleWapper abw = null;
-            if (AssetbundleMap.TryGetValue(path, out abw))
+            if (AssetbundleMap.TryGetValue(abPath, out abw))
             {
                 abw.Use();
                 return abw.AssetBundle;
             }
             else
             {
-                var p = FindMultiAddressAsset(path);
+                //寻找加载路径
+                var loadPath = FindMultiAddressAsset(abPath);
 #if UNITY_EDITOR
-                if (!File.Exists(p))
+                if (!File.Exists(loadPath))
                 {
                     return null;
                 }
 #endif
-                var ab = AssetBundle.LoadFromFile(p);
+                //TODO 这里需要判断Lock列表，异步转同步
+                
+                var ab = AssetBundle.LoadFromFile(loadPath, 0u, (ulong) offset);
                 //添加
-                this.AddAssetBundle(path, ab);
+                this.AddAssetBundle(abPath, ab);
                 return ab;
             }
 
@@ -646,6 +648,48 @@ namespace BDFramework.ResourceMgr.V2
 
         #endregion
 
+        #region 加载任务锁
+
+        /// <summary>
+        /// loder缓存表 防止重复加载
+        /// </summary>
+        private static Dictionary<string, AssetBundleCreateRequest> AB_LOAD_LOCK_MAP = new Dictionary<string, AssetBundleCreateRequest>();
+
+        /// <summary>
+        /// 锁住加载AB
+        /// </summary>
+        static public void LockLoadAssetBundle(string abPath, AssetBundleCreateRequest abcr = null)
+        {
+            if (AB_LOAD_LOCK_MAP.ContainsKey(abPath))
+            {
+                BDebug.LogError("【AssetbundleV2】 重复加锁 " + abPath);
+                return;
+            }
+
+            AB_LOAD_LOCK_MAP[abPath] = abcr;
+        }
+
+        /// <summary>
+        /// 解锁加载ab
+        /// </summary>
+        /// <param name="abPath"></param>
+        /// <param name="abcr"></param>
+        static public void UnLockLoadAssetBundle(string abPath, AssetBundleCreateRequest abcr = null)
+        {
+            AB_LOAD_LOCK_MAP.Remove(abPath);
+        }
+
+        /// <summary>
+        /// 获取加载句柄
+        /// </summary>
+        static public AssetBundleCreateRequest GetLoaderHandle(string abPath)
+        {
+            AB_LOAD_LOCK_MAP.TryGetValue(abPath, out var abcr);
+            return abcr;
+        }
+
+        #endregion
+
         #region 卸载资源
 
         /// <summary>
@@ -663,11 +707,11 @@ namespace BDFramework.ResourceMgr.V2
 
             var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssets(assetName);
             //添加主资源一起卸载
-            dependAssetList.Add(assetBundleItem.AssetBundlePath);
+            dependAssetList.Add(assetBundleItem);
             //卸载
             for (int i = 0; i < dependAssetList.Count; i++)
             {
-                var assetPath = dependAssetList[i];
+                var assetPath = dependAssetList[i].AssetBundlePath;
                 AssetBundleWapper abw = null;
 
                 if (AssetbundleMap.TryGetValue(assetPath, out abw))

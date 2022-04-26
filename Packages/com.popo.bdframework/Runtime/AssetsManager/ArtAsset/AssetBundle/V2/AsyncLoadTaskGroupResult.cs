@@ -19,7 +19,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// asset path
         /// </summary>
-        public string AssetPath { get; private set; }
+        public AssetBundleItem AssetBundleItem { get; private set; }
 
         /// <summary>
         /// 加载类型
@@ -31,9 +31,9 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public bool IsMainAsset { get; private set; }
 
-        public LoaderTaskData(string assetPath, Type t, bool isMainAsset = false)
+        public LoaderTaskData(AssetBundleItem assetBundleItem, Type t, bool isMainAsset = false)
         {
-            this.AssetPath = assetPath;
+            this.AssetBundleItem = assetBundleItem;
             this.LoadType = t;
             this.IsMainAsset = isMainAsset;
         }
@@ -51,10 +51,6 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         static readonly public int ASYNC_TASK_NUM = 5;
 
-        /// <summary>
-        /// loding缓存表 防止重复加载
-        /// </summary>
-        private static Dictionary<string, AssetBundleCreateRequest> AB_LOAD_LOCK_MAP = new Dictionary<string, AssetBundleCreateRequest>();
 
         public int Id { get; set; }
 
@@ -115,7 +111,7 @@ namespace BDFramework.ResourceMgr
             }
 
             //2.主资源添加队列
-            var mainTask = new LoaderTaskData(assetBundleItem.AssetBundlePath, typeof(Object), true);
+            var mainTask = new LoaderTaskData(assetBundleItem, typeof(Object), true);
             this.taskQueue.Enqueue(mainTask);
         }
 
@@ -160,7 +156,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// Load assetbundle状态管理
         /// </summary>
-        List<KeyValuePair<string, AssetBundleCreateRequest>> loadABStatusList = new List<KeyValuePair<string, AssetBundleCreateRequest>>(ASYNC_TASK_NUM);
+        List<KeyValuePair<string, AssetBundleCreateRequest>> loaderHandleList = new List<KeyValuePair<string, AssetBundleCreateRequest>>(ASYNC_TASK_NUM);
 
         /// <summary>
         /// 任务列表
@@ -174,45 +170,45 @@ namespace BDFramework.ResourceMgr
         private bool DoLoadAssetBundle()
         {
             //有加载任务或者任务未完成
-            if (loadABStatusList.Count > 0 || taskQueue.Count > 0)
+            if (loaderHandleList.Count > 0 || taskQueue.Count > 0)
             {
                 //1.循环添加任务
-                while (taskQueue.Count > 0 && loadABStatusList.Count < ASYNC_TASK_NUM)
+                while (taskQueue.Count > 0 && loaderHandleList.Count < ASYNC_TASK_NUM)
                 {
                     var task = taskQueue.Dequeue();
                     //没有被加载过
-                    if (!loder.AssetbundleMap.ContainsKey(task.AssetPath))
+                    if (!loder.AssetbundleMap.ContainsKey(task.AssetBundleItem.AssetBundlePath))
                     {
                         //判断是否在加载中
-                        AB_LOAD_LOCK_MAP.TryGetValue(task.AssetPath, out var exsitLoadingStatus);
+                        var loderHandle = AssetBundleMgrV2.GetLoaderHandle(task.AssetBundleItem.AssetBundlePath); // AB_LOAD_LOCK_MAP.TryGetValue(, out var exsitLoadingStatus);
 
-                        if (exsitLoadingStatus != null)
+                        if (loderHandle != null)
                         {
-                            loadABStatusList.Add(new KeyValuePair<string, AssetBundleCreateRequest>(task.AssetPath, exsitLoadingStatus));
+                            loaderHandleList.Add(new KeyValuePair<string, AssetBundleCreateRequest>(task.AssetBundleItem.AssetBundlePath, loderHandle));
                         }
                         else
                         {
                             //开始加载逻辑
-                            var filePath = loder.FindMultiAddressAsset(task.AssetPath);
-                            var ret = AssetBundle.LoadFromFileAsync(filePath);
+                            var filePath = loder.FindMultiAddressAsset(task.AssetBundleItem.AssetBundlePath);
+                            //加载偏移
+                            var abcr = AssetBundle.LoadFromFileAsync(filePath, 0, (ulong) task.AssetBundleItem.Mix);
                             //添加到loding表
-                            AB_LOAD_LOCK_MAP.Add(task.AssetPath, ret);
-
+                            AssetBundleMgrV2.LockLoadAssetBundle(task.AssetBundleItem.AssetBundlePath, abcr);
                             //添加到状态表
-                            loadABStatusList.Add(new KeyValuePair<string, AssetBundleCreateRequest>(task.AssetPath, ret));
+                            loaderHandleList.Add(new KeyValuePair<string, AssetBundleCreateRequest>(task.AssetBundleItem.AssetBundlePath, abcr));
                         }
                     }
                     else
                     {
-                        BDebug.Log("【AsyncLoadTaskGroup】--> 已存在depend:" + task.AssetPath);
+                        BDebug.Log("【AsyncLoadTaskGroup】--> 已存在depend:" + task.AssetBundleItem);
                     }
                 }
 
                 //2.检测加载状态
-                for (int i = loadABStatusList.Count - 1; i >= 0; i--)
+                for (int i = loaderHandleList.Count - 1; i >= 0; i--)
                 {
-                    var item = loadABStatusList[i];
-                    var assetPath = item.Key;
+                    var item = loaderHandleList[i];
+                    var assetbundlePath = item.Key;
                     var abcr = item.Value;
                     //判断是否成功
                     if (abcr.isDone)
@@ -220,22 +216,23 @@ namespace BDFramework.ResourceMgr
                         //添加到返回列表
                         if (abcr.assetBundle != null)
                         {
-                            loder.AddAssetBundle(assetPath, abcr.assetBundle);
+                            loder.AddAssetBundle(assetbundlePath, abcr.assetBundle);
                         }
                         else
                         {
-                            BDebug.LogError("【LoadGroup】ab资源为空:" + assetPath);
+                            BDebug.LogError("【LoadGroup】ab资源为空:" + assetbundlePath);
                         }
 
                         //移除列表
-                        loadABStatusList.RemoveAt(i);
-                        AB_LOAD_LOCK_MAP.Remove(assetPath);
+                        loaderHandleList.RemoveAt(i);
+                        //解锁
+                        AssetBundleMgrV2.UnLockLoadAssetBundle(assetbundlePath);
 
-                        BDebug.Log("【AsyncLoadTaskGroup】--> depend:" + assetPath);
+                        BDebug.Log("【AsyncLoadTaskGroup】--> depend:" + assetbundlePath);
                     }
                 }
 
-                BDebug.LogFormat("【AsyncLoadTaskGroup】剩余未完成任务:{0} - frame: {1}", loadABStatusList.Count + taskQueue.Count, Time.renderedFrameCount);
+                BDebug.LogFormat("【AsyncLoadTaskGroup】剩余未完成任务:{0} - frame: {1}", loaderHandleList.Count + taskQueue.Count, Time.renderedFrameCount);
             }
             else
             {
@@ -274,7 +271,7 @@ namespace BDFramework.ResourceMgr
         {
             this.AssetBundleItem = null;
             this.taskQueue = null;
-            this.loadABStatusList = null;
+            this.loaderHandleList = null;
             this.OnAllTaskCompleteCallback = null;
         }
     }

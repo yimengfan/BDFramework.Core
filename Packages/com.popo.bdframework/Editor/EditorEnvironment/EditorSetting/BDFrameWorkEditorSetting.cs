@@ -9,7 +9,6 @@ namespace BDFramework.Editor
 {
     public class BDFrameWorkEditorSetting
     {
-        
         /// <summary>
         /// 配置文件路径
         /// </summary>
@@ -79,6 +78,7 @@ namespace BDFramework.Editor
         {
             return File.Exists(SETTING_PATH);
         }
+
         /// <summary>
         /// 加载
         /// </summary>
@@ -90,7 +90,7 @@ namespace BDFramework.Editor
             {
                 SETTING_PATH = IPath.Combine(BDApplication.DevOpsConfigPath, "BDFrameworkSetting.conf");
                 //处理旧文件
-                var oldpath =   IPath.Combine(BDApplication.BDWorkSpace, "config.json");
+                var oldpath = IPath.Combine(BDApplication.BDWorkSpace, "config.json");
                 if (File.Exists(oldpath))
                 {
                     var dirt = Path.GetDirectoryName(SETTING_PATH);
@@ -98,9 +98,11 @@ namespace BDFramework.Editor
                     {
                         Directory.CreateDirectory(dirt);
                     }
-                    File.Move(oldpath,SETTING_PATH);
+
+                    File.Move(oldpath, SETTING_PATH);
                 }
             }
+
             var setting = new BDFrameWorkEditorSetting();
 
             if (File.Exists(SETTING_PATH))
@@ -124,7 +126,7 @@ namespace BDFramework.Editor
     public class AndroidConfig
     {
         [LabelText("Keystore路径")]
-        [FilePath(ParentFolder = "",Extensions = "keystore")]
+        [FilePath(ParentFolder = "", Extensions = "keystore")]
         public string keystoreName;
 
         [LabelText("Keystore密码")]
@@ -153,11 +155,8 @@ namespace BDFramework.Editor
     /// </summary>
     public class BuildAssetConfig
     {
-        // [LabelText("ASE密钥")]
-        // public string AESCode = "bdframe$#@!@#";
-
-        // [LabelText("是否hash命名")]
-        // public bool IsUseHashName = false;
+        [LabelText("开启混淆")]
+        public bool IsEnableObfuscation = true;
     }
 
 
@@ -188,27 +187,29 @@ namespace BDFramework.Editor
         [LabelText("自动编译热更DLL")]
         public bool IsAutoBuildDll = false;
 
-        
+
         [BoxGroup("脚本", true)]
         [LabelText("play模式前强制导入变更Excel")]
         public bool IsForceImportChangedExcelOnWillEnterPlaymode = false;
-        
+
         public bool IsNeedAutoBuildDll()
         {
-            return  IsAutoBuildDll && HotfixCodeFloderType == HotfixCodeFloderTypeEnum.InUnityAssets;
+            return IsAutoBuildDll && HotfixCodeFloderType == HotfixCodeFloderTypeEnum.InUnityAssets;
         }
-        
-        
+
+
         /// <summary>
         /// VCS仓库信息
         /// </summary>
         [Serializable]
         public class VCSData
-        {    
+        {
             [LabelText("仓库地址")]
             public string Url = "http://127.0.0.1:20001";
+
             [LabelText("账号")]
             public string UserName = "root";
+
             [LabelText("密码")]
             public string Psw = "root";
         }
@@ -218,7 +219,7 @@ namespace BDFramework.Editor
         [InlineProperty]
         [LabelText("资源仓库")]
         public VCSData AssetServiceVCSData = new VCSData();
-        
+
         [BoxGroup("DevOps")]
         [InlineProperty]
         [LabelText("母包仓库")]

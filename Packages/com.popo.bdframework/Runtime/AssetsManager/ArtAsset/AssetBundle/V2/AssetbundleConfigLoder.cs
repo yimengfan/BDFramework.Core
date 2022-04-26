@@ -29,7 +29,7 @@ namespace BDFramework.ResourceMgr.V2
     /// </summary>
     public class AssetbundleConfigLoder
     {
-        #region
+        #region 资源类型
 
         /// <summary>
         /// Prefab
@@ -66,6 +66,10 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public AssetTypes AssetTypes { get; private set; }
 
+        /// <summary>
+        /// 配置路径
+        /// </summary>
+        private string configPath { get; set; }
         /// <summary>
         /// 加载接口
         /// </summary>
@@ -105,6 +109,7 @@ namespace BDFramework.ResourceMgr.V2
             //资源配置
             if (!string.IsNullOrEmpty(configPath) && File.Exists(configPath))
             {
+                this.configPath = configPath;
 #if UNITY_EDITOR
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
@@ -154,7 +159,7 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         /// <param name="menifestName"></param>
         /// <returns>这个list外部不要修改</returns>
-        public (AssetBundleItem, List<string>) GetDependAssets<T>(string assetName) where T : Object
+        public (AssetBundleItem, List<AssetBundleItem>) GetDependAssets<T>(string assetName) where T : Object
         {
             return GetDependAssets(assetName, typeof(T));
         }
@@ -167,14 +172,13 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="type"></param>
         /// <param name="menifestName"></param>
         /// <returns>这个list外部不要修改</returns>
-        public (AssetBundleItem, List<string>) GetDependAssets(string assetName, Type type = null)
+        public (AssetBundleItem, List<AssetBundleItem>) GetDependAssets(string assetName, Type type = null)
         {
             //获取资源信息
             var retABItem = GetAssetBundleData(assetName, type);
             //回去依赖列表
             var retList = GetDependAssets(retABItem);
             return (retABItem, retList);
-            return (null, null);
         }
 
 
@@ -182,19 +186,19 @@ namespace BDFramework.ResourceMgr.V2
         /// 获取依赖文件
         /// </summary>
         /// <returns></returns>
-        public List<string> GetDependAssets(AssetBundleItem assetBundleItem)
+        public List<AssetBundleItem> GetDependAssets(AssetBundleItem assetBundleItem)
         {
-            var retlist = new List<string>();
+            var retlist = new List<AssetBundleItem>();
             if (assetBundleItem != null && assetBundleItem.DependAssetIds != null && assetBundleItem.DependAssetIds.Length > 0)
             {
                 int len = assetBundleItem.DependAssetIds.Length;
-                retlist = new List<string>(len);
+                retlist = new List<AssetBundleItem>(len);
                 //找到依赖资源
                 for (int i = 0; i < len; i++)
                 {
                     var idx = assetBundleItem.DependAssetIds[i];
                     var abItem = this.AssetbundleItemList[idx];
-                    retlist.Add(abItem.AssetBundlePath);
+                    retlist.Add(abItem);
                 }
             }
 
@@ -276,5 +280,17 @@ namespace BDFramework.ResourceMgr.V2
 
             return null;
         }
+
+#if UNITY_EDITOR
+
+        /// <summary>
+        /// 覆盖写入配置
+        /// </summary>
+        public void OverrideConfig()
+        {
+            var csv = CsvSerializer.SerializeToCsv(this.AssetbundleItemList);
+            File.WriteAllText(this.configPath,csv);
+        }
+#endif
     }
 }

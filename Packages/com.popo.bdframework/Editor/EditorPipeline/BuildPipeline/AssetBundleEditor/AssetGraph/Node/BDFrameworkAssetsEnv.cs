@@ -174,6 +174,9 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
+            //检测混淆
+            AssetBundleEditorToolsV2.CheckABObfuscationSource();
+
             StopwatchTools.Begin();
             if (BuildingCtx == null)
             {
@@ -260,13 +263,5 @@ namespace BDFramework.Editor.AssetGraph.Node
             //BD生命周期触发
             BDFrameworkPublishPipelineHelper.OnBeginBuildAssetBundle(BuildingCtx);
         }
-
-
-
-        #region 
-
-        
-
-        #endregion
     }
 }

@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using BDFramework.Asset;
 using BDFramework.Editor.AssetGraph.Node;
 using BDFramework.ResourceMgr;
@@ -288,7 +286,6 @@ namespace BDFramework.Editor.AssetBundle
             //     File.Delete(oldBuildInfoPath);
             //     File.Move(buildinfoPath, oldBuildInfoPath);
             // }
-
             //缓存buildinfo
             var json = JsonMapper.ToJson(BuildAssetsInfo, true);
             FileHelper.WriteAllText(buildinfoPath, json);
@@ -297,7 +294,7 @@ namespace BDFramework.Editor.AssetBundle
             //4.备份Artifacts
             //this.BackupArtifacts(buildTarget);
 
-            //5.检测别的本地的Manifest和构建预期对比
+            //5.检测本地的Manifest和构建预期对比
             var abRootPath = IPath.Combine(BuildParams.OutputPath, BDApplication.GetPlatformPath(platform), BResources.ASSET_ROOT_PATH);
             var previewABUnitMap = BuildAssetsInfo.PreviewAssetbundleUnit();
             var manifestList = Directory.GetFiles(abRootPath, "*.manifest", SearchOption.AllDirectories);
@@ -334,8 +331,13 @@ namespace BDFramework.Editor.AssetBundle
 
                 //对比依赖
                 var abname = Path.GetFileNameWithoutExtension(manifest);
+                if(abname.Equals(BResources.ASSET_ROOT_PATH, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+                
                 previewABUnitMap.TryGetValue(abname, out var previewABDependList);
-                if (previewABDependList == null)
+                if (previewABDependList == null )
                 {
                     Debug.LogError("【AssetbundleV2-验证】本地ab的配置不不存在:" + abname);
                 }

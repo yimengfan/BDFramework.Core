@@ -7,15 +7,13 @@ namespace BDFramework.ResourceMgr.V2
     /// </summary>
     public class AssetBundleItem
     {
-
-
         public AssetBundleItem(int id, string loadPath, string assetbundlePath, int assetType, int[] dependAssetIds = null)
         {
-            this.Id              = id;
-            this.LoadPath        = loadPath;
+            this.Id = id;
+            this.LoadPath = loadPath;
             this.AssetBundlePath = assetbundlePath;
-            this.AssetType            = assetType;
-            this.DependAssetIds  = dependAssetIds;
+            this.AssetType = assetType;
+            this.DependAssetIds = dependAssetIds;
         }
 
         /// <summary>
@@ -23,7 +21,6 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public AssetBundleItem()
         {
-            
         }
 
         /// <summary>
@@ -54,8 +51,13 @@ namespace BDFramework.ResourceMgr.V2
         public int AssetType { get; private set; } = -1;
 
         /// <summary>
+        /// 混淆偏移
+        /// </summary>
+        public int Mix { get;  set; } = 0;
+
+        /// <summary>
         /// 依赖
         /// </summary>
-        public int[] DependAssetIds { get;  set; } = new int[] { };
+        public int[] DependAssetIds { get; set; } = new int[] { };
     }
 }
