@@ -261,32 +261,48 @@ namespace BDFramework.Editor.AssetBundle
             //1.整理abname
             this.MergeABName(BuildAssetsInfo);
             //2.对比差异文件
-            var changedBuildInfo = GetChangedAssets(BuildAssetsInfo, buildTarget);
+            var changedAssetsInfo = GetChangedAssets(BuildAssetsInfo, buildTarget);
             //3.生成artconfig
-            var abConfigList = this.GenAssetBundleConfig(BuildAssetsInfo, BuildParams, platform);
+            var assetbundleItemList = this.GenAssetBundleConfig(BuildAssetsInfo, BuildParams, platform);
             //4.打包
             AssetDatabase.StartAssetEditing(); //禁止自动导入
             {
-                this.BuildAB(abConfigList, changedBuildInfo, BuildParams, platform);
+                this.BuildAssetBundle(assetbundleItemList, changedAssetsInfo, BuildParams, platform);
             }
             AssetDatabase.StopAssetEditing(); //恢复自动导入
 
             //3.BuildInfo配置处理
             var platformOutputPath = IPath.Combine(BuildParams.OutputPath, BDApplication.GetPlatformPath(platform));
-            //保存artconfig.info
+            //获取上一次打包的数据，跟这次打包数据合并
             var configPath = IPath.Combine(platformOutputPath, BResources.ASSET_CONFIG_PATH);
-            var csv = CsvSerializer.SerializeToString(abConfigList);
+            if (File.Exists(configPath))
+            {
+                var lastAssetbundleItemList = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(File.ReadAllText(configPath));
+                foreach (var newABI in assetbundleItemList)
+                {
+                    if (string.IsNullOrEmpty(newABI.AssetBundlePath))
+                    {
+                        continue;
+                    }
+
+                    //判断是否在当前打包列表中
+                    var ret = changedAssetsInfo.AssetDataMaps.Values.FirstOrDefault((a) => a.ABName.Equals(newABI.AssetBundlePath, StringComparison.OrdinalIgnoreCase));
+                    //没重新打包，则用上一次的mix信息
+                    if (ret == null)
+                    {
+                        var lastABI = lastAssetbundleItemList.FirstOrDefault((a) => newABI.AssetBundlePath.Equals(a.AssetBundlePath, StringComparison.OrdinalIgnoreCase));
+                        newABI.Mix = lastABI.Mix;
+                    }
+                }
+            }
+
+            //保存artconfig.info
+            var csv = CsvSerializer.SerializeToString(assetbundleItemList);
             FileHelper.WriteAllText(configPath, csv);
 
-            //II:保存BuildInfo配置
+
+            //保存BuildInfo配置
             var buildinfoPath = IPath.Combine(platformOutputPath, BResources.EDITOR_ASSET_BUILD_INFO_PATH);
-            // //移动老配置
-            // if (File.Exists(buildinfoPath))
-            // {
-            //     string oldBuildInfoPath = Path.Combine(platformOutputPath, BResources.ASSET_OLD_BUILD_INFO_PATH);
-            //     File.Delete(oldBuildInfoPath);
-            //     File.Move(buildinfoPath, oldBuildInfoPath);
-            // }
             //缓存buildinfo
             var json = JsonMapper.ToJson(BuildAssetsInfo, true);
             FileHelper.WriteAllText(buildinfoPath, json);
@@ -304,7 +320,7 @@ namespace BDFramework.Editor.AssetBundle
             {
                 var manifest = manifestList[i].Replace("\\", "/");
 
-       
+
                 if (manifest.Equals(abRootPath + ".manifest"))
                 {
                     continue;
@@ -332,13 +348,13 @@ namespace BDFramework.Editor.AssetBundle
 
                 //对比依赖
                 var abname = Path.GetFileNameWithoutExtension(manifest);
-                if(abname.Equals(BResources.ASSET_ROOT_PATH, StringComparison.OrdinalIgnoreCase))
+                if (abname.Equals(BResources.ASSET_ROOT_PATH, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
-                
+
                 previewABUnitMap.TryGetValue(abname, out var previewABDependList);
-                if (previewABDependList == null )
+                if (previewABDependList == null)
                 {
                     Debug.LogError("【AssetbundleV2-验证】本地ab的配置不不存在:" + abname);
                 }
@@ -346,24 +362,22 @@ namespace BDFramework.Editor.AssetBundle
                 {
                     //求差集
                     var except = manifestDependList.Except(previewABDependList);
-                    if (except.Count()!=0)
+                    if (except.Count() != 0)
                     {
-                        var local = JsonMapper.ToJson(manifestDependList,true);
-                        var preview = JsonMapper.ToJson(previewABDependList,true);
+                        var local = JsonMapper.ToJson(manifestDependList, true);
+                        var preview = JsonMapper.ToJson(previewABDependList, true);
                         Debug.LogError($"【AssetbundleV2-验证】本地AssetBundle依赖与预期不符:\n 本地:{local} \n 预期:{preview}");
                     }
                 }
-
-
             }
 
-            
+
             //6.资源混淆
-            if ( BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle.IsEnableObfuscation)
+            if (BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle.IsEnableObfuscation)
             {
-                this.MixAssetBundle(BuildParams.OutputPath,platform);
+                this.MixAssetBundle(BuildParams.OutputPath, platform);
             }
-            
+
 
             //恢复编辑器状态
             BDEditorApplication.EditorStatus = BDFrameworkEditorStatus.Idle;
@@ -381,7 +395,7 @@ namespace BDFramework.Editor.AssetBundle
         /// <param name="buildAssetsInfo"></param>
         /// <param name="buildParams"></param>
         /// <param name="platform"></param>
-        private void BuildAB(List<AssetBundleItem> assetBundleItemList, BuildAssetsInfo buildAssetsInfo, BuildAssetBundleParams buildParams, RuntimePlatform platform)
+        private void BuildAssetBundle(List<AssetBundleItem> assetBundleItemList, BuildAssetsInfo buildAssetsInfo, BuildAssetBundleParams buildParams, RuntimePlatform platform)
         {
             //----------------------------开始设置build ab name-------------------------------
             //根据传进来的资源,设置AB name
@@ -393,8 +407,6 @@ namespace BDFramework.Editor.AssetBundle
                 var ai = GetAssetImporter(assetPath);
                 if (ai)
                 {
-                    // Debug.Log("【设置AB】" + assetReference.importFrom + " - " + assetData.ABName);
-                    //ai.assetBundleName = assetData.ABName;
                     ai.SetAssetBundleNameAndVariant(assetData.ABName, null);
                 }
             }
@@ -408,12 +420,13 @@ namespace BDFramework.Editor.AssetBundle
                 Directory.CreateDirectory(abOutputPath);
             }
 
+            //配置
             var buildTarget = BDApplication.GetBuildTarget(platform);
-            BuildAssetBundleOptions buildOpa = 
-                           BuildAssetBundleOptions.ChunkBasedCompression |//压缩
-                           BuildAssetBundleOptions.DeterministicAssetBundle| //保证一致
-                          // BuildAssetBundleOptions.DisableWriteTypeTree| //关闭TypeTree
-                           BuildAssetBundleOptions.DisableLoadAssetByFileName | BuildAssetBundleOptions.DisableLoadAssetByFileNameWithExtension;//关闭使用filename加载
+            BuildAssetBundleOptions buildOpa =
+                BuildAssetBundleOptions.ChunkBasedCompression | //压缩
+                BuildAssetBundleOptions.DeterministicAssetBundle | //保证一致
+                //BuildAssetBundleOptions.DisableWriteTypeTree| //关闭TypeTree
+                BuildAssetBundleOptions.DisableLoadAssetByFileName | BuildAssetBundleOptions.DisableLoadAssetByFileNameWithExtension; //关闭使用filename加载
 
             //关闭TypeTree
             var buildAssetConf = BDEditorApplication.BDFrameWorkFrameEditorSetting?.BuildAssetBundle;
@@ -421,8 +434,8 @@ namespace BDFramework.Editor.AssetBundle
             {
                 buildOpa |= BuildAssetBundleOptions.DisableWriteTypeTree; //关闭TypeTree
             }
-            
-            
+
+
             UnityEditor.BuildPipeline.BuildAssetBundles(abOutputPath, buildOpa, buildTarget);
             Debug.LogFormat("【编译AssetBundle】 output:{0} ,buildTarget:{1}", abOutputPath, buildTarget.ToString());
 
@@ -682,7 +695,7 @@ namespace BDFramework.Editor.AssetBundle
                         {
                             //依赖完全相同
                             var except = lastAssetItem.DependAssetList.Except(newAssetItem.Value.DependAssetList);
-                            if (except.Count()==0)
+                            if (except.Count() == 0)
                             {
                                 continue;
                             }
@@ -726,8 +739,8 @@ namespace BDFramework.Editor.AssetBundle
                             var lastABUnit = lastABUnitMap[lastAssetItem.ABName];
                             var newABUnit = newABUnitMap[newAssetItem.Value.ABName];
                             //颗粒度修改
-                            var except = lastABUnit.Except(newABUnit);//差集
-                            if (except.Count()!=0)
+                            var except = lastABUnit.Except(newABUnit); //差集
+                            if (except.Count() != 0)
                             {
                                 changedAssetBundleAssetList.Add(newAssetItem);
                             }
@@ -1027,8 +1040,8 @@ namespace BDFramework.Editor.AssetBundle
         #region 静态辅助函数
 
         #endregion
-        
-        
+
+
         #region Assetbundle混淆
 
         /// <summary>
@@ -1056,9 +1069,8 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 添加混淆
         /// </summary>
-        public void MixAssetBundle(string outpath,RuntimePlatform platform)
+        public void MixAssetBundle(string outpath, RuntimePlatform platform)
         {
-            return;
             var mixAssets = GetMixAssets();
             //构建ab管理器对象
             AssetBundleMgrV2 abv2 = new AssetBundleMgrV2();
@@ -1066,6 +1078,7 @@ namespace BDFramework.Editor.AssetBundle
             //
             var mixAssetbundleItems = abv2.AssetConfigLoder.AssetbundleItemList.Where((i) => mixAssets.Contains(i.AssetBundlePath)).ToArray();
 
+            Debug.Log("<color=green>--------------------开始混淆Assetbundle------------------------</color>");
 
             //开始混淆AssetBundle
             for (int i = 0; i < abv2.AssetConfigLoder.AssetbundleItemList.Count; i++)
@@ -1073,7 +1086,7 @@ namespace BDFramework.Editor.AssetBundle
                 //源AB
                 var sourceItem = abv2.AssetConfigLoder.AssetbundleItemList[i];
                 //非混合文件、ab不存在、mix过
-                if (mixAssetbundleItems.Contains(sourceItem)|| sourceItem.AssetBundlePath==null || sourceItem.Mix>0)
+                if (mixAssetbundleItems.Contains(sourceItem) || sourceItem.AssetBundlePath == null || sourceItem.Mix > 0)
                 {
                     continue;
                 }
@@ -1081,9 +1094,9 @@ namespace BDFramework.Editor.AssetBundle
                 var idx = (int) (Random.Range(0, (mixAssetbundleItems.Length - 1) * 10000) / 10000);
                 var mixItem = mixAssetbundleItems[idx];
                 //
-                var mixBytes = File.ReadAllBytes(IPath.Combine(outpath, BDApplication.GetPlatformPath(platform),BResources.ASSET_ROOT_PATH, mixItem.AssetBundlePath));
-              
-                var abpath = IPath.Combine(outpath,BDApplication.GetPlatformPath(platform), BResources.ASSET_ROOT_PATH, sourceItem.AssetBundlePath);
+                var mixBytes = File.ReadAllBytes(IPath.Combine(outpath, BDApplication.GetPlatformPath(platform), BResources.ASSET_ROOT_PATH, mixItem.AssetBundlePath));
+
+                var abpath = IPath.Combine(outpath, BDApplication.GetPlatformPath(platform), BResources.ASSET_ROOT_PATH, sourceItem.AssetBundlePath);
                 var abBytes = File.ReadAllBytes(abpath);
 
                 //拼接
@@ -1091,7 +1104,8 @@ namespace BDFramework.Editor.AssetBundle
                 Array.Copy(mixBytes, 0, outbytes, 0, mixBytes.Length);
                 Array.Copy(abBytes, 0, outbytes, mixBytes.Length, abBytes.Length);
                 //写入
-                File.WriteAllBytes(abpath,outbytes);
+                File.WriteAllBytes(abpath, outbytes);
+
                 //相同ab的都进行赋值，避免下次重新被修改。
                 foreach (var item in abv2.AssetConfigLoder.AssetbundleItemList)
                 {
@@ -1100,10 +1114,17 @@ namespace BDFramework.Editor.AssetBundle
                         item.Mix = mixBytes.Length;
                     }
                 }
-                sourceItem.Mix = mixBytes.Length;;
+
+                sourceItem.Mix = mixBytes.Length;
+                ;
+
+                //混淆
+                Debug.Log("【Assetbundle混淆】" + sourceItem.AssetBundlePath);
             }
-            //
+
+            //重新写入配置
             abv2.AssetConfigLoder.OverrideConfig();
+            Debug.Log("<color=green>--------------------混淆Assetbundle完毕------------------------</color>");
         }
 
         #endregion
