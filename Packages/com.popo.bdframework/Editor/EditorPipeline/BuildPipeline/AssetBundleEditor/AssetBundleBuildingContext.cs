@@ -348,8 +348,8 @@ namespace BDFramework.Editor.AssetBundle
                     var except = manifestDependList.Except(previewABDependList);
                     if (except.Count()!=0)
                     {
-                        var local = JsonMapper.ToJson(manifestDependList);
-                        var preview = JsonMapper.ToJson(previewABDependList);
+                        var local = JsonMapper.ToJson(manifestDependList,true);
+                        var preview = JsonMapper.ToJson(previewABDependList,true);
                         Debug.LogError($"【AssetbundleV2-验证】本地AssetBundle依赖与预期不符:\n 本地:{local} \n 预期:{preview}");
                     }
                 }
@@ -409,8 +409,20 @@ namespace BDFramework.Editor.AssetBundle
             }
 
             var buildTarget = BDApplication.GetBuildTarget(platform);
-            var buildOpa = BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.DeterministicAssetBundle;
+            BuildAssetBundleOptions buildOpa = 
+                           BuildAssetBundleOptions.ChunkBasedCompression |//压缩
+                           BuildAssetBundleOptions.DeterministicAssetBundle| //保证一致
+                          // BuildAssetBundleOptions.DisableWriteTypeTree| //关闭TypeTree
+                           BuildAssetBundleOptions.DisableLoadAssetByFileName | BuildAssetBundleOptions.DisableLoadAssetByFileNameWithExtension;//关闭使用filename加载
 
+            //关闭TypeTree
+            var buildAssetConf = BDEditorApplication.BDFrameWorkFrameEditorSetting?.BuildAssetBundle;
+            if (buildAssetConf.IsDisableTypeTree)
+            {
+                buildOpa |= BuildAssetBundleOptions.DisableWriteTypeTree; //关闭TypeTree
+            }
+            
+            
             UnityEditor.BuildPipeline.BuildAssetBundles(abOutputPath, buildOpa, buildTarget);
             Debug.LogFormat("【编译AssetBundle】 output:{0} ,buildTarget:{1}", abOutputPath, buildTarget.ToString());
 
@@ -820,7 +832,7 @@ namespace BDFramework.Editor.AssetBundle
             }
             else
             {
-                Debug.Log("【增量资源】本地无资源，全部重打!");
+                Debug.Log("<color=yellow>【增量资源】本地无资源，全部重打!</color>");
             }
 
             return newBuildAssetsInfo;
@@ -1046,6 +1058,7 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         public void MixAssetBundle(string outpath,RuntimePlatform platform)
         {
+            return;
             var mixAssets = GetMixAssets();
             //构建ab管理器对象
             AssetBundleMgrV2 abv2 = new AssetBundleMgrV2();

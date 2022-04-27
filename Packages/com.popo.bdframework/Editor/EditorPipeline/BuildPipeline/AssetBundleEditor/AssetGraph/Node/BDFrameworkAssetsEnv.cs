@@ -191,7 +191,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             if ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode == AssetGraphWindowsModeEnum.预览节点模式)
             {
                 //生成buildinfo
-
+                 
                 //创建构建上下文信息
                 GenBuildingCtx();
                 //输出

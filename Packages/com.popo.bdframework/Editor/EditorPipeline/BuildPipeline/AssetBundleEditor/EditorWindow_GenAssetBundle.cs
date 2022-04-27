@@ -24,35 +24,14 @@ namespace BDFramework.Editor.AssetBundle
         private bool isSelectAndroid = true;
 
 
-        //
-        void DrawToolsBar()
-        {
-            GUILayout.Space(5);
-            GUILayout.Label("平台选择:");
-            GUILayout.BeginHorizontal();
-            {
-                GUILayout.Space(30);
-                isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源(Windows资源 Editor环境下共用)");
-            }
-            GUILayout.EndHorizontal();
-            //
-            GUILayout.BeginHorizontal();
-            {
-                GUILayout.Space(30);
-                isSelectIOS = GUILayout.Toggle(isSelectIOS, "生成iOS资源");
-            }
-            GUILayout.EndHorizontal();
-            //
-        }
-
         public void OnGUI()
         {
-            GUILayout.BeginVertical(GUILayout.Height(220));
+            GUILayout.BeginVertical(GUILayout.Height(200));
             {
                 TipsGUI();
-                DrawToolsBar();
+                OnGUI_BuildParams();
                 GUILayout.Space(10);
-                LastestGUI();
+                OnGUI_TestAssetBundle();
                 GUILayout.Space(75);
             }
             GUILayout.EndVertical();
@@ -73,25 +52,53 @@ namespace BDFramework.Editor.AssetBundle
             }
 
             GUILayout.Space(3);
-            GUILayout.Label("AssetBundle输出目录:");
-            GUILayout.Label(BDApplication.DevOpsPublishAssetsPath);
+            GUILayout.Label("AssetBundle输出目录:DevOps");
             //
             //assetConfig.AESCode = EditorGUILayout.TextField("AES密钥(V2 only):", assetConfig.AESCode);
             //assetConfig.IsUseHashName = EditorGUILayout.Toggle("hash命名:", assetConfig.IsUseHashName);
         }
 
 
-        private void OnDestroy()
-        {
-            //保存
-            BDEditorApplication.BDFrameWorkFrameEditorSetting?.Save();
-        }
+        public static GUIContent buildParamsDisableBuildTitle = EditorGUIUtility.TrTextContent("打包参数", "修改打包参数后，需要重新构建，不能增量!");
+        public static GUIContent buildParamsDisableTypeTreeLabel = EditorGUIUtility.TrTextContent("关闭TypeTree:", "能减少内存、磁盘占用,部分unity版本加载会有bug!");
+        public static GUIContent buildParamsEnableObfuscationLabel = EditorGUIUtility.TrTextContent("是否混淆:", "用小颗粒AB进行混淆,以降低破解概率!");
 
+        /// <summary>
+        /// 绘制打包参数
+        /// </summary>
+        void OnGUI_BuildParams()
+        {
+            GUILayout.Space(5);
+            GUILayout.Label("平台选择:");
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Space(30);
+                isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源(Windows资源 Editor环境下共用)");
+            }
+            GUILayout.EndHorizontal();
+            //
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Space(30);
+                isSelectIOS = GUILayout.Toggle(isSelectIOS, "生成iOS资源");
+            }
+            GUILayout.EndHorizontal();
+
+            //打包参数
+            GUILayout.Space(5);
+            GUILayout.Label(buildParamsDisableBuildTitle, EditorGUIHelper.LabelH4);
+            var buildAssetConf = BDEditorApplication.BDFrameWorkFrameEditorSetting?.BuildAssetBundle;
+            if (buildAssetConf != null)
+            {
+                buildAssetConf.IsDisableTypeTree = EditorGUILayout.Toggle(buildParamsDisableTypeTreeLabel, buildAssetConf.IsDisableTypeTree);
+                buildAssetConf.IsEnableObfuscation = EditorGUILayout.Toggle(buildParamsEnableObfuscationLabel, buildAssetConf.IsEnableObfuscation);
+            }
+        }
 
         /// <summary>
         /// 最新包
         /// </summary>
-        void LastestGUI()
+        void OnGUI_TestAssetBundle()
         {
             GUILayout.BeginVertical();
             {
@@ -104,14 +111,6 @@ namespace BDFramework.Editor.AssetBundle
                 {
                     //开始打包
                     BuildAssetBundle(BDApplication.DevOpsPublishAssetsPath);
-                }
-
-                GUILayout.Space(10); //();
-                GUILayout.Label("资源加密:", EditorGUIHelper.LabelH4);
-                var buildAssetConf = BDEditorApplication.BDFrameWorkFrameEditorSetting?.BuildAssetBundle;
-                if (buildAssetConf != null)
-                {
-                    buildAssetConf.IsEnableObfuscation = EditorGUILayout.Toggle("是否混淆:", buildAssetConf.IsEnableObfuscation);
                 }
 
                 GUILayout.Space(10); //();
@@ -159,11 +158,17 @@ namespace BDFramework.Editor.AssetBundle
             {
                 platform = RuntimePlatform.IPhonePlayer;
             }
-            
+
             //生成Assetbundlebunle
             AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform);
             AssetDatabase.Refresh();
             Debug.Log("资源打包完毕");
+        }
+
+        private void OnDestroy()
+        {
+            //保存
+            BDEditorApplication.BDFrameWorkFrameEditorSetting?.Save();
         }
     }
 }

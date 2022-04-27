@@ -30,18 +30,17 @@ namespace BDFramework.ResourceMgr.V2
         #region 各种加载接口
 
         Dictionary<string, string> assetNameMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
         /// <summary>
-        /// 加载图集资源
+        /// 加载图集资源,仅支持 unity atlas方案
         /// </summary>
         /// <param name="texName"></param>
         /// <returns></returns>
         public Object LoadTextureFormAtlas(string texName)
         {
-            //默认一个ab中只有一个atlas
-            var fs = AssetBundle.GetAllAssetNames();
-            var atlas = this.AssetBundle.LoadAsset<SpriteAtlas>(fs[fs.Length - 1]);
-            if (atlas != null)
+            //默认一个ab中只有一个atlas,
+            var allAssetNames = AssetBundle.GetAllAssetNames();
+            var atlas = this.AssetBundle.LoadAsset<SpriteAtlas>(allAssetNames.Last());
+            if (atlas)
             {
                 texName = Path.GetFileName(texName);
                 var sp = atlas.GetSprite(texName);
@@ -85,9 +84,8 @@ namespace BDFramework.ResourceMgr.V2
             }
 
 
-            var gobj = this.AssetBundle.LoadAsset(fullName, type);
-           // var gobj2 = this.AssetBundle.LoadAsset(fullName, typeof(Sprite));
-            return gobj;
+            var go = this.AssetBundle.LoadAsset(fullName, type);
+            return go;
         }
 
         #endregion
