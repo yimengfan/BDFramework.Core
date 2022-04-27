@@ -12,8 +12,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9a5f17c54584a67b7fe58665965f15, type: 3}
   m_Name: AssetProcessEventRecord
   m_EditorClassIdentifier: 
-  m_events: []
-  m_errorEventCount: 52
+  m_events:
+  - m_kind: 1
+    m_timestampUtc: 132955418263242337
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: ec30958a9cb9a414dbb58cbbbf184ea1
+    m_nodeId: 5c54f429-2e9d-45d5-ad93-29577e3649bb
+    m_nodeName: "\u6253\u5305AssetBundle"
+    m_description: System.InvalidOperationException:Building AssetBundles while in
+      play mode is not allowed, please exit play mode first.
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 132955418263252339
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: ec30958a9cb9a414dbb58cbbbf184ea1
+    m_nodeId: 2f5a7eba-f63a-4769-9d76-1d3b7951d455
+    m_nodeName: "\u5206\u5305\u540D:TestChar"
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  - m_kind: 1
+    m_timestampUtc: 132955418263252339
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: ec30958a9cb9a414dbb58cbbbf184ea1
+    m_nodeId: c58ab6fd-f457-4f8d-a53e-38608b4b0a87
+    m_nodeName: "\u5206\u5305\u540D:TestWindow"
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  m_errorEventCount: 55
   m_infoEventCount: 0
   m_version: 1
   m_processStartIndex: 0
