@@ -374,6 +374,7 @@ namespace BDFramework.Editor.AssetBundle
                 if (previewABDependList == null)
                 {
                     Debug.LogError("【AssetbundleV2-验证】本地ab的配置不不存在:" + abname);
+                    Debug.LogError("path:" + AssetDatabase.GUIDToAssetPath(abname));
                 }
                 else
                 {
@@ -461,14 +462,9 @@ namespace BDFramework.Editor.AssetBundle
             //1.移除所有的ab
             RemoveAllAssetbundleName();
             //2.删除本地没有的资源
-            var allAbList = Directory.GetFiles(abOutputPath, "*", SearchOption.AllDirectories);
-            foreach (var abpath in allAbList)
+            var allABList = Directory.GetFiles(abOutputPath, "*", SearchOption.AllDirectories).Where((p)=>string.IsNullOrEmpty(Path.GetExtension(p)));
+            foreach (var abpath in allABList)
             {
-                if (abpath.Contains("."))
-                {
-                    continue;
-                }
-
                 var abname = Path.GetFileName(abpath);
                 var ret = assetBundleItemList.FirstOrDefault((abdata) => abdata.AssetBundlePath == abname);
                 if (ret == null)
