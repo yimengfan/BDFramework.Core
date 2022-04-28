@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using BDFramework;
+using BDFramework.ResourceMgr;
 using LitJson;
 using UnityEditor;
 using UnityEngine;
@@ -47,6 +48,7 @@ public class ExpoterMainProjectAsset
             "Assets/Code/BDFramework.Game", //Game
             "Assets/Code/Game/Demo", //Game demo
             "Assets/Scenes", //Scene
+            BResources.MIX_SOURCE_FOLDER,//混淆源文件
             "Assets/AssetGraph/BResourceAssetBundleConfig.asset", //SG
             "Assets/link.xml",
         };
