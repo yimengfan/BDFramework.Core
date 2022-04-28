@@ -60,7 +60,7 @@ namespace BDFramework.Editor.AssetBundle
         {
             var (cg, bdenvNode) = GetBDFrameExAssetGraph();
             var bdenv = (bdenvNode.Operation.Object as BDFrameworkAssetsEnv);
-            bdenv.SetBuildParams(outPath);
+            bdenv.SetBuildParams(outPath,true);
             //执行
             AssetGraphUtility.ExecuteGraph(buildTarget, cg);
         }

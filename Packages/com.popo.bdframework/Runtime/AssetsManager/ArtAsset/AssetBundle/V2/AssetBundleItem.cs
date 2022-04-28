@@ -28,17 +28,23 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public int Id { get; private set; }
 
+        /// <summary>
+        /// 资源类型
+        /// </summary>
+        public int AssetType { get; private set; } = -1;
 
         /// <summary>
-        /// 映射，加载资源名。
+        /// 加载资源路径
         /// 一般为程序调用加载的路径
         /// </summary>
         public string LoadPath { get; private set; } = "";
 
+
         /// <summary>
-        /// asset路径 【不序列化】
+        /// 引用AB的信息
+        /// 用以节省配置空间
         /// </summary>
-        // public string EditorAssetPath { get; set; }
+        public int RefABId { get; set; } = 0;
 
         /// <summary>
         /// ab的资源路径名
@@ -46,14 +52,14 @@ namespace BDFramework.ResourceMgr.V2
         public string AssetBundlePath { get; private set; } = "";
 
         /// <summary>
-        /// 资源类型
+        /// ab hash
+        /// 用murmurhash3算法
         /// </summary>
-        public int AssetType { get; private set; } = -1;
-
+        public string  Hash { get; set; }
         /// <summary>
-        /// 混淆偏移
+        /// 混淆
         /// </summary>
-        public int Mix { get;  set; } = 0;
+        public int Mix { get; set; } = 0;
 
         /// <summary>
         /// 依赖

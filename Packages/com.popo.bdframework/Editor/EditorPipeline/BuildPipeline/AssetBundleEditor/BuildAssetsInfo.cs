@@ -36,6 +36,10 @@ namespace BDFramework.Editor.AssetBundle
             public string ABName { get; set; } = "";
 
             /// <summary>
+            /// AB文件的hash
+            /// </summary>
+            public string ABHash { get; set; } = "";
+            /// <summary>
             /// 被依赖次数
             /// </summary>
             public int ReferenceCount { get; set; } = 0;

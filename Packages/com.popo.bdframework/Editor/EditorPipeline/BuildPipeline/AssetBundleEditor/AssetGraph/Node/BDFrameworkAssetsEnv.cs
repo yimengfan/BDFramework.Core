@@ -44,10 +44,11 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         /// <param name="outpath"></param>
         /// <param name="isUseHash"></param>
-        public void SetBuildParams(string outpath)
+        public void SetBuildParams(string outpath,bool isBuilding)
         {
             BuildingCtx = new AssetBundleBuildingContext();
             BuildingCtx.BuildParams.OutputPath = outpath;
+            BuildingCtx.BuildParams.IsBuilding = isBuilding;
         }
 
 

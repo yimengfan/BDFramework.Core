@@ -273,6 +273,19 @@ namespace BDFramework.Editor.AssetBundle
 
             //3.BuildInfo配置处理
             var platformOutputPath = IPath.Combine(BuildParams.OutputPath, BDApplication.GetPlatformPath(platform));
+            //设置ab的hash
+            foreach (var abi in assetbundleItemList)
+            {
+                if (string.IsNullOrEmpty(abi.AssetBundlePath))
+                {
+                    continue;
+                }
+
+                var abpath = IPath.Combine(platformOutputPath, BResources.ASSET_ROOT_PATH, abi.AssetBundlePath);
+                var hash = FileHelper.GetMurmurHash3(abpath);
+                abi.Hash = hash;
+            }
+
             //获取上一次打包的数据，跟这次打包数据合并
             var configPath = IPath.Combine(platformOutputPath, BResources.ASSET_CONFIG_PATH);
             if (File.Exists(configPath))
@@ -285,14 +298,18 @@ namespace BDFramework.Editor.AssetBundle
                         continue;
                     }
 
-                    //判断是否在当前打包列表中
-                    var ret = changedAssetsInfo.AssetDataMaps.Values.FirstOrDefault((a) => a.ABName.Equals(newABI.AssetBundlePath, StringComparison.OrdinalIgnoreCase));
+                    // //判断是否在当前打包列表中
+                    // var ret = changedAssetsInfo.AssetDataMaps.Values.FirstOrDefault((a) => a.ABName.Equals(newABI.AssetBundlePath, StringComparison.OrdinalIgnoreCase));
+
+                    var lastABI = lastAssetbundleItemList.FirstOrDefault((last) =>
+                        newABI.AssetBundlePath.Equals(last.AssetBundlePath, StringComparison.OrdinalIgnoreCase) //AB名相等
+                        && newABI.Hash == last.Hash); //hash相等
                     //没重新打包，则用上一次的mix信息
-                    if (ret == null)
+                    if (lastABI != null)
                     {
-                        var lastABI = lastAssetbundleItemList.FirstOrDefault((a) => newABI.AssetBundlePath.Equals(a.AssetBundlePath, StringComparison.OrdinalIgnoreCase));
                         newABI.Mix = lastABI.Mix;
                     }
+                    //否则mix = 0
                 }
             }
 
@@ -841,6 +858,12 @@ namespace BDFramework.Editor.AssetBundle
                 }
 
                 Debug.Log(JsonMapper.ToJson(changedFiles, true));
+
+
+                var ablist = changedBuildInfo.AssetDataMaps.Values.Select((a) => a.ABName).Distinct().ToList();
+                Debug.LogFormat("<color=red>【增量资源】变动Assetbundle:{0}</color>", ablist.Count);
+                Debug.Log(JsonMapper.ToJson(ablist, true));
+
                 return changedBuildInfo;
             }
             else
@@ -1116,7 +1139,6 @@ namespace BDFramework.Editor.AssetBundle
                 }
 
                 sourceItem.Mix = mixBytes.Length;
-                ;
 
                 //混淆
                 Debug.Log("【Assetbundle混淆】" + sourceItem.AssetBundlePath);
