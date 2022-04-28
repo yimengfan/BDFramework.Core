@@ -1,5 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using UnityEngine;
 
 namespace BDFramework.Editor.Unity3dEx
 {
@@ -16,50 +17,29 @@ namespace BDFramework.Editor.Unity3dEx
         /// </summary>
         /// <param name="Addfam">要获取的IP类型</param>
         /// <returns></returns>
-        public static string GetIP(ADDRESSFAM Addfam)
+        //获取本地ip
+        static public string GetLocalIP()
         {
-            if (Addfam == ADDRESSFAM.IPv6 && !Socket.OSSupportsIPv6)
+            NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (NetworkInterface adater in adapters)
             {
-                return null;
-            }
-
-            string output = "";
-
-            foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
-            {
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-                NetworkInterfaceType _type1 = NetworkInterfaceType.Wireless80211;
-                NetworkInterfaceType _type2 = NetworkInterfaceType.Ethernet;
-
-                if ((item.NetworkInterfaceType == _type1 || item.NetworkInterfaceType == _type2) && item.OperationalStatus == OperationalStatus.Up)
-#endif
+                if (adater.Supports((NetworkInterfaceComponent.IPv4)))
                 {
-                    foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
+                    UnicastIPAddressInformationCollection uniCast = adater.GetIPProperties().UnicastAddresses;
+                    if (uniCast.Count > 0)
                     {
-                        //IPv4
-                        if (Addfam == ADDRESSFAM.IPv4)
+                        foreach (UnicastIPAddressInformation uni in uniCast)
                         {
-                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                            if (uni.Address.AddressFamily == AddressFamily.InterNetwork)
                             {
-                                output = ip.Address.ToString();
-                                //Debug.Log("IP:" + output);
-                            }
-                        }
-
-                        //IPv6
-                        else if (Addfam == ADDRESSFAM.IPv6)
-                        {
-                            if (ip.Address.AddressFamily == AddressFamily.InterNetworkV6)
-                            {
-                                output = ip.Address.ToString();
+                                return uni.Address.ToString();
                             }
                         }
                     }
                 }
             }
 
-            return output;
+            return "127.0.0.1";
         }
-
     }
 }

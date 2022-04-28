@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.AssetGraph.Node;
 using BDFramework.ResourceMgr;
 using BDFramework.ResourceMgr.V2;
@@ -56,6 +57,7 @@ namespace BDFramework.Editor
         /// <returns></returns>
         static public List<ServerAssetItem> GetAssetsHashData(string assetsRootPath, RuntimePlatform platform)
         {
+            Debug.Log($"<color=red>------>生成服务器配置:{platform}</color>");
             //黑名单
             List<string> blackFileList = new List<string>()
             {
@@ -63,6 +65,8 @@ namespace BDFramework.Editor
                 BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG_PATH,
                 string.Format("{0}/{0}", BResources.ASSET_ROOT_PATH),
             };
+            //混淆文件添加黑名单
+            blackFileList.AddRange(AssetBundleBuildingContext.GetMixAssets());
 
             //加载assetbundle配置
             assetsRootPath = string.Format("{0}/{1}", assetsRootPath, BDApplication.GetPlatformPath(platform));
@@ -91,7 +95,7 @@ namespace BDFramework.Editor
                 var localPath = assetPath.Replace("\\", "/").Replace(assetsRootPath + "/", "");
 
                 //黑名单
-                var ret = blackFileList.FirstOrDefault((bf) => bf.Equals(localPath, StringComparison.OrdinalIgnoreCase));
+                var ret = blackFileList.FirstOrDefault((bf) => localPath.Equals(bf, StringComparison.OrdinalIgnoreCase) || Path.GetFileName(localPath).Equals(bf));
                 if (ret != null)
                 {
                     Debug.Log("【黑名单】剔除:" + ret);
@@ -149,7 +153,7 @@ namespace BDFramework.Editor
         static public string GenServerHashAssets(string assetsRootPath, RuntimePlatform platform, string version)
         {
             //文件夹准备
-            var outputDir = string.Format("{0}/{1}", assetsRootPath.Replace("\\", "/"), BDApplication.GetPlatformPath(platform)) + UPLOAD_FOLDER_SUFFIX;
+            var outputDir = IPath.Combine(assetsRootPath.Replace("\\", "/"), UPLOAD_FOLDER_SUFFIX, BDApplication.GetPlatformPath(platform));
             if (Directory.Exists(outputDir))
             {
                 Directory.Delete(outputDir, true);
@@ -184,7 +188,7 @@ namespace BDFramework.Editor
                         //var assetbundleItem = abConfigLoader.AssetbundleItemList[id];
                         var serverAssetsItem = allServerAssetItemList.Find((item) => item.Id == id);
                         subPackageItemList.Add(serverAssetsItem);
-                        
+
                         if (serverAssetsItem == null)
                         {
                             Debug.LogError("不存在art asset:" + id);
@@ -207,7 +211,7 @@ namespace BDFramework.Editor
                     {
                         var serverAssetsItem = allServerAssetItemList.Find((item) => item.LocalPath == tpName);
                         subPackageItemList.Add(serverAssetsItem);
-                        
+
                         if (serverAssetsItem == null)
                         {
                             Debug.LogError("不存在table asset:" + tpName);

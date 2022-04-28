@@ -55,6 +55,7 @@ namespace BDFramework.Editor.EditorPipeline.PublishPipeline
             this.Host = host;
             this.port = port;
             this._webHomeDir = webHomeDir;
+            Debug.Log("文件服务器:" + _webHomeDir);
             //开始监听逻辑
             if (listener.IsListening)
                 return;
@@ -131,12 +132,12 @@ namespace BDFramework.Editor.EditorPipeline.PublishPipeline
                 {
                     string filePath = WebHomeDir + rawUrl;
                     //替换
-                    var platforms = BDApplication.GetSupportPlatform();
-                    foreach (var platform in platforms)
-                    {
-                        var platformStr = BDApplication.GetPlatformPath(platform);
-                        filePath = filePath.Replace(platformStr, platformStr + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
-                    }
+                    // var platforms = BDApplication.GetSupportPlatform();
+                    // foreach (var platform in platforms)
+                    // {
+                    //     var platformStr = BDApplication.GetPlatformPath(platform);
+                    //     filePath = filePath.Replace(platformStr, platformStr + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
+                    // }
 
                     if (!File.Exists(filePath))
                     {
