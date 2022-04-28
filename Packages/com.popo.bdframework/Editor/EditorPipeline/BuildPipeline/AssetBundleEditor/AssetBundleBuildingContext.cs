@@ -302,10 +302,10 @@ namespace BDFramework.Editor.AssetBundle
                     // var ret = changedAssetsInfo.AssetDataMaps.Values.FirstOrDefault((a) => a.ABName.Equals(newABI.AssetBundlePath, StringComparison.OrdinalIgnoreCase));
 
                     var lastABI = lastAssetbundleItemList.FirstOrDefault((last) =>
-                        newABI.AssetBundlePath.Equals(last.AssetBundlePath, StringComparison.OrdinalIgnoreCase) //AB名相等
-                        && newABI.Hash == last.Hash); //hash相等
+                        newABI.AssetBundlePath.Equals(last.AssetBundlePath, StringComparison.OrdinalIgnoreCase)); //AB名相等
+                        //&& newABI.Hash == last.Hash); //hash相等
                     //没重新打包，则用上一次的mix信息
-                    if (lastABI != null)
+                    if (lastABI != null && lastABI.Hash == newABI.Hash)
                     {
                         newABI.Mix = lastABI.Mix;
                     }
@@ -1128,6 +1128,7 @@ namespace BDFramework.Editor.AssetBundle
                 Array.Copy(abBytes, 0, outbytes, mixBytes.Length, abBytes.Length);
                 //写入
                 File.WriteAllBytes(abpath, outbytes);
+                var hash = FileHelper.GetMurmurHash3(abpath);
 
                 //相同ab的都进行赋值，避免下次重新被修改。
                 foreach (var item in abv2.AssetConfigLoder.AssetbundleItemList)
@@ -1135,10 +1136,11 @@ namespace BDFramework.Editor.AssetBundle
                     if (sourceItem.AssetBundlePath.Equals(item.AssetBundlePath))
                     {
                         item.Mix = mixBytes.Length;
+                        item.Hash = hash;
                     }
                 }
 
-                sourceItem.Mix = mixBytes.Length;
+                //sourceItem.Mix = mixBytes.Length;
 
                 //混淆
                 Debug.Log("【Assetbundle混淆】" + sourceItem.AssetBundlePath);
