@@ -112,12 +112,12 @@ namespace BDFramework.Editor
         /// <summary>
         /// 发布资源处理前
         /// </summary>
-        static public void OnBeginPublishAssets(RuntimePlatform platform, string outputPath, out string versionNum)
+        static public void OnBeginPublishAssets(RuntimePlatform platform, string outputPath, string lastVersionNum, out string versionNum)
         {
-            versionNum = "version-null";
+            versionNum = "0.0.0";
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.OnBeginPublishAssets(platform, outputPath,out versionNum);
+                behavior.OnBeginPublishAssets(outputPath,platform, lastVersionNum, out versionNum);
             }
         }
         

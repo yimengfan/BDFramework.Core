@@ -21,6 +21,10 @@ namespace BDFramework.Asset
         public long BuildTime = 0;
 
         /// <summary>
+        /// 版本号
+        /// </summary>
+        public string Version = "0.0.0";
+        /// <summary>
         /// AB构建svc版本号
         /// </summary>
         public string AssetBundleSVCVersion = "";

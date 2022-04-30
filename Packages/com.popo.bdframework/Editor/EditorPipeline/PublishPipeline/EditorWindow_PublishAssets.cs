@@ -288,7 +288,7 @@ namespace BDFramework.Editor.PublishPipeline
             //4.生成本地assetinfo配置
             var allServerAssetItemList = PublishPipelineTools.GetAssetsHashData(outputPath, platform);
             var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
-            var assetsInfoPath = string.Format("{0}/{1}/{2}", outputPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_INFO_PATH);
+            var assetsInfoPath = string.Format("{0}/{1}/{2}", outputPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
             File.WriteAllText(assetsInfoPath, csv);
         }
 

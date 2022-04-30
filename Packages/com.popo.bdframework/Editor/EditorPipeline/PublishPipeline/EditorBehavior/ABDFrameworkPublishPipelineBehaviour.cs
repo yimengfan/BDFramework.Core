@@ -109,12 +109,13 @@ namespace BDFramework.Editor
         /// <summary>
         ///  发布资源处理前
         /// </summary>
-        /// <param name="platform"></param>
         /// <param name="outputPath"></param>
-        /// <param name="versionNum"></param>
-        virtual public void OnBeginPublishAssets(RuntimePlatform platform, string outputPath, out string versionNum)
+        /// <param name="platform"></param>
+        /// <param name="lastVersionNum"></param>
+        /// <param name="newVersionNum"></param>
+        virtual public void OnBeginPublishAssets(string outputPath, RuntimePlatform platform, string lastVersionNum, out string newVersionNum)
         {
-            versionNum = "0.0.1";
+            newVersionNum = "0.0.1";
         }
 
         /// <summary>
