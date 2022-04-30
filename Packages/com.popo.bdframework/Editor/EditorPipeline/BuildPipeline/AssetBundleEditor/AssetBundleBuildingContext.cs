@@ -940,7 +940,7 @@ namespace BDFramework.Editor.AssetBundle
 
             Directory.CreateDirectory(targetDir);
             //复制整个目录
-            FileHelper.CopyAllFolderFiles(sourceDir, targetDir);
+            FileHelper.CopyFolderTo(sourceDir, targetDir);
         }
 
         #endregion

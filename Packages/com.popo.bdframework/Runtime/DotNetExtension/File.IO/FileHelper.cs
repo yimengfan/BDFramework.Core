@@ -72,7 +72,7 @@ namespace System.IO
         /// </summary>
         /// <param name="sourceDirt"></param>
         /// <param name="targetDirt"></param>
-        static public void CopyAllFolderFiles(string sourceDirt, string targetDirt)
+        static public void CopyFolderTo(string sourceDirt, string targetDirt)
         {
             var sourceFilePaths = Directory.GetFiles(sourceDirt, "*", SearchOption.AllDirectories);
             var sourceDirts = Directory.GetDirectories(sourceDirt, "*", SearchOption.TopDirectoryOnly);

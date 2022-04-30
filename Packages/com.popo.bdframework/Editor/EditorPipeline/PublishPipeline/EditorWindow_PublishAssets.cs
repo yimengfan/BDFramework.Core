@@ -179,13 +179,12 @@ namespace BDFramework.Editor.PublishPipeline
                     GUI.color = Color.green;
                     if (GUILayout.Button("启动本机文件服务器"))
                     {
-                        if (EditorUtility.DisplayDialog("提示", "请保证已经一键导出所有资源,并生成SeverHash文件!", "OK"))
-                        {
-                            //自动转hash
-                            EditorHttpListener = new EditorHttpListener();
-                            var webdir = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
-                            EditorHttpListener.Start("*", "8081", webdir);
-                        }
+                        //自动转hash
+                        PublishPipelineTools.PublishAssetsToServer(BDApplication.DevOpsPublishAssetsPath);
+                        //开启文件服务器
+                        EditorHttpListener = new EditorHttpListener();
+                        var webdir = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
+                        EditorHttpListener.Start("*", "8081", webdir);
                     }
 
                     GUI.color = GUI.backgroundColor;
@@ -226,8 +225,7 @@ namespace BDFramework.Editor.PublishPipeline
                 GUILayout.Label("资源地址: ");
                 GUILayout.BeginHorizontal();
                 {
-                    
-                     GUILayout.Label(BDApplication.DevOpsPublishPackagePath + "/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX + "/*");
+                    GUILayout.Label(BDApplication.DevOpsPublishPackagePath + "/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX + "/*");
                     if (GUILayout.Button("打开", GUILayout.Width(40)))
                     {
                         var dir = BDApplication.DevOpsPublishPackagePath + "/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX;
@@ -288,7 +286,7 @@ namespace BDFramework.Editor.PublishPipeline
             //4.生成本地assetinfo配置
             var allServerAssetItemList = PublishPipelineTools.GetAssetsHashData(outputPath, platform);
             var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
-            var assetsInfoPath = string.Format("{0}/{1}/{2}", outputPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
+            var assetsInfoPath = IPath.Combine(outputPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
             File.WriteAllText(assetsInfoPath, csv);
         }
 

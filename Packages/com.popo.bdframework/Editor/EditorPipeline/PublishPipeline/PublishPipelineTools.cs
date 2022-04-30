@@ -26,19 +26,36 @@ namespace BDFramework.Editor
         /// </summary>
         /// <param name="path"></param>
         /// <param name="uploadHttpApi"></param>
-        static public void PublishAssetsToServer(string path, string version = "0.0.0")
+        static public void PublishAssetsToServer(string path)
         {
             var plarforms = new RuntimePlatform[] {RuntimePlatform.Android, RuntimePlatform.IPhonePlayer};
 
 
             foreach (var platform in plarforms)
             {
-                var platformPath = IPath.Combine(path, BDApplication.GetPlatformPath(platform));
-                if (Directory.Exists(platformPath))
+                //资源路径
+                var sourcePath = IPath.Combine(path, BDApplication.GetPlatformPath(platform));
+                //输出路径
+                var outputPath = IPath.Combine(path.Replace("\\", "/"), UPLOAD_FOLDER_SUFFIX, BDApplication.GetPlatformPath(platform));
+                if (Directory.Exists(sourcePath))
                 {
+                    //对比Assets.info 是否一致
+                    var sourceAssetsInfoPath = IPath.Combine(sourcePath, BResources.ASSETS_INFO_PATH);
+                    var outputAssetsInfoPath = IPath.Combine(outputPath, BResources.ASSETS_INFO_PATH);
+                    if (File.Exists(sourceAssetsInfoPath) && File.Exists(outputAssetsInfoPath))
+                    {
+                        var sourceHash = FileHelper.GetMurmurHash3(sourceAssetsInfoPath);
+                        var outputHash = FileHelper.GetMurmurHash3(outputAssetsInfoPath);
+                        if (sourceHash == outputHash)
+                        {
+                            Debug.Log("【PublishPipeline】资源无改动，无需重新生成服务器文件.  -" + BDApplication.GetPlatformPath(platform));
+                            continue;
+                        }
+                    }
+                    
                     //获取上一次版本
                     string lastVersionNum = "0.0.0";
-                    var serverVersionInfoPath = IPath.Combine(path.Replace("\\", "/"), UPLOAD_FOLDER_SUFFIX, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_VERSION_INFO_PATH);
+                    var serverVersionInfoPath =  IPath.Combine(outputPath,BResources.SERVER_ASSETS_VERSION_INFO_PATH);
                     if (File.Exists(serverVersionInfoPath))
                     {
                         var content = File.ReadAllText(serverVersionInfoPath);
@@ -48,15 +65,16 @@ namespace BDFramework.Editor
 
                     string newVersionNum = "0.0.1";
                     //发布资源处理前,处理前回调
-                    BDFrameworkPublishPipelineHelper.OnBeginPublishAssets(platform, platformPath, lastVersionNum, out newVersionNum);
+                    BDFrameworkPublishPipelineHelper.OnBeginPublishAssets(platform, sourcePath, lastVersionNum, out newVersionNum);
                     //处理资源
                     var outdir = GenServerHashAssets(path, platform, newVersionNum);
                     //发布资源处理后,通知回调
                     BDFrameworkPublishPipelineHelper.OnEndPublishAssets(platform, outdir);
+                    Debug.Log("发布资源处理完成! 请继承PublishPipeline生命周期,完成后续自动化部署到自己的文件服务器!");
                 }
             }
 
-            Debug.Log("发布资源处理完成,请继承PublishPipeline生命周期,完成后续自动化部署到自己的文件服务器!");
+          
         }
 
 
@@ -72,6 +90,7 @@ namespace BDFramework.Editor
             List<string> blackFileList = new List<string>()
             {
                 BResources.EDITOR_ASSET_BUILD_INFO_PATH,
+                BResources.ASSETS_INFO_PATH,
                 BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH,
                 string.Format("{0}/{0}", BResources.ASSET_ROOT_PATH),
             };
@@ -162,6 +181,7 @@ namespace BDFramework.Editor
         /// <returns></returns>
         static public string GenServerHashAssets(string otputPath, RuntimePlatform platform, string version)
         {
+            Debug.Log($"<color=red>------>生成服务器Hash文件:{BDApplication.GetPlatformPath(platform)}</color>");
             //文件夹准备
             var outputDir = IPath.Combine(otputPath.Replace("\\", "/"), UPLOAD_FOLDER_SUFFIX, BDApplication.GetPlatformPath(platform));
             if (Directory.Exists(outputDir))
@@ -175,8 +195,8 @@ namespace BDFramework.Editor
             var allServerAssetItemList = GetAssetsHashData(otputPath, platform);
             foreach (var assetItem in allServerAssetItemList)
             {
-                var localpath = string.Format("{0}/{1}/{2}", otputPath, BDApplication.GetPlatformPath(platform), assetItem.LocalPath);
-                var copytoPath = string.Format("{0}/{1}", outputDir, assetItem.HashName);
+                var localpath = IPath.Combine( otputPath, BDApplication.GetPlatformPath(platform), assetItem.LocalPath);
+                var copytoPath =  IPath.Combine(  outputDir, assetItem.HashName);
                 File.Copy(localpath, copytoPath);
             }
 
@@ -188,7 +208,7 @@ namespace BDFramework.Editor
             // var abConfigPath = string.Format("{0}/{1}", assetsRootPath, BResources.ASSET_CONFIG_PATH);
             // var abConfigLoader = new AssetbundleConfigLoder();
             // abConfigLoader.Load(abConfigPath, null);
-            var path = string.Format("{0}/{1}/{2}", otputPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH);
+            var path =  IPath.Combine( otputPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH);
             if (File.Exists(path))
             {
                 var subpackageList = CsvSerializer.DeserializeFromString<List<SubPackageConfigItem>>(File.ReadAllText(path));

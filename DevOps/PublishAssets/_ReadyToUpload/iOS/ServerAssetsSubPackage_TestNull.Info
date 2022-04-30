@@ -1,6 +1,6 @@
 Id,HashName,LocalPath,FileSize
-1000002,1411055259,Local.db,11
-1000003,3343822579,PackageBuild.Info,0.09
-1000004,4154269350,Art/ArtConfig.Info,5.69
-1000005,209703306,Art/AssetTypeConfig.Info,0.25
-1000006,285661515,Hotfix/hotfix.dll,107
+1000001,148132800,Local.db,11
+1000002,917749580,PackageBuild.Info,0.1
+1000003,4154269350,Art/ArtConfig.Info,5.69
+1000004,209703306,Art/AssetTypeConfig.Info,0.25
+1000005,3044104531,Hotfix/hotfix.dll,107
