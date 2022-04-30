@@ -176,7 +176,6 @@ namespace BDFramework.Editor.AssetGraph.Node
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
             //检测混淆
-            BuildingCtx.CheckABObfuscationSource();
 
             StopwatchTools.Begin();
             if (BuildingCtx == null)
@@ -185,6 +184,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             BuildingCtx.BuildParams.BuildTarget = target;
+            
+            BuildingCtx.CheckABObfuscationSource();
             //设置所有节点参数请求,依次传参
             Debug.Log("【初始化框架资源环境】配置:\n" + JsonMapper.ToJson(BuildingCtx.BuildParams));
             var outMap = new Dictionary<string, List<AssetReference>>();
