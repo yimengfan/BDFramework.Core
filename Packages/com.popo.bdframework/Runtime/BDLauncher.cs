@@ -107,11 +107,11 @@ namespace BDFramework
             GameAssetHelper.CheckAssetPackageVersion(Application.platform, () =>
             {
                 //1.美术目录
-                BResources.Load(GameConfig.ArtRoot);
+                BResources.Init(GameConfig.ArtRoot);
                 //2.sql
-                SqliteLoder.Load(GameConfig.SQLRoot);
+                SqliteLoder.Init(GameConfig.SQLRoot);
                 //3.脚本,这个启动会开启所有的逻辑
-                ScriptLoder.Load(GameConfig.CodeRoot, GameConfig.CodeRunMode, mainProjectTypes, clrBindingAction);
+                ScriptLoder.Init(GameConfig.CodeRoot, GameConfig.CodeRunMode, mainProjectTypes, clrBindingAction);
             });
         }
 

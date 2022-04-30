@@ -22,7 +22,7 @@ namespace BDFramework
         /// <param name="loadPathTypeType"></param>
         /// <param name="runMode"></param>
         /// <param name="mainProjectTypes">UPM隔离了dll,需要手动传入</param>
-        static public void Load(AssetLoadPathType loadPathTypeType,
+        static public void Init(AssetLoadPathType loadPathTypeType,
             HotfixCodeRunMode runMode,
             Type[] mainProjectTypes,
             Action<bool> clrBindingAction)

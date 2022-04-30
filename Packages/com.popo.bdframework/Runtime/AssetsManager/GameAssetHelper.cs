@@ -50,7 +50,6 @@ namespace BDFramework.Asset
         {
             switch (platform)
             {
-                //android沙盒用www访问
                 case RuntimePlatform.Android:
                 {
                     IEnumeratorTool.StartCoroutine(AndroidCheckAssetPackageVersion(platform, callback));

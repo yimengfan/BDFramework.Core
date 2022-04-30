@@ -80,7 +80,7 @@ namespace BDFramework.Sql
         /// runtime下加载，只读
         /// </summary>
         /// <param name="str"></param>
-        static public void Load(AssetLoadPathType assetLoadPathTypeType)
+        static public void Init(AssetLoadPathType assetLoadPathTypeType)
         {
             Connection?.Dispose();
             var path = GameConfig.GetLoadPath(assetLoadPathTypeType);
