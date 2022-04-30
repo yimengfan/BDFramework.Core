@@ -97,9 +97,9 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetbundleConfigLoder.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AsyncLoadTaskGroupResult.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetsVersionController\AssetsVersionController.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\BResources.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResources.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\GameAssetHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />

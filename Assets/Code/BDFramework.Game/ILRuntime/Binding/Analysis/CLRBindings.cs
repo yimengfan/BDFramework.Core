@@ -45,7 +45,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_String_Binding.Register(app);
             IEnumeratorTool_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
-            BDFramework_VersionController_AssetsVersionController_Binding.Register(app);
             BDebug_Binding.Register(app);
             System_String_Binding.Register(app);
             System_Collections_Generic_IEnumerable_1_KeyValuePair_2_String_Object_Binding.Register(app);
@@ -156,10 +155,12 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Color_Binding.Register(app);
             System_Runtime_CompilerServices_AsyncTaskMethodBuilder_1_ILTypeInstance_Binding.Register(app);
             System_Uri_Binding.Register(app);
+            System_Net_DownloadStringCompletedEventArgs_Binding.Register(app);
             System_Action_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_MethodInfo_Binding.Register(app);
             BDFramework_DataListener_StatusListenerService_Binding.Register(app);
             System_Action_2_Int32_ILTypeInstance_Binding.Register(app);
+            Cysharp_Text_ZString_Binding.Register(app);
             System_Collections_Generic_Queue_1_ILTypeInstance_Binding.Register(app);
 
             ILRuntime.CLR.TypeSystem.CLRType __clrType = null;

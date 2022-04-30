@@ -147,7 +147,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             MultiplePackage.AssetMultiplePackageConfigList.Add(subPackage);
             //
-            var path = string.Format("{0}/{1}/{2}", this.BuildingCtx.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.SERVER_ASSETS_SUB_PACKAGE_CONFIG_PATH);
+            var path = string.Format("{0}/{1}/{2}", this.BuildingCtx.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH);
             var csv = CsvSerializer.SerializeToString(MultiplePackage.AssetMultiplePackageConfigList);
             FileHelper.WriteAllText(path, csv);
             Debug.Log("保存分包设置:" + this.PacakgeName + " -" + buildTarget.ToString());

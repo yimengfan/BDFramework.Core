@@ -6,6 +6,7 @@ using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
 using BDFramework.VersionController;
 using Game.ILRuntime;
+using LitJson;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +15,9 @@ public class WindowPreconfig : MonoBehaviour
     private InputField inputField;
     private Text text_DownloadProcess;
     private Button btn_Download;
-    private Button btn_DownloadSubPackage;
+    private Button btn_GetSubPackage;
     private Button btn_Pass;
-
+    private Button btn_ClearPersistent;
 
     /// <summary>
     /// 开始
@@ -27,13 +28,23 @@ public class WindowPreconfig : MonoBehaviour
         inputField = this.transform.Find("InputField").GetComponent<InputField>();
         text_DownloadProcess = this.transform.Find("text_DownloadProcess").GetComponent<Text>();
         btn_Download = this.transform.Find("btn_Download").GetComponent<Button>();
-        btn_DownloadSubPackage = this.transform.Find("btn_DownloadSubPackage").GetComponent<Button>();
+        btn_GetSubPackage = this.transform.Find("btn_GetSubPackage").GetComponent<Button>();
         btn_Pass = this.transform.Find("btn_Pass").GetComponent<Button>();
+        btn_ClearPersistent = this.transform.Find("btn_ClearPersistent").GetComponent<Button>();
         //
         this.btn_Pass.onClick.AddListener(Onclick_PassAndLaunch);
-        this.btn_Download.onClick.AddListener(Onclick_DownLoadAndLaunch);
-        this.btn_DownloadSubPackage.onClick.AddListener(Onclick_DownloadSubPackageLoadAndLaunch);
-        inputField.text = "127.0.0.1:8081";
+        this.btn_Download.onClick.AddListener(OnClick_DownLoadAndLaunch);
+        this.btn_GetSubPackage.onClick.AddListener(OnClick_GetSubPackage);
+        this.btn_ClearPersistent.onClick.AddListener(OnClick_ClearPersistent);
+        //
+        if (Application.isEditor)
+        {
+            inputField.text = "127.0.0.1:8081";
+        }
+        else
+        {
+            inputField.text = "192.168.0.1:8081";
+        }
     }
 
 
@@ -49,7 +60,10 @@ public class WindowPreconfig : MonoBehaviour
     }
 
 
-    private void Onclick_DownLoadAndLaunch()
+    /// <summary>
+    /// 下载且启动
+    /// </summary>
+    private void OnClick_DownLoadAndLaunch()
     {
         //删除本地的文件，这不是正式环境逻辑，请勿参考
         // var cachedir = IPath.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
@@ -62,7 +76,7 @@ public class WindowPreconfig : MonoBehaviour
         var url = "http://" + this.inputField.text;
         float totalSize = -1;
         float curDoanloadSize = -1;
-        BResources.StartAssetsVersionControl(UpdateMode.CompareVersionConfig, url, null, (curDownload, allDownloadList) =>
+        BResources.StartAssetsVersionControl(UpdateMode.Compare, url, null, (curDownload, allDownloadList) =>
             {
                 if (totalSize == -1)
                 {
@@ -101,17 +115,56 @@ public class WindowPreconfig : MonoBehaviour
     }
 
     /// <summary>
-    /// 下载子包
+    /// 获取子包
     /// </summary>
-    private void Onclick_DownloadSubPackageLoadAndLaunch()
+    private void OnClick_GetSubPackage()
+    {
+        var url = "http://" + inputField.text;
+        BResources.GetServerSubPacks(url, (map) =>
+        {
+            //获取到子包
+            Debug.Log("获取到子包信息:\n" + JsonMapper.ToJson(map,true));
+
+            //全隐藏
+            var grid = this.transform.Find("grid_SubPack");
+            foreach (Transform child in grid)
+            {
+                child.gameObject.SetActive(false);
+            }
+            //显示
+            var idx = 0;
+            foreach (var kv in map)
+            {
+                var btn = grid.GetChild(idx)?.GetComponent<Button>();
+                btn.gameObject.SetActive(true);
+                btn.onClick.RemoveAllListeners();
+                btn.transform.GetChild(0).GetComponent<Text>().text = "下载子包:" + kv.Key;
+                //添加监听
+                btn.onClick.AddListener(() =>
+                {
+                    //下载
+                    this.Onclick_DownloadSubPackageLoadAndLaunch((kv.Key));
+                });
+                   
+                idx++;
+            }
+            
+        });
+        
+    }
+    
+    
+    /// <summary>
+    /// 下载分包且启动
+    /// </summary>
+    private void Onclick_DownloadSubPackageLoadAndLaunch(string subPackageName)
     {
         Debug.Log(Application.persistentDataPath);
 
         var url = "http://" + this.inputField.text;
-        var subPackageName = "TestChar";
         float totalSize = -1;
         float curDoanloadSize = -1;
-        AssetsVersionController.Start(UpdateMode.CompareVersionConfig, url, subPackageName, (curDownload, allDownloadList) =>
+        BResources.StartAssetsVersionControl(UpdateMode.Compare, url, subPackageName, (curDownload, allDownloadList) =>
             {
                 if (totalSize == -1)
                 {
@@ -134,8 +187,8 @@ public class WindowPreconfig : MonoBehaviour
                     case AssetsVersionController.VersionControllerStatus.Success:
                     {
                         this.text_DownloadProcess.text = "下载完毕";
-                        //启动
-                        this.Onclick_PassAndLaunch();
+                        
+                        Debug.Log("分包下载完毕,此时资源不全,进入游戏可能会有bug!");
                     }
                         break;
                     case AssetsVersionController.VersionControllerStatus.Error:
@@ -156,5 +209,25 @@ public class WindowPreconfig : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         Destroy(this.gameObject);
+    }
+
+    /// <summary>
+    /// 清理persistent
+    /// </summary>
+    private void OnClick_ClearPersistent()
+    {
+        var runtimes = BDApplication.GetSupportPlatform();
+        foreach (var runtime in runtimes)
+        {
+            var path = IPath.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(runtime));
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path,true);
+            }
+        }
+        //清理完毕
+        var dirs = Directory.GetDirectories(Application.persistentDataPath, "*");
+        Debug.Log(Application.persistentDataPath);
+        Debug.Log("清理完毕~,剩余目录:" + dirs.Length);
     }
 }

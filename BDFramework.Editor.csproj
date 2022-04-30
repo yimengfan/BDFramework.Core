@@ -111,6 +111,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorHttpListener.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorWindow_PublishAssets.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\PublishPipelineTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\VersionNumHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorTask\EditorTask.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\Menuitems\EditorBuiltinStyle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\Menuitems\GlobalEditorMenuItems.cs" />

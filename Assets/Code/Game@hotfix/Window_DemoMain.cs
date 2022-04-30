@@ -31,11 +31,9 @@ public class Window_DemoMain : AWindow
     }
 
 
-
     public override void Init()
     {
         base.Init();
-        
     }
 
 
@@ -176,16 +174,16 @@ public class Window_DemoMain : AWindow
     {
         var path = Application.persistentDataPath;
         //开始下载
-        AssetsVersionController.Start(UpdateMode.Repair, "http://127.0.0.1", null, (idx, totalNum) =>
-            {
-                //进度通知
-                Debug.LogFormat("资源更新进度：{0}/{1}", idx, totalNum);
-            }, 
-            (status, msg) =>
-            {
-                //错误通知
-                Debug.LogError("结果:" + status + " - " + msg);
-            });
+        BResources.StartAssetsVersionControl(UpdateMode.Repair, "http://127.0.0.1", null, (idx, totalNum) =>
+        {
+            //进度通知
+            Debug.LogFormat("资源更新进度：{0}/{1}", idx, totalNum);
+        },
+        (status, msg) =>
+        {
+            //错误通知
+            Debug.LogError("结果:" + status + " - " + msg);
+        });
     }
 
     [ButtonOnclick("Grid/btn_8")]

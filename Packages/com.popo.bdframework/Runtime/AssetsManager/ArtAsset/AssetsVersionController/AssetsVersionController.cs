@@ -6,6 +6,7 @@ using System.Linq;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
 using Cysharp.Text;
+using LitJson;
 using MurmurHash.Net;
 using ServiceStack.Text;
 using UnityEngine;
@@ -16,23 +17,23 @@ namespace BDFramework.VersionController
     /// <summary>
     /// 服务器Asset的Config
     /// </summary>
-    public class ServerAssetConfig
+    public class ServerAssetsVersionInfo
     {
         /// <summary>
         /// 平台
         /// </summary>
-        public string Platfrom = "";
+        public string Platfrom { get; set; } = "";
 
         /// <summary>
         /// 版本号
         /// </summary>
-        public string Version = "0.0.1";
+        public string Version { get; set; } = "0.0.1";
 
         /// <summary>
         /// 资源子包的版本
-        /// 暂未启用,后续考虑子包的自动版本更新
+        /// packname - verion
         /// </summary>
-        public Dictionary<string, string> SubPckMap = new Dictionary<string, string>();
+        public Dictionary<string, string> SubPckMap { get; private set; } = new Dictionary<string, string>();
     }
 
     /// <summary>
@@ -67,12 +68,27 @@ namespace BDFramework.VersionController
         /// 文件大小 KB
         /// </summary>
         public float FileSize { get; set; }
+
+        /// <summary>
+        /// 重写比较
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is ServerAssetItem _SAI)
+            {
+                return (this.HashName.Equals(_SAI.HashName) && this.LocalPath.Equals(_SAI.LocalPath));
+            }
+
+            return false;
+        }
     }
 
     public enum UpdateMode
     {
-        CompareVersionConfig, //对比版本文件
-        Repair, //修复模式,对比本地文件
+        Compare, //对比版本
+        Repair, //修复模式
     }
 
     /// <summary>
@@ -109,7 +125,7 @@ namespace BDFramework.VersionController
     /// <summary>
     /// 版本控制
     /// </summary>
-    static public class AssetsVersionController
+    public partial class AssetsVersionController
     {
         /// <summary>
         /// 服务器错误码
@@ -120,42 +136,94 @@ namespace BDFramework.VersionController
             Success
         }
 
+        public AssetsVersionController()
+        {
+            //BSA初始化
+            BetterStreamingAssets.Initialize();
+        }
+
         /// <summary>
         /// 开始版本控制
         /// </summary>
         /// <param name="updateMode"></param>
-        /// <param name="serverConfigPath"></param>
+        /// <param name="serverConfigUrl"></param>
         /// <param name="assetsPackageName">分包名,如果不填则为下载所有</param>
         /// <param name="onProccess">下载进度</param>
         /// <param name="onTaskEndCallback">结果回调</param>
-        static public void Start(UpdateMode updateMode, string serverConfigPath, string assetsPackageName = "", Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess = null,
+        public void UpdateAssets(UpdateMode updateMode, string serverConfigUrl, string assetsPackageName = "", Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess = null,
             Action<VersionControllerStatus, string> onTaskEndCallback = null)
         {
-            //BSA初始化
-            BetterStreamingAssets.Initialize();
             //下载资源位置必须为Persistent
-            IEnumeratorTool.StartCoroutine(IE_StartVersionControl(updateMode, serverConfigPath, Application.persistentDataPath, assetsPackageName, onDownloadProccess, onTaskEndCallback));
+            IEnumeratorTool.StartCoroutine(IE_StartVersionControl(updateMode, serverConfigUrl, Application.persistentDataPath, assetsPackageName, onDownloadProccess, onTaskEndCallback));
         }
+
+
+        /// <summary>
+        /// 获取服务器子包信息
+        /// </summary>
+        /// <param name="serverUrl"></param>
+        /// <param name="callback"></param>
+        public void GetServerSubPacks(string serverUrl, Action<Dictionary<string, string>> callback)
+        {
+            IEnumeratorTool.StartCoroutine(this.IE_GetServerVersionInfo(serverUrl, callback));
+        }
+
 
         /// <summary>
         /// 重试次数
         /// </summary>
-        private static int RETRY_COUNT = 5;
+        private static int RETRY_COUNT = 6;
+
 
         /// <summary>
-        /// 开始版本控制
+        ///获取服务器版本信息
+        /// </summary>
+        /// <param name="serverUrl"></param>
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        private IEnumerator IE_GetServerVersionInfo(string serverUrl, Action<Dictionary<string, string>> callback)
+        {
+            //本地、服务器版本信息的路径
+            var serverAssetsVersionInfoUrl = GetServerAssetsVersionInfoPath(serverUrl, Application.platform);
+            //开始下载服务器配置
+            var serverAssetsVersionConfigWebReq = UnityWebRequest.Get(serverAssetsVersionInfoUrl);
+            for (int i = 0; i < RETRY_COUNT; i++)
+            {
+                yield return serverAssetsVersionConfigWebReq.SendWebRequest();
+                if (serverAssetsVersionConfigWebReq.error == null)
+                {
+                    break;
+                }
+            }
+
+            if (serverAssetsVersionConfigWebReq.error == null)
+            {
+                BDebug.Log("服务器资源配置:" + serverAssetsVersionConfigWebReq.downloadHandler.text);
+            }
+            else
+            {
+                BDebug.LogError(serverAssetsVersionConfigWebReq.error);
+                yield break;
+            }
+
+            var serverVersionInfo = JsonMapper.ToObject<ServerAssetsVersionInfo>(serverAssetsVersionConfigWebReq.downloadHandler.text);
+            callback?.Invoke(serverVersionInfo.SubPckMap);
+        }
+
+        /// <summary>
+        /// 开始版本控制逻辑
         /// </summary>
         /// <param name="serverUrl">服务器配置根目录</param>
-        /// <param name="localDownloadAssetsRootPath">本地根目录</param>
+        /// <param name="localSaveAssetsPath">本地根目录</param>
         /// <param name="onDownloadProccess"></param>
         /// <param name="onError">返回失败后，只需要重试重新调用该函数即可</param>
         /// 返回码: -1：error  0：success
-        static public IEnumerator IE_StartVersionControl(UpdateMode mode, string serverUrl, string localDownloadAssetsRootPath, string subPackageName, Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess,
+        private IEnumerator IE_StartVersionControl(UpdateMode mode, string serverUrl, string localSaveAssetsPath, string subPackageName, Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess,
             Action<VersionControllerStatus, string> onTaskEndCallback)
         {
             //目录准备
             var platform = BDApplication.GetPlatformPath(Application.platform);
-            var platformPath = ZString.Format("{0}/{1}", localDownloadAssetsRootPath, platform);
+            var platformPath = IPath.Combine(localSaveAssetsPath, platform);
             if (!Directory.Exists(platformPath))
             {
                 Directory.CreateDirectory(platformPath);
@@ -163,17 +231,18 @@ namespace BDFramework.VersionController
 
             //子包模式判断
             bool isDownloadSubPackageMode = !string.IsNullOrEmpty(subPackageName);
-            //开始下载服务器配置
-            var serverAssetsVersionConfigUrl = GetServerAssetsVersionConfigPath(serverUrl, Application.platform);
-            var localAssetsVersionConfigPath = GetServerAssetsVersionConfigPath(localDownloadAssetsRootPath, Application.platform);
-            BDebug.Log("server version config:" + serverAssetsVersionConfigUrl);
+            //本地、服务器版本信息的路径
+            var serverAssetsVersionInfoUrl = GetServerAssetsVersionInfoPath(serverUrl, Application.platform);
+            var localAssetsVersionInfoPath = GetServerAssetsVersionInfoPath(localSaveAssetsPath, Application.platform);
+            BDebug.Log("server version config:" + serverAssetsVersionInfoUrl);
             /**********************获取差异列表**********************/
             Queue<ServerAssetItem> diffDownloadQueue = null;
             //1.下载服务器version config
 
-            #region ServerAssetsConfig 处理
+            #region 版本信息加载
 
-            var serverAssetsVersionConfigWebReq = UnityWebRequest.Get(serverAssetsVersionConfigUrl);
+            //开始下载服务器配置
+            var serverAssetsVersionConfigWebReq = UnityWebRequest.Get(serverAssetsVersionInfoUrl);
             for (int i = 0; i < RETRY_COUNT; i++)
             {
                 yield return serverAssetsVersionConfigWebReq.SendWebRequest();
@@ -194,20 +263,20 @@ namespace BDFramework.VersionController
                 yield break;
             }
 
-            //读取服务器配置
-            var serverconf = LitJson.JsonMapper.ToObject<ServerAssetConfig>(serverAssetsVersionConfigWebReq.downloadHandler.text);
-            var localconf = new ServerAssetConfig();
-            if (File.Exists(localAssetsVersionConfigPath))
+            var serverVersionInfo = JsonMapper.ToObject<ServerAssetsVersionInfo>(serverAssetsVersionConfigWebReq.downloadHandler.text);
+
+            //本地配置
+            var localVersionInfo = new ServerAssetsVersionInfo();
+            if (File.Exists(localAssetsVersionInfoPath))
             {
-                localconf = LitJson.JsonMapper.ToObject<ServerAssetConfig>(File.ReadAllText(localAssetsVersionConfigPath));
+                localVersionInfo = JsonMapper.ToObject<ServerAssetsVersionInfo>(File.ReadAllText(localAssetsVersionInfoPath));
+                if (localVersionInfo == null)
+                {
+                    localVersionInfo = new ServerAssetsVersionInfo();
+                }
             }
 
             #endregion
-
-
-            //2.服务器AssetInfo 本地AssetInfo对比
-
-            #region 对比版本,生成差异列表
 
             //服务器的AssetInfo
             string serverAssetInfosUrl = "";
@@ -217,24 +286,61 @@ namespace BDFramework.VersionController
             string localAssetInfoPath = "";
             var localAssetsInfoList = new List<ServerAssetItem>();
 
+            //2.服务器AssetInfo 本地AssetInfo对比
+
+            #region 版本信息对比
+
             /**********处理服务器配置*************/
-            //分包逻辑
+            if (mode == UpdateMode.Compare)
+            {
+            }
+
+            //分包下载
             if (isDownloadSubPackageMode)
             {
                 BDebug.Log("【版本控制】子包模式:" + subPackageName);
-                //服务器路径
-                serverAssetInfosUrl = GetServerAssetsSubPackageInfoPath(serverUrl, Application.platform, subPackageName);
+                var ret = serverVersionInfo.SubPckMap.TryGetValue(subPackageName, out var serverSubPckVersion);
+                if (!ret)
+                {
+                    onTaskEndCallback(VersionControllerStatus.Error, "【版本控制】服务器不存在子包:" + subPackageName);
+                    yield break;
+                }
+
+                localVersionInfo.SubPckMap.TryGetValue(subPackageName, out var localSubPckVersion);
+
+                if (serverSubPckVersion != localSubPckVersion)
+                {
+                    //服务器路径
+                    serverAssetInfosUrl = GetAssetsSubPackageInfoPath(serverUrl, Application.platform, subPackageName);
+                    BDebug.Log($"【版本控制】分包下载模式! server:{serverSubPckVersion} local:{localSubPckVersion} ", "red");
+                }
+                else
+                {
+                    BDebug.Log("【版本控制】分包版本一致,无需下载!");
+                    onTaskEndCallback(VersionControllerStatus.Success, "");
+                    yield break;
+                }
             }
             //全量包下载
             else
             {
-                BDebug.Log("【版本控制】全量下载模式!");
                 //判断版本号
-                if (localconf == null || localconf.Version != serverconf.Version)
+                if (localVersionInfo.Version != serverVersionInfo.Version)
                 {
-                    serverAssetInfosUrl = GetServerAssetsVersionInfoPath(serverUrl, Application.platform);
+                    serverAssetInfosUrl = GetAssetsInfoPath(serverUrl, Application.platform);
+                    BDebug.Log($"【版本控制】全量下载模式! server:{serverVersionInfo.Version} local:{localVersionInfo.Version} ", "red");
+                }
+                else
+                {
+                    BDebug.Log("【版本控制】全量版本一致,无需下载!");
+                    onTaskEndCallback(VersionControllerStatus.Success, "");
+                    yield break;
                 }
             }
+
+            #endregion
+
+            #region 服务器资源配置、本地配置加载
 
             //下载服务器配置
             var serverAssetsInfoWebReq = UnityWebRequest.Get(serverAssetInfosUrl);
@@ -262,33 +368,33 @@ namespace BDFramework.VersionController
                 }
             }
 
+
             /**************处理本地配置*************/
             if (isDownloadSubPackageMode)
             {
-                //分包模式：需要分包配置 + Streaming配置，防止下载重复
                 //本地路径
-                localAssetInfoPath = GetServerAssetsSubPackageInfoPath(localDownloadAssetsRootPath, Application.platform, subPackageName);
-                //读取本地分包配置
-                if (File.Exists(localAssetInfoPath))
-                {
-                    var content = File.ReadAllText(localAssetInfoPath);
-                    localAssetsInfoList = CsvSerializer.DeserializeFromString<List<ServerAssetItem>>(content);
-                }
+                localAssetInfoPath = GetAssetsSubPackageInfoPath(localSaveAssetsPath, Application.platform, subPackageName);
             }
             else
             {
-                //全量包
                 //读到一个Assets.info即可,全量只有1个描述文件
-                //本地路径
-                localAssetInfoPath = GetServerAssetsVersionInfoPath(localDownloadAssetsRootPath, Application.platform);
-                if (File.Exists(localAssetInfoPath))
-                {
-                    var content = File.ReadAllText(localAssetInfoPath);
-                    localAssetsInfoList = CsvSerializer.DeserializeFromString<List<ServerAssetItem>>(content);
-                }
+                localAssetInfoPath = GetAssetsInfoPath(localSaveAssetsPath, Application.platform);
             }
 
+            if (File.Exists(localAssetInfoPath))
+            {
+                var content = File.ReadAllText(localAssetInfoPath);
+                localAssetsInfoList = CsvSerializer.DeserializeFromString<List<ServerAssetItem>>(content);
+            }
+
+            #endregion
+
+            //3.生成差异列表
+
+            #region 生成差异文件
+
             //根据加载模式不同,寻找不同目录下的其他配置
+            //打包时，本地会带一份ServerAssets.info以标记当前包携带的资源
             var loadArtRoot = BDLauncher.Inst.GameConfig.ArtRoot;
             switch (loadArtRoot)
             {
@@ -296,7 +402,7 @@ namespace BDFramework.VersionController
                 case AssetLoadPathType.StreamingAsset:
                 {
                     //BSA 读取，不需要前缀
-                    var steamingAssetsInfoPath = string.Format("{0}/{1}", platform, BResources.SERVER_ASSETS_INFO_PATH);
+                    var steamingAssetsInfoPath = IPath.Combine(platform, BResources.ASSETS_INFO_PATH);
                     if (BetterStreamingAssets.FileExists(steamingAssetsInfoPath))
                     {
                         var content = BetterStreamingAssets.ReadAllText(steamingAssetsInfoPath);
@@ -308,7 +414,7 @@ namespace BDFramework.VersionController
                 case AssetLoadPathType.DevOpsPublish:
                 {
                     var path = GameConfig.GetLoadPath(loadArtRoot);
-                    var devopsAssetInfoPath = GetServerAssetsVersionInfoPath(path, Application.platform);
+                    var devopsAssetInfoPath = GetAssetsInfoPath(path, Application.platform);
                     if (File.Exists(devopsAssetInfoPath))
                     {
                         var content = File.ReadAllText(devopsAssetInfoPath);
@@ -319,58 +425,89 @@ namespace BDFramework.VersionController
                     break;
             }
 
-            //3.生成差异列表
+
             switch (mode)
             {
-                case UpdateMode.CompareVersionConfig:
-                    diffDownloadQueue = CompareVersionConfig(localAssetsInfoList, serverAssetsInfoList);
+                case UpdateMode.Compare:
+                    diffDownloadQueue = Compare(localAssetsInfoList, serverAssetsInfoList);
                     break;
                 case UpdateMode.Repair:
-                    diffDownloadQueue = Repair(localDownloadAssetsRootPath, localAssetsInfoList, serverAssetsInfoList);
+                    diffDownloadQueue = Repair(localSaveAssetsPath, localAssetsInfoList, serverAssetsInfoList);
                     break;
             }
 
             #endregion
 
             //4.开始下载
+
+            #region 根据差异文件下载
+
             var downloadCacheList = diffDownloadQueue.ToList();
             var failDownloadList = new List<ServerAssetItem>();
             while (diffDownloadQueue.Count > 0)
             {
                 var downloadItem = diffDownloadQueue.Dequeue();
-                //本地存在hash文件则不用下载,可能之前任务有部分失败了，本次重新下载
-                var localDownloadFile = ZString.Format("{0}/{1}/{2}", localDownloadAssetsRootPath, platform, downloadItem.HashName);
+                bool isSkip = false;
+                //本地存在hash文件,且hash一致,跳过
+                var localDownloadFile = IPath.Combine(localSaveAssetsPath, platform, downloadItem.HashName);
                 if (File.Exists(localDownloadFile))
                 {
-                    continue;
-                }
-
-                //先进行下载hash文件,所有的完成后再进行rename
-                var serverAssetUrl = ZString.Format("{0}/{1}/{2}", serverUrl, platform, downloadItem.HashName);
-                //下载具体资源 ,任务会重试5次
-                var assetDownloadWebReq = UnityWebRequest.Get(serverAssetUrl);
-                for (int i = 0; i < RETRY_COUNT; i++)
-                {
-                    yield return assetDownloadWebReq.SendWebRequest();
-                    if (assetDownloadWebReq.error == null)
+                    var hash = FileHelper.GetMurmurHash3(localDownloadFile);
+                    if (downloadItem.HashName.Equals(hash))
                     {
-                        var downloadFileHash = FileHelper.GetMurmurHash3(assetDownloadWebReq.downloadHandler.data);
-                        if (downloadFileHash.ToString() == downloadItem.HashName)
-                        {
-                            BDebug.Log("下载成功：" + serverAssetUrl);
-                            break;
-                        }
-                        else
-                        {
-                            BDebug.LogError("下载失败 hash不一致：server-" + downloadItem.HashName + " local-" + downloadFileHash);
-                        }
-
-                      
+                        isSkip = true;
+                    }
+                    else
+                    {
+                        File.Delete(localDownloadFile);
                     }
                 }
 
-                //成功通知
-                if (assetDownloadWebReq.error == null)
+                //本地存在原资源，且hash一致，跳过
+                var localRealPath = IPath.Combine(localSaveAssetsPath, platform, downloadItem.LocalPath);
+                if (File.Exists(localRealPath))
+                {
+                    var hash = FileHelper.GetMurmurHash3(localRealPath);
+                    if (downloadItem.HashName.Equals(hash))
+                    {
+                        isSkip = true;
+                    }
+                }
+
+                //下载
+                UnityWebRequest assetDownloadWebReq = null;
+                if (!isSkip)
+                {
+                    //先进行下载hash文件,所有的完成后再进行rename成资源
+                    var serverAssetUrl = IPath.Combine(serverUrl, platform, downloadItem.HashName);
+                    //下载具体资源 ,任务会重试5次
+                    assetDownloadWebReq = UnityWebRequest.Get(serverAssetUrl);
+                    for (int i = 0; i < RETRY_COUNT; i++)
+                    {
+                        yield return assetDownloadWebReq.SendWebRequest();
+                        if (assetDownloadWebReq.error == null)
+                        {
+                            //对比hash
+                            var downloadFileHash = FileHelper.GetMurmurHash3(assetDownloadWebReq.downloadHandler.data);
+                            if (downloadFileHash == downloadItem.HashName)
+                            {
+                                BDebug.Log("下载成功：" + serverAssetUrl);
+                                break;
+                            }
+                            else
+                            {
+                                BDebug.LogError("【版本控制】重下, hash校验失败! server-" + downloadItem.HashName + " local-" + downloadFileHash);
+                            }
+                        }
+                    }
+                }
+
+                //通知
+                if (isSkip)
+                {
+                    onDownloadProccess(downloadItem, downloadCacheList);
+                }
+                else if (assetDownloadWebReq.error == null)
                 {
                     onDownloadProccess(downloadItem, downloadCacheList);
                     FileHelper.WriteAllBytes(localDownloadFile, assetDownloadWebReq.downloadHandler.data);
@@ -382,7 +519,7 @@ namespace BDFramework.VersionController
                     BDebug.LogError("下载失败:" + assetDownloadWebReq.error);
                 }
 
-                assetDownloadWebReq.Dispose();
+                assetDownloadWebReq?.Dispose();
             }
 
             if (failDownloadList.Count > 0)
@@ -391,11 +528,16 @@ namespace BDFramework.VersionController
                 yield break;
             }
 
+            #endregion
+
             //5.重命名资源,并写入配置到本地
+
+            #region 资源写入本地，整理为加载资源
+
             foreach (var assetItem in downloadCacheList)
             {
-                var localHashPath = ZString.Format("{0}/{1}/{2}", localDownloadAssetsRootPath, platform, assetItem.HashName);
-                var localRealPath = ZString.Format("{0}/{1}/{2}", localDownloadAssetsRootPath, platform, assetItem.LocalPath);
+                var localHashPath = IPath.Combine(localSaveAssetsPath, platform, assetItem.HashName);
+                var localRealPath = IPath.Combine(localSaveAssetsPath, platform, assetItem.LocalPath);
                 if (File.Exists(localHashPath))
                 {
                     if (File.Exists(localRealPath))
@@ -408,22 +550,42 @@ namespace BDFramework.VersionController
                 }
             }
 
+            #endregion
+
+
             if (downloadCacheList.Count == 0)
             {
-                BDebug.Log("【版本控制】不用更新");
+                BDebug.Log("【版本控制】对比差异，无可下载资源~");
             }
 
-            //写入ConfigVersion
-            if (!string.IsNullOrEmpty(serverAssetsVersionConfigWebReq.downloadHandler.text))
-            {
-                File.WriteAllText(localAssetsVersionConfigPath, serverAssetsVersionConfigWebReq.downloadHandler.text);
-            }
+            //6.写入配置到本地
+
+            #region 存储配置到本地
 
             //写入AssetInfo
             if (!string.IsNullOrEmpty(serverAssetsInfoWebReq.downloadHandler.text))
             {
                 File.WriteAllText(localAssetInfoPath, serverAssetsInfoWebReq.downloadHandler.text);
             }
+
+            //写入VersionInfo
+            if (isDownloadSubPackageMode)
+            {
+                localVersionInfo.Platfrom = serverVersionInfo.Platfrom;
+                //子包版本信息
+                localVersionInfo.SubPckMap[subPackageName] = serverVersionInfo.SubPckMap[subPackageName];
+            }
+            else
+            {
+                localVersionInfo.Platfrom = serverVersionInfo.Platfrom;
+                //全量包信息
+                localVersionInfo.Version = serverVersionInfo.Version;
+            }
+
+            File.WriteAllText(localAssetsVersionInfoPath, JsonMapper.ToJson(localVersionInfo));
+
+            #endregion
+
 
             //the end.
             serverAssetsVersionConfigWebReq.Dispose();
@@ -435,8 +597,9 @@ namespace BDFramework.VersionController
 
         /// <summary>
         /// 对比版本配置
+        /// 原则上认为StreamingAsset资源为母包携带,且完整
         /// </summary>
-        static private Queue<ServerAssetItem> CompareVersionConfig(List<ServerAssetItem> localAssetsInfo, List<ServerAssetItem> serverAssetsInfo)
+        private Queue<ServerAssetItem> Compare(List<ServerAssetItem> localAssetsInfo, List<ServerAssetItem> serverAssetsInfo)
         {
             if (localAssetsInfo == null || localAssetsInfo.Count == 0)
             {
@@ -462,9 +625,10 @@ namespace BDFramework.VersionController
 
 
         /// <summary>
-        /// 修复模式,是要对比本地文件是否存在
+        /// 修复模式
+        /// Persistent资源和Streaming资源全量进行对比：文件名和hash
         /// </summary>
-        static private Queue<ServerAssetItem> Repair(string localRootPath, List<ServerAssetItem> localAssetsInfo, List<ServerAssetItem> serverAssetsInfo)
+        private Queue<ServerAssetItem> Repair(string localRootPath, List<ServerAssetItem> localAssetsInfo, List<ServerAssetItem> serverAssetsInfo)
         {
             if (localAssetsInfo == null || localAssetsInfo.Count == 0)
             {
@@ -488,10 +652,11 @@ namespace BDFramework.VersionController
                 else
                 {
                     //配置存在，判断文件存不存在,存在还要判断hash         
-                    var fs = ZString.Format("{0}/{1}/{2}", localRootPath, platform, serverAsset.LocalPath);
+                    var fs = IPath.Combine(localRootPath, platform, serverAsset.LocalPath);
                     if (!File.Exists(fs))
                     {
                         diffQueue.Enqueue(serverAsset);
+                        continue;
                     }
                 }
             }
@@ -502,28 +667,25 @@ namespace BDFramework.VersionController
 
 
         /// <summary>
-        /// 获取分包资源
-        /// 分包资源 + 分包依赖资源
-        /// </summary>
-        static public Queue<ServerAssetItem> GetMultiplePackageAssetItems()
-        {
-            return null;
-        }
-
-        /// <summary>
         /// 获取版本配置路径
         /// </summary>
         /// <param name="rootPath"></param>
         /// <param name="platform"></param>
         /// <returns></returns>
-        static private string GetServerAssetsVersionConfigPath(string rootPath, RuntimePlatform platform)
+        private string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
         {
-            return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_VERSION_CONFIG_PATH);
+            return IPath.Combine(rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_VERSION_INFO_PATH);
         }
 
-        static private string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
+        /// <summary>
+        /// 获取资源信息路径
+        /// </summary>
+        /// <param name="rootPath"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        private string GetAssetsInfoPath(string rootPath, RuntimePlatform platform)
         {
-            return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_INFO_PATH);
+            return IPath.Combine(rootPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
         }
 
         /// <summary>
@@ -532,10 +694,18 @@ namespace BDFramework.VersionController
         /// <param name="rootPath"></param>
         /// <param name="platform"></param>
         /// <returns></returns>
-        static private string GetServerAssetsSubPackageInfoPath(string rootPath, RuntimePlatform platform, string subPackageName)
+        private string GetAssetsSubPackageInfoPath(string rootPath, RuntimePlatform platform, string subPackageName)
         {
-            var subPackagePath = string.Format(BResources.SERVER_ART_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageName);
-            return ZString.Format("{0}/{1}/{2}", rootPath, BDApplication.GetPlatformPath(platform), subPackagePath);
+            //旧版本兼容逻辑
+            if (subPackageName.StartsWith("ServerAssetsSubPackage_"))
+            {
+                return IPath.Combine(rootPath, BDApplication.GetPlatformPath(platform), subPackageName);
+            }
+            else
+            {
+                var subPackagePath = string.Format(BResources.SERVER_ART_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageName);
+                return IPath.Combine(rootPath, BDApplication.GetPlatformPath(platform), subPackagePath);
+            }
         }
     }
 }

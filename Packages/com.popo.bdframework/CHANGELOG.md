@@ -1,5 +1,16 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.1.0-preview.7
+-AssetbundleV2: 增加AB混淆，用以加密功能
+-AssetbundleV2: 优化AB的内存占用和大小
+-AssetbundleV2: 增加关闭TypeTree的显式配置
+-AssetbundleV2: 修复部分编辑器的bug.
+-AssetbundleV2: 增加自定义颗粒度的演示
+-UFlux: 重新整理文档.整理demo
+-Uflux: 增加Store监听多个Reducer的支持.
+-StatusListener: 重新整理EventListenerEX 和 ValueListenerEx抽象
+-AssetGraph1.8: 将AssetGraph整理进框架，并提供升级维护
+
 ##V2.1.0-preview.6
 -AssetbundleV2: 重构异步加载逻辑
 -Assetbundlev2: 重新绘制Build Assetbundle 编辑器

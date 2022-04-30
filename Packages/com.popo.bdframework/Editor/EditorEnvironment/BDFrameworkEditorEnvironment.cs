@@ -132,7 +132,7 @@ namespace BDFramework.Editor.Environment
                 }
                 
                 //编辑器下加载初始化
-                BResources.Load(AssetLoadPathType.Editor);
+                BResources.Init(AssetLoadPathType.Editor);
                 //编辑器下管理器注册
                 ManagerInstHelper.Load(Types);
                 //Editor的管理器初始化
