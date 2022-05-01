@@ -851,6 +851,10 @@
       <Project>{d641c1a6-1982-4676-90f3-e25cccafa1d3}</Project>
       <Name>ZString</Name>
     </ProjectReference>
+    <ProjectReference Include="UniTask.csproj">
+      <Project>{62bf1715-5e20-a9d4-c3cb-6a9b837cdaba}</Project>
+      <Name>UniTask</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
