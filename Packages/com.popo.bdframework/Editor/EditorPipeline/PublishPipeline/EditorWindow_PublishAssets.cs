@@ -133,7 +133,7 @@ namespace BDFramework.Editor.PublishPipeline
 
                     //选择目录
                     exportPath = BDApplication.DevOpsPublishAssetsPath;
-
+                    
                     //生成android资源
                     if (isGenAndroidAssets)
                     {
@@ -156,6 +156,31 @@ namespace BDFramework.Editor.PublishPipeline
                 {
                     //自动转hash
                     PublishPipelineTools.PublishAssetsToServer(BDApplication.DevOpsPublishAssetsPath);
+                }
+
+                GUILayout.Space(20);
+                GUILayout.Label("调试功能:", EditorGUIHelper.LabelH4);
+                if (GUILayout.Button("拷贝资源到Streaming", GUILayout.Width(175), GUILayout.Height(30)))
+                {
+                    RuntimePlatform platform = RuntimePlatform.Android;
+                    if (isGenAndroidAssets)
+                    {
+                        platform = RuntimePlatform.Android;
+                    }
+                    else if (isGenIOSAssets)
+                    {
+                        platform =  RuntimePlatform.IPhonePlayer;
+                    }
+
+                    //路径
+                    var source = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, BDApplication.GetPlatformPath(platform));
+                    var target = IPath.Combine(Application.streamingAssetsPath, BDApplication.GetPlatformPath(platform));
+                    if (Directory.Exists(target))
+                    {
+                        Directory.Delete(target,true);
+                    }
+                    //拷贝
+                    FileHelper.CopyFolderTo(source,target);
                 }
             }
             GUILayout.EndVertical();

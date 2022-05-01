@@ -59,7 +59,7 @@ namespace BDFramework.Editor
                     if (File.Exists(serverVersionInfoPath))
                     {
                         var content = File.ReadAllText(serverVersionInfoPath);
-                        var info = JsonMapper.ToObject<ServerAssetsVersionInfo>(content);
+                        var info = JsonMapper.ToObject<AssetsVersionInfo>(content);
                         lastVersionNum = info.Version;
                     }
 
@@ -201,7 +201,7 @@ namespace BDFramework.Editor
             }
 
             //服务器版本信息
-            var serverAssetsInfo = new ServerAssetsVersionInfo();
+            var serverAssetsInfo = new AssetsVersionInfo();
             
             //生成分包信息
             //加载assetbundle配置
