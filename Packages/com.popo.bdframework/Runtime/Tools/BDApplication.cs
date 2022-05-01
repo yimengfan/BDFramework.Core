@@ -24,6 +24,22 @@ namespace BDFramework.Core.Tools
             }
         }
 
+        #region Unity路径缓存防止各种异步访问
+
+        /// <summary>
+        /// Persistent
+        /// </summary>
+       static public string persistentDataPath { get;private set; }
+       /// <summary>
+       /// Streaming
+       /// </summary>
+       static public string streamingAssetsPath { get;private set; }
+
+        #endregion
+        
+        
+        #region 自定义路径
+
         /// <summary>
         /// 项目根目录
         /// </summary>
@@ -90,9 +106,13 @@ namespace BDFramework.Core.Tools
         /// 编辑器缓存目录
         /// </summary>
         public static string BDEditorCachePath { get; private set; }
-
+#endregion
         static public void Init()
         {
+            //Unity路径
+            persistentDataPath = Application.persistentDataPath;
+            streamingAssetsPath = Application.streamingAssetsPath;
+            //自定义路径
             ProjectRoot             = Application.dataPath.Replace("/Assets", "");
             Library                 = ProjectRoot + "/Library";
             Package                 = ProjectRoot + "/Package";

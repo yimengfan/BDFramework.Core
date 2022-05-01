@@ -256,9 +256,11 @@ namespace BDFramework.Asset
                     else
                     {
                         BDebug.Log("【母包资源检测】复制，Streaming 有新资源");
+                        ClearOldPersistentAssets();
                         //Streaming版本比较新
                         //复制Stream的packageinfo 到persistent
                         FileHelper.WriteAllText(persistentPackageInfoPath, streamingPackageInfoContent);
+              
                     }
                 }
                 else
@@ -299,6 +301,24 @@ namespace BDFramework.Asset
 
             //结束
             callback?.Invoke();
+        }
+
+
+
+        /// <summary>
+        /// 清理旧的persistent资源
+        /// </summary>
+        static private void ClearOldPersistentAssets()
+        {
+            var runtimes = BDApplication.GetSupportPlatform();
+            foreach (var runtime in runtimes)
+            {
+                var path = IPath.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(runtime));
+                if (Directory.Exists(path))
+                {
+                    Directory.Delete(path,true);
+                }
+            }
         }
     }
 }
