@@ -133,7 +133,7 @@ namespace BDFramework.Editor.PublishPipeline
 
                     //选择目录
                     exportPath = BDApplication.DevOpsPublishAssetsPath;
-                    
+
                     //生成android资源
                     if (isGenAndroidAssets)
                     {
@@ -160,29 +160,53 @@ namespace BDFramework.Editor.PublishPipeline
 
                 GUILayout.Space(20);
                 GUILayout.Label("调试功能:", EditorGUIHelper.LabelH4);
-                if (GUILayout.Button("拷贝资源到Streaming", GUILayout.Width(175), GUILayout.Height(30)))
+                GUILayout.BeginHorizontal();
                 {
-                    RuntimePlatform platform = RuntimePlatform.Android;
-                    if (isGenAndroidAssets)
+                    if (GUILayout.Button("拷贝资源到Streaming", GUILayout.Width(175), GUILayout.Height(30)))
                     {
-                        platform = RuntimePlatform.Android;
-                    }
-                    else if (isGenIOSAssets)
-                    {
-                        platform =  RuntimePlatform.IPhonePlayer;
+                        RuntimePlatform platform = RuntimePlatform.Android;
+                        if (isGenAndroidAssets)
+                        {
+                            platform = RuntimePlatform.Android;
+                        }
+                        else if (isGenIOSAssets)
+                        {
+                            platform = RuntimePlatform.IPhonePlayer;
+                        }
+
+                        //路径
+                        var source = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, BDApplication.GetPlatformPath(platform));
+                        var target = IPath.Combine(Application.streamingAssetsPath, BDApplication.GetPlatformPath(platform));
+                        if (Directory.Exists(target))
+                        {
+                            Directory.Delete(target, true);
+                        }
+
+                        //拷贝
+                        FileHelper.CopyFolderTo(source, target);
+                        AssetDatabase.Refresh();
                     }
 
-                    //路径
-                    var source = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, BDApplication.GetPlatformPath(platform));
-                    var target = IPath.Combine(Application.streamingAssetsPath, BDApplication.GetPlatformPath(platform));
-                    if (Directory.Exists(target))
+                    if (GUILayout.Button("删除Streaming资源", GUILayout.Width(175), GUILayout.Height(30)))
                     {
-                        Directory.Delete(target,true);
+                        RuntimePlatform platform = RuntimePlatform.Android;
+                        if (isGenAndroidAssets)
+                        {
+                            platform = RuntimePlatform.Android;
+                        }
+                        else if (isGenIOSAssets)
+                        {
+                            platform = RuntimePlatform.IPhonePlayer;
+                        }
+
+                        var target = IPath.Combine(Application.streamingAssetsPath, BDApplication.GetPlatformPath(platform));
+                        Directory.Delete(target, true);
                     }
-                    //拷贝
-                    FileHelper.CopyFolderTo(source,target);
                 }
             }
+            GUILayout.EndHorizontal();
+            
+            
             GUILayout.EndVertical();
         }
 
@@ -194,6 +218,9 @@ namespace BDFramework.Editor.PublishPipeline
         /// </summary>
         public void OnGUI_PublishEditorService()
         {
+            //playmode时候启动
+            this.StartAssetsServerOnPlayMode();
+            
             GUILayout.BeginVertical();
             {
                 GUILayout.Label("AB文件服务器:", EditorGUIHelper.GetFontStyle(Color.red, 15));
@@ -201,27 +228,19 @@ namespace BDFramework.Editor.PublishPipeline
 
                 if (EditorHttpListener == null)
                 {
-                    GUI.color = Color.green;
+                 
                     if (GUILayout.Button("启动本机文件服务器"))
                     {
-                        //自动转hash
-                        PublishPipelineTools.PublishAssetsToServer(BDApplication.DevOpsPublishAssetsPath);
-                        //开启文件服务器
-                        EditorHttpListener = new EditorHttpListener();
-                        var webdir = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
-                        EditorHttpListener.Start("*", "8081", webdir);
+                        StartLocalAssetsFileServer();
                     }
-
-                    GUI.color = GUI.backgroundColor;
                 }
                 else
                 {
-                    GUI.color = Color.red;
+                    GUI.color = Color.green;
 
-                    if (GUILayout.Button("关闭本机文件服务器"))
+                    if (GUILayout.Button("[已启动]关闭本机文件服务器"))
                     {
-                        EditorHttpListener.Stop();
-                        EditorHttpListener = null;
+                        StopLocalAssetsFileServer();
                     }
 
                     GUI.color = GUI.backgroundColor;
@@ -262,6 +281,42 @@ namespace BDFramework.Editor.PublishPipeline
             GUILayout.EndVertical();
         }
 
+
+        /// <summary>
+        /// playmode 启动
+        /// </summary>
+        private void StartAssetsServerOnPlayMode()
+        {
+            if (EditorApplication.isPlaying && EditorHttpListener == null)
+            {
+                this.StartLocalAssetsFileServer();
+            }
+        }
+
+        /// <summary>
+        /// 启动本地的资源服务器
+        /// </summary>
+        private void StartLocalAssetsFileServer()
+        {
+            if (EditorHttpListener == null)
+            {
+                //自动转hash
+                PublishPipelineTools.PublishAssetsToServer(BDApplication.DevOpsPublishAssetsPath);
+                //开启文件服务器
+                EditorHttpListener = new EditorHttpListener();
+                var webdir = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
+                EditorHttpListener.Start("*", "8081", webdir);
+            }
+        }
+
+        private void StopLocalAssetsFileServer()
+        {
+            if (EditorHttpListener != null)
+            {
+                EditorHttpListener.Stop();
+                EditorHttpListener = null;
+            }
+        }
 
         /// <summary>
         /// 生成所有资源

@@ -109,6 +109,18 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// 远程资源地址
+        /// </summary>
+        private static string RemoteAssetsUrl = "";
+        /// <summary>
+        /// 网络寻址模式
+        /// </summary>
+        static public void SetRemoteAssetsUrl(string url)
+        {
+            RemoteAssetsUrl = url;
+        }
+        
+        /// <summary>
         /// 加载器
         /// </summary>
         static public IResMgr ResLoader { get; private set; }

@@ -87,12 +87,37 @@ namespace BDFramework.VersionController
 
             return false;
         }
+
+        public override int GetHashCode()
+        {
+            return ZString.Concat(this.LocalPath, "|", this.HashName).GetHashCode();
+        }
     }
 
     public enum UpdateMode
     {
-        Compare, //对比版本
-        Repair, //修复模式
+        /// <summary>
+        /// 1.对比版本: 本地、服务器版本信息,版本号相同跳过
+        /// 2.获取差异: 对比本地与服务器差异(只对比配置和判断文件是否存在)
+        /// 3.下载资源: 根据差异信息下载
+        /// </summary>
+        Compare,
+
+        /// <summary>
+        /// 1.对比版本: 不对比
+        /// 2.获取差异: 遍历服务器版本,判断本地文件和hash值
+        /// 3.下载资源: 根据差异信息下载
+        /// </summary>
+        Repair,
+
+        /// <summary>
+        /// 1.对比版本: 跟Compare模式一致
+        /// 2.获取差异: 跟Repair模式一致
+        /// 3.下载资源: 根据差异信息下载
+        /// 本质上时:每次版本变化做一次修复
+        /// 建议使用该模式,平时开启Remote资源加载防止资源丢失
+        /// </summary>
+        CompareWithRepair,
     }
 
     /// <summary>
@@ -163,7 +188,6 @@ namespace BDFramework.VersionController
             {
                 //开始版本控制逻辑
                 StartVersionControl(updateMode, serverConfigUrl, BDApplication.persistentDataPath, assetsPackageName, onDownloadProccess, onTaskEndCallback);
-                Debug.Log("test----------------------");
             });
         }
 
@@ -266,7 +290,7 @@ namespace BDFramework.VersionController
 
             #endregion
 
-            //2.获取对应数据
+            //2.对比版本、获取对应数据
             string err = null;
             string suc = null;
             var serverAssetsInfoList = new List<ServerAssetItem>();
@@ -276,6 +300,7 @@ namespace BDFramework.VersionController
             switch (updateMode)
             {
                 case UpdateMode.Compare:
+                case UpdateMode.CompareWithRepair://CP模式对比版本与Compare一致
                 {
                     if (isDownloadSubPackageMode)
                     {
@@ -330,13 +355,14 @@ namespace BDFramework.VersionController
                 }
                     break;
                 case UpdateMode.Repair:
+                case UpdateMode.CompareWithRepair: //CP 获取差异模式与Repair一致
                 {
                     diffDownloadQueue = Repair(serverAssetsInfoList, platform);
                 }
                     break;
             }
 
-            BDebug.Log("【版本控制】下载文件数量 " + diffDownloadQueue.Count, "yellow");
+            BDebug.Log($"【版本控制】 配置数量:{serverAssetsInfoList.Count} ,本地存在{serverAssetsInfoList.Count - diffDownloadQueue.Count},下载文件数量{diffDownloadQueue.Count}", "yellow");
 
             #endregion
 
@@ -372,7 +398,7 @@ namespace BDFramework.VersionController
 
             //写入Asset.Info
             File.WriteAllText(localAssetInfoPath, serverAssetsContent);
-            BDebug.Log($"【版本控制】写入{serverAssetsContent}");
+            BDebug.Log($"【版本控制】写入{Path.GetFileName(localAssetInfoPath)}  \n {serverAssetsContent}");
 
             //写入Version.Info
             if (isDownloadSubPackageMode)
@@ -390,12 +416,15 @@ namespace BDFramework.VersionController
 
             var localAssetsVersionInfoPath = GetServerAssetsVersionInfoPath(localSaveAssetsPath, platform);
             File.WriteAllText(localAssetsVersionInfoPath, JsonMapper.ToJson(localVersionInfo));
-            BDebug.Log($"【版本控制】写入{localAssetsVersionInfoPath}");
+            BDebug.Log($"【版本控制】写入{Path.GetFileName(localAssetsVersionInfoPath)}");
 
             #endregion
 
             //TODO 6.删除冗余资源
-
+            if (!isDownloadSubPackageMode)
+            {
+                //  serverAssetsInfoList
+            }
 
             //the end.
             await UniTask.SwitchToMainThread();
@@ -438,9 +467,29 @@ namespace BDFramework.VersionController
                 //下载服务器Assets.info
                 (err, serverAssetsInfoList, serverAssetsContent) = LoadServerAssetInfo(serverAssetInfosUrl);
             }
-            //本地Assets.info
-            localAssetsInfoList = this.LoadLocalAssetInfo(platform);
+            //加载本地SubPackage配置
+            localAssetsInfoList = LoadLocalSubPacakgeAssetInfo(platform, localVersionInfo);
 
+            //加载本地asset.info
+            var localAssetsInfo = this.LoadLocalAssetInfo(platform);
+            localAssetsInfoList.AddRange(localAssetsInfo);
+            //去重
+            localAssetsInfoList = localAssetsInfoList.Distinct().ToList();
+            localAssetsInfoList.Sort((a, b) =>
+            {
+                if (a.Id < b.Id)
+                {
+                    return -1;
+                }
+                else if (a.Id == b.Id)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
+            });
             //返回
             return (err, suc, serverAssetsInfoList, localAssetsInfoList, serverAssetsContent);
         }
@@ -469,12 +518,22 @@ namespace BDFramework.VersionController
                 return (err, suc, null, null, null);
             }
 
+
             localVersionInfo.SubPckMap.TryGetValue(subPackageName, out var localSubPckVersion);
             if (serverSubPckVersion == localSubPckVersion)
             {
                 suc = "【版本控制】分包版本一致,无需下载!";
-                BDebug.Log(suc);
+//                BDebug.Log(suc);
                 return (err, suc, null, null, null);
+            }
+
+            //本地版本记录
+            if (!string.IsNullOrEmpty(localVersionInfo.Version) && !string.IsNullOrEmpty(localSubPckVersion))
+            {
+                if (localVersionInfo.Version != localSubPckVersion)
+                {
+                    BDebug.Log("【版本控制】分包资源大于 本地整包资源.请注意资源版本有可能不匹配!", "red");
+                }
             }
 
             //2.下载AssetInfo
@@ -486,18 +545,29 @@ namespace BDFramework.VersionController
                 (err, serverAssetsInfoList, serverAssetsContent) = LoadServerAssetInfo(serverAssetInfosUrl);
             }
 
-            //加载本地SubPackage配置
-            var localAssetInfoPath = GetAssetsSubPackageInfoPath(Application.persistentDataPath, platform, subPackageName);
-            if (File.Exists(localAssetInfoPath))
-            {
-                var content = BetterStreamingAssets.ReadAllText(localAssetInfoPath);
-                localAssetsInfoList = CsvSerializer.DeserializeFromString<List<ServerAssetItem>>(content);
-            }
+            //1.加载本地SubPackage配置
+            localAssetsInfoList = LoadLocalSubPacakgeAssetInfo(platform, localVersionInfo);
 
-            //加载本地asset.info
+            //2.加载本地asset.info
             var localAssetsInfo = this.LoadLocalAssetInfo(platform);
             localAssetsInfoList.AddRange(localAssetsInfo);
-
+            //去重、排序
+            localAssetsInfoList = localAssetsInfoList.Distinct().ToList();
+            localAssetsInfoList.Sort((a, b) =>
+            {
+                if (a.Id < b.Id)
+                {
+                    return -1;
+                }
+                else if (a.Id == b.Id)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
+            });
             //返回
             return (err, suc, serverAssetsInfoList, localAssetsInfoList, serverAssetsContent);
         }
@@ -654,6 +724,31 @@ namespace BDFramework.VersionController
                         break;
                 }
             }
+
+            return retList;
+        }
+
+
+        /// <summary>
+        /// 加载SubPacakge的AssetInfo
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        private List<ServerAssetItem> LoadLocalSubPacakgeAssetInfo(RuntimePlatform platform, AssetsVersionInfo localVersionInfo)
+        {
+            var retList = new List<ServerAssetItem>();
+
+            foreach (var kv in localVersionInfo.SubPckMap)
+            {
+                var subPackageInfoPath = GetAssetsSubPackageInfoPath(BDApplication.persistentDataPath, platform, kv.Key);
+                if (File.Exists(subPackageInfoPath))
+                {
+                    var content = File.ReadAllText(subPackageInfoPath);
+                    var assetItems = CsvSerializer.DeserializeFromString<List<ServerAssetItem>>(content);
+                    retList.AddRange(assetItems);
+                }
+            }
+
 
             return retList;
         }
@@ -848,45 +943,22 @@ namespace BDFramework.VersionController
         /// </summary>
         private Queue<ServerAssetItem> Compare(List<ServerAssetItem> localAssetsInfo, List<ServerAssetItem> serverAssetsInfo, RuntimePlatform platform)
         {
-            if (localAssetsInfo == null || localAssetsInfo.Count == 0)
-            {
-                return new Queue<ServerAssetItem>(serverAssetsInfo);
-            }
-
             var diffQueue = new Queue<ServerAssetItem>();
             //比对平台
             foreach (var serverAsset in serverAssetsInfo)
             {
-                //比较本地是否有 hash、文件名一致的资源
-                var result = localAssetsInfo.FindIndex((a) => a.HashName == serverAsset.HashName && a.LocalPath == serverAsset.LocalPath);
-                //不存在,优先相信配置
-                if (result == -1)
+                //比较本地配置是否有 hash、文件名一致的资源
+                var result = localAssetsInfo.FirstOrDefault((info) => serverAsset.Equals(info));
+                //不存在
+                if (result == null)
                 {
-                    //本地是否下载过hash文件(之前下到一半就中止了)
-                    var localHashFile = IPath.Combine(BDApplication.persistentDataPath, BDApplication.GetPlatformPath(platform), serverAsset.HashName);
-                    if (File.Exists(localHashFile))
-                    {
-                        var hash = FileHelper.GetMurmurHash3(localHashFile);
-                        if (serverAsset.HashName.Equals(hash))
-                        {
-                            continue;
-                        }
-                    }
-
                     diffQueue.Enqueue(serverAsset);
                 }
-                else //配置存在
+                else
                 {
-                    //本地文件存在就放过,不校验hash
-                    var persistentAssetPath = IPath.Combine(BDApplication.persistentDataPath,BDApplication.GetPlatformPath(platform), serverAsset.LocalPath);
-                    if (!File.Exists(persistentAssetPath))
+                    if (!IsExsitAssetName(platform, serverAsset))
                     {
-                        //streming不存在
-                        var streamingAssetPath = IPath.Combine(BDApplication.GetPlatformPath(platform), serverAsset.LocalPath);
-                        if (!BetterStreamingAssets.FileExists(streamingAssetPath))
-                        {
-                            diffQueue.Enqueue(serverAsset);
-                        }
+                        diffQueue.Enqueue(serverAsset);
                     }
                 }
             }
@@ -904,60 +976,110 @@ namespace BDFramework.VersionController
         {
             var diffQueue = new Queue<ServerAssetItem>();
             //平台
-            var persistentPlatformPath = IPath.Combine(BDApplication.persistentDataPath, BDApplication.GetPlatformPath(platform));
-            //var streamingPlatformPath = IPath.Combine(BDApplication.streamingAssetsPath, BDApplication.GetPlatformPath(platform));
             //根据服务器配置,遍历本地所有文件判断存在且修复
             foreach (var serverAsset in serverAssetsInfo)
             {
-                //本地是否存在hash文件
-                var persistentHashPath = IPath.Combine(persistentPlatformPath, serverAsset.HashName);
-                if (File.Exists(persistentHashPath))
+                if (!IsExsitAsset(platform, serverAsset))
                 {
-                    var hash = FileHelper.GetMurmurHash3(persistentHashPath);
-                    if (serverAsset.HashName.Equals(hash))
-                    {
-                        BDebug.Log("[版本控制]hash文件存在,无需下载!");
-                        //存在
-                        continue;
-                    }
-                    else
-                    {
-                        File.Delete(persistentHashPath);
-                    }
+                    diffQueue.Enqueue(serverAsset);
                 }
+            }
+            return diffQueue;
+        }
 
-                //本地存在原资源
-                var persistentAssetPath = IPath.Combine(persistentPlatformPath, serverAsset.LocalPath);
-                if (File.Exists(persistentAssetPath))
+
+        /// <summary>
+        /// 是否存在资源、且hash相同
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="serverAsset"></param>
+        /// <returns></returns>
+        private bool IsExsitAsset(RuntimePlatform platform, ServerAssetItem serverAsset)
+        {
+            //本地是否下载过hash文件(之前下到一半就中止了)
+            var persistentHashPath = IPath.Combine(BDApplication.persistentDataPath, BDApplication.GetPlatformPath(platform), serverAsset.HashName);
+            if (File.Exists(persistentHashPath))
+            {
+                var hash = FileHelper.GetMurmurHash3(persistentHashPath);
+                if (serverAsset.HashName.Equals(hash))
                 {
-                    var hash = FileHelper.GetMurmurHash3(persistentAssetPath);
-                    if (serverAsset.HashName.Equals(hash))
-                    {
-                        BDebug.Log("[版本控制]persistent存在,无需下载!");
-                        //存在
-                        continue;
-                    }
+                    BDebug.Log($"[版本控制]hash文件存在,无需下载! - {serverAsset.HashName}");
+                    return true;
                 }
-
-                //Streaming 文件判断,无需Streaming前缀
-                var streamingAssetPath = IPath.Combine(BDApplication.GetPlatformPath(platform), serverAsset.HashName);
-                if (BetterStreamingAssets.FileExists(streamingAssetPath))
+                else
                 {
-                    var bytes = BetterStreamingAssets.ReadAllBytes(streamingAssetPath);
-                    var hash = FileHelper.GetMurmurHash3(bytes);
-                    if (serverAsset.HashName.Equals(hash))
-                    {
-                        BDebug.Log("[版本控制]streaming存在,无需下载!");
-                        //存在
-                        continue;
-                    }
+                    File.Delete(persistentHashPath);
                 }
+            }
 
-                diffQueue.Enqueue(serverAsset);
+            //persistent判断
+            var persistentAssetPath = IPath.Combine(BDApplication.persistentDataPath, BDApplication.GetPlatformPath(platform), serverAsset.LocalPath);
+            if (File.Exists(persistentAssetPath))
+            {
+                var hash = FileHelper.GetMurmurHash3(persistentAssetPath);
+                if (serverAsset.HashName.Equals(hash))
+                {
+                    BDebug.Log($"[版本控制]persistent存在,无需下载! - {serverAsset.LocalPath}");
+                    return true;
+                }
+            }
+
+            //Streaming 文件判断,无需Streaming前缀
+            var streamingAssetPath = IPath.Combine(BDApplication.GetPlatformPath(platform), serverAsset.LocalPath);
+            if (BetterStreamingAssets.FileExists(streamingAssetPath))
+            {
+                var bytes = BetterStreamingAssets.ReadAllBytes(streamingAssetPath);
+                var hash = FileHelper.GetMurmurHash3(bytes);
+                if (serverAsset.HashName.Equals(hash))
+                {
+                    BDebug.Log($"[版本控制]streaming存在,无需下载! - {streamingAssetPath}");
+                    return true;
+                }
             }
 
 
-            return diffQueue;
+            return false;
+        }
+
+        /// <summary>
+        /// 是否存在资源、文件存在即可
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="serverAsset"></param>
+        /// <returns></returns>
+        private bool IsExsitAssetName(RuntimePlatform platform, ServerAssetItem serverAsset)
+        {
+            //本地是否下载过hash文件(之前下到一半就中止了)
+            var persistentHashPath = IPath.Combine(BDApplication.persistentDataPath, BDApplication.GetPlatformPath(platform), serverAsset.HashName);
+            if (File.Exists(persistentHashPath))
+            {
+                var hash = FileHelper.GetMurmurHash3(persistentHashPath);
+                if (serverAsset.HashName.Equals(hash))
+                {
+                    return true;
+                }
+                else
+                {
+                    File.Delete(persistentHashPath);
+                }
+            }
+
+            //persistent判断
+            var persistentAssetPath = IPath.Combine(BDApplication.persistentDataPath, BDApplication.GetPlatformPath(platform), serverAsset.LocalPath);
+            if (File.Exists(persistentAssetPath))
+            {
+                return true;
+            }
+
+            //Streaming 文件判断,无需Streaming前缀
+            var streamingAssetPath = IPath.Combine(BDApplication.GetPlatformPath(platform), serverAsset.LocalPath);
+            if (BetterStreamingAssets.FileExists(streamingAssetPath))
+            {
+                return true;
+            }
+
+
+            return false;
         }
 
         #endregion

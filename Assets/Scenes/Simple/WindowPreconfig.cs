@@ -15,6 +15,7 @@ public class WindowPreconfig : MonoBehaviour
     private InputField inputField;
     private Text text_DownloadProcess;
     private Button btn_Download;
+    private Button btn_DownloadRepair;
     private Button btn_GetSubPackage;
     private Button btn_Pass;
     private Button btn_ClearPersistent;
@@ -28,12 +29,14 @@ public class WindowPreconfig : MonoBehaviour
         inputField = this.transform.Find("InputField").GetComponent<InputField>();
         text_DownloadProcess = this.transform.Find("text_DownloadProcess").GetComponent<Text>();
         btn_Download = this.transform.Find("btn_Download").GetComponent<Button>();
+        btn_DownloadRepair = this.transform.Find("btn_DownloadRepair").GetComponent<Button>();
         btn_GetSubPackage = this.transform.Find("btn_GetSubPackage").GetComponent<Button>();
         btn_Pass = this.transform.Find("btn_Pass").GetComponent<Button>();
         btn_ClearPersistent = this.transform.Find("btn_ClearPersistent").GetComponent<Button>();
         //
         this.btn_Pass.onClick.AddListener(Onclick_PassAndLaunch);
         this.btn_Download.onClick.AddListener(OnClick_DownLoadAndLaunch);
+        this.btn_DownloadRepair.onClick.AddListener(Onclick_Download_RepairMode);
         this.btn_GetSubPackage.onClick.AddListener(OnClick_GetSubPackage);
         this.btn_ClearPersistent.onClick.AddListener(OnClick_ClearPersistent);
         //
@@ -65,18 +68,11 @@ public class WindowPreconfig : MonoBehaviour
     /// </summary>
     private void OnClick_DownLoadAndLaunch()
     {
-        //删除本地的文件，这不是正式环境逻辑，请勿参考
-        // var cachedir = IPath.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(Application.platform));
-        // if (Directory.Exists(cachedir))
-        // {
-        //     Directory.Delete(cachedir, true);
-        // }
-
         Debug.Log(Application.persistentDataPath);
         var url = "http://" + this.inputField.text;
         float totalSize = -1;
         float curDoanloadSize = -1;
-        BResources.StartAssetsVersionControl(UpdateMode.Compare, url, null, (curDownload, allDownloadList) =>
+        BResources.StartAssetsVersionControl(UpdateMode.CompareWithRepair, url, null, (curDownload, allDownloadList) =>
             {
                 if (totalSize == -1)
                 {
@@ -101,7 +97,7 @@ public class WindowPreconfig : MonoBehaviour
                     {
                         this.text_DownloadProcess.text = "下载完毕";
                         //启动
-                        this.Onclick_PassAndLaunch();
+                       // this.Onclick_PassAndLaunch();
                     }
                         break;
                     case AssetsVersionController.VersionControllerStatus.Error:
@@ -114,6 +110,54 @@ public class WindowPreconfig : MonoBehaviour
             });
     }
 
+    /// <summary>
+    /// 下载资源-修复模式
+    /// </summary>
+    private void Onclick_Download_RepairMode()
+    {
+        Debug.Log(Application.persistentDataPath);
+        var url = "http://" + this.inputField.text;
+        float totalSize =0;
+        float curDoanloadSize = 0;
+        BResources.StartAssetsVersionControl(UpdateMode.Repair, url, null, (curDownload, allDownloadList) =>
+        {
+            if (totalSize == 0)
+            {
+                foreach (var item in allDownloadList)
+                {
+                    totalSize += item.FileSize;
+                }
+
+                curDoanloadSize = 0;
+            }
+
+            curDoanloadSize += curDownload.FileSize;
+            //进度通知,显示下载的
+            this.text_DownloadProcess.text = string.Format("{0}KB / {1}KB", curDoanloadSize, totalSize);
+        },
+        (status, msg) =>
+        {
+            //下载状态
+            switch (status)
+            {
+                case AssetsVersionController.VersionControllerStatus.Success:
+                {
+                    this.text_DownloadProcess.text = "下载完毕";
+                    //启动
+                    // this.Onclick_PassAndLaunch();
+                }
+                    break;
+                case AssetsVersionController.VersionControllerStatus.Error:
+                {
+                    //错误
+                    this.text_DownloadProcess.text = msg;
+                }
+                    break;
+            }
+        });
+    }
+    
+    
     /// <summary>
     /// 获取子包
     /// </summary>
@@ -177,7 +221,7 @@ public class WindowPreconfig : MonoBehaviour
                 }
 
                 curDoanloadSize += curDownload.FileSize;
-                //进度通知
+                //进度通知`
                 this.text_DownloadProcess.text = string.Format("{0}KB / {1}KB", curDoanloadSize, totalSize);
             },
             (status, msg) =>
@@ -201,6 +245,8 @@ public class WindowPreconfig : MonoBehaviour
             });
     }
 
+
+    
     /// <summary>
     /// 删除
     /// </summary>
