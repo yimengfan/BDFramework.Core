@@ -82,7 +82,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\SetGranularityNull.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\StopwatchTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\BuildAssetsInfo.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\EditorWindow_GenAssetBundle.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\EditorWindow_BuildAssetBundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\ShaderCollection.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\ShaderVariantsCollectionTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\BuildAssetsTools.cs" />

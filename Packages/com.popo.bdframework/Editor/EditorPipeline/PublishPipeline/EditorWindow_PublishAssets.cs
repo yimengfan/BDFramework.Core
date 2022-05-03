@@ -34,15 +34,15 @@ namespace BDFramework.Editor.PublishPipeline
 
         private EditorWindow_Table editorTable;
         private EditorWindow_ScriptBuildDll editorScript;
-        private EditorWindow_GenAssetBundle editorAsset;
+        private EditorWindow_BuildAssetBundle editorAsset;
 
         public void Show()
         {
             this.editorTable = new EditorWindow_Table();
-            this.editorAsset = new EditorWindow_GenAssetBundle();
+            this.editorAsset = new EditorWindow_BuildAssetBundle();
             this.editorScript = new EditorWindow_ScriptBuildDll();
 
-            this.minSize = this.maxSize = new Vector2(1200, 800);
+            this.minSize = this.maxSize = new Vector2(1050, 800);
             base.Show();
         }
 
@@ -115,7 +115,7 @@ namespace BDFramework.Editor.PublishPipeline
         /// </summary>
         public void OnGUI_OneKeyExprot()
         {
-            GUILayout.BeginVertical(GUILayout.Width(550), GUILayout.Height(350));
+            GUILayout.BeginVertical(GUILayout.Width(this.maxSize.x/2), GUILayout.Height(350));
             {
                 GUILayout.Label("资源发布:", EditorGUIHelper.GetFontStyle(Color.red, 15));
 
@@ -228,7 +228,7 @@ namespace BDFramework.Editor.PublishPipeline
             //playmode时候启动
             this.StartAssetsServerOnPlayMode();
             
-            GUILayout.BeginVertical();
+            GUILayout.BeginVertical(GUILayout.Width(this.maxSize.x/2));
             {
                 GUILayout.Label("AB文件服务器:", EditorGUIHelper.GetFontStyle(Color.red, 15));
                 EditorGUILayout.HelpBox("在本机Devops搭建文件服务器，提供测试下载功能", MessageType.Info);
@@ -276,7 +276,7 @@ namespace BDFramework.Editor.PublishPipeline
                 GUILayout.Label("资源地址: ");
                 GUILayout.BeginHorizontal();
                 {
-                    GUILayout.Label(BApplication.DevOpsPublishPackagePath + "/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX + "/*");
+                    GUILayout.Label("项目根目录/DevOps/PublishAssets/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX + "/*");
                     if (GUILayout.Button("打开", GUILayout.Width(40)))
                     {
                         var dir = BApplication.DevOpsPublishPackagePath + "/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX;

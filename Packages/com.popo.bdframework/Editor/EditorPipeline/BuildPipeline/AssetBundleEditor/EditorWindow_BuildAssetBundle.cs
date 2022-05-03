@@ -9,7 +9,7 @@ using BDFramework.Editor.PublishPipeline;
 
 namespace BDFramework.Editor.AssetBundle
 {
-    public class EditorWindow_GenAssetBundle : EditorWindow
+    public class EditorWindow_BuildAssetBundle : EditorWindow
     {
         [MenuItem("BDFrameWork工具箱/2.AssetBundle打包", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Assetbundle)]
         public static void Open()
@@ -32,7 +32,7 @@ namespace BDFramework.Editor.AssetBundle
                 OnGUI_BuildParams();
                 GUILayout.Space(10);
                 OnGUI_TestAssetBundle();
-                GUILayout.Space(75);
+                GUILayout.Space(20);
             }
             GUILayout.EndVertical();
         }
@@ -59,7 +59,7 @@ namespace BDFramework.Editor.AssetBundle
         }
 
 
-        public static GUIContent buildParamsDisableBuildTitle = EditorGUIUtility.TrTextContent("打包参数", "修改打包参数后，需要重新构建，不能增量!");
+        public static GUIContent buildParamsDisableBuildTitle = EditorGUIUtility.TrTextContent("构建参数:", "修改打包参数后，需要重新构建，不能增量!");
         public static GUIContent buildParamsDisableTypeTreeLabel = EditorGUIUtility.TrTextContent("关闭TypeTree:", "能减少内存、磁盘占用,部分unity版本加载会有bug!");
         public static GUIContent buildParamsEnableObfuscationLabel = EditorGUIUtility.TrTextContent("是否混淆:", "用小颗粒AB进行混淆,以降低破解概率!");
 
@@ -68,22 +68,6 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         void OnGUI_BuildParams()
         {
-            GUILayout.Space(5);
-            GUILayout.Label("平台选择:");
-            GUILayout.BeginHorizontal();
-            {
-                GUILayout.Space(30);
-                isSelectAndroid = GUILayout.Toggle(isSelectAndroid, "生成Android资源(Windows资源 Editor环境下共用)");
-            }
-            GUILayout.EndHorizontal();
-            //
-            GUILayout.BeginHorizontal();
-            {
-                GUILayout.Space(30);
-                isSelectIOS = GUILayout.Toggle(isSelectIOS, "生成iOS资源");
-            }
-            GUILayout.EndHorizontal();
-
             //打包参数
             GUILayout.Space(5);
             GUILayout.Label(buildParamsDisableBuildTitle, EditorGUIHelper.LabelH4);
@@ -101,17 +85,39 @@ namespace BDFramework.Editor.AssetBundle
         void OnGUI_TestAssetBundle()
         {
             GUILayout.BeginVertical();
-            {
-                if (GUILayout.Button("收集Keyword[Shader Feature]", GUILayout.Width(200)))
+            {  
+                GUILayout.Label("构建资源:", EditorGUIHelper.LabelH4);
+                if (GUILayout.Button("收集Keyword[Shader Feature]", GUILayout.Width(200),GUILayout.Height(25)))
                 {
                     ShaderCollection.CollectShaderVariant();
                 }
-
-                if (GUILayout.Button("一键打包[美术资源]", GUILayout.Width(380), GUILayout.Height(30)))
+                GUILayout.Space(5);
+                //遍历支持平台
+                foreach (var platform in BApplication.SupportPlatform)
                 {
-                    //开始打包
-                    BuildAssetBundle(BApplication.DevOpsPublishAssetsPath);
+                    GUILayout.BeginHorizontal();
+                    {
+                        GUILayout.Label(BApplication.GetPlatformPath(platform),GUILayout.Width(80));
+
+                        GUILayout.Space(20);
+                        
+                        GUI.color = Color.green;
+                        
+                        if (GUILayout.Button("Build",GUILayout.Width(100)))
+                        {
+                            var ret = EditorUtility.DisplayDialog("提示", "是否要构建AssetBundle? \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
+                            if (ret)
+                            {
+                                //开始打包
+                                BuildAssetBundle(BApplication.DevOpsPublishAssetsPath, platform);
+                            }
+                        }
+
+                        GUI.color = GUI.backgroundColor;
+                    }
+                    GUILayout.EndHorizontal();
                 }
+                
 
                 GUILayout.Space(10); //();
                 GUILayout.Label("资源验证:", EditorGUIHelper.LabelH4);
@@ -144,21 +150,11 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 打包资源
         /// </summary>
-        public void BuildAssetBundle(string outputPath)
+        public void BuildAssetBundle(string outputPath,RuntimePlatform platform)
         {
             //搜集keyword
             ShaderCollection.CollectShaderVariant();
-            //打包
-            RuntimePlatform platform = RuntimePlatform.Android;
-            if (isSelectAndroid)
-            {
-                platform = RuntimePlatform.Android;
-            }
-            else if (isSelectIOS)
-            {
-                platform = RuntimePlatform.IPhonePlayer;
-            }
-
+            
             //生成Assetbundlebunle
             AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform);
             AssetDatabase.Refresh();
