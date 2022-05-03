@@ -55,8 +55,8 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 初始化
         /// </summary>
-        /// <param name="path"></param>
-        public void Init(string path)
+        /// <param name="rootPath"></param>
+        public void Init(string rootPath)
         {
             allRuntimeDirectList = BDApplication.GetAllRuntimeDirects();
         }

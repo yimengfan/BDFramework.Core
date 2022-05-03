@@ -212,7 +212,7 @@ public class ScriptBuildTools
             Build(baseCs, hotfixCs, dllFileList, outHotfixPath, true);
         }
 
-        GameAssetHelper.GenPackageBuildInfo(outPath, platform);
+        BasePackageAssetsHelper.GenPackageBuildInfo(outPath, platform);
     }
 
     /// <summary>

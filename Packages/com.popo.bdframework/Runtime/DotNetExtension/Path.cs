@@ -14,7 +14,15 @@ namespace System.IO
         /// <returns></returns>
         static public string Combine(string a, string b)
         {
-            if (a.EndsWith("/"))
+            if (string.IsNullOrEmpty(a))
+            {
+                return b;
+            }
+            else if (string.IsNullOrEmpty(b))
+            {
+                return a;
+            }
+            else if (a.EndsWith("/") || b.StartsWith("/")) //目录格式
             {
                 return ZString.Concat(a, b);
             }

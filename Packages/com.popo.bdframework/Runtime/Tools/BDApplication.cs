@@ -24,20 +24,48 @@ namespace BDFramework.Core.Tools
             }
         }
 
-        #region Unity路径缓存防止各种异步访问
+        #region Unity3d路径重写
 
         /// <summary>
         /// Persistent
         /// </summary>
-       static public string persistentDataPath { get;private set; }
-       /// <summary>
-       /// Streaming
-       /// </summary>
-       static public string streamingAssetsPath { get;private set; }
+        static public string persistentDataPath { get; private set; }
+
+        /// <summary>
+        /// Streaming
+        /// </summary>
+        static public string streamingAssetsPath { get; private set; }
+
+
+        /// <summary>
+        ///  获取当前平台
+        /// </summary>
+        static public RuntimePlatform platform
+        {
+            get
+            {
+                return RuntimePlatform.GameCoreXboxSeries;
+#if UNITY_ANDROID
+                return RuntimePlatform.Android;
+#elif UNITY_IOS
+                return RuntimePlatform.IPhonePlayer;
+#elif UNITY_STANDALONE_WIN
+                return RuntimePlatform.WindowsPlayer;
+#elif UNITY_STANDALONE_OSX
+                return RuntimePlatform.OSXPlayer;
+#elif UNITY_WEBGL
+                return RuntimePlatform.WebGLPlayer;
+//以下不常用,不一定对
+#elif UNITY_XBOXONE
+                return RuntimePlatform.GameCoreXboxSeries;
+                
+#endif
+            }
+        }
 
         #endregion
-        
-        
+
+
         #region 自定义路径
 
         /// <summary>
@@ -84,14 +112,17 @@ namespace BDFramework.Core.Tools
         /// Devops 代码路径
         /// </summary>
         public static string DevOpsCodePath { get; private set; }
+
         /// <summary>
         /// Devops 资源路径
         /// </summary>
         public static string DevOpsPublishAssetsPath { get; private set; }
+
         /// <summary>
         /// 发布包体路径
         /// </summary>
         public static string DevOpsPublishPackagePath { get; private set; }
+
         /// <summary>
         /// Devops 配置文件路径
         /// </summary>
@@ -101,31 +132,33 @@ namespace BDFramework.Core.Tools
         /// Devops CI路径
         /// </summary>
         public static string DevOpsCIPath { get; private set; }
-        
+
         /// <summary>
         /// 编辑器缓存目录
         /// </summary>
         public static string BDEditorCachePath { get; private set; }
-#endregion
+
+        #endregion
+
         static public void Init()
         {
             //Unity路径
             persistentDataPath = Application.persistentDataPath;
             streamingAssetsPath = Application.streamingAssetsPath;
             //自定义路径
-            ProjectRoot             = Application.dataPath.Replace("/Assets", "");
-            Library                 = ProjectRoot + "/Library";
-            Package                 = ProjectRoot + "/Package";
-            BDWorkSpace             = ProjectRoot + "/BDWorkSpace";
+            ProjectRoot = Application.dataPath.Replace("/Assets", "");
+            Library = ProjectRoot + "/Library";
+            Package = ProjectRoot + "/Package";
+            BDWorkSpace = ProjectRoot + "/BDWorkSpace";
             RuntimeResourceLoadPath = "Assets/Resource/Runtime";
             //Editor相关目录
-            EditorResourcePath        = "Assets/Resource_SVN";
+            EditorResourcePath = "Assets/Resource_SVN";
             EditorResourceRuntimePath = EditorResourcePath + "/Runtime";
-            BDEditorCachePath         = Library            + "/BDFrameCache";
+            BDEditorCachePath = Library + "/BDFrameCache";
             //DevOps路径
             DevOpsPath = ProjectRoot + "/DevOps";
-            DevOpsPublishAssetsPath  = DevOpsPath + "/PublishAssets";
-            DevOpsPublishPackagePath =  DevOpsPath + "/PublishPackages";
+            DevOpsPublishAssetsPath = DevOpsPath + "/PublishAssets";
+            DevOpsPublishPackagePath = DevOpsPath + "/PublishPackages";
             DevOpsConfigPath = DevOpsPath + "/Config";
             DevOpsCIPath = DevOpsPath + "/CI";
         }
@@ -139,20 +172,21 @@ namespace BDFramework.Core.Tools
             //搜索所有资源
             var root = Application.dataPath;
             //获取根路径所有runtime
-            var          directories = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly).ToList();
-            
+            var directories = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly).ToList();
+
             //ret
-            List<string> retList     = new List<string>();
+            List<string> retList = new List<string>();
             foreach (var dirt in directories)
             {
                 //
                 var _dirt = dirt + "/Runtime";
                 if (Directory.Exists(_dirt))
                 {
-                    _dirt = _dirt.Replace("\\","/").Replace(Application.dataPath,"Assets");
+                    _dirt = _dirt.Replace("\\", "/").Replace(Application.dataPath, "Assets");
                     retList.Add(_dirt);
                 }
             }
+
             return retList;
         }
 
@@ -163,7 +197,7 @@ namespace BDFramework.Core.Tools
         public static List<string> GetAllRuntimeAssetsPath()
         {
             List<string> allAssetsList = new List<string>();
-            var          directories   = GetAllRuntimeDirects();
+            var directories = GetAllRuntimeDirects();
             //所有资源列表
             foreach (var dir in directories)
             {
@@ -209,12 +243,11 @@ namespace BDFramework.Core.Tools
         /// <returns></returns>
         public static RuntimePlatform[] GetSupportPlatform()
         {
-
             return new RuntimePlatform[] {RuntimePlatform.Android, RuntimePlatform.IPhonePlayer};
         }
 
 
-#if  UNITY_EDITOR
+#if UNITY_EDITOR
 
         #region BuildTarget 和RuntimePlatform互转
 
@@ -228,8 +261,8 @@ namespace BDFramework.Core.Tools
             var platform = GetRuntimePlatform(buildTarget);
             return GetPlatformPath(platform);
         }
-        
-        
+
+
         /// <summary>
         /// 获取AB构建平台
         /// </summary>
@@ -301,6 +334,7 @@ namespace BDFramework.Core.Tools
         }
 
         #endregion
+
 #endif
 
         #endregion

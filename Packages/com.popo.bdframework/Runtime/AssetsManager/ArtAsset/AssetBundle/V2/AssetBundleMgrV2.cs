@@ -66,8 +66,8 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 初始化
         /// </summary>
-        /// <param name="path"></param>
-        public void Init(string path)
+        /// <param name="rootPath"></param>
+        public void Init(string rootPath)
         {
             //多热更切换,需要卸载
             if (this.AssetConfigLoder != null)
@@ -79,44 +79,33 @@ namespace BDFramework.ResourceMgr.V2
             //1.设置加载路径  
             if (Application.isEditor)
             {
-                firstArtDirectory = IPath.Combine(path, platformPath, BResources.ASSET_ROOT_PATH);
-                secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformPath, BResources.ASSET_ROOT_PATH); //
+                firstArtDirectory = IPath.Combine(rootPath, platformPath, BResources.ART_ASSET_ROOT_PATH);
+                secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformPath, BResources.ART_ASSET_ROOT_PATH); //
             }
             else
             {
-                firstArtDirectory = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ASSET_ROOT_PATH);
-                secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformPath, BResources.ASSET_ROOT_PATH); //
+                firstArtDirectory = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ART_ASSET_ROOT_PATH);
+                secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformPath, BResources.ART_ASSET_ROOT_PATH); //
             }
 
             //2.路径替换
-            switch (Application.platform)
-            {
-                case RuntimePlatform.OSXEditor:
-                case RuntimePlatform.OSXPlayer:
-                case RuntimePlatform.WindowsEditor:
-                case RuntimePlatform.WindowsPlayer:
-                {
-                    firstArtDirectory = firstArtDirectory.Replace("\\", "/");
-                    secArtDirectory = secArtDirectory.Replace("\\", "/");
-                }
-                    break;
-            }
+            firstArtDirectory = firstArtDirectory.Replace("\\", "/");
+            secArtDirectory = secArtDirectory.Replace("\\", "/");
 
-            //加载Config
+            //3.加载ArtConfig
+            this.AssetConfigLoder = new AssetbundleConfigLoder();
             var assetconfigPath = "";
             var assetTypePath = "";
-
-            this.AssetConfigLoder = new AssetbundleConfigLoder();
             if (Application.isEditor)
             {
-                assetconfigPath = IPath.Combine(path, platformPath, BResources.ASSET_CONFIG_PATH);
-                assetTypePath = IPath.Combine(path, platformPath, BResources.ASSET_TYPES_PATH);
+                assetconfigPath = IPath.Combine(rootPath, platformPath, BResources.ART_ASSET_CONFIG_PATH);
+                assetTypePath = IPath.Combine(rootPath, platformPath, BResources.ART_ASSET_TYPES_PATH);
             }
             else
             {
                 //真机环境config在persistent，跟dll和db保持一致
-                assetconfigPath = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ASSET_CONFIG_PATH);
-                assetTypePath = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ASSET_TYPES_PATH);
+                assetconfigPath = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ART_ASSET_CONFIG_PATH);
+                assetTypePath = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ART_ASSET_TYPES_PATH);
             }
 
             this.AssetConfigLoder.Load(assetconfigPath, assetTypePath);
@@ -170,7 +159,7 @@ namespace BDFramework.ResourceMgr.V2
                 }
 
                 //加载主资源
-                LoadAssetBundle(assetBundleItem.AssetBundlePath,assetBundleItem.Mix);
+                LoadAssetBundle(assetBundleItem.AssetBundlePath, assetBundleItem.Mix);
                 //
                 return LoadFormAssetBundle(type, path, assetBundleItem);
             }
@@ -373,7 +362,7 @@ namespace BDFramework.ResourceMgr.V2
                 }
 #endif
                 //TODO 这里需要判断Lock列表，异步转同步
-                
+
                 var ab = AssetBundle.LoadFromFile(loadPath, 0u, (ulong) offset);
                 //添加
                 this.AddAssetBundle(abPath, ab);

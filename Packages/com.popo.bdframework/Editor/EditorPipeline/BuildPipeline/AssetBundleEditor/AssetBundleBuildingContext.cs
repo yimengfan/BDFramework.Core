@@ -281,13 +281,13 @@ namespace BDFramework.Editor.AssetBundle
                     continue;
                 }
 
-                var abpath = IPath.Combine(platformOutputPath, BResources.ASSET_ROOT_PATH, abi.AssetBundlePath);
+                var abpath = IPath.Combine(platformOutputPath, BResources.ART_ASSET_ROOT_PATH, abi.AssetBundlePath);
                 var hash = FileHelper.GetMurmurHash3(abpath);
                 abi.Hash = hash;
             }
 
             //获取上一次打包的数据，跟这次打包数据合并
-            var configPath = IPath.Combine(platformOutputPath, BResources.ASSET_CONFIG_PATH);
+            var configPath = IPath.Combine(platformOutputPath, BResources.ART_ASSET_CONFIG_PATH);
             if (File.Exists(configPath))
             {
                 var lastAssetbundleItemList = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(File.ReadAllText(configPath));
@@ -319,7 +319,7 @@ namespace BDFramework.Editor.AssetBundle
 
 
             //保存BuildInfo配置
-            var buildinfoPath = IPath.Combine(platformOutputPath, BResources.EDITOR_ASSET_BUILD_INFO_PATH);
+            var buildinfoPath = IPath.Combine(platformOutputPath, BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH);
             //缓存buildinfo
             var json = JsonMapper.ToJson(BuildAssetsInfo, true);
             FileHelper.WriteAllText(buildinfoPath, json);
@@ -329,7 +329,7 @@ namespace BDFramework.Editor.AssetBundle
             //this.BackupArtifacts(buildTarget);
 
             //5.检测本地的Manifest和构建预期对比
-            var abRootPath = IPath.Combine(BuildParams.OutputPath, BDApplication.GetPlatformPath(platform), BResources.ASSET_ROOT_PATH);
+            var abRootPath = IPath.Combine(BuildParams.OutputPath, BDApplication.GetPlatformPath(platform), BResources.ART_ASSET_ROOT_PATH);
             var previewABUnitMap = BuildAssetsInfo.PreviewAssetbundleUnit();
             var manifestList = Directory.GetFiles(abRootPath, "*.manifest", SearchOption.AllDirectories);
             //解析 manifestBuildParams.OutputPath
@@ -365,7 +365,7 @@ namespace BDFramework.Editor.AssetBundle
 
                 //对比依赖
                 var abname = Path.GetFileNameWithoutExtension(manifest);
-                if (abname.Equals(BResources.ASSET_ROOT_PATH, StringComparison.OrdinalIgnoreCase))
+                if (abname.Equals(BResources.ART_ASSET_ROOT_PATH, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -432,7 +432,7 @@ namespace BDFramework.Editor.AssetBundle
 
             //----------------------------生成AssetBundle-------------------------------
             var platformOutputPath = Path.Combine(buildParams.OutputPath, BDApplication.GetPlatformPath(platform));
-            string abOutputPath = IPath.Combine(platformOutputPath, BResources.ASSET_ROOT_PATH);
+            string abOutputPath = IPath.Combine(platformOutputPath, BResources.ART_ASSET_ROOT_PATH);
             if (!Directory.Exists(abOutputPath))
             {
                 Directory.CreateDirectory(abOutputPath);
@@ -490,7 +490,7 @@ namespace BDFramework.Editor.AssetBundle
             //     var depend = AssetDatabase.GetAssetBundleDependencies(abpath,true);
             // }
 
-            GameAssetHelper.GenPackageBuildInfo(buildParams.OutputPath, platform);
+            BasePackageAssetsHelper.GenPackageBuildInfo(buildParams.OutputPath, platform);
         }
 
 
@@ -680,7 +680,7 @@ namespace BDFramework.Editor.AssetBundle
         {
             Debug.Log("<color=red>【增量资源】开始变动资源分析...</color>");
             BuildAssetsInfo lastBuildAssetsInfo = null;
-            var buildinfoPath = IPath.Combine(this.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.EDITOR_ASSET_BUILD_INFO_PATH);
+            var buildinfoPath = IPath.Combine(this.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH);
             Debug.Log("旧资源地址:" + buildinfoPath);
             if (File.Exists(buildinfoPath))
             {
@@ -1113,9 +1113,9 @@ namespace BDFramework.Editor.AssetBundle
                 var idx = (int) (Random.Range(0, (mixAssetbundleItems.Length - 1) * 10000) / 10000);
                 var mixItem = mixAssetbundleItems[idx];
                 //
-                var mixBytes = File.ReadAllBytes(IPath.Combine(outpath, BDApplication.GetPlatformPath(platform), BResources.ASSET_ROOT_PATH, mixItem.AssetBundlePath));
+                var mixBytes = File.ReadAllBytes(IPath.Combine(outpath, BDApplication.GetPlatformPath(platform), BResources.ART_ASSET_ROOT_PATH, mixItem.AssetBundlePath));
 
-                var abpath = IPath.Combine(outpath, BDApplication.GetPlatformPath(platform), BResources.ASSET_ROOT_PATH, sourceItem.AssetBundlePath);
+                var abpath = IPath.Combine(outpath, BDApplication.GetPlatformPath(platform), BResources.ART_ASSET_ROOT_PATH, sourceItem.AssetBundlePath);
                 var abBytes = File.ReadAllBytes(abpath);
 
                 //拼接

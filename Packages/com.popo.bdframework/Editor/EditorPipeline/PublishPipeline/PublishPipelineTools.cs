@@ -40,8 +40,8 @@ namespace BDFramework.Editor
                 if (Directory.Exists(sourcePath))
                 {
                     //对比Assets.info 是否一致
-                    var sourceAssetsInfoPath = IPath.Combine(sourcePath, BResources.ASSETS_INFO_PATH);
-                    var outputAssetsInfoPath = IPath.Combine(outputPath, BResources.ASSETS_INFO_PATH);
+                    var sourceAssetsInfoPath = IPath.Combine(sourcePath, BResources.ART_ASSETS_INFO_PATH);
+                    var outputAssetsInfoPath = IPath.Combine(outputPath, BResources.ART_ASSETS_INFO_PATH);
                     if (File.Exists(sourceAssetsInfoPath) && File.Exists(outputAssetsInfoPath))
                     {
                         var sourceHash = FileHelper.GetMurmurHash3(sourceAssetsInfoPath);
@@ -52,10 +52,10 @@ namespace BDFramework.Editor
                             continue;
                         }
                     }
-                    
+
                     //获取上一次版本
                     string lastVersionNum = "0.0.0";
-                    var serverVersionInfoPath =  IPath.Combine(outputPath,BResources.SERVER_ASSETS_VERSION_INFO_PATH);
+                    var serverVersionInfoPath = IPath.Combine(outputPath, BResources.SERVER_ASSETS_VERSION_INFO_PATH);
                     if (File.Exists(serverVersionInfoPath))
                     {
                         var content = File.ReadAllText(serverVersionInfoPath);
@@ -73,47 +73,46 @@ namespace BDFramework.Editor
                     Debug.Log("发布资源处理完成! 请继承PublishPipeline生命周期,完成后续自动化部署到自己的文件服务器!");
                 }
             }
-
-          
         }
 
 
         /// <summary>
-        /// 获取资源hash数据
+        /// 获取AssetItem信息，这里是所有的资源
         /// </summary>
         /// <param name="assetsRootPath"></param>
         /// <returns></returns>
-        static public List<ServerAssetItem> GetAssetsHashData(string assetsRootPath, RuntimePlatform platform)
+        static public List<ServerAssetItem> GetAssetItemList(string assetsRootPath, RuntimePlatform platform)
         {
             Debug.Log($"<color=red>------>生成服务器配置:{platform}</color>");
             //黑名单
             List<string> blackFileList = new List<string>()
             {
-                BResources.EDITOR_ASSET_BUILD_INFO_PATH,
-                BResources.ASSETS_INFO_PATH,
+                BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH,
+                BResources.ART_ASSETS_INFO_PATH,
                 BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH,
-                string.Format("{0}/{0}", BResources.ASSET_ROOT_PATH),
+                string.Format("{0}/{0}", BResources.ART_ASSET_ROOT_PATH),
             };
             //混淆文件添加黑名单
             blackFileList.AddRange(AssetBundleBuildingContext.GetMixAssets());
 
             //加载assetbundle配置
             assetsRootPath = string.Format("{0}/{1}", assetsRootPath, BDApplication.GetPlatformPath(platform));
-            var abConfigPath = string.Format("{0}/{1}", assetsRootPath, BResources.ASSET_CONFIG_PATH);
+            var abConfigPath = string.Format("{0}/{1}", assetsRootPath, BResources.ART_ASSET_CONFIG_PATH);
             var abConfigLoader = new AssetbundleConfigLoder();
             abConfigLoader.Load(abConfigPath, null);
             //生成hash配置
             var assets = Directory.GetFiles(assetsRootPath, "*", SearchOption.AllDirectories);
-            float count = 0;
+            int ABCounter = 0;
             int notABCounter = 1000000;
             //开始生成hash
             var serverAssetItemList = new List<ServerAssetItem>();
-            foreach (var assetPath in assets)
+
+            for (int i = 0; i < assets.Length; i++)
             {
-                count++;
-                EditorUtility.DisplayProgressBar(" 获取资源hash", string.Format("生成文件hash:{0}/{1}", count, assets.Length), count / assets.Length);
+                var assetPath = assets[i];
+
+                EditorUtility.DisplayProgressBar(" 获取资源hash", string.Format("生成文件hash:{0}/{1}", i, assets.Length), i / assets.Length);
                 var ext = Path.GetExtension(assetPath).ToLower();
-                // bool isConfigFile = false;
                 //无效数据
                 if (ext == ".manifest" || ext == ".meta")
                 {
@@ -133,18 +132,25 @@ namespace BDFramework.Editor
 
                 //文件信息
                 var fileHash = FileHelper.GetMurmurHash3(assetPath);
-                //  var fileHash2 = FileHelper.GetMurmurHash2(assetPath);
-                var fileInfo = new FileInfo(assetPath);
-                //
-                var abpath = Path.GetFileName(assetPath);
-                var assetbundleItem = abConfigLoader.AssetbundleItemList.Find((ab) => ab.AssetBundlePath != null && ab.AssetBundlePath == abpath);
-                ServerAssetItem item;
+                var abPath = Path.GetFileName(assetPath);
+                var assetbundleItem = abConfigLoader.AssetbundleItemList.Find((ab) => ab.AssetBundlePath != null && ab.AssetBundlePath.Equals(abPath));
+                ServerAssetItem item = null;
                 //文件容量
+                var fileInfo = new FileInfo(assetPath);
                 float fileSize = (int) ((fileInfo.Length / 1024f) * 100f) / 100f;
                 //用ab资源id添加
                 if (assetbundleItem != null)
                 {
-                    item = new ServerAssetItem() {Id = assetbundleItem.Id, HashName = fileHash, LocalPath = localPath, FileSize = fileSize};
+                    if (assetbundleItem.Hash == fileHash)
+                    {
+                        ABCounter++;
+                        //这里使用ab的id,用以分包寻找资源
+                        item = new ServerAssetItem() {Id = assetbundleItem.Id, HashName = fileHash, LocalPath = localPath, FileSize = fileSize};
+                    }
+                    else
+                    {
+                        Debug.LogError("【ServerAssetsItem.Info】错误! AssetBundle hash不匹配!");
+                    }
                 }
                 else
                 {
@@ -153,6 +159,7 @@ namespace BDFramework.Editor
                 }
 
                 serverAssetItemList.Add(item);
+                //放在最后，避免提前return 占用id
             }
 
             EditorUtility.ClearProgressBar();
@@ -192,23 +199,23 @@ namespace BDFramework.Editor
             Directory.CreateDirectory(outputDir);
 
             //获取资源的hash数据
-            var allServerAssetItemList = GetAssetsHashData(otputPath, platform);
+            var allServerAssetItemList = GetAssetItemList(otputPath, platform);
             foreach (var assetItem in allServerAssetItemList)
             {
-                var localpath = IPath.Combine( otputPath, BDApplication.GetPlatformPath(platform), assetItem.LocalPath);
-                var copytoPath =  IPath.Combine(  outputDir, assetItem.HashName);
+                var localpath = IPath.Combine(otputPath, BDApplication.GetPlatformPath(platform), assetItem.LocalPath);
+                var copytoPath = IPath.Combine(outputDir, assetItem.HashName);
                 File.Copy(localpath, copytoPath);
             }
 
             //服务器版本信息
             var serverAssetsInfo = new AssetsVersionInfo();
-            
+
             //生成分包信息
             //加载assetbundle配置
             // var abConfigPath = string.Format("{0}/{1}", assetsRootPath, BResources.ASSET_CONFIG_PATH);
             // var abConfigLoader = new AssetbundleConfigLoder();
             // abConfigLoader.Load(abConfigPath, null);
-            var path =  IPath.Combine( otputPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH);
+            var path = IPath.Combine(otputPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH);
             if (File.Exists(path))
             {
                 var subpackageList = CsvSerializer.DeserializeFromString<List<SubPackageConfigItem>>(File.ReadAllText(path));
@@ -282,19 +289,19 @@ namespace BDFramework.Editor
                     Debug.Log("生成分包文件:" + Path.GetFileName(subPackageInfoPath));
                     //写入subPck - version
                     serverAssetsInfo.SubPckMap[subPackageName] = version;
-
                 }
             }
+
             //生成服务器AssetInfo
             var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
-            var configPath = IPath.Combine(outputDir, BResources.ASSETS_INFO_PATH);
+            var configPath = IPath.Combine(outputDir, BResources.ART_ASSETS_INFO_PATH);
             File.WriteAllText(configPath, csv);
 
             //生成服务器版本号
             serverAssetsInfo.Platfrom = BDApplication.GetPlatformPath(platform);
             serverAssetsInfo.Version = version;
             var json = JsonMapper.ToJson(serverAssetsInfo);
-             configPath = IPath.Combine(outputDir, BResources.SERVER_ASSETS_VERSION_INFO_PATH);
+            configPath = IPath.Combine(outputDir, BResources.SERVER_ASSETS_VERSION_INFO_PATH);
             File.WriteAllText(configPath, json);
 
             return outputDir;

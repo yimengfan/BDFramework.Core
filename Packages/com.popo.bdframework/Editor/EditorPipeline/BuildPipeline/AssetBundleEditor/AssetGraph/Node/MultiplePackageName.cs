@@ -141,8 +141,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             //热更表格
             subPackage.TablePathList.Add(SqliteLoder.LOCAL_DB_PATH);
             //配置表
-            subPackage.ConfAndInfoList.Add(BResources.ASSET_CONFIG_PATH);
-            subPackage.ConfAndInfoList.Add(BResources.ASSET_TYPES_PATH);
+            subPackage.ConfAndInfoList.Add(BResources.ART_ASSET_CONFIG_PATH);
+            subPackage.ConfAndInfoList.Add(BResources.ART_ASSET_TYPES_PATH);
             subPackage.ConfAndInfoList.Add(BResources.PACKAGE_BUILD_INFO_PATH);
 
             MultiplePackage.AssetMultiplePackageConfigList.Add(subPackage);

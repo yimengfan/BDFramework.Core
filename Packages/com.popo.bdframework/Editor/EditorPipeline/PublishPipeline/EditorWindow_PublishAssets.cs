@@ -364,9 +364,9 @@ namespace BDFramework.Editor.PublishPipeline
             }
 
             //4.生成本地assetinfo配置
-            var allServerAssetItemList = PublishPipelineTools.GetAssetsHashData(outputPath, platform);
+            var allServerAssetItemList = PublishPipelineTools.GetAssetItemList(outputPath, platform);
             var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
-            var assetsInfoPath = IPath.Combine(outputPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
+            var assetsInfoPath = IPath.Combine(outputPath, BDApplication.GetPlatformPath(platform), BResources.ART_ASSETS_INFO_PATH);
             File.WriteAllText(assetsInfoPath, csv);
         }
 

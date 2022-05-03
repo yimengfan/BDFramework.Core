@@ -22,8 +22,8 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 初始化
         /// </summary>
-        /// <param name="path"></param>
-        void Init(string path);
+        /// <param name="rootPath"></param>
+        void Init(string rootPath);
 
         /// <summary>
         /// 资源管理

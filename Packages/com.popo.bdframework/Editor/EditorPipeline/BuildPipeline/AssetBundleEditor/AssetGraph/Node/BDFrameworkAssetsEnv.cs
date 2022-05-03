@@ -250,7 +250,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             #region 保存AssetTypeConfig
 
-            var asetTypePath = string.Format("{0}/{1}/{2}", BuildingCtx.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.ASSET_TYPES_PATH);
+            var asetTypePath = string.Format("{0}/{1}/{2}", BuildingCtx.BuildParams.OutputPath, BDApplication.GetPlatformPath(buildTarget), BResources.ART_ASSET_TYPES_PATH);
             //数据结构保存
             AssetTypes at = new AssetTypes()
             {

@@ -104,7 +104,7 @@ namespace BDFramework
 
             BDebug.Log("【Launch】框架资源版本验证!");
             //开始资源检测
-            GameAssetHelper.CheckAssetPackageVersion(Application.platform, () =>
+            BasePackageAssetsHelper.CheckBasePackageVersion(Application.platform, () =>
             {
                 //1.美术目录
                 BResources.Init(GameConfig.ArtRoot);

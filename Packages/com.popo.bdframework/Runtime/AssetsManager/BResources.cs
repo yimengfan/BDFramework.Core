@@ -18,37 +18,57 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     static public partial class BResources
     {
-        #region 目录
+        #region 美术资源相关
 
         /// <summary>
         /// 美术根目录
         /// </summary>
-        readonly static public string ASSET_ROOT_PATH = "Art";
+        readonly static public string ART_ASSET_ROOT_PATH = "Art";
 
         /// <summary>
         /// 美术资源config配置
         /// </summary>
-        readonly static public string ASSET_CONFIG_PATH = ASSET_ROOT_PATH + "/ArtConfig.Info";
+        readonly static public string ART_ASSET_CONFIG_PATH = ART_ASSET_ROOT_PATH + "/ArtConfig.Info";
 
         /// <summary>
         /// 资源信息
         /// </summary>
-        readonly static public string ASSET_TYPES_PATH = ASSET_ROOT_PATH + "/AssetTypeConfig.Info";
+        readonly static public string ART_ASSET_TYPES_PATH = ART_ASSET_ROOT_PATH + "/AssetTypeConfig.Info";
 
         /// <summary>
         /// 构建时的信息(Editor用)
         /// </summary>
-        readonly static public string EDITOR_ASSET_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/EditorBuild.Info";
+        readonly static public string EDITOR_ART_ASSET_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/EditorBuild.Info";
 
         /// <summary>
         /// 旧打包资源配置
         /// </summary>
-        readonly static public string ASSET_OLD_BUILD_INFO_PATH = ASSET_ROOT_PATH + "/OldBuild.Info";
+        readonly static public string AIR_ASSET_OLD_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/OldBuild.Info";
+
+        /// <summary>
+        /// ShaderVariant加载地址
+        /// </summary>
+        readonly public static string ALL_SHADER_VARAINT_RUNTIME_PATH = "Shader/AllShaders";
+
+        /// <summary>
+        /// Shadervariant资源地址
+        /// </summary>
+        readonly public static string ALL_SHADER_VARAINT_ASSET_PATH = "Assets/Resource/Runtime/" + ALL_SHADER_VARAINT_RUNTIME_PATH + ".shadervariants";
+
+        /// <summary>
+        /// 混淆ab的资源路径
+        /// </summary>
+        readonly static public string MIX_SOURCE_FOLDER = "Assets/Resource/Runtime/MIX_AB_SOURCE";
+
+        #endregion
+
+
+        #region 所有资源相关配置
 
         /// <summary>
         /// 客户端-资源包服务器信息
         /// </summary>
-        readonly static public string ASSETS_INFO_PATH = "Assets.Info";
+        readonly static public string ART_ASSETS_INFO_PATH = "Assets.Info";
 
         /// <summary>
         /// 客户端-资源分包信息
@@ -66,24 +86,9 @@ namespace BDFramework.ResourceMgr
         readonly static public string SERVER_ART_ASSETS_SUB_PACKAGE_INFO_PATH = "ServerAssetsSubPackage_{0}.Info";
 
         /// <summary>
-        /// ShaderVariant加载地址
-        /// </summary>
-        readonly public static string ALL_SHADER_VARAINT_RUNTIME_PATH = "Shader/AllShaders";
-
-        /// <summary>
-        /// Shadervariant资源地址
-        /// </summary>
-        readonly public static string ALL_SHADER_VARAINT_ASSET_PATH = "Assets/Resource/Runtime/" + ALL_SHADER_VARAINT_RUNTIME_PATH + ".shadervariants";
-
-        /// <summary>
-        /// 包构建信息路径
+        /// 母包构建信息路径
         /// </summary>
         readonly static public string PACKAGE_BUILD_INFO_PATH = "PackageBuild.Info";
-
-        /// <summary>
-        /// 混淆ab的资源路径
-        /// </summary>
-        readonly static public string MIX_SOURCE_FOLDER = "Assets/Resource/Runtime/MIX_AB_SOURCE";
 
         #endregion
 
@@ -352,8 +357,9 @@ namespace BDFramework.ResourceMgr
         #region 对象池
 
         #endregion
-        
+
         #region 资源校验、判断
+
         /// <summary>
         /// 是否存在资源文件
         /// </summary>
@@ -384,13 +390,26 @@ namespace BDFramework.ResourceMgr
                 return true;
             }
 
-            //Streaming 文件判断,无需Streaming前缀
-            var streamingAssetPath = IPath.Combine(BDApplication.GetPlatformPath(platform), assetName);
-            if (BetterStreamingAssets.FileExists(streamingAssetPath))
+            /************母包资源的判断*************/
+           
+            if (Application.isEditor && BDLauncher.Inst.GameConfig.ArtRoot == AssetLoadPathType.DevOpsPublish)
             {
-                return true;
+                //devops
+                var devopsAssetPath = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, BDApplication.GetPlatformPath(platform), assetName);
+                if (File.Exists(devopsAssetPath))
+                {
+                    return true;
+                }
             }
-
+            else
+            {
+                //Streaming 文件判断,无需Streaming前缀
+                var streamingAssetPath = IPath.Combine(BDApplication.GetPlatformPath(platform), assetName);
+                if (BetterStreamingAssets.FileExists(streamingAssetPath))
+                {
+                    return true;
+                }
+            }
 
             return false;
         }
@@ -404,14 +423,14 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         static public bool IsExsitAssetWithCheckHash(RuntimePlatform platform, string assetName, string assetHash)
         {
-            //本地是否下载过hash文件(之前下到一半就中止了)
+            //本地是否下载过hash文件(之前下到一半就中止了),hash文件只会在
             var persistentHashPath = IPath.Combine(BDApplication.persistentDataPath, BDApplication.GetPlatformPath(platform), assetHash);
             if (File.Exists(persistentHashPath))
             {
                 var hash = FileHelper.GetMurmurHash3(persistentHashPath);
                 if (assetHash.Equals(hash))
                 {
-                    BDebug.Log($"[版本控制]hash文件存在,无需下载! - {assetHash}");
+                    BDebug.Log($"hash文件存在 - {assetName} | hash - {assetHash}");
                     return true;
                 }
                 else
@@ -427,26 +446,47 @@ namespace BDFramework.ResourceMgr
                 var hash = FileHelper.GetMurmurHash3(persistentAssetPath);
                 if (assetHash.Equals(hash))
                 {
-                    BDebug.Log($"[版本控制]persistent存在,无需下载! - {assetName}");
+                    BDebug.Log($"persistent存在 - {assetName} | hash - {assetHash}");
                     return true;
                 }
             }
 
-            //Streaming 文件判断,无需Streaming前缀
-            var streamingAssetPath = IPath.Combine(BDApplication.GetPlatformPath(platform), assetName);
-            if (BetterStreamingAssets.FileExists(streamingAssetPath))
+            
+            /************母包资源的判断*************/
+            if (Application.isEditor && BDLauncher.Inst.GameConfig.ArtRoot == AssetLoadPathType.DevOpsPublish)
             {
-                var bytes = BetterStreamingAssets.ReadAllBytes(streamingAssetPath);
-                var hash = FileHelper.GetMurmurHash3(bytes);
-                if (assetHash.Equals(hash))
+                //devops
+                var devopsAssetPath = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, BDApplication.GetPlatformPath(platform), assetName);
+                if (File.Exists(devopsAssetPath))
                 {
-                    BDebug.Log($"[版本控制]streaming存在,无需下载! - {streamingAssetPath}");
-                    return true;
+                    var hash = FileHelper.GetMurmurHash3(devopsAssetPath);
+                    if (assetHash.Equals(hash))
+                    {
+                        BDebug.Log($"devops存在 - {assetName} | hash - {assetHash}");
+                        return true;
+                    }
                 }
             }
+            else
+            {
+                //Streaming 文件判断,无需Streaming前缀
+                var streamingAssetPath = IPath.Combine(BDApplication.GetPlatformPath(platform), assetName);
+                if (BetterStreamingAssets.FileExists(streamingAssetPath))
+                {
+                    var bytes = BetterStreamingAssets.ReadAllBytes(streamingAssetPath);
+                    var hash = FileHelper.GetMurmurHash3(bytes);
+                    if (assetHash.Equals(hash))
+                    {
+                        BDebug.Log($"streaming存在 - {assetName} | hash - {assetHash}");
+                        return true;
+                    }
+                }
+            }
+
 
             return false;
         }
+
         #endregion
 
         #region 配置相关路径
@@ -470,7 +510,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform)
         {
-            return IPath.Combine(rootPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
+            return IPath.Combine(rootPath, BDApplication.GetPlatformPath(platform), BResources.ART_ASSETS_INFO_PATH);
         }
 
         /// <summary>

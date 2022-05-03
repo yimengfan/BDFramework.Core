@@ -60,7 +60,7 @@ namespace BDFramework.Editor.DevOps
         {
             targetpath = IPath.Combine(targetpath, BDApplication.GetPlatformPath(platform));
             //优先删除拷贝的美术资源，防止构建完再导入  其他资源等工作流完全切入DevOps再进行删除
-            var copyArtPath = IPath.Combine(targetpath, BResources.ASSET_ROOT_PATH);
+            var copyArtPath = IPath.Combine(targetpath, BResources.ART_ASSET_ROOT_PATH);
             if (Directory.Exists(copyArtPath))
             {
                 Directory.Delete(copyArtPath, true);
