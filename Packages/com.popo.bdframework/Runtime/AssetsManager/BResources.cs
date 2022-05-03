@@ -6,6 +6,7 @@ using System.IO;
 using BDFramework.ResourceMgr.V2;
 using BDFramework.Core.Tools;
 using BDFramework.VersionController;
+using JetBrains.Annotations;
 using UnityEngine.Rendering;
 using UnityEngine.U2D;
 
@@ -15,9 +16,10 @@ namespace BDFramework.ResourceMgr
     /// <summary>
     /// 资源管理类
     /// </summary>
-    static  public partial class BResources
+    static public partial class BResources
     {
         #region 目录
+
         /// <summary>
         /// 美术根目录
         /// </summary>
@@ -84,7 +86,7 @@ namespace BDFramework.ResourceMgr
         readonly static public string MIX_SOURCE_FOLDER = "Assets/Resource/Runtime/MIX_AB_SOURCE";
 
         #endregion
-        
+
         /// <summary>
         /// 初始化
         /// </summary>
@@ -112,6 +114,7 @@ namespace BDFramework.ResourceMgr
         /// 远程资源地址
         /// </summary>
         private static string RemoteAssetsUrl = "";
+
         /// <summary>
         /// 网络寻址模式
         /// </summary>
@@ -119,7 +122,7 @@ namespace BDFramework.ResourceMgr
         {
             RemoteAssetsUrl = url;
         }
-        
+
         /// <summary>
         /// 加载器
         /// </summary>
@@ -312,6 +315,7 @@ namespace BDFramework.ResourceMgr
                 go = null;
             }
         }
+
         #endregion
 
         #region 资源版本控制
@@ -326,7 +330,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         static public void GetServerSubPacks(string serverUrl, Action<Dictionary<string, string>> callback)
         {
-            AssetsVersionController.GetServerSubPacks(serverUrl, callback);
+            AssetsVersionController.GetServerSubPackageInfos(serverUrl, callback);
         }
 
         /// <summary>
@@ -338,7 +342,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="onProccess">下载进度</param>
         /// <param name="onTaskEndCallback">结果回调</param>
         static public void StartAssetsVersionControl(UpdateMode updateMode, string serverUrl, string assetsPackageName = "", Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess = null,
-            Action<AssetsVersionController.VersionControllerStatus, string> onTaskEndCallback = null)
+            Action<AssetsVersionController.RetStatus, string> onTaskEndCallback = null)
         {
             AssetsVersionController.UpdateAssets(updateMode, serverUrl, assetsPackageName, onDownloadProccess, onTaskEndCallback);
         }
@@ -346,6 +350,148 @@ namespace BDFramework.ResourceMgr
         #endregion
 
         #region 对象池
+
+        #endregion
+        
+        #region 资源校验、判断
+        /// <summary>
+        /// 是否存在资源文件
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="serverAsset"></param>
+        /// <returns></returns>
+        static public bool IsExsitAsset(RuntimePlatform platform, string assetName, string assetHashName)
+        {
+            //本地是否下载过hash文件(之前下到一半就中止了)
+            var persistentHashPath = IPath.Combine(BDApplication.persistentDataPath, BDApplication.GetPlatformPath(platform), assetHashName);
+            if (File.Exists(persistentHashPath))
+            {
+                var hash = FileHelper.GetMurmurHash3(persistentHashPath);
+                if (assetHashName.Equals(hash))
+                {
+                    return true;
+                }
+                else
+                {
+                    File.Delete(persistentHashPath);
+                }
+            }
+
+            //persistent判断
+            var persistentAssetPath = IPath.Combine(BDApplication.persistentDataPath, BDApplication.GetPlatformPath(platform), assetName);
+            if (File.Exists(persistentAssetPath))
+            {
+                return true;
+            }
+
+            //Streaming 文件判断,无需Streaming前缀
+            var streamingAssetPath = IPath.Combine(BDApplication.GetPlatformPath(platform), assetName);
+            if (BetterStreamingAssets.FileExists(streamingAssetPath))
+            {
+                return true;
+            }
+
+
+            return false;
+        }
+
+
+        /// <summary>
+        /// 是否存在资源.并且校验hash
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="serverAsset"></param>
+        /// <returns></returns>
+        static public bool IsExsitAssetWithCheckHash(RuntimePlatform platform, string assetName, string assetHash)
+        {
+            //本地是否下载过hash文件(之前下到一半就中止了)
+            var persistentHashPath = IPath.Combine(BDApplication.persistentDataPath, BDApplication.GetPlatformPath(platform), assetHash);
+            if (File.Exists(persistentHashPath))
+            {
+                var hash = FileHelper.GetMurmurHash3(persistentHashPath);
+                if (assetHash.Equals(hash))
+                {
+                    BDebug.Log($"[版本控制]hash文件存在,无需下载! - {assetHash}");
+                    return true;
+                }
+                else
+                {
+                    File.Delete(persistentHashPath);
+                }
+            }
+
+            //persistent判断
+            var persistentAssetPath = IPath.Combine(BDApplication.persistentDataPath, BDApplication.GetPlatformPath(platform), assetName);
+            if (File.Exists(persistentAssetPath))
+            {
+                var hash = FileHelper.GetMurmurHash3(persistentAssetPath);
+                if (assetHash.Equals(hash))
+                {
+                    BDebug.Log($"[版本控制]persistent存在,无需下载! - {assetName}");
+                    return true;
+                }
+            }
+
+            //Streaming 文件判断,无需Streaming前缀
+            var streamingAssetPath = IPath.Combine(BDApplication.GetPlatformPath(platform), assetName);
+            if (BetterStreamingAssets.FileExists(streamingAssetPath))
+            {
+                var bytes = BetterStreamingAssets.ReadAllBytes(streamingAssetPath);
+                var hash = FileHelper.GetMurmurHash3(bytes);
+                if (assetHash.Equals(hash))
+                {
+                    BDebug.Log($"[版本控制]streaming存在,无需下载! - {streamingAssetPath}");
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        #endregion
+
+        #region 配置相关路径
+
+        /// <summary>
+        /// 获取版本配置路径
+        /// </summary>
+        /// <param name="rootPath"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        static public string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
+        {
+            return IPath.Combine(rootPath, BDApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_VERSION_INFO_PATH);
+        }
+
+        /// <summary>
+        /// 获取资源信息路径
+        /// </summary>
+        /// <param name="rootPath"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform)
+        {
+            return IPath.Combine(rootPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
+        }
+
+        /// <summary>
+        /// 获取分包设置路径
+        /// </summary>
+        /// <param name="rootPath"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        static public string GetAssetsSubPackageInfoPath(string rootPath, RuntimePlatform platform, string subPackageName)
+        {
+            //旧版本兼容逻辑
+            if (subPackageName.StartsWith("ServerAssetsSubPackage_"))
+            {
+                return IPath.Combine(rootPath, BDApplication.GetPlatformPath(platform), subPackageName);
+            }
+            else
+            {
+                var subPackagePath = string.Format(BResources.SERVER_ART_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageName);
+                return IPath.Combine(rootPath, BDApplication.GetPlatformPath(platform), subPackagePath);
+            }
+        }
 
         #endregion
     }

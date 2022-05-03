@@ -67,7 +67,7 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Collections.Generic.List<System.String>), typeof(System.Action<System.Int32, System.Int32>), typeof(System.Action<System.Collections.Generic.IDictionary<System.String, UnityEngine.Object>>)};
             method = type.GetMethod("AsyncLoad", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, AsyncLoad_2);
-            args = new Type[]{typeof(BDFramework.VersionController.UpdateMode), typeof(System.String), typeof(System.String), typeof(System.Action<BDFramework.VersionController.ServerAssetItem, System.Collections.Generic.List<BDFramework.VersionController.ServerAssetItem>>), typeof(System.Action<BDFramework.VersionController.AssetsVersionController.VersionControllerStatus, System.String>)};
+            args = new Type[]{typeof(BDFramework.VersionController.UpdateMode), typeof(System.String), typeof(System.String), typeof(System.Action<BDFramework.VersionController.ServerAssetItem, System.Collections.Generic.List<BDFramework.VersionController.ServerAssetItem>>), typeof(System.Action<BDFramework.VersionController.AssetsVersionController.RetStatus, System.String>)};
             method = type.GetMethod("StartAssetsVersionControl", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, StartAssetsVersionControl_3);
             args = new Type[]{typeof(BDFramework.AssetLoadPathType)};
@@ -196,7 +196,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 5);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Action<BDFramework.VersionController.AssetsVersionController.VersionControllerStatus, System.String> @onTaskEndCallback = (System.Action<BDFramework.VersionController.AssetsVersionController.VersionControllerStatus, System.String>)typeof(System.Action<BDFramework.VersionController.AssetsVersionController.VersionControllerStatus, System.String>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)8);
+            System.Action<BDFramework.VersionController.AssetsVersionController.RetStatus, System.String> @onTaskEndCallback = (System.Action<BDFramework.VersionController.AssetsVersionController.RetStatus, System.String>)typeof(System.Action<BDFramework.VersionController.AssetsVersionController.RetStatus, System.String>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)8);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);

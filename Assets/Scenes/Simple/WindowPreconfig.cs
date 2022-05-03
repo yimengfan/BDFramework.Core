@@ -93,14 +93,14 @@ public class WindowPreconfig : MonoBehaviour
                 //下载状态
                 switch (status)
                 {
-                    case AssetsVersionController.VersionControllerStatus.Success:
+                    case AssetsVersionController.RetStatus.Success:
                     {
                         this.text_DownloadProcess.text = "下载完毕";
                         //启动
                        // this.Onclick_PassAndLaunch();
                     }
                         break;
-                    case AssetsVersionController.VersionControllerStatus.Error:
+                    case AssetsVersionController.RetStatus.Error:
                     {
                         //错误
                         this.text_DownloadProcess.text = msg;
@@ -140,14 +140,14 @@ public class WindowPreconfig : MonoBehaviour
             //下载状态
             switch (status)
             {
-                case AssetsVersionController.VersionControllerStatus.Success:
+                case AssetsVersionController.RetStatus.Success:
                 {
                     this.text_DownloadProcess.text = "下载完毕";
                     //启动
                     // this.Onclick_PassAndLaunch();
                 }
                     break;
-                case AssetsVersionController.VersionControllerStatus.Error:
+                case AssetsVersionController.RetStatus.Error:
                 {
                     //错误
                     this.text_DownloadProcess.text = msg;
@@ -228,14 +228,14 @@ public class WindowPreconfig : MonoBehaviour
             {
                 switch (status)
                 {
-                    case AssetsVersionController.VersionControllerStatus.Success:
+                    case AssetsVersionController.RetStatus.Success:
                     {
                         this.text_DownloadProcess.text = "下载完毕";
                         
                         Debug.Log("分包下载完毕,此时资源不全,进入游戏可能会有bug!");
                     }
                         break;
-                    case AssetsVersionController.VersionControllerStatus.Error:
+                    case AssetsVersionController.RetStatus.Error:
                     {
                         //错误
                         this.text_DownloadProcess.text = msg;
