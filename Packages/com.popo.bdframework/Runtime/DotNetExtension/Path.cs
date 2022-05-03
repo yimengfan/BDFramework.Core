@@ -5,6 +5,8 @@ namespace System.IO
 {
     static public class IPath
     {
+        #region 路径合并
+
         /// <summary>
         /// 路径合并
         /// 这里是修复Mac下的 Path.Combine的Bug
@@ -56,8 +58,28 @@ namespace System.IO
             return ZString.Concat(a, "/", b, "/", c, "/", d);
         }
 
+        // /// <summary>
+        // /// 路径合并
+        // /// 这里是修复Mac下的 Path.Combine的Bug
+        // /// </summary>
+        // /// <param name="a"></param>
+        // /// <param name="b"></param>
+        // /// <returns></returns>
+        // static public string Combine(params string[] paths)
+        // {
+        //     var ret = "";
+        //
+        //     for (int i = 0; i < paths.Length-1; i++)
+        //     {
+        //        ret +=  Combine(paths[i], paths[i + 1]);
+        //
+        //
+        //     }
+        //     return ret;
+        // }
+        #endregion
 
-
+        #region 路径纠正
         /// <summary>
         /// 添加/
         /// </summary>
@@ -72,30 +94,21 @@ namespace System.IO
 
             return path;
         }
+
+
         /// <summary>
-        /// 路径合并
-        /// 这里是修复Mac下的 Path.Combine的Bug
+        /// 将"\\"替换为 "/"
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        // static public string Combine(params string[] paths)
-        // {
-        //     var ret = "";
-        //
-        //     for (int i = 0; i < paths.Length; i++)
-        //     {
-        //         var str = paths[i];
-        //         if (str.EndsWith("/"))
-        //         {
-        //             return ZString.Concat(ret, str);
-        //         }
-        //         else
-        //         {
-        //             return ZString.Concat(ret, "/", str);
-        //         }
-        //     }
-        //     return ret;
-        // }
+        static public string ReplaceBackSlash(string path)
+        {
+            return path.Replace("\\","/" );
+        }
+        
+
+        #endregion
+
+
     }
 }

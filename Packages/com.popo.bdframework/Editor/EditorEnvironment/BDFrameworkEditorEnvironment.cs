@@ -136,7 +136,7 @@ namespace BDFramework.Editor.Environment
                 //编辑器下管理器注册
                 ManagerInstHelper.Load(Types);
                 //Editor的管理器初始化
-                BDFrameworkPublishPipelineHelper.Init();
+                BDFrameworkPipelineHelper.Init();
                 //调试器启动
                 DebuggerServerProcessManager.Inst.Start();
                 //Pipeline初始化

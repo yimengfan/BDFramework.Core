@@ -50,7 +50,7 @@ namespace BDFramework.Editor.Table
         public static void AllExcel2SQLite(string ouptputPath, RuntimePlatform platform, DBType dbType = DBType.Local)
         {
             //触发bd环境周期
-            BDFrameworkPublishPipelineHelper.OnBeginBuildSqlite();
+            BDFrameworkPipelineHelper.OnBeginBuildSqlite();
             var xlslFiles = ExcelEditorTools.GetAllExcelFiles();
             switch (dbType)
             {
@@ -80,7 +80,7 @@ namespace BDFramework.Editor.Table
             //
             EditorUtility.ClearProgressBar();
             //触发bd环境周期
-            BDFrameworkPublishPipelineHelper.OnEndBuildSqlite(ouptputPath);
+            BDFrameworkPipelineHelper.OnEndBuildSqlite(ouptputPath);
             BasePackageAssetsHelper.GenPackageBuildInfo(ouptputPath, platform);
             Debug.Log("导出Sqlite完成!");
         }
@@ -187,7 +187,7 @@ namespace BDFramework.Editor.Table
             }
 
             //回调通知
-            BDFrameworkPublishPipelineHelper.OnExportExcel(type);
+            BDFrameworkPipelineHelper.OnExportExcel(type);
             //
             EditorUtility.ClearProgressBar();
            // EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.Name, jsonObj.Count), 1);

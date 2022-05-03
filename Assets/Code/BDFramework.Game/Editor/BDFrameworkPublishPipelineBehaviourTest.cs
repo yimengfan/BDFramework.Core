@@ -16,12 +16,12 @@ namespace BDFramework.Editor.EditorLife
 
         public override void OnBeginBuildDLL()
         {
-            Debug.Log("【BDFrameEditorBehavior生命周期测试】打包DLL前回调!");
+            Debug.Log("实现回调测试:"+ nameof(OnBeginBuildDLL));
         }
 
         public override void OnEndBuildDLL(string outputPath)
         {
-            Debug.Log("【BDFrameEditorBehavior生命周期测试】打包DLL后回调!");
+            Debug.Log("实现回调测试:"+ nameof(OnEndBuildDLL));
         }
 
         #endregion
@@ -30,12 +30,12 @@ namespace BDFramework.Editor.EditorLife
 
         public override void OnBeginBuildSqlite()
         {
-            Debug.Log("【BDFrameEditorBehavior生命周期测试】打包Sqlite前回调!");
+            Debug.Log("实现回调测试:"+ nameof(OnBeginBuildSqlite));
         }
 
         public override void OnEndBuildSqlite(string outputPath)
         {
-            Debug.Log("【BDFrameEditorBehavior生命周期测试】打包Sqlite后回调!");
+            Debug.Log("实现回调测试:"+ nameof(OnEndBuildSqlite));
         }
 
         /// <summary>
@@ -53,30 +53,60 @@ namespace BDFramework.Editor.EditorLife
 
         public override void OnBeginBuildAssetBundle(AssetBundleBuildingContext assetbundleBuildingCtx)
         {
-            Debug.Log("【BDFrameEditorBehavior生命周期测试】打包Asset时回调!");
+            Debug.Log("实现回调测试:"+ nameof(OnBeginBuildAssetBundle));
         }
 
         public override void OnEndBuildAssetBundle(AssetBundleBuildingContext assetbundleBuildingCtx)
         {
-            Debug.Log("【BDFrameEditorBehavior生命周期测试】打包Asset后回调!");
+            Debug.Log("实现回调测试:"+ nameof(OnEndBuildAssetBundle));
         }
 
         #endregion
+
+        #region 一键构建资源
+
+        /// <summary>
+        /// 一键构建资源前
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="lastVersionNum"></param>
+        /// <param name="newVersionNum"></param>
+        public override void OnBeginBuildAllAssets(RuntimePlatform platform, string outputPath, string lastVersionNum, out string newVersionNum)
+        {
+            Debug.Log("实现回调测试:"+ nameof(OnBeginBuildAllAssets));
+            newVersionNum = VersionNumHelper.AddVersionNum(lastVersionNum, add: 1);
+            
+           
+        }
+
+        /// <summary>
+        /// 一键构建资源后
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="newVersionNum"></param>
+        public override void OnEndBuildAllAssets(RuntimePlatform platform, string outputPath, string newVersionNum)
+        {
+            Debug.Log("实现回调测试:"+ nameof(OnEndBuildAllAssets));
+            Debug.Log($"新版本号:{newVersionNum}");
+        }
+
+        #endregion
+        
 
         #region 发布资源
 
         /// <summary>
         /// 发布资源处理前
         /// </summary>
-        /// <param name="outputPath"></param>
         /// <param name="platform"></param>
-        /// <param name="lastVersionNum"></param>
-        /// <param name="newVersionNum"></param>
-        public override void OnBeginPublishAssets(string outputPath, RuntimePlatform platform, string lastVersionNum, out string newVersionNum)
+        /// <param name="outputPath"></param>
+        /// <param name="versionNum"></param>
+        public override void OnBeginPublishAssets(RuntimePlatform platform, string outputPath, string versionNum)
         {
-            newVersionNum = VersionNumHelper.AddVersionNum(lastVersionNum, add: 1);
-            Debug.Log("【OnPublishAssetsProccessBegin生命周期测试】发布资源处理前,请处理版本信息!  ->" + platform.ToString());
-            Debug.Log($"旧版本:{lastVersionNum}  新版本号:{newVersionNum}");
+            
+            Debug.Log("实现回调测试:"+ nameof(OnBeginPublishAssets));
         }
 
         /// <summary>
@@ -84,10 +114,11 @@ namespace BDFramework.Editor.EditorLife
         /// </summary>
         /// <param name="platform"></param>
         /// <param name="outputPath"></param>
-        public override void OnEndPublishAssets(RuntimePlatform platform, string outputPath)
+        /// <param name="versionNum"></param>
+        public override void OnEndPublishAssets(RuntimePlatform platform, string outputPath, string versionNum)
         {
-            Debug.Log("【OnPublishAssetsProccessEnd生命周期测试】发布资源已完成,请编写脚本提交以下目录! \n" + outputPath);
-            Debug.Log("---------------------------------------------------------------------------------------------------");
+        
+            Debug.Log("实现回调测试:"+ nameof(OnEndPublishAssets));
         }
 
         #endregion

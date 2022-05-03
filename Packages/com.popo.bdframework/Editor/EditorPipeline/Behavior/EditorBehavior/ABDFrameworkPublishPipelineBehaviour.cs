@@ -81,7 +81,30 @@ namespace BDFramework.Editor
         #endregion
 
 
-        #region 构建版本包
+        #region 构建所有Assets
+
+        /// <summary>
+        ///  发布资源处理前，需要提供一个版本号
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="versionNum"></param>
+        virtual public void OnBeginBuildAllAssets(RuntimePlatform platform, string outputPath,string lastVersionNum,out string newVersionNum)
+        {
+            newVersionNum = lastVersionNum;
+        }
+
+        /// <summary>
+        ///  发布资源处理后
+        /// </summary>
+        virtual public void OnEndBuildAllAssets(RuntimePlatform platform, string outputPath,string newVersionNum)
+        {
+            
+        }
+
+        #endregion
+
+        #region 构建移动端包体
        
         /// <summary>
         /// 构建母包开始
@@ -107,21 +130,20 @@ namespace BDFramework.Editor
         #region 资源转hash,预备上传服务器
 
         /// <summary>
-        ///  发布资源处理前
+        ///  发布资源处理前,该资源提交到服务器
         /// </summary>
-        /// <param name="outputPath"></param>
         /// <param name="platform"></param>
-        /// <param name="lastVersionNum"></param>
-        /// <param name="newVersionNum"></param>
-        virtual public void OnBeginPublishAssets(string outputPath, RuntimePlatform platform, string lastVersionNum, out string newVersionNum)
+        /// <param name="outputPath"></param>
+        /// <param name="versionNum"></param>
+        virtual public void OnBeginPublishAssets(RuntimePlatform platform, string outputPath, string versionNum)
         {
-            newVersionNum = "0.0.1";
+            
         }
 
         /// <summary>
-        ///  发布资源处理后
+        ///  发布资源处理后,该资源提交到服务器
         /// </summary>
-        virtual public void OnEndPublishAssets(RuntimePlatform platform, string outputPath)
+        virtual public void OnEndPublishAssets(RuntimePlatform platform, string outputPath, string versionNum)
         {
             
         }

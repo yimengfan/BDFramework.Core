@@ -213,10 +213,12 @@ namespace BDFramework.VersionController
         public void GetServerSubPackageInfos(string serverUrl, Action<Dictionary<string, string>> callback)
         {
             //下载资源位置必须为Persistent
-            UniTask.RunOnThreadPool(() =>
+           var t=  UniTask.RunOnThreadPool(() =>
             {
                 GetServerVersionInfo(serverUrl, callback);
             });
+            
+            Debug.Log("test:------------------------");
         }
 
 
@@ -251,8 +253,8 @@ namespace BDFramework.VersionController
         /// </summary>
         /// <param name="serverUrl">服务器配置根目录</param>
         /// <param name="localSaveAssetsPath">本地根目录</param>
-        /// <param name="onDownloadProccess"></param>
-        /// <param name="onError">返回失败后，只需要重试重新调用该函数即可</param>
+        /// <param name="onDownloadProccess">任务进度通知（下载完不等于任务完成!）</param>
+        /// <param name="onTaskEndCallback">任务成功\失败通知!</param>
         /// 返回码: -1：error  0：success
         async private Task StartVersionControl(UpdateMode updateMode, string serverUrl, string localSaveAssetsPath, string subPackageName, Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess,
             Action<RetStatus, string> onTaskEndCallback)
@@ -275,7 +277,7 @@ namespace BDFramework.VersionController
             var localVersionInfo = new AssetsVersionInfo();
 
             #region AssetVersion.info下载
-
+            BDebug.Log("【版本控制】1.获取版本信息~","red");
             {
                 var ret = await DownloadAssetVersionInfo(serverUrl, localSaveAssetsPath);
                 if (ret.Item1 != null)
@@ -292,6 +294,7 @@ namespace BDFramework.VersionController
             #endregion
 
             //2.对比版本、获取对应数据
+            BDebug.Log("【版本控制】2.对比版本信息~","red");
             string err = null;
             string suc = null;
             var serverAssetsInfoList = new List<ServerAssetItem>();
@@ -344,6 +347,7 @@ namespace BDFramework.VersionController
 
 
             //3.生成差异列表
+            BDebug.Log("【版本控制】3.获取差异列表~","red");
             Queue<ServerAssetItem> diffDownloadQueue = null;
 
             #region 生成差异文件
@@ -370,7 +374,7 @@ namespace BDFramework.VersionController
             //4.开始下载
 
             #region 根据差异文件下载
-
+            BDebug.Log("【版本控制】4.下载资源~","red");
             {
                 var failDownloadList = await DownloadAssets(serverUrl, localSaveAssetsPath, diffDownloadQueue, onDownloadProccess);
                 if (failDownloadList.Count > 0)
@@ -386,7 +390,7 @@ namespace BDFramework.VersionController
             //5.写入配置到本地
 
             #region 存储配置到本地
-
+            BDebug.Log("【版本控制】5.写入配置~","red");
             string localAssetInfoPath = "";
             if (isDownloadSubPackageMode)
             {
@@ -420,16 +424,52 @@ namespace BDFramework.VersionController
             BDebug.Log($"【版本控制】写入{Path.GetFileName(localAssetsVersionInfoPath)}");
 
             #endregion
-
-            //TODO 6.删除冗余资源
+            // 6.删除过期资源
+            BDebug.Log("【版本控制】6.冗余资源检查~","red");
             if (!isDownloadSubPackageMode)
             {
-                //  serverAssetsInfoList
+                var artAssetsPath = IPath.Combine(localSavePlatformPath, BResources.ART_ASSET_ROOT_PATH);
+                var persistentArtAssets = Directory.GetFiles(artAssetsPath, "*", SearchOption.AllDirectories);
+                var replacePath = localSavePlatformPath + "/";
+                foreach (var assetPath in persistentArtAssets)
+                {
+                     var localPath = assetPath.Replace(replacePath,"").Replace("\\","/");
+                     var ret = serverAssetsInfoList.FirstOrDefault((info) => info.LocalPath.Equals(localPath));
+                     if (ret == null)
+                     {
+                         BDebug.Log("【版本控制】删除过期资源:" + localPath);
+                         File.Delete(assetPath);
+                     }
+                }
             }
+            // 7.资源校验文件
+            BDebug.Log("【版本控制】7.整包资源校验~","red");
+            err = null;
+            foreach (var serverAssetItem in serverAssetsInfoList)
+            {
+                var ret= BResources.IsExsitAssetWithCheckHash(platform, serverAssetItem.LocalPath, serverAssetItem.HashName);
+                if (!ret)
+                {
+                    if (string.IsNullOrEmpty(err))
+                    {
+                        err = "资源不存在:";
+                    }
 
+                    err += $"\n {serverAssetItem.LocalPath}";
+                }
+            }
+         
             //the end.
+            BDebug.Log("【版本控制】end.完成~","red");
             await UniTask.SwitchToMainThread();
-            onTaskEndCallback(RetStatus.Success, null);
+            if(err==null)
+            {
+                onTaskEndCallback?.Invoke(RetStatus.Success, null);
+            }
+            else
+            {
+                onTaskEndCallback?.Invoke(RetStatus.Error, err);
+            }
         }
 
         #region 不同模式逻辑
@@ -708,7 +748,7 @@ namespace BDFramework.VersionController
                     case AssetLoadPathType.StreamingAsset:
                     {
                         //TODO ：BSA 读取，不需要Streaming前缀
-                        var steamingAssetsInfoPath = IPath.Combine(BDApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
+                        var steamingAssetsInfoPath = IPath.Combine(BDApplication.GetPlatformPath(platform), BResources.ART_ASSETS_INFO_PATH);
                         //var steamingAssetsInfoPath = GetAssetsInfoPath(BDApplication.streamingAssetsPath, platform);
                         if (BetterStreamingAssets.FileExists(steamingAssetsInfoPath))
                         {
@@ -884,7 +924,7 @@ namespace BDFramework.VersionController
                         if (hash == downloadItem.HashName)
                         {
                             taskByte = taskData;
-                            BDebug.Log("下载成功：" + serverAssetUrl);
+                            BDebug.Log($"下载成功：{serverAssetUrl} -{downloadItem.LocalPath}" );
                             err = null;
                             break;
                         }

@@ -100,7 +100,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResources.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\GameAssetHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BasePackageAssetsHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SQLiteService.cs" />
@@ -126,7 +126,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\File.IO\MurmurHash3.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\HashHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\Path.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\String.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\DotNetExtension\StringEX.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Core\ADataListenerT.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Core\ADataListenerTBase.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Core\AStatusListener.cs" />

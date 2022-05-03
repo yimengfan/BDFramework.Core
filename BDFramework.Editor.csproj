@@ -61,6 +61,8 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorEnvironment\EditorSetting\EditorWindow_BDFrameworkConfig.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorEnvironment\EditorUserGuide\EditorWindow_BDFrameworkStart.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorGUIHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\Behavior\EditorBehavior\ABDFrameworkPublishPipelineBehaviour.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\Behavior\EditorBehavior\BDFrameworkPipelineHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleBuildingContext.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleEditorToolsV2.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleEditorToolsV2CheckAssetbundle.cs" />
@@ -83,6 +85,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\EditorWindow_GenAssetBundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\ShaderCollection.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\ShaderVariantsCollectionTools.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\BuildAssetsTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\BuildPackageTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\ScriptEditor\EditorWindow_ScriptBuildDll.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\ScriptEditor\GenAdapter.cs" />
@@ -96,6 +99,7 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\ExcelExchangeTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\OnExcelImporter.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\TableEditor\TableEditorTask.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\VersionNumHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\CI\CI.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\CI\PublishPipeLineCI.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\DevOpsPipeline\DevOpsEditorTasks.cs" />
@@ -106,12 +110,9 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\HotfixFileConfigLogic.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\HotfixPipelineTools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\HotfixPipeline\MSBuildTest.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\ABDFrameworkPublishPipelineBehaviour.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorBehavior\BDFrameworkPublishPipelineHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorHttpListener.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\EditorWindow_PublishAssets.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\PublishPipelineTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\PublishPipeline\VersionNumHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorTask\EditorTask.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\Menuitems\EditorBuiltinStyle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorWindows\Menuitems\GlobalEditorMenuItems.cs" />

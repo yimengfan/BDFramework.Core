@@ -72,20 +72,32 @@ namespace BDFramework.Asset
         };
 
 
+
         /// <summary>
-        /// 生成资源包构建信息
+        /// 获取母包资源构建信息
         /// </summary>
-        static public void GenPackageBuildInfo(string ouptputPath, RuntimePlatform platform, string basePacakgeSVC = "", string artSVC = "", string scriptSVC = "", string tableSVC = "")
+        /// <returns></returns>
+        static public BasePackageAssetsBuildInfo GetPacakgeBuildInfo(RuntimePlatform platform, string ouptputPath)
         {
             var path = IPath.Combine(ouptputPath, BDApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
-            //写入buildinfo内容
             var buildinfo = new BasePackageAssetsBuildInfo();
             if (File.Exists(path))
             {
                 var text = File.ReadAllText(path);
                 buildinfo = JsonMapper.ToObject<BasePackageAssetsBuildInfo>(text);
             }
+            return buildinfo;
+        }
 
+        /// <summary>
+        /// 生成母包资源构建信息
+        /// </summary>
+        static public void GenPackageBuildInfo(string ouptputPath, RuntimePlatform platform, string basePacakgeSVC = "", string artSVC = "", string scriptSVC = "", string tableSVC = "")
+        {
+            //获取旧BuildAssetInfo
+            var buildinfo = GetPacakgeBuildInfo(platform, ouptputPath);
+            
+            //写入buildinfo内容
             buildinfo.BuildTime = DateTimeEx.GetTotalSeconds();
             //母包信息
             if (!string.IsNullOrEmpty(basePacakgeSVC))
@@ -114,7 +126,7 @@ namespace BDFramework.Asset
             //转json
             var content = JsonMapper.ToJson(buildinfo);
             //写入本地
-
+            var path = IPath.Combine(ouptputPath, BDApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
             FileHelper.WriteAllText(path, content);
         }
 

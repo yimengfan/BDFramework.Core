@@ -6,6 +6,7 @@ using UnityEngine;
 using BDFramework.Editor.Table;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.EditorPipeline.PublishPipeline;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Unity3dEx;
@@ -137,13 +138,13 @@ namespace BDFramework.Editor.PublishPipeline
                     //生成android资源
                     if (isGenAndroidAssets)
                     {
-                        GenAllAssets(exportPath, RuntimePlatform.Android);
+                        BuildAssetsTools.BuildAllAssets(RuntimePlatform.Android, exportPath);
                     }
 
                     //生成ios资源
                     if (isGenIOSAssets)
                     {
-                        GenAllAssets(exportPath, RuntimePlatform.IPhonePlayer);
+                        BuildAssetsTools.BuildAllAssets(RuntimePlatform.IPhonePlayer, exportPath);
                     }
 
                     //EditorUtility.DisplayDialog("提示", "资源导出完成", "OK");
@@ -318,57 +319,6 @@ namespace BDFramework.Editor.PublishPipeline
             }
         }
 
-        /// <summary>
-        /// 生成所有资源
-        /// </summary>
-        /// <param name="outputPath"></param>
-        /// <param name="platform"></param>
-        /// <param name="target"></param>
-        static public void GenAllAssets(string outputPath, RuntimePlatform platform)
-        {
-            var _outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform)); //  + "/" + ;
-            if (!Directory.Exists(_outputPath))
-            {
-                Directory.CreateDirectory(_outputPath);
-            }
-
-            //1.编译脚本
-            try
-            {
-                EditorWindow_ScriptBuildDll.RoslynBuild(outputPath, platform, ScriptBuildTools.BuildMode.Release);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
-            }
-
-            //2.打包表格
-            try
-            {
-                Excel2SQLiteTools.AllExcel2SQLite(outputPath, platform);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
-            }
-
-            //3.打包资源
-            try
-            {
-                //var config = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
-                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
-            }
-
-            //4.生成本地assetinfo配置
-            var allServerAssetItemList = PublishPipelineTools.GetAssetItemList(outputPath, platform);
-            var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
-            var assetsInfoPath = IPath.Combine(outputPath, BDApplication.GetPlatformPath(platform), BResources.ART_ASSETS_INFO_PATH);
-            File.WriteAllText(assetsInfoPath, csv);
-        }
 
 
         private void OnDestroy()

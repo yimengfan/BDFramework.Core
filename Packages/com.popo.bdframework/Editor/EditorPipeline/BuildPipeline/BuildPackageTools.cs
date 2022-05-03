@@ -14,7 +14,7 @@ using Debug = UnityEngine.Debug;
 namespace BDFramework.Editor.BuildPipeline
 {
     /// <summary>
-    /// 构建包体，
+    /// 构建包体工具
     /// 这里是第一次构建母包
     /// </summary>
     static public class BuildPackageTools
@@ -143,7 +143,7 @@ namespace BDFramework.Editor.BuildPipeline
             bool ret = false;
             //增加平台路径
             outdir = IPath.Combine(outdir, BDApplication.GetPlatformPath(BuildTarget.Android));
-            BDFrameworkPublishPipelineHelper.OnBeginBuildPackage(BuildTarget.Android, outdir);
+            BDFrameworkPipelineHelper.OnBeginBuildPackage(BuildTarget.Android, outdir);
             //0.加载场景和配置
             LoadConfig(buildMode);
 
@@ -151,7 +151,7 @@ namespace BDFramework.Editor.BuildPipeline
             //1.生成资源
             if (isGenAssets)
             {
-                EditorWindow_PublishAssets.GenAllAssets(BDApplication.DevOpsPublishAssetsPath, RuntimePlatform.Android);
+                BuildAssetsTools.BuildAllAssets(RuntimePlatform.Android, BDApplication.DevOpsPublishAssetsPath);
             }
 
             //2.拷贝资源并打包
@@ -163,7 +163,7 @@ namespace BDFramework.Editor.BuildPipeline
                 {
                     var  (_ret,outputpath) = BuildAPK(buildMode, outdir);
                     ret = _ret;
-                    BDFrameworkPublishPipelineHelper.OnEndBuildPackage(BuildTarget.Android, outputpath);
+                    BDFrameworkPipelineHelper.OnEndBuildPackage(BuildTarget.Android, outputpath);
                     
                 }
                 catch (Exception e)
@@ -321,14 +321,14 @@ namespace BDFramework.Editor.BuildPipeline
             bool ret = false;
             //增加平台路径
             outdir = IPath.Combine(outdir, BDApplication.GetPlatformPath(BuildTarget.iOS));
-            BDFrameworkPublishPipelineHelper.OnBeginBuildPackage(BuildTarget.iOS, outdir);
+            BDFrameworkPipelineHelper.OnBeginBuildPackage(BuildTarget.iOS, outdir);
             //0.加载场景和配置
             LoadConfig(buildMode);
 
             //1.生成资源
             if (isGenAssets)
             {
-                EditorWindow_PublishAssets.GenAllAssets(BDApplication.DevOpsPublishAssetsPath, RuntimePlatform.IPhonePlayer);
+                BuildAssetsTools.BuildAllAssets(RuntimePlatform.IPhonePlayer, BDApplication.DevOpsPublishAssetsPath);
             }
 
             //2.拷贝资源打包
@@ -339,7 +339,7 @@ namespace BDFramework.Editor.BuildPipeline
                 try
                 {
                     var (_ret,outputpath) = BuildIpa(buildMode, outdir);
-                    BDFrameworkPublishPipelineHelper.OnEndBuildPackage(BuildTarget.iOS, outputpath);
+                    BDFrameworkPipelineHelper.OnEndBuildPackage(BuildTarget.iOS, outputpath);
                     ret = _ret;
                 }
                 catch (Exception e)

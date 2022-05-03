@@ -400,7 +400,7 @@ namespace BDFramework.Editor.AssetBundle
             //恢复编辑器状态
             BDEditorApplication.EditorStatus = BDFrameworkEditorStatus.Idle;
             //BD生命周期触发
-            BDFrameworkPublishPipelineHelper.OnEndBuildAssetBundle(this);
+            BDFrameworkPipelineHelper.OnEndBuildAssetBundle(this);
 
 
             //GenAssetBundleItemCacheList = abConfigList.ToList();

@@ -263,7 +263,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             #endregion
 
             //BD生命周期触发
-            BDFrameworkPublishPipelineHelper.OnBeginBuildAssetBundle(BuildingCtx);
+            BDFrameworkPipelineHelper.OnBeginBuildAssetBundle(BuildingCtx);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace BDFramework.Editor
     /// <summary>
     /// BDFramework publish pipeline各种事件
     /// </summary>
-    static public class BDFrameworkPublishPipelineHelper
+    static public class BDFrameworkPipelineHelper
     {
         static private List<ABDFrameworkPublishPipelineBehaviour> BDFrameworkPipelineBehaviourInstanceList = new List<ABDFrameworkPublishPipelineBehaviour>();
         /// <summary>
@@ -107,35 +107,72 @@ namespace BDFramework.Editor
                 behavior.OnExportExcel(type);
             }
         }
+
         
-        
+        #region 一键构建资源
+
         /// <summary>
-        /// 发布资源处理前
+        /// 【构建所有资源】处理前
         /// </summary>
-        static public void OnBeginPublishAssets(RuntimePlatform platform, string outputPath, string lastVersionNum, out string versionNum)
+        static public void  OnBeginBuildAllAssets(RuntimePlatform platform, string outputPath,string lastVersionNum,out string newVersionNum)
         {
-            versionNum = "0.0.0";
+            Debug.Log("【OnBeginBuildAllAssets生命周期测试】构建资源,请生成版本号信息!!!  ->" + platform.ToString());
+            newVersionNum = lastVersionNum;
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.OnBeginPublishAssets(outputPath,platform, lastVersionNum, out versionNum);
+                behavior.OnBeginBuildAllAssets(platform, outputPath, lastVersionNum,out newVersionNum);
+            }
+            Debug.Log($"<color=red> 新版本号:{newVersionNum} </color>");
+        }
+        
+        /// <summary>
+        /// 【构建所有资源】 处理后
+        /// </summary>
+        static public void OnEndBuildAllAssets(RuntimePlatform platform, string outputPath,string newVersionNum)
+        {
+            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            {
+                behavior.OnEndBuildAllAssets(platform, outputPath, newVersionNum);
+            }
+            Debug.Log("【OnEndBuildAllAssets】构建资源已完成!" );
+        }
+
+        #endregion
+
+        #region 发布资源
+        /// <summary>
+        /// 【发布资源】处理前,该资源提交到服务器
+        /// </summary>
+        static public void OnBeginPublishAssets(RuntimePlatform platform, string outputPath, string versionNum)
+        {
+            Debug.Log("【OnBeginPublishAssets】发布资源处理前.  ->" + platform.ToString());
+            
+            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            {
+                behavior.OnBeginPublishAssets(platform, outputPath, versionNum);
             }
         }
         
         /// <summary>
-        /// 发布资源处理后
+        /// 【发布资源】 处理后,该资源提交到服务器
         /// </summary>
-        static public void OnEndPublishAssets(RuntimePlatform platform,string outputPath)
+        static public void OnEndPublishAssets(RuntimePlatform platform, string outputPath, string versionNum)
         {
             foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
             {
-                behavior.OnEndPublishAssets(platform, outputPath);
+                behavior.OnEndPublishAssets(platform, outputPath, versionNum);
             }
+            
+            Debug.Log($"<color=red> 新版本号:{versionNum} </color>");
+            Debug.Log("【OnEndPublishAssets】发布资源已生成,请编写脚本提交以下目录到Server!" );
+            Debug.Log(outputPath);
+            Debug.Log("------------------------------------------------end---------------------------------------------------");
         }
-        
-        
-        
+        #endregion
+
+        #region 构建母包
         /// <summary>
-        /// 构建母包开始
+        /// 【构建母包】开始
         /// </summary>
         /// <param name="buildTarget"></param>
         /// <param name="outputpath"></param>
@@ -148,7 +185,7 @@ namespace BDFramework.Editor
         }
 
         /// <summary>
-        /// 构建母包结束
+        /// 【构建母包】结束
         /// </summary>
         /// <param name="buildTarget"></param>
         /// <param name="outputpath"></param>
@@ -159,5 +196,6 @@ namespace BDFramework.Editor
                 behavior.OnEndBuildPackage(buildTarget, outputpath);
             }
         }
+        #endregion
     }
 }
