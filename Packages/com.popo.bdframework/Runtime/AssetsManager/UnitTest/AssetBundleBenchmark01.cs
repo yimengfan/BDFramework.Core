@@ -64,7 +64,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         // DevLoder = new DevResourceMgr();
         // DevLoder.Init("");
         AssetBundleLoader = new AssetBundleMgrV2();
-        var abPath = Application.isEditor ? BDApplication.DevOpsPublishAssetsPath : Application.persistentDataPath;
+        var abPath = Application.isEditor ? BApplication.DevOpsPublishAssetsPath : Application.persistentDataPath;
         AssetBundleLoader.Init(abPath);
         AssetBundleLoader.WarmUpShaders();
         //节点
@@ -112,7 +112,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
     /// <returns></returns>
     static IEnumerator IE_01_LoadAll(bool isAsyncLoad = false)
     {
-        var outpath = BDApplication.BDEditorCachePath + "/AssetBundle";
+        var outpath = BApplication.BDEditorCachePath + "/AssetBundle";
         if (!Directory.Exists(outpath))
         {
             Directory.CreateDirectory(outpath);

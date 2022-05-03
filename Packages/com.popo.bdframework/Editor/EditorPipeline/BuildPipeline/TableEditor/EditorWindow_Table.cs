@@ -1,4 +1,5 @@
 ﻿using System;
+using BDFramework.Core.Tools;
 using BDFramework.Editor.Tools;
 using LitJson;
 using UnityEditor;
@@ -24,8 +25,8 @@ namespace BDFramework.Editor.Table
             if (GUILayout.Button("表格导出成Sqlite", GUILayout.Width(300), GUILayout.Height(30)))
             {
                 //3.打包表格
-                Excel2SQLiteTools.AllExcel2SQLite(Application.streamingAssetsPath, Application.platform);
-                Excel2SQLiteTools.CopySqlToOther(Application.streamingAssetsPath, Application.platform);
+                Excel2SQLiteTools.AllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform);
+                Excel2SQLiteTools.CopySqlToOther(Application.streamingAssetsPath, BApplication.RuntimePlatform);
             }
 
             GUILayout.Space(10);

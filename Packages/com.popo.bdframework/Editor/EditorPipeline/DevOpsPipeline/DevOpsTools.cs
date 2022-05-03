@@ -29,8 +29,8 @@ namespace BDFramework.Editor.DevOps
             }
 
             //合并路径
-            var sourcepath = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, BDApplication.GetPlatformPath(platform));
-            targetpath = IPath.Combine(targetpath, BDApplication.GetPlatformPath(platform));
+            var sourcepath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform));
+            targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform));
             //TODO SVN更新资源
 
             //拷贝
@@ -58,7 +58,7 @@ namespace BDFramework.Editor.DevOps
         /// <param name="platform"></param>
         static public void DeleteCopyAssets(string targetpath, RuntimePlatform platform)
         {
-            targetpath = IPath.Combine(targetpath, BDApplication.GetPlatformPath(platform));
+            targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform));
             //优先删除拷贝的美术资源，防止构建完再导入  其他资源等工作流完全切入DevOps再进行删除
             var copyArtPath = IPath.Combine(targetpath, BResources.ART_ASSET_ROOT_PATH);
             if (Directory.Exists(copyArtPath))

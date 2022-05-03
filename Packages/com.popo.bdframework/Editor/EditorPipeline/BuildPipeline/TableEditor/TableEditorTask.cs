@@ -1,4 +1,5 @@
-﻿using BDFramework.Editor.Task;
+﻿using BDFramework.Core.Tools;
+using BDFramework.Editor.Task;
 using BDFramework.Sql;
 using UnityEditor;
 using UnityEngine;
@@ -24,7 +25,7 @@ namespace BDFramework.Editor.Table
                 {
                     BDebug.Log("-----------------强制导入修改的excel文件.begin-----------------", "red");
 
-                    SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath, Application.platform);
+                    SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath, BApplication.RuntimePlatform);
                     {
                         //开始导入
                         foreach (var excel in changedExcelList)

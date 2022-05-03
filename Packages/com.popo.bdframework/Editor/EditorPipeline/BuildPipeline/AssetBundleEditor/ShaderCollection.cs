@@ -45,7 +45,7 @@ namespace BDFramework.Editor.AssetBundle
 
 
             //搜索所有Mat
-            var paths = BDApplication.GetAllRuntimeDirects().ToArray();
+            var paths = BApplication.GetAllRuntimeDirects().ToArray();
             var assets = AssetDatabase.FindAssets("t:Prefab", paths).ToList();
             var assets2 = AssetDatabase.FindAssets("t:Material", paths);
             assets.AddRange(assets2);

@@ -200,7 +200,7 @@ namespace BDFramework.VersionController
             UniTask.RunOnThreadPool(() =>
             {
                 //开始版本控制逻辑
-                StartVersionControl(updateMode, serverConfigUrl, BDApplication.persistentDataPath, assetsPackageName, onDownloadProccess, onTaskEndCallback);
+                StartVersionControl(updateMode, serverConfigUrl, BApplication.persistentDataPath, assetsPackageName, onDownloadProccess, onTaskEndCallback);
             });
         }
 
@@ -259,9 +259,9 @@ namespace BDFramework.VersionController
         async private Task StartVersionControl(UpdateMode updateMode, string serverUrl, string localSaveAssetsPath, string subPackageName, Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess,
             Action<RetStatus, string> onTaskEndCallback)
         {
-            var platform = Application.platform;
+            var platform = BApplication.RuntimePlatform;
             //目录准备
-            var platformStr = BDApplication.GetPlatformPath(platform);
+            var platformStr = BApplication.GetRuntimePlatformPath();
             var localSavePlatformPath = IPath.Combine(localSaveAssetsPath, platformStr);
             if (!Directory.Exists(localSavePlatformPath))
             {
@@ -394,11 +394,11 @@ namespace BDFramework.VersionController
             string localAssetInfoPath = "";
             if (isDownloadSubPackageMode)
             {
-                localAssetInfoPath = BResources.GetAssetsSubPackageInfoPath(BDApplication.persistentDataPath, platform, subPackageName);
+                localAssetInfoPath = BResources.GetAssetsSubPackageInfoPath(BApplication.persistentDataPath, platform, subPackageName);
             }
             else
             {
-                localAssetInfoPath = BResources.GetAssetsInfoPath(BDApplication.persistentDataPath, platform);
+                localAssetInfoPath = BResources.GetAssetsInfoPath(BApplication.persistentDataPath, platform);
             }
 
             //写入Asset.Info
@@ -628,7 +628,7 @@ namespace BDFramework.VersionController
         /// <returns></returns>
         async private Task<Tuple<string, AssetsVersionInfo, AssetsVersionInfo>> DownloadAssetVersionInfo(string serverUrl, string localSaveAssetsPath = null)
         {
-            var platform = Application.platform;
+            var platform = BApplication.RuntimePlatform;
             //本地、服务器版本信息的路径
             var serverAssetsVersionInfoUrl = BResources.GetServerAssetsVersionInfoPath(serverUrl, platform);
 
@@ -730,7 +730,7 @@ namespace BDFramework.VersionController
         {
             var retList = new List<ServerAssetItem>();
             //优先加载persistent的Assets.info
-            var persistentAssetInfoPath = BResources.GetAssetsInfoPath(BDApplication.persistentDataPath, platform);
+            var persistentAssetInfoPath = BResources.GetAssetsInfoPath(BApplication.persistentDataPath, platform);
             if (File.Exists(persistentAssetInfoPath))
             {
                 var content = File.ReadAllText(persistentAssetInfoPath);
@@ -748,7 +748,7 @@ namespace BDFramework.VersionController
                     case AssetLoadPathType.StreamingAsset:
                     {
                         //TODO ：BSA 读取，不需要Streaming前缀
-                        var steamingAssetsInfoPath = IPath.Combine(BDApplication.GetPlatformPath(platform), BResources.ART_ASSETS_INFO_PATH);
+                        var steamingAssetsInfoPath = IPath.Combine(BApplication.GetPlatformPath(platform), BResources.ART_ASSETS_INFO_PATH);
                         //var steamingAssetsInfoPath = GetAssetsInfoPath(BDApplication.streamingAssetsPath, platform);
                         if (BetterStreamingAssets.FileExists(steamingAssetsInfoPath))
                         {
@@ -786,7 +786,7 @@ namespace BDFramework.VersionController
 
             foreach (var kv in localVersionInfo.SubPckMap)
             {
-                var subPackageInfoPath = BResources.GetAssetsSubPackageInfoPath(BDApplication.persistentDataPath, platform, kv.Key);
+                var subPackageInfoPath = BResources.GetAssetsSubPackageInfoPath(BApplication.persistentDataPath, platform, kv.Key);
                 if (File.Exists(subPackageInfoPath))
                 {
                     var content = File.ReadAllText(subPackageInfoPath);
@@ -813,7 +813,7 @@ namespace BDFramework.VersionController
         {
             var failDownloadList = new List<ServerAssetItem>();
             //url构建
-            var platform = BDApplication.GetPlatformPath(Application.platform);
+            var platform = BApplication.GetPlatformPath(BApplication.RuntimePlatform);
             serverUrl = IPath.Combine(serverUrl, platform);
             localSaveAssetsPath = IPath.Combine(localSaveAssetsPath, platform);
             //1.任务缓存
@@ -900,7 +900,7 @@ namespace BDFramework.VersionController
         {
             var failDownloadList = new List<ServerAssetItem>();
             //url构建
-            var platform = BDApplication.GetPlatformPath(Application.platform);
+            var platform = BApplication.GetPlatformPath(BApplication.RuntimePlatform);
             serverUrl = IPath.Combine(serverUrl, platform);
             localSaveAssetsPath = IPath.Combine(localSaveAssetsPath, platform);
             //1.任务缓存

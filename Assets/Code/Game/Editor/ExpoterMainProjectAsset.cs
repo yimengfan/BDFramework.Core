@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using BDFramework;
+using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
 using LitJson;
 using UnityEditor;
@@ -122,7 +123,7 @@ public class ExpoterMainProjectAsset
         //AssetDatabase.ImportPackage(packagePath,true);
         AssetDatabase.ExportPackage(exportfs, packagePath, op);
         //重新生成clr分析文件
-        EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis();
+        EditorWindow_ScriptBuildDll.GenCLRBindingByAnalysis(BApplication.RuntimePlatform);
         //debug
 
         EditorUtility.DisplayDialog("提示", packagePath, "ok");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Asset;
+using BDFramework.Core.Tools;
 using BDFramework.Editor.Environment;
 using LitJson;
 using BDFramework.Sql;
@@ -26,15 +27,15 @@ namespace BDFramework.Editor.Table
         public static void ExecuteGenSqlite()
         {
             //生成sql
-            AllExcel2SQLite(Application.streamingAssetsPath, Application.platform);
-            CopySqlToOther(Application.streamingAssetsPath, Application.platform);
+            AllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform);
+            CopySqlToOther(Application.streamingAssetsPath, BApplication.RuntimePlatform);
             AssetDatabase.Refresh();
         }
 
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite[Server]", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Json2Sqlite)]
         public static void ExecuteJsonToSqlite()
         {
-            AllExcel2SQLite(Application.streamingAssetsPath, Application.platform, DBType.Server);
+            AllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform, DBType.Server);
             AssetDatabase.Refresh();
             Debug.Log("表格导出完毕");
         }
@@ -232,7 +233,7 @@ namespace BDFramework.Editor.Table
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             path = Path.GetFullPath(path);
 
-            SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath, Application.platform);
+            SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath, BApplication.RuntimePlatform);
             {
                 Excel2SQLite(path, DBType.Local);
             }

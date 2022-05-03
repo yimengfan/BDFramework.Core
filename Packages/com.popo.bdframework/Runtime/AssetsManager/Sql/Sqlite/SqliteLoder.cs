@@ -86,7 +86,7 @@ namespace BDFramework.Sql
             var path = GameConfig.GetLoadPath(assetLoadPathTypeType);
 
             //用当前平台目录进行加载
-            path = GetLocalDBPath(path, Application.platform);
+            path = GetLocalDBPath(path, BApplication.RuntimePlatform);
             if (File.Exists(path))
             {
                 Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadOnly);
@@ -113,7 +113,7 @@ namespace BDFramework.Sql
         /// </summary>
         static public string GetLocalDBPath(string root, RuntimePlatform platform)
         {
-            return IPath.Combine(root, BDApplication.GetPlatformPath(platform), LOCAL_DB_PATH);
+            return IPath.Combine(root, BApplication.GetPlatformPath(platform), LOCAL_DB_PATH);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace BDFramework.Sql
         /// </summary>
         static public string GetServerDBPath(string root, RuntimePlatform platform)
         {
-            return IPath.Combine(root, BDApplication.GetPlatformPath(platform), SERVER_DB_PATH);
+            return IPath.Combine(root, BApplication.GetPlatformPath(platform), SERVER_DB_PATH);
         }
     }
 }

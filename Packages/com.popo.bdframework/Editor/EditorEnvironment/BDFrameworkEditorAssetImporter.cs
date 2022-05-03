@@ -28,7 +28,7 @@ namespace BDFramework.Editor.Environment
         /// </summary>
         private static string ImporterCahcePath
         {
-            get { return BDApplication.BDEditorCachePath + "/ImporterCache"; }
+            get { return BApplication.BDEditorCachePath + "/ImporterCache"; }
         }
 
         static private BDAssetImpoterCache _CacheData;

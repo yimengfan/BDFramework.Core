@@ -355,7 +355,7 @@ namespace BDFramework.Editor.SVN
             var out_utf8 = "cmd /c chcp 65001"; //chcp 65001";
             var cd_dir = $"cd /d \"{this.LocalSVNRootPath}\"";
             
-            var svn_exe_path =$"{BDApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~/svn.exe";
+            var svn_exe_path =$"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~/svn.exe";
             if (!File.Exists(svn_exe_path))
             {
                 Debug.LogError("找不到svn.exe!");

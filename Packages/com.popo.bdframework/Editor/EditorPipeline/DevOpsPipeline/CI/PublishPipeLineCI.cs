@@ -35,8 +35,8 @@ namespace BDFramework.Editor.DevOps
             BDFrameworkEditorEnvironment.InitEditorEnvironment();
 
             //
-            CI_ASSETS_PATH = BDApplication.DevOpsPublishAssetsPath; // IPath.Combine(BDApplication.DevOpsPath, "CI_TEMP");
-            CI_PACKAGE_PATH = BDApplication.DevOpsPublishPackagePath; // IPath.Combine(CI_ROOT_PATH, "CI_BUILD_PCK");
+            CI_ASSETS_PATH = BApplication.DevOpsPublishAssetsPath; // IPath.Combine(BDApplication.DevOpsPath, "CI_TEMP");
+            CI_PACKAGE_PATH = BApplication.DevOpsPublishPackagePath; // IPath.Combine(CI_ROOT_PATH, "CI_BUILD_PCK");
             if (!Directory.Exists(CI_ASSETS_PATH))
             {
                 Directory.CreateDirectory(CI_ASSETS_PATH);
@@ -259,10 +259,9 @@ namespace BDFramework.Editor.DevOps
 
 
                 //2.获取支持的目录，提交
-                var platforms = BDApplication.GetSupportPlatform();
-                foreach (var platform in platforms)
+                foreach (var platform in BApplication.SupportPlatform)
                 {
-                    var p = BDApplication.GetPlatformPath(platform);
+                    var p = BApplication.GetPlatformPath(platform);
                     var path = Path.Combine(svnProcessor.LocalSVNRootPath, p);
                     if (Directory.Exists(path))
                     {

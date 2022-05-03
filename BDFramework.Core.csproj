@@ -149,7 +149,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\ScreenNavigation\@hotfix\ScreenViewManager.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\Adaptor\@hotfix\ActionAdaptor.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\Adaptor\ActionAdaptor2.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\BDApplication.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\BApplication.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\BGameObjectPools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\IEnumerator\IEnumeratorTool.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\Serialize\CSVHelper.cs" />

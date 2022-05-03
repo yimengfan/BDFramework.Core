@@ -79,7 +79,7 @@ namespace BDFramework.Asset
         /// <returns></returns>
         static public BasePackageAssetsBuildInfo GetPacakgeBuildInfo(RuntimePlatform platform, string ouptputPath)
         {
-            var path = IPath.Combine(ouptputPath, BDApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
+            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
             var buildinfo = new BasePackageAssetsBuildInfo();
             if (File.Exists(path))
             {
@@ -126,7 +126,7 @@ namespace BDFramework.Asset
             //转json
             var content = JsonMapper.ToJson(buildinfo);
             //写入本地
-            var path = IPath.Combine(ouptputPath, BDApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
+            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
             FileHelper.WriteAllText(path, content);
         }
 
@@ -140,7 +140,7 @@ namespace BDFramework.Asset
         {
             BDebug.Log("【资源包】执行母包资源检测逻辑！");
             //路径初始化
-            var persistentPlatformPath = IPath.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(platform));
+            var persistentPlatformPath = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(platform));
             //母包路径
             string basePckPath = "";
 
@@ -152,13 +152,13 @@ namespace BDFramework.Asset
                 case AssetLoadPathType.StreamingAsset:
                 {
                     isUseSysIO = false;
-                    basePckPath = BDApplication.streamingAssetsPath;
+                    basePckPath = BApplication.streamingAssetsPath;
                 }
                     break;
                 case AssetLoadPathType.DevOpsPublish:
                 {
                     isUseSysIO = true;
-                    basePckPath = BDApplication.DevOpsPath;
+                    basePckPath = BApplication.DevOpsPath;
                 }
                     break;
             }
@@ -167,7 +167,7 @@ namespace BDFramework.Asset
             string basePckPlatformPath = "";
             if (isUseSysIO)
             {
-                basePckPlatformPath = IPath.Combine(basePckPath, BDApplication.GetPlatformPath(platform));
+                basePckPlatformPath = IPath.Combine(basePckPath, BApplication.GetPlatformPath(platform));
             }
 
             //packageinfo
@@ -299,10 +299,10 @@ namespace BDFramework.Asset
         /// </summary>
         static private void ClearOldPersistentAssets()
         {
-            var runtimes = BDApplication.GetSupportPlatform();
+            var runtimes = BApplication.SupportPlatform;
             foreach (var runtime in runtimes)
             {
-                var path = IPath.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(runtime));
+                var path = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(runtime));
                 if (Directory.Exists(path))
                 {
                     Directory.Delete(path, true);

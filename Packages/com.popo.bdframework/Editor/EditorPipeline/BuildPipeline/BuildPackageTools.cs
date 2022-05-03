@@ -54,13 +54,13 @@ namespace BDFramework.Editor.BuildPipeline
         [MenuItem("BDFrameWork工具箱/5.发布母包/Android/Build(当前配置Debug)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
         public static void EditorBuildAPKUseCurrentAssets()
         {
-            BuildAPK(BuildMode.UseCurrentConfigDebug, false, BDApplication.DevOpsPublishPackagePath);
+            BuildAPK(BuildMode.UseCurrentConfigDebug, false, BApplication.DevOpsPublishPackagePath);
         }
 
         [MenuItem("BDFrameWork工具箱/5.发布母包/Android/Build(当前配置Release)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
         public static void EditorBuildAPKUseCurrentAssetsRelease()
         {
-            BuildAPK(BuildMode.UseCurrentConfigRelease, false, BDApplication.DevOpsPublishPackagePath);
+            BuildAPK(BuildMode.UseCurrentConfigRelease, false, BApplication.DevOpsPublishPackagePath);
         }
 
         [MenuItem("BDFrameWork工具箱/5.发布母包/Android/Build(加载Debug.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
@@ -68,7 +68,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildAPK(BuildMode.Debug, true, BDApplication.DevOpsPublishPackagePath);
+                BuildAPK(BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath);
             }
         }
 
@@ -77,7 +77,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildAPK(BuildMode.Release, true, BDApplication.DevOpsPublishPackagePath);
+                BuildAPK(BuildMode.Release, true, BApplication.DevOpsPublishPackagePath);
             }
         }
 
@@ -85,13 +85,13 @@ namespace BDFramework.Editor.BuildPipeline
         [MenuItem("BDFrameWork工具箱/5.发布母包/iOS/Build(当前配置Debug)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
         public static void EditorBuildIpaUseCurrentAssets()
         {
-            BuildIpa(BuildMode.UseCurrentConfigDebug, false, BDApplication.DevOpsPublishPackagePath);
+            BuildIpa(BuildMode.UseCurrentConfigDebug, false, BApplication.DevOpsPublishPackagePath);
         }
 
         [MenuItem("BDFrameWork工具箱/5.发布母包/iOS/Build(当前配置Release)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
         public static void EditorBuildIpaUseCurrentAssetsRelease()
         {
-            BuildIpa(BuildMode.UseCurrentConfigRelease, false, BDApplication.DevOpsPublishPackagePath);
+            BuildIpa(BuildMode.UseCurrentConfigRelease, false, BApplication.DevOpsPublishPackagePath);
         }
 
         [MenuItem("BDFrameWork工具箱/5.发布母包/iOS/Build(加载Debug.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
@@ -99,7 +99,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildIpa(BuildMode.Debug, true, BDApplication.DevOpsPublishPackagePath);
+                BuildIpa(BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath);
             }
         }
 
@@ -108,7 +108,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildIpa(BuildMode.Release, true, BDApplication.DevOpsPublishPackagePath);
+                BuildIpa(BuildMode.Release, true, BApplication.DevOpsPublishPackagePath);
             }
         }
 
@@ -142,7 +142,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             bool ret = false;
             //增加平台路径
-            outdir = IPath.Combine(outdir, BDApplication.GetPlatformPath(BuildTarget.Android));
+            outdir = IPath.Combine(outdir, BApplication.GetPlatformPath(BuildTarget.Android));
             BDFrameworkPipelineHelper.OnBeginBuildPackage(BuildTarget.Android, outdir);
             //0.加载场景和配置
             LoadConfig(buildMode);
@@ -151,7 +151,7 @@ namespace BDFramework.Editor.BuildPipeline
             //1.生成资源
             if (isGenAssets)
             {
-                BuildAssetsTools.BuildAllAssets(RuntimePlatform.Android, BDApplication.DevOpsPublishAssetsPath);
+                BuildAssetsTools.BuildAllAssets(RuntimePlatform.Android, BApplication.DevOpsPublishAssetsPath);
             }
 
             //2.拷贝资源并打包
@@ -216,7 +216,7 @@ namespace BDFramework.Editor.BuildPipeline
 
 
             //秘钥相关
-            var keystorePath = IPath.Combine(BDApplication.ProjectRoot, androidConfig.keystoreName);
+            var keystorePath = IPath.Combine(BApplication.ProjectRoot, androidConfig.keystoreName);
             if (!File.Exists(keystorePath))
             {
                 //For ci
@@ -320,7 +320,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             bool ret = false;
             //增加平台路径
-            outdir = IPath.Combine(outdir, BDApplication.GetPlatformPath(BuildTarget.iOS));
+            outdir = IPath.Combine(outdir, BApplication.GetPlatformPath(BuildTarget.iOS));
             BDFrameworkPipelineHelper.OnBeginBuildPackage(BuildTarget.iOS, outdir);
             //0.加载场景和配置
             LoadConfig(buildMode);
@@ -328,7 +328,7 @@ namespace BDFramework.Editor.BuildPipeline
             //1.生成资源
             if (isGenAssets)
             {
-                BuildAssetsTools.BuildAllAssets(RuntimePlatform.IPhonePlayer, BDApplication.DevOpsPublishAssetsPath);
+                BuildAssetsTools.BuildAllAssets(RuntimePlatform.IPhonePlayer, BApplication.DevOpsPublishAssetsPath);
             }
 
             //2.拷贝资源打包
@@ -417,11 +417,11 @@ namespace BDFramework.Editor.BuildPipeline
                 var shellPath = "";
                 if (Application.platform == RuntimePlatform.WindowsEditor)
                 {
-                    shellPath = BDApplication.DevOpsCIPath + string.Format("/BuildIpa_{0}.cmd", realmode);
+                    shellPath = BApplication.DevOpsCIPath + string.Format("/BuildIpa_{0}.cmd", realmode);
                 }
                 else if (Application.platform == RuntimePlatform.OSXEditor)
                 {
-                    shellPath = BDApplication.DevOpsCIPath + string.Format("/BuildIpa_{0}.shell", realmode);
+                    shellPath = BApplication.DevOpsCIPath + string.Format("/BuildIpa_{0}.shell", realmode);
                 }
 
                 if (File.Exists(shellPath))
@@ -470,7 +470,7 @@ namespace BDFramework.Editor.BuildPipeline
         static private void DeleteIL2cppCache()
         {
 #if UNITY_2019
-            var directs = Directory.GetDirectories(BDApplication.Library, "*", SearchOption.TopDirectoryOnly);
+            var directs = Directory.GetDirectories(BApplication.Library, "*", SearchOption.TopDirectoryOnly);
             foreach (var dirt in directs)
             {
                 if (dirt.Contains("il2cpp"))
@@ -489,7 +489,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //删除
-            var tempdirt = Path.Combine(BDApplication.ProjectRoot, "Temp/StagingArea");
+            var tempdirt = Path.Combine(BApplication.ProjectRoot, "Temp/StagingArea");
             if (Directory.Exists(tempdirt))
             {
                 Directory.Delete(tempdirt, true);

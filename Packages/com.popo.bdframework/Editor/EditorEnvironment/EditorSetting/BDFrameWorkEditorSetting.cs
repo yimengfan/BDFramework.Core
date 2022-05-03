@@ -88,9 +88,9 @@ namespace BDFramework.Editor
         {
             if (string.IsNullOrEmpty(SETTING_PATH))
             {
-                SETTING_PATH = IPath.Combine(BDApplication.DevOpsConfigPath, "BDFrameworkSetting.conf");
+                SETTING_PATH = IPath.Combine(BApplication.DevOpsConfigPath, "BDFrameworkSetting.conf");
                 //处理旧文件
-                var oldpath = IPath.Combine(BDApplication.BDWorkSpace, "config.json");
+                var oldpath = IPath.Combine(BApplication.BDWorkSpace, "config.json");
                 if (File.Exists(oldpath))
                 {
                     var dirt = Path.GetDirectoryName(SETTING_PATH);

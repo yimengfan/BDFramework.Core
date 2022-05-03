@@ -96,7 +96,7 @@ public class ScriptBuildTools
 
 
         //准备输出环境
-        var _outPath = Path.Combine(outPath, BDApplication.GetPlatformPath(platform));
+        var _outPath = Path.Combine(outPath, BApplication.GetPlatformPath(platform));
         try
         {
             var path = _outPath + "/Hotfix";
@@ -134,7 +134,7 @@ public class ScriptBuildTools
         string[] parseCsprojList = new string[] {"Assembly-CSharp.csproj", "BDFramework.Core.csproj"};
         foreach (var csproj in parseCsprojList)
         {
-            var path = Path.Combine(BDApplication.ProjectRoot, csproj);
+            var path = Path.Combine(BApplication.ProjectRoot, csproj);
             if (!File.Exists(path))
             {
                 EditorUtility.DisplayDialog("警告", $"请保证csproj存在:\n {csproj}.\n 请在Preferces/ExternalTools 选择 Generate.csproj文件", "OK");
@@ -175,7 +175,7 @@ public class ScriptBuildTools
 
         //剔除不存的dll
         //TODO 这里是File 接口mac下有bug 会判断文件不存在
-        if (Application.platform == RuntimePlatform.WindowsEditor)
+        if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor)
         {
             for (int i = dllFileList.Count - 1; i >= 0; i--)
             {
@@ -186,9 +186,6 @@ public class ScriptBuildTools
                     Debug.Log("剔除:" + dll);
                 }
             }
-        }
-        else if (Application.platform == RuntimePlatform.OSXEditor)
-        {
         }
 
         #endregion
@@ -358,7 +355,7 @@ public class ScriptBuildTools
             }
 
             //
-            var gendll = BDApplication.Library + "/ScriptAssemblies/" + csproj.Replace(".csproj", ".dll");
+            var gendll = BApplication.Library + "/ScriptAssemblies/" + csproj.Replace(".csproj", ".dll");
             if (!File.Exists(gendll))
             {
                 Debug.LogError("不存在:" + gendll);
@@ -376,20 +373,16 @@ public class ScriptBuildTools
     /// <param name="output"></param>
     static public bool BuildByRoslyn(string[] dlls, string[] codefiles, string output, bool isdebug = false, bool isUseDefine = false)
     {
-        if (Application.platform == RuntimePlatform.OSXEditor)
+        for (int i = 0; i < dlls.Length; i++)
         {
-            for (int i = 0; i < dlls.Length; i++)
-            {
-                dlls[i] = dlls[i].Replace("\\", "/");
-            }
-
-            for (int i = 0; i < codefiles.Length; i++)
-            {
-                codefiles[i] = codefiles[i].Replace("\\", "/");
-            }
-
-            output = output.Replace("\\", "/");
+            dlls[i] = IPath.ReplaceBackSlash(dlls[i]);
         }
+        for (int i = 0; i < codefiles.Length; i++)
+        {
+            codefiles[i] = IPath.ReplaceBackSlash(codefiles[i]); 
+        }
+        output = IPath.ReplaceBackSlash(output);
+
 
         //添加语法树
         var Symbols = defineList;

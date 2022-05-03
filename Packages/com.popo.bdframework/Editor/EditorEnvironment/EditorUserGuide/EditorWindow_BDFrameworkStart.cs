@@ -75,7 +75,7 @@ namespace BDFramework.Editor
         /// <returns></returns>
         static public bool IsTodayOpened()
         {
-            var path = BDApplication.BDEditorCachePath + "/OpenGuideLog_" + DateTime.Today.ToLongDateString();
+            var path = BApplication.BDEditorCachePath + "/OpenGuideLog_" + DateTime.Today.ToLongDateString();
             if (!File.Exists(path))
             {
                 File.WriteAllText(path, "EditorWindow_BDFrameworkStart today is open!");
@@ -354,7 +354,7 @@ namespace BDFramework.Editor
             //有新版本则拉取服务器上的
             if (IsHaveNewVerison())
             {
-                var newLogPath = Path.Combine(BDApplication.BDEditorCachePath, "VersionLog_" + NewVersionNum);
+                var newLogPath = Path.Combine(BApplication.BDEditorCachePath, "VersionLog_" + NewVersionNum);
                 //本地不存在就缓存到本地
                 if (!File.Exists(newLogPath))
                 {

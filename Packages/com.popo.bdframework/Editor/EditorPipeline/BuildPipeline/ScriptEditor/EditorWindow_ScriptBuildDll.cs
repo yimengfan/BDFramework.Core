@@ -42,12 +42,12 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 //
                 if (GUILayout.Button("1.编译dll(Roslyn-Release)", GUILayout.Width(155), GUILayout.Height(30)))
                 {
-                    RoslynBuild(Application.streamingAssetsPath, Application.platform, ScriptBuildTools.BuildMode.Release);
+                    RoslynBuild(Application.streamingAssetsPath, BApplication.RuntimePlatform, ScriptBuildTools.BuildMode.Release);
                 }
 
                 if (GUILayout.Button("编译dll(Roslyn-Debug)", GUILayout.Width(150), GUILayout.Height(30)))
                 {
-                    RoslynBuild(Application.streamingAssetsPath, Application.platform, ScriptBuildTools.BuildMode.Debug);
+                    RoslynBuild(Application.streamingAssetsPath, BApplication.RuntimePlatform, ScriptBuildTools.BuildMode.Debug);
                 }
             }
             GUILayout.EndHorizontal();
@@ -165,13 +165,9 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     /// </summary>
     /// <param name="platform"></param>
     /// <param name="dllpath"></param>
-    static public void GenCLRBindingByAnalysis(RuntimePlatform platform = RuntimePlatform.Lumin, string dllpath = "")
+    static public void GenCLRBindingByAnalysis(RuntimePlatform platform , string dllpath = "")
     {
-        //默认参数
-        if (platform == RuntimePlatform.Lumin)
-        {
-            platform = Application.platform;
-        }
+        
 
         if (dllpath == "")
         {
@@ -179,7 +175,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         }
 
         //路径
-        dllpath = dllpath + "/" + BDApplication.GetPlatformPath(platform) + DLLPATH;
+        dllpath = dllpath + "/" + BApplication.GetPlatformPath(platform) + DLLPATH;
         //不参与自动绑定的
         List<Type> excludeTypes = new List<Type>(); //
         excludeTypes.AddRange(manualBindingTypes);

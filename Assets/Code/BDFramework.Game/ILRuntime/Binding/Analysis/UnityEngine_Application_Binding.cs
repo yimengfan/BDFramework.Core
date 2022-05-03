@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-
+using BDFramework.Core.Tools;
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.CLR.Method;
 using ILRuntime.Runtime.Enviorment;
@@ -83,7 +83,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
 
-            var result_of_this_method = UnityEngine.Application.platform;
+            var result_of_this_method = BApplication.RuntimePlatform;
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }

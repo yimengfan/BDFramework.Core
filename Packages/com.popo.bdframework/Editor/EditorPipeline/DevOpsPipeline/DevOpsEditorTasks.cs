@@ -16,8 +16,8 @@ namespace BDFramework.Editor.DevOps
         [EditorTask.EditorTaskOnUnityLoadOrCodeRecompiled("同步githook文件到本地仓库")]
         static public void UpdateGitHookToLocalStore()
         {
-            var githookDir = Path.Combine(BDApplication.DevOpsCIPath, "githook");
-            var gitdir = Path.Combine(BDApplication.ProjectRoot, ".git/hooks");
+            var githookDir = Path.Combine(BApplication.DevOpsCIPath, "githook");
+            var gitdir = Path.Combine(BApplication.ProjectRoot, ".git/hooks");
             if (Directory.Exists(gitdir) && Directory.Exists(githookDir))
             {
                 var hookfiles = Directory.GetFiles(githookDir, "*", SearchOption.AllDirectories);

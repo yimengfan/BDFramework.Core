@@ -46,7 +46,7 @@ namespace BDFramework.Editor.AssetBundle
             GUILayout.Label("2.资源打包", EditorGUIHelper.LabelH2);
             GUILayout.Space(5);
             GUILayout.Label("Runtime目录:");
-            foreach (var root in BDApplication.GetAllRuntimeDirects())
+            foreach (var root in BApplication.GetAllRuntimeDirects())
             {
                 GUILayout.Label(root);
             }
@@ -110,7 +110,7 @@ namespace BDFramework.Editor.AssetBundle
                 if (GUILayout.Button("一键打包[美术资源]", GUILayout.Width(380), GUILayout.Height(30)))
                 {
                     //开始打包
-                    BuildAssetBundle(BDApplication.DevOpsPublishAssetsPath);
+                    BuildAssetBundle(BApplication.DevOpsPublishAssetsPath);
                 }
 
                 GUILayout.Space(10); //();

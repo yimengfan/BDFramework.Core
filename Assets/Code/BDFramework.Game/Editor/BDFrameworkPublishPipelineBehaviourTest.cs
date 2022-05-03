@@ -76,8 +76,6 @@ namespace BDFramework.Editor.EditorLife
         {
             Debug.Log("实现回调测试:"+ nameof(OnBeginBuildAllAssets));
             newVersionNum = VersionNumHelper.AddVersionNum(lastVersionNum, add: 1);
-            
-           
         }
 
         /// <summary>

@@ -126,7 +126,7 @@ namespace BDFramework.Editor.AssetBundle
         /// <returns></returns>
         static IEnumerator IE_LoadAll()
         {
-            var outpath = BDApplication.BDEditorCachePath + "/AssetBundle";
+            var outpath = BApplication.BDEditorCachePath + "/AssetBundle";
             if (!Directory.Exists(outpath))
             {
                 Directory.CreateDirectory(outpath);
@@ -134,7 +134,7 @@ namespace BDFramework.Editor.AssetBundle
 
             loadDataMap.Clear();
             //加载
-            var allRuntimeAssets = BDApplication.GetAllRuntimeAssetsPath();
+            var allRuntimeAssets = BApplication.GetAllRuntimeAssetsPath();
 
             foreach (var asset in allRuntimeAssets)
             {

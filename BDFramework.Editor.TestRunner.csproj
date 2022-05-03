@@ -733,6 +733,10 @@
       <Project>{dda63793-efe0-650e-30f4-24ff258bedc0}</Project>
       <Name>BDFramework.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="BDFramework.Core.csproj">
+      <Project>{5fa14b88-bf26-510e-d02a-583f03ea6e9a}</Project>
+      <Name>BDFramework.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

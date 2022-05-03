@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using BDFramework.Core.Tools;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -66,7 +67,7 @@ namespace BDFramework.Editor.TestRunner
         [MenuItem("BDFrameWork工具箱/TestPipeline/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTestILRuntimeWithRebuildDll()
         {
-            EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, Application.platform, ScriptBuildTools.BuildMode.Debug);
+            EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, BApplication.RuntimePlatform, ScriptBuildTools.BuildMode.Debug);
             RunILRuntimeTest();
         }
 

@@ -18,7 +18,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 输出目录
         /// </summary>
-        public string OutputPath { get; set; } = BDApplication.DevOpsPublishAssetsPath;
+        public string OutputPath { get; set; } = BApplication.DevOpsPublishAssetsPath;
 
         /// <summary>
         /// 是否正在打包

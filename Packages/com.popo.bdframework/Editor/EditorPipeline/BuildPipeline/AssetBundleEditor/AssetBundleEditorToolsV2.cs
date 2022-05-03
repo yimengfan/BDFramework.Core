@@ -75,7 +75,7 @@ namespace BDFramework.Editor.AssetBundle
         /// <param name="isUseHashName">是否为hash name</param>
         public static bool GenAssetBundle(string outputPath, RuntimePlatform platform)
         {
-            var buildTarget = BDApplication.GetBuildTarget(platform);
+            var buildTarget = BApplication.GetBuildTarget(platform);
             Build(buildTarget, outputPath);
             return true;
         }

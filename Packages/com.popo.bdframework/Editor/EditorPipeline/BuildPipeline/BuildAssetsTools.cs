@@ -51,7 +51,7 @@ namespace BDFramework.Editor.BuildPipeline
 
 
             //开始构建资源
-            var _outputPath = Path.Combine(outputPath, BDApplication.GetPlatformPath(platform));
+            var _outputPath = Path.Combine(outputPath, BApplication.GetPlatformPath(platform));
             if (!Directory.Exists(_outputPath))
             {
                 Directory.CreateDirectory(_outputPath);
@@ -91,7 +91,7 @@ namespace BDFramework.Editor.BuildPipeline
             //4.生成本地assetinfo配置
             var allServerAssetItemList = PublishPipelineTools.GetAssetItemList(outputPath, platform);
             var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
-            var assetsInfoPath = IPath.Combine(outputPath, BDApplication.GetPlatformPath(platform), BResources.ART_ASSETS_INFO_PATH);
+            var assetsInfoPath = IPath.Combine(outputPath, BApplication.GetPlatformPath(platform), BResources.ART_ASSETS_INFO_PATH);
             File.WriteAllText(assetsInfoPath, csv);
 
             //完成回调通知

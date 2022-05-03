@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BDFramework.Core.Tools;
 using BDFramework.Sql;
 using UnityEditor;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace BDFramework.Editor.Table
            
             if (excelList.Count > 0)
             {
-                SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath, Application.platform);
+                SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath, BApplication.RuntimePlatform);
                 float counter = 1f;
                 foreach (var excel in excelList)
                 {

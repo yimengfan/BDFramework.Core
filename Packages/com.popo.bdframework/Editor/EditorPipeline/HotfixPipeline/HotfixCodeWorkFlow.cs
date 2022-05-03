@@ -20,8 +20,7 @@ namespace BDFramework.Editor.WorkFlow
             {
                 if (BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting.IsNeedAutoBuildDll())
                 {
-                    EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, Application.platform,
-                        ScriptBuildTools.BuildMode.Debug, false);
+                    EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, BApplication.RuntimePlatform, ScriptBuildTools.BuildMode.Debug, false);
                     Debug.Log("自动编译Hotfix.dll成功!");
                 }
                 else if (BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting.IsHotfixCodeOutofUnityAssets())
@@ -37,7 +36,7 @@ namespace BDFramework.Editor.WorkFlow
         /// </summary>
         static public void MoveCodeToBDWorkSpace(string[] hotfixCodes)
         {
-            var targetRoot = BDApplication.BDWorkSpace + "/HotfixCode";
+            var targetRoot = BApplication.BDWorkSpace + "/HotfixCode";
             
             foreach (var codePath in hotfixCodes)
             {

@@ -12,11 +12,23 @@ namespace BDFramework.Core.Tools
     /// <summary>
     /// 职责类似Unity的Application
     /// </summary>
-    static public class BDApplication
+    static public class BApplication
     {
-        #region 路径相关
+        /// <summary>
+        /// 定义 支持的平台
+        /// </summary>
+        /// <returns></returns>
+        public static RuntimePlatform[] SupportPlatform { get; private set; } = new RuntimePlatform[]
+        {
+            RuntimePlatform.Android, 
+            RuntimePlatform.IPhonePlayer,
+            /***********新增pc平台************/
+            RuntimePlatform.OSXPlayer,
+            RuntimePlatform.WindowsPlayer
+        };
 
-        static BDApplication()
+
+        static BApplication()
         {
             if (Application.isEditor && Application.isPlaying)
             {
@@ -38,17 +50,18 @@ namespace BDFramework.Core.Tools
 
 
         /// <summary>
-        ///  获取当前平台
+        ///  获取当前平台,不会返回Editor枚举
+        ///  用以解决在editor模式 只会返回eitor runtime问题.
+        ///   能在Editor下返回正常Runtime内容.
         /// </summary>
-        static public RuntimePlatform platform
+        static public RuntimePlatform RuntimePlatform
         {
             get
             {
-                return RuntimePlatform.GameCoreXboxSeries;
-#if UNITY_ANDROID
-                return RuntimePlatform.Android;
-#elif UNITY_IOS
+#if UNITY_IOS
                 return RuntimePlatform.IPhonePlayer;
+#elif UNITY_ANDROID
+                return RuntimePlatform.Android;
 #elif UNITY_STANDALONE_WIN
                 return RuntimePlatform.WindowsPlayer;
 #elif UNITY_STANDALONE_OSX
@@ -56,9 +69,18 @@ namespace BDFramework.Core.Tools
 #elif UNITY_WEBGL
                 return RuntimePlatform.WebGLPlayer;
 //以下不常用,不一定对
+#elif UNITY_TVOS
+                return RuntimePlatform.tvOS;
 #elif UNITY_XBOXONE
                 return RuntimePlatform.GameCoreXboxSeries;
-                
+#elif UNITY_PS4
+                return RuntimePlatform.PS4;
+#elif UNITY_PS5
+                RuntimePlatform.PS5;
+#elif UNITY_LUMIN
+                return RuntimePlatform.Lumin; // Magic Leap OS 
+#else
+                return Application.platform;
 #endif
             }
         }
@@ -163,6 +185,45 @@ namespace BDFramework.Core.Tools
             DevOpsCIPath = DevOpsPath + "/CI";
         }
 
+
+
+        /// <summary>
+        /// 获取当前平台Platform的路径
+        /// </summary>
+        /// <returns></returns>
+        static public string GetRuntimePlatformPath()
+        {
+            return GetPlatformPath(RuntimePlatform);
+        }
+
+        /// <summary>
+        /// 平台资源的父路径
+        /// 这里建议用BDApplication.platform进行传参
+        /// </summary>
+        public static string GetPlatformPath(RuntimePlatform platform)
+        {
+            switch (platform)
+            {
+                case RuntimePlatform.WindowsEditor:
+                case RuntimePlatform.WindowsPlayer:
+                    return "Windows";
+                case RuntimePlatform.Android:
+                    return "Android";
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
+                    return "OSX";
+                case RuntimePlatform.IPhonePlayer:
+                    return "iOS";
+            }
+
+            return platform.ToString().Replace("Editor", "");
+        }
+
+
+
+#if UNITY_EDITOR
+
+        #region Runtime目录支持
         /// <summary>
         /// 获取所有runtime的目录
         /// </summary>
@@ -215,40 +276,8 @@ namespace BDFramework.Core.Tools
             return allAssetsList;
         }
 
-
-        /// <summary>
-        /// 平台资源的父路径
-        /// </summary>
-        public static string GetPlatformPath(RuntimePlatform platform)
-        {
-            switch (platform)
-            {
-                case RuntimePlatform.WindowsEditor:
-                case RuntimePlatform.WindowsPlayer:
-                // return "Windows";
-                case RuntimePlatform.Android:
-                    return "Android";
-                case RuntimePlatform.OSXEditor:
-                case RuntimePlatform.OSXPlayer:
-                case RuntimePlatform.IPhonePlayer:
-                    return "iOS";
-            }
-
-            return "";
-        }
-
-        /// <summary>
-        /// 获取支持的平台
-        /// </summary>
-        /// <returns></returns>
-        public static RuntimePlatform[] GetSupportPlatform()
-        {
-            return new RuntimePlatform[] {RuntimePlatform.Android, RuntimePlatform.IPhonePlayer};
-        }
-
-
-#if UNITY_EDITOR
-
+        #endregion
+        
         #region BuildTarget 和RuntimePlatform互转
 
         /// <summary>
@@ -334,9 +363,7 @@ namespace BDFramework.Core.Tools
         }
 
         #endregion
-
 #endif
 
-        #endregion
     }
 }

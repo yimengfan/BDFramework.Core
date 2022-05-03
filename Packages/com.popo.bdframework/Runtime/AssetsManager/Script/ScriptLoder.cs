@@ -46,7 +46,7 @@ namespace BDFramework
             {
                 BDebug.Log("【ScriptLaunch】热更模式!");
                 var path = GameConfig.GetLoadPath(loadPathTypeType);
-                path = Path.Combine(path, BDApplication.GetPlatformPath(Application.platform));
+                path = Path.Combine(path, BApplication.GetRuntimePlatformPath());
                 //加载dll
                 var dllPath = Path.Combine(path, DLL_PATH);
                 LoadHotfixDLL(dllPath, runMode, mainProjectTypes);

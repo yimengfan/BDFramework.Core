@@ -103,7 +103,7 @@ namespace BDFramework.Editor.Table
         /// </summary>
         private static Dictionary<string, string> LoadExcelCacheInfo()
         {
-            var excelCachePath = IPath.Combine(BDApplication.BDEditorCachePath, EXCEL_CACHE_PATH);
+            var excelCachePath = IPath.Combine(BApplication.BDEditorCachePath, EXCEL_CACHE_PATH);
             Dictionary<string, string> excelCacheMap = new Dictionary<string, string>();
             if (File.Exists(excelCachePath))
             {
@@ -120,7 +120,7 @@ namespace BDFramework.Editor.Table
         /// </summary>
         public static void SaveExcelCacheInfo(Dictionary<string, string> cacheMap)
         {
-            var excelCachePath = IPath.Combine(BDApplication.BDEditorCachePath, EXCEL_CACHE_PATH);
+            var excelCachePath = IPath.Combine(BApplication.BDEditorCachePath, EXCEL_CACHE_PATH);
             var content = JsonMapper.ToJson(cacheMap);
             FileHelper.WriteAllText(excelCachePath, content);
         }

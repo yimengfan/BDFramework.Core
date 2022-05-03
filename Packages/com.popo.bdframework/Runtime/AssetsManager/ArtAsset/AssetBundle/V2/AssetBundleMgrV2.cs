@@ -75,7 +75,7 @@ namespace BDFramework.ResourceMgr.V2
                 this.UnloadAllAsset();
             }
 
-            var platformPath = BDApplication.GetPlatformPath(Application.platform);
+            var platformPath = BApplication.GetRuntimePlatformPath();
             //1.设置加载路径  
             if (Application.isEditor)
             {

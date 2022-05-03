@@ -149,7 +149,7 @@ namespace BDFramework.Editor.HotfixPipeline
                     if (GUILayout.Button("...", GUILayout.Width(20)))
                     {
                         var folder = EditorUtility.OpenFolderPanel("选择文件夹", Application.dataPath, "");
-                        floderFilter.FloderPath = folder.Replace(BDApplication.ProjectRoot + "/", "");
+                        floderFilter.FloderPath = folder.Replace(BApplication.ProjectRoot + "/", "");
 
                         var files = Directory.GetFiles(floderFilter.FloderPath, "*", SearchOption.AllDirectories);
 

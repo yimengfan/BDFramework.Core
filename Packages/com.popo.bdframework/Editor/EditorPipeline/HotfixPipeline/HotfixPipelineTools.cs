@@ -19,7 +19,7 @@ namespace BDFramework.Editor.HotfixPipeline
         /// </summary>
         static public void Init()
         {
-            HOTFIX_FILE_CONG_PATH = BDApplication.DevOpsConfigPath + "/HotfixFile.conf";
+            HOTFIX_FILE_CONG_PATH = BApplication.DevOpsConfigPath + "/HotfixFile.conf";
             //加载
             HotfixFileConfig.Load(HOTFIX_FILE_CONG_PATH);
             

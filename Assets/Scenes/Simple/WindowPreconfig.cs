@@ -262,10 +262,9 @@ public class WindowPreconfig : MonoBehaviour
     /// </summary>
     private void OnClick_ClearPersistent()
     {
-        var runtimes = BDApplication.GetSupportPlatform();
-        foreach (var runtime in runtimes)
+        foreach (var runtime in BApplication.SupportPlatform)
         {
-            var path = IPath.Combine(Application.persistentDataPath, BDApplication.GetPlatformPath(runtime));
+            var path = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(runtime));
             if (Directory.Exists(path))
             {
                 Directory.Delete(path,true);

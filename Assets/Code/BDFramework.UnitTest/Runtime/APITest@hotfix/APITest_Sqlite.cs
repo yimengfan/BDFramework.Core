@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using BDFramework.Core.Tools;
 using BDFramework.Sql;
 using BDFramework.UnitTest;
 using BDFramework.UnitTest.Data;
@@ -23,7 +24,7 @@ namespace BDFramework.UnitTest
 
             if (!ILRuntimeHelper.IsRunning)
             {
-                SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath,Application.platform);
+                SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath,BApplication.RuntimePlatform);
                 SqliteHelper.DB.CreateTable<APITestHero>();
                 SqliteHelper.DB.InsertTable(new List<APITestHero>() {h1, h2, h3});
             }

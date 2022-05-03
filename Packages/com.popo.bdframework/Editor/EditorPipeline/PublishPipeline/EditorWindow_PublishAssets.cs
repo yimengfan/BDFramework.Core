@@ -103,10 +103,13 @@ namespace BDFramework.Editor.PublishPipeline
         }
 
         public string exportPath = "";
-        private bool isGenIOSAssets = false;
+        private bool isGeniOSAssets = false;
         private bool isGenAndroidAssets = true;
+        private bool isGenWindowsAssets = false;
+        private bool isGenOSXAssets = false;
+        //状态
         private bool isBuilding = false;
-
+        
         /// <summary>
         /// 一键导出
         /// </summary>
@@ -115,12 +118,15 @@ namespace BDFramework.Editor.PublishPipeline
             GUILayout.BeginVertical(GUILayout.Width(550), GUILayout.Height(350));
             {
                 GUILayout.Label("资源发布:", EditorGUIHelper.GetFontStyle(Color.red, 15));
-                GUILayout.Label("注:上面按钮操作,会默认生成到DevOps", GUILayout.Height(30));
-                //isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
-                isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源(Windows共用)");
-                isGenIOSAssets = GUILayout.Toggle(isGenIOSAssets, "生成Ios资源");
 
+                
+                //isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
+                isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源");
+                isGeniOSAssets = GUILayout.Toggle(isGeniOSAssets, "生成iOS资源");
+                isGenWindowsAssets = GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
+                isGenOSXAssets = GUILayout.Toggle(isGenOSXAssets, "生成OSX资源");
                 //
+                GUILayout.Space(5);
                 GUILayout.Label("导出地址:" + exportPath);
                 //
                 if (GUILayout.Button("一键导出所有资源", GUILayout.Width(350), GUILayout.Height(30)))
@@ -133,7 +139,7 @@ namespace BDFramework.Editor.PublishPipeline
                     isBuilding = true;
 
                     //选择目录
-                    exportPath = BDApplication.DevOpsPublishAssetsPath;
+                    exportPath = BApplication.DevOpsPublishAssetsPath;
 
                     //生成android资源
                     if (isGenAndroidAssets)
@@ -142,7 +148,7 @@ namespace BDFramework.Editor.PublishPipeline
                     }
 
                     //生成ios资源
-                    if (isGenIOSAssets)
+                    if (isGeniOSAssets)
                     {
                         BuildAssetsTools.BuildAllAssets(RuntimePlatform.IPhonePlayer, exportPath);
                     }
@@ -156,7 +162,7 @@ namespace BDFramework.Editor.PublishPipeline
                 if (GUILayout.Button("热更资源转hash(生成服务器配置)", GUILayout.Width(350), GUILayout.Height(30)))
                 {
                     //自动转hash
-                    PublishPipelineTools.PublishAssetsToServer(BDApplication.DevOpsPublishAssetsPath);
+                    PublishPipelineTools.PublishAssetsToServer(BApplication.DevOpsPublishAssetsPath);
                 }
 
                 GUILayout.Space(20);
@@ -170,14 +176,14 @@ namespace BDFramework.Editor.PublishPipeline
                         {
                             platform = RuntimePlatform.Android;
                         }
-                        else if (isGenIOSAssets)
+                        else if (isGeniOSAssets)
                         {
                             platform = RuntimePlatform.IPhonePlayer;
                         }
 
                         //路径
-                        var source = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, BDApplication.GetPlatformPath(platform));
-                        var target = IPath.Combine(Application.streamingAssetsPath, BDApplication.GetPlatformPath(platform));
+                        var source = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform));
+                        var target = IPath.Combine(Application.streamingAssetsPath, BApplication.GetPlatformPath(platform));
                         if (Directory.Exists(target))
                         {
                             Directory.Delete(target, true);
@@ -195,12 +201,12 @@ namespace BDFramework.Editor.PublishPipeline
                         {
                             platform = RuntimePlatform.Android;
                         }
-                        else if (isGenIOSAssets)
+                        else if (isGeniOSAssets)
                         {
                             platform = RuntimePlatform.IPhonePlayer;
                         }
 
-                        var target = IPath.Combine(Application.streamingAssetsPath, BDApplication.GetPlatformPath(platform));
+                        var target = IPath.Combine(Application.streamingAssetsPath, BApplication.GetPlatformPath(platform));
                         Directory.Delete(target, true);
                     }
                 }
@@ -270,10 +276,10 @@ namespace BDFramework.Editor.PublishPipeline
                 GUILayout.Label("资源地址: ");
                 GUILayout.BeginHorizontal();
                 {
-                    GUILayout.Label(BDApplication.DevOpsPublishPackagePath + "/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX + "/*");
+                    GUILayout.Label(BApplication.DevOpsPublishPackagePath + "/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX + "/*");
                     if (GUILayout.Button("打开", GUILayout.Width(40)))
                     {
-                        var dir = BDApplication.DevOpsPublishPackagePath + "/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX;
+                        var dir = BApplication.DevOpsPublishPackagePath + "/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX;
                         EditorUtility.RevealInFinder(dir);
                     }
                 }
@@ -302,10 +308,10 @@ namespace BDFramework.Editor.PublishPipeline
             if (EditorHttpListener == null)
             {
                 //自动转hash
-                PublishPipelineTools.PublishAssetsToServer(BDApplication.DevOpsPublishAssetsPath);
+                PublishPipelineTools.PublishAssetsToServer(BApplication.DevOpsPublishAssetsPath);
                 //开启文件服务器
                 EditorHttpListener = new EditorHttpListener();
-                var webdir = IPath.Combine(BDApplication.DevOpsPublishAssetsPath, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
+                var webdir = IPath.Combine(BApplication.DevOpsPublishAssetsPath, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
                 EditorHttpListener.Start("*", "8081", webdir);
             }
         }

@@ -12,11 +12,11 @@ namespace BDFramework.Editor.Protocol
 {
     public static class Protobuf2ClassTools
     {
-        private static readonly string protoPath = BDApplication.ProjectRoot + "/Assets/Resource/NetProtocol/Protobuf/";
-        private static readonly string classPath = BDApplication.ProjectRoot + "/Assets/Code/Game/NetProtocol/Protobuf/";
-        private static readonly string cacheProtoPath = BDApplication.BDEditorCachePath + "/ProtoCache/Proto/";
-        private static readonly string cacheScriptPath = BDApplication.BDEditorCachePath + "/ProtoCache/Script/";
-        private static readonly string execPath = BDApplication.ProjectRoot + "/Packages/com.popo.bdframework/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
+        private static readonly string protoPath = BApplication.ProjectRoot + "/Assets/Resource/NetProtocol/Protobuf/";
+        private static readonly string classPath = BApplication.ProjectRoot + "/Assets/Code/Game/NetProtocol/Protobuf/";
+        private static readonly string cacheProtoPath = BApplication.BDEditorCachePath + "/ProtoCache/Proto/";
+        private static readonly string cacheScriptPath = BApplication.BDEditorCachePath + "/ProtoCache/Script/";
+        private static readonly string execPath = BApplication.ProjectRoot + "/Packages/com.popo.bdframework/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
         /// <summary>
         /// 全局父命名空间
         /// </summary>

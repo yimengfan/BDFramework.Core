@@ -111,7 +111,7 @@ namespace BDFramework
                         break;
                     case AssetLoadPathType.DevOpsPublish:
                     {
-                        path = BDApplication.DevOpsPublishAssetsPath;
+                        path = BApplication.DevOpsPublishAssetsPath;
                     }
                         break;
                 }

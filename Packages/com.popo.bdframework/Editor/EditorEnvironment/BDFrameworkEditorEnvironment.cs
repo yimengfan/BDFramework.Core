@@ -118,12 +118,12 @@ namespace BDFramework.Editor.Environment
             try
             {
                 //BD初始化
-                BDApplication.Init();
+                BApplication.Init();
                 //BDEditor初始化
                 BDEditorApplication.Init();
                 //加载主工程的DLL Type
-                var assemblyPath = BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll";
-                var editorAssemlyPath = BDApplication.Library + "/ScriptAssemblies/Assembly-CSharp-Editor.dll";
+                var assemblyPath = BApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll";
+                var editorAssemlyPath = BApplication.Library + "/ScriptAssemblies/Assembly-CSharp-Editor.dll";
                 if (File.Exists(assemblyPath) && File.Exists(editorAssemlyPath))
                 {
                     var gAssembly = Assembly.LoadFile(assemblyPath);

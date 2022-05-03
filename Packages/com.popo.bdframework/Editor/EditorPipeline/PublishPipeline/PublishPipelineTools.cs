@@ -34,9 +34,9 @@ namespace BDFramework.Editor
             foreach (var platform in plarforms)
             {
                 //资源路径
-                var sourcePath = IPath.Combine(path, BDApplication.GetPlatformPath(platform));
+                var sourcePath = IPath.Combine(path, BApplication.GetPlatformPath(platform));
                 //输出路径
-                var outputPath = IPath.Combine(IPath.ReplaceBackSlash(path), UPLOAD_FOLDER_SUFFIX, BDApplication.GetPlatformPath(platform));
+                var outputPath = IPath.Combine(IPath.ReplaceBackSlash(path), UPLOAD_FOLDER_SUFFIX, BApplication.GetPlatformPath(platform));
                 if (Directory.Exists(sourcePath))
                 {
                     //对比Assets.info 是否一致
@@ -48,7 +48,7 @@ namespace BDFramework.Editor
                         var outputHash = FileHelper.GetMurmurHash3(outputAssetsInfoPath);
                         if (sourceHash == outputHash)
                         {
-                            Debug.Log("【PublishPipeline】资源无改动，无需重新生成服务器文件.  -" + BDApplication.GetPlatformPath(platform));
+                            Debug.Log("【PublishPipeline】资源无改动，无需重新生成服务器文件.  -" + BApplication.GetPlatformPath(platform));
                             continue;
                         }
                     }
@@ -96,7 +96,7 @@ namespace BDFramework.Editor
             blackFileList.AddRange(AssetBundleBuildingContext.GetMixAssets());
 
             //加载assetbundle配置
-            assetsRootPath = IPath.Combine(assetsRootPath, BDApplication.GetPlatformPath(platform));
+            assetsRootPath = IPath.Combine(assetsRootPath, BApplication.GetPlatformPath(platform));
             var abConfigPath =IPath.Combine(assetsRootPath, BResources.ART_ASSET_CONFIG_PATH);
             var abTypeConfigPath =IPath.Combine(assetsRootPath, BResources.ART_ASSET_TYPES_PATH);
             var abConfigLoader = new AssetbundleConfigLoder();
@@ -189,9 +189,9 @@ namespace BDFramework.Editor
         /// <returns></returns>
         static public string GenServerHashAssets(string otputPath, RuntimePlatform platform, string version)
         {
-            Debug.Log($"<color=red>------>生成服务器Hash文件:{BDApplication.GetPlatformPath(platform)}</color>");
+            Debug.Log($"<color=red>------>生成服务器Hash文件:{BApplication.GetPlatformPath(platform)}</color>");
             //文件夹准备
-            var outputDir = IPath.Combine(IPath.ReplaceBackSlash(otputPath), UPLOAD_FOLDER_SUFFIX, BDApplication.GetPlatformPath(platform));
+            var outputDir = IPath.Combine(IPath.ReplaceBackSlash(otputPath), UPLOAD_FOLDER_SUFFIX, BApplication.GetPlatformPath(platform));
             if (Directory.Exists(outputDir))
             {
                 Directory.Delete(outputDir, true);
@@ -203,7 +203,7 @@ namespace BDFramework.Editor
             var allServerAssetItemList = GetAssetItemList(otputPath, platform);
             foreach (var assetItem in allServerAssetItemList)
             {
-                var localpath = IPath.Combine(otputPath, BDApplication.GetPlatformPath(platform), assetItem.LocalPath);
+                var localpath = IPath.Combine(otputPath, BApplication.GetPlatformPath(platform), assetItem.LocalPath);
                 var copytoPath = IPath.Combine(outputDir, assetItem.HashName);
                 File.Copy(localpath, copytoPath);
             }
@@ -216,7 +216,7 @@ namespace BDFramework.Editor
             // var abConfigPath = string.Format("{0}/{1}", assetsRootPath, BResources.ASSET_CONFIG_PATH);
             // var abConfigLoader = new AssetbundleConfigLoder();
             // abConfigLoader.Load(abConfigPath, null);
-            var path = IPath.Combine(otputPath, BDApplication.GetPlatformPath(platform), BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH);
+            var path = IPath.Combine(otputPath, BApplication.GetPlatformPath(platform), BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH);
             if (File.Exists(path))
             {
                 var subpackageList = CsvSerializer.DeserializeFromString<List<SubPackageConfigItem>>(File.ReadAllText(path));
@@ -299,7 +299,7 @@ namespace BDFramework.Editor
             File.WriteAllText(configPath, csv);
 
             //生成服务器版本号
-            serverAssetsInfo.Platfrom = BDApplication.GetPlatformPath(platform);
+            serverAssetsInfo.Platfrom = BApplication.GetPlatformPath(platform);
             serverAssetsInfo.Version = version;
             var json = JsonMapper.ToJson(serverAssetsInfo);
             configPath = IPath.Combine(outputDir, BResources.SERVER_ASSETS_VERSION_INFO_PATH);
