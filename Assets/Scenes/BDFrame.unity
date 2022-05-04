@@ -354,9 +354,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data:
-    CodeRoot: 1
-    SQLRoot: 1
-    ArtRoot: 1
+    CodeRoot: 0
+    SQLRoot: 0
+    ArtRoot: 0
     CodeRunMode: 0
     IsDebuggerILRuntime: 0
     IsDebugLog: 1
@@ -392,7 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53901f56d09f96d4886992ff20f43b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConfigText: {fileID: 4900000, guid: 517ff72e71a574546a91d76ad65770c9, type: 3}
+  ConfigText: {fileID: 4900000, guid: dac4b223fdff90143ac6a3d1980e120b, type: 3}
 --- !u!1 &865066839
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,7 +980,7 @@ PrefabInstance:
     - target: {fileID: 4651398941402966389, guid: 3a48620e3cd22904dbd21ff328377ccf,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a48620e3cd22904dbd21ff328377ccf, type: 3}

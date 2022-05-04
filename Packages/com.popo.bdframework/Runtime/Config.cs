@@ -47,7 +47,12 @@ namespace BDFramework
         /// <summary>
         /// 华佗执行
         /// </summary>
-        Huatuo
+        Huatuo,
+        
+        /// <summary>
+        /// 这里只做预留,因为OSX只支持mono方式
+        /// </summary>
+        Mono
     }
 
 
@@ -118,7 +123,8 @@ namespace BDFramework
             }
             else
             {
-                //真机环境默认都在persistent下，因为需要io.不在的各个模块会自行拷贝
+                //真机环境默认都在persistent下，
+                //因为需要io.不在的各个模块会自行拷贝
                 path = Application.persistentDataPath;
             }
 

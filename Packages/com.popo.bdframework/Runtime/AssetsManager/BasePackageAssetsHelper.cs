@@ -159,7 +159,7 @@ namespace BDFramework.Asset
         /// <returns></returns>
         static public void CheckBasePackageVersion(RuntimePlatform platform, Action callback)
         {
-            BDebug.Log("【资源包】执行母包资源检测逻辑！");
+          
             //路径初始化
             var persistentPlatformPath = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(platform));
             //母包路径
@@ -169,6 +169,12 @@ namespace BDFramework.Asset
             switch (BDLauncher.Inst.GameConfig.ArtRoot)
             {
                 case AssetLoadPathType.Editor:
+                {
+                    //editor不进行母包资源管理
+                    BDebug.Log("【资源包】Editor加载不执行:母包资源检测逻辑！");
+                    callback?.Invoke(); 
+                    return;
+                }
                 case AssetLoadPathType.Persistent:
                 case AssetLoadPathType.StreamingAsset:
                 {
@@ -183,7 +189,7 @@ namespace BDFramework.Asset
                 }
                     break;
             }
-
+            BDebug.Log("【资源包】执行母包资源检测逻辑！");
             //源地址
             string basePckPlatformPath = "";
             if (isUseSysIO)

@@ -101,5 +101,14 @@ namespace BDFramework
                 BDebug.Log("【ScriptLaunch】Dll路径:内置", "red");
             }
         }
+
+
+        /// <summary>
+        /// 获取当前本地DLL
+        /// </summary>
+        static public string GetLocalDLLPath(string root,RuntimePlatform platform)
+        {
+            return IPath.Combine(root, BApplication.GetPlatformPath(platform), DLL_PATH);
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace BDFramework.Editor.DevOps
             targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform));
             //TODO SVN更新资源
 
-            //拷贝
+            //TODO  重写拷贝逻辑
             var files = Directory.GetFiles(sourcepath, "*", SearchOption.AllDirectories);
             foreach (var file in files)
             {

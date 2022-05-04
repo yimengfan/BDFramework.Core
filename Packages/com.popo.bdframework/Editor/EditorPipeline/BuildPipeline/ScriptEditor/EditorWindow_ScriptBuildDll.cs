@@ -133,10 +133,45 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         //GenPreCLRBinding();
         //4.生成自动分析绑定
         GenCLRBindingByAnalysis(platform, outpath);
+        //5.拷贝
+        CopyDLLToOther(outpath, platform);
         AssetDatabase.Refresh();
         //触发bd环境周期
         BDFrameworkPipelineHelper.OnEndBuildDLL(outpath);
     }
+    
+    /// <summary>
+    /// 拷贝当前到其他目录
+    /// </summary>
+    /// <param name="sourceh"></param>
+    public static void CopyDLLToOther(string root, RuntimePlatform sourcePlatform)
+    {
+        var source = ScriptLoder.GetLocalDLLPath(root, sourcePlatform);
+        var bytes = File.ReadAllBytes(source);
+        var sourcePdb = source + ".pdb";
+        byte[] pdbBytes = null;
+        if( File.Exists(sourcePdb))
+        {
+            pdbBytes = File.ReadAllBytes(sourcePdb);
+        } 
+        //拷贝当前到其他目录
+        foreach (var sp in BApplication.SupportPlatform)
+        {
+            var outpath = ScriptLoder.GetLocalDLLPath(root, sp);
+            if (source == outpath)
+            {
+                continue;
+            }
+            FileHelper.WriteAllBytes(outpath, bytes);
+            //pdb
+            if (pdbBytes != null)
+            {
+                FileHelper.WriteAllBytes(outpath+".pdb", pdbBytes);
+            }
+            
+        }
+    }
+
 
     /// <summary>
     /// 生成类适配器
