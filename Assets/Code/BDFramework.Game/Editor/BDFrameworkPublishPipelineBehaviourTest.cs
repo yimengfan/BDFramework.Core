@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BDFramework.Editor.AssetBundle;
-using BDFramework.Editor.AssetGraph.Node;
-using BDFramework.ResourceMgr;
-using DotNetExtension;
-using Editor.EditorPipeline.PublishPipeline;
+using BDFramework.Editor.PublishPipeline;
 using UnityEngine;
 
 namespace BDFramework.Editor.EditorLife

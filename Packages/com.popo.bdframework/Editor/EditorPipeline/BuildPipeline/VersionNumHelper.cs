@@ -1,4 +1,4 @@
-﻿namespace Editor.EditorPipeline.PublishPipeline
+﻿namespace BDFramework.Editor.PublishPipeline
 {
     /// <summary>
     /// 版本号帮助

@@ -12,9 +12,6 @@ using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.EditorPipeline.PublishPipeline;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Unity3dEx;
-using BDFramework.ResourceMgr;
-using Editor.EditorPipeline.PublishPipeline;
-using ServiceStack.Text;
 #if ODIN_INSPECTOR
 using Sirenix.Utilities.Editor;
 #endif
