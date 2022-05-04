@@ -12,10 +12,8 @@ namespace BDFramework.Editor.Protocol
 {
     public static class Protobuf2ClassTools
     {
-        private static readonly string protoPath = BApplication.ProjectRoot + "/Assets/Resource/NetProtocol/Protobuf/";
-        private static readonly string classPath = BApplication.ProjectRoot + "/Assets/Code/Game/NetProtocol/Protobuf/";
-        private static readonly string cacheProtoPath = BApplication.BDEditorCachePath + "/ProtoCache/Proto/";
-        private static readonly string cacheScriptPath = BApplication.BDEditorCachePath + "/ProtoCache/Script/";
+        public static readonly string ProtoPath = "Assets/Resource/NetProtocol/Protobuf/";
+        private static readonly string classPath = "Assets/Code/Game/NetProtocol/Protobuf/";
         private static readonly string execPath = BApplication.ProjectRoot + "/Packages/com.popo.bdframework/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
         /// <summary>
         /// 全局父命名空间
@@ -28,7 +26,7 @@ namespace BDFramework.Editor.Protocol
             // 重新创建文件夹 确保不会产生冲突
             RebuildDirectory(classPath);
 
-            var protoPathList = Directory.GetFiles(protoPath, "*.proto", SearchOption.AllDirectories);
+            var protoPathList = Directory.GetFiles(ProtoPath, "*.proto", SearchOption.AllDirectories);
             foreach (var filePath in protoPathList)
             {
                 RunProtoc2Class(filePath);
@@ -68,7 +66,7 @@ namespace BDFramework.Editor.Protocol
         {
             var fileName = Path.GetFileName(filePath);
             
-            var args = $" --csharp_out={classPath} --proto_path={protoPath} {fileName}";
+            var args = $" --csharp_out={classPath} --proto_path={ProtoPath} {fileName}";
             var process = new Process();
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.FileName = execPath;;
