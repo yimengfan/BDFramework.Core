@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.Asset;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.AssetGraph.Node;
@@ -28,10 +29,7 @@ namespace BDFramework.Editor
         /// <param name="uploadHttpApi"></param>
         static public void PublishAssetsToServer(string path)
         {
-            var plarforms = new RuntimePlatform[] {RuntimePlatform.Android, RuntimePlatform.IPhonePlayer};
-
-
-            foreach (var platform in plarforms)
+            foreach (var platform in BApplication.SupportPlatform)
             {
                 //资源路径
                 var sourcePath = IPath.Combine(path, BApplication.GetPlatformPath(platform));
@@ -53,18 +51,12 @@ namespace BDFramework.Editor
                         }
                     }
 
-                    //获取版本号
-                    string versionNum = "0.0.0";
-                    var serverVersionInfoPath = IPath.Combine(outputPath, BResources.SERVER_ASSETS_VERSION_INFO_PATH);
-                    if (File.Exists(serverVersionInfoPath))
-                    {
-                        var content = File.ReadAllText(serverVersionInfoPath);
-                        var info = JsonMapper.ToObject<AssetsVersionInfo>(content);
-                        versionNum = info.Version;
-                    }
+                    //获取资源版本号
+                    var basePckInfo = BasePackageAssetsHelper.GetPacakgeBuildInfo(path, platform);
+                    var versionNum = basePckInfo.Version;
 
-                   
-                    //发布资源处理前,处理前回调
+
+                        //发布资源处理前,处理前回调
                     BDFrameworkPipelineHelper.OnBeginPublishAssets(platform, sourcePath, versionNum);
                     //处理资源
                     var outdir = GenServerHashAssets(path, platform, versionNum);
@@ -97,8 +89,8 @@ namespace BDFramework.Editor
 
             //加载assetbundle配置
             assetsRootPath = IPath.Combine(assetsRootPath, BApplication.GetPlatformPath(platform));
-            var abConfigPath =IPath.Combine(assetsRootPath, BResources.ART_ASSET_CONFIG_PATH);
-            var abTypeConfigPath =IPath.Combine(assetsRootPath, BResources.ART_ASSET_TYPES_PATH);
+            var abConfigPath = IPath.Combine(assetsRootPath, BResources.ART_ASSET_CONFIG_PATH);
+            var abTypeConfigPath = IPath.Combine(assetsRootPath, BResources.ART_ASSET_TYPES_PATH);
             var abConfigLoader = new AssetbundleConfigLoder();
             abConfigLoader.Load(abConfigPath, abTypeConfigPath);
             //生成hash配置
@@ -283,13 +275,12 @@ namespace BDFramework.Editor
                         }
                     });
                     //写入本地配置
-                    var subPackageName = string.Format(BResources.SERVER_ART_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageConfigItem.PackageName);
-                    var subPackageInfoPath = IPath.Combine(outputDir, subPackageName);
+                    var subPackageInfoPath = BResources.GetAssetsSubPackageInfoPath(otputPath, platform, subPackageConfigItem.PackageName);
                     var configContent = CsvSerializer.SerializeToString(subPackageItemList);
                     File.WriteAllText(subPackageInfoPath, configContent);
                     Debug.Log("生成分包文件:" + Path.GetFileName(subPackageInfoPath));
                     //写入subPck - version
-                    serverAssetsInfo.SubPckMap[subPackageName] = version;
+                    serverAssetsInfo.SubPckMap[Path.GetFileName(subPackageInfoPath)] = version;
                 }
             }
 

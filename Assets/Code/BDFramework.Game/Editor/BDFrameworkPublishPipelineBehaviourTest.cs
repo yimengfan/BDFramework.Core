@@ -87,7 +87,7 @@ namespace BDFramework.Editor.EditorLife
         public override void OnEndBuildAllAssets(RuntimePlatform platform, string outputPath, string newVersionNum)
         {
             Debug.Log("实现回调测试:"+ nameof(OnEndBuildAllAssets));
-            Debug.Log($"新版本号:{newVersionNum}");
+         
         }
 
         #endregion

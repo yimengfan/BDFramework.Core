@@ -107,6 +107,7 @@ namespace ILRuntime.Runtime.Generated
             Google_Protobuf_MessageParser_1_rsp_getItem_Binding.Register(app);
             System_IO_MemoryStream_Binding.Register(app);
             System_IO_Stream_Binding.Register(app);
+            BDFramework_Core_Tools_BApplication_Binding.Register(app);
             BDFramework_Sql_SqliteLoder_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding_Enumerator_Binding.Register(app);

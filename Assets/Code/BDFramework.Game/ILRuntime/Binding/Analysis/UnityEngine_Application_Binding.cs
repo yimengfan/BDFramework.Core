@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using BDFramework.Core.Tools;
+
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.CLR.Method;
 using ILRuntime.Runtime.Enviorment;
@@ -32,11 +32,8 @@ namespace ILRuntime.Runtime.Generated
             method = type.GetMethod("get_streamingAssetsPath", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, get_streamingAssetsPath_2);
             args = new Type[]{};
-            method = type.GetMethod("get_platform", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_platform_3);
-            args = new Type[]{};
             method = type.GetMethod("get_isPlaying", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_isPlaying_4);
+            app.RegisterCLRMethodRedirection(method, get_isPlaying_3);
 
 
         }
@@ -77,18 +74,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* get_platform_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
-
-
-            var result_of_this_method = BApplication.RuntimePlatform;
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* get_isPlaying_4(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_isPlaying_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);

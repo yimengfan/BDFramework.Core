@@ -77,7 +77,7 @@ namespace BDFramework.Asset
         /// 获取母包资源构建信息
         /// </summary>
         /// <returns></returns>
-        static public BasePackageAssetsBuildInfo GetPacakgeBuildInfo(RuntimePlatform platform, string ouptputPath)
+        static public BasePackageAssetsBuildInfo GetPacakgeBuildInfo(string ouptputPath, RuntimePlatform platform)
         {
             var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
             var buildinfo = new BasePackageAssetsBuildInfo();
@@ -92,44 +92,65 @@ namespace BDFramework.Asset
         /// <summary>
         /// 生成母包资源构建信息
         /// </summary>
-        static public void GenPackageBuildInfo(string ouptputPath, RuntimePlatform platform, string basePacakgeSVC = "", string artSVC = "", string scriptSVC = "", string tableSVC = "")
+        static public void GenBasePackageAssetBuildInfo(string outputPath, RuntimePlatform platform, string version = "", string basePacakgeSVC = "", string artSVC = "", string scriptSVC = "", string tableSVC = "")
         {
             //获取旧BuildAssetInfo
-            var buildinfo = GetPacakgeBuildInfo(platform, ouptputPath);
+            var info = GetPacakgeBuildInfo(outputPath, platform);
             
             //写入buildinfo内容
-            buildinfo.BuildTime = DateTimeEx.GetTotalSeconds();
-            //母包信息
+            info.BuildTime = DateTimeEx.GetTotalSeconds();
+
+            //资源版本
+            
+            if (!string.IsNullOrEmpty(version))
+            {
+                info.Version = version;
+            }
+
+            
+            //母包版本信息
             if (!string.IsNullOrEmpty(basePacakgeSVC))
             {
-                buildinfo.BasePacakgeSVCVersion = basePacakgeSVC;
+                info.BasePacakgeSVCVersion = basePacakgeSVC;
             }
 
             //美术资产信息
             if (!string.IsNullOrEmpty(artSVC))
             {
-                buildinfo.AssetBundleSVCVersion = artSVC;
+                info.AssetBundleSVCVersion = artSVC;
             }
 
             //热更脚本资产
             if (!string.IsNullOrEmpty(scriptSVC))
             {
-                buildinfo.ScriptSVCVersion = scriptSVC;
+                info.ScriptSVCVersion = scriptSVC;
             }
 
             //表格数据
             if (!string.IsNullOrEmpty(tableSVC))
             {
-                buildinfo.TableSVCVersion = tableSVC;
+                info.TableSVCVersion = tableSVC;
             }
 
+            SaveBasePackageBuildInfo(outputPath, platform, info);
+        }
+
+        /// <summary>
+        /// 保存母包资源info
+        /// </summary>
+        /// <param name="ouptputPath"></param>
+        /// <param name="platform"></param>
+        /// <param name="info"></param>
+        static public void SaveBasePackageBuildInfo(string ouptputPath, RuntimePlatform platform, BasePackageAssetsBuildInfo info)
+        {
             //转json
-            var content = JsonMapper.ToJson(buildinfo);
+            var content = JsonMapper.ToJson(info);
             //写入本地
             var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
             FileHelper.WriteAllText(path, content);
         }
-
+        
+        
         static bool isUseSysIO = false;
 
         /// <summary>

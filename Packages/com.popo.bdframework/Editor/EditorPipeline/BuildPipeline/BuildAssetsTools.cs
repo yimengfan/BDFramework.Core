@@ -26,8 +26,8 @@ namespace BDFramework.Editor.BuildPipeline
         {
             var newVersionNum = "";
             //触发事件
-            var oldPackageBuildInfo = BasePackageAssetsHelper.GetPacakgeBuildInfo(platform, outputPath);
-            var lastVersionNum = oldPackageBuildInfo.Version;
+            var lastPackageBuildInfo = BasePackageAssetsHelper.GetPacakgeBuildInfo(outputPath, platform);
+            var lastVersionNum = lastPackageBuildInfo.Version;
             //没有指定版本号，则需要触发版本号的实现逻辑
             if (string.IsNullOrEmpty(setNewVersionNum))
             {
@@ -88,12 +88,16 @@ namespace BDFramework.Editor.BuildPipeline
                 Debug.LogError(e.Message);
             }
 
-            //4.生成本地assetinfo配置
+            //4.生成本地Assets.info配置
             var allServerAssetItemList = PublishPipelineTools.GetAssetItemList(outputPath, platform);
             var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
-            var assetsInfoPath = IPath.Combine(outputPath, BApplication.GetPlatformPath(platform), BResources.ART_ASSETS_INFO_PATH);
+            var assetsInfoPath = BResources.GetAssetsInfoPath(outputPath,platform);
             File.WriteAllText(assetsInfoPath, csv);
 
+            //5.生成母包资源信息
+            BasePackageAssetsHelper.GenBasePackageAssetBuildInfo(outputPath, platform, version: newVersionNum);
+            
+            Debug.Log($"<color=yellow>{ BApplication.GetPlatformPath(platform)} - 旧版本:{lastPackageBuildInfo.Version} 新版本号:{newVersionNum} </color> ");
             //完成回调通知
             BDFrameworkPipelineHelper.OnEndBuildAllAssets(platform, outputPath, newVersionNum);
         }

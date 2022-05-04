@@ -83,7 +83,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 服务器-资源分包信息
         /// </summary>
-        readonly static public string SERVER_ART_ASSETS_SUB_PACKAGE_INFO_PATH = "ServerAssetsSubPackage_{0}.Info";
+        readonly static public string SERVER_ASSETS_SUB_PACKAGE_INFO_PATH = "ServerAssetsSubPackage_{0}.Info";
 
         /// <summary>
         /// 母包构建信息路径
@@ -528,7 +528,7 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                var subPackagePath = string.Format(BResources.SERVER_ART_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageName);
+                var subPackagePath = string.Format(BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageName);
                 return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), subPackagePath);
             }
         }
