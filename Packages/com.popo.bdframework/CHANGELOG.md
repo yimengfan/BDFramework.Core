@@ -10,6 +10,12 @@ A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 -Uflux: 增加Store监听多个Reducer的支持.
 -StatusListener: 重新整理EventListenerEX 和 ValueListenerEx抽象
 -AssetGraph1.8: 将AssetGraph整理进框架，并提供升级维护
+-BuildPipeline: 增加显式版本号配置页面
+-BuildPipeline: 增加一键构建Asset的Behavior事件
+-Runtime:增加UniTask插件
+-BResource:重构母包资源检测逻辑.
+-BResource:重构资源更新,并新增CompareWithRepair模式
+-BRexource:实验性加入Windows和OSX的支持，满足部分用户的需要
 
 ##V2.1.0-preview.6
 -AssetbundleV2: 重构异步加载逻辑
