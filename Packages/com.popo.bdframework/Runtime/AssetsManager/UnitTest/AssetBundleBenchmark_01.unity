@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.44648796, g: 0.49640262, b: 0.57479304, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -411,6 +411,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1247277302}
   - component: {fileID: 1247277301}
+  - component: {fileID: 1247277304}
   - component: {fileID: 1247277303}
   m_Layer: 0
   m_Name: BDFrame
@@ -457,6 +458,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5c81abd1f70b54a8b4493b2873814e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsAsyncLoad: 0
+--- !u!114 &1247277304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247277300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -614279893, guid: 3b8ad62e537bc86418adf879fac81ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLog: 1
 --- !u!1 &1257181547
 GameObject:
   m_ObjectHideFlags: 0

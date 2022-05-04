@@ -89,8 +89,8 @@ namespace BDFramework.ResourceMgr.V2
             }
 
             //2.路径替换
-            firstArtDirectory = firstArtDirectory.Replace("\\", "/");
-            secArtDirectory = secArtDirectory.Replace("\\", "/");
+            firstArtDirectory = IPath.ReplaceBackSlash(firstArtDirectory);
+            secArtDirectory = IPath.ReplaceBackSlash(secArtDirectory);
 
             //3.加载ArtConfig
             this.AssetConfigLoder = new AssetbundleConfigLoder();
@@ -111,7 +111,8 @@ namespace BDFramework.ResourceMgr.V2
             this.AssetConfigLoder.Load(assetconfigPath, assetTypePath);
             //开始异步任务刷新
             IEnumeratorTool.StartCoroutine(this.IE_AsyncTaskListUpdte());
-            //BDebug.Log("【AssetBundleV2】初始化成功,资源总量:" + this.AssetConfigLoder.AssetbundleItemList.Count);
+            BDebug.Log($"【AssetBundleV2】 firstDir:{firstArtDirectory}","red");
+            BDebug.Log($"【AssetBundleV2】 secDir:{secArtDirectory}","red");
         }
 
 

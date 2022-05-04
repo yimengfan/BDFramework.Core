@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.Asset;
 using UnityEditor;
 using UnityEngine;
 using BDFramework.Editor.Table;
@@ -11,6 +13,7 @@ using BDFramework.Editor.EditorPipeline.PublishPipeline;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Unity3dEx;
 using BDFramework.ResourceMgr;
+using Editor.EditorPipeline.PublishPipeline;
 using ServiceStack.Text;
 #if ODIN_INSPECTOR
 using Sirenix.Utilities.Editor;
@@ -32,6 +35,11 @@ namespace BDFramework.Editor.PublishPipeline
             window.Focus();
         }
 
+        /// <summary>
+        /// 默认导出地址
+        /// </summary>
+        static private string EXPORT_PATH;
+
         private EditorWindow_Table editorTable;
         private EditorWindow_ScriptBuildDll editorScript;
         private EditorWindow_BuildAssetBundle editorAsset;
@@ -41,8 +49,9 @@ namespace BDFramework.Editor.PublishPipeline
             this.editorTable = new EditorWindow_Table();
             this.editorAsset = new EditorWindow_BuildAssetBundle();
             this.editorScript = new EditorWindow_ScriptBuildDll();
+            EXPORT_PATH = BApplication.DevOpsPublishAssetsPath;
 
-            this.minSize = this.maxSize = new Vector2(1050, 800);
+            this.minSize = this.maxSize = new Vector2(1000, 800);
             base.Show();
         }
 
@@ -55,6 +64,7 @@ namespace BDFramework.Editor.PublishPipeline
 #endif
 
 #if ODIN_INSPECTOR
+                EXPORT_PATH = BApplication.DevOpsPublishAssetsPath;
                 if (editorScript != null)
                 {
                     //GUILayout.BeginVertical();
@@ -102,34 +112,85 @@ namespace BDFramework.Editor.PublishPipeline
             BDEditorApplication.BDFrameWorkFrameEditorSetting.Save();
         }
 
-        public string exportPath = "";
-        private bool isGeniOSAssets = false;
-        private bool isGenAndroidAssets = true;
-        private bool isGenWindowsAssets = false;
-        private bool isGenOSXAssets = false;
+
+        //Runtimeform不支持flag
+        private List<RuntimePlatform> selectPlatforms = new List<RuntimePlatform>() {RuntimePlatform.Android};
+
+        private Dictionary<RuntimePlatform, string> platformVersionMap = new Dictionary<RuntimePlatform, string>();
+
         //状态
         private bool isBuilding = false;
-        
+
         /// <summary>
         /// 一键导出
         /// </summary>
         public void OnGUI_OneKeyExprot()
         {
-            GUILayout.BeginVertical(GUILayout.Width(this.maxSize.x/2), GUILayout.Height(350));
+            GUILayout.BeginVertical(GUILayout.Width(this.maxSize.x / 2), GUILayout.Height(350));
             {
                 GUILayout.Label("资源发布:", EditorGUIHelper.GetFontStyle(Color.red, 15));
 
-                
-                //isGenWindowsAssets=GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
-                isGenAndroidAssets = GUILayout.Toggle(isGenAndroidAssets, "生成Android资源");
-                isGeniOSAssets = GUILayout.Toggle(isGeniOSAssets, "生成iOS资源");
-                isGenWindowsAssets = GUILayout.Toggle(isGenWindowsAssets, "生成Windows资源");
-                isGenOSXAssets = GUILayout.Toggle(isGenOSXAssets, "生成OSX资源");
+                EditorGUILayout.HelpBox("版本号采用三段式:0.0.1,前两位可以自定义,最后一位默认自增！\n默认导出地址:Devops/PublishAssets", MessageType.Info);
+                GUILayout.Space(5);
+                //
+                foreach (var sp in BApplication.SupportPlatform)
+                {
+                    GUILayout.BeginHorizontal();
+                    {
+                        var isHas = selectPlatforms.Contains(sp);
+                        //选择
+                        var isSelcet = GUILayout.Toggle(isHas, $"生成{BApplication.GetPlatformPath(sp)}资产", GUILayout.Width(150));
+                        //
+                        if (isHas != isSelcet)
+                        {
+                            if (isSelcet)
+                            {
+                                selectPlatforms.Add(sp);
+                            }
+                            else
+                            {
+                                selectPlatforms.Remove(sp);
+                            }
+                        }
+
+                        var basePackageBuildInfo = BasePackageAssetsHelper.GetPacakgeBuildInfo(sp, EXPORT_PATH);
+                        string setVersionNum = "";
+                        var ret = platformVersionMap.TryGetValue(sp, out setVersionNum);
+                        if (!ret)
+                        {
+                            platformVersionMap[sp] = basePackageBuildInfo.Version;
+                        }
+                        //根据即将设置信息开始解析
+                        var vs =  platformVersionMap[sp] .Split('.');
+                        int bigNum = 0;
+                        int smallNum = 0;
+                        int additiveNum = 0;
+                        bigNum = int.Parse(vs[0]);
+                        smallNum = int.Parse(vs[1]);
+                        additiveNum = int.Parse(vs[2]);
+                        //version.info信息 渲染
+                        GUILayout.Label("Ver:", GUILayout.Width(30));
+                        bigNum = EditorGUILayout.IntField(bigNum, GUILayout.Width(20));
+                        GUILayout.Label(".", GUILayout.Width(5));
+                        smallNum = EditorGUILayout.IntField(smallNum, GUILayout.Width(20));
+                        GUILayout.Label(".", GUILayout.Width(5));
+                        GUILayout.Label(additiveNum.ToString(),GUILayout.Width(40));
+                        //保存 设置信息
+                        setVersionNum= string.Format("{0}.{1}.{2}", bigNum, smallNum, additiveNum);
+                        //渲染预览信息
+                        GUILayout.Space(10);
+                        var newVersion=  VersionNumHelper.AddVersionNum(basePackageBuildInfo.Version, setVersionNum);
+                        GUILayout.Label($"预览: {basePackageBuildInfo.Version}  =>  {newVersion}");
+                        platformVersionMap[sp] = setVersionNum;
+                    }
+                    GUILayout.EndHorizontal();
+                    GUILayout.Space(2);
+                }
+
+
                 //
                 GUILayout.Space(5);
-                GUILayout.Label("导出地址:" + exportPath);
-                //
-                if (GUILayout.Button("一键导出所有资源", GUILayout.Width(350), GUILayout.Height(30)))
+                if (GUILayout.Button("一键导出所选平台资产(脚本、美术、表格)", GUILayout.Width(350), GUILayout.Height(30)))
                 {
                     if (isBuilding)
                     {
@@ -138,22 +199,13 @@ namespace BDFramework.Editor.PublishPipeline
 
                     isBuilding = true;
 
-                    //选择目录
-                    exportPath = BApplication.DevOpsPublishAssetsPath;
 
-                    //生成android资源
-                    if (isGenAndroidAssets)
+                    //开始 生成资源
+                    foreach (var sp in selectPlatforms)
                     {
-                        BuildAssetsTools.BuildAllAssets(RuntimePlatform.Android, exportPath);
+                        BuildAssetsTools.BuildAllAssets(sp, EXPORT_PATH,platformVersionMap[sp]);
+                        platformVersionMap.Remove(sp);
                     }
-
-                    //生成ios资源
-                    if (isGeniOSAssets)
-                    {
-                        BuildAssetsTools.BuildAllAssets(RuntimePlatform.IPhonePlayer, exportPath);
-                    }
-
-                    //EditorUtility.DisplayDialog("提示", "资源导出完成", "OK");
 
                     isBuilding = false;
                 }
@@ -162,7 +214,7 @@ namespace BDFramework.Editor.PublishPipeline
                 if (GUILayout.Button("热更资源转hash(生成服务器配置)", GUILayout.Width(350), GUILayout.Height(30)))
                 {
                     //自动转hash
-                    PublishPipelineTools.PublishAssetsToServer(BApplication.DevOpsPublishAssetsPath);
+                    PublishPipelineTools.PublishAssetsToServer(EXPORT_PATH);
                 }
 
                 GUILayout.Space(20);
@@ -171,19 +223,9 @@ namespace BDFramework.Editor.PublishPipeline
                 {
                     if (GUILayout.Button("拷贝资源到Streaming", GUILayout.Width(175), GUILayout.Height(30)))
                     {
-                        RuntimePlatform platform = RuntimePlatform.Android;
-                        if (isGenAndroidAssets)
-                        {
-                            platform = RuntimePlatform.Android;
-                        }
-                        else if (isGeniOSAssets)
-                        {
-                            platform = RuntimePlatform.IPhonePlayer;
-                        }
-
                         //路径
-                        var source = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform));
-                        var target = IPath.Combine(Application.streamingAssetsPath, BApplication.GetPlatformPath(platform));
+                        var source = IPath.Combine(EXPORT_PATH, BApplication.GetRuntimePlatformPath());
+                        var target = IPath.Combine(Application.streamingAssetsPath, BApplication.GetRuntimePlatformPath());
                         if (Directory.Exists(target))
                         {
                             Directory.Delete(target, true);
@@ -196,24 +238,14 @@ namespace BDFramework.Editor.PublishPipeline
 
                     if (GUILayout.Button("删除Streaming资源", GUILayout.Width(175), GUILayout.Height(30)))
                     {
-                        RuntimePlatform platform = RuntimePlatform.Android;
-                        if (isGenAndroidAssets)
-                        {
-                            platform = RuntimePlatform.Android;
-                        }
-                        else if (isGeniOSAssets)
-                        {
-                            platform = RuntimePlatform.IPhonePlayer;
-                        }
-
-                        var target = IPath.Combine(Application.streamingAssetsPath, BApplication.GetPlatformPath(platform));
+                        var target = IPath.Combine(Application.streamingAssetsPath, BApplication.GetRuntimePlatformPath());
                         Directory.Delete(target, true);
                     }
                 }
             }
             GUILayout.EndHorizontal();
-            
-            
+
+
             GUILayout.EndVertical();
         }
 
@@ -227,15 +259,14 @@ namespace BDFramework.Editor.PublishPipeline
         {
             //playmode时候启动
             this.StartAssetsServerOnPlayMode();
-            
-            GUILayout.BeginVertical(GUILayout.Width(this.maxSize.x/2));
+
+            GUILayout.BeginVertical(GUILayout.Width(this.maxSize.x / 2));
             {
                 GUILayout.Label("AB文件服务器:", EditorGUIHelper.GetFontStyle(Color.red, 15));
                 EditorGUILayout.HelpBox("在本机Devops搭建文件服务器，提供测试下载功能", MessageType.Info);
 
                 if (EditorHttpListener == null)
                 {
-                 
                     if (GUILayout.Button("启动本机文件服务器"))
                     {
                         StartLocalAssetsFileServer();
@@ -308,10 +339,10 @@ namespace BDFramework.Editor.PublishPipeline
             if (EditorHttpListener == null)
             {
                 //自动转hash
-                PublishPipelineTools.PublishAssetsToServer(BApplication.DevOpsPublishAssetsPath);
+                PublishPipelineTools.PublishAssetsToServer(EXPORT_PATH);
                 //开启文件服务器
                 EditorHttpListener = new EditorHttpListener();
-                var webdir = IPath.Combine(BApplication.DevOpsPublishAssetsPath, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
+                var webdir = IPath.Combine(EXPORT_PATH, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
                 EditorHttpListener.Start("*", "8081", webdir);
             }
         }
@@ -324,7 +355,6 @@ namespace BDFramework.Editor.PublishPipeline
                 EditorHttpListener = null;
             }
         }
-
 
 
         private void OnDestroy()

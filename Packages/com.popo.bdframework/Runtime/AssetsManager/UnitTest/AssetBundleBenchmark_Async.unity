@@ -411,6 +411,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1247277302}
   - component: {fileID: 1247277301}
+  - component: {fileID: 1247277304}
   - component: {fileID: 1247277303}
   m_Layer: 0
   m_Name: BDFrame
@@ -458,6 +459,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAsyncLoad: 1
+--- !u!114 &1247277304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247277300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -614279893, guid: 3b8ad62e537bc86418adf879fac81ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLog: 1
 --- !u!1 &1257181547
 GameObject:
   m_ObjectHideFlags: 0

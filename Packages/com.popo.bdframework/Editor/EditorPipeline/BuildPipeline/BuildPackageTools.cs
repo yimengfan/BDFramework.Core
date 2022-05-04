@@ -415,6 +415,7 @@ namespace BDFramework.Editor.BuildPipeline
             if (File.Exists(outputPath + "/Info.plist"))
             {
                 var shellPath = "";
+                //这里需要判断Editor类型,所以使用u3d的 Application.Platform
                 if (Application.platform == RuntimePlatform.WindowsEditor)
                 {
                     shellPath = BApplication.DevOpsCIPath + string.Format("/BuildIpa_{0}.cmd", realmode);

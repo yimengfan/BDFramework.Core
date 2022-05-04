@@ -5,7 +5,6 @@
     /// </summary>
     static public class VersionNumHelper
     {
-
         /// <summary>
         ///  添加一个版本号
         /// 大版本.迭代版本.自增版本 =》1.0.53
@@ -26,7 +25,7 @@
             //调用既有函数
             return AddVersionNum(lastVersionNum, newBigNum, newSmallNum, newAdditiveNum, add);
         }
-        
+
         /// <summary>
         ///  添加一个版本号
         /// 大版本.迭代版本.自增版本 =》1.0.53
@@ -61,13 +60,13 @@
             //当大版本，迭代版本修改时,自增版本自动归零,否则默认add 1
             if (bigNum == lastBigNum && smallNum == lastSmallNum)
             {
-                if (additiveNum > retAdditiveNum)
+                if (additiveNum > lastAdditiveNum)
                 {
                     retAdditiveNum = additiveNum;
                 }
                 else
                 {
-                    retAdditiveNum += add;
+                    retAdditiveNum = lastAdditiveNum + add;
                 }
             }
             else
