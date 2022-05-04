@@ -56,6 +56,8 @@ namespace BDFramework.Core.Tools
         /// </summary>
         static public RuntimePlatform RuntimePlatform
         {
+            //注意这里 异常情况切平台（如打包ab 自动切到目标平台，到一半闪退）
+            //会导致代码未编译，会返回老的宏~ 需要重新把BDFramework导入
             get
             {
 #if UNITY_IOS

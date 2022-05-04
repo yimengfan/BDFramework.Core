@@ -343,7 +343,7 @@ namespace BDFramework.Editor.PublishPipeline
                 //开启文件服务器
                 EditorHttpListener = new EditorHttpListener();
                 var webdir = IPath.Combine(EXPORT_PATH, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
-                EditorHttpListener.Start("*", "8081", webdir);
+                EditorHttpListener.Start("*", "10086", webdir);
             }
         }
 
