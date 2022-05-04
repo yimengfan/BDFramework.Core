@@ -68,7 +68,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 客户端-资源包服务器信息
         /// </summary>
-        readonly static public string ART_ASSETS_INFO_PATH = "Assets.Info";
+        readonly static public string ASSETS_INFO_PATH = "Assets.Info";
 
         /// <summary>
         /// 客户端-资源分包信息
@@ -346,7 +346,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="assetsPackageName">分包名,如果不填则为下载所有</param>
         /// <param name="onProccess">下载进度</param>
         /// <param name="onTaskEndCallback">结果回调</param>
-        static public void StartAssetsVersionControl(UpdateMode updateMode, string serverUrl, string assetsPackageName = "", Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess = null,
+        static public void StartAssetsVersionControl(UpdateMode updateMode, string serverUrl, string assetsPackageName = "", Action<AssetItem, List<AssetItem>> onDownloadProccess = null,
             Action<AssetsVersionController.RetStatus, string> onTaskEndCallback = null)
         {
             AssetsVersionController.UpdateAssets(updateMode, serverUrl, assetsPackageName, onDownloadProccess, onTaskEndCallback);
@@ -510,7 +510,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform)
         {
-            return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), BResources.ART_ASSETS_INFO_PATH);
+            return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
         }
 
         /// <summary>

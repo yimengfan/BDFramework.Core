@@ -451,8 +451,8 @@ public class ScriptBuildTools
             {
                 result = compilation.Emit(dllStream, pdbStream, options: emitOptions);
 
-                File.WriteAllBytes(output, dllStream.GetBuffer());
-                File.WriteAllBytes(pdbPath, pdbStream.GetBuffer());
+                FileHelper.WriteAllBytes(output, dllStream.GetBuffer());
+                FileHelper.WriteAllBytes(pdbPath, pdbStream.GetBuffer());
             }
         }
 

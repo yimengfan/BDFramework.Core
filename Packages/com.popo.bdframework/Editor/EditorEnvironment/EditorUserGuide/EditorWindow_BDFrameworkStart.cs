@@ -78,7 +78,7 @@ namespace BDFramework.Editor
             var path = BApplication.BDEditorCachePath + "/OpenGuideLog_" + DateTime.Today.ToLongDateString();
             if (!File.Exists(path))
             {
-                File.WriteAllText(path, "EditorWindow_BDFrameworkStart today is open!");
+                FileHelper.WriteAllText(path, "EditorWindow_BDFrameworkStart today is open!");
 
                 return false;
             }
@@ -360,7 +360,7 @@ namespace BDFramework.Editor
                 {
                     WebClient wc = new WebClient();
                     var ret = wc.DownloadString(CHANGEDLOG_URL);
-                    File.WriteAllText(newLogPath, ret);
+                    FileHelper.WriteAllText(newLogPath, ret);
                 }
 
                 this.FrameUpdateNote = File.ReadAllText(newLogPath);

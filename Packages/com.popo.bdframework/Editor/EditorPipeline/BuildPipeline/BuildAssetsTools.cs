@@ -88,15 +88,18 @@ namespace BDFramework.Editor.BuildPipeline
                 Debug.LogError(e.Message);
             }
 
-            //4.生成本地Assets.info配置
+            //4.生成母包资源信息
+            BasePackageAssetsHelper.GenBasePackageAssetBuildInfo(outputPath, platform, version: newVersionNum);
+            
+            //5.生成本地Assets.info配置
+            //这个必须最后生成！！！！
+            //这个必须最后生成！！！！
+            //这个必须最后生成！！！！
             var allServerAssetItemList = PublishPipelineTools.GetAssetItemList(outputPath, platform);
             var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
             var assetsInfoPath = BResources.GetAssetsInfoPath(outputPath,platform);
-            File.WriteAllText(assetsInfoPath, csv);
-
-            //5.生成母包资源信息
-            BasePackageAssetsHelper.GenBasePackageAssetBuildInfo(outputPath, platform, version: newVersionNum);
-            
+            FileHelper.WriteAllText(assetsInfoPath, csv);
+            //
             Debug.Log($"<color=yellow>{ BApplication.GetPlatformPath(platform)} - 旧版本:{lastPackageBuildInfo.Version} 新版本号:{newVersionNum} </color> ");
             //完成回调通知
             BDFrameworkPipelineHelper.OnEndBuildAllAssets(platform, outputPath, newVersionNum);

@@ -16,6 +16,7 @@ using BDFramework.Editor.Environment;
 using BDFramework.Editor.PublishPipeline;
 using BDFramework.Tool;
 using ILRuntime.Runtime.CLRBinding;
+using ServiceStack;
 using UnityEngine.UI;
 
 public class EditorWindow_ScriptBuildDll : EditorWindow
@@ -243,7 +244,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         }
 
         //写入
-        File.WriteAllLines(analysisClrBinding, analysisContent);
+        FileHelper.WriteAllLines(analysisClrBinding, analysisContent.ToArray());
 
 
         AssetDatabase.Refresh();
@@ -306,7 +307,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         var oldContent = File.ReadAllText(clrbinding);
         var newContent = oldContent.Replace("class CLRBindings", "class PreCLRBinding");
         //写入新的,删除老的
-        File.WriteAllText(prebinding, newContent);
+        FileHelper.WriteAllText(prebinding, newContent);
         File.Delete(clrbinding);
     }
 }

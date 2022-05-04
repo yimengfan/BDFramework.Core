@@ -1123,7 +1123,7 @@ namespace BDFramework.Editor.AssetBundle
                 Array.Copy(mixBytes, 0, outbytes, 0, mixBytes.Length);
                 Array.Copy(abBytes, 0, outbytes, mixBytes.Length, abBytes.Length);
                 //写入
-                File.WriteAllBytes(abpath, outbytes);
+                FileHelper.WriteAllBytes(abpath, outbytes);
                 var hash = FileHelper.GetMurmurHash3(abpath);
 
                 //相同ab的都进行赋值，避免下次重新被修改。

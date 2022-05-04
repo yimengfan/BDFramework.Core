@@ -43,7 +43,7 @@ namespace BDFramework.VersionController
     /// <summary>
     /// 服务器Asset的描述
     /// </summary>
-    public class ServerAssetItem
+    public class AssetItem
     {
         public enum AssetType
         {
@@ -80,7 +80,7 @@ namespace BDFramework.VersionController
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            if (obj is ServerAssetItem _SAI)
+            if (obj is AssetItem _SAI)
             {
                 return (this.HashName.Equals(_SAI.HashName) && this.LocalPath.Equals(_SAI.LocalPath));
             }
@@ -193,7 +193,7 @@ namespace BDFramework.VersionController
         /// <param name="assetsPackageName">分包名,如果不填则为下载所有</param>
         /// <param name="onProccess">下载进度</param>
         /// <param name="onTaskEndCallback">结果回调</param>
-        public void UpdateAssets(UpdateMode updateMode, string serverConfigUrl, string assetsPackageName = "", Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess = null,
+        public void UpdateAssets(UpdateMode updateMode, string serverConfigUrl, string assetsPackageName = "", Action<AssetItem, List<AssetItem>> onDownloadProccess = null,
             Action<RetStatus, string> onTaskEndCallback = null)
         {
             //下载资源位置必须为Persistent
@@ -256,7 +256,7 @@ namespace BDFramework.VersionController
         /// <param name="onDownloadProccess">任务进度通知（下载完不等于任务完成!）</param>
         /// <param name="onTaskEndCallback">任务成功\失败通知!</param>
         /// 返回码: -1：error  0：success
-        async private Task StartVersionControl(UpdateMode updateMode, string serverUrl, string localSaveAssetsPath, string subPackageName, Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess,
+        async private Task StartVersionControl(UpdateMode updateMode, string serverUrl, string localSaveAssetsPath, string subPackageName, Action<AssetItem, List<AssetItem>> onDownloadProccess,
             Action<RetStatus, string> onTaskEndCallback)
         {
             var platform = BApplication.RuntimePlatform;
@@ -297,8 +297,8 @@ namespace BDFramework.VersionController
             BDebug.Log("【版本控制】2.对比版本信息~","red");
             string err = null;
             string suc = null;
-            var serverAssetsInfoList = new List<ServerAssetItem>();
-            var localAssetsInfoList = new List<ServerAssetItem>();
+            var serverAssetsInfoList = new List<AssetItem>();
+            var localAssetsInfoList = new List<AssetItem>();
             var serverAssetsContent = "";
             //
             switch (updateMode)
@@ -348,7 +348,7 @@ namespace BDFramework.VersionController
 
             //3.生成差异列表
             BDebug.Log("【版本控制】3.获取差异列表~","red");
-            Queue<ServerAssetItem> diffDownloadQueue = null;
+            Queue<AssetItem> diffDownloadQueue = null;
 
             #region 生成差异文件
 
@@ -483,13 +483,13 @@ namespace BDFramework.VersionController
         /// <param name="serverVersionInfo"></param>
         /// <param name="localVersionInfo"></param>
         /// <returns>err, suc, 服务器数据, 本地数据,服务器数据内容 </returns>
-        public (string, string, List<ServerAssetItem>, List<ServerAssetItem>, string) GetDownloadAssetsData(string serverUrl, RuntimePlatform platform, AssetsVersionInfo serverVersionInfo, AssetsVersionInfo localVersionInfo)
+        public (string, string, List<AssetItem>, List<AssetItem>, string) GetDownloadAssetsData(string serverUrl, RuntimePlatform platform, AssetsVersionInfo serverVersionInfo, AssetsVersionInfo localVersionInfo)
         {
             //返回数据
             string err = null;
             string suc = null;
-            var serverAssetsInfoList = new List<ServerAssetItem>();
-            var localAssetsInfoList = new List<ServerAssetItem>();
+            var serverAssetsInfoList = new List<AssetItem>();
+            var localAssetsInfoList = new List<AssetItem>();
             var serverAssetsContent = "";
 
             //1.判断版本号
@@ -539,14 +539,14 @@ namespace BDFramework.VersionController
         /// 获取下载子包的数据
         /// </summary>
         /// <returns>err, suc, server.info, local.info, </returns>
-        public (string, string, List<ServerAssetItem>, List<ServerAssetItem>, string) GetDownloadSubPackageData(string serverUrl, string subPackageName, RuntimePlatform platform, AssetsVersionInfo serverVersionInfo,
+        public (string, string, List<AssetItem>, List<AssetItem>, string) GetDownloadSubPackageData(string serverUrl, string subPackageName, RuntimePlatform platform, AssetsVersionInfo serverVersionInfo,
             AssetsVersionInfo localVersionInfo)
         {
             //返回数据
             string err = null;
             string suc = null;
-            var serverAssetsInfoList = new List<ServerAssetItem>();
-            var localAssetsInfoList = new List<ServerAssetItem>();
+            var serverAssetsInfoList = new List<AssetItem>();
+            var localAssetsInfoList = new List<AssetItem>();
             var serverAssetsContent = "";
 
             BDebug.Log("【版本控制】分包模式:" + subPackageName);
@@ -648,6 +648,7 @@ namespace BDFramework.VersionController
                 catch (Exception e)
                 {
                     err = e.Message;
+                    BDebug.LogError(err);
                 }
             }
 
@@ -674,10 +675,10 @@ namespace BDFramework.VersionController
         /// 加载服务器Asset.Info
         /// </summary>
         /// <returns></returns>
-        async private Task<Tuple<string, List<ServerAssetItem>, string>> DownloadAssetsInfo(string serverAssetInfosUrl)
+        async private Task<Tuple<string, List<AssetItem>, string>> DownloadAssetsInfo(string serverAssetInfosUrl)
         {
             var err = "";
-            var serverAssetsInfoList = new List<ServerAssetItem>();
+            var serverAssetsInfoList = new List<AssetItem>();
             var serverlAssetsContent = "";
             //开始下载
             for (int i = 0; i < RETRY_COUNT; i++)
@@ -685,17 +686,18 @@ namespace BDFramework.VersionController
                 try
                 {
                     serverlAssetsContent = await webClient.DownloadStringTaskAsync(serverAssetInfosUrl);
-                    serverAssetsInfoList = CsvSerializer.DeserializeFromString<List<ServerAssetItem>>(serverlAssetsContent);
+                    serverAssetsInfoList = CsvSerializer.DeserializeFromString<List<AssetItem>>(serverlAssetsContent);
                     err = null;
                     break;
                 }
                 catch (Exception e)
                 {
                     err = e.Message;
+                    BDebug.LogError(err);
                 }
             }
 
-            return new Tuple<string, List<ServerAssetItem>, string>(err, serverAssetsInfoList, serverlAssetsContent);
+            return new Tuple<string, List<AssetItem>, string>(err, serverAssetsInfoList, serverlAssetsContent);
         }
 
 
@@ -703,11 +705,11 @@ namespace BDFramework.VersionController
         /// 加载服务器Asset.info
         /// </summary>
         /// <returns></returns>
-        private (string, List<ServerAssetItem>, string) LoadServerAssetInfo(string serverAssetInfosUrl)
+        private (string, List<AssetItem>, string) LoadServerAssetInfo(string serverAssetInfosUrl)
         {
             //返回数据
             string err = null;
-            var serverAssetsInfoList = new List<ServerAssetItem>();
+            var serverAssetsInfoList = new List<AssetItem>();
             var serverAssetsContent = "";
             //下载
             var task = DownloadAssetsInfo(serverAssetInfosUrl);
@@ -726,15 +728,15 @@ namespace BDFramework.VersionController
         /// <summary>
         /// 加载本地的Asset.info
         /// </summary>
-        private List<ServerAssetItem> LoadLocalAssetInfo(RuntimePlatform platform)
+        private List<AssetItem> LoadLocalAssetInfo(RuntimePlatform platform)
         {
-            var retList = new List<ServerAssetItem>();
+            var retList = new List<AssetItem>();
             //优先加载persistent的Assets.info
             var persistentAssetInfoPath = BResources.GetAssetsInfoPath(BApplication.persistentDataPath, platform);
             if (File.Exists(persistentAssetInfoPath))
             {
                 var content = File.ReadAllText(persistentAssetInfoPath);
-                retList = CsvSerializer.DeserializeFromString<List<ServerAssetItem>>(content);
+                retList = CsvSerializer.DeserializeFromString<List<AssetItem>>(content);
             }
             //streaming 和其他的Assets.info
             else
@@ -748,12 +750,12 @@ namespace BDFramework.VersionController
                     case AssetLoadPathType.StreamingAsset:
                     {
                         //TODO ：BSA 读取，不需要Streaming前缀
-                        var steamingAssetsInfoPath = IPath.Combine(BApplication.GetPlatformPath(platform), BResources.ART_ASSETS_INFO_PATH);
+                        var steamingAssetsInfoPath = IPath.Combine(BApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
                         //var steamingAssetsInfoPath = GetAssetsInfoPath(BDApplication.streamingAssetsPath, platform);
                         if (BetterStreamingAssets.FileExists(steamingAssetsInfoPath))
                         {
                             var content = BetterStreamingAssets.ReadAllText(steamingAssetsInfoPath);
-                            retList = CsvSerializer.DeserializeFromString<List<ServerAssetItem>>(content);
+                            retList = CsvSerializer.DeserializeFromString<List<AssetItem>>(content);
                         }
                     }
                         break;
@@ -764,7 +766,7 @@ namespace BDFramework.VersionController
                         if (File.Exists(devopsAssetInfoPath))
                         {
                             var content = File.ReadAllText(devopsAssetInfoPath);
-                            retList = CsvSerializer.DeserializeFromString<List<ServerAssetItem>>(content);
+                            retList = CsvSerializer.DeserializeFromString<List<AssetItem>>(content);
                         }
                     }
                         break;
@@ -780,9 +782,9 @@ namespace BDFramework.VersionController
         /// </summary>
         /// <param name="platform"></param>
         /// <returns></returns>
-        private List<ServerAssetItem> LoadLocalSubPacakgeAssetInfo(RuntimePlatform platform, AssetsVersionInfo localVersionInfo)
+        private List<AssetItem> LoadLocalSubPacakgeAssetInfo(RuntimePlatform platform, AssetsVersionInfo localVersionInfo)
         {
-            var retList = new List<ServerAssetItem>();
+            var retList = new List<AssetItem>();
 
             foreach (var kv in localVersionInfo.SubPckMap)
             {
@@ -790,7 +792,7 @@ namespace BDFramework.VersionController
                 if (File.Exists(subPackageInfoPath))
                 {
                     var content = File.ReadAllText(subPackageInfoPath);
-                    var assetItems = CsvSerializer.DeserializeFromString<List<ServerAssetItem>>(content);
+                    var assetItems = CsvSerializer.DeserializeFromString<List<AssetItem>>(content);
                     retList.AddRange(assetItems);
                 }
             }
@@ -809,9 +811,9 @@ namespace BDFramework.VersionController
         /// <param name="onDownloadProccess"></param>
         /// <param name="failDownloadList"></param>
         /// <returns></returns>
-        public IEnumerator IE_DownloadAssets(string serverUrl, string localSaveAssetsPath, Queue<ServerAssetItem> downloadQueue, Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess)
+        public IEnumerator IE_DownloadAssets(string serverUrl, string localSaveAssetsPath, Queue<AssetItem> downloadQueue, Action<AssetItem, List<AssetItem>> onDownloadProccess)
         {
-            var failDownloadList = new List<ServerAssetItem>();
+            var failDownloadList = new List<AssetItem>();
             //url构建
             var platform = BApplication.GetPlatformPath(BApplication.RuntimePlatform);
             serverUrl = IPath.Combine(serverUrl, platform);
@@ -896,9 +898,9 @@ namespace BDFramework.VersionController
         /// <param name="downloadQueue"></param>
         /// <param name="onDownloadProccess"></param>
         /// <returns></returns>
-        async private Task<List<ServerAssetItem>> DownloadAssets(string serverUrl, string localSaveAssetsPath, Queue<ServerAssetItem> downloadQueue, Action<ServerAssetItem, List<ServerAssetItem>> onDownloadProccess)
+        async private Task<List<AssetItem>> DownloadAssets(string serverUrl, string localSaveAssetsPath, Queue<AssetItem> downloadQueue, Action<AssetItem, List<AssetItem>> onDownloadProccess)
         {
-            var failDownloadList = new List<ServerAssetItem>();
+            var failDownloadList = new List<AssetItem>();
             //url构建
             var platform = BApplication.GetPlatformPath(BApplication.RuntimePlatform);
             serverUrl = IPath.Combine(serverUrl, platform);
@@ -936,6 +938,7 @@ namespace BDFramework.VersionController
                     catch (Exception e)
                     {
                         err = e.Message;
+                        BDebug.LogError(err);
                     }
                 }
 
@@ -987,9 +990,9 @@ namespace BDFramework.VersionController
         /// 对比
         /// 原则上认为StreamingAsset资源为母包携带,且完整
         /// </summary>
-        private Queue<ServerAssetItem> Compare(List<ServerAssetItem> localAssetsInfo, List<ServerAssetItem> serverAssetsInfo, RuntimePlatform platform)
+        private Queue<AssetItem> Compare(List<AssetItem> localAssetsInfo, List<AssetItem> serverAssetsInfo, RuntimePlatform platform)
         {
-            var diffQueue = new Queue<ServerAssetItem>();
+            var diffQueue = new Queue<AssetItem>();
             //比对平台
             foreach (var serverAsset in serverAssetsInfo)
             {
@@ -1018,9 +1021,9 @@ namespace BDFramework.VersionController
         /// 修复模式
         /// Persistent资源和Streaming资源全量进行对比：文件名和hash
         /// </summary>
-        private Queue<ServerAssetItem> Repair(List<ServerAssetItem> serverAssetsInfo, RuntimePlatform platform)
+        private Queue<AssetItem> Repair(List<AssetItem> serverAssetsInfo, RuntimePlatform platform)
         {
-            var diffQueue = new Queue<ServerAssetItem>();
+            var diffQueue = new Queue<AssetItem>();
             //平台
             //根据服务器配置,遍历本地所有文件判断存在且修复
             foreach (var serverAsset in serverAssetsInfo)
