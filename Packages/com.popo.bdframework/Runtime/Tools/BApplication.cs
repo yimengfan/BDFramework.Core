@@ -18,15 +18,24 @@ namespace BDFramework.Core.Tools
         /// 定义 支持的平台
         /// </summary>
         /// <returns></returns>
-        public static RuntimePlatform[] SupportPlatform { get; private set; } = new RuntimePlatform[]
+        static RuntimePlatform[] _supportPlatform = new RuntimePlatform[]
         {
-            RuntimePlatform.Android, 
+            RuntimePlatform.Android,
             RuntimePlatform.IPhonePlayer,
             /***********新增pc平台************/
             RuntimePlatform.OSXPlayer,
             RuntimePlatform.WindowsPlayer
         };
 
+        /// <summary>
+        /// 定义 支持的平台
+        /// </summary>
+        /// <returns></returns>
+        public static RuntimePlatform[] SupportPlatform
+        {
+            //返回一个副本
+            get { return _supportPlatform.ToArray(); }
+        }
 
         static BApplication()
         {
@@ -188,7 +197,6 @@ namespace BDFramework.Core.Tools
         }
 
 
-
         /// <summary>
         /// 获取当前平台Platform的路径
         /// </summary>
@@ -222,10 +230,10 @@ namespace BDFramework.Core.Tools
         }
 
 
-
 #if UNITY_EDITOR
 
         #region Runtime目录支持
+
         /// <summary>
         /// 获取所有runtime的目录
         /// </summary>
@@ -279,7 +287,7 @@ namespace BDFramework.Core.Tools
         }
 
         #endregion
-        
+
         #region BuildTarget 和RuntimePlatform互转
 
         /// <summary>
@@ -365,7 +373,7 @@ namespace BDFramework.Core.Tools
         }
 
         #endregion
-#endif
 
+#endif
     }
 }

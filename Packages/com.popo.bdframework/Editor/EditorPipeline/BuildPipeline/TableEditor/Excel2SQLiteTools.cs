@@ -202,16 +202,18 @@ namespace BDFramework.Editor.Table
         /// <param name="sourceh"></param>
         public static void CopySqlToOther(string root, RuntimePlatform sourcePlatform)
         {
-            RuntimePlatform[] ps = new RuntimePlatform[] {RuntimePlatform.WindowsEditor, RuntimePlatform.IPhonePlayer, RuntimePlatform.Android};
-
+          
             var target = SqliteLoder.GetLocalDBPath(root, sourcePlatform);
             var bytes = File.ReadAllBytes(target);
             //拷贝当前到其他目录
-
-            foreach (var p in ps)
+            foreach (var p in BApplication.SupportPlatform)
             {
+                
                 var outpath = SqliteLoder.GetLocalDBPath(root, p);
-                if (target == outpath) continue;
+                if (target == outpath)
+                {
+                    continue;
+                }
                 FileHelper.WriteAllBytes(outpath, bytes);
             }
         }
