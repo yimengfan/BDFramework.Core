@@ -83,12 +83,10 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 - 重新定制目录管理规范、指导管理.
 - 一套API自动切换AB和Editor模式，保留Resources.load习惯.
 - 可视化连线打包逻辑、0冗余打包.
-- 可扩展打包规则
-- 分包机制.
+- 可扩展打包节点规则
+- 内置节点:搜集keyword、搜集图集、文件夹颗粒度、后缀名颗粒度等...
 - 打包逻辑纠错机制.
-- 内置增量打包机制，防止不同机器、工程打包AB不同情况.
-- 自动图集管理.
-- 自动搜集Shader  Keyword.
+- 差异打包机制: 防止不同机器、工程打包AB不同情况.
 - 可寻址加载系统.
 - Assetbundle混淆机制，一定程度下防破解资源.
 - Assetbundle 同、异步加载校验.
