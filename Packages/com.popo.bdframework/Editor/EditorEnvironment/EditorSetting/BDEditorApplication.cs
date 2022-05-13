@@ -21,13 +21,13 @@ namespace BDFramework.Editor
         /// 编辑器设置
         /// </summary>
         static public BDFrameWorkEditorSetting BDFrameWorkFrameEditorSetting { get; private set; }
-
-
+        
         /// <summary>
         /// Editor工作状态
         /// </summary>
         static public BDFrameworkEditorStatus EditorStatus { get; set; }
-
+        
+        
         /// <summary>
         /// 初始化
         /// </summary>

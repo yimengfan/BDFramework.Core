@@ -277,18 +277,29 @@ namespace BDFramework
             var json = JsonMapper.ToJson(config.Data);
             //根据不同场景生成配置
             //Scene scene = EditorSceneManager.GetActiveScene();
-            var fs = string.Format("{0}/{1}", str, filename + ".json");
-            FileHelper.WriteAllText(fs, json);
-            AssetDatabase.Refresh();
-            //
-            var textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(fs);
-            var bdconfig = GameObject.FindObjectOfType<BDLauncher>();
-            if (bdconfig.ConfigText.name != filename)
+            var filePath =IPath.Combine(str, filename + ".json");
+            var localjson = "";
+            if (File.Exists(filePath))
             {
-                bdconfig.ConfigText = textAsset;
+                localjson = File.ReadAllText(filePath);
             }
+            
+            if (json != localjson)
+            {
+                FileHelper.WriteAllText(filePath, json);
+                //
+                var textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(filePath);
+                var bdconfig = GameObject.FindObjectOfType<BDLauncher>();
+                if (bdconfig.ConfigText.name != filename)
+                {
+                    bdconfig.ConfigText = textAsset;
+                }
+                AssetDatabase.Refresh();
+                Debug.LogFormat("[{0}] 修改配置保存成功: {1}.json - {2}", EditorSceneManager.GetActiveScene().name, filename, Time.frameCount);
+            }
+           
 
-            Debug.LogFormat("[{0}] 修改配置保存成功: {1}.json - {2}", EditorSceneManager.GetActiveScene().name, filename, Time.frameCount);
+           // 
         }
 
         /// <summary>

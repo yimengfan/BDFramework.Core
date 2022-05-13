@@ -42,11 +42,11 @@ public class WindowPreconfig : MonoBehaviour
         //
         if (Application.isEditor)
         {
-            inputField.text = "127.0.0.1:10086";
+            inputField.text = "127.0.0.1:10086/AssetBundle";
         }
         else
         {
-            inputField.text = "192.168.0.1:10086";
+            inputField.text = "192.168.0.1:10086/AssetBundle";
         }
     }
 

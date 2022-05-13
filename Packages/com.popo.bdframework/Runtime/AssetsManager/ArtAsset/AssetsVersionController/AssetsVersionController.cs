@@ -926,7 +926,7 @@ namespace BDFramework.VersionController
                         if (hash == downloadItem.HashName)
                         {
                             taskByte = taskData;
-                            BDebug.Log($"下载成功：{serverAssetUrl} -{downloadItem.LocalPath}" );
+                            BDebug.Log($"下载成功：{serverAssetUrl} local:{downloadItem.LocalPath}" );
                             err = null;
                             break;
                         }

@@ -38,11 +38,8 @@ namespace BDFramework.Core.Tools
         }
 
         static BApplication()
-        {
-            if (Application.isEditor && Application.isPlaying)
-            {
-                Init();
-            }
+        { 
+            Init();
         }
 
         #region Unity3d路径重写
@@ -173,7 +170,7 @@ namespace BDFramework.Core.Tools
 
         #endregion
 
-        static public void Init()
+        static private void Init()
         {
             //Unity路径
             persistentDataPath = Application.persistentDataPath;

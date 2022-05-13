@@ -9,8 +9,8 @@ using BDFramework.Editor.Table;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.BuildPipeline;
-using BDFramework.Editor.EditorPipeline.PublishPipeline;
 using BDFramework.Editor.Tools;
+using BDFramework.Editor.Tools.EditorHttpServer;
 using BDFramework.Editor.Unity3dEx;
 #if ODIN_INSPECTOR
 using Sirenix.Utilities.Editor;
@@ -35,7 +35,13 @@ namespace BDFramework.Editor.PublishPipeline
         /// <summary>
         /// 默认导出地址
         /// </summary>
-        static private string EXPORT_PATH;
+        static private string EXPORT_PATH
+        {
+            get
+            {
+                return BApplication.DevOpsPublishAssetsPath;
+            }
+        }
 
         private EditorWindow_Table editorTable;
         private EditorWindow_ScriptBuildDll editorScript;
@@ -46,7 +52,6 @@ namespace BDFramework.Editor.PublishPipeline
             this.editorTable = new EditorWindow_Table();
             this.editorAsset = new EditorWindow_BuildAssetBundle();
             this.editorScript = new EditorWindow_ScriptBuildDll();
-            EXPORT_PATH = BApplication.DevOpsPublishAssetsPath;
 
             this.minSize = this.maxSize = new Vector2(1000, 800);
             base.Show();
@@ -61,7 +66,7 @@ namespace BDFramework.Editor.PublishPipeline
 #endif
 
 #if ODIN_INSPECTOR
-                EXPORT_PATH = BApplication.DevOpsPublishAssetsPath;
+                // EXPORT_PATH = BApplication.DevOpsPublishAssetsPath;
                 if (editorScript != null)
                 {
                     //GUILayout.BeginVertical();
@@ -339,8 +344,10 @@ namespace BDFramework.Editor.PublishPipeline
                 PublishPipelineTools.PublishAssetsToServer(EXPORT_PATH);
                 //开启文件服务器
                 EditorHttpListener = new EditorHttpListener();
+                //添加AB文件服务器处理器
+                EditorHttpListener.AddWebAPIProccesor<WP_LocalABFileServer>();
                 var webdir = IPath.Combine(EXPORT_PATH, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
-                EditorHttpListener.Start("*", "10086", webdir);
+                EditorHttpListener.Start("*", "10086");
             }
         }
 

@@ -33,6 +33,19 @@ namespace BDFramework.Editor
             {
                 //资源路径
                 var sourcePath = IPath.Combine(path, BApplication.GetPlatformPath(platform));
+                //大概判断原资源是否存在
+                if (Directory.Exists(sourcePath))
+                {
+                    var files = Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories);
+                    if (files.Length < 5)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
                 //输出路径
                 var outputPath = IPath.Combine(IPath.ReplaceBackSlash(path), UPLOAD_FOLDER_SUFFIX, BApplication.GetPlatformPath(platform));
                 if (Directory.Exists(sourcePath))
@@ -83,7 +96,7 @@ namespace BDFramework.Editor
                 string.Format("{0}/{0}", BResources.ART_ASSET_ROOT_PATH),
             };
             //混淆文件添加黑名单
-            blackFileList.AddRange(AssetBundleBuildingContext.GetMixAssets());
+            blackFileList.AddRange(AssetBundleEditorToolsV2.GetMixAssets());
 
             //加载assetbundle配置
             assetsRootPath = IPath.Combine(assetsRootPath, BApplication.GetPlatformPath(platform));

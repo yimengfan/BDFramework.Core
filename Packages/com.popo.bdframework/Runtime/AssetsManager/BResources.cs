@@ -446,7 +446,7 @@ namespace BDFramework.ResourceMgr
                 var hash = FileHelper.GetMurmurHash3(persistentAssetPath);
                 if (assetHash.Equals(hash))
                 {
-                    BDebug.Log($"persistent存在 - {assetName} | hash - {assetHash}");
+                    BDebug.Log($"【AB校验】persistent存在 - {assetName} | hash - {assetHash}");
                     return true;
                 }
             }
@@ -462,7 +462,7 @@ namespace BDFramework.ResourceMgr
                     var hash = FileHelper.GetMurmurHash3(devopsAssetPath);
                     if (assetHash.Equals(hash))
                     {
-                        BDebug.Log($"devops存在 - {assetName} | hash - {assetHash}");
+                        BDebug.Log($"【AB校验】devops存在 - {assetName} | hash - {assetHash}");
                         return true;
                     }
                 }
@@ -477,7 +477,7 @@ namespace BDFramework.ResourceMgr
                     var hash = FileHelper.GetMurmurHash3(bytes);
                     if (assetHash.Equals(hash))
                     {
-                        BDebug.Log($"streaming存在 - {assetName} | hash - {assetHash}");
+                        BDebug.Log($"【AB校验】streaming存在 - {assetName} | hash - {assetHash}");
                         return true;
                     }
                 }

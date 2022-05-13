@@ -118,7 +118,7 @@ namespace BDFramework.Editor.Environment
             try
             {
                 //BD初始化
-                BApplication.Init();
+                //BApplication.Init();
                 //BDEditor初始化
                 BDEditorApplication.Init();
                 //加载主工程的DLL Type
