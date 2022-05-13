@@ -86,8 +86,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             //开始搜集传入的 shader varint
             var outMap = new Dictionary<string, List<AssetReference>>();
             var incomingShaderAndVariantList = new List<AssetReference>();
-
-            var dependShaders = AssetDatabase.GetDependencies(BResources.ALL_SHADER_VARAINT_ASSET_PATH).Where((depend) =>
+            var dependice = AssetDatabase.GetDependencies(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
+            
+            var dependShaders = dependice.Where((depend) =>
             {
                 var type = AssetDatabase.GetMainAssetTypeAtPath(depend);
                 if (type == typeof(Shader) || type == typeof(ShaderVariantCollection))
@@ -95,17 +96,17 @@ namespace BDFramework.Editor.AssetGraph.Node
                     //Debug.LogError("【搜集Shader】剔除非shader文件" + type.FullName);
                     return true;
                 }
-
                 return false;
             });
 
             //遍历传入的并且移除shader需要的
-
             foreach (var ags in incoming)
             {
                 foreach (var group in ags.assetGroups)
                 {
+                    //拷贝一份
                     var newList = group.Value.ToList();
+                    //
                     for (int i = newList.Count - 1; i >= 0; i--)
                     {
                         //不直接操作传入的容器存储
@@ -118,17 +119,18 @@ namespace BDFramework.Editor.AssetGraph.Node
                         }
                         else
                         {
-                            
                             if (af.assetType == typeof(Shader))
                             {
-                                Debug.LogError("【搜集KeyWord】遗漏shader:" + af.importFrom);
-                                this.BuildingCtx.BuildAssetsInfo.AssetDataMaps.TryGetValue(af.importFrom, out var shaderAssetData);
+                                Debug.LogError($"【搜集KeyWord】 : {af.importFrom},请检查是否直接引用了FBX这类,SubAsset中有Mat的资产,如是请Ctrl+D复制引用!" );
+                                
+                                //寻找遗漏查找依赖资源
+                                this.BuildingCtx.BuildingAssetInfos.AssetInfoMap.TryGetValue(af.importFrom, out var shaderAssetData);
                                 if (shaderAssetData != null)
                                 {
-                                    var returnBD = this.BuildingCtx.BuildAssetsInfo.AssetDataMaps.FirstOrDefault((bd) => bd.Value.DependAssetList.Contains(shaderAssetData.ABName) || bd.Value.DependAssetList.Contains(af.importFrom, StringComparer.Ordinal));
+                                    var returnBD = this.BuildingCtx.BuildingAssetInfos.AssetInfoMap.FirstOrDefault((bd) => bd.Value.DependAssetList.Contains(shaderAssetData.ABName) || bd.Value.DependAssetList.Contains(af.importFrom, StringComparer.Ordinal));
                                     if (returnBD.Value != null)
                                     {
-                                        Debug.Log("依赖资源:" + returnBD.Key);
+                                        Debug.LogError("主资源:" + returnBD.Key);
                                     }
                                 }
                             }
@@ -158,7 +160,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //设置ab
             foreach (var sharder in incomingShaderAndVariantList)
             {
-                this.BuildingCtx.BuildAssetsInfo.SetABName(sharder.importFrom, AssetBundleName, BuildAssetsInfo.SetABNameMode.Force);
+                this.BuildingCtx.BuildingAssetInfos.SetABName(sharder.importFrom, AssetBundleName, BuildingAssetInfos.SetABNameMode.Force);
             }
 
             StopwatchTools.End("【搜集KeyWord】");

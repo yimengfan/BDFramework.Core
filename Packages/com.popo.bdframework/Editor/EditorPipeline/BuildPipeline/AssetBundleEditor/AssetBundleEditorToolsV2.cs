@@ -60,7 +60,7 @@ namespace BDFramework.Editor.AssetBundle
         {
             var (cg, bdenvNode) = GetBDFrameExAssetGraph();
             var bdenv = (bdenvNode.Operation.Object as BDFrameworkAssetsEnv);
-            bdenv.SetBuildParams(outPath,true);
+            bdenv.SetBuildParams(outPath, true);
             //执行
             AssetGraphUtility.ExecuteGraph(buildTarget, cg);
         }
@@ -114,5 +114,110 @@ namespace BDFramework.Editor.AssetBundle
             return type;
         }
 
+
+        #region Assetbundle混淆
+
+        /// <summary>
+        /// 获取混淆的资源
+        /// </summary>
+        /// <returns></returns>
+        static public string[] GetMixAssets()
+        {
+            return AssetDatabase.FindAssets("t:TextAsset", new string[] {BResources.MIX_SOURCE_FOLDER});
+        }
+
+        /// <summary>
+        /// 检测混淆资源
+        /// </summary>
+        static public void CheckABObfuscationSource()
+        {
+            var mixAsset = GetMixAssets();
+            if (mixAsset.Length == 0)
+            {
+                Debug.LogError("【AssetBundle】不存在混淆源文件!");
+            }
+        }
+
+
+        /// <summary>
+        /// 添加混淆
+        /// </summary>
+        static public void MixAssetBundle(string outpath, RuntimePlatform platform)
+        {
+            var mixAssets = GetMixAssets();
+            if (mixAssets.Length == 0)
+            {
+                Debug.LogError("【AssetBundle混淆】不存在混淆源文件!");
+            }
+
+            byte[][] mixSourceBytes = new byte[mixAssets.Length][];
+            for (int i = 0; i < mixAssets.Length; i++)
+            {
+                var path = IPath.Combine(outpath, BApplication.GetPlatformPath(platform), BResources.ART_ASSET_ROOT_PATH, mixAssets[i]);
+                var mixBytes = File.ReadAllBytes(path);
+                mixSourceBytes[i] = mixBytes;
+            }
+
+            //构建ab管理器对象
+            AssetBundleMgrV2 abv2 = new AssetBundleMgrV2();
+            abv2.Init(outpath);
+            //
+            var mixAssetbundleItems = abv2.AssetConfigLoder.AssetbundleItemList.Where((i) => mixAssets.Contains(i.AssetBundlePath)).ToArray();
+
+            Debug.Log("<color=green>--------------------开始混淆Assetbundle------------------------</color>");
+
+            //开始混淆AssetBundle
+            for (int i = 0; i < abv2.AssetConfigLoder.AssetbundleItemList.Count; i++)
+            {
+                //源AB
+                var sourceItem = abv2.AssetConfigLoder.AssetbundleItemList[i];
+                //非混合文件、ab不存在、mix过
+                if (mixAssetbundleItems.Contains(sourceItem) || sourceItem.AssetBundlePath == null || sourceItem.Mix > 0)
+                {
+                    continue;
+                }
+
+                var idx = (int) (Random.Range(0, (mixAssetbundleItems.Length - 1) * 10000) / 10000);
+                var mixBytes = mixSourceBytes[idx];
+                //
+                var abpath = IPath.Combine(outpath, BApplication.GetPlatformPath(platform), BResources.ART_ASSET_ROOT_PATH, sourceItem.AssetBundlePath);
+                if (!File.Exists(abpath))
+                {
+                    
+                    Debug.LogError($"不存在AB:{sourceItem.AssetBundlePath} - {AssetDatabase.GUIDToAssetPath(sourceItem.AssetBundlePath)}");
+                    continue;
+                }
+                
+                var abBytes = File.ReadAllBytes(abpath);
+                //拼接
+                var outbytes = new byte[mixBytes.Length + abBytes.Length];
+                Array.Copy(mixBytes, 0, outbytes, 0, mixBytes.Length);
+                Array.Copy(abBytes, 0, outbytes, mixBytes.Length, abBytes.Length);
+                //写入
+                FileHelper.WriteAllBytes(abpath, outbytes);
+                var hash = FileHelper.GetMurmurHash3(abpath);
+
+                //相同ab的都进行赋值，避免下次重新被修改。
+                foreach (var item in abv2.AssetConfigLoder.AssetbundleItemList)
+                {
+                    if (sourceItem.AssetBundlePath.Equals(item.AssetBundlePath))
+                    {
+                        item.Mix = mixBytes.Length;
+                        item.Hash = hash;
+                    }
+                }
+
+                //sourceItem.Mix = mixBytes.Length;
+
+                //混淆
+                Debug.Log("【Assetbundle混淆】" + sourceItem.AssetBundlePath);
+            }
+
+            //重新写入配置
+            abv2.AssetConfigLoder.OverrideConfig();
+            Debug.Log("<color=green>--------------------混淆Assetbundle完毕------------------------</color>");
+        }
+
+        #endregion
     }
 }

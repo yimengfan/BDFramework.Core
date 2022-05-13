@@ -98,10 +98,20 @@ namespace BDFramework.Editor
             if (IsModuleNotInstalledType_Impl == null)
             {
                 var getwindows = EditorWindow.GetWindow<BuildPlayerWindow>();
-                getwindows?.Close();
-                var method = typeof(BuildPlayerWindow).GetMethod("IsModuleNotInstalled" , BindingFlags.NonPublic | BindingFlags.Instance);
-                
-                IsModuleNotInstalledType_Impl = Delegate.CreateDelegate(typeof(IsModuleNotInstalled_type), getwindows,method) as IsModuleNotInstalled_type;
+                if (getwindows != null)
+                {
+                    try
+                    {
+                        getwindows.Close();
+                    }
+                    catch (Exception e)
+                    {
+                    }
+
+                    var method = typeof(BuildPlayerWindow).GetMethod("IsModuleNotInstalled" , BindingFlags.NonPublic | BindingFlags.Instance);
+                    IsModuleNotInstalledType_Impl = Delegate.CreateDelegate(typeof(IsModuleNotInstalled_type), getwindows,method) as IsModuleNotInstalled_type;
+                }
+
             }
 
             return !IsModuleNotInstalledType_Impl(buildTargetGroup, buildTarget);

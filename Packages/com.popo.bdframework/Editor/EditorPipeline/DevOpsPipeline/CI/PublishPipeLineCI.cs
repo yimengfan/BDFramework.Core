@@ -7,6 +7,7 @@ using BDFramework.Editor.Environment;
 using BDFramework.Editor.PublishPipeline;
 using BDFramework.Editor.SVN;
 using UnityEditor;
+using UnityEditor.Build.Player;
 using UnityEngine;
 
 namespace BDFramework.Editor.DevOps
@@ -114,9 +115,27 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "代码检查")]
         public static void CheckEditorCode()
         {
-            //检查下打包前的代码错
-            UnityEditor.BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, BuildAssetBundleOptions.DeterministicAssetBundle, BuildTarget.Android);
+            CheckCode();
         }
+
+        /// <summary>
+        /// 检测代码
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckCode()
+        {
+            //检查下打包前的代码错
+            var setting = new ScriptCompilationSettings();
+            setting.options = ScriptCompilationOptions.Assertions;
+            setting.target = BuildTarget.Android;
+            var ret = PlayerBuildInterface.CompilePlayerScripts(setting, BApplication.Library + "/BuildTest");
+            if (ret.assemblies.Contains("Assembly-CSharp.dll"))
+            {
+                return true;
+            }
+            return false;
+        }
+        
 
         /// <summary>
         /// 构建dll
@@ -138,7 +157,6 @@ namespace BDFramework.Editor.DevOps
         static public void PublishPackage_AndroidDebug()
         {
             //更新
-
             BuildPackage(RuntimePlatform.Android, BuildPackageTools.BuildMode.Debug);
         }
 
@@ -279,8 +297,7 @@ namespace BDFramework.Editor.DevOps
         }
 
         #endregion
-
-
+        
         #region Git操作
 
         #endregion

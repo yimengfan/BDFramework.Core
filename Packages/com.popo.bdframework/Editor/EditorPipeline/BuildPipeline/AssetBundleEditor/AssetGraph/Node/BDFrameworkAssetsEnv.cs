@@ -146,7 +146,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     break;
             }
 
-            if (GUILayout.Button("刷新资源数据"))
+            if (GUILayout.Button("强制刷新资源数据"))
             {
                 isDirty = true;
                 GenBuildingCtx(true);
@@ -185,15 +185,13 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             BuildingCtx.BuildParams.BuildTarget = target;
             
-            BuildingCtx.CheckABObfuscationSource();
             //设置所有节点参数请求,依次传参
             Debug.Log("【初始化框架资源环境】配置:\n" + JsonMapper.ToJson(BuildingCtx.BuildParams));
             var outMap = new Dictionary<string, List<AssetReference>>();
             //预览模式
-            if ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode == AssetGraphWindowsModeEnum.预览节点模式)
+            if ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode == AssetGraphWindowsModeEnum.预览节点模式 || BuildingCtx.BuildParams.IsBuilding)
             {
-                //生成buildinfo
-                 
+
                 //创建构建上下文信息
                 GenBuildingCtx();
                 //输出
@@ -212,7 +210,6 @@ namespace BDFramework.Editor.AssetGraph.Node
                     {nameof(FloderType.Depend), new List<AssetReference>()}
                 };
             }
-
             StopwatchTools.End("【初始化框架资源环境】");
 
             var output = connectionsToOutput?.FirstOrDefault();
@@ -228,7 +225,6 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         private void GenBuildingCtx(bool isRenew = false)
         {
-            Debug.Log("------------>生成BuildInfo  :" + this.GetHashCode());
             //新构建对象
             if (isRenew)
             {
@@ -238,9 +234,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //生成build资源信息
-            if (BuildingCtx.BuildAssetsInfo.AssetDataMaps.Count == 0)
+            if (BuildingCtx.BuildingAssetInfos.AssetInfoMap.Count == 0)
             {
-                BuildingCtx.GenBuildInfo();
+                BuildingCtx.CollectBuildingAssets();
             }
         }
 

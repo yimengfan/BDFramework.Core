@@ -5,7 +5,9 @@ using UnityEngine;
 using BDFramework.Editor.Tools;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
+using BDFramework.Editor.DevOps;
 using BDFramework.Editor.PublishPipeline;
+using UnityEditor.Build.Player;
 
 namespace BDFramework.Editor.AssetBundle
 {
@@ -85,25 +87,35 @@ namespace BDFramework.Editor.AssetBundle
         void OnGUI_TestAssetBundle()
         {
             GUILayout.BeginVertical();
-            {  
+            {
                 GUILayout.Label("构建资源:", EditorGUIHelper.LabelH4);
-                if (GUILayout.Button("收集Keyword[Shader Feature]", GUILayout.Width(200),GUILayout.Height(25)))
+                GUILayout.BeginHorizontal();
                 {
-                    ShaderCollection.CollectShaderVariant();
+                    if (GUILayout.Button("收集Keyword[Shader Feature]", GUILayout.Width(200), GUILayout.Height(25)))
+                    {
+                        ShaderCollection.CollectShaderVariant();
+                    }
+
+                    if (GUILayout.Button("打包Shader测试", GUILayout.Width(120), GUILayout.Height(25)))
+                    {
+                        ShaderCollection.BuildShadersAssetBundle();
+                    }
                 }
+                GUILayout.EndHorizontal();
+
                 GUILayout.Space(5);
                 //遍历支持平台
                 foreach (var platform in BApplication.SupportPlatform)
                 {
                     GUILayout.BeginHorizontal();
                     {
-                        GUILayout.Label(BApplication.GetPlatformPath(platform),GUILayout.Width(80));
+                        GUILayout.Label(BApplication.GetPlatformPath(platform), GUILayout.Width(80));
 
                         GUILayout.Space(20);
-                        
+
                         GUI.color = Color.green;
-                        
-                        if (GUILayout.Button("Build",GUILayout.Width(100)))
+
+                        if (GUILayout.Button("Build", GUILayout.Width(80)))
                         {
                             var ret = EditorUtility.DisplayDialog("提示", "是否要构建AssetBundle? \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
                             if (ret)
@@ -112,12 +124,19 @@ namespace BDFramework.Editor.AssetBundle
                                 BuildAssetBundle(BApplication.DevOpsPublishAssetsPath, platform);
                             }
                         }
-
+                        if (GUILayout.Button("混淆AB", GUILayout.Width(80)))
+                        {
+                            var ret = EditorUtility.DisplayDialog("提示", "是否要混淆AssetBundle? \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
+                            if (ret)
+                            {
+                               AssetBundleEditorToolsV2.MixAssetBundle(BApplication.DevOpsPublishAssetsPath, platform);
+                            }
+                        }
                         GUI.color = GUI.backgroundColor;
                     }
                     GUILayout.EndHorizontal();
                 }
-                
+
 
                 GUILayout.Space(10); //();
                 GUILayout.Label("资源验证:", EditorGUIHelper.LabelH4);
@@ -150,15 +169,18 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 打包资源
         /// </summary>
-        public void BuildAssetBundle(string outputPath,RuntimePlatform platform)
+        public void BuildAssetBundle(string outputPath, RuntimePlatform platform)
         {
-            //搜集keyword
-            ShaderCollection.CollectShaderVariant();
-            
-            //生成Assetbundlebunle
-            AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform);
-            AssetDatabase.Refresh();
-            Debug.Log("资源打包完毕");
+            //ab会先构建代码,提前构建，避免浪费时间
+            var ret = PublishPipeLineCI.CheckCode();
+            if (ret)
+            {
+                //生成Assetbundlebunle
+                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform);
+                AssetDatabase.Refresh();
+                Debug.Log("资源打包完毕");
+            }
+
         }
 
         private void OnDestroy()

@@ -120,6 +120,7 @@ namespace BDFramework.Editor
         public void Save()
         {
             FileHelper.WriteAllText(SETTING_PATH, JsonMapper.ToJson(this, true));
+           // Debug.Log("保存成功:"+SETTING_PATH);
         }
     }
 

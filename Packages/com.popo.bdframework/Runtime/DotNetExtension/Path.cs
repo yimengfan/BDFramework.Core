@@ -103,7 +103,12 @@ namespace System.IO
         /// <returns></returns>
         static public string ReplaceBackSlash(string path)
         {
-            return path.Replace("\\","/" );
+            if (path != null)
+            {
+                return path.Replace("\\", "/");
+            }
+
+            return path;
         }
         
 

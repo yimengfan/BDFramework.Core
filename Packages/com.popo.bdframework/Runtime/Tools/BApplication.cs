@@ -149,7 +149,7 @@ namespace BDFramework.Core.Tools
         /// <summary>
         /// Devops 资源路径
         /// </summary>
-        public static string DevOpsPublishAssetsPath { get; private set; }
+        public static  string DevOpsPublishAssetsPath { get; private set; }
 
         /// <summary>
         /// 发布包体路径

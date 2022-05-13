@@ -9,9 +9,9 @@ namespace BDFramework.Editor.AssetBundle
     /// <summary>
     /// build资产信息
     /// </summary>
-    public class BuildAssetsInfo
+    public class BuildingAssetInfos
     {
-        public class BuildAssetData
+        public class AssetInfo
         {
             /// <summary>
             /// Id
@@ -39,6 +39,7 @@ namespace BDFramework.Editor.AssetBundle
             /// AB文件的hash
             /// </summary>
             public string ABHash { get; set; } = "";
+
             /// <summary>
             /// 被依赖次数
             /// </summary>
@@ -69,22 +70,23 @@ namespace BDFramework.Editor.AssetBundle
         public string Time;
 
         /// <summary>
-        /// 资源列表
+        /// 参与打包的所有资源
+        /// 
         /// </summary>
-        public Dictionary<string, BuildAssetData> AssetDataMaps = new Dictionary<string, BuildAssetData>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, AssetInfo> AssetInfoMap = new Dictionary<string, AssetInfo>(StringComparer.OrdinalIgnoreCase);
 
         public enum SetABNameMode
         {
             Simple, //如果AB名被修改，则不会再次修改.用以不覆盖先执行的AB颗粒度规则
-            Force,  //强制修改该AB名,即使有其他规则已经修改过该AB颗粒度
-            ForceAndFixAllRef,// ForceAndFixAllRef:强制修改，并且也修改引用该资源的AB名
+            Force, //强制修改该AB名,即使有其他规则已经修改过该AB颗粒度
+            ForceAndFixAllRef, // ForceAndFixAllRef:强制修改，并且也修改引用该资源的AB名
             Lock //锁住，修改完不允许其他规则再次修改
         }
 
         /// <summary>
         /// 设置AB名(颗粒度)
         /// </summary>
-        public bool SetABName(string assetName, string newABName, SetABNameMode setNameMode = SetABNameMode.Simple ,string changelog ="")
+        public bool SetABName(string assetName, string newABName, SetABNameMode setNameMode = SetABNameMode.Simple, string changelog = "")
         {
             //1.如果ab名被修改过,说明有其他规则影响，需要理清打包规则。（比如散图打成图集名）
             //2.如果资源被其他资源引用，修改ab名，需要修改所有引用该ab的名字
@@ -92,7 +94,7 @@ namespace BDFramework.Editor.AssetBundle
             bool isCanSetABName = false;
             bool isSetAllDependAB = false;
 
-            this.AssetDataMaps.TryGetValue(assetName, out var assetData);
+            this.AssetInfoMap.TryGetValue(assetName, out var assetData);
             //
             if (assetData != null)
             {
@@ -135,7 +137,7 @@ namespace BDFramework.Editor.AssetBundle
             if (isSetAllDependAB)
             {
                 //刷新整个列表替换
-                foreach (var assetItem in this.AssetDataMaps)
+                foreach (var assetItem in this.AssetInfoMap)
                 {
                     //依赖替换
                     for (int i = 0; i < assetItem.Value.DependAssetList.Count; i++)
@@ -160,7 +162,7 @@ namespace BDFramework.Editor.AssetBundle
         {
             var retMap = new Dictionary<string, List<string>>();
 
-            foreach (var item in AssetDataMaps)
+            foreach (var item in AssetInfoMap)
             {
                 //增加索引
                 var key = item.Value.ABName;
@@ -180,19 +182,37 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 克隆
         /// </summary>
-        public BuildAssetsInfo Clone()
+        public BuildingAssetInfos Clone()
         {
             //手动new防止内部map，防止构造传参失效
-            BuildAssetsInfo tempBuildAssetsInfo = new BuildAssetsInfo();
+            BuildingAssetInfos tempBuildingAssetInfos = new BuildingAssetInfos();
             //
             var json = JsonMapper.ToJson(this);
-            var temp = JsonMapper.ToObject<BuildAssetsInfo>(json);
-            foreach (var item in temp.AssetDataMaps)
+            var temp = JsonMapper.ToObject<BuildingAssetInfos>(json);
+            foreach (var item in temp.AssetInfoMap)
             {
-                tempBuildAssetsInfo.AssetDataMaps[item.Key] = item.Value;
+                tempBuildingAssetInfos.AssetInfoMap[item.Key] = item.Value;
             }
 
-            return tempBuildAssetsInfo;
+            return tempBuildingAssetInfos;
+        }
+
+
+        /// <summary>
+        /// 获取一个新实例的AssetInfo
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public AssetInfo GetNewInstanceAssetInfo(string path)
+        {
+            var ret = this.AssetInfoMap.TryGetValue(path, out var assetInfo);
+            if (ret)
+            {
+                var json = JsonMapper.ToJson(assetInfo);
+                //返回一个新实例
+                return JsonMapper.ToObject<AssetInfo>(json);
+            }
+            return null;
         }
     }
 }

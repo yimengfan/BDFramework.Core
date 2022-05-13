@@ -12,6 +12,7 @@ using Debug = UnityEngine.Debug;
 using BDFramework.DataListener;
 using BDFramework.Editor;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.DevOps;
 using BDFramework.Editor.Environment;
 using BDFramework.Editor.PublishPipeline;
 using BDFramework.Tool;
@@ -63,6 +64,11 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 StripCode.GenLinkXml();
             }
 
+            if (GUILayout.Button("4.预检查工程代码", GUILayout.Width(305), GUILayout.Height(30)))
+            {
+                PublishPipeLineCI.CheckEditorCode();
+            }
+            
             if (BDEditorApplication.BDFrameWorkFrameEditorSetting != null)
             {
                 BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting.IsAutoBuildDll = EditorGUILayout.Toggle("是否自动编译热更DLL", BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting.IsAutoBuildDll);
