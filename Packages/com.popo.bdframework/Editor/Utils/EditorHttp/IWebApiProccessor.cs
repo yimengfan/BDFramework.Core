@@ -8,6 +8,6 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
     public interface IWebApiProccessor
     {
         string WebApiName { get; }
-        void WebAPIProccessor(string apiParams, HttpListenerResponse response);
+        EditorHttpResonseData WebAPIProccessor(string apiParams, HttpListenerResponse response);
     }
 }

@@ -13,7 +13,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
         /// 监听""不需要api
         /// </summary>
         public string WebApiName { get; set; } = "Assetbundle";
-        public void WebAPIProccessor(string apiParams, HttpListenerResponse response)
+        public EditorHttpResonseData WebAPIProccessor(string apiParams, HttpListenerResponse response)
         {
             string filePath = IPath.Combine( BApplication.DevOpsPublishAssetsPath, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX,apiParams);
             if (!File.Exists(filePath))
@@ -36,6 +36,9 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                 response.OutputStream.Write(fileBytes, 0, byteLength);
                 response.OutputStream.Close();
             }
+
+            //自行处理
+            return null;
         }
     }
 }

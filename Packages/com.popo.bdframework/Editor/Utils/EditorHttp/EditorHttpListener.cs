@@ -20,11 +20,13 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
         /// 是否发生错误
         /// </summary>
         public bool err = false;
+
         /// <summary>
         /// 返回的结构
         /// </summary>
-        public string content="";
+        public string content = "";
     }
+
     /// <summary>
     /// EditorHttp监听器
     /// </summary>
@@ -33,7 +35,9 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
         #region 基本属性
 
         public string Host { get; set; }
+
         public string port { get; set; }
+
         //
         private string _webHomeDir;
         private HttpListener listener = new HttpListener();
@@ -92,6 +96,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                     {
                         listener.Prefixes.Add("http://+:" + tryPort + "/");
                     }
+
                     listener.Start();
                     //赋值本地
                     this.Host = host;
@@ -100,6 +105,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                     {
                         Debug.Log($"【EditorHttpService】备用端口号生效 - http://{host}:{tryPort}");
                     }
+
                     break;
                 }
                 catch (Exception e)
@@ -107,7 +113,6 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                     Debug.LogError(e.Message);
                 }
             }
-
 
 
             listenThread = new Thread(AcceptClient);
@@ -118,7 +123,6 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
 
         private void StartHttpServer()
         {
-            
         }
 
         /// <summary>  
@@ -164,6 +168,8 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
             HttpListenerContext context = ctx as HttpListenerContext;
             HttpListenerResponse response = context.Response;
             HttpListenerRequest request = context.Request;
+            //返回数据构建
+            EditorHttpResonseData retdata = null;
             try
             {
                 //格式化url
@@ -177,9 +183,10 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                 {
                     rawUrl = rawUrl.Substring(1, rawUrl.Length - 1);
                 }
+
                 //
                 rawUrl = rawUrl.Replace("//", "/");
-                
+
 
                 string apiFuc = "";
                 string apiParams = "";
@@ -194,26 +201,40 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                     //只有参数,没有协议
                     apiParams = rawUrl;
                 }
-                
+
                 //调用proccesor
-                InvokeProccessor(apiFuc, apiParams, response);
+                retdata = InvokeProccessor(apiFuc, apiParams, response);
             }
             catch (Exception ex)
             {
-
-                var retdata = new EditorHttpResonseData();
+                retdata = new EditorHttpResonseData();
                 retdata.err = true;
                 retdata.content = ex.Message;
-                
+            }
+
+            //填充返回数据
+            if (request != null)
+            {
                 //返回
-                response.StatusCode = 400;
-                response.ContentType = "text/plain";
+                if (retdata.err)
+                {
+                    response.StatusCode = 400;
+                }
+                else
+                {
+                    response.StatusCode = 200;
+                }
+
+                //返回类型
+                response.ContentType = "text/json";
                 using (StreamWriter writer = new StreamWriter(response.OutputStream, Encoding.UTF8))
                 {
-                    writer.WriteLine(JsonMapper.ToJson(retdata));
+                    var json = JsonMapper.ToJson(retdata);
+                    writer.WriteLine(json);
                 }
             }
 
+            //关闭response
             try
             {
                 response.Close();
@@ -228,7 +249,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
         /// <summary>
         /// WebApi处理器的delegate
         /// </summary>
-        public delegate void WebAPIProccessor(string apiParams, HttpListenerResponse response);
+        public delegate EditorHttpResonseData WebAPIProccessor(string apiParams, HttpListenerResponse response);
 
         public Dictionary<string, WebAPIProccessor> WebAPIProccessorMap = new Dictionary<string, WebAPIProccessor>(StringComparer.OrdinalIgnoreCase);
 
@@ -240,7 +261,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
             var proccessor = Activator.CreateInstance<T>();
             if (!WebAPIProccessorMap.ContainsKey(proccessor.WebApiName))
             {
-                WebAPIProccessorMap[proccessor.WebApiName] = proccessor.WebAPIProccessor;
+                WebAPIProccessorMap[proccessor.WebApiName] = (apiParams, response) => proccessor.WebAPIProccessor(apiParams, response);
             }
             else
             {
@@ -254,13 +275,12 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
         /// <param name="apifunc"></param>
         /// <param name="apiParams"></param>
         /// <param name="response"></param>
-        public void InvokeProccessor(string apifunc, string apiParams, HttpListenerResponse response)
+        public EditorHttpResonseData InvokeProccessor(string apifunc, string apiParams, HttpListenerResponse response)
         {
             var ret = WebAPIProccessorMap.TryGetValue(apifunc, out var proccessor);
-
             if (ret)
             {
-                proccessor?.Invoke(apiParams, response);
+                return proccessor?.Invoke(apiParams, response);
             }
             else
             {

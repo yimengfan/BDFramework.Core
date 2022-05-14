@@ -20,9 +20,20 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
     public class WP_EditorInvoke : IWebApiProccessor
     {
         public string WebApiName { get; set; } = "EditorInvoke";
+        
+        /// <summary>
+        /// editor执行缓存
+        /// </summary>
         private Dictionary<string, MethodInfo> functionCacheMap = new Dictionary<string, MethodInfo>();
 
-        public void WebAPIProccessor(string apiParams, HttpListenerResponse response)
+
+        /// <summary>
+        /// webapi处理器
+        /// </summary>
+        /// <param name="apiParams"></param>
+        /// <param name="response"></param>
+        /// <exception cref="Exception"></exception>
+        public EditorHttpResonseData WebAPIProccessor(string apiParams, HttpListenerResponse response)
         {
             
             var ret=  functionCacheMap.TryGetValue(apiParams, out var methodInfo);
@@ -61,29 +72,27 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                         throw new Exception("Function不存在");
                     }
                 }
+                else
+                {
+                    throw new Exception("Function不存在");
+                }
             }
+
+            try
+            {
+                methodInfo.Invoke(null, null);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Function 执行报错,请查看Unity!");
+            }
+
 
             var retdata = new EditorHttpResonseData();
             retdata.content = "执行成功";
             response.StatusCode = 200;
-            //执行逻辑
-            try
-            {
-                methodInfo.Invoke(null,null);
-            }
-            catch (Exception e)
-            {
-                retdata.err = true;
-                retdata.content = e.Message;
-                response.StatusCode = 400;
-            }
-            
-            //返回数据
-            response.ContentType = "text/plain";
-            using (StreamWriter writer = new StreamWriter(response.OutputStream, Encoding.UTF8))
-            {
-                writer.WriteLine(JsonMapper.ToJson(retdata));
-            }
+
+            return retdata;
         }
 
 
