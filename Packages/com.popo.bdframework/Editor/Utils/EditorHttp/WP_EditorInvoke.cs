@@ -74,7 +74,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                 }
                 else
                 {
-                    throw new Exception("Function不存在");
+                    throw new Exception("ClassType不存在");
                 }
             }
 
