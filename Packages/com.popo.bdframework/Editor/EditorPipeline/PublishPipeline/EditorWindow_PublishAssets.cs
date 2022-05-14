@@ -300,7 +300,7 @@ namespace BDFramework.Editor.PublishPipeline
 
                     if (GUILayout.Button("复制", GUILayout.Width(40)))
                     {
-                        GUIUtility.systemCopyBuffer = weburl;
+                        GUIUtility.systemCopyBuffer = IPHelper.GetLocalIP() + ":" + EditorHttpListener.port+"/Assetbundle";
                         EditorUtility.DisplayDialog("提示", "复制成功!", "OK");
                     }
                 }
@@ -347,7 +347,7 @@ namespace BDFramework.Editor.PublishPipeline
                 //添加AB文件服务器处理器
                 EditorHttpListener.AddWebAPIProccesor<WP_LocalABFileServer>();
                 var webdir = IPath.Combine(EXPORT_PATH, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
-                EditorHttpListener.Start("*", "10086");
+                EditorHttpListener.Start("+", "10086");
             }
         }
 

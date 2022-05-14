@@ -217,8 +217,7 @@ namespace BDFramework.VersionController
             {
                 GetServerVersionInfo(serverUrl, callback);
             });
-            
-            Debug.Log("test:------------------------");
+           // Debug.Log("test:------------------------");
         }
 
 

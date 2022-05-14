@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
+using LitJson;
 using NUnit.Framework.Internal;
 using UnityEngine;
 
@@ -17,37 +20,69 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
     public class WP_EditorInvoke : IWebApiProccessor
     {
         public string WebApiName { get; set; } = "EditorInvoke";
-
-
-        private Dictionary<string, Action> actionCache = new Dictionary<string, Action>();
+        private Dictionary<string, MethodInfo> functionCacheMap = new Dictionary<string, MethodInfo>();
 
         public void WebAPIProccessor(string apiParams, HttpListenerResponse response)
         {
-            var lastDotIdx = apiParams.LastIndexOf(".");
-
-            if (lastDotIdx == -1)
+            
+            var ret=  functionCacheMap.TryGetValue(apiParams, out var methodInfo);
+            if (!ret)
             {
-                throw new Exception("Function不存在");
-            }
+                var lastDotIdx = apiParams.LastIndexOf(".");
+                if (lastDotIdx == -1)
+                {
+                    throw new Exception("Function不存在");
+                }
 
-            var clasname = apiParams.Substring(0, lastDotIdx);
-            var funcname = apiParams.Substring(lastDotIdx + 1);
-            //获取type
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            Type type = null;
-            foreach (var assembly in assemblies)
-            {
-                type = assembly.GetTypes().FirstOrDefault((t) => t.FullName.Equals(clasname, StringComparison.OrdinalIgnoreCase));
+                var clasname = apiParams.Substring(0, lastDotIdx);
+                var funcname = apiParams.Substring(lastDotIdx + 1);
+                //获取type
+                var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                Type type = null;
+                foreach (var assembly in assemblies)
+                {
+                    type = assembly.GetTypes().FirstOrDefault((t) => t.FullName.Equals(clasname, StringComparison.OrdinalIgnoreCase));
+                    if (type != null)
+                    {
+                        break;
+                    }
+                }
+                //
                 if (type != null)
                 {
-                    break;
+                    methodInfo = type.GetMethod(funcname, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                    if (methodInfo != null)
+                    {
+                       
+                        functionCacheMap[apiParams] = methodInfo;
+                    }
+                    else
+                    {
+                        throw new Exception("Function不存在");
+                    }
                 }
             }
-            //
-            var method = type.GetMethod(funcname, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
-            if (method != null)
+
+            var retdata = new EditorHttpResonseData();
+            retdata.content = "执行成功";
+            response.StatusCode = 200;
+            //执行逻辑
+            try
             {
-                method.Invoke(null, null);
+                methodInfo.Invoke(null,null);
+            }
+            catch (Exception e)
+            {
+                retdata.err = true;
+                retdata.content = e.Message;
+                response.StatusCode = 400;
+            }
+            
+            //返回数据
+            response.ContentType = "text/plain";
+            using (StreamWriter writer = new StreamWriter(response.OutputStream, Encoding.UTF8))
+            {
+                writer.WriteLine(JsonMapper.ToJson(retdata));
             }
         }
 
@@ -57,7 +92,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
         /// </summary>
         static private void Test()
         {
-            Debug.Log("EditorInvoke Success!");
+            Debug.Log("【EditorHttp】EditorInvoke Success!");
         }
     }
 }

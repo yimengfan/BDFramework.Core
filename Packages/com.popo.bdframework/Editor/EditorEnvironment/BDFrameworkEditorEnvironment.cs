@@ -10,6 +10,7 @@ using BDFramework.Core.Tools;
 using BDFramework.Editor.HotfixPipeline;
 using BDFramework.Editor.Table;
 using BDFramework.Editor.Task;
+using BDFramework.Editor.Tools.EditorHttpServer;
 using BDFramework.Hotfix.Reflection;
 using BDFramework.ScreenView;
 using ServiceStack;
@@ -33,6 +34,11 @@ namespace BDFramework.Editor.Environment
         /// 编辑器任务的
         /// </summary>
         static public EditorTask EditorTaskInstance { get; private set; } = null;
+
+        /// <summary>
+        /// Editor http任务
+        /// </summary>
+        static public EditorHttpListener EditorHttpListener { get; private set; }
 
         [InitializeOnLoadMethod]
         static void BDFrameworkEditorEnvironmentInit()
@@ -130,7 +136,7 @@ namespace BDFramework.Editor.Environment
                     var eAssemlby = Assembly.LoadFile(editorAssemlyPath);
                     Types = CollectTypes(gAssembly, eAssemlby).ToArray();
                 }
-                
+
                 //编辑器下加载初始化
                 BResources.Init(AssetLoadPathType.Editor);
                 //编辑器下管理器注册
@@ -143,7 +149,10 @@ namespace BDFramework.Editor.Environment
                 HotfixPipelineTools.Init();
                 //编辑器初始化
                 InitEditorTask();
+                //编辑器任务
                 EditorTaskInstance.OnUnityLoadOrCodeRecompiled();
+                //编辑器http服务
+                InitEditorHttpServer();
                 //最后，完成初始化
                 IsInited = true;
                 //  Debug.Log("框架编辑器环境初始化成功!");
@@ -238,6 +247,16 @@ namespace BDFramework.Editor.Environment
                 EditorTaskInstance = new EditorTask();
                 EditorTaskInstance.CollectEditorTaskMedthod();
             }
+        }
+
+        /// <summary>
+        /// 初始化 editor http
+        /// </summary>
+        static private void InitEditorHttpServer()
+        {
+            EditorHttpListener = new EditorHttpListener();
+            EditorHttpListener.Start("+", "9999", "9998", "9997", "9996");
+            EditorHttpListener.AddWebAPIProccesor<WP_EditorInvoke>();
         }
     }
 }

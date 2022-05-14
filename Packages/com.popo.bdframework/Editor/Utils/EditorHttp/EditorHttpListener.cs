@@ -6,10 +6,25 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using BDFramework.Core.Tools;
+using LitJson;
 using UnityEngine;
 
 namespace BDFramework.Editor.Tools.EditorHttpServer
 {
+    /// <summary>
+    /// Editor http 返回的数据
+    /// </summary>
+    public class EditorHttpResonseData
+    {
+        /// <summary>
+        /// 是否发生错误
+        /// </summary>
+        public bool err = false;
+        /// <summary>
+        /// 返回的结构
+        /// </summary>
+        public string content="";
+    }
     /// <summary>
     /// EditorHttp监听器
     /// </summary>
@@ -19,6 +34,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
 
         public string Host { get; set; }
         public string port { get; set; }
+        //
         private string _webHomeDir;
         private HttpListener listener = new HttpListener();
         private Thread listenThread;
@@ -49,30 +65,60 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
 
         #region 处理http业务
 
-        /// <summary>  
+        /// <summary>
         /// 启动服务  
-        /// </summary>  
-        public void Start(string host, string port)
+        /// </summary>
+        /// <param name="host">主机地址</param>
+        /// <param name="ports">端口号,多传参则为备用</param>
+        public void Start(string host, params string[] ports)
         {
-            //http相关配置
-            this.Host = host;
-            this.port = port;
-            //开始监听逻辑
             if (listener.IsListening)
+            {
                 return;
-            if (!string.IsNullOrEmpty(Host) && Host.Length > 0)
-            {
-                listener.Prefixes.Add("http://" + Host + ":" + this.port + "/");
-            }
-            else if (listener.Prefixes == null || listener.Prefixes.Count == 0)
-            {
-                listener.Prefixes.Add("http://localhost:" + this.port + "/");
             }
 
-            listener.Start();
+
+            for (int i = 0; i < ports.Length; i++)
+            {
+                var tryPort = ports[i];
+                //开始监听逻辑
+                try
+                {
+                    if (!string.IsNullOrEmpty(host) && host.Length > 0)
+                    {
+                        listener.Prefixes.Add("http://" + host + ":" + tryPort + "/");
+                    }
+                    else if (listener.Prefixes == null || listener.Prefixes.Count == 0)
+                    {
+                        listener.Prefixes.Add("http://+:" + tryPort + "/");
+                    }
+                    listener.Start();
+                    //赋值本地
+                    this.Host = host;
+                    this.port = tryPort;
+                    if (i > 0)
+                    {
+                        Debug.Log($"【EditorHttpService】备用端口号生效 - http://{host}:{tryPort}");
+                    }
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e.Message);
+                }
+            }
+
+
+
             listenThread = new Thread(AcceptClient);
             listenThread.Name = "httpserver";
             listenThread.Start();
+        }
+
+
+        private void StartHttpServer()
+        {
+            
         }
 
         /// <summary>  
@@ -148,18 +194,23 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                     //只有参数,没有协议
                     apiParams = rawUrl;
                 }
-
-
+                
                 //调用proccesor
                 InvokeProccessor(apiFuc, apiParams, response);
             }
             catch (Exception ex)
             {
-                response.StatusCode = 200;
+
+                var retdata = new EditorHttpResonseData();
+                retdata.err = true;
+                retdata.content = ex.Message;
+                
+                //返回
+                response.StatusCode = 400;
                 response.ContentType = "text/plain";
                 using (StreamWriter writer = new StreamWriter(response.OutputStream, Encoding.UTF8))
                 {
-                    writer.WriteLine(ex.Data);
+                    writer.WriteLine(JsonMapper.ToJson(retdata));
                 }
             }
 
