@@ -80,14 +80,14 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
             {
                 return;
             }
-
-
+            
             for (int i = 0; i < ports.Length; i++)
             {
                 var tryPort = ports[i];
                 //开始监听逻辑
                 try
                 {
+                    listener.Prefixes.Clear();
                     if (!string.IsNullOrEmpty(host) && host.Length > 0)
                     {
                         listener.Prefixes.Add("http://" + host + ":" + tryPort + "/");
@@ -103,7 +103,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                     this.port = tryPort;
                     if (i > 0)
                     {
-                        Debug.Log($"【EditorHttpService】备用端口号生效 - http://{host}:{tryPort}");
+                        Debug.Log($"【EditorHttpService】{ ports[0]}被占用,备用端口号生效 - http://{host}:{tryPort}");
                     }
 
                     break;
