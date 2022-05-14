@@ -3,6 +3,7 @@ using BDFramework.ResourceMgr;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using BDFramework.ResourceMgr.V2;
 using BDFramework.Core.Tools;
 using BDFramework.VersionController;
@@ -133,22 +134,28 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         static public IResMgr ResLoader { get; private set; }
 
+
         #region 加载、取消加载
 
         /// <summary>
         /// 同步加载
         /// </summary>
+        /// <param name="assetPath">资源路径</param>
+        /// <param name="pathType">加载类型：路径名还是GUID</param>
+        /// <param name="groupName">加载组,用以对资源加载分组</param>
         /// <typeparam name="T"></typeparam>
-        /// <param name="name"></param>
         /// <returns></returns>
-        public static T Load<T>(string name, LoadPathType pathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
+        public static T Load<T>(string assetPath, LoadPathType pathType = LoadPathType.RuntimePath, string groupName = null) where T : UnityEngine.Object
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(assetPath))
             {
                 return null;
             }
 
-            return ResLoader.Load<T>(name, pathType);
+            //添加到资源组
+            AddAssetsPathToGroup(groupName, assetPath);
+            //加载
+            return ResLoader.Load<T>(assetPath, pathType);
         }
 
         /// <summary>
@@ -157,7 +164,7 @@ namespace BDFramework.ResourceMgr
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static UnityEngine.Object Load(Type type, string name)
+        private static UnityEngine.Object Load(Type type, string name)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -204,8 +211,11 @@ namespace BDFramework.ResourceMgr
         /// <typeparam name="T">类型</typeparam>
         /// <param name="objName">名称</param>
         /// <param name="action">回调函数</param>
-        public static int AsyncLoad<T>(string assetName, Action<T> action) where T : UnityEngine.Object
+        public static int AsyncLoad<T>(string assetName, Action<T> action, string groupName = null) where T : UnityEngine.Object
         {
+            //添加到资源组
+            AddAssetsPathToGroup(groupName, assetName);
+            //异步加载
             return ResLoader.AsyncLoad<T>(assetName, action);
         }
 
@@ -214,8 +224,11 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="assetlist"></param>
         /// <param name="onLoadEnd"></param>
-        public static List<int> AsyncLoad(List<string> assetlist, Action<int, int> onProcess = null, Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null)
+        public static List<int> AsyncLoad(List<string> assetlist, Action<int, int> onProcess = null, Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null, string groupName = null)
         {
+            //添加到资源组
+            AddAssetsPathToGroup(groupName, assetlist.ToArray());
+            //异步加载
             return ResLoader.AsyncLoad(assetlist, onProcess, onLoadEnd);
         }
 
@@ -247,32 +260,50 @@ namespace BDFramework.ResourceMgr
         #region 卸载资源
 
         /// <summary>
-        /// 卸载某个gameobj
+        /// 卸载资源
         /// </summary>
         /// <param name="o"></param>
-        public static void UnloadAsset(string path, bool isForceUnload = false)
+        public static void UnloadAsset(string assetPath, bool isForceUnload = false)
         {
-            if (string.IsNullOrEmpty(path))
+            if (string.IsNullOrEmpty(assetPath))
             {
                 return;
             }
 
-            ResLoader.UnloadAsset(path, isForceUnload);
+            ResLoader.UnloadAsset(assetPath, isForceUnload);
         }
 
         /// <summary>
         /// 卸载资源
         /// </summary>
-        /// <param name="asset"></param>
-        public static void UnloadAsset(UnityEngine.Object asset)
+        /// <param name="o"></param>
+        public static void UnloadAssets(params string[] assetPaths)
         {
-            if (asset is GameObject || asset is Component)
+            foreach (var assetPath in assetPaths)
+            {
+                if (string.IsNullOrEmpty(assetPath))
+                {
+                    return;
+                }
+
+                ResLoader.UnloadAsset(assetPath);
+            }
+        }
+        
+        /// <summary>
+        /// 卸载资源
+        /// </summary>
+        /// <param name="gobj"></param>
+        public static void UnloadAsset(UnityEngine.Object gobj)
+        {
+            if (gobj is GameObject || gobj is Component)
             {
                 return;
             }
 
-            Resources.UnloadAsset(asset);
+            Resources.UnloadAsset(gobj);
         }
+
 
         /// <summary>
         /// 卸载所有的
@@ -282,6 +313,71 @@ namespace BDFramework.ResourceMgr
             ResLoader.UnloadAllAsset();
         }
 
+        #endregion
+
+        #region 资源组
+
+        /// <summary>
+        /// 加载资源组缓存
+        /// </summary>
+        static public Dictionary<string, List<string>> loadAssetGroupMap = new Dictionary<string, List<string>>();
+
+
+        /// <summary>
+        /// 添加到资源组
+        /// </summary>
+        public static void AddAssetsPathToGroup(string groupName, params string[] assetPath)
+        {
+            if (!string.IsNullOrEmpty(groupName))
+            {
+                if (!loadAssetGroupMap.TryGetValue(groupName, out var list))
+                {
+                    list = new List<string>(10);
+                    loadAssetGroupMap[groupName] = list;
+                }
+
+                list.AddRange(assetPath);
+            }
+        }
+
+        /// <summary>
+        /// 获取资源组资源
+        /// </summary>
+        /// <param name="groupName"></param>
+        /// <returns></returns>
+        public static string[] GetAssetsPathByGroup(string groupName)
+        {
+            if (!string.IsNullOrEmpty(groupName))
+            {
+                if (loadAssetGroupMap.TryGetValue(groupName, out var list))
+                {
+                    return list.ToArray();
+                }
+            }
+
+            return new string[0];
+        }
+
+        /// <summary>
+        /// 获取资源组资源
+        /// </summary>
+        /// <param name="groupName"></param>
+        /// <returns></returns>
+        public static void ClearAssetGroup(string groupName)
+        {
+            loadAssetGroupMap.Remove(groupName);
+        }
+
+        /// <summary>
+        /// 通过组卸载
+        /// </summary>
+        /// <param name="groupName"></param>
+        static public void UnloadAssetByGouroup(string groupName)
+        {
+            var assets = GetAssetsPathByGroup(groupName);
+            UnloadAssets(assets);
+            ClearAssetGroup(groupName);
+        }
         #endregion
 
         #region 实例化、删除管理
@@ -391,7 +487,7 @@ namespace BDFramework.ResourceMgr
             }
 
             /************母包资源的判断*************/
-           
+
             if (Application.isEditor && BDLauncher.Inst.GameConfig.ArtRoot == AssetLoadPathType.DevOpsPublish)
             {
                 //devops
@@ -451,7 +547,7 @@ namespace BDFramework.ResourceMgr
                 }
             }
 
-            
+
             /************母包资源的判断*************/
             if (Application.isEditor && BDLauncher.Inst.GameConfig.ArtRoot == AssetLoadPathType.DevOpsPublish)
             {
