@@ -64,7 +64,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// AssetBundle 
         /// </summary>
-        public Dictionary<string, AssetBundleWapper> AssetbundleMap { get; set; }
+        public Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get; set; }
 
         /// <summary>
         /// 卸载
@@ -130,7 +130,7 @@ namespace BDFramework.ResourceMgr
         /// Type版本
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="path"></param>
+        /// <param name="assetPatharam>
         /// <returns></returns>
         public Object Load(Type type, string path)
         {
@@ -214,13 +214,13 @@ namespace BDFramework.ResourceMgr
                 return null;
             }
 
-            if (rets.Count > 1)
-            {
-                foreach (var r in rets)
-                {
-                    Debug.LogError("注意文件同名:" + r);
-                }
-            }
+            // if (rets.Count > 1)
+            // {
+            //     foreach (var r in rets)
+            //     {
+            //         Debug.LogError("注意文件同名:" + r);
+            //     }
+            // }
 
             return rets;
         }
@@ -257,16 +257,16 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// AssetDataBase 不支持异步加载
         /// </summary>
-        /// <param name="assetName"></param>
+        /// <param name="assetPath"></param>
         /// <param name="callback"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public int AsyncLoad<T>(string assetName, Action<T> callback) where T : UnityEngine.Object
+        public int AsyncLoad<T>(string assetPath, Action<T> callback) where T : UnityEngine.Object
         {
             this.TaskCounter++;
 
 
-            var res = Load<T>(assetName);
+            var res = Load<T>(assetPath);
             callback(res);
 
 
@@ -277,29 +277,29 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// assetdatabase 不支持异步，暂时先做个加载，后期用update模拟异步
         /// </summary>
-        /// <param name="assetNameList"></param>
+        /// <param name="assetPathList"></param>
         /// <param name="onLoadProcess"></param>
         /// <param name="onLoadComplete"></param>
         /// <returns></returns>
-        public List<int> AsyncLoad(List<string> assetNameList, Action<int, int> onLoadProcess, Action<IDictionary<string, Object>> onLoadComplete)
+        public List<int> AsyncLoad(List<string> assetPathList, Action<int, int> onLoadProcess, Action<IDictionary<string, Object>> onLoadComplete)
         {
             //var list = assetsPath.Distinct().ToList();
 
             IDictionary<string, UnityEngine.Object> map = new Dictionary<string, Object>();
             int curProcess = 0;
             //每帧加载1个
-            IEnumeratorTool.StartCoroutine(TaskUpdate(1, assetNameList, (s, o) =>
+            IEnumeratorTool.StartCoroutine(TaskUpdate(1, assetPathList, (s, o) =>
             {
                 curProcess++;
                 map[s] = o;
                 //
                 if (onLoadProcess != null)
                 {
-                    onLoadProcess(curProcess, assetNameList.Count);
+                    onLoadProcess(curProcess, assetPathList.Count);
                 }
 
                 //
-                if (curProcess == assetNameList.Count)
+                if (curProcess == assetPathList.Count)
                 {
                     if (onLoadComplete != null)
                     {

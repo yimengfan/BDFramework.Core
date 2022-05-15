@@ -56,10 +56,10 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 加载普通资源
         /// </summary>
-        /// <param name="name"></param>
         /// <param name="type"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
-        public Object LoadAsset(string name, Type type)
+        public Object LoadAsset(Type type, string name)
         {
             string fullName = "";
             if (!assetNameMap.TryGetValue(name, out fullName))
@@ -111,6 +111,11 @@ namespace BDFramework.ResourceMgr.V2
         public void Unuse()
         {
             UseCounter--;
+            //卸载
+            if (UseCounter <= 0)
+            {
+                this.AssetBundle.Unload(true);
+            }
         }
 
         #endregion

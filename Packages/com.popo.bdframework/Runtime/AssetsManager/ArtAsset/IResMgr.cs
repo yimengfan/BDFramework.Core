@@ -28,13 +28,13 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 资源管理
         /// </summary>
-        Dictionary<string, AssetBundleWapper> AssetbundleMap { get; }
+        Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get; }
 
         /// <summary>
         /// 卸载指定ab
         /// </summary>
-        /// <param name="assetName"></param>
-        void UnloadAsset(string assetName, bool isForceUnload = false);
+        /// <param name="assetPath"></param>
+        void UnloadAsset(string assetPath, bool isForceUnload = false);
 
         /// <summary>
         /// 卸载所有ab
@@ -57,9 +57,9 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="abName"></param>
-        /// <param name="path"></param>
+        /// <param name="assetPatharam>
         /// <returns></returns>
-        UnityEngine.Object Load(Type type, string path);
+        UnityEngine.Object Load(Type type, string assetPath);
 
         /// <summary>
         /// 加载所有资源
@@ -83,21 +83,21 @@ namespace BDFramework.ResourceMgr
         /// 异步加载资源
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="assetName"></param>
+        /// <param name="assetPath"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        int AsyncLoad<T>(string assetName, Action<T> callback) where T : UnityEngine.Object;
+        int AsyncLoad<T>(string assetPath, Action<T> callback) where T : UnityEngine.Object;
 
         /// <summary>
         /// 异步加载资源表
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="assetNameList"></param>
+        /// <param name="assetPathList"></param>
         /// <param name="onLoadProcess"></param>
         /// <param name="onLoadEnd"></param>
         /// <param name="sources"></param>
         /// <returns></returns>
-        List<int> AsyncLoad(List<string> assetNameList,
+        List<int> AsyncLoad(List<string> assetPathList,
             Action<int, int> onLoadProcess,
             Action<IDictionary<string, Object>> onLoadEnd);
 

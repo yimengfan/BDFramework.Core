@@ -177,7 +177,7 @@ namespace BDFramework.ResourceMgr
                 {
                     var task = taskQueue.Dequeue();
                     //没有被加载过
-                    if (!loder.AssetbundleMap.ContainsKey(task.AssetBundleItem.AssetBundlePath))
+                    if (!loder.AssetbundleCacheMap.ContainsKey(task.AssetBundleItem.AssetBundlePath))
                     {
                         //判断是否在加载中
                         var loderHandle = AssetBundleMgrV2.GetLoaderHandle(task.AssetBundleItem.AssetBundlePath); // AB_LOAD_LOCK_MAP.TryGetValue(, out var exsitLoadingStatus);

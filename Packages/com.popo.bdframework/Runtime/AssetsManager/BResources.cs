@@ -12,7 +12,6 @@ using UnityEngine.Rendering;
 using UnityEngine.U2D;
 
 namespace BDFramework.ResourceMgr
-
 {
     /// <summary>
     /// 资源管理类
@@ -114,6 +113,9 @@ namespace BDFramework.ResourceMgr
                 ResLoader = new AssetBundleMgrV2();
                 ResLoader.Init(path);
             }
+
+            //初始化对象池
+            InitObjectPools();
         }
 
         /// <summary>
@@ -289,7 +291,7 @@ namespace BDFramework.ResourceMgr
                 ResLoader.UnloadAsset(assetPath);
             }
         }
-        
+
         /// <summary>
         /// 卸载资源
         /// </summary>
@@ -320,7 +322,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 加载资源组缓存
         /// </summary>
-        static public Dictionary<string, List<string>> loadAssetGroupMap = new Dictionary<string, List<string>>();
+        static private Dictionary<string, List<string>> loadAssetGroupMap = new Dictionary<string, List<string>>();
 
 
         /// <summary>
@@ -378,6 +380,7 @@ namespace BDFramework.ResourceMgr
             UnloadAssets(assets);
             ClearAssetGroup(groupName);
         }
+
         #endregion
 
         #region 实例化、删除管理
@@ -451,6 +454,84 @@ namespace BDFramework.ResourceMgr
         #endregion
 
         #region 对象池
+
+        /// <summary>
+        /// 初始化对象池
+        /// </summary>
+        static private void InitObjectPools()
+        {
+            if (Application.isPlaying)
+            {
+                GameObject pool = new GameObject("GameobjectPools");
+                pool.AddComponent<GameObjectPoolManager>();
+            }
+        }
+
+        
+        /// <summary>
+        /// 预热对象池
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <param name="size"></param>
+        static public void WarmPool(string assetPath, int size = 5)
+        {
+            var obj = Load<GameObject>(assetPath);
+            GameObjectPoolManager.WarmPool(obj, size);
+        }
+        /// <summary>
+        /// 预热对象池
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <param name="size"></param>
+        static public void DestroyPool(string assetPath)
+        {
+            var obj = Load<GameObject>(assetPath);
+            GameObjectPoolManager.DestoryPool(obj);
+        }
+
+        /// <summary>
+        /// 异步预热对象池
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <param name="size"></param>
+        static public void AsyncWarmPool(string assetPath, int size = 5)
+        {
+            //异步加载后初始化
+            AsyncLoad<GameObject>(assetPath, (obj) =>
+            {
+                //异步加载完
+                GameObjectPoolManager.WarmPool(obj, size);
+            });
+        }
+
+        /// <summary>
+        /// 从对象池加载
+        /// </summary>
+        /// <returns></returns>
+        static public GameObject LoadFormPool(string assetPath)
+        {
+            var obj = Load<GameObject>(assetPath);
+            return GameObjectPoolManager.SpawnObject(obj);
+        }
+        
+        /// <summary>
+        /// 从对象池加载
+        /// </summary>
+        /// <returns></returns>
+        static public GameObject LoadFormPool(string assetPath, Vector3 position, Quaternion rotation)
+        {
+            var obj = Load<GameObject>(assetPath);
+            return GameObjectPoolManager.SpawnObject(obj, position, rotation);
+        }
+
+        /// <summary>
+        /// 释放Gameobj
+        /// </summary>
+        /// <param name="gobjClone"></param>
+        static public void ReleaseToPool(GameObject gobjClone)
+        {
+            GameObjectPoolManager.ReleaseObject(gobjClone);
+        }
 
         #endregion
 

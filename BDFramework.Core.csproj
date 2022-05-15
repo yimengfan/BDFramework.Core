@@ -101,6 +101,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResources.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BasePackageAssetsHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ObjectPools\GameObjectPoolManager.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SQLiteService.cs" />
@@ -112,6 +113,9 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQuery.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQueryCustom.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\AssetBundleBenchmark01.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingCSharpObjects\EventBus.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingGameObjects\Bullet.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingGameObjects\Gun.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncher.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncherBridge@hotfix.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Config.cs" />
@@ -152,6 +156,9 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\BApplication.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\BGameObjectPools.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\IEnumerator\IEnumeratorTool.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\MonoSingleton\Singleton.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\ObjectPools\ObjectPool.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\ObjectPools\ObjectPoolContainer.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Tools\Serialize\CSVHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\Collections\PropsList.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\Extension\ObjectsExtension.cs" />
