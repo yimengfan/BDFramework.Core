@@ -1,4 +1,27 @@
-﻿#if !ODIN_INSPECTOR
+﻿#if ODIN_INSPECTOR
+using Sirenix.OdinInspector.Editor;
+using UnityEditor;
+/// <summary>
+/// odin的设置
+/// </summary>
+public class OdinSetting
+{
+    
+    [InitializeOnLoadMethod]
+    public static void SetEditorOnlyMode()
+    {
+       var ret =  EditorOnlyModeConfig.Instance.IsEditorOnlyModeEnabled();
+       if (!ret)
+       {
+           EditorOnlyModeConfig.Instance.EnableEditorOnlyMode(false);
+       }
+    }
+}
+
+
+#endif
+
+#if !ODIN_INSPECTOR
 //这里各种Odin包装 用来在无odin环境下不报错
 namespace Sirenix.OdinInspector
 {
