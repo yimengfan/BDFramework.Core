@@ -431,7 +431,7 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         /// <param name="assetPath"></param>
         /// <returns></returns>
-        public void AddObjectToCache(string assetPath, Object obj)
+        public void AddObjectToCache(Type type, string assetPath, Object obj)
         {
             this.GameObjectCacheMap[assetPath] = obj;
         }

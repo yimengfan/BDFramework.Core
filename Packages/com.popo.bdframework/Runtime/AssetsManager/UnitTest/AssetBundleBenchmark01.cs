@@ -161,6 +161,11 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
+                    if (runtimePath.Equals("objectpool/bullet", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Debug.Log("");
+                    }
+                    
                     obj = AssetBundleLoader.Load<GameObject>(runtimePath);
                 }
 

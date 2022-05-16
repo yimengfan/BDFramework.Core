@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPath: ObjectPool/Bullet
-  BAssetLoadPathType: 3
+  BAssetLoadPathType: 0
 --- !u!4 &708197537
 Transform:
   m_ObjectHideFlags: 0
