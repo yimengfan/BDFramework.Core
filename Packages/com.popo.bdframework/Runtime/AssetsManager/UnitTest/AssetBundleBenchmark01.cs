@@ -45,10 +45,17 @@ public class AssetBundleBenchmark01 : MonoBehaviour
     static private Image imageNode;
     static private SpriteRenderer spriteRendererNode;
 
+
+    private void OnGUI()
+    {
+        
+    }
+
     private void Start()
     {
         BenchmarkResultPath = Application.persistentDataPath + "/Benchmark/AssetBundleTest01.json";
         this.Init();
+        this.StartCoroutine(IE_01_LoadAll(IsAsyncLoad));
         this.StartCoroutine(IE_01_LoadAll(IsAsyncLoad));
     }
 

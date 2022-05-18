@@ -38,14 +38,14 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 对象map
         /// </summary>
-        Dictionary<string, UnityEngine.Object> objsMap;
+        Dictionary<string, UnityEngine.Object> objsCacheMap;
 
 
         public DevResourceMgr()
         {
             willdoTaskSet = new HashSet<int>();
             allTaskList = new List<AsyncLoadTaskGroupResult>();
-            objsMap = new Dictionary<string, UnityEngine.Object>();
+            objsCacheMap = new Dictionary<string, UnityEngine.Object>();
         }
 
 
@@ -75,10 +75,10 @@ namespace BDFramework.ResourceMgr
         {
             try
             {
-                if (objsMap.ContainsKey(assetName))
+                if (objsCacheMap.ContainsKey(assetName))
                 {
-                    var obj = objsMap[assetName];
-                    objsMap.Remove(assetName);
+                    var obj = objsCacheMap[assetName];
+                    objsCacheMap.Remove(assetName);
                     //
                     //Resources.UnloadAsset(obj);
                 }
@@ -95,7 +95,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         public void UnloadAllAsset()
         {
-            objsMap.Clear();
+            objsCacheMap.Clear();
             Resources.UnloadUnusedAssets();
             GC.Collect();
         }
@@ -135,7 +135,7 @@ namespace BDFramework.ResourceMgr
         public Object Load(Type type, string path)
         {
             //读取缓存
-            var ret = objsMap.TryGetValue(path, out var retobj);
+            var ret = objsCacheMap.TryGetValue(path, out var retobj);
             //走新加载逻辑
             if (!ret)
             {
@@ -175,7 +175,7 @@ namespace BDFramework.ResourceMgr
                 }
 
                 retobj = AssetDatabase.LoadAssetAtPath(assetPath, type);
-                objsMap[path] = retobj;
+                objsCacheMap[path] = retobj;
             }
 
             return retobj;

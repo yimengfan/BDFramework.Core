@@ -26,6 +26,14 @@ namespace BDFramework.ResourceMgr.V2
             this.AssetBundle = ab;
         }
 
+        /// <summary>
+        /// 是否被卸载
+        /// </summary>
+        public bool IsUnload
+        {
+            get;
+            private set;
+        } = false;
 
         #region 各种加载接口
 
@@ -114,7 +122,7 @@ namespace BDFramework.ResourceMgr.V2
             //卸载
             if (UseCounter <= 0)
             {
-                this.AssetBundle.Unload(true);
+                this.UnLoad();
             }
         }
 
@@ -127,6 +135,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             this.UseCounter = 0;
             this.AssetBundle.Unload(true);
+            this.IsUnload = true;
         }
     }
 }

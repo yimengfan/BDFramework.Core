@@ -56,11 +56,6 @@ namespace BDFramework.ResourceMgr.V2
         public Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get; private set; } = new Dictionary<string, AssetBundleWapper>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
-        /// 全局的资源缓存
-        /// </summary>
-        public Dictionary<string, Object> GameObjectCacheMap { get; private set; } = new Dictionary<string, Object>(StringComparer.OrdinalIgnoreCase);
-
-        /// <summary>
         /// 资源加载路径
         /// </summary>
         private string firstArtDirectory;
@@ -161,7 +156,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public Object Load(Type type, string assetPath)
         {
-            var retObj = GetObjectFormCache(assetPath);
+            var retObj = GetObjectFormCache(type, assetPath);
 
             if (!retObj)
             {
@@ -240,7 +235,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns>异步任务id</returns>
         public int AsyncLoad<T>(string assetPath, Action<T> callback) where T : UnityEngine.Object
         {
-            var retObj = GetObjectFormCache(assetPath);
+            var retObj = GetObjectFormCache(typeof(T), assetPath);
             if (!retObj)
             {
                 var loadTask = CreateAsyncLoadTask<T>(assetPath);
@@ -424,50 +419,6 @@ namespace BDFramework.ResourceMgr.V2
         #endregion
 
 
-        #region 资源缓存
-
-        /// <summary>
-        /// 从缓存中加载
-        /// </summary>
-        /// <param name="assetPath"></param>
-        /// <returns></returns>
-        public void AddObjectToCache(Type type, string assetPath, Object obj)
-        {
-            this.GameObjectCacheMap[assetPath] = obj;
-        }
-
-        /// <summary>
-        /// 从缓存中加载
-        /// </summary>
-        /// <param name="assetPath"></param>
-        /// <returns></returns>
-        public Object GetObjectFormCache(string assetPath)
-        {
-            Object obj = null;
-            this.GameObjectCacheMap.TryGetValue(assetPath, out obj);
-            return obj;
-        }
-
-        /// <summary>
-        /// 从缓存中加载
-        /// </summary>
-        /// <param name="assetPath"></param>
-        /// <returns></returns>
-        public Object UnloadObjectCache(string assetPath)
-        {
-            Object obj = null;
-            this.GameObjectCacheMap.TryGetValue(assetPath, out obj);
-            if (obj)
-            {
-                Resources.UnloadAsset(obj);
-                this.GameObjectCacheMap.Remove(assetPath);
-            }
-
-            return obj;
-        }
-
-        #endregion
-
         #region 从AB中加载资源
 
         /// <summary>
@@ -515,7 +466,7 @@ namespace BDFramework.ResourceMgr.V2
                     obj = abr.LoadAsset(type, assetPath);
                 }
 
-                AddObjectToCache(assetPath, obj);
+                AddObjectToCache(type, assetPath, obj);
             }
             else
             {
@@ -722,7 +673,7 @@ namespace BDFramework.ResourceMgr.V2
         #region 卸载资源
 
         /// <summary>
-        /// 卸载
+        /// 卸载/AssetBundle
         /// </summary>
         /// <param name="assetPath">根据加载路径卸载</param>
         /// <param name="isForceUnload">强制卸载</param>
@@ -748,11 +699,14 @@ namespace BDFramework.ResourceMgr.V2
                     {
                         abw.Unuse();
                     }
+
+                    //卸载
+                    if (abw.IsUnload)
+                    {
+                        AssetbundleCacheMap.Remove(abPath);
+                    }
                 }
             }
-
-            //2.资源实例卸载
-            UnloadObjectCache(assetPath);
         }
 
 
@@ -766,6 +720,73 @@ namespace BDFramework.ResourceMgr.V2
             GameObjectCacheMap.Clear();
             AssetBundle.UnloadAllAssetBundles(true);
             Resources.UnloadUnusedAssets();
+        }
+
+        #endregion
+
+        #region 资源缓存
+
+        /// <summary>
+        /// 全局的资源缓存
+        /// </summary>
+        static private Dictionary<Type, Dictionary<string, UnityEngine.Object>> GameObjectCacheMap { get; set; } = new Dictionary<Type, Dictionary<string, Object>>();
+
+        /// <summary>
+        /// 从缓存中加载
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <returns></returns>
+        static public void AddObjectToCache(Type type, string assetPath, Object obj)
+        {
+            var ret = GameObjectCacheMap.TryGetValue(type, out var map);
+            if (!ret)
+            {
+                map = new Dictionary<string, Object>(StringComparer.OrdinalIgnoreCase);
+                GameObjectCacheMap[type] = map;
+            }
+
+            map[assetPath] = obj;
+        }
+
+        /// <summary>
+        /// 从缓存中加载
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <returns></returns>
+        static public Object GetObjectFormCache(Type type, string assetPath)
+        {
+            var ret = GameObjectCacheMap.TryGetValue(type, out var map);
+            if (ret)
+            {
+               ret = map.TryGetValue(assetPath, out var gobj);
+               if (ret)
+               {
+                   Debug.Log("缓存命中成功:" + assetPath);
+               }
+                return gobj;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 从缓存中加载
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <returns></returns>
+        static public void UnloadObjectCache(Type type, string assetPath)
+        {
+            var ret = GameObjectCacheMap.TryGetValue(type, out var map);
+            if (ret)
+            {
+                ret = map.TryGetValue(assetPath, out var gobj);
+                if (ret)
+                {
+                    //卸载
+                    BResources.UnloadAsset(gobj);
+                    map.Remove(assetPath);
+                }
+            }
         }
 
         #endregion

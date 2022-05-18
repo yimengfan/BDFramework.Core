@@ -1,15 +1,12 @@
-﻿using UnityEngine;
-using BDFramework.ResourceMgr;
-using System;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using BDFramework.ResourceMgr.V2;
 using BDFramework.Core.Tools;
+using BDFramework.ResourceMgrV2;
 using BDFramework.VersionController;
-using JetBrains.Annotations;
-using UnityEngine.Rendering;
-using UnityEngine.U2D;
+using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr
 {
@@ -18,7 +15,7 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     static public partial class BResources
     {
-        #region 美术资源相关
+        #region 美术资源相关路径
 
         /// <summary>
         /// 美术根目录
@@ -62,8 +59,7 @@ namespace BDFramework.ResourceMgr
 
         #endregion
 
-
-        #region 所有资源相关配置
+        #region 所有资源相关配置路径
 
         /// <summary>
         /// 客户端-资源包服务器信息
@@ -91,6 +87,11 @@ namespace BDFramework.ResourceMgr
         readonly static public string PACKAGE_BUILD_INFO_PATH = "PackageBuild.Info";
 
         #endregion
+
+        /// <summary>
+        /// 加载器
+        /// </summary>
+        static public IResMgr ResLoader { get; private set; }
 
         /// <summary>
         /// 初始化
@@ -124,17 +125,13 @@ namespace BDFramework.ResourceMgr
         private static string RemoteAssetsUrl = "";
 
         /// <summary>
+        /// 设置网络寻址
         /// 网络寻址模式
         /// </summary>
         static public void SetRemoteAssetsUrl(string url)
         {
             RemoteAssetsUrl = url;
         }
-
-        /// <summary>
-        /// 加载器
-        /// </summary>
-        static public IResMgr ResLoader { get; private set; }
 
 
         #region 加载、取消加载
@@ -262,7 +259,7 @@ namespace BDFramework.ResourceMgr
         #region 卸载资源
 
         /// <summary>
-        /// 卸载资源
+        /// 卸载资源/Assetbundle
         /// </summary>
         /// <param name="o"></param>
         public static void UnloadAsset(string assetPath, bool isForceUnload = false)
@@ -275,8 +272,30 @@ namespace BDFramework.ResourceMgr
             ResLoader.UnloadAsset(assetPath, isForceUnload);
         }
 
+
         /// <summary>
-        /// 卸载资源
+        /// 卸载实例化资源
+        /// </summary>
+        /// <param name="obj"></param>
+        public static void UnloadAsset(UnityEngine.Object obj)
+        {
+            if (obj is GameObject go)
+            {
+                Destroy(go);
+                Resources.UnloadAsset(go);
+            }
+            else if (obj is Sprite sp)
+            {
+                Resources.UnloadAsset(sp.texture);
+            }
+            else
+            {
+                Resources.UnloadAsset(obj);
+            }
+        }
+
+        /// <summary>
+        /// 卸载资源/Assetbundle
         /// </summary>
         /// <param name="o"></param>
         public static void UnloadAssets(params string[] assetPaths)
@@ -292,23 +311,9 @@ namespace BDFramework.ResourceMgr
             }
         }
 
-        /// <summary>
-        /// 卸载资源
-        /// </summary>
-        /// <param name="gobj"></param>
-        public static void UnloadAsset(UnityEngine.Object gobj)
-        {
-            if (gobj is GameObject || gobj is Component)
-            {
-                return;
-            }
-
-            Resources.UnloadAsset(gobj);
-        }
-
 
         /// <summary>
-        /// 卸载所有的
+        /// 卸载所有的AssetBundle
         /// </summary>
         public static void UnloadAll()
         {
@@ -317,7 +322,57 @@ namespace BDFramework.ResourceMgr
 
         #endregion
 
-        #region 资源组
+
+        #region 资源缓存
+
+        /// <summary>
+        /// 全局的资源缓存
+        /// </summary>
+        static private Dictionary<string, UnityEngine.Object> GameObjectCacheMap { get; set; } = new Dictionary<string, UnityEngine.Object>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// 从缓存中加载
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <returns></returns>
+        static public void AddObjectToCache(Type type, string assetPath, Object obj)
+        {
+            GameObjectCacheMap[assetPath] = obj;
+        }
+
+        /// <summary>
+        /// 从缓存中加载
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <returns></returns>
+        static public Object GetObjectFormCache(Type type, string assetPath)
+        {
+            Object obj = null;
+            GameObjectCacheMap.TryGetValue(assetPath, out obj);
+            return obj;
+        }
+
+        /// <summary>
+        /// 从缓存中加载
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <returns></returns>
+        static public Object UnloadObjectCache(string assetPath)
+        {
+            var ret = GameObjectCacheMap.TryGetValue(assetPath, out var obj);
+            if (ret)
+            {
+                GameObject.Destroy(obj);
+                GameObjectCacheMap.Remove(assetPath);
+            }
+
+
+            return obj;
+        }
+
+        #endregion
+
+        #region 资源组，用于加载资源分组,方便卸载(Assetbundle)
 
         /// <summary>
         /// 加载资源组缓存
@@ -398,12 +453,12 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 删除接口
         /// </summary>
-        /// <param name="trans"></param>
-        public static void Destroy(Transform trans)
+        /// <param name="transform"></param>
+        public static void Destroy(Transform transform)
         {
-            if (trans)
+            if (transform)
             {
-                Destroy(trans.gameObject);
+                Destroy(transform.gameObject);
             }
         }
 
@@ -415,8 +470,7 @@ namespace BDFramework.ResourceMgr
         {
             if (go)
             {
-                GameObject.DestroyObject(go);
-                go = null;
+                GameObject.Destroy(go);
             }
         }
 
@@ -467,7 +521,7 @@ namespace BDFramework.ResourceMgr
             }
         }
 
-        
+
         /// <summary>
         /// 预热对象池
         /// </summary>
@@ -478,6 +532,7 @@ namespace BDFramework.ResourceMgr
             var obj = Load<GameObject>(assetPath);
             GameObjectPoolManager.WarmPool(obj, size);
         }
+
         /// <summary>
         /// 预热对象池
         /// </summary>
@@ -513,7 +568,7 @@ namespace BDFramework.ResourceMgr
             var obj = Load<GameObject>(assetPath);
             return GameObjectPoolManager.SpawnObject(obj);
         }
-        
+
         /// <summary>
         /// 从对象池加载
         /// </summary>

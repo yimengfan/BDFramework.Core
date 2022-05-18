@@ -56,9 +56,9 @@ namespace BDFramework.Editor.Tools
                 p.BeginOutputReadLine();
                 p.BeginErrorReadLine();
                 //向cmd窗口写入命令
-                foreach (string com in cmds)
+                foreach (string cmd in cmds)
                 {
-                    p.StandardInput.WriteLine(com); //输入CMD命令
+                    p.StandardInput.WriteLine(cmd); //输入CMD命令
                 }
 
                 p.StandardInput.WriteLine("exit"); //结束执行，很重要的
