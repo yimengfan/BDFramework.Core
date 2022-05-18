@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using BDFramework.Core.Tools;
 
 namespace BDFramework.Editor.Tools.EditorHttpServer
@@ -13,7 +14,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
         /// 监听""不需要api
         /// </summary>
         public string WebApiName { get; set; } = "Assetbundle";
-        public EditorHttpResonseData WebAPIProccessor(string apiParams, HttpListenerResponse response)
+        public Task<EditorHttpResonseData>  WebAPIProccessor(string apiParams, HttpListenerResponse response)
         {
             string filePath = IPath.Combine( BApplication.DevOpsPublishAssetsPath, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX,apiParams);
             if (!File.Exists(filePath))

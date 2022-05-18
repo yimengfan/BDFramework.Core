@@ -5,8 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using LitJson;
-using NUnit.Framework.Internal;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace BDFramework.Editor.Tools.EditorHttpServer
@@ -20,7 +20,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
     public class WP_EditorInvoke : IWebApiProccessor
     {
         public string WebApiName { get; set; } = "EditorInvoke";
-        
+
         /// <summary>
         /// editor执行缓存
         /// </summary>
@@ -33,10 +33,9 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
         /// <param name="apiParams"></param>
         /// <param name="response"></param>
         /// <exception cref="Exception"></exception>
-        public EditorHttpResonseData WebAPIProccessor(string apiParams, HttpListenerResponse response)
+        async public Task<EditorHttpResonseData> WebAPIProccessor(string apiParams, HttpListenerResponse response)
         {
-            
-            var ret=  functionCacheMap.TryGetValue(apiParams, out var methodInfo);
+            var ret = functionCacheMap.TryGetValue(apiParams, out var methodInfo);
             if (!ret)
             {
                 var lastDotIdx = apiParams.LastIndexOf(".");
@@ -58,13 +57,13 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                         break;
                     }
                 }
+
                 //
                 if (type != null)
                 {
                     methodInfo = type.GetMethod(funcname, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
                     if (methodInfo != null)
                     {
-                       
                         functionCacheMap[apiParams] = methodInfo;
                     }
                     else
@@ -80,11 +79,21 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
 
             try
             {
+                await UniTask.SwitchToMainThread();
                 methodInfo.Invoke(null, null);
             }
             catch (Exception e)
             {
-                throw new Exception("Function 执行报错,请查看Unity!");
+                var err = e.ToString();
+
+                Debug.LogError(e);
+                if (e.InnerException != null)
+                {
+                    err += ("\n" + e.InnerException.ToString());
+                    Debug.LogError(e.InnerException);
+                }
+
+                throw new Exception("Function 执行报错,请查看Unity! \n" + err);
             }
 
 

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Threading.Tasks;
 
 namespace BDFramework.Editor.Tools.EditorHttpServer
 {
@@ -8,6 +9,6 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
     public interface IWebApiProccessor
     {
         string WebApiName { get; }
-        EditorHttpResonseData WebAPIProccessor(string apiParams, HttpListenerResponse response);
+        Task<EditorHttpResonseData> WebAPIProccessor(string apiParams, HttpListenerResponse response);
     }
 }
