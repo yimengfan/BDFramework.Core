@@ -245,8 +245,8 @@ namespace BDFramework.Editor
         [LabelText("开启混淆")]
         public bool IsEnableObfuscation = true;
 
-        [LabelText("开启混淆")]
-        public bool IsDisableTypeTree = true;
+        [LabelText("关闭TypeTree")]
+        public bool IsDisableTypeTree = false;
     }
 
 
