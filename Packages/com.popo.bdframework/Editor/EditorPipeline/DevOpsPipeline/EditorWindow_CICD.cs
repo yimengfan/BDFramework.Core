@@ -28,7 +28,7 @@ namespace BDFramework.Editor.DevOps
         private void OnDisable()
         {
             //保存
-            BDEditorApplication.BDFrameWorkFrameEditorSetting.Save();
+            BDEditorApplication.BDFrameworkEditorSetting.Save();
         }
 
 
@@ -41,7 +41,7 @@ namespace BDFramework.Editor.DevOps
         {
             GUILayout.BeginVertical();
             {
-                var devops_setting = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting;
+                var devops_setting = BDEditorApplication.BDFrameworkEditorSetting.DevOpsSetting;
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.BeginVertical();

@@ -34,6 +34,8 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
 
     public void OnGUI()
     {
+        var buildDLLSetting = BDEditorApplication.BDFrameworkEditorSetting.BuildHotfixDLLSetting;
+
         GUILayout.BeginVertical();
         {
             GUILayout.Label("1.脚本打包", EditorGUIHelper.LabelH2);
@@ -68,10 +70,10 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
             {
                 PublishPipeLineCI.CheckEditorCode();
             }
-            
-            if (BDEditorApplication.BDFrameWorkFrameEditorSetting != null)
+
+            if (BDEditorApplication.BDFrameworkEditorSetting != null)
             {
-                BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting.IsAutoBuildDll = EditorGUILayout.Toggle("是否自动编译热更DLL", BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting.IsAutoBuildDll);
+                buildDLLSetting.IsAutoBuildDll = EditorGUILayout.Toggle("是否自动编译热更DLL", buildDLLSetting.IsAutoBuildDll);
             }
 
             GUI.color = Color.green;
@@ -94,7 +96,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     private void OnDisable()
     {
         //保存
-        BDEditorApplication.BDFrameWorkFrameEditorSetting?.Save();
+        BDEditorApplication.BDFrameworkEditorSetting?.Save();
     }
 
     /// <summary>
@@ -145,7 +147,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         //触发bd环境周期
         BDFrameworkPipelineHelper.OnEndBuildDLL(outpath);
     }
-    
+
     /// <summary>
     /// 拷贝当前到其他目录
     /// </summary>
@@ -156,10 +158,11 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         var bytes = File.ReadAllBytes(source);
         var sourcePdb = source + ".pdb";
         byte[] pdbBytes = null;
-        if( File.Exists(sourcePdb))
+        if (File.Exists(sourcePdb))
         {
             pdbBytes = File.ReadAllBytes(sourcePdb);
-        } 
+        }
+
         //拷贝当前到其他目录
         foreach (var sp in BApplication.SupportPlatform)
         {
@@ -168,13 +171,13 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
             {
                 continue;
             }
+
             FileHelper.WriteAllBytes(outpath, bytes);
             //pdb
             if (pdbBytes != null)
             {
-                FileHelper.WriteAllBytes(outpath+".pdb", pdbBytes);
+                FileHelper.WriteAllBytes(outpath + ".pdb", pdbBytes);
             }
-            
         }
     }
 
@@ -207,10 +210,8 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     /// </summary>
     /// <param name="platform"></param>
     /// <param name="dllpath"></param>
-    static public void GenCLRBindingByAnalysis(RuntimePlatform platform , string dllpath = "")
+    static public void GenCLRBindingByAnalysis(RuntimePlatform platform, string dllpath = "")
     {
-        
-
         if (dllpath == "")
         {
             dllpath = Application.streamingAssetsPath;

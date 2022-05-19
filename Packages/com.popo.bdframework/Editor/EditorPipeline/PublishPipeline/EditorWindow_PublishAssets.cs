@@ -111,7 +111,7 @@ namespace BDFramework.Editor.PublishPipeline
         private void OnDisable()
         {
             //保存
-            BDEditorApplication.BDFrameWorkFrameEditorSetting.Save();
+            BDEditorApplication.BDFrameworkEditorSetting.Save();
         }
 
 

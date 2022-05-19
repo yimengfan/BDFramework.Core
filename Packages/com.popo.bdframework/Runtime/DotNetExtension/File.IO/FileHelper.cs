@@ -66,7 +66,7 @@ namespace System.IO
             CheckDirectory(targetPath);
             File.Move(path, targetPath);
         }
-
+        
         /// <summary>
         /// 拷贝文件夹
         /// </summary>

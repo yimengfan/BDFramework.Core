@@ -189,7 +189,7 @@ namespace BDFramework.Editor.BuildPipeline
             //删除il2cpp缓存
             //DeleteIL2cppCache();
 
-            if (!BDEditorApplication.BDFrameWorkFrameEditorSetting.IsSetConfig())
+            if (!BDEditorApplication.BDFrameworkEditorSetting.IsSetConfig())
             {
                 //For ci
                 throw new Exception("请注意设置apk keystore账号密码");
@@ -197,19 +197,19 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //模式
-            AndroidConfig androidConfig = null;
+            AndroidSetting androidConfig = null;
             switch (mode)
             {
                 case BuildMode.Debug:
                 case BuildMode.UseCurrentConfigDebug:
                 {
-                    androidConfig = BDEditorApplication.BDFrameWorkFrameEditorSetting.AndroidDebug;
+                    androidConfig = BDEditorApplication.BDFrameworkEditorSetting.AndroidDebug;
                 }
                     break;
                 case BuildMode.Release:
                 case BuildMode.UseCurrentConfigRelease:
                 {
-                    androidConfig = BDEditorApplication.BDFrameWorkFrameEditorSetting.Android;
+                    androidConfig = BDEditorApplication.BDFrameworkEditorSetting.Android;
                 }
                     break;
             }

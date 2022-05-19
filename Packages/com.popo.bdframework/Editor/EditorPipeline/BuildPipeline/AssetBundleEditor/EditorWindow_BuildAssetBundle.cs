@@ -73,7 +73,7 @@ namespace BDFramework.Editor.AssetBundle
             //打包参数
             GUILayout.Space(5);
             GUILayout.Label(buildParamsDisableBuildTitle, EditorGUIHelper.LabelH4);
-            var buildAssetConf = BDEditorApplication.BDFrameWorkFrameEditorSetting?.BuildAssetBundle;
+            var buildAssetConf = BDEditorApplication.BDFrameworkEditorSetting?.BuildAssetBundleSetting;
             if (buildAssetConf != null)
             {
                 buildAssetConf.IsDisableTypeTree = EditorGUILayout.Toggle(buildParamsDisableTypeTreeLabel, buildAssetConf.IsDisableTypeTree);
@@ -143,24 +143,24 @@ namespace BDFramework.Editor.AssetBundle
                 //加载ab
                 GUILayout.BeginHorizontal();
                 {
-                    GUILayout.Label("AssetBundle验证: 加载所有 (DevOps目录)", EditorGUIHelper.GetFontStyle(Color.white, 12));
+                    GUILayout.Label("AssetBundle验证: DevOps目录", EditorGUIHelper.GetFontStyle(Color.white, 12));
                     if (GUILayout.Button("Play", GUILayout.Width(50), GUILayout.Height(20)))
                     {
                         AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleRuntime();
                     }
                 }
                 GUILayout.EndHorizontal();
-                GUILayout.Space(5); //();
-                //加载ab异步
-                GUILayout.BeginHorizontal();
-                {
-                    GUILayout.Label("AssetBundle验证: 加载所有-Async (DevOps目录)", EditorGUIHelper.GetFontStyle(Color.white, 12));
-                    if (GUILayout.Button("Play", GUILayout.Width(50), GUILayout.Height(20)))
-                    {
-                        AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleRuntimeAsync();
-                    }
-                }
-                GUILayout.EndHorizontal();
+                // GUILayout.Space(5); //();
+                // //加载ab异步
+                // GUILayout.BeginHorizontal();
+                // {
+                //     GUILayout.Label("AssetBundle验证: 加载所有-Async (DevOps目录)", EditorGUIHelper.GetFontStyle(Color.white, 12));
+                //     if (GUILayout.Button("Play", GUILayout.Width(50), GUILayout.Height(20)))
+                //     {
+                //         AssetBundleEditorToolsV2CheckAssetbundle.TestLoadAssetbundleRuntimeAsync();
+                //     }
+                // }
+                // GUILayout.EndHorizontal();
             }
             GUILayout.EndVertical();
         }
@@ -186,7 +186,7 @@ namespace BDFramework.Editor.AssetBundle
         private void OnDestroy()
         {
             //保存
-            BDEditorApplication.BDFrameWorkFrameEditorSetting?.Save();
+            BDEditorApplication.BDFrameworkEditorSetting?.Save();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace BDFramework.Editor.Table
 
         public void OnGUI()
         {
-            var setting = BDEditorApplication.BDFrameWorkFrameEditorSetting;
+            var BuildSqlSetting = BDEditorApplication.BDFrameworkEditorSetting.BuildSqlSetting;
             GUILayout.BeginVertical();
             GUILayout.Label("3.表格打包", EditorGUIHelper.LabelH2);
             GUILayout.Space(5);
@@ -30,10 +30,10 @@ namespace BDFramework.Editor.Table
             }
 
             GUILayout.Space(10);
-            if (setting != null)
+            if (BuildSqlSetting != null)
             {
-                setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode = EditorGUILayout.Toggle("PlayMode强制导表", setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode);
-                setting.BuildSetting.IsAutoImportSqlWhenExcelChange = EditorGUILayout.Toggle("Excel修改自动导表", setting.BuildSetting.IsAutoImportSqlWhenExcelChange);
+                BuildSqlSetting.IsForceImportChangedExcelOnWillEnterPlaymode = EditorGUILayout.Toggle("PlayMode强制导表", BuildSqlSetting.IsForceImportChangedExcelOnWillEnterPlaymode);
+                BuildSqlSetting.IsAutoImportSqlWhenExcelChange = EditorGUILayout.Toggle("Excel修改自动导表", BuildSqlSetting.IsAutoImportSqlWhenExcelChange);
             }
             GUILayout.EndVertical();
         }
@@ -74,7 +74,7 @@ namespace BDFramework.Editor.Table
 
         private void OnDisable()
         {
-            BDEditorApplication.BDFrameWorkFrameEditorSetting.Save();
+            BDEditorApplication.BDFrameworkEditorSetting.Save();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace BDFramework.Editor.Table
         static public void OnForceImpotChangedExcel()
         {
             //判断是否导入设置
-            if (BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode)
+            if (BDEditorApplication.BDFrameworkEditorSetting.BuildSqlSetting.IsForceImportChangedExcelOnWillEnterPlaymode)
             {
                 var (changedExcelList,newEcxcelInfoMap )= ExcelEditorTools.GetChangedExcels();
                 if (changedExcelList.Count > 0)

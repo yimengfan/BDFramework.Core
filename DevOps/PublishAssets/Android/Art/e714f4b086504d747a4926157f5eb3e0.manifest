@@ -1,0 +1,32 @@
+ManifestFileVersion: 0
+CRC: 3733534019
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 97c5dacae210ec26291394b671040642
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ac1bb03d31148da765046f7ddac4c80c
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 699775de2619ccc44bb6a7aa5ed620ea, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/ObjectPool/Bullet.prefab
+Dependencies:
+- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/43f3d8a9a7fdd6f469aea742dd9af679

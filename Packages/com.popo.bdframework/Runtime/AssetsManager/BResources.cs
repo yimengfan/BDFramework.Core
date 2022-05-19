@@ -120,6 +120,19 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="abModel"></param>
+        /// <param name="callback"></param>
+        static public void InitLoadAssetBundle(string path)
+        {
+            ResLoader = new AssetBundleMgrV2();
+            ResLoader.Init(path);
+            //初始化对象池
+            InitObjectPools();
+        }
+
+        /// <summary>
         /// 远程资源地址
         /// </summary>
         private static string RemoteAssetsUrl = "";
