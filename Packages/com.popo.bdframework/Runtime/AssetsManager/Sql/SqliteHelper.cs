@@ -59,7 +59,7 @@ namespace BDFramework.Sql
         /// <param name="appdomain"></param>
         public unsafe static void RegisterCLRRedirection(ILRuntime.Runtime.Enviorment.AppDomain appdomain)
         {
-            foreach (var mi in typeof(TableQueryCustom).GetMethods())
+            foreach (var mi in typeof(TableQueryForILRuntime).GetMethods())
             {
                 if (mi.Name == "FromAll" && mi.IsGenericMethodDefinition)
                 {

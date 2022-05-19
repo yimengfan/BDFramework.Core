@@ -2,6 +2,7 @@
 #define USE_CSHARP_SQLITE
 #endif
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace SQLite4Unity3d
         }
     }
 
-    public class TableQuery<T> : BaseTableQuery //, IEnumerable<T>
+    public class TableQuery<T> : BaseTableQuery , IEnumerable<T>
     {
         public SQLiteConnection Connection { get; private set; }
 
@@ -611,6 +612,10 @@ namespace SQLite4Unity3d
             return GenerateCommand("*").ExecuteDeferredQuery<T>().GetEnumerator();
         }
 
-        
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

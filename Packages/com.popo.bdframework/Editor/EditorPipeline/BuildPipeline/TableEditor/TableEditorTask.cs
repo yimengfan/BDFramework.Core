@@ -20,7 +20,7 @@ namespace BDFramework.Editor.Table
             //判断是否导入设置
             if (BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode)
             {
-                var changedExcelList = ExcelEditorTools.GetChangedExcels();
+                var (changedExcelList,newEcxcelInfoMap )= ExcelEditorTools.GetChangedExcels();
                 if (changedExcelList.Count > 0)
                 {
                     BDebug.Log("-----------------强制导入修改的excel文件.begin-----------------", "red");
@@ -37,6 +37,8 @@ namespace BDFramework.Editor.Table
                     SqliteLoder.Close();
                     BDebug.Log("-----------------强制导入修改的excel文件.end-----------------", "red");
                 }
+                //保存配置
+                ExcelEditorTools.SaveExcelCacheInfo(newEcxcelInfoMap);
             }
         }
     }

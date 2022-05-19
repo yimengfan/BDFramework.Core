@@ -42,6 +42,11 @@ namespace BDFramework.Editor.Table
                 xlslFiles.AddRange(fs);
             }
 
+            for (int i = 0; i < xlslFiles.Count; i++)
+            {
+                xlslFiles[i] = IPath.FormatPathOnUnity3d(xlslFiles[i]);
+            }
+
             return xlslFiles;
         }
 
@@ -63,7 +68,7 @@ namespace BDFramework.Editor.Table
                 excelHashMap[guid] = hash;
                 allExcelHash += hash;
             }
-            
+
             //返回
             return (allExcelHash.ToMD5(), excelHashMap);
         }
@@ -75,15 +80,15 @@ namespace BDFramework.Editor.Table
         /// 
         /// 该接口执行1次后就会将新配置覆盖本地
         /// </summary>
-        public static List<string> GetChangedExcels()
+        public static (List<string>, Dictionary<string, string> ) GetChangedExcels()
         {
             List<string> retExchangedInfoList = new List<string>();
             //获取旧配置
             var lastCacheMap = LoadExcelCacheInfo();
             //当前配置
-            var (_, lastestExcelCacheMap) = GetExcelsHash();
+            var (_, newExcelCacheMap) = GetExcelsHash();
 
-            foreach (var excelInfoItem in lastestExcelCacheMap)
+            foreach (var excelInfoItem in newExcelCacheMap)
             {
                 var ret = lastCacheMap.TryGetValue(excelInfoItem.Key, out var lastHash);
                 if (!ret || excelInfoItem.Value != lastHash)
@@ -92,10 +97,8 @@ namespace BDFramework.Editor.Table
                     retExchangedInfoList.Add(excelInfoItem.Key);
                 }
             }
-            //新配置覆盖本地
-            SaveExcelCacheInfo(lastestExcelCacheMap);
 
-            return retExchangedInfoList;
+            return (retExchangedInfoList, newExcelCacheMap);
         }
 
         /// <summary>

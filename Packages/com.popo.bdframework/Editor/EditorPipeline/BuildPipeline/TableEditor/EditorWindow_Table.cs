@@ -32,7 +32,8 @@ namespace BDFramework.Editor.Table
             GUILayout.Space(10);
             if (setting != null)
             {
-                setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode = EditorGUILayout.Toggle("Playmode导入变动Excel", setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode);
+                setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode = EditorGUILayout.Toggle("PlayMode强制导表", setting.BuildSetting.IsForceImportChangedExcelOnWillEnterPlaymode);
+                setting.BuildSetting.IsAutoImportSqlWhenExcelChange = EditorGUILayout.Toggle("Excel修改自动导表", setting.BuildSetting.IsAutoImportSqlWhenExcelChange);
             }
             GUILayout.EndVertical();
         }

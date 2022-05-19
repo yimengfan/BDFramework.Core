@@ -63,6 +63,8 @@ namespace BDFramework.Editor.Table
                     break;
             }
 
+            //清空表
+            SqliteHelper.DB.Connection.DropTable<ImportExcelLog>();
             {
                 foreach (var f in xlslFiles)
                 {
@@ -72,6 +74,7 @@ namespace BDFramework.Editor.Table
                     }
                     catch (Exception e)
                     {
+                        Debug.LogError(e);
                         Debug.LogError("导表失败:" + f);
                         EditorUtility.ClearProgressBar();
                     }
@@ -93,19 +96,54 @@ namespace BDFramework.Editor.Table
         /// <param name="filePath"></param>
         public static void Excel2SQLite(string filePath, DBType dbType)
         {
+            filePath = IPath.FormatPathOnUnity3d(filePath); //.Replace("\\", "/").ToLower();
             //收集所有的类型
             CollectTableTypes();
+            //
+            var excelHash = FileHelper.GetMurmurHash3(filePath);
+            //table判断
+            SqliteHelper.DB.Connection.CreateTable<ImportExcelLog>();
 
-            var excel = new ExcelExchangeTools(filePath);
-            var json = excel.GetJson(dbType);
-            try
+            var table = SqliteHelper.DB.GetTable<ImportExcelLog>();
+            var importLog = table?.Where((ie) => ie.Path == filePath).FirstOrDefault();
+            if (importLog == null || !importLog.Hash.Equals(excelHash))
             {
-                Json2Sqlite(filePath, json);
+                //开始导表
+                var excel = new ExcelExchangeTools(filePath);
+                var json = excel.GetJson(dbType);
+                try
+                {
+                    Json2Sqlite(filePath, json);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
+                    EditorUtility.ClearProgressBar();
+                }
+
+                //插入新版本数据
+                if (importLog == null)
+                {
+                    importLog = new ImportExcelLog();
+                    importLog.Path = filePath;
+                    importLog.Hash = excelHash;
+                    importLog.Date = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+                    ;
+                    importLog.UnityVersion = Application.unityVersion;
+                    SqliteHelper.DB.Insert(importLog);
+                }
+                else
+                {
+                    importLog.Hash = excelHash;
+                    importLog.Date = DateTime.Now.ToString();
+                    ;
+                    importLog.UnityVersion = Application.unityVersion;
+                    SqliteHelper.DB.Connection.Update(importLog);
+                }
             }
-            catch (Exception e)
+            else
             {
-                Debug.LogError(e);
-                EditorUtility.ClearProgressBar();
+                Debug.Log($"<color=green>【Excel2Sql】内容一致,无需导入 {Path.GetFileName(filePath)} - Hash :{excelHash} </color>");
             }
         }
 
@@ -191,7 +229,7 @@ namespace BDFramework.Editor.Table
             BDFrameworkPipelineHelper.OnExportExcel(type);
             //
             EditorUtility.ClearProgressBar();
-           // EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.Name, jsonObj.Count), 1);
+            // EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.Name, jsonObj.Count), 1);
         }
 
         #endregion
@@ -202,18 +240,17 @@ namespace BDFramework.Editor.Table
         /// <param name="sourceh"></param>
         public static void CopySqlToOther(string root, RuntimePlatform sourcePlatform)
         {
-          
             var target = SqliteLoder.GetLocalDBPath(root, sourcePlatform);
             var bytes = File.ReadAllBytes(target);
             //拷贝当前到其他目录
             foreach (var p in BApplication.SupportPlatform)
             {
-                
                 var outpath = SqliteLoder.GetLocalDBPath(root, p);
                 if (target == outpath)
                 {
                     continue;
                 }
+
                 FileHelper.WriteAllBytes(outpath, bytes);
             }
         }
@@ -233,8 +270,6 @@ namespace BDFramework.Editor.Table
         public static void MenuItem_Excel2Sqlite()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            path = Path.GetFullPath(path);
-
             SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath, BApplication.RuntimePlatform);
             {
                 Excel2SQLite(path, DBType.Local);

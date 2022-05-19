@@ -191,7 +191,7 @@ namespace SQLite4Unity3d
             else
             {
 #if UNITY_EDITOR
-                Debug.Log("连接sqlite 成功!");
+                Debug.Log("<color=red>连接sqlite!</color>");
 #endif
             }
 
@@ -1633,6 +1633,9 @@ namespace SQLite4Unity3d
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+#if UNITY_EDITOR
+            Debug.Log("<color=red>关闭sqlite!</color>");
+#endif
         }
 
         protected virtual void Dispose(bool disposing)

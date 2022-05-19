@@ -77,9 +77,11 @@ namespace System.IO
         //     }
         //     return ret;
         // }
+
         #endregion
 
         #region 路径纠正
+
         /// <summary>
         /// 添加/
         /// </summary>
@@ -110,10 +112,28 @@ namespace System.IO
 
             return path;
         }
-        
+
+
+        /// <summary>
+        /// 格式化路径
+        /// </summary>
+        /// <returns></returns>
+        static public string FormatPathOnUnity3d(string path)
+        {
+            if (path != null)
+            {
+                path = path.ToLower();
+                var idx = path.IndexOf("assets");
+                if (idx != 0)
+                {
+                    path = path.Substring(idx);
+                }
+                return path.Replace("\\", "/");
+            }
+
+            return path;
+        }
 
         #endregion
-
-
     }
 }

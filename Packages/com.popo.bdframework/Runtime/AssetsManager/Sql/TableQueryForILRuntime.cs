@@ -39,7 +39,7 @@ namespace SQLite4Unity3d
     /// <summary>
     /// 自定义版本的 TableQuery
     /// </summary>
-    public class TableQueryCustom : BaseTableQuery
+    public class TableQueryForILRuntime : BaseTableQuery
     {
         public SQLiteConnection Connection { get; private set; }
 
@@ -68,7 +68,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="connection">sql连接器</param>
         /// <param name="triggerCacheNum">触发缓存次数</param>
-        public TableQueryCustom(SQLiteConnection connection)
+        public TableQueryForILRuntime(SQLiteConnection connection)
         {
             this.Connection = connection;
         }
@@ -131,7 +131,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public TableQueryCustom Exec(string sql)
+        public TableQueryForILRuntime Exec(string sql)
         {
             this.@sql = sql;
             return this;
@@ -145,7 +145,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryCustom Where(string where, object value)
+        public TableQueryForILRuntime Where(string where, object value)
         {
             if (value is string)
             {
@@ -161,7 +161,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryCustom Where(string where)
+        public TableQueryForILRuntime Where(string where)
         {
             this.@where = ZString.Concat(this.@where, " ", where); // string.Format((" " + where), where);
             return this;
@@ -173,7 +173,7 @@ namespace SQLite4Unity3d
         /// <param name="where"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public TableQueryCustom And
+        public TableQueryForILRuntime And
         {
             get
             {
@@ -186,7 +186,7 @@ namespace SQLite4Unity3d
         /// Or 语句
         /// </summary>
         /// <returns></returns>
-        public TableQueryCustom Or
+        public TableQueryForILRuntime Or
         {
             get
             {
@@ -198,7 +198,7 @@ namespace SQLite4Unity3d
         /// <summary>
         /// In语句查询
         /// </summary>
-        public TableQueryCustom WhereIn<T>(string field, IEnumerable<T> values)
+        public TableQueryForILRuntime WhereIn<T>(string field, IEnumerable<T> values)
         {
             var sqlIn = string.Join(",", values);
             this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlIn);
@@ -209,7 +209,7 @@ namespace SQLite4Unity3d
         /// <summary>
         /// In语句查询
         /// </summary>
-        public TableQueryCustom WhereIn(string field, params object[] objs)
+        public TableQueryForILRuntime WhereIn(string field, params object[] objs)
         {
             var sqlIn = string.Join(",", objs);
             this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlIn);
@@ -220,7 +220,7 @@ namespace SQLite4Unity3d
         /// <summary>
         /// 仿MyBatis CRUD 更符合nameof规范
         /// </summary>
-        public TableQueryCustom WhereEqual(string where, object value)
+        public TableQueryForILRuntime WhereEqual(string where, object value)
         {
             var query = ZString.Format("{0} = {1}", where, value);
             this.@where = ZString.Concat(this.@where, " ", query);
@@ -232,7 +232,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryCustom WhereOr(string field, string operation = "", params object[] objs)
+        public TableQueryForILRuntime WhereOr(string field, string operation = "", params object[] objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Length; i++)
@@ -257,7 +257,7 @@ namespace SQLite4Unity3d
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public TableQueryCustom WhereAnd(string field, string operation = "", params object[] objs)
+        public TableQueryForILRuntime WhereAnd(string field, string operation = "", params object[] objs)
         {
             string sql = "";
             for (int i = 0; i < objs.Length; i++)
@@ -285,7 +285,7 @@ namespace SQLite4Unity3d
         /// Limit 语句
         /// </summary>
         /// <param name="limitValue"></param>
-        public TableQueryCustom Limit(int limitValue)
+        public TableQueryForILRuntime Limit(int limitValue)
         {
             this.limit = limitValue.ToString();
 
@@ -299,7 +299,7 @@ namespace SQLite4Unity3d
         /// <summary>
         /// 降序排序
         /// </summary>
-        public TableQueryCustom OrderByDesc(string field)
+        public TableQueryForILRuntime OrderByDesc(string field)
         {
             var query = ZString.Format(" Order By {0} Desc", field);
             this.@where = ZString.Concat(this.@where, query);
@@ -309,7 +309,7 @@ namespace SQLite4Unity3d
         /// <summary>
         /// 升序排序
         /// </summary>
-        public TableQueryCustom OrderBy(string field)
+        public TableQueryForILRuntime OrderBy(string field)
         {
             var query = ZString.Format(" Order By {0}", field);
             this.@where = ZString.Concat(this.@where, query);

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BDFramework.Core.Tools;
 using BDFramework.Sql;
+using BDFramework.StringEx;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,16 +12,22 @@ namespace BDFramework.Editor.Table
     {
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
+            //判断设置
+            var setting = BDEditorApplication.BDFrameWorkFrameEditorSetting;
+            if (!setting.BuildSetting.IsAutoImportSqlWhenExcelChange)
+            {
+                return;
+            }
+            //开始导表
             var excelList = new List<string>();
             foreach (var asset in importedAssets)
             {
-                if (asset.EndsWith("xlsx") && asset.Contains("Table") && !asset.Contains("~"))
+                if (asset.EndsWith("xlsx", StringComparison.OrdinalIgnoreCase) && asset.Contains("Table",StringComparison.OrdinalIgnoreCase) && !asset.Contains("~"))
                 {
                     excelList.Add(asset);
                 }
             }
 
-           
             if (excelList.Count > 0)
             {
                 SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath, BApplication.RuntimePlatform);

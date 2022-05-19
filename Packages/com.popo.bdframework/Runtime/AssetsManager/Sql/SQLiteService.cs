@@ -7,7 +7,7 @@ namespace BDFramework.Sql
     public class SQLiteService
     {
         //db connect
-        private SQLiteConnection Connection { get; set; }
+        public SQLiteConnection Connection { get; private set; }
 
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace BDFramework.Sql
         public SQLiteService(SQLiteConnection con)
         {
             this.Connection = con;
-            this.tableRuntime = new TableQueryCustom(this.Connection);
+            this.tableRuntime = new TableQueryForILRuntime(this.Connection);
         }
 
         /// <summary>
@@ -98,14 +98,14 @@ namespace BDFramework.Sql
 
         #endregion
 
-        #region 二次封装的表格操作
+        #region 二次封装的表格操作 for ILRuntime
 
-        private TableQueryCustom tableRuntime;
+        private TableQueryForILRuntime tableRuntime;
 
         /// <summary>
         /// 获取TableRuntime
         /// </summary>
-        public TableQueryCustom TableRuntime
+        public TableQueryForILRuntime TableRuntime
         {
             get { return tableRuntime; }
         }
@@ -115,7 +115,7 @@ namespace BDFramework.Sql
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public TableQueryCustom GetTableRuntime()
+        public TableQueryForILRuntime GetTableRuntime()
         {
             return tableRuntime;
         }
