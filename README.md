@@ -2,7 +2,7 @@
 <a name="JYyl0"></a>
 # 作者寄语(Introduction)
 
-Simple! Easy! Professional! This‘s a powerful Unity3d game workflow!<br />BDFramework的设计理念永远是：**工业化、流水线化、专业化！**<br />永远致力于打造高效的商业游戏工作流.<br />BDFramework大部分功能开发都是围绕一整条工作流，以**Pipeline**的形式放出.<br />如:**BuildPipeline、PublishPipeline、DevOps** 等...<br />对于第三方库使用也都是为了Pipeline深度定制，很多时候为了一些使用体验优化会编写大量的Editor编码.<br />这也是BDFramework的设计理念之一：<br />**能编辑器解决的，就不要业务层解决！能自动化的，就不要手动!**<br />BDFramework没有什么看上去很酷炫的功能，大都是一点一滴的积累，一点点的增加自动化，一点点的增加业务编码的体验.也正是因为有这样的坚持，才会有这套框架的出现.<br />更多的是做一些商业技术方案的分享和讨论.<br />因为一些特殊原因，只能放出一些游戏基建方案Pipeline的实现，<br />不会有对具体业务逻辑的解决方案，所以整套workflow更像是一套游戏开发脚手架.<br />望理解！<br />最后,<br />虽然该框架能开箱即用，但我个人建议且鼓励 ：进行自己的思考并，为自己项目进行改造！<br />有任何疑问也欢迎讨论~
+Simple! Easy! Professional! This‘s a powerful Unity3d game workflow!<br />BDFramework的设计理念永远是：**工业化、流水线化、专业化！**<br />永远致力于打造高效的商业游戏工作流.<br />BDFramework大部分功能开发都是围绕一整条工作流，以**Pipeline**的形式放出.<br />如:**BuildPipeline、PublishPipeline、DevOps** 等...<br />对于第三方库使用也都是为了Pipeline深度定制，很多时候为了一些使用体验优化会编写大量的Editor编码.<br />这也是BDFramework的设计理念之一：<br />**能编辑器解决的，就不要业务层解决！能自动化的，就不要手动!**<br />BDFramework没有什么看上去很酷炫的功能，大都是一点一滴的积累，一点点的增加自动化，一点点的增加业务编码的体验.也正是因为有这样的坚持，才会有这套框架的出现.<br />更多的是做一些商业技术方案的分享和讨论.<br />因为一些特殊原因，只能放出一些游戏基建方案Pipeline的实现，<br />不会有对具体业务逻辑的解决方案，所以整套workflow更像是一套游戏开发脚手架.<br />望理解！<br />最后,<br />虽然该框架能开箱即用，但我个人建议且鼓励 ：**进行自己的思考，并为自己项目进行改造！**<br />有任何疑问也欢迎讨论~
 <a name="CDDBb"></a>
 # 社区(Community)
 
@@ -28,7 +28,7 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 #### Unity2020 - [TestBranch](https://github.com/yimengfan/BDFramework.Core/tree/2020.4LTS)
 <a name="J516L"></a>
 #### Unity2021 - [TestBranch](https://github.com/yimengfan/BDFramework.Core/tree/2021.2.13f1)
-
+版本开发流程：<br />=》修改、Fixed bug、新功能加入 基于**Master（目前为Unity2019）**<br />=》Merge to Unity2020 、Unity2021测试
 <a name="KgTix"></a>
 ## V2.1版本:
 
@@ -131,7 +131,6 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 - **完整的测试用例，保证框架的稳定.**
 - 所有功能全面兼容DevOps、CI、CD等工具.
 - 其他大量的定制Editor，以保证使用体验...(太多了统计不过来)
-- <br />
 
 **有很多细枝末节的系统就不列举了...**
 
@@ -166,9 +165,9 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 
 Then open the "**Package Manger"** editor windows. Switch menuitem to "**My Registries** ". You can see the BDFramework ,you can select the new version.<br />[![](https://camo.githubusercontent.com/baa458f5ab7bf39c7465812d5190ca750e38d0aa034206e34e99c138d23b079c/68747470733a2f2f63646e2e6e6c61726b2e636f6d2f79757175652f302f323032312f706e672f3333383236372f313633393830393230353935322d34393231343461352d356431632d346431622d386137332d6536636332643734383262372e706e6723636c69656e7449643d7531313933303662342d366432622d342663726f703d302663726f703d302663726f703d312663726f703d312666726f6d3d7061737465266865696768743d3232362669643d756335643739656439266d617267696e3d2535426f626a6563742532304f626a656374253544266e616d653d696d6167652e706e67266f726967696e4865696768743d343532266f726967696e57696474683d343032266f726967696e616c547970653d62696e61727926726174696f3d3126726f746174696f6e3d302673686f775469746c653d66616c73652673697a653d3331393336267374617475733d646f6e65267374796c653d6e6f6e65267461736b49643d7564636166383936322d656432332d343065332d396438332d3537383437633861333766267469746c653d2677696474683d323031#crop=0&crop=0&crop=1&crop=1&from=url&id=IhWR8&margin=%5Bobject%20Object%5D&originHeight=452&originWidth=402&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=shadow&title=)](https://camo.githubusercontent.com/baa458f5ab7bf39c7465812d5190ca750e38d0aa034206e34e99c138d23b079c/68747470733a2f2f63646e2e6e6c61726b2e636f6d2f79757175652f302f323032312f706e672f3333383236372f313633393830393230353935322d34393231343461352d356431632d346431622d386137332d6536636332643734383262372e706e6723636c69656e7449643d7531313933303662342d366432622d342663726f703d302663726f703d302663726f703d312663726f703d312666726f6d3d7061737465266865696768743d3232362669643d756335643739656439266d617267696e3d2535426f626a6563742532304f626a656374253544266e616d653d696d6167652e706e67266f726967696e4865696768743d343532266f726967696e57696474683d343032266f726967696e616c547970653d62696e61727926726174696f3d3126726f746174696f6e3d302673686f775469746c653d66616c73652673697a653d3331393336267374617475733d646f6e65267374796c653d6e6f6e65267461736b49643d7564636166383936322d656432332d343065332d396438332d3537383437633861333766267469746c653d2677696474683d323031)
 <a name="oo6oU"></a>
-#### Master版（紧急修复bug）:
+#### Master版（紧急修复bug or 自行修改版）:
 
-手动将框架放置在Package目录下 ps:只移动**com.popo.bdframework文件夹**到项目即可 
+手动将框架放置在Package目录下 <br />![image.png](https://cdn.nlark.com/yuque/0/2022/png/338267/1652974827438-46dae355-b6f7-4a50-b068-4231c2d2bede.png#clientId=u601d31b3-c056-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=303&id=ucdfd0f6c&margin=%5Bobject%20Object%5D&name=image.png&originHeight=478&originWidth=710&originalType=binary&ratio=1&rotation=0&showTitle=false&size=22744&status=done&style=shadow&taskId=ub7cee2b7-77bc-447a-be8e-b6d2676bb46&title=&width=450.7936712655721)<br />ps:只移动**com.popo.bdframework文件夹**到自己项目Package目录即可 
 
 <a name="t2U6E"></a>
 # 项目实践流程：
