@@ -2,7 +2,7 @@
 <a name="JYyl0"></a>
 # 作者寄语(Introduction)
 
-Simple! Easy! Professional! This‘s a powerful Unity3d game workflow!<br />BDFramework的设计理念永远是：**工业化、流水线化、专业化！**<br />永远致力于打造高效的商业游戏工作流.<br />BDFramework大部分功能开发都是围绕一整条工作流，以**Pipeline**的形式放出.<br />如:**BuildPipeline、PublishPipeline、DevOps** 等...<br />对于第三方库使用也都是为了Pipeline深度定制，很多时候为了一些使用体验优化会编写大量的Editor编码.<br />这也是BDFramework的设计理念之一：<br />**能编辑器解决的，就不要业务层解决！能自动化的，就不要手动!**<br />BDFramework没有什么看上去很酷炫的功能，大都是一点一滴的积累，一点点的增加自动化，一点点的增加业务编码的体验.也正是因为有这样的坚持，才会有这套框架的出现.<br />更多的是做一些商业技术方案的分享和讨论.<br />最后,<br />因为一些原因，只能放出一些游戏基建方案Pipeline的实现，<br />不会有对具体业务逻辑的解决方案，所以整套workflow更像是一套游戏开发脚手架.<br />望理解！
+Simple! Easy! Professional! This‘s a powerful Unity3d game workflow!<br />BDFramework的设计理念永远是：**工业化、流水线化、专业化！**<br />永远致力于打造高效的商业游戏工作流.<br />BDFramework大部分功能开发都是围绕一整条工作流，以**Pipeline**的形式放出.<br />如:**BuildPipeline、PublishPipeline、DevOps** 等...<br />对于第三方库使用也都是为了Pipeline深度定制，很多时候为了一些使用体验优化会编写大量的Editor编码.<br />这也是BDFramework的设计理念之一：<br />**能编辑器解决的，就不要业务层解决！能自动化的，就不要手动!**<br />BDFramework没有什么看上去很酷炫的功能，大都是一点一滴的积累，一点点的增加自动化，一点点的增加业务编码的体验.也正是因为有这样的坚持，才会有这套框架的出现.<br />更多的是做一些商业技术方案的分享和讨论.<br />因为一些特殊原因，只能放出一些游戏基建方案Pipeline的实现，<br />不会有对具体业务逻辑的解决方案，所以整套workflow更像是一套游戏开发脚手架.<br />望理解！<br />最后,<br />虽然该框架能开箱即用，但我个人建议且鼓励 ：进行自己的思考并，为自己项目进行改造！<br />有任何疑问也欢迎讨论~
 <a name="CDDBb"></a>
 # 社区(Community)
 
@@ -83,10 +83,12 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 - 重新定制目录管理规范、指导管理.
 - 一套API自动切换AB和Editor模式，保留Resources.load习惯.
 - 可视化连线打包逻辑、0冗余打包.
-- 可扩展打包节点规则
-- 内置节点:搜集keyword、搜集图集、文件夹颗粒度、后缀名颗粒度等...
+- 可扩展打包规则
+- 分包机制.
 - 打包逻辑纠错机制.
-- 差异打包机制: 防止不同机器、工程打包AB不同情况.
+- 内置增量打包机制，防止不同机器、工程打包AB不同情况.
+- 自动图集管理.
+- 自动搜集Shader  Keyword.
 - 可寻址加载系统.
 - Assetbundle混淆机制，一定程度下防破解资源.
 - Assetbundle 同、异步加载校验.
