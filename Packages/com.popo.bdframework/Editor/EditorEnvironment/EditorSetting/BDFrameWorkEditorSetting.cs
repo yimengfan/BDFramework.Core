@@ -194,11 +194,11 @@ namespace BDFramework.Editor
 
         [BoxGroup("表格", true)]
         [LabelText("play模式前强制导入变更Excel")]
-        public bool IsForceImportChangedExcelOnWillEnterPlaymode = false;
+        public bool IsForceImportChangedExcelOnWillEnterPlaymode = true;
         
         [BoxGroup("表格", true)]
         [LabelText("修改完Excel自动导表")]
-        public bool IsAutoImportSqlWhenExcelChange = false;
+        public bool IsAutoImportSqlWhenExcelChange = true;
         public bool IsNeedAutoBuildDll()
         {
             return IsAutoBuildDll && HotfixCodeFloderType == HotfixCodeFloderTypeEnum.InUnityAssets;
