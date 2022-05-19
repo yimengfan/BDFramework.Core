@@ -8,6 +8,7 @@ using BDFramework.Editor;
 using BDFramework.Editor.DevOps;
 using BDFramework.Editor.PublishPipeline;
 using UnityEditor.Build.Player;
+using UnityEngine.AssetGraph;
 
 namespace BDFramework.Editor.AssetBundle
 {
@@ -103,6 +104,13 @@ namespace BDFramework.Editor.AssetBundle
                 }
                 GUILayout.EndHorizontal();
 
+                if (GUILayout.Button("编辑AssetBundle颗粒度", GUILayout.Height(25)))
+                {
+                    var win = GetWindow<AssetGraphEditorWindow>();
+                    win.OpenGraph("Assets/AssetGraph/BResourceAssetBundleConfig.asset");
+                }
+
+
                 GUILayout.Space(5);
                 //遍历支持平台
                 foreach (var platform in BApplication.SupportPlatform)
@@ -124,14 +132,16 @@ namespace BDFramework.Editor.AssetBundle
                                 BuildAssetBundle(BApplication.DevOpsPublishAssetsPath, platform);
                             }
                         }
+
                         if (GUILayout.Button("混淆AB", GUILayout.Width(80)))
                         {
                             var ret = EditorUtility.DisplayDialog("提示", "是否要混淆AssetBundle? \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
                             if (ret)
                             {
-                               AssetBundleEditorToolsV2.MixAssetBundle(BApplication.DevOpsPublishAssetsPath, platform);
+                                AssetBundleEditorToolsV2.MixAssetBundle(BApplication.DevOpsPublishAssetsPath, platform);
                             }
                         }
+
                         GUI.color = GUI.backgroundColor;
                     }
                     GUILayout.EndHorizontal();
@@ -180,7 +190,6 @@ namespace BDFramework.Editor.AssetBundle
                 AssetDatabase.Refresh();
                 Debug.Log("资源打包完毕");
             }
-
         }
 
         private void OnDestroy()
