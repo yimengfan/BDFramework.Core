@@ -34,8 +34,12 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
 
     public void OnGUI()
     {
-        var buildDLLSetting = BDEditorApplication.BDFrameworkEditorSetting.BuildHotfixDLLSetting;
-
+        if (BDEditorApplication.BDFrameworkEditorSetting == null)
+        {
+            return;
+        }
+        //
+        var buildDLLSetting = BDEditorApplication.BDFrameworkEditorSetting?.BuildHotfixDLLSetting;
         GUILayout.BeginVertical();
         {
             GUILayout.Label("1.脚本打包", EditorGUIHelper.LabelH2);

@@ -18,6 +18,10 @@ namespace BDFramework.Editor.Table
 
         public void OnGUI()
         {
+            if (BDEditorApplication.BDFrameworkEditorSetting == null)
+            {
+                return;
+            }
             var BuildSqlSetting = BDEditorApplication.BDFrameworkEditorSetting.BuildSqlSetting;
             GUILayout.BeginVertical();
             GUILayout.Label("3.表格打包", EditorGUIHelper.LabelH2);
