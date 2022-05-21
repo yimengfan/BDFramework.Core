@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using BDFramework;
 using BDFramework.Core.Tools;
+using BDFramework.ResourceMgr;
 using BDFramework.ResourceMgr.V2;
 using LitJson;
 using UnityEngine;
@@ -33,9 +35,6 @@ public class AssetBundleBenchmark01 : MonoBehaviour
 
     static private Transform SCENE_ROOT;
 
-    // static private DevResourceMgr   DevLoder;
-    static private AssetBundleMgrV2 AssetBundleLoader;
-
     static private Camera Camera;
 
     // static private EditorWindow     GameView;
@@ -45,9 +44,36 @@ public class AssetBundleBenchmark01 : MonoBehaviour
     static private Image imageNode;
     static private SpriteRenderer spriteRendererNode;
 
+    // readonly static public GUIStyle LabelH4 = new GUIStyle()
+    // {
+    //     fontSize = 15,
+    //     normal = new GUIStyleState()
+    //     {
+    //         textColor = Color.red
+    //     }
+    // };
 
     private void OnGUI()
     {
+        GUILayout.BeginVertical();
+        {
+            GUI.skin.button.fontSize = 30;
+            
+            if (GUILayout.Button("同步加载 测试",GUILayout.Height(100),GUILayout.Width(300)))
+            {
+                this.StartCoroutine(IE_01_LoadAll(false));
+            }
+            if (GUILayout.Button("异步加载 测试",GUILayout.Height(100),GUILayout.Width(300)))
+            {
+                this.StartCoroutine(IE_01_LoadAll(true));
+            }
+            
+            if (GUILayout.Button("随机加载 测试",GUILayout.Height(100),GUILayout.Width(300)))
+            {
+                
+            }
+        }
+        GUILayout.EndVertical();
         
     }
 
@@ -55,8 +81,6 @@ public class AssetBundleBenchmark01 : MonoBehaviour
     {
         BenchmarkResultPath = Application.persistentDataPath + "/Benchmark/AssetBundleTest01.json";
         this.Init();
-        this.StartCoroutine(IE_01_LoadAll(IsAsyncLoad));
-        this.StartCoroutine(IE_01_LoadAll(IsAsyncLoad));
     }
 
 
@@ -70,10 +94,10 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         //dev加载器
         // DevLoder = new DevResourceMgr();
         // DevLoder.Init("");
-        AssetBundleLoader = new AssetBundleMgrV2();
+        BResources.Init(AssetLoadPathType.DevOpsPublish);
         var abPath = Application.isEditor ? BApplication.DevOpsPublishAssetsPath : Application.persistentDataPath;
-        AssetBundleLoader.Init(abPath);
-        AssetBundleLoader.WarmUpShaders();
+        BResources.InitLoadAssetBundle(abPath);
+        BResources.ResLoader.WarmUpShaders();
         //节点
         UI_ROOT = GameObject.Find("UIRoot").transform;
         SCENE_ROOT = GameObject.Find("3dRoot").transform;
@@ -126,6 +150,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         }
 
         loadDataMap.Clear();
+        var AssetBundleLoader = BResources.ResLoader as AssetBundleMgrV2;
         //加载
         foreach (var assetdata in AssetBundleLoader.AssetConfigLoder.AssetbundleItemList)
         {
