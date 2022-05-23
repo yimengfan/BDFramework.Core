@@ -5,6 +5,7 @@ using System.IO;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
+using AssetsManager.ArtAsset.AssetBundle.V2;
 using BDFramework.Core.Tools;
 using Cysharp.Text;
 using Cysharp.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 异步回调表
         /// </summary>
-        private Queue<AsyncLoadTaskGroupResult> asyncTaskGroupQueue { get; set; } = new Queue<AsyncLoadTaskGroupResult>(50);
+        private Queue<LoadTaskGroup> asyncTaskGroupQueue { get; set; } = new Queue<LoadTaskGroup>(50);
 
         /// <summary>
         /// 全局唯一的依赖
@@ -41,8 +42,9 @@ namespace BDFramework.ResourceMgr.V2
 
         /// <summary>
         /// 全局的ab缓存
+        /// ab filename-assetbundle
         /// </summary>
-        public Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get; private set; } = new Dictionary<string, AssetBundleWapper>(StringComparer.OrdinalIgnoreCase);
+       private  Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get;  set; } = new Dictionary<string, AssetBundleWapper>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// 资源加载路径
@@ -78,13 +80,13 @@ namespace BDFramework.ResourceMgr.V2
             }
 
             //2.路径替换
-            firstArtDirectory = IPath.ReplaceBackSlash(firstArtDirectory);
-            secArtDirectory = IPath.ReplaceBackSlash(secArtDirectory);
+            firstArtDirectory = IPath.FormatPathOnRuntime(firstArtDirectory);
+            secArtDirectory = IPath.FormatPathOnRuntime(secArtDirectory);
 
             //3.加载ArtConfig
             this.AssetConfigLoder = new AssetbundleConfigLoder();
-            var assetconfigPath = "";
-            var assetTypePath = "";
+            string assetconfigPath;
+            string assetTypePath;
             if (Application.isEditor)
             {
                 assetconfigPath = IPath.Combine(rootPath, platformPath, BResources.ART_ASSET_CONFIG_PATH);
@@ -106,6 +108,7 @@ namespace BDFramework.ResourceMgr.V2
 
 
         #region 同步加载
+
         /// <summary>
         /// 同步加载
         /// </summary>
@@ -149,25 +152,23 @@ namespace BDFramework.ResourceMgr.V2
             if (!retObj)
             {
                 //1.依赖路径
-                var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssets(assetPath, type);
+                var (mainAssetItem, dependAssetList) = AssetConfigLoder.GetDependAssets(assetPath, type);
                 //2.加载
-                if (assetBundleItem != null)
+                if (mainAssetItem != null)
                 {
-                    //加载依赖AB
-                    List<UniTask> uniTasks = new List<UniTask>(dependAssetList.Count+1);
+                    if (dependAssetList == null)
+                    {
+                        dependAssetList = new List<AssetBundleItem>();
+                    }
+                    dependAssetList.Add(mainAssetItem);
+                    //加载所有ab
                     foreach (var dependABItem in dependAssetList)
                     {
-                       var task = LoadAssetBundleFile(dependABItem.AssetBundlePath, dependABItem.Mix);
-                       uniTasks.Add(task);
+                        LoadAssetBundleFile(dependABItem.AssetBundlePath, dependABItem.Mix);
                     }
 
-                    //加载主资源AB
-                    var mainTask = LoadAssetBundleFile(assetBundleItem.AssetBundlePath, assetBundleItem.Mix);
-                    uniTasks.Add(mainTask);
-                    //等待所有任务结束
-                    UniTask.WhenAll(uniTasks);
                     //加载实例
-                    retObj = LoadObjectFormAssetBundle(type, assetPath, assetBundleItem);
+                    retObj = LoadObjectFormAssetBundle(type, assetPath, mainAssetItem);
                 }
             }
 
@@ -237,7 +238,6 @@ namespace BDFramework.ResourceMgr.V2
 
         #region 异步加载
 
-        
         /// <summary>
         /// 异步加载接口
         /// </summary>
@@ -288,14 +288,14 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="assetName"></param>
         /// <param name="callback"></param>
         /// <returns>异步任务id</returns>
-        public AsyncLoadTaskGroupResult CreateAsyncLoadTask<T>(string assetName) where T : UnityEngine.Object
+        public LoadTaskGroup CreateAsyncLoadTask<T>(string assetName) where T : UnityEngine.Object
         {
             var assetBundleItem = AssetConfigLoder.GetAssetBundleData<T>(assetName);
 
             if (assetBundleItem != null)
             {
                 //添加任务组
-                var taskGroup = new AsyncLoadTaskGroupResult(this, assetBundleItem);
+                var taskGroup = new LoadTaskGroup(this, assetBundleItem);
                 taskGroup.Id = this.taskIdxCounter++;
                 // AddAsyncTaskGroup(taskGroup);
                 return taskGroup;
@@ -347,10 +347,10 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 添加一个任务组
         /// </summary>
-        /// <param name="taskGroupResult"></param>
-        public void AddAsyncTaskGroup(AsyncLoadTaskGroupResult taskGroupResult)
+        /// <param name="taskGroup"></param>
+        public void AddAsyncTaskGroup(LoadTaskGroup taskGroup)
         {
-            this.asyncTaskGroupQueue.Enqueue(taskGroupResult);
+            this.asyncTaskGroupQueue.Enqueue(taskGroup);
         }
 
         #endregion
@@ -361,71 +361,97 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 加载AssetBundle文件
         /// </summary>
-        /// <param name="assetbundlePath"></param>
+        /// <param name="assetbundleFileName">ab文件名</param>
         /// <returns></returns>
-        async public UniTask<AssetBundle> LoadAssetBundleFile(string assetbundlePath, int offset = 0)
+        public void LoadAssetBundleFile(string assetbundleFileName, int offset = 0)
         {
-            AssetBundleWapper abw = null;
-            if (!AssetbundleCacheMap.TryGetValue(assetbundlePath, out abw))
+            AssetBundleWapper abw = GetAssetBundleFromCache(assetbundleFileName);
+            if (abw == null)
             {
                 //寻找加载路径
-                var abRealPath = FindMultiAddressAsset(assetbundlePath);
+                var abPath = FindMultiAddressAsset(assetbundleFileName);
 #if UNITY_EDITOR
-                if (!File.Exists(abRealPath))
+                if (!File.Exists(abPath))
                 {
-                    return null;
+                    return;
                 }
 #endif
-                AssetBundle ab = null;
-                //这里需要判断Lock列表，异步转同步
-                var (ret, abcr) = GetExsitLoadTask(assetbundlePath);
-                if (abcr != null)
+
+                //这里需要判断task列表，异步转同步
+                var loadTask = GetExsitLoadTask(assetbundleFileName);
+                if (loadTask != null)
                 {
-                    //这里已经开始异步加载，则等待加载完毕,除非unity提供取消接口
-                    ab = await abcr;
+                    if (loadTask.IsAsyncTask)
+                    {
+                        loadTask.ToSynchronizationTask();
+                    }
+                    else
+                    {
+                        BDebug.LogError("【AssetbundleV2】同步任务调度错误~");
+                    }
                 }
                 else
                 {
-                    //同步也要添加锁,防止异步突然加载
-                    LockLoadTask(assetbundlePath, null);
+                    //同步也要创建任务
+                    loadTask = new LoadTask(abPath, 0u, (ulong) offset);
+                    AddGlobalLoadTask(loadTask);
                     {
-                        ab = AssetBundle.LoadFromFile(abRealPath, 0u, (ulong) offset);
+                        //同步加载
+                        loadTask.Load();
                     }
-                    UnLockLoadTask(assetbundlePath);
+                    RemoveGlobalLoadTask(loadTask);
                 }
 
 
+#if UNITY_EDITOR
+                if (loadTask.AssetBundle == null)
+                {
+                    Debug.LogError($"【AssetBundleV2】 ab加载失败{loadTask.LocalPath}");
+                }
+#endif
                 //添加
-                abw = this.AddAssetBundle(assetbundlePath, ab);
+                abw = this.AddAssetBundleToCache(assetbundleFileName, loadTask.AssetBundle);
             }
 
             //使用
             abw.Use();
-            return abw.AssetBundle;
         }
 
 
         /// <summary>
-        /// ab包计数器
+        /// 添加ab到缓存
         /// </summary>
-        /// <param name="assetPath"></param>
+        /// <param name="assetBundleFileName">这里是ab文件名，不是路径</param>
         /// <param name="ab"></param>
-        public AssetBundleWapper AddAssetBundle(string assetPath, AssetBundle ab)
+        public AssetBundleWapper AddAssetBundleToCache(string assetBundleFileName, AssetBundle ab)
         {
             AssetBundleWapper abw = null;
             //
-            if (!AssetbundleCacheMap.TryGetValue(assetPath, out abw))
+            if (!AssetbundleCacheMap.TryGetValue(assetBundleFileName, out abw))
             {
                 abw = new AssetBundleWapper(ab);
-                AssetbundleCacheMap[assetPath] = abw;
+                AssetbundleCacheMap[assetBundleFileName] = abw;
             }
 
+            return abw;
+        }
+
+
+        /// <summary>
+        /// 获取缓存中的ab
+        /// </summary>
+        /// <param name="assetBundleFileName"></param>
+        /// <returns></returns>
+        public AssetBundleWapper GetAssetBundleFromCache(string assetBundleFileName)
+        {
+            AssetbundleCacheMap.TryGetValue(assetBundleFileName, out var abw);
             return abw;
         }
 
         #endregion
 
         #region 从AB中加载Object
+
         /// <summary>
         /// 加载资源
         /// </summary>
@@ -604,7 +630,7 @@ namespace BDFramework.ResourceMgr.V2
                 if (this.asyncTaskGroupQueue.Count > 0)
                 {
                     //开始新任务
-                    AsyncLoadTaskGroupResult task = null;
+                    LoadTaskGroup task = null;
 
                     do
                     {
@@ -614,13 +640,13 @@ namespace BDFramework.ResourceMgr.V2
                     //执行任务
                     if (!task.IsCancel)
                     {
-                        BDebug.Log("【AssetbundleV2】开始执行异步加载：" + task.AssetBundleItem.LoadPath);
+                        BDebug.Log("【AssetbundleV2】开始执行异步加载：" + task.MainAssetBundleItem.LoadPath);
 
                         yield return task;
 
                         if (task.IsSuccess)
                         {
-                            BDebug.Log("【AssetbundleV2】加载完成：" + task.AssetBundleItem.LoadPath);
+                            BDebug.Log("【AssetbundleV2】加载完成：" + task.MainAssetBundleItem.LoadPath);
                             task.Dispose();
                         }
                     }
@@ -633,44 +659,77 @@ namespace BDFramework.ResourceMgr.V2
 
         #endregion
 
-        #region Lode task 锁
+        #region 全局加载任务
 
+        /// <summary>
+        /// 最大任务数
+        /// </summary>
+        static readonly public int MAX_TASK_NUM = 10;
+        
         /// <summary>
         /// loder缓存表 防止重复加载
         /// </summary>
-        private static Dictionary<string, AssetBundleCreateRequest> LOAD_TASK_LOCK_MAP = new Dictionary<string, AssetBundleCreateRequest>();
+        private static Dictionary<string, LoadTask> GLOBAL_LOAD_TASK_MAP = new Dictionary<string, LoadTask>();
+
 
         /// <summary>
-        /// 锁住加载AB
+        /// 全局任务数量
         /// </summary>
-        static public void LockLoadTask(string abPath, AssetBundleCreateRequest abcr = null)
+        public int GlobalLoadTaskCount
         {
-            if (LOAD_TASK_LOCK_MAP.ContainsKey(abPath))
+            get
             {
-                BDebug.LogError("【AssetbundleV2】 重复加锁 " + abPath);
-                return;
+                return GLOBAL_LOAD_TASK_MAP.Count;
             }
-
-            LOAD_TASK_LOCK_MAP[abPath] = abcr;
         }
 
         /// <summary>
-        /// 解锁加载ab
+        /// 是否能添加全局任务
+        /// </summary>
+        /// <returns></returns>
+        static public bool IsCanAddGlobalTask
+        {
+            get
+            {
+                return GLOBAL_LOAD_TASK_MAP.Count < MAX_TASK_NUM;
+            }
+        }
+        
+        
+        /// <summary>
+        /// 锁住加载AB
+        /// </summary>
+        static public void AddGlobalLoadTask(LoadTask loadTask)
+        {
+            if (GLOBAL_LOAD_TASK_MAP.ContainsKey(loadTask.LocalPath))
+            {
+                BDebug.LogError("【AssetbundleV2】 重复任务 " + loadTask.LocalPath);
+                return;
+            }
+
+            GLOBAL_LOAD_TASK_MAP[loadTask.LocalPath] = loadTask;
+        }
+        
+        /// <summary>
+        /// 移除加载任务
         /// </summary>
         /// <param name="abPath"></param>
         /// <param name="abcr"></param>
-        static public void UnLockLoadTask(string abPath)
+        static public void RemoveGlobalLoadTask(LoadTask loadTask)
         {
-            LOAD_TASK_LOCK_MAP.Remove(abPath);
+            if (loadTask.IsDone)
+            {
+                GLOBAL_LOAD_TASK_MAP.Remove(loadTask.LocalPath);
+            }
         }
 
         /// <summary>
         /// 获取加载句柄
         /// </summary>
-        static public (bool, AssetBundleCreateRequest) GetExsitLoadTask(string abPath)
+        static public LoadTask GetExsitLoadTask(string abPath)
         {
-            var ret = LOAD_TASK_LOCK_MAP.TryGetValue(abPath, out var abcr);
-            return (ret, abcr);
+            GLOBAL_LOAD_TASK_MAP.TryGetValue(abPath, out var task);
+            return task;
         }
 
         #endregion

@@ -211,7 +211,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="assetName"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static AsyncLoadTaskGroupResult CreateAsyncLoadTask<T>(string assetName) where T : UnityEngine.Object
+        public static LoadTaskGroup CreateAsyncLoadTask<T>(string assetName) where T : UnityEngine.Object
         {
             return ResLoader.CreateAsyncLoadTask<T>(assetName);
         }

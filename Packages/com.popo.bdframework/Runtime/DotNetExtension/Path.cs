@@ -133,7 +133,19 @@ namespace System.IO
 
             return path;
         }
+        /// <summary>
+        /// 格式化路径
+        /// </summary>
+        /// <returns></returns>
+        static public string FormatPathOnRuntime(string path)
+        {
+            if (path != null)
+            {
+                return path.ToLower().Replace("\\", "/");
+            }
 
+            return path;
+        }
         #endregion
     }
 }

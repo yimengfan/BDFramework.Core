@@ -640,6 +640,11 @@ namespace BDFramework.Editor.AssetBundle
             //1.把依赖资源替换成AB Name，
             foreach (var mainAsset in buildingAssetInfos.AssetInfoMap.Values)
             {
+                if (mainAsset.ABName.Equals("assets/resource/runtime/shader/allshaders.shadervariants", StringComparison.OrdinalIgnoreCase))
+                {
+                    Debug.Log("xx");
+                }
+                
                 for (int i = 0; i < mainAsset.DependAssetList.Count; i++)
                 {
                     var dependAssetName = mainAsset.DependAssetList[i];

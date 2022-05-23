@@ -188,7 +188,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public List<AssetBundleItem> GetDependAssets(AssetBundleItem assetBundleItem)
         {
-            var retlist = new List<AssetBundleItem>();
+            List<AssetBundleItem> retlist = null;
             if (assetBundleItem != null && assetBundleItem.DependAssetIds != null && assetBundleItem.DependAssetIds.Length > 0)
             {
                 int len = assetBundleItem.DependAssetIds.Length;
@@ -197,6 +197,7 @@ namespace BDFramework.ResourceMgr.V2
                 for (int i = 0; i < len; i++)
                 {
                     var idx = assetBundleItem.DependAssetIds[i];
+                        
                     var abItem = this.AssetbundleItemList[idx];
                     retlist.Add(abItem);
                 }

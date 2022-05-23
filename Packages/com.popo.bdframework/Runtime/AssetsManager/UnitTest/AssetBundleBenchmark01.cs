@@ -94,7 +94,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         //dev加载器
         // DevLoder = new DevResourceMgr();
         // DevLoder.Init("");
-        BResources.Init(AssetLoadPathType.DevOpsPublish);
+        //BResources.Init(AssetLoadPathType.DevOpsPublish);
         var abPath = Application.isEditor ? BApplication.DevOpsPublishAssetsPath : Application.persistentDataPath;
         BResources.InitLoadAssetBundle(abPath);
         BResources.ResLoader.WarmUpShaders();

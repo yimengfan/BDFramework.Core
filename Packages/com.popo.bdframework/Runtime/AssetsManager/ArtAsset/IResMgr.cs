@@ -28,7 +28,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 资源管理
         /// </summary>
-        Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get; }
+       // Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get; }
 
         /// <summary>
         /// 卸载指定ab
@@ -78,7 +78,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="assetName"></param>
         /// <param name="callback"></param>
         /// <returns>异步任务id</returns>
-        AsyncLoadTaskGroupResult CreateAsyncLoadTask<T>(string assetName) where T : UnityEngine.Object;
+        LoadTaskGroup CreateAsyncLoadTask<T>(string assetName) where T : UnityEngine.Object;
         /// <summary>
         /// 异步加载资源
         /// </summary>
