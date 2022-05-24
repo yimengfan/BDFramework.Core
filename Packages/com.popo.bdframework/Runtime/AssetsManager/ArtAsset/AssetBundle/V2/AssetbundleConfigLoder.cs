@@ -70,6 +70,7 @@ namespace BDFramework.ResourceMgr.V2
         /// 配置路径
         /// </summary>
         private string configPath { get; set; }
+
         /// <summary>
         /// 加载接口
         /// </summary>
@@ -147,10 +148,8 @@ namespace BDFramework.ResourceMgr.V2
                 this.TYPE_SPRITE_ATLAS = this.AssetTypes.AssetTypeList.FindIndex((at) => at == typecls);
             }
 
-            if (this.AssetTypes != null && this.AssetbundleItemList.Count > 0)
-            {
-                BDebug.Log("【AssetbundleV2】资源加载初始化完成,资源数量:" + this.AssetbundleItemList.Count);
-            }
+
+            BDebug.Log("【AssetbundleV2】资源加载初始化完成,资源总量:" + this.AssetbundleItemList?.Count);
         }
 
 
@@ -197,7 +196,7 @@ namespace BDFramework.ResourceMgr.V2
                 for (int i = 0; i < len; i++)
                 {
                     var idx = assetBundleItem.DependAssetIds[i];
-                        
+
                     var abItem = this.AssetbundleItemList[idx];
                     retlist.Add(abItem);
                 }
@@ -290,7 +289,7 @@ namespace BDFramework.ResourceMgr.V2
         public void OverrideConfig()
         {
             var csv = CsvSerializer.SerializeToCsv(this.AssetbundleItemList);
-            File.WriteAllText(this.configPath,csv);
+            File.WriteAllText(this.configPath, csv);
         }
 #endif
     }

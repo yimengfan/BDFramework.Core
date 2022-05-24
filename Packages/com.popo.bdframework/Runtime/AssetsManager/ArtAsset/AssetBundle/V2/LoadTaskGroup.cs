@@ -100,12 +100,21 @@ namespace BDFramework.ResourceMgr
             //赋值
             this.loder = loder;
             this.MainAssetBundleItem = mainAssetBundleItem;
-
+            
             //1.依赖资源队列
             var dependAssetList = loder.AssetConfigLoder.GetDependAssets(mainAssetBundleItem);
-            waitingLoadAssetBundleList = new List<AssetBundleItem>(dependAssetList.Count + 1);
-            //初始化列表
-            waitingLoadAssetBundleList.AddRange(waitingLoadAssetBundleList);
+            if (dependAssetList != null)
+            {
+                waitingLoadAssetBundleList = new List<AssetBundleItem>(dependAssetList.Count + 1);
+                //添加依赖
+                waitingLoadAssetBundleList.AddRange(dependAssetList);
+            }
+            else
+            {
+                waitingLoadAssetBundleList = new List<AssetBundleItem>();
+            }
+
+            //添加主资源
             waitingLoadAssetBundleList.Add(mainAssetBundleItem);
         }
 
@@ -160,7 +169,7 @@ namespace BDFramework.ResourceMgr
         private bool DoLoadAssetBundle()
         {
             //1.循环添加任务
-            while (AssetBundleMgrV2.IsCanAddGlobalTask && curLoadIdx < waitingLoadAssetBundleList.Count)
+            while (AssetBundleMgrV2.IsCanAddGlobalTask && curLoadIdx < waitingLoadAssetBundleList.Count - 1)
             {
                 curLoadIdx++;
 
@@ -184,11 +193,14 @@ namespace BDFramework.ResourceMgr
                         AssetBundleMgrV2.AddGlobalLoadTask(loadTask);
                         //添加到loading表
                         loadingTaskList.Add(new KeyValuePair<string, LoadTask>(abi.AssetBundlePath, loadTask));
+                        //开始加载
+                        loadTask.AysncLoad();
+                        BDebug.Log($"【AsyncLoadTaskGroup】 加    载: {abi.AssetBundlePath}");
                     }
                 }
                 else
                 {
-                    BDebug.Log("【AsyncLoadTaskGroup】--> 已存在depend:" + abi);
+                        BDebug.Log($"【AsyncLoadTaskGroup】 无需加载: {abi.AssetBundlePath}");
                 }
             }
 
@@ -212,20 +224,20 @@ namespace BDFramework.ResourceMgr
                         {
                             BDebug.LogError("【AsyncLoadTaskGroup】ab资源为空:" + assetbundleFileName);
                         }
+
                         //移除成功任务
                         loadingTaskList.RemoveAt(i);
                         //解锁
                         AssetBundleMgrV2.RemoveGlobalLoadTask(loadTask);
-                        BDebug.Log("【AsyncLoadTaskGroup】--> depend:" + assetbundleFileName);
+                        BDebug.Log($"【AsyncLoadTaskGroup】--> 加载完成:{assetbundleFileName}  剩余:{loadingTaskList.Count + waitingLoadAssetBundleList.Count - (curLoadIdx + 1)}/{waitingLoadAssetBundleList.Count}");
                     }
                 }
-                
-
-                BDebug.LogFormat("【AsyncLoadTaskGroup】剩余未完成任务:{0} - frame: {1}", loadingTaskList.Count + waitingLoadAssetBundleList.Count - curLoadIdx, Time.renderedFrameCount);
             }
 
-
+            //任务执行完毕
+            if (loadingTaskList.Count == 0 && curLoadIdx == waitingLoadAssetBundleList.Count - 1)
             {
+                BDebug.Log($"<color=green>【AsyncLoadTaskGroup】所有加载完成:{MainAssetBundleItem.AssetBundlePath}</color>");
                 this.isCompleteLoad = true;
                 //加载完成,主资源只要保证在 实例化之前加载完毕即可
                 if (!isCancel)
@@ -234,7 +246,7 @@ namespace BDFramework.ResourceMgr
                     foreach (var waiting in waitingLoadAssetBundleList)
                     {
                         var abw = loder.GetAssetBundleFromCache(waiting.AssetBundlePath);
-                        if (abw != null)
+                        if (abw != null && abw.AssetBundle != null)
                         {
                             abw.Use();
                         }
@@ -243,7 +255,6 @@ namespace BDFramework.ResourceMgr
                             BDebug.LogError($"【AsyncLoadTaskGroup】未获取ab:{waiting.AssetBundlePath}");
                         }
                     }
-
 
                     this.OnAllTaskCompleteCallback?.Invoke(this.MainAssetBundleItem.LoadPath);
                 }

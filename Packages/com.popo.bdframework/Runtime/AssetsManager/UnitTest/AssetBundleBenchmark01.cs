@@ -9,6 +9,7 @@ using BDFramework.ResourceMgr;
 using BDFramework.ResourceMgr.V2;
 using LitJson;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.U2D;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
@@ -59,17 +60,30 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         {
             GUI.skin.button.fontSize = 30;
             
+            GUILayout.BeginHorizontal();
             if (GUILayout.Button("同步加载 测试",GUILayout.Height(100),GUILayout.Width(300)))
             {
+                Profiler.BeginSample("Benchmark Load");
                 this.StartCoroutine(IE_01_LoadAll(false));
+                Profiler.EndSample();
             }
+            if (GUILayout.Button("卸载所有",GUILayout.Height(100),GUILayout.Width(150)))
+            {
+                
+            }
+            GUILayout.EndHorizontal();
+            
             if (GUILayout.Button("异步加载 测试",GUILayout.Height(100),GUILayout.Width(300)))
             {
+                Profiler.BeginSample("Benchmark  Async Load");
                 this.StartCoroutine(IE_01_LoadAll(true));
+                Profiler.EndSample();
             }
             
             if (GUILayout.Button("随机加载 测试",GUILayout.Height(100),GUILayout.Width(300)))
             {
+                Profiler.BeginSample("Benchmark  Random Load");
+                Profiler.EndSample();
                 
             }
         }
@@ -162,7 +176,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
             var typeName = AssetBundleLoader.AssetConfigLoder.AssetTypes.AssetTypeList[assetdata.AssetType];
             var runtimePath = assetdata.LoadPath;
             //加载
-            //Debug.Log("【LoadTest】:" + runtimePath);
+            Debug.Log($"<color=yellow>【LoadTest】</color>: {runtimePath} ");
             if (!loadDataMap.ContainsKey(typeName))
             {
                 loadDataMap[typeName] = new List<LoadTimeData>();

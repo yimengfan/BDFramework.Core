@@ -611,7 +611,7 @@ namespace BDFramework.ResourceMgr.V2
 #if UNITY_EDITOR
             var (abd, list) = this.AssetConfigLoder.GetDependAssets(BResources.ALL_SHADER_VARAINT_RUNTIME_PATH);
             this.AssetbundleCacheMap.TryGetValue(abd.AssetBundlePath, out var ab);
-            Debug.Log("Shaders:\n" + JsonMapper.ToJson(ab.AssetBundle.GetAllAssetNames(), true));
+            Debug.Log("WarmUp Shaders:\n" + JsonMapper.ToJson(ab.AssetBundle.GetAllAssetNames(), true));
 #endif
         }
 

@@ -10,13 +10,14 @@ namespace AssetsManager.ArtAsset.AssetBundle.V2
         /// </summary>
         public override bool keepWaiting
         {
-            get { return isDone; }
+            get { return IsDone; }
         }
 
         /// <summary>
         /// 是否为异步任务
         /// </summary>
         public bool IsAsyncTask { get; private set; } = false;
+
         /// <summary>
         /// 是否完成
         /// </summary>
@@ -37,10 +38,35 @@ namespace AssetsManager.ArtAsset.AssetBundle.V2
             }
         }
 
+
+        public UnityEngine.AssetBundle assetBundle;
+
         /// <summary>
         /// AB 对象
         /// </summary>
-        public UnityEngine.AssetBundle AssetBundle { get; private set; }
+        public UnityEngine.AssetBundle AssetBundle
+        {
+            get
+            {
+                //异步
+                if (IsAsyncTask)
+                {
+                    if (IsDone)
+                    {
+                        return AssetBundleRequest.assetBundle;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                //同步
+                else
+                {
+                    return assetBundle;
+                }
+            }
+        }
 
         /// <summary>
         /// 是否完成,一般用以给同步
@@ -81,9 +107,8 @@ namespace AssetsManager.ArtAsset.AssetBundle.V2
         {
             if (!this.isStartLoading)
             {
-              
                 this.isStartLoading = true;
-                this.AssetBundle = UnityEngine.AssetBundle.LoadFromFile(LocalPath, crc, offset);
+                this.assetBundle = UnityEngine.AssetBundle.LoadFromFile(LocalPath, crc, offset);
                 this.isDone = true;
             }
             else
@@ -120,8 +145,8 @@ namespace AssetsManager.ArtAsset.AssetBundle.V2
             {
                 // abRequest.assetBundle.Unload(true);
                 //直接访问转为同步
-                this.AssetBundle = AssetBundleRequest.assetBundle;
-                
+                this.assetBundle = AssetBundleRequest.assetBundle;
+
                 return true;
             }
 

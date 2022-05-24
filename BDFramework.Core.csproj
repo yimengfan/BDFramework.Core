@@ -95,7 +95,9 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleWapper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetTypes.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetbundleConfigLoder.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AsyncLoadTaskGroupResult.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\LoadTask.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\LoadTaskGroup.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\UnLoadTask.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetsVersionController\AssetsVersionController.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
