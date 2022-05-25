@@ -44,7 +44,7 @@ namespace BDFramework.ResourceMgr.V2
         /// 全局的ab缓存
         /// ab filename-assetbundle
         /// </summary>
-       private  Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get;  set; } = new Dictionary<string, AssetBundleWapper>(StringComparer.OrdinalIgnoreCase);
+        private Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get; set; } = new Dictionary<string, AssetBundleWapper>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// 资源加载路径
@@ -160,6 +160,7 @@ namespace BDFramework.ResourceMgr.V2
                     {
                         dependAssetList = new List<AssetBundleItem>();
                     }
+
                     dependAssetList.Add(mainAssetItem);
                     //加载所有ab
                     foreach (var dependABItem in dependAssetList)
@@ -665,7 +666,7 @@ namespace BDFramework.ResourceMgr.V2
         /// 最大任务数
         /// </summary>
         static readonly public int MAX_TASK_NUM = 10;
-        
+
         /// <summary>
         /// loder缓存表 防止重复加载
         /// </summary>
@@ -677,10 +678,7 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public int GlobalLoadTaskCount
         {
-            get
-            {
-                return GLOBAL_LOAD_TASK_MAP.Count;
-            }
+            get { return GLOBAL_LOAD_TASK_MAP.Count; }
         }
 
         /// <summary>
@@ -689,13 +687,10 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         static public bool IsCanAddGlobalTask
         {
-            get
-            {
-                return GLOBAL_LOAD_TASK_MAP.Count < MAX_TASK_NUM;
-            }
+            get { return GLOBAL_LOAD_TASK_MAP.Count < MAX_TASK_NUM; }
         }
-        
-        
+
+
         /// <summary>
         /// 锁住加载AB
         /// </summary>
@@ -709,7 +704,7 @@ namespace BDFramework.ResourceMgr.V2
 
             GLOBAL_LOAD_TASK_MAP[loadTask.LocalPath] = loadTask;
         }
-        
+
         /// <summary>
         /// 移除加载任务
         /// </summary>
@@ -741,10 +736,11 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         /// <param name="assetPath">根据加载路径卸载</param>
         /// <param name="isForceUnload">强制卸载</param>
-        public void UnloadAsset(string assetPath, bool isForceUnload = false)
+        /// <param name="type"></param>
+        public void UnloadAsset(string assetPath, bool isForceUnload = false, Type type = null)
         {
             //1.AB卸载
-            var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssets(assetPath);
+            var (assetBundleItem, dependAssetList) = AssetConfigLoder.GetDependAssets(assetPath, type);
             //添加主资源一起卸载
             dependAssetList.Add(assetBundleItem);
             //卸载

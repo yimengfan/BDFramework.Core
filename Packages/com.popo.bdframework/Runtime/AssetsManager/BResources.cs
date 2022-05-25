@@ -272,19 +272,20 @@ namespace BDFramework.ResourceMgr
         #region 卸载资源
 
         /// <summary>
-        /// 卸载资源/Assetbundle
+        /// 卸载资源 / Assetbundle
         /// </summary>
-        /// <param name="o"></param>
-        public static void UnloadAsset(string assetPath, bool isForceUnload = false)
+        /// <param name="assetPath"></param>
+        /// <param name="isForceUnload"></param>
+        /// <param name="type">带具体类型，有些项目喜欢用重名资源,如a.prefab、a.mat，此时卸载就需要指定类型</param>
+        public static void UnloadAsset(string assetPath, bool isForceUnload = false,Type type =null)
         {
             if (string.IsNullOrEmpty(assetPath))
             {
                 return;
             }
 
-            ResLoader.UnloadAsset(assetPath, isForceUnload);
+            ResLoader.UnloadAsset(assetPath, isForceUnload,type);
         }
-
 
         /// <summary>
         /// 卸载实例化资源

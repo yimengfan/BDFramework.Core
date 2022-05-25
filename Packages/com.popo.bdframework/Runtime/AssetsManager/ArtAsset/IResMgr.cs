@@ -30,16 +30,6 @@ namespace BDFramework.ResourceMgr
         /// </summary>
        // Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get; }
 
-        /// <summary>
-        /// 卸载指定ab
-        /// </summary>
-        /// <param name="assetPath"></param>
-        void UnloadAsset(string assetPath, bool isForceUnload = false);
-
-        /// <summary>
-        /// 卸载所有ab
-        /// </summary>
-        void UnloadAllAsset();
 
 
         /// <summary>
@@ -122,5 +112,18 @@ namespace BDFramework.ResourceMgr
         /// 预热sharder
         /// </summary>
         void WarmUpShaders();
+
+
+        /// <summary>
+        /// 卸载指定ab
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <param name="isForceUnload"></param>
+        /// <param name="type"></param>
+        void UnloadAsset(string assetPath, bool isForceUnload = false, Type type = null);
+        /// <summary>
+        /// 卸载所有ab
+        /// </summary>
+        void UnloadAllAsset();
     }
 }

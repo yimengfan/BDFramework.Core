@@ -69,9 +69,10 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 卸载
         /// </summary>
-        /// <param name="assetName"></param>
-        /// <param name="isForceUnload"></param>
-        public void UnloadAsset(string assetName, bool isForceUnload = false)
+        /// <param name="assetName">资源名</param>
+        /// <param name="isForceUnload">强制卸载</param>
+        /// <param name="type">指定类型</param>
+        public void UnloadAsset(string assetName, bool isForceUnload = false, Type type = null)
         {
             try
             {
