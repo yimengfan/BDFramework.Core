@@ -82,6 +82,9 @@ namespace BDFramework.Mgr
         }
 
 
+        /// <summary>
+        /// 这里负责初始化任务
+        /// </summary>
         virtual public void Init()
         {
         }

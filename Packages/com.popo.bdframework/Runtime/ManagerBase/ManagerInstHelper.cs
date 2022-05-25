@@ -6,7 +6,7 @@ using System.Reflection;
 namespace BDFramework.Mgr
 {
     /// <summary>
-    /// 管理器单例助手
+    /// 主工程管理器工具
     /// </summary>
     static public class ManagerInstHelper
     {
@@ -50,6 +50,18 @@ namespace BDFramework.Mgr
                 }
             }
 
+            //按执行顺序排序
+            mgrList.Sort((a, b) =>
+            {
+                var aAttr = a.GetType().GetCustomAttribute<ManagerOrder>(false);
+                var bAttr = a.GetType().GetCustomAttribute<ManagerOrder>(false);
+                var aOrder = aAttr == null ? 0 : aAttr.Order;
+                var bOrder = bAttr == null ? 0 : bAttr.Order;
+                //对比
+                return aOrder.CompareTo(bOrder);
+            });
+
+
             //遍历type执行逻辑
             for (int i = 0; i < types.Length; i++)
             {
@@ -66,7 +78,6 @@ namespace BDFramework.Mgr
                     mgr.CheckType(type, mgrAttribute);
                 }
             }
-
 
             //管理器初始化
             foreach (var mgr in mgrList)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using BDFramework.Hotfix.Reflection;
 using BDFramework.Mgr;
 using BDFramework.UFlux;
@@ -7,7 +8,7 @@ using BDFramework.UFlux;
 namespace BDFramework.HotFix.Mgr
 {
     /// <summary>
-    /// 管理器单例助手
+    /// 热更管理器单例工具
     /// </summary>
     static public class ILRuntimeManagerInstHelper
     {
@@ -40,6 +41,19 @@ namespace BDFramework.HotFix.Mgr
                     }
                 }
             }
+            //按执行顺序排序
+            //按执行顺序排序
+            mgrList.Sort((a, b) =>
+            {
+                var aAttr = a.GetType().GetCustomAttribute<ManagerOrder>();
+                var bAttr = a.GetType().GetCustomAttribute<ManagerOrder>();
+                var aOrder = aAttr == null ? 0 : aAttr.Order;
+                var bOrder = bAttr == null ? 0 : bAttr.Order;
+                //对比
+                return aOrder.CompareTo(bOrder);
+            });
+
+            
             BDebug.Log("[hotfix]管理器加载完成" , "green");
             //遍历type执行逻辑
             for (int i = 0; i < types.Length; i++)
