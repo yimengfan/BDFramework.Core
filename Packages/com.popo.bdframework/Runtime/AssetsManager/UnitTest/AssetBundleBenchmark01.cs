@@ -197,21 +197,17 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = AssetBundleLoader.CreateAsyncLoadTask<GameObject>(runtimePath);
-                    yield return ret;
-                    if (ret.IsSuccess)
+                    var loadTask = AssetBundleLoader.CreateAsyncLoadTask<GameObject>(runtimePath);
+                    yield return loadTask;
+                    
+                    if (loadTask.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<GameObject>();
+                        obj = loadTask.GetResult<GameObject>();
                     }
                 }
                 //同步
                 else
                 {
-                    if (runtimePath.Equals("objectpool/bullet", StringComparison.OrdinalIgnoreCase))
-                    {
-                        Debug.Log("");
-                    }
-                    
                     obj = AssetBundleLoader.Load<GameObject>(runtimePath);
                 }
 
@@ -267,7 +263,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<TextAsset>();
+                        obj = ret.GetResult<TextAsset>();
                     }
                 }
                 //同步
@@ -298,7 +294,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<Texture>();
+                        obj = ret.GetResult<Texture>();
                     }
                 }
                 //同步
@@ -327,7 +323,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<Texture2D>();
+                        obj = ret.GetResult<Texture2D>();
                     }
                 }
                 //同步
@@ -361,7 +357,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<Sprite>();
+                        obj = ret.GetResult<Sprite>();
                     }
                 }
                 //同步
@@ -396,7 +392,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<Material>();
+                        obj = ret.GetResult<Material>();
                     }
                 }
                 //同步
@@ -423,7 +419,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<Shader>();
+                        obj = ret.GetResult<Shader>();
                     }
                 }
                 //同步
@@ -450,7 +446,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<AudioClip>();
+                        obj = ret.GetResult<AudioClip>();
                     }
                 }
                 //同步
@@ -477,7 +473,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<AnimationClip>();
+                        obj = ret.GetResult<AnimationClip>();
                     }
                 }
                 //同步
@@ -504,7 +500,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<Mesh>();
+                        obj = ret.GetResult<Mesh>();
                     }
                 }
                 //同步
@@ -531,7 +527,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<Font>();
+                        obj = ret.GetResult<Font>();
                     }
                 }
                 //同步
@@ -559,7 +555,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<SpriteAtlas>();
+                        obj = ret.GetResult<SpriteAtlas>();
                     }
                 }
                 //同步
@@ -588,7 +584,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<ShaderVariantCollection>();
+                        obj = ret.GetResult<ShaderVariantCollection>();
                     }
                 }
                 //同步
@@ -617,7 +613,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     yield return ret;
                     if (ret.IsSuccess)
                     {
-                        obj = ret.GetAssetBundleInstance<Object>();
+                        obj = ret.GetResult<Object>();
                     }
                 }
                 //同步

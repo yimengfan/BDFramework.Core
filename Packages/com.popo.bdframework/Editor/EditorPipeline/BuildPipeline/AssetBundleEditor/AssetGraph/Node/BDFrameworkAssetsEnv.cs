@@ -248,7 +248,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             var asetTypePath = string.Format("{0}/{1}/{2}", BuildingCtx.BuildParams.OutputPath, BApplication.GetPlatformPath(buildTarget), BResources.ART_ASSET_TYPES_PATH);
             //数据结构保存
-            AssetTypes at = new AssetTypes()
+            AssetTypeConfig at = new AssetTypeConfig()
             {
                 AssetTypeList = BuildingCtx.AssetTypeList,
             };

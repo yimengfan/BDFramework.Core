@@ -47,7 +47,7 @@ namespace BDFramework.ResourceMgr.V2
         public int RefABId { get; set; } = 0;
 
         /// <summary>
-        /// ab的资源路径名
+        /// ab的资源路径
         /// </summary>
         public string AssetBundlePath { get; private set; } = "";
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using BDFramework.ResourceMgr.V2;
 using BDFramework.Core.Tools;
@@ -277,14 +278,14 @@ namespace BDFramework.ResourceMgr
         /// <param name="assetPath"></param>
         /// <param name="isForceUnload"></param>
         /// <param name="type">带具体类型，有些项目喜欢用重名资源,如a.prefab、a.mat，此时卸载就需要指定类型</param>
-        public static void UnloadAsset(string assetPath, bool isForceUnload = false,Type type =null)
+        public static void UnloadAsset(string assetPath, bool isForceUnload = false, Type type = null)
         {
             if (string.IsNullOrEmpty(assetPath))
             {
                 return;
             }
 
-            ResLoader.UnloadAsset(assetPath, isForceUnload,type);
+            ResLoader.UnloadAsset(assetPath, isForceUnload, type);
         }
 
         /// <summary>
@@ -337,54 +338,54 @@ namespace BDFramework.ResourceMgr
         #endregion
 
 
-        #region 资源缓存
-
-        /// <summary>
-        /// 全局的资源缓存
-        /// </summary>
-        static private Dictionary<string, UnityEngine.Object> GameObjectCacheMap { get; set; } = new Dictionary<string, UnityEngine.Object>(StringComparer.OrdinalIgnoreCase);
-
-        /// <summary>
-        /// 从缓存中加载
-        /// </summary>
-        /// <param name="assetPath"></param>
-        /// <returns></returns>
-        static public void AddObjectToCache(Type type, string assetPath, Object obj)
-        {
-            GameObjectCacheMap[assetPath] = obj;
-        }
-
-        /// <summary>
-        /// 从缓存中加载
-        /// </summary>
-        /// <param name="assetPath"></param>
-        /// <returns></returns>
-        static public Object GetObjectFormCache(Type type, string assetPath)
-        {
-            Object obj = null;
-            GameObjectCacheMap.TryGetValue(assetPath, out obj);
-            return obj;
-        }
-
-        /// <summary>
-        /// 从缓存中加载
-        /// </summary>
-        /// <param name="assetPath"></param>
-        /// <returns></returns>
-        static public Object UnloadObjectCache(string assetPath)
-        {
-            var ret = GameObjectCacheMap.TryGetValue(assetPath, out var obj);
-            if (ret)
-            {
-                GameObject.Destroy(obj);
-                GameObjectCacheMap.Remove(assetPath);
-            }
-
-
-            return obj;
-        }
-
-        #endregion
+        // #region 资源缓存
+        //
+        // /// <summary>
+        // /// 全局的资源缓存
+        // /// </summary>
+        // static private Dictionary<string, UnityEngine.Object> GameObjectCacheMap { get; set; } = new Dictionary<string, UnityEngine.Object>(StringComparer.OrdinalIgnoreCase);
+        //
+        // /// <summary>
+        // /// 从缓存中加载
+        // /// </summary>
+        // /// <param name="assetPath"></param>
+        // /// <returns></returns>
+        // static public void AddObjectToCache(Type type, string assetPath, Object obj)
+        // {
+        //     GameObjectCacheMap[assetPath] = obj;
+        // }
+        //
+        // /// <summary>
+        // /// 从缓存中加载
+        // /// </summary>
+        // /// <param name="assetPath"></param>
+        // /// <returns></returns>
+        // static public Object GetObjectFormCache(Type type, string assetPath)
+        // {
+        //     Object obj = null;
+        //     GameObjectCacheMap.TryGetValue(assetPath, out obj);
+        //     return obj;
+        // }
+        //
+        // /// <summary>
+        // /// 从缓存中加载
+        // /// </summary>
+        // /// <param name="assetPath"></param>
+        // /// <returns></returns>
+        // static public Object UnloadObjectCache(string assetPath)
+        // {
+        //     var ret = GameObjectCacheMap.TryGetValue(assetPath, out var obj);
+        //     if (ret)
+        //     {
+        //         GameObject.Destroy(obj);
+        //         GameObjectCacheMap.Remove(assetPath);
+        //     }
+        //
+        //
+        //     return obj;
+        // }
+        //
+        // #endregion
 
         #region 资源组，用于加载资源分组,方便卸载(Assetbundle)
 
@@ -777,6 +778,64 @@ namespace BDFramework.ResourceMgr
                 var subPackagePath = string.Format(BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageName);
                 return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), subPackagePath);
             }
+        }
+
+        #endregion
+
+
+        #region 配置设置
+
+        public enum AUPQualityLevel
+        {
+            Hight,
+            Normal,
+            Low,
+        }
+
+
+        /// <summary>
+        /// 设置AUP等级
+        /// </summary>
+        static public void SetAUPLEvel(AUPQualityLevel qualityLevel)
+        {
+            switch (qualityLevel)
+            {
+                case AUPQualityLevel.Hight:
+                {
+                    //最高配置
+                    QualitySettings.asyncUploadPersistentBuffer = true;
+                    QualitySettings.asyncUploadBufferSize = 32;
+                    QualitySettings.asyncUploadTimeSlice = 4;
+                    Application.backgroundLoadingPriority = ThreadPriority.Normal;
+                }
+                    break;
+                case AUPQualityLevel.Normal:
+                {
+                    //中等配置
+                    QualitySettings.asyncUploadPersistentBuffer = true;
+                    QualitySettings.asyncUploadBufferSize = 16;
+                    QualitySettings.asyncUploadTimeSlice = 4;
+                    Application.backgroundLoadingPriority = ThreadPriority.Normal;
+                }
+                    break;
+                case AUPQualityLevel.Low:
+                {
+                    //低配置
+                    QualitySettings.asyncUploadPersistentBuffer = true;
+                    QualitySettings.asyncUploadBufferSize = 16;
+                    QualitySettings.asyncUploadTimeSlice = 2;
+                    Application.backgroundLoadingPriority = ThreadPriority.Low;
+                }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 设置配置信息
+        /// </summary>
+        static public void SetLoadConfig(int maxLoadTaskNum = -1, int maxUnloadTaskNum = -1)
+        {
+            ResLoader.SetLoadConfig(maxLoadTaskNum,maxUnloadTaskNum);
         }
 
         #endregion

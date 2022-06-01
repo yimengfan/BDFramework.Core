@@ -29,27 +29,6 @@ namespace BDFramework.ResourceMgr.V2
     /// </summary>
     public class AssetbundleConfigLoder
     {
-        #region 资源类型
-
-        /// <summary>
-        /// Prefab
-        /// </summary>
-        public int TYPE_PREFAB = -1;
-
-        /// <summary>
-        /// 图集
-        /// </summary>
-        public int TYPE_SPRITE_ATLAS = -1;
-
-        #endregion
-
-
-        /// <summary>
-        /// 是否为hash命名
-        /// </summary>
-        // public bool IsHashName { get; set; } = true;
-
-
         /// <summary>
         /// 资源列表
         /// </summary>
@@ -64,7 +43,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 资源类型列表
         /// </summary>
-        public AssetTypes AssetTypes { get; private set; }
+        public AssetTypeConfig AssetTypes { get; private set; }
 
         /// <summary>
         /// 配置路径
@@ -94,7 +73,7 @@ namespace BDFramework.ResourceMgr.V2
                 // File.WriteAllText(assetTypePath, str);
                 // //
                 // content = File.ReadAllText(assetTypePath);
-                var records = CsvSerializer.DeserializeFromString<List<AssetTypes>>(content);
+                var records = CsvSerializer.DeserializeFromString<List<AssetTypeConfig>>(content);
                 this.AssetTypes = records[0];
                 //创建不同类型的映射表
                 foreach (var assetType in this.AssetTypes.AssetTypeList)
@@ -139,13 +118,17 @@ namespace BDFramework.ResourceMgr.V2
                 BDebug.LogError("配置文件不存在:" + configPath);
             }
 
-            //判断常用资源类型
+            //初始化常用资源类型
             if (this.AssetTypes != null)
             {
-                var typecls = typeof(GameObject).FullName;
-                this.TYPE_PREFAB = this.AssetTypes.AssetTypeList.FindIndex((at) => at == typecls);
-                typecls = typeof(SpriteAtlas).FullName;
-                this.TYPE_SPRITE_ATLAS = this.AssetTypes.AssetTypeList.FindIndex((at) => at == typecls);
+                //Prefab
+                var clsName = typeof(GameObject).FullName;
+                AssetType.VALID_TYPE_PREFAB = this.AssetTypes.AssetTypeList.FindIndex((at) => at.Equals(clsName, StringComparison.OrdinalIgnoreCase));
+                //图集
+                clsName = typeof(SpriteAtlas).FullName;
+                AssetType.VALID_TYPE_SPRITE_ATLAS = this.AssetTypes.AssetTypeList.FindIndex((at) =>  at.Equals(clsName, StringComparison.OrdinalIgnoreCase));
+                //...
+                //其他省略，需要时候再加
             }
 
 

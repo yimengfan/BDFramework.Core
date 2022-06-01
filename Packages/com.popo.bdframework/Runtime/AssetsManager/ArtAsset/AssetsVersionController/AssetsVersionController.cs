@@ -213,8 +213,9 @@ namespace BDFramework.VersionController
         public void GetServerSubPackageInfos(string serverUrl, Action<Dictionary<string, string>> callback)
         {
             //下载资源位置必须为Persistent
-           var t=  UniTask.RunOnThreadPool(() =>
+            UniTask.RunOnThreadPool(() =>
             {
+                //
                 GetServerVersionInfo(serverUrl, callback);
             });
            // Debug.Log("test:------------------------");

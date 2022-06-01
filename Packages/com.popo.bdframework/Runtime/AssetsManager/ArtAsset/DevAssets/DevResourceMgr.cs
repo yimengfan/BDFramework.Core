@@ -69,17 +69,17 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 卸载
         /// </summary>
-        /// <param name="assetName">资源名</param>
+        /// <param name="assetLoadPath">资源名</param>
         /// <param name="isForceUnload">强制卸载</param>
         /// <param name="type">指定类型</param>
-        public void UnloadAsset(string assetName, bool isForceUnload = false, Type type = null)
+        public void UnloadAsset(string assetLoadPath, bool isForceUnload = false, Type type = null)
         {
             try
             {
-                if (objsCacheMap.ContainsKey(assetName))
+                if (objsCacheMap.ContainsKey(assetLoadPath))
                 {
-                    var obj = objsCacheMap[assetName];
-                    objsCacheMap.Remove(assetName);
+                    var obj = objsCacheMap[assetLoadPath];
+                    objsCacheMap.Remove(assetLoadPath);
                     //
                     //Resources.UnloadAsset(obj);
                 }
@@ -101,6 +101,11 @@ namespace BDFramework.ResourceMgr
             GC.Collect();
         }
 
+        public void SetLoadConfig(int maxLoadTaskNum = -1, int maxUnloadTaskNum = -1)
+        {
+            
+        }
+
         public T LoadFormAssetBundle<T>(string abName, string objName) where T : UnityEngine.Object
         {
             return null;
@@ -109,21 +114,21 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 加载
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="assetLoadPath"></param>
         /// <param name="pathType"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Load<T>(string path, LoadPathType pathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
+        public T Load<T>(string assetLoadPath, LoadPathType pathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
         {
             //guid转短路径
 
             if (pathType == LoadPathType.GUID)
             {
-                path = AssetDatabase.GUIDToAssetPath(path);
+                assetLoadPath = AssetDatabase.GUIDToAssetPath(assetLoadPath);
             }
 
 
-            return Load(typeof(T), path) as T;
+            return Load(typeof(T), assetLoadPath) as T;
         }
 
         /// <summary>
@@ -133,23 +138,23 @@ namespace BDFramework.ResourceMgr
         /// <param name="type"></param>
         /// <param name="assetPatharam>
         /// <returns></returns>
-        public Object Load(Type type, string path)
+        public Object Load(Type type, string assetLoadPath)
         {
             //读取缓存
-            var ret = objsCacheMap.TryGetValue(path, out var retobj);
+            var ret = objsCacheMap.TryGetValue(assetLoadPath, out var retobj);
             //走新加载逻辑
             if (!ret)
             {
                 string assetPath = null;
                 //全路径
-                if (path.StartsWith("Assets", StringComparison.OrdinalIgnoreCase))
+                if (assetLoadPath.StartsWith("Assets", StringComparison.OrdinalIgnoreCase))
                 {
-                    assetPath = path;
+                    assetPath = assetLoadPath;
                 }
                 //短路径
                 else
                 {
-                    var assetPaths = FindAssets(path);
+                    var assetPaths = FindAssets(assetLoadPath);
                     if (assetPaths == null)
                     {
                         return null;
@@ -176,7 +181,7 @@ namespace BDFramework.ResourceMgr
                 }
 
                 retobj = AssetDatabase.LoadAssetAtPath(assetPath, type);
-                objsCacheMap[path] = retobj;
+                objsCacheMap[assetLoadPath] = retobj;
             }
 
             return retobj;
@@ -250,7 +255,7 @@ namespace BDFramework.ResourceMgr
             return list.ToArray();
         }
 
-        public LoadTaskGroup CreateAsyncLoadTask<T>(string assetName) where T : Object
+        public LoadTaskGroup CreateAsyncLoadTask<T>(string assetLoadPath) where T : Object
         {
             return null;
         }
@@ -258,16 +263,16 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// AssetDataBase 不支持异步加载
         /// </summary>
-        /// <param name="assetPath"></param>
+        /// <param name="assetLoadPath"></param>
         /// <param name="callback"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public int AsyncLoad<T>(string assetPath, Action<T> callback) where T : UnityEngine.Object
+        public int AsyncLoad<T>(string assetLoadPath, Action<T> callback) where T : UnityEngine.Object
         {
             this.TaskCounter++;
 
 
-            var res = Load<T>(assetPath);
+            var res = Load<T>(assetLoadPath);
             callback(res);
 
 
@@ -278,29 +283,29 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// assetdatabase 不支持异步，暂时先做个加载，后期用update模拟异步
         /// </summary>
-        /// <param name="assetPathList"></param>
+        /// <param name="assetLoadPathList"></param>
         /// <param name="onLoadProcess"></param>
         /// <param name="onLoadComplete"></param>
         /// <returns></returns>
-        public List<int> AsyncLoad(List<string> assetPathList, Action<int, int> onLoadProcess, Action<IDictionary<string, Object>> onLoadComplete)
+        public List<int> AsyncLoad(List<string> assetLoadPathList, Action<int, int> onLoadProcess, Action<IDictionary<string, Object>> onLoadComplete)
         {
             //var list = assetsPath.Distinct().ToList();
 
             IDictionary<string, UnityEngine.Object> map = new Dictionary<string, Object>();
             int curProcess = 0;
             //每帧加载1个
-            IEnumeratorTool.StartCoroutine(TaskUpdate(1, assetPathList, (s, o) =>
+            IEnumeratorTool.StartCoroutine(TaskUpdate(1, assetLoadPathList, (s, o) =>
             {
                 curProcess++;
                 map[s] = o;
                 //
                 if (onLoadProcess != null)
                 {
-                    onLoadProcess(curProcess, assetPathList.Count);
+                    onLoadProcess(curProcess, assetLoadPathList.Count);
                 }
 
                 //
-                if (curProcess == assetPathList.Count)
+                if (curProcess == assetLoadPathList.Count)
                 {
                     if (onLoadComplete != null)
                     {
