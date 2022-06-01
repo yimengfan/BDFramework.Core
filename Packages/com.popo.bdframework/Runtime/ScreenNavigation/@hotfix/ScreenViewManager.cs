@@ -16,7 +16,9 @@ namespace BDFramework.ScreenView
 
     /// <summary>
     /// 导航管理器
+    /// 导航作为逻辑层主调度，一般最后执行
     /// </summary>
+    [ManagerOrder(Order = 99999)]
     public class ScreenViewManager : ManagerBase<ScreenViewManager, ScreenViewAttribute>
     {
         /// <summary>

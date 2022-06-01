@@ -77,11 +77,10 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 全局Transform绑定的缓存map
         /// </summary>
-        Dictionary<Transform, TransformBindData> globalTransformBindCacheMap =
-            new Dictionary<Transform, TransformBindData>();
+        Dictionary<Transform, TransformBindData> globalTransformBindCacheMap = new Dictionary<Transform, TransformBindData>();
 
 
-        public override void Start()
+        public override void Init()
         {
             base.Start();
             var clsList = this.GetAllClassDatas();
@@ -190,7 +189,6 @@ namespace BDFramework.UFlux
 
                 props.MemberinfoMap = memberInfoMap;
             }
-
             //进行值绑定
             foreach (var mi in props.MemberinfoMap.Values)
             {

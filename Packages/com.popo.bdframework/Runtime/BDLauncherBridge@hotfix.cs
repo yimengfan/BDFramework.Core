@@ -75,7 +75,7 @@ public class BDLauncherBridge
         }
         else
         {
-            //热更逻辑为空,触发HotfixGamestart
+            //热更逻辑为空,触发主工程的GameStart
             TriggerHotFixGameStart(mainProjectTypes);
             //启动著工程的管理器
             ManagerInstHelper.Start();
