@@ -29,10 +29,11 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 是否加载文件成功
         /// 完成加载 且 没被取消 且 资源实例化完成
+        /// 或 已有资源已经存在
         /// </summary>
         public bool IsSuccess
         {
-            get { return !this.isCancel && this.isLoadABFile && isLoadObject; }
+            get { return (!this.isCancel && this.isLoadABFile && isLoadObject) || (resultObject); }
         }
 
         /// <summary>
@@ -129,6 +130,17 @@ namespace BDFramework.ResourceMgr
             waitingLoadAssetBundleList.Add(mainAssetBundleItem);
         }
 
+        /// <summary>
+        /// 一般用于统一返回结构时使用
+        /// </summary>
+        /// <param name="loder"></param>
+        /// <param name="type"></param>
+        /// <param name="mainAssetLoadPath"></param>
+        /// <param name="mainAssetBundleItem"></param>
+        public LoadTaskGroup(Object exsitObject)
+        {
+            this.resultObject = exsitObject;
+        }
 
         /// <summary>
         /// 取消 the task
@@ -147,9 +159,10 @@ namespace BDFramework.ResourceMgr
         {
             get
             {
-                if (isCancel || IsSuccess)
+                Debug.Log("yield Task frame:" + Time.frameCount);
+                //不再等待，表示当前任务已完成/被取消
+                if (isCancel || IsSuccess || resultObject != null)
                 {
-                    //不再等待，表示当前任务已完成/被取消
                     return false;
                 }
 

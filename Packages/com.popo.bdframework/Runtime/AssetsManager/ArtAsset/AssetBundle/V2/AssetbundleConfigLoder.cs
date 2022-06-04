@@ -141,23 +141,23 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         /// <param name="menifestName"></param>
         /// <returns>这个list外部不要修改</returns>
-        public (AssetBundleItem, List<AssetBundleItem>) GetDependAssets<T>(string assetName) where T : Object
+        public (AssetBundleItem, List<AssetBundleItem>) GetDependAssets<T>(string assetLoadPath) where T : Object
         {
-            return GetDependAssets(assetName, typeof(T));
+            return GetDependAssets(assetLoadPath, typeof(T));
         }
 
         /// <summary>
         /// 获取单个依赖
         /// Type版本
         /// </summary>
-        /// <param name="assetName"></param>
+        /// <param name="assetLoadPath"></param>
         /// <param name="type"></param>
         /// <param name="menifestName"></param>
         /// <returns>这个list外部不要修改</returns>
-        public (AssetBundleItem, List<AssetBundleItem>) GetDependAssets(string assetName, Type type = null)
+        public (AssetBundleItem, List<AssetBundleItem>) GetDependAssets(string assetLoadPath, Type type = null)
         {
             //获取资源信息
-            var retABItem = GetAssetBundleData(assetName, type);
+            var retABItem = GetAssetBundleData(assetLoadPath, type);
             //回去依赖列表
             var retList = GetDependAssets(retABItem);
             return (retABItem, retList);
@@ -201,7 +201,7 @@ namespace BDFramework.ResourceMgr.V2
         }
 
 
-        public Dictionary<string, AssetBundleItem> guildAssetBundleItemCahceMap = new Dictionary<string, AssetBundleItem>();
+        public Dictionary<string, AssetBundleItem> guidAssetBundleItemCahceMap = new Dictionary<string, AssetBundleItem>();
 
         /// <summary>
         /// 获取assetbunldeItem通过guid
@@ -211,12 +211,12 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public AssetBundleItem GetAssetBundleDataByGUID(string guid)
         {
-            var ret = guildAssetBundleItemCahceMap.TryGetValue(guid, out var assetBundleItem);
+            var ret = guidAssetBundleItemCahceMap.TryGetValue(guid, out var assetBundleItem);
             if (!ret)
             {
                 //默认是assetbunlepath = meta guid
                 assetBundleItem = this.AssetbundleItemList.Find((abi) => abi.AssetBundlePath.Equals(guid));
-                guildAssetBundleItemCahceMap[guid] = assetBundleItem;
+                guidAssetBundleItemCahceMap[guid] = assetBundleItem;
             }
 
             return assetBundleItem;

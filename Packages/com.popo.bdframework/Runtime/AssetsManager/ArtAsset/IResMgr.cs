@@ -23,15 +23,8 @@ namespace BDFramework.ResourceMgr
         /// 初始化
         /// </summary>
         /// <param name="rootPath"></param>
-        void Init(string rootPath);
-
-        /// <summary>
-        /// 资源管理
-        /// </summary>
-       // Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get; }
-
-
-
+        void Init(string rootPath ,RuntimePlatform platform);
+        
         /// <summary>
         /// 加载资源
         /// </summary>
@@ -60,15 +53,15 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         T[] LoadAll<T>(string path) where T : UnityEngine.Object;
 
-        /// <summary>
+        // <summary>
         /// 异步加载接口
-        /// 需要自行外部yield,这里不进行管理 防止逻辑冲突
+        /// 未加载则返回LoadTask自行驱动，否则返回已加载的内容
+        /// 一般作为Editor验证使用，不作为Runtime正式API
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="assetLoadPath"></param>
-        /// <param name="callback"></param>
-        /// <returns>异步任务id</returns>
-        LoadTaskGroup CreateAsyncLoadTask<T>(string assetLoadPath) where T : UnityEngine.Object;
+        /// <param name="assetLoadPath">api传入的加载路径,Runtime下的相对路径</param>
+        /// <returns>返回Task</returns>
+        LoadTaskGroup AsyncLoad<T>(string assetLoadPath) where T : UnityEngine.Object;
         /// <summary>
         /// 异步加载资源
         /// </summary>

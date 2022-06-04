@@ -33,7 +33,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 异步加载表
         /// </summary>
-        private Queue<LoadTaskGroup> asyncLoadTaskGroupQueue { get; set; } = new Queue<LoadTaskGroup>(50);
+        private List<LoadTaskGroup> asyncLoadTaskList { get; set; } = new List<LoadTaskGroup>(50); //<LoadTaskGroup>(50);
 
         /// <summary>
         /// 全局唯一的依赖
@@ -58,7 +58,7 @@ namespace BDFramework.ResourceMgr.V2
         /// 初始化
         /// </summary>
         /// <param name="rootPath"></param>
-        public void Init(string rootPath)
+        public void Init(string rootPath, RuntimePlatform platform = RuntimePlatform.Android)
         {
             //多热更切换,需要卸载
             if (this.AssetConfigLoder != null)
@@ -66,46 +66,53 @@ namespace BDFramework.ResourceMgr.V2
                 this.UnloadAllAsset();
             }
 
-            var platformPath = BApplication.GetRuntimePlatformPath();
+            //平台
+            string platformPath = "";
             //1.设置加载路径  
             if (Application.isEditor)
             {
+                //editor下可以自行输入
+                platformPath = BApplication.GetPlatformPath(platform);
                 firstArtDirectory = IPath.Combine(rootPath, platformPath, BResources.ART_ASSET_ROOT_PATH);
                 secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformPath, BResources.ART_ASSET_ROOT_PATH); //
             }
             else
             {
+                //runtime只能使用当前平台
+                platformPath = BApplication.GetRuntimePlatformPath();
                 firstArtDirectory = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ART_ASSET_ROOT_PATH);
                 secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformPath, BResources.ART_ASSET_ROOT_PATH); //
+                rootPath = Application.persistentDataPath;
             }
 
-            //2.路径替换
+            //2.寻址路径格式化
             firstArtDirectory = IPath.FormatPathOnRuntime(firstArtDirectory);
             secArtDirectory = IPath.FormatPathOnRuntime(secArtDirectory);
 
             //3.加载ArtConfig
-            this.AssetConfigLoder = new AssetbundleConfigLoder();
-            string assetconfigPath;
-            string assetTypePath;
-            if (Application.isEditor)
-            {
-                assetconfigPath = IPath.Combine(rootPath, platformPath, BResources.ART_ASSET_CONFIG_PATH);
-                assetTypePath = IPath.Combine(rootPath, platformPath, BResources.ART_ASSET_TYPES_PATH);
-            }
-            else
-            {
-                //真机环境config在persistent，跟dll和db保持一致
-                assetconfigPath = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ART_ASSET_CONFIG_PATH);
-                assetTypePath = IPath.Combine(Application.persistentDataPath, platformPath, BResources.ART_ASSET_TYPES_PATH);
-            }
+            this.AssetConfigLoder = GetAssetbundleConfigLoder(rootPath, platformPath);
 
-            this.AssetConfigLoder.Load(assetconfigPath, assetTypePath);
             //开始异步任务刷新
             IEnumeratorTool.StartCoroutine(this.IE_LoadTaskUpdate());
             IEnumeratorTool.StartCoroutine(this.IE_UnLoadTaskUpdate());
 
             BDebug.Log($"【AssetBundleV2】 firstDir:{firstArtDirectory}", "red");
             BDebug.Log($"【AssetBundleV2】 secDir:{secArtDirectory}", "red");
+        }
+
+        /// <summary>
+        /// 获取AssetbundleConfigLoder
+        /// </summary>
+        /// <returns></returns>
+        static public AssetbundleConfigLoder GetAssetbundleConfigLoder(string rootPath, string platformPath)
+        {
+            //路径
+            var assetconfigPath = IPath.Combine(rootPath, platformPath, BResources.ART_ASSET_CONFIG_PATH);
+            var assetTypePath = IPath.Combine(rootPath, platformPath, BResources.ART_ASSET_TYPES_PATH);
+            //实例化
+            var configLoader = new AssetbundleConfigLoder();
+            configLoader.Load(assetconfigPath, assetTypePath);
+            return configLoader;
         }
 
 
@@ -243,6 +250,34 @@ namespace BDFramework.ResourceMgr.V2
 
         /// <summary>
         /// 异步加载接口
+        /// 未加载则返回LoadTask自行驱动，否则返回已加载的内容
+        /// 一般作为Editor验证使用，不作为Runtime正式API
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="assetLoadPath">api传入的加载路径,Runtime下的相对路径</param>
+        /// <returns>返回Task</returns>
+        public LoadTaskGroup AsyncLoad<T>(string assetLoadPath) where T : UnityEngine.Object
+        {
+            LoadTaskGroup loadTask = null;
+            var objCache = GetObjectFormCache(typeof(T), assetLoadPath);
+            if (!objCache)
+            {
+                loadTask = CreateAsyncLoadTask<T>(assetLoadPath);
+                if (loadTask == null)
+                {
+                    BDebug.LogError("不存在资源:" + assetLoadPath);
+                }
+            }
+            else
+            {
+                loadTask = new LoadTaskGroup(objCache);
+            }
+            
+            return  loadTask;
+        }
+
+        /// <summary>
+        /// 异步加载接口
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="assetLoadPath">api传入的加载路径,Runtime下的相对路径</param>
@@ -263,7 +298,7 @@ namespace BDFramework.ResourceMgr.V2
                         //回调
                         callback(obj);
                     });
-                    
+
                     //添加到任务队列
                     AddAsyncTaskGroup(loadTask);
                     return loadTask.Id;
@@ -297,7 +332,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="assetLoadPath">api传入的加载路径,Runtime下的相对路径</param>
         /// <param name="callback"></param>
         /// <returns>异步任务id</returns>
-        public LoadTaskGroup CreateAsyncLoadTask<T>(string assetLoadPath) where T : UnityEngine.Object
+        private LoadTaskGroup CreateAsyncLoadTask<T>(string assetLoadPath) where T : UnityEngine.Object
         {
             var assetBundleItem = AssetConfigLoder.GetAssetBundleData<T>(assetLoadPath);
 
@@ -361,7 +396,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="taskGroup"></param>
         public void AddAsyncTaskGroup(LoadTaskGroup taskGroup)
         {
-            this.asyncLoadTaskGroupQueue.Enqueue(taskGroup);
+            this.asyncLoadTaskList.Add(taskGroup);
         }
 
         #endregion
@@ -552,7 +587,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="taskid"></param>
         public void LoadCancel(int taskid)
         {
-            foreach (var tg in asyncLoadTaskGroupQueue)
+            foreach (var tg in asyncLoadTaskList)
             {
                 if (tg.Id == taskid)
                 {
@@ -568,12 +603,12 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public void LoadAllCancel()
         {
-            foreach (var tg in asyncLoadTaskGroupQueue)
+            foreach (var tg in asyncLoadTaskList)
             {
                 tg.Cancel();
             }
 
-            this.asyncLoadTaskGroupQueue.Clear();
+            this.asyncLoadTaskList.Clear();
         }
 
         /// <summary>
@@ -650,34 +685,21 @@ namespace BDFramework.ResourceMgr.V2
         {
             while (true)
             {
-                //1.加载任务
-                if (this.asyncLoadTaskGroupQueue.Count > 0)
+                //执行任务，因为要兼容IEnumerator,所以直接调用keepWaiting
+                for (int i = 0; i < asyncLoadTaskList.Count; i++)
                 {
-                    //开始新任务
-                    LoadTaskGroup task = null;
-                    //执行加载
-                    while (this.asyncLoadTaskGroupQueue.Count > 0 && task == null)
+                    var asyncTask = asyncLoadTaskList[i];
+                    var iskeep = asyncTask.keepWaiting;
+                }
+
+                //移除已完成
+                for (int i = asyncLoadTaskList.Count - 1; i >= 0; i--)
+                {
+                    var asyncTask = asyncLoadTaskList[i];
+                    if (asyncTask.IsCancel || asyncTask.IsSuccess)
                     {
-                        task = this.asyncLoadTaskGroupQueue.Dequeue();
-                        if (task.IsCancel)
-                        {
-                            task.Dispose();
-                            task = null;
-                        }
-                    }
-
-                    //执行任务
-                    if (task != null && !task.IsSuccess)
-                    {
-                        BDebug.Log("【AssetbundleV2】开始执行异步加载：" + task.MainAssetBundleLoadPath);
-
-                        yield return task;
-
-                        if (task.IsSuccess)
-                        {
-                            BDebug.Log("【AssetbundleV2】加载完成：" + task.MainAssetBundleLoadPath);
-                            task.Dispose();
-                        }
+                        asyncTask.Dispose();
+                        asyncLoadTaskList.RemoveAt(i);
                     }
                 }
 
@@ -693,15 +715,6 @@ namespace BDFramework.ResourceMgr.V2
         /// loder缓存表 防止重复加载
         /// </summary>
         private static Dictionary<string, LoadTask> GLOBAL_LOAD_TASK_MAP = new Dictionary<string, LoadTask>();
-
-
-        /// <summary>
-        /// 全局任务数量
-        /// </summary>
-        public int GlobalLoadTaskCount
-        {
-            get { return GLOBAL_LOAD_TASK_MAP.Count; }
-        }
 
         /// <summary>
         /// 是否能添加全局任务
@@ -758,7 +771,7 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         /// <param name="assetLoadPath">api传入的加载路径,Runtime下的相对路径</param>
         /// <param name="isForceUnload">强制卸载</param>
-        /// <param name="type"></param>
+        /// <param name="type">为空则卸载所有同名资源，为空则卸载指定类型资源</param>
         public void UnloadAsset(string assetLoadPath, bool isForceUnload = false, Type type = null)
         {
             //1.AB卸载
@@ -917,7 +930,7 @@ namespace BDFramework.ResourceMgr.V2
         }
 
         /// <summary>
-        /// 从缓存中卸载
+        /// 从缓存中卸载 实例化的资源
         /// </summary>
         /// <param name="assetLoadPath">api传入的加载路径,Runtime下的相对路径</param>
         /// <returns></returns>

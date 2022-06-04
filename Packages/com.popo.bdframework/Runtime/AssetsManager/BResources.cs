@@ -7,6 +7,7 @@ using BDFramework.ResourceMgr.V2;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgrV2;
 using BDFramework.VersionController;
+using Cysharp.Text;
 using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr
@@ -93,7 +94,10 @@ namespace BDFramework.ResourceMgr
         /// 加载器
         /// </summary>
         static public IResMgr ResLoader { get; private set; }
-
+        /// <summary>
+        /// loder缓存
+        /// </summary>
+        static private Dictionary<string, IResMgr> loaderCacheMap = new Dictionary<string, IResMgr>();
         /// <summary>
         /// 初始化
         /// </summary>
@@ -106,29 +110,41 @@ namespace BDFramework.ResourceMgr
             {
 #if UNITY_EDITOR //防止编译报错
                 ResLoader = new DevResourceMgr();
-                ResLoader.Init("");
+                ResLoader.Init(null, RuntimePlatform.WindowsEditor);
 #endif
             }
             else
             {
                 var path = GameConfig.GetLoadPath(loadPathType);
                 ResLoader = new AssetBundleMgrV2();
-                ResLoader.Init(path);
+                ResLoader.Init(path,BApplication.RuntimePlatform);
             }
 
             //初始化对象池
             InitObjectPools();
         }
 
+
         /// <summary>
-        /// 初始化
+        /// 初始化加载Assetbundle的环境
+        /// 该接口,一般用于测试
         /// </summary>
         /// <param name="abModel"></param>
         /// <param name="callback"></param>
-        static public void InitLoadAssetBundle(string path)
+        static public void InitLoadAssetBundleEnv(string path,RuntimePlatform platform)
         {
-            ResLoader = new AssetBundleMgrV2();
-            ResLoader.Init(path);
+            var key = ZString.Concat(path, "_", platform);
+            if (!loaderCacheMap.TryGetValue(key, out var loder))
+            {
+                ResLoader = new AssetBundleMgrV2();
+                ResLoader.Init(path,platform);
+                loaderCacheMap[key] = ResLoader;
+            }
+            else
+            {
+                ResLoader = loder;
+            }
+
             //初始化对象池
             InitObjectPools();
         }
@@ -153,38 +169,38 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 同步加载
         /// </summary>
-        /// <param name="assetPath">资源路径</param>
+        /// <param name="assetLoadPath">资源路径</param>
         /// <param name="pathType">加载类型：路径名还是GUID</param>
         /// <param name="groupName">加载组,用以对资源加载分组</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Load<T>(string assetPath, LoadPathType pathType = LoadPathType.RuntimePath, string groupName = null) where T : UnityEngine.Object
+        public static T Load<T>(string assetLoadPath, LoadPathType pathType = LoadPathType.RuntimePath, string groupName = null) where T : UnityEngine.Object
         {
-            if (string.IsNullOrEmpty(assetPath))
+            if (string.IsNullOrEmpty(assetLoadPath))
             {
                 return null;
             }
 
             //添加到资源组
-            AddAssetsPathToGroup(groupName, assetPath);
+            AddAssetsPathToGroup(groupName, assetLoadPath);
             //加载
-            return ResLoader.Load<T>(assetPath, pathType);
+            return ResLoader.Load<T>(assetLoadPath, pathType);
         }
 
         /// <summary>
         /// 同步加载
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="name"></param>
+        /// <param name="assetLoadPath"></param>
         /// <returns></returns>
-        private static UnityEngine.Object Load(Type type, string name)
+        private static UnityEngine.Object Load(Type type, string assetLoadPath)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(assetLoadPath))
             {
                 return null;
             }
 
-            return ResLoader.Load(type, name);
+            return ResLoader.Load(type, assetLoadPath);
         }
 
         /// <summary>
@@ -194,14 +210,14 @@ namespace BDFramework.ResourceMgr
         /// <param name="name"></param>
         /// <returns></returns>
         [Obsolete("已废弃,不建议项目使用!")]
-        public static T[] LoadALL<T>(string assetName) where T : UnityEngine.Object
+        public static T[] LoadALL<T>(string assetLoadPath) where T : UnityEngine.Object
         {
-            if (string.IsNullOrEmpty(assetName))
+            if (string.IsNullOrEmpty(assetLoadPath))
             {
                 return null;
             }
 
-            return ResLoader.LoadAll<T>(assetName);
+            return ResLoader.LoadAll<T>(assetLoadPath);
         }
 
 
@@ -209,12 +225,12 @@ namespace BDFramework.ResourceMgr
         /// 创建异步任务
         /// 该接口主要作为加载测试用，非内部创建任务不接受AssetbundleV2系统调度
         /// </summary>
-        /// <param name="assetName"></param>
+        /// <param name="assetLoadPath"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static LoadTaskGroup CreateAsyncLoadTask<T>(string assetName) where T : UnityEngine.Object
+        public static  LoadTaskGroup AsyncLoad<T>(string assetLoadPath) where T : UnityEngine.Object
         {
-            return ResLoader.CreateAsyncLoadTask<T>(assetName);
+            return ResLoader.AsyncLoad<T>(assetLoadPath);
         }
 
 
@@ -224,12 +240,12 @@ namespace BDFramework.ResourceMgr
         /// <typeparam name="T">类型</typeparam>
         /// <param name="objName">名称</param>
         /// <param name="action">回调函数</param>
-        public static int AsyncLoad<T>(string assetName, Action<T> action, string groupName = null) where T : UnityEngine.Object
+        public static int AsyncLoad<T>(string assetLoadPath, Action<T> action, string groupName = null) where T : UnityEngine.Object
         {
             //添加到资源组
-            AddAssetsPathToGroup(groupName, assetName);
+            AddAssetsPathToGroup(groupName, assetLoadPath);
             //异步加载
-            return ResLoader.AsyncLoad<T>(assetName, action);
+            return ResLoader.AsyncLoad<T>(assetLoadPath, action);
         }
 
         /// <summary>
@@ -524,13 +540,15 @@ namespace BDFramework.ResourceMgr
 
         #region 对象池
 
+        private static bool isInitedPools = false;
         /// <summary>
         /// 初始化对象池
         /// </summary>
         static private void InitObjectPools()
         {
-            if (Application.isPlaying)
+            if (Application.isPlaying && !isInitedPools)
             {
+                isInitedPools = true;
                 GameObject pool = new GameObject("GameobjectPools");
                 pool.AddComponent<GameObjectPoolManager>();
             }
@@ -785,22 +803,35 @@ namespace BDFramework.ResourceMgr
 
         #region 配置设置
 
-        public enum AUPQualityLevel
+        public enum AUPLevel
         {
+            /// <summary>
+            /// 低render 情况下，aup可以设置比较高
+            /// </summary>
+            LowRender,
             Hight,
             Normal,
-            Low,
+            Low
         }
 
 
         /// <summary>
         /// 设置AUP等级
         /// </summary>
-        static public void SetAUPLEvel(AUPQualityLevel qualityLevel)
+        static public void SetAUPLEvel(AUPLevel level)
         {
-            switch (qualityLevel)
+            switch (level)
             {
-                case AUPQualityLevel.Hight:
+                case AUPLevel.LowRender:
+                {
+                    //最高配置
+                    QualitySettings.asyncUploadPersistentBuffer = true;
+                    QualitySettings.asyncUploadBufferSize = 32;
+                    QualitySettings.asyncUploadTimeSlice = 8;
+                    Application.backgroundLoadingPriority = ThreadPriority.High;
+                }
+                    break;
+                case AUPLevel.Hight:
                 {
                     //最高配置
                     QualitySettings.asyncUploadPersistentBuffer = true;
@@ -809,7 +840,7 @@ namespace BDFramework.ResourceMgr
                     Application.backgroundLoadingPriority = ThreadPriority.Normal;
                 }
                     break;
-                case AUPQualityLevel.Normal:
+                case AUPLevel.Normal:
                 {
                     //中等配置
                     QualitySettings.asyncUploadPersistentBuffer = true;
@@ -818,7 +849,7 @@ namespace BDFramework.ResourceMgr
                     Application.backgroundLoadingPriority = ThreadPriority.Normal;
                 }
                     break;
-                case AUPQualityLevel.Low:
+                case AUPLevel.Low:
                 {
                     //低配置
                     QualitySettings.asyncUploadPersistentBuffer = true;
@@ -835,7 +866,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         static public void SetLoadConfig(int maxLoadTaskNum = -1, int maxUnloadTaskNum = -1)
         {
-            ResLoader.SetLoadConfig(maxLoadTaskNum,maxUnloadTaskNum);
+            ResLoader.SetLoadConfig(maxLoadTaskNum, maxUnloadTaskNum);
         }
 
         #endregion

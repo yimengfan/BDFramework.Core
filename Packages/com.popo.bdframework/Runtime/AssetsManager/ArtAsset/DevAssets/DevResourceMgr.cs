@@ -56,7 +56,7 @@ namespace BDFramework.ResourceMgr
         /// 初始化
         /// </summary>
         /// <param name="rootPath"></param>
-        public void Init(string rootPath)
+        public void Init(string rootPath,RuntimePlatform platform)
         {
             allRuntimeDirectList = BApplication.GetAllRuntimeDirects();
         }
@@ -255,10 +255,12 @@ namespace BDFramework.ResourceMgr
             return list.ToArray();
         }
 
-        public LoadTaskGroup CreateAsyncLoadTask<T>(string assetLoadPath) where T : Object
+        
+        public LoadTaskGroup AsyncLoad<T>(string assetLoadPath) where T : Object
         {
             return null;
         }
+
 
         /// <summary>
         /// AssetDataBase 不支持异步加载
