@@ -32,7 +32,11 @@ namespace BDFramework.Editor.Unity3dEx
                         {
                             if (uni.Address.AddressFamily == AddressFamily.InterNetwork)
                             {
-                                return uni.Address.ToString();
+                                var ip = uni.Address.ToString();
+                                if (ip.StartsWith("192"))
+                                {
+                                    return ip;
+                                }
                             }
                         }
                     }
