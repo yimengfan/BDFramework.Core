@@ -897,6 +897,12 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public void AddObjectToCache(Type type, string assetLoadPath, Object obj)
         {
+            //部分类型不进行缓存~
+            if (type == typeof(TextAsset))
+            {
+                return;
+            }
+            //
             var ret = GameObjectCacheMap.TryGetValue(type, out var map);
             if (!ret)
             {
