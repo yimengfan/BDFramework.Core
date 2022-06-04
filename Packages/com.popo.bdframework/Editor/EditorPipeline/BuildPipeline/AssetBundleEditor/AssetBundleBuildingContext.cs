@@ -385,28 +385,56 @@ namespace BDFramework.Editor.AssetBundle
         /// 开始构建AB
         /// </summary>
         public void StartBuildAssetBundle(BuildTarget buildTarget)
-        {
+        { 
             //-----------------------开始打包AssetBundle逻辑---------------------------
             Debug.Log("【BuildAssetbundle】执行Build...");
             //设置编辑器状态
             BDEditorApplication.EditorStatus = BDFrameworkEditorStatus.BuildAssetBundle;
-
             var platform = BApplication.GetRuntimePlatform(buildTarget);
-            //1.整理abname
+            var platformOutputPath = IPath.Combine(BuildParams.OutputPath, BApplication.GetPlatformPath(platform));
+            string abOutputPath = IPath.Combine(platformOutputPath, BResources.ART_ASSET_ROOT_PATH);
+            //--------------------------------开始打包----------------------------------
+            //1.打包
+            Debug.Log("<color=green>----->1.进入打包逻辑</color>");
+            //整理abname
             this.MergeABName(BuildingAssetInfos);
-            //2.对比差异文件
+            //对比差异文件
             var changedAssetsInfo = GetChangedAssets(BuildingAssetInfos, buildTarget);
-            //3.生成artconfig
+            //生成artconfig
             var assetbundleItemList = this.GenAssetBundleConfig(BuildingAssetInfos, BuildParams, platform);
-            //4.打包
+            //打包
             AssetDatabase.StartAssetEditing(); //禁止自动导入
             {
                 this.BuildAssetBundle(assetbundleItemList, changedAssetsInfo, BuildParams, platform);
             }
             AssetDatabase.StopAssetEditing(); //恢复自动导入
 
+            
+            //2.清理
+            Debug.Log("<color=green>----->2.清理旧ab</color>");
+            //移除所有的ab
+            RemoveAllAssetbundleName();
+            //删除本地没有的资源
+            var allABList = Directory.GetFiles(abOutputPath, "*", SearchOption.AllDirectories).Where((p) => string.IsNullOrEmpty(Path.GetExtension(p)));
+            foreach (var abpath in allABList)
+            {
+                var abname = Path.GetFileName(abpath);
+                var ret = assetbundleItemList.FirstOrDefault((abdata) => abdata.AssetBundlePath == abname);
+                if (ret == null)
+                {
+                    //
+                    File.Delete(abpath);
+                    File.Delete(abpath + ".manifest");
+                    //
+                    var path = AssetDatabase.GUIDToAssetPath(abname);
+                    Debug.Log("【删除旧ab:】" + abname + "  -  " + path);
+                }
+            }
+
+            
+            
             //3.BuildInfo配置处理
-            var platformOutputPath = IPath.Combine(BuildParams.OutputPath, BApplication.GetPlatformPath(platform));
+            Debug.Log("<color=green>----->3.BuildInfo相关生成</color>");
             //设置ab的hash
             foreach (var abi in assetbundleItemList)
             {
@@ -463,6 +491,7 @@ namespace BDFramework.Editor.AssetBundle
             //this.BackupArtifacts(buildTarget);
 
             //5.检测本地的Manifest和构建预期对比
+            Debug.Log("<color=green>----->5.校验AB依赖</color>");
             var abRootPath = IPath.Combine(BuildParams.OutputPath, BApplication.GetPlatformPath(platform), BResources.ART_ASSET_ROOT_PATH);
             var previewABUnitMap = BuildingAssetInfos.PreviewAssetbundleUnit();
             var manifestList = Directory.GetFiles(abRootPath, "*.manifest", SearchOption.AllDirectories);
@@ -525,6 +554,7 @@ namespace BDFramework.Editor.AssetBundle
 
 
             //6.资源混淆
+            Debug.Log("<color=green>----->6.混淆AB</color>");
             if (BDEditorApplication.BDFrameworkEditorSetting.BuildAssetBundleSetting.IsEnableObfuscation)
             {
                 AssetBundleEditorToolsV2.MixAssetBundle(BuildParams.OutputPath, platform);
@@ -592,25 +622,6 @@ namespace BDFramework.Editor.AssetBundle
             Debug.LogFormat("【编译AssetBundle】 output:{0} ,buildTarget:{1}", abOutputPath, buildTarget.ToString());
 
 
-            //----------------------------清理-------------------------------------
-            //1.移除所有的ab
-            RemoveAllAssetbundleName();
-            //2.删除本地没有的资源
-            var allABList = Directory.GetFiles(abOutputPath, "*", SearchOption.AllDirectories).Where((p) => string.IsNullOrEmpty(Path.GetExtension(p)));
-            foreach (var abpath in allABList)
-            {
-                var abname = Path.GetFileName(abpath);
-                var ret = assetBundleItemList.FirstOrDefault((abdata) => abdata.AssetBundlePath == abname);
-                if (ret == null)
-                {
-                    //
-                    File.Delete(abpath);
-                    File.Delete(abpath + ".manifest");
-                    //
-                    var path = AssetDatabase.GUIDToAssetPath(abname);
-                    Debug.Log("【删除旧ab:】" + abname + "  -  " + path);
-                }
-            }
 
             //3.检测本地Assetbundle
             // allAbList = Directory.GetFiles(abOutputPath, "*", SearchOption.AllDirectories);
@@ -640,11 +651,11 @@ namespace BDFramework.Editor.AssetBundle
             //1.把依赖资源替换成AB Name，
             foreach (var mainAsset in buildingAssetInfos.AssetInfoMap.Values)
             {
-                if (mainAsset.ABName.Equals("assets/resource/runtime/shader/allshaders.shadervariants", StringComparison.OrdinalIgnoreCase))
-                {
-                    Debug.Log("xx");
-                }
-                
+                // if (mainAsset.ABName.Equals("assets/resource/runtime/shader/allshaders.shadervariants", StringComparison.OrdinalIgnoreCase))
+                // {
+                //     Debug.Log("xx");
+                // }
+                //
                 for (int i = 0; i < mainAsset.DependAssetList.Count; i++)
                 {
                     var dependAssetName = mainAsset.DependAssetList[i];

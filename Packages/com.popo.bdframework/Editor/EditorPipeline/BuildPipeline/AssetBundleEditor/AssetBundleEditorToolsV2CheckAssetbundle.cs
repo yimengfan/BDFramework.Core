@@ -74,26 +74,26 @@ namespace BDFramework.Editor.AssetBundle
 
             //执行
             //初始化加载环境
-            UnityEngine.AssetBundle.UnloadAllAssetBundles(true);
-            //dev加载器
-            DevLoder = new DevResourceMgr();
-            DevLoder.Init("");
-            AssetBundleLoader = new AssetBundleMgrV2();
-            AssetBundleLoader.Init(abPath);
-            //节点
-            UI_ROOT = GameObject.Find("UIRoot").transform;
-            SCENE_ROOT = GameObject.Find("3dRoot").transform;
-            //相机
-            Camera = GameObject.Find("Camera").GetComponent<Camera>();
-            Camera.cullingMask = -1;
-            Camera.gameObject.hideFlags = HideFlags.DontSave;
-            //获取gameview
-            var assembly = typeof(UnityEditor.EditorWindow).Assembly;
-            System.Type GameViewType = assembly.GetType("UnityEditor.GameView");
-            GameView = EditorWindow.GetWindow(GameViewType);
-
-            //开始加载
-            EditorCoroutineExtensions.StartCoroutine(IE_LoadAll(), new object());
+            // UnityEngine.AssetBundle.UnloadAllAssetBundles(true);
+            // //dev加载器
+            // DevLoder = new DevResourceMgr();
+            // DevLoder.Init("");
+            // AssetBundleLoader = new AssetBundleMgrV2();
+            // AssetBundleLoader.Init(abPath);
+            // //节点
+            // UI_ROOT = GameObject.Find("UIRoot").transform;
+            // SCENE_ROOT = GameObject.Find("3dRoot").transform;
+            // //相机
+            // Camera = GameObject.Find("Camera").GetComponent<Camera>();
+            // Camera.cullingMask = -1;
+            // Camera.gameObject.hideFlags = HideFlags.DontSave;
+            // //获取gameview
+            // var assembly = typeof(UnityEditor.EditorWindow).Assembly;
+            // System.Type GameViewType = assembly.GetType("UnityEditor.GameView");
+            // GameView = EditorWindow.GetWindow(GameViewType);
+            //
+            // //开始加载
+            // EditorCoroutineExtensions.StartCoroutine(IE_LoadAll(), new object());
         }
 
 
