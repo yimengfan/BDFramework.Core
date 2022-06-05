@@ -56,7 +56,7 @@ namespace BDFramework.ResourceMgr
         /// 初始化
         /// </summary>
         /// <param name="rootPath"></param>
-        public void Init(string rootPath,RuntimePlatform platform)
+        public void Init(string rootPath, RuntimePlatform platform)
         {
             allRuntimeDirectList = BApplication.GetAllRuntimeDirects();
         }
@@ -103,7 +103,6 @@ namespace BDFramework.ResourceMgr
 
         public void SetLoadConfig(int maxLoadTaskNum = -1, int maxUnloadTaskNum = -1)
         {
-            
         }
 
         public T LoadFormAssetBundle<T>(string abName, string objName) where T : UnityEngine.Object
@@ -255,7 +254,7 @@ namespace BDFramework.ResourceMgr
             return list.ToArray();
         }
 
-        
+
         public LoadTaskGroup AsyncLoad<T>(string assetLoadPath) where T : Object
         {
             return null;
@@ -324,12 +323,15 @@ namespace BDFramework.ResourceMgr
         /// 取消任务
         /// </summary>
         /// <param name="taskid"></param>
-        public void LoadCancel(int taskid)
+        public bool LoadCancel(int taskid)
         {
             if (willdoTaskSet.Contains(taskid))
             {
                 willdoTaskSet.Remove(taskid);
+                return true;
             }
+
+            return false;
         }
 
         /// <summary>

@@ -272,8 +272,8 @@ namespace BDFramework.ResourceMgr.V2
             {
                 loadTask = new LoadTaskGroup(objCache);
             }
-            
-            return  loadTask;
+
+            return loadTask;
         }
 
         /// <summary>
@@ -294,9 +294,12 @@ namespace BDFramework.ResourceMgr.V2
                     //添加完成回调
                     loadTask.GetAwaiter().OnCompleted(() =>
                     {
-                        var obj = loadTask.GetResult<T>();
-                        //回调
-                        callback(obj);
+                        if (!loadTask.IsCancel)
+                        {
+                            //回调
+                            var obj = loadTask.GetResult<T>();
+                            callback(obj);
+                        }
                     });
 
                     //添加到任务队列
@@ -426,12 +429,13 @@ namespace BDFramework.ResourceMgr.V2
 #endif
 
                 //这里需要判断task列表，异步转同步
-                var loadTask = GetExsitLoadTask(assetbundleFileName);
+                var loadTask = GetExsitLoadTask(abLocalPath);
                 if (loadTask != null)
                 {
                     if (loadTask.IsAsyncTask)
                     {
                         loadTask.ToSynchronizationTask();
+                        BDebug.Log("【AssetbundleV2】异步转同步:" + loadTask.LocalPath);
                     }
                     else
                     {
@@ -585,16 +589,18 @@ namespace BDFramework.ResourceMgr.V2
         /// 取消load任务
         /// </summary>
         /// <param name="taskid"></param>
-        public void LoadCancel(int taskid)
+        public bool LoadCancel(int taskid)
         {
             foreach (var tg in asyncLoadTaskList)
             {
                 if (tg.Id == taskid)
                 {
                     tg.Cancel();
-                    break;
+                    return true;
                 }
             }
+
+            return false;
         }
 
 
@@ -686,11 +692,11 @@ namespace BDFramework.ResourceMgr.V2
             while (true)
             {
                 //执行任务，因为要兼容IEnumerator,所以直接调用keepWaiting
-                for (int i = 0; i < asyncLoadTaskList.Count; i++)
-                {
-                    var asyncTask = asyncLoadTaskList[i];
-                    var iskeep = asyncTask.keepWaiting;
-                }
+                // for (int i = 0; i < asyncLoadTaskList.Count; i++)
+                // {
+                //     var asyncTask = asyncLoadTaskList[i];
+                //     var iskeep = asyncTask.keepWaiting;
+                // }
 
                 //移除已完成
                 for (int i = asyncLoadTaskList.Count - 1; i >= 0; i--)
@@ -902,6 +908,7 @@ namespace BDFramework.ResourceMgr.V2
             {
                 return;
             }
+
             //
             var ret = GameObjectCacheMap.TryGetValue(type, out var map);
             if (!ret)
@@ -910,6 +917,7 @@ namespace BDFramework.ResourceMgr.V2
                 GameObjectCacheMap[type] = map;
             }
 
+            BDebug.Log($"<color=yellow>缓存添加成功</color>:{assetLoadPath}"  );
             map[assetLoadPath] = obj;
         }
 
@@ -926,7 +934,7 @@ namespace BDFramework.ResourceMgr.V2
                 ret = map.TryGetValue(assetLoadPath, out var gobj);
                 if (ret)
                 {
-                    Debug.Log("缓存命中成功:" + assetLoadPath);
+                    BDebug.Log($"<color=yellow>缓存命中成功</color>:{assetLoadPath}"  );
                 }
 
                 return gobj;

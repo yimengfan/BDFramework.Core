@@ -525,7 +525,7 @@ MonoBehaviour:
     precise: 1
     total: 1
     allocated: 1
-    monoUsage: 0
+    monoUsage: 1
     gfx: 1
   deviceInfoCounter:
     enabled: 1
@@ -545,7 +545,7 @@ MonoBehaviour:
     ramSizeNewLine: 1
     screenData: 1
     screenDataNewLine: 1
-    deviceModel: 0
+    deviceModel: 1
     deviceModelNewLine: 1
   hotKey: 96
   circleGesture: 0
@@ -566,7 +566,7 @@ MonoBehaviour:
   outlineColor: {r: 0, g: 0, b: 0, a: 0.5019608}
   outlineDistance: {x: 1, y: -1}
   autoScale: 0
-  scaleFactor: 2
+  scaleFactor: 1.25
   labelsFont: {fileID: 0}
   fontSize: 14
   lineSpacing: 1

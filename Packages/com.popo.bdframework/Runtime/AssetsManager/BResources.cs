@@ -94,10 +94,12 @@ namespace BDFramework.ResourceMgr
         /// 加载器
         /// </summary>
         static public IResMgr ResLoader { get; private set; }
+
         /// <summary>
         /// loder缓存
         /// </summary>
         static private Dictionary<string, IResMgr> loaderCacheMap = new Dictionary<string, IResMgr>();
+
         /// <summary>
         /// 初始化
         /// </summary>
@@ -117,7 +119,7 @@ namespace BDFramework.ResourceMgr
             {
                 var path = GameConfig.GetLoadPath(loadPathType);
                 ResLoader = new AssetBundleMgrV2();
-                ResLoader.Init(path,BApplication.RuntimePlatform);
+                ResLoader.Init(path, BApplication.RuntimePlatform);
             }
 
             //初始化对象池
@@ -131,13 +133,13 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="abModel"></param>
         /// <param name="callback"></param>
-        static public void InitLoadAssetBundleEnv(string path,RuntimePlatform platform)
+        static public void InitLoadAssetBundleEnv(string path, RuntimePlatform platform)
         {
             var key = ZString.Concat(path, "_", platform);
             if (!loaderCacheMap.TryGetValue(key, out var loder))
             {
                 ResLoader = new AssetBundleMgrV2();
-                ResLoader.Init(path,platform);
+                ResLoader.Init(path, platform);
                 loaderCacheMap[key] = ResLoader;
             }
             else
@@ -228,7 +230,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="assetLoadPath"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static  LoadTaskGroup AsyncLoad<T>(string assetLoadPath) where T : UnityEngine.Object
+        public static LoadTaskGroup AsyncLoad<T>(string assetLoadPath) where T : UnityEngine.Object
         {
             return ResLoader.AsyncLoad<T>(assetLoadPath);
         }
@@ -261,6 +263,16 @@ namespace BDFramework.ResourceMgr
             return ResLoader.AsyncLoad(assetlist, onProcess, onLoadEnd);
         }
 
+
+        /// <summary>
+        /// 取消一个任务
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static bool LoadCancel(int id)
+        {
+            return ResLoader.LoadCancel(id);
+        }
 
         /// <summary>
         /// 取消一组任务
@@ -541,6 +553,7 @@ namespace BDFramework.ResourceMgr
         #region 对象池
 
         private static bool isInitedPools = false;
+
         /// <summary>
         /// 初始化对象池
         /// </summary>
@@ -809,7 +822,7 @@ namespace BDFramework.ResourceMgr
             /// 低render 情况下，aup可以设置比较高
             /// </summary>
             LowRender,
-            Hight,
+            Height,
             Normal,
             Low
         }
@@ -831,7 +844,7 @@ namespace BDFramework.ResourceMgr
                     Application.backgroundLoadingPriority = ThreadPriority.High;
                 }
                     break;
-                case AUPLevel.Hight:
+                case AUPLevel.Height:
                 {
                     //最高配置
                     QualitySettings.asyncUploadPersistentBuffer = true;

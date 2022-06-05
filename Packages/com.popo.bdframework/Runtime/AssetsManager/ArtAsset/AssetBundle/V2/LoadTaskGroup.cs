@@ -159,7 +159,7 @@ namespace BDFramework.ResourceMgr
         {
             get
             {
-                Debug.Log("yield Task frame:" + Time.frameCount);
+                // Debug.Log("yield Task frame:" + Time.frameCount);
                 //不再等待，表示当前任务已完成/被取消
                 if (isCancel || IsSuccess || resultObject != null)
                 {
@@ -188,19 +188,29 @@ namespace BDFramework.ResourceMgr
         /// <returns>是否继续执行</returns>
         private bool DoLoadAssetBundle()
         {
+            
+            BDebug.Log($"【keepAwait】 {this.MainAssetBundleLoadPath}-{Time.realtimeSinceStartup} /   <color=red>frame:{Time.frameCount} </color>");
+
             if (!isCancel)
             {
                 if (!this.isLoadABFile)
                 {
                     this.isLoadABFile = AsyncLoadAssetbundleFile();
+                    if (this.isLoadABFile)
+                    {
+                        BDebug.Log("【LoadTaskGroup】加载AB文件成功:" +this.MainAssetBundleLoadPath);
+                    }
                 }
-                else if (!this.isLoadObject) //完成了loadABFile
+                
+                //在同一帧中继续判断
+                if (this.isLoadABFile && !this.isLoadObject) //完成了loadABFile
                 {
                     this.isLoadObject = AsyncLoadObject();
+                    BDebug.Log("【LoadTaskGroup】AB实例化完成:" +this.MainAssetBundleLoadPath);
                 }
             }
-
-            //没成功则继续
+            BDebug.Log($"<color=yellow> IsSuccess:{this.IsSuccess} </color>");
+           //没成功则继续
             return !this.IsSuccess;
         }
 
@@ -211,7 +221,7 @@ namespace BDFramework.ResourceMgr
         private bool AsyncLoadAssetbundleFile()
         {
             //1.loadABFile,循环添加任务
-            while (AssetBundleMgrV2.IsCanAddGlobalTask && curLoadIdx < waitingLoadAssetBundleList.Count - 1)
+            while (!isCancel && AssetBundleMgrV2.IsCanAddGlobalTask && curLoadIdx < waitingLoadAssetBundleList.Count - 1)
             {
                 curLoadIdx++;
 
@@ -277,25 +287,10 @@ namespace BDFramework.ResourceMgr
             }
 
             //3.任务执行完毕检测
-            if (loadingTaskList.Count == 0 && curLoadIdx == waitingLoadAssetBundleList.Count - 1)
+            if (!isCancel && loadingTaskList.Count == 0 && curLoadIdx == waitingLoadAssetBundleList.Count - 1)
             {
                 //加载完成,主资源只要保证在 实例化之前加载完毕即可
                 //加载完则使用
-                foreach (var abi in waitingLoadAssetBundleList)
-                {
-                    var abw = loder.GetAssetBundleFromCache(abi.AssetBundlePath);
-
-                    if (abw != null && abw.AssetBundle != null)
-                    {
-                        abw.Use();
-                    }
-                    else
-                    {
-                        BDebug.LogError($"【AsyncLoadTaskGroup】未获取ab:{abi.AssetBundlePath}");
-                    }
-                }
-
-
                 BDebug.Log($"<color=green>【AsyncLoadTaskGroup】所有加载完成:{MainAssetBundleItem.AssetBundlePath}</color>");
 
                 return true;
@@ -312,7 +307,7 @@ namespace BDFramework.ResourceMgr
         private bool AsyncLoadObject()
         {
             //判断request 加载进度
-            if (abRequest == null)
+            if (!isCancel && abRequest == null)
             {
                 //加载实例对象
                 var cacheObject = loder.GetObjectFormCache(MainAssetType, MainAssetBundleLoadPath);
@@ -325,23 +320,47 @@ namespace BDFramework.ResourceMgr
                 else
                 {
                     //已经存在
+                    Debug.Log("【LoadTaskGroup】已存在cache :" + MainAssetType);
                     this.resultObject = cacheObject;
                     return true;
                 }
             }
 
-            //完成
-            if (abRequest != null && abRequest.isDone)
+            //异步实例化完成
+            if (!isCancel && abRequest != null && abRequest.isDone)
             {
                 //添加到缓存
                 loder.AddObjectToCache(MainAssetType, MainAssetBundleLoadPath, abRequest.asset);
                 this.resultObject = abRequest.asset;
+                //通过这里实例化的，则使用标记增加
+                AddAssetBundleUsed();
                 return true;
             }
 
             return false;
         }
 
+
+        /// <summary>
+        /// 使用标记增加
+        /// </summary>
+        private void AddAssetBundleUsed()
+        {
+            //使用计数
+            foreach (var abi in waitingLoadAssetBundleList)
+            {
+                var abw = loder.GetAssetBundleFromCache(abi.AssetBundlePath);
+                if (abw != null && abw.AssetBundle != null)
+                {
+                    abw.Use();
+                }
+                else
+                {
+                    BDebug.LogError($"【AsyncLoadTaskGroup】未获取ab:{abi.AssetBundlePath}");
+                }
+            }
+
+        }
 
         /// <summary>
         /// 销毁

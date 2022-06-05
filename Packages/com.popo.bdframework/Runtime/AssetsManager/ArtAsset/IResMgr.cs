@@ -88,7 +88,7 @@ namespace BDFramework.ResourceMgr
         /// 取消一个加载任务
         /// </summary>
         /// <param name="taskid"></param>
-        void LoadCancel(int taskid);
+        bool LoadCancel(int taskid);
 
         /// <summary>
         /// 取消所有加载任务

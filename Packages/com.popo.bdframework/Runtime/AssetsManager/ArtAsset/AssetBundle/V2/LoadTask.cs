@@ -39,7 +39,7 @@ namespace AssetsManager.ArtAsset.AssetBundle.V2
         }
 
 
-        public UnityEngine.AssetBundle assetBundle;
+        private UnityEngine.AssetBundle assetBundle;
 
         /// <summary>
         /// AB 对象

@@ -126,7 +126,7 @@ namespace BDFramework.ResourceMgr.V2
                 AssetType.VALID_TYPE_PREFAB = this.AssetTypes.AssetTypeList.FindIndex((at) => at.Equals(clsName, StringComparison.OrdinalIgnoreCase));
                 //图集
                 clsName = typeof(SpriteAtlas).FullName;
-                AssetType.VALID_TYPE_SPRITE_ATLAS = this.AssetTypes.AssetTypeList.FindIndex((at) =>  at.Equals(clsName, StringComparison.OrdinalIgnoreCase));
+                AssetType.VALID_TYPE_SPRITE_ATLAS = this.AssetTypes.AssetTypeList.FindIndex((at) => at.Equals(clsName, StringComparison.OrdinalIgnoreCase));
                 //...
                 //其他省略，需要时候再加
             }
@@ -233,18 +233,7 @@ namespace BDFramework.ResourceMgr.V2
         {
             if (!string.IsNullOrEmpty(assetLoadPath))
             {
-                if (type != null && type != typeof(Object))
-                {
-                    //指定T Map搜索
-                    if (this.assetTypeIdxMap.TryGetValue(type.FullName, out var assetMap))
-                    {
-                        if (assetMap.TryGetValue(assetLoadPath, out var idx))
-                        {
-                            return this.AssetbundleItemList[idx];
-                        }
-                    }
-                }
-                else
+                if (type == null || type == typeof(Object))
                 {
                     //全局搜索,效率略低
                     for (int i = 0; i < this.AssetbundleItemList.Count; i++)
@@ -256,6 +245,17 @@ namespace BDFramework.ResourceMgr.V2
                             {
                                 return abitem;
                             }
+                        }
+                    }
+                }
+                else
+                {
+                    //指定T Map搜索
+                    if (this.assetTypeIdxMap.TryGetValue(type.FullName, out var assetMap))
+                    {
+                        if (assetMap.TryGetValue(assetLoadPath, out var idx))
+                        {
+                            return this.AssetbundleItemList[idx];
                         }
                     }
                 }
