@@ -85,7 +85,7 @@ namespace BDFramework.Editor.Table
             EditorUtility.ClearProgressBar();
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnEndBuildSqlite(ouptputPath);
-            BasePackageAssetsHelper.GenBasePackageAssetBuildInfo(ouptputPath, platform);
+            GlobalAssetsHelper.GenBasePackageAssetBuildInfo(ouptputPath, platform);
             Debug.Log("导出Sqlite完成!");
         }
 

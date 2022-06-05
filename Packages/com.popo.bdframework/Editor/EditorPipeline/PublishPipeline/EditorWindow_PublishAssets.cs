@@ -155,7 +155,7 @@ namespace BDFramework.Editor.PublishPipeline
                             }
                         }
 
-                        var basePackageBuildInfo = BasePackageAssetsHelper.GetPacakgeBuildInfo(EXPORT_PATH, sp);
+                        var basePackageBuildInfo = GlobalAssetsHelper.GetPackageBuildInfo(EXPORT_PATH, sp);
                         string setVersionNum = "";
                         var ret = platformVersionMap.TryGetValue(sp, out setVersionNum);
                         if (!ret)

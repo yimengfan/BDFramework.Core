@@ -635,7 +635,7 @@ namespace BDFramework.Editor.AssetBundle
             //     var depend = AssetDatabase.GetAssetBundleDependencies(abpath,true);
             // }
 
-            BasePackageAssetsHelper.GenBasePackageAssetBuildInfo(buildParams.OutputPath, platform);
+            GlobalAssetsHelper.GenBasePackageAssetBuildInfo(buildParams.OutputPath, platform);
         }
 
 

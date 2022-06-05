@@ -14,7 +14,7 @@ namespace BDFramework.Asset
     /// <summary>
     /// 母包资源构建信息
     /// </summary>
-    public class BasePackageAssetsBuildInfo
+    public class GlobalAssetsBuildInfo
     {
         /// <summary>
         /// 构建时间
@@ -49,13 +49,13 @@ namespace BDFramework.Asset
     }
 
     /// <summary>
-    /// 母包资源帮助
+    /// 全局资源管理
     /// 用于管理
     /// 用以统一管理Sql、dll、和ArtConfig资源
     /// </summary>
-    static public class BasePackageAssetsHelper
+    static public class GlobalAssetsHelper
     {
-        static BasePackageAssetsHelper()
+        static GlobalAssetsHelper()
         {
             BetterStreamingAssets.Initialize();
         }
@@ -77,14 +77,14 @@ namespace BDFramework.Asset
         /// 获取母包资源构建信息
         /// </summary>
         /// <returns></returns>
-        static public BasePackageAssetsBuildInfo GetPacakgeBuildInfo(string ouptputPath, RuntimePlatform platform)
+        static public GlobalAssetsBuildInfo GetPackageBuildInfo(string ouptputPath, RuntimePlatform platform)
         {
             var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
-            var buildinfo = new BasePackageAssetsBuildInfo();
+            var buildinfo = new GlobalAssetsBuildInfo();
             if (File.Exists(path))
             {
                 var text = File.ReadAllText(path);
-                buildinfo = JsonMapper.ToObject<BasePackageAssetsBuildInfo>(text);
+                buildinfo = JsonMapper.ToObject<GlobalAssetsBuildInfo>(text);
             }
             return buildinfo;
         }
@@ -95,7 +95,7 @@ namespace BDFramework.Asset
         static public void GenBasePackageAssetBuildInfo(string outputPath, RuntimePlatform platform, string version = "", string basePacakgeSVC = "", string artSVC = "", string scriptSVC = "", string tableSVC = "")
         {
             //获取旧BuildAssetInfo
-            var info = GetPacakgeBuildInfo(outputPath, platform);
+            var info = GetPackageBuildInfo(outputPath, platform);
             
             //写入buildinfo内容
             info.BuildTime = DateTimeEx.GetTotalSeconds();
@@ -141,7 +141,7 @@ namespace BDFramework.Asset
         /// <param name="ouptputPath"></param>
         /// <param name="platform"></param>
         /// <param name="info"></param>
-        static public void SaveBasePackageBuildInfo(string ouptputPath, RuntimePlatform platform, BasePackageAssetsBuildInfo info)
+        static public void SaveBasePackageBuildInfo(string ouptputPath, RuntimePlatform platform, GlobalAssetsBuildInfo info)
         {
             //转json
             var content = JsonMapper.ToJson(info);
@@ -216,8 +216,8 @@ namespace BDFramework.Asset
                 {
                     var content = ReadAssetAllText(persistentPackageBuildInfoPath);
                     //解析
-                    var persistentPackageInfo = JsonMapper.ToObject<BasePackageAssetsBuildInfo>(content);
-                    var basePackageInfo = JsonMapper.ToObject<BasePackageAssetsBuildInfo>(basePckBuildInfoContent);
+                    var persistentPackageInfo = JsonMapper.ToObject<GlobalAssetsBuildInfo>(content);
+                    var basePackageInfo = JsonMapper.ToObject<GlobalAssetsBuildInfo>(basePckBuildInfoContent);
                     if (persistentPackageInfo.BuildTime >= basePackageInfo.BuildTime)
                     {
                         //跳出，检测结束
