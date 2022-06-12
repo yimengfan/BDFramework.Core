@@ -168,9 +168,15 @@ public class AssetBundleBenchmark01 : MonoBehaviour
             }
 
             //同异步稳定性测试
-            if (GUILayout.Button("同、异步稳定测试", GUILayout.Height(100), GUILayout.Width(300)))
+            if (GUILayout.Button("同、异步混合测试", GUILayout.Height(100), GUILayout.Width(300)))
             {
-                this.StartCoroutine(TestCancelTask(curRuntimePlatform));
+                this.StartCoroutine(TestLoadTask(curRuntimePlatform,false));
+            }
+            
+            if (GUILayout.Button("同、异步取消测试", GUILayout.Height(100), GUILayout.Width(300)))
+            {
+                //取消异步任务
+                this.StartCoroutine(TestLoadTask(curRuntimePlatform,true));
             }
         }
         GUILayout.EndVertical();
@@ -252,7 +258,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
 
         //package信息
         var pakInfo = GlobalAssetsHelper.GetPackageBuildInfo(abPath, platform);
-        Profiler.BeginSample("Benchmark Load");
+       // Profiler.BeginSample("Benchmark Load");
         var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformPath(platform), pakInfo.Version);
         if (!Directory.Exists(benchmarkDataOutpath))
         {
@@ -699,12 +705,12 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 if (isAsyncLoad)
                 {
                     var ret = BResources.AsyncLoad<SpriteAtlas>(runtimePath);
+                    //
                     yield return ret;
                     if (ret.IsSuccess)
                     {
                         obj = ret.GetResult<SpriteAtlas>();
                     }
-
                     sw.Stop();
                     loadData.AsyncLoadTime = sw.ElapsedTicks;
                     Debug.Log($"End task frame:<color=red>{Time.frameCount} </color>");
@@ -1349,7 +1355,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
     /// 随机加载测试
     /// </summary>
     /// <returns></returns>
-    IEnumerator TestCancelTask(RuntimePlatform platform)
+    IEnumerator TestLoadTask(RuntimePlatform platform ,bool doCancelAysncTask)
     {
         BResources.UnloadAssets();
         //加载
@@ -1360,7 +1366,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
 
         //package信息
         var pakInfo = GlobalAssetsHelper.GetPackageBuildInfo(abPath, platform);
-        Profiler.BeginSample("Benchmark Load");
+
         var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformPath(platform), pakInfo.Version);
         if (!Directory.Exists(benchmarkDataOutpath))
         {
@@ -1383,66 +1389,94 @@ public class AssetBundleBenchmark01 : MonoBehaviour
             var typeName = AssetBundleLoader.AssetConfigLoder.AssetTypes.AssetTypeList[assetdata.AssetType];
             var runtimePath = assetdata.LoadPath;
 
-            bool isLoadEnd = false;
-            Debug.Log($"<color=yellow>------>【开始加载】{idx} - </color>{runtimePath}  <color=red>帧号:{Time.frameCount}</color>");
+            bool isCancel = false;
+            bool isLoad = false;
+            bool isCacheHit = false;
+            var asyncTaskStartFrameCount = Time.frameCount;
+            Debug.Log($"<color=yellow>------>【开始加载】{idx} - </color>{runtimePath}  <color=red>帧号:{asyncTaskStartFrameCount}</color>");
             //开始异步
             Stopwatch swa = new Stopwatch();
             swa.Start();
             var id = BResources.AsyncLoad<Object>(runtimePath, (o) =>
             {
                 swa.Stop();
-                
-                // if (isLoadEnd)
-                // {
-                //     Debug.LogError($"取消失败,异步加载成功:{runtimePath} <color=red>帧号:{Time.frameCount}</color>");
-                // }
-                // else
-                // {
-                    Debug.Log($"<color=yellow>【异步加载成功】</color>  {runtimePath} <color=yellow>{swa.ElapsedTicks/10000f}</color>ms <color=red>帧号:{Time.frameCount}</color>");
-                //}
 
-                isLoadEnd = true;
+                //立刻完成,就是命中缓存了
+                if (asyncTaskStartFrameCount == Time.frameCount)
+                {
+                    isCacheHit = true;
+                }
+                //其他的
+                if (isCancel)
+                {
+                    Debug.LogError($"取消失败,异步加载成功:{runtimePath} <color=red>帧号:{Time.frameCount}</color>");
+                }
+                else
+                {
+                    Debug.Log($"<color=yellow>【异步加载成功】</color>  {runtimePath} <color=yellow>{swa.ElapsedTicks / 10000f}</color>ms <color=red>帧号:{Time.frameCount}</color>");
+                }
+                isLoad = true;
             });
 
             // yield return null;
             //取消任务
-            // var ret = BResources.LoadCancel(id);
-            // if (ret)
-            // {
-            //     Debug.Log($"<color=green>取消任务id:{id}成功!</color>");
-            // }
-            // else
-            // {
-            //     Debug.Log($"<color=red>取消任务id:{id}失败!</color>");
-            // }
+            if (doCancelAysncTask)
+            {
+                var ret = BResources.LoadCancel(id);
+                isCancel = true;
+                if (ret)
+                {
+                    Debug.Log($"<color=green>取消任务id:{id}成功!</color>");
+                }
+                else
+                {
+                    Debug.Log($"<color=red>取消任务id:{id}失败!</color>");
+                }
+            }
+            //已经加载完成,且没有cache命中
+            if (isLoad&& !isCacheHit)
+            {
+                Debug.LogError($"同步异常,异步已经加载:{runtimePath} <color=red>帧号:{Time.frameCount}</color>");
+            }
             
+            //同步加载
             Stopwatch sw = new Stopwatch();
             sw.Start();
             var obj = BResources.Load<Object>(runtimePath);
-            isLoadEnd = true;
+            isLoad = true;
             sw.Stop();
             if (obj)
             {
                 Debug.Log($"<color=yellow>【同步加载成功】</color>  {runtimePath} <color=yellow> {sw.ElapsedTicks / 10000f}ms </color>  <color=red>帧号:{Time.frameCount}</color>");
             }
-            
+
             //测试资产
-            yield return this.StartCoroutine(TestLoadAssets(obj));
-            
+            yield return this.StartCoroutine(ValidAsset(runtimePath, obj));
+
             //
             yield return null;
         }
-
     }
+
+
     
-    
-            
-    ///
-    IEnumerator TestLoadAssets(Object obj)
+    /// <summary>
+    /// 验证资源
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    IEnumerator ValidAsset(string path, Object obj)
     {
         //各种测试
-        if (obj is GameObject  gobj)
+        if (obj is GameObject gobj)
         {
+            if (!gobj)
+            {
+                Debug.LogError("[Prefab]加载失败:" + path);
+                yield break;
+            }
+
             var initGo = GameObject.Instantiate(gobj);
             //UI
             var rectTransform = initGo.GetComponentInChildren<RectTransform>();
@@ -1454,65 +1488,115 @@ public class AssetBundleBenchmark01 : MonoBehaviour
             {
                 initGo.transform.SetParent(SCENE_ROOT);
             }
+
             initGo.SetActive(true);
-               
-            yield return null; 
-            yield return null; 
-                
+
+            yield return null;
+            yield return null;
+
             GameObject.DestroyImmediate(initGo);
         }
-        else if(obj is Texture2D tex2d)
+        else if (obj is Texture2D tex2d)
         {
+            if (!tex2d)
+            {
+                Debug.LogError("[Texture2D]加载失败:" + path);
+                yield break;
+            }
+
             spriteRendererNode.gameObject.SetActive(true);
             spriteRendererNode.sprite = Sprite.Create(tex2d, new Rect(Vector2.zero, tex2d.texelSize), new Vector2(0.5f, 0.5f), 128);
             yield return null;
             spriteRendererNode.gameObject.SetActive(false);
         }
-        else if(obj is Texture2D tex)
+        else if (obj is Texture tex)
         {
-                
+            if (!tex)
+            {
+                Debug.LogError("[Texture]加载失败:" + path);
+                yield break;
+            }
         }
-        else if(obj is Sprite sp)
+        else if (obj is Sprite sp)
         {
+            if (!sp)
+            {
+                Debug.LogError("[Sprite]加载失败:" + path);
+                yield break;
+            }
+
+
             imageNode.gameObject.SetActive(true);
             imageNode.overrideSprite = sp;
             imageNode.SetNativeSize();
             yield return null;
             imageNode.gameObject.SetActive(false);
         }
-        else if(obj is  Font spriteAtlas)
+        else if (obj is TextAsset textAsset)
         {
-                 
+            if (!textAsset)
+            {
+                Debug.LogError("[TextAsset]加载失败:" + path);
+                yield break;
+            }
+
+            Debug.Log(textAsset);
         }
-        else if(obj is  Material mat)
+        else if (obj is Font font)
         {
-                 
+            if (!font)
+            {
+                Debug.LogError("[Font]加载失败:" + path);
+                yield break;
+            }
         }
-        else if(obj is  Shader shader)
+        else if (obj is Material mat)
         {
-                 
+            if (!mat)
+            {
+                Debug.LogError("[Material]加载失败:" + path);
+                yield break;
+            }
         }
-        else if(obj is  Mesh mesh)
+        else if (obj is Shader shader)
         {
-                 
+            if (!shader)
+            {
+                Debug.LogError("[Shader]加载失败:" + path);
+                yield break;
+            }
         }
-        else if(obj is  AudioClip audioclip)
+        else if (obj is Mesh mesh)
         {
-                 
+            if (!mesh)
+            {
+                Debug.LogError("[Mesh]加载失败:" + path);
+                yield break;
+            }
         }
-        else if(obj is  Font font)
+        else if (obj is AudioClip audioclip)
         {
-                 
+            if (!audioclip)
+            {
+                Debug.LogError("[AudioClip]加载失败:" + path);
+                yield break;
+            }
         }
-        else if(obj is  ShaderVariantCollection svc)
+        else if (obj is ShaderVariantCollection svc)
         {
+            if (!svc)
+            {
+                Debug.LogError("[ShaderVariantCollection]加载失败:" + path);
+                yield break;
+            }
+
             svc.WarmUp();
         }
         else
         {
-            if (obj == null)
+            if (!obj)
             {
-                
+                Debug.LogError("加载失败:" + path);
             }
         }
     }

@@ -13,6 +13,11 @@ namespace BDFramework.ResourceMgr.V2
         static public int VALID_TYPE_PREFAB = -1;
 
         /// <summary>
+        /// sprite
+        /// </summary>
+        static public int VALID_TYPE_SPRITE = -1;
+        
+        /// <summary>
         /// 图集
         /// </summary>
         static public int VALID_TYPE_SPRITE_ATLAS = -1;

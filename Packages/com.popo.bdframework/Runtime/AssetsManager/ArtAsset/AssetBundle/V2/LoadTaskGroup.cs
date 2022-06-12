@@ -189,7 +189,7 @@ namespace BDFramework.ResourceMgr
         private bool DoLoadAssetBundle()
         {
             
-            BDebug.Log($"【keepAwait】 {this.MainAssetBundleLoadPath}-{Time.realtimeSinceStartup} /   <color=red>frame:{Time.frameCount} </color>");
+            BDebug.Log($"【keepAwait】 {this.MainAssetBundleLoadPath} - {Time.realtimeSinceStartup}  /   <color=red>frame:{Time.frameCount} </color>");
 
             if (!isCancel)
             {

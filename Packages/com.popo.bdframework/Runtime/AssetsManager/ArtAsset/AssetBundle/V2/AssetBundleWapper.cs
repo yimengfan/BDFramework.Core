@@ -42,7 +42,7 @@ namespace BDFramework.ResourceMgr.V2
         /// 资源实例的缓存，实际用到时会很少
         /// </summary>
         private Dictionary<string, Object> specialObjectCacheMap = new Dictionary<string, Object>(StringComparer.OrdinalIgnoreCase);
-        
+
         /// <summary>
         /// 获取资源全路径
         /// </summary>
@@ -75,18 +75,18 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public AssetBundleRequest CreateAsyncInstantiateTask<T>(string path,bool isNeedGetLocalPathFormLoadPath =false) where T : Object
+        public AssetBundleRequest CreateAsyncInstantiateTask<T>(string path, bool isNeedGetLocalPathFormLoadPath = false) where T : Object
         {
-            return this.CreateAsyncInstantiateTask(typeof(T), path,isNeedGetLocalPathFormLoadPath);
+            return this.CreateAsyncInstantiateTask(typeof(T), path, isNeedGetLocalPathFormLoadPath);
         }
 
-        public AssetBundleRequest CreateAsyncInstantiateTask(Type type, string path,bool isNeedGetLocalPathFormLoadPath =false)
+        public AssetBundleRequest CreateAsyncInstantiateTask(Type type, string path, bool isNeedGetLocalPathFormLoadPath = false)
         {
             if (isNeedGetLocalPathFormLoadPath)
             {
                 path = GetAssetLocalPath(path);
             }
-            
+
             return this.AssetBundle.LoadAssetAsync(path, type);
         }
 
@@ -97,10 +97,11 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         /// <param name="texName"></param>
         /// <returns></returns>
-        private Object LoadTextureFormAtlas(string texName)
+        private SpriteAtlas LoadAtlas()
         {
             //默认一个ab中只有一个atlas
             var atlasName = AssetBundle.GetAllAssetNames().FirstOrDefault((a) => a.EndsWith(".spriteatlas", StringComparison.OrdinalIgnoreCase));
+
             //优先使用缓存
             specialObjectCacheMap.TryGetValue(atlasName, out var @object);
             SpriteAtlas atlas = null;
@@ -108,12 +109,25 @@ namespace BDFramework.ResourceMgr.V2
             {
                 atlas = @object as SpriteAtlas;
             }
-            //不存在缓存 进行加载
-            if (!atlas)
+            else
             {
+                //不存在缓存 进行加载
                 atlas = this.AssetBundle.LoadAsset<SpriteAtlas>(atlasName);
+                specialObjectCacheMap[atlasName] = atlas;
             }
-            
+
+            return atlas;
+        }
+
+
+        /// <summary>
+        /// 加载图集资源,仅支持 unity atlas方案
+        /// </summary>
+        /// <param name="texName"></param>
+        /// <returns></returns>
+        private Object LoadSpriteFormAtlas(string texName)
+        {
+            var atlas = LoadAtlas();
             if (atlas)
             {
                 texName = Path.GetFileName(texName);
@@ -126,12 +140,13 @@ namespace BDFramework.ResourceMgr.V2
             }
         }
 
+        #region 废弃代码
         /// <summary>
         /// 加载图集资源,仅支持 unity atlas方案
         /// </summary>
         /// <param name="texPath"></param>
         /// <returns></returns>
-        private void AsyncLoadTextureFormAtlas(string texPath, Action<Object> callback)
+        private void AsyncLoadAtlas( Action<SpriteAtlas> callback)
         {
             //默认一个ab中只有一个atlas
             var atlasName = AssetBundle.GetAllAssetNames().FirstOrDefault((a) => a.EndsWith(".spriteatlas", StringComparison.OrdinalIgnoreCase));
@@ -141,10 +156,7 @@ namespace BDFramework.ResourceMgr.V2
                 var atlas = @object as SpriteAtlas;
                 if (atlas)
                 {
-                    //加载sp
-                    texPath = Path.GetFileName(texPath);
-                    var sp = atlas.GetSprite(texPath);
-                    callback?.Invoke(sp);
+                    callback?.Invoke(atlas);
                 }
             }
             else
@@ -157,37 +169,58 @@ namespace BDFramework.ResourceMgr.V2
                 {
                     //获取图集
                     var atlas = requestAwaiter.GetResult() as SpriteAtlas;
+                    //缓存
+                    specialObjectCacheMap[atlasName] = atlas;
                     if (atlas)
                     {
-                        //缓存
-                        specialObjectCacheMap[atlasName] = atlas;
-                        //加载sp
-                        texPath = Path.GetFileName(texPath);
-                        var sp = atlas.GetSprite(texPath);
-                        callback?.Invoke(sp);
+                        callback?.Invoke(atlas);
                     }
                 });
             }
         }
 
+        /// <summary>
+        /// 加载图集资源,仅支持 unity atlas方案
+        /// </summary>
+        /// <param name="texPath"></param>
+        /// <returns></returns>
+        private void AsyncLoadSpriteFormAtlas(string texPath, Action<Object> callback)
+        {
+            AsyncLoadAtlas( (atlas) =>
+            {
+                //加载sp
+                texPath = Path.GetFileName(texPath);
+                var sp = atlas.GetSprite(texPath);
+                callback?.Invoke(sp);
+            });
+        }
+
+
+        
+
+        #endregion
 
         /// <summary>
         /// 加载普通资源
         /// </summary>
         /// <param name="loadType"></param>
         /// <param name="assetLoadPath">api加载路径</param>
-        /// <param name="validCofigType">打包时写入的类型,</param>
+        /// <param name="validConfigType">打包时写入的类型,</param>
         /// <returns></returns>
-        public Object LoadAsset(Type loadType, string assetLoadPath, int validCofigType = -1)
+        public Object LoadAsset(Type loadType, string assetLoadPath, int validConfigType = -1)
         {
-            if (validCofigType != -1)
-            {
-                //图集特殊处理
-                if (validCofigType == AssetType.VALID_TYPE_SPRITE_ATLAS)
-                {
-                    return LoadTextureFormAtlas(assetLoadPath);
-                }
-            }
+            // if (validConfigType != -1)
+            // {
+            //     //图集特殊处理
+            //     if (validConfigType == AssetType.VALID_TYPE_SPRITE_ATLAS)
+            //     {
+            //         return LoadAtlas();
+            //     }
+            //     else if((validConfigType == AssetType.VALID_TYPE_SPRITE))
+            //     {
+            //         return LoadSpriteFormAtlas(assetLoadPath);
+            //     }
+            // }
 
             //通用加载
             var assetLocalPath = GetAssetLocalPath(assetLoadPath);
@@ -205,15 +238,20 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public void AsyncLoadAsset(Type loadType, string assetLoadPath, Action<Object> callback, int validConfigType = -1)
         {
-            if (validConfigType != -1)
-            {
-                //图集特殊处理
-                if (validConfigType == AssetType.VALID_TYPE_SPRITE_ATLAS)
-                {
-                    AsyncLoadTextureFormAtlas(assetLoadPath, callback);
-                    return;
-                }
-            }
+            // if (validConfigType != -1)
+            // {
+            //     //图集特殊处理
+            //     if (validConfigType == AssetType.VALID_TYPE_SPRITE_ATLAS)
+            //     {
+            //         AsyncLoadAtlas( callback);
+            //         return;
+            //     }
+            //     else if((validConfigType == AssetType.VALID_TYPE_SPRITE))
+            //     {
+            //          AsyncLoadSpriteFormAtlas(assetLoadPath,callback);
+            //          return;
+            //     }
+            // }
 
             //通用加载
             var assetLocalName = GetAssetLocalPath(assetLoadPath);
