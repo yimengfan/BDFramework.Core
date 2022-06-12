@@ -1,5 +1,19 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.1.0-preview.8
+-AssetV2:重构资源构建面板，使之更加便捷
+-AssetV2:增加 加载组的概念
+-AssetV2:增加一个内置的对象池
+-AssetV2:增加unitask的支持
+-AssetV2:重构任务加载机制
+-AssetV2:增加BResource.Aup接口设置
+-AssetV2:增加Benchmark用于测试AB各种情况.
+-ManagerBase:增加order排序功能
+-Editor: 增加EditorHttpServer 用于远程调用
+-Editor: 修复获取本地地址 多网卡时筛选
+-Editor: 强制开启OdinEditor only
+-Editor: 修改EditorSetting配置
+
 ##V2.1.0-preview.7
 -AssetbundleV2: 增加AB混淆，用以加密功能
 -AssetbundleV2: 优化AB的内存占用和大小
