@@ -65,17 +65,20 @@ namespace BDFramework.Mgr
             //遍历type执行逻辑
             for (int i = 0; i < types.Length; i++)
             {
-                var type = types[i];
-                var mgrAttribute = type.GetCustomAttribute<ManagerAttribute>(false);
-                if (mgrAttribute == null)
+                var type          = types[i];
+                var mgrAttributes = type.GetCustomAttributes<ManagerAttribute>(false);
+                if (mgrAttributes == null)
                 {
                     continue;
                 }
 
-                //注册类型
-                foreach (var mgr in mgrList)
+                foreach (var mgrAttribute in mgrAttributes)
                 {
-                    mgr.CheckType(type, mgrAttribute);
+                    //注册类型
+                    foreach (var mgr in mgrList)
+                    {
+                        mgr.CheckType(type, mgrAttribute);
+                    }
                 }
             }
 
