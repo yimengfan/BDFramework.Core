@@ -1,6 +1,6 @@
 
 {
-  "Time" : "2022/5/16",
+  "Time" : "2022/6/4",
   "AssetInfoMap" : {
     "assets/resource/runtime/allassettype/archive.jpg" : {
       "Id" : 1,
@@ -462,7 +462,7 @@
       "ABName"       : "e714f4b086504d747a4926157f5eb3e0",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "3998852814",
+      "Hash"           : "3367637315",
       "DependAssetList" : [
         "43f3d8a9a7fdd6f469aea742dd9af679"
       ]
@@ -979,7 +979,7 @@
       "ABName"       : "d2abdb77f35d37c4c9469630d1f22e50",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "615187567",
+      "Hash"           : "896249116",
       "DependAssetList" : [
       ]
     },

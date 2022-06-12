@@ -93,10 +93,11 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleItem.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleMgrV2.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleWapper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetTypes.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetTypeConfig.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetbundleConfigLoder.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\LoadTask.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\LoadTaskGroup.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\Loader\ISpriteAtlasLoader.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\UnLoadTask.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetsVersionController\AssetsVersionController.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
@@ -104,7 +105,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResourceV2\GameObjectWrapper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResources.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResourcesV2.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BasePackageAssetsHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\GlobalAssetsHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ObjectPools\GameObjectPoolManager.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />
@@ -151,6 +152,7 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\ManagerBase\@half_hotfix\ManagerBase.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\ManagerBase\@hotfix\ILRuntimeManagerInstHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\ManagerBase\ManagerInstHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\ManagerBase\ManagerOrder.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\OdinHelper\NoOdinHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Reflection\@hotfix\ReflectionExtension.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\ScreenNavigation\@hotfix\IScreenView.cs" />
