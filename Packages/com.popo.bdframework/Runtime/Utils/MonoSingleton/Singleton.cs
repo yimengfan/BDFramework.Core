@@ -2,6 +2,10 @@ using UnityEngine;
 
 namespace BDFramework.ResourceMgr
 {
+	/// <summary>
+	/// mono单例
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public class Singleton<T> : MonoBehaviour where T : Singleton<T>
 	{
 		public static T Instance
