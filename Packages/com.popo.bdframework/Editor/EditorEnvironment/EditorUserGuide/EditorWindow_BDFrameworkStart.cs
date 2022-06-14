@@ -18,20 +18,16 @@ namespace BDFramework.Editor
     public class EditorWindow_BDFrameworkStart : EditorWindow
     {
         //版本号标记
-    
         //URL 相关
         private static string WIKI_URL = "https://www.yuque.com/naipaopao/eg6gik";
         private static string GITHUB_URL = "https://github.com/yimengfan/BDFramework.Core";
-
         private static string Odin_URL = "https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041";
-
         private static string QQGroup_URL = "http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f";
 
         //更新日志
-        private static string CHANGEDLOG_URL = "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/CHANGELOG.md";
-
+        private static string CHANGEDLOG_URL = "https://github.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/CHANGELOG.md";
         //版本号
-        private static string PCKAGE_URL = "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/package.json";
+        private static string PCKAGE_URL = "https://github.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/package.json";
 
         private static Texture webIcon; //= EditorGUIUtility.IconContent( "BuildSettings.Web.Small" ).image;
 
