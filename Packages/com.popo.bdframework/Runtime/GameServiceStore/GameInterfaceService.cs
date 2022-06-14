@@ -6,7 +6,7 @@ namespace BDFramework.GameServiceStore
     /// <summary>
     /// 游戏Service
     /// </summary>
-    public class GameService
+    public class GameInterfaceService
     {
         private List<object> singletonList = new List<object>();
 
@@ -68,23 +68,24 @@ namespace BDFramework.GameServiceStore
         /// </summary>
         /// <param name="t"></param>
         /// <typeparam name="T"></typeparam>
-        public T GetService<T>(T t) where T : class
+        public T GetInterface<T>(T t) where T : class
         {
-            return GetService(typeof(T)) as T;
+            return GetInterface(typeof(T)) as T;
         }
 
 
         /// <summary>
         /// 获取一个服务
+        /// 默认最后一个对象，使用者可以使用覆盖逻辑,后注册的生效
         /// </summary>
         /// <param name="type"></param>
         /// <typeparam name="T"></typeparam>
-        public object GetService(Type type) //where T : class
+        private object GetInterface(Type type) //where T : class
         {
-            var ret = this.singletonList.Find((o) => o.GetType() == type);
+            var ret = this.singletonList.FindLast((o) => o.GetType() == type);
             if (ret == null)
             {
-                var transientType = this.transientList.Find((t) => t == type);
+                var transientType = this.transientList.FindLast((t) => t == type);
                 if (transientType != null)
                 {
                     ret = Activator.CreateInstance(transientType);

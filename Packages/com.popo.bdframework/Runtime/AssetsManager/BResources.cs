@@ -42,7 +42,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 旧打包资源配置
         /// </summary>
-        readonly static public string AIR_ASSET_OLD_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/OldBuild.Info";
+        //readonly static public string AIR_ASSET_OLD_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/OldBuild.Info";
 
         /// <summary>
         /// ShaderVariant加载地址
@@ -812,8 +812,7 @@ namespace BDFramework.ResourceMgr
         }
 
         #endregion
-
-
+        
         #region 配置设置
 
         public enum AUPLevel
