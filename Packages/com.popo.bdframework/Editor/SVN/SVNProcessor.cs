@@ -33,7 +33,7 @@ namespace BDFramework.Editor.SVN
             this.SVNURL = svnurl;
             this.UserName = user;
             this.Password = psw;
-            this.LocalSVNRootPath = localpath;
+            this.LocalSVNRootPath = Path.GetFullPath(localpath);
         }
 
         /// <summary>
@@ -50,26 +50,53 @@ namespace BDFramework.Editor.SVN
             return svn;
         }
 
-
         private string curWorkDirect = "";
+
+        /// <summary>
+        /// 是否存在svn仓库
+        /// </summary>
+        /// <returns></returns>
+        public bool IsExsitSvnStore()
+        {
+            var svnmark = IPath.Combine(this.LocalSVNRootPath, ".svn");
+            if (Directory.Exists(svnmark))
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// 检出一个仓库
         /// </summary>
-        /// <param name="downloadpath"></param>
-        public void CheckOut()
+        /// <param name="checkOutTo">当检出一个局部仓库的时候，需要该字段</param>
+        public void CheckOut(string checkOutTo = "./")
         {
-            var cmd = $"co {this.SVNURL} --username {this.UserName} --password {this.Password} {this.LocalSVNRootPath}";
-            this.ExecuteSVN(cmd);
+            if (!IsExsitSvnStore())
+            {
+                var coPath = LocalSVNRootPath;
+                if (checkOutTo != "./")
+                {
+                    coPath = $"{coPath}/{checkOutTo}";
+                }
+
+                var cmd = $"co {this.SVNURL} --username {this.UserName} --password {this.Password} {coPath}";
+                this.ExecuteSVN(cmd);
+            }
+            else
+            {
+                Update(checkOutTo);
+            }
         }
 
         /// <summary>
         /// 更新一个仓库
         /// </summary>
         /// <param name="downloadpath"></param>
-        public void Update(string workpath = "./")
+        public void Update(string path = "./")
         {
-            var cmd = $"update {workpath}  --username {this.UserName} --password {this.Password}";
+            var cmd = $"update {path}  --username {this.UserName} --password {this.Password}";
 
             this.ExecuteSVN(cmd);
         }
@@ -78,9 +105,9 @@ namespace BDFramework.Editor.SVN
         /// <summary>
         /// 强制Revert
         /// </summary>
-        public void RevertForce(string workpath = "./")
+        public void RevertForce(string path = "./")
         {
-            var cmd = $"revert --recursive  {workpath}";
+            var cmd = $"revert --recursive  {path}";
             this.ExecuteSVN(cmd);
         }
 
@@ -171,7 +198,7 @@ namespace BDFramework.Editor.SVN
             var statusInfos = GetStatus(workpath);
             //获取文件信息
             string[] files = new string[] { };
-            if (statusInfos!=null)
+            if (statusInfos != null)
             {
                 var findStr = "";
                 switch (status)
@@ -185,6 +212,7 @@ namespace BDFramework.Editor.SVN
                     }
                         break;
                 }
+
                 files = statusInfos.Where(s => s.StartsWith(findStr, StringComparison.OrdinalIgnoreCase)).ToArray();
             }
 
@@ -214,7 +242,7 @@ namespace BDFramework.Editor.SVN
             // R      xyz.c               # 这个文件预定要被替换
             // S  stuff/squawk        # 这个文件已经跳转到了分支
 
-            
+
             var statusPath = this.LocalSVNRootPath + "/status.txt";
             var cmd = $"status \"{workpath}\" > \"{statusPath}\"";
             this.ExecuteSVN(cmd);
@@ -353,19 +381,35 @@ namespace BDFramework.Editor.SVN
         /// </summary>
         private void ExecuteSVN(params string[] args)
         {
-            var out_utf8 = "cmd /c chcp 65001"; //chcp 65001";
-            var cd_dir = $"cd /d \"{this.LocalSVNRootPath}\"";
-            
-            var svn_exe_path =$"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~/svn.exe";
+            if (!Directory.Exists(this.LocalSVNRootPath))
+            {
+                Directory.CreateDirectory(this.LocalSVNRootPath);
+            }
+
+            var argList = new List<string>();
+#if UNITY_EDITOR_OSX
+            var svn_exe_path = "/opt/homebrew/bin/svn";
+            if (!File.Exists(svn_exe_path))
+            {
+                Debug.LogError("未安装SVN!请通过homebrew安装");
+                return;
+            }
+            var cd_dir = $"cd \"{this.LocalSVNRootPath}\"";
+#elif UNITY_EDITOR_WIN
+            var svn_exe_path = $"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~/svn.exe";
             if (!File.Exists(svn_exe_path))
             {
                 Debug.LogError("找不到svn.exe!");
                 return;
             }
-            
+
+            var out_utf8 = "cmd /c chcp 65001"; //chcp 65001";
+            var cd_dir = $"cd /d \"{this.LocalSVNRootPath}\"";
+            argList.Add(out_utf8);
+#endif
+            argList.Add(cd_dir);
             var svn_dir = $"\"{svn_exe_path}\"";
 
-            var argList = new List<string>() {out_utf8, cd_dir};
             foreach (var arg in args)
             {
                 //添加svn命名
@@ -375,7 +419,5 @@ namespace BDFramework.Editor.SVN
             //执行cmd
             CMDTools.RunCmd(argList.ToArray());
         }
-
-
     }
 }
