@@ -218,7 +218,7 @@ namespace BDFramework.Core.Tools
                     return "Android";
                 case RuntimePlatform.OSXEditor:
                 case RuntimePlatform.OSXPlayer:
-                    return "OSX";
+                    return "MacOSX";
                 case RuntimePlatform.IPhonePlayer:
                     return "iOS";
             }

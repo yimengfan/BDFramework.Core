@@ -133,9 +133,10 @@ namespace BDFramework.Editor.DevOps
             {
                 return true;
             }
+
             return false;
         }
-        
+
 
         /// <summary>
         /// 构建dll
@@ -157,7 +158,7 @@ namespace BDFramework.Editor.DevOps
         static public void PublishPackage_AndroidDebug()
         {
             //更新
-            BuildPackage(RuntimePlatform.Android, BuildPackageTools.BuildMode.Debug);
+            BuildPackage(BuildTarget.Android, BuildPackageTools.BuildMode.Debug);
         }
 
         /// <summary>
@@ -166,7 +167,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包Android-Release")]
         static public void PublishPackage_AndroidRelease()
         {
-            BuildPackage(RuntimePlatform.Android, BuildPackageTools.BuildMode.Release);
+            BuildPackage(BuildTarget.Android, BuildPackageTools.BuildMode.Release);
         }
 
         /// <summary>
@@ -175,7 +176,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包iOS-Debug")]
         static public void PublishPackage_iOSDebug()
         {
-            BuildPackage(RuntimePlatform.IPhonePlayer, BuildPackageTools.BuildMode.Debug);
+            BuildPackage(BuildTarget.iOS, BuildPackageTools.BuildMode.Debug);
         }
 
         /// <summary>
@@ -184,14 +185,14 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包iOS-Release")]
         static public void PublishPackage_iOSRelease()
         {
-            BuildPackage(RuntimePlatform.IPhonePlayer, BuildPackageTools.BuildMode.Release);
+            BuildPackage(BuildTarget.iOS, BuildPackageTools.BuildMode.Release);
         }
 
 
         /// <summary>
         /// 构建包体
         /// </summary>
-        static private void BuildPackage(RuntimePlatform platform, BuildPackageTools.BuildMode buildMode)
+        static private void BuildPackage(BuildTarget buildTarget, BuildPackageTools.BuildMode buildMode)
         {
             //-默认下载svn管理的仓库,用来打包
             SVNUpdate(AssetsSvnProcessor);
@@ -215,19 +216,8 @@ namespace BDFramework.Editor.DevOps
             //加载配置
             // BuildPackageTools.LoadConfig(buildMode);
             //
-            bool ret = false;
-            if (platform == RuntimePlatform.Android)
-            {
-                Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
-                ret = BuildPackageTools.BuildAPK(buildMode, false, CI_PACKAGE_PATH);
-            }
-            else if (platform == RuntimePlatform.IPhonePlayer)
-            {
-                //构建xcode、ipa
-                Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
-                ret = BuildPackageTools.BuildIpa(buildMode, false, CI_PACKAGE_PATH);
-            }
-
+            Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
+            var ret = BuildPackageTools.Build(buildMode, false, CI_PACKAGE_PATH, buildTarget);
             if (ret)
             {
                 Debug.Log("【CI】Build package success，begin commit!");
@@ -297,7 +287,7 @@ namespace BDFramework.Editor.DevOps
         }
 
         #endregion
-        
+
         #region Git操作
 
         #endregion

@@ -29,9 +29,9 @@ namespace BDFramework.Editor
         [Title("框架配置")]
         [LabelText("")]
         [LabelWidth(1)]
-      
         public BDFrameworkEditorSetting frameworkEditorSetting;
 
+        
         [Button(ButtonSizes.Medium, Name = "保存")]
         [PropertySpace(20)]
         public void Save()
