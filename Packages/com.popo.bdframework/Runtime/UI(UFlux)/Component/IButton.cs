@@ -195,7 +195,7 @@ namespace BDFramework.UFlux
         }
     }
 
-    public class IButton : UIBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler
+    public class IButton : UIBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 #if !UNITY_EDITOR && ( UNITY_ANDROID || UNITY_IOS)
 ,IPointerExitHandler ,IPointerUpHandler
 #else
@@ -225,6 +225,11 @@ namespace BDFramework.UFlux
         /// </summary>
         public IComponentOnClick onUpClick { get; private set; } = new IComponentOnClick();
 
+        /// <summary>
+        /// 开始滑动
+        /// </summary>
+        public IComponentOnClick onBeginDrag { get; private set; } = new IComponentOnClick();
+        
         /// <summary>
         /// 滑动
         /// </summary>
@@ -340,7 +345,7 @@ namespace BDFramework.UFlux
                 }
             }
 
-            if (!this.isCancelThisClick)
+            if (!this.isCancelThisClick && !this.isBeginDrag)
             {
                 onClick.Invoke(eventData);
             }
@@ -348,6 +353,13 @@ namespace BDFramework.UFlux
             onLongTimePress.Reset();
         }
 
+        private bool isBeginDrag = false;
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            this.isBeginDrag = true;
+            onBeginDrag.Invoke(eventData);
+        }
 
         public void OnDrag(PointerEventData eventData)
         {
@@ -356,6 +368,7 @@ namespace BDFramework.UFlux
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            this.isBeginDrag = false;
             onDragEnd.Invoke(eventData);
         }
 
