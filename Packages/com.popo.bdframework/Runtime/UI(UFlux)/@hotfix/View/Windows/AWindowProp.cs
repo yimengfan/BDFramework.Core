@@ -66,7 +66,7 @@ namespace BDFramework.UFlux
         /// </summary>
         public override void OnFocus()
         {
-            this.Open();
+            
         }
 
         #endregion
