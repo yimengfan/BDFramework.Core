@@ -44,11 +44,29 @@ namespace BDFramework.Editor.SVN
         /// <param name="psw"></param>
         static public SVNProcessor CreateSVNProccesor(string svnurl, string user, string psw, string localpath)
         {
+#if UNITY_EDITOR_WIN
+            var svn_exe_path = $"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~";
+            //设置环境变量
+            var value = System.Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Machine);
+            if (!value.Contains(svn_exe_path))
+            {
+                Debug.Log("当前环境变量:" + value);
+
+                var newValue = value + (";" + svn_exe_path);
+                System.Environment.SetEnvironmentVariable("Path", newValue, EnvironmentVariableTarget.Machine);
+                Debug.Log("设置svn环境变量:" + svn_exe_path);
+
+                var value2 = System.Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Machine);
+                if (value2.Contains(svn_exe_path))
+                {
+                    Debug.Log("设置svn环境变量 成功!");
+                }
+            }
+#endif
             var svn = new SVNProcessor(svnurl, user, psw, localpath);
-
-
             return svn;
         }
+
 
         private string curWorkDirect = "";
 
@@ -131,7 +149,20 @@ namespace BDFramework.Editor.SVN
             {
                 paths[i] = $"add {paths[i]}";
             }
-
+            //批量添加cmd
+            this.ExecuteSVN(paths);
+        }
+        
+        /// <summary>
+        /// 添加文件/文件夹，包含所有子目录
+        /// </summary>
+        /// <param name="file"></param>
+        public void ForceAdd(params string[] paths)
+        {
+            for (int i = 0; i < paths.Length; i++)
+            {
+                paths[i] = $"add {paths[i]} --force";
+            }
             //批量添加cmd
             this.ExecuteSVN(paths);
         }
@@ -162,14 +193,27 @@ namespace BDFramework.Editor.SVN
         {
             for (int i = 0; i < paths.Length; i++)
             {
-                paths[i] = $"delete {paths[i]}";
+                paths[i] = $"rm {paths[i]}";
             }
 
             //批量添加cmd
             this.ExecuteSVN(paths);
         }
 
+        /// <summary>
+        /// 删除文件
+        /// </summary>
+        /// <param name="path"></param>
+        public void ForceDelete(params string[] paths)
+        {
+            for (int i = 0; i < paths.Length; i++)
+            {
+                paths[i] = $"rm {paths[i]} --force";
+            }
 
+            //批量添加cmd
+            this.ExecuteSVN(paths);
+        }
         /// <summary>
         /// SVN状态
         /// </summary>
@@ -183,7 +227,17 @@ namespace BDFramework.Editor.SVN
             /// <summary>
             /// 冲突
             /// </summary>
-            Conflict
+            Conflict,
+
+            /// <summary>
+            /// 修改的文件
+            /// </summary>
+            Motify,
+
+            /// <summary>
+            /// 新文件
+            /// </summary>
+            NewFile,
         }
 
         /// <summary>
@@ -204,16 +258,29 @@ namespace BDFramework.Editor.SVN
                 switch (status)
                 {
                     case Status.Deleted:
+                    {
                         findStr = "!";
+                    }
                         break;
                     case Status.Conflict:
                     {
                         findStr = "C";
                     }
                         break;
+                    case Status.NewFile:
+                        findStr = "?";
+                        break;
+                    case Status.Motify:
+                    {
+                        findStr = "M";
+                    }
+                        break;
                 }
 
-                files = statusInfos.Where(s => s.StartsWith(findStr, StringComparison.OrdinalIgnoreCase)).ToArray();
+                files = statusInfos.Where(s => s.StartsWith(findStr, StringComparison.OrdinalIgnoreCase)).Select((s) =>
+                {
+                    return s.Remove(0,1).Trim();
+                }).ToArray();
             }
 
             return files;
@@ -243,18 +310,55 @@ namespace BDFramework.Editor.SVN
             // S  stuff/squawk        # 这个文件已经跳转到了分支
 
 
-            var statusPath = this.LocalSVNRootPath + "/status.txt";
+            var statusPath = this.LocalSVNRootPath + "/../status.txt";
             var cmd = $"status \"{workpath}\" > \"{statusPath}\"";
             this.ExecuteSVN(cmd);
             if (File.Exists(statusPath))
             {
-                return File.ReadLines(statusPath).ToArray();
-                // File.Delete(statusPath);
+                var ret = File.ReadLines(statusPath).ToArray();
+                File.Delete(statusPath);
+                return ret;
             }
 
             return null;
         }
 
+        /// <summary>
+        /// 从staus.txt中获取对应文件名
+        /// </summary>
+        /// <param name="status">文件状态</param>
+        /// <param name="prefixPath">Svn下级指定目录</param>
+        /// <returns></returns>
+        public string[] GetFileNameByStatus(Status status, string prefixPath = "")
+        {
+            //获取status
+            var statusInfos = GetStatus(status);
+            //分割生成文件名
+            List<string> fileName = new List<string>();
+            foreach (var info in statusInfos)
+            {
+                var str = info.Split(' ');
+                if (str.Last().StartsWith(prefixPath))
+                {
+                    fileName.Add(str.Last());
+                }
+            }
+
+            return fileName.ToArray();
+        }
+        /// <summary>
+        /// svn切换远端仓库
+        /// </summary>
+        /// <param name="newRepositoryUrl">新仓库地址</param>
+        /// <param name="localSvnPath">本地仓库</param>
+        public void Switch(string newRepositoryUrl,string localSvnPath="./")
+        {
+            var cmd = $"switch  {newRepositoryUrl} {localSvnPath} ";
+
+            this.ExecuteSVN(cmd);
+        }
+        
+        
         #region 当前版本信息
 
         /// <summary>
@@ -332,7 +436,24 @@ namespace BDFramework.Editor.SVN
 
             return "0";
         }
+        /// <summary>
+        /// 获取分支的URL
+        /// </summary>
+        /// <param name="workpath"></param>
+        public string GetRelativeUrl(string workpath = "./")
+        {
+            var infos = GetInfo(workpath).Split('\n', '\r');
+            foreach (var info in infos)
+            {
+                if (info.StartsWith("Relative URL:"))
+                {
+                    return info.Replace("Relative URL:", "");
+                }
+            }
 
+            return "null";
+        }
+        
         #endregion
 
         /// <summary>
@@ -351,11 +472,11 @@ namespace BDFramework.Editor.SVN
 
 
         /// <summary>
-        /// 提交
+        /// 提交，因为cmd设置问题，中文log会让commit失败~
         /// </summary>
-        public void Commit(string workpath = "./", string log = "")
+        public void Commit(string workpath = "./", string log = "Auto Commit")
         {
-            var cmd = $"commit  {workpath} -m  \"BDFramework CI自动提交!\n {log}\"";
+            var cmd = $"commit  {workpath} -m  \"{log}\" ";
             this.ExecuteSVN(cmd);
         }
 
@@ -396,6 +517,7 @@ namespace BDFramework.Editor.SVN
             }
             var cd_dir = $"cd \"{this.LocalSVNRootPath}\"";
 #elif UNITY_EDITOR_WIN
+          
             var svn_exe_path = $"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~/svn.exe";
             if (!File.Exists(svn_exe_path))
             {
@@ -407,17 +529,18 @@ namespace BDFramework.Editor.SVN
             var cd_dir = $"cd /d \"{this.LocalSVNRootPath}\"";
             argList.Add(out_utf8);
 #endif
+            var svn_exe = "svn";
             argList.Add(cd_dir);
-            var svn_dir = $"\"{svn_exe_path}\"";
-
+            
+            
             foreach (var arg in args)
             {
                 //添加svn命名
-                argList.Add($"{svn_dir} " + arg);
+                argList.Add($"{svn_exe} {arg}");
             }
 
             //执行cmd
-            CMDTools.RunCmd(argList.ToArray());
+            CMDTools.RunCmd(argList.ToArray(),svn_exe,svn_exe_path);
         }
     }
 }

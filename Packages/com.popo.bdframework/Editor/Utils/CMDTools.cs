@@ -18,7 +18,7 @@ namespace BDFramework.Editor.Tools
         /// ||：当||前的命令失败时,才执行||后的命令]]>
         /// </summary>
         /// <param name="cmd">执行的命令</param>
-        public static void RunCmd(string[] cmds)
+        public static void RunCmd(string[] cmds,string envName="",string envValue ="")
         {
             //执行
             using (Process p = new Process())
@@ -32,6 +32,7 @@ namespace BDFramework.Editor.Tools
                 p.StartInfo.StandardOutputEncoding = Encoding.GetEncoding("gb2312");
                 p.StartInfo.StandardErrorEncoding = Encoding.GetEncoding("gb2312");
 #endif
+                p.StartInfo.EnvironmentVariables.Add(envName,envValue);
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 p.StartInfo.UseShellExecute = false; //是否使用操作系统shell启动
                 p.StartInfo.RedirectStandardInput = true; //接受来自调用程序的输入信息
@@ -63,11 +64,13 @@ namespace BDFramework.Editor.Tools
                 p.BeginErrorReadLine();
                 //向cmd窗口写入命令
                 foreach (string cmd in cmds)
-                {
+                {  
+                    Debug.Log("-->" + cmd);
                     p.StandardInput.WriteLine(cmd); //输入CMD命令
+                  
                 }
 
-                p.StandardInput.WriteLine("exit"); //结束执行，很重要的
+                p.StandardInput.WriteLine("exit"); //结束执行，很重要
                 // p.StandardInput.WriteLine(cmd);
                 // p.StandardInput.AutoFlush = true;
 
