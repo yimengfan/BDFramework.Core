@@ -122,8 +122,7 @@ namespace System.IO
         {
             if (path != null)
             {
-                path = path.ToLower();
-                var idx = path.IndexOf("assets");
+                var idx = path.IndexOf("assets", StringComparison.OrdinalIgnoreCase);
                 if (idx != 0)
                 {
                     path = path.Substring(idx);
