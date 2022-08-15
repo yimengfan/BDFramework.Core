@@ -256,6 +256,13 @@ namespace BDFramework.DataListener
             }
         }
 
+        public void ClearAllListener()
+        {
+            callbackMap.Clear();
+            dataMap.Clear();
+            valueCacheMap.Clear();
+        }
+
         /// <summary>
         /// 移除属性变动事件注册
         /// </summary>
