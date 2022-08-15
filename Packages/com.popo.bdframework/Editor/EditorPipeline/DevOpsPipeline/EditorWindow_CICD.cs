@@ -10,7 +10,7 @@ namespace BDFramework.Editor.DevOps
     /// </summary>
     public class EditorWindow_CICD : EditorWindow
     {
-        [MenuItem("BDFrameWork工具箱/DevOps/CI设置", false, (int) BDEditorGlobalMenuItemOrderEnum.DevOps)]
+        [MenuItem("BDFrameWork工具箱/DevOps/CI - API预览", false, (int) BDEditorGlobalMenuItemOrderEnum.DevOps)]
         public static void Open()
         {
             var window = EditorWindow.GetWindow<EditorWindow_CICD>(false, "CI");
