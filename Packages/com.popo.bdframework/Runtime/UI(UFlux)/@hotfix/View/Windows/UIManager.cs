@@ -487,6 +487,7 @@ namespace BDFramework.UFlux
                     }
                     else if (winCom.IsOpen && isCheckFocus)
                     {
+                        //这里Reopen 是为了解决窗口后退中 相同窗口反复打开，导致层级变化的问题
                         win.OnFocus();
                         break;
                     }
