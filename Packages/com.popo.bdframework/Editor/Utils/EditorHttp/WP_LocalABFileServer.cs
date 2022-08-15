@@ -8,37 +8,44 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
     /// <summary>
     /// Assetbundle文件服务器
     /// </summary>
-    public class WP_LocalABFileServer:IWebApiProccessor
+    public class WP_LocalABFileServer:IEditorWebApiProcessor
     {
         /// <summary>
         /// 监听""不需要api
         /// </summary>
         public string WebApiName { get; set; } = "Assetbundle";
-        public Task<EditorHttpResonseData>  WebAPIProccessor(string apiParams, HttpListenerResponse response)
+
+        /// <summary>
+        /// AB服务器
+        /// </summary>
+        /// <param name="apiParams"></param>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public Task<EditorHttpResonseData> WebAPIProcessor(string apiParams, HttpListenerContext ctx)
         {
             string filePath = IPath.Combine( BApplication.DevOpsPublishAssetsPath, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX,apiParams);
             if (!File.Exists(filePath))
             {
-                response.ContentLength64 = 0;
-                response.StatusCode = 400;
-                response.Abort();
+                ctx.Response.ContentLength64 = 0;
+                ctx.Response.StatusCode = 400;
+                ctx.Response.Abort();
             }
             else
             {
-                response.StatusCode = 200;
-                response.ContentType = "application/octet-stream";
+                ctx.Response.StatusCode = 200;
+                ctx.Response.ContentType = "application/octet-stream";
                 FileStream fileStream = new System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, FileShare.ReadWrite);
                 int byteLength = (int) fileStream.Length;
                 byte[] fileBytes = new byte[byteLength];
                 fileStream.Read(fileBytes, 0, byteLength);
                 fileStream.Close();
                 fileStream.Dispose();
-                response.ContentLength64 = byteLength;
-                response.OutputStream.Write(fileBytes, 0, byteLength);
-                response.OutputStream.Close();
+                ctx.Response.ContentLength64 = byteLength;
+                ctx.Response.OutputStream.Write(fileBytes, 0, byteLength);
+                ctx.Response.OutputStream.Close();
             }
 
-            //自行处理
+            //表示不需要后续处理
             return null;
         }
     }

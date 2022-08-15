@@ -202,8 +202,9 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                     apiParams = rawUrl;
                 }
 
+
                 //调用proccesor
-                retdata = InvokeProccessor(apiFuc, apiParams, response);
+                retdata = InvokeProccessor(apiFuc, apiParams,context);
             }
             catch (Exception ex)
             {
@@ -213,7 +214,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
             }
 
             //填充返回数据
-            if (request != null)
+            if (retdata != null)
             {
                 //返回
                 if (retdata.err)
@@ -249,12 +250,12 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
         /// <summary>
         /// WebApi处理器的delegate
         /// </summary>
-        public Dictionary<string, IWebApiProccessor> WebAPIProccessorMap = new Dictionary<string, IWebApiProccessor>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, IEditorWebApiProcessor> WebAPIProccessorMap = new Dictionary<string, IEditorWebApiProcessor>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         ///  添加webAPI处理器
         /// </summary>
-        public void AddWebAPIProccesor<T>() where T : IWebApiProccessor
+        public void AddWebAPIProccesor<T>() where T : IEditorWebApiProcessor
         {
             var proccessor = Activator.CreateInstance<T>();
             if (!WebAPIProccessorMap.ContainsKey(proccessor.WebApiName))
@@ -273,12 +274,12 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
         /// <param name="apifunc"></param>
         /// <param name="apiParams"></param>
         /// <param name="response"></param>
-        public EditorHttpResonseData InvokeProccessor(string apifunc, string apiParams, HttpListenerResponse response)
+        public EditorHttpResonseData InvokeProccessor(string apifunc, string apiParams, HttpListenerContext ctx)
         {
             var ret = WebAPIProccessorMap.TryGetValue(apifunc, out var proccessor);
             if (ret)
             {
-                var t = proccessor.WebAPIProccessor(apiParams, response);
+                var t = proccessor.WebAPIProcessor(apiParams, ctx);
                 return t.Result;
             }
             else
