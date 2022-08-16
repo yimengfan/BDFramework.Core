@@ -12,6 +12,10 @@ namespace BDFramework.Editor.Table
     {
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
+            if (BDEditorApplication.BDFrameworkEditorSetting == null || BDEditorApplication.BDFrameworkEditorSetting.BuildSqlSetting == null)
+            {
+                return;
+            }
             //判断设置
             var BuildSqlSetting = BDEditorApplication.BDFrameworkEditorSetting.BuildSqlSetting;
             if (!BuildSqlSetting.IsAutoImportSqlWhenExcelChange)
