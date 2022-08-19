@@ -105,7 +105,7 @@ namespace BDFramework.Editor.DevOps
             //1.搜集keyword
             ShaderCollection.CollectShaderVariant();
             //2.打包模式
-            var ret = AssetBundleEditorToolsV2.GenAssetBundle(CI_ASSETS_PATH, platform);
+            var ret = AssetBundleEditorToolsV2.GenAssetBundle(platform, CI_ASSETS_PATH);
 
             return ret;
         }

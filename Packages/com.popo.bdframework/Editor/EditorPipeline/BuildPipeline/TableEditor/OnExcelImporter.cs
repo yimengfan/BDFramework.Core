@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace BDFramework.Editor.Table
 {
+    /// <summary>
+    /// excel导入的接管
+    /// </summary>
     public class OnExcelImporter : AssetPostprocessor
     {
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)

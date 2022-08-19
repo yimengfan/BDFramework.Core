@@ -18,9 +18,9 @@ using Object = UnityEngine.Object;
 namespace BDFramework.Editor.AssetBundle
 {
     /// <summary>
-    /// Assetbundle 检测
+    /// Assetbundle 测试接口
     /// </summary>
-    static public class AssetBundleEditorToolsV2CheckAssetbundle
+    static public class AssetBundleTestToolsV2
     {
         static private Transform UI_ROOT;
         static private Transform SCENE_ROOT;

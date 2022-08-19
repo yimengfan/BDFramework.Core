@@ -64,8 +64,9 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\Behavior\EditorBehavior\ABDFrameworkPublishPipelineBehaviour.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\Behavior\EditorBehavior\BDFrameworkPipelineHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleBuildingContext.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleCacheServer.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleEditorToolsV2.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleEditorToolsV2CheckAssetbundle.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetBundleTestToolsV2.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\BuildAssetBundleParams.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\GraphNodeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\BDFrameworkAssetsEnv.cs" />
@@ -81,8 +82,8 @@
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\SetGranularityByFolder.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\SetGranularityNull.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\AssetGraph\Node\StopwatchTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\BuildingAssets\BuildingAssetInfos.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\BuildingAssets\EditorAssetInfosCache.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\BuildAssets\BuildingAssetInfos.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\BuildAssets\EditorAssetInfosCache.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\EditorWindow_BuildAssetBundle.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\ShaderCollection\ShaderCollection.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorPipeline\BuildPipeline\AssetBundleEditor\ShaderCollection\ShaderVariantsCollectionTools.cs" />

@@ -81,7 +81,7 @@ namespace BDFramework.Editor.BuildPipeline
             try
             {
                 //var config = BDEditorApplication.BDFrameWorkFrameEditorSetting.BuildAssetBundle;
-                AssetBundleEditorToolsV2.GenAssetBundle(outputPath, platform);
+                AssetBundleEditorToolsV2.GenAssetBundle(platform, outputPath);
             }
             catch (Exception e)
             {

@@ -50,13 +50,15 @@ namespace BDFramework.Editor.AssetBundle
         }
 
 
+        #region  构建资产
+
         /// <summary>
-        /// build
+        /// 执行AssetGraph构建打包
         /// </summary>
         /// <param name="buildTarget"></param>
         /// <param name="outPath"></param>
         /// <param name="isUseHash"></param>
-        static public void Build(BuildTarget buildTarget, string outPath)
+        static public void ExcuteAssetGraphBuild(BuildTarget buildTarget, string outPath)
         {
             var (cg, bdenvNode) = GetBDFrameExAssetGraph();
             var bdenv = (bdenvNode.Operation.Object as BDFrameworkAssetsEnv);
@@ -69,18 +71,30 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// 生成AssetBundle
         /// </summary>
+        /// <param name="platform"></param>
         /// <param name="outputPath">导出目录</param>
         /// <param name="target">平台</param>
         /// <param name="options">打包参数</param>
         /// <param name="isUseHashName">是否为hash name</param>
-        public static bool GenAssetBundle(string outputPath, RuntimePlatform platform)
+        public static bool GenAssetBundle(RuntimePlatform platform, string outputPath)
         {
             var buildTarget = BApplication.GetBuildTarget(platform);
-            Build(buildTarget, outputPath);
+            ExcuteAssetGraphBuild(buildTarget, outputPath);
             return true;
         }
 
 
+
+        #endregion
+
+
+
+        #region MyRegion 
+
+        
+
+        #endregion
+        
         /// <summary>
         /// 获取主资源类型
         /// </summary>
@@ -219,5 +233,17 @@ namespace BDFramework.Editor.AssetBundle
         }
 
         #endregion
+
+
+        /// <summary>
+        /// 这里将
+        /// </summary>
+        /// <returns></returns>
+        static public string GetGetAssetbundleSourceHash()
+        {
+
+
+            return "";
+        }
     }
 }
