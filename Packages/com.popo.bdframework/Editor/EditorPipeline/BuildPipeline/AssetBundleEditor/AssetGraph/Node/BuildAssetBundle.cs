@@ -86,9 +86,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             Debug.Log("Buildinfo 数量:" + tempBuildAssetsInfo.AssetInfoMap.Count);
             //预计算输出,不直接修改buildinfo
             // var platform = BDApplication.GetRuntimePlatform(target);
-            BDFrameworkAssetsEnv.BuildingCtx.MergeABName(tempBuildAssetsInfo);
+            BDFrameworkAssetsEnv.BuildingCtx.MergeABUnit(tempBuildAssetsInfo);
             //对比差异文件
-            BDFrameworkAssetsEnv.BuildingCtx.GetChangedAssets(tempBuildAssetsInfo, target);
+            BDFrameworkAssetsEnv.BuildingCtx.GetChangedAssetsByCompareFileHash(tempBuildAssetsInfo, target);
 
             //搜集所有的 asset reference 
             List<AssetReference> assetReferenceList = new List<AssetReference>();

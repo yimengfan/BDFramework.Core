@@ -395,11 +395,11 @@ namespace BDFramework.Editor.AssetBundle
             //1.打包
             Debug.Log("<color=green>----->1.进入打包逻辑</color>");
             //整理abname
-            this.MergeABName(BuildingAssetInfos);
+            this.MergeABUnit(BuildingAssetInfos);
             //对比差异文件
-            var changedAssetsInfo = GetChangedAssets(BuildingAssetInfos, buildTarget);
+            var changedAssetsInfo = GetChangedAssetsByCompareFileHash(BuildingAssetInfos, buildTarget);
             //生成artconfig
-            var assetbundleItemList = this.GenAssetBundleConfig(BuildingAssetInfos, BuildParams, platform);
+            var assetbundleItemList = this.GetAssetBundleItems(BuildingAssetInfos, BuildParams, platform);
            
             //打包
             AssetDatabase.StartAssetEditing(); //禁止自动导入
@@ -641,11 +641,11 @@ namespace BDFramework.Editor.AssetBundle
         #region AB相关处理
 
         /// <summary>
-        /// 合并ABname
+        /// 整理Assetbundle 颗粒度
         /// </summary>
-        public void MergeABName(BuildingAssetInfos buildingAssetInfos)
+        public void MergeABUnit(BuildingAssetInfos buildingAssetInfos)
         {
-            #region 整理依赖关系
+            #region 整理AB颗粒度
 
             //1.把依赖资源替换成AB Name，
             foreach (var mainAsset in buildingAssetInfos.AssetInfoMap.Values)
@@ -711,9 +711,9 @@ namespace BDFramework.Editor.AssetBundle
         }
 
         /// <summary>
-        ///生成Runtime下的Art.Config
+        ///获取Assetbundle 打包列表
         /// </summary>
-        private List<AssetBundleItem> GenAssetBundleConfig(BuildingAssetInfos buildingAssetInfos, BuildAssetBundleParams buildParams, RuntimePlatform platform)
+        private List<AssetBundleItem> GetAssetBundleItems(BuildingAssetInfos buildingAssetInfos)
         {
             //根据buildinfo 生成加载用的 Config
             //runtime下的全部保存配置，其他的只保留一个ab名即可
@@ -824,8 +824,9 @@ namespace BDFramework.Editor.AssetBundle
 
         /// <summary>
         /// 获取改动的Assets
+        /// 通过对比文件hash
         /// </summary>
-        public BuildingAssetInfos GetChangedAssets(BuildingAssetInfos newBuildingAssetInfos, BuildTarget buildTarget)
+        public BuildingAssetInfos GetChangedAssetsByCompareFileHash(BuildingAssetInfos newBuildingAssetInfos, BuildTarget buildTarget)
         {
             Debug.Log("<color=red>【增量资源】开始变动资源分析...</color>");
             BuildingAssetInfos lastBuildingAssetInfos = null;
@@ -1017,6 +1018,18 @@ namespace BDFramework.Editor.AssetBundle
             }
 
             return newBuildingAssetInfos;
+        }
+
+
+        /// <summary>
+        /// 获取变动的Assets
+        /// 通过SVN or git
+        /// </summary>
+        /// <param name="newBuildingAssetInfos"></param>
+        /// <param name="buildTarget"></param>
+        /// <returns></returns>
+        public void GetChangedAssetsByVCS(string last)
+        {
         }
 
         #endregion
