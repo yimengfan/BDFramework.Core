@@ -117,13 +117,13 @@ namespace BDFramework.Editor.AssetBundle
                 {
                     GUILayout.BeginHorizontal();
                     {
-                        GUILayout.Label(BApplication.GetPlatformPath(platform), GUILayout.Width(40));
+                        GUILayout.Label(BApplication.GetPlatformPath(platform), GUILayout.Width(60));
 
                         GUILayout.Space(20);
 
                         GUI.color = Color.green;
 
-                        if (GUILayout.Button("Build", GUILayout.Width(80)))
+                        if (GUILayout.Button("Build", GUILayout.Width(60)))
                         {
                             var ret = EditorUtility.DisplayDialog("提示", "是否要构建AssetBundle? \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
                             if (ret)
@@ -133,7 +133,7 @@ namespace BDFramework.Editor.AssetBundle
                             }
                         }
 
-                        if (GUILayout.Button("混淆AB", GUILayout.Width(80)))
+                        if (GUILayout.Button("混淆AB", GUILayout.Width(60)))
                         {
                             var ret = EditorUtility.DisplayDialog("提示", "是否要混淆AssetBundle? \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
                             if (ret)
@@ -142,7 +142,7 @@ namespace BDFramework.Editor.AssetBundle
                             }
                         }
                         
-                        if (GUILayout.Button("混淆内容生成", GUILayout.Width(80)))
+                        if (GUILayout.Button("生成混淆内容", GUILayout.Width(85)))
                         {
                             var ret = EditorUtility.DisplayDialog("提示", "是否要混淆AssetBundle? \n建议每个项目只生成一次，否则会导致与增量包混淆冲突.", "Ok", "Cancel");
                             if (ret)
