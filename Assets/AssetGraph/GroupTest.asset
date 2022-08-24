@@ -1,0 +1,205 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec4882d68a9346b3b5f8ecf1e38a534, type: 3}
+  m_Name: GroupTest
+  m_EditorClassIdentifier: 
+  m_allNodes:
+  - m_name: Load From "Resource_SVN"
+    m_id: 0d1cf049-7d96-4044-88d4-999c7dd8ee78
+    m_x: 132
+    m_y: 480
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2xvYWRQYXRoIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJSZXNvdXJjZV9TVk4ifV19LCJtX2xvYWRQYXRoR3VpZCI6eyJtX3ZhbHVlcyI6W3sidGFyZ2V0R3JvdXAiOjAsInZhbHVlIjoiYWJhYzAzZjM2NWY5NzM0NDY4ZWI5NjNkNDhiN2E4MzYifV19LCJtX2lnbm9yZVBhdHRlcm5zIjpbXSwibV9yZXNwb25kVG9Bc3NldENoYW5nZSI6ZmFsc2V9
+    m_inputPoints: []
+    m_outputPoints:
+    - id: 95773f81-6581-46b5-bc5e-6b2a6d50f064
+      label: +
+      parentId: 0d1cf049-7d96-4044-88d4-999c7dd8ee78
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 198
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: "[\u5206\u7EC4]Group by path"
+    m_id: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
+    m_x: 456
+    m_y: 480
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.FilterGroupByPath, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJDb21wYXJlTW9kZSI6MSwiZ3JvdXBGaWx0ZXJQYXRoRGF0YUxpc3QiOlt7Ik91dHB1dE5vZGVJZCI6IjQ2YTM1NzFiLTM0ODYtNDc0Ny1hMmE3LWQ3MTRlZGZlOGY0MSIsIkdyb3VwUGF0aCI6IjAifSx7Ik91dHB1dE5vZGVJZCI6ImI4ZDRjZjU4LWVhNDQtNDAwOS1iYzIyLTJlMDlhZmRiODNkOCIsIkdyb3VwUGF0aCI6Ii9UYWJsZS8ifSx7Ik91dHB1dE5vZGVJZCI6IjljZDM4NzY0LTdlYmUtNGNhYi1iMzZmLWVhOWYzM2MzNGM2YiIsIkdyb3VwUGF0aCI6Ii9SdW50aW1lLyJ9XX0=
+    m_inputPoints:
+    - id: 14e10269-e4b4-437c-a37c-6f2fb498f6cb
+      label: '-'
+      parentId: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 46a3571b-3486-4747-a2a7-d714edfe8f41
+      label: 0
+      parentId: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 154
+        y: 33.5
+        width: 10
+        height: 23
+    - id: b8d4cf58-ea44-4009-bc22-2e09afdb83d8
+      label: /Table/
+      parentId: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 154
+        y: 65.5
+        width: 10
+        height: 23
+    - id: 9cd38764-7ebe-4cab-b36f-ea9f33c34c6b
+      label: /Runtime/
+      parentId: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 154
+        y: 97.5
+        width: 10
+        height: 23
+  - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
+    m_id: f5c77482-f604-4626-91e7-2c20f9861c7b
+    m_x: 756
+    m_y: 372
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|e30=
+    m_inputPoints:
+    - id: 5ed9a163-2dde-4713-a7e9-cdb851df4cb6
+      label: '-'
+      parentId: f5c77482-f604-4626-91e7-2c20f9861c7b
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 23b5d354-6ef0-44e6-87fb-7b2d22672164
+      label: +
+      parentId: f5c77482-f604-4626-91e7-2c20f9861c7b
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 111
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
+    m_id: f614f9c8-1a12-4405-b30f-57d3cf00e013
+    m_x: 768
+    m_y: 468
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|e30=
+    m_inputPoints:
+    - id: a73dccd1-a63e-48c5-bd6c-181b5e9d47c4
+      label: '-'
+      parentId: f614f9c8-1a12-4405-b30f-57d3cf00e013
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: e0136b9e-ec6d-43b7-8bf4-2996e5fa3df4
+      label: +
+      parentId: f614f9c8-1a12-4405-b30f-57d3cf00e013
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 111
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
+    m_id: a65790f0-d341-4e2e-8542-0a142459cd7b
+    m_x: 768
+    m_y: 600
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|e30=
+    m_inputPoints:
+    - id: 4a7db06a-eaa5-4cbe-be46-0ceaa3663076
+      label: '-'
+      parentId: a65790f0-d341-4e2e-8542-0a142459cd7b
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: a9ae68bc-84ad-4f42-9a71-06699673f19a
+      label: +
+      parentId: a65790f0-d341-4e2e-8542-0a142459cd7b
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 111
+        y: 33.5
+        width: 10
+        height: 23
+  m_allConnections:
+  - m_id: 21fef27f-2f2c-4af8-9700-a61b4dbae396
+    m_fromNodeId: 0d1cf049-7d96-4044-88d4-999c7dd8ee78
+    m_fromNodeConnectionPointId: 95773f81-6581-46b5-bc5e-6b2a6d50f064
+    m_toNodeId: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
+    m_toNodeConnectionPoiontId: 14e10269-e4b4-437c-a37c-6f2fb498f6cb
+    m_label: +
+  - m_id: fa316b5a-6046-480e-985b-7ee1d6372131
+    m_fromNodeId: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
+    m_fromNodeConnectionPointId: 46a3571b-3486-4747-a2a7-d714edfe8f41
+    m_toNodeId: f5c77482-f604-4626-91e7-2c20f9861c7b
+    m_toNodeConnectionPoiontId: 5ed9a163-2dde-4713-a7e9-cdb851df4cb6
+    m_label: 0
+  - m_id: 47c03baa-25f6-4a52-9069-e8aca305b3e7
+    m_fromNodeId: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
+    m_fromNodeConnectionPointId: b8d4cf58-ea44-4009-bc22-2e09afdb83d8
+    m_toNodeId: f614f9c8-1a12-4405-b30f-57d3cf00e013
+    m_toNodeConnectionPoiontId: a73dccd1-a63e-48c5-bd6c-181b5e9d47c4
+    m_label: /Table/
+  - m_id: 0672387b-9f19-4f49-903a-71e6e41d0792
+    m_fromNodeId: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
+    m_fromNodeConnectionPointId: 9cd38764-7ebe-4cab-b36f-ea9f33c34c6b
+    m_toNodeId: a65790f0-d341-4e2e-8542-0a142459cd7b
+    m_toNodeConnectionPoiontId: 4a7db06a-eaa5-4cbe-be46-0ceaa3663076
+    m_label: /Runtime/
+  m_lastModified: 133058066945291272
+  m_version: 2
+  m_graphDescription: 
+  m_useAsAssetPostprocessor: 0
+  m_graphExecOrderPriority: 0

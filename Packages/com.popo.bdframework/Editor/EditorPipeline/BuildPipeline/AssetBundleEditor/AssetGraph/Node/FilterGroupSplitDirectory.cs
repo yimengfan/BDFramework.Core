@@ -16,7 +16,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     /// <summary>
     /// 筛选,通过输出所有子目录
     /// </summary>
-    [CustomNode("BDFramework/[筛选]Group Split Directory", 10)]
+    [CustomNode("BDFramework/[分组]Group SubDirectory", 10)]
     public class FilterGroupSplitDirectory : UnityEngine.AssetGraph.Node
     {
         /// <summary>
@@ -37,7 +37,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override string Category
         {
-            get { return "[筛选]Group Split Directory"; }
+            get { return "[筛选]Group SubDirectory"; }
         }
 
 
@@ -93,7 +93,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
          
-            EditorGUILayout.HelpBox("该节点，用于获取传入路径的所有子节点，默认只接受一个传入!", MessageType.Info);
+            EditorGUILayout.HelpBox("该节点，用于分组 传入路径的所有子目录，默认只接受一个传入!", MessageType.Info);
         }
 
         public override void OnContextMenuGUI(GenericMenu menu)
