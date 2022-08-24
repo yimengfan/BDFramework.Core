@@ -32,7 +32,11 @@ namespace BDFramework.Editor.Tools
                 p.StartInfo.StandardOutputEncoding = Encoding.GetEncoding("gb2312");
                 p.StartInfo.StandardErrorEncoding = Encoding.GetEncoding("gb2312");
 #endif
-                p.StartInfo.EnvironmentVariables.Add(envName,envValue);
+                //FBX工具调用时，不能接受空环境变量
+                if (!string.IsNullOrEmpty(envName))
+                {
+                    p.StartInfo.EnvironmentVariables.Add(envName,envValue);
+                }
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 p.StartInfo.UseShellExecute = false; //是否使用操作系统shell启动
                 p.StartInfo.RedirectStandardInput = true; //接受来自调用程序的输入信息
