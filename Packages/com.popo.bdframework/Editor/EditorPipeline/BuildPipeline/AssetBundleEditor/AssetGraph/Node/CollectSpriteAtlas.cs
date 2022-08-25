@@ -122,12 +122,12 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 var atlasAR = atlasAssetReferenceList[i];
                 //获取依赖中的tex,并设置AB名为atlas名
-                if (this.BuildingCtx.BuildingAssetInfos.AssetInfoMap.TryGetValue(atlasAR.importFrom, out BuildingAssetInfos.AssetInfo atlasAssetData))
+                if (this.BuildingCtx.BuildAssetInfos.AssetInfoMap.TryGetValue(atlasAR.importFrom, out BuildAssetInfos.AssetInfo atlasAssetData))
                 {
                     //设置tex ab
                     foreach (var dependTex in atlasAssetData.DependAssetList)
                     {
-                        var ret = this.BuildingCtx.BuildingAssetInfos.SetABName(dependTex, atlasAR.importFrom, BuildingAssetInfos.SetABNameMode.Force);
+                        var ret = this.BuildingCtx.BuildAssetInfos.SetABName(dependTex, atlasAR.importFrom, BuildAssetInfos.SetABNameMode.Force);
 
                         if (!ret)
                         {

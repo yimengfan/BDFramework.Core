@@ -57,7 +57,7 @@ namespace BDFramework.Editor.AssetBundle
         /// <summary>
         /// info
         /// </summary>
-        static private BuildingAssetInfos BuildingAssetInfos;
+        static private BuildAssetInfos buildAssetInfos;
 
         
         //路径
@@ -66,30 +66,30 @@ namespace BDFramework.Editor.AssetBundle
         /// 获取cache
         /// </summary>
         /// <returns></returns>
-        static public BuildingAssetInfos GetBuildingAssetInfosCache()
+        static public BuildAssetInfos GetBuildingAssetInfosCache()
         {
             //每次构建新对象返回
             if (File.Exists(PATH))
             {
                 var content = File.ReadAllText(PATH);
-                BuildingAssetInfos = JsonMapper.ToObject<BuildingAssetInfos>(content);
+                buildAssetInfos = JsonMapper.ToObject<BuildAssetInfos>(content);
             }
             else
             {
-                BuildingAssetInfos = new BuildingAssetInfos();
+                buildAssetInfos = new BuildAssetInfos();
             }
 
 
-            return BuildingAssetInfos;
+            return buildAssetInfos;
         }
 
         /// <summary>
         /// 保存缓存信息
         /// </summary>
         /// <returns></returns>
-        static public void SaveBuildingAssetInfosCache(BuildingAssetInfos buildingAssetInfos)
+        static public void SaveBuildingAssetInfosCache(BuildAssetInfos buildAssetInfos)
         {
-            var content = JsonMapper.ToJson(buildingAssetInfos, true);
+            var content = JsonMapper.ToJson(buildAssetInfos, true);
             FileHelper.WriteAllText(PATH, content);
         }
 
@@ -100,7 +100,7 @@ namespace BDFramework.Editor.AssetBundle
         static public void OnCacheAssetChanged(string path)
         {
             path = IPath.ReplaceBackSlash(path);
-            BuildingAssetInfos.AssetInfoMap.Remove(path.ToLower());
+            buildAssetInfos.AssetInfoMap.Remove(path.ToLower());
         }
     }
 }

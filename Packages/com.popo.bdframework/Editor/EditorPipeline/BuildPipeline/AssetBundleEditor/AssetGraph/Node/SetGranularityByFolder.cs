@@ -201,7 +201,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     foreach (var ar in ag.Value)
                     {
                         //设置当前ab名为文件夹名,不覆盖在此之前的规则
-                        var ret = this.BuildingCtx.BuildingAssetInfos.SetABName(ar.importFrom, folderPath);
+                        var ret = this.BuildingCtx.BuildAssetInfos.SetABName(ar.importFrom, folderPath);
                         if (!ret)
                         {
                             Debug.LogError($"【颗粒度】设置AB失败 [{folderPath}] -" + ar.importFrom);
@@ -266,7 +266,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                         {
                             if (ar.importFrom.StartsWith(sf + "/", StringComparison.OrdinalIgnoreCase))
                             {
-                                var ret = this.BuildingCtx.BuildingAssetInfos.SetABName(ar.importFrom, sf);
+                                var ret = this.BuildingCtx.BuildAssetInfos.SetABName(ar.importFrom, sf);
                                 if (!ret)
                                 {
                                     Debug.LogError($"【颗粒度】设置AB失败 [{sf}] -" + ar.importFrom);
@@ -283,7 +283,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                         if (!isInSubfolder)
                         {
                             //设置AB name
-                            var ret = this.BuildingCtx.BuildingAssetInfos.SetABName(ar.importFrom, rootfloderPath);
+                            var ret = this.BuildingCtx.BuildAssetInfos.SetABName(ar.importFrom, rootfloderPath);
                             if (!ret)
                             {
                                 Debug.LogError($"【颗粒度】设置AB失败 [{rootfloderPath}] -" + ar.importFrom);
