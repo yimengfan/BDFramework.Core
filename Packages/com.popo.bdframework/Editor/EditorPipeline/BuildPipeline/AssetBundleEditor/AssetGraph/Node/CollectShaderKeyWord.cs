@@ -124,10 +124,10 @@ namespace BDFramework.Editor.AssetGraph.Node
                                 Debug.LogError($"【搜集KeyWord】 : {af.importFrom},请检查是否直接引用了FBX这类,SubAsset中有Mat的资产,如是请Ctrl+D复制引用!" );
                                 
                                 //寻找遗漏查找依赖资源
-                                this.BuildingCtx.BuildingAssetInfos.AssetInfoMap.TryGetValue(af.importFrom, out var shaderAssetData);
+                                this.BuildingCtx.BuildAssetInfos.AssetInfoMap.TryGetValue(af.importFrom, out var shaderAssetData);
                                 if (shaderAssetData != null)
                                 {
-                                    var returnBD = this.BuildingCtx.BuildingAssetInfos.AssetInfoMap.FirstOrDefault((bd) => bd.Value.DependAssetList.Contains(shaderAssetData.ABName) || bd.Value.DependAssetList.Contains(af.importFrom, StringComparer.Ordinal));
+                                    var returnBD = this.BuildingCtx.BuildAssetInfos.AssetInfoMap.FirstOrDefault((bd) => bd.Value.DependAssetList.Contains(shaderAssetData.ABName) || bd.Value.DependAssetList.Contains(af.importFrom, StringComparer.Ordinal));
                                     if (returnBD.Value != null)
                                     {
                                         Debug.LogError("主资源:" + returnBD.Key);
@@ -160,7 +160,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //设置ab
             foreach (var sharder in incomingShaderAndVariantList)
             {
-                this.BuildingCtx.BuildingAssetInfos.SetABName(sharder.importFrom, AssetBundleName, BuildingAssetInfos.SetABNameMode.Force);
+                this.BuildingCtx.BuildAssetInfos.SetABName(sharder.importFrom, AssetBundleName, BuildAssetInfos.SetABNameMode.Force);
             }
 
             StopwatchTools.End("【搜集KeyWord】");

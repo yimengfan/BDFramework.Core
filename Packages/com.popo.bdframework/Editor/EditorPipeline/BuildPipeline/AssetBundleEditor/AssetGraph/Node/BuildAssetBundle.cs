@@ -26,7 +26,8 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 打包AB的上下文工具
         /// </summary>
-         public AssetBundleBuildingContext BuildingCtx { get; set; }
+        public AssetBundleBuildingContext BuildingCtx { get; set; }
+
         public override string ActiveStyle
         {
             get { return "node 7 on"; }
@@ -74,21 +75,22 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+
             this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
-            
+
             //这里只做临时的输出，预览用，不做实际更改
-            var tempBuildAssetsInfo = this.BuildingCtx.BuildingAssetInfos?.Clone();
+            var tempBuildAssetsInfo = this.BuildingCtx.BuildAssetInfos?.Clone();
             if (tempBuildAssetsInfo == null)
             {
-                tempBuildAssetsInfo = new BuildingAssetInfos();
+                tempBuildAssetsInfo = new BuildAssetInfos();
             }
 
             Debug.Log("Buildinfo 数量:" + tempBuildAssetsInfo.AssetInfoMap.Count);
             //预计算输出,不直接修改buildinfo
             // var platform = BDApplication.GetRuntimePlatform(target);
-            BDFrameworkAssetsEnv.BuildingCtx.MergeABName(tempBuildAssetsInfo);
+            AssetBundleToolsV2.CollectABUnit(tempBuildAssetsInfo);
             //对比差异文件
-            BDFrameworkAssetsEnv.BuildingCtx.GetChangedAssets(tempBuildAssetsInfo, target);
+            AssetBundleToolsV2.GetChangedAssetsByFileHash(tempBuildAssetsInfo, target, this.BuildingCtx.BuildParams.OutputPath);
 
             //搜集所有的 asset reference 
             List<AssetReference> assetReferenceList = new List<AssetReference>();
@@ -101,11 +103,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //----------------验证资源-------------
-            if (assetReferenceList.Count == BDFrameworkAssetsEnv.BuildingCtx.BuildingAssetInfos.AssetInfoMap.Count)
+            if (assetReferenceList.Count == BDFrameworkAssetsEnv.BuildingCtx.BuildAssetInfos.AssetInfoMap.Count)
             {
                 foreach (var ar in assetReferenceList)
                 {
-                    if (! this.BuildingCtx.BuildingAssetInfos.AssetInfoMap.ContainsKey(ar.importFrom))
+                    if (!this.BuildingCtx.BuildAssetInfos.AssetInfoMap.ContainsKey(ar.importFrom))
                     {
                         Debug.LogError("【资源验证】不存在:" + ar.importFrom);
                     }
@@ -173,12 +175,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
         }
 
-        
 
         /// <summary>
         /// build assetbundle的结果，用以给后续流程使用
         /// </summary>
-        public static BuildingAssetInfos BuildingAssetResult { get; private set; } = null;
+        public static BuildAssetInfos BuildAssetResult { get; private set; } = null;
 
         /// <summary>
         /// 构建时候触发
@@ -192,15 +193,12 @@ namespace BDFramework.Editor.AssetGraph.Node
         public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc,
             Action<NodeData, string, float> progressFunc)
         {
-            
             //构建ab包
             BDFrameworkAssetsEnv.BuildingCtx.StartBuildAssetBundle(buildTarget);
 
-            BuildingAssetResult = BDFrameworkAssetsEnv.BuildingCtx.BuildingAssetInfos.Clone();
-            
+            BuildAssetResult = BDFrameworkAssetsEnv.BuildingCtx.BuildAssetInfos.Clone();
+
             BDFrameworkAssetsEnv.BuildingCtx = null;
         }
-
-
     }
 }

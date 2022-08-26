@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using BDFramework.Editor.AssetGraph.Node;
 using BDFramework.ResourceMgr;
 using LitJson;
+using UnityEditorInternal.Profiling.Memory.Experimental;
+using UnityEngine;
 
 namespace BDFramework.Editor.AssetBundle
 {
     /// <summary>
     /// build资产信息
     /// </summary>
-    public class BuildingAssetInfos
+    public class BuildAssetInfos
     {
+        /// <summary>
+        /// Asset type
+        /// </summary>
+        public List<string> AssetTypeList { get; private set; } = new List<string>();
+
         public class AssetInfo
         {
             /// <summary>
@@ -71,9 +78,8 @@ namespace BDFramework.Editor.AssetBundle
 
         /// <summary>
         /// 参与打包的所有资源
-        /// 
         /// </summary>
-        public Dictionary<string, AssetInfo> AssetInfoMap = new Dictionary<string, AssetInfo>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, AssetInfo> AssetInfoMap { get; private set; } = new Dictionary<string, AssetInfo>(StringComparer.OrdinalIgnoreCase);
 
         public enum SetABNameMode
         {
@@ -177,27 +183,25 @@ namespace BDFramework.Editor.AssetBundle
 
             return retMap;
         }
-
-
+        
         /// <summary>
         /// 克隆
         /// </summary>
-        public BuildingAssetInfos Clone()
+        public BuildAssetInfos Clone()
         {
             //手动new防止内部map，防止构造传参失效
-            BuildingAssetInfos tempBuildingAssetInfos = new BuildingAssetInfos();
+            BuildAssetInfos tempBuildAssetInfos = new BuildAssetInfos();
             //
             var json = JsonMapper.ToJson(this);
-            var temp = JsonMapper.ToObject<BuildingAssetInfos>(json);
+            var temp = JsonMapper.ToObject<BuildAssetInfos>(json);
             foreach (var item in temp.AssetInfoMap)
             {
-                tempBuildingAssetInfos.AssetInfoMap[item.Key] = item.Value;
+                tempBuildAssetInfos.AssetInfoMap[item.Key] = item.Value;
             }
 
-            return tempBuildingAssetInfos;
+            return tempBuildAssetInfos;
         }
-
-
+        
         /// <summary>
         /// 获取一个新实例的AssetInfo
         /// </summary>
@@ -213,6 +217,83 @@ namespace BDFramework.Editor.AssetBundle
                 return JsonMapper.ToObject<AssetInfo>(json);
             }
             return null;
+        }
+        
+        
+        
+        /// <summary>
+        /// 创建构建资产信息
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <returns></returns>
+         private AssetInfo CreateAssetInfo(string assetPath)
+        {
+            //创建
+            var assetInfo = new AssetInfo();
+            assetInfo.Hash = AssetBundleToolsV2.GetHashFromAssets(assetPath);
+            assetInfo.ABName = assetPath;
+            assetInfo.Type = GetAssetTypeIdx(assetPath);
+            //依赖列表
+            var dependeAssetList = AssetBundleToolsV2.GetDependAssetList(assetPath);
+            assetInfo.DependAssetList = new List<string>(dependeAssetList);
+
+            return assetInfo;
+        }
+
+
+        /// <summary>
+        /// 获取资源类型
+        /// </summary>
+        /// <returns></returns>
+        private int GetAssetTypeIdx(string assetPath)
+        {
+            //判断资源类型
+            var type = AssetBundleToolsV2.GetMainAssetTypeAtPath(assetPath);
+            if (type == null)
+            {
+                Debug.LogError("获取资源类型失败:" + assetPath);
+                return -1;
+            }
+            
+            //
+            var idx = this.AssetTypeList.FindIndex((a) => a == type.FullName);
+            if (idx == -1)
+            {
+                this.AssetTypeList.Add(type.FullName);
+                idx = AssetTypeList.Count - 1;
+            }
+
+            return idx;
+        }
+
+        /// <summary>
+        /// 添加AssetInfo
+        /// </summary>
+        /// <param name="assetInfo">缓存的AssetInfo</param>
+        public void AddAsset(string assetPath,AssetInfo assetInfo)
+        {
+            if (!this.AssetInfoMap.ContainsKey(assetPath))
+            {
+                assetInfo.Id = this.AssetInfoMap.Count + 1;
+                assetInfo.Type = GetAssetTypeIdx(assetPath);
+                //添加
+                this.AssetInfoMap[assetPath] = assetInfo;
+            }
+        }
+
+        /// <summary>
+        ///添加AssetPath
+        /// </summary>
+        /// <param name="assetPath"></param>
+        public void AddAsset(string assetPath)
+        {
+            if (!this.AssetInfoMap.ContainsKey(assetPath))
+            {
+                var assetInfo = this.CreateAssetInfo(assetPath);
+                //添加
+                assetInfo.Id = this.AssetInfoMap.Count + 1;
+                this.AssetInfoMap[assetPath] = assetInfo;
+            }
         }
     }
 }

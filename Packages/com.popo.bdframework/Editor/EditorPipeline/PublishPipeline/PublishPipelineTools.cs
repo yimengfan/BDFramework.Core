@@ -96,7 +96,7 @@ namespace BDFramework.Editor
                 string.Format("{0}/{0}", BResources.ART_ASSET_ROOT_PATH),
             };
             //混淆文件添加黑名单
-            blackFileList.AddRange(AssetBundleEditorToolsV2.GetMixAssets());
+            blackFileList.AddRange(AssetBundleToolsV2.GetMixAssets());
 
             //加载assetbundle配置
             assetsRootPath = IPath.Combine(assetsRootPath, BApplication.GetPlatformPath(platform));

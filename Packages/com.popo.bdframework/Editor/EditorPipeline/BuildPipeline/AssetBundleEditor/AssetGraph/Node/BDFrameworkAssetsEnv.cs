@@ -234,9 +234,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //生成build资源信息
-            if (BuildingCtx.BuildingAssetInfos.AssetInfoMap.Count == 0)
+            if (BuildingCtx.BuildAssetInfos.AssetInfoMap.Count == 0)
             {
-                BuildingCtx.CollectBuildingAssets();
+                BuildingCtx.CollectBuildAssets();
             }
         }
 
@@ -250,7 +250,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //数据结构保存
             AssetTypeConfig at = new AssetTypeConfig()
             {
-                AssetTypeList = BuildingCtx.AssetTypeList,
+                AssetTypeList = BuildingCtx.BuildAssetInfos.AssetTypeList,
             };
             var csv = CsvSerializer.SerializeToString(at);
             FileHelper.WriteAllText(asetTypePath, csv);
