@@ -604,7 +604,7 @@ namespace BDFramework.Editor.AssetBundle
                 }
 
 
-                Debug.LogFormat("<color=red>【增量资源】修改ABName(颗粒度) 文件数:{0}</color>", changedAssetBundleAssetList.Count);
+                Debug.LogFormat("<color=red>【增量资源】修改ABName(颗粒度)  影响文件数:{0}</color>", changedAssetBundleAssetList.Count);
                 var changeABNameFiles = new List<string>();
                 foreach (var item in changedAssetBundleAssetList)
                 {

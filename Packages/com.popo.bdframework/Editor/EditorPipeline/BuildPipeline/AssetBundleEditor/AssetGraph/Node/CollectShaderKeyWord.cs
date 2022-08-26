@@ -145,14 +145,23 @@ namespace BDFramework.Editor.AssetGraph.Node
             //依赖shader
             if (incomingShaderAndVariantList.Count > 0) //0的情况一般为 调试模式~
             {
-                foreach (var dependShader in dependShaders)
+                foreach (var ds in dependShaders)
                 {
-                    var retsult = incomingShaderAndVariantList.Find((ar) => ar.importFrom.Equals(dependShader, StringComparison.OrdinalIgnoreCase));
+                    foreach (var incom in incomingShaderAndVariantList)
+                    {
+                        if (incom.importFrom.Equals(ds, StringComparison.OrdinalIgnoreCase))
+                        {
+                            Debug.Log("ddddd");
+                        }
+                        
+                    }
+                    
+                    var retsult = incomingShaderAndVariantList.FirstOrDefault((ar) => ar.importFrom.Equals(ds, StringComparison.OrdinalIgnoreCase));
                     if (retsult == null)
                     {
-                        var af = AssetReference.CreateReference(dependShader);
+                        var af = AssetReference.CreateReference(ds);
                         incomingShaderAndVariantList.Add(af);
-                        Debug.LogError("没传入的依赖shader 单独添加：" + dependShader);
+                        Debug.LogError("没传入的依赖shader 单独添加：" + ds);
                     }
                 }
 

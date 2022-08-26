@@ -54,8 +54,8 @@ namespace BDFramework.Editor.AssetBundle
 
 
             //ERROR: 添加runtime中独立的shader,没有mat 视为其没有Shader_Featrue变体
-            var shadertAssets = AssetDatabase.FindAssets("t:Shader", paths); //自定义序列化脚本中也有可能有依赖
-            foreach (var guid in shadertAssets)
+            var shaderAssets = AssetDatabase.FindAssets("t:Shader", paths); //自定义序列化脚本中也有可能有依赖
+            foreach (var guid in shaderAssets)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 Debug.LogError("不建议将shader放在runtime中,没有mat信息 无法搜集变体！ " + path);
