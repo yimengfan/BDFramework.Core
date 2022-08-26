@@ -362,7 +362,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 foreach (var group in ags.assetGroups)
                 {
-                    var test = group.Value.Select((g)=>g.importFrom).ToList();
+                   
                     var assetList = group.Value.ToList();
                     
                     for (int i = assetList.Count - 1; i >= 0; i--)
@@ -385,7 +385,15 @@ namespace BDFramework.Editor.AssetGraph.Node
                             }
                         }
                     }
-                    outMap[group.Key] = assetList;
+
+                    if (outMap.ContainsKey(group.Key))
+                    {
+                        outMap[group.Key].AddRange(assetList);
+                    }
+                    else
+                    {
+                        outMap[group.Key] = assetList;
+                    }
                 }
             }
             //校验

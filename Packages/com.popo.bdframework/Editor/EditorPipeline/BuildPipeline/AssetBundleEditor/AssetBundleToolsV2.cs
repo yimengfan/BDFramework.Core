@@ -341,7 +341,7 @@ namespace BDFramework.Editor.AssetBundle
 
                 //优先从缓存获取
                 var assetInfocache = buildInfoCache?.GetNewInstanceAssetInfo(assetPath);
-                if (assetInfocache == null)
+                if (assetInfocache != null)
                 {
                     //构建资源信息
                    retBuildingInfo.AddAsset(assetPath,assetInfocache); 

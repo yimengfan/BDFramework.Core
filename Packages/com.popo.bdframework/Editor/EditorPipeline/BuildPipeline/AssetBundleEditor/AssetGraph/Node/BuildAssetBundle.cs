@@ -142,7 +142,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     Debug.Log("Buildinfo多余资源:\n " + JsonMapper.ToJson(list, true));
                 }
 
-                Debug.LogErrorFormat("【资源验证】coming资源和Buildinfo资源数量不相等!{0}-{1}", assetReferenceList.Count, tempBuildAssetsInfo.AssetInfoMap.Count);
+                Debug.LogErrorFormat("【资源验证】coming资源和Buildinfo资源数量不相等 {0}-{1}，请注意~", assetReferenceList.Count, tempBuildAssetsInfo.AssetInfoMap.Count);
             }
 
 
