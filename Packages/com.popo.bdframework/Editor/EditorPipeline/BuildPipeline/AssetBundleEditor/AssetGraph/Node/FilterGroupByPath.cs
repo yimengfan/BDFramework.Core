@@ -316,7 +316,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //初始化输出列表
-            var outMap = new Dictionary<string, List<AssetReference>>();
+            var outMap = new Dictionary<string, List<AssetReference>>(StringComparer.OrdinalIgnoreCase);
             foreach (var group in this.groupFilterPathDataList)
             {
                 if (!string.IsNullOrEmpty(group.GroupPath))
@@ -362,7 +362,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 foreach (var group in ags.assetGroups)
                 {
+                    var test = group.Value.Select((g)=>g.importFrom).ToList();
                     var assetList = group.Value.ToList();
+                    
                     for (int i = assetList.Count - 1; i >= 0; i--)
                     {
                         var assetRef = assetList[i];
@@ -414,15 +416,19 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 foreach (var outpointNode in connectionsToOutput)
                 {
-                    var groupFilter = this.groupFilterPathDataList.FirstOrDefault((gf) => gf.OutputNodeId == outpointNode.FromNodeConnectionPointId);
+                    var groupFilter = this.groupFilterPathDataList.FirstOrDefault((gf) => gf.OutputNodeId == outpointNode.FromNodeConnectionPointId || gf.GroupPath.Equals(outpointNode.Label));
                     if (groupFilter != null)
                     {
                         var kv = new Dictionary<string, List<AssetReference>>() {{groupFilter.GroupPath, outMap[groupFilter.GroupPath]}};
                         outputFunc(outpointNode, kv);
                     }
+                    else
+                    {
+                        Debug.LogError($" 找不到输出节点:{ outpointNode.Label} - {outpointNode.FromNodeConnectionPointId}");
+                    }
                 }
             }
-        }
+        } 
 
 
         /// <summary>

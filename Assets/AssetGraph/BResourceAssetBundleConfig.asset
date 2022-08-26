@@ -105,7 +105,7 @@ MonoBehaviour:
         height: 23
   - m_name: "\u6253\u5305AssetBundle"
     m_id: 5c54f429-2e9d-45d5-ad93-29577e3649bb
-    m_x: 1380
+    m_x: 1368
     m_y: 624
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.BuildAssetBundle, BDFramework.Editor,
@@ -131,76 +131,6 @@ MonoBehaviour:
         serializedVersion: 2
         x: 137
         y: 33.5
-        width: 10
-        height: 23
-  - m_name: "[\u7B5B\u9009]Group by Path"
-    m_id: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-    m_x: 660
-    m_y: 528
-    m_nodeInstance:
-      m_className: BDFramework.Editor.AssetGraph.Node.FilterGroupByPath, BDFramework.Editor,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|eyJDb21wYXJlTW9kZSI6MCwiZ3JvdXBGaWx0ZXJQYXRoRGF0YUxpc3QiOlt7Ik91dHB1dE5vZGVJZCI6IjM2YzNlNzZlLWNjOWYtNDg3OS1hNmQ5LWQ3MTAzYjRmNzlmYSIsIkdyb3VwUGF0aCI6IlJ1bnRpbWUifSx7Ik91dHB1dE5vZGVJZCI6IjI4ZDEyNzM4LTA0NTgtNDM5YS1iMjNhLWQxZmFlZGQ5NWY4OCIsIkdyb3VwUGF0aCI6IkRlcGVuZCJ9LHsiT3V0cHV0Tm9kZUlkIjoiYTg1NjJhMDItNGM0Yi00MmRiLThkNjEtZTAyMmE3MTlkZThhIiwiR3JvdXBQYXRoIjoiU3ByaXRlQXRsYXMifSx7Ik91dHB1dE5vZGVJZCI6ImVlNWU1ZDFhLWViNmEtNDkxNC04YzE0LTAyYjM2ZDFjMWYxNSIsIkdyb3VwUGF0aCI6IlNoYWRlcnMifSx7Ik91dHB1dE5vZGVJZCI6IjBjMTlkNzkwLWI5OWMtNDMxMy04YjZhLWNkYTg3YzM4ZWZkNCIsIkdyb3VwUGF0aCI6IkFzc2V0cy9SZXNvdXJjZV9TVk4vTW9kZWwvIn1dfQ==
-    m_inputPoints:
-    - id: 954164ee-1454-4b1b-9bdc-e4e2902dd885
-      label: '-'
-      parentId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-      isInput: 1
-      buttonRect:
-        serializedVersion: 2
-        x: 0
-        y: 30.5
-        width: 21
-        height: 29
-    m_outputPoints:
-    - id: 36c3e76e-cc9f-4879-a6d9-d7103b4f79fa
-      label: Runtime
-      parentId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 220
-        y: 33.5
-        width: 10
-        height: 23
-    - id: 28d12738-0458-439a-b23a-d1faedd95f88
-      label: Depend
-      parentId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 220
-        y: 65.5
-        width: 10
-        height: 23
-    - id: a8562a02-4c4b-42db-8d61-e022a719de8a
-      label: SpriteAtlas
-      parentId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 220
-        y: 97.5
-        width: 10
-        height: 23
-    - id: ee5e5d1a-eb6a-4914-8c14-02b36d1c1f15
-      label: Shaders
-      parentId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 220
-        y: 129.5
-        width: 10
-        height: 23
-    - id: 0c19d790-b99c-4313-8b6a-cda87c38efd4
-      label: Assets/Resource_SVN/Model/
-      parentId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 220
-        y: 161.5
         width: 10
         height: 23
   - m_name: "[*]\u521D\u59CB\u5316\u6846\u67B6Assets\u73AF\u5883"
@@ -453,6 +383,76 @@ MonoBehaviour:
         width: 21
         height: 29
     m_outputPoints: []
+  - m_name: "[\u5206\u7EC4]Group by path"
+    m_id: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+    m_x: 696
+    m_y: 516
+    m_nodeInstance:
+      m_className: BDFramework.Editor.AssetGraph.Node.FilterGroupByPath, BDFramework.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJDb21wYXJlTW9kZSI6MCwiZ3JvdXBGaWx0ZXJQYXRoRGF0YUxpc3QiOlt7Ik91dHB1dE5vZGVJZCI6IjQwODllN2Y5LTcyMjYtNDQ4Ny05MTMyLTk2YTZkNjUxNTRjYiIsIkdyb3VwUGF0aCI6IlJ1bnRpbWUifSx7Ik91dHB1dE5vZGVJZCI6IjBkZjVkMzE5LWZiNGItNDliOS1hY2Y5LWY5YWM0ZGY5ZjM3NSIsIkdyb3VwUGF0aCI6IkRlcGVuZCJ9LHsiT3V0cHV0Tm9kZUlkIjoiNmYzZmRhYjAtNjIxNi00MTMxLTg5YjItYWE2MWE4YWZhMGYzIiwiR3JvdXBQYXRoIjoiU3ByaXRlQXRsYXMifSx7Ik91dHB1dE5vZGVJZCI6IjgwNWVhZjU5LTk0ZmEtNGRiZC1iMjBmLWNhNWExOWQ1YjJhMCIsIkdyb3VwUGF0aCI6IlNoYWRlcnMifSx7Ik91dHB1dE5vZGVJZCI6ImU3ZTgzYjM4LWMyMjgtNDNmMS1hMTAxLWRmNGVkZmQzNGQ0ZiIsIkdyb3VwUGF0aCI6IkFzc2V0cy9SZXNvdXJjZV9TVk4vTW9kZWwvIn1dfQ==
+    m_inputPoints:
+    - id: 8cf9b787-0b60-4bd2-a6aa-66718049fd2a
+      label: '-'
+      parentId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 4089e7f9-7226-4487-9132-96a6d65154cb
+      label: Runtime
+      parentId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 220
+        y: 33.5
+        width: 10
+        height: 23
+    - id: 0df5d319-fb4b-49b9-acf9-f9ac4df9f375
+      label: Depend
+      parentId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 220
+        y: 65.5
+        width: 10
+        height: 23
+    - id: 6f3fdab0-6216-4131-89b2-aa61a8afa0f3
+      label: SpriteAtlas
+      parentId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 220
+        y: 97.5
+        width: 10
+        height: 23
+    - id: 805eaf59-94fa-4dbd-b20f-ca5a19d5b2a0
+      label: Shaders
+      parentId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 220
+        y: 129.5
+        width: 10
+        height: 23
+    - id: e7e83b38-c228-43f1-a101-df4edfd34d4f
+      label: Assets/Resource_SVN/Model/
+      parentId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 220
+        y: 161.5
+        width: 10
+        height: 23
   m_allConnections:
   - m_id: 1691dc7e-b7cc-4a49-b074-67bdf844e257
     m_fromNodeId: 4e93d487-bd56-4bd3-a305-231aeed30565
@@ -520,12 +520,6 @@ MonoBehaviour:
     m_toNodeId: 4238358a-f55f-4a7d-a2ea-68110ab2808e
     m_toNodeConnectionPoiontId: 189ddb29-6730-4d80-b2f2-157fec8baecd
     m_label: Shaders
-  - m_id: 3a6b9d15-1df6-48b0-9aed-d70e3832cb5c
-    m_fromNodeId: ecbfb000-a67d-4e67-9eab-0fc9da0bfb6d
-    m_fromNodeConnectionPointId: b1b0ab41-5f5f-412b-a279-4bb298f31aac
-    m_toNodeId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-    m_toNodeConnectionPoiontId: 954164ee-1454-4b1b-9bdc-e4e2902dd885
-    m_label: +
   - m_id: 670154c1-a86f-45fd-a59f-763c5408155d
     m_fromNodeId: 5c54f429-2e9d-45d5-ad93-29577e3649bb
     m_fromNodeConnectionPointId: b18c90d7-680d-41de-bd35-39aeed05ac15
@@ -550,13 +544,43 @@ MonoBehaviour:
     m_toNodeId: c58ab6fd-f457-4f8d-a53e-38608b4b0a87
     m_toNodeConnectionPoiontId: b8b334b8-64e4-4cec-b27a-084bfdc7f20b
     m_label: Assets/Resource/Runtime/Windows/
-  - m_id: 717c7134-34f1-436a-a321-11984f56a672
-    m_fromNodeId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-    m_fromNodeConnectionPointId: 0c19d790-b99c-4313-8b6a-cda87c38efd4
+  - m_id: b154aca8-0c9c-449a-a723-beca84d3f49a
+    m_fromNodeId: ecbfb000-a67d-4e67-9eab-0fc9da0bfb6d
+    m_fromNodeConnectionPointId: b1b0ab41-5f5f-412b-a279-4bb298f31aac
+    m_toNodeId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+    m_toNodeConnectionPoiontId: 8cf9b787-0b60-4bd2-a6aa-66718049fd2a
+    m_label: +
+  - m_id: 2cdd18ea-9fc4-4462-86ae-c616c4a4dc74
+    m_fromNodeId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+    m_fromNodeConnectionPointId: 4089e7f9-7226-4487-9132-96a6d65154cb
+    m_toNodeId: 514d1288-7246-484b-8a94-3075e3d1e8c3
+    m_toNodeConnectionPoiontId: fe577f6d-dd42-46d5-bb77-0c1aca3b5550
+    m_label: Runtime
+  - m_id: 91c70cb5-4a2b-4782-8c92-dc4a4c01c0e2
+    m_fromNodeId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+    m_fromNodeConnectionPointId: 0df5d319-fb4b-49b9-acf9-f9ac4df9f375
+    m_toNodeId: f891d383-3b03-469b-81e8-e99d9f36b03a
+    m_toNodeConnectionPoiontId: e01e2e16-1d93-4b0f-abf2-c91f1636fbe0
+    m_label: Depend
+  - m_id: 1bcd0207-ee2d-4fb4-b48f-1d01b6daead6
+    m_fromNodeId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+    m_fromNodeConnectionPointId: 6f3fdab0-6216-4131-89b2-aa61a8afa0f3
+    m_toNodeId: dd864864-5e6f-4386-bd1c-8c4b29038c29
+    m_toNodeConnectionPoiontId: ff8bd5d3-011a-4378-b865-99bea4906a2e
+    m_label: SpriteAtlas
+  - m_id: e7e14c17-1a6a-4a6e-8309-485a9330c05d
+    m_fromNodeId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+    m_fromNodeConnectionPointId: 805eaf59-94fa-4dbd-b20f-ca5a19d5b2a0
+    m_toNodeId: 4238358a-f55f-4a7d-a2ea-68110ab2808e
+    m_toNodeConnectionPoiontId: 189ddb29-6730-4d80-b2f2-157fec8baecd
+    m_label: Shaders
+  - m_id: 8156cc0f-e1f4-42b9-b9cb-10cba9ad28b0
+    m_fromNodeId: 73d7c30e-095a-4c3e-987f-09ad004c37e3
+    m_fromNodeConnectionPointId: e7e83b38-c228-43f1-a101-df4edfd34d4f
     m_toNodeId: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
     m_toNodeConnectionPoiontId: 04553e4a-d5e6-4d37-87bb-c10b717f8052
     m_label: Assets/Resource_SVN/Model/
-  m_lastModified: 133058064914981511
+  m_lastModified: 133059462491328286
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0

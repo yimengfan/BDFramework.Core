@@ -15,8 +15,8 @@ MonoBehaviour:
   m_allNodes:
   - m_name: Load From "Resource_SVN"
     m_id: 0d1cf049-7d96-4044-88d4-999c7dd8ee78
-    m_x: 132
-    m_y: 480
+    m_x: 60
+    m_y: 492
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -35,8 +35,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u5206\u7EC4]Group by path"
     m_id: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
-    m_x: 456
-    m_y: 480
+    m_x: 372
+    m_y: 456
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.FilterGroupByPath, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -85,8 +85,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
     m_id: f5c77482-f604-4626-91e7-2c20f9861c7b
-    m_x: 756
-    m_y: 372
+    m_x: 708
+    m_y: 288
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -115,8 +115,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
     m_id: f614f9c8-1a12-4405-b30f-57d3cf00e013
-    m_x: 768
-    m_y: 468
+    m_x: 720
+    m_y: 480
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -145,8 +145,8 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
     m_id: a65790f0-d341-4e2e-8542-0a142459cd7b
-    m_x: 768
-    m_y: 600
+    m_x: 720
+    m_y: 660
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityNull, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
