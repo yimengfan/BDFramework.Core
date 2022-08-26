@@ -29,19 +29,17 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         static public string RUNTIME_PATH = "/runtime/";
 
-        
+
         /// <summary>
         /// 文件hash缓存
         /// </summary>
         static Dictionary<string, string> fileHashCacheMap = new Dictionary<string, string>();
-        
-        
+
+
         /// <summary>
         /// Runtime的依赖资产列表
         /// </summary>
         static Dictionary<string, List<string>> DependenciesCacheMap = new Dictionary<string, List<string>>();
-
-
 
 
         /// <summary>
@@ -109,194 +107,14 @@ namespace BDFramework.Editor.AssetBundle
 
         #endregion
 
+        
+        #region 构建BuildAssetInfo
 
-        #region AB相关处理
-
-        /// <summary>
-        /// 收集Assetbundle 颗粒度
-        /// </summary>
-        static public void CollectABUnit(BuildAssetInfos buildAssetInfos)
-        {
-            #region 整理AB颗粒度
-
-            //1.把依赖资源替换成AB Name，
-            foreach (var mainAsset in buildAssetInfos.AssetInfoMap.Values)
-            {
-                // if (mainAsset.ABName.Equals("assets/resource/runtime/shader/allshaders.shadervariants", StringComparison.OrdinalIgnoreCase))
-                // {
-                //     Debug.Log("xx");
-                // }
-                //
-                for (int i = 0; i < mainAsset.DependAssetList.Count; i++)
-                {
-                    var dependAssetName = mainAsset.DependAssetList[i];
-                    if (buildAssetInfos.AssetInfoMap.TryGetValue(dependAssetName, out var dependAssetData))
-                    {
-                        //替换成真正AB名
-                        if (!string.IsNullOrEmpty(dependAssetData.ABName))
-                        {
-                            mainAsset.DependAssetList[i] = dependAssetData.ABName;
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("【AssetbundleV2】资源整理出错: " + dependAssetName);
-                    }
-                }
-
-                //去重，移除自己
-                mainAsset.DependAssetList = mainAsset.DependAssetList.Distinct().ToList();
-                mainAsset.DependAssetList.Remove(mainAsset.ABName);
-            }
-
-            //2.按规则纠正ab名
-            //使用guid 作为ab名
-            foreach (var mainAsset in buildAssetInfos.AssetInfoMap)
-            {
-                var guid = AssetDatabase.AssetPathToGUID(mainAsset.Value.ABName);
-                if (!string.IsNullOrEmpty(guid))
-                {
-                    mainAsset.Value.ABName = guid;
-                }
-                else
-                {
-                    Debug.LogError("获取GUID失败：" + mainAsset.Value.ABName);
-                }
-
-                for (int i = 0; i < mainAsset.Value.DependAssetList.Count; i++)
-                {
-                    var dependAssetPath = mainAsset.Value.DependAssetList[i];
-
-                    guid = AssetDatabase.AssetPathToGUID(dependAssetPath);
-                    if (!string.IsNullOrEmpty(guid))
-                    {
-                        mainAsset.Value.DependAssetList[i] = guid;
-                    }
-                    else
-                    {
-                        Debug.LogError("获取GUID失败：" + dependAssetPath);
-                    }
-                }
-            }
-
-            #endregion
-        }
-
-        /// <summary>
-        ///获取Assetbundle 打包列表
-        /// </summary>
-        static public List<AssetBundleItem> GetAssetBundleItems(BuildAssetInfos buildAssetInfos)
-        {
-            //根据buildinfo 生成加载用的 Config
-            //runtime下的全部保存配置，其他的只保留一个ab名即可
-            //1.导出配置
-            var assetDataItemList = new List<AssetBundleItem>();
-            //占位，让id和idx恒相等
-            assetDataItemList.Add(new AssetBundleItem(0, null, null, -1, new int[] { }));
-
-            //搜集runtime的 ,分两个for 让序列化后的数据更好审查
-            foreach (var item in buildAssetInfos.AssetInfoMap)
-            {
-                //runtime路径下，写入配置
-                if (item.Key.Contains(RUNTIME_PATH, StringComparison.OrdinalIgnoreCase))
-                {
-                    var loadPath = GetAbsPathFormRuntime(item.Key);
-                    //添加
-                    var abi = new AssetBundleItem(assetDataItemList.Count, loadPath, item.Value.ABName, item.Value.Type, new int[] { });
-                    // abi.EditorAssetPath = item.Key;
-                    assetDataItemList.Add(abi); //.ManifestMap[key] = mi;
-                    item.Value.ArtConfigIdx = abi.Id;
-                }
-            }
-
-            //搜集非runtime的,进一步防止重复
-            foreach (var item in buildAssetInfos.AssetInfoMap)
-            {
-                //非runtime的只需要被索引AB
-                if (!item.Key.Contains(RUNTIME_PATH, StringComparison.OrdinalIgnoreCase))
-                {
-                    var ret = assetDataItemList.FirstOrDefault((ab) => ab.AssetBundlePath == item.Value.ABName);
-                    if (ret == null) //不保存重复内容
-                    {
-                        var abi = new AssetBundleItem(assetDataItemList.Count, null, item.Value.ABName, item.Value.Type, new int[] { });
-                        // abi.EditorAssetPath = item.Key;
-                        assetDataItemList.Add(abi);
-                        item.Value.ArtConfigIdx = abi.Id;
-                    }
-                }
-            }
-
-
-            //将depend替换成Id,减少序列化数据量
-            foreach (var assetbundleData in assetDataItemList)
-            {
-                if (!string.IsNullOrEmpty(assetbundleData.LoadPath))
-                {
-                    //dependAsset 替换成ID
-                    var buildAssetData = buildAssetInfos.AssetInfoMap.Values.FirstOrDefault((asset) => asset.ABName == assetbundleData.AssetBundlePath);
-                    for (int i = 0; i < buildAssetData.DependAssetList.Count; i++)
-                    {
-                        var dependAssetName = buildAssetData.DependAssetList[i];
-                        //寻找保存列表中依赖的id（可以认为是下标）
-                        var dependAssetBuildData = assetDataItemList.FirstOrDefault((asset) => asset.AssetBundlePath == dependAssetName);
-                        //向array添加元素，editor 略冗余，目的是为了保护 runtime 数据源readonly
-                        var templist = assetbundleData.DependAssetIds.ToList();
-                        templist.Add(dependAssetBuildData.Id);
-                        assetbundleData.DependAssetIds = templist.ToArray();
-                    }
-                }
-            }
-
-
-            #region 检查生成的数据
-
-            //检查config是否遗漏
-            foreach (var assetDataItem in buildAssetInfos.AssetInfoMap)
-            {
-                var ret = assetDataItemList.Find((abi) => abi.AssetBundlePath == assetDataItem.Value.ABName);
-                if (ret == null)
-                {
-                    Debug.LogError("【生成配置】ab配置遗漏 - " + assetDataItem.Key + " ab:" + assetDataItem.Value.ABName);
-                }
-            }
-
-            #endregion
-
-
-            //
-            return assetDataItemList;
-        }
-
-        /// <summary>
-        /// 获取runtime后的相对路径
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        static public string GetAbsPathFormRuntime(string loadPath)
-        {
-            //移除runtime之前的路径、后缀
-            if (loadPath.Contains(RUNTIME_PATH, StringComparison.OrdinalIgnoreCase))
-            {
-                var index = loadPath.IndexOf(RUNTIME_PATH);
-                loadPath = loadPath.Substring(index + RUNTIME_PATH.Length); //hash要去掉runtime
-                var exten = Path.GetExtension(loadPath);
-                if (!string.IsNullOrEmpty(exten))
-                {
-                    loadPath = loadPath.Replace(exten, "");
-                }
-            }
-
-            return loadPath;
-        }
-
-        #endregion
-
-        #region BuildAssetInfo构建
         /// <summary>
         ///  获取BuildAssetsInfo
         /// </summary>
         /// <returns></returns>
-        static public (BuildAssetInfos,List<string>) GetBuildingAssetInfos(BuildAssetInfos buildInfoCache = null)
+        static public (BuildAssetInfos, List<string>) GetBuildingAssetInfos(BuildAssetInfos buildInfoCache = null)
         {
             var retBuildingInfo = new BuildAssetInfos();
             //开始
@@ -344,13 +162,12 @@ namespace BDFramework.Editor.AssetBundle
                 if (assetInfocache != null)
                 {
                     //构建资源信息
-                   retBuildingInfo.AddAsset(assetPath,assetInfocache); 
+                    retBuildingInfo.AddAsset(assetPath, assetInfocache);
                 }
                 else
                 {
-                    retBuildingInfo.AddAsset(assetPath); 
+                    retBuildingInfo.AddAsset(assetPath);
                 }
-                
             }
 
             //TODO AB依赖关系纠正
@@ -364,13 +181,13 @@ namespace BDFramework.Editor.AssetBundle
             // }
             sw.Stop();
             Debug.LogFormat("【GenBuildInfo】耗时:{0}ms.", sw.ElapsedMilliseconds);
-            return (retBuildingInfo,runtimeAssetsPathList);
+            return (retBuildingInfo, runtimeAssetsPathList);
         }
 
         #endregion
 
 
-        #region 资源Runtime资源接口
+        #region Runtime资源接口
 
         /// <summary>
         ///  获取runtime下的资源
@@ -473,52 +290,16 @@ namespace BDFramework.Editor.AssetBundle
         }
 
 
-        /// <summary>
-        /// 获取文件的md5
-        /// 同时用资产+资产meta 取 sha256
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        static   public string GetHashFromAssets(string fileName)
-        {
-            var str = "";
-            if (fileHashCacheMap.TryGetValue(fileName, out str))
-            {
-                return str;
-            }
-
-            try
-            {
-                //这里使用 asset + meta 生成hash,防止其中一个修改导致的文件变动 没更新
-                var assetBytes = File.ReadAllBytes(fileName);
-                var metaBytes = File.ReadAllBytes(fileName + ".meta");
-                List<byte> byteList = new List<byte>();
-                byteList.AddRange(assetBytes);
-                byteList.AddRange(metaBytes);
-                var hash = FileHelper.GetMurmurHash3(byteList.ToArray());
-                fileHashCacheMap[fileName] = hash;
-                return hash;
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("hash计算错误:" + fileName);
-                return "";
-            }
-        }
-
-
 
         #endregion
 
 
-        #region 资源变动搜集
+        #region 资源变动检查
 
         /// <summary>
-        /// 获取改动的Assets
-        /// 通过对比文件hash
+        /// 获取变动的Assets,通过对比文件hash
         /// </summary>
-        static public BuildAssetInfos GetChangedAssetsByFileHash(BuildAssetInfos newBuildAssetInfos, BuildTarget buildTarget, string outputPath)
+        static public BuildAssetInfos GetChangedAssetsByFileHash(string outputPath, BuildTarget buildTarget, BuildAssetInfos newBuildAssetInfos)
         {
             Debug.Log("<color=red>【增量资源】开始变动资源分析...</color>");
             BuildAssetInfos lastBuildAssetInfos = null;
@@ -717,17 +498,15 @@ namespace BDFramework.Editor.AssetBundle
         /// 获取变动的Assets
         /// 通过SVN or git
         /// </summary>
-        /// <param name="newBuildingAssetInfos"></param>
-        /// <param name="buildTarget"></param>
         /// <returns></returns>
-        static public void GetChangedAssetsByVCS(string last)
+        static public void GetChangedAssetsByVCS(string lastVersionNum,string curVersionNum)
         {
         }
 
         #endregion
 
 
-        #region asset缓存、辅助等
+        #region Asset缓存、辅助等
 
         /// <summary>
         /// 资源导入缓存
@@ -833,7 +612,29 @@ namespace BDFramework.Editor.AssetBundle
             return type;
         }
 
+        /// <summary>
+        /// 获取runtime后的相对路径
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        static public string GetAbsPathFormRuntime(string loadPath)
+        {
+            //移除runtime之前的路径、后缀
+            if (loadPath.Contains(RUNTIME_PATH, StringComparison.OrdinalIgnoreCase))
+            {
+                var index = loadPath.IndexOf(RUNTIME_PATH);
+                loadPath = loadPath.Substring(index + RUNTIME_PATH.Length); //hash要去掉runtime
+                var exten = Path.GetExtension(loadPath);
+                if (!string.IsNullOrEmpty(exten))
+                {
+                    loadPath = loadPath.Replace(exten, "");
+                }
+            }
 
+            return loadPath;
+        }
+        
+        
         #region Assetbundle混淆
 
         /// <summary>
@@ -939,13 +740,52 @@ namespace BDFramework.Editor.AssetBundle
         #endregion
 
 
+        #region 资产Hash
+        
         /// <summary>
-        /// 这里将
+        /// 获取文件的md5
+        /// 同时用资产+资产meta 取 hash
+        /// </summary>
+        /// <param name="assetPath"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        static public string GetAssetsHash(string assetPath)
+        {
+            var str = "";
+            if (fileHashCacheMap.TryGetValue(assetPath, out str))
+            {
+                return str;
+            }
+
+            try
+            {
+                //这里使用 asset + meta 生成hash,防止其中一个修改导致的文件变动 没更新
+                var assetBytes = File.ReadAllBytes(assetPath);
+                var metaBytes = File.ReadAllBytes(assetPath + ".meta");
+                List<byte> byteList = new List<byte>();
+                byteList.AddRange(assetBytes);
+                byteList.AddRange(metaBytes);
+                var hash = FileHelper.GetMurmurHash3(byteList.ToArray());
+                fileHashCacheMap[assetPath] = hash;
+                return hash;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("hash计算错误:" + assetPath);
+                return "";
+            }
+        }
+        
+        
+        /// <summary>
+        /// 获取一个AB中所有原资产的hash
         /// </summary>
         /// <returns></returns>
-        static public string GetGetAssetbundleSourceHash()
+        static public string GetAnAssetbundleSourceAsetsHash()
         {
             return "";
         }
+        #endregion
+
     }
 }

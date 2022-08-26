@@ -130,16 +130,17 @@ namespace BDFramework.Editor.AssetBundle
             //--------------------------------开始打包----------------------------------
             //1.打包
             Debug.Log("<color=green>----->1.进入打包逻辑</color>");
-            //整理abname
-            AssetBundleToolsV2.CollectABUnit(BuildAssetInfos);
-            //对比差异文件
-            var changedAssetsInfo = AssetBundleToolsV2.GetChangedAssetsByFileHash(BuildAssetInfos, buildTarget, this.BuildParams.OutputPath);
+            //整理ab颗粒度
+            BuildAssetInfos.ReorganizeAssetBundleUnit();
             //获取ab列表
-            var assetbundleItemList = AssetBundleToolsV2.GetAssetBundleItems(BuildAssetInfos);
+            var assetbundleItemList = BuildAssetInfos.GetAssetBundleItems();
 
             //打包
             AssetDatabase.StartAssetEditing(); //禁止自动导入
             {
+                //对比差异文件
+                var changedAssetsInfo = AssetBundleToolsV2.GetChangedAssetsByFileHash(this.BuildParams.OutputPath, buildTarget, BuildAssetInfos);
+                //打包
                 this.BuildAssetBundle(assetbundleItemList, changedAssetsInfo, BuildParams, platform);
             }
             AssetDatabase.StopAssetEditing(); //恢复自动导入
