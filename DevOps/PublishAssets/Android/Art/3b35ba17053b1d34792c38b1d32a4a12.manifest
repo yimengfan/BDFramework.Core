@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 27021684
+CRC: 1145184712
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -39,4 +39,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/Windows/window_demo1.prefab
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/d2abdb77f35d37c4c9469630d1f22e50
+- E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/Android/Art/d2abdb77f35d37c4c9469630d1f22e50

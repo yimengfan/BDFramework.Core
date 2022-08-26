@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3733534019
+CRC: 1429128981
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -29,4 +29,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/ObjectPool/Bullet.prefab
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/43f3d8a9a7fdd6f469aea742dd9af679
+- E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/Android/Art/43f3d8a9a7fdd6f469aea742dd9af679

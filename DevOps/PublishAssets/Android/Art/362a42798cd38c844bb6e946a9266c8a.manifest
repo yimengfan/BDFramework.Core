@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1269004142
+CRC: 2183992992
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3878b0430634092451182fa9aaf77ba2
+    Hash: 8877f41ee20730328fee28138b010aa3
   TypeTreeHash:
     serializedVersion: 2
     Hash: 10a6a558690295dadb3dd990eda0821a
@@ -17,4 +17,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/Test/New Material.mat
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/9d59e1d84070e4c46a595b3112d75a40
+- E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/Android/Art/9d59e1d84070e4c46a595b3112d75a40

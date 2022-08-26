@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1214689398
+CRC: 4067456314
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 211722c294babaf83a62d9580d34eb64
+    Hash: 992c59e8d4c84ee75c58149df32cb937
   TypeTreeHash:
     serializedVersion: 2
     Hash: 05833362ce7ad1bd7c6766baa565d54a
@@ -39,5 +39,5 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/Windows/window_demo5_SpriteAtlas.prefab
 Dependencies:
-- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/36c26bcd10b840e4f9868d6a6b9b6b37
-- E:/Unity3d Project/Github/BDFramework.EnvCheck/DevOps/PublishAssets/Android/Art/ec429a586bfac5f4284f3a31749303e7
+- E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/Android/Art/36c26bcd10b840e4f9868d6a6b9b6b37
+- E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/Android/Art/ec429a586bfac5f4284f3a31749303e7

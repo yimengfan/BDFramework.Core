@@ -1,6 +1,6 @@
 
 {
-  "Time" : "2022/6/4",
+  "Time" : "2022/8/26",
   "AssetInfoMap" : {
     "assets/resource/runtime/allassettype/archive.jpg" : {
       "Id" : 1,
@@ -55,7 +55,7 @@
       "ABName"       : "17c174d5584b1694b85f182dd46d03f6",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "3917525748",
+      "Hash"           : "391751003",
       "DependAssetList" : [
       ]
     },
@@ -77,7 +77,7 @@
       "ABName"       : "f9c24efe9caac82418f78b87f9ec7e2d",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1752717274",
+      "Hash"           : "3873691502",
       "DependAssetList" : [
         "362a42798cd38c844bb6e946a9266c8a",
         "9d59e1d84070e4c46a595b3112d75a40"
@@ -134,7 +134,7 @@
       "ABName"       : "d4a88a73900de024eb62d0da15c80841",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "942859253",
+      "Hash"           : "4056781374",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
@@ -146,7 +146,7 @@
       "ABName"       : "f43f8753e3c3460499a09f37075d54cf",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "3408071235",
+      "Hash"           : "1316842752",
       "DependAssetList" : [
         "d4a88a73900de024eb62d0da15c80841",
         "9d59e1d84070e4c46a595b3112d75a40"
@@ -159,7 +159,7 @@
       "ABName"       : "e5ef808d32e88b243bd0521877b3b07a",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1204129944",
+      "Hash"           : "1323514589",
       "DependAssetList" : [
         "2612b115ce3857f45833e28c2325fdbb",
         "9d59e1d84070e4c46a595b3112d75a40",
@@ -173,7 +173,7 @@
       "ABName"       : "635df57f674eda446b0d64328236e858",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "3577133876",
+      "Hash"           : "2691713828",
       "DependAssetList" : [
         "2612b115ce3857f45833e28c2325fdbb",
         "9d59e1d84070e4c46a595b3112d75a40"
@@ -329,7 +329,7 @@
       "ABName"       : "51f5616e141ad98478c3557ebbf2b999",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "323897321",
+      "Hash"           : "4274477129",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
@@ -507,7 +507,7 @@
       "ABName"       : "a7feec6462d3d3249936655cf4e31de5",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "2422937392",
+      "Hash"           : "2940166805",
       "DependAssetList" : [
         "362a42798cd38c844bb6e946a9266c8a",
         "9d59e1d84070e4c46a595b3112d75a40"
@@ -520,7 +520,7 @@
       "ABName"       : "362a42798cd38c844bb6e946a9266c8a",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "4099812302",
+      "Hash"           : "2575548217",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
@@ -532,7 +532,7 @@
       "ABName"       : "36c26bcd10b840e4f9868d6a6b9b6b37",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "4032459170",
+      "Hash"           : "2190346112",
       "DependAssetList" : [
         "76c21518bd7f0e64ca49af74a4987cd9"
       ]
@@ -544,7 +544,7 @@
       "ABName"       : "e157959f9c83caa419fd530f402b54f8",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1780908286",
+      "Hash"           : "1851523669",
       "DependAssetList" : [
         "76c21518bd7f0e64ca49af74a4987cd9"
       ]
@@ -556,7 +556,7 @@
       "ABName"       : "0fab552ab15035e4d82bf9adc52725f6",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1424664894",
+      "Hash"           : "4175978386",
       "DependAssetList" : [
       ]
     },
@@ -567,7 +567,7 @@
       "ABName"       : "7ab40f5c94bb46c4d8bdc9719471a0ea",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1449838945",
+      "Hash"           : "3028092072",
       "DependAssetList" : [
       ]
     },
@@ -578,7 +578,7 @@
       "ABName"       : "a68e48a29a930504a9ca43956d727eed",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "830582008",
+      "Hash"           : "1332738460",
       "DependAssetList" : [
       ]
     },
@@ -589,7 +589,7 @@
       "ABName"       : "f69fe24036fa721438c98fb52af11c6b",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1029798812",
+      "Hash"           : "1847044442",
       "DependAssetList" : [
       ]
     },
@@ -600,7 +600,7 @@
       "ABName"       : "2090e433e199dc549aae632bee6b20d9",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "3491054414",
+      "Hash"           : "4126238453",
       "DependAssetList" : [
       ]
     },
@@ -611,7 +611,7 @@
       "ABName"       : "7d3eab7902fddd347af42de5a0958047",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "4127492173",
+      "Hash"           : "2511204703",
       "DependAssetList" : [
       ]
     },
@@ -633,7 +633,7 @@
       "ABName"       : "7c6f5172672ac234a85467bc91e5283f",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1291717724",
+      "Hash"           : "705803003",
       "DependAssetList" : [
       ]
     },
@@ -644,7 +644,7 @@
       "ABName"       : "0cd1aa33ffab96440974e3fd84b4e99f",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "4078544791",
+      "Hash"           : "1352783812",
       "DependAssetList" : [
       ]
     },
@@ -655,7 +655,7 @@
       "ABName"       : "890171c9213476c4487fdfe8320fed47",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1996205039",
+      "Hash"           : "849242501",
       "DependAssetList" : [
       ]
     },
@@ -678,7 +678,7 @@
       "ABName"       : "d5430f7acac73bb4eaa529db1d8b763a",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "3382382874",
+      "Hash"           : "341522635",
       "DependAssetList" : [
         "76c21518bd7f0e64ca49af74a4987cd9",
         "ec429a586bfac5f4284f3a31749303e7",
@@ -692,7 +692,7 @@
       "ABName"       : "3d1d74f67a3b7b54ba46fec8ab67f807",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "576835018",
+      "Hash"           : "1393169694",
       "DependAssetList" : [
       ]
     },
@@ -703,7 +703,7 @@
       "ABName"       : "bfcd26e55a55bd04f8a6f662bdde9abf",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1065063218",
+      "Hash"           : "3332122225",
       "DependAssetList" : [
         "9ae31c8b351113b44a663362fc4f41e9",
         "9d59e1d84070e4c46a595b3112d75a40"
@@ -716,7 +716,7 @@
       "ABName"       : "0bfcd856254d3f34b87bb6f99b9f3dfb",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "2895603248",
+      "Hash"           : "1622384457",
       "DependAssetList" : [
         "ffdcaf5f90ad6424daa282d10724bfc2",
         "9d59e1d84070e4c46a595b3112d75a40"
@@ -729,7 +729,7 @@
       "ABName"       : "00142fc9b13ce334d94e23f367a33d75",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "3826004323",
+      "Hash"           : "3136605819",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40",
         "68ce09b862773374cbf71b2566b5dfbb"
@@ -742,7 +742,7 @@
       "ABName"       : "ae37c57b09de2ec4399a3eceb62b77ea",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "2011051193",
+      "Hash"           : "2550435831",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40",
         "096dee19ab67ffc44ba3f8f790da67b4"
@@ -755,7 +755,7 @@
       "ABName"       : "096dee19ab67ffc44ba3f8f790da67b4",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1151370845",
+      "Hash"           : "2152852884",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
@@ -767,7 +767,7 @@
       "ABName"       : "70ed25d8f6269304483b716d4ffd3434",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1298973776",
+      "Hash"           : "3837585026",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
@@ -779,7 +779,7 @@
       "ABName"       : "c0d661c42cc867d46887fa3b94908542",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "1449995750",
+      "Hash"           : "1784850627",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
@@ -791,7 +791,7 @@
       "ABName"       : "8fb6653cf0d095a4da38233e10efdb41",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "3714848025",
+      "Hash"           : "616648277",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
@@ -803,7 +803,7 @@
       "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "255104875",
+      "Hash"           : "2638808572",
       "DependAssetList" : [
       ]
     },
@@ -836,34 +836,23 @@
       "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "520635925",
+      "Hash"           : "153497669",
       "DependAssetList" : [
       ]
     },
-    "assets/resource/shaders/builtin_shaders-2019/defaultresourcesextra/normal-vertexlit.shader"  : {
+    "assets/resource/shaders/testshader/shader/pbr_silk.shader"                                   : {
       "Id" : 74,
       "ArtConfigIdx" : -1,
       "Type"         : 10,
       "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "3676051459",
-      "DependAssetList" : [
-      ]
-    },
-    "assets/resource/shaders/testshader/shader/pbr_silk.shader"                                   : {
-      "Id" : 75,
-      "ArtConfigIdx" : -1,
-      "Type"         : 10,
-      "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
-      "ABHash"       : "",
-      "ReferenceCount" : 0,
-      "Hash"           : "1797112991",
+      "Hash"           : "1322287119",
       "DependAssetList" : [
       ]
     },
     "assets/resource/image/test2/5.jpg"                                                           : {
-      "Id" : 76,
+      "Id" : 75,
       "ArtConfigIdx" : -1,
       "Type"         : 8,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -874,7 +863,7 @@
       ]
     },
     "assets/resource/image/test2/3.jpg"                                                           : {
-      "Id" : 77,
+      "Id" : 76,
       "ArtConfigIdx" : -1,
       "Type"         : 8,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -885,7 +874,7 @@
       ]
     },
     "assets/resource/image/test2/4.jpg"                                                           : {
-      "Id" : 78,
+      "Id" : 77,
       "ArtConfigIdx" : -1,
       "Type"         : 8,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -896,7 +885,7 @@
       ]
     },
     "assets/resource/image/test2/10.jpg"                                                          : {
-      "Id" : 79,
+      "Id" : 78,
       "ArtConfigIdx" : -1,
       "Type"         : 8,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -907,7 +896,7 @@
       ]
     },
     "assets/resource/image/test2/9.jpg"                                                           : {
-      "Id" : 80,
+      "Id" : 79,
       "ArtConfigIdx" : -1,
       "Type"         : 8,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -918,7 +907,7 @@
       ]
     },
     "assets/resource/image/test2/2.jpg"                                                           : {
-      "Id" : 81,
+      "Id" : 80,
       "ArtConfigIdx" : -1,
       "Type"         : 8,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -929,7 +918,7 @@
       ]
     },
     "assets/resource/image/test2/6.jpg"                                                           : {
-      "Id" : 82,
+      "Id" : 81,
       "ArtConfigIdx" : -1,
       "Type"         : 8,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -940,7 +929,7 @@
       ]
     },
     "assets/resource/image/test2/1.jpg"                                                           : {
-      "Id" : 83,
+      "Id" : 82,
       "ArtConfigIdx" : -1,
       "Type"         : 8,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -951,7 +940,7 @@
       ]
     },
     "assets/resource/image/test2/8.jpg"                                                           : {
-      "Id" : 84,
+      "Id" : 83,
       "ArtConfigIdx" : -1,
       "Type"         : 8,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -962,7 +951,7 @@
       ]
     },
     "assets/resource/image/test2/7.jpg"                                                           : {
-      "Id" : 85,
+      "Id" : 84,
       "ArtConfigIdx" : -1,
       "Type"         : 8,
       "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
@@ -973,7 +962,7 @@
       ]
     },
     "assets/resource/image/test/timg (1).jpg"                                                     : {
-      "Id" : 86,
+      "Id" : 85,
       "ArtConfigIdx" : 70,
       "Type"         : 8,
       "ABName"       : "d2abdb77f35d37c4c9469630d1f22e50",
@@ -984,19 +973,19 @@
       ]
     },
     "assets/resource_svn/model/001/spongebob.obj"                                                 : {
-      "Id" : 87,
+      "Id" : 86,
       "ArtConfigIdx" : 71,
       "Type"         : 5,
       "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "3478409111",
+      "Hash"           : "1847898514",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
     "assets/resource_svn/model/001/spongebob_squarepants.png"                                     : {
-      "Id" : 88,
+      "Id" : 87,
       "ArtConfigIdx" : -1,
       "Type"         : 0,
       "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
@@ -1007,19 +996,19 @@
       ]
     },
     "assets/resource_svn/model/001/sb.mat"                                                        : {
-      "Id" : 89,
+      "Id" : 88,
       "ArtConfigIdx" : -1,
       "Type"         : 7,
       "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "367238679",
+      "Hash"           : "4104659658",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
     "assets/resource_svn/model/002/char_patrick.png"                                              : {
-      "Id" : 90,
+      "Id" : 89,
       "ArtConfigIdx" : 72,
       "Type"         : 0,
       "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
@@ -1030,43 +1019,43 @@
       ]
     },
     "assets/resource_svn/model/002/pat.mat"                                                       : {
-      "Id" : 91,
+      "Id" : 90,
       "ArtConfigIdx" : -1,
       "Type"         : 7,
       "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "2450914584",
+      "Hash"           : "2621424477",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
     "assets/resource_svn/model/002/patrick.obj"                                                   : {
-      "Id" : 92,
+      "Id" : 91,
       "ArtConfigIdx" : -1,
       "Type"         : 5,
       "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "916651055",
+      "Hash"           : "3275840817",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
     "assets/resource_svn/model/3dxy_material_1.mat"                                               : {
-      "Id" : 93,
+      "Id" : 92,
       "ArtConfigIdx" : 73,
       "Type"         : 7,
       "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "23175468",
+      "Hash"           : "4177296927",
       "DependAssetList" : [
         "9d59e1d84070e4c46a595b3112d75a40"
       ]
     },
     "assets/resource_svn/model/3dxy_img_1.png"                                                    : {
-      "Id" : 94,
+      "Id" : 93,
       "ArtConfigIdx" : -1,
       "Type"         : 0,
       "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
@@ -1077,7 +1066,7 @@
       ]
     },
     "assets/resource_svn/model/3dxy_geometry_001.mesh"                                            : {
-      "Id" : 95,
+      "Id" : 94,
       "ArtConfigIdx" : -1,
       "Type"         : 3,
       "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
