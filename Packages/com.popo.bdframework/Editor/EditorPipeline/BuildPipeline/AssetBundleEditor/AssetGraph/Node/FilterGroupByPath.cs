@@ -32,7 +32,10 @@ namespace BDFramework.Editor.AssetGraph.Node
             Contains,
 
             //正则
-            Regex
+            Regex,
+
+            //通配符
+            WildCard
         }
 
         public override string ActiveStyle
@@ -341,18 +344,14 @@ namespace BDFramework.Editor.AssetGraph.Node
                     {
                         if (gf.GroupPath == ag.Key)
                         {
-                            isRemove = true;
+                            groupFilterPatList.Remove(gf);
                             break;
                         }
                     }
                 }
-
-                if (isRemove)
-                {
-                    groupFilterPatList.RemoveAt(i);
-                }
             }
 
+            
             //排序
             groupFilterPatList.Sort((a, b) =>
             {
@@ -468,6 +467,15 @@ namespace BDFramework.Editor.AssetGraph.Node
                 case CompareModeEnum.Regex:
                 {
                     Regex regex = new Regex(group.ToLower());
+                    return regex.IsMatch(path.ToLower());
+                }
+                    break;
+                case CompareModeEnum.WildCard:
+                {
+                    var split = group.ToLower().Split(Settings.KEYWORD_WILDCARD);
+                    var groupingKeywordPrefix = split[0];
+                    var groupingKeywordPostfix = split[1];
+                    Regex regex = new Regex(groupingKeywordPrefix + "(.*?)" + groupingKeywordPostfix);
                     return regex.IsMatch(path.ToLower());
                 }
                     break;
