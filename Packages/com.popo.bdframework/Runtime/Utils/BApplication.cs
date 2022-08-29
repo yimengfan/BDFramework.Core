@@ -213,17 +213,17 @@ namespace BDFramework.Core.Tools
             {
                 case RuntimePlatform.WindowsEditor:
                 case RuntimePlatform.WindowsPlayer:
-                    return "Windows";
+                    return "windows";
                 case RuntimePlatform.Android:
-                    return "Android";
+                    return "android";
                 case RuntimePlatform.OSXEditor:
                 case RuntimePlatform.OSXPlayer:
-                    return "OSX";
+                    return "osx";
                 case RuntimePlatform.IPhonePlayer:
-                    return "iOS";
+                    return "ios";
             }
 
-            return platform.ToString().Replace("Editor", "");
+            return platform.ToString().Replace("Editor", "").ToLower();
         }
 
 

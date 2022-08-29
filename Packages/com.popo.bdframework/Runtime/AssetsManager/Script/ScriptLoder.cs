@@ -9,7 +9,7 @@ namespace BDFramework
 {
     static public class ScriptLoder
     {
-        static readonly public string DLL_PATH = "Hotfix/hotfix.dll";
+        static readonly public string DLL_PATH = "script/hotfix.dll";
 
         /// <summary>
         /// 反射注册

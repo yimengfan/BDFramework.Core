@@ -22,17 +22,17 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 美术根目录
         /// </summary>
-        readonly static public string ART_ASSET_ROOT_PATH = "Art";
+        readonly static public string ART_ASSET_ROOT_PATH = "assets";
 
         /// <summary>
         /// 美术资源config配置
         /// </summary>
-        readonly static public string ART_ASSET_CONFIG_PATH = ART_ASSET_ROOT_PATH + "/ArtConfig.Info";
+        readonly static public string ART_ASSET_CONFIG_PATH = ART_ASSET_ROOT_PATH + "/art_assets_config.info";
 
         /// <summary>
         /// 资源信息
         /// </summary>
-        readonly static public string ART_ASSET_TYPES_PATH = ART_ASSET_ROOT_PATH + "/AssetTypeConfig.Info";
+        readonly static public string ART_ASSET_TYPES_PATH = ART_ASSET_ROOT_PATH + "/asset_type_config.info";
 
         /// <summary>
         /// 构建时的信息(Editor用)

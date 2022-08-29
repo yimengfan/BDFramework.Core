@@ -12,12 +12,12 @@ namespace BDFramework.Sql
         /// <summary>
         /// 本地DB Path
         /// </summary>
-        public readonly static string LOCAL_DB_PATH = "Local.db";
+        public readonly static string LOCAL_DB_PATH = "local.db";
 
         /// <summary>
         /// ServerDB Path
         /// </summary>
-        public readonly static string SERVER_DB_PATH = "Server.db";
+        public readonly static string SERVER_DB_PATH = "server.db";
 
         /// <summary>
         /// sql驱动对象

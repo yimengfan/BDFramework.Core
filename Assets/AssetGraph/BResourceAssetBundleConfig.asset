@@ -454,12 +454,6 @@ MonoBehaviour:
         width: 10
         height: 23
   m_allConnections:
-  - m_id: 1691dc7e-b7cc-4a49-b074-67bdf844e257
-    m_fromNodeId: 4e93d487-bd56-4bd3-a305-231aeed30565
-    m_fromNodeConnectionPointId: cdfb9790-635f-4c1f-900e-af80a4724a84
-    m_toNodeId: ecbfb000-a67d-4e67-9eab-0fc9da0bfb6d
-    m_toNodeConnectionPoiontId: f860466f-fae3-40ac-851e-dc012f9b858a
-    m_label: +
   - m_id: bc432073-f623-4962-8797-66f5371fcc63
     m_fromNodeId: 3d3399c9-6e09-410a-b617-8b0b97863e4b
     m_fromNodeConnectionPointId: 103f0e06-ef26-4a12-801e-b2c8a1cdd491
@@ -556,7 +550,13 @@ MonoBehaviour:
     m_toNodeId: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
     m_toNodeConnectionPoiontId: 04553e4a-d5e6-4d37-87bb-c10b717f8052
     m_label: Assets/Resource_SVN/Model/
-  m_lastModified: 133059463015128949
+  - m_id: 21ed470f-332e-4420-a430-b619a8da489c
+    m_fromNodeId: 4e93d487-bd56-4bd3-a305-231aeed30565
+    m_fromNodeConnectionPointId: cdfb9790-635f-4c1f-900e-af80a4724a84
+    m_toNodeId: ecbfb000-a67d-4e67-9eab-0fc9da0bfb6d
+    m_toNodeConnectionPoiontId: f860466f-fae3-40ac-851e-dc012f9b858a
+    m_label: +
+  m_lastModified: 133059775772708091
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0
