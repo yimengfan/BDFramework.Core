@@ -75,8 +75,15 @@ namespace BDFramework.Editor.AssetGraph.Node
                     //设置这些资产 保留GUID
                     foreach (var ar in assetGroup.Value)
                     {
-                        BuildingCtx.BuildAssetInfos.AssetInfoMap.TryGetValue(ar.importFrom, out var assetInfo);
-                        assetInfo.IsKeepGUID = true;
+                        if (BuildingCtx != null)
+                        {
+                            BuildingCtx.BuildAssetInfos.AssetInfoMap.TryGetValue(ar.importFrom, out var assetInfo);
+                            if (assetInfo != null)
+                            {
+                                assetInfo.IsKeepGUID = true;
+                            }
+                        }
+                       
                     }
                 }
             }

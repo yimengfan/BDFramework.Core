@@ -107,6 +107,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// 是否修改数据
         /// </summary>
         private bool isDirty;
+
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
             //初始化group list
@@ -128,11 +129,12 @@ namespace BDFramework.Editor.AssetGraph.Node
                 isDirty = true;
                 this.CompareMode = curSelect;
             }
+
             //
             GUILayout.Label("路径匹配:建议以\"/\"结尾,不然路径中包含这一段path都会被匹配上.");
             e_groupList.DoLayoutList();
-            
-            
+
+
             //
             if (isDirty)
             {
@@ -325,7 +327,6 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
             }
 
-            
 
             //1.前面传入的分组不变，新建的分组都会从 上面的分组中移除
             var groupFilterPatList = new List<GroupPathData>(this.groupFilterPathDataList);
@@ -333,17 +334,25 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 var gf = groupFilterPatList[i];
                 //
+                bool isRemove = false;
                 foreach (var ags in incoming)
                 {
                     foreach (var ag in ags.assetGroups)
                     {
                         if (gf.GroupPath == ag.Key)
                         {
-                            groupFilterPatList.RemoveAt(i);
+                            isRemove = true;
+                            break;
                         }
                     }
                 }
+
+                if (isRemove)
+                {
+                    groupFilterPatList.RemoveAt(i);
+                }
             }
+
             //排序
             groupFilterPatList.Sort((a, b) =>
             {
@@ -362,9 +371,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 foreach (var group in ags.assetGroups)
                 {
-                   
                     var assetList = group.Value.ToList();
-                    
+
                     for (int i = assetList.Count - 1; i >= 0; i--)
                     {
                         var assetRef = assetList[i];
@@ -396,6 +404,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     }
                 }
             }
+
             //校验
             int inputCount = 0;
             int outputCount = 0;
@@ -418,7 +427,6 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
 
-
             //一次
             if (connectionsToOutput != null)
             {
@@ -432,11 +440,11 @@ namespace BDFramework.Editor.AssetGraph.Node
                     }
                     else
                     {
-                        Debug.LogError($" 找不到输出节点:{ outpointNode.Label} - {outpointNode.FromNodeConnectionPointId}");
+                        Debug.LogError($" 找不到输出节点:{outpointNode.Label} - {outpointNode.FromNodeConnectionPointId}");
                     }
                 }
             }
-        } 
+        }
 
 
         /// <summary>
