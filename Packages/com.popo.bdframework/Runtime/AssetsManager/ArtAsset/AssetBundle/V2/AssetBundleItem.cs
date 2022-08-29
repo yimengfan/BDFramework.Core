@@ -39,12 +39,16 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public string LoadPath { get; private set; } = "";
 
+        /// <summary>
+        /// 有些资产保留GUID加载
+        /// </summary>
+        public string GUID { get;  set; } = "";
 
         /// <summary>
-        /// 引用AB的信息
+        /// AB包的引用Id
         /// 用以节省配置空间
         /// </summary>
-        public int RefABId { get; set; } = 0;
+        public int RefAssetBundleId { get; private set; } = 0;
 
         /// <summary>
         /// ab的资源路径
@@ -55,7 +59,15 @@ namespace BDFramework.ResourceMgr.V2
         /// ab hash
         /// 用murmurhash3算法
         /// </summary>
-        public string  Hash { get; set; }
+        public string Hash { get; set; }
+
+        /// <summary>
+        /// 打包成ab的源Assets汇总的hash，
+        /// 用于各种校验 
+        /// </summary>
+        public string AssetsPackSourceHash { get; set; }
+
+
         /// <summary>
         /// 混淆
         /// </summary>
@@ -65,5 +77,15 @@ namespace BDFramework.ResourceMgr.V2
         /// 依赖
         /// </summary>
         public int[] DependAssetIds { get; set; } = new int[] { };
+
+
+        /// <summary>
+        /// 设置引用ab的id
+        /// </summary>
+        public void SetRefAssetBundleId(int refABId)
+        {
+            this.AssetBundlePath = "";
+            this.RefAssetBundleId = refABId;
+        }
     }
 }

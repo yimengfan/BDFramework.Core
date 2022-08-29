@@ -214,8 +214,8 @@ namespace BDFramework.ResourceMgr.V2
             var ret = guidAssetBundleItemCahceMap.TryGetValue(guid, out var assetBundleItem);
             if (!ret)
             {
-                //默认是assetbunlepath = meta guid
-                assetBundleItem = this.AssetbundleItemList.Find((abi) => abi.AssetBundlePath.Equals(guid));
+                //保留guid资产 才能用该方式加载
+                assetBundleItem = this.AssetbundleItemList.Find((abi) => abi.GUID.Equals(guid));
                 guidAssetBundleItemCahceMap[guid] = assetBundleItem;
             }
 

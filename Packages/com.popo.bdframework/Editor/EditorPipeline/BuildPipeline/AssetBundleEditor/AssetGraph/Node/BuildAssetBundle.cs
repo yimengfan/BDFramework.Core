@@ -90,10 +90,10 @@ namespace BDFramework.Editor.AssetGraph.Node
             //重整assetbundle颗粒度
             tempBuildAssetsInfo.ReorganizeAssetBundleUnit();
             //对比差异文件
-            AssetBundleToolsV2.GetChangedAssetsByFileHash(this.BuildingCtx.BuildParams.OutputPath, target, tempBuildAssetsInfo);
+            var changedAssetList = AssetBundleToolsV2.GetChangedAssetsByFileHash(this.BuildingCtx.BuildParams.OutputPath, target, tempBuildAssetsInfo);
 
             //搜集所有的 asset reference 
-            List<AssetReference> assetReferenceList = new List<AssetReference>();
+            var assetReferenceList = new List<AssetReference>();
             foreach (var ags in incoming)
             {
                 foreach (var ag in ags.assetGroups)

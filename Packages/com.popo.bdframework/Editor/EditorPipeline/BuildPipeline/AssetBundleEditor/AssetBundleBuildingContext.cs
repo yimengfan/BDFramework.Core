@@ -58,15 +58,15 @@ namespace BDFramework.Editor.AssetBundle
         {
 
             //1.生成BuildingAssetInfo信息
-            BuildAssetInfos buildCache = null;
+            BuildAssetInfos buildInfoCache = null;
             //获取缓存
             if (!this.BuildParams.IsBuilding && !isForceReCollect)
             {
-                buildCache = EditorAssetInfosCache.GetBuildingAssetInfosCache();
+                buildInfoCache = EditorAssetInfosCache.GetBuildingAssetInfosCache();
             }
             
             //获取buildingAssetinfo
-            (this.BuildAssetInfos,this.runtimeAssetsPathList) = AssetBundleToolsV2.GetBuildingAssetInfos(buildCache);
+            (this.BuildAssetInfos,this.runtimeAssetsPathList) = AssetBundleToolsV2.GetBuildingAssetInfos(buildInfoCache);
             //保存
             EditorAssetInfosCache.SaveBuildingAssetInfosCache(this.BuildAssetInfos);
             
@@ -229,7 +229,7 @@ namespace BDFramework.Editor.AssetBundle
             //5.检测本地的Manifest和构建预期对比
             Debug.Log("<color=green>----->5.校验AB依赖</color>");
             var abRootPath = IPath.Combine(BuildParams.OutputPath, BApplication.GetPlatformPath(platform), BResources.ART_ASSET_ROOT_PATH);
-            var previewABUnitMap = BuildAssetInfos.PreviewAssetbundleUnit();
+            var previewABUnitMap = BuildAssetInfos.PreGetAssetbundleUnit();
             var manifestList = Directory.GetFiles(abRootPath, "*.manifest", SearchOption.AllDirectories);
             //解析 manifestBuildParams.OutputPath
             for (int i = 0; i < manifestList.Length; i++)
@@ -313,11 +313,11 @@ namespace BDFramework.Editor.AssetBundle
         /// <param name="buildAssetInfos"></param>
         /// <param name="buildParams"></param>
         /// <param name="platform"></param>
-        private void BuildAssetBundle(List<AssetBundleItem> assetBundleItemList, BuildAssetInfos buildAssetInfos, BuildAssetBundleParams buildParams, RuntimePlatform platform)
+        private void BuildAssetBundle(List<AssetBundleItem> assetBundleItemList,  List<KeyValuePair<string, BuildAssetInfos.AssetInfo>> buildAssetInfos, BuildAssetBundleParams buildParams, RuntimePlatform platform)
         {
             //----------------------------开始设置build ab name-------------------------------
             //根据传进来的资源,设置AB name
-            foreach (var buildInfoItem in buildAssetInfos.AssetInfoMap)
+            foreach (var buildInfoItem in buildAssetInfos)
             {
                 var assetPath = buildInfoItem.Key;
                 var assetData = buildInfoItem.Value;

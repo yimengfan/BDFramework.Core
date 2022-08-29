@@ -61,7 +61,7 @@ namespace BDFramework.Editor.AssetBundle
 
         
         //路径
-        public static string PATH = BApplication.BDEditorCachePath + "/AssetV2_EditorAssetInfosCache";
+        public static string PATH = BApplication.BDEditorCachePath + "/BuildPipelineV2_EditorAssetInfosCache";
         /// <summary>
         /// 获取cache
         /// </summary>
