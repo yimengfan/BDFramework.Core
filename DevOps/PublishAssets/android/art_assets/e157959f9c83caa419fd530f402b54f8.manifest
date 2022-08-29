@@ -1,0 +1,38 @@
+ManifestFileVersion: 0
+CRC: 3996335299
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 85bdcc316e8ce7947e65badbcaae052c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a136c8ea3dbaa7e1bf6892a13884fcb0
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/Windows/UFlux/01Component/Component_test01.prefab
+Dependencies:
+- E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/76c21518bd7f0e64ca49af74a4987cd9

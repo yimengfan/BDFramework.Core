@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 4211138475
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7c04f93ca312b14ed21c5724e4f14a1c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 10a6a558690295dadb3dd990eda0821a
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/Mat/lwrp_lit_test.mat
+Dependencies: []

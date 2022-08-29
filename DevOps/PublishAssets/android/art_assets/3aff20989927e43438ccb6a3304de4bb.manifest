@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 4068117173
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: df81f3494798b460d8986ad4ddf78ed4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/AllAssetType/TextAsset_Json.json
+Dependencies: []

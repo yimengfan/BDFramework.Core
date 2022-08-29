@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 2794993163
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f4cfd398d64431e4fcb84ea5acc84fac
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b1c4c89ef90976e0af8e967bcb404a52
+HashAppended: 0
+ClassTypes:
+- Class: 43
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/AllAssetType/mesh.mesh
+Dependencies: []

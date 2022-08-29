@@ -1,0 +1,1294 @@
+
+{
+  "AssetTypeList" : [
+    "UnityEngine.Texture2D",
+    "UnityEngine.AudioClip",
+    "UnityEngine.Font",
+    "UnityEngine.Mesh",
+    "UnityEngine.U2D.SpriteAtlas",
+    "UnityEngine.GameObject",
+    "UnityEngine.TextAsset",
+    "UnityEngine.Material",
+    "UnityEngine.Sprite",
+    "UnityEngine.ShaderVariantCollection",
+    "UnityEngine.Shader"
+  ],
+  "AssetInfoMap"  : {
+    "assets/resource/runtime/allassettype/archive.jpg" : {
+      "Id" : 1,
+      "ArtConfigIdx" : 1,
+      "Type"         : 0,
+      "ABName"       : "d2a3862f18046f54eb8d3a4da64aa3a4",
+      "ABHash"       : "",
+      "GUID"         : "d2a3862f18046f54eb8d3a4da64aa3a4",
+      "ReferenceCount" : 0,
+      "Hash"           : "2513939842",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/allassettype/audioclip.mp3" : {
+      "Id" : 2,
+      "ArtConfigIdx" : 2,
+      "Type"         : 1,
+      "ABName"       : "d1e9a6292667d134d8745300304b1824",
+      "ABHash"       : "",
+      "GUID"         : "d1e9a6292667d134d8745300304b1824",
+      "ReferenceCount" : 0,
+      "Hash"           : "2085113680",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/allassettype/font1.otf"     : {
+      "Id" : 3,
+      "ArtConfigIdx" : 3,
+      "Type"         : 2,
+      "ABName"       : "d64edb7b5e83d3247b9bbd478715e5a6",
+      "ABHash"       : "",
+      "GUID"         : "d64edb7b5e83d3247b9bbd478715e5a6",
+      "ReferenceCount" : 0,
+      "Hash"           : "1778408420",
+      "DependAssetList" : [
+        "051e691b99a9cb84784ea93c99bcb967"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/allassettype/font2.ttf"     : {
+      "Id" : 4,
+      "ArtConfigIdx" : 4,
+      "Type"         : 2,
+      "ABName"       : "051e691b99a9cb84784ea93c99bcb967",
+      "ABHash"       : "",
+      "GUID"         : "051e691b99a9cb84784ea93c99bcb967",
+      "ReferenceCount" : 0,
+      "Hash"           : "1612219459",
+      "DependAssetList" : [
+        "d64edb7b5e83d3247b9bbd478715e5a6"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/allassettype/mesh.mesh"     : {
+      "Id" : 5,
+      "ArtConfigIdx" : 5,
+      "Type"         : 3,
+      "ABName"       : "17c174d5584b1694b85f182dd46d03f6",
+      "ABHash"       : "",
+      "GUID"         : "17c174d5584b1694b85f182dd46d03f6",
+      "ReferenceCount" : 0,
+      "Hash"           : "391751003",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/allassettype/new sprite atlas.spriteatlas" : {
+      "Id" : 6,
+      "ArtConfigIdx" : 6,
+      "Type"         : 4,
+      "ABName"       : "570885a00974e1d41b1f5d5b4dac96d6",
+      "ABHash"       : "",
+      "GUID"         : "570885a00974e1d41b1f5d5b4dac96d6",
+      "ReferenceCount" : 0,
+      "Hash"           : "1823449114",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/allassettype/prefab.prefab"                : {
+      "Id" : 7,
+      "ArtConfigIdx" : 7,
+      "Type"         : 5,
+      "ABName"       : "f9c24efe9caac82418f78b87f9ec7e2d",
+      "ABHash"       : "",
+      "GUID"         : "f9c24efe9caac82418f78b87f9ec7e2d",
+      "ReferenceCount" : 0,
+      "Hash"           : "3873691502",
+      "DependAssetList" : [
+        "362a42798cd38c844bb6e946a9266c8a",
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/allassettype/tex/tex.png"                  : {
+      "Id" : 8,
+      "ArtConfigIdx" : 8,
+      "Type"         : 0,
+      "ABName"       : "16dd6483913a3c244b1a552e76dda7a7",
+      "ABHash"       : "",
+      "GUID"         : "16dd6483913a3c244b1a552e76dda7a7",
+      "ReferenceCount" : 0,
+      "Hash"           : "4175490514",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/allassettype/textasset_json.json"          : {
+      "Id" : 9,
+      "ArtConfigIdx" : 9,
+      "Type"         : 6,
+      "ABName"       : "3aff20989927e43438ccb6a3304de4bb",
+      "ABHash"       : "",
+      "GUID"         : "3aff20989927e43438ccb6a3304de4bb",
+      "ReferenceCount" : 0,
+      "Hash"           : "3810375894",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/allassettype/textasset_txt.txt"            : {
+      "Id" : 10,
+      "ArtConfigIdx" : 10,
+      "Type"         : 6,
+      "ABName"       : "654c8f5bda70b1540b7bfb67bdaf5624",
+      "ABHash"       : "",
+      "GUID"         : "654c8f5bda70b1540b7bfb67bdaf5624",
+      "ReferenceCount" : 0,
+      "Hash"           : "3907302357",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/allassettype/textasset_xml.xml"            : {
+      "Id" : 11,
+      "ArtConfigIdx" : 11,
+      "Type"         : 6,
+      "ABName"       : "e36c1226daad07342ab8c716b22e75a7",
+      "ABHash"       : "",
+      "GUID"         : "e36c1226daad07342ab8c716b22e75a7",
+      "ReferenceCount" : 0,
+      "Hash"           : "3937694802",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/assettest/cube.mat"                        : {
+      "Id" : 12,
+      "ArtConfigIdx" : 12,
+      "Type"         : 7,
+      "ABName"       : "d4a88a73900de024eb62d0da15c80841",
+      "ABHash"       : "",
+      "GUID"         : "d4a88a73900de024eb62d0da15c80841",
+      "ReferenceCount" : 0,
+      "Hash"           : "4056781374",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/assettest/cube.prefab"                     : {
+      "Id" : 13,
+      "ArtConfigIdx" : 13,
+      "Type"         : 5,
+      "ABName"       : "f43f8753e3c3460499a09f37075d54cf",
+      "ABHash"       : "",
+      "GUID"         : "f43f8753e3c3460499a09f37075d54cf",
+      "ReferenceCount" : 0,
+      "Hash"           : "1316842752",
+      "DependAssetList" : [
+        "d4a88a73900de024eb62d0da15c80841",
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/assettest/particle.prefab"                 : {
+      "Id" : 14,
+      "ArtConfigIdx" : 14,
+      "Type"         : 5,
+      "ABName"       : "e5ef808d32e88b243bd0521877b3b07a",
+      "ABHash"       : "",
+      "GUID"         : "e5ef808d32e88b243bd0521877b3b07a",
+      "ReferenceCount" : 0,
+      "Hash"           : "1323514589",
+      "DependAssetList" : [
+        "2612b115ce3857f45833e28c2325fdbb",
+        "9d59e1d84070e4c46a595b3112d75a40",
+        "635df57f674eda446b0d64328236e858"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/assettest/particletest.mat"                : {
+      "Id" : 15,
+      "ArtConfigIdx" : 15,
+      "Type"         : 7,
+      "ABName"       : "635df57f674eda446b0d64328236e858",
+      "ABHash"       : "",
+      "GUID"         : "635df57f674eda446b0d64328236e858",
+      "ReferenceCount" : 0,
+      "Hash"           : "2691713828",
+      "DependAssetList" : [
+        "2612b115ce3857f45833e28c2325fdbb",
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/assettest/smoke_tex_012.png"               : {
+      "Id" : 16,
+      "ArtConfigIdx" : 16,
+      "Type"         : 0,
+      "ABName"       : "9e1ccbb85029ae447b779059c47e8da6",
+      "ABHash"       : "",
+      "GUID"         : "9e1ccbb85029ae447b779059c47e8da6",
+      "ReferenceCount" : 0,
+      "Hash"           : "1857028350",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/assettest/timg.jpg"                        : {
+      "Id" : 17,
+      "ArtConfigIdx" : 17,
+      "Type"         : 0,
+      "ABName"       : "2612b115ce3857f45833e28c2325fdbb",
+      "ABHash"       : "",
+      "GUID"         : "2612b115ce3857f45833e28c2325fdbb",
+      "ReferenceCount" : 0,
+      "Hash"           : "1669382831",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/image/1.jpeg"                              : {
+      "Id" : 18,
+      "ArtConfigIdx" : 18,
+      "Type"         : 8,
+      "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ABHash"       : "",
+      "GUID"         : "af8afac1060027d47a8cc75d2fe620f2",
+      "ReferenceCount" : 0,
+      "Hash"           : "1115685974",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/image/2.jpeg"                              : {
+      "Id" : 19,
+      "ArtConfigIdx" : 19,
+      "Type"         : 8,
+      "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ABHash"       : "",
+      "GUID"         : "1f433eab888c98b4f89dc81c8a5dbdcf",
+      "ReferenceCount" : 0,
+      "Hash"           : "3432986408",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/image/3.jpeg"                              : {
+      "Id" : 20,
+      "ArtConfigIdx" : 20,
+      "Type"         : 8,
+      "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ABHash"       : "",
+      "GUID"         : "d0528a1f2ccc35b47b50d2c86c9f2d81",
+      "ReferenceCount" : 0,
+      "Hash"           : "1063417347",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/image/4.jpeg"                              : {
+      "Id" : 21,
+      "ArtConfigIdx" : 21,
+      "Type"         : 8,
+      "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ABHash"       : "",
+      "GUID"         : "7c485af2c7b6ef743b74f557ed3a6c78",
+      "ReferenceCount" : 0,
+      "Hash"           : "3883372430",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/image/5.jpeg"                              : {
+      "Id" : 22,
+      "ArtConfigIdx" : 22,
+      "Type"         : 8,
+      "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ABHash"       : "",
+      "GUID"         : "b2e724e95bc1b2949a0c885ae9ac706c",
+      "ReferenceCount" : 0,
+      "Hash"           : "2949834433",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/image/6.jpeg"                              : {
+      "Id" : 23,
+      "ArtConfigIdx" : 23,
+      "Type"         : 8,
+      "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ABHash"       : "",
+      "GUID"         : "44b48269b08f8b14f877d701eb4db5c0",
+      "ReferenceCount" : 0,
+      "Hash"           : "2385964686",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/image/7.jpeg"                              : {
+      "Id" : 24,
+      "ArtConfigIdx" : 24,
+      "Type"         : 8,
+      "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ABHash"       : "",
+      "GUID"         : "47288d62745a0de4686ed133ccea974d",
+      "ReferenceCount" : 0,
+      "Hash"           : "1922307538",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/image/8.jpeg"                              : {
+      "Id" : 25,
+      "ArtConfigIdx" : 25,
+      "Type"         : 8,
+      "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ABHash"       : "",
+      "GUID"         : "54c56be4b2db31a478162c026395a4bc",
+      "ReferenceCount" : 0,
+      "Hash"           : "2672635182",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/image/9.jpeg"                              : {
+      "Id" : 26,
+      "ArtConfigIdx" : 26,
+      "Type"         : 8,
+      "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ABHash"       : "",
+      "GUID"         : "43dc9b46d20ad6646ab98251fe2cb5e4",
+      "ReferenceCount" : 0,
+      "Hash"           : "2603091533",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/image/10.jpeg"                             : {
+      "Id" : 27,
+      "ArtConfigIdx" : 27,
+      "Type"         : 8,
+      "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ABHash"       : "",
+      "GUID"         : "ded86f45cdc94524fbce023e2a5fe6c3",
+      "ReferenceCount" : 0,
+      "Hash"           : "3349152791",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/loadalltest/timg.jpg"                      : {
+      "Id" : 28,
+      "ArtConfigIdx" : 28,
+      "Type"         : 8,
+      "ABName"       : "5db1852abb9a1a6458bd981cd87dd3ab",
+      "ABHash"       : "",
+      "GUID"         : "5db1852abb9a1a6458bd981cd87dd3ab",
+      "ReferenceCount" : 0,
+      "Hash"           : "2390531392",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/mat/lwrp_lit_test.mat"                     : {
+      "Id" : 29,
+      "ArtConfigIdx" : 29,
+      "Type"         : 7,
+      "ABName"       : "51f5616e141ad98478c3557ebbf2b999",
+      "ABHash"       : "",
+      "GUID"         : "51f5616e141ad98478c3557ebbf2b999",
+      "ReferenceCount" : 0,
+      "Hash"           : "4274477129",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/mix_ab_source/obf001.txt"                  : {
+      "Id" : 30,
+      "ArtConfigIdx" : 30,
+      "Type"         : 6,
+      "ABName"       : "f7bebf224507bfc42975ec5a95b16160",
+      "ABHash"       : "",
+      "GUID"         : "f7bebf224507bfc42975ec5a95b16160",
+      "ReferenceCount" : 0,
+      "Hash"           : "13768519",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/mix_ab_source/obf002.txt"                  : {
+      "Id" : 31,
+      "ArtConfigIdx" : 31,
+      "Type"         : 6,
+      "ABName"       : "179f46cdc961bcd4bbd50a7aa2721f80",
+      "ABHash"       : "",
+      "GUID"         : "179f46cdc961bcd4bbd50a7aa2721f80",
+      "ReferenceCount" : 0,
+      "Hash"           : "4125858197",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/mix_ab_source/obf003.txt"                  : {
+      "Id" : 32,
+      "ArtConfigIdx" : 32,
+      "Type"         : 6,
+      "ABName"       : "759d8b554e3d37847a6d32a52c39ff46",
+      "ABHash"       : "",
+      "GUID"         : "759d8b554e3d37847a6d32a52c39ff46",
+      "ReferenceCount" : 0,
+      "Hash"           : "4196231823",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/mix_ab_source/obf004.txt"                  : {
+      "Id" : 33,
+      "ArtConfigIdx" : 33,
+      "Type"         : 6,
+      "ABName"       : "faa9a0f13e41cad409f038f4fff2a228",
+      "ABHash"       : "",
+      "GUID"         : "faa9a0f13e41cad409f038f4fff2a228",
+      "ReferenceCount" : 0,
+      "Hash"           : "2050698193",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/mix_ab_source/obf005.txt"                  : {
+      "Id" : 34,
+      "ArtConfigIdx" : 34,
+      "Type"         : 6,
+      "ABName"       : "3059f944eee2cbb4998bc4a6b7a0424a",
+      "ABHash"       : "",
+      "GUID"         : "3059f944eee2cbb4998bc4a6b7a0424a",
+      "ReferenceCount" : 0,
+      "Hash"           : "362425915",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/mix_ab_source/obf006.txt"                  : {
+      "Id" : 35,
+      "ArtConfigIdx" : 35,
+      "Type"         : 6,
+      "ABName"       : "42ade048d02c43942b255f63990b3ef4",
+      "ABHash"       : "",
+      "GUID"         : "42ade048d02c43942b255f63990b3ef4",
+      "ReferenceCount" : 0,
+      "Hash"           : "3485556956",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/mix_ab_source/obf007.txt"                  : {
+      "Id" : 36,
+      "ArtConfigIdx" : 36,
+      "Type"         : 6,
+      "ABName"       : "03261b91951820a40bec94cb7c5dde24",
+      "ABHash"       : "",
+      "GUID"         : "03261b91951820a40bec94cb7c5dde24",
+      "ReferenceCount" : 0,
+      "Hash"           : "2654574426",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/mix_ab_source/obf008.txt"                  : {
+      "Id" : 37,
+      "ArtConfigIdx" : 37,
+      "Type"         : 6,
+      "ABName"       : "fb5ebad071fb43d4cba483e50f706da6",
+      "ABHash"       : "",
+      "GUID"         : "fb5ebad071fb43d4cba483e50f706da6",
+      "ReferenceCount" : 0,
+      "Hash"           : "1489719721",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/mix_ab_source/obf009.txt"                  : {
+      "Id" : 38,
+      "ArtConfigIdx" : 38,
+      "Type"         : 6,
+      "ABName"       : "c75b9dcf9cd90f849932f8e894451482",
+      "ABHash"       : "",
+      "GUID"         : "c75b9dcf9cd90f849932f8e894451482",
+      "ReferenceCount" : 0,
+      "Hash"           : "3869770087",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/mix_ab_source/obf010.txt"                  : {
+      "Id" : 39,
+      "ArtConfigIdx" : 39,
+      "Type"         : 6,
+      "ABName"       : "888db6dc4d8fee245a31856655840a46",
+      "ABHash"       : "",
+      "GUID"         : "888db6dc4d8fee245a31856655840a46",
+      "ReferenceCount" : 0,
+      "Hash"           : "3041036670",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/objectpool/bullet.png"                     : {
+      "Id" : 40,
+      "ArtConfigIdx" : 40,
+      "Type"         : 8,
+      "ABName"       : "43f3d8a9a7fdd6f469aea742dd9af679",
+      "ABHash"       : "",
+      "GUID"         : "43f3d8a9a7fdd6f469aea742dd9af679",
+      "ReferenceCount" : 0,
+      "Hash"           : "116224092",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/objectpool/bullet.prefab"                  : {
+      "Id" : 41,
+      "ArtConfigIdx" : 41,
+      "Type"         : 5,
+      "ABName"       : "e714f4b086504d747a4926157f5eb3e0",
+      "ABHash"       : "",
+      "GUID"         : "e714f4b086504d747a4926157f5eb3e0",
+      "ReferenceCount" : 0,
+      "Hash"           : "3367637315",
+      "DependAssetList" : [
+        "43f3d8a9a7fdd6f469aea742dd9af679"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/shader/allshaders.shadervariants"          : {
+      "Id" : 42,
+      "ArtConfigIdx" : 42,
+      "Type"         : 9,
+      "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
+      "ABHash"       : "",
+      "GUID"         : "9d59e1d84070e4c46a595b3112d75a40",
+      "ReferenceCount" : 0,
+      "Hash"           : "1430778274",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/spriteatlas/sa2019.spriteatlas"            : {
+      "Id" : 43,
+      "ArtConfigIdx" : 43,
+      "Type"         : 4,
+      "ABName"       : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ABHash"       : "",
+      "GUID"         : "76c21518bd7f0e64ca49af74a4987cd9",
+      "ReferenceCount" : 0,
+      "Hash"           : "3777824043",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/spriteatlas/sa2019_notinruntime.spriteatlas" : {
+      "Id" : 44,
+      "ArtConfigIdx" : 44,
+      "Type"         : 4,
+      "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
+      "ABHash"       : "",
+      "GUID"         : "ec429a586bfac5f4284f3a31749303e7",
+      "ReferenceCount" : 0,
+      "Hash"           : "1922944085",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/test/cube.prefab"                            : {
+      "Id" : 45,
+      "ArtConfigIdx" : 45,
+      "Type"         : 5,
+      "ABName"       : "a7feec6462d3d3249936655cf4e31de5",
+      "ABHash"       : "",
+      "GUID"         : "a7feec6462d3d3249936655cf4e31de5",
+      "ReferenceCount" : 0,
+      "Hash"           : "2940166805",
+      "DependAssetList" : [
+        "362a42798cd38c844bb6e946a9266c8a",
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/test/new material.mat"                       : {
+      "Id" : 46,
+      "ArtConfigIdx" : 46,
+      "Type"         : 7,
+      "ABName"       : "362a42798cd38c844bb6e946a9266c8a",
+      "ABHash"       : "",
+      "GUID"         : "362a42798cd38c844bb6e946a9266c8a",
+      "ReferenceCount" : 0,
+      "Hash"           : "2575548217",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/grid.prefab"                         : {
+      "Id" : 47,
+      "ArtConfigIdx" : 47,
+      "Type"         : 5,
+      "ABName"       : "36c26bcd10b840e4f9868d6a6b9b6b37",
+      "ABHash"       : "",
+      "GUID"         : "36c26bcd10b840e4f9868d6a6b9b6b37",
+      "ReferenceCount" : 0,
+      "Hash"           : "2190346112",
+      "DependAssetList" : [
+        "76c21518bd7f0e64ca49af74a4987cd9"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/uflux/01component/component_test01.prefab" : {
+      "Id" : 48,
+      "ArtConfigIdx" : 48,
+      "Type"         : 5,
+      "ABName"       : "e157959f9c83caa419fd530f402b54f8",
+      "ABHash"       : "",
+      "GUID"         : "e157959f9c83caa419fd530f402b54f8",
+      "ReferenceCount" : 0,
+      "Hash"           : "1851523669",
+      "DependAssetList" : [
+        "76c21518bd7f0e64ca49af74a4987cd9"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/uflux/01component/window_test003.prefab"   : {
+      "Id" : 49,
+      "ArtConfigIdx" : 49,
+      "Type"         : 5,
+      "ABName"       : "0fab552ab15035e4d82bf9adc52725f6",
+      "ABHash"       : "",
+      "GUID"         : "0fab552ab15035e4d82bf9adc52725f6",
+      "ReferenceCount" : 0,
+      "Hash"           : "4175978386",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/uflux/02customcomponentbindadator/01/item.prefab" : {
+      "Id" : 50,
+      "ArtConfigIdx" : 50,
+      "Type"         : 5,
+      "ABName"       : "7ab40f5c94bb46c4d8bdc9719471a0ea",
+      "ABHash"       : "",
+      "GUID"         : "7ab40f5c94bb46c4d8bdc9719471a0ea",
+      "ReferenceCount" : 0,
+      "Hash"           : "3028092072",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/uflux/02customcomponentbindadator/01/window_test.prefab" : {
+      "Id" : 51,
+      "ArtConfigIdx" : 51,
+      "Type"         : 5,
+      "ABName"       : "a68e48a29a930504a9ca43956d727eed",
+      "ABHash"       : "",
+      "GUID"         : "a68e48a29a930504a9ca43956d727eed",
+      "ReferenceCount" : 0,
+      "Hash"           : "1332738460",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/uflux/02customcomponentbindadator/02/window_test.prefab" : {
+      "Id" : 52,
+      "ArtConfigIdx" : 52,
+      "Type"         : 5,
+      "ABName"       : "f69fe24036fa721438c98fb52af11c6b",
+      "ABHash"       : "",
+      "GUID"         : "f69fe24036fa721438c98fb52af11c6b",
+      "ReferenceCount" : 0,
+      "Hash"           : "1847044442",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/uflux/demo004/window_simplewindow.prefab"                : {
+      "Id" : 53,
+      "ArtConfigIdx" : 53,
+      "Type"         : 5,
+      "ABName"       : "2090e433e199dc549aae632bee6b20d9",
+      "ABHash"       : "",
+      "GUID"         : "2090e433e199dc549aae632bee6b20d9",
+      "ReferenceCount" : 0,
+      "Hash"           : "4126238453",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/uflux/demo005/window_propsdemo.prefab"                   : {
+      "Id" : 54,
+      "ArtConfigIdx" : 54,
+      "Type"         : 5,
+      "ABName"       : "7d3eab7902fddd347af42de5a0958047",
+      "ABHash"       : "",
+      "GUID"         : "7d3eab7902fddd347af42de5a0958047",
+      "ReferenceCount" : 0,
+      "Hash"           : "2511204703",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/uflux/demo006/window_reducer.prefab"                     : {
+      "Id" : 55,
+      "ArtConfigIdx" : 55,
+      "Type"         : 5,
+      "ABName"       : "22d5ca41200316741aaa39b9c265eb9b",
+      "ABHash"       : "",
+      "GUID"         : "22d5ca41200316741aaa39b9c265eb9b",
+      "ReferenceCount" : 0,
+      "Hash"           : "2932535669",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/uflux/demo007/window_di.prefab"                          : {
+      "Id" : 56,
+      "ArtConfigIdx" : 56,
+      "Type"         : 5,
+      "ABName"       : "7c6f5172672ac234a85467bc91e5283f",
+      "ABHash"       : "",
+      "GUID"         : "7c6f5172672ac234a85467bc91e5283f",
+      "ReferenceCount" : 0,
+      "Hash"           : "705803003",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/uflux/window_fluxmain.prefab"                            : {
+      "Id" : 57,
+      "ArtConfigIdx" : 57,
+      "Type"         : 5,
+      "ABName"       : "0cd1aa33ffab96440974e3fd84b4e99f",
+      "ABHash"       : "",
+      "GUID"         : "0cd1aa33ffab96440974e3fd84b4e99f",
+      "ReferenceCount" : 0,
+      "Hash"           : "1352783812",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/window_datalistener.prefab"                              : {
+      "Id" : 58,
+      "ArtConfigIdx" : 58,
+      "Type"         : 5,
+      "ABName"       : "890171c9213476c4487fdfe8320fed47",
+      "ABHash"       : "",
+      "GUID"         : "890171c9213476c4487fdfe8320fed47",
+      "ReferenceCount" : 0,
+      "Hash"           : "849242501",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/window_demo1.prefab"                                     : {
+      "Id" : 59,
+      "ArtConfigIdx" : 59,
+      "Type"         : 5,
+      "ABName"       : "3b35ba17053b1d34792c38b1d32a4a12",
+      "ABHash"       : "",
+      "GUID"         : "3b35ba17053b1d34792c38b1d32a4a12",
+      "ReferenceCount" : 0,
+      "Hash"           : "915875721",
+      "DependAssetList" : [
+        "d2abdb77f35d37c4c9469630d1f22e50"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/window_demo5_spriteatlas.prefab"                         : {
+      "Id" : 60,
+      "ArtConfigIdx" : 60,
+      "Type"         : 5,
+      "ABName"       : "d5430f7acac73bb4eaa529db1d8b763a",
+      "ABHash"       : "",
+      "GUID"         : "d5430f7acac73bb4eaa529db1d8b763a",
+      "ReferenceCount" : 0,
+      "Hash"           : "341522635",
+      "DependAssetList" : [
+        "76c21518bd7f0e64ca49af74a4987cd9",
+        "ec429a586bfac5f4284f3a31749303e7",
+        "36c26bcd10b840e4f9868d6a6b9b6b37"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/runtime/windows/window_demomain.prefab"                                  : {
+      "Id" : 61,
+      "ArtConfigIdx" : 61,
+      "Type"         : 5,
+      "ABName"       : "3d1d74f67a3b7b54ba46fec8ab67f807",
+      "ABHash"       : "",
+      "GUID"         : "3d1d74f67a3b7b54ba46fec8ab67f807",
+      "ReferenceCount" : 0,
+      "Hash"           : "1393169694",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/runtime/char/001.prefab"                                             : {
+      "Id" : 62,
+      "ArtConfigIdx" : 62,
+      "Type"         : 5,
+      "ABName"       : "bfcd26e55a55bd04f8a6f662bdde9abf",
+      "ABHash"       : "",
+      "GUID"         : "bfcd26e55a55bd04f8a6f662bdde9abf",
+      "ReferenceCount" : 0,
+      "Hash"           : "3332122225",
+      "DependAssetList" : [
+        "9ae31c8b351113b44a663362fc4f41e9",
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/runtime/char/002.prefab"                                             : {
+      "Id" : 63,
+      "ArtConfigIdx" : 63,
+      "Type"         : 5,
+      "ABName"       : "0bfcd856254d3f34b87bb6f99b9f3dfb",
+      "ABHash"       : "",
+      "GUID"         : "0bfcd856254d3f34b87bb6f99b9f3dfb",
+      "ReferenceCount" : 0,
+      "Hash"           : "1622384457",
+      "DependAssetList" : [
+        "ffdcaf5f90ad6424daa282d10724bfc2",
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/runtime/char/003.prefab"                                             : {
+      "Id" : 64,
+      "ArtConfigIdx" : 64,
+      "Type"         : 5,
+      "ABName"       : "00142fc9b13ce334d94e23f367a33d75",
+      "ABHash"       : "",
+      "GUID"         : "00142fc9b13ce334d94e23f367a33d75",
+      "ReferenceCount" : 0,
+      "Hash"           : "3136605819",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40",
+        "68ce09b862773374cbf71b2566b5dfbb"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/runtime/cubesvn.prefab"                                              : {
+      "Id" : 65,
+      "ArtConfigIdx" : 65,
+      "Type"         : 5,
+      "ABName"       : "ae37c57b09de2ec4399a3eceb62b77ea",
+      "ABHash"       : "",
+      "GUID"         : "ae37c57b09de2ec4399a3eceb62b77ea",
+      "ReferenceCount" : 0,
+      "Hash"           : "2550435831",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40",
+        "096dee19ab67ffc44ba3f8f790da67b4"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/runtime/cubesvnmat.mat"                                              : {
+      "Id" : 66,
+      "ArtConfigIdx" : 66,
+      "Type"         : 7,
+      "ABName"       : "096dee19ab67ffc44ba3f8f790da67b4",
+      "ABHash"       : "",
+      "GUID"         : "096dee19ab67ffc44ba3f8f790da67b4",
+      "ReferenceCount" : 0,
+      "Hash"           : "2152852884",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/runtime/testmat_forkeywordcollect/arrow 1.mat"                       : {
+      "Id" : 67,
+      "ArtConfigIdx" : 67,
+      "Type"         : 7,
+      "ABName"       : "70ed25d8f6269304483b716d4ffd3434",
+      "ABHash"       : "",
+      "GUID"         : "70ed25d8f6269304483b716d4ffd3434",
+      "ReferenceCount" : 0,
+      "Hash"           : "3837585026",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/runtime/testmat_forkeywordcollect/arrow.mat"                         : {
+      "Id" : 68,
+      "ArtConfigIdx" : 68,
+      "Type"         : 7,
+      "ABName"       : "c0d661c42cc867d46887fa3b94908542",
+      "ABHash"       : "",
+      "GUID"         : "c0d661c42cc867d46887fa3b94908542",
+      "ReferenceCount" : 0,
+      "Hash"           : "1784850627",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/runtime/testmat_forkeywordcollect/h_role_lanzhan_clotha_000.mat"     : {
+      "Id" : 69,
+      "ArtConfigIdx" : 69,
+      "Type"         : 7,
+      "ABName"       : "8fb6653cf0d095a4da38233e10efdb41",
+      "ABHash"       : "",
+      "GUID"         : "8fb6653cf0d095a4da38233e10efdb41",
+      "ReferenceCount" : 0,
+      "Hash"           : "616648277",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/shaders/builtin_shaders-2019/defaultresourcesextra/unlit/unlit-color.shader" : {
+      "Id" : 70,
+      "ArtConfigIdx" : -1,
+      "Type"         : 10,
+      "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
+      "ABHash"       : "",
+      "GUID"         : "00218e4f0ba5f5342b9e30a2079bede9",
+      "ReferenceCount" : 0,
+      "Hash"           : "2638808572",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "packages/com.unity.render-pipelines.universal/shaders/particles/particlesunlit.shader"       : {
+      "Id" : 71,
+      "ArtConfigIdx" : -1,
+      "Type"         : 10,
+      "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
+      "ABHash"       : "",
+      "GUID"         : "0406db5a14f94604a8c57ccfbc9f3b46",
+      "ReferenceCount" : 0,
+      "Hash"           : "2355097294",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "packages/com.unity.render-pipelines.universal/shaders/lit.shader"                            : {
+      "Id" : 72,
+      "ArtConfigIdx" : -1,
+      "Type"         : 10,
+      "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
+      "ABHash"       : "",
+      "GUID"         : "933532a4fcc9baf4fa0491de14d08ed7",
+      "ReferenceCount" : 0,
+      "Hash"           : "1735209477",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/shaders/testshader/defaultresourcesextra/standard.shader"                    : {
+      "Id" : 73,
+      "ArtConfigIdx" : -1,
+      "Type"         : 10,
+      "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
+      "ABHash"       : "",
+      "GUID"         : "62873910d2c8cdc4a8e7e4b49ecfe37e",
+      "ReferenceCount" : 0,
+      "Hash"           : "153497669",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/shaders/testshader/defaultresourcesextra/normal-vertexlit.shader"            : {
+      "Id" : 74,
+      "ArtConfigIdx" : -1,
+      "Type"         : 10,
+      "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
+      "ABHash"       : "",
+      "GUID"         : "a5d7a784372567a469e1b498c7bdd697",
+      "ReferenceCount" : 0,
+      "Hash"           : "2040066693",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/shaders/testshader/shader/pbr_silk.shader"                                   : {
+      "Id" : 75,
+      "ArtConfigIdx" : -1,
+      "Type"         : 10,
+      "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
+      "ABHash"       : "",
+      "GUID"         : "d053233f84bf8c047bef2431d30a7eb7",
+      "ReferenceCount" : 0,
+      "Hash"           : "1322287119",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/image/test2/5.jpg"                                                           : {
+      "Id" : 76,
+      "ArtConfigIdx" : -1,
+      "Type"         : 8,
+      "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
+      "ABHash"       : "",
+      "GUID"         : "1b1f04b2ae699c342b01c3a07b2e5e03",
+      "ReferenceCount" : 0,
+      "Hash"           : "2971177096",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/image/test2/3.jpg"                                                           : {
+      "Id" : 77,
+      "ArtConfigIdx" : -1,
+      "Type"         : 8,
+      "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
+      "ABHash"       : "",
+      "GUID"         : "36363df2082242a4596a6b8c7dda8abb",
+      "ReferenceCount" : 0,
+      "Hash"           : "1290778537",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/image/test2/4.jpg"                                                           : {
+      "Id" : 78,
+      "ArtConfigIdx" : -1,
+      "Type"         : 8,
+      "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
+      "ABHash"       : "",
+      "GUID"         : "324b5c460daed5b4ea93aa9d690b508c",
+      "ReferenceCount" : 0,
+      "Hash"           : "1931248090",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/image/test2/10.jpg"                                                          : {
+      "Id" : 79,
+      "ArtConfigIdx" : -1,
+      "Type"         : 8,
+      "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
+      "ABHash"       : "",
+      "GUID"         : "edfb1f96cfbf3b043b10d110680ff91f",
+      "ReferenceCount" : 0,
+      "Hash"           : "2550226276",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/image/test2/9.jpg"                                                           : {
+      "Id" : 80,
+      "ArtConfigIdx" : -1,
+      "Type"         : 8,
+      "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
+      "ABHash"       : "",
+      "GUID"         : "669f7a674010020419c1b821194b8c39",
+      "ReferenceCount" : 0,
+      "Hash"           : "3038880226",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/image/test2/2.jpg"                                                           : {
+      "Id" : 81,
+      "ArtConfigIdx" : -1,
+      "Type"         : 8,
+      "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
+      "ABHash"       : "",
+      "GUID"         : "205e91aa2d4ef4f43a82556c9beffc58",
+      "ReferenceCount" : 0,
+      "Hash"           : "1591161255",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/image/test2/6.jpg"                                                           : {
+      "Id" : 82,
+      "ArtConfigIdx" : -1,
+      "Type"         : 8,
+      "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
+      "ABHash"       : "",
+      "GUID"         : "4047254b0a2e9014f8f66466fb6c8ab4",
+      "ReferenceCount" : 0,
+      "Hash"           : "3961480300",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/image/test2/1.jpg"                                                           : {
+      "Id" : 83,
+      "ArtConfigIdx" : -1,
+      "Type"         : 8,
+      "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
+      "ABHash"       : "",
+      "GUID"         : "9b458a2c447d300438ddb8fdec4f52e6",
+      "ReferenceCount" : 0,
+      "Hash"           : "165851932",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/image/test2/8.jpg"                                                           : {
+      "Id" : 84,
+      "ArtConfigIdx" : -1,
+      "Type"         : 8,
+      "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
+      "ABHash"       : "",
+      "GUID"         : "45b4a2ac7b8750046825d3fdbfa50a79",
+      "ReferenceCount" : 0,
+      "Hash"           : "1194186181",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/image/test2/7.jpg"                                                           : {
+      "Id" : 85,
+      "ArtConfigIdx" : -1,
+      "Type"         : 8,
+      "ABName"       : "ec429a586bfac5f4284f3a31749303e7",
+      "ABHash"       : "",
+      "GUID"         : "affae40fcce2824448f082b077ee1eae",
+      "ReferenceCount" : 0,
+      "Hash"           : "3827189350",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource/image/test/timg (1).jpg"                                                     : {
+      "Id" : 86,
+      "ArtConfigIdx" : 70,
+      "Type"         : 8,
+      "ABName"       : "d2abdb77f35d37c4c9469630d1f22e50",
+      "ABHash"       : "",
+      "GUID"         : "d2abdb77f35d37c4c9469630d1f22e50",
+      "ReferenceCount" : 0,
+      "Hash"           : "896249116",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/model/001/spongebob.obj"                                                 : {
+      "Id" : 87,
+      "ArtConfigIdx" : 71,
+      "Type"         : 5,
+      "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
+      "ABHash"       : "",
+      "GUID"         : "588d2883df702024e8c86857a1a9dd97",
+      "ReferenceCount" : 0,
+      "Hash"           : "1847898514",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/model/001/spongebob_squarepants.png"                                     : {
+      "Id" : 88,
+      "ArtConfigIdx" : -1,
+      "Type"         : 0,
+      "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
+      "ABHash"       : "",
+      "GUID"         : "9870713b13aaf0b4b92d39098c620dea",
+      "ReferenceCount" : 0,
+      "Hash"           : "3088286678",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/model/001/sb.mat"                                                        : {
+      "Id" : 89,
+      "ArtConfigIdx" : -1,
+      "Type"         : 7,
+      "ABName"       : "9ae31c8b351113b44a663362fc4f41e9",
+      "ABHash"       : "",
+      "GUID"         : "30d051dc134b45a43904d6bfbef14c38",
+      "ReferenceCount" : 0,
+      "Hash"           : "4104659658",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/model/002/char_patrick.png"                                              : {
+      "Id" : 90,
+      "ArtConfigIdx" : 72,
+      "Type"         : 0,
+      "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
+      "ABHash"       : "",
+      "GUID"         : "28157152edff2d34aaf47123a03414a0",
+      "ReferenceCount" : 0,
+      "Hash"           : "3474918932",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/model/002/pat.mat"                                                       : {
+      "Id" : 91,
+      "ArtConfigIdx" : -1,
+      "Type"         : 7,
+      "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
+      "ABHash"       : "",
+      "GUID"         : "f115e32a822af8543951c631e48baa80",
+      "ReferenceCount" : 0,
+      "Hash"           : "2621424477",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/model/002/patrick.obj"                                                   : {
+      "Id" : 92,
+      "ArtConfigIdx" : -1,
+      "Type"         : 5,
+      "ABName"       : "ffdcaf5f90ad6424daa282d10724bfc2",
+      "ABHash"       : "",
+      "GUID"         : "8ceea3fb7e2fbf6408e844086568c2ad",
+      "ReferenceCount" : 0,
+      "Hash"           : "3275840817",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/model/3dxy_material_1.mat"                                               : {
+      "Id" : 93,
+      "ArtConfigIdx" : 73,
+      "Type"         : 7,
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ABHash"       : "",
+      "GUID"         : "149bf816ec8356c4782ff08435f35d5d",
+      "ReferenceCount" : 0,
+      "Hash"           : "4177296927",
+      "DependAssetList" : [
+        "9d59e1d84070e4c46a595b3112d75a40"
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/model/3dxy_img_1.png"                                                    : {
+      "Id" : 94,
+      "ArtConfigIdx" : -1,
+      "Type"         : 0,
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ABHash"       : "",
+      "GUID"         : "7a379f57bb413e54c9c683e039b0e216",
+      "ReferenceCount" : 0,
+      "Hash"           : "1189805930",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    },
+    "assets/resource_svn/model/3dxy_geometry_001.mesh"                                            : {
+      "Id" : 95,
+      "ArtConfigIdx" : -1,
+      "Type"         : 3,
+      "ABName"       : "68ce09b862773374cbf71b2566b5dfbb",
+      "ABHash"       : "",
+      "GUID"         : "d6e49a382e792d84987d44a12a1f33b7",
+      "ReferenceCount" : 0,
+      "Hash"           : "4105931160",
+      "DependAssetList" : [
+      ],
+      "IsKeepGUID"      : false
+    }
+  },
+  "Time"          : "2022/8/29"
+}

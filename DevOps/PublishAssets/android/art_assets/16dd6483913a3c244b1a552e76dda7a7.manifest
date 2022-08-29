@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 2147916113
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 65617e7abee0dba12928fd9957b5272d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0a6f9ca6de27cedd10f0532db8ca5f17
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resource/Runtime/AllAssetType/Tex/Tex.png
+Dependencies: []
