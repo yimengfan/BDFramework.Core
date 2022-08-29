@@ -292,6 +292,7 @@ namespace BDFramework.Editor.AssetBundle
         /// <param name="assetInfo">缓存的AssetInfo</param>
         public void AddAsset(string assetPath, AssetInfo assetInfo)
         {
+            assetPath = assetPath.ToLower();
             if (!this.AssetInfoMap.ContainsKey(assetPath))
             {
                 assetInfo.Id = this.AssetInfoMap.Count + 1;
@@ -307,6 +308,7 @@ namespace BDFramework.Editor.AssetBundle
         /// <param name="assetPath"></param>
         public void AddAsset(string assetPath)
         {
+            assetPath = assetPath.ToLower();
             if (!this.AssetInfoMap.ContainsKey(assetPath))
             {
                 var assetInfo = this.CreateAssetInfo(assetPath);

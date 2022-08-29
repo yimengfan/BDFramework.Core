@@ -20,10 +20,10 @@ namespace BDFramework.Editor.AssetBundle
             if (!isAssetChanged)
             {
                 //非脚本修改，剩下的则是资源修改
-                var ret = importedAssets.FirstOrDefault((a) => a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
-                var ret2 = deletedAssets.FirstOrDefault((a) => a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
-                var ret3 = movedAssets.FirstOrDefault((a) => a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
-                var ret4 = movedFromAssetPaths.FirstOrDefault((a) => a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
+                var ret = importedAssets.FirstOrDefault((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
+                var ret2 = deletedAssets.FirstOrDefault((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
+                var ret3 = movedAssets.FirstOrDefault((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
+                var ret4 = movedFromAssetPaths.FirstOrDefault((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
                 if (ret != null || ret2 != null || ret3 != null || ret4 != null)
                 {
                     isAssetChanged = true;
@@ -37,17 +37,17 @@ namespace BDFramework.Editor.AssetBundle
                 {
                     foreach (var asset in importedAssets)
                     {
-                        OnCacheAssetChanged(asset);
+                        OnAssetChanged(asset.ToLower());
                     }
 
                     foreach (var asset in deletedAssets)
                     {
-                        OnCacheAssetChanged(asset);
+                        OnAssetDelete(asset.ToLower());
                     }
 
                     foreach (var asset in movedFromAssetPaths)
                     {
-                        OnCacheAssetChanged(asset);
+                        OnAssetChanged(asset.ToLower());
                     }
                 }
                 SaveBuildingAssetInfosCache(buildingAssetinfo);
@@ -59,9 +59,10 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         static private BuildAssetInfos buildAssetInfos;
 
-        
+
         //路径
         public static string PATH = BApplication.BDEditorCachePath + "/BuildPipelineV2_EditorAssetInfosCache";
+
         /// <summary>
         /// 获取cache
         /// </summary>
@@ -97,7 +98,28 @@ namespace BDFramework.Editor.AssetBundle
         /// 当缓存资源修改
         /// </summary>
         /// <param name="path"></param>
-        static public void OnCacheAssetChanged(string path)
+        static public void OnAssetChanged(string path)
+        {
+            path = IPath.ReplaceBackSlash(path);
+            buildAssetInfos.AssetInfoMap.TryGetValue(path, out var assetInfo);
+            //增加
+            if (assetInfo == null)
+            {
+                buildAssetInfos.AddAsset(path);
+            }
+            //修改
+            else
+            {
+                var newhash = AssetBundleToolsV2.GetAssetsHash(path,false);
+                assetInfo.Hash = newhash;
+            }
+        }
+
+        /// <summary>
+        /// 当缓存删除
+        /// </summary>
+        /// <param name="path"></param>
+        static public void OnAssetDelete(string path)
         {
             path = IPath.ReplaceBackSlash(path);
             buildAssetInfos.AssetInfoMap.Remove(path.ToLower());

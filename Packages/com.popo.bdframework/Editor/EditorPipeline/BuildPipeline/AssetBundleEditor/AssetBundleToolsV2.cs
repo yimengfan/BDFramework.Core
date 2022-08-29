@@ -319,6 +319,10 @@ namespace BDFramework.Editor.AssetBundle
                 //1.找出差异文件：不一致  或者没有
                 foreach (var newAssetItem in newBuildAssetInfos.AssetInfoMap)
                 {
+                    if (newAssetItem.Key.Contains("3DXY_Material_1.mat", StringComparison.OrdinalIgnoreCase))
+                    {
+                        int i = 0;
+                    }
                     if (lastBuildAssetInfos.AssetInfoMap.TryGetValue(newAssetItem.Key, out var lastAssetItem))
                     {
                         //文件hash相同
@@ -817,10 +821,10 @@ namespace BDFramework.Editor.AssetBundle
         /// <param name="assetPath"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        static public string GetAssetsHash(string assetPath)
+        static public string GetAssetsHash(string assetPath,bool isUseCache = true)
         {
             var str = "";
-            if (fileHashCacheMap.TryGetValue(assetPath, out str))
+            if (isUseCache && fileHashCacheMap.TryGetValue(assetPath, out str))
             {
                 return str;
             }
