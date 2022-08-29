@@ -298,7 +298,7 @@ namespace BDFramework.Editor.AssetBundle
         /// 获取变动的Assets,
         /// 通过对比文件hash
         /// </summary>
-        static public List<KeyValuePair<string, BuildAssetInfos.AssetInfo>> GetChangedAssetsByFileHash(string outputPath, BuildTarget buildTarget, BuildAssetInfos buildAssetInfos)
+        static public List<KeyValuePair<string, BuildAssetInfos.AssetInfo>> GetChangedAssetsByFileHash(string outputPath, BuildTarget buildTarget, BuildAssetInfos newBuildAssetInfos)
         {
             Debug.Log("<color=red>【增量资源】开始变动资源分析...</color>");
             BuildAssetInfos lastBuildAssetInfos = null;
@@ -315,9 +315,9 @@ namespace BDFramework.Editor.AssetBundle
 
             if (lastBuildAssetInfos != null && lastBuildAssetInfos.AssetInfoMap.Count != 0)
             {
-                #region 文件改动
+                #region 文件改动检测
                 //1.找出差异文件：不一致  或者没有
-                foreach (var newAssetItem in buildAssetInfos.AssetInfoMap)
+                foreach (var newAssetItem in newBuildAssetInfos.AssetInfoMap)
                 {
                     if (lastBuildAssetInfos.AssetInfoMap.TryGetValue(newAssetItem.Key, out var lastAssetItem))
                     {
@@ -347,16 +347,15 @@ namespace BDFramework.Editor.AssetBundle
 
                 #endregion
 
-
                 #region ABName修改 、颗粒度修改
 
                 //abName修改会导致引用该ab的所有资源重新构建 才能保证正常引用关系 上线项目尽量不要有ab修改的情况
                 var changedAssetBundleAssetList = new List<KeyValuePair<string, BuildAssetInfos.AssetInfo>>();
                 //AB颗粒度
                 var lastABUnitMap = lastBuildAssetInfos.PreGetAssetbundleUnit();
-                var newABUnitMap = buildAssetInfos.PreGetAssetbundleUnit();
+                var newABUnitMap = newBuildAssetInfos.PreGetAssetbundleUnit();
                 //遍历处理
-                foreach (var newAssetItem in buildAssetInfos.AssetInfoMap)
+                foreach (var newAssetItem in newBuildAssetInfos.AssetInfoMap)
                 {
                     if (lastBuildAssetInfos.AssetInfoMap.TryGetValue(newAssetItem.Key, out var lastAssetItem))
                     {
@@ -395,7 +394,7 @@ namespace BDFramework.Editor.AssetBundle
                 {
                     var asset = changedAssetBundleAssetList[i];
                     var abname = asset.Value.ABName;
-                    foreach (var item in buildAssetInfos.AssetInfoMap)
+                    foreach (var item in newBuildAssetInfos.AssetInfoMap)
                     {
                         if (item.Value.DependAssetList.Contains(abname))
                         {
@@ -414,10 +413,78 @@ namespace BDFramework.Editor.AssetBundle
                 }
 
                 #endregion
+
+                //合并
+                changedAssetList.AddRange(changedAssetBundleAssetList);
+
+                #region 影响到的资产
+
+                //依赖的资产，也要按原有颗粒度打出，否则会被打进当前ab包
+                var changedAssetNameList = new List<string>();
+
+
+                //2.依赖资源也要重新打，不然会在这次导出过程中unity默认会把依赖和该资源打到一个ab中
+                foreach (var changedAsset in changedAssetList)
+                {
+                    //1.添加自身的ab
+                    changedAssetNameList.Add(changedAsset.Value.ABName);
+                    //2.添加所有依赖的ab
+                    changedAssetNameList.AddRange(changedAsset.Value.DependAssetList);
+                }
+
+                changedAssetNameList = changedAssetNameList.Distinct().ToList();
+
+
+                //3.搜索相同的ab name的资源,都要重新打包
+                var count = changedAssetNameList.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    var rebuildABName = changedAssetNameList[i];
+                    var theSameABNameAssets = newBuildAssetInfos.AssetInfoMap.Where((asset) => asset.Value.ABName == rebuildABName);
+                    if (theSameABNameAssets != null)
+                    {
+                        foreach (var mainAssetItem in theSameABNameAssets)
+                        {
+                            //添加资源本体
+                            changedAssetNameList.Add(mainAssetItem.Value.ABName);
+                            //添加影响的依赖文件
+                            changedAssetNameList.AddRange(mainAssetItem.Value.DependAssetList);
+                        }
+                    }
+                }
+
+                changedAssetNameList = changedAssetNameList.Distinct().ToList();
+                //4.根据影响的ab，寻找出所有文件
+                var rebuildAssetList = new List<KeyValuePair<string, BuildAssetInfos.AssetInfo>>();
+                foreach (var abname in changedAssetNameList)
+                {
+                    var findAssets = newBuildAssetInfos.AssetInfoMap.Where((asset) => asset.Value.ABName == abname);
+                    rebuildAssetList.AddRange(findAssets);
+                }
+
+
+                //去重
+                rebuildAssetList = rebuildAssetList.Where((a, idx) => rebuildAssetList.FindIndex(b => a.Key == b.Key) == idx).ToList();
+
+                Debug.LogFormat("<color=red>【增量资源】总重打资源数:{0}</color>", rebuildAssetList.Count);
+                var changedFiles = new List<string>();
+                foreach (var item in rebuildAssetList)
+                {
+                    changedFiles.Add(item.Key);
+                }
+
+                Debug.Log(JsonMapper.ToJson(changedFiles, true));
+
+
+                var ablist = rebuildAssetList.Select((a) => a.Value.ABName).Distinct().ToList();
+                Debug.LogFormat("<color=red>【增量资源】变动Assetbundle:{0}</color>", ablist.Count);
+                Debug.Log(JsonMapper.ToJson(ablist, true));
+
+                #endregion
             }
             else
             {
-                changedAssetList = buildAssetInfos.AssetInfoMap.ToList();
+                changedAssetList = newBuildAssetInfos.AssetInfoMap.ToList();
                 Debug.Log("<color=yellow>【增量资源】本地无资源，全部重打!</color>");
             }
 
@@ -776,8 +843,6 @@ namespace BDFramework.Editor.AssetBundle
                 return "";
             }
         }
-
-
 
         #endregion
     }
