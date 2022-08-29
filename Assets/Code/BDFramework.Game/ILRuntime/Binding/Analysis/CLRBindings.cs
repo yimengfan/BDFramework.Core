@@ -87,14 +87,14 @@ namespace ILRuntime.Runtime.Generated
             Google_Protobuf_MessageParser_1_IMessageAdapter_Binding_Adaptor_Binding.Register(app);
             Google_Protobuf_Collections_RepeatedField_1_IMessageAdapter_Binding_Adaptor_Binding.Register(app);
             Google_Protobuf_FieldCodec_Binding.Register(app);
+            System_Reflection_PropertyInfo_Binding.Register(app);
+            System_Reflection_CustomAttributeExtensions_Binding.Register(app);
+            BDFramework_Mgr_ManagerOrder_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Int32_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_IEnumerable_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_IEnumerator_1_ILTypeInstance_Binding.Register(app);
-            System_Reflection_PropertyInfo_Binding.Register(app);
-            System_Reflection_CustomAttributeExtensions_Binding.Register(app);
-            BDFramework_Mgr_ManagerOrder_Binding.Register(app);
             BDFramework_Core_Debugger_Debugger_NetworkServer_Binding.Register(app);
             BDFramework_ResourceMgr_IResMgr_Binding.Register(app);
             BDFramework_DataListener_AStatusListener_Binding.Register(app);

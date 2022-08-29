@@ -121,7 +121,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                         {
                             if (af.assetType == typeof(Shader))
                             {
-                                Debug.LogError($"【搜集KeyWord】 : {af.importFrom},请检查是否直接引用了FBX这类,SubAsset中有Mat的资产,如是请Ctrl+D复制引用!" );
+                                Debug.LogError($"【搜集KeyWord】 遗漏: {af.importFrom},\n 1.请检查是否直接引用了FBX这类,SubAsset中有Mat的资产,如是请Ctrl+D复制引用! \n 2.注意shader的依赖shader情况" );
                                 
                                 //寻找遗漏查找依赖资源
                                 this.BuildingCtx.BuildAssetInfos.AssetInfoMap.TryGetValue(af.importFrom, out var shaderAssetData);
@@ -151,7 +151,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     {
                         if (incom.importFrom.Equals(ds, StringComparison.OrdinalIgnoreCase))
                         {
-                            Debug.Log("ddddd");
+                          
                         }
                         
                     }

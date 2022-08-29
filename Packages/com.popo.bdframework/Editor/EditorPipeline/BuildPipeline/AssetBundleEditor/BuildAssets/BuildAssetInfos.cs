@@ -448,7 +448,7 @@ namespace BDFramework.Editor.AssetBundle
                         // templist.Add(dependAssetBuildData.Id);
                         // assetbundleItem.DependAssetIds = templist.ToArray();
 
-                        assetbundleItem.DependAssetIds.Append(dependAssetBuildData.Id);
+                        assetbundleItem.DependAssetIds = assetbundleItem.DependAssetIds.Append(dependAssetBuildData.Id).ToArray();
                     }
                 }
             }
@@ -522,7 +522,7 @@ namespace BDFramework.Editor.AssetBundle
         static public string GetAssetsPackSourceHash(List<AssetInfo> assetInfos)
         {
             //按guid排序
-            assetInfos.Sort((a, b) => { return a.GUID.CompareTo(b); });
+            assetInfos.Sort((a, b) => { return a.GUID.CompareTo(b.GUID); });
 
             //
             var totalHashStr = "";

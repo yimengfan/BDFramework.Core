@@ -29,8 +29,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         window.Show();
         window.Focus();
     }
-
-    private static string DLLPATH = "/Hotfix/hotfix.dll";
+    
 
     public void OnGUI()
     {
@@ -222,7 +221,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         }
 
         //路径
-        dllpath = dllpath + "/" + BApplication.GetPlatformPath(platform) + DLLPATH;
+        dllpath = IPath.Combine( dllpath,  BApplication.GetPlatformPath(platform) , ScriptLoder.DLL_PATH);
         //不参与自动绑定的
         List<Type> excludeTypes = new List<Type>(); //
         excludeTypes.AddRange(manualBindingTypes);

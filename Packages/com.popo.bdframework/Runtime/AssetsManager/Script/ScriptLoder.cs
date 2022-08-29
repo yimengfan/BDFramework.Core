@@ -9,7 +9,8 @@ namespace BDFramework
 {
     static public class ScriptLoder
     {
-        static readonly public string DLL_PATH = "script/hotfix.dll";
+        static readonly public string SCRIPT_FOLDER_PATH = "script";
+        static readonly public string DLL_PATH = SCRIPT_FOLDER_PATH+"/hotfix.dll";
 
         /// <summary>
         /// 反射注册
@@ -40,7 +41,7 @@ namespace BDFramework
                 var list = new List<Type>();
                 list.AddRange(mainProjectTypes);
                 list.AddRange(typeof(BDLauncher).Assembly.GetTypes());
-                method.Invoke(null, new object[] {list.ToArray(),null});
+                method.Invoke(null, new object[] {list.ToArray(), null});
             }
             else
             {
@@ -106,7 +107,7 @@ namespace BDFramework
         /// <summary>
         /// 获取当前本地DLL
         /// </summary>
-        static public string GetLocalDLLPath(string root,RuntimePlatform platform)
+        static public string GetLocalDLLPath(string root, RuntimePlatform platform)
         {
             return IPath.Combine(root, BApplication.GetPlatformPath(platform), DLL_PATH);
         }

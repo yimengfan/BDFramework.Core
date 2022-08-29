@@ -99,7 +99,7 @@ public class ScriptBuildTools
         var _outPath = Path.Combine(outPath, BApplication.GetPlatformPath(platform));
         try
         {
-            var path = _outPath + "/Hotfix";
+            var path = IPath.Combine(_outPath, ScriptLoder.SCRIPT_FOLDER_PATH);
             if (Directory.Exists(path))
             {
                 Directory.Delete(path, true);

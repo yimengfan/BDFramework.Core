@@ -22,17 +22,17 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 美术根目录
         /// </summary>
-        readonly static public string ART_ASSET_ROOT_PATH = "assets";
+        readonly static public string ART_ASSET_ROOT_PATH = "art_assets";
 
         /// <summary>
         /// 美术资源config配置
         /// </summary>
-        readonly static public string ART_ASSET_CONFIG_PATH = ART_ASSET_ROOT_PATH + "/art_assets_config.info";
+        readonly static public string ART_ASSET_CONFIG_PATH = ART_ASSET_ROOT_PATH + "/art_assets.info";
 
         /// <summary>
         /// 资源信息
         /// </summary>
-        readonly static public string ART_ASSET_TYPES_PATH = ART_ASSET_ROOT_PATH + "/asset_type_config.info";
+        readonly static public string ART_ASSET_TYPES_PATH = ART_ASSET_ROOT_PATH + "/art_asset_type.info";
 
         /// <summary>
         /// 构建时的信息(Editor用)
@@ -66,27 +66,27 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 客户端-资源包服务器信息
         /// </summary>
-        readonly static public string ASSETS_INFO_PATH = "Assets.Info";
+        readonly static public string ASSETS_INFO_PATH = "assets.info";
 
         /// <summary>
         /// 客户端-资源分包信息
         /// </summary>
-        readonly static public string ASSETS_SUB_PACKAGE_CONFIG_PATH = "AssetsSubPackage.Info";
+        readonly static public string ASSETS_SUB_PACKAGE_CONFIG_PATH = "assets_subpack.info";
 
         /// <summary>
         /// 服务器-资源包版本配置
         /// </summary>
-        readonly static public string SERVER_ASSETS_VERSION_INFO_PATH = "ServerAssetsVersion.Info";
+        readonly static public string SERVER_ASSETS_VERSION_INFO_PATH = "server_assets_version.info";
 
         /// <summary>
         /// 服务器-资源分包信息
         /// </summary>
-        readonly static public string SERVER_ASSETS_SUB_PACKAGE_INFO_PATH = "ServerAssetsSubPackage_{0}.Info";
+        readonly static public string SERVER_ASSETS_SUB_PACKAGE_INFO_PATH = "server_assets_subpack_{0}.info";
 
         /// <summary>
-        /// 母包构建信息路径
+        /// 包体构建信息路径
         /// </summary>
-        readonly static public string PACKAGE_BUILD_INFO_PATH = "PackageBuild.Info";
+        readonly static public string PACKAGE_BUILD_INFO_PATH = "package_build.info";
 
         #endregion
 
