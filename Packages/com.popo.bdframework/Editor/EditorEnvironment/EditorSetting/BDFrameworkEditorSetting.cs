@@ -348,7 +348,7 @@ namespace BDFramework.Editor
     [Serializable]
     public class WindowsPlayerSetting
     {
-        
+        public string NULL;
     }
     
     /// <summary>
@@ -357,6 +357,6 @@ namespace BDFramework.Editor
     [Serializable]
     public class MacOSXSetting
     {
-        
+        public string NULL;
     }
 }

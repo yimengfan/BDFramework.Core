@@ -4,7 +4,7 @@
   &lt;Assembly Path="E:\Unity3d Project\Github\BDFramework.EnvCheck\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.dll" /&gt;&#xD;
   &lt;Assembly Path="E:\Unity3d Project\Github\BDFramework.EnvCheck\Library\ScriptAssemblies\BDFramework.Core.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\Administrator\AppData\Local\JetBrains\Rider2021.3\resharper-host\temp\Rider\vAny\CoverageData\_BDFramework.EnvCheck.-1502167525\Snapshot\snapshot.utdcvr</s:String>
+	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b48e8001_002Df367_002D4fd7_002Db925_002Dc1b94a28dcd3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

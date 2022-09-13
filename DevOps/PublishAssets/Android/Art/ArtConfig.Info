@@ -41,7 +41,7 @@ Id,AssetType,LoadPath,RefABId,AssetBundlePath,Hash,Mix,DependAssetIds
 39,6,mix_ab_source/obf010,0,888db6dc4d8fee245a31856655840a46,3628301570,0,"[]"
 40,8,objectpool/bullet,0,43f3d8a9a7fdd6f469aea742dd9af679,1557561220,1225,"[]"
 41,5,objectpool/bullet,0,e714f4b086504d747a4926157f5eb3e0,375038186,1230,"[40]"
-42,9,shader/allshaders,0,9d59e1d84070e4c46a595b3112d75a40,1217264740,1221,"[]"
+42,9,shader/allshaders,0,9d59e1d84070e4c46a595b3112d75a40,781999942,1230,"[]"
 43,4,spriteatlas/sa2019,0,76c21518bd7f0e64ca49af74a4987cd9,3606837667,1233,"[]"
 44,4,spriteatlas/sa2019_notinruntime,0,ec429a586bfac5f4284f3a31749303e7,2116688474,1221,"[]"
 45,5,test/cube,0,a7feec6462d3d3249936655cf4e31de5,3804726246,1219,"[46,42]"

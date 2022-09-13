@@ -17,8 +17,8 @@ namespace BDFramework.Editor.BuildPipeline
     {
         public BuildIOS(iOSSetting releaseSetting, iOSSetting debugSettingSetting)
         {
-            this.AndroidReleaseSetting = releaseSetting;
-            this.AndroidDebugSetting = debugSettingSetting;
+            this.iOSReleaseSetting = releaseSetting;
+            this.iOSDebugSetting = debugSettingSetting;
         }
         
 
@@ -26,18 +26,18 @@ namespace BDFramework.Editor.BuildPipeline
 
         
       
-        [BoxGroup("Android设置[Release]")]
+        [BoxGroup("IOS设置[Release]")]
         [HideLabel]
         [InlineProperty]
         [DisableIf("IsLock")]
-        public iOSSetting AndroidReleaseSetting = new iOSSetting();
+        public iOSSetting iOSReleaseSetting = new iOSSetting();
         
        
-        [BoxGroup("Android设置[Debug]")]
+        [BoxGroup("IOS设置[Debug]")]
         [HideLabel]
         [InlineProperty]
         [DisableIf("IsLock")]
-        public iOSSetting AndroidDebugSetting = new iOSSetting();
+        public iOSSetting iOSDebugSetting = new iOSSetting();
         
         [VerticalGroup("a")]
         [LabelText("锁住配置")]
@@ -78,17 +78,25 @@ namespace BDFramework.Editor.BuildPipeline
      
         [HorizontalGroup("b/a2", LabelWidth = 80)]
         [LabelText("构建资源")]
+        [InfoBox("重新构建资产", InfoMessageType.Info)]
         public bool isReBuildAssets = false;
 
 
        
-        [HorizontalGroup("b/a3")]
+        [HorizontalGroup("b/a3", LabelWidth = 80)]
+        [LabelText("构建选项")]
+        //[EnumToggleButtons]
+        public BuildAssetsTools.BuildPackageOption BuildPackageOption = BuildAssetsTools.BuildPackageOption.BuildAll;
+
+       
+        [HorizontalGroup("b/a4")]
         [GUIColor(0,1,1)]
         [Button("构建(自定义参数)", ButtonSizes.Large, ButtonStyle.CompactBox)]
         public void Btn_CustomBuild()
         {
-         
+            CustomBuild();
         }
+
 
         #endregion
 
@@ -120,7 +128,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         public  void CustomBuild()
         {
-            BuildPackageTools.Build(buildMode, isReBuildAssets, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+            BuildPackageTools.Build(buildMode, isReBuildAssets, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS,BuildPackageOption);
         }
 
 

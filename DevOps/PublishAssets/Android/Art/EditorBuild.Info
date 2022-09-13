@@ -1,6 +1,6 @@
 
 {
-  "Time" : "2022/6/4",
+  "Time" : "2022/6/28",
   "AssetInfoMap" : {
     "assets/resource/runtime/allassettype/archive.jpg" : {
       "Id" : 1,
@@ -840,14 +840,14 @@
       "DependAssetList" : [
       ]
     },
-    "assets/resource/shaders/builtin_shaders-2019/defaultresourcesextra/normal-vertexlit.shader"  : {
+    "assets/resource/shaders/testshader/defaultresourcesextra/normal-vertexlit.shader"            : {
       "Id" : 74,
       "ArtConfigIdx" : -1,
       "Type"         : 10,
       "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
       "ABHash"       : "",
       "ReferenceCount" : 0,
-      "Hash"           : "3676051459",
+      "Hash"           : "4107906427",
       "DependAssetList" : [
       ]
     },
