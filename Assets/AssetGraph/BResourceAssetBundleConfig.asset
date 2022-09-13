@@ -29,7 +29,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -40,7 +40,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.5
         width: 10
         height: 23
   - m_name: "\u641C\u96C6shader\u53D8\u4F53"
@@ -59,7 +59,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -69,14 +69,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 128.7143
-        y: 32.785713
+        x: 129
+        y: 33.5
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u6D4B\u8BD5\u6A21\u578B\u5B50\u76EE\u5F55"
     m_id: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
-    m_x: 1056
-    m_y: 780
+    m_x: 1032
+    m_y: 768
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFolder, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -89,7 +89,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -100,7 +100,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 171
-        y: 32.785713
+        y: 33.5
         width: 10
         height: 23
   - m_name: "\u6253\u5305AssetBundle"
@@ -119,7 +119,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -129,8 +129,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 136.7143
-        y: 32.785713
+        x: 137
+        y: 33.5
         width: 10
         height: 23
   - m_name: "[\u7B5B\u9009]Group by Path"
@@ -140,7 +140,7 @@ MonoBehaviour:
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.FilterGroupByPath, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|eyJncm91cEZpbHRlclBhdGhEYXRhTGlzdCI6W3siT3V0cHV0Tm9kZUlkIjoiMzZjM2U3NmUtY2M5Zi00ODc5LWE2ZDktZDcxMDNiNGY3OWZhIiwiR3JvdXBQYXRoIjoiUnVudGltZSJ9LHsiT3V0cHV0Tm9kZUlkIjoiMjhkMTI3MzgtMDQ1OC00MzlhLWIyM2EtZDFmYWVkZDk1Zjg4IiwiR3JvdXBQYXRoIjoiRGVwZW5kIn0seyJPdXRwdXROb2RlSWQiOiJhODU2MmEwMi00YzRiLTQyZGItOGQ2MS1lMDIyYTcxOWRlOGEiLCJHcm91cFBhdGgiOiJTcHJpdGVBdGxhcyJ9LHsiT3V0cHV0Tm9kZUlkIjoiZWU1ZTVkMWEtZWI2YS00OTE0LThjMTQtMDJiMzZkMWMxZjE1IiwiR3JvdXBQYXRoIjoiU2hhZGVycyJ9LHsiT3V0cHV0Tm9kZUlkIjoiOGI5YzBiODYtZDU0Yy00ZDFlLTk0YzEtZmUxM2U4NTY5MzZlIiwiR3JvdXBQYXRoIjoiQXNzZXRzL1Jlc291cmNlX1NWTi9Nb2RlbC8ifV19
+      m_instanceData: B64|eyJDb21wYXJlTW9kZSI6MCwiZ3JvdXBGaWx0ZXJQYXRoRGF0YUxpc3QiOlt7Ik91dHB1dE5vZGVJZCI6IjM2YzNlNzZlLWNjOWYtNDg3OS1hNmQ5LWQ3MTAzYjRmNzlmYSIsIkdyb3VwUGF0aCI6IlJ1bnRpbWUifSx7Ik91dHB1dE5vZGVJZCI6IjI4ZDEyNzM4LTA0NTgtNDM5YS1iMjNhLWQxZmFlZGQ5NWY4OCIsIkdyb3VwUGF0aCI6IkRlcGVuZCJ9LHsiT3V0cHV0Tm9kZUlkIjoiYTg1NjJhMDItNGM0Yi00MmRiLThkNjEtZTAyMmE3MTlkZThhIiwiR3JvdXBQYXRoIjoiU3ByaXRlQXRsYXMifSx7Ik91dHB1dE5vZGVJZCI6ImVlNWU1ZDFhLWViNmEtNDkxNC04YzE0LTAyYjM2ZDFjMWYxNSIsIkdyb3VwUGF0aCI6IlNoYWRlcnMifSx7Ik91dHB1dE5vZGVJZCI6IjBjMTlkNzkwLWI5OWMtNDMxMy04YjZhLWNkYTg3YzM4ZWZkNCIsIkdyb3VwUGF0aCI6IkFzc2V0cy9SZXNvdXJjZV9TVk4vTW9kZWwvIn1dfQ==
     m_inputPoints:
     - id: 954164ee-1454-4b1b-9bdc-e4e2902dd885
       label: '-'
@@ -149,7 +149,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -159,8 +159,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 220.14287
-        y: 32.785713
+        x: 220
+        y: 33.5
         width: 10
         height: 23
     - id: 28d12738-0458-439a-b23a-d1faedd95f88
@@ -169,8 +169,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 220.14287
-        y: 64.78571
+        x: 220
+        y: 65.5
         width: 10
         height: 23
     - id: a8562a02-4c4b-42db-8d61-e022a719de8a
@@ -179,8 +179,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 220.14287
-        y: 96.78571
+        x: 220
+        y: 97.5
         width: 10
         height: 23
     - id: ee5e5d1a-eb6a-4914-8c14-02b36d1c1f15
@@ -189,18 +189,18 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 220.14287
-        y: 128.7857
+        x: 220
+        y: 129.5
         width: 10
         height: 23
-    - id: 8b9c0b86-d54c-4d1e-94c1-fe13e856936e
+    - id: 0c19d790-b99c-4313-8b6a-cda87c38efd4
       label: Assets/Resource_SVN/Model/
       parentId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 220.14287
-        y: 160.7857
+        x: 220
+        y: 161.5
         width: 10
         height: 23
   - m_name: "[*]\u521D\u59CB\u5316\u6846\u67B6Assets\u73AF\u5883"
@@ -219,8 +219,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 179
-        y: 32.785713
+        x: 178
+        y: 33.5
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
@@ -239,7 +239,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -250,7 +250,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.5
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
@@ -269,7 +269,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -280,7 +280,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.5
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
@@ -299,7 +299,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -310,7 +310,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.5
         width: 10
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u9884\u89C8"
@@ -329,7 +329,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -340,7 +340,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 111
-        y: 32.785713
+        y: 33.5
         width: 10
         height: 23
   - m_name: "[\u5206\u5305]\u8D44\u6E90\u8DEF\u5F84\u5206\u5305"
@@ -359,7 +359,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -369,8 +369,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 262.42856
-        y: 32.785713
+        x: 262
+        y: 33.5
         width: 10
         height: 23
     - id: a77abac2-87f4-4538-a5ca-f9d6a174b901
@@ -379,8 +379,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 262.42856
-        y: 64.78571
+        x: 262
+        y: 65.5
         width: 10
         height: 23
     - id: e3f050a3-5680-4a06-a4ce-89df96578277
@@ -389,8 +389,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 262.42856
-        y: 96.78571
+        x: 262
+        y: 97.5
         width: 10
         height: 23
   - m_name: "\u5206\u5305\u540D:TestChar"
@@ -409,7 +409,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints: []
@@ -429,7 +429,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints: []
@@ -449,7 +449,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 29.785713
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints: []
@@ -544,19 +544,19 @@ MonoBehaviour:
     m_toNodeId: a48b9bc3-7590-480b-b1ef-41ac4e3878b3
     m_toNodeConnectionPoiontId: 5433a767-74f3-4584-8c26-f78dd94823ca
     m_label: Assets/Resource_SVN/Model3/
-  - m_id: de46f0aa-72b8-4881-be2b-edf5f21983e8
-    m_fromNodeId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-    m_fromNodeConnectionPointId: 8b9c0b86-d54c-4d1e-94c1-fe13e856936e
-    m_toNodeId: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
-    m_toNodeConnectionPoiontId: 04553e4a-d5e6-4d37-87bb-c10b717f8052
-    m_label: Assets/Resource_SVN/Model/
   - m_id: 43cb5e91-cb3c-4de2-aa82-0902abec8038
     m_fromNodeId: 11c7368e-660b-4bc6-956d-791ee29cd6b8
     m_fromNodeConnectionPointId: a77abac2-87f4-4538-a5ca-f9d6a174b901
     m_toNodeId: c58ab6fd-f457-4f8d-a53e-38608b4b0a87
     m_toNodeConnectionPoiontId: b8b334b8-64e4-4cec-b27a-084bfdc7f20b
     m_label: Assets/Resource/Runtime/Windows/
-  m_lastModified: 132941769486455063
+  - m_id: 717c7134-34f1-436a-a321-11984f56a672
+    m_fromNodeId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
+    m_fromNodeConnectionPointId: 0c19d790-b99c-4313-8b6a-cda87c38efd4
+    m_toNodeId: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
+    m_toNodeConnectionPoiontId: 04553e4a-d5e6-4d37-87bb-c10b717f8052
+    m_label: Assets/Resource_SVN/Model/
+  m_lastModified: 133058064914981511
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0

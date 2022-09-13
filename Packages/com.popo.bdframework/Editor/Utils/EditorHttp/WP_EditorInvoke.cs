@@ -17,7 +17,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
     /// EditorInvoke/{func_fullname}
     /// EditorInvoke/namepace.classname.funcktionname
     /// </summary>
-    public class WP_EditorInvoke : IWebApiProccessor
+    public class WP_EditorInvoke : IEditorWebApiProcessor
     {
         public string WebApiName { get; set; } = "EditorInvoke";
 
@@ -31,9 +31,9 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
         /// webapi处理器
         /// </summary>
         /// <param name="apiParams"></param>
-        /// <param name="response"></param>
+        /// <param name="ctx"></param>
         /// <exception cref="Exception"></exception>
-        async public Task<EditorHttpResonseData> WebAPIProccessor(string apiParams, HttpListenerResponse response)
+        async public Task<EditorHttpResonseData> WebAPIProcessor(string apiParams, HttpListenerContext ctx)
         {
             var ret = functionCacheMap.TryGetValue(apiParams, out var methodInfo);
             if (!ret)
@@ -96,11 +96,11 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                 throw new Exception("Function 执行报错,请查看Unity! \n" + err);
             }
 
-
+            ctx.Response.StatusCode = 200;
+            
             var retdata = new EditorHttpResonseData();
             retdata.content = "执行成功";
-            response.StatusCode = 200;
-
+            
             return retdata;
         }
 

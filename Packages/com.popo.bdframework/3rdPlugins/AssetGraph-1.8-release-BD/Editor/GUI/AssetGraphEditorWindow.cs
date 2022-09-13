@@ -959,6 +959,11 @@ namespace UnityEngine.AssetGraph
             }
         }
 
+
+        /// <summary>
+        /// 是否正在执行build
+        /// </summary>
+        static public bool IsRunningBuild { get; private set; } = false;
         /**
 		 * Execute the build.
 		 */
@@ -971,6 +976,8 @@ namespace UnityEngine.AssetGraph
 
             try
             {
+                IsRunningBuild = true;
+                
                 AssetDatabase.SaveAssets();
                 AssetBundleBuildMap.GetBuildMap().Clear();
 
@@ -1019,6 +1026,7 @@ namespace UnityEngine.AssetGraph
                 AssetDatabase.Refresh();
 
                 ShowErrorOnNodes();
+                IsRunningBuild = false;
             }
             catch (Exception e)
             {
@@ -1026,10 +1034,12 @@ namespace UnityEngine.AssetGraph
                 {
                     LogUtility.Logger.LogError(LogUtility.kTag, e.ToString());
                 }
+                
             }
             finally
             {
                 EditorUtility.ClearProgressBar();
+                IsRunningBuild = false;
             }
         }
 

@@ -17,9 +17,9 @@ namespace BDFramework.ResourceMgr.V2
     /// loadpath包装
     /// 加载路径名-资源数据
     /// </summary>
-    public class LoadPathMap : Dictionary<string, int>
+    public class LoadPathIdxMap : Dictionary<string, int>
     {
-        public LoadPathMap() : base(StringComparer.OrdinalIgnoreCase)
+        public LoadPathIdxMap() : base(StringComparer.OrdinalIgnoreCase)
         {
         }
     }
@@ -38,7 +38,7 @@ namespace BDFramework.ResourceMgr.V2
         /// 资源类型-资源映射
         /// 这里拆了2个map映射，提高加载检索速度，也能加载同名不同类型文件
         /// </summary>
-        private Dictionary<string, LoadPathMap> assetTypeIdxMap { get; set; } = new Dictionary<string, LoadPathMap>();
+        private Dictionary<string, LoadPathIdxMap> assetTypeIdxMap { get; set; } = new Dictionary<string, LoadPathIdxMap>();
 
         /// <summary>
         /// 资源类型列表
@@ -78,7 +78,7 @@ namespace BDFramework.ResourceMgr.V2
                 //创建不同类型的映射表
                 foreach (var assetType in this.AssetTypes.AssetTypeList)
                 {
-                    this.assetTypeIdxMap[assetType] = new LoadPathMap();
+                    this.assetTypeIdxMap[assetType] = new LoadPathIdxMap();
                 }
             }
             else
@@ -119,17 +119,17 @@ namespace BDFramework.ResourceMgr.V2
             }
 
             //初始化常用资源类型
-            if (this.AssetTypes != null)
-            {
-                //Prefab
-                var clsName = typeof(GameObject).FullName;
-                AssetType.VALID_TYPE_PREFAB = this.AssetTypes.AssetTypeList.FindIndex((at) => at.Equals(clsName, StringComparison.OrdinalIgnoreCase));
-                //图集
-                clsName = typeof(SpriteAtlas).FullName;
-                AssetType.VALID_TYPE_SPRITE_ATLAS = this.AssetTypes.AssetTypeList.FindIndex((at) => at.Equals(clsName, StringComparison.OrdinalIgnoreCase));
-                //...
-                //其他省略，需要时候再加
-            }
+            // if (this.AssetTypes != null)
+            // {
+            //     //Prefab
+            //     var clsName = typeof(GameObject).FullName;
+            //     AssetType.VALID_TYPE_PREFAB = this.AssetTypes.AssetTypeList.FindIndex((at) => at.Equals(clsName, StringComparison.OrdinalIgnoreCase));
+            //     //图集
+            //     clsName = typeof(SpriteAtlas).FullName;
+            //     AssetType.VALID_TYPE_SPRITE_ATLAS = this.AssetTypes.AssetTypeList.FindIndex((at) => at.Equals(clsName, StringComparison.OrdinalIgnoreCase));
+            //     //...
+            //     //其他省略，需要时候再加
+            // }
 
 
             BDebug.Log("【AssetbundleV2】资源加载初始化完成,资源总量:" + this.AssetbundleItemList?.Count);

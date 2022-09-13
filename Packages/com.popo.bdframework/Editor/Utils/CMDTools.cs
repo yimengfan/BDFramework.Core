@@ -7,7 +7,7 @@ namespace BDFramework.Editor.Tools
     static public class CMDTools
     {
         private static string CmdPath = @"C:\Windows\System32\cmd.exe";
-
+        private static string TerrminalPath = "/bin/zsh";
         /// <summary>
         /// 执行cmd命令 返回cmd窗口显示的信息
         /// 多命令请使用批处理命令连接符：
@@ -19,20 +19,31 @@ namespace BDFramework.Editor.Tools
         /// Windows only
         /// </summary>
         /// <param name="cmd">执行的命令</param>
-        public static void RunCmd(string[] cmds)
+        public static void RunCmd(string[] cmds,string envName="",string envValue ="")
         {
             //执行
             using (Process p = new Process())
             {
+ #if UNITY_EDITOR_OSX
+                 p.StartInfo.FileName = TerrminalPath;
+                 //强制SVN log为英文
+                 p.StartInfo.EnvironmentVariables.Add("LC_MESSAGES","en_US");
+#elif UNITY_EDITOR_WIN
                 p.StartInfo.FileName = CmdPath;
-
+                p.StartInfo.StandardOutputEncoding = Encoding.GetEncoding("gb2312");
+                p.StartInfo.StandardErrorEncoding = Encoding.GetEncoding("gb2312");
+#endif
+                //FBX工具调用时，不能接受空环境变量
+                if (!string.IsNullOrEmpty(envName))
+                {
+                    p.StartInfo.EnvironmentVariables.Add(envName,envValue);
+                }
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 p.StartInfo.UseShellExecute = false; //是否使用操作系统shell启动
                 p.StartInfo.RedirectStandardInput = true; //接受来自调用程序的输入信息
                 p.StartInfo.RedirectStandardOutput = true; //由调用程序获取输出信息
                 p.StartInfo.RedirectStandardError = true; //重定向标准错误输出
                 p.StartInfo.CreateNoWindow = true; //不显示程序窗口
-                p.StartInfo.StandardOutputEncoding = Encoding.GetEncoding("gb2312");
-                p.StartInfo.StandardErrorEncoding = Encoding.GetEncoding("gb2312");
 
                 //日志
                 p.OutputDataReceived += (s, e) =>
@@ -58,11 +69,13 @@ namespace BDFramework.Editor.Tools
                 p.BeginErrorReadLine();
                 //向cmd窗口写入命令
                 foreach (string cmd in cmds)
-                {
+                {  
+                    Debug.Log("-->" + cmd);
                     p.StandardInput.WriteLine(cmd); //输入CMD命令
+                  
                 }
 
-                p.StandardInput.WriteLine("exit"); //结束执行，很重要的
+                p.StandardInput.WriteLine("exit"); //结束执行，很重要
                 // p.StandardInput.WriteLine(cmd);
                 // p.StandardInput.AutoFlush = true;
 

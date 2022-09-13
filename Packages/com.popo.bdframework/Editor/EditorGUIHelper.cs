@@ -38,6 +38,17 @@ namespace BDFramework.Editor.Tools
             {
                 textColor = Color.red
             }
+        }; 
+        /// <summary>
+        /// 3号大标题
+        /// </summary>
+        readonly static public GUIStyle LabelH3Green = new GUIStyle()
+        {
+            fontSize = 20,
+            normal = new GUIStyleState()
+            {
+                textColor = Color.green
+            }
         };
 
         /// <summary>

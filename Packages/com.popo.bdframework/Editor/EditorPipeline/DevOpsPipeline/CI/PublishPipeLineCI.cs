@@ -33,8 +33,10 @@ namespace BDFramework.Editor.DevOps
         static PublishPipeLineCI()
         {
             //TODO : 初始化编辑器,必须
-            BDFrameworkEditorEnvironment.InitEditorEnvironment();
-
+            if (Application.isBatchMode)
+            {
+                BDFrameworkEditorEnvironment.InitEditorEnvironment();
+            }
             //
             CI_ASSETS_PATH = BApplication.DevOpsPublishAssetsPath; // IPath.Combine(BDApplication.DevOpsPath, "CI_TEMP");
             CI_PACKAGE_PATH = BApplication.DevOpsPublishPackagePath; // IPath.Combine(CI_ROOT_PATH, "CI_BUILD_PCK");
@@ -77,7 +79,7 @@ namespace BDFramework.Editor.DevOps
             var ret = BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
 
             //提交
-            SVNCommit(AssetsSvnProcessor);
+            SVNCommit(BuildTarget.iOS, AssetsSvnProcessor);
         }
 
         /// <summary>
@@ -86,14 +88,12 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "构建资源Android")]
         public static void BuildAssetBundle_Android()
         {
-            //更新
+            // //更新
             SVNUpdate(AssetsSvnProcessor);
-
             //构建
             var ret = BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
-
             //提交
-            SVNCommit(AssetsSvnProcessor);
+            SVNCommit(BuildTarget.Android, AssetsSvnProcessor);
         }
 
         /// <summary>
@@ -104,7 +104,9 @@ namespace BDFramework.Editor.DevOps
             //1.搜集keyword
             ShaderCollection.CollectShaderVariant();
             //2.打包模式
-            return AssetBundleEditorToolsV2.GenAssetBundle(CI_ASSETS_PATH, platform);
+            var ret = AssetBundleEditorToolsV2.GenAssetBundle(platform, CI_ASSETS_PATH);
+
+            return ret;
         }
 
         #endregion
@@ -133,10 +135,9 @@ namespace BDFramework.Editor.DevOps
             {
                 return true;
             }
-
             return false;
         }
-
+        
 
         /// <summary>
         /// 构建dll
@@ -194,9 +195,9 @@ namespace BDFramework.Editor.DevOps
         /// </summary>
         static private void BuildPackage(BuildTarget buildTarget, BuildPackageTools.BuildMode buildMode)
         {
-            //-默认下载svn管理的仓库,用来打包
+            //- 默认下载svn管理的仓库,用来打包
             SVNUpdate(AssetsSvnProcessor);
-            //-更新包体仓库
+            //- 更新包体仓库
             SVNUpdate(PackageSvnProcessor);
             // var localPath = string.Format("{0}/{1}/Art", CI_ASSETS_PATH, BDApplication.GetPlatformPath(platform));
             // //1.下载资源已有、Sql
@@ -216,12 +217,23 @@ namespace BDFramework.Editor.DevOps
             //加载配置
             // BuildPackageTools.LoadConfig(buildMode);
             //
-            Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
-            var ret = BuildPackageTools.Build(buildMode, false, CI_PACKAGE_PATH, buildTarget);
+            bool ret = false;
+            if (buildTarget == BuildTarget.Android)
+            {
+                Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
+                ret = BuildPackageTools.BuildAPK(buildMode, false, CI_PACKAGE_PATH);
+            }
+            else if (buildTarget == BuildTarget.iOS)
+            {
+                //构建xcode、ipa
+                Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
+                ret = BuildPackageTools.BuildIpa(buildMode, false, CI_PACKAGE_PATH);
+            }
+
             if (ret)
             {
                 Debug.Log("【CI】Build package success，begin commit!");
-                SVNCommit(PackageSvnProcessor);
+                SVNCommit(buildTarget, PackageSvnProcessor);
             }
             else
             {
@@ -239,8 +251,7 @@ namespace BDFramework.Editor.DevOps
         static private void SVNUpdate(SVNProcessor svnProcessor)
         {
             //存在仓库
-            var svntag = svnProcessor.LocalSVNRootPath + "/.svn";
-            if (Directory.Exists(svntag))
+            if (svnProcessor.IsExsitSvnStore())
             {
                 svnProcessor.CleanUp();
                 svnProcessor.RevertForce();
@@ -255,7 +266,7 @@ namespace BDFramework.Editor.DevOps
         /// <summary>
         /// SVN提交
         /// </summary>
-        static private void SVNCommit(SVNProcessor svnProcessor)
+        static private void SVNCommit(BuildTarget buildTarget, SVNProcessor svnProcessor)
         {
             //存在仓库
             var svntag = svnProcessor.LocalSVNRootPath + "/.svn";
@@ -263,26 +274,15 @@ namespace BDFramework.Editor.DevOps
             {
                 //1.获取被删除文件提交
                 var delFiles = svnProcessor.GetStatus(SVNProcessor.Status.Deleted);
-                svnProcessor.Delete(delFiles);
-
-
-                //2.获取支持的目录，提交
-                foreach (var platform in BApplication.SupportPlatform)
-                {
-                    var p = BApplication.GetPlatformPath(platform);
-                    var path = Path.Combine(svnProcessor.LocalSVNRootPath, p);
-                    if (Directory.Exists(path))
-                    {
-                        //添加文件夹
-                        svnProcessor.AddFloder(path);
-                        //添加所有文件
-                        var fs = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
-                        svnProcessor.Add(fs);
-                    }
-                }
-
+                svnProcessor.ForceDelete(delFiles);
+                //2.添加修改的文件
+                var motifyFiles = svnProcessor.GetStatus(SVNProcessor.Status.Motify);
+                svnProcessor.ForceAdd(motifyFiles);
+                //3.添加新文件
+                var addFiles = svnProcessor.GetStatus(SVNProcessor.Status.NewFile);
+                svnProcessor.ForceAdd(addFiles);
                 //提交
-                svnProcessor.Commit();
+                svnProcessor.Commit(log: $"{buildTarget.ToString()} - AssetBundle Commit !");
             }
         }
 
@@ -299,7 +299,7 @@ namespace BDFramework.Editor.DevOps
         static public void Test()
         {
             Debug.Log("Test CI passed!");
-            SVNCommit(PackageSvnProcessor);
+            SVNCommit(BuildTarget.NoTarget, PackageSvnProcessor);
             //var b = BDEditorApplication.IsPlatformModuleInstalled(BuildTargetGroup.Android, BuildTarget.Android);
         }
     }

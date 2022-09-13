@@ -160,7 +160,7 @@ namespace BDFramework.Editor.Environment
             catch (Exception e)
             {
                 Debug.LogError("框架编辑器环境初始化失败!");
-                Debug.LogError(e);
+                Debug.LogError(e.StackTrace);
                 throw;
             }
         }

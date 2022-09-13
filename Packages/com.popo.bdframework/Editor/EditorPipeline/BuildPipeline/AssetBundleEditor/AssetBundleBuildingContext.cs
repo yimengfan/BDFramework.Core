@@ -204,7 +204,7 @@ namespace BDFramework.Editor.AssetBundle
         #endregion
 
 
-        #region 资源获取
+        #region 资源搜集
 
         /// <summary>
         ///  获取runtime下的资源
@@ -376,9 +376,7 @@ namespace BDFramework.Editor.AssetBundle
         }
 
         #endregion
-
-
-
+        
         #region 打包AssetBundle
 
         /// <summary>
@@ -402,6 +400,7 @@ namespace BDFramework.Editor.AssetBundle
             var changedAssetsInfo = GetChangedAssets(BuildingAssetInfos, buildTarget);
             //生成artconfig
             var assetbundleItemList = this.GenAssetBundleConfig(BuildingAssetInfos, BuildParams, platform);
+           
             //打包
             AssetDatabase.StartAssetEditing(); //禁止自动导入
             {
@@ -1096,8 +1095,6 @@ namespace BDFramework.Editor.AssetBundle
         #endregion
 
         #endregion
-
-
         
         #region 静态辅助函数
 

@@ -25,15 +25,13 @@ namespace BDFramework.Editor
         private static string QQGroup_URL = "http://shang.qq.com/wpa/qunwpa?idkey=8e33dccb44f8ac09e3d9ef421c8ec66391023ae18987bdfe5071d57e3dc8af3f";
 
         //更新日志
-        private static string CHANGEDLOG_URL = "https://github.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/CHANGELOG.md";
+        private static string CHANGEDLOG_URL = "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/CHANGELOG.md";
         //版本号
-        private static string PCKAGE_URL = "https://github.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/package.json";
-
+        private static string PCKAGE_URL = "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/package.json";
+        
         private static Texture webIcon; //= EditorGUIUtility.IconContent( "BuildSettings.Web.Small" ).image;
-
         //btn样式
         private static GUIContent wikiBtnContent; // = new GUIContent( " 中文Wiki", webIcon );
-
         private static GUIContent gitBtnContent; // = new GUIContent( " Github", webIcon );
 
         //label样式

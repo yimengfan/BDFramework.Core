@@ -44,7 +44,11 @@ namespace BDFramework.Editor.AssetBundle
             foreach (var path in matPaths)
             {
                 //Material;
-                var material = AssetDatabase.LoadAssetAtPath<Material>(path); 
+                var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+                if (!material)
+                {
+                    Debug.LogError("加载mat失败:" + path);
+                }
                 //shader数据
                 var ret = shaderDataMap.TryGetValue(material.shader, out var shaderData);
                 if (!ret)
@@ -52,7 +56,6 @@ namespace BDFramework.Editor.AssetBundle
                     shaderData = ShaderUtilImpl.GetShaderVariantEntriesFilteredInternal(material.shader, 256, new string[] { }, excludeCollection);
                     shaderDataMap[material.shader] = shaderData;
                 }
-                
                 //收集shaderVaraint
                 var passTypes = shaderData.passTypes.Distinct();
                 foreach (var pt in passTypes)
