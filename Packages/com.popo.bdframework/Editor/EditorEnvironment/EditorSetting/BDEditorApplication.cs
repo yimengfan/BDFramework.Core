@@ -44,25 +44,7 @@ namespace BDFramework.Editor
         {
             return BDFrameworkAssetImporter.CacheData?.HotfixList.ToArray();
         }
-
-        /// <summary>
-        /// 平台资源的父路径
-        /// </summary>
-        public static string GetPlatformPath(BuildTarget buildTarget)
-        {
-            switch (buildTarget)
-            {
-                case BuildTarget.Android:
-                case BuildTarget.StandaloneWindows:
-                case BuildTarget.StandaloneWindows64:
-                    return "Android";
-                case BuildTarget.iOS:
-                case BuildTarget.StandaloneOSX:
-                    return "iOS";
-            }
-
-            return "";
-        }
+        
 
         #region 平台切换
 
@@ -74,10 +56,9 @@ namespace BDFramework.Editor
             //切换到Android
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
         }
-
         
         /// <summary>
-        /// 切换到安卓
+        /// 切换到iOS
         /// </summary>
         static public void SwitchToiOS()
         {
@@ -85,6 +66,25 @@ namespace BDFramework.Editor
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.iOS, BuildTarget.iOS);
         }
 
+        
+        /// <summary>
+        /// 切换到安卓
+        /// </summary>
+        static public void SwitchToWindows()
+        {
+            //切换到Android
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
+        }
+        
+        /// <summary>
+        /// 切换到iOS
+        /// </summary>
+        static public void SwitchToMacOSX()
+        {
+            //切换到Android
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
+        }
+        
         delegate bool IsModuleNotInstalled_type(BuildTargetGroup buildTargetGroup, BuildTarget buildTarget);
         static private IsModuleNotInstalled_type IsModuleNotInstalledType_Impl;
         /// <summary>

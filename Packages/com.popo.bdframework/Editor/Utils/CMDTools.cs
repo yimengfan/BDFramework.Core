@@ -16,6 +16,7 @@ namespace BDFramework.Editor.Tools
         /// |:将上一个命令的输出,作为下一个命令的输入
         /// &&：当&&前的命令成功时,才执行&&后的命令
         /// ||：当||前的命令失败时,才执行||后的命令]]>
+        /// Windows only
         /// </summary>
         /// <param name="cmd">执行的命令</param>
         public static void RunCmd(string[] cmds,string envName="",string envValue ="")
@@ -87,6 +88,51 @@ namespace BDFramework.Editor.Tools
                 // Debug.LogWarning(output);
                 //return output;
             }
+        }
+        
+        /// <summary>
+        /// 执行脚本
+        /// </summary>
+        /// <param name="args">执行的脚本名</param>
+        static public void RunCmdFile(string shellpath, string args = "")
+        {
+            Process process = new Process();
+            process.StartInfo.FileName = shellpath;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+            //日志
+            process.OutputDataReceived += (s, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                {
+                    Debug.Log("[Cmd]" + e.Data);
+                }
+            };
+            process.ErrorDataReceived += (s, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                {
+                    Debug.Log("[Error]" + e.Data);
+                }
+            };
+
+
+            //执行
+            Debug.Log("执行:\n" + args);
+            process.StartInfo.Arguments = args;
+            //开始
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            //
+            process.WaitForExit();
+            process.Close();
+            process.Dispose();
         }
     }
 }

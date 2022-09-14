@@ -6,8 +6,10 @@ using System.IO;
 using System.Text;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.DevOps;
+using BDFramework.Editor.EditorPipeline.BuildPipeline;
 using BDFramework.Editor.Environment;
 using BDFramework.Editor.PublishPipeline;
+using BDFramework.Editor.Tools;
 using UnityEditor.SceneManagement;
 using Debug = UnityEngine.Debug;
 
@@ -21,9 +23,24 @@ namespace BDFramework.Editor.BuildPipeline
     {
         public enum BuildMode
         {
+            /// <summary>
+            /// 使用当前配置，debug构建
+            /// </summary>
             UseCurrentConfigDebug = -2,
+
+            /// <summary>
+            /// 使用当前配置，release构建
+            /// </summary>
             UseCurrentConfigRelease = -1,
+
+            /// <summary>
+            /// 标准构建，使用Debug配置,Debug构建
+            /// </summary>
             Debug = 0,
+
+            /// <summary>
+            /// 标准构建，使用Realease配置,Realease构建
+            /// </summary>
             Release,
         }
 
@@ -49,74 +66,15 @@ namespace BDFramework.Editor.BuildPipeline
         [MenuItem("BDFrameWork工具箱/【BuildPipeline】", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline)]
         public static void NULL()
         {
+            EditorWindow_BuildPipeline.Open();
         }
 
-        [MenuItem("BDFrameWork工具箱/5.发布母包/Android/Build(当前配置Debug)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
-        public static void EditorBuildAPKUseCurrentAssets()
-        {
-            BuildAPK(BuildMode.UseCurrentConfigDebug, false, BApplication.DevOpsPublishPackagePath);
-        }
-
-        [MenuItem("BDFrameWork工具箱/5.发布母包/Android/Build(当前配置Release)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
-        public static void EditorBuildAPKUseCurrentAssetsRelease()
-        {
-            BuildAPK(BuildMode.UseCurrentConfigRelease, false, BApplication.DevOpsPublishPackagePath);
-        }
-
-        [MenuItem("BDFrameWork工具箱/5.发布母包/Android/Build(加载Debug.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
-        public static void EditorBuildAPK_Debug()
-        {
-            if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
-            {
-                BuildAPK(BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath);
-            }
-        }
-
-        [MenuItem("BDFrameWork工具箱/5.发布母包/Android/Build(加载Release.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
-        public static void EditorBuildAPK()
-        {
-            if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
-            {
-                BuildAPK(BuildMode.Release, true, BApplication.DevOpsPublishPackagePath);
-            }
-        }
-
-
-        [MenuItem("BDFrameWork工具箱/5.发布母包/iOS/Build(当前配置Debug)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
-        public static void EditorBuildIpaUseCurrentAssets()
-        {
-            BuildIpa(BuildMode.UseCurrentConfigDebug, false, BApplication.DevOpsPublishPackagePath);
-        }
-
-        [MenuItem("BDFrameWork工具箱/5.发布母包/iOS/Build(当前配置Release)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
-        public static void EditorBuildIpaUseCurrentAssetsRelease()
-        {
-            BuildIpa(BuildMode.UseCurrentConfigRelease, false, BApplication.DevOpsPublishPackagePath);
-        }
-
-        [MenuItem("BDFrameWork工具箱/5.发布母包/iOS/Build(加载Debug.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
-        public static void EditorBuildIpa_Debug()
-        {
-            if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
-            {
-                BuildIpa(BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath);
-            }
-        }
-
-        [MenuItem("BDFrameWork工具箱/5.发布母包/iOS/Build(加载Release.json)", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPipeline_BuildPackage)]
-        public static void EditorBuildIpa()
-        {
-            if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
-            {
-                BuildIpa(BuildMode.Release, true, BApplication.DevOpsPublishPackagePath);
-            }
-        }
 
         /// <summary>
-        /// 加载场景配置
+        /// 加载场景上的配置
         /// </summary>
         /// <param name="mode"></param>
-        static  void LoadConfig(BuildMode mode)
+        static void LoadConfig(BuildMode mode)
         {
             var scene = EditorSceneManager.OpenScene(SCENEPATH);
             TextAsset textContent = null;
@@ -133,55 +91,80 @@ namespace BDFramework.Editor.BuildPipeline
         }
 
 
-        #region Android
-
         /// <summary>
         /// 构建包体，使用当前配置、资源
         /// </summary>
-        static public bool BuildAPK(BuildMode buildMode, bool isGenAssets, string outdir)
+        static public bool Build(BuildMode buildMode, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildAssetsTools.BuildPackageOption buildOption = BuildAssetsTools.BuildPackageOption.BuildAll)
         {
-            bool ret = false;
+            var buildRuntimePlatform = BApplication.GetRuntimePlatform(buildTarget);
             //增加平台路径
-            outdir = IPath.Combine(outdir, BApplication.GetPlatformPath(BuildTarget.Android));
-            BDFrameworkPipelineHelper.OnBeginBuildPackage(BuildTarget.Android, outdir);
+            var outPlatformDir = IPath.Combine(outdir, BApplication.GetPlatformPath(buildTarget));
+            BDFrameworkPipelineHelper.OnBeginBuildPackage(buildTarget, outPlatformDir);
             //0.加载场景和配置
             LoadConfig(buildMode);
 
-
-            //1.生成资源
+            //1.生成资源到Devops
             if (isGenAssets)
             {
-                BuildAssetsTools.BuildAllAssets(RuntimePlatform.Android, BApplication.DevOpsPublishAssetsPath);
+                BuildAssetsTools.BuildAllAssets(buildRuntimePlatform, BApplication.DevOpsPublishAssetsPath,opa: buildOption);
             }
 
+            bool buildResult = false;
+            string outputpath = "";
             //2.拷贝资源并打包
             AssetDatabase.StartAssetEditing(); //停止触发资源导入
             {
                 //拷贝资源
-                DevOpsTools.CopyPublishAssetsTo(Application.streamingAssetsPath, RuntimePlatform.Android);
+                DevOpsTools.CopyPublishAssetsTo(Application.streamingAssetsPath, buildRuntimePlatform);
                 try
                 {
-                    var  (_ret,outputpath) = BuildAPK(buildMode, outdir);
-                    ret = _ret;
-                    BDFrameworkPipelineHelper.OnEndBuildPackage(BuildTarget.Android, outputpath);
-                    
+                    switch (buildTarget)
+                    {
+                        case BuildTarget.Android:
+                        {
+                            (buildResult, outputpath) = BuildAPK(buildMode, outPlatformDir);
+                        }
+                            break;
+                        case BuildTarget.iOS:
+                        {
+                            (buildResult, outputpath) = BuildIpa(buildMode, outPlatformDir);
+                        }
+                            break;
+                        case BuildTarget.StandaloneWindows:
+                        case BuildTarget.StandaloneWindows64:
+                        {
+                            (buildResult, outputpath) = BuildExe(buildMode, outPlatformDir);
+                        }
+                            break;
+                        default:
+                        {
+                            throw new Exception("未实现打包平台:" + buildTarget);
+                        }
+                            break;
+                    }
+
+                    BDFrameworkPipelineHelper.OnEndBuildPackage(buildTarget, outputpath);
                 }
                 catch (Exception e)
                 {
                     Debug.LogException(e);
                 }
 
-                DevOpsTools.DeleteCopyAssets(Application.streamingAssetsPath, RuntimePlatform.Android);
+                DevOpsTools.DeleteCopyAssets(Application.streamingAssetsPath, buildRuntimePlatform);
             }
+            
             AssetDatabase.StopAssetEditing(); //恢复触发资源导入
 
-            return ret;
+            return buildResult;
         }
 
+
+        #region Android
+
         /// <summary>
-        /// 打包APK
+        /// 打包APK   
         /// </summary>
-        static private (bool,string) BuildAPK(BuildMode mode, string outdir)
+        static private (bool, string) BuildAPK(BuildMode mode, string outdir)
         {
             bool ret = false;
             //切换到Android
@@ -193,7 +176,6 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 //For ci
                 throw new Exception("请注意设置apk keystore账号密码");
-                
             }
 
             //模式
@@ -221,7 +203,6 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 //For ci
                 throw new Exception("【keystore】不存在:" + keystorePath);
-              
             }
 
             PlayerSettings.Android.keystoreName = keystorePath;
@@ -237,26 +218,9 @@ namespace BDFramework.Editor.BuildPipeline
             // {
             //PlayerSettings.SetManagedStrippingLevel(BuildTargetGroup.Android, ManagedStrippingLevel.Low);
             // }
-
-
+            
             //开启符号表
             EditorUserBuildSettings.androidCreateSymbolsZip = true;
-            //不同模式的设置
-            // switch (mode)
-            // {
-            //     case BuildMode.Debug:
-            //     {
-            //         
-            //     }
-            //         break;
-            //     case BuildMode.Release:
-            //     {
-            //         
-            //     }
-            //         break;
-            // }
-            //
-
             var outputPath = IPath.Combine(outdir, string.Format("{0}_{1}.apk", Application.identifier, mode.ToString()));
             //文件夹处理
             if (!Directory.Exists(outdir))
@@ -287,12 +251,12 @@ namespace BDFramework.Editor.BuildPipeline
                 }
                     break;
             }
-            
+
             //构建包体
             Debug.Log("------------->Begin build<------------");
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.Android, opa);
             Debug.Log("------------->End build<------------");
-            
+
             //构建出判断
             if (File.Exists(outputPath))
             {
@@ -306,7 +270,7 @@ namespace BDFramework.Editor.BuildPipeline
                 throw new Exception("【BDFramework】Package not exsit！ -" + outputPath);
             }
 
-            return (ret,outputPath);
+            return (ret, outputPath);
         }
 
         #endregion
@@ -314,53 +278,10 @@ namespace BDFramework.Editor.BuildPipeline
         #region iOS
 
         /// <summary>
-        /// 构建包体，使用当前配置、资源
-        /// </summary>
-        static public bool BuildIpa(BuildMode buildMode, bool isGenAssets, string outdir)
-        {
-            bool ret = false;
-            //增加平台路径
-            outdir = IPath.Combine(outdir, BApplication.GetPlatformPath(BuildTarget.iOS));
-            BDFrameworkPipelineHelper.OnBeginBuildPackage(BuildTarget.iOS, outdir);
-            //0.加载场景和配置
-            LoadConfig(buildMode);
-
-            //1.生成资源
-            if (isGenAssets)
-            {
-                BuildAssetsTools.BuildAllAssets(RuntimePlatform.IPhonePlayer, BApplication.DevOpsPublishAssetsPath);
-            }
-
-            //2.拷贝资源打包
-            AssetDatabase.StartAssetEditing(); //停止触发资源导入
-            {
-                //拷贝资源
-                DevOpsTools.CopyPublishAssetsTo(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer);
-                try
-                {
-                    var (_ret,outputpath) = BuildIpa(buildMode, outdir);
-                    BDFrameworkPipelineHelper.OnEndBuildPackage(BuildTarget.iOS, outputpath);
-                    ret = _ret;
-                }
-                catch (Exception e)
-                {
-                    //For ci
-                    throw e;
-                }
-
-                DevOpsTools.DeleteCopyAssets(Application.streamingAssetsPath, RuntimePlatform.IPhonePlayer);
-            }
-            AssetDatabase.StopAssetEditing(); //恢复触发资源导入
-
-            return ret;
-        }
-
-
-        /// <summary>
         /// 编译Xcode（这里是出母包版本）
         /// </summary>
         /// <param name="mode"></param>
-        static private (bool,string) BuildIpa(BuildMode mode, string outdir)
+        static private (bool, string) BuildIpa(BuildMode mode, string outdir)
         {
             bool ret = false;
             BDEditorApplication.SwitchToiOS();
@@ -409,8 +330,8 @@ namespace BDFramework.Editor.BuildPipeline
             Debug.Log("------------->Begin build<------------");
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.iOS, opa);
             Debug.Log("------------->End build<------------");
-            
-            
+
+
             //检测xcode
             if (File.Exists(outputPath + "/Info.plist"))
             {
@@ -429,7 +350,7 @@ namespace BDFramework.Editor.BuildPipeline
                 {
                     //执行BuildIpa的shell
                     Debug.Log("即将执行:" + shellPath);
-                    ExecuteShell(shellPath);
+                    CMDTools.RunCmdFile(shellPath);
                     //删除xcode项目
                     Directory.Delete(outputPath, true);
 
@@ -447,7 +368,6 @@ namespace BDFramework.Editor.BuildPipeline
                 {
                     //For ci
                     throw new Exception("没找到编译xcode脚本! 后续请配合Jekins/Teamcity出包!");
-                    
                 }
 
                 EditorUtility.RevealInFinder(outputPath);
@@ -458,11 +378,82 @@ namespace BDFramework.Editor.BuildPipeline
                 throw new Exception("【BDFramework】Package not exsit！ -" + outputPath);
             }
 
-            return (ret,outputPath);
+            return (ret, outputPath);
         }
 
         #endregion
 
+        #region Windows
+        
+
+        /// <summary>
+        /// 编译Xcode（这里是出母包版本）
+        /// </summary>
+        /// <param name="mode"></param>
+        static private (bool, string) BuildExe(BuildMode mode, string outdir)
+        {
+            bool ret = false;
+            BDEditorApplication.SwitchToWindows();
+            //DeleteIL2cppCache();
+            PlayerSettings.gcIncremental = true;
+            //开启符号表
+            EditorUserBuildSettings.androidCreateSymbolsZip = true;
+            var outputPath = IPath.Combine(outdir, string.Format("{0}_{1}.exe", Application.identifier, mode.ToString()));
+            //文件夹处理
+            if (Directory.Exists(outputPath))
+            {
+             
+            }
+            Directory.CreateDirectory(outputPath);
+
+
+            //开始项目一键打包
+            string[] scenes = {SCENEPATH};
+            BuildOptions opa = BuildOptions.None;
+            BuildMode realmode = BuildMode.Release;
+            switch (mode)
+            {
+                case BuildMode.UseCurrentConfigDebug:
+                case BuildMode.Debug:
+                {
+                    realmode = BuildMode.Debug;
+                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging | BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
+                }
+                    break;
+                case BuildMode.UseCurrentConfigRelease:
+                case BuildMode.Release:
+                {
+                    realmode = BuildMode.Release;
+                    opa = BuildOptions.CompressWithLz4HC;
+                }
+                    break;
+            }
+
+            //构建包体
+            Debug.Log("------------->Begin build<------------");
+            UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.StandaloneWindows64, opa);
+            Debug.Log("------------->End build<------------");
+
+
+            //检测xcode
+            if (File.Exists(outputPath))
+            {
+                Debug.Log("打包Exe成功~");
+            }
+            else
+            {
+                //For ci
+                throw new Exception("【BDFramework】Package not exsit！ -" + outputPath);
+            }
+
+            return (ret, outputPath);
+        }
+
+        #endregion
+
+        #region Mac OSX
+
+        #endregion
 
         /// <summary>
         /// 删除il2cpp
@@ -496,52 +487,6 @@ namespace BDFramework.Editor.BuildPipeline
                 Directory.Delete(tempdirt, true);
             }
 #endif
-        }
-
-
-        /// <summary>
-        /// 执行脚本
-        /// </summary>
-        /// <param name="args"></param>
-        static private void ExecuteShell(string shellpath, string args = "")
-        {
-            Process process = new Process();
-            process.StartInfo.FileName = shellpath;
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
-            //日志
-            process.OutputDataReceived += (s, e) =>
-            {
-                if (!string.IsNullOrEmpty(e.Data))
-                {
-                    Debug.Log("[Svn]" + e.Data);
-                }
-            };
-            process.ErrorDataReceived += (s, e) =>
-            {
-                if (!string.IsNullOrEmpty(e.Data))
-                {
-                    Debug.Log("[Error]" + e.Data);
-                }
-            };
-
-
-            //执行
-            Debug.Log("执行:\n" + args);
-            process.StartInfo.Arguments = args;
-            //开始
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-            //
-            process.WaitForExit();
-            process.Close();
-            process.Dispose();
         }
     }
 }
