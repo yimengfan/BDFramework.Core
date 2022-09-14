@@ -28,8 +28,8 @@ namespace UnityEngine.AssetGraph {
             groupListHeaderState   = GroupListTree.CreateDefaultMultiColumnHeaderState();
             assetListHeaderState   = GroupAssetListTree.CreateDefaultMultiColumnHeaderState();
 
-            groupListTreeRect = new Rect(0f,0f,300f, 100f);
-            assetListTreeRect = new Rect(0f,0f,300f, 120f);
+            groupListTreeRect = new Rect(0f,0f,300f, 500f);
+            assetListTreeRect = new Rect(0f,0f,300f, 300f);
         }
     }
 

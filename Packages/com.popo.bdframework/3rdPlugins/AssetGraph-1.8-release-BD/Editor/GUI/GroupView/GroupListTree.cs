@@ -86,9 +86,9 @@ namespace UnityEngine.AssetGraph {
                 new MultiColumnHeaderState.Column()
             };
             retVal[0].headerContent = new GUIContent("Group Name", "Group name");
-            retVal[0].minWidth = 50;
-            retVal[0].width = 100;
-            retVal[0].maxWidth = 300;
+            retVal[0].minWidth = 500;
+            retVal[0].width = 500;
+            retVal[0].maxWidth = 800;
             retVal[0].headerTextAlignment = TextAlignment.Left;
             retVal[0].canSort = true;
             retVal[0].autoResize = true;

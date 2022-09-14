@@ -13,9 +13,14 @@ namespace UnityEngine.AssetGraph
         [Serializable]
         public class SavedSelection
         {
-            [SerializeField] public List<NodeGUI> nodes;
-            [SerializeField] public List<ConnectionGUI> connections;
-            [SerializeField] private float m_pasteOffset = kPasteOffset;
+            [SerializeField]
+            public List<NodeGUI> nodes;
+
+            [SerializeField]
+            public List<ConnectionGUI> connections;
+
+            [SerializeField]
+            private float m_pasteOffset = kPasteOffset;
 
             static readonly float kPasteOffset = 20.0f;
 
@@ -234,13 +239,23 @@ namespace UnityEngine.AssetGraph
             SCRIPT_IMPORTSETTINGSCONFIGURATOR
         }
 
-        [SerializeField] private List<NodeGUI> m_nodes = new List<NodeGUI>();
-        [SerializeField] private List<ConnectionGUI> m_connections = new List<ConnectionGUI>();
-        [SerializeField] private string m_graphAssetPath;
-        [SerializeField] private string m_graphAssetName;
+        [SerializeField]
+        private List<NodeGUI> m_nodes = new List<NodeGUI>();
 
-        [SerializeField] private SavedSelection m_activeSelection = null;
-        [SerializeField] private SavedSelection m_copiedSelection = null;
+        [SerializeField]
+        private List<ConnectionGUI> m_connections = new List<ConnectionGUI>();
+
+        [SerializeField]
+        private string m_graphAssetPath;
+
+        [SerializeField]
+        private string m_graphAssetName;
+
+        [SerializeField]
+        private SavedSelection m_activeSelection = null;
+
+        [SerializeField]
+        private SavedSelection m_copiedSelection = null;
 
         private bool m_showErrors;
         private bool m_showVerboseLog;
@@ -290,7 +305,7 @@ namespace UnityEngine.AssetGraph
 		 * An alternative way to get Window, becuase
 		 * GetWindow<AssetGraphEditorWindow>() forces window to be active and present
 		 */
-        private static AssetGraphEditorWindow Window
+        public static AssetGraphEditorWindow Window
         {
             get
             {
@@ -301,6 +316,27 @@ namespace UnityEngine.AssetGraph
                 }
 
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// 所有节点
+        /// </summary>
+        public NodeGUI[] Nodes
+        {
+            get
+            {
+               return  m_nodes.ToArray();
+            }
+        }
+        /// <summary>
+        /// 所有连接线
+        /// </summary>
+        public ConnectionGUI[] Connections
+        {
+            get
+            {
+                return m_connections.ToArray();
             }
         }
 
@@ -893,7 +929,7 @@ namespace UnityEngine.AssetGraph
         /**
 		 * Save Graph and update all nodes & connections
 		 */
-        private void Setup(bool forceVisitAll = false)
+        public void Setup(bool forceVisitAll = false)
         {
             EditorUtility.ClearProgressBar();
             if (m_controller == null)
@@ -964,6 +1000,7 @@ namespace UnityEngine.AssetGraph
         /// 是否正在执行build
         /// </summary>
         static public bool IsRunningBuild { get; private set; } = false;
+
         /**
 		 * Execute the build.
 		 */
@@ -977,7 +1014,7 @@ namespace UnityEngine.AssetGraph
             try
             {
                 IsRunningBuild = true;
-                
+
                 AssetDatabase.SaveAssets();
                 AssetBundleBuildMap.GetBuildMap().Clear();
 
@@ -1034,7 +1071,6 @@ namespace UnityEngine.AssetGraph
                 {
                     LogUtility.Logger.LogError(LogUtility.kTag, e.ToString());
                 }
-                
             }
             finally
             {
@@ -2422,7 +2458,7 @@ namespace UnityEngine.AssetGraph
         /**
 			create new connection if same relationship is not exist yet.
 		*/
-        private void AddConnection(string label, NodeGUI startNode, Model.ConnectionPointData startPoint, NodeGUI endNode, Model.ConnectionPointData endPoint)
+        public void AddConnection(string label, NodeGUI startNode, Model.ConnectionPointData startPoint, NodeGUI endNode, Model.ConnectionPointData endPoint)
         {
             RecordUndo("Add Connection");
 

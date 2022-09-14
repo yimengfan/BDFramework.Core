@@ -394,7 +394,7 @@ namespace UnityEngine.AssetGraph {
 			// UpdateNodeRect will be called outside OnGUI(), so it use inacurate but simple way to calcurate label width
 			// instead of CalcSize()
 
-			float labelWidth = GUI.skin.label.CalcSize(new GUIContent(this.Name)).x;
+			float labelWidth = GUI.skin.label.CalcSize(new GUIContent(this.Name)).x * 1.2f;
 			float outputLabelWidth = 0f;
 			float inputLabelWidth = 0f;
 

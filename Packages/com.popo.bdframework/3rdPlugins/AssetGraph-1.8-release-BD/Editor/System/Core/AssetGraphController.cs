@@ -233,7 +233,7 @@ namespace UnityEngine.AssetGraph
             catch (Exception e)
             {
                 m_nodeExceptions.Add(new NodeException($"{e.GetType().ToString()}:{e.Message}", "See Console for detail.", currentNodeData));
-                LogUtility.Logger.LogException(e);
+                Debug.LogError(e.Message + "\n" + e.StackTrace);
             }
 
             m_currentNode = null;
