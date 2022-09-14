@@ -139,6 +139,11 @@ namespace BDFramework.Editor
                 var fileHash = FileHelper.GetMurmurHash3(assetPath);
                 var abPath = Path.GetFileName(assetPath);
                 var assetbundleItem = abConfigLoader.AssetbundleItemList.Find((ab) => ab.AssetBundlePath != null && ab.AssetBundlePath.Equals(abPath));
+                if (assetbundleItem == null)
+                {
+                    Debug.Log("不存在配置:" + abPath);
+                    continue;
+                }
                 AssetItem item = null;
                 //文件容量
                 var fileInfo = new FileInfo(assetPath);
