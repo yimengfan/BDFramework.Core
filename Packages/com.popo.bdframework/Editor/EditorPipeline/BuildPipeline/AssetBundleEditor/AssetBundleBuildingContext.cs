@@ -34,12 +34,12 @@ namespace BDFramework.Editor.AssetBundle
         /// 构建资产的数据
         /// </summary>
         public BuildAssetInfos BuildAssetInfos { get; private set; } = new BuildAssetInfos();
-        
+
         /// <summary>
         /// Runtime资产列表
         /// </summary>
         private List<string> runtimeAssetsPathList = new List<string>();
-        
+
         /// <summary>
         /// runtime下的资源
         /// </summary>
@@ -50,26 +50,25 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         public List<AssetReference> DependAssetList { get; private set; } = new List<AssetReference>();
 
-        
+
         /// <summary>
         /// 搜集打包资产信息
         /// </summary>
-        public bool CollectBuildAssets(bool isForceReCollect = false)
+        public bool CollectBuildAssets(string[] assetDirectories, bool isForceReCollect = false)
         {
-
-            //1.生成BuildingAssetInfo信息
+            //1.  获取缓存
             BuildAssetInfos buildInfoCache = null;
-            //获取缓存
+
             if (!this.BuildParams.IsBuilding && !isForceReCollect)
             {
-                buildInfoCache = EditorAssetInfosCache.GetBuildingAssetInfosCache();
+                buildInfoCache = BuildPipelineAssetCacheImporter.GetBuildingAssetInfosCache();
             }
-            
+
             //获取buildingAssetinfo
-            (this.BuildAssetInfos,this.runtimeAssetsPathList) = AssetBundleToolsV2.GetBuildingAssetInfos(buildInfoCache);
+            (this.BuildAssetInfos, this.runtimeAssetsPathList) = AssetBundleToolsV2.GetBuildingAssetInfos(assetDirectories, buildInfoCache);
             //保存
-            EditorAssetInfosCache.SaveBuildingAssetInfosCache(this.BuildAssetInfos);
-            
+            BuildPipelineAssetCacheImporter.SaveBuildingAssetInfosCache(this.BuildAssetInfos);
+
             //2.创建AssetRef
             foreach (var item in this.BuildAssetInfos.AssetInfoMap)
             {
@@ -148,8 +147,6 @@ namespace BDFramework.Editor.AssetBundle
 
             //2.清理
             Debug.Log("<color=green>----->2.清理旧ab</color>");
-            //移除所有的ab
-            AssetBundleToolsV2.RemoveAllAssetbundleName();
             //删除本地没有的资源
             var allABList = Directory.GetFiles(abOutputPath, "*", SearchOption.AllDirectories).Where((p) => string.IsNullOrEmpty(Path.GetExtension(p)));
             foreach (var abpath in allABList)
@@ -170,7 +167,7 @@ namespace BDFramework.Editor.AssetBundle
 
 
             //3.BuildInfo配置处理
-            Debug.Log("<color=green>----->3.BuildInfo相关生成</color>");
+            Debug.Log($"<color=green>----->3.BuildInfo相关生成  abcount:{assetbundleItemList.Count}</color>");
             //设置ab的hash
             foreach (var abi in assetbundleItemList)
             {
@@ -180,7 +177,9 @@ namespace BDFramework.Editor.AssetBundle
                 }
 
                 var abpath = IPath.Combine(platformOutputPath, BResources.ART_ASSET_ROOT_PATH, abi.AssetBundlePath);
+                Debug.Log("===>获取ABhash:" + abpath);
                 var hash = FileHelper.GetMurmurHash3(abpath);
+                Debug.Log("===>获取成功:" + hash);
                 abi.Hash = hash;
             }
 
@@ -297,6 +296,9 @@ namespace BDFramework.Editor.AssetBundle
             }
 
 
+            //移除所有的ab
+            AssetBundleToolsV2.RemoveAllAssetbundleName();
+
             //恢复编辑器状态
             BDEditorApplication.EditorStatus = BDFrameworkEditorStatus.Idle;
             //BD生命周期触发
@@ -313,7 +315,7 @@ namespace BDFramework.Editor.AssetBundle
         /// <param name="buildAssetInfos"></param>
         /// <param name="buildParams"></param>
         /// <param name="platform"></param>
-        private void BuildAssetBundle(List<AssetBundleItem> assetBundleItemList,  List<KeyValuePair<string, BuildAssetInfos.AssetInfo>> buildAssetInfos, BuildAssetBundleParams buildParams, RuntimePlatform platform)
+        private void BuildAssetBundle(List<AssetBundleItem> assetBundleItemList, List<KeyValuePair<string, BuildAssetInfos.AssetInfo>> buildAssetInfos, BuildAssetBundleParams buildParams, RuntimePlatform platform)
         {
             //----------------------------开始设置build ab name-------------------------------
             //根据传进来的资源,设置AB name
