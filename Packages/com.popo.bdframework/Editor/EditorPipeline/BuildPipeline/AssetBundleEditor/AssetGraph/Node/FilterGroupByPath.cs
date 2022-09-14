@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.Versioning;
 using System.Text.RegularExpressions;
+using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.StringEx;
 using UnityEditor;
@@ -97,6 +99,35 @@ namespace BDFramework.Editor.AssetGraph.Node
             return node;
         }
 
+        //
+        // /// <summary>
+        // /// 添加到List列表
+        // /// </summary>
+        // /// <param name="label"></param>
+        // private void AddToList(string label)
+        // {
+        //     label = IPath.ReplaceBackSlash(label);
+        //     var find = this.groupFilterPathDataList.FirstOrDefault((gf) => gf.GroupPath.Equals(label));
+        //
+        //     if (find == null)
+        //     {
+        //         this.groupFilterPathDataList.Add(new GroupPathData()
+        //         {
+        //             GroupPath = label,
+        //         });
+        //     
+        //         this.AddOutputNode(label);
+        //     }
+        //     else
+        //     {
+        //         Debug.LogError("已经存在:" + label);
+        //     }
+        //
+        //     
+        //     
+        // }
+
+
         #region 渲染 list Inspector
 
         private NodeGUI selfNodeGUI;
@@ -113,9 +144,6 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
-            //初始化group list
-            InitGroupList();
-
             //添加输出节点
             if (incommingAssetGroup != null)
             {
@@ -125,6 +153,37 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
             }
 
+
+            GUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("添加前置节点", GUILayout.Width(150), GUILayout.Height(30)))
+                {
+                    if (this.groupFilterPathDataList.Count == 0)
+                    {
+                        AddOutputNode(nameof(BDFrameworkAssetsEnv.FloderType.Runtime));
+                        AddOutputNode(nameof(BDFrameworkAssetsEnv.FloderType.Depend));
+                        AddOutputNode(nameof(BDFrameworkAssetsEnv.FloderType.Shaders));
+                        AddOutputNode(nameof(BDFrameworkAssetsEnv.FloderType.SpriteAtlas));
+                    }
+                }
+
+                //
+                if (GUILayout.Button("添加Runtime目录", GUILayout.Width(150), GUILayout.Height(30)))
+                {
+                    foreach (var runtimeDir in BApplication.GetAllRuntimeDirects())
+                    {
+                        var dirs = Directory.GetDirectories(runtimeDir, "*", SearchOption.TopDirectoryOnly);
+                        foreach (var dir in dirs)
+                        {
+                            AddOutputNode(dir);
+                        }
+                    }
+                }
+            }
+            GUILayout.EndHorizontal();
+
+
+            GUILayout.Space(10);
             //选择模式
             var curSelect = (CompareModeEnum) EditorGUILayout.EnumPopup("路径匹配模式", this.CompareMode);
             if (curSelect != this.CompareMode)
@@ -133,7 +192,9 @@ namespace BDFramework.Editor.AssetGraph.Node
                 this.CompareMode = curSelect;
             }
 
-            //
+            //渲染列表
+            //初始化group list
+            InitGroupList();
             GUILayout.Label("路径匹配:建议以\"/\"结尾,不然路径中包含这一段path都会被匹配上.");
             e_groupList.DoLayoutList();
 
@@ -144,7 +205,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 Debug.Log("更新node!");
                 //触发
                 //BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, this.selfNodeGUI.Data.OutputPoints.FirstOrDefault());
-                GraphNodeHelper.UpdateNodeGraph(this.selfNodeGUI);
+                AssetGraphTools.UpdateNodeGraph(this.selfNodeGUI);
             }
         }
 
@@ -157,17 +218,21 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             if (list.count > 1)
             {
+                Debug.Log("select：" + list.index);
                 //移除序列化值
-                var removeIdx = this.groupFilterPathDataList.Count - 1;
-                var rItem = this.groupFilterPathDataList[removeIdx];
-                this.groupFilterPathDataList.RemoveAt(removeIdx);
-                //移除输出节点
-                var rOutputNode = this.selfNodeGUI.Data.OutputPoints.Find((node) => node.Id == rItem.OutputNodeId);
-                this.selfNodeGUI.Data.OutputPoints.Remove(rOutputNode);
-                list.index--;
-                //刷新
-                GraphNodeHelper.RemoveOutputNode(this.selfNodeGUI, rOutputNode);
-                GraphNodeHelper.UpdateNodeGraph(this.selfNodeGUI);
+                var removeIdx = list.index;
+                var removeItem = this.groupFilterPathDataList[removeIdx];
+
+                if (EditorUtility.DisplayDialog("提示", "是否删除 " + removeItem.GroupPath, "OK", "Cancel"))
+                {
+                    this.groupFilterPathDataList.RemoveAt(removeIdx);
+                    //移除输出节点
+                    var rOutputNode = this.selfNodeGUI.Data.OutputPoints.Find((node) => node.Id == removeItem.OutputNodeId);
+                    this.selfNodeGUI.Data.OutputPoints.Remove(rOutputNode);
+                    //刷新
+                    AssetGraphTools.RemoveOutputNode(this.selfNodeGUI, rOutputNode);
+                    AssetGraphTools.UpdateNodeGraph(this.selfNodeGUI);
+                }
             }
         }
 
@@ -180,23 +245,31 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             var gp = this.groupFilterPathDataList[idx];
             //渲染数据
-            bool isDisable = this.incommingAssetGroup.assetGroups.ContainsKey(gp.GroupPath);
-            EditorGUI.BeginDisabledGroup(isDisable);
-
-
-            var output = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, rect.height * 0.9f), gp.GroupPath);
-            //检测改动
-            if (output != gp.GroupPath)
+            bool isDisable = false;
+            if (this.incommingAssetGroup != null)
             {
-                Debug.Log("改动:" + output);
-                gp.GroupPath = output;
+                isDisable = this.incommingAssetGroup.assetGroups.ContainsKey(gp.GroupPath);
+            }
+            else
+            {
+                if (gp.GroupPath == nameof(BDFrameworkAssetsEnv.FloderType.Runtime) || gp.GroupPath == nameof(BDFrameworkAssetsEnv.FloderType.Depend) ||
+                    gp.GroupPath == nameof(BDFrameworkAssetsEnv.FloderType.Shaders) || gp.GroupPath == nameof(BDFrameworkAssetsEnv.FloderType.SpriteAtlas))
+                {
+                    isDisable = true;
+                }
+            }
+
+            EditorGUI.BeginDisabledGroup(isDisable);
+            var editorInput = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width, rect.height * 0.9f), gp.GroupPath);
+            //检测改动
+            if (editorInput != gp.GroupPath)
+            {
+                gp.GroupPath = editorInput;
                 //更新
                 UpdateGroupPathData(idx);
-                var outputConnect = this.selfNodeGUI.Data.OutputPoints.Find((node) => node.Id == gp.OutputNodeId);
-
-
+                //var outputConnect = this.selfNodeGUI.Data.OutputPoints.Find((node) => node.Id == gp.OutputNodeId);
                 //BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, outputConnect);
-                GraphNodeHelper.UpdateNodeGraph(this.selfNodeGUI);
+                AssetGraphTools.UpdateNodeGraph(this.selfNodeGUI);
             }
 
             if (isDisable)
@@ -217,6 +290,8 @@ namespace BDFramework.Editor.AssetGraph.Node
         private void ReorderFilterEntryList(ReorderableList list)
         {
             Debug.Log("recorder");
+
+            UpdateListToOutput();
         }
 
 
@@ -229,6 +304,15 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 label = (this.e_groupList.index + 1).ToString();
             }
+            else
+            {
+                if (Directory.Exists(label))
+                {
+                    label = IPath.AddEndSymbol(label);
+                    label = IPath.ReplaceBackSlash(label);
+                }
+            }
+
 
             //不重复添加
             var ret = this.groupFilterPathDataList.Find((data) => data.GroupPath == label);
@@ -237,6 +321,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 return;
             }
 
+            Debug.Log("添加目录:" + label);
             //添加输出节点
             this.e_groupList.index++;
             var node = this.selfNodeGUI.Data.AddOutputPoint(label);
@@ -249,9 +334,19 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         private void UpdateGroupPathData(int idx)
         {
+            var AssetGraphEditor = AssetGraphEditorWindow.Window;
+            //
             var gpd = this.groupFilterPathDataList[idx];
-            var outputNode = this.selfNodeGUI.Data.FindOutputPoint(gpd.OutputNodeId);
-            outputNode.Label = gpd.GroupPath;
+            var outputPoint = this.selfNodeGUI.Data.FindOutputPoint(gpd.OutputNodeId);
+            gpd.GroupPath = IPath.ReplaceBackSlash(gpd.GroupPath);
+            outputPoint.Label = gpd.GroupPath;
+            //
+
+            var con = AssetGraphEditor.Connections.FirstOrDefault((c) => c.OutputPoint.Id == outputPoint.Id);
+            if (con != null)
+            {
+                con.Label = gpd.GroupPath;
+            }
         }
 
         private PerformGraph.AssetGroups incommingAssetGroup = null;
@@ -279,9 +374,12 @@ namespace BDFramework.Editor.AssetGraph.Node
                     return true;
                 };
                 e_groupList.onChangedCallback = OnChangeList;
+//                e_groupList.onMouseDragCallback += (ReorderableList list) => { Debug.Log(list.index); };
+
                 e_groupList.elementHeight = EditorGUIUtility.singleLineHeight + 8f;
                 e_groupList.headerHeight = 3;
                 e_groupList.index = this.groupFilterPathDataList.Count - 1;
+                e_groupList.draggable = true;
             }
         }
 
@@ -290,6 +388,82 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
 
         #endregion
+
+        /// <summary>
+        /// 更新列表到输出节点
+        /// </summary>
+        private void UpdateListToOutput()
+        {
+            bool isChanged = false;
+            var AssetGraphEditor = AssetGraphEditorWindow.Window;
+            for (int i = 0; i < e_groupList.list.Count; i++)
+            {
+                var gp = e_groupList.list[i] as GroupPathData;
+                var idx = this.selfNodeGUI.Data.OutputPoints.FindIndex((point) => point.Label.Equals(gp.GroupPath));
+
+                //发生了变化
+                if (i != idx && idx >= 0 && this.selfNodeGUI.Data.OutputPoints.Count > i)
+                {
+                    isChanged = true;
+                    var curOutputPoint = this.selfNodeGUI.Data.OutputPoints[i];
+                    var lastOutputPoint = this.selfNodeGUI.Data.OutputPoints[idx];
+                    //交换连接线
+                    var lastCon = AssetGraphEditor.Connections.FirstOrDefault((con) => con.OutputPoint.Id == lastOutputPoint.Id);
+                    var curCon = AssetGraphEditor.Connections.FirstOrDefault((con) => con.OutputPoint.Id == curOutputPoint.Id);
+
+
+                    //将线连至当前,
+                    if (lastCon != null)
+                    {
+                        var endNode1 = AssetGraphEditor.Nodes.FirstOrDefault((node) => node.Id == lastCon.Data.ToNodeId);
+                        AssetGraphEditor.AddConnection(gp.GroupPath, this.selfNodeGUI, curOutputPoint, endNode1, lastCon.InputPoint);
+                    }
+                    else if (curCon != null)
+                    {
+                        curCon.Delete();
+                    }
+
+                    //将原来当前的线换位
+                    if (curCon != null)
+                    {
+                        var endNode2 = AssetGraphEditor.Nodes.FirstOrDefault((node) => node.Id == curCon.Data.ToNodeId);
+                        AssetGraphEditor.AddConnection(lastOutputPoint.Label, this.selfNodeGUI, lastOutputPoint, endNode2, curCon.InputPoint);
+                    }
+                    else if (lastCon != null)
+                    {
+                        lastCon.Delete();
+                    }
+
+
+                    lastOutputPoint.Label = curOutputPoint.Label;
+                    curOutputPoint.Label = gp.GroupPath;
+                    //输出节点重复制
+                    gp.OutputNodeId = curOutputPoint.Id;
+                }
+                //
+            }
+
+            //重新整理
+            for (int i = 0; i < e_groupList.count; i++)
+            {
+                var gp = e_groupList.list[i] as GroupPathData;
+                var outputPoint = this.selfNodeGUI.Data.OutputPoints[i];
+                gp.OutputNodeId = outputPoint.Id;
+                outputPoint.Label = gp.GroupPath;
+                //
+                var con = AssetGraphEditor.Connections.FirstOrDefault((c) => c.OutputPoint.Id == outputPoint.Id);
+                if (con != null)
+                {
+                    con.Label = gp.GroupPath;
+                }
+            }
+
+            if (isChanged)
+            {
+                AssetGraphEditor.Setup();
+            }
+        }
+
 
         /// <summary>
         /// 预览结果 编辑器连线数据，但是build模式也会执行
@@ -302,7 +476,6 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
-            Debug.Log("prepare:" + this.GetType().Name + "-" + DateTime.Now.ToLongTimeString());
             if (incoming == null)
             {
                 return;
@@ -310,6 +483,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //prepare传入的资源
             this.incommingAssetGroup = incoming.FirstOrDefault();
+
 
             //初始化输出节点
             foreach (var ags in incoming)
@@ -351,7 +525,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 }
             }
 
-            
+
             //排序
             groupFilterPatList.Sort((a, b) =>
             {
@@ -424,11 +598,31 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 throw new Exception($"【GroupByPath】分组输入输出不相等! input: {inputCount} output: {outputCount}");
             }
+            else
+            {
+                Debug.Log($"{this.Category}: 输入：{inputCount}  输出：{outputCount}");
+            }
 
+
+            //判断有没有连线
+            var AssetGraphEditor = AssetGraphEditorWindow.Window;
+            if (AssetGraphEditor!=null && AssetGraphEditor.Connections != null)
+            {
+                foreach (var gf in this.groupFilterPathDataList)
+                {
+                    var con = AssetGraphEditor.Connections.FirstOrDefault((c) => c?.OutputPoint?.Id == gf.OutputNodeId);
+
+                    if (con == null)
+                    {
+                        Debug.Log($"<color=yellow>{this.Category} 注意！！！！有节点没有连接输出：{gf.GroupPath}</color>");
+                    }
+                }
+            }
 
             //一次
             if (connectionsToOutput != null)
             {
+                //
                 foreach (var outpointNode in connectionsToOutput)
                 {
                     var groupFilter = this.groupFilterPathDataList.FirstOrDefault((gf) => gf.OutputNodeId == outpointNode.FromNodeConnectionPointId || gf.GroupPath.Equals(outpointNode.Label));

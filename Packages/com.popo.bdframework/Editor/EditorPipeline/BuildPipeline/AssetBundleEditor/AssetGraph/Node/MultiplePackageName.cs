@@ -83,6 +83,12 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+            //搜集所有的 asset reference 
+            var comingAssetReferenceList = AssetGraphTools.GetComingAssets(incoming);
+            if (comingAssetReferenceList.Count == 0)
+            {
+                return;
+            }
             this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
 
             //
@@ -110,7 +116,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //寻找当前分包,包含的资源
             foreach (var asset in this.packageAssetList)
             {
-                BuildAssetBundle.BuildAssetResult.AssetInfoMap.TryGetValue(asset, out var buildAssetData);
+              var  buildAssetData =   BuildAssetBundle.BuildAssetResult.GetAssetInfo(asset);
 
                 //依次把加入资源和依赖资源
                 foreach (var dependHash in buildAssetData.DependAssetList)

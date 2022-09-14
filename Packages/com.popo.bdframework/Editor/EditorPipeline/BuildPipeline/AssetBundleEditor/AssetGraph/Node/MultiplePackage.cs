@@ -146,7 +146,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 //移除连接线
                 NodeGUIUtility.NodeEventHandler(new NodeEvent(NodeEvent.EventType.EVENT_CONNECTIONPOINT_DELETED, this.selfNodeGUI, Vector2.zero, rOutputNode));
                 //刷新
-                GraphNodeHelper.UpdateNodeGraph(this.selfNodeGUI);
+                AssetGraphTools.UpdateNodeGraph(this.selfNodeGUI);
             }
         }
 
@@ -171,7 +171,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
 
                 //BDFrameworkAssetsEnv.UpdateConnectLine(this.selfNodeGUI, outputConnect);
-                GraphNodeHelper.UpdateNodeGraph(this.selfNodeGUI);
+                AssetGraphTools.UpdateNodeGraph(this.selfNodeGUI);
             }
         }
 
@@ -243,8 +243,13 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
-            Debug.Log("prepare:" + this.GetType().Name + "-" + DateTime.Now.ToLongTimeString());
             if (incoming == null)
+            {
+                return;
+            }
+            //搜集所有的 asset reference 
+            var comingAssetReferenceList = AssetGraphTools.GetComingAssets(incoming);
+            if (comingAssetReferenceList.Count == 0)
             {
                 return;
             }

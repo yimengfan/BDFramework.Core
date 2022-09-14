@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Editor.EditorPipeline.BuildPipeline
+namespace BDFramework.Editor.EditorPipeline.BuildPipeline
 {
     static public class EditorMenuItem
     {

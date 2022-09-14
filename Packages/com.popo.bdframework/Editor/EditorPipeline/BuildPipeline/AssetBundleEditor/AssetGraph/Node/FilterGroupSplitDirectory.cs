@@ -170,8 +170,8 @@ namespace BDFramework.Editor.AssetGraph.Node
             var gp= this.groupFilterPathDataList.Find((g) => g.OutputNodeId.Equals(uIdx));
             this.groupFilterPathDataList.Remove(gp);
             //移除连接线
-            GraphNodeHelper.RemoveOutputNode(this.selfNodeGUI, outputNode);
-            GraphNodeHelper.UpdateConnectLine(this.selfNodeGUI, outputNode);
+            AssetGraphTools.RemoveOutputNode(this.selfNodeGUI, outputNode);
+            AssetGraphTools.UpdateConnectLine(this.selfNodeGUI, outputNode);
         }
 
 
@@ -192,7 +192,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 GroupPath = path,
                 OutputNodeId = node.Id
             });
-            GraphNodeHelper.UpdateConnectLine(this.selfNodeGUI, node);
+            AssetGraphTools.UpdateConnectLine(this.selfNodeGUI, node);
         }
 
         private PerformGraph.AssetGroups incommingAssetGroup = null;
@@ -215,17 +215,21 @@ namespace BDFramework.Editor.AssetGraph.Node
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
        
-            Debug.Log("prepare:" + this.GetType().Name + "-" + DateTime.Now.ToLongTimeString());
             if (incoming == null)
             {
                 return;
             }
-
+            //搜集所有的 asset reference 
+            var comingAssetReferenceList = AssetGraphTools.GetComingAssets(incoming);
+            if (comingAssetReferenceList.Count == 0)
+            {
+                return;
+            }
             this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
 
             //prepare传入的资源
             this.InitOutputNode(incoming);
-            var assetsList = GraphNodeHelper.GetAllComingAssets(incoming);
+            var assetsList = AssetGraphTools.GetComingAssets(incoming);
             //初始化输出列表
             var allOutMap = new Dictionary<string, List<AssetReference>>();
             foreach (var group in this.groupFilterPathDataList)

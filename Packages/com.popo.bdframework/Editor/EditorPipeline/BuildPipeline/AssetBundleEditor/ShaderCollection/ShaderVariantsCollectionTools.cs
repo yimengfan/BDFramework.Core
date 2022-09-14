@@ -48,6 +48,7 @@ namespace BDFramework.Editor.AssetBundle
                 if (!material)
                 {
                     Debug.LogError("加载mat失败:" + path);
+                    continue;
                 }
                 //shader数据
                 var ret = shaderDataMap.TryGetValue(material.shader, out var shaderData);

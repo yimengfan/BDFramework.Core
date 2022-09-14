@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BDFramework.Editor.AssetBundle;
 using UnityEditor;
 using UnityEngine.AssetGraph;
 using UnityEngine.AssetGraph.DataModel.Version2;
@@ -13,6 +14,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     [CustomNode("BDFramework/[颗粒度]预览", 30)]
     public class SetGranularityNull : UnityEngine.AssetGraph.Node
     {
+        public AssetBundleBuildingContext BuildingCtx { get; set; }
         public override string ActiveStyle
         {
             get { return "node 6 on"; }
@@ -60,18 +62,22 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
-            
+            this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
             var outMap = new Dictionary<string, List<AssetReference>>();
-            
-            foreach (var ags in incoming)
+            var comingList = AssetGraphTools.GetComingAssets(incoming);
+
+            foreach (var ar in comingList)
             {
-                foreach (var assetGroup in ags.assetGroups)
+                var ai=  this.BuildingCtx.BuildAssetInfos.GetAssetInfo(ar.importFrom);
+                if (ai != null)
                 {
-                    outMap[assetGroup.Key] = assetGroup.Value.ToList();
+                    if (!outMap.ContainsKey(ai.ABName))
+                    {
+                        outMap[ai.ABName] = new List<AssetReference>();
+                    }
+                    outMap[ai.ABName].Add(ar);
                 }
             }
-
-
             //
             var output = connectionsToOutput?.FirstOrDefault();
             if (output != null)

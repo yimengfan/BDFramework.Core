@@ -1,34 +1,57 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.AssetGraph;
 using UnityEngine.AssetGraph.DataModel.Version2;
 
-namespace BDFramework.Editor.AssetGraph.Node
+namespace BDFramework.Editor.AssetGraph
 {
     /// <summary>
-    /// 节点辅助类
+    /// AssetGrah的辅助工具
     /// </summary>
-    static public class GraphNodeHelper
+    public class AssetGraphTools
     {
-        /// <summary>
-        /// 获取所有的输入资源
-        /// </summary>
-        /// <param name="incoming"></param>
-        /// <returns></returns>
-        static public List<AssetReference> GetAllComingAssets(IEnumerable<PerformGraph.AssetGroups> incoming)
-        {
-            var retList = new List<AssetReference>();
+        static private Stopwatch sw = new Stopwatch();
 
+        /// <summary>
+        /// 监测开始
+        /// </summary>
+        static public void WatchBegin()
+        {
+            sw.Restart();
+        }
+        
+        /// <summary>
+        /// 检测结束
+        /// </summary>
+        /// <param name="title"></param>
+        static public void WatchEnd(string title = "")
+        {
+            sw.Stop();
+
+            UnityEngine.Debug.LogFormat("{0}耗时:{1}ms", title, sw.ElapsedMilliseconds);
+        }
+
+
+        /// <summary>
+        /// 输入的资产整理
+        /// </summary>
+        /// <returns></returns>
+        static public List<AssetReference> GetComingAssets(IEnumerable<PerformGraph.AssetGroups> incoming)
+        {
+            var comingAssetReferenceList = new List<AssetReference>();
             foreach (var ags in incoming)
             {
                 foreach (var ag in ags.assetGroups)
                 {
-                    retList.AddRange(ag.Value);
+                    comingAssetReferenceList.AddRange(ag.Value);
                 }
-                
             }
-            return retList;
+            return comingAssetReferenceList;
         }
+        
+        
+
         
         
         
@@ -84,5 +107,6 @@ namespace BDFramework.Editor.AssetGraph.Node
         }
 
         #endregion
+
     }
 }

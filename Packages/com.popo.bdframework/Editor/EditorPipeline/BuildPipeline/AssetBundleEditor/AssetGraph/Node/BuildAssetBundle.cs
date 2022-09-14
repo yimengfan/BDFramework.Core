@@ -69,15 +69,14 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
-            Debug.Log("【BuildAssetbundle】执行Prepare");
+            Debug.Log("【BuildAssetbundle】执行:" + this.Category);
 
-            if (incoming == null)
+            if (incoming == null || BDFrameworkAssetsEnv.BuildingCtx == null)
             {
                 return;
             }
 
             this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
-
             //这里只做临时的输出，预览用，不做实际更改
             var tempBuildAssetsInfo = this.BuildingCtx.BuildAssetInfos?.Clone();
             if (tempBuildAssetsInfo == null)
@@ -85,7 +84,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 tempBuildAssetsInfo = new BuildAssetInfos();
             }
 
-            Debug.Log("Buildinfo 数量:" + tempBuildAssetsInfo.AssetInfoMap.Count);
+            Debug.Log("Buildinfo 数量:" + tempBuildAssetsInfo.GetAssetsCount());
             //预计算输出,不直接修改buildinfo
             //重整assetbundle颗粒度
             tempBuildAssetsInfo.ReorganizeAssetBundleUnit();
@@ -93,19 +92,12 @@ namespace BDFramework.Editor.AssetGraph.Node
             var changedAssetList = AssetBundleToolsV2.GetChangedAssetsByFileHash(this.BuildingCtx.BuildParams.OutputPath, target, tempBuildAssetsInfo);
 
             //搜集所有的 asset reference 
-            var assetReferenceList = new List<AssetReference>();
-            foreach (var ags in incoming)
-            {
-                foreach (var ag in ags.assetGroups)
-                {
-                    assetReferenceList.AddRange(ag.Value);
-                }
-            }
+            var comingAssetReferenceList = AssetGraphTools.GetComingAssets(incoming);
 
             //----------------验证资源-------------
-            if (assetReferenceList.Count == BDFrameworkAssetsEnv.BuildingCtx.BuildAssetInfos.AssetInfoMap.Count)
+            if (comingAssetReferenceList.Count == BDFrameworkAssetsEnv.BuildingCtx.BuildAssetInfos.AssetInfoMap.Count)
             {
-                foreach (var ar in assetReferenceList)
+                foreach (var ar in comingAssetReferenceList)
                 {
                     if (!this.BuildingCtx.BuildAssetInfos.AssetInfoMap.ContainsKey(ar.importFrom))
                     {
@@ -116,9 +108,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             else
             {
                 var list = new List<string>();
-                if (assetReferenceList.Count > tempBuildAssetsInfo.AssetInfoMap.Count)
+                if (comingAssetReferenceList.Count > tempBuildAssetsInfo.AssetInfoMap.Count)
                 {
-                    foreach (var ar in assetReferenceList)
+                    foreach (var ar in comingAssetReferenceList)
                     {
                         if (!tempBuildAssetsInfo.AssetInfoMap.ContainsKey(ar.importFrom))
                         {
@@ -132,7 +124,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 {
                     foreach (var key in tempBuildAssetsInfo.AssetInfoMap.Keys)
                     {
-                        var ret = assetReferenceList.Find((ar) => ar.importFrom.Equals(key, StringComparison.OrdinalIgnoreCase));
+                        var ret = comingAssetReferenceList.Find((ar) => ar.importFrom.Equals(key, StringComparison.OrdinalIgnoreCase));
                         if (ret == null)
                         {
                             list.Add(key);
@@ -142,29 +134,33 @@ namespace BDFramework.Editor.AssetGraph.Node
                     Debug.Log("Buildinfo多余资源:\n " + JsonMapper.ToJson(list, true));
                 }
 
-                Debug.LogErrorFormat("【资源验证】coming资源和Buildinfo资源数量不相等 {0}-{1}，请注意~", assetReferenceList.Count, tempBuildAssetsInfo.AssetInfoMap.Count);
+                Debug.LogErrorFormat("【资源验证】coming资源和Buildinfo资源数量不相等 {0}-{1}，请注意~", comingAssetReferenceList.Count, tempBuildAssetsInfo.AssetInfoMap.Count);
             }
 
 
             //输出节点 预览
             var outMap = new Dictionary<string, List<AssetReference>>();
-            foreach (var buildAssetItem in tempBuildAssetsInfo.AssetInfoMap)
+            if (comingAssetReferenceList.Count > 0)
             {
-                if (!outMap.TryGetValue(buildAssetItem.Value.ABName, out var list))
+                foreach (var buildAssetItem in tempBuildAssetsInfo.AssetInfoMap)
                 {
-                    list = new List<AssetReference>();
-                    outMap[buildAssetItem.Value.ABName] = list;
-                }
+                    var assetPath = AssetDatabase.GUIDToAssetPath(buildAssetItem.Value.ABName);
+                    if (!outMap.TryGetValue(assetPath, out var list))
+                    {
+                        list = new List<AssetReference>();
+                        outMap[assetPath] = list;
+                    }
 
-                //找到资源的assetref
-                var ar = assetReferenceList.Find((a) => a.importFrom.Equals(buildAssetItem.Key, StringComparison.OrdinalIgnoreCase));
-                if (ar != null)
-                {
-                    list.Add(ar);
-                }
-                else
-                {
-                    Debug.LogFormat("<color=red>【BuildAssetBundle】资源没有inComing:{0} </color>", buildAssetItem.Key);
+                    //找到资源的assetref
+                    var ar = comingAssetReferenceList.Find((a) => a.importFrom.Equals(buildAssetItem.Key, StringComparison.OrdinalIgnoreCase));
+                    if (ar != null)
+                    {
+                        list.Add(ar);
+                    }
+                    else
+                    {
+                        Debug.LogFormat("<color=red>【BuildAssetBundle】资源没有inComing:{0} </color>", buildAssetItem.Key);
+                    }
                 }
             }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BDFramework.Editor.AssetBundle;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.AssetGraph;
 using UnityEngine.AssetGraph.DataModel.Version2;
 
@@ -57,12 +58,19 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
-            this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
-         
+
+            Debug.Log("-->保留GUID加载！");
             if (incoming == null)
             {
                 return;
             }
+            //搜集所有的 asset reference 
+            var comingAssetReferenceList = AssetGraphTools.GetComingAssets(incoming);
+            if (comingAssetReferenceList.Count == 0)
+            {
+                return;
+            }
+            this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
             
             var outMap = new Dictionary<string, List<AssetReference>>();
             
@@ -77,10 +85,10 @@ namespace BDFramework.Editor.AssetGraph.Node
                     {
                         if (BuildingCtx != null)
                         {
-                            BuildingCtx.BuildAssetInfos.AssetInfoMap.TryGetValue(ar.importFrom, out var assetInfo);
-                            if (assetInfo != null)
+                            var ai =   this.BuildingCtx.BuildAssetInfos.GetAssetInfo(ar.importFrom);
+                            if (ai != null)
                             {
-                                assetInfo.IsKeepGUID = true;
+                                ai.IsKeepGUID = true;
                             }
                         }
                        

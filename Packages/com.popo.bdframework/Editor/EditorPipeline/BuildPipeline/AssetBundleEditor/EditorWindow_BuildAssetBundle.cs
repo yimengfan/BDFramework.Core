@@ -190,6 +190,8 @@ namespace BDFramework.Editor.AssetBundle
         /// </summary>
         public void BuildAssetBundle(string outputPath, RuntimePlatform platform)
         {
+            //关闭配置窗口
+            AssetGraphEditorWindow.Window?.Close();
             //ab会先构建代码,提前构建，避免浪费时间
             var ret = PublishPipeLineCI.CheckCode();
             if (ret)

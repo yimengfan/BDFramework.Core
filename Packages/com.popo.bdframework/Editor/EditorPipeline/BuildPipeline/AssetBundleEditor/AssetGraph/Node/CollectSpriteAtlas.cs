@@ -45,7 +45,12 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             return new CollectSpriteAtlas();
         }
-
+        private NodeGUI selfNodeGUI;
+        public override void OnDrawNodeGUIContent(NodeGUI node)
+        {
+            base.OnDrawNodeGUIContent(node);
+            this.selfNodeGUI = node;
+        }
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
         {
         }
@@ -65,16 +70,23 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+            //搜集所有的 asset reference 
+            var comingAssetReferenceList = AssetGraphTools.GetComingAssets(incoming);
+            if (comingAssetReferenceList.Count == 0)
+            {
+                return;
+            }
             this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
-            
-            StopwatchTools.Begin();
-            //找到runtime
+
+            AssetGraphTools.WatchBegin();
+            //找到runtime中的图集
             List<AssetReference> runtimeAssetReferenceList = null;
             incoming.FirstOrDefault()?.assetGroups.TryGetValue(nameof(BDFrameworkAssetsEnv.FloderType.Runtime), out runtimeAssetReferenceList);
 
             if (runtimeAssetReferenceList == null)
             {
                 Debug.LogError("Runtime数据获取失败!请检查前置节点!");
+                return;
             }
             
             //获取所有的图集设置
@@ -103,7 +115,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     }
                 }
             }
-            StopwatchTools.End("【搜集图集】");
+            AssetGraphTools.WatchEnd("【搜集图集】");
             //atlas
             outMap[nameof(BDFrameworkAssetsEnv.FloderType.SpriteAtlas)] = atlasAssetReferenceList.ToList();
             var output = connectionsToOutput?.FirstOrDefault();
@@ -122,16 +134,18 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 var atlasAR = atlasAssetReferenceList[i];
                 //获取依赖中的tex,并设置AB名为atlas名
-                if (this.BuildingCtx.BuildAssetInfos.AssetInfoMap.TryGetValue(atlasAR.importFrom, out BuildAssetInfos.AssetInfo atlasAssetData))
+                var assetInfo = this.BuildingCtx.BuildAssetInfos.GetAssetInfo(atlasAR.importFrom);
+                if (assetInfo!=null)
                 {
                     //设置tex ab
-                    foreach (var dependTex in atlasAssetData.DependAssetList)
+                    foreach (var dependTex in assetInfo.DependAssetList)
                     {
-                        var ret = this.BuildingCtx.BuildAssetInfos.SetABName(dependTex, atlasAR.importFrom, BuildAssetInfos.SetABNameMode.Force);
+                        var (ret,msg) = this.BuildingCtx.BuildAssetInfos.SetABPack(dependTex, atlasAR.importFrom, BuildAssetInfos.SetABPackLevel.Force,this.Category+" "+(this.selfNodeGUI!=null?this.selfNodeGUI.Name: this.GetHashCode().ToString()),true);
 
                         if (!ret)
                         {
-                            Debug.LogError($"设置ab name失败: old-{dependTex} new-{atlasAR.importFrom}");
+                            
+                            Debug.LogError($"设置ab name失败: old-{dependTex} new-{atlasAR.importFrom} \n {msg}");
                         }
                     }
                 }

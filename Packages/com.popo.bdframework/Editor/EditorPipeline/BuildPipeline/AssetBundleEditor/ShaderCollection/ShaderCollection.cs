@@ -81,7 +81,7 @@ namespace BDFramework.Editor.AssetBundle
                     }
                     else if (Path.GetExtension(dp).Equals(".asset", StringComparison.OrdinalIgnoreCase)) //依赖的ScripttableObject,会
                     {
-                        scriptObjectAssets.Add(AssetDatabase.AssetPathToGUID(dp));
+                        scriptObjectAssets.Add(AssetBundleToolsV2.AssetPathToGUID(dp));
                     }
                 }
             }
@@ -132,7 +132,7 @@ namespace BDFramework.Editor.AssetBundle
             AssetDatabase.StartAssetEditing();
             {
                 CollectShaderVariant();
-                var guid = AssetDatabase.AssetPathToGUID(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
+                var guid = AssetBundleToolsV2.AssetPathToGUID(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
 
                 List<AssetImporter> list = new List<AssetImporter>();
                 //依赖信息
