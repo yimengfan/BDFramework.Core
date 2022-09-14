@@ -4,7 +4,6 @@ using BDFramework.Core.Tools;
 using BDFramework.StringEx;
 using LitJson;
 using UnityEditor;
-using UnityEngine;
 
 namespace BDFramework.Editor.Table
 {
@@ -14,7 +13,8 @@ namespace BDFramework.Editor.Table
     public class ExcelEditorTools
     {
         static private string EXCEL_PATH = "Table";
-        static private string EXCEL_CACHE_PATH = "excel.cache";
+        static private string EXCEL_CACHE_PATH = "ExcelCache.info";
+        static private string LOCALDB_CACHE_PATH = "LacalDBCache.info";
 
         /// <summary>
         /// 获取所有的xlsx文件
@@ -126,6 +126,24 @@ namespace BDFramework.Editor.Table
             var excelCachePath = IPath.Combine(BApplication.BDEditorCachePath, EXCEL_CACHE_PATH);
             var content = JsonMapper.ToJson(cacheMap);
             FileHelper.WriteAllText(excelCachePath, content);
+        }
+
+        //
+        public static string LoadLocalDBCacheInfo()
+        {
+            var dbCachePath = IPath.Combine(BApplication.BDEditorCachePath, LOCALDB_CACHE_PATH);
+            if (File.Exists(dbCachePath))
+            {
+                return File.ReadAllText(dbCachePath);
+            }
+            return string.Empty;
+        }
+
+        public static void SaveLocalDBCacheInfo(string dbPath)
+        {
+            var dbCachePath = IPath.Combine(BApplication.BDEditorCachePath, LOCALDB_CACHE_PATH);
+            var hash = FileHelper.GetMurmurHash3(dbPath);
+            FileHelper.WriteAllText(dbCachePath,hash);
         }
     }
 }
