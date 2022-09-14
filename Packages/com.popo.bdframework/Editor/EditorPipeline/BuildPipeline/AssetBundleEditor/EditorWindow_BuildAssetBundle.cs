@@ -165,7 +165,7 @@ namespace BDFramework.Editor.AssetBundle
                     GUILayout.Label("AssetBundle验证: DevOps目录", EditorGUIHelper.GetFontStyle(Color.white, 12));
                     if (GUILayout.Button("Play", GUILayout.Width(50), GUILayout.Height(20)))
                     {
-                        AssetBundleTestToolsV2.TestLoadAssetbundleRuntime();
+                        AssetBundleBenchmarkToolsV2.TestLoadAssetbundleRuntime();
                     }
                 }
                 GUILayout.EndHorizontal();

@@ -20,7 +20,7 @@ namespace BDFramework.Editor.AssetBundle
     /// <summary>
     /// Assetbundle 测试接口
     /// </summary>
-    static public class AssetBundleTestToolsV2
+    static public class AssetBundleBenchmarkToolsV2
     {
         static private Transform UI_ROOT;
         static private Transform SCENE_ROOT;

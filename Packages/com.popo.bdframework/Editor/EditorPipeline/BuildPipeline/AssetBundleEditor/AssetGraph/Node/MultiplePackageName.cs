@@ -79,6 +79,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
+            this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
             if (incoming == null)
             {
                 return;
@@ -89,7 +90,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
-            this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
+           
 
             //
             packageAssetList = new List<string>();

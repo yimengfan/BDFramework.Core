@@ -48,9 +48,9 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.Sql.SqliteLoder.LoadLocalDBOnEditor(@root, @platform);
+            var result_of_this_method = BDFramework.Sql.SqliteLoder.LoadLocalDBOnEditor(@root, @platform);
 
-            return __ret;
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
         static StackObject* Close_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)

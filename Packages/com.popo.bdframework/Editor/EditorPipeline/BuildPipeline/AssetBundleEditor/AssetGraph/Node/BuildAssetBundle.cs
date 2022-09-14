@@ -191,10 +191,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             //构建ab包
             BDFrameworkAssetsEnv.BuildingCtx.StartBuildAssetBundle(buildTarget);
-
             BuildAssetResult = BDFrameworkAssetsEnv.BuildingCtx.BuildAssetInfos.Clone();
-
-            BDFrameworkAssetsEnv.BuildingCtx = null;
         }
     }
 }

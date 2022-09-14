@@ -50,7 +50,7 @@ namespace BDFramework.Editor.AssetBundle
             List<ConfigGraph> retList = new List<ConfigGraph>();
 
             var assets = AssetDatabase.FindAssets("t: UnityEngine.AssetGraph.DataModel.Version2.ConfigGraph",
-                new string[1] { "Assets" });
+                new string[1] {"Assets"});
             string envclsName = typeof(BDFrameworkAssetsEnv).FullName;
             foreach (var assetGuid in assets)
             {
@@ -88,6 +88,8 @@ namespace BDFramework.Editor.AssetBundle
             bdenv.SetBuildParams(outPath, true);
             //执行
             AssetGraphUtility.ExecuteGraph(buildTarget, cg);
+            //
+            BDFrameworkAssetsEnv.Reset();
         }
 
 
@@ -364,7 +366,7 @@ namespace BDFramework.Editor.AssetBundle
                     }
 
                     var lastAssetInfo = lastBuildAssetInfos.GetAssetInfo(newAssetItem.Key);
-                    if (lastAssetInfo!=null) 
+                    if (lastAssetInfo != null)
                     {
                         //文件hash相同
                         if (lastAssetInfo.Hash == newAssetItem.Value.Hash)
@@ -403,7 +405,7 @@ namespace BDFramework.Editor.AssetBundle
                 foreach (var newAssetItem in newBuildAssetInfos.AssetInfoMap)
                 {
                     var lastAssetItem = lastBuildAssetInfos.GetAssetInfo(newAssetItem.Key);
-                    if (lastAssetItem!=null)
+                    if (lastAssetItem != null)
                     {
                         //AB名修改
                         if (lastAssetItem.ABName != newAssetItem.Value.ABName)
@@ -762,7 +764,7 @@ namespace BDFramework.Editor.AssetBundle
         /// <returns></returns>
         static public string[] GetMixAssets()
         {
-            return AssetDatabase.FindAssets("t:TextAsset", new string[] { BResources.MIX_SOURCE_FOLDER });
+            return AssetDatabase.FindAssets("t:TextAsset", new string[] {BResources.MIX_SOURCE_FOLDER});
         }
 
         /// <summary>
@@ -780,6 +782,7 @@ namespace BDFramework.Editor.AssetBundle
 
         /// <summary>
         /// 添加混淆
+        /// 这个接口独立出来,可供其他地方调用
         /// </summary>
         static public void MixAssetBundle(string outpath, RuntimePlatform platform)
         {
@@ -819,7 +822,7 @@ namespace BDFramework.Editor.AssetBundle
                     continue;
                 }
 
-                var idx = (int)(Random.Range(0, (mixAssetbundleItems.Length - 1) * 10000) / 10000);
+                var idx = (int) (Random.Range(0, (mixAssetbundleItems.Length - 1) * 10000) / 10000);
                 var mixBytes = mixSourceBytes[idx];
                 //
                 var abpath = IPath.Combine(outpath, BApplication.GetPlatformPath(platform),
@@ -838,22 +841,22 @@ namespace BDFramework.Editor.AssetBundle
                 Array.Copy(abBytes, 0, outbytes, mixBytes.Length, abBytes.Length);
                 //写入
                 FileHelper.WriteAllBytes(abpath, outbytes);
-                var hash = FileHelper.GetMurmurHash3(abpath);
-
+                //修正hash
+                var newHash = FileHelper.GetMurmurHash3(abpath);
                 //相同ab的都进行赋值，避免下次重新被修改。
                 foreach (var item in abv2.AssetConfigLoder.AssetbundleItemList)
                 {
                     if (sourceItem.AssetBundlePath.Equals(item.AssetBundlePath))
                     {
                         item.Mix = mixBytes.Length;
-                        item.Hash = hash;
+                        item.Hash = newHash;
                     }
                 }
 
                 //sourceItem.Mix = mixBytes.Length;
 
                 //混淆
-                Debug.Log("【Assetbundle混淆】" + sourceItem.AssetBundlePath);
+                Debug.Log($"【Assetbundle混淆】{sourceItem.AssetBundlePath} - {AssetDatabase.GUIDToAssetPath(sourceItem.AssetBundlePath)}");
             }
 
             //重新写入配置

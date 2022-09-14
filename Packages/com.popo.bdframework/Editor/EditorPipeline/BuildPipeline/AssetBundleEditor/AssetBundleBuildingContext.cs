@@ -169,17 +169,19 @@ namespace BDFramework.Editor.AssetBundle
             //3.BuildInfo配置处理
             Debug.Log($"<color=green>----->3.BuildInfo相关生成  abcount:{assetbundleItemList.Count}</color>");
             //设置ab的hash
-            foreach (var abi in assetbundleItemList)
+            for (int i = 0; i < assetbundleItemList.Count; i++)
             {
+                var abi = assetbundleItemList[i];
+         
                 if (string.IsNullOrEmpty(abi.AssetBundlePath))
                 {
                     continue;
                 }
 
                 var abpath = IPath.Combine(platformOutputPath, BResources.ART_ASSET_ROOT_PATH, abi.AssetBundlePath);
-                Debug.Log("===>获取ABhash:" + abpath);
+                Debug.Log($"===>获取ABhash:{abi.AssetBundlePath}  <color=yellow>[{i}/{assetbundleItemList.Count-1}]</color>" );
                 var hash = FileHelper.GetMurmurHash3(abpath);
-                Debug.Log("===>获取成功:" + hash);
+                Debug.Log("===>获取成功:" + AssetDatabase.GUIDToAssetPath(abi.AssetBundlePath));
                 abi.Hash = hash;
             }
 

@@ -38,13 +38,20 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         static public AssetBundleBuildingContext BuildingCtx { get; set; }
 
+        /// <summary>
+        /// 重置
+        /// </summary>
+        static public void Reset()
+        {
+            BuildingCtx = null;
+        }
 
         /// <summary>
         /// 设置Params
         /// </summary>
         /// <param name="outpath"></param>
         /// <param name="isUseHash"></param>
-        public void SetBuildParams(string outpath,bool isBuilding)
+        public void SetBuildParams(string outpath, bool isBuilding)
         {
             BuildingCtx = new AssetBundleBuildingContext();
             BuildingCtx.BuildParams.OutputPath = outpath;
@@ -150,7 +157,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             if (GUILayout.Button("强制刷新资源数据"))
             {
                 isDirty = true;
-                GenBuildingCtx(this.loadRuntimeAssetPathList,true);
+                GenBuildingCtx(this.loadRuntimeAssetPathList, true);
             }
 
 
@@ -166,6 +173,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         #endregion
 
         private List<string> loadRuntimeAssetPathList = new List<string>();
+
         /// <summary>
         /// 预览结果 编辑器连线数据，但是build模式也会执行
         /// 这里只建议设置BuildingCtx的ab颗粒度
@@ -181,13 +189,14 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
-            
+
             //检测混淆
             AssetGraphTools.WatchBegin();
             if (BuildingCtx == null)
             {
                 BuildingCtx = new AssetBundleBuildingContext();
             }
+
             BuildingCtx.BuildParams.BuildTarget = target;
 
             //拿到外部传入的加载目录
@@ -199,19 +208,19 @@ namespace BDFramework.Editor.AssetGraph.Node
                     loadRuntimeAssetPathList.Add(ag.Key);
                 }
             }
-            Debug.LogError("传入路径:\n" + JsonMapper.ToJson(loadRuntimeAssetPathList,true));
-            
-            
+
+            Debug.LogError("传入路径:\n" + JsonMapper.ToJson(loadRuntimeAssetPathList, true));
+
+
             //设置所有节点参数请求,依次传参
             Debug.Log("【初始化框架资源环境】配置:\n" + JsonMapper.ToJson(BuildingCtx.BuildParams));
             var outMap = new Dictionary<string, List<AssetReference>>();
             //预览模式
             if ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode == AssetGraphWindowsModeEnum.预览节点模式 || BuildingCtx.BuildParams.IsBuilding)
             {
-
                 //创建构建上下文信息
                 GenBuildingCtx(this.loadRuntimeAssetPathList);
-                
+
                 //输出
                 outMap = new Dictionary<string, List<AssetReference>>()
                 {
@@ -228,6 +237,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     {nameof(FloderType.Depend), new List<AssetReference>()}
                 };
             }
+
             AssetGraphTools.WatchEnd("【初始化框架资源环境】");
 
             var output = connectionsToOutput?.FirstOrDefault();
@@ -241,7 +251,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <summary>
         /// 生成BuildingCtx
         /// </summary>
-        private void GenBuildingCtx(List<string> assetDirectories,bool isRenew = false)
+        private void GenBuildingCtx(List<string> assetDirectories, bool isRenew = false)
         {
             //新构建对象
             if (isRenew)

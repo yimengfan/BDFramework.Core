@@ -17,12 +17,12 @@ namespace BDFramework.Editor.AssetGraph.Node
     {
         public override string ActiveStyle
         {
-            get { return "node 6 on"; }
+            get { return "node 4 on"; }
         }
 
         public override string InactiveStyle
         {
-            get { return "node 6"; }
+            get { return "node 4"; }
         }
 
         public override string Category
