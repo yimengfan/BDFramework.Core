@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 184791462
+CRC: 2104430235
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 431bc5ff870e39edbe76b7b4fe5447b5
+    Hash: ef0ba2b76fbc394d78ff2ed6b21bbbc0
   TypeTreeHash:
     serializedVersion: 2
     Hash: 767a59f8de390d2354823e760c737a44
@@ -25,4 +25,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource_SVN/Runtime/Char/002.prefab
 Dependencies:
-- E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/ffdcaf5f90ad6424daa282d10724bfc2
+- E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/68ce09b862773374cbf71b2566b5dfbb

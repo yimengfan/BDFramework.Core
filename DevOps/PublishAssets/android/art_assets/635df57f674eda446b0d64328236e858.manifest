@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3235422484
+CRC: 2111980925
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e3db4671defc5702c6559ce940427200
+    Hash: 0b2b4c2902486bbf79f077392658824a
   TypeTreeHash:
     serializedVersion: 2
     Hash: cc27a7c2b7aeda57fe404097db2213c0
@@ -18,5 +18,4 @@ ClassTypes:
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Resource/Runtime/AssetTest/ParticleTest.mat
-Dependencies:
-- E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/2612b115ce3857f45833e28c2325fdbb
+Dependencies: []
