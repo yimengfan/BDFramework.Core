@@ -28,7 +28,7 @@ namespace BDFramework.Sql
         /// 编辑器下加载DB，可读写|创建
         /// </summary>
         /// <param name="str"></param>
-        static public void LoadLocalDBOnEditor(string root, RuntimePlatform platform)
+        static public string LoadLocalDBOnEditor(string root, RuntimePlatform platform)
         {
             //
             Connection?.Dispose();
@@ -48,6 +48,8 @@ namespace BDFramework.Sql
                 Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
                 BDebug.Log("DB加载路径:" + path, "red");
             }
+
+            return path;
         }
 
         /// <summary>
