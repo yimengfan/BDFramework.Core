@@ -117,7 +117,7 @@ namespace BDFramework.Editor.BuildPipeline
                 if (opa.HasFlag(BuildPackageOption.BuildArtAssets) || opa == BuildPackageOption.BuildAll)
                 {
                     Debug.Log("<color=yellow>=====>打包AssetBundle</color>");
-                    AssetBundleEditorToolsV2.GenAssetBundle(platform,outputPath);
+                    AssetBundleToolsV2.GenAssetBundle(platform,outputPath);
                 }
             }
             catch (Exception e)
