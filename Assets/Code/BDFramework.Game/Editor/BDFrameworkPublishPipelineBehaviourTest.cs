@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BDFramework.Editor.AssetBundle;
+using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.Editor.PublishPipeline;
 using UnityEngine;
 

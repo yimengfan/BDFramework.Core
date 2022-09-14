@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.AssetGraph.Node;
+using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.Editor.Environment;
 using UnityEditor;
 using UnityEngine;

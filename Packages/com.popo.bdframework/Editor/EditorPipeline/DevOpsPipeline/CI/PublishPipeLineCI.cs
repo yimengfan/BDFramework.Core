@@ -3,6 +3,7 @@ using System.IO;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline;
+using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.Editor.Environment;
 using BDFramework.Editor.PublishPipeline;

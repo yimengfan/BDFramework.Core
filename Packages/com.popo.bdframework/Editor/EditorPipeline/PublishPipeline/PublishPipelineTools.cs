@@ -6,6 +6,7 @@ using BDFramework.Asset;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.AssetGraph.Node;
+using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.ResourceMgr;
 using BDFramework.ResourceMgr.V2;
 using BDFramework.VersionController;

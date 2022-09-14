@@ -1,6 +1,7 @@
 ﻿using System;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.AssetGraph.Node;
+using BDFramework.Editor.BuildPipeline.AssetBundle;
 using UnityEditor;
 using UnityEngine;
 

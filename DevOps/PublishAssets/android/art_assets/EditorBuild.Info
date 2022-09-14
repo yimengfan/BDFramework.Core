@@ -998,15 +998,15 @@
       ],
       "IsKeepGUID"      : false
     },
-    "assets/resource/shaders/testshader/defaultresourcesextra/normal-vertexlit.shader"            : {
+    "assets/resource/shaders/builtin_shaders-2019/defaultresourcesextra/normal-vertexlit.shader"  : {
       "Id" : 74,
       "ArtConfigIdx" : -1,
       "Type"         : 10,
       "ABName"       : "9d59e1d84070e4c46a595b3112d75a40",
       "ABHash"       : "",
-      "GUID"         : "a5d7a784372567a469e1b498c7bdd697",
+      "GUID"         : "dbf484ca75d6a184e8f984d6f2b972b6",
       "ReferenceCount" : 0,
-      "Hash"           : "2040066693",
+      "Hash"           : "1685308046",
       "DependAssetList" : [
       ],
       "IsKeepGUID"      : false
