@@ -12,13 +12,7 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
 {
     public class EditorWindow_BuildPipeline : OdinMenuEditorWindow
     {
-        [MenuItem("BDFrameWork工具箱/Odin BuildPipeline")]
-        public static void Open()
-        {
-            var window = GetWindow<EditorWindow_BuildPipeline>("BuildPipeline");
-            window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 500);
-        }
-
+        
         protected override OdinMenuTree BuildMenuTree()
         {
             var tree = new OdinMenuTree(true);
@@ -42,7 +36,7 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
             var selectMenuitem = tree.MenuItems.Find((m) => m.Name.Equals("Build"));
             if (selectMenuitem != null && selectMenuitem.ChildMenuItems.Count > 0)
             {
-                selectMenuitem = selectMenuitem.ChildMenuItems.Find((m) => m.Name.Equals(BApplication.GetPlatformPath(RuntimePlatform.Android)));
+                selectMenuitem = selectMenuitem.ChildMenuItems.Find((m) => m.Name.Equals(BApplication.GetPlatformPath(BApplication.RuntimePlatform)));
             }
 
             selectMenuitem.Select(true);

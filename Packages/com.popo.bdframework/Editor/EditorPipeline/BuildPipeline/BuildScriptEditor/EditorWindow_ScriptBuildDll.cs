@@ -22,13 +22,7 @@ using UnityEngine.UI;
 
 public class EditorWindow_ScriptBuildDll : EditorWindow
 {
-    [MenuItem("BDFrameWork工具箱/1.DLL打包", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_DLL)]
-    public static void Open()
-    {
-        var window = EditorWindow.GetWindow<EditorWindow_PublishAssets>(false, "发布资源");
-        window.Show();
-        window.Focus();
-    }
+
     
 
     public void OnGUI()

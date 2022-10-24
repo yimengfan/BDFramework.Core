@@ -13,6 +13,7 @@ using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Tools.EditorHttpServer;
 using BDFramework.Editor.Unity3dEx;
+using UnityEngine.AssetGraph;
 #if ODIN_INSPECTOR
 using Sirenix.Utilities.Editor;
 #endif
@@ -156,7 +157,7 @@ namespace BDFramework.Editor.PublishPipeline
                             }
                         }
 
-                        var basePackageBuildInfo = GlobalAssetsHelper.GetPackageBuildInfo(EXPORT_PATH, sp);
+                        var basePackageBuildInfo = ClientAssetsHelper.GetPackageBuildInfo(EXPORT_PATH, sp);
                         string setVersionNum = "";
                         var ret = platformVersionMap.TryGetValue(sp, out setVersionNum);
                         if (!ret)
@@ -330,6 +331,7 @@ namespace BDFramework.Editor.PublishPipeline
         {
             if (EditorApplication.isPlaying && EditorHttpListener == null)
             {
+                AssetGraphEditorWindow.Window?.Close();
                 this.StartLocalAssetsFileServer();
             }
         }
@@ -341,14 +343,15 @@ namespace BDFramework.Editor.PublishPipeline
         {
             if (EditorHttpListener == null)
             {
-                //自动转hash
-                PublishPipelineTools.PublishAssetsToServer(EXPORT_PATH);
                 //开启文件服务器
                 EditorHttpListener = new EditorHttpListener();
                 //添加AB文件服务器处理器
                 EditorHttpListener.AddWebAPIProccesor<WP_LocalABFileServer>();
                 var webdir = IPath.Combine(EXPORT_PATH, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
                 EditorHttpListener.Start("+", "10086");
+                
+                //发布资源
+                PublishPipelineTools.PublishAssetsToServer(EXPORT_PATH);
             }
         }
 

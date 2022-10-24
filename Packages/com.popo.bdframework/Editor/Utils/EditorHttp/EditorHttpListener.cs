@@ -105,6 +105,10 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                     {
                         Debug.Log($"【EditorHttpService】{ports[0]}被占用,备用端口号生效 - http://{host}:{tryPort}");
                     }
+                    else
+                    {
+                        Debug.Log($"【EditorHttpService】Editor webapi 启动! - http://{host}:{tryPort}");
+                    }
 
                     break;
                 }

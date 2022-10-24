@@ -9,13 +9,6 @@ namespace BDFramework.Editor.Table
 {
     public class EditorWindow_Table : EditorWindow
     {
-        [MenuItem("BDFrameWork工具箱/3.表格/表格预览", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_GenSqlite - 1)]
-        public static void Open()
-        {
-            var win = EditorWindow.GetWindow<EditorWindow_Table>();
-            win.Show();
-        }
-
         public void OnGUI()
         {
             if (BDEditorApplication.BDFrameworkEditorSetting == null)
