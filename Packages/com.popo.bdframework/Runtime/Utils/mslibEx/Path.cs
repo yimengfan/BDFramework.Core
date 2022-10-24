@@ -140,7 +140,7 @@ namespace System.IO
         {
             if (path != null)
             {
-                return path.ToLower().Replace("\\", "/");
+                return path.Replace("\\", "/");
             }
 
             return path;
