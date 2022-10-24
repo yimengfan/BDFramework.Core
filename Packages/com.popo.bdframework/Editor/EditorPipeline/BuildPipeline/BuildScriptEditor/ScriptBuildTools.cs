@@ -54,10 +54,14 @@ public class ScriptBuildTools
     private static bool IsShowTips;
 
     /// <summary>
-    /// 宏
+    /// 全局宏
     /// </summary>
-    private static List<string> defineList;
+    private static List<string> GlobalSymbols;
 
+    /// <summary>
+    /// playerSetting宏
+    /// </summary>
+    private static List<string> PlayerSettingSymbols;
     /// <summary>
     ///  判断是否为热更脚本
     /// </summary>
@@ -130,7 +134,7 @@ public class ScriptBuildTools
         List<string> dllFileList = new List<string>();
         List<string> csFileList = new List<string>();
         //所有宏
-        defineList = new List<string>();
+        GlobalSymbols = new List<string>();
 
         string[] parseCsprojList = new string[] {"Assembly-CSharp.csproj", "BDFramework.Core.csproj"};
         foreach (var csproj in parseCsprojList)
@@ -148,7 +152,7 @@ public class ScriptBuildTools
         //去重
         dllFileList = dllFileList.Distinct().ToList();
         csFileList = csFileList.Distinct().ToList();
-        defineList = defineList.Distinct().ToList();
+        GlobalSymbols = GlobalSymbols.Distinct().ToList();
 
         //移除参与分析csproj的dll,因为已经解析 包含在cs
         foreach (var csproj in parseCsprojList)
@@ -165,15 +169,19 @@ public class ScriptBuildTools
 
         //宏解析
         //移除editor相关宏
-        for (int i = defineList.Count - 1; i >= 0; i--)
+        for (int i = GlobalSymbols.Count - 1; i >= 0; i--)
         {
-            var symbol = defineList[i];
+            var symbol = GlobalSymbols[i];
             if (symbol.Contains("UNITY_EDITOR"))
             {
-                defineList.RemoveAt(i);
+                GlobalSymbols.RemoveAt(i);
             }
         }
-
+        //增加buildtarget 宏
+        var custom_symbol = PlayerSettings.GetScriptingDefineSymbolsForGroup(BApplication.GetBuildTargetGroup(platform));
+        var symbols = custom_symbol.Split(';');
+        PlayerSettingSymbols = new List<string>(symbols);
+        GlobalSymbols = GlobalSymbols.Distinct().ToList();
         //剔除不存的dll
         //TODO 这里是File 接口mac下有bug 会判断文件不存在
         if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor)
@@ -338,7 +346,7 @@ public class ScriptBuildTools
 
                         var defines = define.Split(';');
 
-                        defineList.AddRange(defines);
+                        GlobalSymbols.AddRange(defines);
                     }
                 }
             }
@@ -386,17 +394,16 @@ public class ScriptBuildTools
 
 
         //添加语法树
-        var Symbols = defineList;
-
         List<Microsoft.CodeAnalysis.SyntaxTree> codes = new List<Microsoft.CodeAnalysis.SyntaxTree>();
         CSharpParseOptions opa = null;
         if (isUseDefine)
         {
-            opa = new CSharpParseOptions(LanguageVersion.Latest, preprocessorSymbols: Symbols);
+            opa = new CSharpParseOptions(LanguageVersion.Latest, preprocessorSymbols: GlobalSymbols);
         }
         else
         {
-            opa = new CSharpParseOptions(LanguageVersion.Latest);
+            //只使用playersetting宏
+            opa = new CSharpParseOptions(LanguageVersion.Latest, preprocessorSymbols: PlayerSettingSymbols);
         }
 
         foreach (var cs in codefiles)
