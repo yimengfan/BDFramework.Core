@@ -1,5 +1,11 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.1.0-preview.9
+-AssetV2:优化加载、卸载机制，优化加载配置.
+-BuildPipeline: 优化ASG打包的Node,编辑颗粒度的机制.
+-BuildPipeline: 打包AssetBundle使用SBP，默认开启CacheServer.
+-BuildPipeline: 重构打包面板.
+
 ##V2.1.0-preview.8
 -AssetV2:重构资源构建面板，使之更加便捷
 -AssetV2:增加 加载组的概念
