@@ -25,7 +25,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2019_4_40;UNITY_2019_4;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;UNITY_ASTC_ONLY_DECOMPRESS;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_IG;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_EDITOR_ONLY;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2019_4_40;UNITY_2019_4;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;UNITY_ASTC_ONLY_DECOMPRESS;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_IG;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_EDITOR_ONLY;ENABLE_BDEBUG;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -90,23 +90,24 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\SafeQueue.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Server.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Utils.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleConfigLoader.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleItem.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleMgrV2.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleWapper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleWrapper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetTypeConfig.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetbundleConfigLoder.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\LoadTask.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\LoadTaskGroup.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\Loader\IAssetBundleIO.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\Loader\ISpriteAtlasLoader.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\UnLoadTask.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetTypeEx\UnityFolder.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetsVersionController\AssetsVersionController.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResourceV2\GameObjectWrapper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResources.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResourcesV2.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\GlobalAssetsHelper.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ClientAssetsHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ObjectPools\GameObjectPoolManager.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />
@@ -120,12 +121,14 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQuery.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQueryForILRuntime.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\AssetBundleBenchmark01.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\AssetBundleTestLoad.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingCSharpObjects\EventBus.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingGameObjects\Bullet.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingGameObjects\Gun.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncher.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncherBridge@hotfix.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Config.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\Debug\Runtime\BDebug.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\@hotfix\DebuggerServerProcessAttribute.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\@hotfix\DebuggerServerProcessManager.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\@hotfix\IDebuggerServerProcess.cs" />
@@ -449,13 +452,13 @@
  <HintPath>E:/bd_new_version/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
+ <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.1.0/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Mdb">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
+ <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.1.0/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Pdb">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+ <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.1.0/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
  </Reference>
  <Reference Include="System.IO.Compression">
  <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.dll</HintPath>
@@ -504,9 +507,6 @@
  </Reference>
  <Reference Include="System.Threading.Tasks.Extensions">
  <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Threading.Tasks.Extensions.4.5.4/lib/netstandard2.0/System.Threading.Tasks.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="Debug.log">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Plugins/Debug/Debug.log.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>

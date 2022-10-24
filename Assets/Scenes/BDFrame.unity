@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44648796, g: 0.49640262, b: 0.57479304, a: 1}
+  m_IndirectSpecularColor: {r: 0.44631976, g: 0.49611664, b: 0.5744803, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -333,7 +333,7 @@ GameObject:
   - component: {fileID: 617214994}
   - component: {fileID: 617214993}
   - component: {fileID: 617214995}
-  - component: {fileID: 8251309750630240741}
+  - component: {fileID: 617214996}
   m_Layer: 0
   m_Name: BDFrame
   m_TagString: Untagged
@@ -365,6 +365,7 @@ MonoBehaviour:
     Port: 0
     IsHotfix: 0
     IsNeedNet: 0
+    ClientVersionNum: 0.0.0
   ConfigFileName: Editor_TestAssetbundle
 --- !u!4 &617214994
 Transform:
@@ -393,6 +394,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConfigText: {fileID: 4900000, guid: 517ff72e71a574546a91d76ad65770c9, type: 3}
+--- !u!114 &617214996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617214992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a4c7238f14b4f89a7d98cd7c5255554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLog: 1
+  LogTagList: []
+  LogTagEnableList: 
 --- !u!1 &865066839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,16 +1125,3 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4547825529114816998}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8251309750630240741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617214992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -614279893, guid: 3b8ad62e537bc86418adf879fac81ef0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsLog: 1

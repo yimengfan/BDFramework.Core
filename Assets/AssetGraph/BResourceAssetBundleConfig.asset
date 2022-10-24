@@ -566,13 +566,7 @@ MonoBehaviour:
     m_toNodeId: 4e93d487-bd56-4bd3-a305-231aeed30565
     m_toNodeConnectionPoiontId: 4bd99a94-2b91-4b23-b0e6-c04bf371d6ea
     m_label: +
-  - m_id: 39764e48-6adf-47c6-b14c-8611e9c7c55d
-    m_fromNodeId: 8f879a48-86bd-4e5d-ada5-ae2ca22bd559
-    m_fromNodeConnectionPointId: 12bdd634-1a1a-43b5-8a29-d63d5376a784
-    m_toNodeId: 7e8a9471-05b8-4092-9478-0a5ecc6c2a50
-    m_toNodeConnectionPoiontId: 427fdfad-5e23-44d2-963d-cf9c18745157
-    m_label: +
-  m_lastModified: 133110950959612106
+  m_lastModified: 133110951030840033
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0
