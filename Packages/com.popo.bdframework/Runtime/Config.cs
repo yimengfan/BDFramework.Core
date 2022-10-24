@@ -93,6 +93,10 @@ namespace BDFramework
         [LabelText("是否联网")]
         public bool IsNeedNet = false;
 
+        [Space(5)]
+        [LabelText("客户端版本")]
+        public string ClientVersionNum = "0.0.0";
+
         /// <summary>
         /// 获取加载路径
         /// </summary>
