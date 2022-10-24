@@ -23,6 +23,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             get { return "node 4"; }
         }
 
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
+        {
+            
+        }
+
         public override string Category
         {
             get { return "[颗粒度]战斗资源-拓展demo"; }
@@ -40,10 +45,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             newData.AddDefaultOutputPoint();
             return new SetGranularity_Battle();
         }
-
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
-        {
-        }
+        
         
         /// <summary>
         /// 预览结果 编辑器连线数据，但是build模式也会执行

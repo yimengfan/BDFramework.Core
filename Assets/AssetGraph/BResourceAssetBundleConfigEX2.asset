@@ -463,66 +463,6 @@ MonoBehaviour:
         width: 21
         height: 29
     m_outputPoints: []
-  - m_name: "[\u9897\u7C92\u5EA6]\u6218\u6597\u8D44\u6E90"
-    m_id: 05edc084-becb-4af3-ad8f-eb276ecc65fd
-    m_x: 1848
-    m_y: 888
-    m_nodeInstance:
-      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularity_Battle, Assembly-CSharp-Editor,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|e30=
-    m_inputPoints:
-    - id: 3c61bb17-3912-4d5b-837a-d8f86ec7f9af
-      label: '-'
-      parentId: 05edc084-becb-4af3-ad8f-eb276ecc65fd
-      isInput: 1
-      buttonRect:
-        serializedVersion: 2
-        x: 0
-        y: 30.5
-        width: 21
-        height: 29
-    m_outputPoints:
-    - id: 2859aa83-9c7b-4521-a6f4-3f5758523753
-      label: +
-      parentId: 05edc084-becb-4af3-ad8f-eb276ecc65fd
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 154.20001
-        y: 33.5
-        width: 10
-        height: 23
-  - m_name: "[\u9897\u7C92\u5EA6]\u5730\u56FE\u8D44\u6E90"
-    m_id: b43f2ad7-04da-4ce0-aa2b-1b86904f3fc3
-    m_x: 1848
-    m_y: 1008
-    m_nodeInstance:
-      m_className: BDFramework.Editor.AssetGraph.Node.SetGranularity_Map, Assembly-CSharp-Editor,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|e30=
-    m_inputPoints:
-    - id: 76d4ad3a-17ce-435d-a5c2-5707d3b07f9f
-      label: '-'
-      parentId: b43f2ad7-04da-4ce0-aa2b-1b86904f3fc3
-      isInput: 1
-      buttonRect:
-        serializedVersion: 2
-        x: 0
-        y: 30.5
-        width: 21
-        height: 29
-    m_outputPoints:
-    - id: 6dc8404e-9c26-4f68-93db-c1e4d16a5589
-      label: +
-      parentId: b43f2ad7-04da-4ce0-aa2b-1b86904f3fc3
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 154.20001
-        y: 33.5
-        width: 10
-        height: 23
   - m_name: "[\u7B5B\u9009]Group Split Directory"
     m_id: 43cb2e8d-2227-49f3-9a44-4ebc55f263f3
     m_x: 2112
@@ -724,24 +664,6 @@ MonoBehaviour:
     m_toNodeId: c58ab6fd-f457-4f8d-a53e-38608b4b0a87
     m_toNodeConnectionPoiontId: b8b334b8-64e4-4cec-b27a-084bfdc7f20b
     m_label: Assets/Resource/Runtime/Windows/
-  - m_id: ddfe8b04-076f-4428-afb3-fb6c87b3f85e
-    m_fromNodeId: 05edc084-becb-4af3-ad8f-eb276ecc65fd
-    m_fromNodeConnectionPointId: 2859aa83-9c7b-4521-a6f4-3f5758523753
-    m_toNodeId: 5c54f429-2e9d-45d5-ad93-29577e3649bb
-    m_toNodeConnectionPoiontId: 61be3c33-746e-4d91-836b-095615bd3d94
-    m_label: +
-  - m_id: 30249cc5-6f1e-4e82-bb81-0d47f9e06894
-    m_fromNodeId: b43f2ad7-04da-4ce0-aa2b-1b86904f3fc3
-    m_fromNodeConnectionPointId: 6dc8404e-9c26-4f68-93db-c1e4d16a5589
-    m_toNodeId: 5c54f429-2e9d-45d5-ad93-29577e3649bb
-    m_toNodeConnectionPoiontId: 61be3c33-746e-4d91-836b-095615bd3d94
-    m_label: +
-  - m_id: 9fc7fbc7-246c-4a1f-86a7-35e9fc87128b
-    m_fromNodeId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-    m_fromNodeConnectionPointId: c40b9412-50d2-4db8-9a66-ce790c486e35
-    m_toNodeId: b43f2ad7-04da-4ce0-aa2b-1b86904f3fc3
-    m_toNodeConnectionPoiontId: 76d4ad3a-17ce-435d-a5c2-5707d3b07f9f
-    m_label: Assets/Resource_SVN/Battle2/
   - m_id: acfe0df6-64f3-4235-be36-8b9cb49c1ab9
     m_fromNodeId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
     m_fromNodeConnectionPointId: 8b9c0b86-d54c-4d1e-94c1-fe13e856936e
@@ -766,13 +688,7 @@ MonoBehaviour:
     m_toNodeId: 618385e7-4d4e-4cd0-ba42-252326a8d232
     m_toNodeConnectionPoiontId: 0e2d5e7d-4d88-4fb1-95f9-9e96f7ea7e8c
     m_label: +
-  - m_id: ee11660b-c1d4-4dea-8728-c24b7e26b160
-    m_fromNodeId: ab8c9ead-f2b2-499e-bb35-a94be1cb4dab
-    m_fromNodeConnectionPointId: e36f7b61-b947-4d92-ad94-ed4918e4f4d8
-    m_toNodeId: 05edc084-becb-4af3-ad8f-eb276ecc65fd
-    m_toNodeConnectionPoiontId: 3c61bb17-3912-4d5b-837a-d8f86ec7f9af
-    m_label: Assets/Resource_SVN/Battle/
-  m_lastModified: 133076002259104870
+  m_lastModified: 133110947370777584
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0

@@ -433,26 +433,6 @@ MonoBehaviour:
         y: 161.5
         width: 10
         height: 23
-  - m_name: "[Loder]\u52A0\u8F7DRuntime\u8D44\u4EA7\u8DEF\u5F84"
-    m_id: 8f879a48-86bd-4e5d-ada5-ae2ca22bd559
-    m_x: 0
-    m_y: 516
-    m_nodeInstance:
-      m_className: BDFramework.Editor.AssetGraph.Node.LoderBuiltinRuntimeAssetDirectories,
-        BDFramework.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|e30=
-    m_inputPoints: []
-    m_outputPoints:
-    - id: 12bdd634-1a1a-43b5-8a29-d63d5376a784
-      label: +
-      parentId: 8f879a48-86bd-4e5d-ada5-ae2ca22bd559
-      isInput: 0
-      buttonRect:
-        serializedVersion: 2
-        x: 233.40001
-        y: 33.5
-        width: 10
-        height: 23
   - m_name: "[*]\u521D\u59CB\u5316\u6846\u67B6Assets\u73AF\u5883"
     m_id: 7e8a9471-05b8-4092-9478-0a5ecc6c2a50
     m_x: 324
@@ -592,7 +572,7 @@ MonoBehaviour:
     m_toNodeId: 7e8a9471-05b8-4092-9478-0a5ecc6c2a50
     m_toNodeConnectionPoiontId: 427fdfad-5e23-44d2-963d-cf9c18745157
     m_label: +
-  m_lastModified: 133076000797965026
+  m_lastModified: 133110950959612106
   m_version: 2
   m_graphDescription: "BDFramework\u7684AssetBundle\u6253\u5305\u914D\u7F6E"
   m_useAsAssetPostprocessor: 0
