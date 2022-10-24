@@ -7,10 +7,11 @@ namespace BDFramework.ResourceMgr.V2
     /// </summary>
     public class AssetBundleItem
     {
-        public AssetBundleItem(int id, string loadPath, string assetbundlePath, int assetType, int[] dependAssetIds = null)
+        public AssetBundleItem(int id, string loadPath, string assetbundlePath, string guid,int assetType, int[] dependAssetIds = null)
         {
             this.Id = id;
             this.LoadPath = loadPath;
+            this.GUID = guid;
             this.AssetBundlePath = assetbundlePath;
             this.AssetType = assetType;
             this.DependAssetIds = dependAssetIds;
@@ -35,20 +36,15 @@ namespace BDFramework.ResourceMgr.V2
 
         /// <summary>
         /// 加载资源路径
-        /// 一般为程序调用加载的路径
+        /// 一般为程序调用加载的路径,即：runtime后的目录
         /// </summary>
         public string LoadPath { get; private set; } = "";
 
         /// <summary>
         /// 有些资产保留GUID加载
         /// </summary>
-        public string GUID { get;  set; } = "";
+        public string GUID { get; private set; } = "";
 
-        /// <summary>
-        /// AB包的引用Id
-        /// 用以节省配置空间
-        /// </summary>
-        public int RefAssetBundleId { get; private set; } = 0;
 
         /// <summary>
         /// ab的资源路径
@@ -62,6 +58,7 @@ namespace BDFramework.ResourceMgr.V2
         public string Hash { get; set; }
 
         /// <summary>
+        /// 溯源Hash
         /// 打包成ab的源Assets汇总的hash，
         /// 用于各种校验 
         /// </summary>
@@ -78,14 +75,27 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public int[] DependAssetIds { get; set; } = new int[] { };
 
+        /// <summary>
+        /// 是不是AB文件本体
+        /// </summary>
+        /// <returns></returns>
+        public bool IsAssetBundleFile()
+        {
+            return !string.IsNullOrEmpty(this.AssetBundlePath);
+        }
 
         /// <summary>
-        /// 设置引用ab的id
+        /// 是不是可加载配置
         /// </summary>
-        public void SetRefAssetBundleId(int refABId)
+        /// <returns></returns>
+        public bool IsLoadConfig()
         {
-            this.AssetBundlePath = "";
-            this.RefAssetBundleId = refABId;
+            if (this.Id > 0 && !string.IsNullOrEmpty(this.LoadPath))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

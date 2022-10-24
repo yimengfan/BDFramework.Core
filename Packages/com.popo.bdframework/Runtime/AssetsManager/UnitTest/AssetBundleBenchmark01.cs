@@ -27,11 +27,6 @@ using Object = UnityEngine.Object;
 public class AssetBundleBenchmark01 : MonoBehaviour
 {
     /// <summary>
-    /// 是否为异步加载
-    /// </summary>
-    public bool IsAsyncLoad = false;
-
-    /// <summary>
     /// 资源分组
     /// </summary>
     public Dictionary<string, List<string>> AssetGroup = new Dictionary<string, List<string>>();
@@ -170,13 +165,13 @@ public class AssetBundleBenchmark01 : MonoBehaviour
             //同异步稳定性测试
             if (GUILayout.Button("同、异步混合测试", GUILayout.Height(100), GUILayout.Width(300)))
             {
-                this.StartCoroutine(TestLoadTask(curRuntimePlatform,false));
+                this.StartCoroutine(TestLoadTask(curRuntimePlatform, false));
             }
-            
+
             if (GUILayout.Button("同、异步取消测试", GUILayout.Height(100), GUILayout.Width(300)))
             {
                 //取消异步任务
-                this.StartCoroutine(TestLoadTask(curRuntimePlatform,true));
+                this.StartCoroutine(TestLoadTask(curRuntimePlatform, true));
             }
         }
         GUILayout.EndVertical();
@@ -257,8 +252,8 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         BResources.ResLoader.WarmUpShaders();
 
         //package信息
-        var pakInfo = GlobalAssetsHelper.GetPackageBuildInfo(abPath, platform);
-       // Profiler.BeginSample("Benchmark Load");
+        var pakInfo = ClientAssetsHelper.GetPackageBuildInfo(abPath, platform);
+        // Profiler.BeginSample("Benchmark Load");
         var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformPath(platform), pakInfo.Version);
         if (!Directory.Exists(benchmarkDataOutpath))
         {
@@ -269,15 +264,17 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         loadList.Clear();
         var AssetBundleLoader = BResources.ResLoader as AssetBundleMgrV2;
         //加载
-        foreach (var assetdata in AssetBundleLoader.AssetConfigLoder.AssetbundleItemList)
+        foreach (var assetdata in AssetBundleLoader.AssetBundleInfoLoader.AssetbundleItemList)
         {
-            if (string.IsNullOrEmpty(assetdata.LoadPath))
+            if (string.IsNullOrEmpty(assetdata.LoadPath) && string.IsNullOrEmpty(assetdata.GUID))
             {
                 continue;
             }
 
-            var typeName = AssetBundleLoader.AssetConfigLoder.AssetTypes.AssetTypeList[assetdata.AssetType];
-            var runtimePath = assetdata.LoadPath;
+
+            var typeName = AssetBundleLoader.AssetBundleInfoLoader.AssetTypes.AssetTypeList[assetdata.AssetType];
+            var runtimePath = string.IsNullOrEmpty(assetdata.GUID) ? assetdata.LoadPath : assetdata.GUID;
+            var loadtype = string.IsNullOrEmpty(assetdata.GUID) ? LoadPathType.RuntimePath : LoadPathType.GUID;
             //加载
             Debug.Log($"<color=yellow>【LoadTest】</color>: {runtimePath} ");
             Debug.Log($"Create task frame: <color=red>{Time.frameCount} </color>");
@@ -301,7 +298,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var loadTask = BResources.AsyncLoad<GameObject>(runtimePath);
+                    var loadTask = BResources.AsyncLoad<GameObject>(runtimePath,loadtype);
                     yield return loadTask;
                     if (loadTask.IsSuccess)
                     {
@@ -315,7 +312,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<GameObject>(runtimePath);
+                    obj = BResources.Load<GameObject>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -366,7 +363,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<TextAsset>(runtimePath);
+                    var ret = BResources.AsyncLoad<TextAsset>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -380,7 +377,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<TextAsset>(runtimePath);
+                    obj = BResources.Load<TextAsset>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -402,7 +399,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Texture>(runtimePath);
+                    var ret = BResources.AsyncLoad<Texture>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -416,7 +413,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Texture>(runtimePath);
+                    obj = BResources.Load<Texture>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -435,7 +432,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Texture2D>(runtimePath);
+                    var ret = BResources.AsyncLoad<Texture2D>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -449,7 +446,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Texture2D>(runtimePath);
+                    obj = BResources.Load<Texture2D>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -473,7 +470,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Sprite>(runtimePath);
+                    var ret = BResources.AsyncLoad<Sprite>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -487,7 +484,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Sprite>(runtimePath);
+                    obj = BResources.Load<Sprite>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -512,7 +509,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Material>(runtimePath);
+                    var ret = BResources.AsyncLoad<Material>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -526,7 +523,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Material>(runtimePath);
+                    obj = BResources.Load<Material>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -540,11 +537,11 @@ public class AssetBundleBenchmark01 : MonoBehaviour
             else if (typeName == typeof(Shader).FullName)
             {
                 sw.Start();
-                var obj = BResources.Load<Shader>(runtimePath);
+                var obj = BResources.Load<Shader>(runtimePath,loadtype);
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Shader>(runtimePath);
+                    var ret = BResources.AsyncLoad<Shader>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -558,7 +555,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Shader>(runtimePath);
+                    obj = BResources.Load<Shader>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -576,7 +573,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<AudioClip>(runtimePath);
+                    var ret = BResources.AsyncLoad<AudioClip>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -590,7 +587,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<AudioClip>(runtimePath);
+                    obj = BResources.Load<AudioClip>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -608,7 +605,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<AnimationClip>(runtimePath);
+                    var ret = BResources.AsyncLoad<AnimationClip>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -622,7 +619,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<AnimationClip>(runtimePath);
+                    obj = BResources.Load<AnimationClip>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -640,7 +637,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Mesh>(runtimePath);
+                    var ret = BResources.AsyncLoad<Mesh>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -654,7 +651,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Mesh>(runtimePath);
+                    obj = BResources.Load<Mesh>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -672,7 +669,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Font>(runtimePath);
+                    var ret = BResources.AsyncLoad<Font>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -686,7 +683,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Font>(runtimePath);
+                    obj = BResources.Load<Font>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -704,13 +701,14 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<SpriteAtlas>(runtimePath);
+                    var ret = BResources.AsyncLoad<SpriteAtlas>(runtimePath,loadtype);
                     //
                     yield return ret;
                     if (ret.IsSuccess)
                     {
                         obj = ret.GetResult<SpriteAtlas>();
                     }
+
                     sw.Stop();
                     loadData.AsyncLoadTime = sw.ElapsedTicks;
                     Debug.Log($"End task frame:<color=red>{Time.frameCount} </color>");
@@ -718,7 +716,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<SpriteAtlas>(runtimePath);
+                    obj = BResources.Load<SpriteAtlas>(runtimePath,loadtype);
                     sw.Stop();
 
                     loadData.LoadTime = sw.ElapsedTicks;
@@ -732,7 +730,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<ShaderVariantCollection>(runtimePath);
+                    var ret = BResources.AsyncLoad<ShaderVariantCollection>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -746,7 +744,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<ShaderVariantCollection>(runtimePath);
+                    obj = BResources.Load<ShaderVariantCollection>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -765,7 +763,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Object>(runtimePath);
+                    var ret = BResources.AsyncLoad<Object>(runtimePath,loadtype);
                     yield return ret;
                     if (ret.IsSuccess)
                     {
@@ -779,7 +777,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Object>(runtimePath);
+                    obj = BResources.Load<Object>(runtimePath,loadtype);
                     sw.Stop();
                     loadData.LoadTime = sw.ElapsedTicks;
                 }
@@ -851,7 +849,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         BResources.InitLoadAssetBundleEnv(abPath, platform);
         BResources.ResLoader.WarmUpShaders();
         //资源信息
-        var pakInfo = GlobalAssetsHelper.GetPackageBuildInfo(abPath, platform);
+        var pakInfo = ClientAssetsHelper.GetPackageBuildInfo(abPath, platform);
 
         Profiler.BeginSample("Benchmark Load");
         var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "BenchMark", BApplication.GetPlatformPath(platform), pakInfo.Version);
@@ -864,15 +862,16 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         loadDataMap.Clear();
         var AssetBundleLoader = BResources.ResLoader as AssetBundleMgrV2;
         //加载
-        foreach (var assetdata in AssetBundleLoader.AssetConfigLoder.AssetbundleItemList)
+        foreach (var assetdata in AssetBundleLoader.AssetBundleInfoLoader.AssetbundleItemList)
         {
-            if (string.IsNullOrEmpty(assetdata.LoadPath))
+            if (string.IsNullOrEmpty(assetdata.LoadPath)&& string.IsNullOrEmpty(assetdata.GUID))
             {
                 continue;
             }
 
-            var typeName = AssetBundleLoader.AssetConfigLoder.AssetTypes.AssetTypeList[assetdata.AssetType];
-            var runtimePath = assetdata.LoadPath;
+            var typeName = AssetBundleLoader.AssetBundleInfoLoader.AssetTypes.AssetTypeList[assetdata.AssetType];
+            var runtimePath = string.IsNullOrEmpty(assetdata.GUID) ? assetdata.LoadPath : assetdata.GUID;
+            var loadtype = string.IsNullOrEmpty(assetdata.GUID) ? LoadPathType.RuntimePath : LoadPathType.GUID;
             //加载
             Debug.Log($"<color=yellow>【LoadTest】</color>: {runtimePath} ");
             Debug.Log("create task frame:" + Time.frameCount);
@@ -896,7 +895,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var loadTask = BResources.AsyncLoad<GameObject>(runtimePath);
+                    var loadTask = BResources.AsyncLoad<GameObject>(runtimePath,loadtype);
                     await loadTask;
                     if (loadTask.IsSuccess)
                     {
@@ -906,7 +905,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<GameObject>(runtimePath);
+                    obj = BResources.Load<GameObject>(runtimePath,loadtype);
                 }
 
                 Debug.Log("end task frame:" + Time.frameCount);
@@ -948,7 +947,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<TextAsset>(runtimePath);
+                    var ret = BResources.AsyncLoad<TextAsset>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -958,7 +957,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<TextAsset>(runtimePath);
+                    obj = BResources.Load<TextAsset>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -979,7 +978,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Texture>(runtimePath);
+                    var ret = BResources.AsyncLoad<Texture>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -989,7 +988,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Texture>(runtimePath);
+                    obj = BResources.Load<Texture>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -1008,7 +1007,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Texture2D>(runtimePath);
+                    var ret = BResources.AsyncLoad<Texture2D>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -1018,7 +1017,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Texture2D>(runtimePath);
+                    obj = BResources.Load<Texture2D>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -1042,7 +1041,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Sprite>(runtimePath);
+                    var ret = BResources.AsyncLoad<Sprite>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -1052,7 +1051,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Sprite>(runtimePath);
+                    obj = BResources.Load<Sprite>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -1077,7 +1076,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Material>(runtimePath);
+                    var ret = BResources.AsyncLoad<Material>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -1087,7 +1086,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Material>(runtimePath);
+                    obj = BResources.Load<Material>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -1100,11 +1099,11 @@ public class AssetBundleBenchmark01 : MonoBehaviour
             else if (typeName == typeof(Shader).FullName)
             {
                 sw.Start();
-                var obj = BResources.Load<Shader>(runtimePath);
+                var obj = BResources.Load<Shader>(runtimePath,loadtype);
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Shader>(runtimePath);
+                    var ret = BResources.AsyncLoad<Shader>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -1114,7 +1113,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Shader>(runtimePath);
+                    obj = BResources.Load<Shader>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -1131,7 +1130,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<AudioClip>(runtimePath);
+                    var ret = BResources.AsyncLoad<AudioClip>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -1141,7 +1140,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<AudioClip>(runtimePath);
+                    obj = BResources.Load<AudioClip>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -1158,7 +1157,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<AnimationClip>(runtimePath);
+                    var ret = BResources.AsyncLoad<AnimationClip>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -1168,7 +1167,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<AnimationClip>(runtimePath);
+                    obj = BResources.Load<AnimationClip>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -1185,7 +1184,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Mesh>(runtimePath);
+                    var ret = BResources.AsyncLoad<Mesh>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -1195,7 +1194,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Mesh>(runtimePath);
+                    obj = BResources.Load<Mesh>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -1212,7 +1211,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Font>(runtimePath);
+                    var ret = BResources.AsyncLoad<Font>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -1222,7 +1221,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Font>(runtimePath);
+                    obj = BResources.Load<Font>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -1240,7 +1239,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<SpriteAtlas>(runtimePath);
+                    var ret = BResources.AsyncLoad<SpriteAtlas>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -1250,7 +1249,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<SpriteAtlas>(runtimePath);
+                    obj = BResources.Load<SpriteAtlas>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -1269,7 +1268,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<ShaderVariantCollection>(runtimePath);
+                    var ret = BResources.AsyncLoad<ShaderVariantCollection>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -1279,7 +1278,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<ShaderVariantCollection>(runtimePath);
+                    obj = BResources.Load<ShaderVariantCollection>(runtimePath,loadtype);
                 }
 
                 obj?.WarmUp();
@@ -1298,7 +1297,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //异步
                 if (isAsyncLoad)
                 {
-                    var ret = BResources.AsyncLoad<Object>(runtimePath);
+                    var ret = BResources.AsyncLoad<Object>(runtimePath,loadtype);
                     await ret;
                     if (ret.IsSuccess)
                     {
@@ -1308,7 +1307,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 //同步
                 else
                 {
-                    obj = BResources.Load<Object>(runtimePath);
+                    obj = BResources.Load<Object>(runtimePath,loadtype);
                 }
 
                 sw.Stop();
@@ -1355,7 +1354,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
     /// 随机加载测试
     /// </summary>
     /// <returns></returns>
-    IEnumerator TestLoadTask(RuntimePlatform platform ,bool doCancelAysncTask)
+    IEnumerator TestLoadTask(RuntimePlatform platform, bool doCancelAysncTask)
     {
         BResources.UnloadAssets();
         //加载
@@ -1365,7 +1364,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         BResources.ResLoader.WarmUpShaders();
 
         //package信息
-        var pakInfo = GlobalAssetsHelper.GetPackageBuildInfo(abPath, platform);
+        var pakInfo = ClientAssetsHelper.GetPackageBuildInfo(abPath, platform);
 
         var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformPath(platform), pakInfo.Version);
         if (!Directory.Exists(benchmarkDataOutpath))
@@ -1378,7 +1377,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         var AssetBundleLoader = BResources.ResLoader as AssetBundleMgrV2;
         //加载
         int idx = 0;
-        foreach (var assetdata in AssetBundleLoader.AssetConfigLoder.AssetbundleItemList)
+        foreach (var assetdata in AssetBundleLoader.AssetBundleInfoLoader.AssetbundleItemList)
         {
             idx++;
             if (string.IsNullOrEmpty(assetdata.LoadPath))
@@ -1386,8 +1385,9 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 continue;
             }
 
-            var typeName = AssetBundleLoader.AssetConfigLoder.AssetTypes.AssetTypeList[assetdata.AssetType];
-            var runtimePath = assetdata.LoadPath;
+            var typeName = AssetBundleLoader.AssetBundleInfoLoader.AssetTypes.AssetTypeList[assetdata.AssetType];
+            var runtimePath = string.IsNullOrEmpty(assetdata.GUID) ? assetdata.LoadPath : assetdata.GUID;
+            var loadtype = string.IsNullOrEmpty(assetdata.GUID) ? LoadPathType.RuntimePath : LoadPathType.GUID;
 
             bool isCancel = false;
             bool isLoad = false;
@@ -1406,6 +1406,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     isCacheHit = true;
                 }
+
                 //其他的
                 if (isCancel)
                 {
@@ -1415,6 +1416,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     Debug.Log($"<color=yellow>【异步加载成功】</color>  {runtimePath} <color=yellow>{swa.ElapsedTicks / 10000f}</color>ms <color=red>帧号:{Time.frameCount}</color>");
                 }
+
                 isLoad = true;
             });
 
@@ -1433,16 +1435,17 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     Debug.Log($"<color=red>取消任务id:{id}失败!</color>");
                 }
             }
+
             //已经加载完成,且没有cache命中
-            if (isLoad&& !isCacheHit)
+            if (isLoad && !isCacheHit)
             {
                 Debug.LogError($"同步异常,异步已经加载:{runtimePath} <color=red>帧号:{Time.frameCount}</color>");
             }
-            
+
             //同步加载
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var obj = BResources.Load<Object>(runtimePath);
+            var obj = BResources.Load<Object>(runtimePath,loadtype);
             isLoad = true;
             sw.Stop();
             if (obj)
@@ -1459,7 +1462,6 @@ public class AssetBundleBenchmark01 : MonoBehaviour
     }
 
 
-    
     /// <summary>
     /// 验证资源
     /// </summary>

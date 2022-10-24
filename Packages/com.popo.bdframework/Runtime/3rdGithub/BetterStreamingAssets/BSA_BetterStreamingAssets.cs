@@ -160,7 +160,7 @@ public static class BetterStreamingAssets
 
     private static void ThrowFileNotFound(string path)
     {
-        throw new FileNotFoundException("File not found", path);
+        throw new FileNotFoundException("File not found - ", path);
     }
 
 #if UNITY_EDITOR

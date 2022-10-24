@@ -16,6 +16,7 @@ namespace BDFramework.ResourceMgr
     /// <summary>
     /// 开发模式下的加载
     /// </summary>
+    
     public class DevResourceMgr : IResMgr
     {
         static string RUNTIME_STR = "/Runtime/";
@@ -64,15 +65,24 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// AssetBundle 
         /// </summary>
-        public Dictionary<string, AssetBundleWapper> AssetbundleCacheMap { get; set; }
+        public Dictionary<string, AssetBundleWrapper> AssetbundleCacheMap { get; set; }
+
+        /// <summary>
+        /// 寻找一个shader
+        /// </summary>
+        /// <param name="shaderName"></param>
+        /// <returns></returns>
+        public Shader FindShader(string shaderName)
+        {
+            return Shader.Find(shaderName);
+        }
 
         /// <summary>
         /// 卸载
         /// </summary>
         /// <param name="assetLoadPath">资源名</param>
-        /// <param name="isForceUnload">强制卸载</param>
         /// <param name="type">指定类型</param>
-        public void UnloadAsset(string assetLoadPath, bool isForceUnload = false, Type type = null)
+        public void UnloadAsset(string assetLoadPath, Type type = null)
         {
             try
             {
@@ -113,21 +123,21 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 加载
         /// </summary>
-        /// <param name="assetLoadPath"></param>
-        /// <param name="pathType"></param>
+        /// <param name="loadPath"></param>
+        /// <param name="loadPathType"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Load<T>(string assetLoadPath, LoadPathType pathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
+        public T Load<T>(string loadPath, LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
         {
             //guid转短路径
 
-            if (pathType == LoadPathType.GUID)
+            if (loadPathType == LoadPathType.GUID)
             {
-                assetLoadPath = AssetDatabase.GUIDToAssetPath(assetLoadPath);
+                loadPath = AssetDatabase.GUIDToAssetPath(loadPath);
             }
 
 
-            return Load(typeof(T), assetLoadPath) as T;
+            return Load(typeof(T), loadPath) as T;
         }
 
         /// <summary>
@@ -137,23 +147,23 @@ namespace BDFramework.ResourceMgr
         /// <param name="type"></param>
         /// <param name="assetPatharam>
         /// <returns></returns>
-        public Object Load(Type type, string assetLoadPath)
+        public Object Load(Type type, string loadPath, LoadPathType loadPathType = LoadPathType.RuntimePath)
         {
             //读取缓存
-            var ret = objsCacheMap.TryGetValue(assetLoadPath, out var retobj);
+            var ret = objsCacheMap.TryGetValue(loadPath, out var retobj);
             //走新加载逻辑
             if (!ret)
             {
                 string assetPath = null;
                 //全路径
-                if (assetLoadPath.StartsWith("Assets", StringComparison.OrdinalIgnoreCase))
+                if (loadPath.StartsWith("Assets", StringComparison.OrdinalIgnoreCase))
                 {
-                    assetPath = assetLoadPath;
+                    assetPath = loadPath;
                 }
                 //短路径
                 else
                 {
-                    var assetPaths = FindAssets(assetLoadPath);
+                    var assetPaths = FindAssets(loadPath);
                     if (assetPaths == null)
                     {
                         return null;
@@ -180,7 +190,7 @@ namespace BDFramework.ResourceMgr
                 }
 
                 retobj = AssetDatabase.LoadAssetAtPath(assetPath, type);
-                objsCacheMap[assetLoadPath] = retobj;
+                objsCacheMap[loadPath] = retobj;
             }
 
             return retobj;
@@ -255,7 +265,7 @@ namespace BDFramework.ResourceMgr
         }
 
 
-        public LoadTaskGroup AsyncLoad<T>(string assetLoadPath) where T : Object
+        public LoadTaskGroup AsyncLoad<T>(string loadPath, LoadPathType loadPathType = LoadPathType.RuntimePath) where T : Object
         {
             return null;
         }
@@ -264,16 +274,16 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// AssetDataBase 不支持异步加载
         /// </summary>
-        /// <param name="assetLoadPath"></param>
+        /// <param name="loadPath"></param>
         /// <param name="callback"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public int AsyncLoad<T>(string assetLoadPath, Action<T> callback) where T : UnityEngine.Object
+        public int AsyncLoad<T>(string loadPath, Action<T> callback, LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
         {
             this.TaskCounter++;
 
 
-            var res = Load<T>(assetLoadPath);
+            var res = Load<T>(loadPath);
             callback(res);
 
 
@@ -284,29 +294,29 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// assetdatabase 不支持异步，暂时先做个加载，后期用update模拟异步
         /// </summary>
-        /// <param name="assetLoadPathList"></param>
+        /// <param name="loadPathList"></param>
         /// <param name="onLoadProcess"></param>
         /// <param name="onLoadComplete"></param>
         /// <returns></returns>
-        public List<int> AsyncLoad(List<string> assetLoadPathList, Action<int, int> onLoadProcess, Action<IDictionary<string, Object>> onLoadComplete)
+        public List<int> AsyncLoad(List<string> loadPathList, Action<int, int> onLoadProcess, Action<IDictionary<string, Object>> onLoadComplete, LoadPathType loadPathType = LoadPathType.RuntimePath)
         {
             //var list = assetsPath.Distinct().ToList();
 
             IDictionary<string, UnityEngine.Object> map = new Dictionary<string, Object>();
             int curProcess = 0;
             //每帧加载1个
-            IEnumeratorTool.StartCoroutine(TaskUpdate(1, assetLoadPathList, (s, o) =>
+            IEnumeratorTool.StartCoroutine(TaskUpdate(1, loadPathList, (s, o) =>
             {
                 curProcess++;
                 map[s] = o;
                 //
                 if (onLoadProcess != null)
                 {
-                    onLoadProcess(curProcess, assetLoadPathList.Count);
+                    onLoadProcess(curProcess, loadPathList.Count);
                 }
 
                 //
-                if (curProcess == assetLoadPathList.Count)
+                if (curProcess == loadPathList.Count)
                 {
                     if (onLoadComplete != null)
                     {

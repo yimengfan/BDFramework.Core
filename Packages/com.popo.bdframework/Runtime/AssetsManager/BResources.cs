@@ -27,7 +27,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 美术资源config配置
         /// </summary>
-        readonly static public string ART_ASSET_CONFIG_PATH = ART_ASSET_ROOT_PATH + "/art_assets.info";
+        readonly static public string ART_ASSET_INFO_PATH = ART_ASSET_ROOT_PATH + "/art_assets.info";
 
         /// <summary>
         /// 资源信息
@@ -101,6 +101,10 @@ namespace BDFramework.ResourceMgr
         static private Dictionary<string, IResMgr> loaderCacheMap = new Dictionary<string, IResMgr>();
 
         /// <summary>
+        /// 资产加载路径类型
+        /// </summary>
+        static  public  AssetLoadPathType AssetPathType { get; private set; }
+        /// <summary>
         /// 初始化
         /// </summary>
         /// <param name="abModel"></param>
@@ -122,6 +126,7 @@ namespace BDFramework.ResourceMgr
                 ResLoader.Init(path, BApplication.RuntimePlatform);
             }
 
+            AssetPathType = loadPathType;
             //初始化对象池
             InitObjectPools();
         }
@@ -230,7 +235,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="assetLoadPath"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static LoadTaskGroup AsyncLoad<T>(string assetLoadPath) where T : UnityEngine.Object
+        public static LoadTaskGroup AsyncLoad<T>(string assetLoadPath,LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
         {
             return ResLoader.AsyncLoad<T>(assetLoadPath);
         }
@@ -255,12 +260,21 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <param name="assetlist"></param>
         /// <param name="onLoadEnd"></param>
-        public static List<int> AsyncLoad(List<string> assetlist, Action<int, int> onProcess = null, Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null, string groupName = null)
+        public static List<int> AsyncLoad(List<string> assetlist, Action<int, int> onProcess = null, Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null, string groupName = null,LoadPathType loadPathType = LoadPathType.RuntimePath)
         {
-            //添加到资源组
-            AddAssetsPathToGroup(groupName, assetlist.ToArray());
-            //异步加载
-            return ResLoader.AsyncLoad(assetlist, onProcess, onLoadEnd);
+            if (assetlist.Count != 0)
+            {
+                //添加到资源组
+                AddAssetsPathToGroup(groupName, assetlist.ToArray());
+                //异步加载
+                return ResLoader.AsyncLoad(assetlist, onProcess, onLoadEnd,loadPathType);
+            }
+            else
+            {
+                //==0 容错！
+                onLoadEnd?.Invoke(new Dictionary<string, Object>());
+                return new List<int>();
+            }
         }
 
 
@@ -313,7 +327,7 @@ namespace BDFramework.ResourceMgr
                 return;
             }
 
-            ResLoader.UnloadAsset(assetPath, isForceUnload, type);
+            ResLoader.UnloadAsset(assetPath, type);
         }
 
         /// <summary>
@@ -366,6 +380,27 @@ namespace BDFramework.ResourceMgr
         #endregion
 
 
+        #region Shader操作
+
+        /// <summary>
+        /// 预热shader
+        /// </summary>
+        public static void WarmUpShaders()
+        {
+            ResLoader.WarmUpShaders();
+        }
+
+
+        /// <summary>
+        /// 寻找一个shader
+        /// </summary>
+        /// <param name="shaderName"></param>
+        public static Shader FindShader(string shaderName)
+        {
+           return ResLoader.FindShader(shaderName);
+        }
+
+        #endregion
         // #region 资源缓存
         //
         // /// <summary>
@@ -813,7 +848,7 @@ namespace BDFramework.ResourceMgr
 
         #endregion
         
-        #region 配置设置
+        #region AUP设置
 
         public enum AUPLevel
         {
@@ -836,7 +871,7 @@ namespace BDFramework.ResourceMgr
             {
                 case AUPLevel.LowRender:
                 {
-                    //最高配置
+                    //低渲染、高加载时候
                     QualitySettings.asyncUploadPersistentBuffer = true;
                     QualitySettings.asyncUploadBufferSize = 32;
                     QualitySettings.asyncUploadTimeSlice = 8;

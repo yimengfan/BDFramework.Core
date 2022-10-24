@@ -21,7 +21,7 @@ namespace AssetsManager.ArtAsset.AssetBundle.V2
         /// <summary>
         /// ab包装
         /// </summary>
-        private AssetBundleWapper AssetBundleWapper;
+        private AssetBundleWrapper AssetBundleWapper;
 
         /// <summary>
         /// 完成回调
@@ -31,7 +31,7 @@ namespace AssetsManager.ArtAsset.AssetBundle.V2
         /// 卸载
         /// </summary>
         /// <param name="unloadAction"></param>
-        public UnLoadTask(AssetBundleWapper abw,Action onUnloadEnd =null)
+        public UnLoadTask(AssetBundleWrapper abw,Action onUnloadEnd =null)
         {
             this.AssetBundleWapper = abw;
             this.onUnloadEnd = onUnloadEnd;
