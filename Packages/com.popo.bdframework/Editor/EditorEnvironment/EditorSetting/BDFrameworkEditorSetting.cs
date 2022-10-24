@@ -340,6 +340,11 @@ namespace BDFramework.Editor
         [LabelText("密钥")]
         [LabelWidth(100)]
         public string Key;
+
+        [FilePath(ParentFolder = "")]
+        [LabelText("生成Xcode后执行")]
+        [LabelWidth(200)]
+        public string ExcuteShell = "DevOps/CI/BuildIOS.shell";
     }
 
     /// <summary>

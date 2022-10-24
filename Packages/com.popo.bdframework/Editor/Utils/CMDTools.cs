@@ -19,7 +19,7 @@ namespace BDFramework.Editor.Tools
         /// Windows only
         /// </summary>
         /// <param name="cmd">执行的命令</param>
-        public static void RunCmd(string[] cmds,string envName="",string envValue ="")
+        public static void RunCmd(string[] cmds,string envName="",string envValue ="",bool islog =true)
         {
             //执行
             using (Process p = new Process())

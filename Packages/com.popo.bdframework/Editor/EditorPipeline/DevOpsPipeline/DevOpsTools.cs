@@ -15,61 +15,7 @@ namespace BDFramework.Editor.DevOps
     /// </summary>
     static public class DevOpsTools
     {
-        #region 资产操作类
-        /// <summary>
-        /// 拷贝发布资源
-        /// </summary>
-        static public void CopyPublishAssetsTo(string targetpath, RuntimePlatform platform)
-        {
-            List<string> blackFile = new List<string>() {"/Build.info", ".manifest"};
-            //清空目标文件夹
-            if (Directory.Exists(targetpath))
-            {
-                Directory.Delete(targetpath, true);
-            }
-
-            //合并路径
-            var sourcepath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform));
-            targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform));
-            //TODO SVN更新资源
-
-            //TODO  重写拷贝逻辑
-            var files = Directory.GetFiles(sourcepath, "*", SearchOption.AllDirectories);
-            foreach (var file in files)
-            {
-                var _f = file.Replace("\\", "/");
-                var ret = blackFile.Find((blackstr) => _f.EndsWith(blackstr, StringComparison.OrdinalIgnoreCase));
-                if (ret != null)
-                {
-                    // Debug.Log("[黑名单]" + _f);
-                    continue;
-                }
-
-                //
-                var tp = _f.Replace(sourcepath, targetpath);
-                FileHelper.Copy(_f, tp, true);
-            }
-        }
-
-        /// <summary>
-        /// 删除拷贝的资源
-        /// </summary>
-        /// <param name="targetpath"></param>
-        /// <param name="platform"></param>
-        static public void DeleteCopyAssets(string targetpath, RuntimePlatform platform)
-        {
-            targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform));
-            //优先删除拷贝的美术资源，防止构建完再导入  其他资源等工作流完全切入DevOps再进行删除
-            var copyArtPath = IPath.Combine(targetpath, BResources.ART_ASSET_ROOT_PATH);
-            if (Directory.Exists(copyArtPath))
-            {
-                Directory.Delete(copyArtPath, true);
-            }
-        }
-
-        #endregion
-
-
+        
         #region CI相关接口
 
         /// <summary>

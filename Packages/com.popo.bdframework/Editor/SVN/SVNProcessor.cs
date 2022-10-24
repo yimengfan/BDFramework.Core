@@ -44,25 +44,25 @@ namespace BDFramework.Editor.SVN
         /// <param name="psw"></param>
         static public SVNProcessor CreateSVNProccesor(string svnurl, string user, string psw, string localpath)
         {
-#if UNITY_EDITOR_WIN
-            var svn_exe_path = $"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~";
-            //设置环境变量
-            var value = System.Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Machine);
-            if (!value.Contains(svn_exe_path))
-            {
-                Debug.Log("当前环境变量:" + value);
-
-                var newValue = value + (";" + svn_exe_path);
-                System.Environment.SetEnvironmentVariable("Path", newValue, EnvironmentVariableTarget.Machine);
-                Debug.Log("设置svn环境变量:" + svn_exe_path);
-
-                var value2 = System.Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Machine);
-                if (value2.Contains(svn_exe_path))
-                {
-                    Debug.Log("设置svn环境变量 成功!");
-                }
-            }
-#endif
+// #if UNITY_EDITOR_WIN
+//             var svn_exe_path = $"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~";
+//             //设置环境变量
+//             var value = System.Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Machine);
+//             if (!value.Contains(svn_exe_path))
+//             {
+//                 Debug.Log("当前环境变量:" + value);
+//
+//                 var newValue = value + (";" + svn_exe_path);
+//                 System.Environment.SetEnvironmentVariable("Path", newValue, EnvironmentVariableTarget.Machine);
+//                 Debug.Log("设置svn环境变量:" + svn_exe_path);
+//
+//                 var value2 = System.Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Machine);
+//                 if (value2.Contains(svn_exe_path))
+//                 {
+//                     Debug.Log("设置svn环境变量 成功!");
+//                 }
+//             }
+// #endif
             var svn = new SVNProcessor(svnurl, user, psw, localpath);
             return svn;
         }

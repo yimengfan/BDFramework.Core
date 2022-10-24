@@ -67,16 +67,17 @@ namespace BDFramework.Editor
         /// <summary>
         /// 一键打包时，开始导出AssetBundle
         /// </summary>
-      
         virtual public void OnBeginBuildAssetBundle(AssetBundleBuildingContext assetbundleBuildingCtx)
         {
         }
 
+        
         /// <summary>
         ///  一键打包时，完成导出AssetBundle
         /// </summary>
         virtual public void OnEndBuildAssetBundle(AssetBundleBuildingContext assetbundleBuildingCtx)
         {
+            
         }
 
         #endregion
@@ -105,6 +106,36 @@ namespace BDFramework.Editor
 
         #endregion
 
+        #region SVC版本号
+
+        /// <summary>
+        ///  获取美术资源版本号(git\svn\p4...)
+        /// </summary>
+        virtual public string GetArtSVCNum(RuntimePlatform platform, string outputPath)
+        {
+            return "0";
+        }
+
+        /// <summary>
+        ///  获取表格资源版本号(git\svn\p4...)
+        /// </summary>
+        virtual public string GetTableSVCNum(RuntimePlatform platform, string outputPath)
+        {
+            return "0";
+        }
+        
+        /// <summary>
+        ///  获取表格资源版本号(git\svn\p4...)
+        /// </summary>
+        virtual public string GetScriptSVCNum(RuntimePlatform platform, string outputPath)
+        {
+            return "0";
+        }
+        
+        #endregion
+        
+        
+        
         #region 构建移动端包体
        
         /// <summary>

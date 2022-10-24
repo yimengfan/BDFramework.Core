@@ -38,6 +38,7 @@ namespace BDFramework.Editor.Table
                         }
                     }
                     SqliteLoder.Close();
+                    Excel2SQLiteTools.CopySqlToOther(Application.streamingAssetsPath, BApplication.RuntimePlatform);
                     BDebug.Log("-----------------强制导入修改的excel文件.end-----------------", "red");
 
                     ExcelEditorTools.SaveExcelCacheInfo(newEcxcelInfoMap);

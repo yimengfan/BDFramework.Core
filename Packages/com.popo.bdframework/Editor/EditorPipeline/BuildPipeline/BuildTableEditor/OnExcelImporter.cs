@@ -14,7 +14,7 @@ namespace BDFramework.Editor.Table
         {
             //判断设置
             var BuildSqlSetting = BDEditorApplication.BDFrameworkEditorSetting?.BuildSqlSetting;
-            if (!BuildSqlSetting.IsAutoImportSqlWhenExcelChange)
+            if (BuildSqlSetting!=null &&!BuildSqlSetting.IsAutoImportSqlWhenExcelChange)
             {
                 return;
             }

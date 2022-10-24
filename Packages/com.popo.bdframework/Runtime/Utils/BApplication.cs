@@ -37,8 +37,9 @@ namespace BDFramework.Core.Tools
             get { return _supportPlatform.ToArray(); }
         }
 
+
         static BApplication()
-        { 
+        {
             Init();
         }
 
@@ -146,7 +147,7 @@ namespace BDFramework.Core.Tools
         /// <summary>
         /// Devops 资源路径
         /// </summary>
-        public static  string DevOpsPublishAssetsPath { get; private set; }
+        public static string DevOpsPublishAssetsPath { get; private set; }
 
         /// <summary>
         /// 发布包体路径
@@ -228,6 +229,27 @@ namespace BDFramework.Core.Tools
 
 
 #if UNITY_EDITOR
+        /// <summary>
+        /// 定义支持的平台
+        /// </summary>
+        /// <returns></returns>
+        static BuildTargetGroup[] _supportBuildTargetGroup = new BuildTargetGroup[]
+        {
+            BuildTargetGroup.Android,
+            BuildTargetGroup.iOS,
+            /***********新增pc平台************/
+            BuildTargetGroup.Standalone,
+        };
+
+        /// <summary>
+        /// 定义 支持的平台
+        /// </summary>
+        /// <returns></returns>
+        public static BuildTargetGroup[] SupportBuildTargetGroups
+        {
+            //返回一个副本
+            get { return _supportBuildTargetGroup.ToArray(); }
+        }
 
         #region Runtime目录支持
 
@@ -330,6 +352,36 @@ namespace BDFramework.Core.Tools
                     break;
             }
 
+            return target;
+        }
+
+        /// <summary>
+        /// 获取AB构建平台
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        public static BuildTargetGroup GetBuildTargetGroup(RuntimePlatform platform)
+        {
+            //构建平台
+            BuildTargetGroup target = BuildTargetGroup.Standalone;
+            switch (platform)
+            {
+                case RuntimePlatform.Android:
+                    target = BuildTargetGroup.Android;
+                    break;
+                case RuntimePlatform.IPhonePlayer:
+                    target = BuildTargetGroup.iOS;
+                    break;
+                case RuntimePlatform.WindowsEditor:
+                case RuntimePlatform.WindowsPlayer:
+
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
+                {
+                    target = BuildTargetGroup.Standalone;
+                }
+                    break;
+            }
             return target;
         }
 
