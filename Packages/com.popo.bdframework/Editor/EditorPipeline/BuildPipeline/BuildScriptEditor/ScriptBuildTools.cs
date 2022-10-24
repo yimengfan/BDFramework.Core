@@ -10,6 +10,7 @@ using BDFramework;
 using BDFramework.Asset;
 using Debug = UnityEngine.Debug;
 using BDFramework.Core.Tools;
+using BDFramework.Editor;
 using BDFramework.Editor.Unity3dEx;
 using BDFramework.StringEx;
 using Microsoft.CodeAnalysis;
@@ -208,8 +209,8 @@ public class ScriptBuildTools
         {
             Build(baseCs, hotfixCs, dllFileList, outHotfixPath, true);
         }
-
-        GlobalAssetsHelper.GenBasePackageAssetBuildInfo(outPath, platform);
+        var version = BDFrameworkPipelineHelper.GetScriptSVCNum(outPath, platform);
+        ClientAssetsHelper.GenBasePackageBuildInfo(outPath, platform,scriptSVC:version);
     }
 
     /// <summary>

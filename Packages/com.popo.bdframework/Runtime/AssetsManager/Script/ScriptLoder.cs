@@ -11,7 +11,7 @@ namespace BDFramework
     {
         static readonly public string SCRIPT_FOLDER_PATH = "script";
         static readonly public string DLL_PATH = SCRIPT_FOLDER_PATH+"/hotfix.dll";
-
+        static readonly public string PDB_PATH = DLL_PATH + "pdb"; 
         /// <summary>
         /// 反射注册
         /// </summary>

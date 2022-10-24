@@ -66,7 +66,7 @@ namespace BDFramework.Editor
                     }
 
                     //获取资源版本号
-                    var basePckInfo = GlobalAssetsHelper.GetPackageBuildInfo(path, platform);
+                    var basePckInfo = ClientAssetsHelper.GetPackageBuildInfo(path, platform);
                     var versionNum = basePckInfo.Version;
                     //发布资源处理前,处理前回调
                     BDFrameworkPipelineHelper.OnBeginPublishAssets(platform, sourcePath, versionNum);
@@ -101,10 +101,8 @@ namespace BDFramework.Editor
 
             //加载assetbundle配置
             assetsRootPath = IPath.Combine(assetsRootPath, BApplication.GetPlatformPath(platform));
-            var abConfigPath = IPath.Combine(assetsRootPath, BResources.ART_ASSET_CONFIG_PATH);
-            var abTypeConfigPath = IPath.Combine(assetsRootPath, BResources.ART_ASSET_TYPES_PATH);
-            var abConfigLoader = new AssetbundleConfigLoder();
-            abConfigLoader.Load(abConfigPath, abTypeConfigPath);
+            var abConfigLoader = new AssetBundleConfigLoader();
+            abConfigLoader.Load(assetsRootPath);
             //生成hash配置
             var assets = Directory.GetFiles(assetsRootPath, "*", SearchOption.AllDirectories);
             int ABCounter = 0;
@@ -136,7 +134,6 @@ namespace BDFramework.Editor
                 }
 
                 //文件信息
-                var fileHash = FileHelper.GetMurmurHash3(assetPath);
                 var abPath = Path.GetFileName(assetPath);
                 var assetbundleItem = abConfigLoader.AssetbundleItemList.Find((ab) => ab.AssetBundlePath != null && ab.AssetBundlePath.Equals(abPath));
                 if (assetbundleItem == null)
@@ -144,6 +141,8 @@ namespace BDFramework.Editor
                     Debug.Log("不存在配置:" + abPath);
                     continue;
                 }
+                
+                var fileHash = FileHelper.GetMurmurHash3(assetPath);
                 AssetItem item = null;
                 //文件容量
                 var fileInfo = new FileInfo(assetPath);

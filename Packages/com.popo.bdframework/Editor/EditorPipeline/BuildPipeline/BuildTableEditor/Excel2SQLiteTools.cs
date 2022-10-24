@@ -85,7 +85,9 @@ namespace BDFramework.Editor.Table
             EditorUtility.ClearProgressBar();
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnEndBuildSqlite(ouptputPath);
-            GlobalAssetsHelper.GenBasePackageAssetBuildInfo(ouptputPath, platform);
+
+            var version = BDFrameworkPipelineHelper.GetTableSVCNum(ouptputPath, platform);
+            ClientAssetsHelper.GenBasePackageBuildInfo(ouptputPath, platform, tableSVC: version);
             Debug.Log("导出Sqlite完成!");
         }
 
@@ -136,7 +138,6 @@ namespace BDFramework.Editor.Table
                 {
                     importLog.Hash = excelHash;
                     importLog.Date = DateTime.Now.ToString();
-                    ;
                     importLog.UnityVersion = Application.unityVersion;
                     SqliteHelper.DB.Connection.Update(importLog);
                 }

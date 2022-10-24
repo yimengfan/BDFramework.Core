@@ -90,8 +90,7 @@ namespace BDFramework.Editor.Environment
             {
                 if (impoter.Contains("Sirenix.OdinInspector.Attributes.dll"))
                 {
-                    var btg = new BuildTargetGroup[] {BuildTargetGroup.Android, BuildTargetGroup.iOS, BuildTargetGroup.Standalone};
-                    foreach (var bt in btg)
+                    foreach (var bt in BApplication.SupportBuildTargetGroups)
                     {
                         var symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(bt);
                         if (!symbols.Contains("ODIN_INSPECTOR"))

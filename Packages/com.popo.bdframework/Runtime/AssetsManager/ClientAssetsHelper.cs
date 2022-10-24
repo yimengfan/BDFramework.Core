@@ -14,7 +14,7 @@ namespace BDFramework.Asset
     /// <summary>
     /// 母包资源构建信息
     /// </summary>
-    public class GlobalAssetsBuildInfo
+    public class ClientPackageBuildInfo
     {
         /// <summary>
         /// 构建时间
@@ -53,9 +53,11 @@ namespace BDFramework.Asset
     /// 用于管理
     /// 用以统一管理Sql、dll、和ArtConfig资源
     /// </summary>
-    static public class GlobalAssetsHelper
+    static public class ClientAssetsHelper
     {
-        static GlobalAssetsHelper()
+
+
+        static ClientAssetsHelper()
         {
             BetterStreamingAssets.Initialize();
         }
@@ -66,48 +68,52 @@ namespace BDFramework.Asset
         static string[] PersistentOnlyFiles = new string[]
         {
             ScriptLoder.DLL_PATH, //DLL,
-            ScriptLoder.DLL_PATH + ".pdb", //PBD文件
+            ScriptLoder.PDB_PATH, //PBD文件
             SqliteLoder.LOCAL_DB_PATH, //db
-            BResources.ART_ASSET_CONFIG_PATH, BResources.ART_ASSET_TYPES_PATH, //ArtConfig,这两个配置文件是保证 更新资源后逻辑统一.
+            BResources.ART_ASSET_INFO_PATH, BResources.ART_ASSET_TYPES_PATH, //ArtConfig,这两个配置文件是保证 更新资源后逻辑统一.
         };
-
 
 
         /// <summary>
         /// 获取母包资源构建信息
         /// </summary>
         /// <returns></returns>
-        static public GlobalAssetsBuildInfo GetPackageBuildInfo(string ouptputPath, RuntimePlatform platform)
+        static public ClientPackageBuildInfo GetPackageBuildInfo(string ouptputPath, RuntimePlatform platform)
         {
-            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
-            var buildinfo = new GlobalAssetsBuildInfo();
+            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform),
+                BResources.PACKAGE_BUILD_INFO_PATH);
+            var buildinfo = new ClientPackageBuildInfo();
             if (File.Exists(path))
             {
                 var text = File.ReadAllText(path);
-                buildinfo = JsonMapper.ToObject<GlobalAssetsBuildInfo>(text);
+                buildinfo = JsonMapper.ToObject<ClientPackageBuildInfo>(text);
             }
+
             return buildinfo;
         }
+
 
         /// <summary>
         /// 生成母包资源构建信息
         /// </summary>
-        static public void GenBasePackageAssetBuildInfo(string outputPath, RuntimePlatform platform, string version = "", string basePacakgeSVC = "", string artSVC = "", string scriptSVC = "", string tableSVC = "")
+        static public void GenBasePackageBuildInfo(string outputPath, RuntimePlatform platform,
+            string version = "", string basePacakgeSVC = "", string artSVC = "", string scriptSVC = "",
+            string tableSVC = "")
         {
             //获取旧BuildAssetInfo
             var info = GetPackageBuildInfo(outputPath, platform);
-            
+
             //写入buildinfo内容
             info.BuildTime = DateTimeEx.GetTotalSeconds();
 
             //资源版本
-            
+
             if (!string.IsNullOrEmpty(version))
             {
                 info.Version = version;
             }
 
-            
+
             //母包版本信息
             if (!string.IsNullOrEmpty(basePacakgeSVC))
             {
@@ -141,17 +147,16 @@ namespace BDFramework.Asset
         /// <param name="ouptputPath"></param>
         /// <param name="platform"></param>
         /// <param name="info"></param>
-        static public void SaveBasePackageBuildInfo(string ouptputPath, RuntimePlatform platform, GlobalAssetsBuildInfo info)
+        static public void SaveBasePackageBuildInfo(string ouptputPath, RuntimePlatform platform, ClientPackageBuildInfo info)
         {
             //转json
             var content = JsonMapper.ToJson(info);
             //写入本地
-            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), BResources.PACKAGE_BUILD_INFO_PATH);
+            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform),
+                BResources.PACKAGE_BUILD_INFO_PATH);
             FileHelper.WriteAllText(path, content);
         }
-        
-        
-        static bool isUseSysIO = false;
+
 
         /// <summary>
         /// 母包资源检测逻辑
@@ -159,8 +164,8 @@ namespace BDFramework.Asset
         /// <returns></returns>
         static public void CheckBasePackageVersion(RuntimePlatform platform, Action callback)
         {
-          
-            //路径初始化
+            bool isUseBetterStreaming = false;
+            //persistent路径
             var persistentPlatformPath = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(platform));
             //母包路径
             string basePckPath = "";
@@ -172,74 +177,95 @@ namespace BDFramework.Asset
                 {
                     //editor不进行母包资源管理
                     BDebug.Log("【资源包】Editor加载不执行:母包资源检测逻辑！");
-                    callback?.Invoke(); 
+                    callback?.Invoke();
                     return;
                 }
                 case AssetLoadPathType.Persistent:
                 case AssetLoadPathType.StreamingAsset:
                 {
-                    isUseSysIO = false;
+                    isUseBetterStreaming = true;
                     basePckPath = BApplication.streamingAssetsPath;
                 }
                     break;
                 case AssetLoadPathType.DevOpsPublish:
                 {
-                    isUseSysIO = true;
-                    basePckPath = BApplication.DevOpsPath;
+                    if (Application.isEditor)
+                    {
+                        isUseBetterStreaming = false;
+                        basePckPath = BApplication.DevOpsPath;
+                    }
+                    else
+                    {
+                        isUseBetterStreaming = true;
+                        basePckPath = BApplication.streamingAssetsPath;
+                    }
                 }
                     break;
             }
+
             BDebug.Log("【资源包】执行母包资源检测逻辑！");
             //源地址
             string basePckPlatformPath = "";
-            if (isUseSysIO)
+            if (isUseBetterStreaming)
+            {
+                basePckPlatformPath = BApplication.GetPlatformPath(platform);
+            }
+            else
             {
                 basePckPlatformPath = IPath.Combine(basePckPath, BApplication.GetPlatformPath(platform));
             }
 
             //packageinfo
-            var persistentPackageBuildInfoPath = IPath.Combine(persistentPlatformPath, BResources.PACKAGE_BUILD_INFO_PATH);
+            var persistentPckBuildInfoPath = IPath.Combine(persistentPlatformPath, BResources.PACKAGE_BUILD_INFO_PATH);
+            //母包的build.info信息
             var basePckBuildInfoPath = IPath.Combine(basePckPlatformPath, BResources.PACKAGE_BUILD_INFO_PATH);
 
-            if (!IsExsitAsset(basePckBuildInfoPath))
+            if (!IsExsitAsset(basePckBuildInfoPath, isUseBetterStreaming))
             {
                 //不存在Streaming配置
-                   BDebug.LogError("【母包资源检测】拷贝失败,不存在：" + basePckBuildInfoPath);
+                BDebug.LogError("【母包资源检测】拷贝失败,不存在：" + basePckBuildInfoPath);
                 callback?.Invoke();
                 return;
             }
             else
             {
-                var basePckBuildInfoContent = ReadAssetAllText(basePckBuildInfoPath);
+                BDebug.Log("【母包资源检测】读取母包配置：" + basePckBuildInfoPath);
+                var basePckBuildInfoContent = ReadAssetAllText(basePckBuildInfoPath, isUseBetterStreaming);
                 //persitent存在，判断版本
-                if (!IsExsitAsset(persistentPackageBuildInfoPath))
+                if (IsExsitAsset(persistentPckBuildInfoPath))
                 {
-                    var content = ReadAssetAllText(persistentPackageBuildInfoPath);
+                    BDebug.Log("【母包资源检测】读取persistent配置：" + persistentPckBuildInfoPath);
+                    var content = ReadAssetAllText(persistentPckBuildInfoPath);
                     //解析
-                    var persistentPackageInfo = JsonMapper.ToObject<GlobalAssetsBuildInfo>(content);
-                    var basePackageInfo = JsonMapper.ToObject<GlobalAssetsBuildInfo>(basePckBuildInfoContent);
+                    var persistentPackageInfo = JsonMapper.ToObject<ClientPackageBuildInfo>(content);
+                    var basePackageInfo = JsonMapper.ToObject<ClientPackageBuildInfo>(basePckBuildInfoContent);
                     if (persistentPackageInfo.BuildTime >= basePackageInfo.BuildTime)
                     {
                         //跳出，检测结束
-                        BDebug.Log("【母包资源检测】不复制，母包 无新资源");
+                        BDebug.Log("【母包资源检测】不复制，母包无新资源");
+                        BDLauncher.Inst.ClientBuildInfo = persistentPackageInfo;
                         callback?.Invoke();
                         return;
                     }
                     else
                     {
-                        BDebug.Log("【母包资源检测】复制，母包 有新资源,即将清理persistent旧资源!!!!", "yellow");
+                        BDebug.Log("【母包资源检测】母包有新资源,即将覆盖persistent旧资源!!!!", "yellow");
+                        BDLauncher.Inst.ClientBuildInfo  = basePackageInfo;
                         ClearOldPersistentAssets();
+                     
                         //Streaming版本比较新
                         //复制Stream的packageinfo 到persistent
-                        FileHelper.WriteAllText(persistentPackageBuildInfoPath, basePckBuildInfoContent);
+                        FileHelper.WriteAllText(persistentPckBuildInfoPath, basePckBuildInfoContent);
                     }
                 }
                 else
                 {
                     BDebug.Log("【母包资源检测】第一次创建资源包info到persistent目录");
+                    var basePackageInfo = JsonMapper.ToObject<ClientPackageBuildInfo>(basePckBuildInfoContent);
+                    BDLauncher.Inst.ClientBuildInfo  = basePackageInfo;
                     //persistent版本不存在
                     //复制Stream的packageinfo 到persistent
-                    FileHelper.WriteAllText(persistentPackageBuildInfoPath, basePckBuildInfoContent);
+                    FileHelper.WriteAllText(persistentPckBuildInfoPath, basePckBuildInfoContent);
                 }
             }
 
@@ -247,15 +273,15 @@ namespace BDFramework.Asset
             for (int i = 0; i < PersistentOnlyFiles.Length; i++)
             {
                 var copytoFile = PersistentOnlyFiles[i];
-                //复制新版本的DLL 
+                //复制新版本的资产
                 var persistentPath = IPath.Combine(persistentPlatformPath, copytoFile);
                 var basePckAssetPath = IPath.Combine(basePckPlatformPath, copytoFile);
 
                 //开始拷贝
-                if (IsExsitAsset(basePckAssetPath))
+                if (IsExsitAsset(basePckAssetPath, isUseBetterStreaming))
                 {
                     BDebug.Log("【母包资源检测】复制成功:" + copytoFile);
-                    var bytes = ReadFileAllBytes(basePckAssetPath, isUseSysIO);
+                    var bytes = ReadFileAllBytes(basePckAssetPath, isUseBetterStreaming);
                     FileHelper.WriteAllBytes(persistentPath, bytes);
                 }
                 else
@@ -273,16 +299,16 @@ namespace BDFramework.Asset
         /// 是否存在文件
         /// </summary>
         /// <returns></returns>
-        static private bool IsExsitAsset(string filePath)
+        static private bool IsExsitAsset(string filePath, bool isUseBetterStreaming = false)
         {
-            if (isUseSysIO)
-            {
-                return File.Exists(filePath);
-            }
-            else
+            if (isUseBetterStreaming)
             {
                 return BetterStreamingAssets.FileExists(filePath);
             }
+            else
+            {
+                return File.Exists(filePath);
+            }
         }
 
         /// <summary>
@@ -291,33 +317,33 @@ namespace BDFramework.Asset
         /// <param name="filePath"></param>
         /// <param name="isUseSysIO"></param>
         /// <returns></returns>
-        static private string ReadAssetAllText(string filePath)
+        static private string ReadAssetAllText(string filePath, bool isUseBetterStreaming = false)
         {
-            if (isUseSysIO)
-            {
-                return File.ReadAllText(filePath);
-            }
-            else
+            if (isUseBetterStreaming)
             {
                 return BetterStreamingAssets.ReadAllText(filePath);
             }
+            else
+            {
+                return File.ReadAllText(filePath);
+            }
         }
 
         /// <summary>
         /// 读取文件内容
         /// </summary>
         /// <param name="filePath"></param>
-        /// <param name="isUseSysIO"></param>
+        /// <param name="isUseBetterStreaming"></param>
         /// <returns></returns>
-        static private byte[] ReadFileAllBytes(string filePath, bool isUseSysIO)
+        static private byte[] ReadFileAllBytes(string filePath, bool isUseBetterStreaming = false)
         {
-            if (isUseSysIO)
+            if (isUseBetterStreaming)
             {
-                return File.ReadAllBytes(filePath);
+                return BetterStreamingAssets.ReadAllBytes(filePath);
             }
             else
             {
-                return BetterStreamingAssets.ReadAllBytes(filePath);
+                return File.ReadAllBytes(filePath);
             }
         }
 
