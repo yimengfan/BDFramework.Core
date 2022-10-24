@@ -56,23 +56,23 @@ namespace UnityEngine.AssetGraph {
 			return newNode;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 			
 			if (m_importDirectoryPath == null) {
 				return;
 			}
 
-			var currentEditingGroup = editor.CurrentEditingGroup;
+			var currentEditingGroup = inspector.CurrentEditingGroup;
 
 			EditorGUILayout.HelpBox("Import Unity Packages: Import Unity Packages.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 			GUILayout.Space(10f);
 
 			//Show target configuration tab
-			editor.DrawPlatformSelector(node);
+			inspector.DrawPlatformSelector(node);
 			using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-				var disabledScope = editor.DrawOverrideTargetToggle(node, m_importDirectoryPath.ContainsValueOf(currentEditingGroup), (bool enabled) => {
+				var disabledScope = inspector.DrawOverrideTargetToggle(node, m_importDirectoryPath.ContainsValueOf(currentEditingGroup), (bool enabled) => {
 					using(new RecordUndoScope("Remove Target Export Settings", node, true)){
 						if(enabled) {
 							m_importDirectoryPath[currentEditingGroup] = m_importDirectoryPath.DefaultValue;
@@ -92,7 +92,7 @@ namespace UnityEngine.AssetGraph {
 
 					string newImportDir = null;
 
-                    newImportDir = editor.DrawFolderSelector ("", "Select Import Folder", 
+                    newImportDir = inspector.DrawFolderSelector ("", "Select Import Folder", 
                         m_importDirectoryPath[currentEditingGroup],
                         GetImportDirectoryPath(m_importDirectoryPath[currentEditingGroup]),
                         (string folderSelected) => {

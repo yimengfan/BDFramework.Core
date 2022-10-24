@@ -66,7 +66,7 @@ namespace UnityEngine.AssetGraph {
 
 		public bool IsSelected {
 			get {
-				return (Selection.activeObject == this);
+				return (AssetGraphEditorWindow.activeObject == this);
 			}
 		}
 
@@ -237,7 +237,7 @@ namespace UnityEngine.AssetGraph {
 
 		public void SetActive (bool active) {
 			if(active) {
-				Selection.activeObject = this;
+				AssetGraphEditorWindow.activeObject = this;
 				m_connectionButtonStyle = "sv_label_1";
 			} else {
 				m_connectionButtonStyle = "sv_label_0";

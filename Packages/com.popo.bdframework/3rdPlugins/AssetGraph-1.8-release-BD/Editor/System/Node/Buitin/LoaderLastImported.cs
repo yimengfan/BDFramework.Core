@@ -66,10 +66,10 @@ namespace UnityEngine.AssetGraph {
 			return true;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
 			EditorGUILayout.HelpBox("Last Imported Items: Load assets just imported.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 		}
 

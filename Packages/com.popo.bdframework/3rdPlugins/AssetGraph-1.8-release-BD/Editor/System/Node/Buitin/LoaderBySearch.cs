@@ -93,14 +93,14 @@ namespace UnityEngine.AssetGraph {
             return false;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
 			if (m_searchFilter == null) {
 				return;
 			}
 
 			EditorGUILayout.HelpBox("Load By Search Filter: Load assets match given search filter condition.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 			GUILayout.Space(10f);
 
@@ -114,21 +114,21 @@ namespace UnityEngine.AssetGraph {
             GUILayout.Space(4f);
 
 			//Show target configuration tab
-			editor.DrawPlatformSelector(node);
+			inspector.DrawPlatformSelector(node);
 			using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-				var disabledScope = editor.DrawOverrideTargetToggle(node, m_searchFilter.ContainsValueOf(editor.CurrentEditingGroup), (bool b) => {
+				var disabledScope = inspector.DrawOverrideTargetToggle(node, m_searchFilter.ContainsValueOf(inspector.CurrentEditingGroup), (bool b) => {
 					using(new RecordUndoScope("Remove Target Search Filter Settings", node, true)) {
 						if(b) {
-							m_searchFilter[editor.CurrentEditingGroup] = m_searchFilter.DefaultValue;
+							m_searchFilter[inspector.CurrentEditingGroup] = m_searchFilter.DefaultValue;
 						} else {
-							m_searchFilter.Remove(editor.CurrentEditingGroup);
+							m_searchFilter.Remove(inspector.CurrentEditingGroup);
 						}
 						onValueChanged();
 					}
 				});
 
 				using (disabledScope) {
-					var condition = m_searchFilter[editor.CurrentEditingGroup];
+					var condition = m_searchFilter[inspector.CurrentEditingGroup];
 					EditorGUILayout.LabelField("Search Filter");
 
 					string newCondition = null;
@@ -139,7 +139,7 @@ namespace UnityEngine.AssetGraph {
 
 					if (newCondition != condition) {
 						using(new RecordUndoScope("Modify Search Filter", node, true)){
-							m_searchFilter[editor.CurrentEditingGroup] = newCondition;
+							m_searchFilter[inspector.CurrentEditingGroup] = newCondition;
 							onValueChanged();
 						}
 					}

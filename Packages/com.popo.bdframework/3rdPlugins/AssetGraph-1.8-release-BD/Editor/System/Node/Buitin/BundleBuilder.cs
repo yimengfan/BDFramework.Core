@@ -105,14 +105,14 @@ namespace UnityEngine.AssetGraph {
 			return newNode;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
 			if (m_enabledBundleOptions == null) {
 				return;
 			}
 
 			EditorGUILayout.HelpBox("Build Asset Bundles: Build asset bundles with given asset bundle settings.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 			bool newOverwrite = EditorGUILayout.ToggleLeft ("Keep AssetImporter settings for variants", m_overwriteImporterSetting);
 			if (newOverwrite != m_overwriteImporterSetting) {
@@ -125,38 +125,38 @@ namespace UnityEngine.AssetGraph {
 			GUILayout.Space(10f);
 
 			//Show target configuration tab
-			editor.DrawPlatformSelector(node);
+			inspector.DrawPlatformSelector(node);
 			using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-				var disabledScope = editor.DrawOverrideTargetToggle(node, m_enabledBundleOptions.ContainsValueOf(editor.CurrentEditingGroup), (bool enabled) => {
+				var disabledScope = inspector.DrawOverrideTargetToggle(node, m_enabledBundleOptions.ContainsValueOf(inspector.CurrentEditingGroup), (bool enabled) => {
 					using(new RecordUndoScope("Remove Target Bundle Options", node, true)){
 						if(enabled) {
-                            m_enabledBundleOptions[editor.CurrentEditingGroup] = m_enabledBundleOptions.DefaultValue;
-                            m_outputDir[editor.CurrentEditingGroup] = m_outputDir.DefaultValue;
-                            m_outputOption[editor.CurrentEditingGroup] = m_outputOption.DefaultValue;
-                            m_manifestName[editor.CurrentEditingGroup] = m_manifestName.DefaultValue;
+                            m_enabledBundleOptions[inspector.CurrentEditingGroup] = m_enabledBundleOptions.DefaultValue;
+                            m_outputDir[inspector.CurrentEditingGroup] = m_outputDir.DefaultValue;
+                            m_outputOption[inspector.CurrentEditingGroup] = m_outputOption.DefaultValue;
+                            m_manifestName[inspector.CurrentEditingGroup] = m_manifestName.DefaultValue;
 						}  else {
-                            m_enabledBundleOptions.Remove(editor.CurrentEditingGroup);
-                            m_outputDir.Remove(editor.CurrentEditingGroup);
-                            m_outputOption.Remove(editor.CurrentEditingGroup);
-                            m_manifestName.Remove(editor.CurrentEditingGroup);
+                            m_enabledBundleOptions.Remove(inspector.CurrentEditingGroup);
+                            m_outputDir.Remove(inspector.CurrentEditingGroup);
+                            m_outputOption.Remove(inspector.CurrentEditingGroup);
+                            m_manifestName.Remove(inspector.CurrentEditingGroup);
 						}
 						onValueChanged();
 					}
 				} );
 
 				using (disabledScope) {
-                    OutputOption opt = (OutputOption)m_outputOption[editor.CurrentEditingGroup];
+                    OutputOption opt = (OutputOption)m_outputOption[inspector.CurrentEditingGroup];
                     var newOption = (OutputOption)EditorGUILayout.EnumPopup("Output Option", opt);
                     if(newOption != opt) {
                         using(new RecordUndoScope("Change Output Option", node, true)){
-                            m_outputOption[editor.CurrentEditingGroup] = (int)newOption;
+                            m_outputOption[inspector.CurrentEditingGroup] = (int)newOption;
                             onValueChanged();
                         }
                     }
 
                     using (new EditorGUI.DisabledScope (opt == OutputOption.BuildInCacheDirectory)) {
-                        var newDirPath = editor.DrawFolderSelector ("Output Directory", "Select Output Folder", 
-                            m_outputDir[editor.CurrentEditingGroup],
+                        var newDirPath = inspector.DrawFolderSelector ("Output Directory", "Select Output Folder", 
+                            m_outputDir[inspector.CurrentEditingGroup],
                             Application.dataPath + "/../",
                             (string folderSelected) => {
                                 var projectPath = Directory.GetParent(Application.dataPath).ToString();
@@ -175,18 +175,18 @@ namespace UnityEngine.AssetGraph {
                                 return folderSelected;
                             }
                         );
-                        if (newDirPath != m_outputDir[editor.CurrentEditingGroup]) {
+                        if (newDirPath != m_outputDir[inspector.CurrentEditingGroup]) {
                             using(new RecordUndoScope("Change Output Directory", node, true)){
-                                m_outputDir[editor.CurrentEditingGroup] = newDirPath;
+                                m_outputDir[inspector.CurrentEditingGroup] = newDirPath;
                                 onValueChanged();
                             }
                         }
 
-                        var outputDir = PrepareOutputDirectory (BuildTargetUtility.GroupToTarget(editor.CurrentEditingGroup), node.Data, false, false);
+                        var outputDir = PrepareOutputDirectory (BuildTargetUtility.GroupToTarget(inspector.CurrentEditingGroup), node.Data, false, false);
 
                         if (opt == OutputOption.ErrorIfNoOutputDirectoryFound && 
-                            editor.CurrentEditingGroup != BuildTargetGroup.Unknown &&
-                            !string.IsNullOrEmpty(m_outputDir [editor.CurrentEditingGroup]) &&
+                            inspector.CurrentEditingGroup != BuildTargetGroup.Unknown &&
+                            !string.IsNullOrEmpty(m_outputDir [inspector.CurrentEditingGroup]) &&
                             !Directory.Exists (outputDir)) 
                         {
                             using (new EditorGUILayout.HorizontalScope()) {
@@ -197,7 +197,7 @@ namespace UnityEngine.AssetGraph {
                             }
                             EditorGUILayout.Space();
 
-                            string parentDir = Path.GetDirectoryName(m_outputDir[editor.CurrentEditingGroup]);
+                            string parentDir = Path.GetDirectoryName(m_outputDir[inspector.CurrentEditingGroup]);
                             if(Directory.Exists(parentDir)) {
                                 EditorGUILayout.LabelField("Available Directories:");
                                 string[] dirs = Directory.GetDirectories(parentDir);
@@ -223,18 +223,18 @@ namespace UnityEngine.AssetGraph {
 
                     GUILayout.Space (8f);
 
-                    var manifestName = m_manifestName[editor.CurrentEditingGroup];
+                    var manifestName = m_manifestName[inspector.CurrentEditingGroup];
                     var newManifestName = EditorGUILayout.TextField("Manifest Name", manifestName);
                     if(newManifestName != manifestName) {
                         using(new RecordUndoScope("Change Manifest Name", node, true)){
-                            m_manifestName[editor.CurrentEditingGroup] = newManifestName;
+                            m_manifestName[inspector.CurrentEditingGroup] = newManifestName;
                             onValueChanged();
                         }
                     }
 
                     GUILayout.Space (8f);
 
-					int bundleOptions = m_enabledBundleOptions[editor.CurrentEditingGroup];
+					int bundleOptions = m_enabledBundleOptions[inspector.CurrentEditingGroup];
 
 					bool isDisableWriteTypeTreeEnabled  = 0 < (bundleOptions & (int)BuildAssetBundleOptions.DisableWriteTypeTree);
 					bool isIgnoreTypeTreeChangesEnabled = 0 < (bundleOptions & (int)BuildAssetBundleOptions.IgnoreTypeTreeChanges);
@@ -260,7 +260,7 @@ namespace UnityEngine.AssetGraph {
 									bundleOptions = (result) ? 
 										((int)option.option | bundleOptions) : 
 										(((~(int)option.option)) & bundleOptions);
-									m_enabledBundleOptions[editor.CurrentEditingGroup] = bundleOptions;
+									m_enabledBundleOptions[inspector.CurrentEditingGroup] = bundleOptions;
 									onValueChanged();
 								}
 							}

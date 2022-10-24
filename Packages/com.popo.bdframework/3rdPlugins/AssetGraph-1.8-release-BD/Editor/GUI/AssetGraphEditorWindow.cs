@@ -288,6 +288,19 @@ namespace UnityEngine.AssetGraph
         private static readonly string kPREFKEY_LASTEDITEDGRAPH = "AssetGraph.LastEditedGraph";
         static readonly int kDragNodesControlID = "AssetGraph.HandleDragNodes".GetHashCode();
 
+        /// <summary>
+        /// 用以替代Selection.activeObject
+        /// </summary>
+        static public UnityEngine.Object activeObject { get; set; }
+
+        /// <summary>
+        /// BuildTarget
+        /// </summary>
+        public BuildTarget BuildTarget
+        {
+            get { return this.m_target; }
+        }
+
         private bool IsAnyIssueFound
         {
             get
@@ -324,20 +337,15 @@ namespace UnityEngine.AssetGraph
         /// </summary>
         public NodeGUI[] Nodes
         {
-            get
-            {
-               return  m_nodes.ToArray();
-            }
+            get { return m_nodes.ToArray(); }
         }
+
         /// <summary>
         /// 所有连接线
         /// </summary>
         public ConnectionGUI[] Connections
         {
-            get
-            {
-                return m_connections.ToArray();
-            }
+            get { return m_connections.ToArray(); }
         }
 
         public static void GenerateScript(ScriptType scriptType)
@@ -1086,9 +1094,9 @@ namespace UnityEngine.AssetGraph
                 return;
             }
 
-            if (Selection.activeObject.GetType() == typeof(ConnectionGUI))
+            if (AssetGraphEditorWindow.activeObject?.GetType() == typeof(ConnectionGUI))
             {
-                var con = Selection.activeObject as ConnectionGUI;
+                var con = AssetGraphEditorWindow.activeObject as ConnectionGUI;
 
                 // null when multiple connection deleted.
                 if (string.IsNullOrEmpty(con.Id))
@@ -1556,6 +1564,55 @@ namespace UnityEngine.AssetGraph
             }
         }
 
+
+        private ConnectionGUIInspector connectionGUIInspector = new ConnectionGUIInspector();
+        private NodeGUIInspector nodeGUIInspector = new NodeGUIInspector();
+
+        private Object lastActiveObject = null;
+        /// <summary>
+        /// 绘制Inspector
+        /// </summary>
+        private void DrawInspector()
+        {
+          
+                using (new EditorGUILayout.HorizontalScope(GUILayout.Width(450)))
+                {
+                  //  GUILayout.FlexibleSpace();
+                    using (new EditorGUILayout.VerticalScope())
+                    {
+                        GUILayout.Label("NodeGUI Inspector", EditorStyles.toolbar);
+                        GUILayout.Space(10);
+
+                        Object showInspector = null;
+                        if (activeObject != null && (activeObject is ConnectionGUI || activeObject is NodeGUI))
+                        {
+                            lastActiveObject = activeObject;
+                        }
+                        
+                        if(lastActiveObject)
+                        {
+                            showInspector = lastActiveObject;
+                        }
+
+                        if (showInspector != null)
+                        {
+                            if (showInspector is ConnectionGUI conGui)
+                            {
+                                connectionGUIInspector.OnInspectorGUI(conGui);
+                            }
+                            else if (showInspector is NodeGUI nodeGui)
+                            {
+                                nodeGUIInspector.OnInspectorGUI(nodeGui);
+                            }
+                        }
+
+                    }
+
+                  //  GUILayout.FlexibleSpace();
+                }
+            
+        }
+
         private void RecordUndo(string msg)
         {
             if (m_undo == null)
@@ -1623,7 +1680,10 @@ namespace UnityEngine.AssetGraph
 
         public void OnEnable()
         {
-            Init();
+            if (!EditorApplication.isPlaying && !EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                Init();
+            }
         }
 
         public void OnDisable()
@@ -1644,6 +1704,12 @@ namespace UnityEngine.AssetGraph
             }
             else
             {
+                //默认Vertical排版
+                //   toolsbar
+                //-
+                //-  |nodes|
+                //-
+                //    footbar
                 DrawGUIToolBar();
 
                 using (new EditorGUILayout.HorizontalScope())
@@ -1653,6 +1719,9 @@ namespace UnityEngine.AssetGraph
                     {
                         DrawGUINodeErrors();
                     }
+
+                    //绘制inspector
+                    DrawInspector();
                 }
 
                 if (!string.IsNullOrEmpty(m_graphAssetPath))
@@ -1663,6 +1732,7 @@ namespace UnityEngine.AssetGraph
                         GUILayout.Label(m_graphAssetPath, "MiniLabel");
                     }
                 }
+
 
                 if (m_controller.IsAnyIssueFound)
                 {
@@ -1712,9 +1782,9 @@ namespace UnityEngine.AssetGraph
                     }
 
                     // clear inspector
-                    if (Selection.activeObject is NodeGUI || Selection.activeObject is ConnectionGUI)
+                    if (AssetGraphEditorWindow.activeObject is NodeGUI || AssetGraphEditorWindow.activeObject is ConnectionGUI)
                     {
-                        Selection.activeObject = null;
+                        AssetGraphEditorWindow.activeObject = null;
                     }
 
                     break;

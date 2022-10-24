@@ -75,10 +75,10 @@ namespace UnityEngine.AssetGraph {
     	}
 
 
-    	public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+    	public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
     		EditorGUILayout.HelpBox("Assert Unwanted Assets In Bundle: Checks if unwanted assets are included in bundle configurations.", MessageType.Info);
-    		editor.UpdateNodeName(node);
+    		inspector.UpdateNodeName(node);
 
     		GUILayout.Space(10f);
 
@@ -93,26 +93,26 @@ namespace UnityEngine.AssetGraph {
     		GUILayout.Space(4f);
 
     		//Show target configuration tab
-    		editor.DrawPlatformSelector(node);
+    		inspector.DrawPlatformSelector(node);
     		using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-    			var disabledScope = editor.DrawOverrideTargetToggle(node, m_path.ContainsValueOf(editor.CurrentEditingGroup), (bool b) => {
+    			var disabledScope = inspector.DrawOverrideTargetToggle(node, m_path.ContainsValueOf(inspector.CurrentEditingGroup), (bool b) => {
     				using(new RecordUndoScope("Remove Target Load Path Settings", node, true)) {
     					if(b) {
-    						m_path[editor.CurrentEditingGroup] = m_path.DefaultValue;
+    						m_path[inspector.CurrentEditingGroup] = m_path.DefaultValue;
     					} else {
-    						m_path.Remove(editor.CurrentEditingGroup);
+    						m_path.Remove(inspector.CurrentEditingGroup);
     					}
     					onValueChanged();
     				}
     			});
 
     			using (disabledScope) {
-    				var path = m_path[editor.CurrentEditingGroup];
+    				var path = m_path[inspector.CurrentEditingGroup];
     				EditorGUILayout.LabelField("Assertion Path:");
 
     				string newLoadPath = null;
 
-                    newLoadPath = editor.DrawFolderSelector (Model.Settings.Path.ASSETS_PATH, "Select Asset Folder", 
+                    newLoadPath = inspector.DrawFolderSelector (Model.Settings.Path.ASSETS_PATH, "Select Asset Folder", 
                         path,
                         FileUtility.PathCombine(Model.Settings.Path.ASSETS_PATH, path),
                         (string folderSelected) => {
@@ -134,7 +134,7 @@ namespace UnityEngine.AssetGraph {
 
     				if (newLoadPath != path) {
     					using(new RecordUndoScope("Path Change", node, true)){
-    						m_path[editor.CurrentEditingGroup] = newLoadPath;
+    						m_path[inspector.CurrentEditingGroup] = newLoadPath;
     						onValueChanged();
     					}
     				}

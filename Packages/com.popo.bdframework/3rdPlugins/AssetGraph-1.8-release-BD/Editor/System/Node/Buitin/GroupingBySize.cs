@@ -71,63 +71,63 @@ namespace UnityEngine.AssetGraph
 			return newNode;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
 			if (m_groupSizeByte == null) {
 				return;
 			}
 
 			EditorGUILayout.HelpBox("Grouping by size: Create group of assets by size.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 			GUILayout.Space(10f);
 
 			//Show target configuration tab
-			editor.DrawPlatformSelector(node);
+			inspector.DrawPlatformSelector(node);
 			using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-				var disabledScope = editor.DrawOverrideTargetToggle(node, m_groupSizeByte.ContainsValueOf(editor.CurrentEditingGroup), (bool enabled) => {
+				var disabledScope = inspector.DrawOverrideTargetToggle(node, m_groupSizeByte.ContainsValueOf(inspector.CurrentEditingGroup), (bool enabled) => {
 					using(new RecordUndoScope("Remove Target Grouping Size Settings", node, true)){
 						if(enabled) {
-							m_groupSizeByte[editor.CurrentEditingGroup] = m_groupSizeByte.DefaultValue;
-                            m_groupingType[editor.CurrentEditingGroup] = m_groupingType.DefaultValue;
-                            m_groupNameFormat[editor.CurrentEditingGroup] = m_groupNameFormat.DefaultValue;
+							m_groupSizeByte[inspector.CurrentEditingGroup] = m_groupSizeByte.DefaultValue;
+                            m_groupingType[inspector.CurrentEditingGroup] = m_groupingType.DefaultValue;
+                            m_groupNameFormat[inspector.CurrentEditingGroup] = m_groupNameFormat.DefaultValue;
 						} else {
-							m_groupSizeByte.Remove(editor.CurrentEditingGroup);
-                            m_groupingType.Remove(editor.CurrentEditingGroup);
-                            m_groupNameFormat.Remove(editor.CurrentEditingGroup);
+							m_groupSizeByte.Remove(inspector.CurrentEditingGroup);
+                            m_groupingType.Remove(inspector.CurrentEditingGroup);
+                            m_groupNameFormat.Remove(inspector.CurrentEditingGroup);
 						}
 						onValueChanged();
 					}
 				});
 
 				using (disabledScope) {
-                    var newType = (GroupingType)EditorGUILayout.EnumPopup("Grouping Type",(GroupingType)m_groupingType[editor.CurrentEditingGroup]);
-                    if (newType != (GroupingType)m_groupingType[editor.CurrentEditingGroup]) {
+                    var newType = (GroupingType)EditorGUILayout.EnumPopup("Grouping Type",(GroupingType)m_groupingType[inspector.CurrentEditingGroup]);
+                    if (newType != (GroupingType)m_groupingType[inspector.CurrentEditingGroup]) {
                         using(new RecordUndoScope("Change Grouping Type", node, true)){
-                            m_groupingType[editor.CurrentEditingGroup] = (int)newType;
+                            m_groupingType[inspector.CurrentEditingGroup] = (int)newType;
                             onValueChanged();
                         }
                     }
 
-					var newSizeText = EditorGUILayout.TextField("Size(KB)",m_groupSizeByte[editor.CurrentEditingGroup].ToString());
+					var newSizeText = EditorGUILayout.TextField("Size(KB)",m_groupSizeByte[inspector.CurrentEditingGroup].ToString());
 					int newSize = 0;
                     Int32.TryParse (newSizeText, out newSize);
 
-					if (newSize != m_groupSizeByte[editor.CurrentEditingGroup]) {
+					if (newSize != m_groupSizeByte[inspector.CurrentEditingGroup]) {
 						using(new RecordUndoScope("Change Grouping Size", node, true)){
-							m_groupSizeByte[editor.CurrentEditingGroup] = newSize;
+							m_groupSizeByte[inspector.CurrentEditingGroup] = newSize;
 							onValueChanged();
 						}
 					}
 
-                    var newGroupNameFormat = EditorGUILayout.TextField ("Group Name Format", m_groupNameFormat [editor.CurrentEditingGroup]);
+                    var newGroupNameFormat = EditorGUILayout.TextField ("Group Name Format", m_groupNameFormat [inspector.CurrentEditingGroup]);
                     EditorGUILayout.HelpBox (
                         "You can customize group name. You can use variable {OldGroup} for old group name and {NewGroup} for current matching name.", 
                         MessageType.Info);
 
-                    if (newGroupNameFormat != m_groupNameFormat [editor.CurrentEditingGroup]) {
+                    if (newGroupNameFormat != m_groupNameFormat [inspector.CurrentEditingGroup]) {
                         using (new RecordUndoScope ("Change Group Name", node, true)) {
-                            m_groupNameFormat [editor.CurrentEditingGroup] = newGroupNameFormat;
+                            m_groupNameFormat [inspector.CurrentEditingGroup] = newGroupNameFormat;
                             onValueChanged ();
                         }
                     }

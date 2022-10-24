@@ -109,10 +109,10 @@ namespace UnityEngine.AssetGraph {
             GeneratorEntry entry, 
             NodeGUI node, 
             AssetReferenceStreamManager streamManager, 
-            NodeGUIEditor editor, 
+            NodeGUIInspector inspector, 
             Action onValueChanged) 
         {
-            var generator = entry.m_instance.Get<IAssetGenerator>(editor.CurrentEditingGroup);
+            var generator = entry.m_instance.Get<IAssetGenerator>(inspector.CurrentEditingGroup);
 
             using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
                 using (new GUILayout.HorizontalScope())
@@ -151,7 +151,7 @@ namespace UnityEngine.AssetGraph {
                                     {
                                         using(new RecordUndoScope("Change AssetGenerator class", node, true)) {
                                             generator = AssetGeneratorUtility.CreateGenerator(selectedGUIName);
-                                            entry.m_instance.Set(editor.CurrentEditingGroup, generator);
+                                            entry.m_instance.Set(inspector.CurrentEditingGroup, generator);
                                             onValueChanged();
                                         }
                                     } 
@@ -180,13 +180,13 @@ namespace UnityEngine.AssetGraph {
 
                 GUILayout.Space(10f);
 
-                editor.DrawPlatformSelector(node);
+                inspector.DrawPlatformSelector(node);
                 using (new EditorGUILayout.VerticalScope()) {
-                    var disabledScope = editor.DrawOverrideTargetToggle(node, entry.m_instance.ContainsValueOf(editor.CurrentEditingGroup), (bool enabled) => {
+                    var disabledScope = inspector.DrawOverrideTargetToggle(node, entry.m_instance.ContainsValueOf(inspector.CurrentEditingGroup), (bool enabled) => {
                         if(enabled) {
-                            entry.m_instance.CopyDefaultValueTo(editor.CurrentEditingGroup);
+                            entry.m_instance.CopyDefaultValueTo(inspector.CurrentEditingGroup);
                         } else {
-                            entry.m_instance.Remove(editor.CurrentEditingGroup);
+                            entry.m_instance.Remove(inspector.CurrentEditingGroup);
                         }
                         onValueChanged();
                     });
@@ -195,7 +195,7 @@ namespace UnityEngine.AssetGraph {
                         if (generator != null) {
                             Action onChangedAction = () => {
                                 using(new RecordUndoScope("Change AssetGenerator Setting", node)) {
-                                    entry.m_instance.Set(editor.CurrentEditingGroup, generator);
+                                    entry.m_instance.Set(inspector.CurrentEditingGroup, generator);
                                     onValueChanged();
                                 }
                             };
@@ -207,10 +207,10 @@ namespace UnityEngine.AssetGraph {
             }
         }
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
 			EditorGUILayout.HelpBox("Generate Asset: Generate new asset from incoming asset.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
             GUILayout.Space(8f);
 
@@ -219,25 +219,25 @@ namespace UnityEngine.AssetGraph {
 		        m_popupIcon = EditorGUIUtility.Load (EditorGUIUtility.isProSkin ? "icons/d__Popup.png" : "icons/_Popup.png") as Texture2D;
 		    }		    
 
-            editor.DrawPlatformSelector(node);
+            inspector.DrawPlatformSelector(node);
             using (new EditorGUILayout.VerticalScope()) {
-                var disabledScope = editor.DrawOverrideTargetToggle(node, m_outputOption.ContainsValueOf(editor.CurrentEditingGroup), (bool enabled) => {
+                var disabledScope = inspector.DrawOverrideTargetToggle(node, m_outputOption.ContainsValueOf(inspector.CurrentEditingGroup), (bool enabled) => {
                     if(enabled) {
-                        m_outputOption[editor.CurrentEditingGroup] = m_outputOption.DefaultValue;
-                        m_outputDir[editor.CurrentEditingGroup] = m_outputDir.DefaultValue;
+                        m_outputOption[inspector.CurrentEditingGroup] = m_outputOption.DefaultValue;
+                        m_outputDir[inspector.CurrentEditingGroup] = m_outputDir.DefaultValue;
                     } else {
-                        m_outputOption.Remove(editor.CurrentEditingGroup);
-                        m_outputDir.Remove(editor.CurrentEditingGroup);
+                        m_outputOption.Remove(inspector.CurrentEditingGroup);
+                        m_outputDir.Remove(inspector.CurrentEditingGroup);
                     }
                     onValueChanged();
                 });
 
                 using (disabledScope) {
-                    OutputOption opt = (OutputOption)m_outputOption[editor.CurrentEditingGroup];
+                    OutputOption opt = (OutputOption)m_outputOption[inspector.CurrentEditingGroup];
                     var newOption = (OutputOption)EditorGUILayout.EnumPopup("Output Option", opt);
                     if(newOption != opt) {
                         using(new RecordUndoScope("Change Output Option", node, true)){
-                            m_outputOption[editor.CurrentEditingGroup] = (int)newOption;
+                            m_outputOption[inspector.CurrentEditingGroup] = (int)newOption;
                             onValueChanged();
                         }
                         opt = newOption;
@@ -247,11 +247,11 @@ namespace UnityEngine.AssetGraph {
                     }
 
                     using (new EditorGUI.DisabledScope (opt == OutputOption.CreateInCacheDirectory)) {
-                        var newDirPath = m_outputDir[editor.CurrentEditingGroup];
+                        var newDirPath = m_outputDir[inspector.CurrentEditingGroup];
 
                         if (opt == OutputOption.CreateInSelectedDirectory) {
-                            newDirPath = editor.DrawFolderSelector ("Output Directory", "Select Output Folder", 
-                                m_outputDir [editor.CurrentEditingGroup],
+                            newDirPath = inspector.DrawFolderSelector ("Output Directory", "Select Output Folder", 
+                                m_outputDir [inspector.CurrentEditingGroup],
                                 Application.dataPath,
                                 (string folderSelected) => {
                                     string basePath = Application.dataPath;
@@ -271,24 +271,24 @@ namespace UnityEngine.AssetGraph {
                                 }
                             );
                         } else if (opt == OutputOption.RelativeToSourceAsset) {
-                            newDirPath = EditorGUILayout.TextField("Relative Path", m_outputDir[editor.CurrentEditingGroup]);
+                            newDirPath = EditorGUILayout.TextField("Relative Path", m_outputDir[inspector.CurrentEditingGroup]);
                         }
 
-                        if (newDirPath != m_outputDir[editor.CurrentEditingGroup]) {
+                        if (newDirPath != m_outputDir[inspector.CurrentEditingGroup]) {
                             using(new RecordUndoScope("Change Output Directory", node, true)){
-                                m_outputDir[editor.CurrentEditingGroup] = newDirPath;
+                                m_outputDir[inspector.CurrentEditingGroup] = newDirPath;
                                 onValueChanged();
                             }
                         }
 
-                        var dirPath = Path.Combine (Application.dataPath, m_outputDir [editor.CurrentEditingGroup]);
+                        var dirPath = Path.Combine (Application.dataPath, m_outputDir [inspector.CurrentEditingGroup]);
 
                         if (opt == OutputOption.CreateInSelectedDirectory && 
-                            !string.IsNullOrEmpty(m_outputDir [editor.CurrentEditingGroup]) &&
+                            !string.IsNullOrEmpty(m_outputDir [inspector.CurrentEditingGroup]) &&
                             !Directory.Exists (dirPath)) 
                         {
                             using (new EditorGUILayout.HorizontalScope()) {
-                                EditorGUILayout.LabelField(m_outputDir[editor.CurrentEditingGroup] + " does not exist.");
+                                EditorGUILayout.LabelField(m_outputDir[inspector.CurrentEditingGroup] + " does not exist.");
                                 if(GUILayout.Button("Create directory")) {
                                     Directory.CreateDirectory(dirPath);
                                     AssetDatabase.Refresh ();
@@ -296,7 +296,7 @@ namespace UnityEngine.AssetGraph {
                             }
                             EditorGUILayout.Space();
 
-                            string parentDir = Path.GetDirectoryName(m_outputDir[editor.CurrentEditingGroup]);
+                            string parentDir = Path.GetDirectoryName(m_outputDir[inspector.CurrentEditingGroup]);
                             if(Directory.Exists(parentDir)) {
                                 EditorGUILayout.LabelField("Available Directories:");
                                 string[] dirs = Directory.GetDirectories(parentDir);
@@ -308,7 +308,7 @@ namespace UnityEngine.AssetGraph {
                         }
 
                         if (opt == OutputOption.CreateInSelectedDirectory || opt == OutputOption.CreateInCacheDirectory) {
-                            var outputDir = PrepareOutputDirectory (BuildTargetUtility.GroupToTarget(editor.CurrentEditingGroup), node.Data, null);
+                            var outputDir = PrepareOutputDirectory (BuildTargetUtility.GroupToTarget(inspector.CurrentEditingGroup), node.Data, null);
 
                             using (new EditorGUI.DisabledScope (!Directory.Exists (outputDir))) 
                             {
@@ -328,7 +328,7 @@ namespace UnityEngine.AssetGraph {
             GUILayout.Space(8f);
 
             foreach (var s in m_entries) {
-                DrawGeneratorSetting (s, node, streamManager, editor, onValueChanged);
+                DrawGeneratorSetting (s, node, streamManager, inspector, onValueChanged);
                 GUILayout.Space (10f);
             }
 

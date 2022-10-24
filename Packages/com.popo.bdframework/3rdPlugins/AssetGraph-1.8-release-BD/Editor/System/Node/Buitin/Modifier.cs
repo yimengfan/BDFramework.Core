@@ -62,10 +62,10 @@ namespace UnityEngine.AssetGraph {
 			return newNode;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
 			EditorGUILayout.HelpBox("Modify Assets Directly: Modify assets.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 			GUILayout.Space(10f);
 
@@ -98,7 +98,7 @@ namespace UnityEngine.AssetGraph {
                 }
 
                 var targetType = Type.GetType (m_modifierType);
-				var modifier = m_instance.Get<IModifier>(editor.CurrentEditingGroup);
+				var modifier = m_instance.Get<IModifier>(inspector.CurrentEditingGroup);
 
 				Dictionary<string, string> map = null;
 
@@ -120,7 +120,7 @@ namespace UnityEngine.AssetGraph {
 									{
 										using(new RecordUndoScope("Change Modifier class", node, true)) {
                                             modifier = ModifierUtility.CreateModifier(selectedGUIName, targetType);
-											m_instance.Set(editor.CurrentEditingGroup,modifier);
+											m_instance.Set(inspector.CurrentEditingGroup,modifier);
 											onValueChanged();
 										}
 									}  
@@ -158,13 +158,13 @@ namespace UnityEngine.AssetGraph {
 
 				GUILayout.Space(10f);
 
-				editor.DrawPlatformSelector(node);
+				inspector.DrawPlatformSelector(node);
 				using (new EditorGUILayout.VerticalScope()) {
-					var disabledScope = editor.DrawOverrideTargetToggle(node, m_instance.ContainsValueOf(editor.CurrentEditingGroup), (bool enabled) => {
+					var disabledScope = inspector.DrawOverrideTargetToggle(node, m_instance.ContainsValueOf(inspector.CurrentEditingGroup), (bool enabled) => {
 						if(enabled) {
-							m_instance.CopyDefaultValueTo(editor.CurrentEditingGroup);
+							m_instance.CopyDefaultValueTo(inspector.CurrentEditingGroup);
 						} else {
-							m_instance.Remove(editor.CurrentEditingGroup);
+							m_instance.Remove(inspector.CurrentEditingGroup);
 						}
 						onValueChanged();
 					});
@@ -173,7 +173,7 @@ namespace UnityEngine.AssetGraph {
 						if (modifier != null) {
 							Action onChangedAction = () => {
 								using(new RecordUndoScope("Change Modifier Setting", node)) {
-									m_instance.Set(editor.CurrentEditingGroup, modifier);
+									m_instance.Set(inspector.CurrentEditingGroup, modifier);
 									onValueChanged();
 								}
 							};

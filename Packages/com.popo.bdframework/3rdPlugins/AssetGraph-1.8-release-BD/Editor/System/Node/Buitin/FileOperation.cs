@@ -66,16 +66,16 @@ namespace UnityEngine.AssetGraph {
 			return newNode;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 			
 			if (m_destinationPath == null) {
 				return;
 			}
 
-			var currentEditingGroup = editor.CurrentEditingGroup;
+			var currentEditingGroup = inspector.CurrentEditingGroup;
 
 			EditorGUILayout.HelpBox("File Operation: Copy or Move Files.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 			GUILayout.Space(10f);
 			
@@ -100,9 +100,9 @@ namespace UnityEngine.AssetGraph {
 			GUILayout.Space(8f);
 
 			//Show target configuration tab
-			editor.DrawPlatformSelector(node);
+			inspector.DrawPlatformSelector(node);
 			using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-				var disabledScope = editor.DrawOverrideTargetToggle(node, m_destinationPath.ContainsValueOf(currentEditingGroup), (bool enabled) => {
+				var disabledScope = inspector.DrawOverrideTargetToggle(node, m_destinationPath.ContainsValueOf(currentEditingGroup), (bool enabled) => {
 					using(new RecordUndoScope("Remove Target Directory Settings", node, true)){
 						if(enabled) {
 							m_destinationPath[currentEditingGroup] = m_destinationPath.DefaultValue;
@@ -129,7 +129,7 @@ namespace UnityEngine.AssetGraph {
 
 					string newDstPath = null;
 
-                    newDstPath = editor.DrawFolderSelector ("", "Select Destination Folder", 
+                    newDstPath = inspector.DrawFolderSelector ("", "Select Destination Folder", 
                         m_destinationPath[currentEditingGroup],
                         GetDestinationPath(m_destinationPath[currentEditingGroup]),
                         (string folderSelected) => {

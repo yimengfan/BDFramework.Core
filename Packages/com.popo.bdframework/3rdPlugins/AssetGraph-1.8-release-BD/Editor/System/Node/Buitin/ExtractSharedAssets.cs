@@ -70,10 +70,10 @@ namespace UnityEngine.AssetGraph {
     		return newNode;
     	}
 
-    	public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+    	public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
     		EditorGUILayout.HelpBox("Extract Shared Assets: Extract shared assets between asset bundles and add bundle configurations.", MessageType.Info);
-    		editor.UpdateNodeName(node);
+    		inspector.UpdateNodeName(node);
 
     		GUILayout.Space(10f);
 
@@ -88,48 +88,48 @@ namespace UnityEngine.AssetGraph {
             GUILayout.Space(10f);
 
             //Show target configuration tab
-            editor.DrawPlatformSelector(node);
+            inspector.DrawPlatformSelector(node);
             using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-                var disabledScope = editor.DrawOverrideTargetToggle(node, m_groupSizeByte.ContainsValueOf(editor.CurrentEditingGroup), (bool enabled) => {
+                var disabledScope = inspector.DrawOverrideTargetToggle(node, m_groupSizeByte.ContainsValueOf(inspector.CurrentEditingGroup), (bool enabled) => {
                     using(new RecordUndoScope("Remove Target Grouping Size Settings", node, true)){
                         if(enabled) {
-                            m_groupExtractedAssets[editor.CurrentEditingGroup] = m_groupExtractedAssets.DefaultValue;
-                            m_groupSizeByte[editor.CurrentEditingGroup] = m_groupSizeByte.DefaultValue;
-                            m_groupingType[editor.CurrentEditingGroup] = m_groupingType.DefaultValue;
+                            m_groupExtractedAssets[inspector.CurrentEditingGroup] = m_groupExtractedAssets.DefaultValue;
+                            m_groupSizeByte[inspector.CurrentEditingGroup] = m_groupSizeByte.DefaultValue;
+                            m_groupingType[inspector.CurrentEditingGroup] = m_groupingType.DefaultValue;
                         } else {
-                            m_groupExtractedAssets.Remove(editor.CurrentEditingGroup);
-                            m_groupSizeByte.Remove(editor.CurrentEditingGroup);
-                            m_groupingType.Remove(editor.CurrentEditingGroup);
+                            m_groupExtractedAssets.Remove(inspector.CurrentEditingGroup);
+                            m_groupSizeByte.Remove(inspector.CurrentEditingGroup);
+                            m_groupingType.Remove(inspector.CurrentEditingGroup);
                         }
                         onValueChanged();
                     }
                 });
 
                 using (disabledScope) {
-                    var useGroup = EditorGUILayout.ToggleLeft ("Subgroup shared assets by size", m_groupExtractedAssets [editor.CurrentEditingGroup] != 0);
-                    if (useGroup != (m_groupExtractedAssets [editor.CurrentEditingGroup] != 0)) {
+                    var useGroup = EditorGUILayout.ToggleLeft ("Subgroup shared assets by size", m_groupExtractedAssets [inspector.CurrentEditingGroup] != 0);
+                    if (useGroup != (m_groupExtractedAssets [inspector.CurrentEditingGroup] != 0)) {
                         using(new RecordUndoScope("Change Grouping Type", node, true)){
-                            m_groupExtractedAssets[editor.CurrentEditingGroup] = (useGroup)? 1:0;
+                            m_groupExtractedAssets[inspector.CurrentEditingGroup] = (useGroup)? 1:0;
                             onValueChanged();
                         }
                     }
 
                     using (new EditorGUI.DisabledScope (!useGroup)) {
-                        var newType = (GroupingType)EditorGUILayout.EnumPopup("Grouping Type",(GroupingType)m_groupingType[editor.CurrentEditingGroup]);
-                        if (newType != (GroupingType)m_groupingType[editor.CurrentEditingGroup]) {
+                        var newType = (GroupingType)EditorGUILayout.EnumPopup("Grouping Type",(GroupingType)m_groupingType[inspector.CurrentEditingGroup]);
+                        if (newType != (GroupingType)m_groupingType[inspector.CurrentEditingGroup]) {
                             using(new RecordUndoScope("Change Grouping Type", node, true)){
-                                m_groupingType[editor.CurrentEditingGroup] = (int)newType;
+                                m_groupingType[inspector.CurrentEditingGroup] = (int)newType;
                                 onValueChanged();
                             }
                         }
 
-                        var newSizeText = EditorGUILayout.TextField("Size(KB)",m_groupSizeByte[editor.CurrentEditingGroup].ToString());
+                        var newSizeText = EditorGUILayout.TextField("Size(KB)",m_groupSizeByte[inspector.CurrentEditingGroup].ToString());
                         int newSize = 0;
                         Int32.TryParse (newSizeText, out newSize);
 
-                        if (newSize != m_groupSizeByte[editor.CurrentEditingGroup]) {
+                        if (newSize != m_groupSizeByte[inspector.CurrentEditingGroup]) {
                             using(new RecordUndoScope("Change Grouping Size", node, true)){
-                                m_groupSizeByte[editor.CurrentEditingGroup] = newSize;
+                                m_groupSizeByte[inspector.CurrentEditingGroup] = newSize;
                                 onValueChanged();
                             }
                         }

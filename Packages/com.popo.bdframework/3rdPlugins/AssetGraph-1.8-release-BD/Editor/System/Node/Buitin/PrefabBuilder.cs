@@ -84,12 +84,12 @@ namespace UnityEngine.AssetGraph {
 			return m_instance.Get<IPrefabBuilder>(target);
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
 			EditorGUILayout.HelpBox("Create Prefab From Group: Create prefab from incoming group of assets, using assigned script.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
-			var builder = m_instance.Get<IPrefabBuilder>(editor.CurrentEditingGroup);
+			var builder = m_instance.Get<IPrefabBuilder>(inspector.CurrentEditingGroup);
 
 			using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
 
@@ -107,7 +107,7 @@ namespace UnityEngine.AssetGraph {
 									{
 										using(new RecordUndoScope("Change PrefabBuilder class", node, true)) {
 											builder = PrefabBuilderUtility.CreatePrefabBuilder(selectedGUIName);
-											m_instance.Set(editor.CurrentEditingGroup, builder);
+											m_instance.Set(inspector.CurrentEditingGroup, builder);
 											onValueChanged();
 										}
 									} 
@@ -136,17 +136,17 @@ namespace UnityEngine.AssetGraph {
 
 				GUILayout.Space(10f);
 
-				editor.DrawPlatformSelector(node);
+				inspector.DrawPlatformSelector(node);
 				using (new EditorGUILayout.VerticalScope()) {
-					var disabledScope = editor.DrawOverrideTargetToggle(node, m_instance.ContainsValueOf(editor.CurrentEditingGroup), (bool enabled) => {
+					var disabledScope = inspector.DrawOverrideTargetToggle(node, m_instance.ContainsValueOf(inspector.CurrentEditingGroup), (bool enabled) => {
 						if(enabled) {
-							m_instance.CopyDefaultValueTo(editor.CurrentEditingGroup);
-                            m_outputDir[editor.CurrentEditingGroup] = m_outputDir.DefaultValue;
-                            m_outputOption[editor.CurrentEditingGroup] = m_outputOption.DefaultValue;
+							m_instance.CopyDefaultValueTo(inspector.CurrentEditingGroup);
+                            m_outputDir[inspector.CurrentEditingGroup] = m_outputDir.DefaultValue;
+                            m_outputOption[inspector.CurrentEditingGroup] = m_outputOption.DefaultValue;
 						} else {
-							m_instance.Remove(editor.CurrentEditingGroup);
-                            m_outputDir.Remove(editor.CurrentEditingGroup);
-                            m_outputOption.Remove(editor.CurrentEditingGroup);
+							m_instance.Remove(inspector.CurrentEditingGroup);
+                            m_outputDir.Remove(inspector.CurrentEditingGroup);
+                            m_outputOption.Remove(inspector.CurrentEditingGroup);
 						}
 						onValueChanged();
 					});
@@ -160,19 +160,19 @@ namespace UnityEngine.AssetGraph {
 							onValueChanged();
 						}
 						
-                        OutputOption opt = (OutputOption)m_outputOption[editor.CurrentEditingGroup];
+                        OutputOption opt = (OutputOption)m_outputOption[inspector.CurrentEditingGroup];
                         var newOption = (OutputOption)EditorGUILayout.EnumPopup("Output Option", opt);
                         if(newOption != opt) {
                             using(new RecordUndoScope("Change Output Option", node, true)){
-                                m_outputOption[editor.CurrentEditingGroup] = (int)newOption;
+                                m_outputOption[inspector.CurrentEditingGroup] = (int)newOption;
                                 onValueChanged();
                             }
                             opt = newOption;
                         }
 
                         using (new EditorGUI.DisabledScope (opt == OutputOption.CreateInCacheDirectory)) {
-                            var newDirPath = editor.DrawFolderSelector ("Output Directory", "Select Output Folder", 
-                                m_outputDir[editor.CurrentEditingGroup],
+                            var newDirPath = inspector.DrawFolderSelector ("Output Directory", "Select Output Folder", 
+                                m_outputDir[inspector.CurrentEditingGroup],
                                 Application.dataPath,
                                 (string folderSelected) => {
                                     string basePath = Application.dataPath;
@@ -191,21 +191,21 @@ namespace UnityEngine.AssetGraph {
                                     return folderSelected;
                                 }
                             );
-                            if (newDirPath != m_outputDir[editor.CurrentEditingGroup]) {
+                            if (newDirPath != m_outputDir[inspector.CurrentEditingGroup]) {
                                 using(new RecordUndoScope("Change Output Directory", node, true)){
-                                    m_outputDir[editor.CurrentEditingGroup] = newDirPath;
+                                    m_outputDir[inspector.CurrentEditingGroup] = newDirPath;
                                     onValueChanged();
                                 }
                             }
 
-                            var dirPath = Path.Combine (Application.dataPath, m_outputDir [editor.CurrentEditingGroup]);
+                            var dirPath = Path.Combine (Application.dataPath, m_outputDir [inspector.CurrentEditingGroup]);
 
                             if (opt == OutputOption.CreateInSelectedDirectory && 
-                                !string.IsNullOrEmpty(m_outputDir [editor.CurrentEditingGroup]) &&
+                                !string.IsNullOrEmpty(m_outputDir [inspector.CurrentEditingGroup]) &&
                                 !Directory.Exists (dirPath)) 
                             {
                                 using (new EditorGUILayout.HorizontalScope()) {
-                                    EditorGUILayout.LabelField(m_outputDir[editor.CurrentEditingGroup] + " does not exist.");
+                                    EditorGUILayout.LabelField(m_outputDir[inspector.CurrentEditingGroup] + " does not exist.");
                                     if(GUILayout.Button("Create directory")) {
                                         Directory.CreateDirectory(dirPath);
                                         AssetDatabase.Refresh ();
@@ -213,7 +213,7 @@ namespace UnityEngine.AssetGraph {
                                 }
                                 EditorGUILayout.Space();
 
-                                string parentDir = Path.GetDirectoryName(m_outputDir[editor.CurrentEditingGroup]);
+                                string parentDir = Path.GetDirectoryName(m_outputDir[inspector.CurrentEditingGroup]);
                                 if(Directory.Exists(parentDir)) {
                                     EditorGUILayout.LabelField("Available Directories:");
                                     string[] dirs = Directory.GetDirectories(parentDir);
@@ -224,7 +224,7 @@ namespace UnityEngine.AssetGraph {
                                 EditorGUILayout.Space();
                             }
 
-                            var outputDir = PrepareOutputDirectory (BuildTargetUtility.GroupToTarget(editor.CurrentEditingGroup), node.Data);
+                            var outputDir = PrepareOutputDirectory (BuildTargetUtility.GroupToTarget(inspector.CurrentEditingGroup), node.Data);
 
                             using (new EditorGUI.DisabledScope (!Directory.Exists (outputDir))) 
                             {
@@ -243,7 +243,7 @@ namespace UnityEngine.AssetGraph {
 						if (builder != null) {
 							Action onChangedAction = () => {
 								using(new RecordUndoScope("Change PrefabBuilder Setting", node)) {
-									m_instance.Set(editor.CurrentEditingGroup, builder);
+									m_instance.Set(inspector.CurrentEditingGroup, builder);
 									onValueChanged();
 								}
 							};

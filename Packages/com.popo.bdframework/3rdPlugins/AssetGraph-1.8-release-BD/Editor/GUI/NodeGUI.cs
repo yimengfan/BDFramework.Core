@@ -135,7 +135,7 @@ namespace UnityEngine.AssetGraph {
 
 		public void SetActive (bool active) {
 			if(active) {
-				Selection.activeObject = this;
+				AssetGraphEditorWindow.activeObject = this;
 				m_nodeSyle = m_data.Operation.Object.ActiveStyle;
 			} else {
 				m_nodeSyle = m_data.Operation.Object.InactiveStyle;
@@ -386,7 +386,8 @@ namespace UnityEngine.AssetGraph {
 
 			GUIStyle catStyle = new GUIStyle("WhiteMiniLabel");
 			catStyle.alignment = TextAnchor.LowerRight;
-			var categoryRect = new Rect(2f, m_baseRect.height - 14f, m_baseRect.width - 4f, 16f);
+			catStyle.fontSize = 12;
+			var categoryRect = new Rect(2f, m_baseRect.height - 18f, m_baseRect.width - 4f, 20f);
 			GUI.Label(categoryRect, m_data.Operation.Object.Category, catStyle);
 		}
 

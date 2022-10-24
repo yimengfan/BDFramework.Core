@@ -49,19 +49,19 @@ namespace UnityEngine.AssetGraph {
 			return newNode;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 			
-			var currentEditingGroup = editor.CurrentEditingGroup;
+			var currentEditingGroup = inspector.CurrentEditingGroup;
 
 			EditorGUILayout.HelpBox("Export As UnityPackage: Export given files as UnityPackage.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 			GUILayout.Space(10f);
 
 			//Show target configuration tab
-			editor.DrawPlatformSelector(node);
+			inspector.DrawPlatformSelector(node);
 			using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-				var disabledScope = editor.DrawOverrideTargetToggle(node, m_packageName.ContainsValueOf(currentEditingGroup), (bool enabled) => {
+				var disabledScope = inspector.DrawOverrideTargetToggle(node, m_packageName.ContainsValueOf(currentEditingGroup), (bool enabled) => {
 					using(new RecordUndoScope("Remove Target Export Settings", node, true)){
 						if(enabled) {
 							m_packageName[currentEditingGroup] = m_packageName.DefaultValue;
@@ -99,7 +99,7 @@ namespace UnityEngine.AssetGraph {
 								exportOptions = (result) ? 
 									((int)option.option | exportOptions) : 
 									(((~(int)option.option)) & exportOptions);
-								m_exportPackageOptions[editor.CurrentEditingGroup] = exportOptions;
+								m_exportPackageOptions[inspector.CurrentEditingGroup] = exportOptions;
 								onValueChanged();
 							}
 						}

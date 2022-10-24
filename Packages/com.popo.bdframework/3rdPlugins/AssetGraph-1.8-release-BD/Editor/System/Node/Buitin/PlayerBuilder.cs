@@ -58,11 +58,11 @@ namespace UnityEngine.AssetGraph
             return newNode;
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
 
             EditorGUILayout.HelpBox("Build Player: Build Player.", MessageType.Info);
-            editor.UpdateNodeName(node);
+            inspector.UpdateNodeName(node);
 
             if (m_buildOptions == null)
             {
@@ -72,26 +72,26 @@ namespace UnityEngine.AssetGraph
             GUILayout.Space(10f);
 
             //Show target configuration tab
-            editor.DrawPlatformSelector(node);
+            inspector.DrawPlatformSelector(node);
             using (new EditorGUILayout.VerticalScope(GUI.skin.box))
             {
-                var disabledScope = editor.DrawOverrideTargetToggle(node, m_buildOptions.ContainsValueOf(editor.CurrentEditingGroup), (bool enabled) =>
+                var disabledScope = inspector.DrawOverrideTargetToggle(node, m_buildOptions.ContainsValueOf(inspector.CurrentEditingGroup), (bool enabled) =>
                 {
                     using (new RecordUndoScope("Remove Target Build Settings", node, true))
                     {
                         if (enabled)
                         {
-                            m_buildOptions[editor.CurrentEditingGroup] = m_buildOptions.DefaultValue;
-                            m_buildLocations[editor.CurrentEditingGroup] = m_buildLocations.DefaultValue;
-                            m_playerName[editor.CurrentEditingGroup] = m_playerName.DefaultValue;
-                            m_scenes[editor.CurrentEditingGroup] = m_scenes.DefaultValue;
+                            m_buildOptions[inspector.CurrentEditingGroup] = m_buildOptions.DefaultValue;
+                            m_buildLocations[inspector.CurrentEditingGroup] = m_buildLocations.DefaultValue;
+                            m_playerName[inspector.CurrentEditingGroup] = m_playerName.DefaultValue;
+                            m_scenes[inspector.CurrentEditingGroup] = m_scenes.DefaultValue;
                         }
                         else
                         {
-                            m_buildOptions.Remove(editor.CurrentEditingGroup);
-                            m_buildLocations.Remove(editor.CurrentEditingGroup);
-                            m_playerName.Remove(editor.CurrentEditingGroup);
-                            m_scenes.Remove(editor.CurrentEditingGroup);
+                            m_buildOptions.Remove(inspector.CurrentEditingGroup);
+                            m_buildLocations.Remove(inspector.CurrentEditingGroup);
+                            m_playerName.Remove(inspector.CurrentEditingGroup);
+                            m_scenes.Remove(inspector.CurrentEditingGroup);
                         }
                         onValueChanged();
                     }
@@ -103,8 +103,8 @@ namespace UnityEngine.AssetGraph
                     {
                         m_scroll = scrollScope.scrollPosition;
                         GUILayout.Label("Player Build Location", "BoldLabel");
-                        var newBuildLocation = editor.DrawFolderSelector("", "Select Build Location",
-                            m_buildLocations[editor.CurrentEditingGroup],
+                        var newBuildLocation = inspector.DrawFolderSelector("", "Select Build Location",
+                            m_buildLocations[inspector.CurrentEditingGroup],
                             Application.dataPath + "/../"
                         );
                         if (newBuildLocation.StartsWith(Application.dataPath))
@@ -114,28 +114,28 @@ namespace UnityEngine.AssetGraph
                                 node.Data);
                         }
 
-                        if (newBuildLocation != m_buildLocations[editor.CurrentEditingGroup])
+                        if (newBuildLocation != m_buildLocations[inspector.CurrentEditingGroup])
                         {
                             using (new RecordUndoScope("Change Build Location", node, true))
                             {
-                                m_buildLocations[editor.CurrentEditingGroup] = newBuildLocation;
+                                m_buildLocations[inspector.CurrentEditingGroup] = newBuildLocation;
                                 onValueChanged();
                             }
                         }
                         GUILayout.Space(4f);
-                        var newPlayerName = EditorGUILayout.TextField("Player Name", m_playerName[editor.CurrentEditingGroup]);
-                        if (newPlayerName != m_playerName[editor.CurrentEditingGroup])
+                        var newPlayerName = EditorGUILayout.TextField("Player Name", m_playerName[inspector.CurrentEditingGroup]);
+                        if (newPlayerName != m_playerName[inspector.CurrentEditingGroup])
                         {
                             using (new RecordUndoScope("Change Player Name", node, true))
                             {
-                                m_playerName[editor.CurrentEditingGroup] = newPlayerName;
+                                m_playerName[inspector.CurrentEditingGroup] = newPlayerName;
                                 onValueChanged();
                             }
                         }
 
                         GUILayout.Space(10f);
                         GUILayout.Label("Build Options", "BoldLabel");
-                        int buildOptions = m_buildOptions[editor.CurrentEditingGroup];
+                        int buildOptions = m_buildOptions[inspector.CurrentEditingGroup];
                         foreach (var option in Model.Settings.BuildPlayerOptionsSettings)
                         {
 
@@ -150,7 +150,7 @@ namespace UnityEngine.AssetGraph
                                     buildOptions = (result) ?
                                     ((int)option.option | buildOptions) :
                                     (((~(int)option.option)) & buildOptions);
-                                    m_buildOptions[editor.CurrentEditingGroup] = buildOptions;
+                                    m_buildOptions[inspector.CurrentEditingGroup] = buildOptions;
                                     onValueChanged();
                                 }
                             }
@@ -164,7 +164,7 @@ namespace UnityEngine.AssetGraph
 
                             using (new EditorGUILayout.VerticalScope(GUI.skin.box))
                             {
-                                var scenesSelected = m_scenes[editor.CurrentEditingGroup].Split(',');
+                                var scenesSelected = m_scenes[inspector.CurrentEditingGroup].Split(',');
 
                                 foreach (var sceneGUID in scenesInProject)
                                 {
@@ -172,7 +172,7 @@ namespace UnityEngine.AssetGraph
                                     if (string.IsNullOrEmpty(path))
                                     {
                                         ArrayUtility.Remove(ref scenesSelected, sceneGUID);
-                                        m_scenes[editor.CurrentEditingGroup] = string.Join(",", scenesSelected);
+                                        m_scenes[inspector.CurrentEditingGroup] = string.Join(",", scenesSelected);
                                         onValueChanged();
                                         continue;
                                     }
@@ -196,7 +196,7 @@ namespace UnityEngine.AssetGraph
                                             {
                                                 ArrayUtility.Remove(ref scenesSelected, sceneGUID);
                                             }
-                                            m_scenes[editor.CurrentEditingGroup] = string.Join(",", scenesSelected);
+                                            m_scenes[inspector.CurrentEditingGroup] = string.Join(",", scenesSelected);
                                             onValueChanged();
                                         }
                                     }

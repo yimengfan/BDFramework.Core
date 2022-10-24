@@ -12,7 +12,8 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.ourpalm.ilruntime": "2.0.2"
+        "com.ourpalm.ilruntime": "2.0.2",
+        "com.unity.scriptablebuildpipeline": "1.20.2"
       }
     },
     "com.unity.ext.nunit": {

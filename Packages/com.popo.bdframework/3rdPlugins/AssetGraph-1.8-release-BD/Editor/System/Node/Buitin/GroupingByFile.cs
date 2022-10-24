@@ -48,36 +48,36 @@ namespace UnityEngine.AssetGraph
 			return newNode;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
 			EditorGUILayout.HelpBox("Group By File: Create group per individual asset.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
             GUILayout.Space(4f);
 
             //Show target configuration tab
-            editor.DrawPlatformSelector(node);
+            inspector.DrawPlatformSelector(node);
             using (new EditorGUILayout.VerticalScope (GUI.skin.box)) {
-                var disabledScope = editor.DrawOverrideTargetToggle (node, m_groupNameFormat.ContainsValueOf (editor.CurrentEditingGroup), (bool enabled) => {
+                var disabledScope = inspector.DrawOverrideTargetToggle (node, m_groupNameFormat.ContainsValueOf (inspector.CurrentEditingGroup), (bool enabled) => {
                     using (new RecordUndoScope ("Remove Target Grouping Settings", node, true)) {
                         if (enabled) {
-                            m_groupNameFormat [editor.CurrentEditingGroup] = m_groupNameFormat.DefaultValue;
+                            m_groupNameFormat [inspector.CurrentEditingGroup] = m_groupNameFormat.DefaultValue;
                         } else {
-                            m_groupNameFormat.Remove (editor.CurrentEditingGroup);
+                            m_groupNameFormat.Remove (inspector.CurrentEditingGroup);
                         }
                         onValueChanged ();
                     }
                 });
 
                 using (disabledScope) {
-                    var newGroupNameFormat = EditorGUILayout.TextField ("Group Name Format", m_groupNameFormat [editor.CurrentEditingGroup]);
+                    var newGroupNameFormat = EditorGUILayout.TextField ("Group Name Format", m_groupNameFormat [inspector.CurrentEditingGroup]);
                     EditorGUILayout.HelpBox (
                         "You can customize group name. You can use variable {OldGroup} for old group name and {NewGroup} for current matching name.You can also use {FileName} and {FileExtension}.", 
                         MessageType.Info);
 
-                    if (newGroupNameFormat != m_groupNameFormat [editor.CurrentEditingGroup]) {
+                    if (newGroupNameFormat != m_groupNameFormat [inspector.CurrentEditingGroup]) {
                         using (new RecordUndoScope ("Change Group Name", node, true)) {
-                            m_groupNameFormat [editor.CurrentEditingGroup] = newGroupNameFormat;
+                            m_groupNameFormat [inspector.CurrentEditingGroup] = newGroupNameFormat;
                             onValueChanged ();
                         }
                     }

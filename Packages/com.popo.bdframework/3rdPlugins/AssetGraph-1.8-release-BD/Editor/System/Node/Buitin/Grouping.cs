@@ -70,7 +70,7 @@ namespace UnityEngine.AssetGraph
         }
 
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager,
-            NodeGUIEditor editor, Action onValueChanged)
+            NodeGUIInspector inspector, Action onValueChanged)
         {
             if (m_groupingKeyword == null)
             {
@@ -79,7 +79,7 @@ namespace UnityEngine.AssetGraph
 
             EditorGUILayout.HelpBox("Group By File Path: Create group of assets from asset's file path.",
                 MessageType.Info);
-            editor.UpdateNodeName(node);
+            inspector.UpdateNodeName(node);
 
             GUILayout.Space(10f);
             var newSlash = EditorGUILayout.ToggleLeft("Allow directory separator ('/') in group name", m_allowSlash);
@@ -102,25 +102,25 @@ namespace UnityEngine.AssetGraph
             GUILayout.Space(4f);
 
             //Show target configuration tab
-            editor.DrawPlatformSelector(node);
+            inspector.DrawPlatformSelector(node);
             using (new EditorGUILayout.VerticalScope(GUI.skin.box))
             {
-                var disabledScope = editor.DrawOverrideTargetToggle(node,
-                    m_groupingKeyword.ContainsValueOf(editor.CurrentEditingGroup), (bool enabled) =>
+                var disabledScope = inspector.DrawOverrideTargetToggle(node,
+                    m_groupingKeyword.ContainsValueOf(inspector.CurrentEditingGroup), (bool enabled) =>
                     {
                         using (new RecordUndoScope("Remove Target Grouping Keyword Settings", node, true))
                         {
                             if (enabled)
                             {
-                                m_groupingKeyword[editor.CurrentEditingGroup] = m_groupingKeyword.DefaultValue;
-                                m_patternType[editor.CurrentEditingGroup] = m_patternType.DefaultValue;
-                                m_groupNameFormat[editor.CurrentEditingGroup] = m_groupNameFormat.DefaultValue;
+                                m_groupingKeyword[inspector.CurrentEditingGroup] = m_groupingKeyword.DefaultValue;
+                                m_patternType[inspector.CurrentEditingGroup] = m_patternType.DefaultValue;
+                                m_groupNameFormat[inspector.CurrentEditingGroup] = m_groupNameFormat.DefaultValue;
                             }
                             else
                             {
-                                m_groupingKeyword.Remove(editor.CurrentEditingGroup);
-                                m_patternType.Remove(editor.CurrentEditingGroup);
-                                m_groupNameFormat.Remove(editor.CurrentEditingGroup);
+                                m_groupingKeyword.Remove(inspector.CurrentEditingGroup);
+                                m_patternType.Remove(inspector.CurrentEditingGroup);
+                                m_groupNameFormat.Remove(inspector.CurrentEditingGroup);
                             }
 
                             onValueChanged();
@@ -130,20 +130,20 @@ namespace UnityEngine.AssetGraph
                 using (disabledScope)
                 {
                     var newType = (GroupingPatternType) EditorGUILayout.EnumPopup("Pattern Type",
-                        (GroupingPatternType) m_patternType[editor.CurrentEditingGroup]);
-                    if (newType != (GroupingPatternType) m_patternType[editor.CurrentEditingGroup])
+                        (GroupingPatternType) m_patternType[inspector.CurrentEditingGroup]);
+                    if (newType != (GroupingPatternType) m_patternType[inspector.CurrentEditingGroup])
                     {
                         using (new RecordUndoScope("Change Grouping Pattern Type", node, true))
                         {
-                            m_patternType[editor.CurrentEditingGroup] = (int) newType;
+                            m_patternType[inspector.CurrentEditingGroup] = (int) newType;
                             onValueChanged();
                         }
                     }
 
                     var newGroupingKeyword = EditorGUILayout.TextField("Grouping Keyword",
-                        m_groupingKeyword[editor.CurrentEditingGroup]);
+                        m_groupingKeyword[inspector.CurrentEditingGroup]);
                     string helpText = null;
-                    switch ((GroupingPatternType) m_patternType[editor.CurrentEditingGroup])
+                    switch ((GroupingPatternType) m_patternType[inspector.CurrentEditingGroup])
                     {
                         case GroupingPatternType.WildCard:
                             helpText =
@@ -157,26 +157,26 @@ namespace UnityEngine.AssetGraph
 
                     EditorGUILayout.HelpBox(helpText, MessageType.Info);
 
-                    if (newGroupingKeyword != m_groupingKeyword[editor.CurrentEditingGroup])
+                    if (newGroupingKeyword != m_groupingKeyword[inspector.CurrentEditingGroup])
                     {
                         using (new RecordUndoScope("Change Grouping Keywords", node, true))
                         {
-                            m_groupingKeyword[editor.CurrentEditingGroup] = newGroupingKeyword;
+                            m_groupingKeyword[inspector.CurrentEditingGroup] = newGroupingKeyword;
                             onValueChanged();
                         }
                     }
 
                     var newGroupNameFormat = EditorGUILayout.TextField("Group Name Format",
-                        m_groupNameFormat[editor.CurrentEditingGroup]);
+                        m_groupNameFormat[inspector.CurrentEditingGroup]);
                     EditorGUILayout.HelpBox(
                         "You can customize group name. You can use variable {OldGroup} for old group name and {NewGroup} for current matching name.",
                         MessageType.Info);
 
-                    if (newGroupNameFormat != m_groupNameFormat[editor.CurrentEditingGroup])
+                    if (newGroupNameFormat != m_groupNameFormat[inspector.CurrentEditingGroup])
                     {
                         using (new RecordUndoScope("Change Group Name", node, true))
                         {
-                            m_groupNameFormat[editor.CurrentEditingGroup] = newGroupNameFormat;
+                            m_groupNameFormat[inspector.CurrentEditingGroup] = newGroupNameFormat;
                             onValueChanged();
                         }
                     }

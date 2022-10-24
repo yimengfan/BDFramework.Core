@@ -81,23 +81,23 @@ namespace UnityEngine.AssetGraph {
 			return newNode;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 			
 			if (m_exportPath == null) {
 				return;
 			}
 
-			var currentEditingGroup = editor.CurrentEditingGroup;
+			var currentEditingGroup = inspector.CurrentEditingGroup;
 
 			EditorGUILayout.HelpBox("Export To Directory: Export given files to output directory.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 			GUILayout.Space(10f);
 
 			//Show target configuration tab
-			editor.DrawPlatformSelector(node);
+			inspector.DrawPlatformSelector(node);
 			using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-				var disabledScope = editor.DrawOverrideTargetToggle(node, m_exportPath.ContainsValueOf(currentEditingGroup), (bool enabled) => {
+				var disabledScope = inspector.DrawOverrideTargetToggle(node, m_exportPath.ContainsValueOf(currentEditingGroup), (bool enabled) => {
 					using(new RecordUndoScope("Remove Target Export Settings", node, true)){
 						if(enabled) {
 							m_exportPath[currentEditingGroup] = m_exportPath.DefaultValue;
@@ -126,7 +126,7 @@ namespace UnityEngine.AssetGraph {
 
 					string newExportPath = null;
 
-                    newExportPath = editor.DrawFolderSelector ("", "Select Export Folder", 
+                    newExportPath = inspector.DrawFolderSelector ("", "Select Export Folder", 
                         m_exportPath[currentEditingGroup],
                         GetExportPath(m_exportPath[currentEditingGroup]),
                         (string folderSelected) => {

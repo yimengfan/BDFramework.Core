@@ -136,9 +136,9 @@ namespace UnityEngine.AssetGraph {
         /// </summary>
         /// <param name="node">NodeGUI instance for this node.</param>
         /// <param name="streamManager">Manager instance to retrieve graph's incoming/outgoing group of assets.</param>
-        /// <param name="editor">Helper instance to draw inspector.</param>
+        /// <param name="inspector">Helper instance to draw inspector.</param>
         /// <param name="onValueChanged">Action to call when OnInspectorGUI() changed value of this node.</param>
-		public abstract void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged);
+		public abstract void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged);
 
         /// <summary>
         /// OnContextMenuGUI() is called when Node is clicked for context menu.

@@ -53,10 +53,10 @@ namespace UnityEngine.AssetGraph {
     		return newNode;
     	}
 
-    	public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+    	public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
     		EditorGUILayout.HelpBox("Error: Raise error if there is any input asset.", MessageType.Info);
-    		editor.UpdateNodeName(node);
+    		inspector.UpdateNodeName(node);
 
     		GUILayout.Space(10f);
 

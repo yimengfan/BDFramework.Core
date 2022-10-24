@@ -108,7 +108,7 @@ namespace UnityEngine.AssetGraph {
 			return newNode;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
             if (m_filterList == null) {
                 m_filterList = new ReorderableList(m_filter, typeof(FilterEntry), true, false, true, true);
@@ -125,7 +125,7 @@ namespace UnityEngine.AssetGraph {
             m_OnValueChanged = onValueChanged;
 
 			EditorGUILayout.HelpBox("Split By Filter: Split incoming assets by filter conditions.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
             EditorGUILayout.LabelField ("Filter Conditions");
             m_filterList.DoLayoutList();

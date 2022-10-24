@@ -110,23 +110,23 @@ public class RegressionTestNode : Node {
 		return newNode;
 	}
 
-	public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+	public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
 		EditorGUILayout.HelpBox("My Custom Node: Implement your own Inspector.", MessageType.Info);
-		editor.UpdateNodeName(node);
+		inspector.UpdateNodeName(node);
 
 		GUILayout.Space(10f);
 
 		//Show target configuration tab
-		editor.DrawPlatformSelector(node);
+		inspector.DrawPlatformSelector(node);
 		using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
 			// Draw Platform selector tab. 
-			var disabledScope = editor.DrawOverrideTargetToggle(node, m_result.ContainsValueOf(editor.CurrentEditingGroup), (bool b) => {
+			var disabledScope = inspector.DrawOverrideTargetToggle(node, m_result.ContainsValueOf(inspector.CurrentEditingGroup), (bool b) => {
 				using(new RecordUndoScope("Remove Target Platform Settings", node, true)) {
 					if(b) {
-						m_result[editor.CurrentEditingGroup] = m_result.DefaultValue;
+						m_result[inspector.CurrentEditingGroup] = m_result.DefaultValue;
 					} else {
-						m_result.Remove(editor.CurrentEditingGroup);
+						m_result.Remove(inspector.CurrentEditingGroup);
 					}
 					onValueChanged();
 				}
@@ -134,7 +134,7 @@ public class RegressionTestNode : Node {
 
 			// Draw tab contents
 			using (disabledScope) {
-				var val = m_result[editor.CurrentEditingGroup];
+				var val = m_result[inspector.CurrentEditingGroup];
 
 				using (new GUILayout.HorizontalScope())
 				{
@@ -142,13 +142,13 @@ public class RegressionTestNode : Node {
 					{
 						using(new RecordUndoScope("My Value Changed", node, true)){
 							val = JsonUtility.ToJson(m_current);
-							m_result[editor.CurrentEditingGroup] = val;
+							m_result[inspector.CurrentEditingGroup] = val;
 							onValueChanged();
 						}
 					}
 					if (GUILayout.Button("Clear", GUILayout.Width(50f)))
 					{
-						m_result.Remove(editor.CurrentEditingGroup);
+						m_result.Remove(inspector.CurrentEditingGroup);
 						val = string.Empty;
 						onValueChanged();
 					}

@@ -141,12 +141,12 @@ namespace UnityEngine.AssetGraph {
 			p.Label = variant.Name;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
 			if (m_bundleNameTemplate == null) return;
 
 			EditorGUILayout.HelpBox("Configure Bundle From Group: Create asset bundle settings from incoming group of assets.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 			GUILayout.Space(10f);
 
@@ -221,25 +221,25 @@ namespace UnityEngine.AssetGraph {
 			}
 
 			//Show target configuration tab
-			editor.DrawPlatformSelector(node);
+			inspector.DrawPlatformSelector(node);
 			using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-				var disabledScope = editor.DrawOverrideTargetToggle(node, m_bundleNameTemplate.ContainsValueOf(editor.CurrentEditingGroup), (bool enabled) => {
+				var disabledScope = inspector.DrawOverrideTargetToggle(node, m_bundleNameTemplate.ContainsValueOf(inspector.CurrentEditingGroup), (bool enabled) => {
 					using(new RecordUndoScope("Remove Target Bundle Name Template Setting", node, true)){
 						if(enabled) {
-							m_bundleNameTemplate[editor.CurrentEditingGroup] = m_bundleNameTemplate.DefaultValue;
+							m_bundleNameTemplate[inspector.CurrentEditingGroup] = m_bundleNameTemplate.DefaultValue;
 						} else {
-							m_bundleNameTemplate.Remove(editor.CurrentEditingGroup);
+							m_bundleNameTemplate.Remove(inspector.CurrentEditingGroup);
 						}
 						onValueChanged();
 					}
 				});
 
 				using (disabledScope) {
-					var bundleNameTemplate = EditorGUILayout.TextField("Bundle Name Template", m_bundleNameTemplate[editor.CurrentEditingGroup]).ToLower();
+					var bundleNameTemplate = EditorGUILayout.TextField("Bundle Name Template", m_bundleNameTemplate[inspector.CurrentEditingGroup]).ToLower();
 
-					if (bundleNameTemplate != m_bundleNameTemplate[editor.CurrentEditingGroup]) {
+					if (bundleNameTemplate != m_bundleNameTemplate[inspector.CurrentEditingGroup]) {
 						using(new RecordUndoScope("Change Bundle Name Template", node, true)){
-							m_bundleNameTemplate[editor.CurrentEditingGroup] = bundleNameTemplate;
+							m_bundleNameTemplate[inspector.CurrentEditingGroup] = bundleNameTemplate;
 							onValueChanged();
 						}
 					}

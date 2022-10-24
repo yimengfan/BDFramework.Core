@@ -73,23 +73,23 @@ namespace UnityEngine.AssetGraph {
 			return newNode;
 		}
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 			
             if (m_srcPath == null) {
 				return;
 			}
 
-			var currentEditingGroup = editor.CurrentEditingGroup;
+			var currentEditingGroup = inspector.CurrentEditingGroup;
 
 			EditorGUILayout.HelpBox("Mirror Directory: Mirror source directory to destination. This node does not use assets passed by.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 			GUILayout.Space(10f);
 
 			//Show target configuration tab
-			editor.DrawPlatformSelector(node);
+			inspector.DrawPlatformSelector(node);
 			using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-                var disabledScope = editor.DrawOverrideTargetToggle(node, m_srcPath.ContainsValueOf(currentEditingGroup), (bool enabled) => {
+                var disabledScope = inspector.DrawOverrideTargetToggle(node, m_srcPath.ContainsValueOf(currentEditingGroup), (bool enabled) => {
 					using(new RecordUndoScope("Remove Target Mirror Directory Settings", node, true)){
 						if(enabled) {
                             m_srcPath[currentEditingGroup] = m_srcPath.DefaultValue;
@@ -119,7 +119,7 @@ namespace UnityEngine.AssetGraph {
                     string newSrcPath = null;
                     string newDstPath = null;
 
-                    newSrcPath = editor.DrawFolderSelector ("", "Select Source Folder", 
+                    newSrcPath = inspector.DrawFolderSelector ("", "Select Source Folder", 
                         m_srcPath[currentEditingGroup],
                         Directory.GetParent(Application.dataPath).ToString(),
                         (string folderSelected) => {
@@ -150,7 +150,7 @@ namespace UnityEngine.AssetGraph {
                     GUILayout.Space (10f);
 
                     EditorGUILayout.LabelField("Destination Directory Path:");
-                    newDstPath = editor.DrawFolderSelector ("", "Select Destination Folder", 
+                    newDstPath = inspector.DrawFolderSelector ("", "Select Destination Folder", 
                         m_dstPath[currentEditingGroup],
                         Directory.GetParent(Application.dataPath).ToString(),
                         (string folderSelected) => {

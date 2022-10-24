@@ -270,14 +270,14 @@ namespace UnityEngine.AssetGraph {
             return path;
         }
 
-		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged) {
+		public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged) {
 
 			if (m_loadPath == null) {
 				return;
 			}
 
 			EditorGUILayout.HelpBox("Load From Directory: Load assets from given directory path.", MessageType.Info);
-			editor.UpdateNodeName(node);
+			inspector.UpdateNodeName(node);
 
 			GUILayout.Space(10f);
 
@@ -292,28 +292,28 @@ namespace UnityEngine.AssetGraph {
             GUILayout.Space(4f);
 
             //Show target configuration tab
-			editor.DrawPlatformSelector(node);
+			inspector.DrawPlatformSelector(node);
 			using (new EditorGUILayout.VerticalScope(GUI.skin.box)) {
-				var disabledScope = editor.DrawOverrideTargetToggle(node, m_loadPath.ContainsValueOf(editor.CurrentEditingGroup), (bool b) => {
+				var disabledScope = inspector.DrawOverrideTargetToggle(node, m_loadPath.ContainsValueOf(inspector.CurrentEditingGroup), (bool b) => {
 					using(new RecordUndoScope("Remove Target Load Path Settings", node, true)) {
 						if(b) {
-                            m_loadPath[editor.CurrentEditingGroup] = m_loadPath.DefaultValue;
-                            m_loadPathGuid[editor.CurrentEditingGroup] = m_loadPathGuid.DefaultValue;
+                            m_loadPath[inspector.CurrentEditingGroup] = m_loadPath.DefaultValue;
+                            m_loadPathGuid[inspector.CurrentEditingGroup] = m_loadPathGuid.DefaultValue;
 						} else {
-							m_loadPath.Remove(editor.CurrentEditingGroup);
-                            m_loadPathGuid.Remove(editor.CurrentEditingGroup);
+							m_loadPath.Remove(inspector.CurrentEditingGroup);
+                            m_loadPathGuid.Remove(inspector.CurrentEditingGroup);
 						}
 						onValueChanged();
 					}
 				});
 
 				using (disabledScope) {
-					var path = m_loadPath[editor.CurrentEditingGroup];
+					var path = m_loadPath[inspector.CurrentEditingGroup];
 					EditorGUILayout.LabelField("Load Path:");
 
 					string newLoadPath = null;
 
-                    newLoadPath = editor.DrawFolderSelector (Model.Settings.Path.ASSETS_PATH, "Select Asset Folder", 
+                    newLoadPath = inspector.DrawFolderSelector (Model.Settings.Path.ASSETS_PATH, "Select Asset Folder", 
                         path,
                         FileUtility.PathCombine(Model.Settings.Path.ASSETS_PATH, path),
                         (string folderSelected) => { return NormalizeLoadPath(folderSelected); }
@@ -323,8 +323,8 @@ namespace UnityEngine.AssetGraph {
 
 					if (newLoadPath != path) {
 						using(new RecordUndoScope("Load Path Changed", node, true)){
-							m_loadPath[editor.CurrentEditingGroup] = newLoadPath;
-                            m_loadPathGuid [editor.CurrentEditingGroup] = AssetDatabase.AssetPathToGUID (dirPath);
+							m_loadPath[inspector.CurrentEditingGroup] = newLoadPath;
+                            m_loadPathGuid [inspector.CurrentEditingGroup] = AssetDatabase.AssetPathToGUID (dirPath);
 							onValueChanged();
 						}
 					}

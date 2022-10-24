@@ -171,10 +171,10 @@ namespace UnityEngine.AssetGraph
             }
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
             EditorGUILayout.HelpBox("Overwrite Import Setting: Overwrite import settings of incoming assets.", MessageType.Info);
-            editor.UpdateNodeName(node);
+            inspector.UpdateNodeName(node);
 
             // prevent inspector flicking by new Editor changing active selction
             node.SetActive(true);
@@ -230,7 +230,7 @@ namespace UnityEngine.AssetGraph
                 if (importerType != null && assetType != null)
                 {
                     GUILayout.Space(10f);
-                    DoCustomAssetGUI(assetType, importerType, node, editor, onValueChanged);
+                    DoCustomAssetGUI(assetType, importerType, node, inspector, onValueChanged);
                 }
 
                 // get reference importer again (enabling custom asset this time)
@@ -238,7 +238,7 @@ namespace UnityEngine.AssetGraph
 
                 if (referenceImporter != null)
                 {
-                    var configurator = m_configuratorInstance.Get<IAssetImporterConfigurator>(editor.CurrentEditingGroup);
+                    var configurator = m_configuratorInstance.Get<IAssetImporterConfigurator>(inspector.CurrentEditingGroup);
                     if (configurator != null)
                     {
                         GUILayout.Space(10f);
@@ -247,12 +247,12 @@ namespace UnityEngine.AssetGraph
                         {
                             using (new RecordUndoScope($"Change {node.Name} Setting", node))
                             {
-                                m_configuratorInstance.Set(editor.CurrentEditingGroup, configurator);
+                                m_configuratorInstance.Set(inspector.CurrentEditingGroup, configurator);
                                 onValueChanged();
                             }
                         };
 
-                        configurator.OnInspectorGUI(referenceImporter, editor.CurrentEditingGroup, onChangedAction);
+                        configurator.OnInspectorGUI(referenceImporter, inspector.CurrentEditingGroup, onChangedAction);
                     }
 
                     if (m_importerEditor == null)
@@ -303,7 +303,7 @@ namespace UnityEngine.AssetGraph
             }
         }
 
-        private void DoCustomAssetGUI(Type assetType, Type importerType, NodeGUI node, NodeGUIEditor editor, Action onValueChanged)
+        private void DoCustomAssetGUI(Type assetType, Type importerType, NodeGUI node, NodeGUIInspector inspector, Action onValueChanged)
         {
             // Custom Settings Asset
             using (new EditorGUILayout.VerticalScope(GUI.skin.box))
