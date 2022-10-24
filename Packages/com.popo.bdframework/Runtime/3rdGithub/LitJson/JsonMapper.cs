@@ -16,6 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using ILRuntime.Runtime.Intepreter;
 using ILRuntime.Runtime.Stack;
@@ -238,28 +239,35 @@ namespace LitJson
             }
         }
 
-        private static void AddObjectMetadata(Type type)
+        private static void AddObjectMetadata(Type instType, Type fieldOrPropFilterType)
         {
-            if (object_metadata.ContainsKey(type))
+            if (object_metadata.ContainsKey(instType))
                 return;
 
             ObjectMetadata data = new ObjectMetadata();
 
-            if (type.GetInterface("System.Collections.IDictionary") != null)
+            if (instType.GetInterface("System.Collections.IDictionary") != null)
                 data.IsDictionary = true;
 
             data.Properties = new Dictionary<string, PropertyMetadata>();
 
             //this do for :  int x｛get;private set}   set is null~
-            var flag = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public |BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
-            List<PropertyInfo>props = new List<PropertyInfo>();
-            Type startType = type;
-            while (startType!=null)
+            var flag = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+            List<PropertyInfo> props = new List<PropertyInfo>();
+            Type startType = instType;
+            while (startType != null)
             {
-                props.AddRange(startType.GetProperties(flag));
+                var _props = startType.GetProperties(flag);
+                props.AddRange(_props);
                 startType = startType.BaseType;
             }
 
+            //筛选指定的Attribute prop
+            if (fieldOrPropFilterType != null)
+            {
+                props = props.Where((p) => p.CustomAttributes?.FirstOrDefault((a) => a.AttributeType == fieldOrPropFilterType) != null).ToList();
+
+            }
 
             foreach (PropertyInfo p_info in props)
             {
@@ -272,9 +280,9 @@ namespace LitJson
 
                     if (parameters[0].ParameterType == typeof(string))
                     {
-                        if (type is ILRuntime.Reflection.ILRuntimeWrapperType)
+                        if (instType is ILRuntime.Reflection.ILRuntimeWrapperType)
                         {
-                            data.ElementType = ((ILRuntime.Reflection.ILRuntimeWrapperType) type).CLRType
+                            data.ElementType = ((ILRuntime.Reflection.ILRuntimeWrapperType) instType).CLRType
                                 .GenericArguments[1].Value.ReflectionType;
                         }
                         else
@@ -288,11 +296,23 @@ namespace LitJson
                 p_data.Info = p_info;
                 p_data.Type = p_info.PropertyType;
 
-                data.Properties.Add(p_info.Name, p_data);
+                //由继承类到父类，virsual会被子类代替
+                if (!data.Properties.ContainsKey(p_info.Name))
+                {
+                    data.Properties.Add(p_info.Name, p_data);
+                }
             }
 
-            var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public |
-                                        BindingFlags.NonPublic);
+            //field处理
+            flag = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+          
+             var fields = instType.GetFields(flag);
+
+            //筛选指定的Attribute prop
+            if (fieldOrPropFilterType != null)
+            {
+                fields = fields.Where((p) => p.CustomAttributes?.FirstOrDefault((a) => a.AttributeType == fieldOrPropFilterType) != null).ToArray();
+            }
 
             foreach (FieldInfo f_info in fields)
             {
@@ -300,7 +320,6 @@ namespace LitJson
                 p_data.Info = f_info;
                 p_data.IsField = true;
                 p_data.Type = f_info.FieldType;
-
                 data.Properties.Add(f_info.Name, p_data);
             }
 
@@ -308,7 +327,7 @@ namespace LitJson
             {
                 try
                 {
-                    object_metadata.Add(type, data);
+                    object_metadata.Add(instType, data);
                 }
                 catch (ArgumentException)
                 {
@@ -386,7 +405,15 @@ namespace LitJson
             return op;
         }
 
-        private static object ReadValue(Type inst_type, JsonReader reader)
+        /// <summary>
+        /// 递归读取值
+        /// </summary>
+        /// <param name="inst_type"></param>
+        /// <param name="reader"></param>
+        /// <param name="fieldOrPropFilterType">字段属性的筛选值</param>
+        /// <returns></returns>
+        /// <exception cref="JsonException"></exception>
+        private static object ReadValue(Type inst_type, JsonReader reader, Type fieldOrPropFilterType)
         {
             reader.Read();
 
@@ -466,18 +493,18 @@ namespace LitJson
                 {
                     if (vt == typeof(int))
                     {
-                        return Convert.ToInt32(reader.Value) ;
+                        return Convert.ToInt32(reader.Value);
                     }
                     else if (vt == typeof(float))
                     {
-                        return  (float)Convert.ToDouble(reader.Value);
+                        return (float) Convert.ToDouble(reader.Value);
                     }
                     else if (vt == typeof(double))
                     {
                         return Convert.ToDouble(reader.Value);
                     }
                 }
-                
+
                 // No luck
                 throw new JsonException(String.Format(
                     "Can't assign value '{0}' (type {1}) to type {2}",
@@ -512,7 +539,7 @@ namespace LitJson
 
                 while (true)
                 {
-                    object item = ReadValue(elem_type, reader);
+                    object item = ReadValue(elem_type, reader, fieldOrPropFilterType);
                     if (item == null && reader.Token == JsonToken.ArrayEnd)
                         break;
                     var rt = elem_type is ILRuntime.Reflection.ILRuntimeWrapperType
@@ -535,7 +562,7 @@ namespace LitJson
             }
             else if (reader.Token == JsonToken.ObjectStart)
             {
-                AddObjectMetadata(value_type);
+                AddObjectMetadata(value_type, fieldOrPropFilterType);
                 ObjectMetadata t_data = object_metadata[value_type];
                 if (value_type is ILRuntime.Reflection.ILRuntimeType)
                     instance = ((ILRuntime.Reflection.ILRuntimeType) value_type).ILType.Instantiate();
@@ -563,14 +590,14 @@ namespace LitJson
                         if (prop_data.IsField)
                         {
                             var p_prop = ((FieldInfo) prop_data.Info);
-                            var value = ReadValue(prop_data.Type, reader);
-                            p_prop.SetValue(instance,value );
+                            var value = ReadValue(prop_data.Type, reader, fieldOrPropFilterType);
+                            p_prop.SetValue(instance, value);
                         }
                         else
                         {
                             var p_info = (PropertyInfo) prop_data.Info;
-                            var value = ReadValue(prop_data.Type, reader);
-                            p_info.SetValue(instance,  value);
+                            var value = ReadValue(prop_data.Type, reader, fieldOrPropFilterType);
+                            p_info.SetValue(instance, value);
                         }
                     }
                     else
@@ -594,9 +621,7 @@ namespace LitJson
                         var rt = t_data.ElementType is ILRuntime.Reflection.ILRuntimeWrapperType
                             ? ((ILRuntime.Reflection.ILRuntimeWrapperType) t_data.ElementType).RealType
                             : t_data.ElementType;
-                        ((IDictionary) instance).Add(
-                            property, rt.CheckCLRTypes(ReadValue(
-                                t_data.ElementType, reader)));
+                        ((IDictionary) instance).Add(property, rt.CheckCLRTypes(ReadValue(t_data.ElementType, reader, fieldOrPropFilterType)));
                     }
                 }
             }
@@ -1012,23 +1037,23 @@ namespace LitJson
                 delegate { return new JsonData(); }, json);
         }
 
-        public static T ToObject<T>(JsonReader reader)
+        public static T ToObject<T>(JsonReader reader, Type fieldOrPropFilterType = null)
         {
-            return (T) ReadValue(typeof(T), reader);
+            return (T) ReadValue(typeof(T), reader, fieldOrPropFilterType);
         }
 
-        public static T ToObject<T>(TextReader reader)
+        public static T ToObject<T>(TextReader reader, Type fieldOrPropFilterType = null)
         {
             JsonReader json_reader = new JsonReader(reader);
 
-            return (T) ReadValue(typeof(T), json_reader);
+            return (T) ReadValue(typeof(T), json_reader, fieldOrPropFilterType);
         }
 
-        public static T ToObject<T>(string json)
+        public static T ToObject<T>(string json, Type fieldOrPropFilterType = null)
         {
             JsonReader reader = new JsonReader(json);
 
-            return (T) ReadValue(typeof(T), reader);
+            return (T) ReadValue(typeof(T), reader, fieldOrPropFilterType);
         }
 
         /// <summary>
@@ -1037,11 +1062,11 @@ namespace LitJson
         /// <param name="t"></param>
         /// <param name="json"></param>
         /// <returns></returns>
-        public static object ToObject(Type t, string json)
+        public static object ToObject(Type t, string json, Type fieldOrPropFilterType = null)
         {
             JsonReader reader = new JsonReader(json);
 
-            return ReadValue(t, reader);
+            return ReadValue(t, reader, fieldOrPropFilterType);
         }
 
         public static IJsonWrapper ToWrapper(WrapperFactory factory,
@@ -1114,14 +1139,21 @@ namespace LitJson
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(esp, 1);
+            StackObject* __ret = ILIntepreter.Minus(esp, 2);
+            //
             ptr_of_this_method = ILIntepreter.Minus(esp, 1);
+            Type filterType = (System.Type) typeof(System.Type).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain,
+                mStack));
+
+            ptr_of_this_method = ILIntepreter.Minus(esp, 2);
             System.String json =
                 (System.String) typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain,
                     mStack));
+
+
             intp.Free(ptr_of_this_method);
             var type = method.GenericArguments[0].ReflectionType;
-            var result_of_this_method = ReadValue(type, new JsonReader(json));
+            var result_of_this_method = ReadValue(type, new JsonReader(json), filterType);
 
             return ILIntepreter.PushObject(__ret, mStack, result_of_this_method);
         }
@@ -1131,14 +1163,19 @@ namespace LitJson
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(esp, 1);
+            StackObject* __ret = ILIntepreter.Minus(esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(esp, 1);
+            Type filterType =
+                (Type) typeof(Type).CheckCLRTypes(
+                    StackObject.ToObject(ptr_of_this_method, __domain, mStack));
+
+            ptr_of_this_method = ILIntepreter.Minus(esp, 2);
             JsonReader json =
                 (JsonReader) typeof(JsonReader).CheckCLRTypes(
                     StackObject.ToObject(ptr_of_this_method, __domain, mStack));
             intp.Free(ptr_of_this_method);
             var type = method.GenericArguments[0].ReflectionType;
-            var result_of_this_method = ReadValue(type, json);
+            var result_of_this_method = ReadValue(type, json, filterType);
 
             return ILIntepreter.PushObject(__ret, mStack, result_of_this_method);
         }
@@ -1148,14 +1185,19 @@ namespace LitJson
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(esp, 1);
+            StackObject* __ret = ILIntepreter.Minus(esp, 2);
             ptr_of_this_method = ILIntepreter.Minus(esp, 1);
+            Type filterType =
+                (Type) typeof(Type).CheckCLRTypes(
+                    StackObject.ToObject(ptr_of_this_method, __domain, mStack));
+
+            ptr_of_this_method = ILIntepreter.Minus(esp, 2);
             TextReader json =
                 (TextReader) typeof(TextReader).CheckCLRTypes(
                     StackObject.ToObject(ptr_of_this_method, __domain, mStack));
             intp.Free(ptr_of_this_method);
             var type = method.GenericArguments[0].ReflectionType;
-            var result_of_this_method = ReadValue(type, new JsonReader(json));
+            var result_of_this_method = ReadValue(type, new JsonReader(json), filterType);
 
             return ILIntepreter.PushObject(__ret, mStack, result_of_this_method);
         }
