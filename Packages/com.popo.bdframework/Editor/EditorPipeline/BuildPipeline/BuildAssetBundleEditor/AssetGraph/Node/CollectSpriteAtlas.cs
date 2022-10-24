@@ -52,7 +52,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             base.OnDrawNodeGUIContent(node);
             this.selfNodeGUI = node;
         }
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
         }
 
@@ -143,11 +143,11 @@ namespace BDFramework.Editor.AssetGraph.Node
                     {
                         var (ret,msg) = this.BuildingCtx.BuildAssetInfos.SetABPack(dependTex, atlasAR.importFrom, BuildAssetInfos.SetABPackLevel.Force,this.Category+" "+(this.selfNodeGUI!=null?this.selfNodeGUI.Name: this.GetHashCode().ToString()),true);
 
-                        if (!ret)
-                        {
-                            
-                            Debug.LogError($"设置ab name失败: old-{dependTex} new-{atlasAR.importFrom} \n {msg}");
-                        }
+                        // if (!ret)
+                        // {
+                        //     
+                        //     Debug.LogError($"设置ab name失败: old-{dependTex} new-{atlasAR.importFrom} \n {msg}");
+                        // }
                     }
                 }
             }

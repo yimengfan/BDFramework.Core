@@ -14,13 +14,6 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 {
     public class EditorWindow_BuildAssetBundle : EditorWindow
     {
-        [MenuItem("BDFrameWork工具箱/2.AssetBundle打包", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Assetbundle)]
-        public static void Open()
-        {
-            var window = EditorWindow.GetWindow<EditorWindow_PublishAssets>(false, "发布资源");
-            window.Show();
-            window.Focus();
-        }
 
         private bool isSelectIOS = false;
 
@@ -121,8 +114,15 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
                         GUILayout.Space(20);
 
-                        GUI.color = Color.green;
-
+                        if (BApplication.RuntimePlatform == platform)
+                        {
+                            GUI.color = Color.yellow;
+                        }
+                        else
+                        {
+                            GUI.color = Color.green;
+                        }
+                        
                         if (GUILayout.Button("Build", GUILayout.Width(60)))
                         {
                             var ret = EditorUtility.DisplayDialog("提示", "是否要构建AssetBundle? \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
@@ -132,7 +132,8 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                                 BuildAssetBundle(BApplication.DevOpsPublishAssetsPath, platform);
                             }
                         }
-
+                        
+                        GUI.color = Color.green;
                         if (GUILayout.Button("混淆AB", GUILayout.Width(60)))
                         {
                             var ret = EditorUtility.DisplayDialog("提示", "是否要混淆AssetBundle? \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
@@ -141,15 +142,15 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                                 AssetBundleToolsV2.MixAssetBundle(BApplication.DevOpsPublishAssetsPath, platform);
                             }
                         }
-                        
-                        if (GUILayout.Button("生成混淆内容", GUILayout.Width(85)))
-                        {
-                            var ret = EditorUtility.DisplayDialog("提示", "是否要混淆AssetBundle? \n建议每个项目只生成一次，否则会导致与增量包混淆冲突.", "Ok", "Cancel");
-                            if (ret)
-                            {
-                                
-                            }
-                        }
+                        //
+                        // if (GUILayout.Button("生成混淆内容", GUILayout.Width(85)))
+                        // {
+                        //     var ret = EditorUtility.DisplayDialog("提示", "是否要混淆AssetBundle? \n建议每个项目只生成一次，否则会导致与增量包混淆冲突.", "Ok", "Cancel");
+                        //     if (ret)
+                        //     {
+                        //         
+                        //     }
+                        // }
 
                         GUI.color = GUI.backgroundColor;
                     }
@@ -163,7 +164,13 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.Label("AssetBundle验证: DevOps目录", EditorGUIHelper.GetFontStyle(Color.white, 12));
-                    if (GUILayout.Button("Play", GUILayout.Width(50), GUILayout.Height(20)))
+                    
+                    if (GUILayout.Button("Open", GUILayout.Width(50), GUILayout.Height(20)))
+                    {
+                        AssetBundleBenchmarkToolsV2.OpenScene();
+                    }
+                    
+                    if (GUILayout.Button("Open&Play", GUILayout.Width(80), GUILayout.Height(20)))
                     {
                         AssetBundleBenchmarkToolsV2.TestLoadAssetbundleRuntime();
                     }

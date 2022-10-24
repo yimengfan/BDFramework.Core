@@ -20,21 +20,72 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// <summary>
         /// 简单收集
         /// </summary>
-        public static void CollectShaderVariant()
+        public static void CollectShaderVariant(string[] allAssets = null)
         {
+            //收集材质
+            string[] allMatPaths;
+            //传入资源
+            if (allAssets != null)
+            {
+                allMatPaths = allAssets.Where((asset) => asset.EndsWith(".mat", StringComparison.OrdinalIgnoreCase)).ToArray();
+            }
+            else
+            {
+                //收集runtime的材质
+                allMatPaths = CollectMatFromRuntime();
+            }
+
+            //创建上下文
             //先搜集所有keyword到工具类SVC
             ToolSVC = new ShaderVariantCollection();
             var shaders = AssetDatabase.FindAssets("t:Shader", new string[] {"Assets", "Packages"}).ToList();
-            foreach (var shader in shaders)
+            foreach (var guid in shaders)
             {
+                var shaderPath = AssetDatabase.GUIDToAssetPath(guid);
+                //var shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
+                //清理shader的默认图片
+                Shader shader = null;
+                bool ischanged = false;
+                var ai = AssetImporter.GetAtPath(shaderPath);
+                if (ai is ShaderImporter shaderImporter)
+                {
+                    shader = shaderImporter.GetShader();
+                   
+                    for (int i = 0; i < ShaderUtil.GetPropertyCount(shader); i++)
+                    {
+                        var type = ShaderUtil.GetPropertyType(shader, i);
+                        if (type == ShaderUtil.ShaderPropertyType.TexEnv)
+                        {
+                            var propName = ShaderUtil.GetPropertyName(shader, i);
+                            var tex = shaderImporter.GetDefaultTexture( propName);
+                            if (tex)
+                            {
+                                ischanged = true;
+                                shaderImporter.SetDefaultTextures(new string[]{propName},new Texture[]{null});
+                                Debug.Log($"清理shader默认贴图:{shaderPath} - {propName}" );
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
+                }
+             
+                if (ischanged)
+                {
+                    ai.SaveAndReimport();
+                }
+                
+               
+                //添加
                 ShaderVariantCollection.ShaderVariant sv = new ShaderVariantCollection.ShaderVariant();
-                var shaderPath = AssetDatabase.GUIDToAssetPath(shader);
-                sv.shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
+                sv.shader = shader;
                 ToolSVC.Add(sv);
-                //
+
                 allShaderNameList.Add(shaderPath);
             }
-
+            
 
             //防空
             var dirt = Path.GetDirectoryName(toolsSVCpath);
@@ -45,7 +96,37 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
             AssetDatabase.CreateAsset(ToolSVC, toolsSVCpath);
 
+            //开始收集ShaderVaraint
+            ShaderVariantCollection allShaderVaraint = null;
+            var tools = new ShaderVariantsCollectionTools();
+            allShaderVaraint = tools.CollectionKeywords(allMatPaths.ToArray(), ToolSVC);
 
+            //输出SVC文件
+            var targetDir = Path.GetDirectoryName(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
+            if (!Directory.Exists(targetDir))
+            {
+                Directory.CreateDirectory(targetDir);
+            }
+
+            AssetDatabase.DeleteAsset(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
+            AssetDatabase.CreateAsset(allShaderVaraint, BResources.ALL_SHADER_VARAINT_ASSET_PATH);
+            AssetDatabase.Refresh();
+
+            Debug.Log("<color=red>shader_features收集完毕,multi_compiles默认全打包需要继承IPreprocessShaders.OnProcessShader自行剔除!</color>");
+            // var dependencies = AssetDatabase.GetDependencies(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
+            // foreach (var guid in dependencies )
+            // {
+            //     Debug.Log("依赖shader:" + guid);
+            // }
+        }
+
+
+        /// <summary>
+        /// 收集runtime中的mat
+        /// </summary>
+        /// <returns></returns>
+        static private string[] CollectMatFromRuntime()
+        {
             var paths = BApplication.GetAllRuntimeDirects().ToArray();
             //搜索所有runtime中所有可能挂载mat的地方
             var scriptObjectAssets = AssetDatabase.FindAssets("t:ScriptableObject", paths).ToList(); //自定义序列化脚本中也有可能有依赖
@@ -97,32 +178,9 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 }
             }
 
-            //开始收集ShaderVaraint
-            allMatPaths = allMatPaths.Distinct().ToList();
-            ShaderVariantCollection allShaderVaraint = null;
-            var tools = new ShaderVariantsCollectionTools();
-            allShaderVaraint = tools.CollectionKeywords(allMatPaths.ToArray(), ToolSVC);
 
-
-            //输出SVC文件
-            var targetDir = Path.GetDirectoryName(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
-            if (!Directory.Exists(targetDir))
-            {
-                Directory.CreateDirectory(targetDir);
-            }
-
-            AssetDatabase.DeleteAsset(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
-            AssetDatabase.CreateAsset(allShaderVaraint, BResources.ALL_SHADER_VARAINT_ASSET_PATH);
-            AssetDatabase.Refresh();
-
-            Debug.Log("<color=red>shader_features收集完毕,multi_compiles默认全打包需要继承IPreprocessShaders.OnProcessShader自行剔除!</color>");
-            // var dependencies = AssetDatabase.GetDependencies(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
-            // foreach (var guid in dependencies )
-            // {
-            //     Debug.Log("依赖shader:" + guid);
-            // }
+            return allMatPaths.Distinct().ToArray();
         }
-
 
         /// <summary>
         /// 打包ShaderOnly
@@ -144,7 +202,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                     {
                         var ai = AssetImporter.GetAtPath(depend);
                         ai.SetAssetBundleNameAndVariant(guid, null);
-                        Debug.Log("打包:" +depend);
+                        Debug.Log("打包:" + depend);
                         list.Add(ai);
                     }
                 }
@@ -165,6 +223,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 {
                     ai.SetAssetBundleNameAndVariant(null, null);
                 }
+
                 Debug.Log("测试AB已经输出:" + outpath);
             }
             AssetDatabase.StopAssetEditing();

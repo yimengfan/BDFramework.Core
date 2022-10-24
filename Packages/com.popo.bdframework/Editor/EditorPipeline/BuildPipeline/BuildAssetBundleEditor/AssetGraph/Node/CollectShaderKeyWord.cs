@@ -54,7 +54,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             this.selfNodeGUI = node;
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
         }
 
@@ -91,10 +91,11 @@ namespace BDFramework.Editor.AssetGraph.Node
             
             AssetGraphTools.WatchBegin();
             //收集变体
-            if (!isCollectedShaderKW) //防止GUI每次调用prepare时候都触发,真正打包时候 会重新构建
+            if (!isCollectedShaderKW || this. BuildingCtx.BuildParams.IsBuilding) //防止GUI每次调用prepare时候都触发,真正打包时候 会重新构建
             {
                 Debug.Log("------------>收集Key word");
-                ShaderCollection.CollectShaderVariant();
+                var allAssets = comingAssetReferenceList.Select((a) => a.importFrom).ToArray();
+                ShaderCollection.CollectShaderVariant(allAssets);
                 isCollectedShaderKW = true;
             }
 
@@ -186,10 +187,10 @@ namespace BDFramework.Editor.AssetGraph.Node
             foreach (var sharder in incomingShaderAndVariantList)
             {
                 var (ret,msg) = this.BuildingCtx.BuildAssetInfos.SetABPack(sharder.importFrom, AssetBundleName, BuildAssetInfos.SetABPackLevel.Force,this.Category+"  "+(this.selfNodeGUI!=null?this.selfNodeGUI.Name: this.GetHashCode().ToString()),false);
-                if (!ret)
-                {
-                    Debug.LogError(msg);
-                }
+                // if (!ret)
+                // {
+                //     Debug.LogError(msg);
+                // }
             }
 
             AssetGraphTools.WatchEnd("【搜集KeyWord】");

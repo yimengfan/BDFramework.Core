@@ -39,7 +39,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             return new LoderBuiltinRuntimeAssetDirectories();
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
         }
 

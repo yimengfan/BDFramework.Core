@@ -15,17 +15,22 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
     /// </summary>
     public class BuildPipelineAssetCacheImporter : AssetPostprocessor
     {
+        /// <summary>
+        /// 缓存
+        /// </summary>
+        static private BuildAssetInfos AssetInfoCache;
+
         static public void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
             bool isAssetChanged = false;
             if (!isAssetChanged)
             {
                 //非脚本修改，剩下的则是资源修改
-                var ret = importedAssets.FirstOrDefault((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
-                var ret2 = deletedAssets.FirstOrDefault((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
-                var ret3 = movedAssets.FirstOrDefault((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
-                var ret4 = movedFromAssetPaths.FirstOrDefault((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase));
-                if (ret != null || ret2 != null || ret3 != null || ret4 != null)
+                importedAssets = importedAssets.Where((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase)).ToArray();
+                deletedAssets = deletedAssets.Where((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase)).ToArray();
+                movedAssets = movedAssets.Where((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase)).ToArray();
+                movedFromAssetPaths = movedFromAssetPaths.Where((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase)).ToArray();
+                if (importedAssets?.Count() > 0 || deletedAssets?.Count() > 0 || movedAssets?.Count() > 0 || movedFromAssetPaths?.Count() > 0)
                 {
                     isAssetChanged = true;
                 }
@@ -34,7 +39,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             //资源变动，触发资源cache修改
             if (isAssetChanged)
             {
-                var buildingAssetinfo = GetBuildingAssetInfosCache();
+                if (AssetInfoCache == null) AssetInfoCache = GetBuildingAssetInfosCache();
                 {
                     foreach (var asset in importedAssets)
                     {
@@ -60,14 +65,9 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                         }
                     }
                 }
-                SaveBuildingAssetInfosCache(buildingAssetinfo);
+                SaveBuildingAssetInfosCache(AssetInfoCache);
             }
         }
-
-        /// <summary>
-        /// info
-        /// </summary>
-        static private BuildAssetInfos buildAssetInfos;
 
 
         //路径
@@ -79,6 +79,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// <returns></returns>
         static public BuildAssetInfos GetBuildingAssetInfosCache()
         {
+            BuildAssetInfos buildAssetInfos;
             //每次构建新对象返回
             if (File.Exists(PATH))
             {
@@ -122,14 +123,17 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         static public void OnAssetChanged(string path)
         {
             path = IPath.ReplaceBackSlash(path);
-           var assetInfo  = buildAssetInfos.GetAssetInfo(path,false);
+            var assetInfo = AssetInfoCache.GetAssetInfo(path, false);
             //增加
             if (assetInfo != null)
             {
-                buildAssetInfos.AssetInfoMap.Remove(path);
+                AssetInfoCache.AssetInfoMap.Remove(path);
             }
 
-            buildAssetInfos.AddAsset(path);
+            if (File.Exists(path))
+            {
+                AssetInfoCache.AddAsset(path);
+            }
         }
 
         /// <summary>
@@ -139,7 +143,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         static public void OnAssetDelete(string path)
         {
             path = IPath.ReplaceBackSlash(path);
-            buildAssetInfos.AssetInfoMap.Remove(path.ToLower());
+            AssetInfoCache.AssetInfoMap.Remove(path.ToLower());
         }
     }
 }

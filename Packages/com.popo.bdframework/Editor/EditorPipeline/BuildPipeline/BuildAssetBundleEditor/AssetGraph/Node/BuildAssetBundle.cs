@@ -55,8 +55,13 @@ namespace BDFramework.Editor.AssetGraph.Node
             return new BuildAssetBundle();
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
+            //
+            if (GUILayout.Button("重新生成-" + BResources.ART_ASSET_INFO_PATH))
+            {
+                BDFrameworkAssetsEnv.BuildingCtx.StartBuildAssetBundle(AssetGraphEditorWindow.Window.BuildTarget, buildMode: AssetBundleBuildingContext.BuildMode.GenArtAssetInfo);
+            }
         }
 
         /// <summary>
@@ -77,6 +82,12 @@ namespace BDFramework.Editor.AssetGraph.Node
                 return;
             }
 
+            var comingList = AssetGraphTools.GetComingAssets(incoming);
+            if (comingList.Count == 0)
+            {
+                return;
+            }
+
             this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
             //这里只做临时的输出，预览用，不做实际更改
             var tempBuildAssetsInfo = this.BuildingCtx.BuildAssetInfos?.Clone();
@@ -85,18 +96,20 @@ namespace BDFramework.Editor.AssetGraph.Node
                 tempBuildAssetsInfo = new BuildAssetInfos();
             }
 
-            Debug.Log("Buildinfo 数量:" + tempBuildAssetsInfo.GetAssetsCount());
+            Debug.Log("Buildinfo 数量:" + tempBuildAssetsInfo.GetValidAssetsCount());
             //预计算输出,不直接修改buildinfo
             //重整assetbundle颗粒度
             tempBuildAssetsInfo.ReorganizeAssetBundleUnit();
+            //获取ab列表
+            var newAssetBundleItemList = tempBuildAssetsInfo.GetAssetBundleItems();
             //对比差异文件
-            var changedAssetList = AssetBundleToolsV2.GetChangedAssetsByFileHash(this.BuildingCtx.BuildParams.OutputPath, target, tempBuildAssetsInfo);
-
+           var changedAssetList = AssetBundleToolsV2.GetChangedAssetsByFileHash(this.BuildingCtx.BuildParams.OutputPath, target, tempBuildAssetsInfo);
+        //    var changedAssetList2 = AssetBundleToolsV2.GetChangedAssetsByCompareAB(this.BuildingCtx.BuildParams.OutputPath, target, newAssetBundleItemList);
             //搜集所有的 asset reference 
             var comingAssetReferenceList = AssetGraphTools.GetComingAssets(incoming);
 
             //----------------验证资源-------------
-            if (comingAssetReferenceList.Count == BDFrameworkAssetsEnv.BuildingCtx.BuildAssetInfos.AssetInfoMap.Count)
+            if (comingAssetReferenceList.Count == BDFrameworkAssetsEnv.BuildingCtx.BuildAssetInfos.GetValidAssetsCount())
             {
                 foreach (var ar in comingAssetReferenceList)
                 {
@@ -135,7 +148,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     Debug.Log("Buildinfo多余资源:\n " + JsonMapper.ToJson(list, true));
                 }
 
-                Debug.LogErrorFormat("【资源验证】coming资源和Buildinfo资源数量不相等 {0}-{1}，请注意~", comingAssetReferenceList.Count, tempBuildAssetsInfo.AssetInfoMap.Count);
+                Debug.LogErrorFormat("【资源验证】coming资源和Buildinfo资源数量不相等 {0}-{1}，请注意~", comingAssetReferenceList.Count, tempBuildAssetsInfo.GetValidAssetsCount());
             }
 
 
@@ -158,7 +171,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     {
                         list.Add(ar);
                     }
-                    else
+                    else if(!Directory.Exists(buildAssetItem.Key)) //非文件夹，则报错
                     {
                         Debug.LogFormat("<color=red>【BuildAssetBundle】资源没有inComing:{0} </color>", buildAssetItem.Key);
                     }
@@ -173,10 +186,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         }
 
 
-        /// <summary>
-        /// build assetbundle的结果，用以给后续流程使用
-        /// </summary>
-        public static BuildAssetInfos BuildAssetResult { get; private set; } = null;
+
 
         /// <summary>
         /// 构建时候触发
@@ -192,7 +202,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             //构建ab包
             BDFrameworkAssetsEnv.BuildingCtx.StartBuildAssetBundle(buildTarget);
-            BuildAssetResult = BDFrameworkAssetsEnv.BuildingCtx.BuildAssetInfos.Clone();
+
         }
     }
 }

@@ -61,12 +61,12 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="incoming"></param>
         /// <param name="connectionsToOutput"></param>
         /// <param name="outputFunc"></param>
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
 
             EditorGUILayout.HelpBox("将该目录下所有Prefab打包!", MessageType.Info);
 
-            base.OnInspectorGUI( node,  streamManager,  editor,  onValueChanged);
+            base.OnInspectorGUI( node,  streamManager,  inspector,  onValueChanged);
         }
 
 
@@ -109,10 +109,10 @@ namespace BDFramework.Editor.AssetGraph.Node
                         }
 
                         var (ret,msg) = this.BuildingCtx.BuildAssetInfos.SetABPack(ar.importFrom, ar.importFrom, BuildAssetInfos.SetABPackLevel.Simple, this.Category + " " + (this.selfNodeGUI!=null?this.selfNodeGUI.Name: this.GetHashCode().ToString()), this.IsIncludeDependAssets);
-                        if (!ret)
-                        {
-                            Debug.LogError($"【颗粒度】设置AB失败 - {ar.importFrom} \n {msg}");
-                        }
+                        // if (!ret)
+                        // {
+                        //     Debug.LogError($"【颗粒度】设置AB失败 - {ar.importFrom} \n {msg}");
+                        // }
 
                         //返回prefab
                         outMap[ar.importFrom] = new List<AssetReference>() { };

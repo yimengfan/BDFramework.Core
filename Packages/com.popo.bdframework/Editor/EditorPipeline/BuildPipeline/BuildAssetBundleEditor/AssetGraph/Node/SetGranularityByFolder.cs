@@ -13,7 +13,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     /// <summary>
     /// 颗粒度,排序30-50
     /// </summary>
-    [CustomNode("BDFramework/[颗粒度]文件夹打包一个AB", 30)]
+    [CustomNode("BDFramework/[颗粒度]按文件夹打包", 30)]
     public class SetGranularityByFolder : SetGranularityBase
     {
         public override string ActiveStyle
@@ -28,7 +28,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         public override string Category
         {
-            get { return "[颗粒度]文件夹打包一个AB"; }
+            get { return "[颗粒度]整个文件夹打包"; }
         }
 
         public override void Initialize(NodeData data)
@@ -43,58 +43,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             newData.AddDefaultOutputPoint();
             return new SetGranularityByFolder();
         }
-
-
-        // /// <summary>
-        // /// 是否包含依赖资产
-        // /// </summary>
-        // public bool IsIncludeDependAssets = false;
-        //
-        // /// <summary>
-        // /// 设置依赖等级
-        // /// </summary>
-        // public int SetLevel = (int) BuildAssetInfos.SetABPackLevel.Simple;
-        //
-        //
-        // private NodeGUI selfNodeGUI;
-        //
-        // public override void OnDrawNodeGUIContent(NodeGUI node)
-        // {
-        //     this.selfNodeGUI = node;
-        //     GUILayout.BeginHorizontal(GUILayout.Height(300));
-        //     {
-        //
-        //         GUILayout.Label("依赖: ", GUILayout.Width(30));
-        //         if (IsIncludeDependAssets)
-        //         {
-        //             GUI.color = Color.red;
-        //         }
-        //         else
-        //         {
-        //             GUI.color = Color.yellow;
-        //         }
-        //
-        //         GUILayout.Label((IsIncludeDependAssets ? "True" : "False"), GUILayout.Width(30));
-        //         GUI.color = GUI.backgroundColor;
-        //         //space
-        //         //GUILayout.Space(1);
-        //
-        //         GUILayout.Label("设置: ", GUILayout.Width(30));
-        //         if ((BuildAssetInfos.SetABPackLevel) this.SetLevel == BuildAssetInfos.SetABPackLevel.Lock)
-        //         {
-        //             GUI.color = Color.red;
-        //         }
-        //         else
-        //         {
-        //             GUI.color = Color.yellow;
-        //         }
-        //
-        //         GUILayout.Label(((BuildAssetInfos.SetABPackLevel) this.SetLevel).ToString(),GUILayout.Width(30));
-        //     }
-        //     GUILayout.EndHorizontal();
-        //     GUI.color = GUI.backgroundColor;
-        // }
-        //
+        
         //
         /// <summary>
         /// 预览结果 编辑器连线数据，但是build模式也会执行
@@ -105,10 +54,10 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="incoming"></param>
         /// <param name="connectionsToOutput"></param>
         /// <param name="outputFunc"></param>
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
             EditorGUILayout.HelpBox("将该目录下所有文件,打包成一个AB!", MessageType.Info);
-            base.OnInspectorGUI(node, streamManager, editor, onValueChanged);
+            base.OnInspectorGUI(node, streamManager, inspector, onValueChanged);
         }
 
         /// <summary>
@@ -184,10 +133,10 @@ namespace BDFramework.Editor.AssetGraph.Node
                     {
                         //设置当前ab名为文件夹名
                         var (ret, msg) = this.BuildingCtx.BuildAssetInfos.SetABPack(ar.importFrom, folderPath, (BuildAssetInfos.SetABPackLevel) this.SetLevel, (this.selfNodeGUI!=null?this.selfNodeGUI.Name: this.GetHashCode().ToString()), false);
-                        if (!ret)
-                        {
-                            Debug.LogError($"【颗粒度】设置AB失败 [{folderPath}] - {ar.importFrom} \n {msg}");
-                        }
+                        // if (!ret)
+                        // {
+                        //     Debug.LogError($"【颗粒度】设置AB失败 [{folderPath}] - {ar.importFrom} \n {msg}");
+                        // }
 
                         //设置依赖，依赖资产需要特殊处理在当前根目录下的依赖，跳过按文件夹处理
                         if (this.IsIncludeDependAssets)
@@ -201,10 +150,10 @@ namespace BDFramework.Editor.AssetGraph.Node
                                     if (!depend.Equals(ar.importFrom, StringComparison.OrdinalIgnoreCase) && !depend.StartsWith(folderPath, StringComparison.OrdinalIgnoreCase))
                                     {
                                         (ret, msg) = this.BuildingCtx.BuildAssetInfos.SetABPack(depend, folderPath, (BuildAssetInfos.SetABPackLevel) this.SetLevel, this.Category + " " + (this.selfNodeGUI!=null?this.selfNodeGUI.Name: this.GetHashCode().ToString()), false);
-                                        if (!ret)
-                                        {
-                                            Debug.LogError($"【颗粒度】[depend]设置AB失败 [{folderPath}] - {ar.importFrom} \n {msg}");
-                                        }
+                                        // if (!ret)
+                                        // {
+                                        //     Debug.LogError($"【颗粒度】[depend]设置AB失败 [{folderPath}] - {ar.importFrom} \n {msg}");
+                                        // }
                                     }
                                 }
                             }

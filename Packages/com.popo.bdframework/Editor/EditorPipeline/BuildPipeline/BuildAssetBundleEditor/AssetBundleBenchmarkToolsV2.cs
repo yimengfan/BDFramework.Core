@@ -31,6 +31,21 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         
         private static string ScenePath = "Packages/com.popo.bdframework/Runtime/AssetsManager/UnitTest/AssetBundleBenchmark_01.unity";
         private static string ScenePath2 = "Packages/com.popo.bdframework/Runtime/AssetsManager/UnitTest/AssetBundleBenchmark_Async.unity";
+
+        /// <summary>
+        /// 打开场景
+        /// </summary>
+        static public void OpenScene()
+        {
+            if (EditorApplication.isPlaying)
+            {
+                EditorApplication.ExecuteMenuItem("Edit/Play");
+            }
+
+            //打开场景、运行
+            EditorSceneManager.OpenScene(ScenePath);
+        }
+
         /// <summary>
         /// 测试加载所有的AssetBundle
         /// </summary>

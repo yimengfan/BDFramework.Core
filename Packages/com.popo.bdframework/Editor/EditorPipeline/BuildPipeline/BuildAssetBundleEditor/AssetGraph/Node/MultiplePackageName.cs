@@ -26,6 +26,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// 构建的上下文信息
         /// </summary>
         public AssetBundleBuildingContext BuildingCtx { get; set; }
+
         public override string ActiveStyle
         {
             get { return "node 3 on"; }
@@ -57,7 +58,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         }
 
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
             this.PacakgeName = EditorGUILayout.TextField("分包名:", this.PacakgeName);
             node.Name = "分包名:" + this.PacakgeName;
@@ -85,13 +86,14 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+
             //搜集所有的 asset reference 
             var comingAssetReferenceList = AssetGraphTools.GetComingAssets(incoming);
             if (comingAssetReferenceList.Count == 0)
             {
                 return;
             }
-           
+
 
             //
             packageAssetList = new List<string>();
@@ -116,26 +118,29 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             var assetIdList = new List<int>();
             //寻找当前分包,包含的资源
-            foreach (var asset in this.packageAssetList)
+            foreach (var assetPath in this.packageAssetList)
             {
-              var  buildAssetData =   BuildAssetBundle.BuildAssetResult.GetAssetInfo(asset);
+                var buildAssetInfo = this.BuildingCtx.BuildAssetInfos.GetAssetInfo(assetPath);
 
                 //依次把加入资源和依赖资源
-                foreach (var dependHash in buildAssetData.DependAssetList)
+                foreach (var dependGUID in buildAssetInfo.DependAssetList)
                 {
-                    var dependAsset = BuildAssetBundle.BuildAssetResult.AssetInfoMap.Values.FirstOrDefault((value) => value.ArtConfigIdx != -1 && value.ABName == dependHash);
-                    if (dependAsset != null)
+                    var dependAssetInfo = this.BuildingCtx.BuildAssetInfos.AssetInfoMap.Values.First((ai) => ai.GUID.Equals(dependGUID));
+
+                    //获取asset ab的idx
+                    var idx = this.BuildingCtx.AssetBundleItemList.FindIndex((abi) => abi.AssetBundlePath == dependAssetInfo.ABName);
+                    if (idx > -1)
                     {
-                        assetIdList.Add(dependAsset.ArtConfigIdx);
+                        assetIdList.Add(dependAssetInfo.ArtAssetsInfoIdx);
                     }
                     else
                     {
-                        BDebug.LogError("分包依赖失败:" + dependHash);
+                        BDebug.LogError("分包依赖失败:" + dependGUID);
                     }
                 }
 
                 //符合分包路径
-                assetIdList.Add(buildAssetData.ArtConfigIdx);
+                assetIdList.Add(buildAssetInfo.ArtAssetsInfoIdx);
             }
 
             //新建package描述表
@@ -149,7 +154,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //热更表格
             subPackage.TablePathList.Add(SqliteLoder.LOCAL_DB_PATH);
             //配置表
-            subPackage.ConfAndInfoList.Add(BResources.ART_ASSET_CONFIG_PATH);
+            subPackage.ConfAndInfoList.Add(BResources.ART_ASSET_INFO_PATH);
             subPackage.ConfAndInfoList.Add(BResources.ART_ASSET_TYPES_PATH);
             subPackage.ConfAndInfoList.Add(BResources.PACKAGE_BUILD_INFO_PATH);
 

@@ -90,7 +90,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             this.selfNodeGUI = node;
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
           
             //初始化group list

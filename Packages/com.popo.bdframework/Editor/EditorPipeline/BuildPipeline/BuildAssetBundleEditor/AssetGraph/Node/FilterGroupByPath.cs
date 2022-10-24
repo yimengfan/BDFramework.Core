@@ -100,35 +100,6 @@ namespace BDFramework.Editor.AssetGraph.Node
             return node;
         }
 
-        //
-        // /// <summary>
-        // /// 添加到List列表
-        // /// </summary>
-        // /// <param name="label"></param>
-        // private void AddToList(string label)
-        // {
-        //     label = IPath.ReplaceBackSlash(label);
-        //     var find = this.groupFilterPathDataList.FirstOrDefault((gf) => gf.GroupPath.Equals(label));
-        //
-        //     if (find == null)
-        //     {
-        //         this.groupFilterPathDataList.Add(new GroupPathData()
-        //         {
-        //             GroupPath = label,
-        //         });
-        //     
-        //         this.AddOutputNode(label);
-        //     }
-        //     else
-        //     {
-        //         Debug.LogError("已经存在:" + label);
-        //     }
-        //
-        //     
-        //     
-        // }
-
-
         #region 渲染 list Inspector
 
         private NodeGUI selfNodeGUI;
@@ -143,7 +114,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         private bool isDirty;
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
             //添加输出节点
             if (incommingAssetGroup != null)
@@ -180,6 +151,35 @@ namespace BDFramework.Editor.AssetGraph.Node
                         }
                     }
                 }
+
+                GUI.color = Color.red;
+                if (GUILayout.Button("清理", GUILayout.Width(100), GUILayout.Height(30)))
+                {
+                    if (EditorUtility.DisplayDialog("提示", "是否移除不存在的路径?(StartWith生效)", "ok", "cancel"))
+                    {
+                        if (CompareMode == CompareModeEnum.StartWith)
+                        {
+                            var removeList = new List<int>();
+
+                            for (int i = 0; i < this.groupFilterPathDataList.Count; i++)
+                            {
+                                var gf = this.groupFilterPathDataList[i];
+                                if (gf.GroupPath.Contains("/") && !Directory.Exists(gf.GroupPath))
+                                {
+                                    Debug.Log($"【移除】{gf.GroupPath}");
+                                    removeList.Add(i);
+                                }
+                            }
+
+                            if (removeList.Count > 0)
+                            {
+                                RemoveOutputNode(removeList.ToArray());
+                            }
+                        }
+                    }
+                }
+
+                GUI.color = GUI.backgroundColor;
             }
             GUILayout.EndHorizontal();
 
@@ -226,13 +226,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
                 if (EditorUtility.DisplayDialog("提示", "是否删除 " + removeItem.GroupPath, "OK", "Cancel"))
                 {
-                    this.groupFilterPathDataList.RemoveAt(removeIdx);
-                    //移除输出节点
-                    var rOutputNode = this.selfNodeGUI.Data.OutputPoints.Find((node) => node.Id == removeItem.OutputNodeId);
-                    this.selfNodeGUI.Data.OutputPoints.Remove(rOutputNode);
-                    //刷新
-                    AssetGraphTools.RemoveOutputNode(this.selfNodeGUI, rOutputNode);
-                    AssetGraphTools.UpdateNodeGraph(this.selfNodeGUI);
+                    RemoveOutputNode(removeIdx);
                 }
             }
         }
@@ -327,6 +321,30 @@ namespace BDFramework.Editor.AssetGraph.Node
             this.e_groupList.index++;
             var node = this.selfNodeGUI.Data.AddOutputPoint(label);
             this.groupFilterPathDataList.Add(new GroupPathData() {OutputNodeId = node.Id, GroupPath = label});
+        }
+
+
+        /// <summary>
+        /// 移除输出节点
+        /// </summary>
+        /// <param name="idx"></param>
+        private void RemoveOutputNode(params int[] idxs)
+        {
+            for (int i =   this.groupFilterPathDataList.Count-1; i >= 0; i--)
+            {
+                if (idxs.Contains(i))
+                {
+                    var removeItem = this.groupFilterPathDataList[i];
+                    //移除输出节点
+                    var rOutputNode = this.selfNodeGUI.Data.OutputPoints.Find((node) => node.Id == removeItem.OutputNodeId);
+                    this.selfNodeGUI.Data.OutputPoints.Remove(rOutputNode);
+                    this.groupFilterPathDataList.RemoveAt(i);
+                    AssetGraphTools.RemoveOutputNode(this.selfNodeGUI, rOutputNode);
+                }
+            }
+
+            //刷新
+            AssetGraphTools.UpdateNodeGraph(this.selfNodeGUI);
         }
 
 
@@ -607,7 +625,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             //判断有没有连线
             var AssetGraphEditor = AssetGraphEditorWindow.Window;
-            if (AssetGraphEditor!=null && AssetGraphEditor.Connections != null)
+            if (AssetGraphEditor != null && AssetGraphEditor.Connections != null)
             {
                 foreach (var gf in this.groupFilterPathDataList)
                 {

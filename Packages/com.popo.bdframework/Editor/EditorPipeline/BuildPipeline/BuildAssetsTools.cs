@@ -53,7 +53,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             var newVersionNum = "";
             //触发事件
-            var lastPackageBuildInfo = GlobalAssetsHelper.GetPackageBuildInfo(outputPath, platform);
+            var lastPackageBuildInfo = ClientAssetsHelper.GetPackageBuildInfo(outputPath, platform);
             var lastVersionNum = lastPackageBuildInfo.Version;
             //没有指定版本号，则需要触发版本号的实现逻辑
             if (string.IsNullOrEmpty(setNewVersionNum))
@@ -127,7 +127,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //4.生成母包资源信息
-            GlobalAssetsHelper.GenBasePackageAssetBuildInfo(outputPath, platform, version: newVersionNum);
+            ClientAssetsHelper.GenBasePackageBuildInfo(outputPath, platform, version: newVersionNum);
 
             //5.生成本地Assets.info配置
             //这个必须最后生成！！！！

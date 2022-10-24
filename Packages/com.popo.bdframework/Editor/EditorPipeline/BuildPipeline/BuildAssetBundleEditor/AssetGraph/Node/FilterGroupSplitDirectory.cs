@@ -89,9 +89,9 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         /// <param name="node"></param>
         /// <param name="streamManager"></param>
-        /// <param name="editor"></param>
+        /// <param name="inspector"></param>
         /// <param name="onValueChanged"></param>
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
          
             EditorGUILayout.HelpBox("该节点，用于分组 传入路径的所有子目录，默认只接受一个传入!", MessageType.Info);
@@ -124,8 +124,10 @@ namespace BDFramework.Editor.AssetGraph.Node
             //路径
             var rootDir = item.Key;
             var subDirList = Directory.GetDirectories(rootDir, "*", SearchOption.TopDirectoryOnly).ToList();
+            
+            //根目录下存在资产
             var rootDirFiles = Directory.GetFiles(rootDir, "*", SearchOption.TopDirectoryOnly).Where((d)=>!d.EndsWith(".meta"));
-            if (rootDirFiles.Count() > 0)
+            if (rootDirFiles.Count() >= 2)
             {
                 subDirList.Add(rootDir);
             }
@@ -220,16 +222,16 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+            //prepare传入的资源
+            this.InitOutputNode(incoming);
+            this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
+            
             //搜集所有的 asset reference 
             var comingAssetReferenceList = AssetGraphTools.GetComingAssets(incoming);
             if (comingAssetReferenceList.Count == 0)
             {
                 return;
             }
-            this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
-
-            //prepare传入的资源
-            this.InitOutputNode(incoming);
             var assetsList = AssetGraphTools.GetComingAssets(incoming);
             //初始化输出列表
             var allOutMap = new Dictionary<string, List<AssetReference>>();

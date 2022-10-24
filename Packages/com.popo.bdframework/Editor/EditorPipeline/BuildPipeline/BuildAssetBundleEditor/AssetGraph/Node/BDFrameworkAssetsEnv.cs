@@ -124,7 +124,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         private NodeGUI selfNodeGUI;
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
             GUILayout.Label("初始化打包框架", EditorGUIHelper.LabelH4);
             this.selfNodeGUI = node;
@@ -186,31 +186,38 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
-            if (incoming == null)
-            {
-                return;
-            }
-
             //检测混淆
             AssetGraphTools.WatchBegin();
+            
+            //初始化buildingCtx
             if (BuildingCtx == null)
             {
                 BuildingCtx = new AssetBundleBuildingContext();
             }
 
             BuildingCtx.BuildParams.BuildTarget = target;
-
-            //拿到外部传入的加载目录
-            loadRuntimeAssetPathList.Clear();
-            foreach (var ags in incoming)
+            if (incoming == null)
             {
-                foreach (var ag in ags.assetGroups)
+                loadRuntimeAssetPathList = new List<string>(BApplication.GetAllRuntimeDirects());
+            }
+            else
+            {
+                //拿到外部传入的加载目录
+                loadRuntimeAssetPathList.Clear();
+                foreach (var ags in incoming)
                 {
-                    loadRuntimeAssetPathList.Add(ag.Key);
+                    foreach (var ag in ags.assetGroups)
+                    {
+                        loadRuntimeAssetPathList.Add(ag.Key);
+                    }
                 }
             }
 
-            Debug.LogError("传入路径:\n" + JsonMapper.ToJson(loadRuntimeAssetPathList, true));
+
+
+
+
+            Debug.Log("传入路径:\n" + JsonMapper.ToJson(loadRuntimeAssetPathList, true));
 
 
             //设置所有节点参数请求,依次传参
@@ -263,9 +270,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             //生成build资源信息
-            if (BuildingCtx.BuildAssetInfos.GetAssetsCount() == 0)
+            if (BuildingCtx.BuildAssetInfos.GetValidAssetsCount() == 0)
             {
-                BuildingCtx.CollectBuildAssets(assetDirectories.ToArray());
+                BuildingCtx.CollectBuildAssets(assetDirectories.ToArray(),isRenew);
             }
         }
 
@@ -273,19 +280,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc,
             Action<NodeData, string, float> progressFunc)
         {
-            #region 保存AssetTypeConfig
 
-            var asetTypePath = string.Format("{0}/{1}/{2}", BuildingCtx.BuildParams.OutputPath, BApplication.GetPlatformPath(buildTarget), BResources.ART_ASSET_TYPES_PATH);
-            //数据结构保存
-            AssetTypeConfig at = new AssetTypeConfig()
-            {
-                AssetTypeList = BuildingCtx.BuildAssetInfos.AssetTypeList,
-            };
-            var csv = CsvSerializer.SerializeToString(at);
-            FileHelper.WriteAllText(asetTypePath, csv);
-            Debug.LogFormat("AssetType写入到:{0} \n{1}", asetTypePath, csv);
-
-            #endregion
 
             //BD生命周期触发
             BDFrameworkPipelineHelper.OnBeginBuildAssetBundle(BuildingCtx);

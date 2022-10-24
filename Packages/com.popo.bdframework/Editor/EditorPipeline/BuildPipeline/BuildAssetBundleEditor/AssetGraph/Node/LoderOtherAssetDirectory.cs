@@ -44,7 +44,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             return new LoderOtherAssetDirectory();
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
             EditorGUILayout.HelpBox("支持* ?通配符", MessageType.Info);
             var path = EditorGUILayout.TextField("打包路径:", this.LoadAssetPath);

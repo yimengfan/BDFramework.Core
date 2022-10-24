@@ -35,8 +35,9 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
             /// <summary>
             /// 在artConfig中的idx,用以辅助其他模块逻辑
+            /// 因为转成assetItem后会有数据丢失
             /// </summary>
-            public int ArtConfigIdx { get; set; } = -1;
+            public int ArtAssetsInfoIdx { get; set; } = -1;
 
             /// <summary>
             /// 资源类型
@@ -111,6 +112,8 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             public bool IsSetByDepend = false;
 
             public string LastSetABName = "";
+
+            public string Time = "";
         }
 
         /// <summary>
@@ -121,15 +124,14 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// <summary>
         /// 参与打包的所有资源
         /// </summary>
-        public Dictionary<string, AssetInfo> AssetInfoMap { get; private set; } =
-            new Dictionary<string, AssetInfo>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, AssetInfo> AssetInfoMap { get; private set; } = new Dictionary<string, AssetInfo>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
-        /// 资产数量
+        /// 验证资产数量
         /// </summary>
-        public int GetAssetsCount()
+        public int GetValidAssetsCount()
         {
-            return AssetInfoMap.Count;
+            return AssetInfoMap.Keys.Where((k) => File.Exists(k)).Count();
         }
 
         /// <summary>
@@ -160,14 +162,28 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         public (bool, string) SetABPack(string assetName, string newABName, SetABPackLevel setLevel, string owerLog,
             bool isSetAllDependAsset)
         {
+            //Folder有些时候没被添加
+            if (Directory.Exists(newABName))
+            {
+                if (!this.AssetInfoMap.ContainsKey(newABName))
+                {
+                    this.AddAsset(newABName);
+                }
+            }
+
+            // if (newABName.Equals("assets/resource_svn/runtime/battle/char/common/model/skin_default/skillshow/commontimeline_diagonal02hit13_right.prefab", StringComparison.OrdinalIgnoreCase))
+            // {
+            //     Debug.Log("1111111111");
+            // }
             //1.如果ab名被修改过,说明有其他规则影响，需要理清打包规则。（比如散图打成图集名）
             //2.如果资源被其他资源引用，修改ab名，需要修改所有引用该ab的名字
             bool isCanSetABName = false;
             this.AssetInfoMap.TryGetValue(assetName, out var assetInfo);
             if (assetInfo == null)
             {
-                return (false, $"！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！不存在assetName，请检查：{assetName}");
+                return (false, $"！！！！！！！！！！！！！！！！不存在assetName，请检查：{assetName}");
             }
+
             //设置日志
             this.SetAssetLogs.TryGetValue(assetName, out var list);
             if (list == null)
@@ -184,42 +200,47 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             else
             {
                 //设置级别比较
-                if ((int)setLevel > (int)lastSetLog.LastSetLevel)
+                if ((int) setLevel > (int) lastSetLog.LastSetLevel || newABName == lastSetLog.LastSetABName)
                 {
                     isCanSetABName = true;
                 }
             }
 
+            //输出日志
+            string retLog = "";
+            if (lastSetLog != null)
+            {
+                var dependStr = lastSetLog.IsSetByDepend ? "【Depend】" : "";
+                retLog = $"\n当前:<color=yellow>Level:{setLevel} Log:{owerLog}</color>, " +
+                         $"上次:<color=red>{dependStr}</color> <color=yellow>Level:{lastSetLog.LastSetLevel} Log:{lastSetLog.Log}</color> " +
+                         $"\n<color=green>LastTime</color> : {lastSetLog.Time} " +
+                         $"<color=green>CurTime</color> : {DateTime.Now.ToLongTimeString()} " +
+                         $"\n<color=green>LastAB</color> : {lastSetLog.LastSetABName} " +
+                         $"<color=green>CurAB</color> : {newABName}";
+            }
 
-            string retStr = "";
 
             if (isCanSetABName)
             {
-               
                 assetInfo.ABName = newABName;
 
                 list.Add(new SetLog()
                 {
                     LastSetLevel = setLevel,
                     Log = owerLog,
-                    LastSetABName = newABName
+                    LastSetABName = newABName,
+                    Time = DateTime.Now.ToLongTimeString()
                 });
             }
             else if (lastSetLog.Log != owerLog || lastSetLog.LastSetLevel != setLevel ||
                      lastSetLog.LastSetABName != newABName)
             {
-                var depend = lastSetLog.IsSetByDepend ? "【Depend】" : "";
-                retStr =
-                    $"【颗粒度】设置失败{assetName} " +
-                    $"\n当前:<color=yellow>{setLevel}-{owerLog}</color>, " +
-                    $"上次:<color=red>{depend}</color> <color=yellow>{lastSetLog.LastSetLevel}-{lastSetLog.Log}</color> " +
-                    $"\n <color=green>LastAB</color> : {lastSetLog.LastSetABName} " +
-                    $"\n <color=green>NewAB</color> : {newABName}";
+                retLog = ($"【颗粒度】设置失败{assetName} " + retLog);
             }
             else if (lastSetLog.Log == owerLog && lastSetLog.LastSetLevel == setLevel &&
                      lastSetLog.LastSetABName == newABName)
             {
-                return (true, retStr);
+                return (true, retLog);
             }
 
             //设置所有依赖的AB name
@@ -236,7 +257,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             }
 
 
-            return (isCanSetABName, retStr);
+            return (isCanSetABName, retLog);
         }
 
         /// <summary>
@@ -288,8 +309,8 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// <returns></returns>
         public AssetInfo GetNewInstanceAssetInfo(string path)
         {
-            var assetInfo =GetAssetInfo(path );
-            if (assetInfo!=null)
+            var assetInfo = GetAssetInfo(path, false);
+            if (assetInfo != null)
             {
                 var json = JsonMapper.ToJson(assetInfo);
                 //返回一个新实例
@@ -380,16 +401,26 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         }
 
 
+        private bool isReorganized = false;
+
         /// <summary>
         /// 重组Assetbundle 颗粒度
         /// </summary>
         public void ReorganizeAssetBundleUnit()
         {
+            if (isReorganized)
+            {
+                return;
+            }
+
+            isReorganized = true;
+
             #region 整理AB颗粒度
 
             //1.把依赖资源替换成AB Name，
-            foreach (var mainAsset in this.AssetInfoMap.Values)
+            foreach (var item in this.AssetInfoMap)
             {
+                var mainAsset = item.Value;
                 // if (mainAsset.ABName.Equals("assets/resource/runtime/shader/allshaders.shadervariants", StringComparison.OrdinalIgnoreCase))
                 // {
                 //     Debug.Log("xx");
@@ -398,23 +429,31 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 for (int i = 0; i < mainAsset.DependAssetList.Count; i++)
                 {
                     var dependAssetName = mainAsset.DependAssetList[i];
-                    if (this.AssetInfoMap.TryGetValue(dependAssetName, out var dependAssetData))
+                    if (this.AssetInfoMap.TryGetValue(dependAssetName, out var ai))
                     {
                         //替换成真正AB名
-                        if (!string.IsNullOrEmpty(dependAssetData.ABName))
+                        if (!string.IsNullOrEmpty(ai.ABName))
                         {
-                            mainAsset.DependAssetList[i] = dependAssetData.ABName;
+                            mainAsset.DependAssetList[i] = ai.ABName;
                         }
                     }
                     else
                     {
-                        Debug.LogError("【AssetbundleV2】资源整理出错: " + dependAssetName);
+                        if (!File.Exists(dependAssetName))
+                        {
+                            Debug.LogError($"【AssetbundleV2】资源整理出错,不存在:{dependAssetName} - mainAssets: {item.Key} ");
+                        }
+                        else
+                        {
+                            Debug.LogError($"【AssetbundleV2】资源整理出错,未收集:{dependAssetName} - mainAssets: {item.Key} ");
+                        }
                     }
                 }
 
-                //去重，移除自己
+                //去重，将本体移到最后
                 mainAsset.DependAssetList = mainAsset.DependAssetList.Distinct().ToList();
                 mainAsset.DependAssetList.Remove(mainAsset.ABName);
+                mainAsset.DependAssetList.Add(mainAsset.ABName);
             }
 
             //2.按规则纠正ab名
@@ -450,153 +489,199 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             #endregion
         }
 
+
         /// <summary>
         ///获取Assetbundle 打包列表
         /// </summary>
         public List<AssetBundleItem> GetAssetBundleItems()
         {
+            if (!isReorganized)
+            {
+                Debug.LogError("AssetMap没有过重新整理过");
+                return null;
+            }
+
+
+            var cloneAssetInfos = this.Clone();
+
             //根据buildinfo 生成加载用的 Config
             //runtime下的全部保存配置，其他的只保留一个ab名即可
             //1.导出配置
             var assetbundleItemList = new List<AssetBundleItem>();
             //占位，让id和idx恒相等
-            assetbundleItemList.Add(new AssetBundleItem(0, null, null, -1, new int[] { }));
+            assetbundleItemList.Add(new AssetBundleItem(0, null, null, null, -1, new int[] { }));
 
-            //搜集runtime的 ,分两个for 让序列化后的数据更好审查
-            foreach (var assetInfo in this.AssetInfoMap)
+            //I.先搜集所有的AssetBundlePath
+            foreach (var assetInfo in cloneAssetInfos.AssetInfoMap)
+            {
+                var ret = assetbundleItemList.FirstOrDefault((abi) => abi.AssetBundlePath == assetInfo.Value.ABName);
+                if (ret == null)
+                {
+                    var abItem = new AssetBundleItem(assetbundleItemList.Count, "", assetInfo.Value.ABName,"", -1, new int[] { });
+                    assetbundleItemList.Add(abItem); //.ManifestMap[key] = mi;
+                }
+            }
+
+            Debug.Log($"<color=yellow>AssetBundle数量:{assetbundleItemList.Count}</color>");
+
+
+            //II.搜集runtime的 ,分两个for 让序列化后的数据更好审查
+            int counter = 0;
+            foreach (var assetInfo in cloneAssetInfos.AssetInfoMap)
             {
                 //runtime路径下，写入配置
-                if (assetInfo.Key.Contains(AssetBundleToolsV2.RUNTIME_PATH))
+                //剔除文件夹
+                if (AssetBundleToolsV2.IsRuntimePathAssetWithoutFolder(assetInfo.Key))
                 {
                     var loadPath = AssetBundleToolsV2.GetAbsPathFormRuntime(assetInfo.Key);
                     //添加
-                    var abItem = new AssetBundleItem(assetbundleItemList.Count, loadPath, assetInfo.Value.ABName,
-                        assetInfo.Value.Type, new int[] { });
+                    var abItem = new AssetBundleItem(assetbundleItemList.Count, loadPath, "", assetInfo.Value.GUID,assetInfo.Value.Type, new int[] { });
                     // abi.EditorAssetPath = item.Key;
                     assetbundleItemList.Add(abItem); //.ManifestMap[key] = mi;
-                    assetInfo.Value.ArtConfigIdx = abItem.Id;
+                    assetInfo.Value.ArtAssetsInfoIdx = abItem.Id;
+                    counter++;
                 }
             }
-            
-            //搜集非runtime的,进一步防止重复
-            foreach (var assetInfo in this.AssetInfoMap)
+
+            Debug.Log($"<color=yellow>Runtime数量:{counter}</color>");
+            Debug.Log($"<color=yellow>ABList数量:{assetbundleItemList.Count}</color>");
+            //III. 保留GUID的操作，可能会加载非Runtime下的资产
+            foreach (var assetInfo in cloneAssetInfos.AssetInfoMap)
             {
-                //非runtime的只需要被索引AB
-                if (!assetInfo.Key.Contains(AssetBundleToolsV2.RUNTIME_PATH))
+                //保留GUID
+                if (assetInfo.Value.IsKeepGUID && assetInfo.Value.ArtAssetsInfoIdx == -1)
                 {
-                    //非runtime不会被直接加载（只会被依赖加载），所以保留一个AB标记即可
-                    var idx = assetbundleItemList.FindIndex((ab) =>ab.AssetBundlePath!=  null &&  ab.AssetBundlePath ==  assetInfo.Value.ABName);
-                    if (idx == -1 ) //不存在，则添加
+                    if (!AssetBundleToolsV2.IsRuntimePath(assetInfo.Key))
                     {
-                        var abItem = new AssetBundleItem(assetbundleItemList.Count, null, assetInfo.Value.ABName,
-                            assetInfo.Value.Type, new int[] { });
-                        // abi.EditorAssetPath = item.Key;
+                        var abItem = new AssetBundleItem(assetbundleItemList.Count, "", "", assetInfo.Value.GUID, assetInfo.Value.Type, new int[] { });
                         assetbundleItemList.Add(abItem);
-                        assetInfo.Value.ArtConfigIdx = abItem.Id;
+                        assetInfo.Value.ArtAssetsInfoIdx = abItem.Id;
+                    }
+                    else
+                    {
+                        Debug.LogError("流程出错，出现runtime资产未在列表中");
                     }
                 }
             }
 
-            //保留GUID的操作，可能会加载非Runtime下的资产
-            foreach (var assetInfo in this.AssetInfoMap)
+
+            //2.将depend资源
+            //替换成依赖的AB,减少序列化数据量
+            for (int idx = 0; idx < assetbundleItemList.Count; idx++)
             {
-                //保留GUID
-                if (assetInfo.Value.IsKeepGUID)
+                var assetbundleItem = assetbundleItemList[idx];
+
+                if (!string.IsNullOrEmpty(assetbundleItem.LoadPath) || !string.IsNullOrEmpty(assetbundleItem.GUID))
                 {
-                    if (assetInfo.Value.ArtConfigIdx == -1)
+                    var assetInfoItem = cloneAssetInfos.AssetInfoMap.FirstOrDefault((ai) => ai.Value.ArtAssetsInfoIdx == idx || ai.Value.GUID == assetbundleItem.GUID);
+
+                    //dependAsset 替换成ID
+                    List<int> dependIdList = new List<int>();
+                    foreach (var dependGUID in assetInfoItem.Value.DependAssetList)
                     {
-                        if (!assetInfo.Key.Contains(AssetBundleToolsV2.RUNTIME_PATH))
+                        //寻找保存列表中依赖的id（可以认为是下标）
+                        var dependAsset = cloneAssetInfos.AssetInfoMap.Values.FirstOrDefault((ai) => ai.GUID == dependGUID);
+                        int dependABIdx = -1;
+                        if (dependAsset != null)
                         {
-                            var abItem = new AssetBundleItem(assetbundleItemList.Count, null, assetInfo.Value.ABName, assetInfo.Value.Type, new int[] { });
-                            assetbundleItemList.Add(abItem);
-                            assetInfo.Value.ArtConfigIdx = abItem.Id;
+                            dependABIdx = assetbundleItemList.FindIndex((abi) => abi.AssetBundlePath == dependAsset.ABName);
+                        }
+                        else //可能是文件夹
+                        {
+                            Debug.LogError($"AssetInfoMap不存在资产:{AssetDatabase.GUIDToAssetPath(dependGUID)}");
+                        }
+
+
+                        //依赖的AB
+
+                        if (dependABIdx > -1)
+                        {
+                            dependIdList.Add(dependABIdx);
                         }
                         else
                         {
-                            Debug.LogError("流程出错，出现runtime资产idx=-1");
+                            Debug.LogError($"AssetbundleItemList中不存在依赖:{assetInfoItem.Key}-{dependGUID} / {AssetDatabase.GUIDToAssetPath(dependGUID)}");
                         }
                     }
-                  
-                    assetbundleItemList[assetInfo.Value.ArtConfigIdx].GUID = assetInfo.Value.GUID;
+
+                    //赋值dependAssetIdx,去重，排序，保持主资源在最后
+                    var tmpList = dependIdList.Distinct().ToList();
+                    var mainIdx = tmpList.Last();
+                    tmpList.Remove(mainIdx);
+                    if (tmpList.Count > 1)
+                    {
+                        tmpList.Sort();
+                    }
+
+                    tmpList.Add(mainIdx);
+                    assetbundleItem.DependAssetIds = tmpList.ToArray();
                 }
             }
 
-
-            //2.将depend替换成Id,减少序列化数据量
-            foreach (var assetbundleItem in assetbundleItemList)
+            //4.设置溯源packHash
+            foreach (var abi in assetbundleItemList)
             {
-                if (!string.IsNullOrEmpty(assetbundleItem.LoadPath))
+                if (abi.IsAssetBundleFile())
                 {
-                    //dependAsset 替换成ID
-                    var assetInfo = this.AssetInfoMap.Values.FirstOrDefault((asset) => asset.ABName == assetbundleItem.AssetBundlePath);
-                    for (int i = 0; i < assetInfo.DependAssetList.Count; i++)
-                    {
-                        var dependAssetName = assetInfo.DependAssetList[i];
-                        //寻找保存列表中依赖的id（可以认为是下标）
-                        var dependAssetBuildData =
-                            assetbundleItemList.FirstOrDefault((asset) => asset.AssetBundlePath == dependAssetName);
-                        //向array添加元素，editor 略冗余，目的是为了保护 runtime 数据源readonly
-                        // var templist = assetbundleItem.DependAssetIds.ToList();
-                        // templist.Add(dependAssetBuildData.Id);
-                        // assetbundleItem.DependAssetIds = templist.ToArray();
+                    //获取到pack hash
+                    var packHash = cloneAssetInfos.GetAssetsPackSourceHash(abi.AssetBundlePath);
+                    //赋值
+                    abi.AssetsPackSourceHash = packHash;
+                }
+            }
 
-                        assetbundleItem.DependAssetIds =
-                            assetbundleItem.DependAssetIds.Append(dependAssetBuildData.Id).ToArray();
+            //最后.检查config是否遗漏  
+            foreach (var assetInfo in cloneAssetInfos.AssetInfoMap)
+            {
+                AssetBundleItem checkABItem = null;
+                //使用runtime加载
+                if (AssetBundleToolsV2.IsRuntimePathAssetWithoutFolder(assetInfo.Key))
+                {
+                    if (assetInfo.Value.ArtAssetsInfoIdx < 0 || assetInfo.Value.ArtAssetsInfoIdx > assetbundleItemList.Count)
+                    {
+                        Debug.LogError("AssetBundleList中不存在Runtime资产:" + assetInfo.Key);
+                        continue;
+                    }
+
+                    checkABItem = assetbundleItemList[assetInfo.Value.ArtAssetsInfoIdx];
+                }
+                //使用GUID加载
+                else if (assetInfo.Value.IsKeepGUID)
+                {
+                    checkABItem = assetbundleItemList.FirstOrDefault((ai) => ai.GUID == assetInfo.Value.GUID);
+                    if (checkABItem == null)
+                    {
+                        Debug.LogError("GUID加载资产遗漏:" + assetInfo.Key);
+                        continue;
+                    }
+                }
+
+                if (checkABItem != null)
+                {
+                    //寻找依赖是否存在
+                    foreach (var dependGUID in assetInfo.Value.DependAssetList)
+                    {
+                        var dependAI = cloneAssetInfos.AssetInfoMap.Values.FirstOrDefault((ai) => ai.GUID == dependGUID);
+                        if (dependAI == null)
+                        {
+                            Debug.LogError("Depend资产未找到:" + AssetDatabase.GUIDToAssetPath(dependGUID));
+                            continue;
+                        }
+
+
+                        //检查依赖是否存在
+                        var ret = checkABItem.DependAssetIds.Where((did) => assetbundleItemList[did].AssetBundlePath == dependAI.ABName);
+                        if (ret == null || ret.Count() == 0)
+                        {
+                            Debug.LogError($"Depend AB未找到:{assetInfo.Key} - ");
+                        }
+                        else if (ret.Count() > 1)
+                        {
+                            Debug.LogError($"Depend AB配置冗余:{assetInfo.Key} -  {dependAI.ABName}");
+                        }
                     }
                 }
             }
-
-            //4.最后进行整理
-            foreach (var assetInfo in this.AssetInfoMap)
-            {
-
-                //判断是否为源资产
-                var abPackPath = AssetDatabase.GUIDToAssetPath(assetInfo.Value.ABName);
-                bool isABSourceAsset = assetInfo.Key.Equals(abPackPath, StringComparison.OrdinalIgnoreCase);
-
-                //设置assetPackHash
-                if (isABSourceAsset)
-                {
-                    var assetsPack = this.AssetInfoMap.Values.Where((ai) => ai.ABName.Equals(assetInfo.Value.ABName))
-                        .ToList();
-                    //获取到pack hash
-                    var packHash = GetAssetsPackSourceHash(assetsPack);
-                    //赋值
-                    assetbundleItemList[assetInfo.Value.ArtConfigIdx].AssetsPackSourceHash = packHash;
-                }
-
-                //TODO 设置refABID
-                // if (isABSourceAsset)
-                // {
-                //     for (int i = 0; i < assetbundleItemList.Count; i++)
-                //     {
-                //         //本体跳过
-                //         if (i == assetInfo.Value.ArtConfigIdx)
-                //         {
-                //             continue;
-                //         }
-                //
-                //         //剩下的进行refId赋值
-                //         var abi = assetbundleItemList[i];
-                //         if (abi.AssetBundlePath.Equals(assetInfo.Value.ABName))
-                //         {
-                //             abi.SetRefAssetBundleId(assetInfo.Value.ArtConfigIdx);
-                //         }
-                //     }
-                // }
-            }
-
-
-            //最后.检查config是否遗漏  
-            foreach (var assetDataItem in this.AssetInfoMap)
-            {
-                var ret = assetbundleItemList.Find((abi) => abi.AssetBundlePath == assetDataItem.Value.ABName);
-                if (ret == null)
-                {
-                    Debug.LogError("【生成配置】abItemList - " + assetDataItem.Key + " ab:" + assetDataItem.Value.ABName);
-                }
-            }
-
 
             //
             return assetbundleItemList;
@@ -607,13 +692,19 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// </summary>
         /// <param name="assetPath"></param>
         /// <returns></returns>
-        public AssetInfo GetAssetInfo(string assetPath,bool isLog =true)
+        public AssetInfo GetAssetInfo(string assetPath, bool isLog = true, bool isAddAssetIfMapNotExsit = false)
         {
             var ret = this.AssetInfoMap.TryGetValue(assetPath, out var assetInfo);
-            if (!ret && isLog)
+
+            if (ret == null && isAddAssetIfMapNotExsit)
             {
-                Debug.LogError("不存在资产:" + assetPath);
             }
+
+            if (assetInfo == null && isLog)
+            {
+                Debug.LogError("AssetInfoMap 不存在资产:" + assetPath);
+            }
+
             return assetInfo;
         }
 
@@ -622,7 +713,17 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// 获取一个AB中所有源资产的hash
         /// </summary>
         /// <returns></returns>
-        static public string GetAssetsPackSourceHash(List<AssetInfo> assetInfos)
+        public string GetAssetsPackSourceHash(string assetbundlePath)
+        {
+            var assetInfos = AssetInfoMap.Values.Where((ai) => ai.ABName.Equals(assetbundlePath)).ToList();
+            return GetAssetsPackSourceHash(assetInfos);
+        }
+
+        /// <summary>
+        /// 获取一个AB中所有源资产的hash
+        /// </summary>
+        /// <returns></returns>
+        static private string GetAssetsPackSourceHash(List<AssetInfo> assetInfos)
         {
             //按guid排序
             assetInfos.Sort((a, b) => { return a.GUID.CompareTo(b.GUID); });

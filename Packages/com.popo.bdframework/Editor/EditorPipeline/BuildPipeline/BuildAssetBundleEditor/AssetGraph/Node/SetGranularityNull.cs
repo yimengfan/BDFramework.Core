@@ -12,7 +12,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     /// <summary>
     /// 颗粒度,不修改 只作为连线查看用 避免线到一坨了
     /// </summary>
-    [CustomNode("BDFramework/[颗粒度]预览", 30)]
+    [CustomNode("BDFramework/[辅助]预览", 36)]
     public class SetGranularityNull : UnityEngine.AssetGraph.Node
     {
         public AssetBundleBuildingContext BuildingCtx { get; set; }
@@ -44,7 +44,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             return new SetGranularityNull();
         }
 
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
         }
         /// <summary>
@@ -63,6 +63,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 return;
             }
+            
             this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
             var outMap = new Dictionary<string, List<AssetReference>>();
             var comingList = AssetGraphTools.GetComingAssets(incoming);

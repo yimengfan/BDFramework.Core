@@ -54,9 +54,9 @@ namespace BDFramework.Editor.AssetGraph.Node
             this.selfNodeGUI = node;
             //控制rect
             var rect = node.GetRect();
-            if (rect.width < 200)
+            if (rect.width < 250)
             {
-                rect.width = 200;
+                rect.width = 250;
                 node.UpdateNodeRect();
             }
 
@@ -109,11 +109,11 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="incoming"></param>
         /// <param name="connectionsToOutput"></param>
         /// <param name="outputFunc"></param>
-        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIEditor editor, Action onValueChanged)
+        public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
             bool isDirty = false;
 
-            editor.UpdateNodeName(node);
+            inspector.UpdateNodeName(node);
             EditorGUILayout.HelpBox("将该目录下所有文件,打包成一个AB!", MessageType.Info);
 
             GUILayout.Space(10);
