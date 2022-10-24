@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data:
-    CodeRoot: 0
+    CodeRoot: 2
     SQLRoot: 0
     ArtRoot: 3
     CodeRunMode: 0
@@ -365,7 +365,7 @@ MonoBehaviour:
     Port: 0
     IsHotfix: 0
     IsNeedNet: 0
-    ClientVersionNum: 0.0.0
+    ClientVersionNum: 2.1.0
   ConfigFileName: Editor_TestAssetbundle
 --- !u!4 &617214994
 Transform:
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53901f56d09f96d4886992ff20f43b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConfigText: {fileID: 4900000, guid: 517ff72e71a574546a91d76ad65770c9, type: 3}
+  ConfigText: {fileID: 4900000, guid: 9a399e3d62c58704cb5b6a5b7e373078, type: 3}
 --- !u!114 &617214996
 MonoBehaviour:
   m_ObjectHideFlags: 0

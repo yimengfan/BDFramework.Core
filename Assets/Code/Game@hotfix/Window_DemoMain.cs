@@ -189,6 +189,13 @@ public class Window_DemoMain : AWindow
     [ButtonOnclick("Grid/btn_8")]
     private void btn_08()
     {
+        var events = DemoEventManager.Inst.GetAllClassDatas();
+        foreach (var e in events)
+        {
+            Debug.Log("获取到event=》:" + e.Type.FullName);
+        }
+        
+        Debug.Log("Trigger demoEvent2:");
         DemoEventManager.Inst.Do(DemoEventEnum.TestEvent2);
     }
 

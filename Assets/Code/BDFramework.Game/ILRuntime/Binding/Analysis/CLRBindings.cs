@@ -45,12 +45,15 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_String_Binding.Register(app);
             IEnumeratorTool_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
-            BDebug_Binding.Register(app);
+            System_Collections_Generic_IEnumerable_1_ILTypeInstance_Binding.Register(app);
+            System_Collections_Generic_IEnumerator_1_ILTypeInstance_Binding.Register(app);
+            System_Type_Binding.Register(app);
             System_String_Binding.Register(app);
+            System_Collections_IEnumerator_Binding.Register(app);
+            BDebug_Binding.Register(app);
             System_Collections_Generic_IEnumerable_1_KeyValuePair_2_String_Object_Binding.Register(app);
             System_Collections_Generic_IEnumerator_1_KeyValuePair_2_String_Object_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_String_Object_Binding.Register(app);
-            System_Collections_IEnumerator_Binding.Register(app);
             System_Collections_Generic_List_1_GameObject_Binding_Enumerator_Binding.Register(app);
             BDFramework_DataListener_StatusListenerServer_Binding.Register(app);
             BDFramework_DataListener_ValueListenerEx_Binding.Register(app);
@@ -65,7 +68,6 @@ namespace ILRuntime.Runtime.Generated
             System_Int32_Binding.Register(app);
             System_DateTime_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding.Register(app);
-            System_Type_Binding.Register(app);
             System_Reflection_Assembly_Binding.Register(app);
             System_Linq_Enumerable_Binding.Register(app);
             BDFramework_ILRuntimeHelper_Binding.Register(app);
@@ -93,8 +95,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Int32_ILTypeInstance_Binding.Register(app);
-            System_Collections_Generic_IEnumerable_1_ILTypeInstance_Binding.Register(app);
-            System_Collections_Generic_IEnumerator_1_ILTypeInstance_Binding.Register(app);
             BDFramework_Core_Debugger_Debugger_NetworkServer_Binding.Register(app);
             BDFramework_ResourceMgr_IResMgr_Binding.Register(app);
             BDFramework_DataListener_AStatusListener_Binding.Register(app);

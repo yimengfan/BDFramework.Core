@@ -30,8 +30,9 @@ public class ILRuntimeDelegateHelper
         appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.Transform, System.Object>();
         appdomain.DelegateManager.RegisterFunctionDelegate<System.Reflection.PropertyInfo, System.Boolean>();
         appdomain.DelegateManager.RegisterFunctionDelegate<System.Reflection.MethodInfo, System.Boolean>();
+        appdomain.DelegateManager.RegisterFunctionDelegate<ILRuntime.Runtime.Intepreter.ILTypeInstance, ILRuntime.Runtime.Intepreter.ILTypeInstance, System.Int32>();
+        appdomain.DelegateManager.RegisterMethodDelegate<System.Object, System.Net.DownloadStringCompletedEventArgs>();
 
-        
         appdomain.DelegateManager.RegisterDelegateConvertor<UnityEngine.Events.UnityAction>((act) =>
         {
             return new UnityEngine.Events.UnityAction(() => { ((Action) act)(); });
@@ -64,6 +65,13 @@ public class ILRuntimeDelegateHelper
             return new BDFramework.BDLauncher.GameLauncherDelegate(() =>
             {
                 ((Action)act)();
+            });
+        });
+        appdomain.DelegateManager.RegisterDelegateConvertor<System.Comparison<ILRuntime.Runtime.Intepreter.ILTypeInstance>>((act) =>
+        {
+            return new System.Comparison<ILRuntime.Runtime.Intepreter.ILTypeInstance>((x, y) =>
+            {
+                return ((Func<ILRuntime.Runtime.Intepreter.ILTypeInstance, ILRuntime.Runtime.Intepreter.ILTypeInstance, System.Int32>)act)(x, y);
             });
         });
 

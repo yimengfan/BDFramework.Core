@@ -22,6 +22,10 @@ namespace Game.demo_EventManager
             {
                 @event.Do();
             }
+            else
+            {
+                BDebug.Log("获取不到 event:" + @enum.ToString());
+            }
             
         }
     }
