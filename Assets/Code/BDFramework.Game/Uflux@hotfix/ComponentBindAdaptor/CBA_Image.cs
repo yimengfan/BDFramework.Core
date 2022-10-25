@@ -14,8 +14,8 @@ namespace  BDFramework.UFlux
         public override void Init()
         {
             base.Init();
-            setPropComponentBindMap[nameof(Image.overrideSprite)] = SetProp_Sprite;
-            setPropComponentBindMap[nameof(Image.color)]          = SetProp_Color;
+            setPropComponentBindMap[nameof(Image.sprite)] = SetProp_Sprite;
+            setPropComponentBindMap[nameof(Image.color)] = SetProp_Color;
             setPropComponentBindMap[nameof(Image.fillAmount)] = SetProp_Amount;
         }
 

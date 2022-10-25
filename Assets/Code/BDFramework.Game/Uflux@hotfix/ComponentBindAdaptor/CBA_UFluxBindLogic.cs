@@ -1,34 +1,23 @@
-﻿using System;
-using System.Collections;
-using BDFramework.UFlux.Collections;
+﻿using BDFramework.UFlux.Collections;
 using BDFramework.UFlux.View.Props;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace BDFramework.UFlux
 {
     public class UFluxBindLogic
     {
-        
         /// <summary>
         /// 绑定单个子节点
         /// </summary>
-        public void BindChild()
-        {
-        }
-
+        public void BindChild() { }
         /// <summary>
         /// 绑定所有子节点
         /// </summary>
-        public void BindChildren()
-        {
-
-        }
+        public void BindChildren() { }
     }
 
     /// <summary>
-    /// Ulfux绑定逻辑
+    /// 
     /// </summary>
     [ComponentBindAdaptor(typeof(UFluxBindLogic))]
     public class CBA_UFluxBindLogic : AComponentBindAdaptor
@@ -47,11 +36,6 @@ namespace BDFramework.UFlux
         /// <param name="value"></param>
         private void BindChild(Transform transform, object value)
         {
-            if (value == null)
-            {
-                return;
-            }
-            
             var props = value as APropsBase;
             if (props == null)
             {
@@ -70,16 +54,8 @@ namespace BDFramework.UFlux
         /// <param name="value">Value必须为集合类型</param>
         private void BindChildren(Transform transform, object value)
         {
-            if (value == null)
-            {
-                return;
-            }
-            
-            IPropsList propsList = value as IPropsList;
-            if (!propsList.IsChanged)
-            {
-                return;
-            }
+            var propsList = (IPropsList) value;
+            if (!propsList.IsChanged) return;
             
             //绑定子节点
             propsList.Foreach((idx,props) =>
@@ -89,8 +65,6 @@ namespace BDFramework.UFlux
                     UFluxUtils.SetComponentProps(transform.GetChild(idx), props);
                 }
             });
-
-
         }
     }
 }

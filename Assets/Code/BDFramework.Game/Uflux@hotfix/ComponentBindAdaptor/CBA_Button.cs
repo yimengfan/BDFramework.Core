@@ -1,4 +1,5 @@
 ﻿using System;
+using BDFramework.UFlux;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 //这里的命名空间必须为：BDFramework.Uflux
@@ -10,12 +11,13 @@ namespace BDFramework.UFlux
     [ComponentBindAdaptor(typeof(Button))]
     public class CBA_Button : AComponentBindAdaptor
     {
-        public override void Init()   
+        public override void Init()
         {
             base.Init();
             
             setPropComponentBindMap[nameof(Button.onClick)] = SetProp_OnClick;
             setPropComponentBindMap[nameof(Button.onClick.AddListener)] = SetProp_AddListener;
+            setPropComponentBindMap[nameof(Button.interactable)] = SetProp_Interactable;
         }
 
         /// <summary>
@@ -51,6 +53,18 @@ namespace BDFramework.UFlux
                 //注册回调
                 btn.onClick.RemoveAllListeners();
                 btn.onClick.AddListener(() => { action(); });
+            }
+        }
+        
+        /// <summary>
+        /// 设置按钮是否可交互
+        /// </summary>
+        private void SetProp_Interactable(UIBehaviour uiBehaviour, object value)
+        {
+            var btn = (Button) uiBehaviour;
+            if (value is bool interactable)
+            {
+                btn.interactable = interactable;
             }
         }
     }

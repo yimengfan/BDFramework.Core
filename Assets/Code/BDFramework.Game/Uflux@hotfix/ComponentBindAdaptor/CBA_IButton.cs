@@ -12,7 +12,6 @@ namespace BDFramework.UFlux
     [ComponentBindAdaptor(typeof(IButton))]
     public class CBA_IButton : AComponentBindAdaptor
     {
-        
         public override void Init()
         {
             base.Init();
@@ -25,7 +24,6 @@ namespace BDFramework.UFlux
         /// 这里有点潜规则，Onclick代表替换，AddListener 代表注册增加监听
         /// </summary>
         /// <param name="value"></param>
-      
         private void SetProp_OnClick(UIBehaviour uiBehaviour, object value)
         {
             var btn = uiBehaviour as IButton;

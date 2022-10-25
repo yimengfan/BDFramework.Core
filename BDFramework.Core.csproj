@@ -452,13 +452,13 @@
  <HintPath>E:/bd_new_version/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.1.0/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
+ <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Mdb">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.1.0/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
+ <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
  </Reference>
  <Reference Include="ILRuntime.Mono.Cecil.Pdb">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.1.0/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+ <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
  </Reference>
  <Reference Include="System.IO.Compression">
  <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.dll</HintPath>
