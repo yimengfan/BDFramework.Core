@@ -182,7 +182,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                     //3.BuildInfo配置处理
                     Debug.Log($"<color=green>----->3.BuildInfo相关生成  abcount:{AssetBundleItemList.Count}</color>");
                     var lastAssetInfoPath = IPath.Combine(platformOutputPath, BResources.ART_ASSET_INFO_PATH);
-                    List<AssetBundleItem> lastAssetbundleItemList = null;
+                    List<AssetBundleItem> lastAssetbundleItemList = new List<AssetBundleItem>();
                     if (File.Exists(lastAssetInfoPath))
                     {
                         lastAssetbundleItemList = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(File.ReadAllText(lastAssetInfoPath));
