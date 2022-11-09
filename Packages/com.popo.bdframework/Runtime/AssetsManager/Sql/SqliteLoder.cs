@@ -25,60 +25,6 @@ namespace BDFramework.Sql
         static public SQLiteConnection Connection { get; private set; }
 
         /// <summary>
-        /// 编辑器下加载DB，可读写|创建
-        /// </summary>
-        /// <param name="str"></param>
-        static public string LoadLocalDBOnEditor(string root, RuntimePlatform platform)
-        {
-            //
-            Connection?.Dispose();
-            //用当前平台目录进行加载
-            var path = GetLocalDBPath(root, platform);
-            //
-            var dir = Path.GetDirectoryName(path);
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-
-            //编辑器下打开
-            if (Application.isEditor)
-            {
-                //editor下 不在执行的时候，直接创建
-                Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-                BDebug.Log("DB加载路径:" + path, "red");
-            }
-
-            return path;
-        }
-
-        /// <summary>
-        /// 编辑器下加载DB，可读写|创建
-        /// </summary>
-        /// <param name="str"></param>
-        static public void LoadServerDBOnEditor(string root, RuntimePlatform platform)
-        {
-            //
-            Connection?.Dispose();
-            //用当前平台目录进行加载
-            var path = GetServerDBPath(root, platform);
-            //
-            var dir = Path.GetDirectoryName(path);
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-
-            //编辑器下打开
-            if (Application.isEditor)
-            {
-                //editor下 不在执行的时候，直接创建
-                Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-                BDebug.Log("DB加载路径:" + path, "red");
-            }
-        }
-
-        /// <summary>
         /// runtime下加载，只读
         /// </summary>
         /// <param name="str"></param>
@@ -125,5 +71,58 @@ namespace BDFramework.Sql
         {
             return IPath.Combine(root, BApplication.GetPlatformPath(platform), SERVER_DB_PATH);
         }
+
+        #region Editor下加载
+
+        /// <summary>
+        /// 编辑器下加载DB，可读写|创建
+        /// </summary>
+        /// <param name="str"></param>
+        static public string LoadLocalDBOnEditor(string root, RuntimePlatform platform)
+        {
+            //用当前平台目录进行加载
+            var path = GetLocalDBPath(root, platform);
+            LoadSQLOnEditor(path);
+
+            return path;
+        }
+
+
+        /// <summary>
+        /// 编辑器下加载DB，可读写|创建
+        /// </summary>
+        /// <param name="str"></param>
+        static public void LoadServerDBOnEditor(string root, RuntimePlatform platform)
+        {
+            //用当前平台目录进行加载
+            var path = GetServerDBPath(root, platform);
+            LoadSQLOnEditor(path);
+        }
+
+        /// <summary>
+        /// 加载Sql
+        /// </summary>
+        /// <param name="sqlPath"></param>
+        static public void LoadSQLOnEditor(string sqlPath)
+        {
+            //
+            Connection?.Dispose();
+            //
+            var dir = Path.GetDirectoryName(sqlPath);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            //编辑器下打开
+            if (Application.isEditor)
+            {
+                //editor下 不在执行的时候，直接创建
+                Connection = new SQLiteConnection(sqlPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+                BDebug.Log("DB加载路径:" + sqlPath, "red");
+            }
+        }
+
+        #endregion
     }
 }

@@ -224,7 +224,7 @@ namespace BDFramework.ResourceMgr
 
             if (rets.Count == 0)
             {
-                Debug.LogError("未找到资源:" + path);
+                BDebug.LogError("未找到资源:" + path);
 
                 return null;
             }
@@ -304,8 +304,8 @@ namespace BDFramework.ResourceMgr
 
             IDictionary<string, UnityEngine.Object> map = new Dictionary<string, Object>();
             int curProcess = 0;
-            //每帧加载1个
-            IEnumeratorTool.StartCoroutine(TaskUpdate(1, loadPathList, (s, o) =>
+            //每帧加载n个
+            IEnumeratorTool.StartCoroutine(TaskUpdate(5, loadPathList, (s, o) =>
             {
                 curProcess++;
                 map[s] = o;

@@ -1,5 +1,5 @@
-﻿using System;
-using BDFramework.ResourceMgr;
+﻿using BDFramework.ResourceMgr;
+using UnityEngine;
 
 
 namespace BDFramework.ResourceMgrV2
@@ -7,31 +7,41 @@ namespace BDFramework.ResourceMgrV2
     /// <summary>
     /// 这里实验性功能扩展
     /// </summary>
-    public partial class BResources
+    public partial class BResourcesV2
     {
         /// <summary>
-        /// 同步加载
-        /// 返回更安全的包装类型,防止接口滥用.
-        /// 也更好进行资源管理
+        /// 实例计数
         /// </summary>
-        /// <param name="assetPath">资源路径</param>
+        static private int instCounter = 0;
+
+        /// <summary>
+        /// 获取全局实例id
+        /// </summary>
+        /// <returns></returns>
+        public static int GetGlobalInstId()
+        {
+            instCounter++;
+            return instCounter;
+        }
+
+        /// <summary>
+        ///  实例化
+        /// </summary>
+        /// <param name="assetLoadPath">资源路径</param>
         /// <param name="pathType">加载类型：路径名还是GUID</param>
         /// <param name="groupName">加载组,用以对资源加载分组</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static GameObjectWrapper Load(string assetPath, LoadPathType pathType = LoadPathType.RuntimePath, string groupName = null)
+        public static GameObjectWrapper Instantiate<T>(string assetLoadPath, LoadPathType pathType = LoadPathType.RuntimePath, string groupName = null) where T : UnityEngine.Object
         {
-            if (string.IsNullOrEmpty(assetPath))
-            {
-                throw new Exception("路径错误!");
-            }
-
-            
-            // //添加到资源组
-            // AddAssetsPathToGroup(groupName, assetPath);
-            // //加载
-            // return ResLoader.Load<GameObject>(assetPath, pathType);
-            return new GameObjectWrapper(null);
+            var id = GetGlobalInstId();
+            //加载
+            var go = ResourceMgr.BResources.Load<T>(assetLoadPath, pathType, groupName);
+            //实例化
+            var inst = GameObject.Instantiate(go) as GameObject;
+            //返回包装类型
+            var gw = new GameObjectWrapper(id, -1, inst);
+            return gw;
         }
     }
 }

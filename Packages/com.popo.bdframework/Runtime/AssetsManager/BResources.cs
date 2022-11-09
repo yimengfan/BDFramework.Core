@@ -517,17 +517,7 @@ namespace BDFramework.ResourceMgr
         #endregion
 
         #region 实例化、删除管理
-
-        /// <summary>
-        /// 实例化
-        /// </summary>
-        /// <param name="gameObject"></param>
-        /// <returns></returns>
-        static public GameObject Instantiate(GameObject gameObject)
-        {
-            return GameObject.Instantiate(gameObject);
-        }
-
+        
         /// <summary>
         /// 删除接口
         /// </summary>

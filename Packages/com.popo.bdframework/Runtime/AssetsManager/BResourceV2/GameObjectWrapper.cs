@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BDFramework.ResourceMgr;
+using UnityEngine;
 
 namespace BDFramework.ResourceMgrV2
 {
@@ -11,13 +12,15 @@ namespace BDFramework.ResourceMgrV2
         /// <summary>
         /// 实例id
         /// </summary>
-        public int Id { get; private set; }
+        public int InstId { get; private set; }
+
         /// <summary>
         /// 源 gameobject的id
         /// 从 哪个Gameobj派生
         /// -1 表示自己就是源
         /// </summary>
         public int SourceGameObjectId { get; private set; } = -1;
+
         /// <summary>
         /// gameoject
         /// </summary>
@@ -27,26 +30,24 @@ namespace BDFramework.ResourceMgrV2
         /// Gameobject包装类型
         /// </summary>
         /// <param name="gameObject"></param>
-        public GameObjectWrapper(GameObject gameObject)
+        public GameObjectWrapper(int instid, int sourceid, GameObject gameObject)
         {
-            
+            this.InstId = instid;
+            this.SourceGameObjectId = sourceid;
+            this.gameObject = gameObject;
         }
 
-        // /// <summary>
-        // /// 实例化
-        // /// </summary>
-        // /// <returns></returns>
-        // public GameObjectWrapper Instantiate()
-        // {
-        // }
-        //
-        // /// <summary>
-        // /// clone一份
-        // /// </summary>
-        // /// <returns></returns>
-        // public GameObjectWrapper Clone()
-        // {
-        //     
-        // }
+
+        /// <summary>
+        /// 实例化
+        /// </summary>
+        /// <returns></returns>
+        public GameObjectWrapper Clone()
+        {
+            var instid = BResourcesV2.GetGlobalInstId();
+            var clonego = GameObject.Instantiate(this.gameObject);
+            //返回gow
+            return new GameObjectWrapper(instid, this.SourceGameObjectId, clonego);
+        }
     }
 }
