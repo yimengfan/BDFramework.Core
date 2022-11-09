@@ -50,7 +50,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Packages\com.popo.bdframework\Editor\Debugger\Inspector\BDebugInspector.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\CoroutineWindowExample.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutineExtensions.cs" />
      <Compile Include="Packages\com.popo.bdframework\Editor\EditorCoroutines\EditorCoroutines.cs" />
