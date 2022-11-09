@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using BDFramework.Core.Tools;
+using BDFramework.Sql;
 using BDFramework.StringEx;
 using LitJson;
 using UnityEditor;
@@ -102,6 +105,35 @@ namespace BDFramework.Editor.Table
         }
 
         /// <summary>
+        /// 获取修改的Excel文件,通过本地数据库对比
+        /// 路径为Unity assets GUID
+        /// 该接口执行1次后就会将新配置覆盖本地
+        /// </summary>
+        public static (List<string>, Dictionary<string, string> ) GetChangedExcelsFromLocalSql(string sqlPath)
+        {
+            List<string> retExchangedInfoList = new List<string>();
+            //当前配置
+            var (_, newExcelCacheMap) = GetExcelsHash();
+            //获取Sql中的日志
+            SqliteLoder.LoadSQLOnEditor(sqlPath);
+            var logs = SqliteHelper.DB.GetTable<ImportExcelLog>().ToList();
+            SqliteLoder.Close();
+            //
+            foreach (var excelInfoItem in newExcelCacheMap)
+            {
+                var excelPath = AssetDatabase.GUIDToAssetPath(excelInfoItem.Key);
+                var ret = logs.FirstOrDefault((log) => log.Path.Equals(excelPath, StringComparison.OrdinalIgnoreCase));
+                if (ret == null || ret.Hash != excelInfoItem.Value)
+                {
+                    //添加没有、或者hash不相等的excel配置
+                    retExchangedInfoList.Add(excelInfoItem.Key);
+                }
+            }
+
+            return (retExchangedInfoList, newExcelCacheMap);
+        }
+
+        /// <summary>
         /// 加载ExcelCache信息
         /// </summary>
         private static Dictionary<string, string> LoadExcelCacheInfo()
@@ -136,6 +168,7 @@ namespace BDFramework.Editor.Table
             {
                 return File.ReadAllText(dbCachePath);
             }
+
             return string.Empty;
         }
 
@@ -143,7 +176,7 @@ namespace BDFramework.Editor.Table
         {
             var dbCachePath = IPath.Combine(BApplication.BDEditorCachePath, LOCALDB_CACHE_PATH);
             var hash = FileHelper.GetMurmurHash3(dbPath);
-            FileHelper.WriteAllText(dbCachePath,hash);
+            FileHelper.WriteAllText(dbCachePath, hash);
         }
     }
 }
