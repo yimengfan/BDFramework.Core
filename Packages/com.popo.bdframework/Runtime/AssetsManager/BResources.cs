@@ -111,7 +111,10 @@ namespace BDFramework.ResourceMgr
         /// <param name="callback"></param>
         static public void Init(AssetLoadPathType loadPathType)
         {
-            BDebug.Log("【BResource】加载路径:" + loadPathType.ToString());
+            if (Application.isPlaying)
+            {
+                BDebug.Log("【BResource】加载路径:" + loadPathType.ToString());
+            }
             if (loadPathType == AssetLoadPathType.Editor)
             {
 #if UNITY_EDITOR //防止编译报错
