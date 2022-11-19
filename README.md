@@ -10,6 +10,18 @@ Simple! Easy! Professional! This‘s a powerful Unity3d game workflow!<br />BDFr
 **在线discussions** [点击](https://github.com/yimengfan/BDFramework.Core/discussions)  
 #### 第九第十艺术交流:184111890 （QQ Group:184111890）  [点击加群](https://jq.qq.com/?_wv=1027&k=OSxzhgK4)
 If you find a bug or have some suggestions,please make issue! I'll get back to you!<br />任何问题直接提issue,24小时内必解决 （有时候邮件抽风，没收到，需要在群里at下我~）<br />github地址: [https://github.com/yimengfan/BDFramework.Core](https://github.com/yimengfan/BDFramework.Core)<br />gitee地址: [https://gitee.com/yimengfan/BDFramework.Core](https://gitee.com/yimengfan/BDFramework.Core) (国内比较快)  
+
+<a name="UpQig"></a>
+# 文档(Document)
+
+[**中文 Wiki**](https://www.yuque.com/naipaopao/eg6gik)
+<a name="sVFFi"></a>
+#### [English Wiki](http://www.nekosang.com/)
+<a name="Am01R"></a>
+#### [视频教程（video）](https://www.bilibili.com/video/av78814115/)
+<a name="YTPRV"></a>
+#### [博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
+
 <a name="HbQIU"></a>  
 # 发布（Publish）
 
@@ -134,17 +146,6 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 - 其他大量的定制Editor，以保证使用体验...(太多了统计不过来)
 
 **有很多细枝末节的系统就不列举了...**
-
-<a name="UpQig"></a>
-# 文档(Document)
-
-[**中文 Wiki**](https://www.yuque.com/naipaopao/eg6gik)
-<a name="sVFFi"></a>
-#### [English Wiki](http://www.nekosang.com/)
-<a name="Am01R"></a>
-#### [视频教程（video）](https://www.bilibili.com/video/av78814115/)
-<a name="YTPRV"></a>
-#### [博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
 
 <a name="B34PH"></a>
 # 安装使用(Start)
