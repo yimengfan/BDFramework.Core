@@ -49,3 +49,7 @@ Assets/3rdPlugins/Sirenix.meta
 /Assets/Plugins/CodeStage
 /.vsconfig
 /Assets/Plugins.meta
+ProjectSettings/ProjectVersion.txt
+BDFramework.Editor.TestRunner.csproj
+BDFramework.Editor.csproj
+BDFramework.Core.csproj

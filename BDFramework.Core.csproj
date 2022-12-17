@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <_TargetFrameworkDirectories>non_empty_path_generated_by_unity.rider.package</_TargetFrameworkDirectories>
-    <_FullFrameworkReferenceAssemblyPaths>non_empty_path_generated_by_unity.rider.package</_FullFrameworkReferenceAssemblyPaths>
-    <DisableHandlePackageFileConflicts>true</DisableHandlePackageFileConflicts>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{12548a1f-4b7a-99a2-7d9e-7b027681c23c}</ProjectGuid>
+    <ProjectGuid>{1F8A5412-7A4B-A299-7D9E-7B027681C23C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>BDFramework.Core</AssemblyName>
@@ -25,12 +22,11 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2019_4_40;UNITY_2019_4;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;UNITY_ASTC_ONLY_DECOMPRESS;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_IG;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_EDITOR_ONLY;ENABLE_BDEBUG;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2019_4_39;UNITY_2019_4;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_IG;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;ODIN_INSPECTOR;ENABLE_BDEBUG;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,7 +36,6 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -49,832 +44,852 @@
     <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
+  <PropertyGroup>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
+    <UnityProjectGeneratorVersion>4.11.4.0</UnityProjectGeneratorVersion>
+    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
+    <UnityVersion>2019.4.39f1c1</UnityVersion>
+  </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_BetterStreamingAssets.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_PathUtil.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_SubReadOnlyStream.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_TestSceneGUI.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_ZipArchive.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\IJsonWrapper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonData.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonException.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonMapper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonMockWrapper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonReader.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonWriter.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\Lexer.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\ParserToken.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\ByteArray.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\ByteString.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\CodedInputStream.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\CodedOutputStream.ComputeSize.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\CodedOutputStream.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\Collections\RepeatedField.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\Compatibility\PropertyInfoExtensions.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\Compatibility\StreamExtensions.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\FieldCodec.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\ICustomDiagnosticMessage.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\IMessage.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\InvalidProtocolBufferException.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\LimitedInputStream.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\MessageExtensions.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\MessageParser.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\ProtoPreconditions.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\WireFormat.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Client.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Common.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\EventType.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Logger.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Message.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\NetworkStreamExtensions.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\SafeQueue.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Server.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Utils.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleConfigLoader.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleItem.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleMgrV2.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleWrapper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetTypeConfig.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\LoadTask.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\LoadTaskGroup.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\Loader\IAssetBundleIO.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\Loader\ISpriteAtlasLoader.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\UnLoadTask.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetTypeEx\UnityFolder.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetsVersionController\AssetsVersionController.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResourceV2\GameObjectWrapper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResources.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResourcesV2.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ClientAssetsHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ObjectPools\GameObjectPoolManager.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\ImportExcelLog.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SQLiteService.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite\SQLite3.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite\SQLite3DllImport.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite\TableMaping.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SqliteHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SqliteLoder.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQuery.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQueryForILRuntime.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\AssetBundleBenchmark01.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\AssetBundleTestLoad.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingCSharpObjects\EventBus.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingGameObjects\Bullet.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingGameObjects\Gun.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncher.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncherBridge@hotfix.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Config.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Debug\Runtime\BDebug.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\@hotfix\DebuggerServerProcessAttribute.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\@hotfix\DebuggerServerProcessManager.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\@hotfix\IDebuggerServerProcess.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\core\DebuggerNetworkTools.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\core\Debugger_NetworkClient.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\core\Debugger_NetworkServer.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Core\ADataListenerT.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Core\ADataListenerTBase.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Core\AStatusListener.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\EventListenerEx.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\EventListenerEx_ILRuntimeAdaptor.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Service\StatusListenerServer.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Service\StatusListenerService.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\ValueListenerEX_ILRuntimeAdaptor.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Event\ValueListenerEx.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\GameServiceStore\GameInterfaceService.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\GameServiceStore\GameServiceStore.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\GameStart\IGameStart.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\GameStart\IHotfixGameStart@hotfix.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Reflection\@hotfix\ReflectionExtension.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\ScreenNavigation\@hotfix\IScreenView.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\ScreenNavigation\@hotfix\ScreenViewCenter.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\ScreenNavigation\@hotfix\ScreenViewManager.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\Collections\PropsList.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\Extension\ObjectsExtension.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\State\AStateBase.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\State\IPropertyChange.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\State\IState.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\State\StateBase.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\State\StateFactory.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Reducer\AReducers.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Reducer\Attribute\AsyncReducerAttribute.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Reducer\Attribute\ReducerAttribute.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Reducer\UFluxAction.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Store\IStore.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Store\Store.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Store\StoreFactory.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Store\StoreWrapper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\UFluxUtils.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Atrribute\AutoInitComponent\AutoInitComponentAttribute.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Atrribute\AutoInitComponent\ButtonOnclickAttribute.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Atrribute\AutoInitComponent\TransformPathAttribute.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Atrribute\ComponentAttribute.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Atrribute\ComponentValueBindAttribute.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Component\AComponent.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Component\ATComponent.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Component\IComponent.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Component\ISubComponent.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\ComponentBindAdaptor\AComponentBindAdaptor.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\ComponentBindAdaptor\Manager\ComponentBindAdaptorAttribute.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\ComponentBindAdaptor\Manager\ComponentBindAdaptorManager.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Props\APropsBase.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\AWindow.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\AWindowProp.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\Attribute\UIAttribute.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\Attribute\UIMessageListenerAttribute.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\Interface\IUIMessage.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\Interface\IWindow.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\UIManager.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\UIManagerExDI.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\UIMsgData.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\WindowStatus.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\IButton.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\Localization\L2Image.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\Localization\L2Text.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\PageList\PageGrid.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\PageList\PageList.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\PageList\PageListDemo.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ActionAdaptor\@hotfix\ActionAdaptor.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ActionAdaptor\ActionAdaptor2.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\BApplication.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\IEnumerator\IEnumeratorTool.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ManagerBase\@half_hotfix\IMgr.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ManagerBase\@half_hotfix\ManagerBase.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ManagerBase\@hotfix\ILRuntimeManagerInstHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ManagerBase\ManagerInstHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ManagerBase\ManagerOrder.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\MonoSingleton\Singleton.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ObjectPools\ObjectPool.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ObjectPools\ObjectPoolContainer.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\OdinHelper\NoOdinHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\Serialize\CSVHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\DataTime.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\File.IO\FileHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\File.IO\MurmurHash3.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\HashHelper.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\Path.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\StringEX.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\VersionNum\IVersionNum.cs" />
-     <None Include="Packages\com.popo.bdframework\Runtime\BDFramework.Core.asmdef" />
-     <None Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\README.txt" />
- <Reference Include="ILRuntime">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/ScriptAssemblies/ILRuntime.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.UI">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UI">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.AIModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.ARModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.AccessibilityModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.AndroidJNIModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AndroidJNIModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.AnimationModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.AssetBundleModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.AudioModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.ClothModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.CoreModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.CrashReportingModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.DSPGraphModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.DSPGraphModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.DirectorModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.GameCenterModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.GridModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.HotReloadModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.IMGUIModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.ImageConversionModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.InputModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.InputLegacyModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.InputLegacyModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.JSONSerializeModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.LocalizationModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.LocalizationModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.ParticleSystemModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.PerformanceReportingModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.PhysicsModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Physics2DModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.ProfilerModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ProfilerModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.ScreenCaptureModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.SharedInternalsModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.SpriteMaskModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.SpriteShapeModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.StreamingModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.StreamingModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.SubstanceModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.SubsystemsModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.SubsystemsModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.TLSModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.TerrainModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.TerrainPhysicsModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.TextCoreModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.TextRenderingModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.TilemapModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UIModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UIElementsModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UNETModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UNETModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UmbraModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UnityAnalyticsModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UnityConnectModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UnityTestProtocolModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityTestProtocolModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UnityWebRequestModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UnityWebRequestAudioModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UnityWebRequestTextureModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UnityWebRequestWWWModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.VFXModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.VRModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.VehiclesModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.VideoModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.WindModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.XRModule">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEditor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.VR">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.Graphs">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.WindowsStandalone.Extensions">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.Android.Extensions">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="DemiLib">
- <HintPath>E:/bd_new_version/BDFramework.Core/Assets/3rdPlugins/Dotween/DemiLib/Core/DemiLib.dll</HintPath>
- </Reference>
- <Reference Include="DemiEditor">
- <HintPath>E:/bd_new_version/BDFramework.Core/Assets/3rdPlugins/Dotween/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
- </Reference>
- <Reference Include="DOTween">
- <HintPath>E:/bd_new_version/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/DOTween.dll</HintPath>
- </Reference>
- <Reference Include="DOTweenEditor">
- <HintPath>E:/bd_new_version/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/Editor/DOTweenEditor.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.OdinInspector.Attributes">
- <HintPath>E:/bd_new_version/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.OdinInspector.Editor">
- <HintPath>E:/bd_new_version/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Serialization.Config">
- <HintPath>E:/bd_new_version/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Serialization">
- <HintPath>E:/bd_new_version/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Utilities">
- <HintPath>E:/bd_new_version/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
- </Reference>
- <Reference Include="Sirenix.Utilities.Editor">
- <HintPath>E:/bd_new_version/BDFramework.Core/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
- </Reference>
- <Reference Include="ILRuntime.Mono.Cecil">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
- </Reference>
- <Reference Include="ILRuntime.Mono.Cecil.Mdb">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
- </Reference>
- <Reference Include="ILRuntime.Mono.Cecil.Pdb">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.Compression">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.Compression.FileSystem">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.FileSystem.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.Compression.ZipFile">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.ZipFile.dll</HintPath>
- </Reference>
- <Reference Include="Excel">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Editor/Plugins/Excel/Excel.dll</HintPath>
- </Reference>
- <Reference Include="ICSharpCode.SharpZipLib">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Editor/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
- </Reference>
- <Reference Include="Microsoft.Bcl.AsyncInterfaces">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/Microsoft.Bcl.AsyncInterfaces.1.1.1/lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
- </Reference>
- <Reference Include="Microsoft.CodeAnalysis">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.Common.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.dll</HintPath>
- </Reference>
- <Reference Include="Microsoft.CodeAnalysis.CSharp">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.CSharp.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
- </Reference>
- <Reference Include="ServiceStack.Text">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/ServiceStack.Text.5.12.0/lib/netstandard2.0/ServiceStack.Text.dll</HintPath>
- </Reference>
- <Reference Include="System.Buffers">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Buffers.4.5.1/lib/netstandard2.0/System.Buffers.dll</HintPath>
- </Reference>
- <Reference Include="System.Collections.Immutable">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Collections.Immutable.5.0.0/lib/netstandard2.0/System.Collections.Immutable.dll</HintPath>
- </Reference>
- <Reference Include="System.Memory">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Memory.4.5.4/lib/netstandard2.0/System.Memory.dll</HintPath>
- </Reference>
- <Reference Include="System.Reflection.Metadata">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Reflection.Metadata.5.0.0/lib/netstandard2.0/System.Reflection.Metadata.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.CompilerServices.Unsafe">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Runtime.CompilerServices.Unsafe.5.0.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
- </Reference>
- <Reference Include="System.Text.Encoding.CodePages">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Text.Encoding.CodePages.4.5.1/lib/netstandard2.0/System.Text.Encoding.CodePages.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading.Tasks.Extensions">
- <HintPath>E:/bd_new_version/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Threading.Tasks.Extensions.4.5.4/lib/netstandard2.0/System.Threading.Tasks.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="ICSharpCode.NRefactory">
- <HintPath>E:/bd_new_version/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions.Xcode">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.iOS.Extensions.Common">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
- </Reference>
- <Reference Include="netstandard">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
- </Reference>
- <Reference Include="Microsoft.Win32.Primitives">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/Microsoft.Win32.Primitives.dll</HintPath>
- </Reference>
- <Reference Include="System.AppContext">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.AppContext.dll</HintPath>
- </Reference>
- <Reference Include="System.Collections.Concurrent">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.Concurrent.dll</HintPath>
- </Reference>
- <Reference Include="System.Collections">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.dll</HintPath>
- </Reference>
- <Reference Include="System.Collections.NonGeneric">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.NonGeneric.dll</HintPath>
- </Reference>
- <Reference Include="System.Collections.Specialized">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.Specialized.dll</HintPath>
- </Reference>
- <Reference Include="System.ComponentModel">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.dll</HintPath>
- </Reference>
- <Reference Include="System.ComponentModel.EventBasedAsync">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.EventBasedAsync.dll</HintPath>
- </Reference>
- <Reference Include="System.ComponentModel.Primitives">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.Primitives.dll</HintPath>
- </Reference>
- <Reference Include="System.ComponentModel.TypeConverter">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.TypeConverter.dll</HintPath>
- </Reference>
- <Reference Include="System.Console">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Console.dll</HintPath>
- </Reference>
- <Reference Include="System.Data.Common">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Data.Common.dll</HintPath>
- </Reference>
- <Reference Include="System.Diagnostics.Contracts">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Contracts.dll</HintPath>
- </Reference>
- <Reference Include="System.Diagnostics.Debug">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Debug.dll</HintPath>
- </Reference>
- <Reference Include="System.Diagnostics.FileVersionInfo">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.FileVersionInfo.dll</HintPath>
- </Reference>
- <Reference Include="System.Diagnostics.Process">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Process.dll</HintPath>
- </Reference>
- <Reference Include="System.Diagnostics.StackTrace">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.StackTrace.dll</HintPath>
- </Reference>
- <Reference Include="System.Diagnostics.TextWriterTraceListener">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.TextWriterTraceListener.dll</HintPath>
- </Reference>
- <Reference Include="System.Diagnostics.Tools">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Tools.dll</HintPath>
- </Reference>
- <Reference Include="System.Diagnostics.TraceSource">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.TraceSource.dll</HintPath>
- </Reference>
- <Reference Include="System.Diagnostics.Tracing">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Tracing.dll</HintPath>
- </Reference>
- <Reference Include="System.Drawing.Primitives">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Drawing.Primitives.dll</HintPath>
- </Reference>
- <Reference Include="System.Dynamic.Runtime">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Dynamic.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="System.Globalization.Calendars">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Globalization.Calendars.dll</HintPath>
- </Reference>
- <Reference Include="System.Globalization">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Globalization.dll</HintPath>
- </Reference>
- <Reference Include="System.Globalization.Extensions">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Globalization.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.Compression">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.Compression.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.Compression.ZipFile">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.Compression.ZipFile.dll</HintPath>
- </Reference>
- <Reference Include="System.IO">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.FileSystem">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.FileSystem.DriveInfo">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.DriveInfo.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.FileSystem.Primitives">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.Primitives.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.FileSystem.Watcher">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.Watcher.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.IsolatedStorage">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.IsolatedStorage.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.MemoryMappedFiles">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.MemoryMappedFiles.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.Pipes">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.Pipes.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.UnmanagedMemoryStream">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.UnmanagedMemoryStream.dll</HintPath>
- </Reference>
- <Reference Include="System.Linq">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.dll</HintPath>
- </Reference>
- <Reference Include="System.Linq.Expressions">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.Expressions.dll</HintPath>
- </Reference>
- <Reference Include="System.Linq.Parallel">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.Parallel.dll</HintPath>
- </Reference>
- <Reference Include="System.Linq.Queryable">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.Queryable.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.Http">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Http.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.NameResolution">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.NameResolution.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.NetworkInformation">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.NetworkInformation.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.Ping">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Ping.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.Primitives">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Primitives.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.Requests">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Requests.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.Security">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Security.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.Sockets">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Sockets.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.WebHeaderCollection">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.WebHeaderCollection.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.WebSockets.Client">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.WebSockets.Client.dll</HintPath>
- </Reference>
- <Reference Include="System.Net.WebSockets">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.WebSockets.dll</HintPath>
- </Reference>
- <Reference Include="System.ObjectModel">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ObjectModel.dll</HintPath>
- </Reference>
- <Reference Include="System.Reflection">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Reflection.dll</HintPath>
- </Reference>
- <Reference Include="System.Reflection.Extensions">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Reflection.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="System.Reflection.Primitives">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Reflection.Primitives.dll</HintPath>
- </Reference>
- <Reference Include="System.Resources.Reader">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Resources.Reader.dll</HintPath>
- </Reference>
- <Reference Include="System.Resources.ResourceManager">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Resources.ResourceManager.dll</HintPath>
- </Reference>
- <Reference Include="System.Resources.Writer">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Resources.Writer.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.CompilerServices.VisualC">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.CompilerServices.VisualC.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.Extensions">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.Handles">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Handles.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.InteropServices">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.InteropServices.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.Numerics">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Numerics.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.Serialization.Formatters">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Formatters.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.Serialization.Json">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Json.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.Serialization.Primitives">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Primitives.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.Serialization.Xml">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Xml.dll</HintPath>
- </Reference>
- <Reference Include="System.Security.Claims">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Claims.dll</HintPath>
- </Reference>
- <Reference Include="System.Security.Cryptography.Algorithms">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Algorithms.dll</HintPath>
- </Reference>
- <Reference Include="System.Security.Cryptography.Csp">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Csp.dll</HintPath>
- </Reference>
- <Reference Include="System.Security.Cryptography.Encoding">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Encoding.dll</HintPath>
- </Reference>
- <Reference Include="System.Security.Cryptography.Primitives">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Primitives.dll</HintPath>
- </Reference>
- <Reference Include="System.Security.Cryptography.X509Certificates">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.X509Certificates.dll</HintPath>
- </Reference>
- <Reference Include="System.Security.Principal">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Principal.dll</HintPath>
- </Reference>
- <Reference Include="System.Security.SecureString">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.SecureString.dll</HintPath>
- </Reference>
- <Reference Include="System.Text.Encoding">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Text.Encoding.dll</HintPath>
- </Reference>
- <Reference Include="System.Text.Encoding.Extensions">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Text.Encoding.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="System.Text.RegularExpressions">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Text.RegularExpressions.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading.Overlapped">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Overlapped.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading.Tasks">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Tasks.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading.Tasks.Parallel">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Tasks.Parallel.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading.Thread">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Thread.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading.ThreadPool">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.ThreadPool.dll</HintPath>
- </Reference>
- <Reference Include="System.Threading.Timer">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Timer.dll</HintPath>
- </Reference>
- <Reference Include="System.ValueTuple">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ValueTuple.dll</HintPath>
- </Reference>
- <Reference Include="System.Xml.ReaderWriter">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.ReaderWriter.dll</HintPath>
- </Reference>
- <Reference Include="System.Xml.XDocument">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XDocument.dll</HintPath>
- </Reference>
- <Reference Include="System.Xml.XmlDocument">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XmlDocument.dll</HintPath>
- </Reference>
- <Reference Include="System.Xml.XmlSerializer">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XmlSerializer.dll</HintPath>
- </Reference>
- <Reference Include="System.Xml.XPath">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XPath.dll</HintPath>
- </Reference>
- <Reference Include="System.Xml.XPath.XDocument">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XPath.XDocument.dll</HintPath>
- </Reference>
- <Reference Include="System.Numerics.Vectors">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/Extensions/2.0.0/System.Numerics.Vectors.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.InteropServices.WindowsRuntime">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll</HintPath>
- </Reference>
- <Reference Include="mscorlib">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/mscorlib.dll</HintPath>
- </Reference>
- <Reference Include="System.ComponentModel.Composition">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.ComponentModel.Composition.dll</HintPath>
- </Reference>
- <Reference Include="System.Core">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Core.dll</HintPath>
- </Reference>
- <Reference Include="System.Data">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Data.dll</HintPath>
- </Reference>
- <Reference Include="System">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.dll</HintPath>
- </Reference>
- <Reference Include="System.Drawing">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Drawing.dll</HintPath>
- </Reference>
- <Reference Include="System.IO.Compression.FileSystem">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.IO.Compression.FileSystem.dll</HintPath>
- </Reference>
- <Reference Include="System.Net">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Net.dll</HintPath>
- </Reference>
- <Reference Include="System.Numerics">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Numerics.dll</HintPath>
- </Reference>
- <Reference Include="System.Runtime.Serialization">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Runtime.Serialization.dll</HintPath>
- </Reference>
- <Reference Include="System.ServiceModel.Web">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.ServiceModel.Web.dll</HintPath>
- </Reference>
- <Reference Include="System.Transactions">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Transactions.dll</HintPath>
- </Reference>
- <Reference Include="System.Web">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Web.dll</HintPath>
- </Reference>
- <Reference Include="System.Windows">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Windows.dll</HintPath>
- </Reference>
- <Reference Include="System.Xml">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.dll</HintPath>
- </Reference>
- <Reference Include="System.Xml.Linq">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Linq.dll</HintPath>
- </Reference>
- <Reference Include="System.Xml.Serialization">
- <HintPath>D:/UnityHub/2019.4.40f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
- </Reference>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>E:\2019.4.39f1c1\Editor\Data\Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>E:\2019.4.39f1c1\Editor\Data\Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_BetterStreamingAssets.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_PathUtil.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_SubReadOnlyStream.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_TestSceneGUI.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\BSA_ZipArchive.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\IJsonWrapper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonData.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonException.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonMapper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonMockWrapper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonReader.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\JsonWriter.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\Lexer.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\LitJson\ParserToken.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\ByteArray.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\ByteString.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\CodedInputStream.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\CodedOutputStream.ComputeSize.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\CodedOutputStream.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\Collections\RepeatedField.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\Compatibility\PropertyInfoExtensions.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\Compatibility\StreamExtensions.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\FieldCodec.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\ICustomDiagnosticMessage.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\IMessage.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\InvalidProtocolBufferException.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\LimitedInputStream.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\MessageExtensions.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\MessageParser.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\ProtoPreconditions.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\NetProtocol\Protobuf\WireFormat.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Client.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Common.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\EventType.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Logger.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Message.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\NetworkStreamExtensions.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\SafeQueue.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Server.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\3rdGithub\Telepathy\Utils.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleConfigLoader.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleItem.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleMgrV2.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetBundleWrapper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\AssetTypeConfig.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\LoadTask.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\LoadTaskGroup.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\Loader\IAssetBundleIO.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\Loader\ISpriteAtlasLoader.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetBundle\V2\UnLoadTask.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetTypeEx\UnityFolder.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\AssetsVersionController\AssetsVersionController.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\DevAssets\DevResourceMgr.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ArtAsset\IResMgr.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResourceV2\GameObjectWrapper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResources.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\BResourcesV2.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ClientAssetsHelper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ObjectPools\GameObjectPoolManager.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\ImportExcelLog.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SQLiteService.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite\SQLite3.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite\SQLite3DllImport.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite\TableMaping.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SqliteHelper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SqliteLoder.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQuery.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQueryForILRuntime.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\AssetBundleBenchmark01.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\AssetBundleTestLoad.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingCSharpObjects\EventBus.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingGameObjects\Bullet.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\ObjectPools\Examples\PoolingGameObjects\Gun.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncher.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\BDLauncherBridge@hotfix.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Config.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Debug\Runtime\BDebug.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\@hotfix\DebuggerServerProcessAttribute.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\@hotfix\DebuggerServerProcessManager.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\@hotfix\IDebuggerServerProcess.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\core\DebuggerNetworkTools.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\core\Debugger_NetworkClient.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Debugger\core\Debugger_NetworkServer.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Core\ADataListenerT.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Core\ADataListenerTBase.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Core\AStatusListener.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Event\EventListenerEx.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Event\EventListenerEx_ILRuntimeAdaptor.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Service\StatusListenerServer.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Event\Service\StatusListenerService.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Event\ValueListenerEX_ILRuntimeAdaptor.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Event\ValueListenerEx.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\GameServiceStore\GameInterfaceService.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\GameServiceStore\GameServiceStore.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\GameStart\IGameStart.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\GameStart\IHotfixGameStart@hotfix.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Reflection\@hotfix\ReflectionExtension.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\ScreenNavigation\@hotfix\IScreenView.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\ScreenNavigation\@hotfix\ScreenViewCenter.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\ScreenNavigation\@hotfix\ScreenViewManager.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\Collections\PropsList.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\Extension\ObjectsExtension.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\State\AStateBase.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\State\IPropertyChange.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\State\IState.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\State\StateBase.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\State\StateFactory.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Reducer\AReducers.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Reducer\Attribute\AsyncReducerAttribute.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Reducer\Attribute\ReducerAttribute.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Reducer\UFluxAction.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Store\IStore.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Store\Store.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Store\StoreFactory.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\StateManager\Store\StoreWrapper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\UFluxUtils.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Atrribute\AutoInitComponent\AutoInitComponentAttribute.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Atrribute\AutoInitComponent\ButtonOnclickAttribute.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Atrribute\AutoInitComponent\TransformPathAttribute.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Atrribute\ComponentAttribute.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Atrribute\ComponentValueBindAttribute.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Component\AComponent.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Component\ATComponent.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Component\IComponent.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Component\ISubComponent.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\ComponentBindAdaptor\AComponentBindAdaptor.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\ComponentBindAdaptor\Manager\ComponentBindAdaptorAttribute.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\ComponentBindAdaptor\Manager\ComponentBindAdaptorManager.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Props\APropsBase.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\AWindow.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\AWindowProp.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\Attribute\UIAttribute.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\Attribute\UIMessageListenerAttribute.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\Interface\IUIMessage.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\Interface\IWindow.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\UIManager.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\UIManagerExDI.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\UIMsgData.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\@hotfix\View\Windows\WindowStatus.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\IButton.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\Localization\L2Image.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\Localization\L2Text.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\PageList\PageGrid.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\PageList\PageList.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\UI(UFlux)\Component\PageList\PageListDemo.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ActionAdaptor\@hotfix\ActionAdaptor.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ActionAdaptor\ActionAdaptor2.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\BApplication.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\IEnumerator\IEnumeratorTool.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ManagerBase\@half_hotfix\IMgr.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ManagerBase\@half_hotfix\ManagerBase.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ManagerBase\@hotfix\ILRuntimeManagerInstHelper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ManagerBase\ManagerInstHelper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ManagerBase\ManagerOrder.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\MonoSingleton\Singleton.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ObjectPools\ObjectPool.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\ObjectPools\ObjectPoolContainer.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\OdinHelper\NoOdinHelper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\Serialize\CSVHelper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\DataTime.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\File.IO\FileHelper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\File.IO\MurmurHash3.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\HashHelper.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\Path.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\Utils\mslibEx\StringEX.cs" />
+    <Compile Include="Packages\com.popo.bdframework\Runtime\VersionNum\IVersionNum.cs" />
+    <None Include="Packages\com.popo.bdframework\Runtime\BDFramework.Core.asmdef" />
+    <None Include="Packages\com.popo.bdframework\Runtime\3rdGithub\BetterStreamingAssets\README.txt" />
+    <Reference Include="UnityEngine">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AndroidJNIModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AndroidJNIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DSPGraphModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.DSPGraphModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HotReloadModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.LocalizationModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.LocalizationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ProfilerModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ProfilerModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StreamingModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.StreamingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubstanceModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubsystemsModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.SubsystemsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TLSModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UNETModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UmbraModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityTestProtocolModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityTestProtocolModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VFXModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="DemiLib">
+      <HintPath>C:/BDFramework.Core/Assets/3rdPlugins/Dotween/DemiLib/Core/DemiLib.dll</HintPath>
+    </Reference>
+    <Reference Include="DemiEditor">
+      <HintPath>C:/BDFramework.Core/Assets/3rdPlugins/Dotween/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>C:/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenEditor">
+      <HintPath>C:/BDFramework.Core/Assets/3rdPlugins/Dotween/DOTween/Editor/DOTweenEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.OdinInspector.Attributes">
+      <HintPath>C:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.OdinInspector.Editor">
+      <HintPath>C:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Serialization.Config">
+      <HintPath>C:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Serialization">
+      <HintPath>C:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities">
+      <HintPath>C:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Utilities.Editor">
+      <HintPath>C:/BDFramework.Core/Assets/3rdPlugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="ILRuntime.Mono.Cecil">
+      <HintPath>C:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="ILRuntime.Mono.Cecil.Mdb">
+      <HintPath>C:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="ILRuntime.Mono.Cecil.Pdb">
+      <HintPath>C:/BDFramework.Core/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.ZipFile">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/3rdPlugins/NuGet/System.IO.Compression/System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Excel">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Editor/Plugins/Excel/Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Editor/Plugins/Excel/ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/Microsoft.Bcl.AsyncInterfaces.1.1.1/lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.Common.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/Microsoft.CodeAnalysis.CSharp.3.11.0/lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/ServiceStack.Text.5.12.0/lib/netstandard2.0/ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Buffers.4.5.1/lib/netstandard2.0/System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Collections.Immutable.5.0.0/lib/netstandard2.0/System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Memory.4.5.4/lib/netstandard2.0/System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Reflection.Metadata.5.0.0/lib/netstandard2.0/System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Runtime.CompilerServices.Unsafe.5.0.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Text.Encoding.CodePages.4.5.1/lib/netstandard2.0/System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions">
+      <HintPath>C:/BDFramework.Core/Packages/com.popo.bdframework/Nuget/System.Threading.Tasks.Extensions.4.5.4/lib/netstandard2.0/System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>C:/BDFramework.Core/Library/PackageCache/com.unity.render-pipelines.core@7.6.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="netstandard">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.AppContext">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.AppContext.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Concurrent">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.Concurrent.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.NonGeneric">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.NonGeneric.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Specialized">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Collections.Specialized.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.EventBasedAsync">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.EventBasedAsync.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Primitives">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.TypeConverter">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ComponentModel.TypeConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Console">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Common">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Contracts">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Debug">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.FileVersionInfo">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.FileVersionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Process">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Process.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.StackTrace">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.StackTrace.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.TextWriterTraceListener">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.TextWriterTraceListener.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Tools">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.TraceSource">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.TraceSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Tracing">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Diagnostics.Tracing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Primitives">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Drawing.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Dynamic.Runtime">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Dynamic.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Calendars">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Globalization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Extensions">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Globalization.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.ZipFile">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.DriveInfo">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.DriveInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Watcher">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.FileSystem.Watcher.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.IsolatedStorage">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.IsolatedStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.MemoryMappedFiles">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.MemoryMappedFiles.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Pipes">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.Pipes.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.UnmanagedMemoryStream">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.IO.UnmanagedMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Expressions">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.Expressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Parallel">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.Parallel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Queryable">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Linq.Queryable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NameResolution">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.NameResolution.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NetworkInformation">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.NetworkInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Ping">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Ping.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Primitives">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Requests">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Requests.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Security">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebHeaderCollection">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.WebHeaderCollection.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebSockets.Client">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.WebSockets.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebSockets">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Net.WebSockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ObjectModel">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Extensions">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Reflection.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Primitives">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Reflection.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Reader">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Resources.Reader.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.ResourceManager">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Resources.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Writer">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Resources.Writer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.VisualC">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.CompilerServices.VisualC.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Handles">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Handles.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.InteropServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Numerics">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Formatters">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Formatters.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Json">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Primitives">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Xml">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Runtime.Serialization.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Claims">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Claims.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Csp">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Csp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.Principal.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.SecureString">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Security.SecureString.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Text.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.Extensions">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Text.Encoding.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.RegularExpressions">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Text.RegularExpressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Overlapped">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Overlapped.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Parallel">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Tasks.Parallel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Thread.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.ThreadPool">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.ThreadPool.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Timer">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Threading.Timer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.ReaderWriter">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XDocument">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XmlDocument">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XmlDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XmlSerializer">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XmlSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XPath">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XPath.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XPath.XDocument">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netstandard/System.Xml.XPath.XDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/Extensions/2.0.0/System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.WindowsRuntime">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.ComponentModel.Composition.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.IO.Compression.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.ServiceModel.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Transactions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Serialization">
+      <HintPath>E:/2019.4.39f1c1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="ILRuntime">
+      <HintPath>C:/BDFramework.Core/Library/ScriptAssemblies/ILRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>C:/BDFramework.Core/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:/BDFramework.Core/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ZString.csproj">
-      <Project>{62f5267d-4748-114e-5ea1-9d36d5a87950}</Project>
+      <Project>{7D26F562-4847-4E11-5EA1-9D36D5A87950}</Project>
       <Name>ZString</Name>
     </ProjectReference>
     <ProjectReference Include="UniTask.csproj">
-      <Project>{73c4cde1-717e-ed0f-53a2-967832e2502a}</Project>
+      <Project>{E1CDC473-7E71-0FED-53A2-967832E2502A}</Project>
       <Name>UniTask</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+  <Target Name="GenerateTargetFrameworkMonikerAttribute" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
