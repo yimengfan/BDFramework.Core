@@ -96,7 +96,7 @@ namespace BDFramework.UFlux.Reducer
         protected void AddAsyncRecucer(Enum @enum, Store<T>.ReducerAsync reducer)
         {
             var key =GetEnumKey(@enum);;
-            if (ReducersMap.ContainsKey(key))
+            if ( AsyncReducersMap.ContainsKey(key))
             {
                 BDebug.LogError("重复添加key,请检查" + @enum);
                 return;
