@@ -133,10 +133,13 @@ namespace BDFramework.Editor.BuildPipeline
                 }
                     break;
             }
+
             AssetDatabase.Refresh();
-            
+
             //不通模式的设置
             //项目名
+            string productNameCache = PlayerSettings.productName;
+            string applicationIdentifierCache = PlayerSettings.applicationIdentifier;
             if (addPackageNameStr != null)
             {
                 if (!PlayerSettings.productName.Contains(addPackageNameStr))
@@ -219,21 +222,9 @@ namespace BDFramework.Editor.BuildPipeline
             AssetDatabase.StopAssetEditing(); //恢复触发资源导入
 
             //恢复包名
-            if (addPackageNameStr != null)
-            {
-                //项目名
-                if (PlayerSettings.productName.Contains(addPackageNameStr))
-                {
-                    PlayerSettings.productName = PlayerSettings.productName.Replace(addPackageNameStr, "");
-                }
+            PlayerSettings.productName = productNameCache;
+            PlayerSettings.applicationIdentifier = applicationIdentifierCache;
 
-                //包名
-                if (PlayerSettings.applicationIdentifier.Contains(addPackageNameStr))
-                {
-                    PlayerSettings.applicationIdentifier =
-                        PlayerSettings.applicationIdentifier.Replace(addPackageNameStr, "");
-                }
-            }
 
             return buildResult;
         }
@@ -310,7 +301,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //开始项目一键打包
-            string[] scenes = { SCENEPATH };
+            string[] scenes = {SCENEPATH};
             BuildOptions opa = BuildOptions.None;
             switch (mode)
             {
@@ -378,7 +369,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //开始项目一键打包
-            string[] scenes = { SCENEPATH };
+            string[] scenes = {SCENEPATH};
             BuildOptions opa = BuildOptions.None;
 
             switch (mode)
@@ -477,7 +468,7 @@ namespace BDFramework.Editor.BuildPipeline
 
 
             //开始项目一键打包
-            string[] scenes = { SCENEPATH };
+            string[] scenes = {SCENEPATH};
             BuildOptions opa = BuildOptions.None;
             switch (mode)
             {
@@ -563,7 +554,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static public void CopyPublishAssetsTo(string targetpath, RuntimePlatform platform)
         {
-            List<string> blackFile = new List<string>() { BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH, ".manifest" };
+            List<string> blackFile = new List<string>() {BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH, ".manifest"};
             //清空目标文件夹
             if (Directory.Exists(targetpath))
             {
