@@ -111,13 +111,13 @@
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\ObjectPools\GameObjectPoolManager.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ILRuntimeHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Script\ScriptLoder.cs" />
-     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\ImportExcelLog.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SQLiteService.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite\SQLite3.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite\SQLite3DllImport.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\Sqlite\TableMaping.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SqliteHelper.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\SqliteLoder.cs" />
+     <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableLog.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQuery.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\Sql\TableQueryForILRuntime.cs" />
      <Compile Include="Packages\com.popo.bdframework\Runtime\AssetsManager\UnitTest\AssetBundleBenchmark01.cs" />

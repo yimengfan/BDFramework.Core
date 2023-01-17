@@ -55,7 +55,7 @@ namespace ILRuntime.Runtime.Generated
             {
                 foreach(var m in lst)
                 {
-                    if(m.MatchGenericParameters(args, typeof(System.Int32), typeof(System.String), typeof(System.Action<UnityEngine.GameObject>), typeof(System.String)))
+                    if(m.MatchGenericParameters(args, typeof(System.Int32), typeof(System.String), typeof(System.Action<UnityEngine.GameObject>), typeof(BDFramework.ResourceMgr.LoadPathType), typeof(System.String)))
                     {
                         method = m.MakeGenericMethod(args);
                         app.RegisterCLRMethodRedirection(method, AsyncLoad_1);
@@ -64,7 +64,7 @@ namespace ILRuntime.Runtime.Generated
                     }
                 }
             }
-            args = new Type[]{typeof(System.Collections.Generic.List<System.String>), typeof(System.Action<System.Int32, System.Int32>), typeof(System.Action<System.Collections.Generic.IDictionary<System.String, UnityEngine.Object>>), typeof(System.String), typeof(BDFramework.ResourceMgr.LoadPathType)};
+            args = new Type[]{typeof(System.Collections.Generic.List<System.String>), typeof(System.Action<System.Int32, System.Int32>), typeof(System.Action<System.Collections.Generic.IDictionary<System.String, UnityEngine.Object>>), typeof(BDFramework.ResourceMgr.LoadPathType), typeof(System.String)};
             method = type.GetMethod("AsyncLoad", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, AsyncLoad_2);
             args = new Type[]{typeof(BDFramework.VersionController.UpdateMode), typeof(System.String), typeof(System.String), typeof(System.Action<BDFramework.VersionController.AssetItem, System.Collections.Generic.List<BDFramework.VersionController.AssetItem>>), typeof(System.Action<BDFramework.VersionController.AssetsVersionController.RetStatus, System.String>)};
@@ -146,22 +146,26 @@ namespace ILRuntime.Runtime.Generated
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 3);
+            StackObject* __ret = ILIntepreter.Minus(__esp, 4);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             System.String @groupName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.Action<UnityEngine.GameObject> @action = (System.Action<UnityEngine.GameObject>)typeof(System.Action<UnityEngine.GameObject>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)8);
+            BDFramework.ResourceMgr.LoadPathType @loadPathType = (BDFramework.ResourceMgr.LoadPathType)typeof(BDFramework.ResourceMgr.LoadPathType).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)20);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
+            System.Action<UnityEngine.GameObject> @action = (System.Action<UnityEngine.GameObject>)typeof(System.Action<UnityEngine.GameObject>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)8);
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
             System.String @assetLoadPath = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = BDFramework.ResourceMgr.BResources.AsyncLoad<UnityEngine.GameObject>(@assetLoadPath, @action, @groupName);
+            var result_of_this_method = BDFramework.ResourceMgr.BResources.AsyncLoad<UnityEngine.GameObject>(@assetLoadPath, @action, @loadPathType, @groupName);
 
             __ret->ObjectType = ObjectTypes.Integer;
             __ret->Value = result_of_this_method;
@@ -175,11 +179,11 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 5);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            BDFramework.ResourceMgr.LoadPathType @loadPathType = (BDFramework.ResourceMgr.LoadPathType)typeof(BDFramework.ResourceMgr.LoadPathType).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)20);
+            System.String @groupName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.String @groupName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            BDFramework.ResourceMgr.LoadPathType @loadPathType = (BDFramework.ResourceMgr.LoadPathType)typeof(BDFramework.ResourceMgr.LoadPathType).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)20);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
@@ -195,7 +199,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            var result_of_this_method = BDFramework.ResourceMgr.BResources.AsyncLoad(@assetlist, @onProcess, @onLoadEnd, @groupName, @loadPathType);
+            var result_of_this_method = BDFramework.ResourceMgr.BResources.AsyncLoad(@assetlist, @onProcess, @onLoadEnd, @loadPathType, @groupName);
 
             object obj_result_of_this_method = result_of_this_method;
             if(obj_result_of_this_method is CrossBindingAdaptorType)
