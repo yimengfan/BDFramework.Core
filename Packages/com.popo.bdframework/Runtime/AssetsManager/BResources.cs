@@ -43,6 +43,7 @@ namespace BDFramework.ResourceMgr
         /// SBP build信息
         /// </summary>
         readonly static public string SBPBuildLog = "buildlogtep.json";
+        readonly static public string SBPBuildLog2 = "build_result.info";
         /// <summary>
         /// 旧打包资源配置
         /// </summary>
