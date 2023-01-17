@@ -99,26 +99,26 @@ namespace BDFramework.Editor
         [HideLabel]
         [InlineProperty]
         public WindowsPlayerSetting WindowsPlayer = new WindowsPlayerSetting();
-        
+
         [ShowIf(nameof(pageType), PageType.BuildPackage)]
         [BoxGroup("Windows设置[Debug]")]
         [HideLabel]
         [InlineProperty]
         public WindowsPlayerSetting WindowsPlayerDebug = new WindowsPlayerSetting();
 
-        
-        
+
         [ShowIf(nameof(pageType), PageType.BuildPackage)]
         [BoxGroup("Mac OSX设置[Release]")]
         [HideLabel]
         [InlineProperty]
         public MacOSXSetting MacOSX = new MacOSXSetting();
-        
+
         [ShowIf(nameof(pageType), PageType.BuildPackage)]
         [BoxGroup("Mac OSX设置[Debug]")]
         [HideLabel]
         [InlineProperty]
-        public MacOSXSetting  MacOSXDebug = new MacOSXSetting();
+        public MacOSXSetting MacOSXDebug = new MacOSXSetting();
+
         #endregion
 
 
@@ -178,39 +178,32 @@ namespace BDFramework.Editor
 
 
     /// <summary>
+    /// VCS仓库信息
+    /// </summary>
+    [Serializable]
+    public class VCSData
+    {
+        public enum VCSType
+        {
+            Git,
+            SVN,
+            P4,
+        }
+        [LabelText("仓库类型")]
+        public VCSType VcsType = VCSType.SVN;
+        [LabelText("仓库地址")]
+        public string Url = "http://127.0.0.1:20001";
+        [LabelText("账号")]
+        public string UserName = "root";
+        [LabelText("密码")]
+        public string Psw = "root";
+    }
+
+    /// <summary>
     /// devops 设置
     /// </summary>
     public class DevOpsSetting
     {
-        /// <summary>
-        /// VCS仓库信息
-        /// </summary>
-        [Serializable]
-        public class VCSData
-        {
-            public enum VCSType
-            {
-                Git,
-                SVN,
-                P4,
-            }
-            [LabelText("标记")]
-            public string Tag = "";
-            
-            [LabelText("仓库类型")]
-            public VCSType VcsType = VCSType.Git;
-            [LabelText("仓库地址")]
-            public string Url = "http://127.0.0.1:20001";
-
-            [LabelText("账号")]
-            public string UserName = "root";
-
-            [LabelText("密码")]
-            public string Psw = "root";
-        }
-
-      
-
         [PropertySpace(10)]
         [BoxGroup("DevOps")]
         [InlineProperty]
@@ -225,16 +218,7 @@ namespace BDFramework.Editor
         [LabelText("自定义仓库")]
         public List<VCSData> CustomVCSDataList = new List<VCSData>();
 
-
-        /// <summary>
-        /// 获取一个VCS
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <returns></returns>
-        public VCSData GetVCSData(string tag)
-        {
-            return CustomVCSDataList.FirstOrDefault((vcs) => vcs.Tag.Equals(tag, StringComparison.OrdinalIgnoreCase));
-        }
+        
     }
 
 
@@ -309,7 +293,7 @@ namespace BDFramework.Editor
     [Serializable]
     public class AndroidSetting
     {
-        [LabelText("Keystore路径" )]
+        [LabelText("Keystore路径")]
         [LabelWidth(100)]
         [FilePath(ParentFolder = "", Extensions = "keystore")]
         public string keystoreName;
@@ -325,6 +309,11 @@ namespace BDFramework.Editor
         [LabelText("keyalias密码")]
         [LabelWidth(100)]
         public string keyaliasPass;
+
+        [Space(10)]
+        [LabelText("包体仓库")]
+        [LabelWidth(100)]
+        public VCSData VSC = new VCSData();
     }
 
     /// <summary>
@@ -336,7 +325,7 @@ namespace BDFramework.Editor
         [LabelText("证书")]
         [LabelWidth(100)]
         public string Licese;
-        
+
         [LabelText("密钥")]
         [LabelWidth(100)]
         public string Key;
@@ -345,6 +334,11 @@ namespace BDFramework.Editor
         [LabelText("生成Xcode后执行")]
         [LabelWidth(200)]
         public string ExcuteShell = "DevOps/CI/BuildIOS.shell";
+        
+        [Space(10)]
+        [LabelText("包体仓库")]
+        [LabelWidth(100)]
+        public VCSData VSC = new VCSData();
     }
 
     /// <summary>
@@ -354,8 +348,13 @@ namespace BDFramework.Editor
     public class WindowsPlayerSetting
     {
         public string NULL;
+        
+        [Space(10)]
+        [LabelText("包体仓库")]
+        [LabelWidth(100)]
+        public VCSData VSC = new VCSData();
     }
-    
+
     /// <summary>
     /// MacOSX平台设置
     /// </summary>
@@ -363,5 +362,10 @@ namespace BDFramework.Editor
     public class MacOSXSetting
     {
         public string NULL;
+        
+        [Space(10)]
+        [LabelText("包体仓库")]
+        [LabelWidth(100)]
+        public VCSData VSC = new VCSData();
     }
 }

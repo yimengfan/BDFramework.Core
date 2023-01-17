@@ -107,12 +107,11 @@ namespace System.IO
         {
             if (path != null)
             {
-                return path.Replace("\\", "/");
+                return path.Replace("\\", "/").Replace(@"\", "/");
             }
 
             return path;
         }
-
 
         /// <summary>
         /// 格式化路径

@@ -14,6 +14,17 @@ using Debug = UnityEngine.Debug;
 
 namespace BDFramework.Editor.SVN
 {
+    public class SvnOption
+    {
+        /// <summary>
+        /// 移除未在版本控制的文件
+        /// </summary>
+        public static readonly string CleanUp_RemoveUnversioned= "--remove-unversioned";
+        /// <summary>
+        /// 移除已忽略的文件
+        /// </summary>
+        public static readonly string CleanUp_RemoveIgnored= "--remove-ignored";
+    }
     /// <summary>
     /// SVN的处理器
     /// </summary>
@@ -28,13 +39,22 @@ namespace BDFramework.Editor.SVN
         /// </summary>
         public string LocalSVNRootPath { get; set; }
 
-        private SVNProcessor(string svnurl, string user, string psw, string localpath)
+        /// <summary>
+        /// 是否打印log
+        /// </summary>
+        private bool islog = false;
+
+        private SVNProcessor(string svnurl, string user, string psw, string localpath, bool islog)
         {
             this.SVNURL = svnurl;
             this.UserName = user;
             this.Password = psw;
             this.LocalSVNRootPath = Path.GetFullPath(localpath);
+            this.islog = islog;
+            
+            BDebug.Log($"SVN-账号:{user}，密码:{psw}");
         }
+
 
         /// <summary>
         ///  svn处理器
@@ -42,7 +62,7 @@ namespace BDFramework.Editor.SVN
         /// <param name="svnurl"></param>
         /// <param name="user"></param>
         /// <param name="psw"></param>
-        static public SVNProcessor CreateSVNProccesor(string svnurl, string user, string psw, string localpath)
+        static public SVNProcessor CreateSVNProccesor(string svnurl, string user, string psw, string localpath, bool islog = true)
         {
 // #if UNITY_EDITOR_WIN
 //             var svn_exe_path = $"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~";
@@ -63,7 +83,7 @@ namespace BDFramework.Editor.SVN
 //                 }
 //             }
 // #endif
-            var svn = new SVNProcessor(svnurl, user, psw, localpath);
+            var svn = new SVNProcessor(svnurl, user, psw, localpath, islog);
             return svn;
         }
 
@@ -130,12 +150,12 @@ namespace BDFramework.Editor.SVN
         }
 
         /// <summary>
-        /// 更新一个仓库
+        /// 清理
         /// </summary>
-        /// <param name="downloadpath"></param>
-        public void CleanUp()
+        /// <param name="option">cleanup 参数</param>
+        public void CleanUp(string option="")
         {
-            var cmd = $"cleanup {this.LocalSVNRootPath}";
+            var cmd = $"cleanup {option} {this.LocalSVNRootPath}";
             this.ExecuteSVN(cmd);
         }
 
@@ -149,10 +169,11 @@ namespace BDFramework.Editor.SVN
             {
                 paths[i] = $"add {paths[i]}";
             }
+
             //批量添加cmd
             this.ExecuteSVN(paths);
         }
-        
+
         /// <summary>
         /// 添加文件/文件夹，包含所有子目录
         /// </summary>
@@ -163,6 +184,7 @@ namespace BDFramework.Editor.SVN
             {
                 paths[i] = $"add {paths[i]} --force";
             }
+
             //批量添加cmd
             this.ExecuteSVN(paths);
         }
@@ -214,6 +236,7 @@ namespace BDFramework.Editor.SVN
             //批量添加cmd
             this.ExecuteSVN(paths);
         }
+
         /// <summary>
         /// SVN状态
         /// </summary>
@@ -277,10 +300,7 @@ namespace BDFramework.Editor.SVN
                         break;
                 }
 
-                files = statusInfos.Where(s => s.StartsWith(findStr, StringComparison.OrdinalIgnoreCase)).Select((s) =>
-                {
-                    return s.Remove(0,1).Trim();
-                }).ToArray();
+                files = statusInfos.Where(s => s.StartsWith(findStr, StringComparison.OrdinalIgnoreCase)).Select((s) => { return s.Remove(0, 1).Trim(); }).ToArray();
             }
 
             return files;
@@ -311,7 +331,7 @@ namespace BDFramework.Editor.SVN
 
 
             var statusPath = this.LocalSVNRootPath + "/../status.txt";
-            var cmd = $"status \"{workpath}\" > \"{statusPath}\"";
+            var cmd = $"status  \"{workpath}\" > \"{statusPath}\"";
             this.ExecuteSVN(cmd);
             if (File.Exists(statusPath))
             {
@@ -346,19 +366,20 @@ namespace BDFramework.Editor.SVN
 
             return fileName.ToArray();
         }
+
         /// <summary>
         /// svn切换远端仓库
         /// </summary>
         /// <param name="newRepositoryUrl">新仓库地址</param>
         /// <param name="localSvnPath">本地仓库</param>
-        public void Switch(string newRepositoryUrl,string localSvnPath="./")
+        public void Switch(string newRepositoryUrl, string localSvnPath = "./")
         {
             var cmd = $"switch  {newRepositoryUrl} {localSvnPath} ";
 
             this.ExecuteSVN(cmd);
         }
-        
-        
+
+
         #region 当前版本信息
 
         /// <summary>
@@ -378,10 +399,11 @@ namespace BDFramework.Editor.SVN
                 cmd = $"info {workpath} {svnurl} > \"{infoPath}\"";
             }
 
-            //
+            //执行svn
             this.ExecuteSVN(cmd);
-
-            return File.ReadAllText(infoPath);
+            var info = File.ReadAllText(infoPath);
+            File.Delete(infoPath);
+            return info;
         }
 
         /// <summary>
@@ -421,8 +443,7 @@ namespace BDFramework.Editor.SVN
                     break;
                 }
             }
-
-            Debug.Log(response_url);
+            
             //解析
             infos = GetInfo(response_url).Split('\n', '\r');
 
@@ -436,6 +457,7 @@ namespace BDFramework.Editor.SVN
 
             return "0";
         }
+
         /// <summary>
         /// 获取分支的URL
         /// </summary>
@@ -453,7 +475,7 @@ namespace BDFramework.Editor.SVN
 
             return "null";
         }
-        
+
         #endregion
 
         /// <summary>
@@ -517,7 +539,7 @@ namespace BDFramework.Editor.SVN
             }
             var cd_dir = $"cd \"{this.LocalSVNRootPath}\"";
 #elif UNITY_EDITOR_WIN
-          
+
             var svn_exe_path = $"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~/svn.exe";
             if (!File.Exists(svn_exe_path))
             {
@@ -531,8 +553,8 @@ namespace BDFramework.Editor.SVN
 #endif
             var svn_exe = "svn";
             argList.Add(cd_dir);
-            
-            
+
+
             foreach (var arg in args)
             {
                 //添加svn命名
@@ -540,7 +562,7 @@ namespace BDFramework.Editor.SVN
             }
 
             //执行cmd
-            CMDTools.RunCmd(argList.ToArray(),svn_exe,svn_exe_path);
+            CMDTools.RunCmd(argList.ToArray(), svn_exe, svn_exe_path, this.islog);
         }
     }
 }

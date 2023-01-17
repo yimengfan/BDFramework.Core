@@ -5,7 +5,7 @@ namespace BDFramework.Sql
     /// <summary>
     /// Excel版本信息
     /// </summary>
-    public class ImportExcelLog
+    public class TableLog
     {       
         // id
         [PrimaryKey,AutoIncrement]

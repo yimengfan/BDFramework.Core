@@ -63,23 +63,22 @@ namespace BDFramework.Editor.Table
                     break;
             }
 
-            //清空表
-            SqliteHelper.DB.Connection.DropTable<ImportExcelLog>();
+            //清空表日志
+            SqliteHelper.DB.Connection.DropTable<TableLog>();
+            foreach (var f in xlslFiles)
             {
-                foreach (var f in xlslFiles)
+                try
                 {
-                    try
-                    {
-                        Excel2SQLite(f, dbType);
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError(e);
-                        Debug.LogError("导表失败:" + f);
-                        EditorUtility.ClearProgressBar();
-                    }
+                    Excel2SQLite(f, dbType);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
+                    Debug.LogError("导表失败:" + f);
+                    EditorUtility.ClearProgressBar();
                 }
             }
+            //关闭sql
             SqliteLoder.Close();
             //
             EditorUtility.ClearProgressBar();
@@ -104,9 +103,9 @@ namespace BDFramework.Editor.Table
             //
             var excelHash = FileHelper.GetMurmurHash3(filePath);
             //table判断
-            SqliteHelper.DB.Connection.CreateTable<ImportExcelLog>();
+            SqliteHelper.DB.Connection.CreateTable<TableLog>();
 
-            var table = SqliteHelper.DB.GetTable<ImportExcelLog>();
+            var table = SqliteHelper.DB.GetTable<TableLog>();
             var importLog = table?.Where((ie) => ie.Path == filePath).FirstOrDefault();
             if (importLog == null || !importLog.Hash.Equals(excelHash))
             {
@@ -126,11 +125,10 @@ namespace BDFramework.Editor.Table
                 //插入新版本数据
                 if (importLog == null)
                 {
-                    importLog = new ImportExcelLog();
+                    importLog = new TableLog();
                     importLog.Path = filePath;
                     importLog.Hash = excelHash;
                     importLog.Date = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-                    ;
                     importLog.UnityVersion = Application.unityVersion;
                     SqliteHelper.DB.Insert(importLog);
                 }

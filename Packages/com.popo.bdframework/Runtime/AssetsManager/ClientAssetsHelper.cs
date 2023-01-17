@@ -192,7 +192,7 @@ namespace BDFramework.Asset
                     if (Application.isEditor)
                     {
                         isUseBetterStreaming = false;
-                        basePckPath = BApplication.DevOpsPath;
+                        basePckPath = BApplication.DevOpsPublishAssetsPath;
                     }
                     else
                     {

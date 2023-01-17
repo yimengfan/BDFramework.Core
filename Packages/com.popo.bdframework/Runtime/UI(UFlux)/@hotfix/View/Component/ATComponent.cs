@@ -93,14 +93,26 @@ namespace BDFramework.UFlux
         /// </summary>
         public void Load()
         {
-            if (resPath == null) return;
+            if (resPath == null)
+            {
+                return;
+            }
+
 
             var o = UFluxUtils.Load<GameObject>(resPath);
             this.Transform = GameObject.Instantiate(o).transform;
             this.IsLoad = true;
             UFluxUtils.InitComponent(this);
-            //初始化
-            this.Init();
+            try
+            {
+                //初始化
+                Init();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"窗口初始化出错: {this.resPath}");
+                Debug.LogError(e);
+            }
         }
 
 
@@ -110,18 +122,28 @@ namespace BDFramework.UFlux
         /// <param name="callback"></param>
         public void AsyncLoad(Action callback = null)
         {
-            if (resPath == null) return;
+            if (resPath == null)
+            {
+                return;
+            }
+
             UFluxUtils.AsyncLoad<GameObject>(resPath, obj =>
             {
                 this.Transform = GameObject.Instantiate(obj).transform;
                 this.IsLoad = true;
                 UFluxUtils.InitComponent(this);
-                //初始化
-                Init();
-                if (callback != null)
+                try
                 {
-                    callback();
+                    //初始化
+                    Init();
                 }
+                catch (Exception e)
+                {
+                    Debug.LogError($"窗口初始化出错: {this.resPath}");
+                    Debug.LogError(e);
+                }
+
+                callback?.Invoke();
             });
         }
 

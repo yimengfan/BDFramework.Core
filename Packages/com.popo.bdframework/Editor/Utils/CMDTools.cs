@@ -6,8 +6,10 @@ namespace BDFramework.Editor.Tools
 {
     static public class CMDTools
     {
+        private static string LogTag = "CMD";
         private static string CmdPath = @"C:\Windows\System32\cmd.exe";
         private static string TerrminalPath = "/bin/zsh";
+
         /// <summary>
         /// 执行cmd命令 返回cmd窗口显示的信息
         /// 多命令请使用批处理命令连接符：
@@ -19,12 +21,21 @@ namespace BDFramework.Editor.Tools
         /// Windows only
         /// </summary>
         /// <param name="cmd">执行的命令</param>
-        public static void RunCmd(string[] cmds,string envName="",string envValue ="",bool islog =true)
+        public static void RunCmd(string[] cmds, string envName = "", string envValue = "", bool islog = true)
         {
+            if (islog)
+            {
+                BDebug.EnableLog(LogTag);
+            }
+            else
+            {
+                BDebug.DisableTag(LogTag);
+            }
+
             //执行
             using (Process p = new Process())
             {
- #if UNITY_EDITOR_OSX
+#if UNITY_EDITOR_OSX
                  p.StartInfo.FileName = TerrminalPath;
                  //强制SVN log为英文
                  p.StartInfo.EnvironmentVariables.Add("LC_MESSAGES","en_US");
@@ -36,8 +47,9 @@ namespace BDFramework.Editor.Tools
                 //FBX工具调用时，不能接受空环境变量
                 if (!string.IsNullOrEmpty(envName))
                 {
-                    p.StartInfo.EnvironmentVariables.Add(envName,envValue);
+                    p.StartInfo.EnvironmentVariables.Add(envName, envValue);
                 }
+
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 p.StartInfo.UseShellExecute = false; //是否使用操作系统shell启动
                 p.StartInfo.RedirectStandardInput = true; //接受来自调用程序的输入信息
@@ -50,14 +62,14 @@ namespace BDFramework.Editor.Tools
                 {
                     if (!string.IsNullOrEmpty(e.Data))
                     {
-                        Debug.Log(e.Data);
+                        BDebug.Log(tag:LogTag, e.Data);
                     }
                 };
                 p.ErrorDataReceived += (s, e) =>
                 {
                     if (!string.IsNullOrEmpty(e.Data))
                     {
-                        Debug.LogError(e.Data);
+                        BDebug.LogError(tag:LogTag, e.Data);
                     }
                 };
 
@@ -69,10 +81,9 @@ namespace BDFramework.Editor.Tools
                 p.BeginErrorReadLine();
                 //向cmd窗口写入命令
                 foreach (string cmd in cmds)
-                {  
-                    Debug.Log("-->" + cmd);
+                {
+                    BDebug.Log(tag:LogTag,"-->" + cmd);
                     p.StandardInput.WriteLine(cmd); //输入CMD命令
-                  
                 }
 
                 p.StandardInput.WriteLine("exit"); //结束执行，很重要
@@ -89,7 +100,7 @@ namespace BDFramework.Editor.Tools
                 //return output;
             }
         }
-        
+
         /// <summary>
         /// 执行脚本
         /// </summary>
@@ -110,14 +121,14 @@ namespace BDFramework.Editor.Tools
             {
                 if (!string.IsNullOrEmpty(e.Data))
                 {
-                    Debug.Log("[Cmd]" + e.Data);
+                    BDebug.Log(tag:LogTag, e.Data);
                 }
             };
             process.ErrorDataReceived += (s, e) =>
             {
                 if (!string.IsNullOrEmpty(e.Data))
                 {
-                    Debug.Log("[Error]" + e.Data);
+                    BDebug.Log(tag:LogTag, "[error]" + e.Data);
                 }
             };
 

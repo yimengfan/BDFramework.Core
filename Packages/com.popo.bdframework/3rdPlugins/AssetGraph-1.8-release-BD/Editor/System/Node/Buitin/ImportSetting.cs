@@ -507,8 +507,8 @@ namespace UnityEngine.AssetGraph
 
                         if (importerModified)
                         {
-                            importer.SaveAndReimport();
-                            asset.TouchImportAsset();
+                            importer?.SaveAndReimport();
+                            asset?.TouchImportAsset();
                         }
                     }
                 }

@@ -335,7 +335,10 @@ namespace UnityEngine.AssetGraph {
         /// Touchs the import asset.
         /// </summary>
 		public void TouchImportAsset() {
-			System.IO.File.SetLastWriteTime(importFrom, DateTime.UtcNow);
+	        if (File.Exists(importFrom))
+	        {
+		        System.IO.File.SetLastWriteTime(importFrom, DateTime.UtcNow);
+	        }
 		}
 
         /// <summary>

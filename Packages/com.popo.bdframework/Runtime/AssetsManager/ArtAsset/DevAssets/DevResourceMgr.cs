@@ -224,7 +224,7 @@ namespace BDFramework.ResourceMgr
 
             if (rets.Count == 0)
             {
-                BDebug.LogError("未找到资源:" + path);
+                BDebug.LogError("资源加载","未找到资源:" + path);
 
                 return null;
             }

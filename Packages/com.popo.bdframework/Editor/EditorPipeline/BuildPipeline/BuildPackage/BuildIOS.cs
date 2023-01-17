@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Management.Instrumentation;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Tools;
@@ -51,18 +52,35 @@ namespace BDFramework.Editor.BuildPipeline
 
         [HorizontalGroup("a/a1")]
         [Button("构建Debug母包", ButtonSizes.Large)]
-        [GUIColor(1, 1, 0)]
+        [GUIColor(1, 0, 0)]
         public void Btn_DebugBuild()
         {
-            DebugBuild();
+            if (EditorUtility.DisplayDialog("提示", "是否构建Debug包体", "OK", "Cancel"))
+            {
+                BuildPackageTools.Build(BuildPackageTools.BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+            }
+        }
+        
+        [HorizontalGroup("a/a1")]
+        [Button("Release for profiling", ButtonSizes.Large)]
+        [GUIColor(1, 1, 0)]
+        public void Btn_ReleaseForProfiling()
+        {
+            if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForProfiling包体", "OK", "Cancel"))
+            {
+                BuildPackageTools.Build(BuildPackageTools.BuildMode.Profiler, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+            }
         }
 
-        [HorizontalGroup("a/a1")]
-        [Button("构建Release母包", ButtonSizes.Large)]
+        [HorizontalGroup("a/a2")]
+        [Button("构建发布版本", ButtonSizes.Large)]
         [GUIColor(0, 1, 0)]
         public void Btn_ReleaseBuild()
         {
-            ReleaseBuild();
+            if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForPublish版本包体？", "OK", "Cancel"))
+            {
+                BuildPackageTools.Build(BuildPackageTools.BuildMode.Release, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+            }
         }
 
         #endregion
@@ -106,45 +124,41 @@ namespace BDFramework.Editor.BuildPipeline
 
 
         [HorizontalGroup("b/a7")]
-        [GUIColor(1, 1, 0.5f)]
+        [GUIColor(1, 0, 0)]
         [Button("自定义构建（Debug）", ButtonSizes.Large, ButtonStyle.CompactBox)]
-        public void Btn_CustomBuildRelease()
+        public void Btn_CustomBuildDebug()
         {
             CustomBuild(BuildPackageTools.BuildMode.Debug);
         }
-
+        
         [HorizontalGroup("b/a7")]
+        [GUIColor(1, 1, 0.5f)]
+        [Button("自定义构建（ReleaseForProfiling）", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        public void Btn_CustomBuildReleaseForProfiling()
+        {
+            CustomBuild(BuildPackageTools.BuildMode.Profiler);
+        }
+
+        [HorizontalGroup("b/a8")]
         [GUIColor(0, 1, 0.5f)]
-        [Button("自定义构建（Release）", ButtonSizes.Large, ButtonStyle.CompactBox)]
-        public void Btn_CustomBuildDebug()
+        [Button("自定义构建（构建发布版本）", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        public void Btn_CustomBuildReleaseForPublish()
         {
             CustomBuild(BuildPackageTools.BuildMode.Release);
         }
-
+        
         #endregion
+        
 
-
-        /// <summary>
-        /// 加载debug配置,debug构建
-        /// </summary>
-        public static void DebugBuild()
+        [PropertySpace(20)]
+        [HorizontalGroup("b/a9")]
+        [Button("Build资源到XCode(不构建代码)", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        public void Btn_BuildAssetsAndCopyToXcode()
         {
-            if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
-            {
-                BuildPackageTools.Build(BuildPackageTools.BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
-            }
+            this.BuildAssetsAndCopyToXcode();
         }
 
-        /// <summary>
-        /// 加载Release配置,Release 构建
-        /// </summary>
-        public static void ReleaseBuild()
-        {
-            if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
-            {
-                BuildPackageTools.Build(BuildPackageTools.BuildMode.Release, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
-            }
-        }
+
 
 
         /// 自定义构建
@@ -153,6 +167,37 @@ namespace BDFramework.Editor.BuildPipeline
         {
             var buildConfig = this.IsSetBuildSceneConfig ? this.BuildSceneConfig : null;
             BuildPackageTools.Build(buildMode, this.BuildScene, buildConfig, IsReBuildAssets, BApplication.DevOpsPublishPackagePath, BuildTarget, BuildPackageOption);
+        }
+
+
+        /// <summary>
+        /// 编译资源拷贝至Xcode
+        /// </summary>
+        public void BuildAssetsAndCopyToXcode()
+        {
+            //构建
+            var platform = BApplication.GetRuntimePlatform(BuildTarget);
+            if (this.IsReBuildAssets)
+            {
+                BuildAssetsTools.BuildAllAssets(platform, BApplication.DevOpsPublishAssetsPath, opa: BuildPackageOption);
+            }
+            //拷贝到iospack
+            var iosPackDir = IPath.Combine(BApplication.DevOpsPublishPackagePath, BApplication.GetPlatformPath(BuildTarget));
+            var outDirs = Directory.GetDirectories(iosPackDir, "*", SearchOption.TopDirectoryOnly);
+            //
+            var iosSourcePackPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(BuildTarget));
+            foreach (var outdir in outDirs)
+            {
+                var xcodeDataPath = IPath.Combine(outdir, "Data/Raw", BApplication.GetPlatformPath(BuildTarget));
+                EditorUtility.DisplayDialog("提示",$"正在拷贝资源到:{xcodeDataPath}","ok");
+                //删除旧data
+                if (Directory.Exists(xcodeDataPath))
+                {
+                    Directory.Delete(xcodeDataPath, true);
+                }
+                //拷贝
+                FileHelper.CopyFolderTo(iosSourcePackPath ,xcodeDataPath);
+            }
         }
     }
 }

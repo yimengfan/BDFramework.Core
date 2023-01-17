@@ -26,9 +26,14 @@ namespace BDFramework.Editor.BuildPipeline
             Debug = 0,
 
             /// <summary>
-            /// 标准构建，使用Realease配置,Realease构建
+            /// Release 发布
             /// </summary>
             Release,
+
+            /// <summary>
+            /// Release for profiler
+            /// </summary>
+            Profiler,
         }
 
         //打包场景
@@ -95,8 +100,6 @@ namespace BDFramework.Editor.BuildPipeline
             return Build(buildMode, SCENEPATH, buildConfig, isGenAssets, outdir, buildTarget, buildOption);
         }
 
-        private static string DebugStr = ".Debug";
-
         /// <summary>
         /// 构建包体，使用当前配置、资源
         /// 这里默认建议使用单场景结构打包.
@@ -105,39 +108,47 @@ namespace BDFramework.Editor.BuildPipeline
             string outdir, BuildTarget buildTarget,
             BuildAssetsTools.BuildPackageOption buildOption = BuildAssetsTools.BuildPackageOption.BuildAll)
         {
-            //设置debug包名
+            string addPackageNameStr = null;
+            if (buildMode != BuildMode.Release)
+            {
+                addPackageNameStr = "." + buildMode.ToString().ToLower();
+            }
+
+            //不通模式的设置
             switch (buildMode)
             {
                 case BuildMode.Debug:
                 {
-                    //项目名
-                    if (!PlayerSettings.productName.EndsWith(DebugStr))
-                    {
-                        PlayerSettings.productName += DebugStr;
-                    }
-
-                    //包名
-                    if (!PlayerSettings.applicationIdentifier.EndsWith(DebugStr))
-                    {
-                        PlayerSettings.applicationIdentifier += DebugStr;
-                    }
+                    BDebugEditor.EnableDebug();
                 }
                     break;
                 case BuildMode.Release:
                 {
-                    //项目名
-                    if (PlayerSettings.productName.EndsWith(DebugStr))
-                    {
-                        PlayerSettings.productName = PlayerSettings.productName.Replace(DebugStr, "");
-                    }
-
-                    //包名
-                    if (PlayerSettings.applicationIdentifier.EndsWith(DebugStr))
-                    {
-                        PlayerSettings.applicationIdentifier = PlayerSettings.applicationIdentifier.Replace(DebugStr, "");
-                    }
+                    BDebugEditor.DisableDebug();
                 }
                     break;
+                case BuildMode.Profiler:
+                {
+                    BDebugEditor.EnableDebug();
+                }
+                    break;
+            }
+            AssetDatabase.Refresh();
+            
+            //不通模式的设置
+            //项目名
+            if (addPackageNameStr != null)
+            {
+                if (!PlayerSettings.productName.Contains(addPackageNameStr))
+                {
+                    PlayerSettings.productName += addPackageNameStr;
+                }
+
+                //包名
+                if (!PlayerSettings.applicationIdentifier.Contains(addPackageNameStr))
+                {
+                    PlayerSettings.applicationIdentifier += addPackageNameStr;
+                }
             }
 
 
@@ -208,23 +219,20 @@ namespace BDFramework.Editor.BuildPipeline
             AssetDatabase.StopAssetEditing(); //恢复触发资源导入
 
             //恢复包名
-            switch (buildMode)
+            if (addPackageNameStr != null)
             {
-                case BuildMode.Debug:
+                //项目名
+                if (PlayerSettings.productName.Contains(addPackageNameStr))
                 {
-                    //项目名
-                    if (PlayerSettings.productName.EndsWith(DebugStr))
-                    {
-                        PlayerSettings.productName = PlayerSettings.productName.Replace(DebugStr, "");
-                    }
-
-                    //包名
-                    if (PlayerSettings.applicationIdentifier.EndsWith(DebugStr))
-                    {
-                        PlayerSettings.applicationIdentifier = PlayerSettings.applicationIdentifier.Replace(DebugStr, "");
-                    }
+                    PlayerSettings.productName = PlayerSettings.productName.Replace(addPackageNameStr, "");
                 }
-                    break;
+
+                //包名
+                if (PlayerSettings.applicationIdentifier.Contains(addPackageNameStr))
+                {
+                    PlayerSettings.applicationIdentifier =
+                        PlayerSettings.applicationIdentifier.Replace(addPackageNameStr, "");
+                }
             }
 
             return buildResult;
@@ -258,6 +266,7 @@ namespace BDFramework.Editor.BuildPipeline
                 }
                     break;
                 case BuildMode.Release:
+                case BuildMode.Profiler:
                 {
                     androidConfig = BDEditorApplication.BDFrameworkEditorSetting.Android;
                 }
@@ -301,7 +310,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //开始项目一键打包
-            string[] scenes = {SCENEPATH};
+            string[] scenes = { SCENEPATH };
             BuildOptions opa = BuildOptions.None;
             switch (mode)
             {
@@ -369,7 +378,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //开始项目一键打包
-            string[] scenes = {SCENEPATH};
+            string[] scenes = { SCENEPATH };
             BuildOptions opa = BuildOptions.None;
 
             switch (mode)
@@ -406,9 +415,9 @@ namespace BDFramework.Editor.BuildPipeline
             if (File.Exists(plist))
             {
                 //执行shell path
-                var shellPath = mode == BuildMode.Debug ? BDEditorApplication.BDFrameworkEditorSetting.iOSDebug.ExcuteShell : BDEditorApplication.BDFrameworkEditorSetting.iOS.ExcuteShell;
-                shellPath = Path.GetFullPath(shellPath);
-
+                var shellPath = mode == BuildMode.Debug
+                    ? BDEditorApplication.BDFrameworkEditorSetting.iOSDebug.ExcuteShell
+                    : BDEditorApplication.BDFrameworkEditorSetting.iOS.ExcuteShell;
                 if (File.Exists(shellPath))
                 {
                     //执行BuildIpa的shell
@@ -468,7 +477,7 @@ namespace BDFramework.Editor.BuildPipeline
 
 
             //开始项目一键打包
-            string[] scenes = {SCENEPATH};
+            string[] scenes = { SCENEPATH };
             BuildOptions opa = BuildOptions.None;
             switch (mode)
             {
@@ -554,7 +563,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static public void CopyPublishAssetsTo(string targetpath, RuntimePlatform platform)
         {
-            List<string> blackFile = new List<string>() {BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH, ".manifest"};
+            List<string> blackFile = new List<string>() { BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH, ".manifest" };
             //清空目标文件夹
             if (Directory.Exists(targetpath))
             {

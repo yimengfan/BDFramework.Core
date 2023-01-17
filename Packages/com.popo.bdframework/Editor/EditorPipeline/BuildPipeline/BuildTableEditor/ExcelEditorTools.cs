@@ -116,7 +116,7 @@ namespace BDFramework.Editor.Table
             var (_, newExcelCacheMap) = GetExcelsHash();
             //获取Sql中的日志
             SqliteLoder.LoadSQLOnEditor(sqlPath);
-            var logs = SqliteHelper.DB.GetTable<ImportExcelLog>().ToList();
+            var logs = SqliteHelper.DB.GetTable<TableLog>().ToList();
             SqliteLoder.Close();
             //
             foreach (var excelInfoItem in newExcelCacheMap)
@@ -133,6 +133,7 @@ namespace BDFramework.Editor.Table
             return (retExchangedInfoList, newExcelCacheMap);
         }
 
+        
         /// <summary>
         /// 加载ExcelCache信息
         /// </summary>

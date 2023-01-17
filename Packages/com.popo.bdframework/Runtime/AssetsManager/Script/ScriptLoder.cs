@@ -64,7 +64,7 @@ namespace BDFramework
         static void LoadHotfixDLL(string dllPath, HotfixCodeRunMode mode, Type[] mainProjecTypes)
         {
             //反射执行
-            if (mode == HotfixCodeRunMode.Huatuo)
+            if (mode == HotfixCodeRunMode.HCLR)
             {
                 new NotSupportedException("暂未实现");
                 // BDebug.Log("【ScriptLaunch】反射Dll路径:" + dllPath, "red");

@@ -54,8 +54,9 @@ namespace BDFramework.Editor.PublishPipeline
             this.editorTable = new EditorWindow_Table();
             this.editorAsset = new EditorWindow_BuildAssetBundle();
             this.editorScript = new EditorWindow_ScriptBuildDll();
-
             this.minSize = this.maxSize = new Vector2(1000, 800);
+            //
+            selectPlatforms.Add(BApplication.RuntimePlatform);
             base.Show();
         }
 
@@ -118,7 +119,7 @@ namespace BDFramework.Editor.PublishPipeline
 
 
         //Runtimeform不支持flag
-        private List<RuntimePlatform> selectPlatforms = new List<RuntimePlatform>() {RuntimePlatform.Android};
+        private List<RuntimePlatform> selectPlatforms = new List<RuntimePlatform>() {};
 
         private Dictionary<RuntimePlatform, string> platformVersionMap = new Dictionary<RuntimePlatform, string>();
 
@@ -134,7 +135,7 @@ namespace BDFramework.Editor.PublishPipeline
             {
                 GUILayout.Label("资源发布:", EditorGUIHelper.GetFontStyle(Color.red, 15));
 
-                EditorGUILayout.HelpBox("版本号采用三段式:0.0.1,前两位可以自定义,最后一位默认自增！\n默认导出地址:Devops/PublishAssets", MessageType.Info);
+                EditorGUILayout.HelpBox("版本号采用三段式:0.0.1,前两位可以自定义,最后一位默认自增！\n 默认导出地址:Devops/PublishAssets", MessageType.Info);
                 GUILayout.Space(5);
                 //
                 foreach (var sp in BApplication.SupportPlatform)
@@ -208,6 +209,7 @@ namespace BDFramework.Editor.PublishPipeline
                     foreach (var sp in selectPlatforms)
                     {
                         BuildAssetsTools.BuildAllAssets(sp, EXPORT_PATH,platformVersionMap[sp]);
+                        Debug.Log($"==============>:{sp}");
                         platformVersionMap.Remove(sp);
                     }
 

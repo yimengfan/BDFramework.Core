@@ -46,25 +46,44 @@ namespace BDFramework.Editor.BuildPipeline
 
         #endregion
 
+
         #region 标准构建
 
         [HorizontalGroup("a/a1")]
         [Button("构建Debug母包", ButtonSizes.Large)]
-        [GUIColor(1, 1, 0)]
+        [GUIColor(1, 0, 0)]
         public void Btn_DebugBuild()
         {
-            DebugBuild();
+            if (EditorUtility.DisplayDialog("提示", "是否构建Debug包体", "OK", "Cancel"))
+            {
+                BuildPackageTools.Build(BuildPackageTools.BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+            }
+        }
+        
+        [HorizontalGroup("a/a1")]
+        [Button("Release for profiling", ButtonSizes.Large)]
+        [GUIColor(1, 1, 0)]
+        public void Btn_ReleaseForProfiling()
+        {
+            if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForProfiling包体", "OK", "Cancel"))
+            {
+                BuildPackageTools.Build(BuildPackageTools.BuildMode.Profiler, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+            }
         }
 
-        [HorizontalGroup("a/a1")]
-        [Button("构建Release母包", ButtonSizes.Large)]
+        [HorizontalGroup("a/a2")]
+        [Button("构建发布版本", ButtonSizes.Large)]
         [GUIColor(0, 1, 0)]
         public void Btn_ReleaseBuild()
         {
-            ReleaseBuild();
+            if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForPublish版本包体？", "OK", "Cancel"))
+            {
+                BuildPackageTools.Build(BuildPackageTools.BuildMode.Release, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+            }
         }
 
         #endregion
+
 
         #region 自定义构建
 
@@ -104,21 +123,29 @@ namespace BDFramework.Editor.BuildPipeline
 
 
         [HorizontalGroup("b/a7")]
-        [GUIColor(1, 1, 0.5f)]
+        [GUIColor(1, 0, 0)]
         [Button("自定义构建（Debug）", ButtonSizes.Large, ButtonStyle.CompactBox)]
-        public void Btn_CustomBuildRelease()
+        public void Btn_CustomBuildDebug()
         {
             CustomBuild(BuildPackageTools.BuildMode.Debug);
         }
-
+        
         [HorizontalGroup("b/a7")]
+        [GUIColor(1, 1, 0.5f)]
+        [Button("自定义构建（ReleaseForProfiling）", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        public void Btn_CustomBuildReleaseForProfiling()
+        {
+            CustomBuild(BuildPackageTools.BuildMode.Profiler);
+        }
+
+        [HorizontalGroup("b/a8")]
         [GUIColor(0, 1, 0.5f)]
-        [Button("自定义构建（Release）", ButtonSizes.Large, ButtonStyle.CompactBox)]
-        public void Btn_CustomBuildDebug()
+        [Button("自定义构建（构建发布版本）", ButtonSizes.Large, ButtonStyle.CompactBox)]
+        public void Btn_CustomBuildReleaseForPublish()
         {
             CustomBuild(BuildPackageTools.BuildMode.Release);
         }
-
+        
         #endregion
 
 

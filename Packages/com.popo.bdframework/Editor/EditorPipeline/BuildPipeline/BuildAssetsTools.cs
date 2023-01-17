@@ -51,6 +51,8 @@ namespace BDFramework.Editor.BuildPipeline
         /// <param name="setNewVersionNum">新版本号</param>
         static public void BuildAllAssets(RuntimePlatform platform, string outputPath, string setNewVersionNum = null, BuildPackageOption opa = BuildPackageOption.BuildAll)
         {
+            Debug.Log("BuildAssetOpt:" + opa.ToString());
+            
             var newVersionNum = "";
             //触发事件
             var lastPackageBuildInfo = ClientAssetsHelper.GetPackageBuildInfo(outputPath, platform);

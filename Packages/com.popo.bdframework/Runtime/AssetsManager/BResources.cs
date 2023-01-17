@@ -103,7 +103,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 资产加载路径类型
         /// </summary>
-        static  public  AssetLoadPathType AssetPathType { get; private set; }
+        static public AssetLoadPathType AssetPathType { get; private set; } = AssetLoadPathType.Editor;
         /// <summary>
         /// 初始化
         /// </summary>
@@ -111,10 +111,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="callback"></param>
         static public void Init(AssetLoadPathType loadPathType)
         {
-            if (Application.isPlaying)
-            {
-                BDebug.Log("【BResource】加载路径:" + loadPathType.ToString());
-            }
+            BDebug.Log("【BResource】加载路径:" + loadPathType.ToString());
             if (loadPathType == AssetLoadPathType.Editor)
             {
 #if UNITY_EDITOR //防止编译报错
@@ -199,9 +196,10 @@ namespace BDFramework.ResourceMgr
 
         /// <summary>
         /// 同步加载
+        /// Load<T>的type形式
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="assetLoadPath"></param>
+        /// <typeparam name="type">类型</typeparam>
+        /// <param name="assetLoadPath">加载路径</param>
         /// <returns></returns>
         private static UnityEngine.Object Load(Type type, string assetLoadPath)
         {
@@ -235,7 +233,7 @@ namespace BDFramework.ResourceMgr
         /// 创建异步任务
         /// 该接口主要作为加载测试用，非内部创建任务不接受AssetbundleV2系统调度
         /// </summary>
-        /// <param name="assetLoadPath"></param>
+        /// <param name="assetLoadPath">加载路径</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public static LoadTaskGroup AsyncLoad<T>(string assetLoadPath,LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
@@ -249,21 +247,26 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         /// <typeparam name="T">类型</typeparam>
         /// <param name="objName">名称</param>
-        /// <param name="action">回调函数</param>
-        public static int AsyncLoad<T>(string assetLoadPath, Action<T> action, string groupName = null) where T : UnityEngine.Object
+        /// <param name="action">加载回调</param>
+        /// <param name="groupName">分组名，用于统一管理，如：卸载等</param>
+        ///  <param name="loadPathType">路径类型：路径或者guid</param>
+        public static int AsyncLoad<T>(string assetLoadPath, Action<T> action, LoadPathType loadPathType = LoadPathType.RuntimePath,string groupName = null) where T : UnityEngine.Object
         {
             //添加到资源组
             AddAssetsPathToGroup(groupName, assetLoadPath);
             //异步加载
-            return ResLoader.AsyncLoad<T>(assetLoadPath, action);
+            return ResLoader.AsyncLoad<T>(assetLoadPath, action,loadPathType);
         }
 
         /// <summary>
         /// 批量加载
         /// </summary>
         /// <param name="assetlist"></param>
+        /// <param name="onProcess"></param>
         /// <param name="onLoadEnd"></param>
-        public static List<int> AsyncLoad(List<string> assetlist, Action<int, int> onProcess = null, Action<IDictionary<string, UnityEngine.Object>> onLoadEnd = null, string groupName = null,LoadPathType loadPathType = LoadPathType.RuntimePath)
+        /// <param name="loadPathType"></param>
+        /// <param name="groupName"></param>
+        public static List<int> AsyncLoad(List<string> assetlist, Action<int, int> onProcess = null, Action<IDictionary<string, Object>> onLoadEnd = null, LoadPathType loadPathType = LoadPathType.RuntimePath, string groupName = null)
         {
             if (assetlist.Count != 0)
             {
@@ -396,6 +399,7 @@ namespace BDFramework.ResourceMgr
 
         /// <summary>
         /// 寻找一个shader
+        /// 类似Shader.Find用法
         /// </summary>
         /// <param name="shaderName"></param>
         public static Shader FindShader(string shaderName)
@@ -860,12 +864,13 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         static public void SetAUPLEvel(AUPLevel level)
         {
+            QualitySettings.asyncUploadPersistentBuffer = true;
             switch (level)
             {
                 case AUPLevel.LowRender:
                 {
                     //低渲染、高加载时候
-                    QualitySettings.asyncUploadPersistentBuffer = true;
+                  
                     QualitySettings.asyncUploadBufferSize = 32;
                     QualitySettings.asyncUploadTimeSlice = 8;
                     Application.backgroundLoadingPriority = ThreadPriority.High;
@@ -874,7 +879,6 @@ namespace BDFramework.ResourceMgr
                 case AUPLevel.Height:
                 {
                     //最高配置
-                    QualitySettings.asyncUploadPersistentBuffer = true;
                     QualitySettings.asyncUploadBufferSize = 32;
                     QualitySettings.asyncUploadTimeSlice = 4;
                     Application.backgroundLoadingPriority = ThreadPriority.Normal;
@@ -883,7 +887,6 @@ namespace BDFramework.ResourceMgr
                 case AUPLevel.Normal:
                 {
                     //中等配置
-                    QualitySettings.asyncUploadPersistentBuffer = true;
                     QualitySettings.asyncUploadBufferSize = 16;
                     QualitySettings.asyncUploadTimeSlice = 4;
                     Application.backgroundLoadingPriority = ThreadPriority.Normal;
@@ -892,7 +895,6 @@ namespace BDFramework.ResourceMgr
                 case AUPLevel.Low:
                 {
                     //低配置
-                    QualitySettings.asyncUploadPersistentBuffer = true;
                     QualitySettings.asyncUploadBufferSize = 16;
                     QualitySettings.asyncUploadTimeSlice = 2;
                     Application.backgroundLoadingPriority = ThreadPriority.Low;
