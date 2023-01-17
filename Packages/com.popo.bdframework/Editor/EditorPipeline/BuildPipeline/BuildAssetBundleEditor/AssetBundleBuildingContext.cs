@@ -548,7 +548,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             //SBP
             if (!iscanConnectCacheServer)
             {
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     UnityEngine.Debug.LogError("建议配置 CacheServer,避免相同资产打包Assetbundle不一致!! (Project Setting/Editor/CacheServer(project specific))");
                 }

@@ -56,7 +56,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建Debug包体", "OK", "Cancel"))
             {
-                BuildPackageTools.Build(BuildPackageTools.BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+                BuildPackageTools.Build(BuildPackageTools.BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
             }
         }
         
@@ -67,7 +67,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForProfiling包体", "OK", "Cancel"))
             {
-                BuildPackageTools.Build(BuildPackageTools.BuildMode.Profiler, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+                BuildPackageTools.Build(BuildPackageTools.BuildMode.Profiler, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
             }
         }
 
@@ -78,7 +78,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForPublish版本包体？", "OK", "Cancel"))
             {
-                BuildPackageTools.Build(BuildPackageTools.BuildMode.Release, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+                BuildPackageTools.Build(BuildPackageTools.BuildMode.Release, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
             }
         }
 
@@ -156,7 +156,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildPackageTools.Build(BuildPackageTools.BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+                BuildPackageTools.Build(BuildPackageTools.BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
             }
         }
 
@@ -167,7 +167,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildPackageTools.Build(BuildPackageTools.BuildMode.Release, true, BApplication.DevOpsPublishPackagePath, BuildTarget.iOS);
+                BuildPackageTools.Build(BuildPackageTools.BuildMode.Release, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
             }
         }
 
