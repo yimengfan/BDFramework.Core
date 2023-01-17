@@ -554,13 +554,22 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static public void CopyPublishAssetsTo(string targetpath, RuntimePlatform platform)
         {
-            List<string> blackFile = new List<string>() {BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH, ".manifest"};
+            List<string> blackFile = new List<string>()
+            {
+                BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH, //editor信息
+                BResources.ASSETS_INFO_PATH,
+                BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH,
+                BResources.SERVER_ASSETS_VERSION_INFO_PATH,
+                BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH,
+                BResources.PACKAGE_BUILD_INFO_PATH,
+                ".manifest"
+            };
             //清空目标文件夹
             if (Directory.Exists(targetpath))
             {
                 Directory.Delete(targetpath, true);
             }
-
+            
             //合并路径
             var sourcepath =
                 IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform));
