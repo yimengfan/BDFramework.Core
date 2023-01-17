@@ -40,6 +40,10 @@ namespace BDFramework.ResourceMgr
         readonly static public string EDITOR_ART_ASSET_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/EditorBuild.Info";
 
         /// <summary>
+        /// SBP build信息
+        /// </summary>
+        readonly static public string SBPBuildLog = "buildlogtep.json";
+        /// <summary>
         /// 旧打包资源配置
         /// </summary>
         //readonly static public string AIR_ASSET_OLD_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/OldBuild.Info";
@@ -104,6 +108,7 @@ namespace BDFramework.ResourceMgr
         /// 资产加载路径类型
         /// </summary>
         static public AssetLoadPathType AssetPathType { get; private set; } = AssetLoadPathType.Editor;
+
         /// <summary>
         /// 初始化
         /// </summary>
@@ -236,7 +241,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="assetLoadPath">加载路径</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static LoadTaskGroup AsyncLoad<T>(string assetLoadPath,LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
+        public static LoadTaskGroup AsyncLoad<T>(string assetLoadPath, LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
         {
             return ResLoader.AsyncLoad<T>(assetLoadPath);
         }
@@ -250,12 +255,12 @@ namespace BDFramework.ResourceMgr
         /// <param name="action">加载回调</param>
         /// <param name="groupName">分组名，用于统一管理，如：卸载等</param>
         ///  <param name="loadPathType">路径类型：路径或者guid</param>
-        public static int AsyncLoad<T>(string assetLoadPath, Action<T> action, LoadPathType loadPathType = LoadPathType.RuntimePath,string groupName = null) where T : UnityEngine.Object
+        public static int AsyncLoad<T>(string assetLoadPath, Action<T> action, LoadPathType loadPathType = LoadPathType.RuntimePath, string groupName = null) where T : UnityEngine.Object
         {
             //添加到资源组
             AddAssetsPathToGroup(groupName, assetLoadPath);
             //异步加载
-            return ResLoader.AsyncLoad<T>(assetLoadPath, action,loadPathType);
+            return ResLoader.AsyncLoad<T>(assetLoadPath, action, loadPathType);
         }
 
         /// <summary>
@@ -273,7 +278,7 @@ namespace BDFramework.ResourceMgr
                 //添加到资源组
                 AddAssetsPathToGroup(groupName, assetlist.ToArray());
                 //异步加载
-                return ResLoader.AsyncLoad(assetlist, onProcess, onLoadEnd,loadPathType);
+                return ResLoader.AsyncLoad(assetlist, onProcess, onLoadEnd, loadPathType);
             }
             else
             {
@@ -404,10 +409,11 @@ namespace BDFramework.ResourceMgr
         /// <param name="shaderName"></param>
         public static Shader FindShader(string shaderName)
         {
-           return ResLoader.FindShader(shaderName);
+            return ResLoader.FindShader(shaderName);
         }
 
         #endregion
+
         // #region 资源缓存
         //
         // /// <summary>
@@ -524,7 +530,7 @@ namespace BDFramework.ResourceMgr
         #endregion
 
         #region 实例化、删除管理
-        
+
         /// <summary>
         /// 删除接口
         /// </summary>
@@ -844,7 +850,7 @@ namespace BDFramework.ResourceMgr
         }
 
         #endregion
-        
+
         #region AUP设置
 
         public enum AUPLevel
@@ -870,7 +876,7 @@ namespace BDFramework.ResourceMgr
                 case AUPLevel.LowRender:
                 {
                     //低渲染、高加载时候
-                  
+
                     QualitySettings.asyncUploadBufferSize = 32;
                     QualitySettings.asyncUploadTimeSlice = 8;
                     Application.backgroundLoadingPriority = ThreadPriority.High;

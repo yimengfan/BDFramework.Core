@@ -562,6 +562,7 @@ namespace BDFramework.Editor.BuildPipeline
                 BResources.SERVER_ASSETS_VERSION_INFO_PATH,
                 BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH,
                 BResources.PACKAGE_BUILD_INFO_PATH,
+                BResources.SBPBuildLog,
                 ".manifest"
             };
             //清空目标文件夹
