@@ -13,7 +13,9 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
         public static void Open()
         {
             var window = EditorWindow.GetWindow<EditorWindow_BuildPipeline>("BuildPipeline");
+#if ODIN_INSPECTOR
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(1000, 800);
+#endif
         }
         
         [MenuItem("BDFrameWork工具箱/1.DLL打包", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_DLL)]
@@ -42,7 +44,9 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
         public static void NULL()
         {
             var window = EditorWindow.GetWindow<EditorWindow_BuildPipeline>("BuildPipeline");
+#if ODIN_INSPECTOR
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(1000, 800);
+#endif
         }
         /// <summary>
         /// 显示依赖

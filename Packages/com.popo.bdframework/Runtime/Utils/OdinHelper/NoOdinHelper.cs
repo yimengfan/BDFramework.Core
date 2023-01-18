@@ -33,7 +33,8 @@ namespace Sirenix.OdinInspector
 
     public class Title : Attribute
     {
-        public Title(string str)
+        public bool Bold = false;
+        public Title(string str, TitleAlignments titleAlignment = TitleAlignments.Left)
         {
         }
     }
@@ -63,18 +64,28 @@ namespace Sirenix.OdinInspector
     public enum ButtonSizes
     {
         Small,
-        Medium
+        Medium,
+        Large
+    }
+
+    public enum ButtonStyle
+    {
+        CompactBox,
     }
 
     public class Button : Attribute
     {
         public string Name;
 
+        public Button(string str ="")
+        {
+        }
+
         public Button(ButtonSizes size)
         {
         }
 
-        public Button(string str, ButtonSizes size)
+        public Button(string str, ButtonSizes size= ButtonSizes.Large, ButtonStyle buttonStyle = ButtonStyle.CompactBox)
         {
         }
     }
@@ -99,7 +110,8 @@ namespace Sirenix.OdinInspector
 
     public enum TitleAlignments
     {
-        Centered
+        Centered,
+        Left
     }
 
     public class TitleGroup : Attribute
@@ -108,7 +120,32 @@ namespace Sirenix.OdinInspector
         {
         }
     }
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
+    public class HorizontalGroup : Attribute
+    {
+        public int LabelWidth = 0;
+        public HorizontalGroup(string str, int width = 0)
+        {
 
+        }
+    }
+    
+    public class VerticalGroup : Attribute
+    {
+        public VerticalGroup(string str, int width = 10)
+        {
+
+        }
+    }
+    
+
+    public class GUIColor: Attribute
+    {
+        public GUIColor(float x, float y, float z)
+        {
+            
+        }
+    }
 
     public class HideLabel : Attribute
     {
@@ -124,9 +161,14 @@ namespace Sirenix.OdinInspector
         public string ParentFolder;
     }
 
+    public enum InfoMessageType
+    {
+        Info
+    }
+
     public class InfoBox : Attribute
     {
-        public InfoBox(string str)
+        public InfoBox(string str,InfoMessageType type = InfoMessageType.Info)
         {
         }
     }
@@ -144,6 +186,21 @@ namespace Sirenix.OdinInspector
         {
         }
     }
+    
+    public class DisableIf : Attribute
+    {
+        public DisableIf(string  str = "")
+        {
+            
+        }
+    }
+    public class EnableIf : Attribute
+    {
+        public EnableIf(string  str = "")
+        {
+            
+        }
+    }
 }
 
 
@@ -152,14 +209,41 @@ namespace Sirenix.OdinInspector
 namespace Sirenix.OdinInspector.Editor
 {
     using UnityEditor;
-
     public class OdinEditorWindow : EditorWindow
     {
         virtual public void OnDestroy()
         {
         }
     }
+
+    public class OdinMenuTree
+    {
+        public OdinMenuTree(bool b)
+        {
+            
+        }
+    }
+
+    public abstract class OdinMenuEditorWindow : OdinEditorWindow
+    {
+        protected virtual OdinMenuTree BuildMenuTree()
+        {
+            return null;
+        }
+        
+        virtual protected void OnDestroy()
+        {
+        }
+    }
 }
+
+namespace Sirenix.Utilities.Editor
+{
+    public class NoError
+    {
+    }
+}
+
 #endif
 
 
