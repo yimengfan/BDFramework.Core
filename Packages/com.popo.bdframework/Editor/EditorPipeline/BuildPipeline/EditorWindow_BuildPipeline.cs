@@ -15,6 +15,9 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
         
         protected override OdinMenuTree BuildMenuTree()
         {
+#if ODIN_INSPECTOR
+            
+
             var tree = new OdinMenuTree(true);
             tree.DefaultMenuStyle.IconSize = 20.00f;
 
@@ -42,6 +45,9 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
             selectMenuitem.Select(true);
 
             return tree;
+#else
+            return null;
+#endif
         }
 
         //保存设置

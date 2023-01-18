@@ -106,7 +106,7 @@ namespace BDFramework.Editor.BuildPipeline
         public bool IsSetBuildSceneConfig = false;
 
         [HorizontalGroup("b/a4", LabelWidth = 80)]
-        [LabelText("打包场景")]
+        [LabelText("打包配置")]
         [EnableIf(nameof(IsSetBuildSceneConfig))]
         public string BuildSceneConfig = BuildPackageTools.SceneConfigs[0];
 

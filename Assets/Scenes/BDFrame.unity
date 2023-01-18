@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44631976, g: 0.49611664, b: 0.5744803, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -356,15 +356,15 @@ MonoBehaviour:
   Data:
     CodeRoot: 0
     SQLRoot: 0
-    ArtRoot: 0
+    ArtRoot: 3
     CodeRunMode: 0
-    IsDebuggerILRuntime: 0
+    IsDebuggerILRuntime: 1
     IsDebugLog: 1
     FileServerUrl: 192.168.8.68
     GateServerIp: 
     Port: 0
-    IsHotfix: 0
-    IsNeedNet: 0
+    IsHotfix: 1
+    IsNeedNet: 1
     ClientVersionNum: 2.1.0
   ConfigFileName: Editor_TestAssetbundle
 --- !u!4 &617214994
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53901f56d09f96d4886992ff20f43b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConfigText: {fileID: 4900000, guid: dac4b223fdff90143ac6a3d1980e120b, type: 3}
+  ConfigText: {fileID: 4900000, guid: a35fde23afc8243a88a460b17fbcb98d, type: 3}
 --- !u!114 &617214996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,7 +729,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 26.700012, y: -16.900024}
+  m_AnchoredPosition: {x: 26.700073, y: -16.900024}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1242117325
@@ -876,10 +876,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1440034326}
     m_Modifications:
+    - target: {fileID: 4651398939729626346, guid: 3a48620e3cd22904dbd21ff328377ccf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4651398939818020830, guid: 3a48620e3cd22904dbd21ff328377ccf,
         type: 3}
       propertyPath: m_Text
       value: Professional!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651398940684012607, guid: 3a48620e3cd22904dbd21ff328377ccf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4651398941402966378, guid: 3a48620e3cd22904dbd21ff328377ccf,
         type: 3}
@@ -1114,6 +1124,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MainLoading
+      objectReference: {fileID: 0}
+    - target: {fileID: 2884646171612803763, guid: 775fad6a3186592448e34c0af68e119c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 775fad6a3186592448e34c0af68e119c, type: 3}

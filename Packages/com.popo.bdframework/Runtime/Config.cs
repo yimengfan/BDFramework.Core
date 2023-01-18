@@ -205,7 +205,24 @@ namespace BDFramework
             if (!Application.isPlaying && isGuiChanged)
             {
                 var asset = this.gameObject.GetComponent<BDLauncher>().ConfigText;
-                var path = AssetDatabase.GetAssetPath(asset.GetInstanceID());
+                string path = "";
+                if (asset)
+                {
+                    path = AssetDatabase.GetAssetPath(asset.GetInstanceID());
+                }
+                else
+                {
+                    var paths = GetConfigPaths();
+                    if (paths.Length > 0)
+                    {
+                        path = paths[0];
+                    }
+                }
+
+                if (string.IsNullOrEmpty(path))
+                {
+                    return;
+                }
 
                 //防止一些情况下不同的config覆盖
                 if (path == curSelectConfigPath)
@@ -276,7 +293,11 @@ namespace BDFramework
 
             var configPathList = GetConfigPaths().ToList();
             //开始赋值
-            var curConfigPath = AssetDatabase.GetAssetPath(launcher.ConfigText.GetInstanceID());
+            string curConfigPath = "";
+            if (launcher.ConfigText != null)
+            {
+                curConfigPath= AssetDatabase.GetAssetPath(launcher.ConfigText.GetInstanceID());
+            }
             if (curSelectConfigIdx == -1)
             {
                 curSelectConfigIdx = configPathList.FindIndex((s) => s == curConfigPath);
@@ -291,8 +312,12 @@ namespace BDFramework
             //渲染下拉
             var configNames = configPathList.Select((s) => Path.GetFileName(s)).ToArray();
             var newSelectIdx = EditorGUILayout.Popup("选择配置:", curSelectConfigIdx, configNames);
+            if (configPathList.Count < newSelectIdx)
+            {
+                newSelectIdx = 0;
+            }
             //选择新Config
-            if (configPathList[newSelectIdx] != curConfigPath)
+            if (configPathList.Count>0 && configPathList[newSelectIdx] != curConfigPath)
             {
                 curSelectConfigIdx = newSelectIdx;
                 //保存当前
@@ -423,7 +448,7 @@ namespace BDFramework
         static public string[] GetConfigPaths()
         {
 
-            var configList = Directory.GetFiles(CONFIG_PATH, "*", SearchOption.AllDirectories).Select((s) => s.Replace("\\", "/"))
+            var configList = Directory.GetFiles(CONFIG_PATH, "*.bytes", SearchOption.AllDirectories).Select((s) => s.Replace("\\", "/"))
                 .Where((s)=>Path.GetExtension(s)!= ".meta").ToList();
 
             return configList.ToArray();

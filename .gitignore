@@ -50,3 +50,4 @@ Assets/3rdPlugins/Sirenix.meta
 /.vsconfig
 /Assets/Plugins.meta
 /DevOps/PublishPackages
+*.csproj

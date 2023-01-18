@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System.IO;
+using System.Linq;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Environment;
 using BDFramework.Editor.Tools;
@@ -41,8 +42,8 @@ namespace BDFramework.Editor.BuildPipeline
 
         readonly static public string[] SceneConfigs =
         {
-            "Assets/Scenes/Config/Debug.json", //0
-            "Assets/Scenes/Config/Release.json" //1
+            "Assets/Scenes/Config/Debug.bytes", //0
+            "Assets/Scenes/Config/Release.bytes" //1
         };
 
 
@@ -391,7 +392,7 @@ namespace BDFramework.Editor.BuildPipeline
             var plist = outputPath + "/Info.plist";
             Debug.Log("plist:" + plist);
             //append模式
-            if (File.Exists(plist))
+            if (File.Exists(plist) && Application.platform == RuntimePlatform.OSXEditor) 
             {
                 opa = (opa | BuildOptions.AcceptExternalModificationsToPlayer);
                 Debug.Log("--->生成xcode,depend模式");
@@ -561,7 +562,6 @@ namespace BDFramework.Editor.BuildPipeline
                 BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH,
                 BResources.SERVER_ASSETS_VERSION_INFO_PATH,
                 BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH,
-                BResources.PACKAGE_BUILD_INFO_PATH,
                 BResources.SBPBuildLog,
                 BResources.SBPBuildLog2,
                 ".manifest"
@@ -573,17 +573,28 @@ namespace BDFramework.Editor.BuildPipeline
             }
             
             //合并路径
-            var sourcepath =
-                IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform));
-            targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform));
+            var sourcepath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform)).ToLower();
+            targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform)).ToLower();
             //TODO SVN更新资源
 
             //TODO  重写拷贝逻辑
-            var files = Directory.GetFiles(sourcepath, "*", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(sourcepath, "*", SearchOption.AllDirectories).Select((f)=> f.ToLower().Replace("\\","/"));
             foreach (var file in files)
             {
                 var fp = IPath.ReplaceBackSlash(file);
-                var ret = blackFile.Find((blackstr) => fp.EndsWith(blackstr, StringComparison.OrdinalIgnoreCase));
+                var ret = blackFile.Find((blackstr) =>
+                {
+                    //后缀名
+                    if (blackstr.StartsWith("."))
+                    {
+                        return fp.EndsWith(blackstr, StringComparison.OrdinalIgnoreCase);
+                    }
+                    //路径
+                    else
+                    {
+                        return fp.EndsWith("/"+blackstr, StringComparison.OrdinalIgnoreCase);
+                    }
+                });
                 if (ret != null)
                 {
                     Debug.Log("[黑名单]" + fp);
@@ -593,7 +604,7 @@ namespace BDFramework.Editor.BuildPipeline
                 //
                 var tp = fp.Replace(sourcepath, targetpath);
 
-                //拷贝资产,最多尝试5次
+                //拷贝资产,比较hash,最多尝试5次
                 int maxTryCount = 5;
                 for (int i = 0; i < maxTryCount; i++)
                 {
