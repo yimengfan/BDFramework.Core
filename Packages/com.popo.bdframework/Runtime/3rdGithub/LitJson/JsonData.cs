@@ -518,7 +518,7 @@ namespace LitJson
 
 
         #region IJsonWrapper Methods
-        bool IJsonWrapper.GetBoolean ()
+        public   bool GetBoolean ()
         {
             if (type != JsonType.Boolean)
                 throw new InvalidOperationException (
@@ -527,7 +527,7 @@ namespace LitJson
             return inst_boolean;
         }
 
-        double IJsonWrapper.GetDouble ()
+        public double GetDouble ()
         {
             if (type != JsonType.Double)
                 throw new InvalidOperationException (
@@ -536,7 +536,7 @@ namespace LitJson
             return inst_double;
         }
 
-        int IJsonWrapper.GetInt ()
+        public int GetInt ()
         {
             if (type != JsonType.Int)
                 throw new InvalidOperationException (
@@ -545,7 +545,7 @@ namespace LitJson
             return inst_int;
         }
 
-        long IJsonWrapper.GetLong ()
+        public  long GetLong ()
         {
             if (type != JsonType.Long)
                 throw new InvalidOperationException (
@@ -554,7 +554,8 @@ namespace LitJson
             return inst_long;
         }
 
-        string IJsonWrapper.GetString ()
+
+       public  string  GetString ()
         {
             if (type != JsonType.String)
                 throw new InvalidOperationException (
@@ -563,7 +564,7 @@ namespace LitJson
             return inst_string;
         }
 
-        void IJsonWrapper.SetBoolean (bool val)
+       void IJsonWrapper.SetBoolean (bool val)
         {
             type = JsonType.Boolean;
             inst_boolean = val;
