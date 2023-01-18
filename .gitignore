@@ -51,3 +51,4 @@ Assets/3rdPlugins/Sirenix.meta
 /Assets/Plugins.meta
 /DevOps/PublishPackages
 *.csproj
+/ProjectSettings/ProjectSettings.asset

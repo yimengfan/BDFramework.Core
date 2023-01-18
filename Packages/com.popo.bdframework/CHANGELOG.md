@@ -1,5 +1,10 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.1.0
+-BuildPipeline: 重构打包面板，优化打包流程
+-BuildPipeline: 增加DevOps优化支持
+-UFlux: 修复异步列表bug
+
 ##V2.1.0-preview.9
 -AssetV2:优化加载、卸载机制，优化加载配置.
 -BuildPipeline: 优化ASG打包的Node,编辑颗粒度的机制.
