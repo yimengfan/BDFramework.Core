@@ -41,8 +41,8 @@ namespace BDFramework.Editor.BuildPipeline
 
         readonly static public string[] SceneConfigs =
         {
-            "Assets/Scenes/Config/Debug.json", //0
-            "Assets/Scenes/Config/Release.json" //1
+            "Assets/Scenes/Config/Debug.bytes", //0
+            "Assets/Scenes/Config/Release.bytes" //1
         };
 
 
