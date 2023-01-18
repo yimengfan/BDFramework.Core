@@ -1058,22 +1058,8 @@
       ],
       "IsKeepGUID"       : false
     },
-    "assets/resource/shaders/testshader/defaultresourcesextra/normal-vertexlit.shader"            : {
-      "Id" : 73,
-      "ArtAssetsInfoIdx" : -1,
-      "Type"             : 10,
-      "ABName"           : "9d59e1d84070e4c46a595b3112d75a40",
-      "ABHash"           : "",
-      "GUID"             : "a5d7a784372567a469e1b498c7bdd697",
-      "ReferenceCount"   : 0,
-      "Hash"             : "2040066693",
-      "DependAssetList"  : [
-        "9d59e1d84070e4c46a595b3112d75a40"
-      ],
-      "IsKeepGUID"       : false
-    },
     "assets/resource/shaders/testshader/defaultresourcesextra/standard.shader"                    : {
-      "Id" : 74,
+      "Id" : 73,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 10,
       "ABName"           : "9d59e1d84070e4c46a595b3112d75a40",
@@ -1087,7 +1073,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/shaders/testshader/shader/pbr_silk.shader"                                   : {
-      "Id" : 75,
+      "Id" : 74,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 10,
       "ABName"           : "9d59e1d84070e4c46a595b3112d75a40",
@@ -1101,7 +1087,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/image/test2/1.jpg"                                                           : {
-      "Id" : 76,
+      "Id" : 75,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 8,
       "ABName"           : "ec429a586bfac5f4284f3a31749303e7",
@@ -1115,7 +1101,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/image/test2/10.jpg"                                                          : {
-      "Id" : 77,
+      "Id" : 76,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 8,
       "ABName"           : "ec429a586bfac5f4284f3a31749303e7",
@@ -1129,7 +1115,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/image/test2/2.jpg"                                                           : {
-      "Id" : 78,
+      "Id" : 77,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 8,
       "ABName"           : "ec429a586bfac5f4284f3a31749303e7",
@@ -1143,7 +1129,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/image/test2/3.jpg"                                                           : {
-      "Id" : 79,
+      "Id" : 78,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 8,
       "ABName"           : "ec429a586bfac5f4284f3a31749303e7",
@@ -1157,7 +1143,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/image/test2/4.jpg"                                                           : {
-      "Id" : 80,
+      "Id" : 79,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 8,
       "ABName"           : "ec429a586bfac5f4284f3a31749303e7",
@@ -1171,7 +1157,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/image/test2/5.jpg"                                                           : {
-      "Id" : 81,
+      "Id" : 80,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 8,
       "ABName"           : "ec429a586bfac5f4284f3a31749303e7",
@@ -1185,7 +1171,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/image/test2/6.jpg"                                                           : {
-      "Id" : 82,
+      "Id" : 81,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 8,
       "ABName"           : "ec429a586bfac5f4284f3a31749303e7",
@@ -1199,7 +1185,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/image/test2/7.jpg"                                                           : {
-      "Id" : 83,
+      "Id" : 82,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 8,
       "ABName"           : "ec429a586bfac5f4284f3a31749303e7",
@@ -1213,7 +1199,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/image/test2/8.jpg"                                                           : {
-      "Id" : 84,
+      "Id" : 83,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 8,
       "ABName"           : "ec429a586bfac5f4284f3a31749303e7",
@@ -1227,7 +1213,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/image/test2/9.jpg"                                                           : {
-      "Id" : 85,
+      "Id" : 84,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 8,
       "ABName"           : "ec429a586bfac5f4284f3a31749303e7",
@@ -1241,7 +1227,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource/image/test/timg (1).jpg"                                                     : {
-      "Id" : 86,
+      "Id" : 85,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 8,
       "ABName"           : "d2abdb77f35d37c4c9469630d1f22e50",
@@ -1255,7 +1241,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource_svn/model/001/sb.mat"                                                        : {
-      "Id" : 87,
+      "Id" : 86,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 7,
       "ABName"           : "68ce09b862773374cbf71b2566b5dfbb",
@@ -1270,7 +1256,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource_svn/model/001/spongebob.obj"                                                 : {
-      "Id" : 88,
+      "Id" : 87,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 5,
       "ABName"           : "68ce09b862773374cbf71b2566b5dfbb",
@@ -1285,7 +1271,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource_svn/model/001/spongebob_squarepants.png"                                     : {
-      "Id" : 89,
+      "Id" : 88,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 0,
       "ABName"           : "68ce09b862773374cbf71b2566b5dfbb",
@@ -1299,7 +1285,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource_svn/model/002/char_patrick.png"                                              : {
-      "Id" : 90,
+      "Id" : 89,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 0,
       "ABName"           : "68ce09b862773374cbf71b2566b5dfbb",
@@ -1313,7 +1299,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource_svn/model/002/pat.mat"                                                       : {
-      "Id" : 91,
+      "Id" : 90,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 7,
       "ABName"           : "68ce09b862773374cbf71b2566b5dfbb",
@@ -1328,7 +1314,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource_svn/model/002/patrick.obj"                                                   : {
-      "Id" : 92,
+      "Id" : 91,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 5,
       "ABName"           : "68ce09b862773374cbf71b2566b5dfbb",
@@ -1343,7 +1329,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource_svn/model/3dxy_geometry_001.mesh"                                            : {
-      "Id" : 93,
+      "Id" : 92,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 3,
       "ABName"           : "68ce09b862773374cbf71b2566b5dfbb",
@@ -1357,7 +1343,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource_svn/model/3dxy_img_1.png"                                                    : {
-      "Id" : 94,
+      "Id" : 93,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 0,
       "ABName"           : "68ce09b862773374cbf71b2566b5dfbb",
@@ -1371,7 +1357,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource_svn/model/3dxy_material_1.mat"                                               : {
-      "Id" : 95,
+      "Id" : 94,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 7,
       "ABName"           : "68ce09b862773374cbf71b2566b5dfbb",
@@ -1386,7 +1372,7 @@
       "IsKeepGUID"       : false
     },
     "assets/resource_svn/model/"                                                                  : {
-      "Id" : 96,
+      "Id" : 95,
       "ArtAssetsInfoIdx" : -1,
       "Type"             : 11,
       "ABName"           : "68ce09b862773374cbf71b2566b5dfbb",
@@ -1400,5 +1386,5 @@
       "IsKeepGUID"       : false
     }
   },
-  "Time"          : "2023/1/17"
+  "Time"          : "1/18/2023"
 }
