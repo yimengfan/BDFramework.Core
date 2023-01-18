@@ -52,3 +52,5 @@ Assets/3rdPlugins/Sirenix.meta
 /DevOps/PublishPackages
 *.csproj
 /ProjectSettings/ProjectSettings.asset
+/BDFrameworkMaster.sln.DotSettings.user
+/BDFramework.EnvCheck.sln.DotSettings.user
