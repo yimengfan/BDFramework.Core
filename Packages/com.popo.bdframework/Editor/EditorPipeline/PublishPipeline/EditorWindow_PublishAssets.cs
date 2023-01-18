@@ -201,10 +201,8 @@ namespace BDFramework.Editor.PublishPipeline
                     {
                         return;
                     }
-
                     isBuilding = true;
-
-
+                    
                     //开始 生成资源
                     foreach (var sp in selectPlatforms)
                     {
@@ -229,16 +227,8 @@ namespace BDFramework.Editor.PublishPipeline
                 {
                     if (GUILayout.Button("拷贝资源到Streaming", GUILayout.Width(175), GUILayout.Height(30)))
                     {
-                        //路径
-                        var source = IPath.Combine(EXPORT_PATH, BApplication.GetRuntimePlatformPath());
-                        var target = IPath.Combine(Application.streamingAssetsPath, BApplication.GetRuntimePlatformPath());
-                        if (Directory.Exists(target))
-                        {
-                            Directory.Delete(target, true);
-                        }
-
                         //拷贝
-                        FileHelper.CopyFolderTo(source, target);
+                        BuildPackageTools.CopyPublishAssetsTo(Application.streamingAssetsPath, BApplication.RuntimePlatform);
                         AssetDatabase.Refresh();
                     }
 
