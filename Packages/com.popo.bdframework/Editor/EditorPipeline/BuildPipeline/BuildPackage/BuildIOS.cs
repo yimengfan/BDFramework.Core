@@ -3,6 +3,7 @@ using System.IO;
 using System.Management.Instrumentation;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Tools;
+using BDFramework.Editor.Unity3dEx.PluginsEx.Odin.Attribute;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities.Editor;
 using UnityEditor;
@@ -88,17 +89,12 @@ namespace BDFramework.Editor.BuildPipeline
 
         #region 自定义构建
 
-        // [Space(20)]
-        // [VerticalGroup("b")]
-        // [HorizontalGroup("b/a1", LabelWidth = 80)]
-        // [Title("自定义构建", titleAlignment: TitleAlignments.Left, Bold = true)]
-        // [LabelText("构建模式")]
-        // private BuildPackageTools.BuildMode BuildMode = BuildPackageTools.BuildMode.Debug;
         [Space(20)]
         [Title("自定义构建", titleAlignment: TitleAlignments.Left, Bold = true)]
         [VerticalGroup("b")]
         [HorizontalGroup("b/a2", LabelWidth = 80)]
         [LabelText("打包场景")]
+        [Ex_SelectFileFromPath("Assets/Scenes","*.unity")]
         public string BuildScene = BuildPackageTools.SCENEPATH;
 
         [HorizontalGroup("b/a3", LabelWidth = 80)]
@@ -108,6 +104,7 @@ namespace BDFramework.Editor.BuildPipeline
         [HorizontalGroup("b/a4", LabelWidth = 80)]
         [LabelText("打包配置")]
         [EnableIf(nameof(IsSetBuildSceneConfig))]
+        [Ex_SelectFileFromPath("Assets/Scenes/Config/","*.bytes")]
         public string BuildSceneConfig = BuildPackageTools.SceneConfigs[0];
 
         //
