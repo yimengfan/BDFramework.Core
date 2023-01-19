@@ -7,7 +7,7 @@ using Cysharp.Text;
 
 namespace BDFramework.UFlux.Reducer
 {
-    abstract public class AReducers<T> where T : AStateBase, new()
+    abstract public class AReducers<T> : IReducer where T : AStateBase, new()
     {
         public enum ExecuteTypeEnum
         {
@@ -21,7 +21,7 @@ namespace BDFramework.UFlux.Reducer
             /// 异步
             /// </summary>
             Async,
-            
+
             /// <summary>
             /// 回调
             /// </summary>
@@ -31,32 +31,32 @@ namespace BDFramework.UFlux.Reducer
         /// <summary>
         /// 当前的Reducermap,同步Reducer，
         /// </summary>
-        protected Dictionary<string, Store<T>.Reducer> ReducersMap = new Dictionary<string, Store<T>.Reducer>();
+        protected Dictionary<string , Store<T>.Reducer> ReducersMap = new Dictionary<string , Store<T>.Reducer> ();
 
         /// <summary>
         /// 当前的Reducermap,异步Reducer，
         /// </summary>
-        protected Dictionary<string, Store<T>.ReducerAsync> AsyncReducersMap = new Dictionary<string, Store<T>.ReducerAsync>();
+        protected Dictionary<string , Store<T>.ReducerAsync> AsyncReducersMap = new Dictionary<string , Store<T>.ReducerAsync> ();
 
         /// <summary>
         /// 当前的Reducermap，callback模式
         /// </summary>
-        protected Dictionary<string, Store<T>.ReducerCallback> CallbackReducersMap = new Dictionary<string, Store<T>.ReducerCallback>();
+        protected Dictionary<string , Store<T>.ReducerCallback> CallbackReducersMap = new Dictionary<string , Store<T>.ReducerCallback> ();
 
 
         /// <summary>
         /// 构造函数
         /// </summary>
-        public AReducers()
+        public AReducers ()
         {
             //注册reducer
-            RegisterReducers();
+            RegisterReducers ();
         }
 
         /// <summary>
         /// 注册所有的Reducer
         /// </summary>
-        virtual public void RegisterReducers()
+        virtual public void RegisterReducers ()
         {
         }
 
@@ -66,9 +66,9 @@ namespace BDFramework.UFlux.Reducer
         /// </summary>
         /// <param name="enum"></param>
         /// <returns></returns>
-        private string GetEnumKey(Enum @enum)
+        private string GetEnumKey (Enum @enum)
         {
-            var key = ZString.Concat( @enum.GetType().FullName ,".", @enum.ToString());
+            var key = ZString.Concat (@enum.GetType ().FullName , "." , @enum.ToString ());
             return key;
         }
 
@@ -76,16 +76,16 @@ namespace BDFramework.UFlux.Reducer
         /// 添加同步 reducer
         /// </summary>
         /// <param name="enum"></param>
-        protected void AddRecucer(Enum @enum, Store<T>.Reducer reducer)
+        protected void AddRecucer (Enum @enum , Store<T>.Reducer reducer)
         {
-            var key =GetEnumKey(@enum);
-            if (ReducersMap.ContainsKey(key))
+            var key = GetEnumKey (@enum);
+            if ( ReducersMap.ContainsKey (key) )
             {
-                BDebug.LogError("重复添加key,请检查" + @enum);
+                BDebug.LogError ("重复添加key,请检查" + @enum);
                 return;
             }
 
-            ReducersMap[key] = reducer;
+            ReducersMap [key] = reducer;
         }
 
 
@@ -93,16 +93,16 @@ namespace BDFramework.UFlux.Reducer
         /// 添加异步 reducer
         /// </summary>
         /// <param name="enum"></param>
-        protected void AddAsyncRecucer(Enum @enum, Store<T>.ReducerAsync reducer)
+        protected void AddAsyncRecucer (Enum @enum , Store<T>.ReducerAsync reducer)
         {
-            var key =GetEnumKey(@enum);;
-            if (AsyncReducersMap.ContainsKey(key))
+            var key = GetEnumKey (@enum); ;
+            if ( AsyncReducersMap.ContainsKey (key) )
             {
-                BDebug.LogError("重复添加key,请检查" + @enum);
+                BDebug.LogError ("重复添加key,请检查" + @enum);
                 return;
             }
 
-            AsyncReducersMap[key] = reducer;
+            AsyncReducersMap [key] = reducer;
         }
 
         /// <summary>
@@ -110,16 +110,16 @@ namespace BDFramework.UFlux.Reducer
         /// 这里需要注意乱序问题，如果强制保证顺序 则有可能导致后续逻辑不执行
         /// </summary>
         /// <param name="enum"></param>
-        protected void AddCallbackReducer(Enum @enum, Store<T>.ReducerCallback reducerCallback)
+        protected void AddCallbackReducer (Enum @enum , Store<T>.ReducerCallback reducerCallback)
         {
-            var key =GetEnumKey(@enum);
-            if (CallbackReducersMap.ContainsKey(key))
+            var key = GetEnumKey (@enum);
+            if ( CallbackReducersMap.ContainsKey (key) )
             {
-                BDebug.LogError("重复添加key,请检查" + @enum);
+                BDebug.LogError ("重复添加key,请检查" + @enum);
                 return;
             }
 
-            CallbackReducersMap[key] = reducerCallback;
+            CallbackReducersMap [key] = reducerCallback;
         }
 
         /// <summary>
@@ -128,19 +128,19 @@ namespace BDFramework.UFlux.Reducer
         /// <param name="enum"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public ExecuteTypeEnum GetExecuteType(Enum @enum)
+        public ExecuteTypeEnum GetExecuteType (Enum @enum)
         {
-            var key =GetEnumKey(@enum);
+            var key = GetEnumKey (@enum);
 
-            if (this.ReducersMap.ContainsKey(key))
+            if ( this.ReducersMap.ContainsKey (key) )
             {
                 return ExecuteTypeEnum.Synchronization;
             }
-            else if (this.AsyncReducersMap.ContainsKey(key))
+            else if ( this.AsyncReducersMap.ContainsKey (key) )
             {
                 return ExecuteTypeEnum.Async;
             }
-            else if (this.CallbackReducersMap.ContainsKey(key))
+            else if ( this.CallbackReducersMap.ContainsKey (key) )
             {
                 return ExecuteTypeEnum.Callback;
             }
@@ -155,15 +155,15 @@ namespace BDFramework.UFlux.Reducer
         /// <param name="oldState"></param>
         /// <param name="callback"></param>
         /// <returns>返回是否为异步模式</returns>
-        public T Excute(Enum @enum, object @params, T oldState)
+        public T Excute (Enum @enum , object @params , T oldState)
         {
             //同步列表下寻找
             Store<T>.Reducer func = null;
-            var key =GetEnumKey(@enum);
-            if (this.ReducersMap.TryGetValue(key, out func))
+            var key = GetEnumKey (@enum);
+            if ( this.ReducersMap.TryGetValue (key , out func) )
             {
                 //同步接口
-                return func(oldState, @params);
+                return func (oldState , @params);
             }
 
             return null;
@@ -176,15 +176,15 @@ namespace BDFramework.UFlux.Reducer
         /// <param name="oldState"></param>
         /// <param name="callback"></param>
         /// <returns>返回是否为异步模式</returns>
-        async public Task<T> ExcuteAsync(Enum @enum, object @params, T oldState)
+        async public Task<T> ExcuteAsync (Enum @enum , object @params , T oldState)
         {
             //同步列表下寻找
             Store<T>.ReducerAsync func = null;
-            var key =GetEnumKey(@enum);
-            if (this.AsyncReducersMap.TryGetValue(key, out func))
+            var key = GetEnumKey (@enum);
+            if ( this.AsyncReducersMap.TryGetValue (key , out func) )
             {
                 //同步接口
-                return await func(oldState, @params);
+                return await func (oldState , @params);
             }
 
             return null;
@@ -197,14 +197,14 @@ namespace BDFramework.UFlux.Reducer
         /// <param name="params"></param>
         /// <param name="state"></param>
         /// <param name="callback"></param>
-        public void ExcuteByCallback(Enum @enum, object @params, Store<T>.GetState getStateFunc, Action<T> callback)
+        public void ExcuteByCallback (Enum @enum , object @params , Store<T>.GetState getStateFunc , Action<T> callback)
         {
             Store<T>.ReducerCallback func = null;
-            var key =GetEnumKey(@enum);
-            if (this.CallbackReducersMap.TryGetValue(key, out func))
+            var key = GetEnumKey (@enum);
+            if ( this.CallbackReducersMap.TryGetValue (key , out func) )
             {
                 //异步接口
-                func(getStateFunc, @params, callback);
+                func (getStateFunc , @params , callback);
             }
         }
     }
