@@ -37,7 +37,7 @@ using Sqlite3Statement = System.IntPtr;
 namespace SQLite4Unity3d
 {
     /// <summary>
-    /// 自定义版本的 TableQuery
+    /// ILRuntime版本的TableQuery
     /// </summary>
     public class TableQueryForILRuntime : BaseTableQuery
     {

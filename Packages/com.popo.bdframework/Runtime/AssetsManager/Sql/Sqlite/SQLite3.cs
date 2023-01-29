@@ -2033,7 +2033,7 @@ namespace SQLite4Unity3d
         }
 
         /// <summary>
-        /// By BDFrame
+        /// For ILRuntime
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
@@ -2109,6 +2109,11 @@ namespace SQLite4Unity3d
         }
 
 
+        /// <summary>
+        /// For ILRuntime
+        /// </summary>
+        /// <param name="mapType"></param>
+        /// <returns></returns>
         public IEnumerable<object> ExecuteDeferredQuery(Type mapType)
         {
 #if UNITY_EDITOR
