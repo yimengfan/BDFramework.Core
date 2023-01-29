@@ -384,9 +384,9 @@ namespace SQLite4Unity3d
                         var cmd = this.Connection.CreateCommand(sqlCmdText);
                         retlist = cmd.ExecuteQuery(type);
                     }
-                    
-                    var intelval = Time.realtimeSinceStartup - st;
                     //缓存判断
+                  
+                    var intelval = Time.realtimeSinceStartup - st;
                     var counter = GetSqlExecCount(sqlCmdText);
                     if (counter >= this.TRIGGER_CHACHE_NUM || intelval >= this.TRIGGER_CHACHE_TIMER)
                     {
@@ -396,6 +396,7 @@ namespace SQLite4Unity3d
                     {
                         this.AddSqlExecCounter(sqlCmdText, counter);
                     }
+
                 }
             }
             else

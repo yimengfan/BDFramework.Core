@@ -111,9 +111,8 @@ namespace BDFramework.UnitTest
             if (SW.IsRunning)
             {
                 SW.Stop();
-                SW.Reset();
             }
-
+            SW.Reset();
             SW.Start();
         }
 

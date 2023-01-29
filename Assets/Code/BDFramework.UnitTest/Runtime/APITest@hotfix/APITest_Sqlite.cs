@@ -128,8 +128,6 @@ namespace BDFramework.UnitTest
             Assert.StartWatch();
             var ds = SqliteHelper.DB.GetTableRuntime().Where("Id >= 1").OrderByDesc("Id").FromAll<APITestHero>();
             var time = Assert.StopWatch();
-            Debug.Log(JsonMapper.ToJson(ds));
-
             //降序检测
             bool isPass = true;
             for (int i = 0; i < ds.Count-1; i++)
@@ -147,10 +145,11 @@ namespace BDFramework.UnitTest
         static public void MultiSelect_OrderBy()
         {
             Assert.StartWatch();
+            BDebug.LogWatchBegin("order by");
             var ds = SqliteHelper.DB.GetTableRuntime().Where("Id >= 1").OrderBy("Id").FromAll<APITestHero>();
+            BDebug.LogWatchEnd("order by");
             var time = Assert.StopWatch();
             
-            Debug.Log(JsonMapper.ToJson(ds));
             //升序检测
             bool isPass = true;
             for (int i = 0; i < ds.Count-1; i++)
