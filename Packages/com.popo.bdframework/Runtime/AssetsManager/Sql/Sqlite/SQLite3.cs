@@ -2039,9 +2039,8 @@ namespace SQLite4Unity3d
         /// <returns></returns>
         public List<object> ExecuteQuery(Type t)
         {
-            var mapping = _conn.GetMapping(t);
-
-            return ExecuteDeferredQuery(mapping).ToList();
+            var ret = ExecuteDeferredQuery(t).ToList();
+            return ret;
         }
 
         public List<T> ExecuteQuery<T>(TableMapping map)
@@ -2110,9 +2109,13 @@ namespace SQLite4Unity3d
         }
 
 
-
-        public IEnumerable<object> ExecuteDeferredQuery(TableMapping map)
+        public IEnumerable<object> ExecuteDeferredQuery(Type mapType)
         {
+#if UNITY_EDITOR
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+#endif
+            var map = _conn.GetMapping(mapType);
             if (_conn.Trace)
             {
                 _conn.InvokeTrace("Executing Query: " + this);
@@ -2120,32 +2123,53 @@ namespace SQLite4Unity3d
 
             lock (_conn.SyncObject)
             {
+                //查询
                 var stmt = Prepare();
+                //
                 try
                 {
                     var cols = new TableMapping.Column[SQLite3.ColumnCount(stmt)];
-
                     for (int i = 0; i < cols.Length; i++)
                     {
                         var name = SQLite3.ColumnName16(stmt, i);
                         cols[i] = map.FindColumn(name);
                     }
+#if UNITY_EDITOR
+                    sw.Stop();
+                    var serchSqlTime = sw.ElapsedTicks / 10000f;
+#endif
 
+#if UNITY_EDITOR
+                    sw.Restart();
+#endif
+                    //反序列化
+                    var count = 0;
                     while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                     {
                         var obj = ILRuntimeHelper.CreateInstance(map.MappedType);
-                        
                         for (int i = 0; i < cols.Length; i++)
                         {
-                            if (cols[i] == null)
-                                continue;
-                            var colType = SQLite3.ColumnType(stmt, i);
-                            var val = ReadCol(stmt, i, colType, cols[i].ColumnType);
-                            cols[i].SetValue(obj, val);
+                            if (cols[i] != null)
+                            {
+                                var colType = SQLite3.ColumnType(stmt, i);
+                                var val = ReadCol(stmt, i, colType, cols[i].ColumnType);
+                                cols[i].SetValue(obj, val);
+                            }
                         }
-                        
+
+                        count++;
                         yield return obj;
                     }
+#if UNITY_EDITOR
+                    sw.Stop();
+                    var deSerializeTime = sw.ElapsedTicks / 10000f;
+
+                    var total = serchSqlTime + deSerializeTime;
+                    if (total > 10)
+                    {
+                        Debug.LogError($"<color=white>消耗较高!</color>:<color=yellow>{total}ms</color>，元素数量:<color=red>{count}</color>, 执行sql耗时: <color=yellow>{serchSqlTime} ms</color>,反序列化耗时：<color=yellow>{deSerializeTime}ms</color>");
+                    }
+#endif
                 }
                 finally
                 {

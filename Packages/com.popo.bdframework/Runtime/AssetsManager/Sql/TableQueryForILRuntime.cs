@@ -114,11 +114,7 @@ namespace SQLite4Unity3d
                 //直接执行sql
                 sqlCmdText = @sql;
             }
-
-
-#if UNITY_EDITOR
-            Debug.Log("sql:" + sqlCmdText);
-#endif
+            
 
             return sqlCmdText;
         }
@@ -371,8 +367,11 @@ namespace SQLite4Unity3d
         public List<object> FormAll(Type type, string selection = "*")
         {
             var sqlCmdText = GenerateCommand(selection, type.Name);
+
+#if UNITY_EDITOR
+            Debug.Log("sql:" + sqlCmdText);
+#endif
             List<object> retlist = null;
-            
             if (this.TRIGGER_CHACHE_NUM > 0 || this.TRIGGER_CHACHE_TIMER > 0)
             {
                 //判断是否在缓存中
@@ -385,6 +384,7 @@ namespace SQLite4Unity3d
                         var cmd = this.Connection.CreateCommand(sqlCmdText);
                         retlist = cmd.ExecuteQuery(type);
                     }
+                    
                     var intelval = Time.realtimeSinceStartup - st;
                     //缓存判断
                     var counter = GetSqlExecCount(sqlCmdText);
