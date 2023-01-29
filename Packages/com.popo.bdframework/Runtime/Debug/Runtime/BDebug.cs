@@ -22,7 +22,7 @@ public class BDebug : MonoBehaviour
     {
         get
         {
-            if (inst == null&& !Application.isPlaying)
+            if (inst == null && !Application.isPlaying)
             {
                 inst = FindObjectOfType<BDebug>();
                 if (!inst)
@@ -30,6 +30,7 @@ public class BDebug : MonoBehaviour
                     inst = new GameObject("BDebug").AddComponent<BDebug>();
                 }
             }
+
             return inst;
         }
     }
@@ -65,11 +66,10 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     public static void Log(object log)
     {
-        if (Inst!=null&&Inst.IsLog)
+        if (Inst != null && Inst.IsLog)
         {
             Debug.Log(log);
         }
-        
     }
 
     /// <summary>
@@ -192,7 +192,7 @@ public class BDebug : MonoBehaviour
         if (idx < 0)
         {
             var log = new LogTag() {Tag = tag, IsLog = true};
-            
+
             Inst.LogTagList.Add(log);
 
             idx = Inst.LogTagList.Count - 1;
@@ -212,14 +212,14 @@ public class BDebug : MonoBehaviour
         if (idx < 0)
         {
             Inst.LogTagList.Add(new LogTag() {Tag = tag, IsLog = true});
-            idx = Inst.LogTagList.Count -1 ;
+            idx = Inst.LogTagList.Count - 1;
         }
 
         Inst.LogTagList[idx].IsLog = false;
     }
 
     #endregion
-    
+
     /// <summary>
     /// watch缓存
     /// </summary>
@@ -233,11 +233,9 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     static public void LogWatchBegin(string watchTag)
     {
-#if UNITY_EDITOR
         Stopwatch sw = new Stopwatch();
         watchMap[watchTag] = sw;
         sw.Start();
-#endif
     }
 
     /// <summary>
@@ -247,24 +245,21 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     static public void LogWatchEnd(string watchTag, string color = "")
     {
-#if UNITY_EDITOR
         watchMap.TryGetValue(watchTag, out var sw);
-
         if (sw != null)
         {
             sw.Stop();
             if (string.IsNullOrEmpty(color))
             {
-                Debug.Log($"【{watchTag}】 耗时：{sw.ElapsedTicks / 10000f} ms");
+                Debug.Log($"【{watchTag}】 耗时：<color=yellow>{sw.ElapsedTicks / 10000f} ms</color>");
             }
             else
             {
-                Debug.Log($"<color={color}>【{watchTag}】 耗时：{sw.ElapsedTicks / 10000f} ms</color>");
+                Debug.Log($"<color={color}>【{watchTag}】</color> 耗时：<color=yellow>{sw.ElapsedTicks / 10000f} ms</color>");
             }
 
             watchMap.Remove(watchTag);
         }
-#endif
     }
 
     /// <summary>

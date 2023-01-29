@@ -205,10 +205,7 @@ namespace BDFramework.ResourceMgr.V2
             AssetBundleItem assetBundleItem = null;
             if (!string.IsNullOrEmpty(loadPath))
             {
-#if UNITY_EDITOR
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-#endif
+                BDebug.LogWatchBegin($"寻找ABItem-{loadPath}");
                 if (type == null || type == typeof(Object))
                 {
                     //全局搜索,效率略低
@@ -239,10 +236,9 @@ namespace BDFramework.ResourceMgr.V2
                         }
                     }
                 }
-#if UNITY_EDITOR
-                sw.Stop();
-                BDebug.Log($"寻找ABItem耗时: {sw.ElapsedTicks / 10000f} ms - {loadPath}", "yellow");
-#endif
+
+                BDebug.LogWatchEnd($"寻找ABItem-{loadPath}","green");
+
             }
 
             return assetBundleItem;

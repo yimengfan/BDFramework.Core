@@ -55,7 +55,7 @@ namespace BDFramework.UnitTest
         public class TestMethodData
         {
             public UnitTestBaseAttribute TestData;
-            public MethodInfo            MethodInfo;
+            public MethodInfo MethodInfo;
         }
 
 
@@ -111,7 +111,7 @@ namespace BDFramework.UnitTest
                 foreach (var method in methods)
                 {
                     var mattrs = method.GetCustomAttributes(attribute, false);
-                    var mattr  = mattrs[0] as UnitTestBaseAttribute;
+                    var mattr = mattrs[0] as UnitTestBaseAttribute;
 
                     //数据
                     var newMethodData = new TestMethodData() {MethodInfo = method, TestData = mattr,};
@@ -186,30 +186,41 @@ namespace BDFramework.UnitTest
 
                 foreach (var methodData in md)
                 {
-                    bool   isFail  = false;
+                    bool isFail = false;
                     string failMsg = "";
+                    float time = 0;
                     //开始执行测试
                     try
                     {
                         methodData.MethodInfo.Invoke(null, null);
                         //采用最简单的状态模式，防止ilr下爆栈
-                        Assert.GetAssertStaus(out isFail, out failMsg);
+                        Assert.GetAssertStaus(out isFail, out failMsg,out time);
                         Assert.ClearStatus();
                     }
                     catch (Exception e)
                     {
-                        isFail  = true;
+                        isFail = true;
                         Debug.LogError(e);
                     }
 
+                    var color = "";
                     if (!isFail)
                     {
-                        Debug.LogFormat("<color=green>执行 {0}: 成功! - {1}</color>", methodData.TestData.Des, methodData.MethodInfo.Name);
+
+                        color = "green";
                     }
                     else
                     {
-                        Debug.LogFormat("<color=red>执行 {0}: 失败! - {1}</color>", methodData.TestData.Des, methodData.MethodInfo.Name);
-                     
+                        color = "red";
+                    }
+                    
+                    if (time == 0)
+                    {
+                        Debug.Log($"<color={color}>执行 {methodData.TestData.Des}: 成功! - {methodData.MethodInfo.Name} </color>");
+                    }
+                    else
+                    {
+                        Debug.LogFormat($"<color={color}>执行 {methodData.TestData.Des}: 成功! - {methodData.MethodInfo.Name}, 耗时：<color=yellow>{time} ms</color>. </color>", methodData.TestData.Des,time, methodData.MethodInfo.Name);
                     }
                 }
             }

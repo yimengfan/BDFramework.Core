@@ -213,7 +213,7 @@ namespace BDFramework.ResourceMgr.V2
                 }
                 else
                 {
-                    BDebug.LogError($"依赖获取失败,art_assets.info不存在资产配置:" + loadPath);
+                    BDebug.LogError($"依赖获取失败,art_assets.info不存在资产配置,传入路径:" + loadPath);
                 }
             }
 
