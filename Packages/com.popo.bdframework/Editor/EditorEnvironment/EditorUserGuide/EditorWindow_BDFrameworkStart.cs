@@ -140,7 +140,7 @@ namespace BDFramework.Editor
             GUILayout.BeginHorizontal();
             {
                 GUI.color = Color.green;
-                GUILayout.Label("官方1群  ", GUILayout.Width(120));
+                GUILayout.Label("官方1群:184111890", GUILayout.Width(120));
                 GUI.color = GUI.contentColor;
 
                 if (GUILayout.Button("加入", GUILayout.Width(35)))
