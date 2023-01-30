@@ -1,40 +1,13 @@
-﻿#if WINDOWS_PHONE && !USE_WP8_NATIVE_SQLITE
-#define USE_CSHARP_SQLITE
-#endif
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading;
-using BDFramework;
 using Cysharp.Text;
-using ILRuntime.CLR.Method;
-using ILRuntime.CLR.Utils;
-using ILRuntime.Runtime.Intepreter;
-using ILRuntime.Runtime.Stack;
-using LitJson;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
-#if USE_CSHARP_SQLITE
-using Sqlite3 = Community.CsharpSqlite.Sqlite3;
-using Sqlite3DatabaseHandle = Community.CsharpSqlite.Sqlite3.sqlite3;
-using Sqlite3Statement = Community.CsharpSqlite.Sqlite3.Vdbe;
-#elif USE_WP8_NATIVE_SQLITE
-using Sqlite3 = Sqlite.Sqlite3;
-using Sqlite3DatabaseHandle = Sqlite.Database;
-using Sqlite3Statement = Sqlite.Statement;
-#else
 using Sqlite3DatabaseHandle = System.IntPtr;
 using Sqlite3Statement = System.IntPtr;
 
-#endif
 
-namespace SQLite4Unity3d
+namespace SQLite
 {
     /// <summary>
     /// ILRuntime版本的TableQuery
@@ -57,6 +30,7 @@ namespace SQLite4Unity3d
         /// 不能为0
         /// </summary>
         private int TRIGGER_CHACHE_NUM = 5;
+
         /// <summary>
         /// sql缓存触发消耗时间
         /// 不能为0
@@ -114,7 +88,7 @@ namespace SQLite4Unity3d
                 //直接执行sql
                 sqlCmdText = @sql;
             }
-            
+
 
             return sqlCmdText;
         }
@@ -222,7 +196,7 @@ namespace SQLite4Unity3d
             this.@where = ZString.Concat(this.@where, " ", query);
             return this;
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -382,10 +356,10 @@ namespace SQLite4Unity3d
                     //查询
                     {
                         var cmd = this.Connection.CreateCommand(sqlCmdText);
-                        retlist = cmd.ExecuteQuery(type);
+                        retlist = cmd.ExecuteQueryForILR(type);
                     }
                     //缓存判断
-                  
+
                     var intelval = Time.realtimeSinceStartup - st;
                     var counter = GetSqlExecCount(sqlCmdText);
                     if (counter >= this.TRIGGER_CHACHE_NUM || intelval >= this.TRIGGER_CHACHE_TIMER)
@@ -396,16 +370,15 @@ namespace SQLite4Unity3d
                     {
                         this.AddSqlExecCounter(sqlCmdText, counter);
                     }
-
                 }
             }
             else
             {
                 //查询
                 var cmd = this.Connection.CreateCommand(sqlCmdText);
-                retlist = cmd.ExecuteQuery(type);
+                retlist = cmd.ExecuteQueryForILR(type);
             }
-            
+
             //重置状态
             this.Reset();
             return retlist;
