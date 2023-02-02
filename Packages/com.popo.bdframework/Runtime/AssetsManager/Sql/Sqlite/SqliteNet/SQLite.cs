@@ -37,7 +37,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using BDFramework;
+using ILRuntime.Reflection;
 using LitJson;
+using Utils.mslibEx;
 
 #if USE_CSHARP_SQLITE
 using Sqlite3 = Community.CsharpSqlite.Sqlite3;
@@ -675,6 +677,7 @@ namespace SQLite
         {
             return DropTable(GetMapping(type));
         }
+
         /// <summary>
         /// Executes a "drop table" on the database.  This is non-recoverable.
         /// </summary>
@@ -2768,16 +2771,22 @@ namespace SQLite
             MappedType = type;
             CreateFlags = createFlags;
 
-            var typeInfo = type.GetTypeInfo();
+
+            TableAttribute tableAttr = null;
+            if (!(type is ILRuntimeType))
+            {
+                var typeInfo = type.GetTypeInfo();
 #if ENABLE_IL2CPP
-			var tableAttr = typeInfo.GetCustomAttribute<TableAttribute> ();
+                tableAttr = typeInfo.GetCustomAttribute<TableAttribute>();
 #else
-            var tableAttr =
-                typeInfo.CustomAttributes
-                    .Where(x => x.AttributeType == typeof(TableAttribute))
-                    .Select(x => (TableAttribute) Orm.InflateAttribute(x))
-                    .FirstOrDefault();
+                 tableAttr =
+                    typeInfo.CustomAttributes
+                        .Where(x => x.AttributeType == typeof(TableAttribute))
+                        .Select(x => (TableAttribute) Orm.InflateAttribute(x))
+                        .FirstOrDefault();
 #endif
+            }
+
 
             TableName = (tableAttr != null && !string.IsNullOrEmpty(tableAttr.Name)) ? tableAttr.Name : MappedType.Name;
             WithoutRowId = tableAttr != null ? tableAttr.WithoutRowId : false;
@@ -2831,11 +2840,10 @@ namespace SQLite
             var newMembers = new List<MemberInfo>();
             do
             {
-                var ti = type.GetTypeInfo();
                 newMembers.Clear();
 
                 newMembers.AddRange(
-                    from p in ti.DeclaredProperties
+                    from p in type.GetDeclaredProperties()
                     where !memberNames.Contains(p.Name) &&
                           p.CanRead && p.CanWrite &&
                           p.GetMethod != null && p.SetMethod != null &&
@@ -2845,9 +2853,18 @@ namespace SQLite
 
                 members.AddRange(newMembers);
                 foreach (var m in newMembers)
+                {
                     memberNames.Add(m.Name);
+                }
 
-                type = ti.BaseType;
+                if (type.BaseType != null)
+                {
+                    type = type.BaseType;
+                }
+                else
+                {
+                    break;
+                }
             } while (type != typeof(object));
 
             return members;
@@ -2935,11 +2952,12 @@ namespace SQLite
                 _member = member;
                 var memberType = GetMemberType(member);
 
-                var colAttr = member.CustomAttributes.FirstOrDefault(x => x.AttributeType == typeof(ColumnAttribute));
+
 #if ENABLE_IL2CPP
-                var ca = member.GetCustomAttribute(typeof(ColumnAttribute)) as ColumnAttribute;
-				Name = ca == null ? member.Name : ca.Name;
+                var ca = member.GetCustomAttribute<ColumnAttribute>();
+                Name = ca == null ? member.Name : ca.Name;
 #else
+                var colAttr = member.CustomAttributes.FirstOrDefault(x => x.AttributeType == typeof(ColumnAttribute));
                 Name = (colAttr != null && colAttr.ConstructorArguments.Count > 0) ? colAttr.ConstructorArguments[0].Value?.ToString() : member.Name;
 #endif
                 //If this type is Nullable<T> then Nullable.GetUnderlyingType returns the T, otherwise it returns null, so get the actual type instead
@@ -2967,7 +2985,7 @@ namespace SQLite
                 IsNullable = !(IsPK || Orm.IsMarkedNotNull(member));
                 MaxStringLength = Orm.MaxStringLength(member);
 
-                StoreAsText = memberType.GetTypeInfo().CustomAttributes.Any(x => x.AttributeType == typeof(StoreAsTextAttribute));
+                StoreAsText = memberType.GetCustomAttributes().Any(x => x.GetType() == typeof(StoreAsTextAttribute));
             }
 
             public Column(PropertyInfo member, CreateFlags createFlags = CreateFlags.None)
@@ -2979,14 +2997,14 @@ namespace SQLite
             {
                 if (_member is PropertyInfo propy)
                 {
-                    if (val != null && ColumnType.GetTypeInfo().IsEnum)
+                    if (val != null && ColumnType.IsEnum)
                         propy.SetValue(obj, Enum.ToObject(ColumnType, val));
                     else
                         propy.SetValue(obj, val);
                 }
                 else if (_member is FieldInfo field)
                 {
-                    if (val != null && ColumnType.GetTypeInfo().IsEnum)
+                    if (val != null && ColumnType.IsEnum)
                         field.SetValue(obj, Enum.ToObject(ColumnType, val));
                     else
                         field.SetValue(obj, val);
@@ -3027,13 +3045,11 @@ namespace SQLite
     {
         public EnumCacheInfo(Type type)
         {
-            var typeInfo = type.GetTypeInfo();
-
-            IsEnum = typeInfo.IsEnum;
+            IsEnum = type.IsEnum;
 
             if (IsEnum)
             {
-                StoreAsText = typeInfo.CustomAttributes.Any(x => x.AttributeType == typeof(StoreAsTextAttribute));
+                StoreAsText = type.GetCustomAttributes().Any(x => x.GetType() == typeof(StoreAsTextAttribute));
 
                 if (StoreAsText)
                 {
@@ -3090,7 +3106,10 @@ namespace SQLite
                 return typeof(object);
             var rt = obj as IReflectableType;
             if (rt != null)
+            {
                 return rt.GetTypeInfo().AsType();
+            }
+
             return obj.GetType();
         }
 
@@ -3153,7 +3172,7 @@ namespace SQLite
             {
                 return "bigint";
             }
-            else if (clrType.GetTypeInfo().IsEnum)
+            else if (clrType.IsEnum)
             {
                 if (p.StoreAsText)
                     return "varchar";
@@ -3182,13 +3201,18 @@ namespace SQLite
 
         public static bool IsPK(MemberInfo p)
         {
+#if ENABLE_IL2CPP
+            var attr = p.GetCustomAttribute<ColumnAttribute>();
+            return attr != null;
+#else
             return p.CustomAttributes.Any(x => x.AttributeType == typeof(PrimaryKeyAttribute));
+#endif
         }
 
         public static string Collation(MemberInfo p)
         {
 #if ENABLE_IL2CPP
-			return (p.GetCustomAttribute<CollationAttribute> ()?.Value) ?? "";
+            return (p.GetCustomAttribute<CollationAttribute>()?.Value) ?? "";
 #else
             return
                 (p.CustomAttributes
@@ -3204,53 +3228,58 @@ namespace SQLite
 
         public static bool IsAutoInc(MemberInfo p)
         {
-            return p.CustomAttributes.Any(x => x.AttributeType == typeof(AutoIncrementAttribute));
-        }
-
-        public static FieldInfo GetField(TypeInfo t, string name)
-        {
-            var f = t.GetDeclaredField(name);
-            if (f != null)
-                return f;
-            return GetField(t.BaseType.GetTypeInfo(), name);
-        }
-
-        public static PropertyInfo GetProperty(TypeInfo t, string name)
-        {
-            var f = t.GetDeclaredProperty(name);
-            if (f != null)
-                return f;
-            return GetProperty(t.BaseType.GetTypeInfo(), name);
-        }
-
-        public static object InflateAttribute(CustomAttributeData x)
-        {
-            var atype = x.AttributeType;
-            var typeInfo = atype.GetTypeInfo();
 #if ENABLE_IL2CPP
-			var r = Activator.CreateInstance (x.AttributeType);
+            var attr = p.GetCustomAttribute<AutoIncrementAttribute>(); //(typeof(AutoIncrementAttribute)) as AutoIncrementAttribute;
+            return attr != null;
 #else
-            var args = x.ConstructorArguments.Select(a => a.Value).ToArray();
-            var r = Activator.CreateInstance(x.AttributeType, args);
-            foreach (var arg in x.NamedArguments)
-            {
-                if (arg.IsField)
-                {
-                    GetField(typeInfo, arg.MemberName).SetValue(r, arg.TypedValue.Value);
-                }
-                else
-                {
-                    GetProperty(typeInfo, arg.MemberName).SetValue(r, arg.TypedValue.Value);
-                }
-            }
+            return p.CustomAttributes.Any(x => x.AttributeType == typeof(AutoIncrementAttribute));
 #endif
-            return r;
         }
+
+//         public static FieldInfo GetField(TypeInfo t, string name)
+//         {
+//             var f = t.GetDeclaredField(name);
+//             if (f != null)
+//                 return f;
+//             return GetField(t.BaseType.GetTypeInfo(), name);
+//         }
+//
+//         public static PropertyInfo GetProperty(TypeInfo t, string name)
+//         {
+//             var f = t.GetDeclaredProperty(name);
+//             if (f != null)
+//                 return f;
+//             return GetProperty(t.BaseType.GetTypeInfo(), name);
+//         }
+//
+//         public static object InflateAttribute(CustomAttributeData x)
+//         {
+//             var atype = x.AttributeType;
+//             var typeInfo = atype.GetTypeInfo();
+// #if ENABLE_IL2CPP
+//             var r = Activator.CreateInstance(x.AttributeType);
+// #else
+//             var args = x.ConstructorArguments.Select(a => a.Value).ToArray();
+//             var r = Activator.CreateInstance(x.AttributeType, args);
+//             foreach (var arg in x.NamedArguments)
+//             {
+//                 if (arg.IsField)
+//                 {
+//                     GetField(typeInfo, arg.MemberName).SetValue(r, arg.TypedValue.Value);
+//                 }
+//                 else
+//                 {
+//                     GetProperty(typeInfo, arg.MemberName).SetValue(r, arg.TypedValue.Value);
+//                 }
+//             }
+// #endif
+//             return r;
+//         }
 
         public static IEnumerable<IndexedAttribute> GetIndices(MemberInfo p)
         {
 #if ENABLE_IL2CPP
-			return p.GetCustomAttributes<IndexedAttribute> ();
+            return p.GetCustomAttributes<IndexedAttribute>();
 #else
             var indexedInfo = typeof(IndexedAttribute).GetTypeInfo();
             return
@@ -3263,7 +3292,7 @@ namespace SQLite
         public static int? MaxStringLength(MemberInfo p)
         {
 #if ENABLE_IL2CPP
-			return p.GetCustomAttribute<MaxLengthAttribute> ()?.Value;
+            return p.GetCustomAttribute<MaxLengthAttribute>()?.Value;
 #else
             var attr = p.CustomAttributes.FirstOrDefault(x => x.AttributeType == typeof(MaxLengthAttribute));
             if (attr != null)
@@ -3280,7 +3309,12 @@ namespace SQLite
 
         public static bool IsMarkedNotNull(MemberInfo p)
         {
-            return p.CustomAttributes.Any(x => x.AttributeType == typeof(NotNullAttribute));
+#if ENABLE_IL2CPP
+            var attr = p.GetCustomAttribute<NotNullAttribute>();
+            return attr != null;
+#else
+           return p.CustomAttributes.Any(x => x.AttributeType == typeof(NotNullAttribute));
+#endif
         }
     }
 
@@ -3343,7 +3377,7 @@ namespace SQLite
         public List<object> ExecuteQueryForILR(Type t)
         {
             var map = _conn.GetMapping(t);
-            var ret = ExecuteDeferredQuery<object>(map,true).ToList();
+            var ret = ExecuteDeferredQuery<object>(map, true).ToList();
             return ret;
         }
 
@@ -3387,7 +3421,7 @@ namespace SQLite
             try
             {
                 var cols = new TableMapping.Column[SQLite3.ColumnCount(stmt)];
-                var fastColumnSetters = new Action<object, Sqlite3Statement, int>[SQLite3.ColumnCount(stmt)];
+                Action<object, Sqlite3Statement, int>[] fastColumnSetters = null;
 
                 if (map.Method == TableMapping.MapMethod.ByPosition)
                 {
@@ -3396,18 +3430,23 @@ namespace SQLite
                 else if (map.Method == TableMapping.MapMethod.ByName)
                 {
                     MethodInfo getSetter = null;
-                    if (typeof(T) != map.MappedType)
+                    if (!isILRuntime)
                     {
-                        getSetter = typeof(FastColumnSetter)
-                            .GetMethod(nameof(FastColumnSetter.GetFastSetter),
-                                BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(map.MappedType);
+                        fastColumnSetters = new Action<object, Sqlite3Statement, int>[SQLite3.ColumnCount(stmt)];
+                        if (typeof(T) != map.MappedType)
+                        {
+                            getSetter = typeof(FastColumnSetter)
+                                .GetMethod(nameof(FastColumnSetter.GetFastSetter),
+                                    BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(map.MappedType);
+                        }
                     }
 
                     for (int i = 0; i < cols.Length; i++)
                     {
                         var name = SQLite3.ColumnName16(stmt, i);
                         cols[i] = map.FindColumn(name);
-                        if (cols[i] != null)
+                        if (cols[i] != null && fastColumnSetters != null)
+                        {
                             if (getSetter != null)
                             {
                                 fastColumnSetters[i] = (Action<object, Sqlite3Statement, int>) getSetter.Invoke(null, new object[] {_conn, cols[i]});
@@ -3416,8 +3455,10 @@ namespace SQLite
                             {
                                 fastColumnSetters[i] = FastColumnSetter.GetFastSetter<T>(_conn, cols[i]);
                             }
+                        }
                     }
                 }
+
 
 #if UNITY_EDITOR
                 sw.Stop();
@@ -3444,7 +3485,7 @@ namespace SQLite
                         if (cols[i] == null)
                             continue;
 
-                        if (fastColumnSetters[i] != null)
+                        if (fastColumnSetters != null && fastColumnSetters[i] != null)
                         {
                             fastColumnSetters[i].Invoke(obj, stmt, i);
                         }
@@ -3466,7 +3507,7 @@ namespace SQLite
                 var total = serchSqlTime + deSerializeTime;
                 if (total > 10)
                 {
-                    UnityEngine.Debug.LogError($"<color=white>消耗较高!</color>:<color=yellow>{total}ms</color>，元素数量:<color=red>{count}</color>, 执行sql耗时: <color=yellow>{serchSqlTime} ms</color>,反序列化耗时：<color=yellow>{deSerializeTime}ms</color>");
+                    UnityEngine.Debug.LogError($"<color=white>消耗较高!</color>:<color=yellow>{total}ms</color>，查询结果数量:<color=red>{count}</color>, 执行sql耗时: <color=yellow>{serchSqlTime} ms</color>,反序列化耗时：<color=yellow>{deSerializeTime}ms</color>");
                 }
 #endif
             }
@@ -3732,11 +3773,9 @@ namespace SQLite
             }
             else
             {
-                var clrTypeInfo = clrType.GetTypeInfo();
-                if (clrTypeInfo.IsGenericType && clrTypeInfo.GetGenericTypeDefinition() == typeof(Nullable<>))
+                if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
-                    clrType = clrTypeInfo.GenericTypeArguments[0];
-                    clrTypeInfo = clrType.GetTypeInfo();
+                    clrType = clrType.GenericTypeArguments[0];
                 }
 
                 if (clrType == typeof(String))
@@ -3799,7 +3838,7 @@ namespace SQLite
                 {
                     return new DateTimeOffset(SQLite3.ColumnInt64(stmt, index), TimeSpan.Zero);
                 }
-                else if (clrTypeInfo.IsEnum)
+                else if (clrType.IsEnum)
                 {
                     if (type == SQLite3.ColType.Text)
                     {
@@ -3869,7 +3908,7 @@ namespace SQLite
                 }
                 else
                 {
-                    throw new NotSupportedException("Don't know how to read " + clrType);
+                    throw new NotSupportedException($"Don't know how to read {clrType} - ");
                 }
             }
         }
@@ -3897,11 +3936,10 @@ namespace SQLite
 
             Type clrType = column.PropertyInfo.PropertyType;
 
-            var clrTypeInfo = clrType.GetTypeInfo();
-            if (clrTypeInfo.IsGenericType && clrTypeInfo.GetGenericTypeDefinition() == typeof(Nullable<>))
+
+            if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
-                clrType = clrTypeInfo.GenericTypeArguments[0];
-                clrTypeInfo = clrType.GetTypeInfo();
+                clrType = clrType.GenericTypeArguments[0];
             }
 
             if (clrType == typeof(String))
@@ -3970,7 +4008,7 @@ namespace SQLite
             {
                 fastSetter = CreateNullableTypedSetterDelegate<T, DateTimeOffset>(column, (stmt, index) => { return new DateTimeOffset(SQLite3.ColumnInt64(stmt, index), TimeSpan.Zero); });
             }
-            else if (clrTypeInfo.IsEnum)
+            else if (clrType.IsEnum)
             {
                 // NOTE: Not sure of a good way (if any?) to do a strongly-typed fast setter like this for enumerated types -- for now, return null and column sets will revert back to the safe (but slow) Reflection-based method of column prop.Set()
             }
@@ -4058,7 +4096,7 @@ namespace SQLite
         /// <returns>A strongly-typed delegate</returns>
         private static Action<object, Sqlite3Statement, int> CreateNullableTypedSetterDelegate<ObjectType, ColumnMemberType>(TableMapping.Column column, Func<Sqlite3Statement, int, ColumnMemberType> getColumnValue) where ColumnMemberType : struct
         {
-            var clrTypeInfo = column.PropertyInfo.PropertyType.GetTypeInfo();
+            var clrTypeInfo = column.PropertyInfo.PropertyType;
             bool isNullable = false;
 
             if (clrTypeInfo.IsGenericType && clrTypeInfo.GetGenericTypeDefinition() == typeof(Nullable<>))

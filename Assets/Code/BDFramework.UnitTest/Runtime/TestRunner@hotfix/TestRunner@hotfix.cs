@@ -108,10 +108,23 @@ namespace BDFramework.UnitTest
                 var testMethodDataList = new List<TestMethodData>();
                 testMethodDataMap[type] = testMethodDataList;
                 //获取uit test并排序
-                foreach (var method in methods)
+                foreach (MethodInfo method in methods)
                 {
-                    var mattrs = method.GetCustomAttributes(attribute, false);
-                    var mattr = mattrs[0] as UnitTestBaseAttribute;
+                    UnitTestBaseAttribute mattr = null;
+                    if (ILRuntimeHelper.IsRunning)
+                    {
+                        mattr = method.GetAttributeInILRuntime<UnitTestBaseAttribute>();
+                    }
+                    else
+                    {
+                        var mattrs = method.GetCustomAttributes(attribute, false);
+                        mattr = mattrs[0] as UnitTestBaseAttribute;
+                    }
+
+                    if (mattr == null)
+                    {
+                        continue;
+                    }
 
                     //数据
                     var newMethodData = new TestMethodData() {MethodInfo = method, TestData = mattr,};
@@ -194,33 +207,40 @@ namespace BDFramework.UnitTest
                     {
                         methodData.MethodInfo.Invoke(null, null);
                         //采用最简单的状态模式，防止ilr下爆栈
-                        Assert.GetAssertStaus(out isFail, out failMsg,out time);
+                        Assert.GetAssertStaus(out isFail, out failMsg, out time);
                         Assert.ClearStatus();
                     }
                     catch (Exception e)
                     {
                         isFail = true;
-                        Debug.LogError(e);
+                        if (e.InnerException != null)
+                        {
+                            Debug.LogError(e.InnerException);
+                        }
+                        else
+                        {
+                            Debug.LogError(e);
+                        }
                     }
-
+                    
+                    
                     var color = "";
                     if (!isFail)
                     {
-
                         color = "green";
                     }
                     else
                     {
                         color = "red";
                     }
-                    
+
                     if (time == 0)
                     {
-                        Debug.Log($"<color={color}>执行 {methodData.TestData.Des}: 成功! - {methodData.MethodInfo.Name} </color>");
+                        Debug.Log($"<color={color}>执行 {methodData.TestData.Des}: {(isFail?"失败":"成功")}! - {methodData.MethodInfo.Name} </color>");
                     }
                     else
                     {
-                        Debug.LogFormat($"<color={color}>执行 {methodData.TestData.Des}: 成功! - {methodData.MethodInfo.Name}, 耗时：<color=yellow>{time} ms</color>. </color>", methodData.TestData.Des,time, methodData.MethodInfo.Name);
+                        Debug.LogFormat($"<color={color}>执行 {methodData.TestData.Des}: {(isFail?"失败":"成功")}! - {methodData.MethodInfo.Name}, 耗时：<color=yellow>{time} ms</color>. </color>", methodData.TestData.Des, time, methodData.MethodInfo.Name);
                     }
                 }
             }

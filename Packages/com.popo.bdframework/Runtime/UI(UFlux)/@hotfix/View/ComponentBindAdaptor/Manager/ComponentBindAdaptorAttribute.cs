@@ -30,7 +30,7 @@ namespace BDFramework.UFlux
                     {
                         this.BindType = ilrtype.ReflectionType;
                     }
-                    else
+                    else if(Application.isPlaying)
                     {
                         BDebug.LogError("【UFlux】不存在ComponentBindAdaptor:" + name);
                     }

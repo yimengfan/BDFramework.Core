@@ -239,7 +239,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         //注册
         ILRuntimeHelper.LoadHotfix(dllpath, mainProjectIlrBindAction, false);
         BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain, outputPath);
-        ILRuntimeHelper.Close();
+        ILRuntimeHelper.Dispose();
 
 
         /******************移除已经被绑定的部分****************/

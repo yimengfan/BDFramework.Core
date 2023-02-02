@@ -167,7 +167,7 @@ namespace BDFramework
         {
 #if UNITY_EDITOR
             SqliteLoder.Close();
-            ILRuntimeHelper.Close();
+            ILRuntimeHelper.Dispose();
 #endif
         }
 

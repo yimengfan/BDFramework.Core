@@ -1,6 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using BDFramework.Core.Tools;
+using DG.Tweening.Plugins.Core.PathCore;
+using Game.ILRuntime;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -58,7 +61,19 @@ namespace BDFramework.Editor.TestRunner
         [MenuItem("BDFrameWork工具箱/TestPipeline/执行逻辑测试-ILRuntime", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTestILRuntime()
         {
-            RunILRuntimeTest();
+            //执行热更单元测试
+            var dllPath =IPath.Combine(GameConfig.GetLoadPath(AssetLoadPathType.DevOpsPublish), BApplication.GetRuntimePlatformPath(), ScriptLoder.DLL_PATH);
+            ILRuntimeHelper.LoadHotfix(dllPath,GameLogicCLRBinding.Bind);
+            try
+            {
+                ILRuntimeHelper.AppDomain.Invoke("BDFramework.UnitTest.TestRunner", "RunHotfixUnitTest", null, new object[] { });
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
+          
+            ILRuntimeHelper.Dispose();
         }
 
         /// <summary>
@@ -67,8 +82,8 @@ namespace BDFramework.Editor.TestRunner
         [MenuItem("BDFrameWork工具箱/TestPipeline/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTestILRuntimeWithRebuildDll()
         {
-            EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, BApplication.RuntimePlatform, ScriptBuildTools.BuildMode.Debug);
-            RunILRuntimeTest();
+            EditorWindow_ScriptBuildDll.RoslynBuild(BApplication.DevOpsPublishAssetsPath, BApplication.RuntimePlatform, ScriptBuildTools.BuildMode.Debug);
+            UnitTestILRuntime();
         }
 
         /// <summary>

@@ -10,8 +10,9 @@ namespace BDFramework
     static public class ScriptLoder
     {
         static readonly public string SCRIPT_FOLDER_PATH = "script";
-        static readonly public string DLL_PATH = SCRIPT_FOLDER_PATH+"/hotfix.dll";
-        static readonly public string PDB_PATH = DLL_PATH + "pdb"; 
+        static readonly public string DLL_PATH = SCRIPT_FOLDER_PATH + "/hotfix.dll";
+        static readonly public string PDB_PATH = DLL_PATH + "pdb";
+
         /// <summary>
         /// 反射注册
         /// </summary>
@@ -20,17 +21,17 @@ namespace BDFramework
         /// <summary>
         /// 脚本加载入口
         /// </summary>
-        /// <param name="loadPathTypeType"></param>
+        /// <param name="loadPathType"></param>
         /// <param name="runMode"></param>
         /// <param name="mainProjectTypes">UPM隔离了dll,需要手动传入</param>
-        static public void Init(AssetLoadPathType loadPathTypeType,
+        static public void Init(AssetLoadPathType loadPathType,
             HotfixCodeRunMode runMode,
             Type[] mainProjectTypes,
             Action<bool> clrBindingAction)
         {
             CLRBindAction = clrBindingAction;
 
-            if (loadPathTypeType == AssetLoadPathType.Editor)
+            if (loadPathType == AssetLoadPathType.Editor)
             {
                 BDebug.Log("【ScriptLaunch】Editor(非热更)模式!");
                 //反射调用，防止编译报错
@@ -46,11 +47,7 @@ namespace BDFramework
             else
             {
                 BDebug.Log("【ScriptLaunch】热更模式!");
-                var path = GameConfig.GetLoadPath(loadPathTypeType);
-                path = Path.Combine(path, BApplication.GetRuntimePlatformPath());
-                //加载dll
-                var dllPath = Path.Combine(path, DLL_PATH);
-                LoadHotfixDLL(dllPath, runMode, mainProjectTypes);
+                LoadHotfixDLL(loadPathType, runMode, mainProjectTypes);
             }
         }
 
@@ -61,8 +58,10 @@ namespace BDFramework
         /// <param name="source"></param>
         /// <param name="copyto"></param>
         /// <returns></returns>
-        static void LoadHotfixDLL(string dllPath, HotfixCodeRunMode mode, Type[] mainProjecTypes)
+        static public void LoadHotfixDLL(AssetLoadPathType loadPathType, HotfixCodeRunMode mode, Type[] mainProjecTypes)
         {
+            //路径
+            var dllPath = Path.Combine(GameConfig.GetLoadPath(loadPathType), BApplication.GetRuntimePlatformPath(), DLL_PATH);
             //反射执行
             if (mode == HotfixCodeRunMode.HCLR)
             {
@@ -94,8 +93,7 @@ namespace BDFramework
                 //解释执行模式
                 ILRuntimeHelper.LoadHotfix(dllPath, CLRBindAction);
                 var hotfixTypes = ILRuntimeHelper.GetHotfixTypes().ToArray();
-                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null,
-                    new object[] {mainProjecTypes, hotfixTypes});
+                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] {mainProjecTypes, hotfixTypes});
             }
             else
             {

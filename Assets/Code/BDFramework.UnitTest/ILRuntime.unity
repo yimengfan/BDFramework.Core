@@ -365,6 +365,50 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1933055363}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &443937807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 443937809}
+  - component: {fileID: 443937808}
+  m_Layer: 0
+  m_Name: BDebug
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &443937808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443937807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a4c7238f14b4f89a7d98cd7c5255554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLog: 1
+--- !u!4 &443937809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443937807}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &617214992
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +420,7 @@ GameObject:
   - component: {fileID: 617214994}
   - component: {fileID: 617214993}
   - component: {fileID: 617214995}
-  - component: {fileID: 8251309750630240741}
+  - component: {fileID: 617214996}
   m_Layer: 0
   m_Name: BDFrame
   m_TagString: Untagged
@@ -397,20 +441,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data:
-    CodeRoot: 1
-    SQLRoot: 1
-    ArtRoot: 1
-    CustomArtRoot: 
+    CodeRoot: 0
+    SQLRoot: 0
+    ArtRoot: 3
     CodeRunMode: 0
-    AssetBundleManagerVersion: 1
-    IsDebuggerILRuntime: 0
+    IsDebuggerILRuntime: 1
     IsDebugLog: 1
-    IsExcuteHotfixUnitTest: 1
     FileServerUrl: 192.168.8.68
     GateServerIp: 
     Port: 0
-    IsHotfix: 0
-    IsNeedNet: 0
+    IsHotfix: 1
+    IsNeedNet: 1
+    ClientVersionNum: 2.1.0
   ConfigFileName: noname
 --- !u!4 &617214994
 Transform:
@@ -438,7 +480,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53901f56d09f96d4886992ff20f43b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConfigText: {fileID: 4900000, guid: 3708280b060e20e4f9506eed9cfa0317, type: 3}
+  ConfigText: {fileID: 4900000, guid: a35fde23afc8243a88a460b17fbcb98d, type: 3}
+--- !u!114 &617214996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617214992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a4c7238f14b4f89a7d98cd7c5255554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLog: 1
 --- !u!1 &865066839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,16 +1173,3 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4547825529114816998}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8251309750630240741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617214992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -614279893, guid: 3b8ad62e537bc86418adf879fac81ef0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsLog: 1
