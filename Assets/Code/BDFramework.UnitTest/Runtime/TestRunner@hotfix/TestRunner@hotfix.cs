@@ -12,6 +12,15 @@ namespace BDFramework.UnitTest
     /// </summary>
     static public class TestRunner
     {
+        /// <summary>
+        /// Test方法的数据
+        /// </summary>
+        public class TestMethodData
+        {
+            public UnitTestBaseAttribute TestData;
+            public MethodInfo MethodInfo;
+        }
+
         #region 对外的函数接口
 
         /// <summary>
@@ -22,9 +31,9 @@ namespace BDFramework.UnitTest
             Debug.ClearDeveloperConsole();
             Debug.Log("<color=red>----------------------开始测试MonoCLR-----------------------</color>");
             //热更模式
-            CollectTestClassData(TestType.MonoOrCLR);
+            var testMethodDataMap = CollectTestClassData(TestType.MonoOrCLR);
             //执行普通的测试
-            ExcuteTest<UnitTestAttribute>();
+            ExcuteTest<UnitTestAttribute>(testMethodDataMap);
         }
 
         /// <summary>
@@ -34,29 +43,14 @@ namespace BDFramework.UnitTest
         {
             Debug.Log("<color=red>----------------------开始测试ILR-----------------------</color>");
             //搜集测试用例
-            CollectTestClassData(TestType.ILRuntime);
+            var testMethodDataMap = CollectTestClassData(TestType.ILRuntime);
             //1.执行普通的测试
-            ExcuteTest<UnitTestAttribute>();
+            ExcuteTest<UnitTestAttribute>(testMethodDataMap);
             //2.执行hotfix的测试
-            ExcuteTest<HotfixOnlyUnitTestAttribute>();
+            ExcuteTest<HotfixOnlyUnitTestAttribute>(testMethodDataMap);
         }
 
         #endregion
-
-
-        /// <summary>
-        /// 测试函数的集合
-        /// </summary>
-        private static Dictionary<Type, List<TestMethodData>> testMethodDataMap;
-
-        /// <summary>
-        /// Test方法的数据
-        /// </summary>
-        public class TestMethodData
-        {
-            public UnitTestBaseAttribute TestData;
-            public MethodInfo MethodInfo;
-        }
 
 
         /// <summary>
@@ -71,9 +65,9 @@ namespace BDFramework.UnitTest
         /// <summary>
         /// 收集Test的数据
         /// </summary>
-        static public void CollectTestClassData(TestType testType)
+        static public Dictionary<Type, List<TestMethodData>> CollectTestClassData(TestType testType)
         {
-            testMethodDataMap = new Dictionary<Type, List<TestMethodData>>();
+            var retMap = new Dictionary<Type, List<TestMethodData>>();
             List<Type> types = new List<Type>();
             //判断不同的模式
 
@@ -106,7 +100,7 @@ namespace BDFramework.UnitTest
                 // var attrs = type.GetCustomAttributes(attribute,false);
                 // var attr = attrs[0] as HotfixTest;
                 var testMethodDataList = new List<TestMethodData>();
-                testMethodDataMap[type] = testMethodDataList;
+                retMap[type] = testMethodDataList;
                 //获取uit test并排序
                 foreach (MethodInfo method in methods)
                 {
@@ -149,6 +143,8 @@ namespace BDFramework.UnitTest
                     }
                 }
             }
+
+            return retMap;
         }
 
         /// <summary>
@@ -186,7 +182,7 @@ namespace BDFramework.UnitTest
         //         }
         //     }
         // }
-        static public void ExcuteTest<T>() where T : UnitTestBaseAttribute
+        static public void ExcuteTest<T>(Dictionary<Type, List<TestMethodData>> testMethodDataMap) where T : UnitTestBaseAttribute
         {
             foreach (var item in testMethodDataMap)
             {
@@ -222,8 +218,8 @@ namespace BDFramework.UnitTest
                             Debug.LogError(e);
                         }
                     }
-                    
-                    
+
+
                     var color = "";
                     if (!isFail)
                     {
@@ -236,11 +232,25 @@ namespace BDFramework.UnitTest
 
                     if (time == 0)
                     {
-                        Debug.Log($"<color={color}>执行 {methodData.TestData.Des}: {(isFail?"失败":"成功")}! - {methodData.MethodInfo.Name} </color>");
+                        if (isFail)
+                        {
+                            Debug.LogError($"<color={color}>执行 {methodData.TestData.Des}: {(isFail ? "失败" : "成功")}! - {methodData.MethodInfo.Name} </color>");
+                        }
+                        else
+                        {
+                            Debug.Log($"<color={color}>执行 {methodData.TestData.Des}: {(isFail ? "失败" : "成功")}! - {methodData.MethodInfo.Name} </color>");
+                        }
                     }
                     else
                     {
-                        Debug.LogFormat($"<color={color}>执行 {methodData.TestData.Des}: {(isFail?"失败":"成功")}! - {methodData.MethodInfo.Name}, 耗时：<color=yellow>{time} ms</color>. </color>", methodData.TestData.Des, time, methodData.MethodInfo.Name);
+                        if (isFail)
+                        {
+                            Debug.LogError($"<color={color}>执行 {methodData.TestData.Des}: {(isFail ? "失败" : "成功")}! - {methodData.MethodInfo.Name}, 耗时：<color=yellow>{time} ms</color>. </color>");
+                        }
+                        else
+                        {
+                            Debug.Log($"<color={color}>执行 {methodData.TestData.Des}: {(isFail ? "失败" : "成功")}! - {methodData.MethodInfo.Name}, 耗时：<color=yellow>{time} ms</color>. </color>");
+                        }
                     }
                 }
             }

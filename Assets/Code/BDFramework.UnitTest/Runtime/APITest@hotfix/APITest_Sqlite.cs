@@ -34,6 +34,7 @@ namespace BDFramework.UnitTest
                 var ret = SqliteHelper.DB.GetTableRuntime().FromAll<APITestHero>();
                 Debug.Log($"<color=green>插入sql条目：{ret.Count}</color>");
             }
+
             Assert.IsPass(true);
         }
 
@@ -46,6 +47,7 @@ namespace BDFramework.UnitTest
             var ds = SqliteHelper.DB.GetTableRuntime().Where("id = 1").FromAll<APITestHero>();
             var time = Assert.StopWatch();
 
+            //对比返回数量和id
             if (Assert.Equals(ds.Count, 1, time: time))
             {
                 Assert.Equals(ds[0].Id, 1d, time: time);
@@ -64,7 +66,7 @@ namespace BDFramework.UnitTest
                 Debug.Log(JsonMapper.ToJson(d));
             }
 
-            Assert.IsNull(d, "limit查询失败", time);
+            Assert.IsPass(d != null && d.Id != 1, time: time);
         }
 
         [UnitTest(des: "Or And语句查询")]

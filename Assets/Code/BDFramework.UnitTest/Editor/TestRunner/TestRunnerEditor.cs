@@ -25,7 +25,7 @@ namespace BDFramework.Editor.TestRunner
         /// <summary>
         /// 测试所有
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/TestPipeline/执行框架UnitTest-API", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
+        [MenuItem("BDFrameWork工具箱/TestPipeline/执行UnitTest-DLL", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTest()
         {
             var assemblys = AppDomain.CurrentDomain.GetAssemblies();
@@ -47,18 +47,11 @@ namespace BDFramework.Editor.TestRunner
 
 
         /// <summary>
-        /// editor的逻辑测试
-        /// </summary>
-        [MenuItem("BDFrameWork工具箱/TestPipeline/执行逻辑测试-Editor", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
-        public static void UnitTestEditor()
-        {
-            RunMonoOrCLRTest();
-        }
 
         /// <summary>
         /// ilrutnime的逻辑测试
         /// </summary>
-        [MenuItem("BDFrameWork工具箱/TestPipeline/执行逻辑测试-ILRuntime", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
+        [MenuItem("BDFrameWork工具箱/TestPipeline/执行UnitTest-ILRuntime", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTestILRuntime()
         {
             //执行热更单元测试
@@ -84,29 +77,6 @@ namespace BDFramework.Editor.TestRunner
         {
             EditorWindow_ScriptBuildDll.RoslynBuild(BApplication.DevOpsPublishAssetsPath, BApplication.RuntimePlatform, ScriptBuildTools.BuildMode.Debug);
             UnitTestILRuntime();
-        }
-
-        /// <summary>
-        /// 执行Clrtest
-        /// </summary>
-        static public void RunMonoOrCLRTest()
-        {
-            //启动场景
-            EditorSceneManager.OpenScene("Assets/Code/BDFramework.UnitTest/MonoCLR.unity");
-
-            //执行
-            EditorApplication.ExecuteMenuItem("Edit/Play");
-        }
-
-        /// <summary>
-        /// 执行Clrtest
-        /// </summary>
-        static public void RunILRuntimeTest()
-        {
-            //启动场景
-            EditorSceneManager.OpenScene("Assets/Code/BDFramework.UnitTest/ILRuntime.unity");
-            //执行
-            EditorApplication.ExecuteMenuItem("Edit/Play");
         }
     }
 }
