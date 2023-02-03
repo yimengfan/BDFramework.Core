@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.Unity3dEx;
 using BDFramework.Editor.WorkFlow;
 using LitJson;
 using UnityEditor;
@@ -90,32 +91,7 @@ namespace BDFramework.Editor.Environment
             {
                 if (impoter.Contains("Sirenix.OdinInspector.Attributes.dll"))
                 {
-                    foreach (var bt in BApplication.SupportBuildTargetGroups)
-                    {
-                        var symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(bt);
-                        if (!symbols.Contains("ODIN_INSPECTOR"))
-                        {
-                            string str = "";
-                            if (!string.IsNullOrEmpty(symbols))
-                            {
-                                if (!str.EndsWith(";"))
-                                {
-                                    str = symbols + ";ODIN_INSPECTOR";
-                                }
-                                else
-                                {
-                                    str = symbols + "ODIN_INSPECTOR";
-                                }
-                            }
-                            else
-                            {
-                                str = "ODIN_INSPECTOR";
-                            }
-
-
-                            PlayerSettings.SetScriptingDefineSymbolsForGroup(bt, str);
-                        }
-                    }
+                    EditorEx.AddSymbols("ODIN_INSPECTOR");
 
                     break;
                 }

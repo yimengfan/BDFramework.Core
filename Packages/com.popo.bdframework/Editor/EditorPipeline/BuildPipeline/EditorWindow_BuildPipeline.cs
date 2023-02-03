@@ -30,7 +30,6 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
             tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.OSXPlayer)}(待实现)", new BuildMacOSX());
             // tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.OSXPlayer)}", new BuildAndroid());
             // tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.WindowsPlayer)}", new BuildAndroid());
-
             // tree.Add("Test", EditorWindow.GetWindow<EditorWindow_BDFrameworkConfig>());
             //设置
             tree.Add("Player Settings", Resources.FindObjectsOfTypeAll<PlayerSettings>().FirstOrDefault());

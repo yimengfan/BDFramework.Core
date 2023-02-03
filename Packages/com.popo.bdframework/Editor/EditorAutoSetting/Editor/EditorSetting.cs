@@ -10,12 +10,14 @@ static public class EditorSetting
 {
     static EditorSetting()
     {
+        //设置允许unsafe
         if (!PlayerSettings.allowUnsafeCode)
         {
             PlayerSettings.allowUnsafeCode = true;
             Debug.Log("【AutoSetting】allowUnsafeCode = true.");
         }
 
+        //关闭dll校验
         if (PlayerSettings.assemblyVersionValidation)
         {
             PlayerSettings.assemblyVersionValidation = false;
@@ -30,6 +32,41 @@ static public class EditorSetting
         {
             EditorPrefs.SetBool(settingName, true);
             Debug.Log($"【AutoSetting】{settingName}= true.");
+        }
+
+        //
+        BuildTargetGroup[] _supportBuildTargetGroup = new BuildTargetGroup[]
+        {
+            BuildTargetGroup.Android,
+            BuildTargetGroup.iOS,
+            /***********新增pc平台************/
+            BuildTargetGroup.Standalone,
+        };
+
+        foreach (var bt in _supportBuildTargetGroup)
+        {
+            var symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(bt);
+            if (!symbols.Contains("ENABLE_IL2CPP"))
+            {
+                string str = "";
+                if (!string.IsNullOrEmpty(symbols))
+                {
+                    if (!str.EndsWith(";"))
+                    {
+                        str = symbols + ";ENABLE_IL2CPP";
+                    }
+                    else
+                    {
+                        str = symbols + "ENABLE_IL2CPP";
+                    }
+                }
+                else
+                {
+                    str = "ENABLE_IL2CPP";
+                }
+
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(bt, str);
+            }
         }
     }
 }
