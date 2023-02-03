@@ -274,7 +274,7 @@ namespace BDFramework.Sql
                 if (dbservice == null || dbservice.IsClose)
                 {
                     dbservice = new SQLiteService(SqliteLoder.Connection);
-                    
+
                     if (dbservice == null)
                     {
                         BDebug.LogError("Sql加载失败，请检查!");
@@ -304,21 +304,22 @@ namespace BDFramework.Sql
         /// <param name="appdomain"></param>
         public unsafe static void RegisterCLRRedirection(ILRuntime.Runtime.Enviorment.AppDomain appdomain)
         {
+            //from all
             foreach (var mi in typeof(TableQueryForILRuntime).GetMethods())
             {
-                if (mi.Name == "FromAll" && mi.IsGenericMethodDefinition)
+                if (mi.Name == "FromAll" && mi.IsGenericMethodDefinition && mi.GetParameters().Length == 1)
                 {
-                    var param = mi.GetParameters();
-                    if (param[0].ParameterType == typeof(string))
-                    {
-                        appdomain.RegisterCLRMethodRedirection(mi, ReDirFromAll);
-                    }
+                    appdomain.RegisterCLRMethodRedirection(mi, RedirFromAll);
+                }
+                else if (mi.Name == "From" && mi.IsGenericMethodDefinition && mi.GetParameters().Length == 1)
+                {
+                    appdomain.RegisterCLRMethodRedirection(mi, RedirFrom);
                 }
             }
         }
 
         /// <summary>
-        /// 查询的重定向
+        /// FromAll的重定向
         /// </summary>
         /// <param name="intp"></param>
         /// <param name="esp"></param>
@@ -326,7 +327,7 @@ namespace BDFramework.Sql
         /// <param name="method"></param>
         /// <param name="isNewObj"></param>
         /// <returns></returns>
-        public unsafe static StackObject* ReDirFromAll(ILIntepreter intp, StackObject* esp, IList<object> mStack, CLRMethod method, bool isNewObj)
+        public unsafe static StackObject* RedirFromAll(ILIntepreter intp, StackObject* esp, IList<object> mStack, CLRMethod method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -337,7 +338,7 @@ namespace BDFramework.Sql
             intp.Free(ptr_of_this_method);
             var generic = method.GenericArguments[0];
             //调用
-            var result_of_this_method = DB.GetTableRuntime().FormAll(generic.ReflectionType, selection);
+            var result_of_this_method = DB.GetTableRuntime().FromAll(generic.ReflectionType, selection);
 
             if (generic is CLRType)
             {
@@ -366,6 +367,42 @@ namespace BDFramework.Sql
 
                 return ILIntepreter.PushObject(__ret, mStack, retList);
             }
+        }
+
+
+        /// <summary>
+        /// From重定向
+        /// </summary>
+        /// <param name="intp"></param>
+        /// <param name="esp"></param>
+        /// <param name="mStack"></param>
+        /// <param name="method"></param>
+        /// <param name="isNewObj"></param>
+        /// <returns></returns>
+        public unsafe static StackObject* RedirFrom(ILIntepreter intp, StackObject* esp, IList<object> mStack, CLRMethod method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(esp, 1);
+            //
+            System.String selection = (System.String) typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, mStack));
+            intp.Free(ptr_of_this_method);
+            var generic = method.GenericArguments[0];
+            //调用
+            var result_of_this_method = DB.GetTableRuntime().From(generic.ReflectionType, selection);
+
+            // if (generic is CLRType)
+            // {
+                return ILIntepreter.PushObject(__ret, mStack, result_of_this_method);
+            // }
+            // else
+            // {
+            //     // 转成ilrTypeInstance
+            //
+            //     var ilrInstance = result_of_this_method as ILTypeInstance;
+            //     return ILIntepreter.PushObject(__ret, mStack, ilrInstance);
+            // }
         }
 
         #endregion

@@ -296,16 +296,20 @@ namespace SQLite
         /// <returns></returns>
         public T From<T>(string selection = "*")
         {
-            var rets = this.Limit(1).FromAll<T>(selection);
+            var ret = From(typeof(T), selection);
+            return (T) ret;
+        }
+
+        public object From(Type type, string selection = "*")
+        {
+            var rets = this.Limit(1).FromAll(type,selection);
 
             if (rets.Count > 0)
             {
                 return rets[0];
             }
-
-            return default(T);
+            return null;
         }
-
 
         /// <summary>
         /// 查询所有的数据
@@ -316,7 +320,7 @@ namespace SQLite
         public List<T> FromAll<T>(string selection = "*")
         {
             //查询
-            var list = this.FormAll(typeof(T), selection);
+            var list = this.FromAll(typeof(T), selection);
 
             var retList = new List<T>(list.Count);
             //映射并返回T
@@ -338,7 +342,7 @@ namespace SQLite
         /// <param name="type"></param>
         /// <param name="selection"></param>
         /// <returns></returns>
-        public List<object> FormAll(Type type, string selection = "*")
+        public List<object> FromAll(Type type, string selection = "*")
         {
             var sqlCmdText = GenerateCommand(selection, type.Name);
 

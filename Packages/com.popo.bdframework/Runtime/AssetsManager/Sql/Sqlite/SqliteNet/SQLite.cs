@@ -3764,7 +3764,6 @@ namespace SQLite
 
             public int Index { get; set; }
         }
-
         object ReadCol(Sqlite3Statement stmt, int index, SQLite3.ColType type, Type clrType)
         {
             if (type == SQLite3.ColType.Null)
@@ -3773,6 +3772,12 @@ namespace SQLite
             }
             else
             {
+                //For ILR
+                if (clrType is ILRuntimeWrapperType iltype)
+                {
+                    clrType = iltype.RealType;
+                }
+                
                 if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
                     clrType = clrType.GenericTypeArguments[0];
