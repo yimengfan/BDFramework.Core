@@ -19,7 +19,8 @@ namespace BDFramework.Sql
     /// </summary>
     static public class SqliteLoder
     {
-        private static string testkey = "password";
+        private static string testkey = "password11222!";
+
         /// <summary>
         /// 本地DB Path
         /// </summary>
@@ -84,6 +85,9 @@ namespace BDFramework.Sql
             return IPath.Combine(root, BApplication.GetPlatformPath(platform), SERVER_DB_PATH);
         }
 
+
+#if UNITY_EDITOR
+
         #region Editor下加载
 
         /// <summary>
@@ -136,7 +140,28 @@ namespace BDFramework.Sql
             }
         }
 
+        /// <summary>
+        /// 删除数据库
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        static public string DeleteDBFile(string root, RuntimePlatform platform)
+        {
+            //用当前平台目录进行加载
+            var path = GetLocalDBPath(root, platform);
+
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            return path;
+        }
+
         #endregion
+
+#endif
     }
 
     /// <summary>

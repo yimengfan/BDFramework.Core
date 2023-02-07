@@ -52,6 +52,9 @@ namespace BDFramework.Editor.Table
         {
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnBeginBuildSqlite();
+            //删除旧的，重新创建
+            SqliteLoder.DeleteDBFile(ouptputPath, platform);
+            //
             var xlslFiles = ExcelEditorTools.GetAllExcelFiles();
             switch (dbType)
             {
