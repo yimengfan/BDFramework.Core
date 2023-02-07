@@ -19,6 +19,7 @@ namespace BDFramework.Sql
     /// </summary>
     static public class SqliteLoder
     {
+        private static string testkey = "password";
         /// <summary>
         /// 本地DB Path
         /// </summary>
@@ -47,7 +48,8 @@ namespace BDFramework.Sql
             path = GetLocalDBPath(path, BApplication.RuntimePlatform);
             if (File.Exists(path))
             {
-                Connection = new SQLiteConnection(path, SQLiteOpenFlags.ReadOnly);
+                SQLiteConnectionString cs = new SQLiteConnectionString(path, SQLiteOpenFlags.ReadOnly, true, key: testkey);
+                Connection = new SQLiteConnection(cs);
                 BDebug.Log("DB加载路径:" + path, "red");
             }
             else
@@ -128,7 +130,8 @@ namespace BDFramework.Sql
             if (Application.isEditor)
             {
                 //editor下 不在执行的时候，直接创建
-                Connection = new SQLiteConnection(sqlPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+                SQLiteConnectionString cs = new SQLiteConnectionString(sqlPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, true, key: testkey);
+                Connection = new SQLiteConnection(cs);
                 BDebug.Log("DB加载路径:" + sqlPath, "red");
             }
         }
@@ -394,7 +397,7 @@ namespace BDFramework.Sql
 
             // if (generic is CLRType)
             // {
-                return ILIntepreter.PushObject(__ret, mStack, result_of_this_method);
+            return ILIntepreter.PushObject(__ret, mStack, result_of_this_method);
             // }
             // else
             // {
