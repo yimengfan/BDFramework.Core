@@ -89,7 +89,12 @@ namespace SQLite
                 sqlCmdText = @sql;
             }
 
-
+            //重置状态
+            this.@where = "";
+            this.@sql = "";
+            this.@limit = "";
+            
+            
             return sqlCmdText;
         }
 
@@ -345,11 +350,11 @@ namespace SQLite
         public List<object> FromAll(Type type, string selection = "*")
         {
             var sqlCmdText = GenerateCommand(selection, type.Name);
-
 #if UNITY_EDITOR
             Debug.Log("sql:" + sqlCmdText);
 #endif
             List<object> retlist = null;
+            
             if (this.TRIGGER_CHACHE_NUM > 0 || this.TRIGGER_CHACHE_TIMER > 0)
             {
                 //判断是否在缓存中
@@ -383,8 +388,7 @@ namespace SQLite
                 retlist = cmd.ExecuteQueryForILR(type);
             }
 
-            //重置状态
-            this.Reset();
+
             return retlist;
         }
 
@@ -442,15 +446,6 @@ namespace SQLite
         }
 
         #endregion
-
-        /// <summary>
-        /// 重置
-        /// </summary>
-        private void Reset()
-        {
-            this.@where = "";
-            this.@sql = "";
-            this.@limit = "";
-        }
+        
     }
 }

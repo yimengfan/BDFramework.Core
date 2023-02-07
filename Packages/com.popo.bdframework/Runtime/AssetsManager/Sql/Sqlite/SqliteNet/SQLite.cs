@@ -39,6 +39,7 @@ using System.Threading;
 using BDFramework;
 using ILRuntime.Reflection;
 using LitJson;
+using MessagePack;
 using UnityEngine;
 using Utils.mslibEx;
 using Debug = System.Diagnostics.Debug;
@@ -3741,8 +3742,9 @@ namespace SQLite
                 //ForILR:数组当成json串存储,文档存储
                 else if (value.GetType().IsArray || value.GetType().FullName.Contains(".List"))
                 {
-                    var v = JsonMapper.ToJson(value);
-                    SQLite3.BindText(stmt, index, v, -1, NegativePointer);
+                    byte[] bytes = MessagePackSerializer.Serialize(value);
+                    
+                    SQLite3.BindBlob(stmt, index, bytes, bytes.Length, NegativePointer);
                 }
                 else
                 {
@@ -3915,98 +3917,60 @@ namespace SQLite
                     return new UriBuilder(text);
                 }
                 //ForILR:数组当成json串存储,文档存储
-                else if (clrType.IsArray)
+                else if (clrType.IsArray ||clrType.FullName.Contains(".List"))
                 {
-                    var text = SQLite3.ColumnString(stmt, index);
-                    return JsonMapper.ToObject(clrType, text);
-                    var strArray = text.Substring(1, text.Length - 2).Split(',');
-                    //建立数组容器
+                    var bytes = SQLite3.ColumnByteArray(stmt, index);
                     var elementType = clrType.GenericTypeArguments[0];
-                    var array = Array.CreateInstance(elementType, strArray.Length);
-                    for (int i = 0; i < strArray.Length; i++)
-                    {
-                        var eleValue = strArray[i];
 
+                    if (clrType.IsArray)
+                    {
                         if (elementType == typeof(int))
                         {
-                            var value = int.Parse(eleValue);
-                            array.SetValue(value, i);
+                            return MessagePackSerializer.Deserialize<int[]>(bytes);
                         }
                         else if (elementType == typeof(string))
                         {
-                            array.SetValue(eleValue, i);
-                            //UnityEngine.Debug.Log("array:" + eleValue);
+                            return MessagePackSerializer.Deserialize<string[]>(bytes);
                         }
                         else if (elementType == typeof(float))
                         {
-                            var value = float.Parse(eleValue);
-                            array.SetValue(value, i);
+                            return MessagePackSerializer.Deserialize<float[]>(bytes);
                         }
                         else if (elementType == typeof(bool))
                         {
-                            var value = bool.Parse(eleValue);
-                            array.SetValue(value, i);
+                            return MessagePackSerializer.Deserialize<bool[]>(bytes);
                         }
                         else if (elementType == typeof(double))
                         {
-                            var value = double.Parse(eleValue);
-                            array.SetValue(value, i);
-                        }
-                        else
-                        {
-                            array.SetValue(eleValue, i);
+                            return MessagePackSerializer.Deserialize<double[]>(bytes);
                         }
                     }
-
-
-                    return array;
-                }
-                else if (clrType.FullName.Contains(".List"))
-                {
+                    else
+                    {
+                        if (elementType == typeof(int))
+                        {
+                            return MessagePackSerializer.Deserialize<List<int>>(bytes);
+                        }
+                        else if (elementType == typeof(string))
+                        {
+                            return MessagePackSerializer.Deserialize<List<string>>(bytes);
+                        }
+                        else if (elementType == typeof(float))
+                        {
+                            return MessagePackSerializer.Deserialize<List<float>>(bytes);
+                        }
+                        else if (elementType == typeof(bool))
+                        {
+                            return MessagePackSerializer.Deserialize<List<bool>>(bytes);
+                        }
+                        else if (elementType == typeof(double))
+                        {
+                            return MessagePackSerializer.Deserialize<List<double>>(bytes);
+                        }
+                    }
                   
-                    var text = SQLite3.ColumnString(stmt, index);
-                    return JsonMapper.ToObject(clrType, text);
-                    
-                    var strArray = text.Substring(1, text.Length - 2).Split(',');
-                    //建立数组容器
-                    var elementType = clrType.GenericTypeArguments[0];
-                    var listType = typeof(List<>).MakeGenericType(elementType);
-                    var list = Activator.CreateInstance(listType, new object[] {strArray.Length}) as IList;
-                    for (int i = 0; i < strArray.Length; i++)
-                    {
-                        var eleValue = strArray[i];
 
-                        if (elementType == typeof(int))
-                        {
-                            var value = int.Parse(eleValue);
-                            list.Add(value);
-                        }
-                        else if (elementType == typeof(string))
-                        {
-                            list.Add(eleValue);
-                        }
-                        else if (elementType == typeof(float))
-                        {
-                            var value = float.Parse(eleValue);
-                            list.Add(value);
-                        }
-                        else if (elementType == typeof(bool))
-                        {
-                            var value = bool.Parse(eleValue);
-                            list.Add(value);
-                        }
-                        else if (elementType == typeof(double))
-                        {
-                            var value = double.Parse(eleValue);
-                            list.Add(value);
-                        }
-                        else
-                        {
-                            list.Add(eleValue);
-                        }
-                    }
-
-                    return list;
+                    return null;
                 }
                 else
                 {
