@@ -25,6 +25,7 @@
 #endif
 
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
@@ -2343,7 +2344,7 @@ namespace SQLite4Unity3d
                     SQLite3.BindText(stmt, index, ((Guid) value).ToString(), 72, NegativePointer);
                 }
                 //ForILR:数组当成json串存储,文档存储
-                else if (value.GetType().IsArray || value.GetType().FullName.Contains(".List"))
+                else if (value.GetType().IsArray || value.GetType() is IList)
                 {
                     var v = JsonMapper.ToJson(value);
                     SQLite3.BindText(stmt, index, v, -1, NegativePointer);
@@ -2457,9 +2458,10 @@ namespace SQLite4Unity3d
                     var text = SQLite3.ColumnString(stmt, index);
                     return new Guid(text);
                 }
-                else if (clrType.FullName.Contains(".List") || clrType.IsArray)
+                else if (clrType is IList || clrType.IsArray)
                 {
                     var text = SQLite3.ColumnString(stmt, index);
+                    //
                     return JsonMapper.ToObject(clrType, text);
                 }
                 else

@@ -3773,6 +3773,7 @@ namespace SQLite
 
             public int Index { get; set; }
         }
+
         object ReadCol(Sqlite3Statement stmt, int index, SQLite3.ColType type, Type clrType)
         {
             if (type == SQLite3.ColType.Null)
@@ -3786,8 +3787,7 @@ namespace SQLite
                 {
                     clrType = iltype.RealType;
                 }
-                
-                if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                else if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
                     clrType = clrType.GenericTypeArguments[0];
                 }
@@ -3915,10 +3915,98 @@ namespace SQLite
                     return new UriBuilder(text);
                 }
                 //ForILR:数组当成json串存储,文档存储
-                else if (clrType.FullName.Contains(".List") || clrType.IsArray)
+                else if (clrType.IsArray)
                 {
                     var text = SQLite3.ColumnString(stmt, index);
                     return JsonMapper.ToObject(clrType, text);
+                    var strArray = text.Substring(1, text.Length - 2).Split(',');
+                    //建立数组容器
+                    var elementType = clrType.GenericTypeArguments[0];
+                    var array = Array.CreateInstance(elementType, strArray.Length);
+                    for (int i = 0; i < strArray.Length; i++)
+                    {
+                        var eleValue = strArray[i];
+
+                        if (elementType == typeof(int))
+                        {
+                            var value = int.Parse(eleValue);
+                            array.SetValue(value, i);
+                        }
+                        else if (elementType == typeof(string))
+                        {
+                            array.SetValue(eleValue, i);
+                            //UnityEngine.Debug.Log("array:" + eleValue);
+                        }
+                        else if (elementType == typeof(float))
+                        {
+                            var value = float.Parse(eleValue);
+                            array.SetValue(value, i);
+                        }
+                        else if (elementType == typeof(bool))
+                        {
+                            var value = bool.Parse(eleValue);
+                            array.SetValue(value, i);
+                        }
+                        else if (elementType == typeof(double))
+                        {
+                            var value = double.Parse(eleValue);
+                            array.SetValue(value, i);
+                        }
+                        else
+                        {
+                            array.SetValue(eleValue, i);
+                        }
+                    }
+
+
+                    return array;
+                }
+                else if (clrType.FullName.Contains(".List"))
+                {
+                  
+                    var text = SQLite3.ColumnString(stmt, index);
+                    return JsonMapper.ToObject(clrType, text);
+                    
+                    var strArray = text.Substring(1, text.Length - 2).Split(',');
+                    //建立数组容器
+                    var elementType = clrType.GenericTypeArguments[0];
+                    var listType = typeof(List<>).MakeGenericType(elementType);
+                    var list = Activator.CreateInstance(listType, new object[] {strArray.Length}) as IList;
+                    for (int i = 0; i < strArray.Length; i++)
+                    {
+                        var eleValue = strArray[i];
+
+                        if (elementType == typeof(int))
+                        {
+                            var value = int.Parse(eleValue);
+                            list.Add(value);
+                        }
+                        else if (elementType == typeof(string))
+                        {
+                            list.Add(eleValue);
+                        }
+                        else if (elementType == typeof(float))
+                        {
+                            var value = float.Parse(eleValue);
+                            list.Add(value);
+                        }
+                        else if (elementType == typeof(bool))
+                        {
+                            var value = bool.Parse(eleValue);
+                            list.Add(value);
+                        }
+                        else if (elementType == typeof(double))
+                        {
+                            var value = double.Parse(eleValue);
+                            list.Add(value);
+                        }
+                        else
+                        {
+                            list.Add(eleValue);
+                        }
+                    }
+
+                    return list;
                 }
                 else
                 {
