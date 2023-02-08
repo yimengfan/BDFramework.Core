@@ -420,7 +420,7 @@ namespace SQLite
             DatabasePath = connectionString.DatabasePath;
 
             LibVersionNumber = SQLite3.LibVersionNumber();
-#if UNITY_EDITOR
+#if DEBUG
             if (Application.isPlaying)
             {
                 UnityEngine.Debug.Log($"Sqlite Ver: {LibVersionNumber}");
@@ -3198,10 +3198,9 @@ namespace SQLite
                 return "varchar(36)";
             }
             //ForILR 判断是否是list 或者array
-            else if (clrType.FullName.Contains("System.Collections.Generic.List") || clrType.IsArray)
+            else if (clrType.FullName.Contains(".List") || clrType.IsArray)
             {
-                //          Debug.Log("数组将以json形式保存:" + clrType.Name);
-                return "varchar(4000)";
+                return "blob";
             }
             else
             {
@@ -3418,7 +3417,7 @@ namespace SQLite
 
         public IEnumerable<T> ExecuteDeferredQuery<T>(TableMapping map, bool isILRuntime = false)
         {
-#if UNITY_EDITOR
+#if DEBUG
             Stopwatch sw = new Stopwatch();
             sw.Start();
 #endif
@@ -3470,7 +3469,7 @@ namespace SQLite
                 }
 
 
-#if UNITY_EDITOR
+#if DEBUG
                 sw.Stop();
                 var serchSqlTime = sw.ElapsedTicks / 10000f;
                 sw.Restart();
@@ -3511,7 +3510,7 @@ namespace SQLite
                     OnInstanceCreated(obj);
                     yield return (T) obj;
                 }
-#if UNITY_EDITOR
+#if DEBUG
                 sw.Stop();
                 var deSerializeTime = sw.ElapsedTicks / 10000f;
                 var total = serchSqlTime + deSerializeTime;
