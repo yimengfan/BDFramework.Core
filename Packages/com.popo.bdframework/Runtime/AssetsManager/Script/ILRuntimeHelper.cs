@@ -63,7 +63,9 @@ namespace BDFramework
             //开启debuger
             if (BDLauncher.Inst != null && BDLauncher.Inst.GameConfig.IsDebuggerILRuntime)
             {
+#if DEBUG
                 AppDomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
+#endif
                 AppDomain.DebugService.StartDebugService(56000);
                 Debug.Log("[ILRuntime]调试端口:56000");
             }

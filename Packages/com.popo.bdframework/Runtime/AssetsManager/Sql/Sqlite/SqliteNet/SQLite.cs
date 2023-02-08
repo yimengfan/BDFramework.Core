@@ -3920,33 +3920,34 @@ namespace SQLite
                 else if (clrType.IsArray ||clrType.FullName.Contains(".List"))
                 {
                     var bytes = SQLite3.ColumnByteArray(stmt, index);
-                    var elementType = clrType.GenericTypeArguments[0];
+                   
 
                     if (clrType.IsArray)
                     {
-                        if (elementType == typeof(int))
+                        if (clrType == typeof(int[]))
                         {
                             return MessagePackSerializer.Deserialize<int[]>(bytes);
                         }
-                        else if (elementType == typeof(string))
+                        else if (clrType == typeof(string[]))
                         {
                             return MessagePackSerializer.Deserialize<string[]>(bytes);
                         }
-                        else if (elementType == typeof(float))
+                        else if (clrType == typeof(float[]))
                         {
                             return MessagePackSerializer.Deserialize<float[]>(bytes);
                         }
-                        else if (elementType == typeof(bool))
+                        else if (clrType == typeof(bool[]))
                         {
                             return MessagePackSerializer.Deserialize<bool[]>(bytes);
                         }
-                        else if (elementType == typeof(double))
+                        else if (clrType == typeof(double[]))
                         {
                             return MessagePackSerializer.Deserialize<double[]>(bytes);
                         }
                     }
                     else
                     {
+                        var elementType = clrType.GenericTypeArguments[0];
                         if (elementType == typeof(int))
                         {
                             return MessagePackSerializer.Deserialize<List<int>>(bytes);

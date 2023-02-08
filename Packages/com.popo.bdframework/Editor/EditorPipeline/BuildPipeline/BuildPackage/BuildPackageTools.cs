@@ -7,6 +7,7 @@ using System.Linq;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Environment;
 using BDFramework.Editor.Tools;
+using BDFramework.Editor.Tools.RuntimeEditor;
 using BDFramework.ResourceMgr;
 using UnityEditor.SceneManagement;
 using Debug = UnityEngine.Debug;
@@ -115,7 +116,7 @@ namespace BDFramework.Editor.BuildPipeline
                 addPackageNameStr = "." + buildMode.ToString().ToLower();
             }
 
-            //不通模式的设置
+            //不同模式的设置
             switch (buildMode)
             {
                 case BuildMode.Debug:
@@ -302,7 +303,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //开始项目一键打包
-            string[] scenes = {SCENEPATH};
+            string[] scenes = { SCENEPATH };
             BuildOptions opa = BuildOptions.None;
             switch (mode)
             {
@@ -370,7 +371,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //开始项目一键打包
-            string[] scenes = {SCENEPATH};
+            string[] scenes = { SCENEPATH };
             BuildOptions opa = BuildOptions.None;
 
             switch (mode)
@@ -392,7 +393,7 @@ namespace BDFramework.Editor.BuildPipeline
             var plist = outputPath + "/Info.plist";
             Debug.Log("plist:" + plist);
             //append模式
-            if (File.Exists(plist) && Application.platform == RuntimePlatform.OSXEditor) 
+            if (File.Exists(plist) && Application.platform == RuntimePlatform.OSXEditor)
             {
                 opa = (opa | BuildOptions.AcceptExternalModificationsToPlayer);
                 Debug.Log("--->生成xcode,depend模式");
@@ -469,7 +470,7 @@ namespace BDFramework.Editor.BuildPipeline
 
 
             //开始项目一键打包
-            string[] scenes = {SCENEPATH};
+            string[] scenes = { SCENEPATH };
             BuildOptions opa = BuildOptions.None;
             switch (mode)
             {
@@ -571,14 +572,16 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 Directory.Delete(targetpath, true);
             }
-            
+
             //合并路径
-            var sourcepath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform)).ToLower();
+            var sourcepath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform))
+                .ToLower();
             targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform)).ToLower();
             //TODO SVN更新资源
 
             //TODO  重写拷贝逻辑
-            var files = Directory.GetFiles(sourcepath, "*", SearchOption.AllDirectories).Select((f)=> f.ToLower().Replace("\\","/"));
+            var files = Directory.GetFiles(sourcepath, "*", SearchOption.AllDirectories)
+                .Select((f) => f.ToLower().Replace("\\", "/"));
             foreach (var file in files)
             {
                 var fp = IPath.ReplaceBackSlash(file);
@@ -592,7 +595,7 @@ namespace BDFramework.Editor.BuildPipeline
                     //路径
                     else
                     {
-                        return fp.EndsWith("/"+blackstr, StringComparison.OrdinalIgnoreCase);
+                        return fp.EndsWith("/" + blackstr, StringComparison.OrdinalIgnoreCase);
                     }
                 });
                 if (ret != null)

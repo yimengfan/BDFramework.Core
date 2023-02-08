@@ -6,7 +6,7 @@ namespace BDFramework.Editor.Unity3dEx
     /// <summary>
     /// unity3d的editor扩展函数
     /// </summary>
-    static public class EditorEx
+    static public class Unity3dEditorEx
     {
         /// <summary>
         /// 添加宏
@@ -38,6 +38,29 @@ namespace BDFramework.Editor.Unity3dEx
 
                     PlayerSettings.SetScriptingDefineSymbolsForGroup(bt, str);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 移除宏
+        /// </summary>
+        /// <param name="symbol"></param>
+        public static void RemoveSymbols(string symbol)
+        {
+            //移除宏
+            foreach (var bt in BApplication.SupportBuildTargetGroups)
+            {
+                var symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(bt);
+                if (symbols.Contains(symbol + ";"))
+                {
+                    symbols = symbols.Replace(symbol + ";", "");
+                }
+                else if (symbols.Contains(symbol))
+                {
+                    symbols = symbols.Replace(symbol, "");
+                }
+
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(bt, symbols);
             }
         }
     }

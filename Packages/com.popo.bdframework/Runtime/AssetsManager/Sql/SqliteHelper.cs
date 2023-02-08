@@ -84,10 +84,7 @@ namespace BDFramework.Sql
         {
             return IPath.Combine(root, BApplication.GetPlatformPath(platform), SERVER_DB_PATH);
         }
-
-
-#if UNITY_EDITOR
-
+        
         #region Editor下加载
 
         /// <summary>
@@ -161,7 +158,7 @@ namespace BDFramework.Sql
 
         #endregion
 
-#endif
+
     }
 
     /// <summary>

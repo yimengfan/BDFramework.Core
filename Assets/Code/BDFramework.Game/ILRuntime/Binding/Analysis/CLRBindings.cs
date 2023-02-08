@@ -119,8 +119,8 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_KeyValuePair_2_Type_List_1_ILTypeInstance_Binding.Register(app);
             System_Reflection_MethodBase_Binding.Register(app);
             System_Exception_Binding.Register(app);
-            System_Collections_Generic_List_1_Double_Binding.Register(app);
             System_Collections_Generic_List_1_Single_Binding.Register(app);
+            System_Collections_Generic_List_1_Double_Binding.Register(app);
             System_Collections_Generic_List_1_Boolean_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
             System_Reflection_FieldInfo_Binding.Register(app);
