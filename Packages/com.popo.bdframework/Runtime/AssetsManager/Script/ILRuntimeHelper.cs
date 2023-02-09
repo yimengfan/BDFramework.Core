@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Sql;
+using ICSharpCode.SharpZipLib.Zip;
 using ILRuntime.Mono.Cecil.Pdb;
 using ILRuntime.Runtime;
 using ILRuntime.Runtime.Generated;
@@ -76,19 +77,21 @@ namespace BDFramework
         /// </summary>
         public static void Dispose()
         {
-            AppDomain = null;
-            IsRunning = false;
+            AppDomain.Dispose();
             if (fsDll != null)
             {
                 fsDll.Close();
                 fsDll.Dispose();
+                fsDll = null;
             }
-
             if (fsPdb != null)
             {
                 fsPdb.Close();
                 fsPdb.Dispose();
+                fsPdb = null;
             }
+            AppDomain = null;
+            IsRunning = false;
         }
 
         #region hotfix类型

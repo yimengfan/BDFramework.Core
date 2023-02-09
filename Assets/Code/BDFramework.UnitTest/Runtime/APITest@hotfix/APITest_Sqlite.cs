@@ -18,9 +18,7 @@ namespace BDFramework.UnitTest
         [UnitTest(des: "初始化数据库")]
         static public void Insert()
         {
-            //TODO 
-            //暂时热更内不支持创建插入操作
-            //该条测试可能会对后面有影响
+            //构造插入数据
             var insertList = new List<UniTestSqlite_AllType>();
             for (int i = 0; i < 10000; i++)
             {
@@ -28,20 +26,19 @@ namespace BDFramework.UnitTest
                 insertList.Add(t);
             }
 
-
             //创建测试db
             var dbpath = IPath.Combine(Application.persistentDataPath, dbname);
             SqliteLoder.LoadDBReadWriteCreate(dbpath);
-            //Drop table
-            SqliteHelper.GetDB(dbname).CreateTable<UniTestSqlite_AllType>();
-            SqliteHelper.GetDB(dbname).InsertTable(insertList);
+            if (!ILRuntimeHelper.IsRunning)
+            {
+                //Drop table
+                SqliteHelper.GetDB(dbname).CreateTable<UniTestSqlite_AllType>();
+                SqliteHelper.GetDB(dbname).InsertTable(insertList);
+            }
             var ret = SqliteHelper.GetDB(dbname).GetTableRuntime().FromAll<UniTestSqlite_AllType>();
-            Debug.Log($"<color=green>插入sql条目：{ret.Count}</color>");
-
-
+            Debug.Log($"<color=green>存在条目：{ret.Count}</color>");
             Assert.IsPass(true);
         }
-
 
         [UnitTest(des: "单条件查询")]
         static public void Select()
@@ -159,7 +156,8 @@ namespace BDFramework.UnitTest
         {
             Assert.StartWatch();
             BDebug.LogWatchBegin("order by");
-            var ds = SqliteHelper.GetDB(dbname).GetTableRuntime().Where("Id >= 0").OrderBy("Id").FromAll<UniTestSqlite_AllType>();
+            var ds = SqliteHelper.GetDB(dbname).GetTableRuntime().Where("Id >= 0").OrderBy("Id")
+                .FromAll<UniTestSqlite_AllType>();
             BDebug.LogWatchEnd("order by");
             var time = Assert.StopWatch();
 
@@ -181,6 +179,8 @@ namespace BDFramework.UnitTest
         static public void Close()
         {
             SqliteLoder.Close(dbname);
+            var dbpath = IPath.Combine(Application.persistentDataPath, dbname);
+            // File.Delete(dbpath);
         }
     }
 }

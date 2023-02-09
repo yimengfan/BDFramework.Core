@@ -25,17 +25,6 @@ namespace SQLite
 
         #endregion
 
-        /// <summary>
-        /// sql缓存的触发次数
-        /// 不能为0
-        /// </summary>
-        private int TRIGGER_CHACHE_NUM = 5;
-
-        /// <summary>
-        /// sql缓存触发消耗时间
-        /// 不能为0
-        /// </summary>
-        private float TRIGGER_CHACHE_TIMER = 0.05f;
 
         /// <summary>
         /// 构造函数
@@ -54,12 +43,9 @@ namespace SQLite
         /// <param name="triggerChacheTimer"></param>
         public void EnableSqlCahce(int triggerCacheNum = 5, float triggerChacheTimer = 0.05f)
         {
-            this.TRIGGER_CHACHE_NUM = triggerCacheNum;
-            this.TRIGGER_CHACHE_TIMER = triggerChacheTimer;
         }
 
         #region 生成sql cmd
-
         private string GenerateCommand(string @select, string tablename)
         {
             string sqlCmdText = "";
@@ -90,11 +76,12 @@ namespace SQLite
             }
 
             //重置状态
-            this.@where = "";
             this.@sql = "";
             this.@limit = "";
+            this.@where = "";
             
-            
+
+
             return sqlCmdText;
         }
 
@@ -302,17 +289,18 @@ namespace SQLite
         public T From<T>(string selection = "*")
         {
             var ret = From(typeof(T), selection);
-            return (T) ret;
+            return (T)ret;
         }
 
         public object From(Type type, string selection = "*")
         {
-            var rets = this.Limit(1).FromAll(type,selection);
+            var rets = this.Limit(1).FromAll(type, selection);
 
             if (rets.Count > 0)
             {
                 return rets[0];
             }
+
             return null;
         }
 
@@ -339,8 +327,7 @@ namespace SQLite
 
             return retList;
         }
-
-
+        
         /// <summary>
         /// 非泛型方法
         /// </summary>
@@ -353,99 +340,12 @@ namespace SQLite
 #if UNITY_EDITOR
             Debug.Log("sql:" + sqlCmdText);
 #endif
-            List<object> retlist = null;
-            
-            if (this.TRIGGER_CHACHE_NUM > 0 || this.TRIGGER_CHACHE_TIMER > 0)
-            {
-                //判断是否在缓存中
-                var ret = sqlResultCacheMap.TryGetValue(sqlCmdText, out retlist);
-                if (!ret)
-                {
-                    var st = Time.realtimeSinceStartup;
-                    //查询
-                    {
-                        var cmd = this.Connection.CreateCommand(sqlCmdText);
-                        retlist = cmd.ExecuteQueryForILR(type);
-                    }
-                    //缓存判断
-
-                    var intelval = Time.realtimeSinceStartup - st;
-                    var counter = GetSqlExecCount(sqlCmdText);
-                    if (counter >= this.TRIGGER_CHACHE_NUM || intelval >= this.TRIGGER_CHACHE_TIMER)
-                    {
-                        this.AddSqlCache(sqlCmdText, retlist);
-                    }
-                    else
-                    {
-                        this.AddSqlExecCounter(sqlCmdText, counter);
-                    }
-                }
-            }
-            else
-            {
-                //查询
-                var cmd = this.Connection.CreateCommand(sqlCmdText);
-                retlist = cmd.ExecuteQueryForILR(type);
-            }
-
-
+            //查询
+            var cmd = this.Connection.CreateCommand(sqlCmdText);
+            var retlist = cmd.ExecuteQueryForILR(type);
             return retlist;
         }
 
         #endregion
-
-        #region 缓存
-
-        /// <summary>
-        /// 缓存列表
-        /// </summary>
-        public Dictionary<string, List<object>> sqlResultCacheMap = new Dictionary<string, List<object>>();
-
-        /// <summary>
-        /// 添加sql缓存
-        /// </summary>
-        /// <param name="cmd"></param>
-        /// <param name="ret"></param>
-        public void AddSqlCache(string cmd, List<object> ret)
-        {
-            sqlResultCacheMap[cmd] = ret;
-
-            BDebug.Log("【添加缓存】 " + cmd);
-        }
-
-        /// <summary>
-        /// 缓存列表
-        /// </summary>
-        public Dictionary<string, int> sqlExecCounterMap = new Dictionary<string, int>();
-
-        /// <summary>
-        /// 获取sql执行次数
-        /// </summary>
-        /// <param name="cmd"></param>
-        /// <returns></returns>
-        private int GetSqlExecCount(string cmd)
-        {
-            int counter = 0;
-            var ret = sqlExecCounterMap.TryGetValue(cmd, out counter);
-            if (!ret)
-            {
-                sqlExecCounterMap[cmd] = 0;
-            }
-
-            return counter;
-        }
-
-        /// <summary>
-        /// 增加sql exec次数
-        /// </summary>
-        /// <param name="cmd"></param>
-        /// <param name="counter"></param>
-        private void AddSqlExecCounter(string cmd, int counter = 0)
-        {
-            sqlExecCounterMap[cmd] = counter + 1;
-        }
-
-        #endregion
-        
     }
 }

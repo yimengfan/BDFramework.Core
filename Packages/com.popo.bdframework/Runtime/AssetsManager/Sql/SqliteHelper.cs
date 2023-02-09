@@ -84,7 +84,8 @@ namespace BDFramework.Sql
         static public SQLiteConnection LoadDBReadWriteCreate(string path)
         {
             BDebug.Log("DB加载路径:" + path, "red");
-            SQLiteConnectionString cs = new SQLiteConnectionString(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, true, key: testkey);
+            SQLiteConnectionString cs = new SQLiteConnectionString(path,
+                SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, true, key: testkey);
             var con = new SQLiteConnection(cs);
             SqLiteConnectionMap[Path.GetFileNameWithoutExtension(path)] = con;
             return con;
@@ -234,7 +235,7 @@ namespace BDFramework.Sql
             public SQLiteService(SQLiteConnection con)
             {
                 this.Connection = con;
-                this.tableRuntime = new TableQueryForILRuntime(this.Connection);
+                this._ilRuntimeTable = new TableQueryForILRuntime(this.Connection);
             }
 
             /// <summary>
@@ -261,8 +262,7 @@ namespace BDFramework.Sql
             /// <typeparam name="T"></typeparam>
             public void CreateTable<T>()
             {
-                Connection.DropTable<T>();
-                Connection.CreateTable<T>();
+                CreateTable(typeof(T));
             }
 
             /// <summary>
@@ -315,16 +315,19 @@ namespace BDFramework.Sql
 
             #endregion
 
-            #region 二次封装的表格操作 for ILRuntime
+            #region for ILRuntime
 
-            private TableQueryForILRuntime tableRuntime;
+            /// <summary>
+            /// ILRuntime的table
+            /// </summary>
+            private TableQueryForILRuntime _ilRuntimeTable;
 
             /// <summary>
             /// 获取TableRuntime
             /// </summary>
-            public TableQueryForILRuntime TableRuntime
+            public TableQueryForILRuntime ILRuntimeTable
             {
-                get { return tableRuntime; }
+                get { return _ilRuntimeTable; }
             }
 
             /// <summary>
@@ -334,7 +337,7 @@ namespace BDFramework.Sql
             /// <returns></returns>
             public TableQueryForILRuntime GetTableRuntime()
             {
-                return tableRuntime;
+                return _ilRuntimeTable;
             }
 
             #endregion
@@ -352,15 +355,21 @@ namespace BDFramework.Sql
         {
             get
             {
-                if (dbservice == null || dbservice.IsClose)
+                if (dbservice == null || dbservice.IsClose) //防止持有未关闭的db connect
                 {
-                    dbservice = new SQLiteService(SqliteLoder.Connection);
+                    if (SqliteLoder.Connection.IsOpen)
+                    {
+                        dbservice = new SQLiteService(SqliteLoder.Connection);
+                    }
                 }
 
                 return dbservice;
             }
         }
 
+        /// <summary>
+        /// db map
+        /// </summary>
         private static Dictionary<string, SQLiteService> DBServiceMap = new Dictionary<string, SQLiteService>();
 
         /// <summary>
@@ -371,26 +380,19 @@ namespace BDFramework.Sql
         static public SQLiteService GetDB(string dbName)
         {
             SQLiteService db = null;
-            if (!DBServiceMap.TryGetValue(dbName, out db))
+            if (!DBServiceMap.TryGetValue(dbName, out db) || db.IsClose) //防止持有未关闭的db connect
             {
                 var con = SqliteLoder.GetSqliteConnect(dbName);
-                db = new SQLiteService(con);
-                DBServiceMap[dbName] = db;
+                if (con.IsOpen)
+                {
+                    db = new SQLiteService(con);
+                    DBServiceMap[dbName] = db;
+                }
             }
 
             return db;
         }
 
-
-        /// <summary>
-        /// 设置sql 缓存触发参数
-        /// </summary>
-        /// <param name="triggerCacheNum"></param>
-        /// <param name="triggerChacheTimer"></param>
-        static public void SetSqlCacheTrigger(int triggerCacheNum = 5, float triggerChacheTimer = 0.05f)
-        {
-            DB.TableRuntime.EnableSqlCahce(triggerCacheNum, triggerChacheTimer);
-        }
 
         #region ILRuntime 重定向
 
@@ -400,7 +402,7 @@ namespace BDFramework.Sql
         /// <param name="appdomain"></param>
         public unsafe static void RegisterCLRRedirection(ILRuntime.Runtime.Enviorment.AppDomain appdomain)
         {
-            //from all
+            //tableRuntime 绑定
             foreach (var mi in typeof(TableQueryForILRuntime).GetMethods())
             {
                 if (mi.Name == "FromAll" && mi.IsGenericMethodDefinition && mi.GetParameters().Length == 1)
@@ -412,7 +414,19 @@ namespace BDFramework.Sql
                     appdomain.RegisterCLRMethodRedirection(mi, RedirFrom);
                 }
             }
+
+
+            //service绑定
+            foreach (var mi in typeof(SQLiteService).GetMethods())
+            {
+                if (mi.Name == "CreateTable" && mi.GetParameters().Length == 0)
+                {
+                    appdomain.RegisterCLRMethodRedirection(mi, RedirCreateTable);
+                    break;
+                }
+            }
         }
+
 
         /// <summary>
         /// FromAll的重定向
@@ -423,21 +437,24 @@ namespace BDFramework.Sql
         /// <param name="method"></param>
         /// <param name="isNewObj"></param>
         /// <returns></returns>
-        public unsafe static StackObject* RedirFromAll(ILIntepreter intp, StackObject* esp, IList<object> mStack,
+        unsafe static StackObject* RedirFromAll(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack,
             CLRMethod method, bool isNewObj)
         {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = intp.AppDomain;
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(esp, 1);
-            //
-            System.String selection =
-                (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain,
-                    mStack));
-            intp.Free(ptr_of_this_method);
-            var generic = method.GenericArguments[0];
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.String @selection = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
+            __intp.Free(ptr_of_this_method);
+
             //调用
-            var result_of_this_method = DB.GetTableRuntime().FromAll(generic.ReflectionType, selection);
+            var generic = method.GenericArguments[0];
+            var result_of_this_method = instance_of_this_method.FromAll(generic.ReflectionType, selection);
 
             if (generic is CLRType)
             {
@@ -452,7 +469,7 @@ namespace BDFramework.Sql
                     retList.Add(obj);
                 }
 
-                return ILIntepreter.PushObject(__ret, mStack, retList);
+                return ILIntepreter.PushObject(__ret, __mStack, retList);
             }
             else
             {
@@ -464,7 +481,7 @@ namespace BDFramework.Sql
                     retList.Add(hotfixObj);
                 }
 
-                return ILIntepreter.PushObject(__ret, mStack, retList);
+                return ILIntepreter.PushObject(__ret, __mStack, retList);
             }
         }
 
@@ -478,25 +495,28 @@ namespace BDFramework.Sql
         /// <param name="method"></param>
         /// <param name="isNewObj"></param>
         /// <returns></returns>
-        public unsafe static StackObject* RedirFrom(ILIntepreter intp, StackObject* esp, IList<object> mStack,
+        unsafe static StackObject* RedirFrom(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack,
             CLRMethod method, bool isNewObj)
         {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = intp.AppDomain;
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(esp, 1);
-            //
-            System.String selection =
-                (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain,
-                    mStack));
-            intp.Free(ptr_of_this_method);
-            var generic = method.GenericArguments[0];
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.String @selection = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
+            __intp.Free(ptr_of_this_method);
+            
             //调用
-            var result_of_this_method = DB.GetTableRuntime().From(generic.ReflectionType, selection);
+            var generic = method.GenericArguments[0];
+            var result_of_this_method = instance_of_this_method.From(generic.ReflectionType, selection);
 
             // if (generic is CLRType)
             // {
-            return ILIntepreter.PushObject(__ret, mStack, result_of_this_method);
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
             // }
             // else
             // {
@@ -505,6 +525,24 @@ namespace BDFramework.Sql
             //     var ilrInstance = result_of_this_method as ILTypeInstance;
             //     return ILIntepreter.PushObject(__ret, mStack, ilrInstance);
             // }
+        }
+
+
+        unsafe static StackObject* RedirCreateTable(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack,
+            CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            SQLiteService instance_of_this_method = (SQLiteService)typeof(SQLiteService).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (ILRuntime.CLR.Utils.Extensions.TypeFlags)0);
+            __intp.Free(ptr_of_this_method);
+
+            var generic = __method.GenericArguments[0];
+            instance_of_this_method.CreateTable(generic.ReflectionType);
+
+            return __ret;
         }
 
         #endregion

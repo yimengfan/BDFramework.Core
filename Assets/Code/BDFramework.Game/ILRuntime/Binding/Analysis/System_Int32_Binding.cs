@@ -29,6 +29,8 @@ namespace ILRuntime.Runtime.Generated
             method = type.GetMethod("CompareTo", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, CompareTo_1);
 
+            app.RegisterCLRCreateArrayInstance(type, s => new System.Int32[s]);
+
 
         }
 

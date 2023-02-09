@@ -32,6 +32,7 @@ namespace ILRuntime.Runtime.Generated
             System_Action_1_String_Binding.Register(app);
             System_Action_2_Int32_Int32_Binding.Register(app);
             UnityEngine_Debug_Binding.Register(app);
+            BDFramework_ILRuntimeHelper_Binding.Register(app);
             System_Collections_Generic_List_1_Int32_Binding.Register(app);
             BDFramework_Sql_SqliteHelper_Binding.Register(app);
             BDFramework_Sql_SqliteHelper_Binding_SQLiteService_Binding.Register(app);
@@ -70,7 +71,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_Type_Binding.Register(app);
             System_Reflection_Assembly_Binding.Register(app);
             System_Linq_Enumerable_Binding.Register(app);
-            BDFramework_ILRuntimeHelper_Binding.Register(app);
             System_Reflection_MemberInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Type_Binding.Register(app);
             BDFramework_Mgr_ManagerInstHelper_Binding.Register(app);
@@ -109,7 +109,7 @@ namespace ILRuntime.Runtime.Generated
             Google_Protobuf_MessageParser_1_rsp_getItem_Binding.Register(app);
             System_IO_MemoryStream_Binding.Register(app);
             System_IO_Stream_Binding.Register(app);
-            BDFramework_Core_Tools_BApplication_Binding.Register(app);
+            System_IO_IPath_Binding.Register(app);
             BDFramework_Sql_SqliteLoder_Binding.Register(app);
             System_Diagnostics_Stopwatch_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding.Register(app);
@@ -119,9 +119,13 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_KeyValuePair_2_Type_List_1_ILTypeInstance_Binding.Register(app);
             System_Reflection_MethodBase_Binding.Register(app);
             System_Exception_Binding.Register(app);
+            BDFramework_Core_Tools_BApplication_Binding.Register(app);
             System_Collections_Generic_List_1_Single_Binding.Register(app);
             System_Collections_Generic_List_1_Double_Binding.Register(app);
             System_Collections_Generic_List_1_Boolean_Binding.Register(app);
+            System_Single_Binding.Register(app);
+            System_Double_Binding.Register(app);
+            System_Boolean_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
             System_Reflection_FieldInfo_Binding.Register(app);
             System_Action_Binding.Register(app);

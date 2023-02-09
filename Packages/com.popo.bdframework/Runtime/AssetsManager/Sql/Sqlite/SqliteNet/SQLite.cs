@@ -38,6 +38,7 @@ using System.Text;
 using System.Threading;
 using BDFramework;
 using ILRuntime.Reflection;
+using ILRuntime.Runtime.Intepreter;
 using LitJson;
 using MessagePack;
 using UnityEngine;
@@ -2843,8 +2844,10 @@ namespace SQLite
         private IReadOnlyCollection<MemberInfo> GetPublicMembers(Type type)
         {
             if (type.Name.StartsWith("ValueTuple`"))
+            {
                 return GetFieldsFromValueTuple(type);
-
+            }
+            
             var members = new List<MemberInfo>();
             var memberNames = new HashSet<string>();
             var newMembers = new List<MemberInfo>();
@@ -3153,6 +3156,11 @@ namespace SQLite
         public static string SqlType(TableMapping.Column p, bool storeDateTimeAsTicks, bool storeTimeSpanAsTicks)
         {
             var clrType = p.ColumnType;
+            if (clrType is ILRuntimeWrapperType ilrtype)
+            {
+                clrType = ilrtype.RealType;
+            }
+            
             if (clrType == typeof(Boolean) || clrType == typeof(Byte) || clrType == typeof(UInt16) || clrType == typeof(SByte) || clrType == typeof(Int16) || clrType == typeof(Int32) || clrType == typeof(UInt32) || clrType == typeof(Int64))
             {
                 return "integer";
