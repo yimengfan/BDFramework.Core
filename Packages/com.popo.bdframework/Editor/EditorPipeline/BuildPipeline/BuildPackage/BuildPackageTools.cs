@@ -33,7 +33,8 @@ namespace BDFramework.Editor.BuildPipeline
             Release,
 
             /// <summary>
-            /// Release for profiler
+            /// Release for profiler，
+            /// Release编译但是开启
             /// </summary>
             Profiler,
         }

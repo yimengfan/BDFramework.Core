@@ -3433,7 +3433,7 @@ namespace SQLite
 
         public IEnumerable<T> ExecuteDeferredQuery<T>(TableMapping map, bool isILRuntime = false)
         {
-#if DEBUG
+#if ENABLE_BDEBUG
             Stopwatch sw = new Stopwatch();
             sw.Start();
 #endif
@@ -3485,7 +3485,7 @@ namespace SQLite
                 }
 
 
-#if DEBUG
+#if ENABLE_BDEBUG
                 sw.Stop();
                 var serchSqlTime = sw.ElapsedTicks / 10000f;
                 sw.Restart();
@@ -3494,6 +3494,7 @@ namespace SQLite
                 //反序列化
                 while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                 {
+                    count++;
                     object obj = null;
                     //For ILR
                     if (isILRuntime)
@@ -3522,11 +3523,11 @@ namespace SQLite
                         }
                     }
 
-                    count++;
+                   
                     OnInstanceCreated(obj);
                     yield return (T) obj;
                 }
-#if DEBUG
+#if ENABLE_BDEBUG
                 sw.Stop();
                 var deSerializeTime = sw.ElapsedTicks / 10000f;
                 var total = serchSqlTime + deSerializeTime;
