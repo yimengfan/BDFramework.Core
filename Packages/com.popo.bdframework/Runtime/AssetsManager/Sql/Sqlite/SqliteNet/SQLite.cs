@@ -2797,7 +2797,7 @@ namespace SQLite
                         .FirstOrDefault();
 #endif
             }
-
+            
 
             TableName = (tableAttr != null && !string.IsNullOrEmpty(tableAttr.Name)) ? tableAttr.Name : MappedType.Name;
             WithoutRowId = tableAttr != null ? tableAttr.WithoutRowId : false;
@@ -3115,15 +3115,23 @@ namespace SQLite
 
         public static Type GetType(object obj)
         {
-            if (obj == null)
-                return typeof(object);
-            var rt = obj as IReflectableType;
-            if (rt != null)
+            if (obj is ILTypeInstance ilInst)
             {
-                return rt.GetTypeInfo().AsType();
+                return ilInst.Type.ReflectionType;
+            }
+            else
+            {
+                if (obj == null)
+                    return typeof(object);
+                var rt = obj as IReflectableType;
+                if (rt != null)
+                {
+                    return rt.GetTypeInfo().AsType();
+                }
+
+                return obj.GetType();
             }
 
-            return obj.GetType();
         }
 
         public static string SqlDecl(TableMapping.Column p, bool storeDateTimeAsTicks, bool storeTimeSpanAsTicks)

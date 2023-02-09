@@ -29,14 +29,14 @@ namespace BDFramework.UnitTest
             //创建测试db
             var dbpath = IPath.Combine(Application.persistentDataPath, dbname);
             SqliteLoder.LoadDBReadWriteCreate(dbpath);
-            if (!ILRuntimeHelper.IsRunning)
+            //if (!ILRuntimeHelper.IsRunning)
             {
                 //Drop table
                 SqliteHelper.GetDB(dbname).CreateTable<UniTestSqlite_AllType>();
                 SqliteHelper.GetDB(dbname).InsertTable(insertList);
             }
             var ret = SqliteHelper.GetDB(dbname).GetTableRuntime().FromAll<UniTestSqlite_AllType>();
-            Debug.Log($"<color=green>存在条目：{ret.Count}</color>");
+            Debug.Log($"<color=yellow>插入条目：{ret.Count}</color>");
             Assert.IsPass(true);
         }
 
