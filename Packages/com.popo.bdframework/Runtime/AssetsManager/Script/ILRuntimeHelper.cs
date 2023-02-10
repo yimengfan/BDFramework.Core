@@ -4,11 +4,9 @@ using System.IO;
 using System.Linq;
 using BDFramework.Sql;
 using ILRuntime.Mono.Cecil.Pdb;
-using ILRuntime.Runtime;
 using ILRuntime.Runtime.Generated;
 using LitJson;
 using UnityEngine;
-using UnityEngine.Networking;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
 
@@ -63,7 +61,9 @@ namespace BDFramework
             //开启debuger
             if (BDLauncher.Inst != null && BDLauncher.Inst.GameConfig.IsDebuggerILRuntime)
             {
+#if DEBUG
                 AppDomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
+#endif
                 AppDomain.DebugService.StartDebugService(56000);
                 Debug.Log("[ILRuntime]调试端口:56000");
             }
@@ -74,19 +74,21 @@ namespace BDFramework
         /// </summary>
         public static void Dispose()
         {
-            AppDomain = null;
-            IsRunning = false;
+            AppDomain.Dispose();
             if (fsDll != null)
             {
                 fsDll.Close();
                 fsDll.Dispose();
+                fsDll = null;
             }
-
             if (fsPdb != null)
             {
                 fsPdb.Close();
                 fsPdb.Dispose();
+                fsPdb = null;
             }
+            AppDomain = null;
+            IsRunning = false;
         }
 
         #region hotfix类型

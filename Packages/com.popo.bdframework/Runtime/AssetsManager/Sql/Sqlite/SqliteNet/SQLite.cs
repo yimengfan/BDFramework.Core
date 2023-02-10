@@ -38,6 +38,7 @@ using System.Text;
 using System.Threading;
 using BDFramework;
 using ILRuntime.Reflection;
+using ILRuntime.Runtime.Intepreter;
 using LitJson;
 using MessagePack;
 using UnityEngine;
@@ -420,7 +421,7 @@ namespace SQLite
             DatabasePath = connectionString.DatabasePath;
 
             LibVersionNumber = SQLite3.LibVersionNumber();
-#if UNITY_EDITOR
+#if DEBUG
             if (Application.isPlaying)
             {
                 UnityEngine.Debug.Log($"Sqlite Ver: {LibVersionNumber}");
@@ -2796,7 +2797,7 @@ namespace SQLite
                         .FirstOrDefault();
 #endif
             }
-
+            
 
             TableName = (tableAttr != null && !string.IsNullOrEmpty(tableAttr.Name)) ? tableAttr.Name : MappedType.Name;
             WithoutRowId = tableAttr != null ? tableAttr.WithoutRowId : false;
@@ -2843,8 +2844,10 @@ namespace SQLite
         private IReadOnlyCollection<MemberInfo> GetPublicMembers(Type type)
         {
             if (type.Name.StartsWith("ValueTuple`"))
+            {
                 return GetFieldsFromValueTuple(type);
-
+            }
+            
             var members = new List<MemberInfo>();
             var memberNames = new HashSet<string>();
             var newMembers = new List<MemberInfo>();
@@ -3112,15 +3115,23 @@ namespace SQLite
 
         public static Type GetType(object obj)
         {
-            if (obj == null)
-                return typeof(object);
-            var rt = obj as IReflectableType;
-            if (rt != null)
+            if (obj is ILTypeInstance ilInst)
             {
-                return rt.GetTypeInfo().AsType();
+                return ilInst.Type.ReflectionType;
+            }
+            else
+            {
+                if (obj == null)
+                    return typeof(object);
+                var rt = obj as IReflectableType;
+                if (rt != null)
+                {
+                    return rt.GetTypeInfo().AsType();
+                }
+
+                return obj.GetType();
             }
 
-            return obj.GetType();
         }
 
         public static string SqlDecl(TableMapping.Column p, bool storeDateTimeAsTicks, bool storeTimeSpanAsTicks)
@@ -3153,6 +3164,11 @@ namespace SQLite
         public static string SqlType(TableMapping.Column p, bool storeDateTimeAsTicks, bool storeTimeSpanAsTicks)
         {
             var clrType = p.ColumnType;
+            if (clrType is ILRuntimeWrapperType ilrtype)
+            {
+                clrType = ilrtype.RealType;
+            }
+            
             if (clrType == typeof(Boolean) || clrType == typeof(Byte) || clrType == typeof(UInt16) || clrType == typeof(SByte) || clrType == typeof(Int16) || clrType == typeof(Int32) || clrType == typeof(UInt32) || clrType == typeof(Int64))
             {
                 return "integer";
@@ -3198,10 +3214,9 @@ namespace SQLite
                 return "varchar(36)";
             }
             //ForILR 判断是否是list 或者array
-            else if (clrType.FullName.Contains("System.Collections.Generic.List") || clrType.IsArray)
+            else if (clrType.FullName.Contains(".List") || clrType.IsArray)
             {
-                //          Debug.Log("数组将以json形式保存:" + clrType.Name);
-                return "varchar(4000)";
+                return "blob";
             }
             else
             {
@@ -3418,7 +3433,7 @@ namespace SQLite
 
         public IEnumerable<T> ExecuteDeferredQuery<T>(TableMapping map, bool isILRuntime = false)
         {
-#if UNITY_EDITOR
+#if ENABLE_BDEBUG
             Stopwatch sw = new Stopwatch();
             sw.Start();
 #endif
@@ -3470,7 +3485,7 @@ namespace SQLite
                 }
 
 
-#if UNITY_EDITOR
+#if ENABLE_BDEBUG
                 sw.Stop();
                 var serchSqlTime = sw.ElapsedTicks / 10000f;
                 sw.Restart();
@@ -3479,6 +3494,7 @@ namespace SQLite
                 //反序列化
                 while (SQLite3.Step(stmt) == SQLite3.Result.Row)
                 {
+                    count++;
                     object obj = null;
                     //For ILR
                     if (isILRuntime)
@@ -3507,11 +3523,11 @@ namespace SQLite
                         }
                     }
 
-                    count++;
+                   
                     OnInstanceCreated(obj);
                     yield return (T) obj;
                 }
-#if UNITY_EDITOR
+#if ENABLE_BDEBUG
                 sw.Stop();
                 var deSerializeTime = sw.ElapsedTicks / 10000f;
                 var total = serchSqlTime + deSerializeTime;
@@ -3920,33 +3936,34 @@ namespace SQLite
                 else if (clrType.IsArray ||clrType.FullName.Contains(".List"))
                 {
                     var bytes = SQLite3.ColumnByteArray(stmt, index);
-                    var elementType = clrType.GenericTypeArguments[0];
+                   
 
                     if (clrType.IsArray)
                     {
-                        if (elementType == typeof(int))
+                        if (clrType == typeof(int[]))
                         {
                             return MessagePackSerializer.Deserialize<int[]>(bytes);
                         }
-                        else if (elementType == typeof(string))
+                        else if (clrType == typeof(string[]))
                         {
                             return MessagePackSerializer.Deserialize<string[]>(bytes);
                         }
-                        else if (elementType == typeof(float))
+                        else if (clrType == typeof(float[]))
                         {
                             return MessagePackSerializer.Deserialize<float[]>(bytes);
                         }
-                        else if (elementType == typeof(bool))
+                        else if (clrType == typeof(bool[]))
                         {
                             return MessagePackSerializer.Deserialize<bool[]>(bytes);
                         }
-                        else if (elementType == typeof(double))
+                        else if (clrType == typeof(double[]))
                         {
                             return MessagePackSerializer.Deserialize<double[]>(bytes);
                         }
                     }
                     else
                     {
+                        var elementType = clrType.GenericTypeArguments[0];
                         if (elementType == typeof(int))
                         {
                             return MessagePackSerializer.Deserialize<List<int>>(bytes);

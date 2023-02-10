@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BDFramework;
 using BDFramework.Sql;
 using UnityEngine;
 using BDFramework.UI;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 using BDFramework.ScreenView;
 using BDFramework.ResourceMgr;
 using BDFramework.UFlux;
+using BDFramework.UnitTest;
 using BDFramework.VersionController;
 using Game;
 using Game.Data.Local;
@@ -35,7 +37,18 @@ public class Window_DemoMain : AWindow
     {
         base.Init();
     }
-
+    [ButtonOnclick("Grid/btn_UnitTest")]
+    private void btn_UnitTest()
+    {
+        if (ILRuntimeHelper.IsRunning)
+        {
+            TestRunner.RunHotfixUnitTest();
+        }
+        else
+        {
+            TestRunner.RunMonoCLRUnitTest();
+        }
+    }
 
     [ButtonOnclick("Grid/btn_1")]
     private void btn_01()

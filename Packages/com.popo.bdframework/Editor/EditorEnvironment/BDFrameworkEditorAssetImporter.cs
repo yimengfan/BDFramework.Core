@@ -91,7 +91,7 @@ namespace BDFramework.Editor.Environment
             {
                 if (impoter.Contains("Sirenix.OdinInspector.Attributes.dll"))
                 {
-                    EditorEx.AddSymbols("ODIN_INSPECTOR");
+                    Unity3dEditorEx.AddSymbols("ODIN_INSPECTOR");
 
                     break;
                 }

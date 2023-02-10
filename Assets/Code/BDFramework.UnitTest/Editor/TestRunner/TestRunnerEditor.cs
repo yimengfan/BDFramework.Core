@@ -66,8 +66,10 @@ namespace BDFramework.Editor.TestRunner
             {
                 Debug.LogError(e.Message);
             }
-          
             ILRuntimeHelper.Dispose();
+            //清理当前appdomian 数据
+            var path = AssetDatabase.GUIDToAssetPath("2b7a02d2757164147959db0911d95ce6");
+            AssetDatabase.ImportAsset(path);
         }
 
         /// <summary>
