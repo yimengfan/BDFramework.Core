@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using BDFramework.Configure;
 using BDFramework.ResourceMgr.V2;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgrV2;

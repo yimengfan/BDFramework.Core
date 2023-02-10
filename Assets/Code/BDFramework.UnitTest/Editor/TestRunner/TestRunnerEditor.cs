@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using DG.Tweening.Plugins.Core.PathCore;
 using Game.ILRuntime;

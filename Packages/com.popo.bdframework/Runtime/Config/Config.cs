@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using LitJson;
 using Sirenix.OdinInspector;
@@ -14,151 +15,6 @@ using UnityEditor.SceneManagement;
 
 namespace BDFramework
 {
-    public enum AssetLoadPathType
-    {
-        Editor = 0,
-
-        /// <summary>
-        /// 用户可读写沙盒
-        /// </summary>
-        Persistent,
-
-        /// <summary>
-        /// Streaming
-        /// </summary>
-        StreamingAsset,
-
-        /// <summary>
-        /// devop的发布目录
-        /// </summary>
-        DevOpsPublish
-    }
-
-    /// <summary>
-    /// 热更代码执行模式
-    /// </summary>
-    public enum HotfixCodeRunMode
-    {
-        /// <summary>
-        /// ILRuntime解释执行
-        /// </summary>
-        ILRuntime = 0,
-
-        /// <summary>
-        /// 华佗执行
-        /// </summary>
-        HCLR,
-
-        /// <summary>
-        /// 这里只做预留,因为OSX只支持mono方式
-        /// </summary>
-        Mono
-    }
-
-
-    [Serializable]
-    public class GameConfig
-    {
-        [VerticalGroup("a")]
-        [HorizontalGroup("a/a1")]
-        [LabelText("代码路径")]
-        public AssetLoadPathType CodeRoot = AssetLoadPathType.Editor;
-
-        [LabelText("SQLite路径")]
-        [HorizontalGroup("a/a2")]
-        public AssetLoadPathType SQLRoot = AssetLoadPathType.Editor;
-
-        [LabelText("资源路径")]
-        [HorizontalGroup("a/a3")]
-        public AssetLoadPathType ArtRoot = AssetLoadPathType.Editor;
-
-
-        [LabelText("热更代码执行模式")]
-        [HorizontalGroup("a/a4")]
-        public HotfixCodeRunMode CodeRunMode = HotfixCodeRunMode.ILRuntime;
-
-        [LabelText("是否开启ILRuntime调试")]
-        [HorizontalGroup("a/a5")]
-        public bool IsDebuggerILRuntime = false;
-
-        [LabelText("是否打印日志")]
-        [HorizontalGroup("a/a6")]
-        public bool IsDebugLog = true;
-
-
-        [LabelText("文件服务器")]
-        [HorizontalGroup("a/a7")]
-        public string FileServerUrl = "192.168.8.68";
-
-        [LabelText("Gate服务器")]
-        [HorizontalGroup("a/a8")]
-        public string GateServerIp = "";
-
-        [HorizontalGroup("a/a9")]
-        public int Port;
-
-        [LabelText("是否热更")]
-        [HorizontalGroup("a/a10")]
-        public bool IsHotfix = false;
-
-        [LabelText("是否联网")]
-        [HorizontalGroup("a/a11")]
-        public bool IsNeedNet = false;
-
-        [Space(5)]
-        [LabelText("客户端版本")]
-        [HorizontalGroup("a/a12")]
-        public string ClientVersionNum = "0.0.0";
-
-#if UNITY_EDITOR
-        [HorizontalGroup("a/a12", width: 150)]
-        [LabelText("更新至所有配置")]
-        [Button]
-        [GUIColor(0, 1, 0)]
-        public void UpdateClientToAllConfig()
-        {
-            Config.UpdateAllCofnigClientVersion(ClientVersionNum);
-        }
-#endif
-        /// <summary>
-        /// 获取加载路径
-        /// </summary>
-        /// <param name="assetLoadPathType"></param>
-        static public string GetLoadPath(AssetLoadPathType assetLoadPathType)
-        {
-            var path = "";
-            //Editor下按照加载路径区分
-            if (Application.isEditor)
-            {
-                switch (assetLoadPathType)
-                {
-                    case AssetLoadPathType.Persistent:
-                        path = Application.persistentDataPath;
-                        break;
-                    case AssetLoadPathType.Editor:
-                    case AssetLoadPathType.StreamingAsset:
-                    {
-                        path = Application.streamingAssetsPath;
-                    }
-                        break;
-                    case AssetLoadPathType.DevOpsPublish:
-                    {
-                        path = BApplication.DevOpsPublishAssetsPath;
-                    }
-                        break;
-                }
-            }
-            else
-            {
-                //真机环境默认都在persistent下，
-                //因为需要io.不在的各个模块会自行拷贝
-                path = Application.persistentDataPath;
-            }
-
-            return path;
-        }
-    }
-
     /// <summary>
     /// 游戏进入的config
     /// </summary>
@@ -175,6 +31,7 @@ namespace BDFramework
         [OnInspectorGUI("_ONGUI")]
 #endif
         public GameConfig Data;
+        
 
         /// <summary>
         /// 设置新配置
@@ -457,4 +314,48 @@ namespace BDFramework
 
         #endregion
     }
+    
+    
+    public enum AssetLoadPathType
+    {
+        Editor = 0,
+
+        /// <summary>
+        /// 用户可读写沙盒
+        /// </summary>
+        Persistent,
+
+        /// <summary>
+        /// Streaming
+        /// </summary>
+        StreamingAsset,
+
+        /// <summary>
+        /// devop的发布目录
+        /// </summary>
+        DevOpsPublish
+    }
+
+    /// <summary>
+    /// 热更代码执行模式
+    /// </summary>
+    public enum HotfixCodeRunMode
+    {
+        /// <summary>
+        /// ILRuntime解释执行
+        /// </summary>
+        ILRuntime = 0,
+
+        /// <summary>
+        /// 华佗执行
+        /// </summary>
+        HCLR,
+
+        /// <summary>
+        /// 这里只做预留,因为OSX只支持mono方式
+        /// </summary>
+        Mono
+    }
+
+
 }

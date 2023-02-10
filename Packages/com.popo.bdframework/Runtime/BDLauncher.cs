@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using BDFramework.Asset;
+using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using BDFramework.GameStart;
 using UnityEngine;

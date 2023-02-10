@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using ILRuntime.CLR.Method;
 using ILRuntime.CLR.TypeSystem;
