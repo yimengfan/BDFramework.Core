@@ -62,7 +62,7 @@ namespace BDFramework
         static public void LoadHotfixDLL(AssetLoadPathType loadPathType, HotfixCodeRunMode mode, Type[] mainProjecTypes)
         {
             //路径
-            var dllPath = Path.Combine(GameConfig.GetLoadPath(loadPathType), BApplication.GetRuntimePlatformPath(), DLL_PATH);
+            var dllPath = Path.Combine(GameBaseConfigProcessor.GetLoadPath(loadPathType), BApplication.GetRuntimePlatformPath(), DLL_PATH);
             //反射执行
             if (mode == HotfixCodeRunMode.HCLR)
             {

@@ -189,13 +189,17 @@ namespace BDFramework.Editor.AssetGraph.Node
                 return;
             }
 
-            var node = this.selfNodeGUI.Data.AddOutputPoint(path);
-            this.groupFilterPathDataList.Add(new GroupPathData()
+            if (this.selfNodeGUI != null)
             {
-                GroupPath = path,
-                OutputNodeId = node.Id
-            });
-            AssetGraphTools.UpdateConnectLine(this.selfNodeGUI, node);
+                var node = this.selfNodeGUI.Data.AddOutputPoint(path);
+                this.groupFilterPathDataList.Add(new GroupPathData()
+                {
+                    GroupPath = path,
+                    OutputNodeId = node.Id
+                });
+                AssetGraphTools.UpdateConnectLine(this.selfNodeGUI, node);
+            }
+
         }
 
         private PerformGraph.AssetGroups incommingAssetGroup = null;

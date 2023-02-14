@@ -1,14 +1,12 @@
 using System;
-using System.Reflection;
 using BDFramework.Asset;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using BDFramework.GameStart;
-using UnityEngine;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using LitJson;
-using Sirenix.OdinInspector;
+using UnityEngine;
 
 
 namespace BDFramework
@@ -25,7 +23,13 @@ namespace BDFramework
         /// 客户端配置信息
         /// </summary>
         [HideInInspector]
-        public GameConfig GameConfig { get; private set; }
+        public GameBaseConfigProcessor.GameConfig GameConfig
+        {
+            get
+            {
+                return GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.GameConfig>();
+            }
+        }
         
         /// <summary>
         /// 客户端包信息
@@ -60,8 +64,6 @@ namespace BDFramework
             if (this.ConfigText)
             {
                 BDebug.Log("配置:" + this.ConfigText.name);
-
-                this.GameConfig = JsonMapper.ToObject<GameConfig>(this.ConfigText.text);
                 //纠正配置
                 if (!Application.isEditor)
                 {

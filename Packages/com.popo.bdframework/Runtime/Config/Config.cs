@@ -30,7 +30,7 @@ namespace BDFramework
 #if UNITY_EDITOR
         [OnInspectorGUI("_ONGUI")]
 #endif
-        public GameConfig Data;
+        public GameBaseConfigProcessor.GameConfig Data;
         
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace BDFramework
         /// <param name="gameConfig"></param>
         public void SetNewConfig(string gameConfig)
         {
-            this.Data = JsonMapper.ToObject<GameConfig>(gameConfig);
+            this.Data = JsonMapper.ToObject<GameBaseConfigProcessor.GameConfig>(gameConfig);
         }
 
         #region 编辑器
@@ -239,7 +239,7 @@ namespace BDFramework
         /// </summary>
         /// <param name="dirt"></param>
         /// <param name="platform"></param>
-        static public void SaveGameConfig(string configPath, GameConfig conf)
+        static public void SaveGameConfig(string configPath, GameBaseConfigProcessor.GameConfig conf)
         {
             if (Application.isPlaying)
             {
@@ -258,24 +258,7 @@ namespace BDFramework
 
             // 
         }
-
-
-        /// <summary>
-        /// 值变动
-        /// </summary>
-        /// <param name="text"></param>
-        static public void OnValueChanged_GameConfig(TextAsset text)
-        {
-            if (text)
-            {
-                var configData = JsonMapper.ToObject<GameConfig>(text.text);
-                var config = GameObject.FindObjectOfType<Config>();
-                config.Data = configData;
-            }
-
-            BDebug.Log("配置改变,刷新!");
-        }
-
+        
 
         /// <summary>
         /// 更新所有配置client——version
@@ -290,7 +273,7 @@ namespace BDFramework
                Debug.Log($"更新:{Path.GetFileName(cp)} ClientVersion至{clientversion}！");
 
                 var json = File.ReadAllText(cp);
-                var config = JsonMapper.ToObject<GameConfig>(json);
+                var config = JsonMapper.ToObject<GameBaseConfigProcessor.GameConfig>(json);
                 config.ClientVersionNum = clientversion;
                 var newdata = JsonMapper.ToJson(config);
                 FileHelper.WriteAllText(cp, newdata);

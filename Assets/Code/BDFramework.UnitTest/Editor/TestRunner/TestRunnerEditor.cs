@@ -56,7 +56,7 @@ namespace BDFramework.Editor.TestRunner
         public static void UnitTestILRuntime()
         {
             //执行热更单元测试
-            var dllPath =IPath.Combine(GameConfig.GetLoadPath(AssetLoadPathType.DevOpsPublish), BApplication.GetRuntimePlatformPath(), ScriptLoder.DLL_PATH);
+            var dllPath =IPath.Combine(GameBaseConfigProcessor.GetLoadPath(AssetLoadPathType.DevOpsPublish), BApplication.GetRuntimePlatformPath(), ScriptLoder.DLL_PATH);
             ILRuntimeHelper.LoadHotfix(dllPath,GameLogicCLRBinding.Bind);
             try
             {

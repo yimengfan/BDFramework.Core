@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BDFramework.UFlux;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace BDFramework.Mgr
         /// int类型Tag
         /// </summary>
         public int IntTag { get; private set; } = -1;
+
         /// <summary>
         /// String类型tag
         /// </summary>
@@ -32,7 +34,7 @@ namespace BDFramework.Mgr
     /// </summary>
     /// <typeparam name="T">是管理器实例</typeparam>
     /// <typeparam name="V">标签属性</typeparam>
-   abstract public class ManagerBase<T, V> : IMgr where T : IMgr, new() where V : ManagerAttribute
+    abstract public class ManagerBase<T, V> : IMgr where T : IMgr, new() where V : ManagerAttribute
     {
         static private T i;
 
@@ -57,7 +59,7 @@ namespace BDFramework.Mgr
             this.ClassDataMap_IntKey = new Dictionary<int, ClassData>();
             this.ClassDataMap_StringKey = new Dictionary<string, ClassData>();
         }
-        
+
         /// <summary>
         /// 检测类型
         /// </summary>
@@ -66,10 +68,9 @@ namespace BDFramework.Mgr
         virtual public void CheckType(Type type, ManagerAttribute attribute)
         {
             //var vAttr = attribute as V;
-            
+
             if (attribute is V vAttr)
             {
-                
                 if (vAttr.IntTag != -1)
                 {
                     SaveAttribute(vAttr.IntTag, new ClassData() {Attribute = vAttr, Type = type});
@@ -89,6 +90,9 @@ namespace BDFramework.Mgr
         {
         }
 
+        /// <summary>
+        /// 管理器开始
+        /// </summary>
         virtual public void Start()
         {
         }
@@ -154,17 +158,36 @@ namespace BDFramework.Mgr
         /// <returns></returns>
         public IEnumerable<ClassData> GetAllClassDatas()
         {
-            IEnumerable<ClassData> classDatas = new List<ClassData>();
             if (this.ClassDataMap_IntKey.Count > 0)
             {
-                classDatas = this.ClassDataMap_IntKey.Values;
+                //key 从小到大排序
+                var keys = ClassDataMap_IntKey.Keys.ToList();
+                keys.Sort();
+                //压入
+                ClassData[] classDatas = new ClassData[keys.Count];
+                for (int i = 0; i < keys.Count; i++)
+                {
+                    classDatas[i] = this.ClassDataMap_IntKey[keys[i]];
+                }
+
+                return classDatas;
             }
             else if (this.ClassDataMap_StringKey.Count > 0)
             {
-                classDatas = this.ClassDataMap_StringKey.Values;
+                //key 从小到大排序
+                var keys = ClassDataMap_IntKey.Keys.ToList();
+                keys.Sort();
+                //压入
+                ClassData[] classDatas = new ClassData[keys.Count];
+                for (int i = 0; i < keys.Count; i++)
+                {
+                    classDatas[i] = this.ClassDataMap_IntKey[keys[i]];
+                }
+
+                return classDatas;
             }
 
-            return classDatas;
+            return new ClassData[0];
         }
 
         /// <summary>

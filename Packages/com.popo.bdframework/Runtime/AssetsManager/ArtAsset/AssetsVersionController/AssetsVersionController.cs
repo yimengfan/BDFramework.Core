@@ -762,7 +762,7 @@ namespace BDFramework.VersionController
                         break;
                     case AssetLoadPathType.DevOpsPublish:
                     {
-                        var path = GameConfig.GetLoadPath(loadArtRoot);
+                        var path = GameBaseConfigProcessor.GetLoadPath(loadArtRoot);
                         var devopsAssetInfoPath = BResources.GetAssetsInfoPath(path, platform);
                         if (File.Exists(devopsAssetInfoPath))
                         {

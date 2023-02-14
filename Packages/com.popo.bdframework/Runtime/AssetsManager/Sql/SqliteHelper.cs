@@ -51,7 +51,7 @@ namespace BDFramework.Sql
         {
             Connection?.Dispose();
 
-            var path = GameConfig.GetLoadPath(assetLoadPathType);
+            var path = GameBaseConfigProcessor.GetLoadPath(assetLoadPathType);
             //用当前平台目录进行加载
             path = GetLocalDBPath(path, BApplication.RuntimePlatform);
             Connection = LoadDBReadOnly(path);

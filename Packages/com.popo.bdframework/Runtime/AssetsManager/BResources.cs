@@ -128,7 +128,7 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                var path = GameConfig.GetLoadPath(loadPathType);
+                var path = GameBaseConfigProcessor.GetLoadPath(loadPathType);
                 ResLoader = new AssetBundleMgrV2();
                 ResLoader.Init(path, BApplication.RuntimePlatform);
             }
