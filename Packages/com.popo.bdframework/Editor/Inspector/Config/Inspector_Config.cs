@@ -6,6 +6,7 @@ using BDFramework.Configure;
 using LitJson;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
+using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -53,14 +54,13 @@ namespace BDFramework.Editor.Inspector.Config
         /// <summary>
         /// 当前选择配置类型
         /// </summary>
-        private Type curSelectConfigType = typeof(GameBaseConfigProcessor.Config);
+        private Type curSelectConfigType = typeof(GameBaseConfigProcessor);
 
         /// <summary>
         /// 选择配置
         /// </summary>
         public void ONGUI_SelcectConfig()
         {
-            GUI.color = Color.green;
             var launcher = GameObject.FindObjectOfType<BDLauncher>();
             if (launcher == null)
             {
@@ -132,8 +132,9 @@ namespace BDFramework.Editor.Inspector.Config
                 //
                 SelectNewConfig(configPathList[curSelectConfigIdx]);
             }
+            
+            GUILayout.Space(10);
 
-            GUI.color = GUI.backgroundColor;
         }
 
 
@@ -150,7 +151,7 @@ namespace BDFramework.Editor.Inspector.Config
                 {
                     GUILayout.BeginHorizontal();
                 }
-
+                
                 //渲染按钮
                 var attr = key.GetCustomAttribute<GameConfigAttribute>();
                 if (key == this.curSelectConfigType)
@@ -168,7 +169,7 @@ namespace BDFramework.Editor.Inspector.Config
                 }
             }
 
-            //
+            SirenixEditorGUI.Title("配置属性","", TextAlignment.Left,true);
             this.configInstanceMap[this.curSelectConfigType].Item2.Draw(false);
         }
 
