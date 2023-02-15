@@ -110,16 +110,17 @@ public class ExpoterMainProjectAsset
         var bdlauncher = GameObject.Find("BDFrame").GetComponent<BDLauncher>();
         bdlauncher.ConfigText = AssetDatabase.LoadAssetAtPath<TextAsset>(AssetDatabase.GUIDToAssetPath("517ff72e71a574546a91d76ad65770c9"));
         var config = GameObject.Find("BDFrame").GetComponent<Config>();
-        config.Data.CodeRoot = AssetLoadPathType.Persistent;
-        config.Data.SQLRoot = AssetLoadPathType.Persistent;
-        config.Data.ArtRoot = AssetLoadPathType.Persistent;
+        // config.Data.CodeRoot = AssetLoadPathType.Persistent;
+        // config.Data.SQLRoot = AssetLoadPathType.Persistent;
+        // config.Data.ArtRoot = AssetLoadPathType.Persistent;
+        
         AssetDatabase.SaveAssets();
         //切换成Editor.json
         bdlauncher.ConfigText = AssetDatabase.LoadAssetAtPath<TextAsset>(AssetDatabase.GUIDToAssetPath("dac4b223fdff90143ac6a3d1980e120b"));
-         config = GameObject.Find("BDFrame").GetComponent<Config>();
-        config.Data.CodeRoot = AssetLoadPathType.Editor;
-        config.Data.SQLRoot = AssetLoadPathType.Editor;
-        config.Data.ArtRoot = AssetLoadPathType.Editor;
+        config = GameObject.Find("BDFrame").GetComponent<Config>();
+        // config.Data.CodeRoot = AssetLoadPathType.Editor;
+        // config.Data.SQLRoot = AssetLoadPathType.Editor;
+        // config.Data.ArtRoot = AssetLoadPathType.Editor;
         AssetDatabase.SaveAssets();
         
         #endregion

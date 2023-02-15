@@ -83,6 +83,8 @@ namespace BDFramework.Mgr
         }
 
 
+        public bool IsStarted { get; private set; }
+
         /// <summary>
         /// 这里负责初始化任务
         /// </summary>
@@ -95,6 +97,7 @@ namespace BDFramework.Mgr
         /// </summary>
         virtual public void Start()
         {
+            this.IsStarted = false;
         }
 
         /// <summary>

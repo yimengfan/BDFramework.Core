@@ -710,7 +710,7 @@ namespace BDFramework.ResourceMgr
 
             /************母包资源的判断*************/
 
-            if (Application.isEditor && BDLauncher.Inst.GameConfig.ArtRoot == AssetLoadPathType.DevOpsPublish)
+            if (Application.isEditor && BDLauncher.Inst.Config.ArtRoot == AssetLoadPathType.DevOpsPublish)
             {
                 //devops
                 var devopsAssetPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform), assetName);
@@ -771,7 +771,7 @@ namespace BDFramework.ResourceMgr
 
 
             /************母包资源的判断*************/
-            if (Application.isEditor && BDLauncher.Inst.GameConfig.ArtRoot == AssetLoadPathType.DevOpsPublish)
+            if (Application.isEditor && BDLauncher.Inst.Config.ArtRoot == AssetLoadPathType.DevOpsPublish)
             {
                 //devops
                 var devopsAssetPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform), assetName);

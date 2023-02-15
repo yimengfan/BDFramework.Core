@@ -8,14 +8,14 @@ namespace BDFramework.Configure
     /// <summary>
     /// 游戏基本数据处理器
     /// </summary>
-    [GameConfig(-9999)]
+    [GameConfig(-9999,"基本")]
     public class GameBaseConfigProcessor : AConfigProcessor
     {
         /// <summary>
         /// 游戏基础设置
         /// </summary>
         [Serializable]
-        public class GameConfig : ConfigDataBase
+        public class Config : ConfigDataBase
         {
             [VerticalGroup("a")]
             [HorizontalGroup("a/a1")]
@@ -75,9 +75,17 @@ namespace BDFramework.Configure
             [GUIColor(0, 1, 0)]
             public void UpdateClientToAllConfig()
             {
-                Config.UpdateAllCofnigClientVersion(ClientVersionNum);
+                //BDFramework.Config.UpdateAllCofnigClientVersion(ClientVersionNum);
             }
 #endif
+        }
+
+
+        public override void OnConfigLoad(ConfigDataBase config)
+        {
+            var con = config as Config;
+            //log
+            BDLauncher.Inst.GetComponent<BDebug>().IsLog = con.IsDebugLog;
         }
 
 

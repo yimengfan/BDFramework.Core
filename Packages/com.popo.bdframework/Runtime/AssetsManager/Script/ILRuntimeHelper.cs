@@ -50,7 +50,7 @@ namespace BDFramework
                 AppDomain.LoadAssembly(fsDll);
             }
 
-            
+
             //其他模块的binding，后注册的相同函数签名 会被跳过
             JsonMapper.RegisterCLRRedirection(AppDomain);
             SqliteHelper.RegisterCLRRedirection(AppDomain);
@@ -59,7 +59,7 @@ namespace BDFramework
             //clrbinding
             gamelogicBind?.Invoke(isDoCLRBinding);
             //开启debuger
-            if (BDLauncher.Inst != null && BDLauncher.Inst.GameConfig.IsDebuggerILRuntime)
+            if (BDLauncher.Inst != null && BDLauncher.Inst.Config.IsDebuggerILRuntime)
             {
 #if DEBUG
                 AppDomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
@@ -74,19 +74,22 @@ namespace BDFramework
         /// </summary>
         public static void Dispose()
         {
-            AppDomain.Dispose();
+            AppDomain?.Dispose();
+            
             if (fsDll != null)
             {
                 fsDll.Close();
                 fsDll.Dispose();
                 fsDll = null;
             }
+
             if (fsPdb != null)
             {
                 fsPdb.Close();
                 fsPdb.Dispose();
                 fsPdb = null;
             }
+
             AppDomain = null;
             IsRunning = false;
         }
@@ -153,6 +156,7 @@ namespace BDFramework
             {
                 instance = Activator.CreateInstance(value_type);
             }
+
             return instance;
         }
 

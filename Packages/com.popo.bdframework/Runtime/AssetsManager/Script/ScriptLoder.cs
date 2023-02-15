@@ -10,10 +10,24 @@ namespace BDFramework
 {
     static public class ScriptLoder
     {
+        #region 路径
         static readonly public string SCRIPT_FOLDER_PATH = "script";
         static readonly public string DLL_PATH = SCRIPT_FOLDER_PATH + "/hotfix.dll";
         static readonly public string PDB_PATH = DLL_PATH + "pdb";
+        #endregion
 
+        #region 加密
+        /// <summary>
+        /// 私钥
+        /// </summary>
+        static public string PrivateKey { get; set; } = null;
+        /// <summary>
+        /// 公钥
+        /// </summary>
+        static public string PublicKey { get; set; } = null;
+        #endregion
+
+        
         /// <summary>
         /// 反射注册
         /// </summary>
@@ -40,10 +54,10 @@ namespace BDFramework
                 var type = assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
                 //添加框架部分的type，热更下不需要，打包会把框架的部分打进去
-                var list = new List<Type>();
-                list.AddRange(mainProjectTypes);
-                list.AddRange(typeof(BDLauncher).Assembly.GetTypes());
-                method.Invoke(null, new object[] {list.ToArray(), null});
+                // var list = new List<Type>();
+                // list.AddRange(mainProjectTypes);
+                // list.AddRange(typeof(BDLauncher).Assembly.GetTypes());
+                method.Invoke(null, new object[] {mainProjectTypes, null});
             }
             else
             {

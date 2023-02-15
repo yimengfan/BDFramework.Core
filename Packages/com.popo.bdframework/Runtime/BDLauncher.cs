@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using BDFramework.Asset;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using BDFramework.GameStart;
+using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using LitJson;
@@ -23,11 +26,11 @@ namespace BDFramework
         /// 客户端配置信息
         /// </summary>
         [HideInInspector]
-        public GameBaseConfigProcessor.GameConfig GameConfig
+        public GameBaseConfigProcessor.Config Config
         {
             get
             {
-                return GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.GameConfig>();
+                return GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
             }
         }
         
@@ -58,8 +61,6 @@ namespace BDFramework
             Inst = this;
             //添加组件
             this.gameObject.AddComponent<IEnumeratorTool>();
-            var debug = this.gameObject.GetComponent<BDebug>();
-            var platform = BApplication.RuntimePlatform;
             //游戏配置
             if (this.ConfigText)
             {
@@ -67,21 +68,21 @@ namespace BDFramework
                 //纠正配置
                 if (!Application.isEditor)
                 {
-                    if (this.GameConfig.ArtRoot != AssetLoadPathType.Persistent &&
-                        this.GameConfig.ArtRoot != AssetLoadPathType.StreamingAsset)
+                    if (this.Config.ArtRoot != AssetLoadPathType.Persistent &&
+                        this.Config.ArtRoot != AssetLoadPathType.StreamingAsset)
                     {
-                        this.GameConfig.ArtRoot = AssetLoadPathType.Persistent;
+                        this.Config.ArtRoot = AssetLoadPathType.Persistent;
                     }
 
-                    if (this.GameConfig.SQLRoot != AssetLoadPathType.Persistent &&
-                        this.GameConfig.SQLRoot != AssetLoadPathType.StreamingAsset)
+                    if (this.Config.SQLRoot != AssetLoadPathType.Persistent &&
+                        this.Config.SQLRoot != AssetLoadPathType.StreamingAsset)
                     {
-                        this.GameConfig.SQLRoot = AssetLoadPathType.Persistent;
+                        this.Config.SQLRoot = AssetLoadPathType.Persistent;
                     }
 
-                    if (this.GameConfig.CodeRoot == AssetLoadPathType.DevOpsPublish)
+                    if (this.Config.CodeRoot == AssetLoadPathType.DevOpsPublish)
                     {
-                        this.GameConfig.CodeRoot = AssetLoadPathType.Persistent;
+                        this.Config.CodeRoot = AssetLoadPathType.Persistent;
                     }
                 }
             }
@@ -89,9 +90,7 @@ namespace BDFramework
             {
                 BDebug.LogError("GameConfig配置为null,请检查!");
             }
-
-            //日志打印
-            debug.IsLog = this.GameConfig.IsDebugLog;
+            
             //添加不删除的组件
             if (Application.isPlaying)
             {
@@ -110,10 +109,25 @@ namespace BDFramework
         /// </summary>
         /// <param name="mainProjectTypes">Editor模式下,UPM隔离了DLL需要手动传入</param>
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
-        public void Launch(Type[] mainProjectTypes, Action<bool> clrBindingAction, string gameId = "default",Action loadEndCallback = null)
+        public void Launch(Type[] mainProjectTypes, Action<bool> clrBindingAction, string gameId = "default",Action launchSuccessCallback = null)
         {
             BDebug.Log("【Launch】Persistent:" + Application.persistentDataPath);
             BDebug.Log("【Launch】StreamingAsset:" + Application.streamingAssetsPath);
+            
+            //list
+            BDebug.LogWatchBegin("加载所有DLL-types");
+            var typeList = new List<Type>();
+            Assembly[] assemblyList = System.AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblyList)
+            {
+                if (!assembly.FullName.Equals("editor", StringComparison.OrdinalIgnoreCase))
+                {
+                    typeList.AddRange(assembly.GetTypes());
+                }
+            }
+            BDebug.LogWatchEnd("加载所有DLL-types");
+            
+            
             //主工程启动
             IGameStart mainStart;
             foreach (var type in mainProjectTypes)
@@ -121,7 +135,7 @@ namespace BDFramework
                 //TODO 这里有可能先访问到 IGamestart的Adaptor
                 if (type.IsClass && type.GetInterface(nameof(IGameStart)) != null)
                 {
-                    BDebug.Log("【Launch】主工程Start! " + type.FullName);
+                    BDebug.Log("【Launch】主工程 Start： " + type.FullName);
                     mainStart = Activator.CreateInstance(type) as IGameStart;
                     if (mainStart != null)
                     {
@@ -135,18 +149,23 @@ namespace BDFramework
             }
 
 
-            BDebug.Log("【Launch】框架资源版本验证!");
+            //执行主工程逻辑
+            BDebug.Log("【Launch】主工程管理器初始化..","red");
+            ManagerInstHelper.Load(mainProjectTypes);
+            GameConfigLoder.Load();
+            
             //开始资源检测
+            BDebug.Log("【Launch】框架资源版本验证!");
             ClientAssetsHelper.CheckBasePackageVersion(BApplication.RuntimePlatform, () =>
             {
-                //1.美术目录
-                BResources.Init(GameConfig.ArtRoot);
-                //2.sql
-                SqliteLoder.Init(GameConfig.SQLRoot);
+                //1.美术资产初始化
+                BResources.Init(Config.ArtRoot);
+                //2.sql初始化
+                SqliteLoder.Init(Config.SQLRoot);
                 //3.脚本,这个启动会开启所有的逻辑
-                ScriptLoder.Init(GameConfig.CodeRoot, GameConfig.CodeRunMode, mainProjectTypes, clrBindingAction);
+                ScriptLoder.Init(Config.CodeRoot, Config.CodeRunMode, mainProjectTypes, clrBindingAction);
                 //触发回调
-                loadEndCallback?.Invoke();
+                launchSuccessCallback?.Invoke();
             });
         }
 

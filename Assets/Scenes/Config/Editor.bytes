@@ -1,1 +1,24 @@
-{"CodeRoot":0,"SQLRoot":0,"ArtRoot":0,"CodeRunMode":0,"IsDebuggerILRuntime":true,"IsDebugLog":true,"FileServerUrl":"192.168.8.68","GateServerIp":"","Port":0,"IsHotfix":true,"IsNeedNet":true,"ClientVersionNum":"2.1.0"}
+
+[
+  {
+    "CodeRoot" : 0,
+    "SQLRoot"  : 0,
+    "ArtRoot"  : 0,
+    "CodeRunMode" : 0,
+    "IsDebuggerILRuntime" : false,
+    "IsDebugLog"          : true,
+    "FileServerUrl"       : "192.168.8.68",
+    "GateServerIp"        : "",
+    "Port"                : 0,
+    "IsHotfix"            : false,
+    "IsNeedNet"           : false,
+    "ClientVersionNum"    : "0.0.0",
+    "ClassType"           : "BDFramework.Configure.GameBaseConfigProcessor+Config"
+  },
+  {
+    "SqlitePassword" : "password123",
+    "ScriptPubKey"   : "",
+    "ScriptPrivateKey" : "",
+    "ClassType"        : "BDFramework.Configure.GameCipherConfigProcessor+Config"
+  }
+]

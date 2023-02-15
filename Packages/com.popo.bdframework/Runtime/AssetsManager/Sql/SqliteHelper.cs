@@ -20,7 +20,7 @@ namespace BDFramework.Sql
     /// </summary>
     static public class SqliteLoder
     {
-        private static string testkey = "password11222!";
+        public static string Password { get; set; } = "password11222!";
 
         /// <summary>
         /// 本地DB Path
@@ -67,7 +67,7 @@ namespace BDFramework.Sql
             {
                 BDebug.Log("DB加载路径:" + path, "red");
                 SQLiteConnectionString cs =
-                    new SQLiteConnectionString(path, SQLiteOpenFlags.ReadOnly, true, key: testkey);
+                    new SQLiteConnectionString(path, SQLiteOpenFlags.ReadOnly, true, key: Password);
                 var con = new SQLiteConnection(cs);
                 SqLiteConnectionMap[Path.GetFileNameWithoutExtension(path)] = con;
                 return con;
@@ -86,7 +86,7 @@ namespace BDFramework.Sql
         {
             BDebug.Log("DB加载路径:" + path, "red");
             SQLiteConnectionString cs = new SQLiteConnectionString(path,
-                SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, true, key: testkey);
+                SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, true, key: Password);
             var con = new SQLiteConnection(cs);
             SqLiteConnectionMap[Path.GetFileNameWithoutExtension(path)] = con;
             return con;

@@ -744,7 +744,7 @@ namespace BDFramework.VersionController
             {
                 //根据加载模式不同,寻找不同目录下的其他配置
                 //打包时，本地会带一份ServerAssets.info以标记当前包携带的资源
-                var loadArtRoot = BDLauncher.Inst.GameConfig.ArtRoot;
+                var loadArtRoot = BDLauncher.Inst.Config.ArtRoot;
                 switch (loadArtRoot)
                 {
                     case AssetLoadPathType.Persistent:

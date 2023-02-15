@@ -72,6 +72,8 @@ namespace BDFramework.ScreenView
 
         public override void Start()
         {
+            base.Start();
+            //导航
             MainLayer.BeginNavTo(this.defaultScreenTag);
         }
 

@@ -57,9 +57,7 @@ public class BDLauncherBridge
         }
 
 
-        //执行主工程逻辑
-        BDebug.Log("主工程Instance初始化...","red");
-        ManagerInstHelper.Load(mainProjectTypes);
+
         //执行热更逻辑
         if (hotfixTypes != null)
         {

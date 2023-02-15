@@ -12,8 +12,10 @@ namespace BDFramework.Configure
     /// </summary>
     public class GameConfigAttribute : ManagerAttribute
     {
-        public GameConfigAttribute(int intTag) : base(intTag)
+        public string Title = "";
+        public GameConfigAttribute(int intTag,string tile) : base(intTag)
         {
+            Title = tile;
         }
 
         public GameConfigAttribute(string tag) : base(tag)
@@ -31,11 +33,33 @@ namespace BDFramework.Configure
         /// </summary>
         private List<ConfigDataBase> configList { get; set; } = new List<ConfigDataBase>();
 
-
+        /// <summary>
+        /// start
+        /// </summary>
         public override void Start()
         {
+            base.Start();
+            //执行
+            var (dataList, processorList) = LoadConfig(BDLauncher.Inst.ConfigText.text);
+            for (int i = 0; i < dataList.Count; i++)
+            {
+                processorList[i].OnConfigLoad(dataList[i]);
+            }
+        }
+
+
+        /// <summary>
+        /// 加载配置
+        /// </summary>
+        /// <param name="configText"></param>
+        /// <returns></returns>
+        public (List<ConfigDataBase>, List<AConfigProcessor>) LoadConfig(string configText)
+        {
+            List<ConfigDataBase> retDatalist = new List<ConfigDataBase>();
+            List<AConfigProcessor> retProcessorList = new List<AConfigProcessor>();
+
             var classDataList = this.GetAllClassDatas();
-            var jsonObj = JsonMapper.ToObject(BDLauncher.Inst.ConfigText.text);
+            var jsonObj = JsonMapper.ToObject(configText);
             //按tag顺序执行
             foreach (var cd in classDataList)
             {
@@ -49,13 +73,14 @@ namespace BDFramework.Configure
                     {
                         var configData = JsonMapper.ToObject(nestType, jo.ToJson()) as ConfigDataBase;
                         var configProcessor = CreateInstance<AConfigProcessor>(cd);
-                        configList.Add(configData);
-                        //执行
-                        configProcessor.OnConfigLoad(configData);
+                        retDatalist.Add(configData);
+
                         break;
                     }
                 }
             }
+
+            return (retDatalist, retProcessorList);
         }
 
 
@@ -71,20 +96,6 @@ namespace BDFramework.Configure
         }
 
 
-        /// <summary>
-        /// 保存Config
-        /// </summary>
-        /// <param name="configMap"></param>
-        public void SaveConfig(string filePath, List<ConfigDataBase> configList)
-        {
-            //
-            foreach (var config in configList)
-            {
-                config.ClassType = config.GetType().FullName;
-            }
 
-            var jsonConfig = JsonMapper.ToJson(configList, true);
-            FileHelper.WriteAllText(filePath, jsonConfig);
-        }
     }
 }

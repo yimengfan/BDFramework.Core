@@ -171,7 +171,7 @@ namespace BDFramework.Asset
             string basePckPath = "";
 
             //母包路径不同情况不一样
-            switch (BDLauncher.Inst.GameConfig.ArtRoot)
+            switch (BDLauncher.Inst.Config.ArtRoot)
             {
                 case AssetLoadPathType.Editor:
                 {

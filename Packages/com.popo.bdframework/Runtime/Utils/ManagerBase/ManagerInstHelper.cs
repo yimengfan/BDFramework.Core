@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 
@@ -22,8 +23,8 @@ namespace BDFramework.Mgr
         /// <returns></returns>
         static public void Load(Type[] types)
         {
+            BDebug.LogWatchBegin("主工程管理器");
             //管理器列表
-
             for (int i = 0; i < types.Length; i++)
             {
                 var type = types[i];
@@ -65,7 +66,7 @@ namespace BDFramework.Mgr
             //遍历type执行逻辑
             for (int i = 0; i < types.Length; i++)
             {
-                var type          = types[i];
+                var type = types[i];
                 var mgrAttributes = type.GetCustomAttributes<ManagerAttribute>(false);
                 if (mgrAttributes == null)
                 {
@@ -82,11 +83,15 @@ namespace BDFramework.Mgr
                 }
             }
 
+            BDebug.LogWatchEnd("主工程管理器");
+            
             //管理器初始化
             foreach (var mgr in mgrList)
             {
                 mgr.Init();
             }
+            
+            
         }
 
 
@@ -96,6 +101,23 @@ namespace BDFramework.Mgr
         static public void Start()
         {
             foreach (var mgr in mgrList)
+            {
+                if (!mgr.IsStarted)
+                {
+                    mgr.Start();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 开始某个具体管理器逻辑
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        static public void Start<T>()
+        {
+            var mgr = mgrList.FirstOrDefault((m) => m is T);
+
+            if (mgr != null && !mgr.IsStarted)
             {
                 mgr.Start();
             }
