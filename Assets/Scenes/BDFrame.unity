@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.44631976, g: 0.49611664, b: 0.5744803, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -353,20 +353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c55bb42676de1c4993dc7ec9b884229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data:
-    CodeRoot: 2
-    SQLRoot: 1
-    ArtRoot: 0
-    CodeRunMode: 0
-    IsDebuggerILRuntime: 1
-    IsDebugLog: 1
-    FileServerUrl: 192.168.8.68
-    GateServerIp: 
-    Port: 0
-    IsHotfix: 0
-    IsNeedNet: 0
-    ClientVersionNum: 2.1.0
-  ConfigFileName: Editor
 --- !u!4 &617214994
 Transform:
   m_ObjectHideFlags: 0
@@ -393,7 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53901f56d09f96d4886992ff20f43b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConfigText: {fileID: 4900000, guid: eb15c9888d244417c93ced4ebeb1c577, type: 3}
+  ConfigText: {fileID: 4900000, guid: a35fde23afc8243a88a460b17fbcb98d, type: 3}
 --- !u!114 &617214996
 MonoBehaviour:
   m_ObjectHideFlags: 0

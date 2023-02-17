@@ -223,6 +223,36 @@ MonoBehaviour:
         y: 33.5
         width: 10
         height: 23
+  - m_name: Split By Filter
+    m_id: a672f33e-f771-4046-b3c4-e172a6dd2fec
+    m_x: 555
+    m_y: 224
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.Filter, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2ZpbHRlciI6W3sibV9pbnN0YW5jZSI6eyJtX2NsYXNzTmFtZSI6IlVuaXR5RW5naW5lLkFzc2V0R3JhcGguRmlsdGVyQnlOYW1lQW5kVHlwZSwgVW5pdHkuQXNzZXRHcmFwaC5FZGl0b3IsIFZlcnNpb249MC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsIiwibV9pbnN0YW5jZURhdGEiOiJCNjR8ZXlKdFgyWnBiSFJsY2t0bGVYZHZjbVFpT2lJaUxDSnRYMlpwYkhSbGNrdGxlWFI1Y0dVaU9pSkJibmtpTENKdFgzWmxjbk5wYjI0aU9qRjkifSwibV9wb2ludElkIjoiNTVhOWNjYjUtYjUyYS00NThlLTg1NDEtZWM5YTM2OTM2NmZkIn1dfQ==
+    m_inputPoints:
+    - id: 6a715d06-e713-4bbd-935b-7ab71d6c54d8
+      label: '-'
+      parentId: a672f33e-f771-4046-b3c4-e172a6dd2fec
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 55a9ccb5-b52a-458e-8541-ec9a369366fd
+      label: 
+      parentId: a672f33e-f771-4046-b3c4-e172a6dd2fec
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 141
+        y: 33.5
+        width: 10
+        height: 23
   m_allConnections:
   - m_id: fa316b5a-6046-480e-985b-7ee1d6372131
     m_fromNodeId: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
@@ -260,7 +290,7 @@ MonoBehaviour:
     m_toNodeId: 1ddcd99c-4395-4580-b09c-bf4b1b695dbc
     m_toNodeConnectionPoiontId: 14e10269-e4b4-437c-a37c-6f2fb498f6cb
     m_label: +
-  m_lastModified: 133062366711947882
+  m_lastModified: 133210985955163315
   m_version: 2
   m_graphDescription: 
   m_useAsAssetPostprocessor: 0

@@ -7,11 +7,7 @@
     "CodeRunMode" : 0,
     "IsDebuggerILRuntime" : false,
     "IsDebugLog"          : true,
-    "FileServerUrl"       : "192.168.8.68",
-    "GateServerIp"        : "",
-    "Port"                : 0,
     "IsHotfix"            : false,
-    "IsNeedNet"           : false,
     "ClientVersionNum"    : "0.0.0",
     "ClassType"           : "BDFramework.Configure.GameBaseConfigProcessor+Config"
   },
@@ -20,5 +16,30 @@
     "ScriptPubKey"   : "",
     "ScriptPrivateKey" : "",
     "ClassType"        : "BDFramework.Configure.GameCipherConfigProcessor+Config"
+  },
+  {
+    "IsNeedNet" : false,
+    "FileServerUrl" : "192.168.0.222",
+    "GateServerIp"  : "",
+    "Port"          : 0,
+    "ClassType"     : "Game.Config.ServerConfigProcessor+Config"
+  },
+  {
+    "Test1" : "111",
+    "Test2" : "111",
+    "Test3" : "111",
+    "ClassType" : "Game.Config.TestConfigProcessor+Config"
+  },
+  {
+    "Test1" : "222",
+    "Test2" : "222",
+    "Test3" : "222",
+    "ClassType" : "Game.Config.TestConfigProcessor2+Config"
+  },
+  {
+    "Test1" : "3331111",
+    "Test2" : "333",
+    "Test3" : "333",
+    "ClassType" : "Game.Config.TestConfigProcessor3+Config"
   }
 ]

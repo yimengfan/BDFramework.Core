@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using BDFramework.Configure;
 using LitJson;
 using Sirenix.OdinInspector.Editor;
@@ -24,7 +25,7 @@ namespace BDFramework.Editor.Inspector.Config
         /// <summary>
         /// config实例map缓存
         /// </summary>
-        private Dictionary<Type, Tuple<object, PropertyTree>> configInstanceMap = new Dictionary<Type, Tuple<object, PropertyTree>>();
+        private Dictionary<Type, Tuple<ConfigDataBase, PropertyTree>> configInstanceMap = new Dictionary<Type, Tuple<ConfigDataBase, PropertyTree>>();
 
         public override void OnInspectorGUI()
         {
@@ -32,9 +33,11 @@ namespace BDFramework.Editor.Inspector.Config
 
             //渲染Select config
             ONGUI_SelcectConfig();
-
             //渲染具体配置
             ONGUI_ConfigProperty();
+
+            ONGUI_Bottom();
+            
         }
 
 
@@ -55,6 +58,11 @@ namespace BDFramework.Editor.Inspector.Config
         /// 当前选择配置类型
         /// </summary>
         private Type curSelectConfigType = typeof(GameBaseConfigProcessor);
+
+        /// <summary>
+        /// 配置列表
+        /// </summary>
+        private Dictionary<string, string> configMap = new Dictionary<string, string>();
 
         /// <summary>
         /// 选择配置
@@ -93,8 +101,13 @@ namespace BDFramework.Editor.Inspector.Config
             {
                 this.CreateConfig("Editor");
             }
-
-            configPathList = GetConfigPaths().ToList();
+            var newlist = GetConfigPaths().ToList();
+            if (newlist.Count != configPathList.Count)
+            {
+                configPathList =newlist;
+                AssetDatabase.Refresh();
+            }
+        
 
             //容错,各种异常情况判断
             if (launcher.ConfigText != null)
@@ -106,35 +119,46 @@ namespace BDFramework.Editor.Inspector.Config
                 {
                     curSelectConfigIdx = idx;
                     //
-                    SelectNewConfig(configPathList[curSelectConfigIdx]);
+                    SelectNewConfig(configPathList[curSelectConfigIdx], false);
                 }
             }
-            if (launcher.ConfigText == null ||  curSelectConfigIdx == -1 || curSelectConfigIdx > configPathList.Count)
+
+            if (launcher.ConfigText == null || curSelectConfigIdx == -1 || curSelectConfigIdx > configPathList.Count)
             {
                 curSelectConfigIdx = 0;
-                SelectNewConfig(configPathList[curSelectConfigIdx]);
+                SelectNewConfig(configPathList[curSelectConfigIdx], false);
             }
 
 
             //渲染下拉
             var configNames = configPathList.Select((s) => Path.GetFileName(s)).ToArray();
+
             var newSelectIdx = EditorGUILayout.Popup("选择配置:", curSelectConfigIdx, configNames);
             if (configPathList.Count < newSelectIdx)
             {
                 newSelectIdx = 0;
             }
 
+            //保存config
+            for (int i = 0; i < configNames.Length; i++)
+            {
+                configMap[configNames[i]] = configPathList[i];
+            }
 
             //选择新Config
-            if (configPathList.Count > 0 && newSelectIdx != curSelectConfigIdx)
+            if (newSelectIdx != curSelectConfigIdx)
             {
                 curSelectConfigIdx = newSelectIdx;
                 //
-                SelectNewConfig(configPathList[curSelectConfigIdx]);
+                SelectNewConfig(configPathList[curSelectConfigIdx], true);
             }
-            
-            GUILayout.Space(10);
 
+            if (this.configInstanceMap.Count == 0)
+            {
+                SelectNewConfig(configPathList[curSelectConfigIdx], false);
+            }
+
+            GUILayout.Space(10);
         }
 
 
@@ -151,12 +175,13 @@ namespace BDFramework.Editor.Inspector.Config
                 {
                     GUILayout.BeginHorizontal();
                 }
-                
+
                 //渲染按钮
                 var attr = key.GetCustomAttribute<GameConfigAttribute>();
-                if (key == this.curSelectConfigType)
-                    GUI.color = Color.green;
-                if (GUILayout.Button(attr.Title))
+                if (key == this.curSelectConfigType) GUI.color = Color.yellow;
+
+                GUIContent content = new GUIContent(attr.Title, key.Name + ".cs");
+                if (GUILayout.Button(content))
                 {
                     this.curSelectConfigType = key;
                 }
@@ -169,10 +194,65 @@ namespace BDFramework.Editor.Inspector.Config
                 }
             }
 
-            SirenixEditorGUI.Title("配置属性","", TextAlignment.Left,true);
-            this.configInstanceMap[this.curSelectConfigType].Item2.Draw(false);
+            SirenixEditorGUI.Title("配置属性", "", TextAlignment.Left, true);
+            this.configInstanceMap.TryGetValue(this.curSelectConfigType, out var inst);
+            inst?.Item2.Draw(false);
         }
 
+
+        /// <summary>
+        /// bottom渲染
+        /// </summary>
+        public void ONGUI_Bottom()
+        {
+            GUILayout.Space(10);
+            if (GUILayout.Button("保存", GUILayout.Height(30)))
+            {
+                SaveCurrentConfig(true);
+            }
+        }
+
+        /// <summary>
+        /// 选择新Config
+        /// </summary>
+        private void SelectNewConfig(string configPath, bool isSaveCurrentConfig)
+        {
+            //保存last配置
+            if (isSaveCurrentConfig)
+            {
+                SaveCurrentConfig();
+            }
+
+            //赋值
+            var assetText = File.ReadAllText(configPath);
+            var (datalist, processorlist) = GameConfigManager.Inst.LoadConfig(assetText);
+            //赋值新的
+            configInstanceMap = new Dictionary<Type, Tuple<ConfigDataBase, PropertyTree>>();
+            var allconfigtype = GameConfigManager.Inst.GetAllClassDatas();
+            foreach (var cd in allconfigtype)
+            {
+                var nestedType = cd.Type.GetNestedType("Config");
+                if (nestedType != null)
+                {
+                    //寻找本地配置
+                    var configData = datalist.FirstOrDefault((c) => c.ClassType == nestedType.FullName);
+                    //不存在则创建新的配置对象
+                    if (configData == null)
+                    {
+                        configData = Activator.CreateInstance(nestedType) as ConfigDataBase;
+                    }
+
+                    configInstanceMap[cd.Type] = new Tuple<ConfigDataBase, PropertyTree>(configData, PropertyTree.Create(configData));
+                }
+            }
+
+            curSelectConfigPath = configPath;
+            //设置到面板
+            var go = GameObject.FindObjectOfType<BDLauncher>();
+            go.ConfigText = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath);
+            //
+            EditorUtility.SetDirty(go);
+        }
 
         /// <summary>
         /// 获取所有配置path
@@ -221,38 +301,35 @@ namespace BDFramework.Editor.Inspector.Config
                 config.ClassType = config.GetType().FullName;
             }
 
-            var jsonConfig = JsonMapper.ToJson(configList, true);
-            FileHelper.WriteAllText(filePath, jsonConfig);
+            var json = JsonMapper.ToJson(configList, true);
+            if (File.Exists(filePath))
+            {
+                var exsitFile = File.ReadAllText(filePath);
+                if (exsitFile == json)
+                {
+                    return;
+                }
+            }
+
+            FileHelper.WriteAllText(filePath, json);
             //
-            Debug.Log("保存成功!");
+            Debug.Log($"保存成功:{filePath} \n {json}");
         }
 
         /// <summary>
-        /// 选择新Config
+        /// 保存当前Config
         /// </summary>
-        private void SelectNewConfig(string configPath)
+        private void SaveCurrentConfig(bool isNeedTips = false)
         {
-            //赋值
-            var assetText = AssetDatabase.LoadAssetAtPath<TextAsset>(configPath);
-            var (datalist, processorlist) = GameConfigManager.Inst.LoadConfig(assetText.text);
-            //赋值新的
-            configInstanceMap = new Dictionary<Type, Tuple<object, PropertyTree>>();
-            var allconfigtype = GameConfigManager.Inst.GetAllClassDatas();
-            foreach (var cd in allconfigtype)
+            if (isNeedTips && !EditorUtility.DisplayDialog("提示", $"是否保存到：{curSelectConfigPath}", "OK", "Cancel"))
             {
-                var nestedType = cd.Type.GetNestedType("Config");
-                if (nestedType != null)
-                {
-                    //寻找本地配置
-                    var configData = datalist.FirstOrDefault((c) => c.ClassType == nestedType.FullName);
-                    //不存在则创建新的
-                    if (configData == null)
-                    {
-                        configData = Activator.CreateInstance(nestedType) as ConfigDataBase;
-                    }
+                return;
+            }
 
-                    configInstanceMap[cd.Type] = new Tuple<object, PropertyTree>(configData, PropertyTree.Create(configData));
-                }
+            if (!string.IsNullOrEmpty(curSelectConfigPath))
+            {
+                var configlist = this.configInstanceMap.Select((i) => i.Value.Item1).ToList();
+                SaveConfig(curSelectConfigPath, configlist);
             }
         }
     }

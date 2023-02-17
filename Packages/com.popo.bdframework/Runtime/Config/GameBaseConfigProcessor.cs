@@ -43,26 +43,12 @@ namespace BDFramework.Configure
             [HorizontalGroup("a/a6")]
             public bool IsDebugLog = true;
 
-
-            [LabelText("文件服务器")]
-            [HorizontalGroup("a/a7")]
-            public string FileServerUrl = "192.168.8.68";
-
-            [LabelText("Gate服务器")]
-            [HorizontalGroup("a/a8")]
-            public string GateServerIp = "";
-
-            [HorizontalGroup("a/a9")]
-            public int Port;
-
+            
             [LabelText("是否热更")]
             [HorizontalGroup("a/a10")]
             public bool IsHotfix = false;
 
-            [LabelText("是否联网")]
-            [HorizontalGroup("a/a11")]
-            public bool IsNeedNet = false;
-
+            
             [Space(5)]
             [LabelText("客户端版本")]
             [HorizontalGroup("a/a12")]

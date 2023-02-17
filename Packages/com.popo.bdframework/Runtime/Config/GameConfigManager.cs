@@ -62,20 +62,23 @@ namespace BDFramework.Configure
             var jsonObj = JsonMapper.ToObject(configText);
             //按tag顺序执行
             foreach (var cd in classDataList)
-            {
-                foreach (JsonData jo in jsonObj)
+            { 
+                var nestType = cd.Type.GetNestedType("Config");
+                if (nestType != null)
                 {
-                    //查询内部类
-                    var clsType = jo[nameof(ConfigDataBase.ClassType)].GetString();
-                    var nestType = cd.Type.GetNestedType(clsType);
-                    //实例化内部类
-                    if (nestType != null)
+                    foreach (JsonData jo in jsonObj)
                     {
-                        var configData = JsonMapper.ToObject(nestType, jo.ToJson()) as ConfigDataBase;
-                        var configProcessor = CreateInstance<AConfigProcessor>(cd);
-                        retDatalist.Add(configData);
-
-                        break;
+                        //查询内部类
+                        var clsTypeName = jo[nameof(ConfigDataBase.ClassType)].GetString();
+                        //实例化内部类
+                        if (nestType.FullName == clsTypeName)
+                        {
+                            var configData = JsonMapper.ToObject(nestType, jo.ToJson()) as ConfigDataBase;
+                            var configProcessor = CreateInstance<AConfigProcessor>(cd);
+                            retDatalist.Add(configData);
+                            retProcessorList.Add(configProcessor);
+                            break;
+                        }
                     }
                 }
             }
