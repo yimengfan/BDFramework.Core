@@ -22,6 +22,7 @@ namespace BDFramework.Editor.Table
             //判断是否导入设置
             if (BDEditorApplication.BDFrameworkEditorSetting.BuildSqlSetting.IsForceImportChangedExcelOnWillEnterPlaymode)
             {
+                Debug.Log("【EditorTask】数据库校验...");
                 var dbPath = SqliteLoder.GetLocalDBPath(Application.streamingAssetsPath, BApplication.RuntimePlatform);
                 //获取差异
                 var (changedExcelList, newEcxcelInfoMap) = ExcelEditorTools.GetChangedExcelsFromLocalSql(dbPath);
@@ -71,6 +72,7 @@ namespace BDFramework.Editor.Table
                 //     ExcelEditorTools.SaveLocalDBCacheInfo(dbPath);
                 // }
                 //保存配置
+                Debug.Log("【EditorTask】校验完成!");
             }
         }
     }

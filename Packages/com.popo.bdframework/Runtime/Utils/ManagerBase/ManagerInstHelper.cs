@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -21,13 +22,12 @@ namespace BDFramework.Mgr
         /// </summary>
         /// <param name="types"></param>
         /// <returns></returns>
-        static public void Load(Type[] types)
+        static public void Load(IEnumerable<Type> types)
         {
             BDebug.LogWatchBegin("主工程管理器");
             //管理器列表
-            for (int i = 0; i < types.Length; i++)
+            foreach (var type in types)
             {
-                var type = types[i];
                 if (type != null && type.IsClass && (!type.IsAbstract) && typeof(IMgr).IsAssignableFrom(type))
                 {
                     // BDebug.Log("[main]加载管理器-" + type, "green");
@@ -64,34 +64,33 @@ namespace BDFramework.Mgr
 
 
             //遍历type执行逻辑
-            for (int i = 0; i < types.Length; i++)
+            foreach (var type in types)
             {
-                var type = types[i];
-                var mgrAttributes = type.GetCustomAttributes<ManagerAttribute>(false);
-                if (mgrAttributes == null)
+                if (type != null && type.IsClass)
                 {
-                    continue;
-                }
-
-                foreach (var mgrAttribute in mgrAttributes)
-                {
-                    //注册类型
-                    foreach (var mgr in mgrList)
+                    var mgrAttributes = type.GetCustomAttributes<ManagerAttribute>(false).ToArray();
+                    if (mgrAttributes != null)
                     {
-                        mgr.CheckType(type, mgrAttribute);
+                        //注册类型
+                        foreach (var mgr in mgrList)
+                        {
+                            var ret = mgr.CheckType(type, mgrAttributes);
+                            if (ret)
+                            {
+                                break;
+                            }
+                        }
                     }
                 }
             }
 
             BDebug.LogWatchEnd("主工程管理器");
-            
+
             //管理器初始化
             foreach (var mgr in mgrList)
             {
                 mgr.Init();
             }
-            
-            
         }
 
 

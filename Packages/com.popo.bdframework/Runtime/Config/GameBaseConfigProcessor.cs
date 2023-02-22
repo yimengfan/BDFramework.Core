@@ -8,7 +8,7 @@ namespace BDFramework.Configure
     /// <summary>
     /// 游戏基本数据处理器
     /// </summary>
-    [GameConfig(-9999,"基本")]
+    [GameConfig(-9999,"框架")]
     public class GameBaseConfigProcessor : AConfigProcessor
     {
         /// <summary>

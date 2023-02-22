@@ -57,7 +57,7 @@ public class WindowPreconfig : MonoBehaviour
     void Onclick_PassAndLaunch()
     {
         //直接启动
-        BDLauncher.Inst.Launch(this.GetType().Assembly.GetTypes(), GameLogicCLRBinding.Bind);
+        BDLauncher.Inst.Launch( GameLogicCLRBinding.Bind);
         //
         this.StartCoroutine(IE_Destroy());
     }

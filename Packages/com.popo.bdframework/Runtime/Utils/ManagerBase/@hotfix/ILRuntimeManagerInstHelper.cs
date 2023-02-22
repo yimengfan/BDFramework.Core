@@ -17,13 +17,12 @@ namespace BDFramework.HotFix.Mgr
         /// </summary>
         /// <param name="types"></param>
         /// <returns></returns>
-        static public List<IMgr> LoadManagerInstance(Type[] types)
+        static public List<IMgr> LoadManagerInstance(IEnumerable<Type> types)
         {
             //管理器列表
             var mgrList = new List<IMgr>();
-            for (int i = 0; i < types.Length; i++)
+            foreach (var type in types)
             {
-                var type = types[i];
                 if (type != null && type.BaseType != null && type.BaseType.FullName != null)
                 {
                     if (type.BaseType.FullName.Contains(".ManagerBase`2")) //这里ILR里面只能这么做，丑但有效
@@ -41,6 +40,7 @@ namespace BDFramework.HotFix.Mgr
                     }
                 }
             }
+
             //按执行顺序排序
             //按执行顺序排序
             mgrList.Sort((a, b) =>
@@ -53,26 +53,28 @@ namespace BDFramework.HotFix.Mgr
                 return aOrder.CompareTo(bOrder);
             });
 
-            
-            BDebug.Log("[hotfix]管理器加载完成" , "green");
-            //遍历type执行逻辑
-            for (int i = 0; i < types.Length; i++)
-            {
-                var type = types[i];
-                var mgrAttribute = type.GetAttributeInILRuntime<ManagerAttribute>();
-                if (mgrAttribute == null)
-                {
-                    continue;
-                }
 
-                //注册类型
-                foreach (var iMgr in mgrList)
+            BDebug.Log("[hotfix]管理器加载完成", "green");
+            foreach (var type in types)
+            {
+                if (type != null && type.IsClass)
                 {
-                    iMgr.CheckType(type, mgrAttribute);
+                    var mgrAttributes = type.GetAttributeInILRuntimes<ManagerAttribute>();
+                    if (mgrAttributes != null)
+                    {
+                        //注册类型
+                        foreach (var mgr in mgrList)
+                        {
+                            var ret = mgr.CheckType(type, mgrAttributes);
+                            if (ret)
+                            {
+                                break;
+                            }
+                        }
+                    }
                 }
             }
-
-
+            
             //管理器初始化
             foreach (var m in mgrList)
             {

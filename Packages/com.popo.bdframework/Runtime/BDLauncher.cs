@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using BDFramework.Asset;
 using BDFramework.Configure;
@@ -8,7 +9,9 @@ using BDFramework.GameStart;
 using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
+using BDFramework.StringEx;
 using LitJson;
+using ServiceStack;
 using UnityEngine;
 
 
@@ -20,7 +23,7 @@ namespace BDFramework
         /// <summary>
         /// 框架版本号
         /// </summary>
-        public const string Version  = "2.1.0";
+        public const string Version = "2.1.0";
 
         /// <summary>
         /// 客户端配置信息
@@ -28,17 +31,14 @@ namespace BDFramework
         [HideInInspector]
         public GameBaseConfigProcessor.Config Config
         {
-            get
-            {
-                return GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
-            }
+            get { return GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>(); }
         }
-        
+
         /// <summary>
         /// 客户端包信息
         /// </summary>
-         public ClientPackageBuildInfo ClientBuildInfo { get;  set; }
-        
+        public ClientPackageBuildInfo ClientBuildInfo { get; set; }
+
         /// <summary>
         /// Config的Text
         /// </summary>
@@ -90,7 +90,7 @@ namespace BDFramework
             {
                 BDebug.LogError("GameConfig配置为null,请检查!");
             }
-            
+
             //添加不删除的组件
             if (Application.isPlaying)
             {
@@ -109,28 +109,38 @@ namespace BDFramework
         /// </summary>
         /// <param name="mainProjectTypes">Editor模式下,UPM隔离了DLL需要手动传入</param>
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
-        public void Launch(Type[] mainProjectTypes, Action<bool> clrBindingAction, string gameId = "default",Action launchSuccessCallback = null)
+        public void Launch(Action<bool> clrBindingAction, string gameId = "default", Action launchSuccessCallback = null)
         {
             BDebug.Log("【Launch】Persistent:" + Application.persistentDataPath);
             BDebug.Log("【Launch】StreamingAsset:" + Application.streamingAssetsPath);
-            
+
             //list
             BDebug.LogWatchBegin("加载所有DLL-types");
             var typeList = new List<Type>();
             Assembly[] assemblyList = System.AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblyList)
             {
-                if (!assembly.FullName.Equals("editor", StringComparison.OrdinalIgnoreCase))
+                //剔除只加载 BDFrame，默认的Assembly-CSharp，和Game.开头的DLL
+                if (assembly.FullName.StartsWith("BDFramework")
+                    || assembly.FullName.StartsWith("Assembly-CSharp,")
+                    || assembly.FullName.StartsWith("Assembly-CSharp-firstpass,")
+                    || assembly.FullName.StartsWith("Game."))
                 {
-                    typeList.AddRange(assembly.GetTypes());
+                    var ts = assembly.GetTypes().Where((t) => t != null && t.IsClass && !t.IsNested);
+                    typeList.AddRange(ts);
                 }
             }
+
+#if UNITY_EDITOR
+            typeList.Sort((a, b) => a.FullName.CompareTo(b.FullName));
+#endif
+            var types = typeList.ToArray();
             BDebug.LogWatchEnd("加载所有DLL-types");
-            
-            
+
+
             //主工程启动
             IGameStart mainStart;
-            foreach (var type in mainProjectTypes)
+            foreach (var type in types)
             {
                 //TODO 这里有可能先访问到 IGamestart的Adaptor
                 if (type.IsClass && type.GetInterface(nameof(IGameStart)) != null)
@@ -150,10 +160,9 @@ namespace BDFramework
 
 
             //执行主工程逻辑
-            BDebug.Log("【Launch】主工程管理器初始化..","red");
-            ManagerInstHelper.Load(mainProjectTypes);
+            BDebug.Log("【Launch】主工程管理器初始化..", "red");
+            ManagerInstHelper.Load(types);
             GameConfigLoder.Load();
-            
             //开始资源检测
             BDebug.Log("【Launch】框架资源版本验证!");
             ClientAssetsHelper.CheckBasePackageVersion(BApplication.RuntimePlatform, () =>
@@ -163,7 +172,7 @@ namespace BDFramework
                 //2.sql初始化
                 SqliteLoder.Init(Config.SQLRoot);
                 //3.脚本,这个启动会开启所有的逻辑
-                ScriptLoder.Init(Config.CodeRoot, Config.CodeRunMode, mainProjectTypes, clrBindingAction);
+                ScriptLoder.Init(Config.CodeRoot, Config.CodeRunMode, types, clrBindingAction);
                 //触发回调
                 launchSuccessCallback?.Invoke();
             });

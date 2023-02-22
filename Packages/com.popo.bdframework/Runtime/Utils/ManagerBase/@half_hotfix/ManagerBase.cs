@@ -64,22 +64,29 @@ namespace BDFramework.Mgr
         /// 检测类型
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="attribute"></param>
-        virtual public void CheckType(Type type, ManagerAttribute attribute)
+        /// <param name="attributes"></param>
+        virtual public bool CheckType(Type type, ManagerAttribute[] attributes)
         {
             //var vAttr = attribute as V;
-
-            if (attribute is V vAttr)
+            bool ret = false;
+            foreach (var attr in attributes)
             {
-                if (vAttr.IntTag != -1)
+                if (attr is V vAttr)
                 {
-                    SaveAttribute(vAttr.IntTag, new ClassData() {Attribute = vAttr, Type = type});
-                }
-                else if (vAttr.Tag != null)
-                {
-                    SaveAttribute(vAttr.Tag, new ClassData() {Attribute = vAttr, Type = type});
+                    if (vAttr.IntTag != -1)
+                    {
+                        SaveAttribute(vAttr.IntTag, new ClassData() {Attribute = vAttr, Type = type});
+                    }
+                    else if (vAttr.Tag != null)
+                    {
+                        SaveAttribute(vAttr.Tag, new ClassData() {Attribute = vAttr, Type = type});
+                    }
+
+                    ret = true;
                 }
             }
+            
+            return ret;
         }
 
 
@@ -97,7 +104,7 @@ namespace BDFramework.Mgr
         /// </summary>
         virtual public void Start()
         {
-            this.IsStarted = false;
+            this.IsStarted = true;
         }
 
         /// <summary>

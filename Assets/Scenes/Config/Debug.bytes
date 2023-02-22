@@ -26,13 +26,13 @@
   },
   {
     "Test1" : "111",
-    "Test2" : "111",
+    "Test2" : "111333",
     "Test3" : "111",
     "ClassType" : "Game.Config.TestConfigProcessor+Config"
   },
   {
     "Test1" : "222",
-    "Test2" : "222",
+    "Test2" : "2222222",
     "Test3" : "222",
     "ClassType" : "Game.Config.TestConfigProcessor2+Config"
   },

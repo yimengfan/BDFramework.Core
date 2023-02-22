@@ -23,7 +23,7 @@ namespace Game.Config
         {
             var con = config as Config;
             
-            Debug.Log($"测试条目3:\n{JsonMapper.ToJson(con,true)}");
+            Debug.Log($"[配置中心]测试条目1:\n{JsonMapper.ToJson(con,true)}");
         }
     }
 }

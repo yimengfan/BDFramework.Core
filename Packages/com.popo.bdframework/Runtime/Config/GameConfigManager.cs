@@ -41,6 +41,7 @@ namespace BDFramework.Configure
             base.Start();
             //执行
             var (dataList, processorList) = LoadConfig(BDLauncher.Inst.ConfigText.text);
+            configList = new List<ConfigDataBase>(dataList);
             for (int i = 0; i < dataList.Count; i++)
             {
                 processorList[i].OnConfigLoad(dataList[i]);

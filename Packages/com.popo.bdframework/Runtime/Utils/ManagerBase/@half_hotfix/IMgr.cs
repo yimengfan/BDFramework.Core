@@ -29,8 +29,8 @@ namespace BDFramework.Mgr
         /// 类型检测
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="attribute"></param>
-        void CheckType(Type type, ManagerAttribute attribute);
+        /// <param name="attributes"></param>
+        bool CheckType(Type type, ManagerAttribute[] attributes);
 
         /// <summary>
         /// 创建实例
