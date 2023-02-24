@@ -85,7 +85,7 @@ namespace BDFramework.Mgr
                     ret = true;
                 }
             }
-            
+
             return ret;
         }
 
@@ -112,22 +112,18 @@ namespace BDFramework.Mgr
         /// </summary>
         /// <param name="tag"></param>
         /// <returns></returns>
-        public ClassData GetClassData(int tag)
+        public ClassData GetClassData(object tag)
         {
             ClassData classData = null;
-            this.ClassDataMap_IntKey.TryGetValue(tag, out classData);
-            return classData;
-        }
-
-        /// <summary>
-        /// 通过tag 获取class信息
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <returns></returns>
-        public ClassData GetClassData(string tag)
-        {
-            ClassData classData = null;
-            this.ClassDataMap_StringKey.TryGetValue(tag, out classData);
+            if (tag is int i)
+            {
+                this.ClassDataMap_IntKey.TryGetValue(i, out classData);
+            }
+            else if (tag is string s)
+            {
+                this.ClassDataMap_StringKey.TryGetValue(s, out classData);
+            }
+            
             return classData;
         }
 
@@ -205,19 +201,16 @@ namespace BDFramework.Mgr
         /// </summary>
         /// <param name="tag"></param>
         /// <param name="data"></param>
-        public void SaveAttribute(int tag, ClassData data)
+        private void SaveAttribute(object tag, ClassData data)
         {
-            this.ClassDataMap_IntKey[tag] = data;
-        }
-
-        /// <summary>
-        /// 保存属性
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <param name="data"></param>
-        public void SaveAttribute(string tag, ClassData data)
-        {
-            this.ClassDataMap_StringKey[tag] = data;
+            if (tag is int i)
+            {
+                this.ClassDataMap_IntKey[i] = data;
+            }
+            else if (tag is string s)
+            {
+                this.ClassDataMap_StringKey[s] = data;
+            }
         }
 
 
@@ -254,7 +247,7 @@ namespace BDFramework.Mgr
         /// <param name="args"></param>
         /// <typeparam name="T2"></typeparam>
         /// <returns></returns>
-        public T2 CreateInstance<T2>(int tag, params object[] args) where T2 : class
+        public T2 CreateInstance<T2>(object tag, params object[] args) where T2 : class
         {
             var cd = GetClassData(tag);
             if (cd == null)
@@ -265,24 +258,6 @@ namespace BDFramework.Mgr
 
             return CreateInstance<T2>(cd, args);
         }
-
-        /// <summary>
-        /// 创建实例
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <param name="args"></param>
-        /// <typeparam name="T2"></typeparam>
-        /// <returns></returns>
-        public T2 CreateInstance<T2>(string tag, params object[] args) where T2 : class
-        {
-            var cd = GetClassData(tag);
-            if (cd == null)
-            {
-                BDebug.LogError("没有找到:" + tag + " -" + typeof(T2).Name);
-                return null;
-            }
-
-            return CreateInstance<T2>(cd, args);
-        }
+        
     }
 }

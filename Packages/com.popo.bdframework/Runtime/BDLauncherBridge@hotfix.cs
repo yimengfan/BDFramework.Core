@@ -11,10 +11,6 @@ using BDFramework.UFlux;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// using BDFramework.UFlux;
-// using BDFramework.UnitTest;
-
-
 public class BDLauncherBridge
 {
     static private IHotfixGameStart hotfixStart = null;
@@ -26,20 +22,11 @@ public class BDLauncherBridge
     static public void Start(Type[] mainProjectTypes = null, Type[] hotfixTypes = null)
     {
         //UI组件类型注册
-        List<Type> types = new List<Type>();
-        types.AddRange(typeof(Button).Assembly.GetTypes()); //Unity
-        types.AddRange(typeof(IButton).Assembly.GetTypes()); //BDFramework.Core
-        types.AddRange(mainProjectTypes); //游戏业务逻辑
-        if (Application.isEditor)
-        {
-            types = types.Distinct().ToList();
-        }
-
         //ui类型
         var uitype = typeof(UIBehaviour);
-        for (int i = 0; i < types.Count; i++)
+        for (int i = 0; i < mainProjectTypes.Length; i++)
         {
-            var type = types[i];
+            var type = mainProjectTypes[i];
             //注册所有uiComponent
             bool ret = type.IsSubclassOf(uitype);
             if (ret)

@@ -115,29 +115,7 @@ namespace BDFramework
             BDebug.Log("【Launch】StreamingAsset:" + Application.streamingAssetsPath);
 
             //list
-            BDebug.LogWatchBegin("加载所有DLL-types");
-            var typeList = new List<Type>();
-            Assembly[] assemblyList = System.AppDomain.CurrentDomain.GetAssemblies();
-            foreach (var assembly in assemblyList)
-            {
-                //剔除只加载 BDFrame，默认的Assembly-CSharp，和Game.开头的DLL
-                if (assembly.FullName.StartsWith("BDFramework")
-                    || assembly.FullName.StartsWith("Assembly-CSharp,")
-                    || assembly.FullName.StartsWith("Assembly-CSharp-firstpass,")
-                    || assembly.FullName.StartsWith("Game."))
-                {
-                    var ts = assembly.GetTypes().Where((t) => t != null && t.IsClass && !t.IsNested);
-                    typeList.AddRange(ts);
-                }
-            }
-
-#if UNITY_EDITOR
-            typeList.Sort((a, b) => a.FullName.CompareTo(b.FullName));
-#endif
-            var types = typeList.ToArray();
-            BDebug.LogWatchEnd("加载所有DLL-types");
-
-
+            var types = ManagerInstHelper.GetMainProjectTypes();
             //主工程启动
             IGameStart mainStart;
             foreach (var type in types)
@@ -162,7 +140,8 @@ namespace BDFramework
             //执行主工程逻辑
             BDebug.Log("【Launch】主工程管理器初始化..", "red");
             ManagerInstHelper.Load(types);
-            GameConfigLoder.Load();
+            //加载框架配置
+            GameConfigLoder.LoadFrameBaseConfig();
             //开始资源检测
             BDebug.Log("【Launch】框架资源版本验证!");
             ClientAssetsHelper.CheckBasePackageVersion(BApplication.RuntimePlatform, () =>

@@ -6,15 +6,14 @@
     public class GameConfigLoder
     {
         /// <summary>
-        /// 加载
+        /// 加载框架基本配置
         /// </summary>
-        public static void Load()
+        public static void LoadFrameBaseConfig()
         {
             if (GameConfigManager.Inst != null)
             {
                 GameConfigManager.Inst.Start();
             }
-            
         }
     }
 }

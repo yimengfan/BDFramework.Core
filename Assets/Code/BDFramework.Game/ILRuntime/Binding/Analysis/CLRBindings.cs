@@ -68,14 +68,11 @@ namespace ILRuntime.Runtime.Generated
             System_Int64_Binding.Register(app);
             System_Int32_Binding.Register(app);
             System_DateTime_Binding.Register(app);
-            System_Collections_Generic_List_1_Type_Binding.Register(app);
-            System_Reflection_Assembly_Binding.Register(app);
-            System_Linq_Enumerable_Binding.Register(app);
             System_Reflection_MemberInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Type_Binding.Register(app);
-            BDFramework_Mgr_ManagerInstHelper_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
+            BDFramework_Mgr_ManagerInstHelper_Binding.Register(app);
             System_Activator_Binding.Register(app);
             BDFramework_BDLauncher_Binding.Register(app);
             System_Array_Binding.Register(app);
@@ -89,6 +86,8 @@ namespace ILRuntime.Runtime.Generated
             Google_Protobuf_MessageParser_1_IMessageAdapter_Binding_Adaptor_Binding.Register(app);
             Google_Protobuf_Collections_RepeatedField_1_IMessageAdapter_Binding_Adaptor_Binding.Register(app);
             Google_Protobuf_FieldCodec_Binding.Register(app);
+            System_Collections_Generic_IEnumerable_1_Type_Binding.Register(app);
+            System_Collections_Generic_IEnumerator_1_Type_Binding.Register(app);
             System_Reflection_PropertyInfo_Binding.Register(app);
             System_Reflection_CustomAttributeExtensions_Binding.Register(app);
             BDFramework_Mgr_ManagerOrder_Binding.Register(app);
@@ -113,6 +112,9 @@ namespace ILRuntime.Runtime.Generated
             BDFramework_Sql_SqliteLoder_Binding.Register(app);
             System_Diagnostics_Stopwatch_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding.Register(app);
+            System_Collections_Generic_List_1_Type_Binding.Register(app);
+            System_Reflection_Assembly_Binding.Register(app);
+            System_Linq_Enumerable_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
