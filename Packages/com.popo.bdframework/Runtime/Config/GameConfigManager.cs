@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Mgr;
@@ -13,7 +14,8 @@ namespace BDFramework.Configure
     public class GameConfigAttribute : ManagerAttribute
     {
         public string Title = "";
-        public GameConfigAttribute(int intTag,string tile) : base(intTag)
+
+        public GameConfigAttribute(int intTag, string tile) : base(intTag)
         {
             Title = tile;
         }
@@ -63,7 +65,7 @@ namespace BDFramework.Configure
             var jsonObj = JsonMapper.ToObject(configText);
             //按tag顺序执行
             foreach (var cd in classDataList)
-            { 
+            {
                 var nestType = cd.Type.GetNestedType("Config");
                 if (nestType != null)
                 {
@@ -100,6 +102,59 @@ namespace BDFramework.Configure
         }
 
 
+        /// <summary>
+        /// 创建新的配置
+        /// </summary>
+        /// <returns></returns>
+        public List<ConfigDataBase> CreateNewConfig()
+        {
+            List<ConfigDataBase> list = new List<ConfigDataBase>();
+            var allconfigtype = GameConfigManager.Inst.GetAllClassDatas();
+            foreach (var cd in allconfigtype)
+            {
+                var configType = cd.Type.GetNestedType("Config");
+                if (configType != null)
+                {
+                    var configInstance = Activator.CreateInstance(configType) as ConfigDataBase;
+                    list.Add(configInstance);
+                }
+            }
 
+            return list;
+        }
+
+
+        /// <summary>
+        /// 读取config
+        /// </summary>
+        /// <param name="configText"></param>
+        public Dictionary<Type,ConfigDataBase> ReadConfig(string configText)
+        {
+            //type=> 主class的type
+            var map = new Dictionary<Type, ConfigDataBase>();
+            
+            var (datalist, processorlist) = LoadConfig(configText);
+            //赋值新的
+            var allconfigtype = GameConfigManager.Inst.GetAllClassDatas();
+            foreach (var cd in allconfigtype)
+            {
+                var nestedType = cd.Type.GetNestedType("Config");
+                if (nestedType != null)
+                {
+                    //寻找本地配置
+                    var configData = datalist.FirstOrDefault((c) => c.ClassType == nestedType.FullName);
+                    //不存在则创建新的配置对象
+                    if (configData == null)
+                    {
+                        configData = Activator.CreateInstance(nestedType) as ConfigDataBase;
+                    }
+
+                    map[cd.Type] = configData;
+                }
+            }
+            
+            return map;
+        }
+        
     }
 }

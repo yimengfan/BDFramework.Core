@@ -17,6 +17,7 @@ namespace BDFramework.Editor.Inspector.Config
     [CustomEditor(typeof(BDFramework.Config))]
     public class Inspector_Config : UnityEditor.Editor
     {
+      static  private string FILE_SUFFIX = ".bytes";
         /// <summary>
         /// 配置path
         /// </summary>
@@ -200,13 +201,32 @@ namespace BDFramework.Editor.Inspector.Config
         }
 
 
+        private string configName = "newConfig";
         /// <summary>
         /// bottom渲染
         /// </summary>
         public void ONGUI_Bottom()
         {
             GUILayout.Space(10);
-            if (GUILayout.Button("保存", GUILayout.Height(30)))
+            
+            GUILayout.BeginHorizontal();
+            {
+                configName = EditorGUILayout.TextArea(configName ,GUILayout.Width(200));
+                GUILayout.Space(20);
+                if(GUILayout.Button("创建",GUILayout.Width(60)))
+                {
+                    if (configName.Contains(".") || configName.Contains("/"))
+                    {
+                        EditorUtility.DisplayDialog("提示", "配置名非法", "OK");
+                        return;
+                    }
+                    CreateConfig(configName);
+                }
+            }
+            GUILayout.EndHorizontal();
+
+
+            if (GUILayout.Button("保存 (修改后点击!)", GUILayout.Height(30)))
             {
                 SaveCurrentConfig(true);
             }
@@ -225,27 +245,15 @@ namespace BDFramework.Editor.Inspector.Config
 
             //赋值
             var assetText = File.ReadAllText(configPath);
-            var (datalist, processorlist) = GameConfigManager.Inst.LoadConfig(assetText);
+            var map = GameConfigManager.Inst.ReadConfig(assetText);
             //赋值新的
             configInstanceMap = new Dictionary<Type, Tuple<ConfigDataBase, PropertyTree>>();
-            var allconfigtype = GameConfigManager.Inst.GetAllClassDatas();
-            foreach (var cd in allconfigtype)
+
+            foreach (var item in map)
             {
-                var nestedType = cd.Type.GetNestedType("Config");
-                if (nestedType != null)
-                {
-                    //寻找本地配置
-                    var configData = datalist.FirstOrDefault((c) => c.ClassType == nestedType.FullName);
-                    //不存在则创建新的配置对象
-                    if (configData == null)
-                    {
-                        configData = Activator.CreateInstance(nestedType) as ConfigDataBase;
-                    }
-
-                    configInstanceMap[cd.Type] = new Tuple<ConfigDataBase, PropertyTree>(configData, PropertyTree.Create(configData));
-                }
+                configInstanceMap[item.Key] = new Tuple<ConfigDataBase, PropertyTree>(item.Value, PropertyTree.Create(item.Value));
             }
-
+           
             curSelectConfigPath = configPath;
             //设置到面板
             var go = GameObject.FindObjectOfType<BDLauncher>();
@@ -260,7 +268,7 @@ namespace BDFramework.Editor.Inspector.Config
         /// <returns></returns>
         static public string[] GetConfigPaths()
         {
-            var configList = Directory.GetFiles(CONFIG_PATH, "*.bytes", SearchOption.AllDirectories).Select((s) => s.Replace("\\", "/"))
+            var configList = Directory.GetFiles(CONFIG_PATH, "*"+ FILE_SUFFIX, SearchOption.AllDirectories).Select((s) => s.Replace("\\", "/"))
                 .Where((s) => Path.GetExtension(s) != ".meta").ToList();
 
             return configList.ToArray();
@@ -272,21 +280,11 @@ namespace BDFramework.Editor.Inspector.Config
         /// <param name="configName"></param>
         private void CreateConfig(string configName)
         {
-            List<ConfigDataBase> datalist = new List<ConfigDataBase>();
-            //type
-            var allconfigtype = GameConfigManager.Inst.GetAllClassDatas();
-            foreach (var cd in allconfigtype)
-            {
-                var configType = cd.Type.GetNestedType("Config");
-                if (configType != null)
-                {
-                    var configInstance = Activator.CreateInstance(configType) as ConfigDataBase;
-                    datalist.Add(configInstance);
-                }
-            }
-
+           var datalist = GameConfigManager.Inst.CreateNewConfig();
             //保存默认的
-            SaveConfig(IPath.Combine(CONFIG_PATH, configName + ".bytes"), datalist);
+            SaveConfig(IPath.Combine(CONFIG_PATH, configName + FILE_SUFFIX), datalist);
+            
+            AssetDatabase.Refresh();
         }
 
 
@@ -305,15 +303,20 @@ namespace BDFramework.Editor.Inspector.Config
             if (File.Exists(filePath))
             {
                 var exsitFile = File.ReadAllText(filePath);
-                if (exsitFile == json)
+                if (exsitFile != json)
                 {
-                    return;
+                    FileHelper.WriteAllText(filePath, json);
+                    //
+                    Debug.Log($"覆盖成功:{filePath} \n {json}");
                 }
             }
+            else
+            {
+                FileHelper.WriteAllText(filePath, json);
+                Debug.Log($"保存成功:{filePath} \n {json}");
+            }
 
-            FileHelper.WriteAllText(filePath, json);
-            //
-            Debug.Log($"保存成功:{filePath} \n {json}");
+;
         }
 
         /// <summary>

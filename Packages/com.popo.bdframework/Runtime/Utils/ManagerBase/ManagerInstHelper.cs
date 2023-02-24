@@ -29,7 +29,7 @@ namespace BDFramework.Mgr
                     || assembly.FullName.StartsWith("Assembly-CSharp-firstpass,") //unity未定义Standard Assets的class
                     || assembly.FullName.StartsWith("UnityEngine.UI") //UnityUI类
                     || assembly.FullName.StartsWith("Game.") //所有以Game.开头定义的Assembly,可以定义AssemblyDefine以该字符开头则会被收集
-                    ||  assembly.FullName.Contains("@main") //所有包含@main的Assembly,可以定义AssemblyDefine以该字符开头则会被收集
+                    || assembly.FullName.Contains("@main") //所有包含@main的Assembly,可以定义AssemblyDefine以该字符开头则会被收集
                    )
                 {
                     var ts = assembly.GetTypes().Where((t) => t != null && t.IsClass && !t.IsNested);
