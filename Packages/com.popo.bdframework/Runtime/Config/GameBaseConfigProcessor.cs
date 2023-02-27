@@ -1,5 +1,6 @@
 ﻿using System;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.Inspector.Config;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace BDFramework.Configure
     /// <summary>
     /// 游戏基本数据处理器
     /// </summary>
-    [GameConfig(-9999,"框架")]
+    [GameConfig(-9999, "框架基础")]
     public class GameBaseConfigProcessor : AConfigProcessor
     {
         /// <summary>
@@ -43,12 +44,12 @@ namespace BDFramework.Configure
             [HorizontalGroup("a/a6")]
             public bool IsDebugLog = true;
 
-            
+
             [LabelText("是否热更")]
             [HorizontalGroup("a/a10")]
             public bool IsHotfix = false;
 
-            
+
             [Space(5)]
             [LabelText("客户端版本")]
             [HorizontalGroup("a/a12")]
@@ -56,12 +57,12 @@ namespace BDFramework.Configure
 
 #if UNITY_EDITOR
             [HorizontalGroup("a/a12", width: 150)]
-            [LabelText("更新至所有配置")]
+            [LabelText("更新所有配置版本号")]
             [Button]
             [GUIColor(0, 1, 0)]
             public void UpdateClientToAllConfig()
             {
-                //BDFramework.Config.UpdateAllCofnigClientVersion(ClientVersionNum);
+                ConfigEditorUtil.UpdateClientVersionToAll(ClientVersionNum);
             }
 #endif
         }
