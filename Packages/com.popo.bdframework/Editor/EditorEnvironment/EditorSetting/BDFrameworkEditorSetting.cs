@@ -63,6 +63,15 @@ namespace BDFramework.Editor
         [HideLabel]
         [InlineProperty]
         public BuildAssetBundleSetting BuildAssetBundleSetting = new BuildAssetBundleSetting();
+        
+        /// <summary>
+        /// 资源打包
+        /// </summary>
+        [ShowIf(nameof(pageType), PageType.BuildPipeline)]
+        [BoxGroup("AB本地服务器")]
+        [HideLabel]
+        [InlineProperty]
+        public ABFileEditorServerSetting ABFileEditorServerSetting = new ABFileEditorServerSetting();
 
         #endregion
 
@@ -189,15 +198,22 @@ namespace BDFramework.Editor
             SVN,
             P4,
         }
+
         [LabelText("仓库类型")]
         public VCSType VcsType = VCSType.SVN;
+
         [LabelText("仓库地址")]
         public string Url = "http://127.0.0.1:20001";
+
         [LabelText("账号")]
         public string UserName = "root";
+
         [LabelText("密码")]
         public string Psw = "root";
     }
+
+
+    #region BuildPipeline 设置
 
     /// <summary>
     /// devops 设置
@@ -217,8 +233,6 @@ namespace BDFramework.Editor
 
         [LabelText("自定义仓库")]
         public List<VCSData> CustomVCSDataList = new List<VCSData>();
-
-        
     }
 
 
@@ -287,6 +301,22 @@ namespace BDFramework.Editor
         public bool IsDisableTypeTree = false;
     }
 
+    #endregion
+
+    /// <summary>
+    /// VCS仓库信息
+    /// </summary>
+    [Serializable]
+    public class ABFileEditorServerSetting
+    {
+        [LabelText("PlayMode启动本机AB Server")]
+        public bool IsAutoStartLocalABServer = false;
+
+    }
+    
+
+    #region 打包证书设置
+
     /// <summary>
     /// Android打包设置
     /// </summary>
@@ -334,7 +364,7 @@ namespace BDFramework.Editor
         [LabelText("生成Xcode后执行")]
         [LabelWidth(200)]
         public string ExcuteShell = "DevOps/CI/BuildIOS.shell";
-        
+
         [Space(10)]
         [LabelText("包体仓库")]
         [LabelWidth(100)]
@@ -348,7 +378,7 @@ namespace BDFramework.Editor
     public class WindowsPlayerSetting
     {
         public string NULL;
-        
+
         [Space(10)]
         [LabelText("包体仓库")]
         [LabelWidth(100)]
@@ -362,10 +392,12 @@ namespace BDFramework.Editor
     public class MacOSXSetting
     {
         public string NULL;
-        
+
         [Space(10)]
         [LabelText("包体仓库")]
         [LabelWidth(100)]
         public VCSData VSC = new VCSData();
     }
+
+    #endregion
 }

@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Code.Game.Editor
@@ -31,7 +32,14 @@ namespace Code.Game.Editor
             var idx = GameViewUtils.FindSize(GameViewUtils.GetCurrentGroupType(), screenView.x, screenView.y);
             if (idx >= 0)
             {
-                GameViewUtils.SetSize(idx);
+                try
+                {
+                    GameViewUtils.SetSize(idx);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("设置窗口[1080*1920]失败 :" + screenView);
+                }
             }
             else
             {

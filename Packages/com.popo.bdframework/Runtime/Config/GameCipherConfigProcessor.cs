@@ -19,7 +19,7 @@ namespace BDFramework.Configure
             /// 数据库密码
             /// </summary>
             [LabelText("Sqlite密码")]
-            public string SqlitePassword = "password123";
+            public string SqlitePassword = "password123!!!";
             /// <summary>
             /// 公钥
             /// </summary>

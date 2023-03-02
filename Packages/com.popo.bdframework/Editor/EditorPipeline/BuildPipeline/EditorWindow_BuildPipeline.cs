@@ -21,7 +21,7 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
             var tree = new OdinMenuTree(true);
             tree.DefaultMenuStyle.IconSize = 20.00f;
 
-            var setting = BDEditorApplication.BDFrameworkEditorSetting;
+            var setting = BDEditorApplication.EditorSetting;
 
             tree.Add("Build", null, EditorIcons.SmartPhone);
             tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.Android)}", new BuildAndroid(setting.Android, setting.AndroidDebug));
@@ -52,7 +52,7 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
         //保存设置
         protected override void OnDestroy()
         {
-            BDEditorApplication.BDFrameworkEditorSetting?.Save();
+            BDEditorApplication.EditorSetting?.Save();
         }
     }
 }

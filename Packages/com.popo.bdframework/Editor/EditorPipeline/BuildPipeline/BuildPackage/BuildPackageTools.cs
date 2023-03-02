@@ -244,7 +244,7 @@ namespace BDFramework.Editor.BuildPipeline
             //开启符号表
             EditorUserBuildSettings.androidCreateSymbolsZip = true;
 
-            if (!BDEditorApplication.BDFrameworkEditorSetting.IsSetConfig())
+            if (!BDEditorApplication.EditorSetting.IsSetConfig())
             {
                 //For ci
                 throw new Exception("请注意设置apk keystore账号密码");
@@ -256,13 +256,13 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 case BuildMode.Debug:
                 {
-                    androidConfig = BDEditorApplication.BDFrameworkEditorSetting.AndroidDebug;
+                    androidConfig = BDEditorApplication.EditorSetting.AndroidDebug;
                 }
                     break;
                 case BuildMode.Release:
                 case BuildMode.Profiler:
                 {
-                    androidConfig = BDEditorApplication.BDFrameworkEditorSetting.Android;
+                    androidConfig = BDEditorApplication.EditorSetting.Android;
                 }
                     break;
             }
@@ -410,8 +410,8 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 //执行shell path
                 var shellPath = mode == BuildMode.Debug
-                    ? BDEditorApplication.BDFrameworkEditorSetting.iOSDebug.ExcuteShell
-                    : BDEditorApplication.BDFrameworkEditorSetting.iOS.ExcuteShell;
+                    ? BDEditorApplication.EditorSetting.iOSDebug.ExcuteShell
+                    : BDEditorApplication.EditorSetting.iOS.ExcuteShell;
                 if (File.Exists(shellPath))
                 {
                     //执行BuildIpa的shell

@@ -18,12 +18,12 @@ namespace BDFramework.Editor.WorkFlow
             var codes = BDEditorApplication.GetLeastHotfixCodes();
             if (codes != null && codes.Length > 0) //修改过Hotfix
             {
-                if (BDEditorApplication.BDFrameworkEditorSetting.BuildHotfixDLLSetting.IsNeedAutoBuildDll())
+                if (BDEditorApplication.EditorSetting.BuildHotfixDLLSetting.IsNeedAutoBuildDll())
                 {
                     EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, BApplication.RuntimePlatform, ScriptBuildTools.BuildMode.Debug, false);
                     Debug.Log("自动编译Hotfix.dll成功!");
                 }
-                else if (BDEditorApplication.BDFrameworkEditorSetting.BuildHotfixDLLSetting.IsHotfixCodeOutofUnityAssets())
+                else if (BDEditorApplication.EditorSetting.BuildHotfixDLLSetting.IsHotfixCodeOutofUnityAssets())
                 {
                     MoveCodeToBDWorkSpace(codes);
                 }

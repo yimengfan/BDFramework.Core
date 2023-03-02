@@ -20,7 +20,7 @@ namespace BDFramework.Editor
         /// <summary>
         /// 编辑器设置
         /// </summary>
-        static public BDFrameworkEditorSetting BDFrameworkEditorSetting { get; private set; }
+        static public BDFrameworkEditorSetting EditorSetting { get; private set; }
         
         /// <summary>
         /// Editor工作状态
@@ -33,7 +33,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public void Init()
         {
-            BDFrameworkEditorSetting = BDFrameworkEditorSetting.Load();
+            EditorSetting = BDFrameworkEditorSetting.Load();
         }
 
 

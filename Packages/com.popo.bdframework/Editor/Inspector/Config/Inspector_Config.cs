@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using BDFramework.Configure;
-using LitJson;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
@@ -17,8 +15,6 @@ namespace BDFramework.Editor.Inspector.Config
     [CustomEditor(typeof(BDFramework.Config))]
     public class Inspector_Config : UnityEditor.Editor
     {
-
-
         /// <summary>
         /// config实例map缓存
         /// </summary>
@@ -32,9 +28,8 @@ namespace BDFramework.Editor.Inspector.Config
             ONGUI_SelcectConfig();
             //渲染具体配置
             ONGUI_ConfigProperty();
-
+            //
             ONGUI_Bottom();
-            
         }
 
 
@@ -56,8 +51,8 @@ namespace BDFramework.Editor.Inspector.Config
         /// </summary>
         private Type curSelectConfigType = typeof(GameBaseConfigProcessor);
 
-       
-            /// <summary>
+
+        /// <summary>
         /// 配置列表
         /// </summary>
         private Dictionary<string, string> configMap = new Dictionary<string, string>();
@@ -85,27 +80,28 @@ namespace BDFramework.Editor.Inspector.Config
             //开始赋值
             var configPathList = ConfigEditorUtil.GetConfigPaths().ToList();
             //创建必须存在的配置
-            if (!configPathList.Exists(c => c.EndsWith("debug.bytes", StringComparison.OrdinalIgnoreCase)))
+            if (!configPathList.Exists(c => c.EndsWith("debug" + ConfigEditorUtil.FILE_SUFFIX, StringComparison.OrdinalIgnoreCase)))
             {
                 ConfigEditorUtil.CreateConfig("Debug");
             }
 
-            if (!configPathList.Exists(c => c.EndsWith("release.bytes", StringComparison.OrdinalIgnoreCase)))
+            if (!configPathList.Exists(c => c.EndsWith("release" + ConfigEditorUtil.FILE_SUFFIX, StringComparison.OrdinalIgnoreCase)))
             {
                 ConfigEditorUtil.CreateConfig("Release");
             }
 
-            if (!configPathList.Exists(c => c.EndsWith("editor.bytes", StringComparison.OrdinalIgnoreCase)))
+            if (!configPathList.Exists(c => c.EndsWith("editor" + ConfigEditorUtil.FILE_SUFFIX, StringComparison.OrdinalIgnoreCase)))
             {
                 ConfigEditorUtil.CreateConfig("Editor");
             }
+
             var newlist = ConfigEditorUtil.GetConfigPaths().ToList();
             if (newlist.Count != configPathList.Count)
             {
-                configPathList =newlist;
+                configPathList = newlist;
                 AssetDatabase.Refresh();
             }
-        
+
 
             //容错,各种异常情况判断
             if (launcher.ConfigText != null)
@@ -130,14 +126,15 @@ namespace BDFramework.Editor.Inspector.Config
 
             //渲染下拉
             var configNames = configPathList.Select((s) => Path.GetFileName(s)).ToArray();
-
             var newSelectIdx = EditorGUILayout.Popup("选择配置:", curSelectConfigIdx, configNames);
             if (configPathList.Count < newSelectIdx)
             {
                 newSelectIdx = 0;
             }
-
-            //保存config
+            
+            GUILayout.Label($"Tips: Editor{ConfigEditorUtil.FILE_SUFFIX} 会作为editor下框架工具默认获取的配置!");
+            
+            //保存configMap
             for (int i = 0; i < configNames.Length; i++)
             {
                 configMap[configNames[i]] = configPathList[i];
@@ -204,6 +201,7 @@ namespace BDFramework.Editor.Inspector.Config
 
 
         private string configName = "newConfig";
+
         /// <summary>
         /// bottom渲染
         /// </summary>
@@ -215,45 +213,53 @@ namespace BDFramework.Editor.Inspector.Config
             {
                 //同步当前到其他
                 GUI.color = Color.yellow;
-                if (GUILayout.Button($"同步[{curSelectConfigButonName}]配置" , GUILayout.Height(30)))
+                if (GUILayout.Button($"同步[{curSelectConfigButonName}]配置", GUILayout.Height(30)))
                 {
-                    if (EditorUtility.DisplayDialog("提示", $"只会同步当前[{curSelectConfigButonName}]配置至当其他Config", "OK","Cancel"))
+                    if (EditorUtility.DisplayDialog("提示", $"只会同步当前[{curSelectConfigButonName}]配置至当其他Config", "OK", "Cancel"))
                     {
                         this.configInstanceMap.TryGetValue(this.curSelectConfigType, out var inst);
                         //更新当前数据到所有
                         ConfigEditorUtil.UpdateConfigDataToAll(inst.Item1);
                     }
                 }
+
                 GUI.color = GUI.backgroundColor;
-                
+
                 GUILayout.Space(10);
                 //保存
-                if (GUILayout.Button("保存 (修改后点击!)", GUILayout.Height(30)))
+                if (GUILayout.Button("保存", GUILayout.Height(30)))
                 {
                     SaveCurrentConfig(true);
                 }
+
                 GUILayout.Space(10);
                 //创建
-                configName = EditorGUILayout.TextArea(configName ,GUILayout.Height(25));
-                if(GUILayout.Button("+",GUILayout.Width(20),GUILayout.Height(25)))
+                configName = EditorGUILayout.TextArea(configName, GUILayout.Height(25));
+                
+                if (GUILayout.Button("+", GUILayout.Width(20), GUILayout.Height(25)))
                 {
                     if (configName.Contains(".") || configName.Contains("/"))
                     {
                         EditorUtility.DisplayDialog("提示", "配置名非法", "OK");
                         return;
                     }
+
                     ConfigEditorUtil.CreateConfig(configName);
                 }
-          
-            
-            
-            
-
             }
             GUILayout.EndHorizontal();
-
-
-
+            
+            
+            GUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("Clear Persistent", GUILayout.Height(20)))
+                {
+                    Debug.Log(Application.persistentDataPath);
+                    var files = Directory.GetFiles(Application.persistentDataPath, "*");
+                    
+                }
+            }
+            GUILayout.EndHorizontal();
         }
 
         /// <summary>
@@ -277,7 +283,7 @@ namespace BDFramework.Editor.Inspector.Config
             {
                 configInstanceMap[item.Key] = new Tuple<ConfigDataBase, PropertyTree>(item.Value, PropertyTree.Create(item.Value));
             }
-           
+
             curSelectConfigPath = configPath;
             //设置到面板
             var go = GameObject.FindObjectOfType<BDLauncher>();
@@ -302,13 +308,5 @@ namespace BDFramework.Editor.Inspector.Config
                 ConfigEditorUtil.SaveConfig(curSelectConfigPath, configlist);
             }
         }
-        
-        
-        
-        
     }
-    
-    
-    
-    
 }

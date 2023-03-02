@@ -67,7 +67,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             //打包参数
             GUILayout.Space(5);
             GUILayout.Label(buildParamsDisableBuildTitle, EditorGUIHelper.LabelH4);
-            var buildAssetConf = BDEditorApplication.BDFrameworkEditorSetting?.BuildAssetBundleSetting;
+            var buildAssetConf = BDEditorApplication.EditorSetting?.BuildAssetBundleSetting;
             if (buildAssetConf != null)
             {
                 buildAssetConf.IsDisableTypeTree = EditorGUILayout.Toggle(buildParamsDisableTypeTreeLabel, buildAssetConf.IsDisableTypeTree);
@@ -213,7 +213,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         private void OnDestroy()
         {
             //保存
-            BDEditorApplication.BDFrameworkEditorSetting?.Save();
+            BDEditorApplication.EditorSetting?.Save();
         }
     }
 }

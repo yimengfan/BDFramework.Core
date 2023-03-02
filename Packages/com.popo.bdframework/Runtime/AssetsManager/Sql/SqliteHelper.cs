@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.Inspector.Config;
 using ILRuntime.CLR.Method;
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.CLR.Utils;
@@ -12,7 +13,7 @@ using ILRuntime.Runtime.Stack;
 using SQLite;
 using UnityEngine;
 
-//这里为了方便切换Sqlite版本 将三个类放在一起
+//这里为了方便切换Sqlite-net版本 将三个类放在一起
 namespace BDFramework.Sql
 {
     /// <summary>
@@ -20,7 +21,29 @@ namespace BDFramework.Sql
     /// </summary>
     static public class SqliteLoder
     {
-        public static string Password { get; set; } = "password11222!";
+        public static string password;
+
+        /// <summary>
+        /// Password
+        /// </summary>
+        public static string Password
+        {
+            get
+            {
+                if (Application.isPlaying)
+                {
+                    return password;
+                }
+#if UNITY_EDITOR
+                else
+                {
+                    var conf = ConfigEditorUtil.GetEditorConfig<GameCipherConfigProcessor.Config>();
+                    return conf.SqlitePassword;
+                }
+#endif
+            }
+            set { password = value; }
+        }
 
         /// <summary>
         /// 本地DB Path
@@ -446,11 +469,11 @@ namespace BDFramework.Sql
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.String @selection = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
+            System.String @selection = (System.String) typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
+            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime) typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
             __intp.Free(ptr_of_this_method);
 
             //调用
@@ -462,7 +485,7 @@ namespace BDFramework.Sql
                 // 创建clrTypeInstance
                 var clrType = generic.TypeForCLR;
                 var genericType = typeof(List<>).MakeGenericType(clrType);
-                var retList = (IList)Activator.CreateInstance(genericType);
+                var retList = (IList) Activator.CreateInstance(genericType);
 
                 for (int i = 0; i < result_of_this_method.Count; i++)
                 {
@@ -504,13 +527,13 @@ namespace BDFramework.Sql
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.String @selection = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
+            System.String @selection = (System.String) typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
+            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime) typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
             __intp.Free(ptr_of_this_method);
-            
+
             //调用
             var generic = method.GenericArguments[0];
             var result_of_this_method = instance_of_this_method.From(generic.ReflectionType, selection);
@@ -537,7 +560,7 @@ namespace BDFramework.Sql
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            SQLiteService instance_of_this_method = (SQLiteService)typeof(SQLiteService).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (ILRuntime.CLR.Utils.Extensions.TypeFlags)0);
+            SQLiteService instance_of_this_method = (SQLiteService) typeof(SQLiteService).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (ILRuntime.CLR.Utils.Extensions.TypeFlags) 0);
             __intp.Free(ptr_of_this_method);
 
             var generic = __method.GenericArguments[0];

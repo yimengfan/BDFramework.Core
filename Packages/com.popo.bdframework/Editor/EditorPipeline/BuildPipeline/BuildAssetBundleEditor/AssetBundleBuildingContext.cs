@@ -380,7 +380,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
 
                     //6.资源混淆
-                    if (BDEditorApplication.BDFrameworkEditorSetting.BuildAssetBundleSetting.IsEnableObfuscation)
+                    if (BDEditorApplication.EditorSetting.BuildAssetBundleSetting.IsEnableObfuscation)
                     {
                         Debug.Log("<color=green>----->6.混淆AB</color>");
                         AssetBundleToolsV2.MixAssetBundle(BuildParams.OutputPath, platform);
@@ -492,7 +492,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 BuildAssetBundleOptions.DisableLoadAssetByFileName | BuildAssetBundleOptions.DisableLoadAssetByFileNameWithExtension; //关闭使用filename加载
 
             //关闭TypeTree
-            var buildAssetConf = BDEditorApplication.BDFrameworkEditorSetting?.BuildAssetBundleSetting;
+            var buildAssetConf = BDEditorApplication.EditorSetting?.BuildAssetBundleSetting;
             if (buildAssetConf.IsDisableTypeTree)
             {
                 buildOpa |= BuildAssetBundleOptions.DisableWriteTypeTree; //关闭TypeTree

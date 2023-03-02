@@ -48,7 +48,7 @@ namespace BDFramework.Editor.Table
         /// 默认导出到当前平台目录下
         /// </summary>
         /// <param name="ouptputPath">自定义路径</param>
-        public static void AllExcel2SQLite(string ouptputPath, RuntimePlatform platform, DBType dbType = DBType.Local)
+        public static bool AllExcel2SQLite(string ouptputPath, RuntimePlatform platform, DBType dbType = DBType.Local)
         {
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnBeginBuildSqlite();
@@ -66,6 +66,7 @@ namespace BDFramework.Editor.Table
                     break;
             }
 
+            var isSuccess = true;
             //清空表日志
             SqliteHelper.DB.Connection.DropTable<TableLog>();
             foreach (var f in xlslFiles)
@@ -76,11 +77,11 @@ namespace BDFramework.Editor.Table
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e);
-                    Debug.LogError("导表失败:" + f);
-                    EditorUtility.ClearProgressBar();
+                    Debug.LogError($"导表失败:{f} \n{e}");
+                    isSuccess = false;
                 }
             }
+
             //关闭sql
             SqliteLoder.Close();
             //
@@ -91,62 +92,77 @@ namespace BDFramework.Editor.Table
             var version = BDFrameworkPipelineHelper.GetTableSVCNum(ouptputPath, platform);
             ClientAssetsHelper.GenBasePackageBuildInfo(ouptputPath, platform, tableSVC: version);
             Debug.Log("导出Sqlite完成!");
+
+
+            return isSuccess;
         }
 
         /// <summary>
         /// excel导出sqlite
         /// 需要主动连接数据库
         /// </summary>
-        /// <param name="filePath"></param>
-        public static void Excel2SQLite(string filePath, DBType dbType)
+        /// <param name="excelPath"></param>
+        public static bool Excel2SQLite(string excelPath, DBType dbType)
         {
-            filePath = IPath.FormatPathOnUnity3d(filePath); //.Replace("\\", "/").ToLower();
+            bool isSuccess = true;
+            excelPath = IPath.FormatPathOnUnity3d(excelPath);
+
             //收集所有的类型
             CollectTableTypes();
-            //
-            var excelHash = FileHelper.GetMurmurHash3(filePath);
+            var excelHash = FileHelper.GetMurmurHash3(excelPath);
+
             //table判断
             SqliteHelper.DB.Connection.CreateTable<TableLog>();
-
             var table = SqliteHelper.DB.GetTable<TableLog>();
-            var importLog = table?.Where((ie) => ie.Path == filePath).FirstOrDefault();
+            var importLog = table?.Where((ie) => ie.Path == excelPath).FirstOrDefault();
             if (importLog == null || !importLog.Hash.Equals(excelHash))
             {
                 //开始导表
-                var excel = new ExcelExchangeTools(filePath);
+                var excel = new ExcelExchangeTools(excelPath);
                 var json = excel.GetJson(dbType);
                 try
                 {
-                    Json2Sqlite(filePath, json);
+                    Json2Sqlite(excelPath, json);
                 }
                 catch (Exception e)
                 {
+                    isSuccess = false;
                     Debug.LogError(e);
                     EditorUtility.ClearProgressBar();
                 }
 
                 //插入新版本数据
-                if (importLog == null)
+                if (isSuccess)
                 {
-                    importLog = new TableLog();
-                    importLog.Path = filePath;
-                    importLog.Hash = excelHash;
-                    importLog.Date = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-                    importLog.UnityVersion = Application.unityVersion;
-                    SqliteHelper.DB.Insert(importLog);
-                }
-                else
-                {
-                    importLog.Hash = excelHash;
-                    importLog.Date = DateTime.Now.ToString();
-                    importLog.UnityVersion = Application.unityVersion;
-                    SqliteHelper.DB.Connection.Update(importLog);
+                    if (importLog == null)
+                    {
+                        importLog = new TableLog();
+                        importLog.Path = excelPath;
+                        importLog.Hash = excelHash;
+                        importLog.Date = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+                        importLog.UnityVersion = Application.unityVersion;
+                        SqliteHelper.DB.Insert(importLog);
+                    }
+                    else
+                    {
+                        importLog.Hash = excelHash;
+                        importLog.Date = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+                        importLog.UnityVersion = Application.unityVersion;
+                        SqliteHelper.DB.Connection.Update(importLog);
+                    }
                 }
             }
             else
             {
-                Debug.Log($"<color=green>【Excel2Sql】内容一致,无需导入 {Path.GetFileName(filePath)} - Hash :{excelHash} </color>");
+                Debug.Log($"<color=green>【Excel2Sql】内容一致,无需导入 {Path.GetFileName(excelPath)} - Hash :{excelHash} </color>");
             }
+
+            if (!isSuccess)
+            {
+                BDebug.LogError("注意报错信息，如果提示“SQLiteException: file is not a database”，可能是密码不对!");
+            }
+
+            return isSuccess;
         }
 
         #endregion
@@ -272,13 +288,19 @@ namespace BDFramework.Editor.Table
         public static void MenuItem_Excel2Sqlite()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            bool isSuccess = false;
             SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath, BApplication.RuntimePlatform);
             {
-                Excel2SQLite(path, DBType.Local);
+                isSuccess = Excel2SQLite(path, DBType.Local);
             }
             SqliteLoder.Close();
             EditorUtility.ClearProgressBar();
-            EditorUtility.DisplayDialog("提示", Path.GetFileName(path) + "\n恭喜你又成功导入一次表格吶~\n呐!呐!呐!呐! ", "OK");
+            //
+            if (isSuccess)
+            {
+                EditorUtility.DisplayDialog("提示", Path.GetFileName(path) + "\n恭喜你又成功导入一次表格吶~\n呐!呐!呐!呐! ", "OK");
+            }
+
             AssetDatabase.Refresh();
         }
 

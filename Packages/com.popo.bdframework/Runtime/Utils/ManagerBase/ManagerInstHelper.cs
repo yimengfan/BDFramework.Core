@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 
 
 namespace BDFramework.Mgr
@@ -58,7 +59,10 @@ namespace BDFramework.Mgr
         /// <returns></returns>
         static public void Load(IEnumerable<Type> types)
         {
-            BDebug.LogWatchBegin("主工程管理器");
+            if (Application.isPlaying)
+            {
+                BDebug.LogWatchBegin("主工程管理器");
+            }
             //管理器列表
             foreach (var type in types)
             {
@@ -118,7 +122,10 @@ namespace BDFramework.Mgr
                 }
             }
 
-            BDebug.LogWatchEnd("主工程管理器");
+            if (Application.isPlaying)
+            {
+                BDebug.LogWatchEnd("主工程管理器");
+            }
 
             //管理器初始化
             foreach (var mgr in mgrList)

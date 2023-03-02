@@ -11,11 +11,11 @@ namespace BDFramework.Editor.Table
     {
         public void OnGUI()
         {
-            if (BDEditorApplication.BDFrameworkEditorSetting == null)
+            if (BDEditorApplication.EditorSetting == null)
             {
                 return;
             }
-            var BuildSqlSetting = BDEditorApplication.BDFrameworkEditorSetting.BuildSqlSetting;
+            var BuildSqlSetting = BDEditorApplication.EditorSetting.BuildSqlSetting;
             GUILayout.BeginVertical();
             GUILayout.Label("3.表格打包", EditorGUIHelper.LabelH2);
             GUILayout.Space(5);
@@ -71,7 +71,7 @@ namespace BDFramework.Editor.Table
 
         private void OnDisable()
         {
-            BDEditorApplication.BDFrameworkEditorSetting.Save();
+            BDEditorApplication.EditorSetting.Save();
         }
     }
 }

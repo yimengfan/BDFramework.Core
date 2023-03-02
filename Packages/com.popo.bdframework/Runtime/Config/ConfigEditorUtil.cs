@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using BDFramework.Configure;
 using LitJson;
 using UnityEditor;
-using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace BDFramework.Editor.Inspector.Config
 {
@@ -14,7 +15,7 @@ namespace BDFramework.Editor.Inspector.Config
     /// </summary>
     static public class ConfigEditorUtil
     {
-        static private string FILE_SUFFIX = ".bytes";
+        static readonly public string FILE_SUFFIX = ".bytes";
 
         /// <summary>
         /// 配置path
@@ -36,18 +37,19 @@ namespace BDFramework.Editor.Inspector.Config
         /// <summary>
         /// 获取config数据
         /// </summary>
-        static public Dictionary<string,List<ConfigDataBase>> GetConfigDatas()
+        static public Dictionary<string, List<ConfigDataBase>> GetConfigDatas()
         {
-           var retMap = new Dictionary<string, List<ConfigDataBase>>();
+            var retMap = new Dictionary<string, List<ConfigDataBase>>();
             //
             var files = GetConfigPaths();
             foreach (var f in files)
             {
                 var text = File.ReadAllText(f);
-                var ret =  GameConfigManager.Inst.LoadConfig(text);
+                var ret = GameConfigManager.Inst.LoadConfig(text);
                 retMap[f] = ret.Item1;
             }
-            return retMap ;
+
+            return retMap;
         }
 
         /// <summary>
@@ -62,7 +64,7 @@ namespace BDFramework.Editor.Inspector.Config
 
             AssetDatabase.Refresh();
         }
-        
+
         /// <summary>
         /// 保存Config
         /// </summary>
@@ -115,11 +117,12 @@ namespace BDFramework.Editor.Inspector.Config
                         break;
                     }
                 }
+
                 //保存
-                SaveConfig(item.Key,item.Value);
+                SaveConfig(item.Key, item.Value);
             }
         }
-        
+
         /// <summary>
         /// 更新一个Data数据到所有
         /// </summary>
@@ -134,17 +137,33 @@ namespace BDFramework.Editor.Inspector.Config
                 {
                     var d = item.Value[i];
                     //覆盖
-                    if (d is  GameBaseConfigProcessor.Config con)
+                    if (d is GameBaseConfigProcessor.Config con)
                     {
                         con.ClientVersionNum = clientVersion;
                         break;
                     }
                 }
+
                 //保存
-                SaveConfig(item.Key,item.Value);
+                SaveConfig(item.Key, item.Value);
             }
         }
-        
+
+
+        /// <summary>
+        /// 加载EditorConfig
+        /// </summary>
+        /// <returns></returns>
+        static public T GetEditorConfig<T>()  where  T : ConfigDataBase
+        {
+            //
+            var editorPath = IPath.Combine(CONFIG_PATH, "editor" + FILE_SUFFIX);
+            var content = File.ReadAllText(editorPath);
+            //
+            var item = GameConfigManager.Inst.LoadConfig(content);
+            var find =  item.Item1.FirstOrDefault((t)=>t is T);
+            return (T) find;
+        }
     }
 #endif
 }

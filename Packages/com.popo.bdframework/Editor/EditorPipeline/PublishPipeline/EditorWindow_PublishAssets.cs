@@ -39,10 +39,7 @@ namespace BDFramework.Editor.PublishPipeline
         /// </summary>
         static private string EXPORT_PATH
         {
-            get
-            {
-                return BApplication.DevOpsPublishAssetsPath;
-            }
+            get { return BApplication.DevOpsPublishAssetsPath; }
         }
 
         private EditorWindow_Table editorTable;
@@ -114,12 +111,12 @@ namespace BDFramework.Editor.PublishPipeline
         private void OnDisable()
         {
             //保存
-            BDEditorApplication.BDFrameworkEditorSetting.Save();
+            BDEditorApplication.EditorSetting.Save();
         }
 
 
         //Runtimeform不支持flag
-        private List<RuntimePlatform> selectPlatforms = new List<RuntimePlatform>() {};
+        private List<RuntimePlatform> selectPlatforms = new List<RuntimePlatform>() { };
 
         private Dictionary<RuntimePlatform, string> platformVersionMap = new Dictionary<RuntimePlatform, string>();
 
@@ -165,8 +162,9 @@ namespace BDFramework.Editor.PublishPipeline
                         {
                             platformVersionMap[sp] = basePackageBuildInfo.Version;
                         }
+
                         //根据即将设置信息开始解析
-                        var vs =  platformVersionMap[sp] .Split('.');
+                        var vs = platformVersionMap[sp].Split('.');
                         int bigNum = 0;
                         int smallNum = 0;
                         int additiveNum = 0;
@@ -179,12 +177,12 @@ namespace BDFramework.Editor.PublishPipeline
                         GUILayout.Label(".", GUILayout.Width(5));
                         smallNum = EditorGUILayout.IntField(smallNum, GUILayout.Width(20));
                         GUILayout.Label(".", GUILayout.Width(5));
-                        GUILayout.Label(additiveNum.ToString(),GUILayout.Width(40));
+                        GUILayout.Label(additiveNum.ToString(), GUILayout.Width(40));
                         //保存 设置信息
-                        setVersionNum= string.Format("{0}.{1}.{2}", bigNum, smallNum, additiveNum);
+                        setVersionNum = string.Format("{0}.{1}.{2}", bigNum, smallNum, additiveNum);
                         //渲染预览信息
                         GUILayout.Space(10);
-                        var newVersion=  VersionNumHelper.AddVersionNum(basePackageBuildInfo.Version, setVersionNum);
+                        var newVersion = VersionNumHelper.AddVersionNum(basePackageBuildInfo.Version, setVersionNum);
                         GUILayout.Label($"预览: {basePackageBuildInfo.Version}  =>  {newVersion}");
                         platformVersionMap[sp] = setVersionNum;
                     }
@@ -201,12 +199,13 @@ namespace BDFramework.Editor.PublishPipeline
                     {
                         return;
                     }
+
                     isBuilding = true;
-                    
+
                     //开始 生成资源
                     foreach (var sp in selectPlatforms)
                     {
-                        BuildAssetsTools.BuildAllAssets(sp, EXPORT_PATH,platformVersionMap[sp]);
+                        BuildAssetsTools.BuildAllAssets(sp, EXPORT_PATH, platformVersionMap[sp]);
                         Debug.Log($"==============>:{sp}");
                         platformVersionMap.Remove(sp);
                     }
@@ -260,6 +259,11 @@ namespace BDFramework.Editor.PublishPipeline
             {
                 GUILayout.Label("AB文件服务器:", EditorGUIHelper.GetFontStyle(Color.red, 15));
                 EditorGUILayout.HelpBox("在本机Devops搭建文件服务器，提供测试下载功能", MessageType.Info);
+                GUILayout.Space(10);
+
+                var ret = BDEditorApplication.EditorSetting.ABFileEditorServerSetting.IsAutoStartLocalABServer;
+                ret = EditorGUILayout.Toggle("PlayMode自动开启", ret);
+                BDEditorApplication.EditorSetting.ABFileEditorServerSetting.IsAutoStartLocalABServer = ret;
 
                 if (EditorHttpListener == null)
                 {
@@ -294,7 +298,7 @@ namespace BDFramework.Editor.PublishPipeline
 
                     if (GUILayout.Button("复制", GUILayout.Width(40)))
                     {
-                        GUIUtility.systemCopyBuffer = IPHelper.GetLocalIP() + ":" + EditorHttpListener.port+"/Assetbundle";
+                        GUIUtility.systemCopyBuffer = IPHelper.GetLocalIP() + ":" + EditorHttpListener.port + "/Assetbundle";
                         EditorUtility.DisplayDialog("提示", "复制成功!", "OK");
                     }
                 }
@@ -324,7 +328,11 @@ namespace BDFramework.Editor.PublishPipeline
             if (EditorApplication.isPlaying && EditorHttpListener == null)
             {
                 AssetGraphEditorWindow.Window?.Close();
-                this.StartLocalAssetsFileServer();
+
+                if (BDEditorApplication.EditorSetting.ABFileEditorServerSetting.IsAutoStartLocalABServer)
+                {
+                    this.StartLocalAssetsFileServer();
+                }
             }
         }
 
@@ -341,7 +349,7 @@ namespace BDFramework.Editor.PublishPipeline
                 EditorHttpListener.AddWebAPIProccesor<WP_LocalABFileServer>();
                 var webdir = IPath.Combine(EXPORT_PATH, PublishPipelineTools.UPLOAD_FOLDER_SUFFIX);
                 EditorHttpListener.Start("+", "10086");
-                
+
                 //发布资源
                 PublishPipelineTools.PublishAssetsToServer(EXPORT_PATH);
             }

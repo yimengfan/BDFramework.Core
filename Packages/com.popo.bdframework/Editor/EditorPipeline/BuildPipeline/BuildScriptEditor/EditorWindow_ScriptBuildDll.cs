@@ -27,12 +27,12 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
 
     public void OnGUI()
     {
-        if (BDEditorApplication.BDFrameworkEditorSetting == null)
+        if (BDEditorApplication.EditorSetting == null)
         {
             return;
         }
         //
-        var buildDLLSetting = BDEditorApplication.BDFrameworkEditorSetting?.BuildHotfixDLLSetting;
+        var buildDLLSetting = BDEditorApplication.EditorSetting?.BuildHotfixDLLSetting;
         GUILayout.BeginVertical();
         {
             GUILayout.Label("1.脚本打包", EditorGUIHelper.LabelH2);
@@ -68,7 +68,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
                 PublishPipeLineCI.CheckEditorCode();
             }
 
-            if (BDEditorApplication.BDFrameworkEditorSetting != null)
+            if (BDEditorApplication.EditorSetting != null)
             {
                 buildDLLSetting.IsAutoBuildDll = EditorGUILayout.Toggle("是否自动编译热更DLL", buildDLLSetting.IsAutoBuildDll);
             }
@@ -93,7 +93,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
     private void OnDisable()
     {
         //保存
-        BDEditorApplication.BDFrameworkEditorSetting?.Save();
+        BDEditorApplication.EditorSetting?.Save();
     }
 
     /// <summary>
