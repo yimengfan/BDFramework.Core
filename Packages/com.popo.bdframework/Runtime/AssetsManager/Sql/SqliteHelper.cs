@@ -30,16 +30,18 @@ namespace BDFramework.Sql
         {
             get
             {
+#if UNITY_EDITOR
                 if (Application.isPlaying)
                 {
                     return password;
                 }
-#if UNITY_EDITOR
                 else
                 {
                     var conf = ConfigEditorUtil.GetEditorConfig<GameCipherConfigProcessor.Config>();
                     return conf.SqlitePassword;
                 }
+#else
+    return password;
 #endif
             }
             set { password = value; }
