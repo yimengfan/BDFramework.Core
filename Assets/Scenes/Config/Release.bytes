@@ -1,13 +1,18 @@
 
 [
   {
-    "SqlitePassword" : "password1231222\uFF01\uFF01\uFF01",
-    "ScriptPubKey"   : "",
-    "ScriptPrivateKey" : "",
-    "ClassType"        : "BDFramework.Configure.GameCipherConfigProcessor+Config"
+    "CodeRoot" : 1,
+    "SQLRoot"  : 1,
+    "ArtRoot"  : 1,
+    "CodeRunMode" : 0,
+    "IsDebuggerILRuntime" : false,
+    "IsDebugLog"          : true,
+    "IsHotfix"            : false,
+    "ClientVersionNum"    : "0.0.0",
+    "ClassType"           : "BDFramework.Configure.GameBaseConfigProcessor+Config"
   },
   {
-    "SqlitePassword" : "password123",
+    "SqlitePassword" : "password1231222\uFF01\uFF01\uFF01",
     "ScriptPubKey"   : "",
     "ScriptPrivateKey" : "",
     "ClassType"        : "BDFramework.Configure.GameCipherConfigProcessor+Config"
