@@ -31,7 +31,7 @@ namespace BDFramework.Sql
             get
             {
 #if UNITY_EDITOR
-                if (Application.isPlaying)
+                if (Application.isPlaying && !string.IsNullOrEmpty(password))
                 {
                     return password;
                 }
@@ -41,7 +41,7 @@ namespace BDFramework.Sql
                     return conf.SqlitePassword;
                 }
 #else
-    return password;
+                 return password;
 #endif
             }
             set { password = value; }
@@ -109,7 +109,7 @@ namespace BDFramework.Sql
         /// </summary>
         static public SQLiteConnection LoadDBReadWriteCreate(string path)
         {
-            BDebug.Log("DB加载路径:" + path, "red");
+            BDebug.Log($" DB Path:{path}  <color=yellow>password:{Password}</color>");
             SQLiteConnectionString cs = new SQLiteConnectionString(path,
                 SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, true, key: Password);
             var con = new SQLiteConnection(cs);
