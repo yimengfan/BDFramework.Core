@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using BDFramework.Core.Tools;
 using BDFramework.Hotfix.Reflection;
+using DotNetExtension;
 using LitJson;
 using UnityEngine;
 
@@ -49,6 +51,9 @@ namespace BDFramework.UnitTest
             TestMethodDataMap = CollectTestClassData(TestType.MonoOrCLR);
             //执行普通的测试
             TestResultMap = ExcuteTest<UnitTestAttribute>();
+            
+            //保存本地
+            SaveTestDataToLocal(TestResultMap);
         }
 
 
@@ -65,11 +70,34 @@ namespace BDFramework.UnitTest
             ExcuteTest<UnitTestAttribute>();
             //2.执行hotfix的测试
             TestResultMap = ExcuteTest<HotfixOnlyUnitTestAttribute>();
-            //
+            //保存本地
+            SaveTestDataToLocal(TestResultMap);
         }
 
         #endregion
 
+
+        /// <summary>
+        /// 保存测试数据
+        /// </summary>
+        /// <param name="ret"></param>
+        static public void SaveTestDataToLocal(object testRet)
+        {
+            var path = "";
+            if (Application.isEditor)
+            {
+                path = IPath.Combine(BApplication.DevOpsPath, $"TestRenner/UnitTest_{DateTimeEx.GetTotalSeconds()}");
+            }
+            else
+            {
+                path = IPath.Combine(Application.persistentDataPath, $"TestRenner/UnitTest_{DateTimeEx.GetTotalSeconds()}");
+            }
+
+            var json = JsonMapper.ToJson(testRet, true);
+            
+            FileHelper.WriteAllText(path,json);
+        }
+        
 
         /// <summary>
         /// 测试类型

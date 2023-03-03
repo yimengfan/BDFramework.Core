@@ -1,14 +1,14 @@
 
 [
   {
-    "CodeRoot" : 2,
+    "CodeRoot" : 0,
     "SQLRoot"  : 0,
     "ArtRoot"  : 0,
     "CodeRunMode" : 0,
     "IsDebuggerILRuntime" : false,
     "IsDebugLog"          : true,
     "IsHotfix"            : false,
-    "ClientVersionNum"    : "2.1",
+    "ClientVersionNum"    : "2.1.0",
     "ClassType"           : "BDFramework.Configure.GameBaseConfigProcessor+Config"
   },
   {
