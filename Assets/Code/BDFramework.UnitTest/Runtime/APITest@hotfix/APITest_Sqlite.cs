@@ -28,6 +28,10 @@ namespace BDFramework.UnitTest
 
             //创建测试db
             var dbpath = IPath.Combine(Application.persistentDataPath, dbname);
+            if (File.Exists(dbpath))
+            {
+                File.Delete(dbpath);
+            }
             SqliteLoder.LoadDBReadWriteCreate(dbpath);
             //if (!ILRuntimeHelper.IsRunning)
             {

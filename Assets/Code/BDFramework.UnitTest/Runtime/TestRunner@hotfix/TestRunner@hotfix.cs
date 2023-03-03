@@ -53,7 +53,7 @@ namespace BDFramework.UnitTest
             TestResultMap = ExcuteTest<UnitTestAttribute>();
             
             //保存本地
-            SaveTestDataToLocal(TestResultMap);
+            SaveTestDataToLocal(TestResultMap,false);
         }
 
 
@@ -71,7 +71,7 @@ namespace BDFramework.UnitTest
             //2.执行hotfix的测试
             TestResultMap = ExcuteTest<HotfixOnlyUnitTestAttribute>();
             //保存本地
-            SaveTestDataToLocal(TestResultMap);
+            SaveTestDataToLocal(TestResultMap,true);
         }
 
         #endregion
@@ -81,16 +81,17 @@ namespace BDFramework.UnitTest
         /// 保存测试数据
         /// </summary>
         /// <param name="ret"></param>
-        static public void SaveTestDataToLocal(object testRet)
+        static public void SaveTestDataToLocal(object testRet,bool ishotFix)
         {
             var path = "";
+            var hotfix = ishotFix?"_hotfix" : "";
             if (Application.isEditor)
             {
-                path = IPath.Combine(BApplication.DevOpsPath, $"TestRenner/UnitTest_{DateTimeEx.GetTotalSeconds()}");
+                path = IPath.Combine(BApplication.DevOpsPath, $"TestRenner/UnitTest{hotfix}_{DateTimeEx.GetTotalSeconds()}");
             }
             else
             {
-                path = IPath.Combine(Application.persistentDataPath, $"TestRenner/UnitTest_{DateTimeEx.GetTotalSeconds()}");
+                path = IPath.Combine(Application.persistentDataPath, $"TestRenner/UnitTest{hotfix}_{DateTimeEx.GetTotalSeconds()}");
             }
 
             var json = JsonMapper.ToJson(testRet, true);

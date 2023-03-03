@@ -109,8 +109,11 @@ namespace ILRuntime.Runtime.Generated
             System_IO_MemoryStream_Binding.Register(app);
             System_IO_Stream_Binding.Register(app);
             System_IO_IPath_Binding.Register(app);
+            System_IO_File_Binding.Register(app);
             BDFramework_Sql_SqliteLoder_Binding.Register(app);
             System_Diagnostics_Stopwatch_Binding.Register(app);
+            BDFramework_Core_Tools_BApplication_Binding.Register(app);
+            System_IO_FileHelper_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding.Register(app);
             System_Reflection_Assembly_Binding.Register(app);
@@ -121,7 +124,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_KeyValuePair_2_Type_List_1_ILTypeInstance_Binding.Register(app);
             System_Reflection_MethodBase_Binding.Register(app);
             System_Exception_Binding.Register(app);
-            BDFramework_Core_Tools_BApplication_Binding.Register(app);
             System_Collections_Generic_List_1_Single_Binding.Register(app);
             System_Collections_Generic_List_1_Double_Binding.Register(app);
             System_Collections_Generic_List_1_Boolean_Binding.Register(app);
