@@ -59,6 +59,11 @@ namespace BDFramework.Editor.PublishPipeline
 
         private void OnGUI()
         {
+            if (BDEditorApplication.EditorSetting == null)
+            {
+                return;
+            }
+            
             GUILayout.BeginHorizontal();
             {
 #if !ODIN_INSPECTOR

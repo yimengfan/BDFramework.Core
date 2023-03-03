@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using BDFramework.Configure;
 using LitJson;
 using UnityEditor;
@@ -156,13 +157,33 @@ namespace BDFramework.Editor.Inspector.Config
         /// <returns></returns>
         static public T GetEditorConfig<T>()  where  T : ConfigDataBase
         {
-            //
             var editorPath = IPath.Combine(CONFIG_PATH, "editor" + FILE_SUFFIX);
             var content = File.ReadAllText(editorPath);
             //
             var item = GameConfigManager.Inst.LoadConfig(content);
             var find =  item.Item1.FirstOrDefault((t)=>t is T);
             return (T) find;
+        }
+        
+        /// <summary>
+        /// 加载正则匹配
+        /// </summary>
+        /// <returns></returns>
+        static public string GetEditorConfig(string configType,string configKey)  
+        {
+            var editorPath = IPath.Combine(CONFIG_PATH, "editor" + FILE_SUFFIX);
+
+            var json = JsonMapper.ToObject(File.ReadAllText(editorPath));
+            
+            foreach (JsonData jd in json)
+            {
+                if (jd["ClassType"].GetString() == configType)
+                {
+                    return jd[configKey].GetString();
+                }
+            }
+
+            return "";
         }
     }
 #endif

@@ -16,12 +16,13 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
         protected override OdinMenuTree BuildMenuTree()
         {
 #if ODIN_INSPECTOR
-            
-
             var tree = new OdinMenuTree(true);
             tree.DefaultMenuStyle.IconSize = 20.00f;
-
             var setting = BDEditorApplication.EditorSetting;
+            if (setting == null)
+            {
+                return tree;
+            }
 
             tree.Add("Build", null, EditorIcons.SmartPhone);
             tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.Android)}", new BuildAndroid(setting.Android, setting.AndroidDebug));

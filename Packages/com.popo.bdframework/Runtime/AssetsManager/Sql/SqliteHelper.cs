@@ -38,7 +38,15 @@ namespace BDFramework.Sql
                 else
                 {
                     var conf = ConfigEditorUtil.GetEditorConfig<GameCipherConfigProcessor.Config>();
-                    return conf.SqlitePassword;
+                    if (conf != null)
+                    {
+                        return conf.SqlitePassword;
+                    }
+                    else
+                    {
+                       var psw= ConfigEditorUtil.GetEditorConfig(typeof(GameCipherConfigProcessor.Config).FullName, nameof(GameCipherConfigProcessor.Config.SqlitePassword));
+                       return psw;
+                    }
                 }
 #else
                  return password;
