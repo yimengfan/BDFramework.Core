@@ -253,6 +253,8 @@ namespace BDFramework.UnitTest
                 foreach (var methodData in md)
                 {
                     var result = new UniTestMethodResult();
+                    result.MedthodName = methodData.MethodInfo.Name;
+                    result.MethodDes = methodData.TestData.Des;
                     //开始执行测试
                     try
                     {
