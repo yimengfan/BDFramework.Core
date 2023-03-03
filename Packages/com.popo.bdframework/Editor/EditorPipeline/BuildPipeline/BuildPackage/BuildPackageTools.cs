@@ -88,6 +88,7 @@ namespace BDFramework.Editor.BuildPipeline
             switch (buildMode)
             {
                 case BuildMode.Debug:
+                case BuildMode.Profiler:
                 {
                     buildConfig = SceneConfigs[0];
                 }
@@ -121,6 +122,7 @@ namespace BDFramework.Editor.BuildPipeline
             switch (buildMode)
             {
                 case BuildMode.Debug:
+                case BuildMode.Profiler:
                 {
                     BDebugEditor.EnableDebug();
                 }
@@ -128,11 +130,6 @@ namespace BDFramework.Editor.BuildPipeline
                 case BuildMode.Release:
                 {
                     BDebugEditor.DisableDebug();
-                }
-                    break;
-                case BuildMode.Profiler:
-                {
-                    BDebugEditor.EnableDebug();
                 }
                     break;
             }
@@ -304,7 +301,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //开始项目一键打包
-            string[] scenes = { SCENEPATH };
+            string[] scenes = {SCENEPATH};
             BuildOptions opa = BuildOptions.None;
             switch (mode)
             {
@@ -372,7 +369,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //开始项目一键打包
-            string[] scenes = { SCENEPATH };
+            string[] scenes = {SCENEPATH};
             BuildOptions opa = BuildOptions.None;
 
             switch (mode)
@@ -471,7 +468,7 @@ namespace BDFramework.Editor.BuildPipeline
 
 
             //开始项目一键打包
-            string[] scenes = { SCENEPATH };
+            string[] scenes = {SCENEPATH};
             BuildOptions opa = BuildOptions.None;
             switch (mode)
             {

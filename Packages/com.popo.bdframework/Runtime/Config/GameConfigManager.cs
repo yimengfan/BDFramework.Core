@@ -42,6 +42,8 @@ namespace BDFramework.Configure
         {
             base.Start();
             //执行
+            var textAsset = BDLauncher.Inst.ConfigText;
+            BDebug.Log("加载配置:"+ textAsset.name,"yellow");
             var (dataList, processorList) = LoadConfig(BDLauncher.Inst.ConfigText.text);
             configList = new List<ConfigDataBase>(dataList);
             for (int i = 0; i < dataList.Count; i++)
