@@ -1,0 +1,75 @@
+
+{
+  "BDFramework.UnitTest.UnitTestAttribute" : [
+    {
+      "MedthodName" : "",
+      "MethodDes"   : "",
+      "isFail"      : true,
+      "failMsg"     : "",
+      "time"        : 0
+    },
+    {
+      "MedthodName" : "",
+      "MethodDes"   : "",
+      "isFail"      : true,
+      "failMsg"     : "",
+      "time"        : 0
+    },
+    {
+      "MedthodName" : "",
+      "MethodDes"   : "",
+      "isFail"      : true,
+      "failMsg"     : "",
+      "time"        : 0
+    },
+    {
+      "MedthodName" : "",
+      "MethodDes"   : "",
+      "isFail"      : true,
+      "failMsg"     : "",
+      "time"        : 0
+    },
+    {
+      "MedthodName" : "",
+      "MethodDes"   : "",
+      "isFail"      : true,
+      "failMsg"     : "",
+      "time"        : 0
+    },
+    {
+      "MedthodName" : "",
+      "MethodDes"   : "",
+      "isFail"      : true,
+      "failMsg"     : "",
+      "time"        : 0
+    },
+    {
+      "MedthodName" : "",
+      "MethodDes"   : "",
+      "isFail"      : true,
+      "failMsg"     : "",
+      "time"        : 0
+    },
+    {
+      "MedthodName" : "",
+      "MethodDes"   : "",
+      "isFail"      : true,
+      "failMsg"     : "",
+      "time"        : 0
+    },
+    {
+      "MedthodName" : "",
+      "MethodDes"   : "",
+      "isFail"      : true,
+      "failMsg"     : "",
+      "time"        : 0
+    },
+    {
+      "MedthodName" : "",
+      "MethodDes"   : "",
+      "isFail"      : false,
+      "failMsg"     : "",
+      "time"        : 0
+    }
+  ]
+}

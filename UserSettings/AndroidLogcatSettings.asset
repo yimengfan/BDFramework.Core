@@ -1,19 +1,13 @@
 {
     "m_SelectedDeviceId": "127.0.0.1:62001",
     "m_SelectedPackage": {
-        "deviceId": "127.0.0.1:62001",
-        "name": "com.Popo.BDFrameworkTest",
-        "processId": 3588,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
-        {
-            "deviceId": "127.0.0.1:62001",
-            "name": "com.Popo.BDFrameworkTest",
-            "processId": 3192,
-            "exited": true
-        },
         {
             "deviceId": "127.0.0.1:62001",
             "name": "com.Popo.BDFrameworkTest",
@@ -36,6 +30,12 @@
             "deviceId": "127.0.0.1:62001",
             "name": "com.Popo.BDFrameworkTest",
             "processId": 3588,
+            "exited": true
+        },
+        {
+            "deviceId": "127.0.0.1:62001",
+            "name": "com.Popo.BDFrameworkTest.profiler",
+            "processId": 3564,
             "exited": false
         }
     ],
@@ -87,7 +87,7 @@
             true
         ],
         "MemoryGroup": 2,
-        "Behavior": 0
+        "Behavior": 2
     },
     "m_FilterOptions": {
         "m_Filter": "",

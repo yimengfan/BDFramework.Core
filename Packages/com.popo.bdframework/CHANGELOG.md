@@ -1,5 +1,12 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.2.0-preview.1
+-Sqlite3:化Sqlite反序列化速度
+-Sqlite3:基于Sqlite.Net 增加SqlCipher加密
+-GameConfig:增加自定义的GameConfig中心，以及获取方式。
+-GameConfig：重新绘制GameConfig面板
+-TestRunner：优化TestRunner机制,增加Result
+
 ##V2.1.0
 -BuildPipeline: 重构打包面板，优化打包流程
 -BuildPipeline: 增加DevOps优化支持
