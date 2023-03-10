@@ -132,6 +132,7 @@ namespace BDFramework.Mgr
             {
                 mgr.Init();
             }
+            
         }
 
 

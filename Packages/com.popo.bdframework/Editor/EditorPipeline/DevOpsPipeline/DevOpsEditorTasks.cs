@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Task;
 using UnityEditor;
@@ -27,7 +28,7 @@ namespace BDFramework.Editor.DevOps
             //复制
             FileHelper.CopyFolderTo(projectGithookDir,localStoreGitdir);
         }
-        
+
     }
 }
 

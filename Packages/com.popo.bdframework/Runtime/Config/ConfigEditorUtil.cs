@@ -16,12 +16,12 @@ namespace BDFramework.Editor.Inspector.Config
     /// </summary>
     static public class ConfigEditorUtil
     {
-        static readonly public string FILE_SUFFIX = ".bytes";
-
         /// <summary>
         /// 配置path
         /// </summary>
         static public string CONFIG_PATH = "Assets/Scenes/Config";
+        static readonly public string FILE_SUFFIX = ".bytes";
+        static public string DefaultEditorConfig = IPath.Combine(CONFIG_PATH, "editor" + FILE_SUFFIX);
 
         /// <summary>
         /// 获取所有配置path
@@ -70,7 +70,7 @@ namespace BDFramework.Editor.Inspector.Config
         /// 保存Config
         /// </summary>
         /// <param name="configMap"></param>
-        static public void SaveConfig(string filePath, List<ConfigDataBase> configList)
+        static public bool SaveConfig(string filePath, List<ConfigDataBase> configList)
         {
             foreach (var config in configList)
             {
@@ -86,15 +86,17 @@ namespace BDFramework.Editor.Inspector.Config
                     FileHelper.WriteAllText(filePath, json);
                     //
                     Debug.Log($"覆盖成功:{filePath} \n {json}");
+                    return true;
                 }
             }
             else
             {
                 FileHelper.WriteAllText(filePath, json);
                 Debug.Log($"保存成功:{filePath} \n {json}");
+                return true;
             }
 
-            ;
+            return false;
         }
 
 
@@ -112,7 +114,7 @@ namespace BDFramework.Editor.Inspector.Config
                 {
                     var d = item.Value[i];
                     //覆盖
-                    if (d.GetType() == d.GetType())
+                    if (d.GetType() == data.GetType())
                     {
                         item.Value[i] = data;
                         break;
@@ -122,6 +124,7 @@ namespace BDFramework.Editor.Inspector.Config
                 //保存
                 SaveConfig(item.Key, item.Value);
             }
+            AssetDatabase.Refresh();
         }
 
         /// <summary>
@@ -148,6 +151,7 @@ namespace BDFramework.Editor.Inspector.Config
                 //保存
                 SaveConfig(item.Key, item.Value);
             }
+            AssetDatabase.Refresh();
         }
 
 
@@ -157,9 +161,7 @@ namespace BDFramework.Editor.Inspector.Config
         /// <returns></returns>
         static public T GetEditorConfig<T>()  where  T : ConfigDataBase
         {
-            var editorPath = IPath.Combine(CONFIG_PATH, "editor" + FILE_SUFFIX);
-            var content = File.ReadAllText(editorPath);
-            //
+            var content = File.ReadAllText(DefaultEditorConfig);
             var item = GameConfigManager.Inst.LoadConfig(content);
             var find =  item.Item1.FirstOrDefault((t)=>t is T);
             return (T) find;
@@ -171,10 +173,7 @@ namespace BDFramework.Editor.Inspector.Config
         /// <returns></returns>
         static public string GetEditorConfig(string configType,string configKey)  
         {
-            var editorPath = IPath.Combine(CONFIG_PATH, "editor" + FILE_SUFFIX);
-
-            var json = JsonMapper.ToObject(File.ReadAllText(editorPath));
-            
+            var json = JsonMapper.ToObject(File.ReadAllText(DefaultEditorConfig));
             foreach (JsonData jd in json)
             {
                 if (jd["ClassType"].GetString() == configType)

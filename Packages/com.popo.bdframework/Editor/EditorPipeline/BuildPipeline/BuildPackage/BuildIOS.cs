@@ -95,7 +95,7 @@ namespace BDFramework.Editor.BuildPipeline
         [HorizontalGroup("b/a2", LabelWidth = 80)]
         [LabelText("打包场景")]
         [Ex_SelectFileFromPath("Assets/Scenes","*.unity")]
-        public string BuildScene = BuildPackageTools.SCENEPATH;
+        public string BuildScene = BuildPackageTools.SCENE_PATH;
 
         [HorizontalGroup("b/a3", LabelWidth = 80)]
         [LabelText("场景配置")]

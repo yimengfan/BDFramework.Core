@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using BDFramework.Configure;
 using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
@@ -137,10 +138,14 @@ namespace BDFramework.Editor.Environment
                     Types = CollectTypes(gAssembly, eAssemlby).ToArray();
                 }
 
+                
                 //编辑器下加载初始化
                 BResources.Init(AssetLoadPathType.Editor);
                 //编辑器下管理器注册
                 ManagerInstHelper.Load(Types);
+                //加载框架配置
+                GameConfigLoder.LoadFrameBaseConfig(); 
+                
                 //Editor的管理器初始化
                 BDFrameworkPipelineHelper.Init();
                 //调试器启动

@@ -141,7 +141,7 @@ namespace BDFramework
             BDebug.Log("【Launch】主工程管理器初始化..", "red");
             ManagerInstHelper.Load(types);
             //加载框架配置
-            GameConfigLoder.LoadFrameBaseConfig();
+            GameConfigLoder.LoadFrameBaseConfig(); 
             //开始资源检测
             BDebug.Log("【Launch】框架资源版本验证!");
             ClientAssetsHelper.CheckBasePackageVersion(BApplication.RuntimePlatform, () =>

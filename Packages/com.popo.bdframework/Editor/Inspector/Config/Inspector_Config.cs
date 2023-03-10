@@ -131,9 +131,9 @@ namespace BDFramework.Editor.Inspector.Config
             {
                 newSelectIdx = 0;
             }
-            
+
             GUILayout.Label($"Tips: Editor{ConfigEditorUtil.FILE_SUFFIX} 会作为editor下框架工具默认获取的配置!");
-            
+
             //保存configMap
             for (int i = 0; i < configNames.Length; i++)
             {
@@ -196,7 +196,14 @@ namespace BDFramework.Editor.Inspector.Config
 
             SirenixEditorGUI.Title("配置属性", "", TextAlignment.Left, true);
             this.configInstanceMap.TryGetValue(this.curSelectConfigType, out var inst);
-            inst?.Item2.Draw(false);
+            if (inst != null)
+            {
+                inst.Item2.Draw(false);
+            }
+            else
+            {
+                EditorGUILayout.HelpBox("等待GameSettingManager初始化!", MessageType.Error);
+            }
         }
 
 
@@ -234,8 +241,8 @@ namespace BDFramework.Editor.Inspector.Config
 
                 GUILayout.Space(10);
                 //创建
-                configName = EditorGUILayout.TextArea(configName, GUILayout.Height(25));
-                
+                configName = EditorGUILayout.TextArea(configName, GUILayout.Width(150), GUILayout.Height(25));
+
                 if (GUILayout.Button("+", GUILayout.Width(20), GUILayout.Height(25)))
                 {
                     if (configName.Contains(".") || configName.Contains("/"))
@@ -248,15 +255,14 @@ namespace BDFramework.Editor.Inspector.Config
                 }
             }
             GUILayout.EndHorizontal();
-            
-            
+
+
             GUILayout.BeginHorizontal();
             {
                 if (GUILayout.Button("Clear Persistent", GUILayout.Height(20)))
                 {
                     Debug.Log(Application.persistentDataPath);
                     var files = Directory.GetFiles(Application.persistentDataPath, "*");
-                    
                 }
             }
             GUILayout.EndHorizontal();
@@ -305,7 +311,11 @@ namespace BDFramework.Editor.Inspector.Config
             if (!string.IsNullOrEmpty(curSelectConfigPath))
             {
                 var configlist = this.configInstanceMap.Select((i) => i.Value.Item1).ToList();
-                ConfigEditorUtil.SaveConfig(curSelectConfigPath, configlist);
+                var ret = ConfigEditorUtil.SaveConfig(curSelectConfigPath, configlist);
+                if (ret)
+                {
+                    AssetDatabase.Refresh();
+                }
             }
         }
     }

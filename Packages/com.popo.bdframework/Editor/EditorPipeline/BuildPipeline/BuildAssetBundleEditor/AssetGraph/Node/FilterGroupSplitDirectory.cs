@@ -73,7 +73,7 @@ namespace BDFramework.Editor.AssetGraph.Node
 
         #region 渲染
 
-        private NodeGUI selfNodeGUI;
+        private NodeGUI selfNodeGUI { get; set; }
 
         /// <summary>
         /// 绘制NodeGUI
@@ -199,7 +199,6 @@ namespace BDFramework.Editor.AssetGraph.Node
                 });
                 AssetGraphTools.UpdateConnectLine(this.selfNodeGUI, node);
             }
-
         }
 
         private PerformGraph.AssetGroups incommingAssetGroup = null;

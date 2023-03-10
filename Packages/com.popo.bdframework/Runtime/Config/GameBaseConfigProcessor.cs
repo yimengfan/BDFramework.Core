@@ -1,6 +1,7 @@
 ﻿using System;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Inspector.Config;
+using BDFramework.L2;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -49,12 +50,11 @@ namespace BDFramework.Configure
             [HorizontalGroup("a/a10")]
             public bool IsHotfix = false;
 
-
             [Space(5)]
             [LabelText("客户端版本")]
             [HorizontalGroup("a/a12")]
             public string ClientVersionNum = "0.0.0";
-
+            
 #if UNITY_EDITOR
             [HorizontalGroup("a/a12", width: 150)]
             [LabelText("更新所有配置版本号")]
@@ -65,14 +65,22 @@ namespace BDFramework.Configure
                 ConfigEditorUtil.UpdateClientVersionToAll(ClientVersionNum);
             }
 #endif
+            
+            [LabelText("语言包")]
+            [HorizontalGroup("a/a13")]
+            public L2Type L2Type = L2Type.zh_CN;
         }
+        
 
 
         public override void OnConfigLoad(ConfigDataBase config)
         {
             var con = config as Config;
             //log
-            BDLauncher.Inst.GetComponent<BDebug>().IsLog = con.IsDebugLog;
+            if (BDLauncher.Inst)
+            {
+                BDLauncher.Inst.GetComponent<BDebug>().IsLog = con.IsDebugLog;
+            }
         }
 
 

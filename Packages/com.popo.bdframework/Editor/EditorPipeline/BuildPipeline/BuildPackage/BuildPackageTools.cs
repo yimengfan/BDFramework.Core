@@ -40,7 +40,8 @@ namespace BDFramework.Editor.BuildPipeline
         }
 
         //打包场景
-        readonly public static string SCENEPATH = "Assets/Scenes/BDFrame.unity";
+        readonly public static string SCENE_PATH = "Assets/Scenes/BDFrame.unity";
+        readonly public static string QA_SCENE_PATH = "Assets/Scenes/BDFrameForQA.unity";
 
         readonly static public string[] SceneConfigs =
         {
@@ -101,7 +102,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //build
-            return Build(buildMode, SCENEPATH, buildConfig, isGenAssets, outdir, buildTarget, buildOption);
+            return Build(buildMode, SCENE_PATH, buildConfig, isGenAssets, outdir, buildTarget, buildOption);
         }
 
         /// <summary>
@@ -301,7 +302,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //开始项目一键打包
-            string[] scenes = {SCENEPATH};
+            string[] scenes = {SCENE_PATH};
             BuildOptions opa = BuildOptions.None;
             switch (mode)
             {
@@ -369,7 +370,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //开始项目一键打包
-            string[] scenes = {SCENEPATH};
+            string[] scenes = {SCENE_PATH};
             BuildOptions opa = BuildOptions.None;
 
             switch (mode)
@@ -468,7 +469,7 @@ namespace BDFramework.Editor.BuildPipeline
 
 
             //开始项目一键打包
-            string[] scenes = {SCENEPATH};
+            string[] scenes = {SCENE_PATH};
             BuildOptions opa = BuildOptions.None;
             switch (mode)
             {

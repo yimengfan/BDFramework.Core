@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.Editor.Inspector.Config;
 using BDFramework.Mgr;
 using LitJson;
+using UnityEngine;
 
 namespace BDFramework.Configure
 {
@@ -41,18 +43,39 @@ namespace BDFramework.Configure
         public override void Start()
         {
             base.Start();
+            string text="";
+            if (Application.isPlaying)
+            {
+                text = BDLauncher.Inst.ConfigText.text;
+                BDebug.Log("GameConfig加载配置:"+ BDLauncher.Inst.ConfigText.name,"yellow");
+            }
+            else
+            {
+                var launcher = GameObject.FindObjectOfType<BDLauncher>();
+                if (launcher != null)
+                {
+                    text = launcher.ConfigText.text;
+                    BDebug.Log("GameConfig加载配置:"+ launcher.ConfigText.name,"yellow");
+                }
+                else
+                {
+#if UNITY_EDITOR
+                    //读取默认bytes
+                    var filepath =   ConfigEditorUtil.DefaultEditorConfig;
+                    text = File.ReadAllText(filepath);
+                    BDebug.Log("GameConfig加载配置:"+ launcher.ConfigText.name,"yellow");
+#endif
+                }
+            }
+            
             //执行
-            var textAsset = BDLauncher.Inst.ConfigText;
-            BDebug.Log("加载配置:"+ textAsset.name,"yellow");
-            var (dataList, processorList) = LoadConfig(BDLauncher.Inst.ConfigText.text);
+            var (dataList, processorList) = LoadConfig(text);
             configList = new List<ConfigDataBase>(dataList);
             for (int i = 0; i < dataList.Count; i++)
             {
                 processorList[i].OnConfigLoad(dataList[i]);
             }
         }
-
-
         /// <summary>
         /// 加载配置
         /// </summary>
@@ -103,6 +126,7 @@ namespace BDFramework.Configure
             return (T) con;
         }
 
+        
 
         /// <summary>
         /// 创建新的配置
