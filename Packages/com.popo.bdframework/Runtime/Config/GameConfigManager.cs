@@ -63,7 +63,7 @@ namespace BDFramework.Configure
                     //读取默认bytes
                     var filepath =   ConfigEditorUtil.DefaultEditorConfig;
                     text = File.ReadAllText(filepath);
-                    BDebug.Log("GameConfig加载配置:"+ launcher.ConfigText.name,"yellow");
+                    BDebug.Log("GameConfig加载配置:"+ filepath,"yellow");
 #endif
                 }
             }
