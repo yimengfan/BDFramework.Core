@@ -43,31 +43,31 @@ namespace BDFramework.Configure
         public override void Start()
         {
             base.Start();
-            string text="";
+            string text = "";
             if (Application.isPlaying)
             {
                 text = BDLauncher.Inst.ConfigText.text;
-                BDebug.Log("GameConfig加载配置:"+ BDLauncher.Inst.ConfigText.name,"yellow");
+                BDebug.Log("GameConfig加载配置:" + BDLauncher.Inst.ConfigText.name, "yellow");
             }
             else
             {
                 var launcher = GameObject.FindObjectOfType<BDLauncher>();
-                if (launcher != null)
+                if (launcher && launcher.ConfigText)
                 {
                     text = launcher.ConfigText.text;
-                    BDebug.Log("GameConfig加载配置:"+ launcher.ConfigText.name,"yellow");
+                    BDebug.Log("GameConfig加载配置:" + launcher.ConfigText.name, "yellow");
                 }
                 else
                 {
 #if UNITY_EDITOR
                     //读取默认bytes
-                    var filepath =   ConfigEditorUtil.DefaultEditorConfig;
+                    var filepath = ConfigEditorUtil.DefaultEditorConfig;
                     text = File.ReadAllText(filepath);
-                    BDebug.Log("GameConfig加载配置:"+ filepath,"yellow");
+                    BDebug.Log("GameConfig加载配置:" + filepath, "yellow");
 #endif
                 }
             }
-            
+
             //执行
             var (dataList, processorList) = LoadConfig(text);
             configList = new List<ConfigDataBase>(dataList);
@@ -76,6 +76,7 @@ namespace BDFramework.Configure
                 processorList[i].OnConfigLoad(dataList[i]);
             }
         }
+
         /// <summary>
         /// 加载配置
         /// </summary>
@@ -126,7 +127,6 @@ namespace BDFramework.Configure
             return (T) con;
         }
 
-        
 
         /// <summary>
         /// 创建新的配置
@@ -154,11 +154,11 @@ namespace BDFramework.Configure
         /// 读取config
         /// </summary>
         /// <param name="configText"></param>
-        public Dictionary<Type,ConfigDataBase> ReadConfig(string configText)
+        public Dictionary<Type, ConfigDataBase> ReadConfig(string configText)
         {
             //type=> 主class的type
             var map = new Dictionary<Type, ConfigDataBase>();
-            
+
             var (datalist, processorlist) = LoadConfig(configText);
             //赋值新的
             var allconfigtype = GameConfigManager.Inst.GetAllClassDatas();
@@ -178,9 +178,8 @@ namespace BDFramework.Configure
                     map[cd.Type] = configData;
                 }
             }
-            
+
             return map;
         }
-        
     }
 }

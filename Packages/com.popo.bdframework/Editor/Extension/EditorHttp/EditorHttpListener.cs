@@ -80,7 +80,6 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
             {
                 return;
             }
-
             for (int i = 0; i < ports.Length; i++)
             {
                 var tryPort = ports[i];
@@ -103,7 +102,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                     this.port = tryPort;
                     if (i > 0)
                     {
-                        Debug.Log($"【EditorHttpService】{ports[0]}被占用,备用端口号生效 - http://{host}:{tryPort}");
+                        Debug.Log($"【EditorHttpService】 备用端口号生效 - http://{host}:{tryPort}");
                     }
                     else
                     {
@@ -114,7 +113,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e.Message);
+                    Debug.LogError($"{e.Message} - 端口被占用:{tryPort}");
                 }
             }
 
