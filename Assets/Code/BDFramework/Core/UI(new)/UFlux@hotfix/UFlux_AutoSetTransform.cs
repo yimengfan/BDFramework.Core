@@ -104,8 +104,12 @@ namespace BDFramework.UFlux
         {
             if (fieldInfos.Count == 1) return fieldInfos[0];
             // 获取所有的基类和派生类
-            FieldInfo targetFieldInfo = null;
-            var targetDefTypeFullName = string.Empty;
+            var declaredType = vt;
+            var targetDefTypeName = vt.Name;
+
+            var dic = new Dictionary<string, FieldInfo>();
+
+
             foreach (var fieldInfo in fieldInfos)
             {
                 var dFullName = string.Empty;
@@ -113,7 +117,7 @@ namespace BDFramework.UFlux
                 // 直接执行
                 if (definitionField == null)
                 {
-                    dFullName = fieldInfo.DeclaringType.FullName;
+                    dFullName = fieldInfo.DeclaringType.Name;
                 }
                 // 在ILRuntime中执行
                 else
@@ -127,19 +131,23 @@ namespace BDFramework.UFlux
                         var declaringTypeField = properties.Find(p => p.Name.Equals("DeclaringType"));
 
                         var declaringType = declaringTypeField.GetValue(definition);
-                        var fullNameField = typeof(ILRuntime.Mono.Cecil.TypeReference).GetProperty("FullName");
+                        var fullNameField = typeof(ILRuntime.Mono.Cecil.TypeReference).GetProperty("Name");
                         var fullName = fullNameField.GetValue(declaringType);
                         dFullName = fullName.ToString();
                     }
                 }
-                // 对比字段定义类名的长度，最长的就是最后定义的
-                if (dFullName.Length > targetDefTypeFullName.Length)
-                {
-                    targetFieldInfo = fieldInfo;
-                    targetDefTypeFullName = dFullName;
-                }
+                dic.Add(dFullName, fieldInfo);
             }
-            return targetFieldInfo;
+
+            while (true)
+            {
+                if (dic.Keys.Contains(targetDefTypeName))
+                {
+                    return dic[targetDefTypeName];
+                }
+                declaredType = declaredType.BaseType;
+                targetDefTypeName = declaredType.Name;
+            }
         }
     }
 }
