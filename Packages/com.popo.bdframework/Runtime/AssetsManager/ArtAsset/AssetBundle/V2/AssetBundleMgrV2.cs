@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections;
 using System.Linq;
-using AssetsManager.ArtAsset.AssetBundle.V2;
+using BResource.AssetBundle.V2;
 using BDFramework.Core.Tools;
 using Cysharp.Text;
 using Cysharp.Threading.Tasks;
@@ -15,11 +15,13 @@ using Object = UnityEngine.Object;
 using UnityEditor;
 #endif
 
-
 namespace BDFramework.ResourceMgr.V2
 {
     /// <summary>
-    /// ab包管理器
+    /// AssetBundle资源管理器
+    /// 概念定义：
+    /// loadPath => 资产的显示加载的调用地址，可能跟ab文件不一致
+    /// assetbundlePath=>ab文件的io地址，实际地址
     /// </summary>
     public class AssetBundleMgrV2 : IResMgr
     {
@@ -37,18 +39,21 @@ namespace BDFramework.ResourceMgr.V2
         /// <summary>
         /// 异步加载表
         /// </summary>
-        private List<LoadTaskGroup> asyncLoadTaskList { get; set; } = new List<LoadTaskGroup>(50); //<LoadTaskGroup>(50);
+        private List<LoadTaskGroup> asyncLoadTaskList { get; set; } =
+            new List<LoadTaskGroup>(100); //<LoadTaskGroup>(50);
 
         /// <summary>
-        /// 全局唯一的依赖
+        /// 全局唯一的加载配置
         /// </summary>
-        public AssetBundleConfigLoader AssetBundleInfoLoader { get; private set; }
+        public AssetBundleConfigLoader AssetBundleConfig { get; private set; }
 
         /// <summary>
-        /// 全局的ab缓存
-        /// ab filename-assetbundle
+        /// 全局的AssetLoder
+        /// assetbundleFilePath - assetLoader
+        /// 一个ab文件一个
         /// </summary>
-        private Dictionary<string, AssetBundleWrapper> AssetbundleCacheMap { get; set; } = new Dictionary<string, AssetBundleWrapper>(StringComparer.OrdinalIgnoreCase);
+        private Dictionary<string, AssetLoder> AssetLoderMap { get; set; } =
+            new Dictionary<string, AssetLoder>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// 资源加载路径
@@ -65,7 +70,7 @@ namespace BDFramework.ResourceMgr.V2
         public void Init(string rootPath, RuntimePlatform platform = RuntimePlatform.Android)
         {
             //多热更切换,需要卸载
-            if (this.AssetBundleInfoLoader != null)
+            if (this.AssetBundleConfig != null)
             {
                 this.UnloadAllAsset();
             }
@@ -78,14 +83,18 @@ namespace BDFramework.ResourceMgr.V2
                 //editor下可以自行输入
                 platformStr = BApplication.GetPlatformPath(platform);
                 firstArtDirectory = IPath.Combine(rootPath, platformStr, BResources.ART_ASSET_ROOT_PATH);
-                secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformStr, BResources.ART_ASSET_ROOT_PATH); //
+                //devops为第二寻址
+                secArtDirectory = IPath.Combine(BApplication.DevOpsPublishAssetsPath, platformStr,
+                    BResources.ART_ASSET_ROOT_PATH); //
             }
             else
             {
                 //runtime只能使用当前平台
                 platformStr = BApplication.GetRuntimePlatformPath();
-                firstArtDirectory = IPath.Combine(Application.persistentDataPath, platformStr, BResources.ART_ASSET_ROOT_PATH);
-                secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformStr, BResources.ART_ASSET_ROOT_PATH); //
+                firstArtDirectory = IPath.Combine(Application.persistentDataPath, platformStr,
+                    BResources.ART_ASSET_ROOT_PATH);
+                secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformStr,
+                    BResources.ART_ASSET_ROOT_PATH); //
                 rootPath = Application.persistentDataPath;
             }
 
@@ -94,14 +103,14 @@ namespace BDFramework.ResourceMgr.V2
             secArtDirectory = IPath.FormatPathOnRuntime(secArtDirectory);
 
             //3.加载ArtConfig
-            this.AssetBundleInfoLoader = GetAssetbundleConfigLoder(rootPath, platformStr);
+            this.AssetBundleConfig = GetAssetbundleConfigLoder(rootPath, platformStr);
 
             //开始异步任务刷新
-            IEnumeratorTool.StartCoroutine(this.IE_LoadTaskUpdate());
+            IEnumeratorTool.StartCoroutine(this.IE_AsyncLoadTaskUpdate());
             IEnumeratorTool.StartCoroutine(this.IE_UnLoadTaskUpdate());
 
-            BDebug.Log($"【AssetBundleV2】 firstDir:{firstArtDirectory}", "red");
-            BDebug.Log($"【AssetBundleV2】 secDir:{secArtDirectory}", "red");
+            BDebug.Log($"【AssetBundleV2】 firstDir:{firstArtDirectory}", Color.red);
+            BDebug.Log($"【AssetBundleV2】 secDir:{secArtDirectory}", Color.red);
         }
 
         /// <summary>
@@ -157,7 +166,8 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="fullPath"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Load<T>(string loadPath, LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
+        public T Load<T>(string loadPath, LoadPathType loadPathType = LoadPathType.RuntimePath)
+            where T : UnityEngine.Object
         {
             // loadPath = GetLoadPath<T>(loadPath, loadPathType);
 
@@ -179,46 +189,52 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public Object Load(Type type, string loadPath, LoadPathType loadPathType = LoadPathType.RuntimePath)
         {
-            var retObj = GetObjectFormCache(loadPath, type);
-
-            if (!retObj)
+            AssetBundleItem mainItem = null;
+            IEnumerable<AssetBundleItem> dependItems = null;
+            AssetLoder mainAssetLoder = null;
+            //1.依赖路径
+            switch (loadPathType)
             {
-                AssetBundleItem mainItem = null;
-                List<AssetBundleItem> dependItems = null;
-                //1.依赖路径
-                switch (loadPathType)
-                {
-                    case LoadPathType.RuntimePath:
-                        (mainItem, dependItems) = AssetBundleInfoLoader.GetDependAssets(loadPath, type);
-                        break;
-                    case LoadPathType.GUID:
-                        (mainItem, dependItems) = AssetBundleInfoLoader.GetDependAssetsByGUID(loadPath, type);
-                        break;
-                }
-
-                //2.加载
-                if (dependItems?.Count > 0)
-                {
-                    //加载所有ab
-                    foreach (var dependABItem in dependItems)
-                    {
-                        LoadAssetBundle(dependABItem.AssetBundlePath, dependABItem.Mix);
-                    }
-
-                    //使用ab
-                    UseAssetBundle(loadPath, type);
-                    //加载实例
-                    var abFileItem = dependItems.Last();
-                    retObj = LoadObjectFormAssetBundle(type, loadPath, mainItem.GUID, abFileItem);
-                }
-                else
-                {
-                    BDebug.LogError($"依赖获取失败,art_assets.info不存在资产配置,传入路径:" + loadPath);
-                }
+                case LoadPathType.RuntimePath:
+                    (mainItem, dependItems) = AssetBundleConfig.GetDependAssets(loadPath, type);
+                    break;
+                case LoadPathType.GUID:
+                    (mainItem, dependItems) = AssetBundleConfig.GetDependAssetsByGUID(loadPath, type);
+                    break;
             }
 
+            //2.加载
+            if (dependItems?.Count() > 0)
+            {
+                //加载所有ab
+                foreach (var item in dependItems)
+                {
+                    mainAssetLoder = LoadAssetBundle(item);
+                }
 
-            return retObj;
+                //使用ab
+                UseAssetBundle(loadPath, type);
+            }
+            else
+            {
+                BDebug.LogError($"依赖获取失败,art_assets.info不存在资产配置,传入路径:" + loadPath);
+            }
+
+            //处理缓存
+            if (mainItem != null)
+            {
+                var retObj = GetAssetObjectFromCache(loadPath, type);
+                if (!retObj)
+                {
+                    retObj = mainAssetLoder.LoadAsset(type, mainItem.GUID);
+                    //加入缓存
+                    AddAssetObjectToCache(type, loadPath, retObj);
+                }
+
+                return retObj;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -291,21 +307,15 @@ namespace BDFramework.ResourceMgr.V2
         /// <typeparam name="T"></typeparam>
         /// <param name="loadPath">api传入的加载路径,Runtime下的相对路径</param>
         /// <returns>返回Task</returns>
-        public LoadTaskGroup AsyncLoad<T>(string loadPath, LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
+        public LoadTaskGroup AsyncLoad<T>(string loadPath, LoadPathType loadPathType = LoadPathType.RuntimePath)
+            where T : UnityEngine.Object
         {
             LoadTaskGroup loadTask = null;
-            var objCache = GetObjectFormCache(loadPath, typeof(T));
-            if (!objCache)
+
+            loadTask = CreateAsyncLoadTask<T>(loadPath, loadPathType);
+            if (loadTask == null)
             {
-                loadTask = CreateAsyncLoadTask<T>(loadPath, loadPathType);
-                if (loadTask == null)
-                {
-                    BDebug.LogError("不存在资源:" + loadPath);
-                }
-            }
-            else
-            {
-                loadTask = new LoadTaskGroup(objCache);
+                BDebug.LogError("不存在资源:" + loadPath);
             }
 
             return loadTask;
@@ -318,46 +328,40 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="loadPath">api传入的加载路径,Runtime下的相对路径</param>
         /// <param name="callback"></param>
         /// <returns>异步任务id</returns>
-        public int AsyncLoad<T>(string loadPath, Action<T> callback, LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
+        public int AsyncLoad<T>(string loadPath, Action<T> callback,
+            LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
         {
             //转换path
             // loadPath = GetLoadPath<T>(loadPath, loadPathType);
-
-            var cacheObj = GetObjectFormCache(loadPath, typeof(T));
-            if (!cacheObj)
+            var loadTask = CreateAsyncLoadTask<T>(loadPath, loadPathType);
+            if (loadTask != null)
             {
-                var loadTask = CreateAsyncLoadTask<T>(loadPath, loadPathType);
-                if (loadTask != null)
+                //添加完成回调
+                loadTask.GetAwaiter().OnCompleted(() =>
                 {
-                    //添加完成回调
-                    loadTask.GetAwaiter().OnCompleted(() =>
+                    if (!loadTask.IsCancel)
                     {
-                        if (!loadTask.IsCancel)
-                        {
-                            this.UseAssetBundle(loadPath, typeof(T));
-                            //回调
-                            var obj = loadTask.GetResult<T>();
-                            callback(obj);
-                        }
-                    });
+                        this.UseAssetBundle(loadPath, typeof(T));
+                        //回调
+                        var obj = loadTask.GetResult<T>();
+                        callback(obj);
+                    }
+                });
 
-                    //添加到任务队列
-                    AddAsyncTaskGroup(loadTask);
-                    return loadTask.Id;
-                }
-                else
-                {
-                    BDebug.LogError("不存在资源:" + loadPath);
-                }
+                //添加到任务队列
+                AddAsyncTaskGroup(loadTask);
+                return loadTask.Id;
             }
             else
             {
-                //返回缓存的数据
-                var obj = cacheObj as T;
-                callback?.Invoke(obj);
-            }
+#if UNITY_EDITOR
+                BDebug.LogError($"不存在资源:{loadPath} / EditorPath:{UnityEditor.AssetDatabase.GUIDToAssetPath(loadPath)}");
+#else
+                BDebug.LogError("不存在资源:{loadPath}");
+#endif
 
-            return -1;
+                return -1;
+            }
         }
 
 
@@ -375,23 +379,24 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="loadPath">api传入的加载路径,Runtime下的相对路径</param>
         /// <param name="callback"></param>
         /// <returns>异步任务id</returns>
-        private LoadTaskGroup CreateAsyncLoadTask<T>(string loadPath, LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
+        private LoadTaskGroup CreateAsyncLoadTask<T>(string loadPath,
+            LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
         {
             //
             AssetBundleItem mainItem = null;
-            List<AssetBundleItem> dependItems = null;
+            IEnumerable<AssetBundleItem> dependItems = null;
             //1.依赖路径
             switch (loadPathType)
             {
                 case LoadPathType.RuntimePath:
-                    (mainItem, dependItems) = AssetBundleInfoLoader.GetDependAssets(loadPath, typeof(T));
+                    (mainItem, dependItems) = AssetBundleConfig.GetDependAssets(loadPath, typeof(T));
                     break;
                 case LoadPathType.GUID:
-                    (mainItem, dependItems) = AssetBundleInfoLoader.GetDependAssetsByGUID(loadPath, typeof(T));
+                    (mainItem, dependItems) = AssetBundleConfig.GetDependAssetsByGUID(loadPath, typeof(T));
                     break;
             }
 
-            if (dependItems != null && dependItems.Count > 0)
+            if (dependItems != null && dependItems.Count() > 0)
             {
                 //取消卸载任务
                 var abPaths = dependItems.Select((d) => d.AssetBundlePath).ToArray();
@@ -404,7 +409,11 @@ namespace BDFramework.ResourceMgr.V2
             }
             else
             {
-                BDebug.LogError("不存在资源:" + loadPath);
+#if UNITY_EDITOR
+                BDebug.LogError($"不存在资源:{loadPath} / EditorPath:{UnityEditor.AssetDatabase.GUIDToAssetPath(loadPath)}");
+#else
+                BDebug.LogError("不存在资源:{loadPath}");
+#endif
             }
 
             return null;
@@ -417,30 +426,47 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="onLoadProcess">进度</param>
         /// <param name="onLoadComplete">加载结束</param>
         /// <returns>任务id列表</returns>
-        public List<int> AsyncLoad(List<string> loadPathList, Action<int, int> onLoadProcess, Action<IDictionary<string, Object>> onLoadComplete, LoadPathType loadPathType = LoadPathType.RuntimePath)
+        public List<int> AsyncLoad(List<string> loadPathList, Action<int, int> onLoadProcess,
+            Action<IDictionary<string, Object>> onLoadComplete, LoadPathType loadPathType = LoadPathType.RuntimePath)
         {
             var taskIdList = new List<int>();
             int taskCounter = 0;
-            var loadAssetMap = new Dictionary<string, Object>();
+            var returnLoadAssetMap = new Dictionary<string, Object>();
             loadPathList = loadPathList.Distinct().ToList(); //去重
-            int totalNum = loadPathList.Count;
+            //总任务数
+            int totalTaskNum = 0;
+            //失败任务数
+            int failTaskNum = 0;
             //依次添加异步任务
             foreach (var assetLoadPath in loadPathList)
             {
                 var taskid = AsyncLoad<Object>(assetLoadPath, (o) =>
                 {
-                    loadAssetMap[assetLoadPath] = o;
+                    returnLoadAssetMap[assetLoadPath] = o;
                     //进度回调
-                    onLoadProcess?.Invoke(loadAssetMap.Count, totalNum);
+                    onLoadProcess?.Invoke(returnLoadAssetMap.Count, totalTaskNum);
                     //完成回调
-                    if (loadAssetMap.Count == totalNum)
+                    if (returnLoadAssetMap.Count == totalTaskNum)
                     {
-                        onLoadComplete?.Invoke(loadAssetMap);
+                        onLoadComplete?.Invoke(returnLoadAssetMap);
                     }
                 }, loadPathType);
-                taskIdList.Add(taskid);
+
+                //失败任务
+                if (taskid < 0)
+                {
+                    failTaskNum++;
+                }
+                else
+                {
+                    taskIdList.Add(taskid);
+                }
             }
 
+            //重整失败任务数量
+            totalTaskNum = loadPathList.Count - failTaskNum;
+
+            BDebug.LogError($"失败任务数:{failTaskNum}");
             //
             return taskIdList;
         }
@@ -458,180 +484,55 @@ namespace BDFramework.ResourceMgr.V2
         #endregion
 
 
-        #region AssetbundleFile 处理
-
-        /// <summary>
-        /// 加载AssetBundle文件
-        /// </summary>
-        /// <param name="assetbundleFileName">ab文件名</param>
-        /// <returns></returns>
-        public void LoadAssetBundle(string assetbundleFileName, int offset = 0)
-        {
-            AssetBundleWrapper abw = GetAssetBundleFromCache(assetbundleFileName);
-            if (abw == null)
-            {
-                //取消加载任务
-                this.CancelUnloadTask(assetbundleFileName);
-                //寻找加载路径
-                var abLocalPath = FindMultiAddressAsset(assetbundleFileName);
-#if UNITY_EDITOR
-                if (!File.Exists(abLocalPath))
-                {
-                    return;
-                }
-#endif
-
-                //这里需要判断task列表，异步转同步
-                var loadTask = GetExsitLoadTask(abLocalPath);
-                if (loadTask != null)
-                {
-                    if (loadTask.IsAsyncTask)
-                    {
-                        loadTask.ToSynchronizationTask();
-                        BDebug.Log("【AssetbundleV2】异步转同步:" + loadTask.LocalPath);
-                    }
-                    else
-                    {
-                        BDebug.LogError("【AssetbundleV2】同步任务调度错误~");
-                    }
-                }
-                else
-                {
-                    //同步也要创建任务
-                    loadTask = new LoadTask(abLocalPath, 0u, (ulong) offset);
-                    AddGlobalLoadTask(loadTask);
-                    {
-                        //同步加载
-                        loadTask.Load();
-                    }
-                    RemoveGlobalLoadTask(loadTask);
-                }
-
-
-#if UNITY_EDITOR
-                if (loadTask.AssetBundle == null)
-                {
-                    Debug.LogError($"【AssetBundleV2】 ab加载失败{loadTask.LocalPath}");
-                }
-#endif
-                //添加
-                abw = this.AddAssetBundleToCache(assetbundleFileName, loadTask.AssetBundle);
-            }
-        }
-
-
-        /// <summary>
-        /// 添加ab到缓存
-        /// </summary>
-        /// <param name="assetbundleFileName">这里是ab文件名，不是路径</param>
-        /// <param name="ab"></param>
-        public AssetBundleWrapper AddAssetBundleToCache(string assetbundleFileName, AssetBundle ab)
-        {
-            AssetBundleWrapper abw = null;
-            //
-            if (!AssetbundleCacheMap.TryGetValue(assetbundleFileName, out abw))
-            {
-                abw = new AssetBundleWrapper(ab);
-                AssetbundleCacheMap[assetbundleFileName] = abw;
-            }
-
-            return abw;
-        }
-
-
-        /// <summary>
-        /// 获取缓存中的ab
-        /// </summary>
-        /// <param name="assetBundleFileName"></param>
-        /// <returns></returns>
-        public AssetBundleWrapper GetAssetBundleFromCache(string assetBundleFileName)
-        {
-            AssetbundleCacheMap.TryGetValue(assetBundleFileName, out var abw);
-            return abw;
-        }
-
-        #endregion
-
         #region 从AB中加载Object
 
-        /// <summary>
-        /// 加载资源
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="assetName"></param>
-        /// <param name="item"></param>
-        /// <param name="abName"></param>
-        /// <param name="objName"></param>
-        /// <returns></returns>
-        public T LoadObjectFormAssetBundle<T>(string loadPath, string guid, AssetBundleItem item) where T : UnityEngine.Object
-        {
-            var obj = LoadObjectFormAssetBundle(typeof(T), loadPath, guid, item);
-            if (obj)
-            {
-                return (obj as T);
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 加载实例资源
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="loadType"></param>
-        /// <param name="loadPath">api传入的加载路径,Runtime下的相对路径</param>
-        /// <param name="guid"></param>
-        /// <param name="abFileItem"></param>
-        /// <param name="abName"></param>
-        /// <param name="objName"></param>
-        /// <returns></returns>
-        public Object LoadObjectFormAssetBundle(Type loadType, string loadPath, string guid, AssetBundleItem abFileItem)
-        {
-            Object retObj = null;
-            if (AssetbundleCacheMap.TryGetValue(abFileItem.AssetBundlePath, out var abw))
-            {
-                retObj = abw.LoadAsset(loadType, guid);
-                //加入缓存
-                AddObjectToCache(loadType, loadPath, retObj);
-            }
-            else
-            {
-                BDebug.Log("资源不存在:" + loadPath + " - " + abFileItem.AssetBundlePath, "red");
-                return null;
-            }
-
-            return retObj;
-        }
-
-        /// <summary>
-        /// 加载实例资源
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="loadType"></param>
-        /// <param name="loadPath">api传入的加载路径,Runtime下的相对路径</param>
-        /// <param name="item"></param>
-        /// <param name="abName"></param>
-        /// <param name="objName"></param>
-        /// <returns></returns>
-        public void AsyncLoadObjectFormAssetBundle(Type loadType, string loadPath, LoadPathType loadPathType, AssetBundleItem item, Action<Object> callback)
-        {
-            if (AssetbundleCacheMap.TryGetValue(item.AssetBundlePath, out var abw))
-            {
-                //item.AssetType == AssetType.TYPE_SPRITE_ATLAS
-                //异步加载
-                abw.AsyncLoadAsset(loadType, loadPath, (o) =>
-                {
-                    //加入缓存
-                    AddObjectToCache(loadType, loadPath, o);
-                    //触发回调
-                    callback?.Invoke(o);
-                }, item.AssetType);
-            }
-            else
-            {
-                BDebug.Log("资源不存在:" + loadPath + " - " + item.AssetBundlePath, "red");
-            }
-        }
+        // /// <summary>
+        // /// 加载资源
+        // /// </summary>
+        // /// <typeparam name="T"></typeparam>
+        // /// <param name="assetName"></param>
+        // /// <param name="item"></param>
+        // /// <param name="abName"></param>
+        // /// <param name="objName"></param>
+        // /// <returns></returns>
+        // public T LoadAssetObject<T>(string loadPath, string guid, AssetBundleItem item) where T : UnityEngine.Object
+        // {
+        //     var obj = LoadAssetObject(typeof(T), loadPath, guid, item);
+        //     if (obj)
+        //     {
+        //         return (obj as T);
+        //     }
+        //
+        //     return null;
+        // }
+        //
+        // /// <summary>
+        // /// 加载实例资源
+        // /// </summary>
+        // /// <typeparam name="T"></typeparam>
+        // /// <param name="loadType"></param>
+        // /// <param name="loadPath">api传入的加载路径,Runtime下的相对路径</param>
+        // /// <param name="guid"></param>
+        // /// <param name="abFileItem"></param>
+        // /// <param name="abName"></param>
+        // /// <param name="objName"></param>
+        // /// <returns></returns>
+        // public Object LoadAssetObject(Type loadType, string loadPath, string guid, AssetBundleItem abFileItem)
+        // {
+        //     Object retObj = null;
+        //     var assetLoder = GetAssetLoder(abFileItem.AssetBundlePath);
+        //     if (assetLoder!=null)
+        //     {
+        //         retObj = assetLoder.LoadAsset(loadType, guid);
+        //     }
+        //     else
+        //     {
+        //         BDebug.Log($"不存在Loader:{loadPath} - {abFileItem.AssetBundlePath}", Color.red);
+        //         return null;
+        //     }
+        //
+        //     return retObj;
+        // }
 
         #endregion
 
@@ -685,7 +586,7 @@ namespace BDFramework.ResourceMgr.V2
             // {
             //     str = ZString.Format(DEBUG_RUNTIME, str);
             // }
-            foreach (var abItem in this.AssetBundleInfoLoader.AssetbundleItemList)
+            foreach (var abItem in this.AssetBundleConfig.AssetbundleItemList)
             {
                 if (abItem.LoadPath != null && abItem.LoadPath.StartsWith(str, StringComparison.OrdinalIgnoreCase))
                 {
@@ -712,53 +613,6 @@ namespace BDFramework.ResourceMgr.V2
             return rets.ToArray();
         }
 
-        private AssetBundleWrapper ALLSHADER = null;
-
-        /// <summary>
-        /// 预热shader
-        /// </summary>
-        public void WarmUpShaders()
-        {
-            var svc = this.Load<ShaderVariantCollection>(BResources.ALL_SHADER_VARAINT_RUNTIME_PATH);
-            if (!svc.isWarmedUp)
-            {
-                svc.WarmUp();
-                //加载shaders
-                if (this.ALLSHADER == null)
-                {
-                    var abItem = this.AssetBundleInfoLoader.GetAssetBundleItem(BResources.ALL_SHADER_VARAINT_RUNTIME_PATH);
-                    var abContentItem = this.AssetBundleInfoLoader.GetAssetBundleItem(abItem.DependAssetIds.Last());
-                    if (abContentItem.AssetBundlePath == null)
-                    {
-                        BDebug.LogError("Shader AssetBundlePath 为空！！！！ ");
-                        return;
-                    }
-                   
-                    this.AssetbundleCacheMap.TryGetValue(abContentItem.AssetBundlePath, out ALLSHADER);
-                    if (ALLSHADER != null)
-                    {
-                        ALLSHADER.LoadAllShaders();
-                    }
-                }
-            }
-#if UNITY_EDITOR
-            var (_, dependList) = this.AssetBundleInfoLoader.GetDependAssets(BResources.ALL_SHADER_VARAINT_RUNTIME_PATH);
-            var svcABItem = dependList.Last();
-            this.AssetbundleCacheMap.TryGetValue(svcABItem.AssetBundlePath, out var ab);
-            BDebug.Log("WarmUp Shaders:\n" + JsonMapper.ToJson(ab.AssetBundle.GetAllAssetNames(), true));
-#endif
-        }
-
-        /// <summary>
-        /// 寻找一个shader
-        /// </summary>
-        /// <param name="shaderName"></param>
-        /// <returns></returns>
-        public Shader FindShader(string shaderName)
-        {
-            return ALLSHADER?.FindShader(shaderName);
-        }
-
         #endregion
 
         #region 加载任务
@@ -767,7 +621,7 @@ namespace BDFramework.ResourceMgr.V2
         /// 加载任务的驱动
         /// 目前只处理异步任务
         /// </summary>
-        IEnumerator IE_LoadTaskUpdate()
+        IEnumerator IE_AsyncLoadTaskUpdate()
         {
             while (true)
             {
@@ -782,7 +636,7 @@ namespace BDFramework.ResourceMgr.V2
                 for (int i = asyncLoadTaskList.Count - 1; i >= 0; i--)
                 {
                     var asyncTask = asyncLoadTaskList[i];
-                    if (asyncTask.IsCancel || asyncTask.IsSuccess)
+                    if (asyncTask.IsComplete)
                     {
                         asyncTask.Dispose();
                         asyncLoadTaskList.RemoveAt(i);
@@ -852,14 +706,13 @@ namespace BDFramework.ResourceMgr.V2
 
         #endregion
 
-
         #region 引用计数辅助
 
         /// <summary>
         /// 加载计数
         /// 防止对某个具体资产 一直unse 导致ab被卸载
         /// </summary>
-        private Dictionary<string, int> loadCounterMap = new Dictionary<string, int>();
+        private Dictionary<string, int> loadCounterMap { get; set; } = new Dictionary<string, int>();
 
         /// <summary>
         /// 引用计数辅助,use
@@ -875,14 +728,14 @@ namespace BDFramework.ResourceMgr.V2
             //自增
             loadCounterMap[loadPath] = counter++;
             //1.ab自增
-            var mainAssetItem = AssetBundleInfoLoader.GetAssetBundleItem(loadPath, type,true);
-            var dependAssetList = AssetBundleInfoLoader.GetDependAssets(mainAssetItem);
+            var mainAssetItem = AssetBundleConfig.GetAssetBundleItem(loadPath, type, true);
+            var dependAssetList = AssetBundleConfig.GetDependAssets(mainAssetItem);
             foreach (var abi in dependAssetList)
             {
-                if (AssetbundleCacheMap.TryGetValue(abi.AssetBundlePath, out var abw))
+                var assetLoader = GetAssetLoder(abi.AssetBundlePath);
+                if (assetLoader != null)
                 {
-                    //
-                    abw.Use();
+                    assetLoader.Use();
                 }
             }
         }
@@ -898,37 +751,40 @@ namespace BDFramework.ResourceMgr.V2
                 {
                     BDebug.Log($"AssetMgrV2: <color=yellow>UnUse</color> {loadPath}");
                     //1.AB卸载
-                    var mainAssetItem = AssetBundleInfoLoader.GetAssetBundleItem(loadPath, type,true);
-                    var dependAssetList = AssetBundleInfoLoader.GetDependAssets(mainAssetItem);
+                    var mainAssetItem = AssetBundleConfig.GetAssetBundleItem(loadPath, type, true);
+                    var dependAssetList = AssetBundleConfig.GetDependAssets(mainAssetItem);
                     foreach (var abi in dependAssetList)
                     {
-                        var abPath = abi.AssetBundlePath;
+                        var abFilePath = abi.AssetBundlePath;
+                        var assetLoader = GetAssetLoder(abFilePath);
                         //unuse
-                        if (AssetbundleCacheMap.TryGetValue(abPath, out var abw))
+                        if (assetLoader != null)
                         {
-                            abw.Unuse();
+                            assetLoader.Unuse();
 
                             //判断是否需要卸载
-                            if (abw.UseCounter <= 0)
+                            if (assetLoader.UseCounter <= 0)
                             {
                                 //卸载回调
                                 Action onUnloadEnd = () =>
                                 {
                                     //移除assetbundle
-                                    AssetbundleCacheMap.Remove(abPath);
+                                    AssetLoderMap.Remove(abFilePath);
                                     //移除缓存
                                     this.UnloadObjectCache(type, loadPath);
                                 };
 
                                 //创建unload任务
-                                var unloadTask = new UnLoadTask(abw, onUnloadEnd);
+                                var unloadTask = new UnLoadTask(assetLoader, onUnloadEnd);
                                 //添加卸载任务
-                                this.AddUnloadTask(abPath, unloadTask);
+                                this.AddUnloadTask(abFilePath, unloadTask);
 
 #if UNITY_EDITOR
-                                BDebug.Log($"AssetMgrV2: <color=red>Unload</color> {loadPath} - AB: {AssetDatabase.GUIDToAssetPath(abw.AssetBundle.name)}");
+                                BDebug.Log(
+                                    $"AssetMgrV2: <color=red>Unload</color> {loadPath} - AB: {AssetDatabase.GUIDToAssetPath(assetLoader.Name)}");
 #else
-                                BDebug.Log($"AssetMgrV2: <color=red>Unload</color> {loadPath} - AB: { abw.AssetBundle.name}");
+                                BDebug.Log(
+                                    $"AssetMgrV2: <color=red>Unload</color> {loadPath} - AB: {assetLoader.Name}");
 #endif
                             }
                         }
@@ -962,14 +818,12 @@ namespace BDFramework.ResourceMgr.V2
         /// <param name="path"></param>
         public void UnloadAllAsset()
         {
-            AssetbundleCacheMap.Clear();
+            AssetLoderMap.Clear();
             GameObjectCacheMap.Clear();
             loadCounterMap.Clear();
             AssetBundle.UnloadAllAssetBundles(true);
             Resources.UnloadUnusedAssets();
         }
-
-        #endregion
 
         #region 卸载任务
 
@@ -977,7 +831,8 @@ namespace BDFramework.ResourceMgr.V2
         /// 卸载任务集合
         /// </summary>
         /// <returns></returns>
-        private Queue<KeyValuePair<string, UnLoadTask>> UnloadTaskQueue = new Queue<KeyValuePair<string, UnLoadTask>>(50);
+        private Queue<KeyValuePair<string, UnLoadTask>> UnloadTaskQueue =
+            new Queue<KeyValuePair<string, UnLoadTask>>(50);
 
         /// <summary>
         /// 执行卸载任务
@@ -1030,20 +885,22 @@ namespace BDFramework.ResourceMgr.V2
 
         #endregion
 
+        #endregion
 
         #region 资源缓存
 
         /// <summary>
         /// 全局的资源缓存
         /// </summary>
-        private Dictionary<Type, Dictionary<string, UnityEngine.Object>> GameObjectCacheMap { get; set; } = new Dictionary<Type, Dictionary<string, Object>>();
+        private Dictionary<Type, Dictionary<string, Object>> GameObjectCacheMap { get; set; } =
+            new Dictionary<Type, Dictionary<string, Object>>();
 
         /// <summary>
         /// 从缓存中加载
         /// </summary>
         /// <param name="loadPath">api传入的加载路径,Runtime下的相对路径</param>
         /// <returns></returns>
-        public void AddObjectToCache(Type type, string loadPath, Object obj)
+        public void AddAssetObjectToCache(Type type, string loadPath, Object obj)
         {
             //部分类型不进行缓存~
             if (type == typeof(TextAsset))
@@ -1059,17 +916,17 @@ namespace BDFramework.ResourceMgr.V2
                 GameObjectCacheMap[type] = map;
             }
 
-            BDebug.Log($"<color=yellow>缓存添加成功</color>:{loadPath}");
+            BDebug.Log($"<color=red>缓存添加成功</color>:{loadPath} - <color=green>{type.Name}</color>");
             map[loadPath] = obj;
         }
 
         /// <summary>
-        /// 从缓存中加载
+        /// 获取存在的缓存
         /// </summary>
         /// <param name="loadPath">api传入的加载路径,Runtime下的相对路径</param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public Object GetObjectFormCache(string loadPath, Type type)
+        public Object GetAssetObjectFromCache(string loadPath, Type type)
         {
             var ret = GameObjectCacheMap.TryGetValue(type, out var map);
             if (ret)
@@ -1082,9 +939,10 @@ namespace BDFramework.ResourceMgr.V2
 
                 return gobj;
             }
+
             return null;
         }
-        
+
 
         /// <summary>
         /// 从缓存中卸载 实例化的资源
@@ -1127,6 +985,154 @@ namespace BDFramework.ResourceMgr.V2
         }
 
         #endregion
+
+
+        #region AssetLoader管理
+
+        /// <summary>
+        /// 加载AssetBundle文件
+        /// </summary>
+        /// <param name="assetbundlePath">ab文件名</param>
+        /// <returns></returns>
+        public AssetLoder LoadAssetBundle(AssetBundleItem item)
+        {
+            AssetLoder assetLoder = GetAssetLoder(item.AssetBundlePath);
+            if (assetLoder == null)
+            {
+                //取消加载任务
+                this.CancelUnloadTask(item.AssetBundlePath);
+                //寻找加载路径
+                var abLocalPath = FindMultiAddressAsset(item.AssetBundlePath);
+
+                //这里需要判断task列表，异步转同步
+                var loadTask = GetExsitLoadTask(abLocalPath);
+                if (loadTask != null)
+                {
+                    if (loadTask.IsAsyncTask)
+                    {
+                        loadTask.ToSynchronizationTask();
+                        BDebug.Log("【AssetbundleV2】异步转同步:" + loadTask.LocalPath);
+                    }
+                    else
+                    {
+                        BDebug.LogError("【AssetbundleV2】同步任务调度错误~");
+                    }
+                }
+                else
+                {
+                    //同步也要创建任务
+                    loadTask = new LoadTask(abLocalPath, 0u, (ulong)item.Mix);
+                    AddGlobalLoadTask(loadTask);
+                    {
+                        //同步加载
+                        loadTask.Load();
+                    }
+                    RemoveGlobalLoadTask(loadTask);
+                }
+
+                if (loadTask.AssetBundle == null)
+                {
+                    BDebug.LogError($"【AssetBundleV2】 ab加载失败{loadTask.LocalPath}");
+                }
+
+                //添加
+                assetLoder = this.AddAssetLoder(item, loadTask.AssetBundle);
+            }
+
+            return assetLoder;
+        }
+
+
+        /// <summary>
+        /// 添加ab到缓存
+        /// </summary>
+        /// <param name="assetbundleFileName">这里是ab文件名</param>
+        /// <param name="ab"></param>
+        public AssetLoder AddAssetLoder(AssetBundleItem item, AssetBundle ab)
+        {
+            AssetLoder assetLoder = null;
+            //
+            if (item.IsAssetBundleSourceFile() && !AssetLoderMap.TryGetValue(item.AssetBundlePath, out assetLoder))
+            {
+                assetLoder = AssetLoaderFactory.CrateAssetLoder(item, ab);
+                AssetLoderMap[item.AssetBundlePath] = assetLoder;
+            }
+
+            return assetLoder;
+        }
+
+        /// <summary>
+        /// 获取Assetloader
+        /// </summary>
+        /// <param name="loadPath">加载路径</param>
+        /// <returns></returns>
+        private T GetAssetLoder<T>(string loadPath) where T : AssetLoder
+        {
+            var abSourceFileItem = this.AssetBundleConfig.GetAssetBundleSourceFile(loadPath);
+            if (abSourceFileItem.AssetBundlePath == null)
+            {
+                BDebug.LogError($"不存在AssetLoader:{loadPath}");
+                return null;
+            }
+
+            //
+            this.AssetLoderMap.TryGetValue(abSourceFileItem.AssetBundlePath, out var assetLoder);
+            if (assetLoder != null && assetLoder is T t)
+            {
+                return t;
+            }
+            else
+            {
+                BDebug.LogError("assetLoder 不存在或者Type不对~");
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 获取缓存中的ab
+        /// </summary>
+        /// <param name="abFilePath"></param>
+        /// <returns></returns>
+        public AssetLoder GetAssetLoder(string abFilePath)
+        {
+            AssetLoderMap.TryGetValue(abFilePath, out var assetLoder);
+            return assetLoder;
+        }
+
+        #endregion
+
+        #region Shader管理
+
+        /// <summary>
+        /// 预热shader
+        /// </summary>
+        public void WarmUpShaders()
+        {
+            var loadpath = BResources.DUMMY_SHADER_PATH;
+            this.Load<Object>(loadpath);
+            var shaderLoder = GetAssetLoder<ShaderLoder>(loadpath);
+            shaderLoder.LoadAllShaders();
+
+#if UNITY_EDITOR
+            BDebug.Log("WarmUp Shaders:\n" + JsonMapper.ToJson(shaderLoder.GetAllAssetNames(), true));
+#endif
+        }
+
+        /// <summary>
+        /// 寻找一个shader
+        /// </summary>
+        /// <param name="shaderName"></param>
+        /// <returns></returns>
+        public Shader FindShader(string shaderName)
+        {
+              var loadpath = BResources.DUMMY_SHADER_PATH;
+            var shaderLoder = GetAssetLoder<ShaderLoder>(loadpath);
+            return shaderLoder?.FindShader(shaderName);
+        }
+
+        #endregion
+
 
         /// <summary>
         /// 设置加载配置

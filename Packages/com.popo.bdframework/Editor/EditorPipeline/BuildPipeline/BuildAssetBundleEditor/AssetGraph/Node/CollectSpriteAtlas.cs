@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
+using BDFramework.ResourceMgr.V2;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AssetGraph;
@@ -47,11 +48,13 @@ namespace BDFramework.Editor.AssetGraph.Node
             return new CollectSpriteAtlas();
         }
         private NodeGUI selfNodeGUI;
+        public bool IsOnlyOneShaderVaraint = false;
         public override void OnDrawNodeGUIContent(NodeGUI node)
         {
             base.OnDrawNodeGUIContent(node);
             this.selfNodeGUI = node;
         }
+        
         public override void OnInspectorGUI(NodeGUI node, AssetReferenceStreamManager streamManager, NodeGUIInspector inspector, Action onValueChanged)
         {
         }
@@ -78,7 +81,11 @@ namespace BDFramework.Editor.AssetGraph.Node
                 return;
             }
             this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
-
+            if (BuildingCtx.BuildParams.IsBuilding)
+            {
+                EditorUtility.DisplayProgressBar("构建资产", this.Category, 1);
+            }
+            
             AssetGraphTools.WatchBegin();
             //找到runtime中的图集
             List<AssetReference> runtimeAssetReferenceList = null;
@@ -141,7 +148,8 @@ namespace BDFramework.Editor.AssetGraph.Node
                     //设置tex ab
                     foreach (var dependTex in assetInfo.DependAssetList)
                     {
-                        var (ret,msg) = this.BuildingCtx.BuildAssetInfos.SetABPack(dependTex, atlasAR.importFrom, BuildAssetInfos.SetABPackLevel.Force,this.Category+" "+(this.selfNodeGUI!=null?this.selfNodeGUI.Name: this.GetHashCode().ToString()),true);
+                        var log = this.Category + " " + (this.selfNodeGUI != null ? this.selfNodeGUI.Name : this.GetHashCode().ToString());
+                        var (ret,msg) = this.BuildingCtx.BuildAssetInfos.SetABPack(dependTex, atlasAR.importFrom, BuildAssetInfos.SetABPackLevel.Force,log,true);
 
                         // if (!ret)
                         // {
@@ -150,6 +158,9 @@ namespace BDFramework.Editor.AssetGraph.Node
                         // }
                     }
                 }
+
+                //设置ABLoadType
+                this.BuildingCtx.BuildAssetInfos.SetABLoadType(atlasAR.importFrom, AssetLoaderFactory.AssetBunldeLoadType.SpriteAtlas);
             }
         }
     }

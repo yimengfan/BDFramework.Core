@@ -81,7 +81,7 @@ namespace BDFramework
             if (mode == HotfixCodeRunMode.HCLR)
             {
                 new NotSupportedException("暂未实现");
-                // BDebug.Log("【ScriptLaunch】反射Dll路径:" + dllPath, "red");
+                // BDebug.Log("【ScriptLaunch】反射Dll路径:" + dllPath, Color.red);
                 // Assembly Assembly;
                 // var dllBytes = File.ReadAllBytes(dllPath);
                 // var pdbPath = dllPath + ".pdb";
@@ -104,7 +104,7 @@ namespace BDFramework
             //解释执行
             else if (mode == HotfixCodeRunMode.ILRuntime)
             {
-                BDebug.Log("【ScriptLaunch】热更Dll路径:" + dllPath, "red");
+                BDebug.Log("【ScriptLaunch】热更Dll路径:" + dllPath, Color.red);
                 //解释执行模式
                 ILRuntimeHelper.LoadHotfix(dllPath, CLRBindAction);
                 var hotfixTypes = ILRuntimeHelper.GetHotfixTypes().ToArray();
@@ -112,7 +112,7 @@ namespace BDFramework
             }
             else
             {
-                BDebug.Log("【ScriptLaunch】Dll路径:内置", "red");
+                BDebug.Log("【ScriptLaunch】Dll路径:内置", Color.red);
             }
         }
 

@@ -65,7 +65,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// AssetBundle 
         /// </summary>
-        public Dictionary<string, AssetBundleWrapper> AssetbundleCacheMap { get; set; }
+        public Dictionary<string, AssetLoder> AssetbundleCacheMap { get; set; }
 
         /// <summary>
         /// 寻找一个shader

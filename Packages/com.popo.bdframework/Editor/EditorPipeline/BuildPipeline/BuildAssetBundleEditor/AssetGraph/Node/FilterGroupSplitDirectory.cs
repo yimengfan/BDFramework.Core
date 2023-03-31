@@ -96,15 +96,7 @@ namespace BDFramework.Editor.AssetGraph.Node
          
             EditorGUILayout.HelpBox("该节点，用于分组 传入路径的所有子目录，默认只接受一个传入!", MessageType.Info);
         }
-
-        public override void OnContextMenuGUI(GenericMenu menu)
-        {
-            base.OnContextMenuGUI(menu);
-        }
-
-        private void InitOutputNode()
-        {
-        }
+        
 
         /// <summary>
         /// 添加

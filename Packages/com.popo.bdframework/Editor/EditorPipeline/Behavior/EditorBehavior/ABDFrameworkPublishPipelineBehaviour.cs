@@ -1,7 +1,9 @@
 ﻿using System;
+using BDFramework.Configure;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.AssetGraph.Node;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
+using BDFramework.Editor.Inspector.Config;
 using UnityEditor;
 using UnityEngine;
 
@@ -145,6 +147,34 @@ namespace BDFramework.Editor
         /// <param name="outputpath"></param>
         virtual public void OnBeginBuildPackage(BuildTarget buildTarget, string outputpath)
         {
+            var config =  ConfigEditorUtil.GetEditorConfig<GameBaseConfigProcessor.Config>();
+            switch (buildTarget)
+            {
+                case BuildTarget.Android:
+                {
+                    PlayerSettings.Android.bundleVersionCode++;
+                    //设置版本号
+                    PlayerSettings.bundleVersion = config.ClientVersionNum;
+                    
+                    
+                    BDebug.Log($"APP版本号：Version:{ PlayerSettings.bundleVersion} / BundleVersion:{PlayerSettings.Android.bundleVersionCode}", Color.yellow);
+                }
+                    break;
+                case BuildTarget.iOS:
+                {
+                    int buildNumber = 0;
+                    int.TryParse(PlayerSettings.iOS.buildNumber, out buildNumber);
+                    buildNumber++;
+                    //设置build number
+                    PlayerSettings.iOS.buildNumber = buildNumber.ToString();
+                    //设置版本号
+                    PlayerSettings.bundleVersion = config.ClientVersionNum;
+                    
+                    BDebug.Log($"APP版本号：Version:{ PlayerSettings.bundleVersion} / BundleVersion:{PlayerSettings.iOS.buildNumber}", Color.yellow);
+
+                }
+                    break;
+            }
         }
 
         /// <summary>

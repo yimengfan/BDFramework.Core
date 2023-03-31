@@ -17,12 +17,7 @@ namespace BDFramework.UFlux
         /// 资源节点
         /// </summary>
         public Transform Transform { get; private set; }
-
-        /// <summary>
-        /// 状态管理
-        /// </summary>
-        public AStatusListener State { get; }
-
+        
         /// <summary>
         /// 是否加载
         /// </summary>
@@ -32,6 +27,8 @@ namespace BDFramework.UFlux
         /// 是否打开
         /// </summary>
         public bool IsOpen { get; private set; } = false;
+        
+
 
         /// <summary>
         /// 是否被删除
@@ -43,7 +40,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 构造函数,n一旦new 会自动创建相关的渲染组件
         /// </summary>
-        public ATComponent()
+         public ATComponent(bool isLoadAsset = true)
         {
             var t = this.GetType();
             var attr = t.GetAttributeInILRuntime<ComponentAttribute>();
@@ -51,14 +48,17 @@ namespace BDFramework.UFlux
             {
                 return;
             }
-
             this.resPath = attr.Path;
+            
             //创建State
             this.Props = new T();
             //自动加载
-            if (!attr.IsAsyncLoad)
+            if (isLoadAsset)
             {
-                this.Load();
+                if (!attr.IsAsyncLoad)
+                {
+                    this.Load();
+                }
             }
         }
 
@@ -129,11 +129,11 @@ namespace BDFramework.UFlux
 
             UFluxUtils.AsyncLoad<GameObject>(resPath, obj =>
             {
-                this.Transform = GameObject.Instantiate(obj).transform;
-                this.IsLoad = true;
-                UFluxUtils.InitComponent(this);
                 try
                 {
+                    this.Transform = GameObject.Instantiate(obj).transform;
+                    this.IsLoad = true;
+                    UFluxUtils.InitComponent(this);
                     //初始化
                     Init();
                 }
@@ -216,14 +216,7 @@ namespace BDFramework.UFlux
             this.IsOpen = true;
             this.Transform.gameObject.SetActive(true);
         }
-
-        /// <summary>
-        /// 获得焦点
-        /// </summary>
-        virtual public void OnFocus()
-        {
-            this.Open();
-        }
+        
 
         /// <summary>
         ///  关闭

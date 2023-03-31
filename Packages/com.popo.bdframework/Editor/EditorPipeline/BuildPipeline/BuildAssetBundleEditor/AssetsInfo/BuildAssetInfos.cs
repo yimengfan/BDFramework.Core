@@ -18,6 +18,13 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
     /// </summary>
     public class BuildAssetInfos
     {
+        static public string Tag = "BuildPipeline-Assets";
+
+        /// <summary>
+        /// 上次修改时间
+        /// </summary>
+        public long LastChangeTime = 0;
+
         /// <summary>
         /// Asset type
         /// </summary>
@@ -62,6 +69,11 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             public string GUID { get; set; }
 
             /// <summary>
+            /// AssetBundle Load的type
+            /// </summary>
+            public AssetLoaderFactory.AssetBunldeLoadType AssetBundleLoadType { get; set; } = AssetLoaderFactory.AssetBunldeLoadType.Base;
+
+            /// <summary>
             /// 被依赖次数
             /// </summary>
             public int ReferenceCount { get; set; } = 0;
@@ -72,6 +84,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             /// </summary>
             public string Hash { get; set; } = "";
 
+            
             /// <summary>
             /// 依赖列表
             /// </summary>
@@ -145,8 +158,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             None = 0,
             Simple, //lv1.如果AB名被修改，则不会再次修改.用以不覆盖先执行的AB颗粒度规则
             Force, //lv2.强制修改该AB名,即使有其他规则已经修改过该AB颗粒度
-
-            //ForceAndFixAllRef, //lv3. ForceAndFixAllRef:强制修改，并且也修改引用该资源的AB名
+            FrameworkDefault, //lv3. 框架默认
             Lock //lv4. 最高等级,锁住，修改完不允许其他规则再次修改
         }
 
@@ -258,6 +270,23 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
 
             return (isCanSetABName, retLog);
+        }
+
+        /// <summary>
+        /// 设置LoadType
+        /// </summary>
+        /// <param name="loadType"></param>
+        /// <returns></returns>
+        public bool SetABLoadType(string assetName, AssetLoaderFactory.AssetBunldeLoadType loadType)
+        {
+            this.AssetInfoMap.TryGetValue(assetName, out var assetInfo);
+
+            if (assetInfo != null)
+            {
+                assetInfo.AssetBundleLoadType = loadType;
+            }
+            return false;
+
         }
 
         /// <summary>
@@ -388,7 +417,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         ///添加AssetPath
         /// </summary>
         /// <param name="assetPath"></param>
-        public void AddAsset(string assetPath)
+        public bool AddAsset(string assetPath)
         {
             assetPath = assetPath.ToLower();
             if (!this.AssetInfoMap.ContainsKey(assetPath))
@@ -397,7 +426,11 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 //添加
                 assetInfo.Id = this.AssetInfoMap.Count + 1;
                 this.AssetInfoMap[assetPath] = assetInfo;
+
+                return true;
             }
+
+            return false;
         }
 
 
@@ -467,7 +500,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 }
                 else
                 {
-                    Debug.LogError("获取GUID失败：" + mainAsset.Value.ABName);
+                    BDebug.LogError(BuildAssetInfos.Tag, "主资源，获取GUID失败：" + mainAsset.Value.ABName);
                 }
 
                 for (int i = 0; i < mainAsset.Value.DependAssetList.Count; i++)
@@ -481,7 +514,14 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                     }
                     else
                     {
-                        Debug.LogError("获取GUID失败：" + dependAssetPath);
+                        if (!File.Exists(dependAssetPath))
+                        {
+                            BDebug.LogError(BuildAssetInfos.Tag, $"文件不存在,获取GUID失败：{dependAssetPath}");
+                        }
+                        else
+                        {
+                            BDebug.LogError(BuildAssetInfos.Tag, $"文件存在,获取GUID失败：{dependAssetPath}");
+                        }
                     }
                 }
             }
@@ -509,16 +549,31 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             //1.导出配置
             var assetbundleItemList = new List<AssetBundleItem>();
             //占位，让id和idx恒相等
-            assetbundleItemList.Add(new AssetBundleItem(0, null, null, null, -1, new int[] { }));
+            assetbundleItemList.Add(new AssetBundleItem(0, null, null, 0,null, -1, new int[] { }));
 
-            //I.先搜集所有的AssetBundlePath
+            //I.先搜集所有的AssetBundlePath文件,因为ab只会出现一次
             foreach (var assetInfo in cloneAssetInfos.AssetInfoMap)
             {
-                var ret = assetbundleItemList.FirstOrDefault((abi) => abi.AssetBundlePath == assetInfo.Value.ABName);
-                if (ret == null)
+                var find = assetbundleItemList.FirstOrDefault((abi) => abi.AssetBundlePath == assetInfo.Value.ABName);
+                if (find == null) //不存在
                 {
-                    var abItem = new AssetBundleItem(assetbundleItemList.Count, "", assetInfo.Value.ABName,"", -1, new int[] { });
+                    var abItem = new AssetBundleItem(assetbundleItemList.Count, "", assetInfo.Value.ABName, (int)assetInfo.Value.AssetBundleLoadType,"", -1, new int[] { });
                     assetbundleItemList.Add(abItem); //.ManifestMap[key] = mi;
+                }
+                else
+                {
+                    //存在则根据一些情况更新数据
+
+                    //更新LoadType
+                    if (find.AssetBundleLoadType == (int)AssetLoaderFactory.AssetBunldeLoadType.Base)
+                    {
+                        find.AssetBundleLoadType = (int)assetInfo.Value.AssetBundleLoadType;
+                    }
+                    else if(assetInfo.Value.AssetBundleLoadType!= (int)AssetLoaderFactory.AssetBunldeLoadType.Base)
+                    {
+                        Debug.LogError($"AssetLoder冲突! \n {JsonMapper.ToJson(assetInfo,true)}");
+                    }
+                    
                 }
             }
 
@@ -535,9 +590,9 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 {
                     var loadPath = AssetBundleToolsV2.GetAbsPathFormRuntime(assetInfo.Key);
                     //添加
-                    var abItem = new AssetBundleItem(assetbundleItemList.Count, loadPath, "", assetInfo.Value.GUID,assetInfo.Value.Type, new int[] { });
-                    // abi.EditorAssetPath = item.Key;
-                    assetbundleItemList.Add(abItem); //.ManifestMap[key] = mi;
+                    var abItem = new AssetBundleItem(assetbundleItemList.Count, loadPath, "",  (int)assetInfo.Value.AssetBundleLoadType,assetInfo.Value.GUID, assetInfo.Value.Type, new int[] { });
+
+                    assetbundleItemList.Add(abItem); 
                     assetInfo.Value.ArtAssetsInfoIdx = abItem.Id;
                     counter++;
                 }
@@ -553,7 +608,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 {
                     if (!AssetBundleToolsV2.IsRuntimePath(assetInfo.Key))
                     {
-                        var abItem = new AssetBundleItem(assetbundleItemList.Count, "", "", assetInfo.Value.GUID, assetInfo.Value.Type, new int[] { });
+                        var abItem = new AssetBundleItem(assetbundleItemList.Count, "", "",  (int)assetInfo.Value.AssetBundleLoadType,assetInfo.Value.GUID, assetInfo.Value.Type, new int[] { });
                         assetbundleItemList.Add(abItem);
                         assetInfo.Value.ArtAssetsInfoIdx = abItem.Id;
                     }
@@ -621,7 +676,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             //4.设置溯源packHash
             foreach (var abi in assetbundleItemList)
             {
-                if (abi.IsAssetBundleFile())
+                if (abi.IsAssetBundleSourceFile())
                 {
                     //获取到pack hash
                     var packHash = cloneAssetInfos.GetAssetsPackSourceHash(abi.AssetBundlePath);

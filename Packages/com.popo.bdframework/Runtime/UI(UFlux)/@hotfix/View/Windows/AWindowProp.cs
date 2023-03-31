@@ -15,25 +15,29 @@ namespace BDFramework.UFlux
     /// Window-Prop基类
     /// 不带Flux Store
     /// </summary>
-    /// <typeparam name="TProp"></typeparam>
-    public class AWindow<TProp> : ATComponent<TProp>, IWindow, IUIMessage where TProp : APropsBase, new()
+    /// <typeparam name="TP"></typeparam>
+    public class AWindow<TP> : ATComponent<TP>, IWindow, IUIMessage where TP : APropsBase, new()
     {
+        /// <summary>
+        /// 状态管理
+        /// </summary>
+        public AStatusListener State { get; private set; } = new StatusListenerService();
+
+        /// <summary>
+        /// 是否获得焦点
+        /// </summary>
+        public bool IsFocus { get; protected set; } = false;
+        
         public AWindow(string path) : base(path)
         {
             RegisterUIMessages();
-            State = new StatusListenerService();
         }
 
         public AWindow(Transform transform) : base(transform)
         {
             RegisterUIMessages();
-            State = new StatusListenerService();
         }
 
-        /// <summary>
-        /// 状态管理
-        /// </summary>
-        public AStatusListener State { get; private set; }
 
 
 
@@ -48,6 +52,7 @@ namespace BDFramework.UFlux
         {
             base.Open(uiMsg);
             this.State.TriggerEvent<OnWindowOpen>();
+            
         }
 
         /// <summary>
@@ -64,9 +69,19 @@ namespace BDFramework.UFlux
         /// 获得焦点
         /// 这里是IWindow的接口
         /// </summary>
-        public override void OnFocus()
+        public void OnFocus()
+        {    
+            this.IsFocus = true;
+            this.State.TriggerEvent<OnWindowFocus>();
+        }
+
+        /// <summary>
+        /// 丢失焦点
+        /// </summary>
+        public void OnBlur()
         {
-            this.Open();
+            this.IsFocus = false;
+            this.State.TriggerEvent<OnWindowBlur>();
         }
 
         #endregion
@@ -87,7 +102,7 @@ namespace BDFramework.UFlux
         private void RegisterUIMessages()
         {
             //注册回调
-            var t    = this.GetType();
+            var t = this.GetType();
             var flag = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
             foreach (var mi in t.GetMethods(flag))
             {
@@ -130,8 +145,8 @@ namespace BDFramework.UFlux
 
             //TODO: 热更执行完Invoke会导致 map的堆栈出问题，
             MethodInfo method = null;
-            var        key    = uiMsg.GetType();
-            bool       flag   = this.msgCallbackMap.TryGetValue(key, out method);
+            var key = uiMsg.GetType();
+            bool flag = this.msgCallbackMap.TryGetValue(key, out method);
             if (flag)
             {
                 method.Invoke(this, new object[] { uiMsg });
@@ -163,8 +178,6 @@ namespace BDFramework.UFlux
             subwin.SetParent(this);
             (subwin as IComponent).Init();
         }
-
-
 
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace BDFramework.Configure
     /// 游戏基本数据处理器
     /// </summary>
     [GameConfig(-9999, "框架基础")]
-    public class GameBaseConfigProcessor : AConfigProcessor
+    public class GameBaseConfigProcessor : IConfigProcessor
     {
         /// <summary>
         /// 游戏基础设置
@@ -73,13 +73,19 @@ namespace BDFramework.Configure
         
 
 
-        public override void OnConfigLoad(ConfigDataBase config)
+        public  void OnConfigLoad(ConfigDataBase config)
         {
             var con = config as Config;
             //log
             if (BDLauncher.Inst)
             {
                 BDLauncher.Inst.GetComponent<BDebug>().IsLog = con.IsDebugLog;
+            }
+            
+            //纠正配置
+            if (!Application.isEditor)
+            {
+                con.ArtRoot = AssetLoadPathType.Persistent;
             }
         }
 

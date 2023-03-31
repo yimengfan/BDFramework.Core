@@ -67,7 +67,7 @@ using Sqlite3Statement = System.IntPtr;
 
 #pragma warning disable 1591 // XML Doc Comments
 
-namespace SQLite
+namespace SQLite4Unity3d
 {
     public class SQLiteException : Exception
     {
@@ -3227,7 +3227,7 @@ namespace SQLite
         public static bool IsPK(MemberInfo p)
         {
 #if ENABLE_IL2CPP
-            var attr = p.GetCustomAttribute<ColumnAttribute>();
+            var attr = p.GetCustomAttribute<PrimaryKeyAttribute>();
             return attr != null;
 #else
             return p.CustomAttributes.Any(x => x.AttributeType == typeof(PrimaryKeyAttribute));
@@ -3533,7 +3533,10 @@ namespace SQLite
                 var total = serchSqlTime + deSerializeTime;
                 if (total > 10)
                 {
-                    UnityEngine.Debug.LogError($"<color=white>消耗较高!</color>:<color=yellow>{total}ms</color>，查询结果数量:<color=red>{count}</color>, 执行sql耗时: <color=yellow>{serchSqlTime} ms</color>,反序列化耗时：<color=yellow>{deSerializeTime}ms</color>");
+                    if (Application.isPlaying)
+                    {
+                        UnityEngine.Debug.LogError($"<color=white>消耗较高!</color>:<color=yellow>{total}ms</color>，查询结果数量:<color=red>{count}</color>, 执行sql耗时: <color=yellow>{serchSqlTime} ms</color>,反序列化耗时：<color=yellow>{deSerializeTime}ms</color>");
+                    }
                 }
 #endif
             }

@@ -38,10 +38,19 @@ namespace BDFramework.ResourceMgrV2
             //加载
             var go = ResourceMgr.BResources.Load<T>(assetLoadPath, pathType, groupName);
             //实例化
-            var inst = GameObject.Instantiate(go) as GameObject;
-            //返回包装类型
-            var gw = new GameObjectWrapper(id, -1, inst);
-            return gw;
+            if (go)
+            {
+                var inst = GameObject.Instantiate(go) as GameObject;
+                //返回包装类型
+                var gw = new GameObjectWrapper(id, -1, inst);
+                return gw;
+            }
+            else
+            {
+                BDebug.LogError("BResource",$"无该资源:{assetLoadPath}");
+                return new GameObjectWrapper(-1,-1,null);
+            }
+
         }
     }
 }

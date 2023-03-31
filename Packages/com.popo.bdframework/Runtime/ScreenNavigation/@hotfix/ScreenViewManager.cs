@@ -66,7 +66,7 @@ namespace BDFramework.ScreenView
                 sv.Name = attr.IntTag;
                 MainLayer.RegisterScreen(sv);
                 //
-                //BDebug.Log("创建screen:" + attr.IntTag, "green");
+                //BDebug.Log("创建screen:" + attr.IntTag, Color.green);
             }
         }
 

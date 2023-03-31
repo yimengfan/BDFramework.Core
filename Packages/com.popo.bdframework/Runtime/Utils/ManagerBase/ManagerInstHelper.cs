@@ -68,7 +68,7 @@ namespace BDFramework.Mgr
             {
                 if (type != null && type.IsClass && (!type.IsAbstract) && typeof(IMgr).IsAssignableFrom(type))
                 {
-                    // BDebug.Log("[main]加载管理器-" + type, "green");
+                    // BDebug.Log("[main]加载管理器-" + type, Color.green);
                     var inst = type.BaseType.GetProperty("Inst", BindingFlags.Static | BindingFlags.Public);
                     if (inst != null)
                     {

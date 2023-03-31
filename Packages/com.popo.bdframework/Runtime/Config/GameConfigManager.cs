@@ -33,9 +33,14 @@ namespace BDFramework.Configure
     public class GameConfigManager : ManagerBase<GameConfigManager, GameConfigAttribute>
     {
         /// <summary>
-        /// config缓存
+        /// config数据列表
         /// </summary>
         private List<ConfigDataBase> configList { get; set; } = new List<ConfigDataBase>();
+
+        /// <summary>
+        /// config处理器列表
+        /// </summary>
+        private List<IConfigProcessor> configProcessorList { get; set; } = new List<IConfigProcessor>();
 
         /// <summary>
         /// start
@@ -47,7 +52,7 @@ namespace BDFramework.Configure
             if (Application.isPlaying)
             {
                 text = BDLauncher.Inst.ConfigText.text;
-                BDebug.Log("GameConfig加载配置:" + BDLauncher.Inst.ConfigText.name, "yellow");
+                BDebug.Log("GameConfig加载配置:" + BDLauncher.Inst.ConfigText.name, Color.yellow);
             }
             else
             {
@@ -55,7 +60,7 @@ namespace BDFramework.Configure
                 if (launcher && launcher.ConfigText)
                 {
                     text = launcher.ConfigText.text;
-                    BDebug.Log("GameConfig加载配置:" + launcher.ConfigText.name, "yellow");
+                    BDebug.Log("GameConfig加载配置:" + launcher.ConfigText.name, Color.yellow);
                 }
                 else
                 {
@@ -63,17 +68,16 @@ namespace BDFramework.Configure
                     //读取默认bytes
                     var filepath = ConfigEditorUtil.DefaultEditorConfig;
                     text = File.ReadAllText(filepath);
-                    BDebug.Log("GameConfig加载配置:" + filepath, "yellow");
+                    BDebug.Log("GameConfig加载配置:" + filepath, Color.yellow);
 #endif
                 }
             }
 
             //执行
-            var (dataList, processorList) = LoadConfig(text);
-            configList = new List<ConfigDataBase>(dataList);
-            for (int i = 0; i < dataList.Count; i++)
+            (configList, configProcessorList) = LoadConfig(text);
+            for (int i = 0; i < configList.Count; i++)
             {
-                processorList[i].OnConfigLoad(dataList[i]);
+                configProcessorList[i].OnConfigLoad(configList[i]);
             }
         }
 
@@ -82,10 +86,10 @@ namespace BDFramework.Configure
         /// </summary>
         /// <param name="configText"></param>
         /// <returns></returns>
-        public (List<ConfigDataBase>, List<AConfigProcessor>) LoadConfig(string configText)
+        public (List<ConfigDataBase>, List<IConfigProcessor>) LoadConfig(string configText)
         {
             List<ConfigDataBase> retDatalist = new List<ConfigDataBase>();
-            List<AConfigProcessor> retProcessorList = new List<AConfigProcessor>();
+            List<IConfigProcessor> retProcessorList = new List<IConfigProcessor>();
 
             var classDataList = this.GetAllClassDatas();
             var jsonObj = JsonMapper.ToObject(configText);
@@ -103,7 +107,7 @@ namespace BDFramework.Configure
                         if (nestType.FullName == clsTypeName)
                         {
                             var configData = JsonMapper.ToObject(nestType, jo.ToJson()) as ConfigDataBase;
-                            var configProcessor = CreateInstance<AConfigProcessor>(cd);
+                            var configProcessor = CreateInstance<IConfigProcessor>(cd);
                             retDatalist.Add(configData);
                             retProcessorList.Add(configProcessor);
                             break;
@@ -124,10 +128,19 @@ namespace BDFramework.Configure
         public T GetConfig<T>() where T : ConfigDataBase
         {
             var con = configList.FirstOrDefault((c) => c is T);
-            return (T) con;
+            return (T)con;
         }
 
-
+        /// <summary>
+        /// 获取config
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetConfigProcessor<T>() where T : IConfigProcessor
+        {
+            var con = configProcessorList.FirstOrDefault((c) => c is T);
+            return (T)con;
+        }
         /// <summary>
         /// 创建新的配置
         /// </summary>

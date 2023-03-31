@@ -1,5 +1,7 @@
-﻿using System.Diagnostics;
+﻿using LitJson;
+using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using Debug = UnityEngine.Debug;
 
 namespace BDFramework.Editor.Tools
@@ -23,6 +25,7 @@ namespace BDFramework.Editor.Tools
         /// <param name="cmd">执行的命令</param>
         public static void RunCmd(string[] cmds, string envName = "", string envValue = "", bool islog = true)
         {
+           
             if (islog)
             {
                 BDebug.EnableLog(LogTag);
@@ -31,7 +34,16 @@ namespace BDFramework.Editor.Tools
             {
                 BDebug.DisableTag(LogTag);
             }
+            //执行
+            //var listenThread = new Thread(()=>
+            //{
+            RunCmdContent(cmds, envName, envValue, islog);
+            //});
+        }
 
+
+        public static void RunCmdContent(string[] cmds, string envName = "", string envValue = "",bool isLog =true)
+        {
             //执行
             using (Process p = new Process())
             {
@@ -60,16 +72,16 @@ namespace BDFramework.Editor.Tools
                 //日志
                 p.OutputDataReceived += (s, e) =>
                 {
-                    if (!string.IsNullOrEmpty(e.Data))
+                    if (isLog &&!string.IsNullOrEmpty(e.Data))
                     {
-                        BDebug.Log(tag:LogTag, e.Data);
+                        Debug.Log(e.Data);
                     }
                 };
                 p.ErrorDataReceived += (s, e) =>
                 {
-                    if (!string.IsNullOrEmpty(e.Data))
+                    if (isLog && !string.IsNullOrEmpty(e.Data))
                     {
-                        BDebug.LogError(tag:LogTag, e.Data);
+                        Debug.LogError( e.Data);
                     }
                 };
 
@@ -82,8 +94,12 @@ namespace BDFramework.Editor.Tools
                 //向cmd窗口写入命令
                 foreach (string cmd in cmds)
                 {
-                    BDebug.Log(tag:LogTag,"-->" + cmd);
+                   
                     p.StandardInput.WriteLine(cmd); //输入CMD命令
+                    if (isLog)
+                    {
+                        BDebug.Log(LogTag,"-->" + cmd);
+                    }
                 }
 
                 p.StandardInput.WriteLine("exit"); //结束执行，很重要
@@ -100,7 +116,6 @@ namespace BDFramework.Editor.Tools
                 //return output;
             }
         }
-
         /// <summary>
         /// 执行脚本
         /// </summary>
@@ -121,14 +136,14 @@ namespace BDFramework.Editor.Tools
             {
                 if (!string.IsNullOrEmpty(e.Data))
                 {
-                    BDebug.Log(tag:LogTag, e.Data);
+                    BDebug.Log(LogTag, e.Data);
                 }
             };
             process.ErrorDataReceived += (s, e) =>
             {
                 if (!string.IsNullOrEmpty(e.Data))
                 {
-                    BDebug.Log(tag:LogTag, "[error]" + e.Data);
+                    BDebug.Log(LogTag, "[error]" + e.Data);
                 }
             };
 

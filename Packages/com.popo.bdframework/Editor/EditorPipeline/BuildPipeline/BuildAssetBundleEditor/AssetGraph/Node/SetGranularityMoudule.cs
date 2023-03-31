@@ -13,7 +13,7 @@ namespace BDFramework.Editor.AssetGraph.Node
     /// <summary>
     /// 颗粒度,不修改 只作为连线查看用 避免线到一坨了
     /// </summary>
-    [CustomNode("BDFramework/[辅助]模块", 35)]
+    [CustomNode("BDFramework/[辅助]模块预览", 35)]
     public class SetGranularityMoudule : UnityEngine.AssetGraph.Node
     {
         public AssetBundleBuildingContext BuildingCtx { get; set; }
@@ -76,7 +76,10 @@ namespace BDFramework.Editor.AssetGraph.Node
 
             this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
 
-
+            if (BuildingCtx.BuildParams.IsBuilding)
+            {
+                EditorUtility.DisplayProgressBar("构建资产", this.Category+":" + nodeData.Name, 1);
+            }
             List<string> allLabelList = new List<string>();
             foreach (var ags in incoming)
             {

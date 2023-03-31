@@ -15,7 +15,7 @@ namespace BDFramework.Editor
     /// </summary>
     static public class BDFrameworkPipelineHelper
     {
-        static private List<ABDFrameworkPublishPipelineBehaviour> BDFrameworkPipelineBehaviourInstanceList = new List<ABDFrameworkPublishPipelineBehaviour>();
+        static private List<ABDFrameworkPublishPipelineBehaviour> InstanceList = new List<ABDFrameworkPublishPipelineBehaviour>();
 
         /// <summary>
         /// 初始化
@@ -28,8 +28,13 @@ namespace BDFramework.Editor
             {
                 if (t.IsSubclassOf(type))
                 {
-                    var buildPipelineInst = Activator.CreateInstance(t) as ABDFrameworkPublishPipelineBehaviour;
-                    BDFrameworkPipelineBehaviourInstanceList.Add(buildPipelineInst);
+                    var ret =  InstanceList.FirstOrDefault((a)=>a.GetType() == t);
+                    if (ret == null)
+                    {
+                        var buildPipelineInst = Activator.CreateInstance(t) as ABDFrameworkPublishPipelineBehaviour;
+                        InstanceList.Add(buildPipelineInst);
+                    }
+
                 }
             }
         }
@@ -39,7 +44,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public void OnBeginBuildHotfixDLL()
         {
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnBeginBuildDLL();
             }
@@ -50,7 +55,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public void OnEndBuildDLL(string outputPath)
         {
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnEndBuildDLL(outputPath);
             }
@@ -61,7 +66,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public void OnBeginBuildSqlite()
         {
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnBeginBuildSqlite();
             }
@@ -73,7 +78,7 @@ namespace BDFramework.Editor
         /// <param name="outputPath"></param>
         static public void OnEndBuildSqlite(string outputPath)
         {
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnEndBuildSqlite(outputPath);
             }
@@ -85,7 +90,7 @@ namespace BDFramework.Editor
         /// <param name="assetbundleBuildingCtx"></param>
         static public void OnBeginBuildAssetBundle(AssetBundleBuildingContext assetbundleBuildingCtx)
         {
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnBeginBuildAssetBundle(assetbundleBuildingCtx);
             }
@@ -93,7 +98,7 @@ namespace BDFramework.Editor
 
         static public void OnEndBuildAssetBundle(AssetBundleBuildingContext assetbundleBuildingCtx)
         {
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnEndBuildAssetBundle(assetbundleBuildingCtx);
             }
@@ -105,7 +110,7 @@ namespace BDFramework.Editor
         /// <param name="type"></param>
         static public void OnExportExcel(Type type)
         {
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnExportExcel(type);
             }
@@ -121,7 +126,7 @@ namespace BDFramework.Editor
         {
             Debug.Log("【OnBeginBuildAllAssets生命周期测试】构建资源,请生成版本号信息!!!  ->" + platform.ToString());
             newVersionNum = lastVersionNum;
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnBeginBuildAllAssets(platform, outputPath, lastVersionNum, out newVersionNum);
             }
@@ -134,7 +139,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public void OnEndBuildAllAssets(RuntimePlatform platform, string outputPath, string newVersionNum)
         {
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnEndBuildAllAssets(platform, outputPath, newVersionNum);
             }
@@ -152,7 +157,7 @@ namespace BDFramework.Editor
         static public string GetArtSVCNum(string outputPath, RuntimePlatform platform)
         {
             ABDFrameworkPublishPipelineBehaviour inst = null;
-            foreach (var behaviour in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behaviour in InstanceList)
             {
                 var method = behaviour.GetType().GetMethod(nameof(GetArtSVCNum));
                 //判断是否覆盖了父类
@@ -177,7 +182,7 @@ namespace BDFramework.Editor
         static public string GetTableSVCNum(string outputPath, RuntimePlatform platform)
         {
             ABDFrameworkPublishPipelineBehaviour inst = null;
-            foreach (var behaviour in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behaviour in InstanceList)
             {
                 var method = behaviour.GetType().GetMethod(nameof(GetTableSVCNum));
                 //判断是否覆盖了父类
@@ -202,7 +207,7 @@ namespace BDFramework.Editor
         static public string GetScriptSVCNum(string outputPath, RuntimePlatform platform)
         {
             ABDFrameworkPublishPipelineBehaviour inst = null;
-            foreach (var behaviour in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behaviour in InstanceList)
             {
                 var method = behaviour.GetType().GetMethod(nameof(GetScriptSVCNum));
                 //判断是否覆盖了父类
@@ -227,24 +232,24 @@ namespace BDFramework.Editor
         #region 发布资源
 
         /// <summary>
-        /// 【发布资源】处理前,该资源提交到服务器
+        /// 【发布资源】处理前
         /// </summary>
         static public void OnBeginPublishAssets(RuntimePlatform platform, string outputPath, string versionNum)
         {
             Debug.Log("【OnBeginPublishAssets】发布资源处理前.  ->" + platform.ToString());
 
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnBeginPublishAssets(platform, outputPath, versionNum);
             }
         }
 
         /// <summary>
-        /// 【发布资源】 处理后,该资源提交到服务器
+        /// 【发布资源】 处理后
         /// </summary>
         static public void OnEndPublishAssets(RuntimePlatform platform, string outputPath, string versionNum)
         {
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnEndPublishAssets(platform, outputPath, versionNum);
             }
@@ -266,7 +271,7 @@ namespace BDFramework.Editor
         /// <param name="outputpath"></param>
         static public void OnBeginBuildPackage(BuildTarget buildTarget, string outputpath)
         {
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnBeginBuildPackage(buildTarget, outputpath);
             }
@@ -279,7 +284,7 @@ namespace BDFramework.Editor
         /// <param name="outputpath"></param>
         static public void OnEndBuildPackage(BuildTarget buildTarget, string outputpath)
         {
-            foreach (var behavior in BDFrameworkPipelineBehaviourInstanceList)
+            foreach (var behavior in InstanceList)
             {
                 behavior.OnEndBuildPackage(buildTarget, outputpath);
             }

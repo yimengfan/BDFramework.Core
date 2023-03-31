@@ -10,7 +10,7 @@ using ILRuntime.CLR.TypeSystem;
 using ILRuntime.CLR.Utils;
 using ILRuntime.Runtime.Intepreter;
 using ILRuntime.Runtime.Stack;
-using SQLite;
+using SQLite4Unity3d;
 using UnityEngine;
 
 //这里为了方便切换Sqlite-net版本 将三个类放在一起
@@ -98,7 +98,7 @@ namespace BDFramework.Sql
         {
             if (File.Exists(path))
             {
-                BDebug.Log("DB加载路径:" + path, "red");
+                BDebug.Log("DB加载路径:" + path, Color.red);
                 SQLiteConnectionString cs =
                     new SQLiteConnectionString(path, SQLiteOpenFlags.ReadOnly, true, key: Password);
                 var con = new SQLiteConnection(cs);
@@ -222,7 +222,7 @@ namespace BDFramework.Sql
             {
                 //editor下 不在执行的时候，直接创建
                 Connection = LoadDBReadWriteCreate(sqlPath);
-                BDebug.Log("DB加载路径:" + sqlPath, "red");
+                BDebug.Log("DB加载路径:" + sqlPath, Color.red);
             }
         }
 
@@ -483,7 +483,7 @@ namespace BDFramework.Sql
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime) typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime) typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
             __intp.Free(ptr_of_this_method);
 
             //调用
@@ -541,7 +541,7 @@ namespace BDFramework.Sql
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime) typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime) typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), 0);
             __intp.Free(ptr_of_this_method);
 
             //调用

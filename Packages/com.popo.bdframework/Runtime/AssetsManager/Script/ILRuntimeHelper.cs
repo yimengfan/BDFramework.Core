@@ -31,7 +31,7 @@ namespace BDFramework
         {
             //
             IsRunning = true;
-            BDebug.Log("DLL加载路径:" + dllPath, "red");
+            BDebug.Log("DLL加载路径:" + dllPath, Color.red);
             string pdbPath = dllPath + ".pdb";
             //按需jit
             //AppDomain = new AppDomain(ILRuntimeJITFlags.JITOnDemand);

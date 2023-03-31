@@ -4,6 +4,7 @@ using System.Reflection;
 using BDFramework.Hotfix.Reflection;
 using BDFramework.Mgr;
 using BDFramework.UFlux;
+using UnityEngine;
 
 namespace BDFramework.HotFix.Mgr
 {
@@ -27,7 +28,7 @@ namespace BDFramework.HotFix.Mgr
                 {
                     if (type.BaseType.FullName.Contains(".ManagerBase`2")) //这里ILR里面只能这么做，丑但有效
                     {
-                        BDebug.Log("[hotfix]加载管理器-" + type.FullName, "green");
+                        BDebug.Log("[hotfix]加载管理器-" + type.FullName, Color.green);
                         var mgr = type.BaseType.GetProperty("Inst").GetValue(null, null) as IMgr;
                         if (mgr != null)
                         {
@@ -54,7 +55,7 @@ namespace BDFramework.HotFix.Mgr
             });
 
 
-            BDebug.Log("[hotfix]管理器加载完成", "green");
+            BDebug.Log("[hotfix]管理器加载完成", Color.green);
             foreach (var type in types)
             {
                 if (type != null && type.IsClass)

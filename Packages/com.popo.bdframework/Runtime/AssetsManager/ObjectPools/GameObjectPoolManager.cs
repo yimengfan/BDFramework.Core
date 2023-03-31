@@ -133,7 +133,7 @@ namespace BDFramework.ResourceMgr
                 pool.Destroy();
             }
             //删除key
-            Instance.instanceLookup.Remove(prefab);
+            Instance.prefabLookup.Remove(prefab);
         }
         /// <summary>
         /// 获取一个object

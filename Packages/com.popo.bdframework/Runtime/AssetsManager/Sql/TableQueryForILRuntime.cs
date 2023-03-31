@@ -7,7 +7,7 @@ using Sqlite3DatabaseHandle = System.IntPtr;
 using Sqlite3Statement = System.IntPtr;
 
 
-namespace SQLite
+namespace SQLite4Unity3d
 {
     /// <summary>
     /// ILRuntime版本的TableQuery

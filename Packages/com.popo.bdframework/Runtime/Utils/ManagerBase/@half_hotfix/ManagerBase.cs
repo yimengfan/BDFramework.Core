@@ -181,13 +181,13 @@ namespace BDFramework.Mgr
             else if (this.ClassDataMap_StringKey.Count > 0)
             {
                 //key 从小到大排序
-                var keys = ClassDataMap_IntKey.Keys.ToList();
+                var keys = ClassDataMap_StringKey.Keys.ToList();
                 keys.Sort();
                 //压入
                 ClassData[] classDatas = new ClassData[keys.Count];
                 for (int i = 0; i < keys.Count; i++)
                 {
-                    classDatas[i] = this.ClassDataMap_IntKey[keys[i]];
+                    classDatas[i] = this.ClassDataMap_StringKey[keys[i]];
                 }
 
                 return classDatas;

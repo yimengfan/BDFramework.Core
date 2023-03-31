@@ -44,6 +44,7 @@ namespace BDFramework
         /// </summary>
         public TextAsset ConfigText;
 
+
         #region 对外的生命周期
 
         public delegate void GameLauncherDelegate();
@@ -52,7 +53,6 @@ namespace BDFramework
         static public GameLauncherDelegate OnLateUpdate { get; set; }
 
         #endregion
-
         static public BDLauncher Inst { get; private set; }
 
         // Use this for initialization
@@ -65,26 +65,6 @@ namespace BDFramework
             if (this.ConfigText)
             {
                 BDebug.Log("配置:" + this.ConfigText.name);
-                //纠正配置
-                if (!Application.isEditor)
-                {
-                    if (this.Config.ArtRoot != AssetLoadPathType.Persistent &&
-                        this.Config.ArtRoot != AssetLoadPathType.StreamingAsset)
-                    {
-                        this.Config.ArtRoot = AssetLoadPathType.Persistent;
-                    }
-
-                    if (this.Config.SQLRoot != AssetLoadPathType.Persistent &&
-                        this.Config.SQLRoot != AssetLoadPathType.StreamingAsset)
-                    {
-                        this.Config.SQLRoot = AssetLoadPathType.Persistent;
-                    }
-
-                    if (this.Config.CodeRoot == AssetLoadPathType.DevOpsPublish)
-                    {
-                        this.Config.CodeRoot = AssetLoadPathType.Persistent;
-                    }
-                }
             }
             else
             {
@@ -138,7 +118,7 @@ namespace BDFramework
 
 
             //执行主工程逻辑
-            BDebug.Log("【Launch】主工程管理器初始化..", "red");
+            BDebug.Log("【Launch】主工程管理器初始化..", Color.red);
             ManagerInstHelper.Load(types);
             //加载框架配置
             GameConfigLoder.LoadFrameBaseConfig(); 

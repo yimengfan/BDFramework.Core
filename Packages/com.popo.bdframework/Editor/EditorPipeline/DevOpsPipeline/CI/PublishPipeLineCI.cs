@@ -103,8 +103,6 @@ namespace BDFramework.Editor.DevOps
         /// </summary>
         private static bool BuildAssetBundle(RuntimePlatform platform, BuildTarget target)
         {
-            //1.搜集keyword
-            ShaderCollection.CollectShaderVariant();
             //2.打包模式
             var ret = AssetBundleToolsV2.GenAssetBundle(platform, CI_ASSETS_PATH);
 

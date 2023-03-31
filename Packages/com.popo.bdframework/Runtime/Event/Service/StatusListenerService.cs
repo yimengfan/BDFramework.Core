@@ -5,5 +5,14 @@
     /// </summary>
     public class StatusListenerService : AStatusListener
     {
+        /// <summary>
+        /// Service名字
+        /// </summary>
+        public string Name { get; private set; }
+        
+        public StatusListenerService()
+        {
+            
+        }
     }
 }

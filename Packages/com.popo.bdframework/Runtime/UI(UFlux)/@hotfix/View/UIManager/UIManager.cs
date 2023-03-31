@@ -22,6 +22,11 @@ namespace BDFramework.UFlux
     public partial class UIManager : ManagerBase<UIManager, UIAttribute>
     {
         /// <summary>
+        /// UI管理器状态
+        /// </summary>
+        public AStatusListener Status { get; private set; } = new StatusListenerService();
+
+        /// <summary>
         /// UI窗口字典
         /// </summary>
         private Dictionary<int, IWindow> windowMap = null;
@@ -30,6 +35,7 @@ namespace BDFramework.UFlux
         /// ui的三个层级
         /// </summary>
         private Transform Bottom, Center, Top;
+
 
         override public void Init()
         {
@@ -41,14 +47,9 @@ namespace BDFramework.UFlux
                 Bottom = uiroot.Find("Bottom")?.transform;
                 Center = uiroot.Find("Center")?.transform;
                 Top = uiroot.Find("Top")?.transform;
-                //不删除uiroot
-                if (Application.isPlaying)
-                {
-                    GameObject.DontDestroyOnLoad(uiroot.gameObject);
-                }
             }
         }
-        
+
         /// <summary>
         /// 创建一个窗口
         /// </summary>
@@ -65,12 +66,36 @@ namespace BDFramework.UFlux
 
             //根据attribute创建窗口
             var attr = classData.Attribute as UIAttribute;
-            var window = Activator.CreateInstance(classData.Type, new object[] {attr.ResourcePath}) as IWindow;
+            var window = Activator.CreateInstance(classData.Type, new object[] { attr.ResourcePath }) as IWindow;
             //设置DI
             SetWindowDI(window);
 
-            //添加窗口关闭消息
-            window.State.AddListener<OnWindowClose>((o) => { this.OnWindowClose(uiIdx, window); });
+            //添加窗口消息
+            window.State.AddListener<OnWindowOpen>((o) =>
+            {
+                //窗口
+                this.Status.TriggerEvent(new OnWindowOpen(uiIdx));
+            });
+
+            window.State.AddListener<OnWindowClose>((o) =>
+            {
+                //窗口关闭
+                this.OnHistoryListChangeByCloseWindow(uiIdx, window);
+                this.Status.TriggerEvent(new OnWindowClose(uiIdx));
+            });
+            
+            window.State.AddListener<OnWindowFocus>((o) =>
+            {
+                //窗口聚焦
+                this.Status.TriggerEvent(new OnWindowFocus(uiIdx));
+            });
+            window.State.AddListener<OnWindowBlur>((o) =>
+            {
+                //窗口失焦
+                this.Status.TriggerEvent(new OnWindowBlur(uiIdx));
+            });
+            
+            
 
             return window;
         }
@@ -88,10 +113,9 @@ namespace BDFramework.UFlux
             if (windowMap.ContainsKey(index))
             {
                 var win = windowMap[index] as IComponent;
-                var winCom = win as IComponent;
-                if (winCom.IsLoad)
+                if (win.IsLoad)
                 {
-                    BDebug.Log("已经加载过并未卸载" + index, "red");
+                    BDebug.Log("已经加载过并未卸载" + index, Color.red);
                 }
             }
             else
@@ -100,7 +124,7 @@ namespace BDFramework.UFlux
                 var window = CreateWindow(index) as IComponent;
                 if (window == null)
                 {
-                    BDebug.Log("不存在UI:" + index, "red");
+                    BDebug.Log("不存在UI:" + index, Color.red);
                 }
                 else
                 {
@@ -126,7 +150,7 @@ namespace BDFramework.UFlux
                 var uvalue = windowMap[index] as IComponent;
                 if (uvalue.IsLoad)
                 {
-                    BDebug.Log("已经加载过并未卸载" + index, "red");
+                    BDebug.Log("已经加载过并未卸载" + index, Color.red);
                 }
             }
             else
@@ -135,7 +159,7 @@ namespace BDFramework.UFlux
                 var window = CreateWindow(index) as IComponent;
                 if (window == null)
                 {
-                    BDebug.Log("不存在UI:" + index, "red");
+                    BDebug.Log("不存在UI:" + index, Color.red);
                 }
                 else
                 {
@@ -267,15 +291,15 @@ namespace BDFramework.UFlux
         }
 
         #endregion
-
-
+        
         #region 打开、关闭
 
         /// <summary>
         /// 显示窗口
         /// </summary>
         /// <param name="uiIndex">窗口枚举</param>
-        public void ShowWindow(Enum uiEnumIdx, UIMsgData uiMsgData = null, bool resetMask = true, UILayer layer = UILayer.Bottom, bool isAddToHistory = true)
+        public void ShowWindow(Enum uiEnumIdx, UIMsgData uiMsgData = null, bool resetMask = true,
+            UILayer layer = UILayer.Bottom, bool isAddToHistory = true)
         {
             int uiIdx = uiEnumIdx.GetHashCode();
 
@@ -290,7 +314,8 @@ namespace BDFramework.UFlux
         /// <param name="resetMask"></param>
         /// <param name="layer"></param>
         /// <param name="isAddToHistory"></param>
-        private void ShowWindow(int uiIdx, UIMsgData uiMsgData = null, bool resetMask = true, UILayer layer = UILayer.Bottom, bool isAddToHistory = true)
+        private void ShowWindow(int uiIdx, UIMsgData uiMsgData = null, bool resetMask = true,
+            UILayer layer = UILayer.Bottom, bool isAddToHistory = true)
         {
             if (windowMap.ContainsKey(uiIdx))
             {
@@ -313,18 +338,19 @@ namespace BDFramework.UFlux
                     }
 
                     winCom.Transform.SetAsLastSibling();
-                    win.Open(uiMsgData);
+                    win .Open(uiMsgData);
                     //effect
+                    if (isAddToHistory)
+                    {
+                        AddToHistory(uiIdx);
+                    }
                 }
                 else
                 {
                     Debug.LogErrorFormat("UI处于[unload,lock,open]状态之一：{0}", uiIdx);
                 }
 
-                if (isAddToHistory)
-                {
-                    AddToHistory(uiIdx);
-                }
+ 
             }
             else
             {
@@ -459,13 +485,22 @@ namespace BDFramework.UFlux
             //保证不会有重复列表
             HistoryList.Remove(uiIdx);
             HistoryList.Add(uiIdx);
+            
+            //Focus当前窗口
+            this.windowMap[uiIdx].OnFocus();
+            //Blur上一个窗口
+            if (HistoryList.Count > 2)
+            {
+                var lastWinIdx = HistoryList[HistoryList.Count - 2];
+                this.windowMap[lastWinIdx].OnBlur();
+            }
         }
 
 
         /// <summary>
         /// 当窗口关闭
         /// </summary>
-        private void OnWindowClose(int uiIdx, IWindow window)
+        private void OnHistoryListChangeByCloseWindow(int uiIdx, IWindow window)
         {
             if (HistoryList.Count > 2)
             {
@@ -478,21 +513,19 @@ namespace BDFramework.UFlux
                     {
                         continue;
                     }
+
                     win = this.windowMap[idx];
                     var winCom = win as IComponent;
                     //判断栈顶是否有关闭的,有则继续搜索第一个打开的执行focus，
                     if (!winCom.IsOpen)
                     {
                         isCheckFocus = true;
+                        HistoryList.Remove(idx); //移除栈顶
                     }
-                    else if (winCom.IsOpen && isCheckFocus)
+                    else if (winCom.IsOpen&& !win.IsFocus && isCheckFocus)
                     {
                         //这里Reopen 是为了解决窗口后退中 相同窗口反复打开，导致层级变化的问题
                         win.OnFocus();
-                        break;
-                    }
-                    else
-                    {
                         break;
                     }
                 }

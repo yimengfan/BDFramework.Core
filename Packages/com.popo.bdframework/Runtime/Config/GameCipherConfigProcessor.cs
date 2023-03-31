@@ -8,7 +8,7 @@ namespace BDFramework.Configure
     /// 游戏加密处理器
     /// </summary>
     [GameConfig(2,"加密")]
-    public class GameCipherConfigProcessor : AConfigProcessor
+    public class GameCipherConfigProcessor : IConfigProcessor
     {
         /// <summary>
         /// 游戏加密设置
@@ -37,7 +37,7 @@ namespace BDFramework.Configure
         /// 当加载成功
         /// </summary>
         /// <param name="config"></param>
-        public override void OnConfigLoad(ConfigDataBase config)
+        public  void OnConfigLoad(ConfigDataBase config)
         {
             var con = config as Config;
             //Sqlite秘钥

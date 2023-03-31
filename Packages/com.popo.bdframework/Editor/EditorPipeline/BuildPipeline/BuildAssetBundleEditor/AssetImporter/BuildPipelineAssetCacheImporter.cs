@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Core.Tools;
+using DotNetExtension;
 using LitJson;
 using UnityEditor;
 using UnityEngine;
@@ -20,26 +22,33 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// </summary>
         static private BuildAssetInfos AssetInfoCache;
 
-        static public void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
+        static public void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets,
+            string[] movedFromAssetPaths)
         {
             bool isAssetChanged = false;
             if (!isAssetChanged)
             {
                 //非脚本修改，剩下的则是资源修改
-                importedAssets = importedAssets.Where((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase)).ToArray();
-                deletedAssets = deletedAssets.Where((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase)).ToArray();
-                movedAssets = movedAssets.Where((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase)).ToArray();
-                movedFromAssetPaths = movedFromAssetPaths.Where((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase)).ToArray();
-                if (importedAssets?.Count() > 0 || deletedAssets?.Count() > 0 || movedAssets?.Count() > 0 || movedFromAssetPaths?.Count() > 0)
+                importedAssets = FilterFile(importedAssets).ToArray();
+                deletedAssets = FilterFile(deletedAssets).ToArray();
+                movedAssets = FilterFile(movedAssets).ToArray();
+                movedFromAssetPaths = FilterFile(movedFromAssetPaths).ToArray();
+                
+                if (importedAssets?.Count() > 0 || deletedAssets?.Count() > 0 || movedAssets?.Count() > 0 ||
+                    movedFromAssetPaths?.Count() > 0)
                 {
                     isAssetChanged = true;
                 }
             }
-
+            
             //资源变动，触发资源cache修改
             if (isAssetChanged)
             {
-                if (AssetInfoCache == null) AssetInfoCache = GetBuildingAssetInfosCache();
+                if (AssetInfoCache == null)
+                {
+                    AssetInfoCache = GetBuildingAssetInfosCache();
+                }
+                //处理缓存资产
                 {
                     foreach (var asset in importedAssets)
                     {
@@ -67,6 +76,8 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 }
                 SaveBuildingAssetInfosCache(AssetInfoCache);
             }
+            
+            
         }
 
 
@@ -85,16 +96,29 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             {
                 var content = File.ReadAllText(PATH);
                 buildAssetInfos = JsonMapper.ToObject<BuildAssetInfos>(content);
-                //检测资产是否存在
-                var keys = buildAssetInfos.AssetInfoMap.Keys.ToList();
+                var assetNum = buildAssetInfos.AssetInfoMap.Count;
+                BDebug.Log($"加载缓存配置,数量:{assetNum}", Color.red);
 
-                foreach (var key in keys)
+                //检测资产是否存
+                var time = DateTimeEx.GetTotalSeconds();
+                //大于一天清理一次
+                if (time - buildAssetInfos.LastChangeTime > 3600 * 8 )
                 {
-                    if (!File.Exists(key))
+                    var keys = buildAssetInfos.AssetInfoMap.Keys.ToList();
+                    foreach (var key in keys)
                     {
-                        buildAssetInfos.AssetInfoMap.Remove(key);
-                        Debug.Log("remove:" + key);
+                        if (!File.Exists(key) && !Directory.Exists(key))
+                        {
+                            buildAssetInfos.AssetInfoMap.Remove(key);
+                            BDebug.Log("移除不存在资产:" + key);
+                        }
                     }
+                    buildAssetInfos.LastChangeTime = DateTimeEx.GetTotalSeconds();
+                }
+                
+                if (assetNum != buildAssetInfos.AssetInfoMap.Count)
+                {
+                    SaveBuildingAssetInfosCache(buildAssetInfos);
                 }
             }
             else
@@ -144,6 +168,20 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         {
             path = IPath.ReplaceBackSlash(path);
             AssetInfoCache.AssetInfoMap.Remove(path.ToLower());
+        }
+
+
+        /// <summary>
+        /// 过滤文件
+        /// </summary>
+        /// <param name="assets"></param>
+        /// <returns></returns>
+       static public IEnumerable<string> FilterFile(IEnumerable<string> assets)
+        {
+            return assets.Where((a) => !a.EndsWith(".cs", StringComparison.OrdinalIgnoreCase)
+                                       && !a.StartsWith(Application.streamingAssetsPath,
+                                           StringComparison.OrdinalIgnoreCase)
+            ).ToArray();
         }
     }
 }

@@ -5,7 +5,9 @@ using System.IO;
 using System.Text;
 using System.Reflection;
 using System;
+using System.Linq;
 using LitJson;
+using ServiceStack.Text;
 using UnityEngine;
 
 
@@ -20,7 +22,6 @@ namespace BDFramework.Editor.Table
         /// 表格数据集合
         /// </summary>
         // private DataSet mResultSet;
-
         private DataTable mSheet = null;
 
         /// <summary>
@@ -29,7 +30,7 @@ namespace BDFramework.Editor.Table
         /// <param name="excelFile">Excel file.</param>
         public ExcelExchangeTools(string excelFile)
         {
-            FileStream       mStream      = File.Open(excelFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            FileStream mStream = File.Open(excelFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             IExcelDataReader mExcelReader = ExcelReaderFactory.CreateOpenXmlReader(mStream);
             var mResultSet = mExcelReader.AsDataSet();
             if (mResultSet.Tables.Count > 0)
@@ -66,9 +67,9 @@ namespace BDFramework.Editor.Table
             for (int i = 1; i < rowCount; i++)
             {
                 //创建实例
-                Type            t      = typeof(T);
-                ConstructorInfo ct     = t.GetConstructor(System.Type.EmptyTypes);
-                T               target = (T) ct.Invoke(null);
+                Type t = typeof(T);
+                ConstructorInfo ct = t.GetConstructor(System.Type.EmptyTypes);
+                T target = (T)ct.Invoke(null);
                 for (int j = 0; j < colCount; j++)
                 {
                     //读取第1行数据作为表头字段
@@ -106,31 +107,34 @@ namespace BDFramework.Editor.Table
         /// <summary>
         /// 后补的接口，适配旧的调用
         /// </summary>
+        /// <param name="dbType"></param>
         /// <param name="tableName"></param>
-        /// <param name="IdX"></param>
-        /// <param name="IdY"></param>
-        /// <returns></returns>
-        public string GetJson(DBType dbType)
+        public (bool, string) GetJson(DBType dbType)
         {
-            int x    = -1;
-            int y    = -1;
+            int x = -1;
+            int y = -1;
             var list = new List<object>();
-            var json = GetJson(dbType.ToString(), ref x, ref y, ref list);
-            return json;
+            var (json, isSuccess) = GetJson(dbType.ToString(), ref x, ref y, ref list);
+            return (isSuccess, json);
         }
+
 
         /// <summary>
         /// 获取json
         /// </summary>
-        /// <returns></returns>
-        public string GetJson(string tableName, ref int IdX, ref int IdY, ref List<object> keepFieldList)
+        /// <param name="tableName"></param>
+        /// <param name="IdX"></param>
+        /// <param name="IdY"></param>
+        /// <param name="keepFieldList"></param>
+        /// <returns>返回json 和是否失败</returns>
+        public (string, bool) GetJson(string tableName, ref int IdX, ref int IdY, ref List<object> keepFieldList)
         {
             IdX = -1;
             IdY = -1;
             //判断Excel文件中是否存在数据表
-            if (mSheet==null)
+            if (mSheet == null)
             {
-                return "";
+                return ("", false);
             }
 
             //默认读取第一个数据表
@@ -138,7 +142,7 @@ namespace BDFramework.Editor.Table
             //判断数据表内是否存在数据
             if (mSheet.Rows.Count < 1)
             {
-                return "";
+                return ("", false);
             }
 
             //准备一个列表存储整个表的数据
@@ -152,8 +156,8 @@ namespace BDFramework.Editor.Table
              *
              * 带*的行列保留
              */
-            List<object> serverRowDatas    = new List<object>();
-            List<object> localRowDatas     = new List<object>();
+            List<object> serverRowDatas = new List<object>();
+            List<object> localRowDatas = new List<object>();
             List<object> fieldNameRowDatas = new List<object>();
             //
             List<object> fieldTypeRowDatas = new List<object>();
@@ -199,8 +203,8 @@ namespace BDFramework.Editor.Table
                 {
                     if (rows[j].Equals("Id"))
                     {
-                        skipRowCount      = i;
-                        skipColCount      = j;
+                        skipRowCount = i;
+                        skipColCount = j;
                         fieldNameRowDatas = rows;
                         //获取字段类型
                         var rowtype = this.GetRowDatas(i - 1);
@@ -211,15 +215,15 @@ namespace BDFramework.Editor.Table
                 }
             }
 
-
             if (skipRowCount == -1)
             {
                 Debug.LogError("表格数据可能有错,没发现Id字段,请检查");
-                return "{}";
+                return ("{}", false);
             }
 
-            IdX           = skipColCount;
-            IdY           = skipRowCount;
+
+            IdX = skipColCount;
+            IdY = skipRowCount;
             keepFieldList = new List<object>();
             if (tableName == "Local")
             {
@@ -236,12 +240,13 @@ namespace BDFramework.Editor.Table
                 isKeepStarMode = true;
             }
 
+            bool isSuccess = true;
             //读取数据
             for (int i = skipRowCount + 1; i < mSheet.Rows.Count; i++)
             {
                 //准备一个字典存储每一行的数据
                 Dictionary<string, object> row = new Dictionary<string, object>();
-                //
+
                 for (int j = skipColCount; j < mSheet.Columns.Count; j++)
                 {
                     string field = fieldNameRowDatas[j].ToString();
@@ -285,55 +290,108 @@ namespace BDFramework.Editor.Table
                         {
                             row[field] = 0;
                         }
-                        else if (fieldType == "string")
+                        else if (fieldType.Equals("string", StringComparison.OrdinalIgnoreCase))
                         {
                             row[field] = "";
                         }
-                        else if(fieldType=="bool")
+                        else if (fieldType.Equals("bool", StringComparison.OrdinalIgnoreCase))
                         {
                             row[field] = false;
                         }
-                        else if (fieldType.Contains("[]")) //空数组
+                        else if (fieldType.Contains("[]") || fieldType.Contains("list<")) //空数组
                         {
-                            row[field] = "[]";
+                            if (fieldType.Equals("int[]", StringComparison.OrdinalIgnoreCase) ||
+                                fieldType.Equals("list<int>", StringComparison.OrdinalIgnoreCase))
+                            {
+                                row[field] = new int[0];
+                            }
+                            else if (fieldType.Equals("float[]", StringComparison.OrdinalIgnoreCase) ||
+                                     fieldType.Equals("list<float>", StringComparison.OrdinalIgnoreCase))
+                            {
+                                row[field] = new float[0];
+                            }
+                            else if (fieldType.Equals("double[]", StringComparison.OrdinalIgnoreCase) ||
+                                     fieldType.Equals("list<double>", StringComparison.OrdinalIgnoreCase))
+                            {
+                                row[field] = new double[0];
+                            }
+                            else if (fieldType.Equals("string[]", StringComparison.OrdinalIgnoreCase) || fieldType.Equals("list<string>", StringComparison.OrdinalIgnoreCase))
+                            {
+                                row[field] = new string[0];
+                            }
+                            else if (fieldType.Equals("bool[]", StringComparison.OrdinalIgnoreCase) ||
+                                     fieldType.Equals("list<bool>", StringComparison.OrdinalIgnoreCase))
+                            {
+                                row[field] = new bool[0];
+                            }
                         }
                     }
                     else
                     {
                         //string数组，对单个元素加上""
-                        if (fieldType == "string[]")
+                        if (fieldType.Contains("[]") || fieldType.Contains("list<")) //空数组
                         {
                             var value = rowdata.ToString();
-                            if (value != "[]" && !value.Contains("\"")) //不是空数组,且没有""
+                            if (fieldType.Equals("string[]") || fieldType.Equals("list<string>", StringComparison.OrdinalIgnoreCase))
                             {
-                                if (value.StartsWith("\"["))
+                                string[] strArray = null;
+                                //空数组
+                                if (value == "[]" || value == "\"[]\"")
                                 {
-                                    value = value.Replace("\"[", "[\"");
-                                    value = value.Replace("]\"", "\"]");
+                                    strArray = new string[0];
                                 }
                                 else
                                 {
-                                    value = value.Replace("[", "[\"");
-                                    value = value.Replace("]", "\"]");
+                                    //非空数组
+                                    value = value.Replace("\"[", "").Replace("]\"", "");
+                                    value = value.Replace("[", "").Replace("]", "");
+                                    var strs = value.Split(',');
+                                    strArray = new string[strs.Length];
+                                    for (int k = 0; k < strs.Length; k++)
+                                    {
+                                        var str = strs[k];
+                                        //移出\"\"
+                                        if (str.StartsWith("\""))
+                                        {
+                                            str = str.Remove(0, 1);
+                                            str = str.Remove(str.Length - 1, 1);
+                                        }
+
+                                        strArray[k] = str;
+                                    }
                                 }
 
-                                value      = value.Replace(",", "\",\"");
-                                row[field] = value;
+
+
+                                //解析
+                                row[field] = strArray;
                             }
                             else
                             {
-                                row[field] = rowdata;
+                                value = value.Replace("\"[", "[").Replace("]\"", "]");
+                                if (fieldType.Equals("int[]", StringComparison.OrdinalIgnoreCase)|| fieldType.Equals("list<int>", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    var ret = JsonMapper.ToObject<int[]>(value);
+                                    row[field] = ret;
+                                }
+                                else if (fieldType.Equals("float[]", StringComparison.OrdinalIgnoreCase)|| fieldType.Equals("list<float>", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    var ret = JsonMapper.ToObject<float[]>(value);
+                                    row[field] = ret;
+                                }
+                                else if (fieldType.Equals("double[]", StringComparison.OrdinalIgnoreCase)|| fieldType.Equals("list<double>", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    var ret = JsonMapper.ToObject<double[]>(value);
+                                    row[field] = ret;
+                                }
+                                else if (fieldType.Equals("bool[]", StringComparison.OrdinalIgnoreCase)|| fieldType.Equals("list<bool>", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    var ret = JsonMapper.ToObject<bool[]>(value);
+                                    row[field] = ret;
+                                }
                             }
                         }
-                        //其他数组 会被处理成string
-                        else if (fieldType.Contains("["))
-                        {
-                            var value = rowdata.ToString();
-                            value      = value.Replace("\"[", "[");
-                            value      = value.Replace("]\"", "]");
-                            row[field] = value;
-                        }
-
+                        //数值
                         else if (fieldType == "int" || fieldType == "float" || fieldType == "double")
                         {
                             var oldValue = rowdata.ToString();
@@ -347,7 +405,9 @@ namespace BDFramework.Editor.Table
                                 else
                                 {
                                     row[field] = 0;
-                                    Debug.LogErrorFormat("表格数据出错:{0}-{1}", i, j);
+                                    Debug.LogError(
+                                        $"表格数据类型出错:{i}-{j}, 字段名:{fieldNameRowDatas[j]}！要求类型:{fieldTypeRowDatas[j]}，实际类型：{oldValue.GetType()} - value:{oldValue} ");
+                                    isSuccess = false;
                                 }
                             }
                             else if (fieldType == "float")
@@ -360,7 +420,9 @@ namespace BDFramework.Editor.Table
                                 else
                                 {
                                     row[field] = 0;
-                                    Debug.LogErrorFormat("表格数据出错:{0}-{1}", i, j);
+                                    Debug.LogError(
+                                        $"表格数据类型出错:{i}-{j}, 字段名:{fieldNameRowDatas[j]}！要求类型:{fieldTypeRowDatas[j]}，实际类型：{oldValue.GetType()} - value:{oldValue} ");
+                                    isSuccess = false;
                                 }
                             }
                             else if (fieldType == "double")
@@ -373,13 +435,23 @@ namespace BDFramework.Editor.Table
                                 else
                                 {
                                     row[field] = 0;
-                                    Debug.LogErrorFormat("表格数据出错:{0}-{1}", i, j);
+                                    Debug.LogError(
+                                        $"表格数据类型出错:{i}-{j}, 字段名:{fieldNameRowDatas[j]}！要求类型:{fieldTypeRowDatas[j]}，实际类型：{oldValue.GetType()} - value:{oldValue} ");
+                                    isSuccess = false;
                                 }
                             }
                         }
-                        else if (field.Equals("string"))
+                        else if (fieldType.Equals("string"))
                         {
-                            row[field] = rowdata.ToString();
+                            var str = rowdata.ToString();
+                            if (str == "\"\"")
+                            {
+                                row[field] = "";
+                            }
+                            else
+                            {
+                                row[field] = str;
+                            }
                         }
                         else
                         {
@@ -397,11 +469,48 @@ namespace BDFramework.Editor.Table
 
             //生成Json字符串
             string json = JsonMapper.ToJson(table);
-            //把当字符串的数组 重新处理成数组
-            json = json.Replace("\"[", "[").Replace("]\"", "]");
-            json = json.Replace("\\\"", "\"");
-            json = json.Replace("\"\"\"\"", "\"\"");
-            return json;
+            var jsonObject = JsonMapper.ToObject(json);
+            foreach (JsonData jo in jsonObject)
+            {
+                //对比字段类型：
+                // var keys = jo.Keys.ToArray();
+                // foreach (var fieldName in keys)
+                // {
+                //     var jsonField = jo[fieldName];
+                //     if (jsonField.IsString)
+                //     {
+                //         var jstr = jsonField.GetString();
+                //
+                //         if (jstr.Contains("[")) //把当字符串的数组"[]",重新处理成数组[]
+                //         {
+                //             jstr = jstr.Replace("\"[", "[").Replace("]\"", "]");
+                //         }
+                //         else
+                //         {
+                //             //把当字符串"\"\"",重新处理成数组""
+                //             jstr = jstr.Replace("\\\"", "\"");
+                //             jstr = jstr.Replace("\"\"\"\"", "\"\"");
+                //         }
+                //
+                //         //重新赋值
+                //         jo[fieldName] = jstr;
+                //     }
+                // }
+
+                var joStr = jo.ToJson();
+                //校验
+                try
+                {
+                    var chekjo = JsonMapper.ToObject(joStr);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"校验失败,string内容：{joStr}");
+                }
+            }
+
+
+            return (json, isSuccess);
         }
 
         /// <summary>
@@ -414,13 +523,13 @@ namespace BDFramework.Editor.Table
             List<object> list = new List<object>();
 
             //判断Excel文件中是否存在数据表
-            if (mSheet==null)
+            if (mSheet == null)
             {
                 return list;
             }
 
             //默认读取第一个数据表
-            
+
             //判断数据表内是否存在数据
             if (mSheet.Rows.Count <= index)
             {
@@ -488,7 +597,7 @@ namespace BDFramework.Editor.Table
         public void ConvertToXml(string XmlFile)
         {
             //判断Excel文件中是否存在数据表
-            if (mSheet==null) return;
+            if (mSheet == null) return;
 
             //默认读取第一个数据表
 

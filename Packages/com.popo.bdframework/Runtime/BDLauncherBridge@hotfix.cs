@@ -50,7 +50,7 @@ public class BDLauncherBridge
         {
             TriggerHotFixGameStart(hotfixTypes);
             //获取管理器列表，开始工作
-            BDebug.Log("热更Instance初始化...","red");
+            BDebug.Log("热更Instance初始化...",Color.red);
             var hotfixMgrList = ILRuntimeManagerInstHelper.LoadManagerInstance(hotfixTypes);
             //启动热更管理器
             foreach (var hotfixMgr in hotfixMgrList)

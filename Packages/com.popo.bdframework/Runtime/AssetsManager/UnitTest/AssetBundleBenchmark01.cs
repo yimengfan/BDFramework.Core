@@ -264,7 +264,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         loadList.Clear();
         var AssetBundleLoader = BResources.ResLoader as AssetBundleMgrV2;
         //加载
-        foreach (var assetdata in AssetBundleLoader.AssetBundleInfoLoader.AssetbundleItemList)
+        foreach (var assetdata in AssetBundleLoader.AssetBundleConfig.AssetbundleItemList)
         {
             if (string.IsNullOrEmpty(assetdata.LoadPath) && string.IsNullOrEmpty(assetdata.GUID))
             {
@@ -272,7 +272,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
             }
 
 
-            var typeName = AssetBundleLoader.AssetBundleInfoLoader.AssetTypes.AssetTypeList[assetdata.AssetType];
+            var typeName = AssetBundleLoader.AssetBundleConfig.AssetTypes.AssetTypeList[assetdata.AssetType];
             var runtimePath = string.IsNullOrEmpty(assetdata.GUID) ? assetdata.LoadPath : assetdata.GUID;
             var loadtype = string.IsNullOrEmpty(assetdata.GUID) ? LoadPathType.RuntimePath : LoadPathType.GUID;
             //加载
@@ -300,7 +300,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var loadTask = BResources.AsyncLoad<GameObject>(runtimePath,loadtype);
                     yield return loadTask;
-                    if (loadTask.IsSuccess)
+                    if (loadTask.IsComplete)
                     {
                         obj = loadTask.GetResult<GameObject>();
                     }
@@ -365,7 +365,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<TextAsset>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<TextAsset>();
                     }
@@ -401,7 +401,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Texture>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Texture>();
                     }
@@ -434,7 +434,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Texture2D>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Texture2D>();
                     }
@@ -472,7 +472,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Sprite>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Sprite>();
                     }
@@ -511,7 +511,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Material>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Material>();
                     }
@@ -543,7 +543,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Shader>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Shader>();
                     }
@@ -575,7 +575,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<AudioClip>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<AudioClip>();
                     }
@@ -607,7 +607,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<AnimationClip>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<AnimationClip>();
                     }
@@ -639,7 +639,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Mesh>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Mesh>();
                     }
@@ -671,7 +671,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Font>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Font>();
                     }
@@ -704,7 +704,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                     var ret = BResources.AsyncLoad<SpriteAtlas>(runtimePath,loadtype);
                     //
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<SpriteAtlas>();
                     }
@@ -732,7 +732,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<ShaderVariantCollection>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<ShaderVariantCollection>();
                     }
@@ -765,7 +765,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Object>(runtimePath,loadtype);
                     yield return ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Object>();
                     }
@@ -862,14 +862,14 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         loadDataMap.Clear();
         var AssetBundleLoader = BResources.ResLoader as AssetBundleMgrV2;
         //加载
-        foreach (var assetdata in AssetBundleLoader.AssetBundleInfoLoader.AssetbundleItemList)
+        foreach (var assetdata in AssetBundleLoader.AssetBundleConfig.AssetbundleItemList)
         {
             if (string.IsNullOrEmpty(assetdata.LoadPath)&& string.IsNullOrEmpty(assetdata.GUID))
             {
                 continue;
             }
 
-            var typeName = AssetBundleLoader.AssetBundleInfoLoader.AssetTypes.AssetTypeList[assetdata.AssetType];
+            var typeName = AssetBundleLoader.AssetBundleConfig.AssetTypes.AssetTypeList[assetdata.AssetType];
             var runtimePath = string.IsNullOrEmpty(assetdata.GUID) ? assetdata.LoadPath : assetdata.GUID;
             var loadtype = string.IsNullOrEmpty(assetdata.GUID) ? LoadPathType.RuntimePath : LoadPathType.GUID;
             //加载
@@ -897,7 +897,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var loadTask = BResources.AsyncLoad<GameObject>(runtimePath,loadtype);
                     await loadTask;
-                    if (loadTask.IsSuccess)
+                    if (loadTask.IsComplete)
                     {
                         obj = loadTask.GetResult<GameObject>();
                     }
@@ -949,7 +949,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<TextAsset>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<TextAsset>();
                     }
@@ -980,7 +980,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Texture>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Texture>();
                     }
@@ -1009,7 +1009,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Texture2D>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Texture2D>();
                     }
@@ -1043,7 +1043,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Sprite>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Sprite>();
                     }
@@ -1078,7 +1078,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Material>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Material>();
                     }
@@ -1105,7 +1105,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Shader>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Shader>();
                     }
@@ -1132,7 +1132,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<AudioClip>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<AudioClip>();
                     }
@@ -1159,7 +1159,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<AnimationClip>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<AnimationClip>();
                     }
@@ -1186,7 +1186,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Mesh>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Mesh>();
                     }
@@ -1213,7 +1213,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Font>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Font>();
                     }
@@ -1241,7 +1241,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<SpriteAtlas>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<SpriteAtlas>();
                     }
@@ -1270,7 +1270,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<ShaderVariantCollection>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<ShaderVariantCollection>();
                     }
@@ -1299,7 +1299,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 {
                     var ret = BResources.AsyncLoad<Object>(runtimePath,loadtype);
                     await ret;
-                    if (ret.IsSuccess)
+                    if (ret.IsComplete)
                     {
                         obj = ret.GetResult<Object>();
                     }
@@ -1377,7 +1377,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         var AssetBundleLoader = BResources.ResLoader as AssetBundleMgrV2;
         //加载
         int idx = 0;
-        foreach (var assetdata in AssetBundleLoader.AssetBundleInfoLoader.AssetbundleItemList)
+        foreach (var assetdata in AssetBundleLoader.AssetBundleConfig.AssetbundleItemList)
         {
             idx++;
             if (string.IsNullOrEmpty(assetdata.LoadPath))
@@ -1385,7 +1385,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
                 continue;
             }
 
-            var typeName = AssetBundleLoader.AssetBundleInfoLoader.AssetTypes.AssetTypeList[assetdata.AssetType];
+            var typeName = AssetBundleLoader.AssetBundleConfig.AssetTypes.AssetTypeList[assetdata.AssetType];
             var runtimePath = string.IsNullOrEmpty(assetdata.GUID) ? assetdata.LoadPath : assetdata.GUID;
             var loadtype = string.IsNullOrEmpty(assetdata.GUID) ? LoadPathType.RuntimePath : LoadPathType.GUID;
 

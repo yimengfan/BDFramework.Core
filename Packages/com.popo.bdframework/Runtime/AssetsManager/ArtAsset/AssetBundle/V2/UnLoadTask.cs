@@ -1,7 +1,7 @@
 ﻿using System;
 using BDFramework.ResourceMgr.V2;
 
-namespace AssetsManager.ArtAsset.AssetBundle.V2
+namespace BResource.AssetBundle.V2
 {
     /// <summary>
     /// 卸载任务
@@ -21,7 +21,7 @@ namespace AssetsManager.ArtAsset.AssetBundle.V2
         /// <summary>
         /// ab包装
         /// </summary>
-        private AssetBundleWrapper AssetBundleWapper;
+        private AssetLoder AssetBundleWapper;
 
         /// <summary>
         /// 完成回调
@@ -31,7 +31,7 @@ namespace AssetsManager.ArtAsset.AssetBundle.V2
         /// 卸载
         /// </summary>
         /// <param name="unloadAction"></param>
-        public UnLoadTask(AssetBundleWrapper abw,Action onUnloadEnd =null)
+        public UnLoadTask(AssetLoder abw,Action onUnloadEnd =null)
         {
             this.AssetBundleWapper = abw;
             this.onUnloadEnd = onUnloadEnd;

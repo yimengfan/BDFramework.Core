@@ -43,7 +43,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 打开
         /// </summary>
-        void Open(UIMsgData uiMsg =null);
+        void Open(UIMsgData uiMsg = null);
         /// <summary>
         /// 关闭
         /// </summary>

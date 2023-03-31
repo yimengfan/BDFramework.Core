@@ -91,7 +91,7 @@ namespace System.IO
             {
                 var targetfilePath = sfp.Replace(sourceDirt, targetDirt);
                 //复制
-                File.Copy(sfp, targetfilePath);
+                FileHelper.Copy(sfp, targetfilePath,true);
             }
         }
 

@@ -4,16 +4,12 @@
     /// Config处理器的基类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    abstract public class AConfigProcessor
+    public interface IConfigProcessor
     {
-
         /// <summary>
         /// 当config加载
         /// </summary>
         /// <param name="config"></param>
-        virtual public void OnConfigLoad(ConfigDataBase config)
-        {
-            
-        }
+        void OnConfigLoad(ConfigDataBase config);
     }
 }

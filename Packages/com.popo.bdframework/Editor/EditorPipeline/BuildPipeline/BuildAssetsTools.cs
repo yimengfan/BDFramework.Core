@@ -98,6 +98,7 @@ namespace BDFramework.Editor.BuildPipeline
             catch (Exception e)
             {
                 Debug.LogError(e.Message);
+                throw e;
             }
 
             //2.打包表格
@@ -106,12 +107,18 @@ namespace BDFramework.Editor.BuildPipeline
                 if (opa.HasFlag(BuildPackageOption.BuildSqlite) || opa == BuildPackageOption.BuildAll)
                 {
                     Debug.Log("<color=yellow>=====>打包Sqlite</color>");
-                    Excel2SQLiteTools.AllExcel2SQLite(outputPath, platform);
+                    var ret = Excel2SQLiteTools.AllExcel2SQLite(outputPath, platform);
+
+                    if (!ret)
+                    {
+                        throw new Exception("打包表格失败!");
+                    }
                 }
             }
             catch (Exception e)
             {
                 Debug.LogError(e.Message);
+                throw e;
             }
 
             //3.打包资源
@@ -126,6 +133,7 @@ namespace BDFramework.Editor.BuildPipeline
             catch (Exception e)
             {
                 Debug.LogError(e.Message);
+                throw e;
             }
 
             //4.生成母包资源信息

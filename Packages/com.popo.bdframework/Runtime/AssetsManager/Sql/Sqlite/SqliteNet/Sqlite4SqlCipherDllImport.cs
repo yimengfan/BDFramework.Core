@@ -4,7 +4,7 @@ using System.Text;
 using Sqlite3DatabaseHandle = System.IntPtr;
 using Sqlite3BackupHandle = System.IntPtr;
 
-namespace SQLite
+namespace SQLite4Unity3d
 {
     public static partial class SQLite3
     {

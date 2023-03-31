@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace AssetsManager.ArtAsset.AssetBundle.V2
+namespace BResource.AssetBundle.V2
 {
     public class LoadTask : CustomYieldInstruction
     {

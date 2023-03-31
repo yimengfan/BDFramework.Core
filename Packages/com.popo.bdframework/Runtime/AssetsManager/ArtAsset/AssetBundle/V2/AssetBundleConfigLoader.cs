@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using ServiceStack.Text;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr.V2
@@ -53,9 +54,8 @@ namespace BDFramework.ResourceMgr.V2
         public void Load(string platformPath)
         {
             string assetsInfoPath = IPath.Combine(platformPath, BResources.ART_ASSET_INFO_PATH);
-            ;
             string assetTypePath = IPath.Combine(platformPath, BResources.ART_ASSET_TYPES_PATH);
-            ;
+
             //资源类型配置
             if (!string.IsNullOrEmpty(assetTypePath) && File.Exists(assetTypePath))
             {
@@ -89,18 +89,13 @@ namespace BDFramework.ResourceMgr.V2
             if (!string.IsNullOrEmpty(assetsInfoPath) && File.Exists(assetsInfoPath))
             {
                 this.configPath = assetsInfoPath;
-#if UNITY_EDITOR
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-#endif
+
+                BDebug.LogWatchBegin("AssetbundleV2-加载config:");
                 var content = File.ReadAllText(assetsInfoPath);
                 this.AssetbundleItemList = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(content);
-#if UNITY_EDITOR
-                sw.Stop();
-                BDebug.LogFormat("【AssetbundleV2】加载Config耗时{0}ms!", sw.ElapsedTicks / 10000L);
-#endif
+                BDebug.LogWatchEnd("AssetbundleV2-加载config:");
 
-
+                //
                 foreach (var abItem in this.AssetbundleItemList)
                 {
                     //可以被加载的资源
@@ -153,10 +148,6 @@ namespace BDFramework.ResourceMgr.V2
             AssetBundleItem assetBundleItem = null;
             if (!string.IsNullOrEmpty(guid))
             {
-#if UNITY_EDITOR
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-#endif
                 if (type == null || type == typeof(Object))
                 {
                     //全局搜索,效率略低
@@ -173,10 +164,6 @@ namespace BDFramework.ResourceMgr.V2
                         }
                     }
                 }
-#if UNITY_EDITOR
-                sw.Stop();
-                BDebug.Log($"寻找ABItem耗时: {sw.ElapsedTicks / 10000f} ms - {guid}", "yellow");
-#endif
             }
 
             return assetBundleItem;
@@ -194,34 +181,37 @@ namespace BDFramework.ResourceMgr.V2
         }
 
         /// <summary>
-        /// 获取单个menifestItem
+        /// 获取单个Item
         /// Type版本
         /// </summary>
-        /// <param name="loadPath"></param>
+        /// <param name="loadPath">加载路径</param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public AssetBundleItem GetAssetBundleItem(string loadPath, Type type = null, bool searchByGuid = false)
+        public AssetBundleItem GetAssetBundleItem(string loadPath, Type type = null, bool isGuid = false)
         {
             AssetBundleItem assetBundleItem = null;
             if (!string.IsNullOrEmpty(loadPath))
             {
-                BDebug.LogWatchBegin($"寻找ABItem-{loadPath}");
+                // BDebug.LogWatchBegin($"寻找ABItem-{loadPath}");
                 if (type == null || type == typeof(Object))
                 {
                     //全局搜索,效率略低
                     for (int i = 0; i < this.AssetbundleItemList.Count; i++)
                     {
-                        var abitem = this.AssetbundleItemList[i];
-                       
-                        if (searchByGuid && abitem.GUID == loadPath)
+                        var item = this.AssetbundleItemList[i];
+
+                        if (!item.IsAssetBundleSourceFile())
                         {
-                            assetBundleItem = abitem;
-                            break;
-                        }
-                        else  if (abitem.LoadPath != null && abitem.LoadPath.Equals(loadPath, StringComparison.OrdinalIgnoreCase))
-                        {
-                            assetBundleItem = abitem;
-                            break;
+                            if (isGuid && item.GUID == loadPath)
+                            {
+                                assetBundleItem = item;
+                                break;
+                            }
+                            else if (item.LoadPath!=null && item.LoadPath.Equals(loadPath, StringComparison.OrdinalIgnoreCase))
+                            {
+                                assetBundleItem = item;
+                                break;
+                            }
                         }
                     }
                 }
@@ -236,9 +226,6 @@ namespace BDFramework.ResourceMgr.V2
                         }
                     }
                 }
-
-                BDebug.LogWatchEnd($"寻找ABItem-{loadPath}","green");
-
             }
 
             return assetBundleItem;
@@ -249,9 +236,8 @@ namespace BDFramework.ResourceMgr.V2
         /// 获取依赖列表
         /// 主资源为最后一个
         /// </summary>
-        /// <param name="menifestName"></param>
-        /// <returns>这个list外部不要修改</returns>
-        public (AssetBundleItem, List<AssetBundleItem>) GetDependAssets<T>(string assetLoadPath) where T : Object
+        /// <returns></returns>
+        public (AssetBundleItem, IEnumerable<AssetBundleItem>) GetDependAssets<T>(string assetLoadPath) where T : Object
         {
             return GetDependAssets(assetLoadPath, typeof(T));
         }
@@ -260,11 +246,8 @@ namespace BDFramework.ResourceMgr.V2
         /// 获取依赖列表
         /// 主资源为最后一个
         /// </summary>
-        /// <param name="assetLoadPath"></param>
-        /// <param name="type"></param>
-        /// <param name="menifestName"></param>
-        /// <returns>这个list外部不要修改</returns>
-        public (AssetBundleItem, List<AssetBundleItem>) GetDependAssets(string assetLoadPath, Type type = null)
+        /// <returns></returns>
+        public (AssetBundleItem, IEnumerable<AssetBundleItem>) GetDependAssets(string assetLoadPath, Type type = null)
         {
             //获取主资源信息
             var mainABItem = GetAssetBundleItem(assetLoadPath, type);
@@ -277,11 +260,8 @@ namespace BDFramework.ResourceMgr.V2
         /// 获取依赖列表
         /// 主资源为最后一个
         /// </summary>
-        /// <param name="assetLoadPath"></param>
-        /// <param name="type"></param>
-        /// <param name="menifestName"></param>
-        /// <returns>这个list外部不要修改</returns>
-        public (AssetBundleItem, List<AssetBundleItem>) GetDependAssetsByGUID(string guid, Type type = null)
+        /// <returns></returns>
+        public (AssetBundleItem, IEnumerable<AssetBundleItem>) GetDependAssetsByGUID(string guid, Type type = null)
         {
             //获取主资源信息
             var mainABItem = GetAssetBundleItemByGUID(guid, type);
@@ -294,7 +274,7 @@ namespace BDFramework.ResourceMgr.V2
         /// 获取依赖文件
         /// </summary>
         /// <returns></returns>
-        public List<AssetBundleItem> GetDependAssets(AssetBundleItem assetBundleItem)
+        public IEnumerable<AssetBundleItem> GetDependAssets(AssetBundleItem assetBundleItem)
         {
             List<AssetBundleItem> retlist = null;
             if (assetBundleItem != null && assetBundleItem.DependAssetIds != null && assetBundleItem.DependAssetIds.Length > 0)
@@ -311,9 +291,42 @@ namespace BDFramework.ResourceMgr.V2
                 }
             }
 
-
             return retlist;
         }
+
+
+        #region 获取Assetbundle文件本地
+
+        /// <summary>
+        /// 获取assetbundle的源文件
+        /// </summary>
+        public AssetBundleItem GetAssetBundleSourceFile(string loadPath)
+        {
+            var abItem = this.GetAssetBundleItem(loadPath);
+            return this.GetAssetBundleSourceFile(abItem);
+            return null;
+        }
+
+        /// <summary>
+        /// 获取assetbundle的源文件
+        /// </summary>
+        public AssetBundleItem GetAssetBundleSourceFile(AssetBundleItem item)
+        {
+            if (item.IsAssetBundleSourceFile())
+            {
+                return item;
+            }
+            else if (item.DependAssetIds.Length > 0)
+            {
+                var idx = item.DependAssetIds[item.DependAssetIds.Length - 1];
+                return this.GetAssetBundleItem(idx);
+            }
+
+            return null;
+        }
+
+        
+        #endregion
 
 
 #if UNITY_EDITOR

@@ -97,8 +97,8 @@ namespace BDFramework.Editor.BuildPipeline
         [Ex_SelectFileFromPath("Assets/Scenes","*.unity")]
         public string BuildScene = BuildPackageTools.SCENE_PATH;
 
-        [HorizontalGroup("b/a3", LabelWidth = 80)]
-        [LabelText("场景配置")]
+        [HorizontalGroup("b/a3", LabelWidth = 200)]
+        [LabelText("场景配置(默认场景自带)")]
         public bool IsSetBuildSceneConfig = false;
 
         [HorizontalGroup("b/a4", LabelWidth = 80)]
@@ -176,7 +176,16 @@ namespace BDFramework.Editor.BuildPipeline
             var platform = BApplication.GetRuntimePlatform(BuildTarget);
             if (this.IsReBuildAssets)
             {
-                BuildAssetsTools.BuildAllAssets(platform, BApplication.DevOpsPublishAssetsPath, opa: BuildPackageOption);
+                try
+                {
+                    BuildAssetsTools.BuildAllAssets(platform, BApplication.DevOpsPublishAssetsPath, opa: BuildPackageOption);
+                }
+                catch (Exception e)
+                {
+                    EditorUtility.DisplayDialog("提示",$"打包资产失败!","ok");
+                    throw e;
+                }
+              
             }
             //拷贝到iospack
             var iosPackDir = IPath.Combine(BApplication.DevOpsPublishPackagePath, BApplication.GetPlatformPath(BuildTarget));

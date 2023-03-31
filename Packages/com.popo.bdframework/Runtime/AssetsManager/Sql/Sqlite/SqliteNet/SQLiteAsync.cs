@@ -30,7 +30,7 @@ using System.Threading.Tasks;
 
 #pragma warning disable 1591 // XML Doc Comments
 
-namespace SQLite
+namespace SQLite4Unity3d
 {
 	public interface ISQLiteAsyncConnection
 	{

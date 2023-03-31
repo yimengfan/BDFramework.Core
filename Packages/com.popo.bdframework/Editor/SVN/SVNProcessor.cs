@@ -8,6 +8,7 @@ using System.Text;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Tools;
 using ILRuntime.Runtime;
+using LitJson;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -91,6 +92,14 @@ namespace BDFramework.Editor.SVN
         private string curWorkDirect = "";
 
         /// <summary>
+        /// 获取登录的cmd
+        /// </summary>
+        /// <returns></returns>
+        private string GetLoginCmd()
+        {
+            return $" --username {this.UserName} --password {this.Password} ";
+        }
+        /// <summary>
         /// 是否存在svn仓库
         /// </summary>
         /// <returns></returns>
@@ -119,7 +128,7 @@ namespace BDFramework.Editor.SVN
                     coPath = $"{coPath}/{checkOutTo}";
                 }
 
-                var cmd = $"co {this.SVNURL} --username {this.UserName} --password {this.Password} {coPath}";
+                var cmd = $"co {this.SVNURL} {GetLoginCmd()} {coPath}";
                 this.ExecuteSVN(cmd);
             }
             else
@@ -134,7 +143,7 @@ namespace BDFramework.Editor.SVN
         /// <param name="downloadpath"></param>
         public void Update(string path = "./")
         {
-            var cmd = $"update {path}  --username {this.UserName} --password {this.Password}";
+            var cmd = $"update {path}  {GetLoginCmd()}";
 
             this.ExecuteSVN(cmd);
         }
@@ -392,18 +401,23 @@ namespace BDFramework.Editor.SVN
             string cmd = "";
             if (string.IsNullOrEmpty(svnurl))
             {
-                cmd = $"info {workpath}  > \"{infoPath}\"";
+                cmd = $"info {workpath}  > \"{infoPath}\" {GetLoginCmd()}";
             }
             else
             {
-                cmd = $"info {workpath} {svnurl} > \"{infoPath}\"";
+                cmd = $"info {workpath} {svnurl} > \"{infoPath}\" {GetLoginCmd()}";
             }
 
             //执行svn
             this.ExecuteSVN(cmd);
-            var info = File.ReadAllText(infoPath);
-            File.Delete(infoPath);
-            return info;
+            if (File.Exists(infoPath))
+            {
+                var info = File.ReadAllText(infoPath);
+                File.Delete(infoPath);
+                return info;
+            }
+
+            return "";
         }
 
         /// <summary>
@@ -455,7 +469,7 @@ namespace BDFramework.Editor.SVN
                 }
             }
 
-            return "0";
+            return "null";
         }
 
         /// <summary>
@@ -494,11 +508,31 @@ namespace BDFramework.Editor.SVN
 
 
         /// <summary>
+        /// 提交文件夹内所有文件
+        /// </summary>
+        /// <param name="floder"></param>
+        /// <param name="log"></param>
+        public void CommitFolder(string floder = "./", string log = "Auto Commit")
+        {
+            
+            //删除Resource_SVN表格
+            var delFiles = this.GetFileNameByStatus(Status.Deleted, floder);
+            this.Delete(delFiles);
+            //添加Resource_SVN表格
+            var addFiles = this.GetFileNameByStatus(Status.NewFile, floder);
+            this.ForceAdd(addFiles.ToArray());
+            //motify
+            var motifyFiles = this.GetStatus(Status.Motify,floder);
+            this.ForceAdd(motifyFiles);
+        }
+        
+
+        /// <summary>
         /// 提交，因为cmd设置问题，中文log会让commit失败~
         /// </summary>
         public void Commit(string workpath = "./", string log = "Auto Commit")
         {
-            var cmd = $"commit  {workpath} -m  \"{log}\" ";
+            var cmd = $"ci  {workpath} -m  \"{log}\" ";
             this.ExecuteSVN(cmd);
         }
 
@@ -532,35 +566,30 @@ namespace BDFramework.Editor.SVN
             var argList = new List<string>();
 #if UNITY_EDITOR_OSX
             var svn_exe_path = "/opt/homebrew/bin/svn";
-            if (!File.Exists(svn_exe_path))
-            {
-                Debug.LogError("未安装SVN!请通过homebrew安装");
-                return;
-            }
             var cd_dir = $"cd \"{this.LocalSVNRootPath}\"";
 #elif UNITY_EDITOR_WIN
 
             var svn_exe_path = $"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~/svn.exe";
-            if (!File.Exists(svn_exe_path))
-            {
-                Debug.LogError("找不到svn.exe!");
-                return;
-            }
-
             var out_utf8 = "cmd /c chcp 65001"; //chcp 65001";
             var cd_dir = $"cd /d \"{this.LocalSVNRootPath}\"";
             argList.Add(out_utf8);
 #endif
             var svn_exe = "svn";
             argList.Add(cd_dir);
-
-
+            
+            //替换命令行
             foreach (var arg in args)
             {
                 //添加svn命名
                 argList.Add($"{svn_exe} {arg}");
             }
-
+         
+            if (!File.Exists(svn_exe_path))
+            {
+                Debug.LogError($"找不到svn执行文件，请安装：{svn_exe_path}!");
+                Debug.Log($"执行命令行:{JsonMapper.ToJson(argList, true)}");
+                return;
+            }
             //执行cmd
             CMDTools.RunCmd(argList.ToArray(), svn_exe, svn_exe_path, this.islog);
         }

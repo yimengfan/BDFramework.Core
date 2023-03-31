@@ -149,12 +149,24 @@ public class IEnumeratorTool : MonoBehaviour
         {
             var id = IEnumeratorQueue.Dequeue();
             //取出携程
-            var ie = iEnumeratorDictionary[id];
-            iEnumeratorDictionary.Remove(id);
-            //执行携程
-            var coroutine = base.StartCoroutine(ie);
-            //存入coroutine
-            coroutineDictionary[id] = coroutine;
+            var ret = iEnumeratorDictionary.ContainsKey(id);
+            if (ret)
+            {
+                var ie = iEnumeratorDictionary[id];
+                iEnumeratorDictionary.Remove(id);
+                //执行携程
+                var coroutine = base.StartCoroutine(ie);
+                if (coroutine != null)
+                {
+                    //存入coroutine
+                    coroutineDictionary[id] = coroutine;
+                }
+            }
+            else
+            {
+                BDebug.LogError($"iEnumeratorDictionary 不存在id:{id}");
+            }
+
         }
 
         //主线程循环 立即执行

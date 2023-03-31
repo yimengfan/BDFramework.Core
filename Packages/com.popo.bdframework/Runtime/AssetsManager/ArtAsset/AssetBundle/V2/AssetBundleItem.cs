@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BDFramework.ResourceMgr.V2
 {
@@ -7,7 +8,7 @@ namespace BDFramework.ResourceMgr.V2
     /// </summary>
     public class AssetBundleItem
     {
-        public AssetBundleItem(int id, string loadPath, string assetbundlePath, string guid,int assetType, int[] dependAssetIds = null)
+        public AssetBundleItem(int id, string loadPath, string assetbundlePath,int assetBundleLoadType, string guid,int assetType, int[] dependAssetIds = null)
         {
             this.Id = id;
             this.LoadPath = loadPath;
@@ -15,6 +16,7 @@ namespace BDFramework.ResourceMgr.V2
             this.AssetBundlePath = assetbundlePath;
             this.AssetType = assetType;
             this.DependAssetIds = dependAssetIds;
+            this.AssetBundleLoadType = assetBundleLoadType;
         }
 
         /// <summary>
@@ -47,6 +49,11 @@ namespace BDFramework.ResourceMgr.V2
 
 
         /// <summary>
+        /// AssetBundle Load的type
+        /// </summary>
+        public int AssetBundleLoadType { get;   set; } = (int)AssetLoaderFactory.AssetBunldeLoadType.Base;
+
+        /// <summary>
         /// ab的资源路径
         /// </summary>
         public string AssetBundlePath { get; private set; } = "";
@@ -76,10 +83,10 @@ namespace BDFramework.ResourceMgr.V2
         public int[] DependAssetIds { get; set; } = new int[] { };
 
         /// <summary>
-        /// 是不是AB文件本体
+        /// 判断AB文件本体
         /// </summary>
         /// <returns></returns>
-        public bool IsAssetBundleFile()
+        public bool IsAssetBundleSourceFile()
         {
             return !string.IsNullOrEmpty(this.AssetBundlePath);
         }
@@ -97,5 +104,8 @@ namespace BDFramework.ResourceMgr.V2
 
             return false;
         }
+
+
+        
     }
 }

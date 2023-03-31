@@ -23,7 +23,8 @@ namespace BDFramework.Editor.Table
     /// </summary>
     static public class Excel2SQLiteTools
     {
-        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_GenSqlite)]
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false,
+            (int)BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_GenSqlite)]
         public static void ExecuteGenSqlite()
         {
             //生成sql
@@ -32,7 +33,8 @@ namespace BDFramework.Editor.Table
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite[Server]", false, (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Json2Sqlite)]
+        [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite[Server]", false,
+            (int)BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Json2Sqlite)]
         public static void ExecuteJsonToSqlite()
         {
             AllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform, DBType.Server);
@@ -104,9 +106,10 @@ namespace BDFramework.Editor.Table
         /// <param name="excelPath"></param>
         public static bool Excel2SQLite(string excelPath, DBType dbType)
         {
-            bool isSuccess = true;
+            BDebug.Log($"导表:{excelPath}", Color.yellow);
+            
+            bool isSuccess = false;
             excelPath = IPath.FormatPathOnUnity3d(excelPath);
-
             //收集所有的类型
             CollectTableTypes();
             var excelHash = FileHelper.GetMurmurHash3(excelPath);
@@ -119,42 +122,39 @@ namespace BDFramework.Editor.Table
             {
                 //开始导表
                 var excel = new ExcelExchangeTools(excelPath);
-                var json = excel.GetJson(dbType);
-                try
-                {
-                    Json2Sqlite(excelPath, json);
-                }
-                catch (Exception e)
-                {
-                    isSuccess = false;
-                    Debug.LogError(e);
-                    EditorUtility.ClearProgressBar();
-                }
+                var (ret, jsonArray) = excel.GetJson(dbType);
 
-                //插入新版本数据
-                if (isSuccess)
+                if (ret)
                 {
-                    if (importLog == null)
+                    isSuccess = Json2Sqlite(excelPath, jsonArray);
+
+                    //插入新版本数据
+                    if (isSuccess)
                     {
-                        importLog = new TableLog();
-                        importLog.Path = excelPath;
-                        importLog.Hash = excelHash;
-                        importLog.Date = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-                        importLog.UnityVersion = Application.unityVersion;
-                        SqliteHelper.DB.Insert(importLog);
-                    }
-                    else
-                    {
-                        importLog.Hash = excelHash;
-                        importLog.Date = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-                        importLog.UnityVersion = Application.unityVersion;
-                        SqliteHelper.DB.Connection.Update(importLog);
+                        if (importLog == null)
+                        {
+                            importLog = new TableLog();
+                            importLog.Path = excelPath;
+                            importLog.Hash = excelHash;
+                            importLog.Date = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+                            importLog.UnityVersion = Application.unityVersion;
+                            SqliteHelper.DB.Insert(importLog);
+                        }
+                        else
+                        {
+                            importLog.Hash = excelHash;
+                            importLog.Date = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+                            importLog.UnityVersion = Application.unityVersion;
+                            SqliteHelper.DB.Connection.Update(importLog);
+                        }
                     }
                 }
             }
             else
             {
-                Debug.Log($"<color=green>【Excel2Sql】内容一致,无需导入 {Path.GetFileName(excelPath)} - Hash :{excelHash} </color>");
+                isSuccess = true;
+                Debug.Log(
+                    $"<color=green>【Excel2Sql】内容一致,无需导入 {Path.GetFileName(excelPath)} - Hash :{excelHash} </color>");
             }
 
             if (!isSuccess)
@@ -189,7 +189,8 @@ namespace BDFramework.Editor.Table
                 foreach (var type in types)
                 {
                     //
-                    if (type != null && type.IsClass && type.Namespace != null && type.Namespace.StartsWith("Game.Data."))
+                    if (type != null && type.IsClass && type.Namespace != null &&
+                        type.Namespace.StartsWith("Game.Data."))
                     {
                         retTypeList.Add(type);
                     }
@@ -206,39 +207,46 @@ namespace BDFramework.Editor.Table
         /// </summary>
         /// <param name="filePath"></param>
         /// <param name="jsonContent"></param>
-        static private void Json2Sqlite(string filePath, string jsonContent)
+        static private bool Json2Sqlite(string filePath, string jsonContent)
         {
             var table = Path.GetFileName(filePath).Replace(Path.GetExtension(filePath), "");
             var jsonObj = JsonMapper.ToObject(jsonContent);
             var dbname = Path.GetFileNameWithoutExtension(SqliteHelper.DB.DBPath);
             var @namespace = "Game.Data." + dbname + ".";
-            var type = TABLE_TYPES.FirstOrDefault((t) => t.FullName.ToLower().StartsWith(@namespace.ToLower()) && t.Name.ToLower() == table.ToLower());
+            var type = TABLE_TYPES.FirstOrDefault((t) =>
+                t.FullName.ToLower().StartsWith(@namespace.ToLower()) && t.Name.ToLower() == table.ToLower());
             if (type == null)
             {
-                type = TABLE_TYPES.FirstOrDefault((t) => t.FullName.ToLower().StartsWith("Game.Data.".ToLower()) && t.Name.ToLower() == table.ToLower());
+                type = TABLE_TYPES.FirstOrDefault((t) =>
+                    t.FullName.ToLower().StartsWith("Game.Data.".ToLower()) && t.Name.ToLower() == table.ToLower());
             }
 
             if (type == null)
             {
                 Debug.LogError(table + "类不存在，请检查!");
-                return;
+                return false;
             }
 
             //
-            EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.FullName, jsonObj.Count), 1);
-            Debug.LogFormat("导出 [{0}]:{1}", dbname, filePath.Replace(Application.dataPath + "\\", "") + "=>【" + type.FullName + "】");
+            EditorUtility.DisplayProgressBar("Excel2Sqlite",
+                string.Format("生成：{0} 记录条目:{1}", type.FullName, jsonObj.Count), 1);
+            Debug.LogFormat("导出 [{0}]:{1}", dbname,
+                filePath.Replace(Application.dataPath + "\\", "") + "=>【" + type.FullName + "】");
             //数据库创建表
+            bool ret = true;
             SqliteHelper.DB.CreateTable(type);
             for (int i = 0; i < jsonObj.Count; i++)
             {
+                var json = jsonObj[i].ToJson();
                 try
                 {
-                    var json = jsonObj[i].ToJson();
                     var jobj = JsonMapper.ToObject(type, json);
                     SqliteHelper.DB.Insert(jobj);
                 }
                 catch (Exception e)
                 {
+                    ret = false;
+                    BDebug.Log(json);
                     Debug.LogError("导出数据有错,跳过! 错误位置:" + type.Name + ":" + i + "/" + jsonObj.Count + "\n" + e);
                 }
             }
@@ -248,6 +256,8 @@ namespace BDFramework.Editor.Table
             //
             EditorUtility.ClearProgressBar();
             // EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.Name, jsonObj.Count), 1);
+
+            return ret;
         }
 
         #endregion

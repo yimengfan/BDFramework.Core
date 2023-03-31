@@ -7,6 +7,7 @@ using System.Linq;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
 using LitJson;
+using Sirenix.Utilities;
 
 namespace BDFramework.Editor.BuildPipeline.AssetBundle
 {
@@ -18,9 +19,11 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         static List<string> allShaderNameList = new List<string>();
 
         /// <summary>
-        /// 简单收集
+        /// 收集shaderVariant
         /// </summary>
-        public static void CollectShaderVariant(string[] allAssets = null)
+        /// <param name="allAssets"></param>
+        /// <returns>tuple<string,string>=> shader路径-shaderVariant </returns>
+        public static List<Tuple<string, string>> CollectShaderVariant(string[] allAssets = null)
         {
             //收集材质
             string[] allMatPaths;
@@ -50,19 +53,19 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 if (ai is ShaderImporter shaderImporter)
                 {
                     shader = shaderImporter.GetShader();
-                   
+
                     for (int i = 0; i < ShaderUtil.GetPropertyCount(shader); i++)
                     {
                         var type = ShaderUtil.GetPropertyType(shader, i);
                         if (type == ShaderUtil.ShaderPropertyType.TexEnv)
                         {
                             var propName = ShaderUtil.GetPropertyName(shader, i);
-                            var tex = shaderImporter.GetDefaultTexture( propName);
+                            var tex = shaderImporter.GetDefaultTexture(propName);
                             if (tex)
                             {
                                 ischanged = true;
-                                shaderImporter.SetDefaultTextures(new string[]{propName},new Texture[]{null});
-                                Debug.Log($"清理shader默认贴图:{shaderPath} - {propName}" );
+                                shaderImporter.SetDefaultTextures(new string[] {propName}, new Texture[] {null});
+                                Debug.Log($"清理shader默认贴图:{shaderPath} - {propName}");
                             }
                         }
                     }
@@ -71,13 +74,13 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 {
                     shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderPath);
                 }
-             
+
                 if (ischanged)
                 {
                     ai.SaveAndReimport();
                 }
-                
-               
+
+
                 //添加
                 ShaderVariantCollection.ShaderVariant sv = new ShaderVariantCollection.ShaderVariant();
                 sv.shader = shader;
@@ -85,21 +88,23 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
                 allShaderNameList.Add(shaderPath);
             }
-            
+
 
             //防空
             var dirt = Path.GetDirectoryName(toolsSVCpath);
             if (!Directory.Exists(dirt))
             {
                 Directory.CreateDirectory(dirt);
+                //For mac osx
+                AssetDatabase.Refresh();
             }
-
+            
             AssetDatabase.CreateAsset(ToolSVC, toolsSVCpath);
 
             //开始收集ShaderVaraint
-            ShaderVariantCollection allShaderVaraint = null;
+
             var tools = new ShaderVariantsCollectionTools();
-            allShaderVaraint = tools.CollectionKeywords(allMatPaths.ToArray(), ToolSVC);
+            var svcMap = tools.CollectionKeywords(allMatPaths.ToArray(), ToolSVC);
 
             //输出SVC文件
             var targetDir = Path.GetDirectoryName(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
@@ -108,16 +113,34 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 Directory.CreateDirectory(targetDir);
             }
 
-            AssetDatabase.DeleteAsset(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
-            AssetDatabase.CreateAsset(allShaderVaraint, BResources.ALL_SHADER_VARAINT_ASSET_PATH);
-            AssetDatabase.Refresh();
+            List<Tuple<string, string>> retVcsList = new List<Tuple<string, string>>();
+            //创建SVC
+            if (Directory.Exists(BResources.ALL_SHADER_VARAINT_ASSET_PATH))
+            {
+                Directory.Delete(BResources.ALL_SHADER_VARAINT_ASSET_PATH, true);
+            }
 
+            Directory.CreateDirectory(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
+ 
+          
+            foreach (var item in svcMap)
+            {
+                var svcPath = $"{BResources.ALL_SHADER_VARAINT_ASSET_PATH}/{item.Key.name.Trim().Replace("/","@")}.shadervariants";
+                AssetDatabase.CreateAsset(item.Value, svcPath);
+                var shaderPath = AssetDatabase.GetAssetPath(item.Key);
+                retVcsList.Add(new Tuple<string, string>(shaderPath, svcPath));
+                // Debug.Log($"svc:{svcPath}");
+            }
+            //创建一个dummy.shadervariant,用于方便找到
+            var dumnmy = $"Assets/Resource/Runtime/{BResources.DUMMY_SHADER_PATH}.shadervariants";
+            var dummySVC = new ShaderVariantCollection();
+            AssetDatabase.CreateAsset(dummySVC, dumnmy);
+            retVcsList.Add(new Tuple<string, string>("",dumnmy));
+            //防止SBP打包失败
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
             Debug.Log("<color=red>shader_features收集完毕,multi_compiles默认全打包需要继承IPreprocessShaders.OnProcessShader自行剔除!</color>");
-            // var dependencies = AssetDatabase.GetDependencies(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
-            // foreach (var guid in dependencies )
-            // {
-            //     Debug.Log("依赖shader:" + guid);
-            // }
+            return retVcsList;
         }
 
 
@@ -187,46 +210,34 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// </summary>
         public static void BuildShadersAssetBundle()
         {
-            AssetDatabase.StartAssetEditing();
+            //收集shaderVaraint
+            var vcsLit = CollectShaderVariant();
+            List<string> dependList = new List<string>();
+            foreach (var item in vcsLit)
             {
-                CollectShaderVariant();
-                var guid = AssetBundleToolsV2.AssetPathToGUID(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
-
-                List<AssetImporter> list = new List<AssetImporter>();
-                //依赖信息
-                var dependice = AssetDatabase.GetDependencies(BResources.ALL_SHADER_VARAINT_ASSET_PATH);
-                foreach (var depend in dependice)
-                {
-                    var type = AssetDatabase.GetMainAssetTypeAtPath(depend);
-                    if (type == typeof(Material) || type == typeof(ShaderVariantCollection))
-                    {
-                        var ai = AssetImporter.GetAtPath(depend);
-                        ai.SetAssetBundleNameAndVariant(guid, null);
-                        Debug.Log("打包:" + depend);
-                        list.Add(ai);
-                    }
-                }
-
-                //开始编译
-                var outpath = IPath.Combine(BApplication.Library, "BDBuildTest", BApplication.GetRuntimePlatformPath());
-                if (Directory.Exists(outpath))
-                {
-                    Directory.Delete(outpath, true);
-                }
-
-                Directory.CreateDirectory(outpath);
-                //
-                var buildtarget = BApplication.GetBuildTarget(BApplication.RuntimePlatform);
-                UnityEditor.BuildPipeline.BuildAssetBundles(outpath, BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.ChunkBasedCompression, buildtarget);
-                //
-                foreach (var ai in list)
-                {
-                    ai.SetAssetBundleNameAndVariant(null, null);
-                }
-
-                Debug.Log("测试AB已经输出:" + outpath);
+                var dependice = AssetDatabase.GetDependencies(item.Item2);
+                dependList.AddRange(dependice);
             }
-            AssetDatabase.StopAssetEditing();
+
+            //打包ab信息
+            var build = new AssetBundleBuild();
+            build.assetNames.AddRange(dependList);
+            build.assetBundleName = BResources.ALL_SHADER_VARAINT_ASSET_PATH;
+
+
+            //开始编译
+            var outpath = IPath.Combine(BApplication.Library, "BuildAssetsTest", BApplication.GetRuntimePlatformPath());
+            if (Directory.Exists(outpath))
+            {
+                Directory.Delete(outpath, true);
+            }
+
+            Directory.CreateDirectory(outpath);
+            var buildtarget = BApplication.GetBuildTarget(BApplication.RuntimePlatform);
+            UnityEditor.BuildPipeline.BuildAssetBundles(outpath, new AssetBundleBuild[] {build}, BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.ChunkBasedCompression, buildtarget);
+
+
+            Debug.Log("测试AB已经输出:" + outpath);
         }
     }
 }

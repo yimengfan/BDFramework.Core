@@ -29,7 +29,7 @@ namespace BDFramework.Editor.Table
                 //
                 if (changedExcelList.Count > 0)
                 {
-                    BDebug.Log("-----------------强制导入修改的excel文件.begin-----------------", "red");
+                    BDebug.Log("-----------------强制导入修改的excel文件.begin-----------------", Color.red);
 
                     SqliteLoder.LoadSQLOnEditor(dbPath);
                     {
@@ -43,7 +43,7 @@ namespace BDFramework.Editor.Table
                     SqliteLoder.Close();
                     
                     Excel2SQLiteTools.CopySqlToOther(Application.streamingAssetsPath, BApplication.RuntimePlatform);
-                    BDebug.Log("-----------------强制导入修改的excel文件.end-----------------", "red");
+                    BDebug.Log("-----------------强制导入修改的excel文件.end-----------------", Color.red);
 
                     ExcelEditorTools.SaveExcelCacheInfo(newEcxcelInfoMap);
                     //db_hash
@@ -68,7 +68,7 @@ namespace BDFramework.Editor.Table
                 //     }
                 //     SqliteLoder.Close();
                 //
-                //     BDebug.Log("-----------------强制导入修改的excel文件.end-----------------", "red");
+                //     BDebug.Log("-----------------强制导入修改的excel文件.end-----------------", Color.red);
                 //     ExcelEditorTools.SaveLocalDBCacheInfo(dbPath);
                 // }
                 //保存配置

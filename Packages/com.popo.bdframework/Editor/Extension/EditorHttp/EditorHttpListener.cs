@@ -119,7 +119,7 @@ namespace BDFramework.Editor.Tools.EditorHttpServer
 
 
             listenThread = new Thread(AcceptClient);
-            listenThread.Name = "httpserver";
+            listenThread.Name = "BDFramework-EditorHttpserver";
             listenThread.Start();
         }
 

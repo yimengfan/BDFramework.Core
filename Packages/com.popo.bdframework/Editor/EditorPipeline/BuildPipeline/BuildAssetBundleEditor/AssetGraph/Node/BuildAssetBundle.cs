@@ -75,6 +75,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
+          
             Debug.Log("【BuildAssetbundle】执行:" + this.Category);
 
             if (incoming == null || BDFrameworkAssetsEnv.BuildingCtx == null)
@@ -89,6 +90,16 @@ namespace BDFramework.Editor.AssetGraph.Node
             }
 
             this.BuildingCtx = BDFrameworkAssetsEnv.BuildingCtx;
+            if (BuildingCtx.BuildParams.IsBuilding)
+            {
+                EditorUtility.DisplayProgressBar("构建资产", this.Category, 1);
+            }
+
+            if (this.BuildingCtx.BuildParams.IsBuilding)
+            {
+                BDebug.Log("Building模式，不执行prepare!",Color.yellow);
+                return;
+            }
             //这里只做临时的输出，预览用，不做实际更改
             var tempBuildAssetsInfo = this.BuildingCtx.BuildAssetInfos?.Clone();
             if (tempBuildAssetsInfo == null)
@@ -202,6 +213,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         {
             //构建ab包
             BDFrameworkAssetsEnv.BuildingCtx.StartBuildAssetBundle(buildTarget);
+            EditorUtility.ClearProgressBar();
 
         }
     }

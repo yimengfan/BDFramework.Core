@@ -41,6 +41,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// 是否包含依赖资产
         /// </summary>
         public bool IsIncludeDependAssets = false;
+        
         /// <summary>
         /// 设置依赖等级
         /// </summary>

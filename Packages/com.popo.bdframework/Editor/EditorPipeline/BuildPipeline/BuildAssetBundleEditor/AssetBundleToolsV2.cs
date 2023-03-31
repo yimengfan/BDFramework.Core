@@ -143,12 +143,13 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 //从缓存取依赖
                 if (buildInfoCache != null)
                 {
-                    var assetInfo = buildInfoCache.GetAssetInfo(runtimeAsset);
+                    var assetInfo = buildInfoCache.GetAssetInfo(runtimeAsset,false);
                     //添加一个
                     if (assetInfo == null && File.Exists(runtimeAsset))
                     {
                         buildInfoCache.AddAsset(runtimeAsset);
                         assetInfo = buildInfoCache.GetAssetInfo(runtimeAsset);
+                        BDebug.Log($"添加缓存中不存在资源:{runtimeAsset}", Color.yellow);
                     }
 
                     //验证Depend资产是否存在
@@ -216,6 +217,8 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             Debug.LogFormat("【GenBuildInfo】耗时:{0}ms.", sw.ElapsedMilliseconds);
             return (retBuildingInfo, runtimeAssetsPathList);
         }
+
+
 
         #endregion
 
@@ -566,7 +569,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             foreach (var newABI in newAssetbundleItemList)
             {
                 //AB path 和 sourcehash不为空
-                if (newABI.IsAssetBundleFile())
+                if (newABI.IsAssetBundleSourceFile())
                 {
                     var ret = lastAssetbundleItemList.Find((lastabi) => newABI.AssetBundlePath == lastabi.AssetBundlePath && newABI.AssetsPackSourceHash == lastabi.AssetsPackSourceHash);
                     if (ret == null)
@@ -879,18 +882,18 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             AssetBundleMgrV2 abv2 = new AssetBundleMgrV2();
             abv2.Init(outpath);
             //
-            var mixSourceAssetbundleItems = abv2.AssetBundleInfoLoader.AssetbundleItemList
-                .Where((abi) => abi.IsAssetBundleFile() && mixAssets.Contains(abi.AssetBundlePath)).ToArray();
+            var mixSourceAssetbundleItems = abv2.AssetBundleConfig.AssetbundleItemList
+                .Where((abi) => abi.IsAssetBundleSourceFile() && mixAssets.Contains(abi.AssetBundlePath)).ToArray();
 
             Debug.Log("<color=green>--------------------开始混淆Assetbundle------------------------</color>");
 
             //开始混淆AssetBundle
-            for (int i = 0; i < abv2.AssetBundleInfoLoader.AssetbundleItemList.Count; i++)
+            for (int i = 0; i < abv2.AssetBundleConfig.AssetbundleItemList.Count; i++)
             {
                 //源AB
-                var sourceItem = abv2.AssetBundleInfoLoader.AssetbundleItemList[i];
+                var sourceItem = abv2.AssetBundleConfig.AssetbundleItemList[i];
                 //混合文件、是否为AB本体、mix过
-                if (!sourceItem.IsAssetBundleFile() || mixSourceAssetbundleItems.Contains(sourceItem) || sourceItem.Mix > 0)
+                if (!sourceItem.IsAssetBundleSourceFile() || mixSourceAssetbundleItems.Contains(sourceItem) || sourceItem.Mix > 0)
                 {
                     continue;
                 }
@@ -917,7 +920,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 //修正hash
                 var newHash = FileHelper.GetMurmurHash3(abpath);
                 //相同ab的都进行赋值，避免下次重新被修改。
-                foreach (var item in abv2.AssetBundleInfoLoader.AssetbundleItemList)
+                foreach (var item in abv2.AssetBundleConfig.AssetbundleItemList)
                 {
                     if (sourceItem.AssetBundlePath.Equals(item.AssetBundlePath))
                     {
@@ -932,22 +935,22 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
             //TODO 临时补坑逻辑
             //开始混淆AssetBundle
-            for (int i = 0; i < abv2.AssetBundleInfoLoader.AssetbundleItemList.Count; i++)
+            for (int i = 0; i < abv2.AssetBundleConfig.AssetbundleItemList.Count; i++)
             {
                 //源AB
-                var sourceItem = abv2.AssetBundleInfoLoader.AssetbundleItemList[i];
+                var sourceItem = abv2.AssetBundleConfig.AssetbundleItemList[i];
                 if (sourceItem.IsLoadConfig())
                 {
                     if (sourceItem.Mix == 0)
                     {
-                        var assetbundleContent = abv2.AssetBundleInfoLoader.AssetbundleItemList.FirstOrDefault((abi) => abi.AssetBundlePath == sourceItem.AssetBundlePath);
+                        var assetbundleContent = abv2.AssetBundleConfig.AssetbundleItemList.FirstOrDefault((abi) => abi.AssetBundlePath == sourceItem.AssetBundlePath);
                         sourceItem.Mix = assetbundleContent.Mix;
                     }
                 }
             }
 
             //重新写入配置
-            abv2.AssetBundleInfoLoader.OverrideConfig();
+            abv2.AssetBundleConfig.OverrideConfig();
             Debug.Log("<color=green>--------------------混淆Assetbundle完毕------------------------</color>");
         }
 

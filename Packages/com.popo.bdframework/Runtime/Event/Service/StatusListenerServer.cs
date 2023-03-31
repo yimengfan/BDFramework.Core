@@ -58,7 +58,7 @@ namespace BDFramework.DataListener
         /// 删除一个service
         /// </summary>
         /// <param name="name"></param>
-        static public void DelService(string name)
+        static public void RemoveService(string name)
         {
             StatusListenerService status = null;
             serviceMap.TryGetValue(name, out status);
@@ -71,7 +71,7 @@ namespace BDFramework.DataListener
         /// 删除一个service
         /// </summary>
         /// <param name="name"></param>
-        static public void DeleteALLService()
+        static public void RemoveALLService()
         {
             serviceMap.Clear();
         }

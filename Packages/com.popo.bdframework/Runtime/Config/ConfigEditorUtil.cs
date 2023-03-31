@@ -110,17 +110,18 @@ namespace BDFramework.Editor.Inspector.Config
             //
             foreach (var item in configMap)
             {
-                for (int i = 0; i < item.Value.Count; i++)
-                {
-                    var d = item.Value[i];
-                    //覆盖
-                    if (d.GetType() == data.GetType())
-                    {
-                        item.Value[i] = data;
-                        break;
-                    }
-                }
+                var idx = item.Value.FindIndex((d) => d.GetType() == data.GetType());
 
+                if (idx > -1)
+                {
+                    //存在则替换
+                    item.Value[idx] = data;
+                }
+                else
+                {
+                    //不存在则添加
+                    item.Value.Add(data);
+                }
                 //保存
                 SaveConfig(item.Key, item.Value);
             }
@@ -128,7 +129,7 @@ namespace BDFramework.Editor.Inspector.Config
         }
 
         /// <summary>
-        /// 更新一个Data数据到所有
+        /// 更新版本号数据到所有
         /// </summary>
         /// <param name="data"></param>
         static public void UpdateClientVersionToAll(string clientVersion)

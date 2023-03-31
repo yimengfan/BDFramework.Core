@@ -74,15 +74,35 @@ public class BDebug : MonoBehaviour
 
     /// <summary>
     /// Log
+    /// 为了兼容以前 字符串color 
+    /// </summary>
+    /// <param name="tagOrLog">日志内容</param>
+    /// <param name="color">色号</param>
+    [Conditional("ENABLE_BDEBUG")]
+    public static void Log(string tagOrLog, string logOrColor)
+    {
+        if (logOrColor.StartsWith("#")&&ColorUtility.TryParseHtmlString(logOrColor.Substring(1,logOrColor.Length-1), out var color))
+        {
+            Log(tagOrLog, color);
+        }
+        else
+        {
+            var log = ZString.Format("<color=#FFC63F>【{0}】</color> {1}", tagOrLog,  logOrColor);
+            Debug.Log(log);
+        }
+    }
+
+    /// <summary>
+    /// Log
     /// </summary>
     /// <param name="log">日志内容</param>
     /// <param name="color">色号</param>
     [Conditional("ENABLE_BDEBUG")]
-    public static void Log(object log, string color)
+    public static void Log(string log, Color color)
     {
         if (Inst.IsLog)
         {
-            log = ZString.Format("<color={0}>{1}</color>", (object) color, log);
+            log = ZString.Format("<color=#{0}>{1}</color>", ColorUtility.ToHtmlStringRGBA(color), log);
             Debug.Log(log);
         }
     }
@@ -91,19 +111,32 @@ public class BDebug : MonoBehaviour
     /// 根据tag进行Log
     /// 需要通过EnableTag()、DisableTag()管理
     /// </summary>
-    /// <param name="tag">开关标记</param>
+    /// <param name="tagOrLog">开关标记</param>
     /// <param name="log">日志内容</param>
     /// <param name="color">色号</param>
     [Conditional("ENABLE_BDEBUG")]
-    public static void Log(string tag, object log, string color = "white")
+    public static void Log(string tagOrLog, string log, Color color)
     {
-        if (IsEnableTag(tag))
+        var colorStr = ColorUtility.ToHtmlStringRGBA(color);
+        Log(tagOrLog, log, colorStr);
+    }
+
+    /// <summary>
+    /// 根据tag进行Log
+    /// 需要通过EnableTag()、DisableTag()管理
+    /// </summary>
+    /// <param name="tagOrLog">开关标记</param>
+    /// <param name="log">日志内容</param>
+    /// <param name="color">色号</param>
+    [Conditional("ENABLE_BDEBUG")]
+    public static void Log(string tagOrLog, string log, string color)
+    {
+        if (IsEnableTag(tagOrLog))
         {
-            log = ZString.Format("【{0}】<color={1}>{2}</color>", tag, (object) color, log);
+            log = ZString.Format("<color=#FFC63F>【{0}】</color> <color=#{1}>{2}</color>", tagOrLog, color, log);
             Debug.Log(log);
         }
     }
-
 
     /// <summary>
     /// LogFormat
@@ -191,7 +224,7 @@ public class BDebug : MonoBehaviour
         var idx = Inst.LogTagList.FindIndex((t) => t.Tag == tag);
         if (idx < 0)
         {
-            var log = new LogTag() {Tag = tag, IsLog = true};
+            var log = new LogTag() { Tag = tag, IsLog = true };
 
             Inst.LogTagList.Add(log);
 
@@ -208,14 +241,16 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     static public void DisableTag(string tag)
     {
-        var idx = Inst.LogTagList.FindIndex((t) => t.Tag == tag);
-        if (idx < 0)
+        if (Inst)
         {
-            Inst.LogTagList.Add(new LogTag() {Tag = tag, IsLog = true});
-            idx = Inst.LogTagList.Count - 1;
+            var idx = Inst.LogTagList.FindIndex((t) => t.Tag == tag);
+            if (idx < 0)
+            {
+                Inst.LogTagList.Add(new LogTag() { Tag = tag, IsLog = true });
+                idx = Inst.LogTagList.Count - 1;
+            }
+            Inst.LogTagList[idx].IsLog = false;
         }
-
-        Inst.LogTagList[idx].IsLog = false;
     }
 
     #endregion
@@ -255,7 +290,8 @@ public class BDebug : MonoBehaviour
             }
             else
             {
-                Debug.Log($"<color={color}>【{watchTag}】</color> 耗时：<color=yellow>{sw.ElapsedTicks / 10000f} ms</color>");
+                Debug.Log(
+                    $"<color={color}>【{watchTag}】</color> 耗时：<color=yellow>{sw.ElapsedTicks / 10000f} ms</color>");
             }
 
             watchMap.Remove(watchTag);
@@ -288,6 +324,3 @@ public class BDebug : MonoBehaviour
         }
     }
 }
-
-
-

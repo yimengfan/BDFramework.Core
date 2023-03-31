@@ -95,28 +95,27 @@ namespace BDFramework.Editor.AssetGraph.Node
         public enum AssetGraphWindowsModeEnum
         {
             /// <summary>
-            /// 设置AB名为父文件夹路径
+            /// 配置AB
             /// </summary>
-            配置节点模式,
-
+            配置模式,
+            
             /// <summary>
-            /// 设置所有子文件夹中的文件，AB名为子文件夹名
+            /// 预览AB
             /// </summary>
-            预览节点模式
+            预览AssetBundle
         }
 
         /// <summary>
         /// 设置规则
-        /// 这里的值一定要public，不然sg 用json序列化判断值未变化，则不会刷新
         /// </summary>
-        public int AssetGraphWindowsMode = (int) AssetGraphWindowsModeEnum.配置节点模式;
+        private int AssetGraphWindowsMode = (int) AssetGraphWindowsModeEnum.配置模式;
 
         /// <summary>
         /// 是否为编辑模式
         /// </summary>
         private bool IsEditMode
         {
-            get { return AssetGraphWindowsMode == (int) AssetGraphWindowsModeEnum.配置节点模式; }
+            get { return AssetGraphWindowsMode == (int) AssetGraphWindowsModeEnum.配置模式; }
         }
 
         /// <summary>
@@ -142,13 +141,13 @@ namespace BDFramework.Editor.AssetGraph.Node
             //根据不同的枚举进行提示
             switch ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode)
             {
-                case AssetGraphWindowsModeEnum.配置节点模式:
+                case AssetGraphWindowsModeEnum.配置模式:
                 {
                     EditorGUILayout.HelpBox("该模式下,不会加载实际Assets数据,避免卡顿!", MessageType.Info);
                 }
                     break;
 
-                case AssetGraphWindowsModeEnum.预览节点模式:
+                case AssetGraphWindowsModeEnum.预览AssetBundle:
                 {
                     EditorGUILayout.HelpBox("该模式下,所有操作都会预览实际Assets打包情况，比较卡!", MessageType.Info);
                 }
@@ -186,6 +185,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// <param name="outputFunc"></param>
         public override void Prepare(BuildTarget target, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc)
         {
+           
             //检测混淆
             AssetGraphTools.WatchBegin();
             
@@ -194,7 +194,10 @@ namespace BDFramework.Editor.AssetGraph.Node
             {
                 BuildingCtx = new AssetBundleBuildingContext();
             }
-
+            if (BuildingCtx.BuildParams.IsBuilding)
+            {
+                EditorUtility.DisplayProgressBar("构建资产", this.Category, 1);
+            }
             BuildingCtx.BuildParams.BuildTarget = target;
             if (incoming == null)
             {
@@ -212,19 +215,14 @@ namespace BDFramework.Editor.AssetGraph.Node
                     }
                 }
             }
-
-
-
-
-
+            
             Debug.Log("传入路径:\n" + JsonMapper.ToJson(loadRuntimeAssetPathList, true));
-
 
             //设置所有节点参数请求,依次传参
             Debug.Log("【初始化框架资源环境】配置:\n" + JsonMapper.ToJson(BuildingCtx.BuildParams));
             var outMap = new Dictionary<string, List<AssetReference>>();
             //预览模式
-            if ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode == AssetGraphWindowsModeEnum.预览节点模式 || BuildingCtx.BuildParams.IsBuilding)
+            if ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode == AssetGraphWindowsModeEnum.预览AssetBundle || BuildingCtx.BuildParams.IsBuilding)
             {
                 //创建构建上下文信息
                 GenBuildingCtx(this.loadRuntimeAssetPathList);
@@ -236,7 +234,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     {nameof(FloderType.Depend), BuildingCtx.DependAssetList.ToList()}
                 };
             }
-            else if ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode == AssetGraphWindowsModeEnum.配置节点模式)
+            else if ((AssetGraphWindowsModeEnum) this.AssetGraphWindowsMode == AssetGraphWindowsModeEnum.配置模式)
             {
                 //输出
                 outMap = new Dictionary<string, List<AssetReference>>()
@@ -281,7 +279,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             Action<NodeData, string, float> progressFunc)
         {
 
-
+          
             //BD生命周期触发
             BDFrameworkPipelineHelper.OnBeginBuildAssetBundle(BuildingCtx);
         }

@@ -55,8 +55,6 @@ namespace BDFramework.Asset
     /// </summary>
     static public class ClientAssetsHelper
     {
-
-
         static ClientAssetsHelper()
         {
             BetterStreamingAssets.Initialize();
@@ -249,7 +247,7 @@ namespace BDFramework.Asset
                     }
                     else
                     {
-                        BDebug.Log("【母包资源检测】母包有新资源,即将覆盖persistent旧资源!!!!", "yellow");
+                        BDebug.Log("【母包资源检测】母包有新资源,即将覆盖persistent旧资源!!!!", Color.yellow);
                         BDLauncher.Inst.ClientBuildInfo  = basePackageInfo;
                         ClearOldPersistentAssets();
                      

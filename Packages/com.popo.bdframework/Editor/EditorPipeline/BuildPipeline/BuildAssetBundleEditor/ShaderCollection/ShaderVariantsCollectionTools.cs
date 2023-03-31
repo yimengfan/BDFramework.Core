@@ -1,12 +1,6 @@
-﻿using System.Text;
-using System.Net;
-using System;
-using System.Reflection;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using System.IO;
 using UnityEngine.Rendering;
 using System.Linq;
 using BDFramework.Editor.Unity3dEx;
@@ -37,9 +31,9 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// <summary>
         /// 搜集keywords
         /// </summary>
-        public ShaderVariantCollection CollectionKeywords(string[] matPaths,ShaderVariantCollection excludeCollection)
+        public Dictionary<Shader,ShaderVariantCollection> CollectionKeywords(string[] matPaths,ShaderVariantCollection excludeCollection)
         {
-            var shaderCollection = new ShaderVariantCollection();
+           var retSVCMap = new Dictionary<Shader, ShaderVariantCollection>();
             //遍历所有mat的KeyWords 
             foreach (var path in matPaths)
             {
@@ -57,6 +51,13 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                     shaderData = ShaderUtilImpl.GetShaderVariantEntriesFilteredInternal(material.shader, 256, new string[] { }, excludeCollection);
                     shaderDataMap[material.shader] = shaderData;
                 }
+
+                ret= retSVCMap.TryGetValue(material.shader, out var shaderCollection);
+                if (!ret)
+                {
+                    shaderCollection = new ShaderVariantCollection();
+                    retSVCMap[material.shader] = shaderCollection;
+                }
                 //收集shaderVaraint
                 var passTypes = shaderData.passTypes.Distinct();
                 foreach (var pt in passTypes)
@@ -73,7 +74,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 // }
             }
 
-            return shaderCollection;
+            return retSVCMap;
         }
 
         /// <summary>

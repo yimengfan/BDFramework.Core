@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using AssetsManager.ArtAsset.AssetBundle.V2;
+using BResource.AssetBundle.V2;
 using BDFramework.ResourceMgr.V2;
 using Cysharp.Threading.Tasks;
 using LitJson;
@@ -19,6 +19,7 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     public class LoadTaskGroup : CustomYieldInstruction, IDisposable
     {
+        public readonly static string LogTag = "LoadTask";
         public delegate void OnTaskComplete();
 
         /// <summary>
@@ -27,14 +28,18 @@ namespace BDFramework.ResourceMgr
         public int Id { get; set; }
 
         /// <summary>
-        /// 是否加载文件成功
-        /// 完成加载 且 没被取消 且 资源实例化完成
-        /// 或 已有资源已经存在
+        /// 任务是否完成
+        /// 被取消，实例化成功，或者失败 =》都会结束任务
         /// </summary>
-        public bool IsSuccess
+        public bool IsComplete
         {
-            get { return (!this.isCancel && this.isLoadABFile && isLoadObject) || (resultObject); }
+            get { return this.isCancel || IsFail || resultObject; }
         }
+
+        /// <summary>
+        /// 是否失败
+        /// </summary>
+        public bool IsFail { get; private set; } = false;
 
         /// <summary>
         /// 是否取消
@@ -66,12 +71,12 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 是否加载AB文件
         /// </summary>
-        private bool isLoadABFile { get; set; }
+        private bool isLoadABFileEnd { get; set; } = false;
 
         /// <summary>
         /// 是否加载实例
         /// </summary>
-        private bool isLoadObject { get; set; } = false;
+        private bool isLoadObjectEnd { get; set; } = false;
 
 
         // /// <summary>
@@ -91,6 +96,7 @@ namespace BDFramework.ResourceMgr
         public string LoadPath { get; private set; }
 
         private string guid { get; set; }
+
         /// <summary>
         /// 主资源类型
         /// </summary>
@@ -106,7 +112,16 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         private AssetBundleMgrV2 loader { get; set; }
 
-        public LoadTaskGroup(AssetBundleMgrV2 loader, Type loadType, string loadPath,string guid, List<AssetBundleItem> dependAssets)
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="loader"></param>
+        /// <param name="loadType"></param>
+        /// <param name="loadPath"></param>
+        /// <param name="guid"></param>
+        /// <param name="dependAssets"></param>
+        public LoadTaskGroup(AssetBundleMgrV2 loader, Type loadType, string loadPath, string guid,
+            IEnumerable<AssetBundleItem> dependAssets)
         {
             //赋值
             this.loader = loader;
@@ -136,7 +151,7 @@ namespace BDFramework.ResourceMgr
         public void Cancel()
         {
             isCancel = true;
-            isLoadABFile = true;
+            isLoadABFileEnd = true;
         }
 
 
@@ -147,22 +162,25 @@ namespace BDFramework.ResourceMgr
         {
             get
             {
-                // Debug.Log("yield Task frame:" + Time.frameCount);
-                //不再等待，表示当前任务已完成/被取消
-                if (isCancel || IsSuccess || resultObject != null)
+                //完成，则不需要等待
+                if (IsComplete)
                 {
                     return false;
                 }
-
-                //执行加载Assetbundle
-                return DoLoadAssetBundle();
+                else
+                {
+                    //执行加载Assetbundle
+                    LoadAssets();
+                    //不在当前帧返回
+                    return true; //继续等待 
+                }
             }
         }
 
         /// <summary>
         /// Load assetbundle状态管理
         /// </summary>
-        List<KeyValuePair<string, LoadTask>> loadingTaskList = new List<KeyValuePair<string, LoadTask>>(10);
+        private List<KeyValuePair<AssetBundleItem, LoadTask>> loadingTaskList { get; set; } = new List<KeyValuePair<AssetBundleItem, LoadTask>>(10);
 
         /// <summary>
         /// 当前任务计数
@@ -174,73 +192,69 @@ namespace BDFramework.ResourceMgr
         /// 执行加载 Assetbundle
         /// </summary>
         /// <returns>是否继续执行</returns>
-        private bool DoLoadAssetBundle()
+        private bool LoadAssets()
         {
-            
-            BDebug.Log($"【keepAwait】 {this.LoadPath} - {Time.realtimeSinceStartup}  /   <color=red>frame:{Time.frameCount} </color>");
 
             if (!isCancel)
             {
-                if (!this.isLoadABFile)
+                if (!this.isLoadABFileEnd)
                 {
-                    this.isLoadABFile = AsyncLoadAssetbundleFile();
-                    if (this.isLoadABFile)
-                    {
-                        BDebug.Log("【LoadTaskGroup】加载AB文件成功:" +this.LoadPath);
-                    }
+                    this.isLoadABFileEnd = AsyncLoadAssetbundleFile();
                 }
-                
+
                 //在同一帧中继续判断
-                if (this.isLoadABFile && !this.isLoadObject) //完成了loadABFile
+                if (this.isLoadABFileEnd && !this.isLoadObjectEnd) //完成了loadABFile
                 {
-                    this.isLoadObject = AsyncLoadObject();
-                    BDebug.Log("【LoadTaskGroup】AB实例化完成:" +this.LoadPath);
+                    this.isLoadObjectEnd = AsyncLoadObject();
                 }
             }
-//            BDebug.Log($"<color=yellow> IsSuccess:{this.IsSuccess} </color>");
-           //没成功则继续
-            return !this.IsSuccess;
+
+            return this.IsComplete;
         }
 
 
         /// <summary>
-        /// 加载assetbundle 文件
+        /// 异步加载ab文件
         /// </summary>
+        /// <returns>是否加载完成</returns>
         private bool AsyncLoadAssetbundleFile()
         {
             //1.loadABFile,循环添加任务
-            while (!isCancel && AssetBundleMgrV2.IsCanAddGlobalTask && curLoadIdx < dependAssetBundleList.Count - 1)
+            while (AssetBundleMgrV2.IsCanAddGlobalTask && curLoadIdx < dependAssetBundleList.Count - 1)
             {
                 curLoadIdx++;
-
-                var abi = dependAssetBundleList[curLoadIdx];
+                var item = dependAssetBundleList[curLoadIdx];
                 //没有被加载过
-                var abw = loader.GetAssetBundleFromCache(abi.AssetBundlePath);
-                if (abw == null)
+                var assetLoder = loader.GetAssetLoder(item.AssetBundlePath);
+                if (assetLoder == null|| !assetLoder.IsValid)
                 {
-                    var abPath = loader.FindMultiAddressAsset(abi.AssetBundlePath);
+                    var abPath = loader.FindMultiAddressAsset(item.AssetBundlePath);
                     //判断是否在加载中
                     var loadTask = AssetBundleMgrV2.GetExsitLoadTask(abPath);
                     if (loadTask != null)
                     {
-                        loadingTaskList.Add(new KeyValuePair<string, LoadTask>(abi.AssetBundlePath, loadTask));
+                        loadingTaskList.Add(new KeyValuePair<AssetBundleItem, LoadTask>(item, loadTask));
                     }
                     else
                     {
                         //创建任务
-                        loadTask = new LoadTask(abPath, 0, (ulong) abi.Mix);
+                        loadTask = new LoadTask(abPath, 0, (ulong)item.Mix);
                         //加入Global任务
                         AssetBundleMgrV2.AddGlobalLoadTask(loadTask);
                         //添加到loading表
-                        loadingTaskList.Add(new KeyValuePair<string, LoadTask>(abi.AssetBundlePath, loadTask));
+                        loadingTaskList.Add(new KeyValuePair<AssetBundleItem, LoadTask>(item, loadTask));
                         //开始加载
                         loadTask.AysncLoad();
-                        BDebug.Log($"【AsyncLoadTaskGroup】 加    载: {abi.AssetBundlePath}");
+#if UNITY_EDITOR
+                        BDebug.Log(LogTag,$"<color=red>Id:{this.Id}</color> 创建加载依赖:{item.AssetBundlePath}  - {UnityEditor.AssetDatabase.GUIDToAssetPath(item.AssetBundlePath)}");
+#else
+                        BDebug.Log(LogTag,$"<color=red>Id:{this.Id}</color>  创建加载依赖:{item.AssetBundlePath}");
+#endif
                     }
                 }
                 else
                 {
-                    BDebug.Log($"【AsyncLoadTaskGroup】 <color=green>无需加载</color>: {abi.AssetBundlePath}");
+                    BDebug.Log(LogTag,$"<color=red>Id:{this.Id}</color> 无需加载:{item.AssetBundlePath}",Color.yellow);
                 }
             }
 
@@ -250,7 +264,7 @@ namespace BDFramework.ResourceMgr
                 for (int i = loadingTaskList.Count - 1; i >= 0; i--)
                 {
                     var loadingTask = loadingTaskList[i];
-                    var assetbundleFileName = loadingTask.Key;
+                    var item = loadingTask.Key;
                     var loadTask = loadingTask.Value;
                     //判断是否结束
                     if (loadTask.IsDone)
@@ -258,28 +272,41 @@ namespace BDFramework.ResourceMgr
                         //添加到返回列表
                         if (loadTask.AssetBundle != null)
                         {
-                            loader.AddAssetBundleToCache(assetbundleFileName, loadTask.AssetBundle);
+                            loader.AddAssetLoder(item, loadTask.AssetBundle);
                         }
                         else
                         {
-                            BDebug.LogError("【AsyncLoadTaskGroup】ab资源为空:" + assetbundleFileName);
+                            BDebug.LogError(LogTag,"ab资源为空:" + item);
                         }
 
                         //移除成功任务
                         loadingTaskList.RemoveAt(i);
                         //解锁
                         AssetBundleMgrV2.RemoveGlobalLoadTask(loadTask);
-                        BDebug.Log($"【AsyncLoadTaskGroup】--> 加载完成:{assetbundleFileName}  剩余:{loadingTaskList.Count + dependAssetBundleList.Count - (curLoadIdx + 1)}/{dependAssetBundleList.Count}");
+#if UNITY_EDITOR
+                        BDebug.Log(
+                            LogTag,$"<color=red>Id:{this.Id}</color> --> 加载依赖完成:{item}  -  {UnityEditor.AssetDatabase.GUIDToAssetPath(item.AssetBundlePath)}!  <color=green>剩余:{loadingTaskList.Count + dependAssetBundleList.Count - (curLoadIdx + 1)}/{dependAssetBundleList.Count}</color>");
+#else
+                  BDebug.Log(
+                            LogTag,$"<color=red>Id:{this.Id}</color> -->  加载依赖完成:{item.AssetBundlePath}!  剩余:{loadingTaskList.Count + dependAssetBundleList.Count - (curLoadIdx + 1)}/{dependAssetBundleList.Count}");
+#endif
+                      
                     }
                 }
             }
 
             //3.任务执行完毕检测
-            if (!isCancel && loadingTaskList.Count == 0 && curLoadIdx == dependAssetBundleList.Count - 1)
+            if (loadingTaskList.Count == 0 && curLoadIdx == dependAssetBundleList.Count - 1)
             {
                 //加载完成,主资源只要保证在 实例化之前加载完毕即可
                 //加载完则使用
-                BDebug.Log($"<color=green>【AsyncLoadTaskGroup】所有加载完成:{MainAssetBundleItem.AssetBundlePath}</color>");
+#if UNITY_EDITOR
+                BDebug.Log(LogTag,
+                    $"<color=red>Id:{this.Id}</color> 所有依赖加载:{MainAssetBundleItem.AssetBundlePath} - {UnityEditor.AssetDatabase.GUIDToAssetPath(MainAssetBundleItem.AssetBundlePath)}",Color.green);
+#else
+                    BDebug.Log(LogTag,$"<color=red>Id:{this.Id}</color> 所有依赖加载:{MainAssetBundleItem.AssetBundlePath}",Color.green);
+#endif
+
 
                 return true;
             }
@@ -287,47 +314,48 @@ namespace BDFramework.ResourceMgr
             return false;
         }
 
-        private AssetBundleRequest abRequest = null;
+        /// <summary>
+        /// 加载ab的进度
+        /// </summary>
+        private AssetBundleRequest assetbundleRequest = null;
 
         /// <summary>
-        /// 异步加载对象
+        /// 异步加载AB对象
         /// </summary>
         private bool AsyncLoadObject()
         {
             //判断request 加载进度
-            if (!isCancel && abRequest == null)
+            if (assetbundleRequest == null)
             {
-                //加载实例对象
-                var cacheObject = loader.GetObjectFormCache(LoadPath, loadType);
+                var cacheObject = loader.GetAssetObjectFromCache(LoadPath, loadType);
+                //不存在缓存,加载
                 if (!cacheObject)
                 {
-                    var abw = loader.GetAssetBundleFromCache(MainAssetBundleItem.AssetBundlePath);
-                    abRequest = abw.CreateAsyncInstantiateTask(loadType,guid ,true);
+                    var assetLoder = loader.GetAssetLoder(MainAssetBundleItem.AssetBundlePath);
+                    assetbundleRequest = assetLoder.LoadAssetAsync(loadType, guid, true);
                     return false;
                 }
                 else
                 {
                     //已经存在
-                    Debug.Log("【LoadTaskGroup】已存在cache :" + loadType);
+                    BDebug.Log(LogTag,"<color=red>Id:{this.Id}</color> 已存在cache :" + loadType);
                     this.resultObject = cacheObject;
                     return true;
                 }
             }
 
             //异步实例化完成
-            if (!isCancel && abRequest != null && abRequest.isDone)
+            if (assetbundleRequest != null && assetbundleRequest.isDone)
             {
                 //添加到缓存
-                loader.AddObjectToCache(loadType, LoadPath, abRequest.asset);
-                this.resultObject = abRequest.asset;
+                loader.AddAssetObjectToCache(loadType, LoadPath, assetbundleRequest.asset);
+                this.resultObject = assetbundleRequest.asset;
                 return true;
             }
 
             return false;
         }
 
-
-      
 
         /// <summary>
         /// 销毁
@@ -340,7 +368,7 @@ namespace BDFramework.ResourceMgr
             this.LoadPath = null;
             this.loadingTaskList = null;
             this.dependAssetBundleList = null;
-            this.abRequest = null;
+            this.assetbundleRequest = null;
         }
     }
 }

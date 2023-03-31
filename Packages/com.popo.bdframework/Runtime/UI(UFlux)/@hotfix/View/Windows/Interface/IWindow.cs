@@ -1,5 +1,4 @@
-﻿
-using BDFramework.DataListener;
+﻿using BDFramework.DataListener;
 
 namespace BDFramework.UFlux
 {
@@ -12,6 +11,15 @@ namespace BDFramework.UFlux
         /// 状态管理,事件监听
         /// </summary>
         AStatusListener State { get; }
+        /// <summary>
+        /// 父窗口
+        /// </summary>
+        IWindow Parent { get; }
+
+        /// <summary>
+        /// 是否处于激活状态
+        /// </summary>
+        bool IsFocus { get; }
 
         /// <summary>
         /// 发送消息
@@ -25,28 +33,30 @@ namespace BDFramework.UFlux
         /// <param name="window"></param>
         void SetParent(IWindow window);
 
+  
         /// <summary>
-        /// 父窗口
+        /// 开启
         /// </summary>
-        IWindow Parent { get; }
-        
-        /// <summary>
-        /// 打开
-        /// </summary>
-        void Open(UIMsgData uiMsg =null);
+        /// <param name="uiMsg"></param>
+        /// <param name="isFocus"></param>
+        void Open(UIMsgData uiMsg = null);
 
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        void Close();
+        
         /// <summary>
         /// 当窗口重新获得焦点时会调用
         /// 如 2覆盖1上面，2关闭，1触发focus
         /// </summary>
         void OnFocus();
-    
-        /// <summary>
-        /// 关闭
-        /// </summary>
-        void Close();
 
-        
+        /// <summary>
+        /// 丢失焦点
+        /// </summary>
+        void OnBlur();
+
         /// <summary>
         /// 注册子窗口
         /// </summary>

@@ -248,7 +248,7 @@ namespace LitJson
 
         #region Public Indexers
         public JsonData this[string prop_name] {
-            get {
+            get{
                 EnsureDictionary ();
                 return inst_object[prop_name];
             }
@@ -902,10 +902,12 @@ namespace LitJson
             this.type = type;
         }
 
-        public string ToJson ()
+        public string ToJson ( bool isForceConvert =false)
         {
-            if (json != null)
+            if (json != null && !isForceConvert)
+            {
                 return json;
+            }
 
             StringWriter sw = new StringWriter ();
             JsonWriter writer = new JsonWriter (sw);

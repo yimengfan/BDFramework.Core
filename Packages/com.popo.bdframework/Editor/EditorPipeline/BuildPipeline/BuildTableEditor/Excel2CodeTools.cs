@@ -121,7 +121,7 @@ Excel格式如下:
             int idX = -1;
             int idY = -1;
             List<object> keepFieldList = new List<object>();
-            string json = excel.GetJson(@namespace, ref idX, ref idY, ref keepFieldList);
+            var (json,tableMap) = excel.GetJson(@namespace, ref idX, ref idY, ref keepFieldList);
             if (idX != -1 && idY != -1)
             {
                 if (idY < 2)
