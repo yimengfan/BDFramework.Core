@@ -28,7 +28,7 @@ namespace BDFramework.UnitTest
                 service.TriggerEvent(Msg.test);
             }
 
-            StatusListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.RemoveService(nameof(Msg.test));
             Assert.Equals(count, 100);
         }
 
@@ -46,7 +46,7 @@ namespace BDFramework.UnitTest
             Debug.Log("发送值:" + sender);
             service.TriggerEvent(Msg.test, sender);
             
-            StatusListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.RemoveService(nameof(Msg.test));
             Assert.IsPass(true);
         }
         
@@ -60,7 +60,7 @@ namespace BDFramework.UnitTest
             });
             service.TriggerEvent(Msg.test, "一零零八六");
             
-            StatusListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.RemoveService(nameof(Msg.test));
             Assert.IsPass(true);
         }
 
@@ -92,7 +92,7 @@ namespace BDFramework.UnitTest
             
             service.TriggerEvent(Msg.test, new Msg_ParamTest());
             
-            StatusListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.RemoveService(nameof(Msg.test));
             Assert.IsPass(true);
         }
 
@@ -119,7 +119,7 @@ namespace BDFramework.UnitTest
             
             service.TriggerEvent(new Msg_ParamTest());
             
-            StatusListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.RemoveService(nameof(Msg.test));
             Assert.IsPass(true);
         }
         
@@ -157,7 +157,7 @@ namespace BDFramework.UnitTest
             }
             Assert.Equals(count2, 1,"AddOnce 测试失败");
             
-            StatusListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.RemoveService(nameof(Msg.test));
         }
 
         [UnitTestAttribute(des:  "添加顺序测试")]
@@ -191,7 +191,7 @@ namespace BDFramework.UnitTest
 
             //次数到了之后不会再执行
             service.TriggerEvent(Msg.test);
-            StatusListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.RemoveService(nameof(Msg.test));
             //两个必须等于1
             Assert.Equals(count, 1);
             Assert.Equals(count2, 1);
@@ -218,7 +218,7 @@ namespace BDFramework.UnitTest
                 service.RemoveListener(Msg.test, callback);
             }
 
-            StatusListenerServer.DelService(nameof(Msg.test));
+            StatusListenerServer.RemoveService(nameof(Msg.test));
             //验证结果
             Assert.Equals(count, 1);
         }

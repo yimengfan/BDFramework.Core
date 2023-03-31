@@ -145,7 +145,7 @@ public class Window_StatusListener : AWindow
             });
 
             s2.TriggerEvent(Msg_Test001.Msg2, new Msg_ParamTest());
-            StatusListenerServer.DelService(nameof(Msg_Test001.Msg2));
+            StatusListenerServer.RemoveService(nameof(Msg_Test001.Msg2));
 
             //1.创建数据监听服务
             var service = StatusListenerServer.Create(nameof(Msg_Test001));

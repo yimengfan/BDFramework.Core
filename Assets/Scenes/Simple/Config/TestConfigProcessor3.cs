@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Game.Config
 {
     [GameConfig(13, "Config测试3")]
-    public class TestConfigProcessor3 : AConfigProcessor
+    public class TestConfigProcessor3 : IConfigProcessor
     {
         public class Config : ConfigDataBase
         {
@@ -19,7 +19,7 @@ namespace Game.Config
             public string Test3 = "333";
         }
         
-        public override void OnConfigLoad(ConfigDataBase config)
+        public  void OnConfigLoad(ConfigDataBase config)
         {
             var con = config as Config;
             

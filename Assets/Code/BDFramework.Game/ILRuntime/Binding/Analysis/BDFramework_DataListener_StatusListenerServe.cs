@@ -27,8 +27,8 @@ namespace ILRuntime.Runtime.Generated
             method = methods.Where(t => t.Name.Equals("Create") && t.CheckMethodParams(args)).Single();
             app.RegisterCLRMethodRedirection(method, Create_0);
             args = new Type[]{typeof(System.String)};
-            method = type.GetMethod("DelService", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, DelService_1);
+            method = type.GetMethod("RemoveService", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, RemoveService_1);
             args = new Type[]{typeof(System.String)};
             method = methods.Where(t => t.Name.Equals("GetService") && t.CheckMethodParams(args)).Single();
             app.RegisterCLRMethodRedirection(method, GetService_2);
@@ -109,7 +109,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* DelService_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* RemoveService_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -120,7 +120,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            BDFramework.DataListener.StatusListenerServer.DelService(@name);
+            BDFramework.DataListener.StatusListenerServer.RemoveService(@name);
 
             return __ret;
         }

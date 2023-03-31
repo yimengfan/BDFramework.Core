@@ -36,7 +36,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_Int32_Binding.Register(app);
             BDFramework_Sql_SqliteHelper_Binding.Register(app);
             BDFramework_Sql_SqliteHelper_Binding_SQLiteService_Binding.Register(app);
-            SQLite_TableQueryForILRuntime_Binding.Register(app);
+            SQLite4Unity3d_TableQueryForILRuntime_Binding.Register(app);
             System_Collections_Generic_List_1_Hero_Binding.Register(app);
             System_Collections_Generic_List_1_Hero_Binding_Enumerator_Binding.Register(app);
             System_IDisposable_Binding.Register(app);
@@ -70,6 +70,7 @@ namespace ILRuntime.Runtime.Generated
             System_DateTime_Binding.Register(app);
             System_Reflection_MemberInfo_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Type_Binding.Register(app);
+            UnityEngine_Color_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             BDFramework_Mgr_ManagerInstHelper_Binding.Register(app);
@@ -174,13 +175,12 @@ namespace ILRuntime.Runtime.Generated
             System_Reflection_MethodInfo_Binding.Register(app);
             System_Reflection_ParameterInfo_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding.Register(app);
-            UnityEngine_Color_Binding.Register(app);
+            BDFramework_DataListener_StatusListenerService_Binding.Register(app);
             System_Runtime_CompilerServices_AsyncTaskMethodBuilder_1_ILTypeInstance_Binding.Register(app);
             System_Uri_Binding.Register(app);
             System_Net_DownloadStringCompletedEventArgs_Binding.Register(app);
             System_Action_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Type_MethodInfo_Binding.Register(app);
-            BDFramework_DataListener_StatusListenerService_Binding.Register(app);
             System_Action_2_Int32_ILTypeInstance_Binding.Register(app);
             Cysharp_Text_ZString_Binding.Register(app);
             System_Collections_Generic_Queue_1_ILTypeInstance_Binding.Register(app);

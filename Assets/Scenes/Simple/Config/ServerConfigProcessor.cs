@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 namespace Game.Config
 {
     [GameConfig(10, "网络设置")]
-    public class ServerConfigProcessor : AConfigProcessor
+    public class ServerConfigProcessor : IConfigProcessor
     {
         public class Config : ConfigDataBase
         {
@@ -18,6 +18,11 @@ namespace Game.Config
             [LabelText("Gate服务器")]
             public string GateServerIp = "";
             public int Port;
+        }
+
+        public void OnConfigLoad(ConfigDataBase config)
+        {
+            
         }
     }
 }

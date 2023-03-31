@@ -14,14 +14,14 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class SQLite_TableQueryForILRuntime_Binding
+    unsafe class SQLite4Unity3d_TableQueryForILRuntime_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(SQLite.TableQueryForILRuntime);
+            Type type = typeof(SQLite4Unity3d.TableQueryForILRuntime);
             args = new Type[]{typeof(System.String), typeof(System.Object)};
             method = type.GetMethod("Where", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Where_0);
@@ -128,7 +128,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.Where(@where, @value);
@@ -147,7 +147,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.FromAll<Game.Data.Local.Hero>(@selection);
@@ -171,7 +171,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.Where(@where);
@@ -186,7 +186,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.And;
@@ -201,7 +201,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 1);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.Or;
@@ -228,7 +228,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.WhereAnd(@field, @operation, @objs);
@@ -255,7 +255,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.WhereOr(@field, @operation, @objs);
@@ -274,7 +274,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.FromAll<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@selection);
@@ -297,7 +297,7 @@ namespace ILRuntime.Runtime.Generated
             System.Int32 @limitValue = ptr_of_this_method->Value;
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.Limit(@limitValue);
@@ -316,7 +316,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.From<ILRuntime.Runtime.Intepreter.ILTypeInstance>(@selection);
@@ -339,7 +339,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.WhereIn(@field, @objs);
@@ -358,7 +358,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.OrderByDesc(@field);
@@ -377,7 +377,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            SQLite.TableQueryForILRuntime instance_of_this_method = (SQLite.TableQueryForILRuntime)typeof(SQLite.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            SQLite4Unity3d.TableQueryForILRuntime instance_of_this_method = (SQLite4Unity3d.TableQueryForILRuntime)typeof(SQLite4Unity3d.TableQueryForILRuntime).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.OrderBy(@field);
