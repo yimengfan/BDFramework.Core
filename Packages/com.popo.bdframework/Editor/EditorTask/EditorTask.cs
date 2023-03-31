@@ -149,11 +149,10 @@ namespace BDFramework.Editor.Task
                 foreach (var editorTask in list)
                 {
                     //执行
-                    editorTask.MethodInfo.Invoke(null, new object[] { });
+                    editorTask?.MethodInfo?.Invoke(null, new object[] { });
                 }
             }
         }
-
 
         /// <summary>
         /// 当unity加载或者重新编译

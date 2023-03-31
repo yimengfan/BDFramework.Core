@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if ODIN_INSPECTOR
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -320,3 +321,4 @@ namespace BDFramework.Editor.Inspector.Config
         }
     }
 }
+#endif

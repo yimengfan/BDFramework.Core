@@ -211,33 +211,33 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         public static void BuildShadersAssetBundle()
         {
             //收集shaderVaraint
-            var vcsLit = CollectShaderVariant();
-            List<string> dependList = new List<string>();
-            foreach (var item in vcsLit)
-            {
-                var dependice = AssetDatabase.GetDependencies(item.Item2);
-                dependList.AddRange(dependice);
-            }
+            // var vcsLit = CollectShaderVariant();
+            // List<string> dependList = new List<string>();
+            // foreach (var item in vcsLit)
+            // {
+            //     var dependice = AssetDatabase.GetDependencies(item.Item2);
+            //     dependList.AddRange(dependice);
+            // }
+            //
+            // //打包ab信息
+            // var build = new AssetBundleBuild();
+            // build.assetNames.AddRange(dependList);
+            // build.assetBundleName = BResources.ALL_SHADER_VARAINT_ASSET_PATH;
+            //
+            //
+            // //开始编译
+            // var outpath = IPath.Combine(BApplication.Library, "BuildAssetsTest", BApplication.GetRuntimePlatformPath());
+            // if (Directory.Exists(outpath))
+            // {
+            //     Directory.Delete(outpath, true);
+            // }
+            //
+            // Directory.CreateDirectory(outpath);
+            // var buildtarget = BApplication.GetBuildTarget(BApplication.RuntimePlatform);
+            // UnityEditor.BuildPipeline.BuildAssetBundles(outpath, new AssetBundleBuild[] {build}, BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.ChunkBasedCompression, buildtarget);
 
-            //打包ab信息
-            var build = new AssetBundleBuild();
-            build.assetNames.AddRange(dependList);
-            build.assetBundleName = BResources.ALL_SHADER_VARAINT_ASSET_PATH;
 
-
-            //开始编译
-            var outpath = IPath.Combine(BApplication.Library, "BuildAssetsTest", BApplication.GetRuntimePlatformPath());
-            if (Directory.Exists(outpath))
-            {
-                Directory.Delete(outpath, true);
-            }
-
-            Directory.CreateDirectory(outpath);
-            var buildtarget = BApplication.GetBuildTarget(BApplication.RuntimePlatform);
-            UnityEditor.BuildPipeline.BuildAssetBundles(outpath, new AssetBundleBuild[] {build}, BuildAssetBundleOptions.DeterministicAssetBundle | BuildAssetBundleOptions.ChunkBasedCompression, buildtarget);
-
-
-            Debug.Log("测试AB已经输出:" + outpath);
+            //Debug.Log("测试AB已经输出:" + outpath);
         }
     }
 }

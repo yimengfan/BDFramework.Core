@@ -67,18 +67,25 @@ namespace BDFramework.Configure
 #if UNITY_EDITOR
                     //读取默认bytes
                     var filepath = ConfigEditorUtil.DefaultEditorConfig;
-                    text = File.ReadAllText(filepath);
-                    BDebug.Log("GameConfig加载配置:" + filepath, Color.yellow);
+                    if (File.Exists(filepath))
+                    {
+                        text = File.ReadAllText(filepath);
+                        BDebug.Log("GameConfig加载配置:" + filepath, Color.yellow);
+                    }
 #endif
                 }
             }
 
-            //执行
-            (configList, configProcessorList) = LoadConfig(text);
-            for (int i = 0; i < configList.Count; i++)
+            if (!string.IsNullOrEmpty(text))
             {
-                configProcessorList[i].OnConfigLoad(configList[i]);
+                //执行
+                (configList, configProcessorList) = LoadConfig(text);
+                for (int i = 0; i < configList.Count; i++)
+                {
+                    configProcessorList[i].OnConfigLoad(configList[i]);
+                }
             }
+
         }
 
         /// <summary>

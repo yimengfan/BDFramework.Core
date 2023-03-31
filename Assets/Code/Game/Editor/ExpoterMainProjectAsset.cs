@@ -47,9 +47,10 @@ public class ExpoterMainProjectAsset
             "Assets/3rdPlugins/Dotween", // 第三方插件
             "Assets/Code/BDFramework.Game", //Game
             "Assets/Code/Game/Demo", //Game demo
-            "Assets/Scenes", //Scene
+            "Assets/Scenes", //Scenes
             BResources.MIX_SOURCE_FOLDER,//混淆源文件
             "Assets/AssetGraph/BResourceAssetBundleConfig.asset", //SG
+            "Assets/Code/Game/Client.cs", //Client.cs
             "Assets/link.xml",
         };
         var exportAssets = new List<string>();
