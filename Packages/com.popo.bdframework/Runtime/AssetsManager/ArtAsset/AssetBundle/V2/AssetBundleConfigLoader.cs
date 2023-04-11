@@ -133,7 +133,7 @@ namespace BDFramework.ResourceMgr.V2
             // }
 
 
-            BDebug.Log("【AssetbundleV2】资源加载初始化完成,资源总量:" + this.AssetbundleItemList?.Count);
+            BDebug.Log(BResources.LogTag,"资源加载初始化完成,资源总量:" + this.AssetbundleItemList?.Count);
         }
 
 

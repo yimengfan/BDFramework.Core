@@ -46,7 +46,7 @@ namespace BDFramework.Configure
             public bool IsDebugLog = true;
 
 
-            [LabelText("是否热更")]
+            [LabelText("是否热更资产")]
             [HorizontalGroup("a/a10")]
             public bool IsHotfix = false;
 

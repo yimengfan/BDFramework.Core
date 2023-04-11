@@ -46,6 +46,9 @@ namespace SQLite4Unity3d
         }
 
         #region 生成sql cmd
+        
+        Dictionary<string ,int> sqlCmdCache = new Dictionary<string, int>();
+
         private string GenerateCommand(string @select, string tablename)
         {
             string sqlCmdText = "";
@@ -79,8 +82,26 @@ namespace SQLite4Unity3d
             this.@sql = "";
             this.@limit = "";
             this.@where = "";
-            
 
+
+#if UNITY_EDITOR
+            if (Application.isPlaying)
+            {
+                if (sqlCmdCache.ContainsKey(sqlCmdText))
+                {
+                    sqlCmdCache[sqlCmdText]++;
+                }
+                else
+                {
+                    sqlCmdCache.Add(sqlCmdText, 1);
+                }
+                var count = sqlCmdCache[sqlCmdText];
+                if (count > 2)
+                {
+                    Debug.LogError($"Sql执行次数过多:<color=yellow>{count}</color>次,sql:" + sqlCmdText);
+                }
+            }
+#endif
 
             return sqlCmdText;
         }
@@ -314,7 +335,7 @@ namespace SQLite4Unity3d
         {
             //查询
             var list = this.FromAll(typeof(T), selection);
-
+ 
             var retList = new List<T>(list.Count);
             //映射并返回T
             for (int i = 0; i < list.Count; i++)

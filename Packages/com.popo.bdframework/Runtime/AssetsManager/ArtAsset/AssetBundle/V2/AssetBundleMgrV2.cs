@@ -109,8 +109,8 @@ namespace BDFramework.ResourceMgr.V2
             IEnumeratorTool.StartCoroutine(this.IE_AsyncLoadTaskUpdate());
             IEnumeratorTool.StartCoroutine(this.IE_UnLoadTaskUpdate());
 
-            BDebug.Log($"【AssetBundleV2】 firstDir:{firstArtDirectory}", Color.red);
-            BDebug.Log($"【AssetBundleV2】 secDir:{secArtDirectory}", Color.red);
+            BDebug.Log(BResources.LogTag,$" firstDir:{firstArtDirectory}", Color.red);
+            BDebug.Log(BResources.LogTag,$"secDir:{secArtDirectory}", Color.red);
         }
 
         /// <summary>
@@ -749,7 +749,7 @@ namespace BDFramework.ResourceMgr.V2
             {
                 if (counter > 0)
                 {
-                    BDebug.Log($"AssetMgrV2: <color=yellow>UnUse</color> {loadPath}");
+                    BDebug.Log(BResources.LogTag,$" <color=yellow>UnUse</color> {loadPath}");
                     //1.AB卸载
                     var mainAssetItem = AssetBundleConfig.GetAssetBundleItem(loadPath, type, true);
                     var dependAssetList = AssetBundleConfig.GetDependAssets(mainAssetItem);
@@ -781,10 +781,10 @@ namespace BDFramework.ResourceMgr.V2
 
 #if UNITY_EDITOR
                                 BDebug.Log(
-                                    $"AssetMgrV2: <color=red>Unload</color> {loadPath} - AB: {AssetDatabase.GUIDToAssetPath(assetLoader.Name)}");
+                                    BResources.LogTag,$"AssetMgrV2: <color=red>Unload</color> {loadPath} - AB: {AssetDatabase.GUIDToAssetPath(assetLoader.Name)}");
 #else
                                 BDebug.Log(
-                                    $"AssetMgrV2: <color=red>Unload</color> {loadPath} - AB: {assetLoader.Name}");
+                                    BResources.LogTag,$"AssetMgrV2: <color=red>Unload</color> {loadPath} - AB: {assetLoader.Name}");
 #endif
                             }
                         }
@@ -916,7 +916,7 @@ namespace BDFramework.ResourceMgr.V2
                 GameObjectCacheMap[type] = map;
             }
 
-            BDebug.Log($"<color=red>缓存添加成功</color>:{loadPath} - <color=green>{type.Name}</color>");
+            BDebug.Log(BResources.LogTag,$"<color=red>缓存添加成功</color>:{loadPath} - <color=green>{type.Name}</color>");
             map[loadPath] = obj;
         }
 
@@ -934,7 +934,7 @@ namespace BDFramework.ResourceMgr.V2
                 ret = map.TryGetValue(loadPath, out var gobj);
                 if (ret)
                 {
-                    BDebug.Log($"<color=yellow>缓存命中成功</color>:{loadPath}");
+                    BDebug.Log(BResources.LogTag,$"<color=yellow>缓存命中成功</color>:{loadPath}");
                 }
 
                 return gobj;
@@ -964,7 +964,7 @@ namespace BDFramework.ResourceMgr.V2
                         BResources.UnloadAsset(gobj);
                         map.Remove(assetLoadPath);
 
-                        BDebug.Log($"<color=red>删除缓存</color>:{assetLoadPath}");
+                        BDebug.Log(BResources.LogTag,$"<color=red>删除缓存</color>:{assetLoadPath}");
                     }
                 }
             }
@@ -1011,7 +1011,7 @@ namespace BDFramework.ResourceMgr.V2
                     if (loadTask.IsAsyncTask)
                     {
                         loadTask.ToSynchronizationTask();
-                        BDebug.Log("【AssetbundleV2】异步转同步:" + loadTask.LocalPath);
+                        BDebug.Log(BResources.LogTag,"【AssetbundleV2】异步转同步:" + loadTask.LocalPath);
                     }
                     else
                     {
@@ -1115,7 +1115,7 @@ namespace BDFramework.ResourceMgr.V2
             shaderLoder.LoadAllShaders();
 
 #if UNITY_EDITOR
-            BDebug.Log("WarmUp Shaders:\n" + JsonMapper.ToJson(shaderLoder.GetAllAssetNames(), true));
+            BDebug.Log(BResources.LogTag,"WarmUp Shaders:\n" + JsonMapper.ToJson(shaderLoder.GetAllAssetNames(), true));
 #endif
         }
 
