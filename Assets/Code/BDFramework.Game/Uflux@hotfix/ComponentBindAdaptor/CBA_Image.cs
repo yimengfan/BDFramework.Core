@@ -15,6 +15,7 @@ namespace  BDFramework.UFlux
         {
             base.Init();
             setPropComponentBindMap[nameof(Image.sprite)] = SetProp_Sprite;
+            setPropComponentBindMap[nameof(Image.overrideSprite)] = SetProp_OverrideSprite;
             setPropComponentBindMap[nameof(Image.color)] = SetProp_Color;
             setPropComponentBindMap[nameof(Image.fillAmount)] = SetProp_Amount;
         }
@@ -33,6 +34,23 @@ namespace  BDFramework.UFlux
             else if (value is Sprite)
             {
                 img.sprite = (Sprite) value;
+            }
+        }
+        
+        /// <summary>
+        /// 设置图片
+        /// </summary>
+        /// <param name="value"></param>
+        private void SetProp_OverrideSprite(UIBehaviour uiBehaviour, object value)
+        {
+            var img = uiBehaviour as Image;
+            if (value is string path)
+            {
+                img.overrideSprite = BDFramework.UFlux.UFluxUtils.Load<Sprite>( path);
+            }
+            else if (value is Sprite sprite)
+            {
+                img.overrideSprite = sprite;
             }
         }
 

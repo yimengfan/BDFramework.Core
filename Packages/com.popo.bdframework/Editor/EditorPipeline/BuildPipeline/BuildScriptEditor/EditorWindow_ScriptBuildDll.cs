@@ -137,7 +137,7 @@ public class EditorWindow_ScriptBuildDll : EditorWindow
         //3.预绑定
         //GenPreCLRBinding();
         //4.生成自动分析绑定
-        GenCLRBindingByAnalysis(platform, outpath);
+       // GenCLRBindingByAnalysis(platform, outpath);
         //5.拷贝
         CopyDLLToOther(outpath, platform);
         AssetDatabase.Refresh();

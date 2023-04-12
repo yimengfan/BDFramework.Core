@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.focus-creative-games.hybridclr_unity": {
+      "version": "file:hybridclr_unity-main",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.ourpalm.ilruntime": {
       "version": "2.0.2",
       "depth": 1,

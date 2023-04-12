@@ -29,7 +29,8 @@ namespace BDFramework.HotFix.Mgr
                     if (type.BaseType.FullName.Contains(".ManagerBase`2")) //这里ILR里面只能这么做，丑但有效
                     {
                         BDebug.Log("[hotfix]加载管理器-" + type.FullName, Color.green);
-                        var mgr = type.BaseType.GetProperty("Inst").GetValue(null, null) as IMgr;
+                        var inst = type.BaseType.GetProperty("Inst").GetValue(null, null);
+                        var mgr = inst as IMgr;
                         if (mgr != null)
                         {
                             mgrList.Add(mgr);
@@ -41,7 +42,6 @@ namespace BDFramework.HotFix.Mgr
                     }
                 }
             }
-
             //按执行顺序排序
             //按执行顺序排序
             mgrList.Sort((a, b) =>

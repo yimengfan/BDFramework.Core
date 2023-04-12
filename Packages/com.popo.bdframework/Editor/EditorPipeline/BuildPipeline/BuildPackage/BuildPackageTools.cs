@@ -4,8 +4,10 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System.Linq;
+using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Environment;
+using BDFramework.Editor.Inspector.Config;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Tools.RuntimeEditor;
 using BDFramework.ResourceMgr;
@@ -74,6 +76,8 @@ namespace BDFramework.Editor.BuildPipeline
             var config = GameObject.FindObjectOfType<BDLauncher>();
             config.ConfigText = textContent;
             Debug.LogFormat("【BuildPackage】 加载配置:{0} \n {1}", buildConfig, config.ConfigText);
+
+            GameConfigManager.Inst.LoadConfig(config.ConfigText.text);
             //保存场景
             AssetDatabase.SaveAssets();
             EditorSceneManager.SaveScene(scene);
@@ -257,6 +261,8 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static private (bool, string) BuildAPK(BuildMode mode, string outdir)
         {
+            var baseConfig = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
+            //
             bool ret = false;
             //开启符号表
             EditorUserBuildSettings.androidCreateSymbolsZip = true;
@@ -299,7 +305,17 @@ namespace BDFramework.Editor.BuildPipeline
             PlayerSettings.keyaliasPass = androidConfig.keyaliasPass;
             Debug.Log("【keystore】" + PlayerSettings.Android.keystoreName);
             //具体安卓的配置
-            PlayerSettings.gcIncremental = true;
+
+            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HCLR_or_Mono)
+            {
+                PlayerSettings.gcIncremental = false;
+                PlayerSettings.SetApiCompatibilityLevel( BuildTargetGroup.Android, ApiCompatibilityLevel.NET_4_6);
+            }
+            else
+            {
+                PlayerSettings.gcIncremental = true;
+            }
+           
             PlayerSettings.Android.preferredInstallLocation = AndroidPreferredInstallLocation.Auto;
             //PlayerSettings.stripEngineCode = true;
             // if (PlayerSettings.GetManagedStrippingLevel(BuildTargetGroup.Android) == ManagedStrippingLevel.High)
@@ -370,11 +386,21 @@ namespace BDFramework.Editor.BuildPipeline
         /// <param name="mode"></param>
         static private (bool, string) BuildIpa(BuildMode mode, string outdir)
         {
+            var baseConfig = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
             bool ret = false;
             BDEditorApplication.SwitchToiOS();
             //DeleteIL2cppCache();
             //具体IOS的的配置
-            PlayerSettings.gcIncremental = true;
+            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HCLR_or_Mono)
+            {
+                PlayerSettings.gcIncremental = false;
+                PlayerSettings.SetApiCompatibilityLevel( BuildTargetGroup.Android, ApiCompatibilityLevel.NET_4_6);
+            }
+            else
+            {
+                PlayerSettings.gcIncremental = true;
+            }
+
             //PlayerSettings.stripEngineCode = true;
             // if (PlayerSettings.GetManagedStrippingLevel(BuildTargetGroup.iOS) == ManagedStrippingcLevel.High)
             // {
@@ -472,12 +498,20 @@ namespace BDFramework.Editor.BuildPipeline
         /// <param name="mode"></param>
         static private (bool, string) BuildExe(BuildMode mode, string outdir)
         {
+            var baseConfig = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
             bool ret = false;
             BDEditorApplication.SwitchToWindows();
             //DeleteIL2cppCache();
-            PlayerSettings.gcIncremental = true;
-            var outputPath = IPath.Combine(outdir,
-                string.Format("{0}_{1}.exe", Application.identifier, mode.ToString()));
+            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HCLR_or_Mono)
+            {
+                PlayerSettings.gcIncremental = false;
+                PlayerSettings.SetApiCompatibilityLevel( BuildTargetGroup.Android, ApiCompatibilityLevel.NET_4_6);
+            }
+            else
+            {
+                PlayerSettings.gcIncremental = true;
+            }
+            var outputPath = IPath.Combine(outdir, string.Format("{0}_{1}.exe", Application.identifier, mode.ToString()));
             //文件夹处理
             if (Directory.Exists(outdir))
             {

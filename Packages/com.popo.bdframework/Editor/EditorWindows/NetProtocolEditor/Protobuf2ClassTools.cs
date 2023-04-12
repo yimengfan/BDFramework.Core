@@ -14,7 +14,7 @@ namespace BDFramework.Editor.Protocol
     {
         public static readonly string ProtoPath = "Assets/Resource/NetProtocol/Protobuf/";
         private static readonly string classPath = "Assets/Code/Game/NetProtocol/Protobuf/";
-        private static readonly string execPath = BApplication.ProjectRoot + "/Packages/com.popo.bdframework/Runtime/3rdGithub/NetProtocol/Tools/ProtoC.exe";
+        private static readonly string execPath = BApplication.ProjectRoot + "/Packages/com.popo.bdframework/3rdPlugins/Protobuf/Tools/ProtoC.exe";
         /// <summary>
         /// 全局父命名空间
         /// </summary>
@@ -64,8 +64,12 @@ namespace BDFramework.Editor.Protocol
         /// </summary>
         private static void RunProtoc2Class(string filePath)
         {
+            if (!File.Exists(filePath))
+            {
+                BDebug.LogError($"proto2cs工具不存在! - {filePath}");
+                return;
+            }
             var fileName = Path.GetFileName(filePath);
-            
             var args = $" --csharp_out={classPath} --proto_path={ProtoPath} {fileName}";
             var process = new Process();
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;

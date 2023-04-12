@@ -78,28 +78,48 @@ namespace BDFramework
             //路径
             var dllPath = Path.Combine(GameBaseConfigProcessor.GetLoadPath(loadPathType), BApplication.GetRuntimePlatformPath(), DLL_PATH);
             //反射执行
-            if (mode == HotfixCodeRunMode.HCLR)
+            if (mode == HotfixCodeRunMode.HCLR_or_Mono)
             {
                 new NotSupportedException("暂未实现");
-                // BDebug.Log("【ScriptLaunch】反射Dll路径:" + dllPath, Color.red);
-                // Assembly Assembly;
-                // var dllBytes = File.ReadAllBytes(dllPath);
-                // var pdbPath = dllPath + ".pdb";
-                // if (File.Exists(pdbPath))
-                // {
-                //     var pdbBytes = File.ReadAllBytes(pdbPath);
-                //     Assembly = Assembly.Load(dllBytes, pdbBytes);
-                // }
-                // else
-                // {
-                //     Assembly = Assembly.Load(dllBytes);
-                // }
-                //
-                // BDebug.Log("【ScriptLaunch】反射加载成功,开始执行Start");
-                // var type = typeof(ScriptLoder).Assembly.GetType("BDLauncherBridge");
-                // var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                //
-                // method.Invoke(null, new object[] {mainProjecTypes, Assembly.GetTypes()});
+                BDebug.Log("【ScriptLaunch】反射Dll路径:" + dllPath, Color.red);
+                Assembly assembly;
+                
+                
+                var dllBytes = File.ReadAllBytes(dllPath);
+                var pdbPath = dllPath + ".pdb";
+                if (File.Exists(pdbPath))
+                {
+                    var pdbBytes = File.ReadAllBytes(pdbPath);
+                    assembly = Assembly.Load(dllBytes, pdbBytes);
+                }
+                else
+                {
+                    assembly = Assembly.Load(dllBytes);
+                }
+                
+                BDebug.Log("【ScriptLaunch】反射加载成功,开始执行Start");
+                var type = typeof(ScriptLoder).Assembly.GetType("BDLauncherBridge");
+                var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
+                var start =  (Action<Type[],Type[]>)Delegate.CreateDelegate(typeof(Action<Type[],Type[]>), method);
+
+                
+                try
+                {
+                    var hotfixTypes = assembly.GetTypes();
+                    
+                    //开始
+                    start(mainProjecTypes, hotfixTypes);
+                }
+                catch (ReflectionTypeLoadException e)
+                {
+                    foreach (var exc in e.LoaderExceptions)
+                    {
+                        Debug.LogError(exc);
+                    }
+                }
+                // mainFunc();
+                //method.Invoke(null, new object[] {mainProjecTypes, Assembly.GetTypes()});
+                
             }
             //解释执行
             else if (mode == HotfixCodeRunMode.ILRuntime)
