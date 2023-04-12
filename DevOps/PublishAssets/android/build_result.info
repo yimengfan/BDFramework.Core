@@ -60,13 +60,13 @@
   },
   "f9c24efe9caac82418f78b87f9ec7e2d" : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/f9c24efe9caac82418f78b87f9ec7e2d",
-    "Crc"      : 3360062416,
+    "Crc"      : 3947506499,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
       "362a42798cd38c844bb6e946a9266c8a",
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   },
   "16dd6483913a3c244b1a552e76dda7a7" : {
@@ -107,46 +107,46 @@
   },
   "d4a88a73900de024eb62d0da15c80841" : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/d4a88a73900de024eb62d0da15c80841",
-    "Crc"      : 3906611126,
+    "Crc"      : 607028543,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   },
   "f43f8753e3c3460499a09f37075d54cf" : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/f43f8753e3c3460499a09f37075d54cf",
-    "Crc"      : 2035462215,
+    "Crc"      : 4162570864,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "9d59e1d84070e4c46a595b3112d75a40",
+      "57583c5f039fc2a4c8140e97e14a4fb1",
       "d4a88a73900de024eb62d0da15c80841"
     ]
   },
   "e5ef808d32e88b243bd0521877b3b07a" : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/e5ef808d32e88b243bd0521877b3b07a",
-    "Crc"      : 583678808,
+    "Crc"      : 3223823220,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
       "2612b115ce3857f45833e28c2325fdbb",
-      "635df57f674eda446b0d64328236e858",
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1",
+      "635df57f674eda446b0d64328236e858"
     ]
   },
   "635df57f674eda446b0d64328236e858" : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/635df57f674eda446b0d64328236e858",
-    "Crc"      : 3726104224,
+    "Crc"      : 1429507080,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
       "2612b115ce3857f45833e28c2325fdbb",
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   },
   "9e1ccbb85029ae447b779059c47e8da6" : {
@@ -187,12 +187,12 @@
   },
   "51f5616e141ad98478c3557ebbf2b999" : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/51f5616e141ad98478c3557ebbf2b999",
-    "Crc"      : 4014387928,
+    "Crc"      : 2399972883,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   },
   "f7bebf224507bfc42975ec5a95b16160" : {
@@ -304,16 +304,16 @@
       "43f3d8a9a7fdd6f469aea742dd9af679"
     ]
   },
-  "9d59e1d84070e4c46a595b3112d75a40" : {
-    "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/9d59e1d84070e4c46a595b3112d75a40",
-    "Crc"      : 1159739005,
+  "assets/resource/runtime/shader/allshaders.shadervariants" : {
+    "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/assets/resource/runtime/shader/allshaders.shadervariants",
+    "Crc"      : 1189507426,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
     ]
   },
-  "ec429a586bfac5f4284f3a31749303e7" : {
+  "ec429a586bfac5f4284f3a31749303e7"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/ec429a586bfac5f4284f3a31749303e7",
     "Crc"      : 2062095547,
     "Hash"     : {
@@ -322,28 +322,28 @@
     "Dependencies" : [
     ]
   },
-  "a7feec6462d3d3249936655cf4e31de5" : {
+  "a7feec6462d3d3249936655cf4e31de5"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/a7feec6462d3d3249936655cf4e31de5",
-    "Crc"      : 550952066,
+    "Crc"      : 1744137453,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
       "362a42798cd38c844bb6e946a9266c8a",
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   },
-  "362a42798cd38c844bb6e946a9266c8a" : {
+  "362a42798cd38c844bb6e946a9266c8a"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/362a42798cd38c844bb6e946a9266c8a",
-    "Crc"      : 3826998576,
+    "Crc"      : 3009891259,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   },
-  "36c26bcd10b840e4f9868d6a6b9b6b37" : {
+  "36c26bcd10b840e4f9868d6a6b9b6b37"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/36c26bcd10b840e4f9868d6a6b9b6b37",
     "Crc"      : 3545551048,
     "Hash"     : {
@@ -353,7 +353,7 @@
       "76c21518bd7f0e64ca49af74a4987cd9"
     ]
   },
-  "e157959f9c83caa419fd530f402b54f8" : {
+  "e157959f9c83caa419fd530f402b54f8"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/e157959f9c83caa419fd530f402b54f8",
     "Crc"      : 4195754827,
     "Hash"     : {
@@ -363,7 +363,7 @@
       "76c21518bd7f0e64ca49af74a4987cd9"
     ]
   },
-  "0fab552ab15035e4d82bf9adc52725f6" : {
+  "0fab552ab15035e4d82bf9adc52725f6"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/0fab552ab15035e4d82bf9adc52725f6",
     "Crc"      : 1235303370,
     "Hash"     : {
@@ -372,7 +372,7 @@
     "Dependencies" : [
     ]
   },
-  "7ab40f5c94bb46c4d8bdc9719471a0ea" : {
+  "7ab40f5c94bb46c4d8bdc9719471a0ea"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/7ab40f5c94bb46c4d8bdc9719471a0ea",
     "Crc"      : 583977661,
     "Hash"     : {
@@ -381,7 +381,7 @@
     "Dependencies" : [
     ]
   },
-  "a68e48a29a930504a9ca43956d727eed" : {
+  "a68e48a29a930504a9ca43956d727eed"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/a68e48a29a930504a9ca43956d727eed",
     "Crc"      : 1016709926,
     "Hash"     : {
@@ -390,7 +390,7 @@
     "Dependencies" : [
     ]
   },
-  "f69fe24036fa721438c98fb52af11c6b" : {
+  "f69fe24036fa721438c98fb52af11c6b"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/f69fe24036fa721438c98fb52af11c6b",
     "Crc"      : 133426305,
     "Hash"     : {
@@ -399,7 +399,7 @@
     "Dependencies" : [
     ]
   },
-  "2090e433e199dc549aae632bee6b20d9" : {
+  "2090e433e199dc549aae632bee6b20d9"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/2090e433e199dc549aae632bee6b20d9",
     "Crc"      : 3321524818,
     "Hash"     : {
@@ -408,7 +408,7 @@
     "Dependencies" : [
     ]
   },
-  "7d3eab7902fddd347af42de5a0958047" : {
+  "7d3eab7902fddd347af42de5a0958047"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/7d3eab7902fddd347af42de5a0958047",
     "Crc"      : 1540534316,
     "Hash"     : {
@@ -417,7 +417,7 @@
     "Dependencies" : [
     ]
   },
-  "22d5ca41200316741aaa39b9c265eb9b" : {
+  "22d5ca41200316741aaa39b9c265eb9b"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/22d5ca41200316741aaa39b9c265eb9b",
     "Crc"      : 243370268,
     "Hash"     : {
@@ -426,7 +426,7 @@
     "Dependencies" : [
     ]
   },
-  "7c6f5172672ac234a85467bc91e5283f" : {
+  "7c6f5172672ac234a85467bc91e5283f"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/7c6f5172672ac234a85467bc91e5283f",
     "Crc"      : 2391710629,
     "Hash"     : {
@@ -435,7 +435,7 @@
     "Dependencies" : [
     ]
   },
-  "0cd1aa33ffab96440974e3fd84b4e99f" : {
+  "0cd1aa33ffab96440974e3fd84b4e99f"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/0cd1aa33ffab96440974e3fd84b4e99f",
     "Crc"      : 2238494461,
     "Hash"     : {
@@ -444,7 +444,7 @@
     "Dependencies" : [
     ]
   },
-  "890171c9213476c4487fdfe8320fed47" : {
+  "890171c9213476c4487fdfe8320fed47"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/890171c9213476c4487fdfe8320fed47",
     "Crc"      : 103747133,
     "Hash"     : {
@@ -453,7 +453,7 @@
     "Dependencies" : [
     ]
   },
-  "3b35ba17053b1d34792c38b1d32a4a12" : {
+  "3b35ba17053b1d34792c38b1d32a4a12"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/3b35ba17053b1d34792c38b1d32a4a12",
     "Crc"      : 1517891040,
     "Hash"     : {
@@ -463,7 +463,7 @@
       "d2abdb77f35d37c4c9469630d1f22e50"
     ]
   },
-  "d5430f7acac73bb4eaa529db1d8b763a" : {
+  "d5430f7acac73bb4eaa529db1d8b763a"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/d5430f7acac73bb4eaa529db1d8b763a",
     "Crc"      : 1558149743,
     "Hash"     : {
@@ -474,7 +474,7 @@
       "ec429a586bfac5f4284f3a31749303e7"
     ]
   },
-  "3d1d74f67a3b7b54ba46fec8ab67f807" : {
+  "3d1d74f67a3b7b54ba46fec8ab67f807"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/3d1d74f67a3b7b54ba46fec8ab67f807",
     "Crc"      : 3178919468,
     "Hash"     : {
@@ -483,91 +483,100 @@
     "Dependencies" : [
     ]
   },
-  "bfcd26e55a55bd04f8a6f662bdde9abf" : {
+  "bfcd26e55a55bd04f8a6f662bdde9abf"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/bfcd26e55a55bd04f8a6f662bdde9abf",
-    "Crc"      : 2498617395,
+    "Crc"      : 3554145772,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "68ce09b862773374cbf71b2566b5dfbb",
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1",
+      "68ce09b862773374cbf71b2566b5dfbb"
     ]
   },
-  "0bfcd856254d3f34b87bb6f99b9f3dfb" : {
+  "0bfcd856254d3f34b87bb6f99b9f3dfb"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/0bfcd856254d3f34b87bb6f99b9f3dfb",
-    "Crc"      : 3020279293,
+    "Crc"      : 1747777496,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "68ce09b862773374cbf71b2566b5dfbb",
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1",
+      "68ce09b862773374cbf71b2566b5dfbb"
     ]
   },
-  "00142fc9b13ce334d94e23f367a33d75" : {
+  "00142fc9b13ce334d94e23f367a33d75"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/00142fc9b13ce334d94e23f367a33d75",
-    "Crc"      : 3367740466,
+    "Crc"      : 2341990148,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "68ce09b862773374cbf71b2566b5dfbb",
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1",
+      "68ce09b862773374cbf71b2566b5dfbb"
     ]
   },
-  "ae37c57b09de2ec4399a3eceb62b77ea" : {
+  "ae37c57b09de2ec4399a3eceb62b77ea"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/ae37c57b09de2ec4399a3eceb62b77ea",
-    "Crc"      : 3263283088,
+    "Crc"      : 3420497580,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
       "096dee19ab67ffc44ba3f8f790da67b4",
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   },
-  "096dee19ab67ffc44ba3f8f790da67b4" : {
+  "096dee19ab67ffc44ba3f8f790da67b4"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/096dee19ab67ffc44ba3f8f790da67b4",
-    "Crc"      : 1990862599,
+    "Crc"      : 383794124,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   },
-  "70ed25d8f6269304483b716d4ffd3434" : {
+  "70ed25d8f6269304483b716d4ffd3434"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/70ed25d8f6269304483b716d4ffd3434",
-    "Crc"      : 1247523426,
+    "Crc"      : 213671099,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   },
-  "c0d661c42cc867d46887fa3b94908542" : {
+  "c0d661c42cc867d46887fa3b94908542"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/c0d661c42cc867d46887fa3b94908542",
-    "Crc"      : 2640741429,
+    "Crc"      : 1101170573,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   },
-  "8fb6653cf0d095a4da38233e10efdb41" : {
+  "8fb6653cf0d095a4da38233e10efdb41"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/8fb6653cf0d095a4da38233e10efdb41",
-    "Crc"      : 3929349160,
+    "Crc"      : 119103693,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   },
-  "d2abdb77f35d37c4c9469630d1f22e50" : {
+  "57583c5f039fc2a4c8140e97e14a4fb1"                         : {
+    "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/57583c5f039fc2a4c8140e97e14a4fb1",
+    "Crc"      : 442422014,
+    "Hash"     : {
+      "isValid" : true
+    },
+    "Dependencies" : [
+    ]
+  },
+  "d2abdb77f35d37c4c9469630d1f22e50"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/d2abdb77f35d37c4c9469630d1f22e50",
     "Crc"      : 4069328211,
     "Hash"     : {
@@ -576,14 +585,14 @@
     "Dependencies" : [
     ]
   },
-  "68ce09b862773374cbf71b2566b5dfbb" : {
+  "68ce09b862773374cbf71b2566b5dfbb"                         : {
     "FileName" : "E:/bd_new_version/BDFramework.Core/DevOps/PublishAssets/android/art_assets/68ce09b862773374cbf71b2566b5dfbb",
-    "Crc"      : 3073755129,
+    "Crc"      : 770568406,
     "Hash"     : {
       "isValid" : true
     },
     "Dependencies" : [
-      "9d59e1d84070e4c46a595b3112d75a40"
+      "57583c5f039fc2a4c8140e97e14a4fb1"
     ]
   }
 }
