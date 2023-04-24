@@ -1,9 +1,9 @@
 
 [
   {
-    "CodeRoot" : 2,
-    "SQLRoot"  : 3,
-    "ArtRoot"  : 2,
+    "CodeRoot" : 1,
+    "SQLRoot"  : 1,
+    "ArtRoot"  : 1,
     "CodeRunMode" : 1,
     "IsDebuggerILRuntime" : false,
     "IsDebugLog"          : true,
