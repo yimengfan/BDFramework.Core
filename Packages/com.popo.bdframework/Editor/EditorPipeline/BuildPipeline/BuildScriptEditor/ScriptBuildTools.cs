@@ -225,8 +225,8 @@ public class ScriptBuildTools
             Build(baseCs, hotfixCs, dllFileList, outHotfixPath, true);
         }
 
-        var version = BDFrameworkPipelineHelper.GetScriptSVCNum(outPath, platform);
-        ClientAssetsHelper.GenBasePackageBuildInfo(outPath, platform, scriptSVC: version);
+        var version = BDFrameworkPipelineHelper.GetScriptSVCNum(platform, outPath);
+        ClientAssetsHelper.GenBasePackageBuildInfo(outPath, platform, hotfixScriptSVC: version);
     }
 
     /// <summary>

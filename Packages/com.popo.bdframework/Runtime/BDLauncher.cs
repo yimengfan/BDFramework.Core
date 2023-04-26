@@ -35,10 +35,15 @@ namespace BDFramework
         }
 
         /// <summary>
-        /// 客户端包信息
+        /// 客户端母包信息
         /// </summary>
-        public ClientPackageBuildInfo ClientBuildInfo { get; set; }
-
+        public ClientPackageBuildInfo BasePckBuildInfo { get; set; }
+        
+        /// <summary>
+        /// 热更资源信息
+        /// </summary>
+        public ClientPackageBuildInfo HotfixAssetsBuildInfo { get; set; }
+        
         /// <summary>
         /// Config的Text
         /// </summary>

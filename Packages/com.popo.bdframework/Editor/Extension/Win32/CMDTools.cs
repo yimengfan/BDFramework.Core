@@ -116,6 +116,42 @@ namespace BDFramework.Editor.Tools
                 //return output;
             }
         }
+        
+        
+        /// <summary>
+        /// 执行cmd 返回执行结果
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        static public string RunCmd(string cmd)
+        {
+            
+            Process p = new Process();
+#if UNITY_EDITOR_OSX
+            p.StartInfo.FileName = TerrminalPath;
+            //强制SVN log为英文
+            p.StartInfo.EnvironmentVariables.Add("LC_MESSAGES","en_US");
+#elif UNITY_EDITOR_WIN
+            p.StartInfo.FileName = CmdPath;
+            p.StartInfo.StandardOutputEncoding = Encoding.GetEncoding("gb2312");
+            p.StartInfo.StandardErrorEncoding = Encoding.GetEncoding("gb2312");
+#endif
+            
+            p.StartInfo.CreateNoWindow = true;         // 不创建新窗口    
+            p.StartInfo.UseShellExecute = false;       //不启用shell启动进程  
+            p.StartInfo.RedirectStandardInput = true;  // 重定向输入    
+            p.StartInfo.RedirectStandardOutput = true; // 重定向标准输出    
+            p.StartInfo.RedirectStandardError = true;  // 重定向错误输出
+            p.Start();//执行 ,先运行cmd.exe 
+            p.StandardInput.WriteLine(cmd);
+            p.StandardInput.WriteLine("exit"); //向cmd窗口发送输入信息  
+            var str = p.StandardOutput.ReadToEnd();//输出
+            p.WaitForExit();//等待程序执行完退出进程   
+            p.Close();//结束
+            return str;
+        }
+        
+        
         /// <summary>
         /// 执行脚本
         /// </summary>

@@ -18,6 +18,8 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     static public partial class BResources
     {
+        public static string LogTag = "BResourcesV2";
+
         #region 美术资源相关路径
 
         /// <summary>
@@ -44,6 +46,7 @@ namespace BDFramework.ResourceMgr
         /// SBP build信息
         /// </summary>
         readonly static public string SBPBuildLog = "buildlogtep.json";
+
         readonly static public string SBPBuildLog2 = "build_result.info";
         /// <summary>
         /// 旧打包资源配置
@@ -58,11 +61,14 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// Shadervariant资源地址
         /// </summary>
-        readonly public static string ALL_SHADER_VARAINT_ASSET_PATH = "Assets/Resource/Runtime/" + ALL_SHADER_VARAINT_RUNTIME_PATH;
+        readonly public static string ALL_SHADER_VARAINT_ASSET_PATH =
+            "Assets/Resource/Runtime/" + ALL_SHADER_VARAINT_RUNTIME_PATH;
+
         /// <summary>
         /// DummyShaderVaraint
         /// </summary>
-        readonly public static string DUMMY_SHADER_PATH = "Shader/Dummy" ;
+        readonly public static string DUMMY_SHADER_PATH = "Shader/Dummy";
+
         /// <summary>
         /// 混淆ab的资源路径
         /// </summary>
@@ -70,12 +76,12 @@ namespace BDFramework.ResourceMgr
 
         #endregion
 
-        #region  音乐根目录
+        #region 音乐根目录
+
         /// <summary>
         /// 音乐根目录
         /// </summary>
         readonly static public string SOUND_ASSET_PATH = "sound";
-        
 
         #endregion
 
@@ -101,10 +107,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         readonly static public string SERVER_ASSETS_SUB_PACKAGE_INFO_PATH = "server_assets_subpack_{0}.info";
 
-        /// <summary>
-        /// 包体构建信息路径
-        /// </summary>
-        readonly static public string PACKAGE_BUILD_INFO_PATH = "package_build.info";
+
 
         #endregion
 
@@ -116,6 +119,7 @@ namespace BDFramework.ResourceMgr
         readonly static public string Launcher_CONF__PATH = "LauncherConfig";
 
         #endregion
+
         /// <summary>
         /// 加载器
         /// </summary>
@@ -138,11 +142,11 @@ namespace BDFramework.ResourceMgr
         /// <param name="callback"></param>
         static public void Init(AssetLoadPathType loadPathType)
         {
-            BDebug.EnableLog(LoadTaskGroup.LogTag);
-            BDebug.Log("【BResource】加载路径:" + loadPathType.ToString());
+            //BDebug.EnableLog(LoadTaskGroup.LogTag);
+            BDebug.Log(BResources.LogTag,"加载路径:" + loadPathType.ToString());
             if (loadPathType == AssetLoadPathType.Editor)
             {
-#if UNITY_EDITOR 
+#if UNITY_EDITOR
                 //防止编译报错
                 ResLoader = new DevResourceMgr();
                 ResLoader.Init(null, RuntimePlatform.WindowsEditor);
@@ -210,7 +214,8 @@ namespace BDFramework.ResourceMgr
         /// <param name="groupName">加载组,用以对资源加载分组</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Load<T>(string assetLoadPath, LoadPathType pathType = LoadPathType.RuntimePath, string groupName = null) where T : UnityEngine.Object
+        public static T Load<T>(string assetLoadPath, LoadPathType pathType = LoadPathType.RuntimePath,
+            string groupName = null) where T : UnityEngine.Object
         {
             if (string.IsNullOrEmpty(assetLoadPath))
             {
@@ -265,7 +270,8 @@ namespace BDFramework.ResourceMgr
         /// <param name="assetLoadPath">加载路径</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static LoadTaskGroup AsyncLoad<T>(string assetLoadPath, LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
+        public static LoadTaskGroup AsyncLoad<T>(string assetLoadPath,
+            LoadPathType loadPathType = LoadPathType.RuntimePath) where T : UnityEngine.Object
         {
             return ResLoader.AsyncLoad<T>(assetLoadPath);
         }
@@ -279,7 +285,8 @@ namespace BDFramework.ResourceMgr
         /// <param name="action">加载回调</param>
         /// <param name="groupName">分组名，用于统一管理，如：卸载等</param>
         ///  <param name="loadPathType">路径类型：路径或者guid</param>
-        public static int AsyncLoad<T>(string assetLoadPath, Action<T> action, LoadPathType loadPathType = LoadPathType.RuntimePath, string groupName = null) where T : UnityEngine.Object
+        public static int AsyncLoad<T>(string assetLoadPath, Action<T> action,
+            LoadPathType loadPathType = LoadPathType.RuntimePath, string groupName = null) where T : UnityEngine.Object
         {
             //添加到资源组
             AddAssetsPathToGroup(groupName, assetLoadPath);
@@ -295,7 +302,9 @@ namespace BDFramework.ResourceMgr
         /// <param name="onLoadEnd"></param>
         /// <param name="loadPathType"></param>
         /// <param name="groupName"></param>
-        public static List<int> AsyncLoad(List<string> assetlist, Action<int, int> onProcess = null, Action<IDictionary<string, Object>> onLoadEnd = null, LoadPathType loadPathType = LoadPathType.RuntimePath, string groupName = null)
+        public static List<int> AsyncLoad(List<string> assetlist, Action<int, int> onProcess = null,
+            Action<IDictionary<string, Object>> onLoadEnd = null, LoadPathType loadPathType = LoadPathType.RuntimePath,
+            string groupName = null)
         {
             if (assetlist.Count != 0)
             {
@@ -415,18 +424,17 @@ namespace BDFramework.ResourceMgr
         #endregion
 
 
-
         /// <summary>
         /// 获取Assets路径
         /// </summary>
         /// <param name="floder"></param>
         /// <param name="searchPattern"></param>
         /// <returns></returns>
-       static public string[] GetAssets(string floder, string searchPattern = null)
+        static public string[] GetAssets(string floder, string searchPattern = null)
         {
-            return ResLoader.GetAssets(floder,searchPattern);
+            return ResLoader.GetAssets(floder, searchPattern);
         }
-        
+
         #region Shader操作
 
         /// <summary>
@@ -549,7 +557,8 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 版本控制器
         /// </summary>
-        static public AssetsVersionController AssetsVersionController { get; private set; } = new AssetsVersionController();
+        static public AssetsVersionController AssetsVersionController { get; private set; } =
+            new AssetsVersionController();
 
         /// <summary>
         /// 获取子包的信息
@@ -567,10 +576,12 @@ namespace BDFramework.ResourceMgr
         /// <param name="assetsPackageName">分包名,如果不填则为下载所有</param>
         /// <param name="onProccess">下载进度</param>
         /// <param name="onTaskEndCallback">结果回调</param>
-        static public void StartAssetsVersionControl(UpdateMode updateMode, string serverUrl, string assetsPackageName = "", Action<AssetItem, List<AssetItem>> onDownloadProccess = null,
+        static public void StartAssetsVersionControl(UpdateMode updateMode, string serverUrl,
+            string assetsPackageName = "", Action<AssetItem, List<AssetItem>> onDownloadProccess = null,
             Action<AssetsVersionController.RetStatus, string> onTaskEndCallback = null)
         {
-            AssetsVersionController.UpdateAssets(updateMode, serverUrl, assetsPackageName, onDownloadProccess, onTaskEndCallback);
+            AssetsVersionController.UpdateAssets(updateMode, serverUrl, assetsPackageName, onDownloadProccess,
+                onTaskEndCallback);
         }
 
         #endregion
@@ -686,7 +697,8 @@ namespace BDFramework.ResourceMgr
         static public bool IsExsitAsset(RuntimePlatform platform, string assetName, string assetHashName)
         {
             //本地是否下载过hash文件(之前下到一半就中止了)
-            var persistentHashPath = IPath.Combine(BApplication.persistentDataPath, BApplication.GetPlatformPath(platform), assetHashName);
+            var persistentHashPath = IPath.Combine(BApplication.persistentDataPath,
+                BApplication.GetPlatformPath(platform), assetHashName);
             if (File.Exists(persistentHashPath))
             {
                 var hash = FileHelper.GetMurmurHash3(persistentHashPath);
@@ -701,7 +713,8 @@ namespace BDFramework.ResourceMgr
             }
 
             //persistent判断
-            var persistentAssetPath = IPath.Combine(BApplication.persistentDataPath, BApplication.GetPlatformPath(platform), assetName);
+            var persistentAssetPath = IPath.Combine(BApplication.persistentDataPath,
+                BApplication.GetPlatformPath(platform), assetName);
             if (File.Exists(persistentAssetPath))
             {
                 return true;
@@ -712,7 +725,8 @@ namespace BDFramework.ResourceMgr
             if (Application.isEditor && BDLauncher.Inst.Config.ArtRoot == AssetLoadPathType.DevOpsPublish)
             {
                 //devops
-                var devopsAssetPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform), assetName);
+                var devopsAssetPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath,
+                    BApplication.GetPlatformPath(platform), assetName);
                 if (File.Exists(devopsAssetPath))
                 {
                     return true;
@@ -741,13 +755,14 @@ namespace BDFramework.ResourceMgr
         static public bool IsExsitAssetWithCheckHash(RuntimePlatform platform, string assetName, string assetHash)
         {
             //本地是否下载过hash文件(之前下到一半就中止了),hash文件只会在
-            var persistentHashPath = IPath.Combine(BApplication.persistentDataPath, BApplication.GetPlatformPath(platform), assetHash);
+            var persistentHashPath = IPath.Combine(BApplication.persistentDataPath,
+                BApplication.GetPlatformPath(platform), assetHash);
             if (File.Exists(persistentHashPath))
             {
                 var hash = FileHelper.GetMurmurHash3(persistentHashPath);
                 if (assetHash.Equals(hash))
                 {
-                    BDebug.Log($"hash文件存在 - {assetName} | hash - {assetHash}");
+                    BDebug.Log(LogTag,$"hash文件存在 - {assetName} | hash - {assetHash}");
                     return true;
                 }
                 else
@@ -757,7 +772,8 @@ namespace BDFramework.ResourceMgr
             }
 
             //persistent判断
-            var persistentAssetPath = IPath.Combine(BApplication.persistentDataPath, BApplication.GetPlatformPath(platform), assetName);
+            var persistentAssetPath = IPath.Combine(BApplication.persistentDataPath,
+                BApplication.GetPlatformPath(platform), assetName);
             if (File.Exists(persistentAssetPath))
             {
                 var hash = FileHelper.GetMurmurHash3(persistentAssetPath);
@@ -773,7 +789,8 @@ namespace BDFramework.ResourceMgr
             if (Application.isEditor && BDLauncher.Inst.Config.ArtRoot == AssetLoadPathType.DevOpsPublish)
             {
                 //devops
-                var devopsAssetPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform), assetName);
+                var devopsAssetPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath,
+                    BApplication.GetPlatformPath(platform), assetName);
                 if (File.Exists(devopsAssetPath))
                 {
                     var hash = FileHelper.GetMurmurHash3(devopsAssetPath);
@@ -816,7 +833,8 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         static public string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
         {
-            return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_VERSION_INFO_PATH);
+            return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform),
+                BResources.SERVER_ASSETS_VERSION_INFO_PATH);
         }
 
         /// <summary>
@@ -836,7 +854,8 @@ namespace BDFramework.ResourceMgr
         /// <param name="rootPath"></param>
         /// <param name="platform"></param>
         /// <returns></returns>
-        static public string GetAssetsSubPackageInfoPath(string rootPath, RuntimePlatform platform, string subPackageName)
+        static public string GetAssetsSubPackageInfoPath(string rootPath, RuntimePlatform platform,
+            string subPackageName)
         {
             //旧版本兼容逻辑
             if (subPackageName.StartsWith("ServerAssetsSubPackage_"))

@@ -157,6 +157,7 @@ namespace BDFramework.VersionController
     /// </summary>
     public partial class AssetsVersionController
     {
+        private static string LogTag = "版本控制";
         /// <summary>
         /// 服务器错误码
         /// </summary>
@@ -278,7 +279,7 @@ namespace BDFramework.VersionController
             var localVersionInfo = new AssetsVersionInfo();
 
             #region AssetVersion.info下载
-            BDebug.Log("【版本控制】1.获取版本信息~",Color.red);
+            BDebug.Log(LogTag,"1.获取版本信息~",Color.red);
             {
                 var ret = await DownloadAssetVersionInfo(serverUrl, localSaveAssetsPath);
                 if (ret.Item1 != null)
@@ -295,7 +296,7 @@ namespace BDFramework.VersionController
             #endregion
 
             //2.对比版本、获取对应数据
-            BDebug.Log("【版本控制】2.对比版本信息~",Color.red);
+            BDebug.Log(LogTag,"2.对比版本信息~",Color.red);
             string err = null;
             string suc = null;
             var serverAssetsInfoList = new List<AssetItem>();
@@ -340,7 +341,7 @@ namespace BDFramework.VersionController
 
             if (suc != null)
             {
-                BDebug.Log(suc);
+           
                 await UniTask.SwitchToMainThread();
                 onTaskEndCallback?.Invoke(RetStatus.Success, suc);
                 return;
@@ -348,7 +349,7 @@ namespace BDFramework.VersionController
 
 
             //3.生成差异列表
-            BDebug.Log("【版本控制】3.获取差异列表~",Color.red);
+            BDebug.Log(LogTag,"3.获取差异列表~",Color.red);
             Queue<AssetItem> diffDownloadQueue = null;
 
             #region 生成差异文件
@@ -368,14 +369,14 @@ namespace BDFramework.VersionController
                     break;
             }
 
-            BDebug.Log($"【版本控制】 配置数量:{serverAssetsInfoList.Count} ,本地存在{serverAssetsInfoList.Count - diffDownloadQueue.Count},下载文件数量{diffDownloadQueue.Count}", Color.yellow);
+            BDebug.Log(LogTag,$" 配置数量:{serverAssetsInfoList.Count} ,本地存在{serverAssetsInfoList.Count - diffDownloadQueue.Count},下载文件数量{diffDownloadQueue.Count}", Color.yellow);
 
             #endregion
 
             //4.开始下载
 
             #region 根据差异文件下载
-            BDebug.Log("【版本控制】4.下载资源~",Color.red);
+            BDebug.Log(LogTag,"4.下载资源~",Color.red);
             {
                 var failDownloadList = await DownloadAssets(serverUrl, localSaveAssetsPath, diffDownloadQueue, onDownloadProccess);
                 if (failDownloadList.Count > 0)
@@ -391,7 +392,7 @@ namespace BDFramework.VersionController
             //5.写入配置到本地
 
             #region 存储配置到本地
-            BDebug.Log("【版本控制】5.写入配置~",Color.red);
+            BDebug.Log(LogTag,"5.写入配置~",Color.red);
             string localAssetInfoPath = "";
             if (isDownloadSubPackageMode)
             {
@@ -404,7 +405,7 @@ namespace BDFramework.VersionController
 
             //写入Asset.Info
             File.WriteAllText(localAssetInfoPath, serverAssetsContent);
-            BDebug.Log($"【版本控制】写入{Path.GetFileName(localAssetInfoPath)}  \n {serverAssetsContent}");
+            BDebug.Log(LogTag,$"写入{Path.GetFileName(localAssetInfoPath)}  \n {serverAssetsContent}");
 
             //写入Version.Info
             if (isDownloadSubPackageMode)
@@ -422,11 +423,11 @@ namespace BDFramework.VersionController
 
             var localAssetsVersionInfoPath = BResources.GetServerAssetsVersionInfoPath(localSaveAssetsPath, platform);
             File.WriteAllText(localAssetsVersionInfoPath, JsonMapper.ToJson(localVersionInfo));
-            BDebug.Log($"【版本控制】写入{Path.GetFileName(localAssetsVersionInfoPath)}");
+            BDebug.Log(LogTag,$"写入{Path.GetFileName(localAssetsVersionInfoPath)}");
 
             #endregion
             // 6.删除过期资源
-            BDebug.Log("【版本控制】6.冗余资源检查~",Color.red);
+            BDebug.Log(LogTag,"【版本控制】6.冗余资源检查~",Color.red);
             if (!isDownloadSubPackageMode)
             {
                 var artAssetsPath = IPath.Combine(localSavePlatformPath, BResources.ART_ASSET_ROOT_PATH);
@@ -438,13 +439,13 @@ namespace BDFramework.VersionController
                      var ret = serverAssetsInfoList.FirstOrDefault((info) => info.LocalPath.Equals(localPath));
                      if (ret == null)
                      {
-                         BDebug.Log("【版本控制】删除过期资源:" + localPath);
+                         BDebug.Log(LogTag,"删除过期资源:" + localPath);
                          File.Delete(assetPath);
                      }
                 }
             }
             // 7.资源校验文件
-            BDebug.Log("【版本控制】7.整包资源校验~",Color.red);
+            BDebug.Log(LogTag,"7.整包资源校验~",Color.red);
             err = null;
             foreach (var serverAssetItem in serverAssetsInfoList)
             {
@@ -461,7 +462,7 @@ namespace BDFramework.VersionController
             }
          
             //the end.
-            BDebug.Log("【版本控制】end.完成~",Color.red);
+            BDebug.Log(LogTag,"end.完成~",Color.red);
             await UniTask.SwitchToMainThread();
             if(err==null)
             {
@@ -497,12 +498,12 @@ namespace BDFramework.VersionController
             if (localVersionInfo.Version == serverVersionInfo.Version)
             {
                 suc = "【版本控制】全量版本一致,无需下载!";
-                BDebug.Log(suc);
+                BDebug.Log(LogTag,suc);
                 return (err, suc, null, null, null);
             }
 
             //2.获取Assets.info
-            BDebug.Log($"【版本控制】全量下载模式! server:{serverVersionInfo.Version} local:{localVersionInfo.Version} ", Color.red);
+            BDebug.Log(LogTag,$"全量下载模式! server:{serverVersionInfo.Version} local:{localVersionInfo.Version} ", Color.red);
             {
                 //服务器路径
                 var serverAssetInfosUrl = BResources.GetAssetsInfoPath(serverUrl, platform);
@@ -550,7 +551,7 @@ namespace BDFramework.VersionController
             var localAssetsInfoList = new List<AssetItem>();
             var serverAssetsContent = "";
 
-            BDebug.Log("【版本控制】分包模式:" + subPackageName);
+            BDebug.Log(LogTag,"分包模式:" + subPackageName);
             //AssetInfo路径
             //1.判断版本号
             var ret = serverVersionInfo.SubPckMap.TryGetValue(subPackageName, out var serverSubPckVersion);
@@ -565,7 +566,7 @@ namespace BDFramework.VersionController
             if (serverSubPckVersion == localSubPckVersion)
             {
                 suc = "【版本控制】分包版本一致,无需下载!";
-//                BDebug.Log(suc);
+               BDebug.Log(LogTag,suc);
                 return (err, suc, null, null, null);
             }
 
@@ -574,12 +575,12 @@ namespace BDFramework.VersionController
             {
                 if (localVersionInfo.Version != localSubPckVersion)
                 {
-                    BDebug.Log("【版本控制】分包资源大于 本地整包资源.请注意资源版本有可能不匹配!", Color.red);
+                    BDebug.Log(LogTag,"分包资源大于 本地整包资源.请注意资源版本有可能不匹配!", Color.red);
                 }
             }
 
             //2.下载AssetInfo
-            BDebug.Log($"【版本控制】分包下载模式! server:{serverSubPckVersion} local:{localSubPckVersion} ", Color.red);
+            BDebug.Log(LogTag,$"分包下载模式! server:{serverSubPckVersion} local:{localSubPckVersion} ", Color.red);
             {
                 //服务器路径
                 var serverAssetInfosUrl = BResources.GetAssetsSubPackageInfoPath(serverUrl, platform, subPackageName);
@@ -847,7 +848,7 @@ namespace BDFramework.VersionController
                         var downloadFileHash = FileHelper.GetMurmurHash3(uwq.downloadHandler.data);
                         if (downloadFileHash == downloadItem.HashName)
                         {
-                            BDebug.Log("下载成功：" + serverAssetUrl);
+                            BDebug.Log(LogTag,"下载成功：" + serverAssetUrl);
                             break;
                         }
                         else
@@ -927,7 +928,7 @@ namespace BDFramework.VersionController
                         if (hash == downloadItem.HashName)
                         {
                             taskByte = taskData;
-                            BDebug.Log($"下载成功：{serverAssetUrl} local:{downloadItem.LocalPath}" );
+                            BDebug.Log(LogTag,$"下载成功：{serverAssetUrl} local:{downloadItem.LocalPath}" );
                             err = null;
                             break;
                         }

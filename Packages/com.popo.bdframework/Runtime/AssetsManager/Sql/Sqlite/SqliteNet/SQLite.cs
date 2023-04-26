@@ -2926,7 +2926,7 @@ namespace SQLite4Unity3d
             if (Method != MapMethod.ByName)
                 throw new InvalidOperationException($"This {nameof(TableMapping)} is not mapped by name, but {Method}.");
 
-            var exact = Columns.FirstOrDefault(c => c.Name.ToLower() == columnName.ToLower());
+            var exact = Columns.FirstOrDefault(c => c.Name.Equals(columnName, StringComparison.OrdinalIgnoreCase));
             return exact;
         }
 
@@ -3535,7 +3535,7 @@ namespace SQLite4Unity3d
                 {
                     if (Application.isPlaying)
                     {
-                        UnityEngine.Debug.LogError($"<color=white>消耗较高!</color>:<color=yellow>{total}ms</color>，查询结果数量:<color=red>{count}</color>, 执行sql耗时: <color=yellow>{serchSqlTime} ms</color>,反序列化耗时：<color=yellow>{deSerializeTime}ms</color>");
+                        UnityEngine.Debug.LogError($"<color=white>sql消耗较高!</color>:<color=yellow>{total}ms</color>，查询结果数量:<color=red>{count}</color>, 执行sql耗时: <color=yellow>{serchSqlTime} ms</color>,反序列化耗时：<color=yellow>{deSerializeTime}ms</color>");
                     }
                 }
 #endif

@@ -286,8 +286,17 @@ namespace BDFramework.UFlux
                 vcom.Destroy();
             }
 
+            ClearHistory();
             this.windowMap.Clear();
             this.uiDataCacheMap.Clear();
+        }
+
+        /// <summary>
+        /// 清理导航历史
+        /// </summary>
+        public void ClearHistory()
+        {
+            HistoryList.Clear();
         }
 
         #endregion

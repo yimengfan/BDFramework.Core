@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BDFramework.Editor.AssetBundle;
-using BDFramework.Editor.AssetGraph.Node;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.Editor.Environment;
 using UnityEditor;
@@ -17,6 +15,7 @@ namespace BDFramework.Editor
     {
         static private List<ABDFrameworkPublishPipelineBehaviour> InstanceList = new List<ABDFrameworkPublishPipelineBehaviour>();
 
+       static  private PublishBehaviour @BaseBehaviour = new PublishBehaviour();
         /// <summary>
         /// 初始化
         /// </summary>
@@ -28,25 +27,46 @@ namespace BDFramework.Editor
             {
                 if (t.IsSubclassOf(type))
                 {
-                    var ret =  InstanceList.FirstOrDefault((a)=>a.GetType() == t);
+                    var ret = InstanceList.FirstOrDefault((a) => a.GetType() == t);
                     if (ret == null)
                     {
                         var buildPipelineInst = Activator.CreateInstance(t) as ABDFrameworkPublishPipelineBehaviour;
                         InstanceList.Add(buildPipelineInst);
                     }
-
                 }
             }
         }
-
+        //
+        // [MenuItem("xxx/xxxx")]
+        // static public void OnBeginPublishAssetsTest()
+        // {
+        //     BuildTarget platform = BuildTarget.Android;
+        //     string outputPath = "";
+        //     string versionNum = "";
+        //     OnBeginBuildPackage(platform, outputPath);
+        // }
         /// <summary>
         /// 开始打包热更dll
         /// </summary>
         static public void OnBeginBuildHotfixDLL()
         {
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnBeginBuildDLL);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnBeginBuildDLL();
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnBeginBuildDLL();
+                }
+            }
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnBeginBuildDLL();
             }
         }
 
@@ -55,9 +75,24 @@ namespace BDFramework.Editor
         /// </summary>
         static public void OnEndBuildDLL(string outputPath)
         {
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnEndBuildDLL);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnEndBuildDLL(outputPath);
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnEndBuildDLL(outputPath);
+                }
+            }
+            
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnEndBuildDLL(outputPath);
             }
         }
 
@@ -66,9 +101,24 @@ namespace BDFramework.Editor
         /// </summary>
         static public void OnBeginBuildSqlite()
         {
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnBeginBuildSqlite);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnBeginBuildSqlite();
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnBeginBuildSqlite();
+                }
+            }
+            
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnBeginBuildSqlite();
             }
         }
 
@@ -78,9 +128,24 @@ namespace BDFramework.Editor
         /// <param name="outputPath"></param>
         static public void OnEndBuildSqlite(string outputPath)
         {
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnEndBuildSqlite);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnEndBuildSqlite(outputPath);
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnEndBuildSqlite(outputPath);
+                }
+            }
+
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnEndBuildSqlite(outputPath);
             }
         }
 
@@ -90,17 +155,46 @@ namespace BDFramework.Editor
         /// <param name="assetbundleBuildingCtx"></param>
         static public void OnBeginBuildAssetBundle(AssetBundleBuildingContext assetbundleBuildingCtx)
         {
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnBeginBuildAssetBundle);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnBeginBuildAssetBundle(assetbundleBuildingCtx);
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnBeginBuildAssetBundle(assetbundleBuildingCtx);
+                }
+            }
+            
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnBeginBuildAssetBundle(assetbundleBuildingCtx);
             }
         }
 
         static public void OnEndBuildAssetBundle(AssetBundleBuildingContext assetbundleBuildingCtx)
         {
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnEndBuildAssetBundle);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnEndBuildAssetBundle(assetbundleBuildingCtx);
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnEndBuildAssetBundle(assetbundleBuildingCtx);
+                }
+            }
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnEndBuildAssetBundle(assetbundleBuildingCtx);
             }
         }
 
@@ -110,9 +204,23 @@ namespace BDFramework.Editor
         /// <param name="type"></param>
         static public void OnExportExcel(Type type)
         {
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnExportExcel);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnExportExcel(type);
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnExportExcel(type);
+                }
+            }
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnExportExcel(type);
             }
         }
 
@@ -126,11 +234,25 @@ namespace BDFramework.Editor
         {
             Debug.Log("【OnBeginBuildAllAssets生命周期测试】构建资源,请生成版本号信息!!!  ->" + platform.ToString());
             newVersionNum = lastVersionNum;
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnBeginBuildAllAssets);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnBeginBuildAllAssets(platform, outputPath, lastVersionNum, out newVersionNum);
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnBeginBuildAllAssets(platform, outputPath, lastVersionNum, out newVersionNum);
+                }
             }
 
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnBeginBuildAllAssets(platform, outputPath, lastVersionNum, out newVersionNum);
+            }
             Debug.Log($"<color=red> 新版本号:{newVersionNum} </color>");
         }
 
@@ -139,11 +261,25 @@ namespace BDFramework.Editor
         /// </summary>
         static public void OnEndBuildAllAssets(RuntimePlatform platform, string outputPath, string newVersionNum)
         {
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnEndBuildAllAssets);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnEndBuildAllAssets(platform, outputPath, newVersionNum);
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnEndBuildAllAssets(platform, outputPath, newVersionNum);
+                }
             }
 
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnEndBuildAllAssets(platform, outputPath, newVersionNum);
+            }
             Debug.Log("【OnEndBuildAllAssets】构建资源已完成!");
         }
 
@@ -154,12 +290,12 @@ namespace BDFramework.Editor
         /// <summary>
         ///  获取美术资源版本号(git\svn\p4...)
         /// </summary>
-        static public string GetArtSVCNum(string outputPath, RuntimePlatform platform)
+        static public string GetArtSVCNum(RuntimePlatform platform, string outputPath)
         {
             ABDFrameworkPublishPipelineBehaviour inst = null;
             foreach (var behaviour in InstanceList)
             {
-                var method = behaviour.GetType().GetMethod(nameof(GetArtSVCNum));
+                var method = behaviour.GetType().GetMethod(nameof(ABDFrameworkPublishPipelineBehaviour.GetArtSVCNum));
                 //判断是否覆盖了父类
                 if (method.DeclaringType.Equals(behaviour.GetType()))
                 {
@@ -168,48 +304,19 @@ namespace BDFramework.Editor
                 }
             }
 
-            if (inst != null)
-            {
-                return inst.GetArtSVCNum(platform, outputPath);
-            }
 
-            return "0";
-        }
-        
-        /// <summary>
-        ///  获取表格资源版本号(git\svn\p4...)
-        /// </summary>
-        static public string GetTableSVCNum(string outputPath, RuntimePlatform platform)
-        {
-            ABDFrameworkPublishPipelineBehaviour inst = null;
-            foreach (var behaviour in InstanceList)
-            {
-                var method = behaviour.GetType().GetMethod(nameof(GetTableSVCNum));
-                //判断是否覆盖了父类
-                if (method.DeclaringType.Equals(behaviour.GetType()))
-                {
-                    inst = behaviour;
-                    break;
-                }
-            }
-
-            if (inst != null)
-            {
-                return inst.GetTableSVCNum(platform, outputPath);
-            }
-
-            return "0";
+            return inst?.GetArtSVCNum(platform, outputPath);
         }
 
         /// <summary>
         ///  获取表格资源版本号(git\svn\p4...)
         /// </summary>
-        static public string GetScriptSVCNum(string outputPath, RuntimePlatform platform)
+        static public string GetTableSVCNum(RuntimePlatform platform, string outputPath)
         {
             ABDFrameworkPublishPipelineBehaviour inst = null;
             foreach (var behaviour in InstanceList)
             {
-                var method = behaviour.GetType().GetMethod(nameof(GetScriptSVCNum));
+                var method = behaviour.GetType().GetMethod(nameof(ABDFrameworkPublishPipelineBehaviour.GetTableSVCNum));
                 //判断是否覆盖了父类
                 if (method.DeclaringType.Equals(behaviour.GetType()))
                 {
@@ -218,16 +325,32 @@ namespace BDFramework.Editor
                 }
             }
 
-            if (inst != null)
+            return inst?.GetTableSVCNum(platform, outputPath);
+
+        }
+
+        /// <summary>
+        ///  获取表格资源版本号(git\svn\p4...)
+        /// </summary>
+        static public string GetScriptSVCNum(RuntimePlatform platform, string outputPath)
+        {
+            ABDFrameworkPublishPipelineBehaviour inst = null;
+            foreach (var behaviour in InstanceList)
             {
-                return inst.GetScriptSVCNum(platform, outputPath);
+                var method = behaviour.GetType().GetMethod(nameof(ABDFrameworkPublishPipelineBehaviour.GetScriptSVCNum));
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(behaviour.GetType()))
+                {
+                    inst = behaviour;
+                    break;
+                }
             }
 
-            return "0";
+            //只获取一个
+            return inst?.GetScriptSVCNum(platform, outputPath);
         }
 
         #endregion
-
 
         #region 发布资源
 
@@ -236,11 +359,24 @@ namespace BDFramework.Editor
         /// </summary>
         static public void OnBeginPublishAssets(RuntimePlatform platform, string outputPath, string versionNum)
         {
-            Debug.Log("【OnBeginPublishAssets】发布资源处理前.  ->" + platform.ToString());
-
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnBeginPublishAssets);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnBeginPublishAssets(platform, outputPath, versionNum);
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnBeginPublishAssets(platform, outputPath, versionNum);
+                }
+            }
+            
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnBeginPublishAssets(platform, outputPath, versionNum);
             }
         }
 
@@ -249,11 +385,25 @@ namespace BDFramework.Editor
         /// </summary>
         static public void OnEndPublishAssets(RuntimePlatform platform, string outputPath, string versionNum)
         {
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnEndPublishAssets);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnEndPublishAssets(platform, outputPath, versionNum);
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnEndPublishAssets(platform, outputPath, versionNum);
+                }
             }
 
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnEndPublishAssets(platform, outputPath, versionNum);
+            }
             Debug.Log($"<color=red> 新版本号:{versionNum} </color>");
             Debug.Log("【OnEndPublishAssets】发布资源已生成,请编写脚本提交以下目录到Server!");
             Debug.Log(outputPath);
@@ -264,6 +414,9 @@ namespace BDFramework.Editor
 
         #region 构建母包
 
+
+
+
         /// <summary>
         /// 【构建母包】开始
         /// </summary>
@@ -271,9 +424,24 @@ namespace BDFramework.Editor
         /// <param name="outputpath"></param>
         static public void OnBeginBuildPackage(BuildTarget buildTarget, string outputpath)
         {
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnBeginBuildPackage);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnBeginBuildPackage(buildTarget, outputpath);
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnBeginBuildPackage(buildTarget, outputpath);
+                }
+            }
+            
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnBeginBuildPackage(buildTarget, outputpath);
             }
         }
 
@@ -284,9 +452,24 @@ namespace BDFramework.Editor
         /// <param name="outputpath"></param>
         static public void OnEndBuildPackage(BuildTarget buildTarget, string outputpath)
         {
-            foreach (var behavior in InstanceList)
+            var  isCallSuccess = false;
+            var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnEndBuildPackage);
+            foreach (var inst in InstanceList)
             {
-                behavior.OnEndBuildPackage(buildTarget, outputpath);
+                var method = inst.GetType().GetMethod(fname);
+                //判断是否覆盖了父类
+                if (method.DeclaringType.Equals(inst.GetType()))
+                {
+                    Debug.Log($"执行:{inst.GetType()}.{fname}");
+                    isCallSuccess = true;
+                    inst.OnEndBuildPackage(buildTarget, outputpath);
+                }
+            }
+            
+            if (!isCallSuccess)
+            {
+                Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
+                @BaseBehaviour.OnEndBuildPackage(buildTarget, outputpath);
             }
         }
 

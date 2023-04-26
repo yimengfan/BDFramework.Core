@@ -140,7 +140,12 @@ namespace BDFramework.UFlux
         /// <typeparam name="T"></typeparam>
         static public T Load<T>(string path) where T : Object
         {
-            return BResources.Load<T>(path);
+            var go =  BResources.Load<T>(path);
+            if (!go)
+            {
+                BDebug.LogError("加载资源:" + path);
+            }
+            return go;
         }
 
         /// <summary>

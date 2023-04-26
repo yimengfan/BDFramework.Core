@@ -350,13 +350,44 @@ namespace BDFramework.Editor.Table
                                     for (int k = 0; k < strs.Length; k++)
                                     {
                                         var str = strs[k];
-                                        //移出\"\"
+                                        //移除首尾 "
                                         if (str.StartsWith("\""))
                                         {
                                             str = str.Remove(0, 1);
+                                           
+                                        }
+                                        if (str.StartsWith(" \""))//空格情况
+                                        {
+                                            str = str.Remove(0, 2);
+                                           
+                                        }
+                                        //移除末尾
+                                        if (str.EndsWith("\""))
+                                        {
                                             str = str.Remove(str.Length - 1, 1);
                                         }
-
+                                        if (str.EndsWith("\" "))//空格情况
+                                        {
+                                            str = str.Remove(str.Length - 2, 2);
+                                        }
+                                        
+                                        //
+                                        if (str.Contains("\""))
+                                        {
+                                            int errorCount = 0;
+                                            foreach (var s in str)
+                                            {
+                                                if (s== '\"')
+                                                {
+                                                    errorCount++;
+                                                }
+                                            }
+                                            //
+                                            if (errorCount % 2 != 0)
+                                            {
+                                                Debug.LogError($"引号数量不对，为基数:{errorCount} + {str}");
+                                            }
+                                        }
                                         strArray[k] = str;
                                     }
                                 }

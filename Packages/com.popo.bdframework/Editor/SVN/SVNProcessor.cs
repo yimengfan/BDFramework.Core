@@ -128,7 +128,7 @@ namespace BDFramework.Editor.SVN
                     coPath = $"{coPath}/{checkOutTo}";
                 }
 
-                var cmd = $"co {this.SVNURL} {GetLoginCmd()} {coPath}";
+                var cmd = $"co {this.SVNURL} {GetLoginCmd()} \"{coPath}\"";
                 this.ExecuteSVN(cmd);
             }
             else
@@ -143,7 +143,7 @@ namespace BDFramework.Editor.SVN
         /// <param name="downloadpath"></param>
         public void Update(string path = "./")
         {
-            var cmd = $"update {path}  {GetLoginCmd()}";
+            var cmd = $"update \"{path}\"  {GetLoginCmd()}";
 
             this.ExecuteSVN(cmd);
         }
@@ -154,7 +154,7 @@ namespace BDFramework.Editor.SVN
         /// </summary>
         public void RevertForce(string path = "./")
         {
-            var cmd = $"revert --recursive  {path}";
+            var cmd = $"revert --recursive  \"{path}\"";
             this.ExecuteSVN(cmd);
         }
 
@@ -164,7 +164,7 @@ namespace BDFramework.Editor.SVN
         /// <param name="option">cleanup 参数</param>
         public void CleanUp(string option="")
         {
-            var cmd = $"cleanup {option} {this.LocalSVNRootPath}";
+            var cmd = $"cleanup {option} \"{this.LocalSVNRootPath}\"";
             this.ExecuteSVN(cmd);
         }
 
@@ -176,7 +176,7 @@ namespace BDFramework.Editor.SVN
         {
             for (int i = 0; i < paths.Length; i++)
             {
-                paths[i] = $"add {paths[i]}";
+                paths[i] = $"add \"{paths[i]}\"";
             }
 
             //批量添加cmd
@@ -191,7 +191,7 @@ namespace BDFramework.Editor.SVN
         {
             for (int i = 0; i < paths.Length; i++)
             {
-                paths[i] = $"add {paths[i]} --force";
+                paths[i] = $"add \"{paths[i]}\" --force";
             }
 
             //批量添加cmd
@@ -211,7 +211,7 @@ namespace BDFramework.Editor.SVN
             }
             else
             {
-                var cmd = $"add {direct}  --non-recursive";
+                var cmd = $"add \"{direct}\"  --non-recursive";
                 this.ExecuteSVN(cmd);
             }
         }
@@ -224,7 +224,7 @@ namespace BDFramework.Editor.SVN
         {
             for (int i = 0; i < paths.Length; i++)
             {
-                paths[i] = $"rm {paths[i]}";
+                paths[i] = $"rm \"{paths[i]}\"";
             }
 
             //批量添加cmd
@@ -239,7 +239,7 @@ namespace BDFramework.Editor.SVN
         {
             for (int i = 0; i < paths.Length; i++)
             {
-                paths[i] = $"rm {paths[i]} --force";
+                paths[i] = $"rm \"{paths[i]}\" --force";
             }
 
             //批量添加cmd
@@ -383,7 +383,7 @@ namespace BDFramework.Editor.SVN
         /// <param name="localSvnPath">本地仓库</param>
         public void Switch(string newRepositoryUrl, string localSvnPath = "./")
         {
-            var cmd = $"switch  {newRepositoryUrl} {localSvnPath} ";
+            var cmd = $"switch  {newRepositoryUrl} {localSvnPath} {GetLoginCmd()}";
 
             this.ExecuteSVN(cmd);
         }
@@ -532,7 +532,7 @@ namespace BDFramework.Editor.SVN
         /// </summary>
         public void Commit(string workpath = "./", string log = "Auto Commit")
         {
-            var cmd = $"ci  {workpath} -m  \"{log}\" ";
+            var cmd = $"ci  \"{workpath}\" -m  \"{log}\" ";
             this.ExecuteSVN(cmd);
         }
 

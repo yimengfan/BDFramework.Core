@@ -168,7 +168,7 @@ namespace BDFramework.Editor.BuildPipeline
             //增加平台路径
             var buildRuntimePlatform = BApplication.GetRuntimePlatform(buildTarget);
             var outPlatformDir = IPath.Combine(outdir, BApplication.GetPlatformPath(buildTarget));
-            BDFrameworkPipelineHelper.OnBeginBuildPackage(buildTarget, outPlatformDir);
+            BDFrameworkPipelineHelper.OnBeginBuildPackage(buildTarget, outdir);
             //0.加载场景配置
             Debug.Log("<color=green>===>1.加载场景配置</color>");
             if (!string.IsNullOrEmpty(buildConfig))

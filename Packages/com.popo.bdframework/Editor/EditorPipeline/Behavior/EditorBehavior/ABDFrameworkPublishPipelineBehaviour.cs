@@ -1,9 +1,12 @@
 ﻿using System;
+using BDFramework.Asset;
 using BDFramework.Configure;
+using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.AssetGraph.Node;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.Editor.Inspector.Config;
+using Game.Editor.PublishPipeline;
 using UnityEditor;
 using UnityEngine;
 
@@ -136,8 +139,6 @@ namespace BDFramework.Editor
         
         #endregion
         
-        
-        
         #region 构建移动端包体
        
         /// <summary>
@@ -145,8 +146,12 @@ namespace BDFramework.Editor
         /// </summary>
         /// <param name="buildTarget"></param>
         /// <param name="outputpath"></param>
-        virtual public void OnBeginBuildPackage(BuildTarget buildTarget, string outputpath)
+        virtual public void OnBeginBuildPackage(BuildTarget buildTarget, string outputpath )
         {
+            //设置母包脚本版本号
+            var githash = GitProcessor.GetVersion(6);
+            ClientAssetsHelper.GenBasePackageBuildInfo(outputpath, BApplication.GetRuntimePlatform(buildTarget),githash);
+            //
             var config =  ConfigEditorUtil.GetEditorConfig<GameBaseConfigProcessor.Config>();
             switch (buildTarget)
             {
@@ -155,8 +160,6 @@ namespace BDFramework.Editor
                     PlayerSettings.Android.bundleVersionCode++;
                     //设置版本号
                     PlayerSettings.bundleVersion = config.ClientVersionNum;
-                    
-                    
                     BDebug.Log($"APP版本号：Version:{ PlayerSettings.bundleVersion} / BundleVersion:{PlayerSettings.Android.bundleVersionCode}", Color.yellow);
                 }
                     break;
@@ -168,7 +171,7 @@ namespace BDFramework.Editor
                     //设置build number
                     PlayerSettings.iOS.buildNumber = buildNumber.ToString();
                     //设置版本号
-                    PlayerSettings.bundleVersion = config.ClientVersionNum;
+                    PlayerSettings.bundleVersion = config.GetClientVersionNumForIOS();
                     
                     BDebug.Log($"APP版本号：Version:{ PlayerSettings.bundleVersion} / BundleVersion:{PlayerSettings.iOS.buildNumber}", Color.yellow);
 

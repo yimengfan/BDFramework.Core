@@ -53,28 +53,28 @@ namespace BDFramework.Editor.BuildPipeline
         {
             Debug.Log("BuildAssetOpt:" + opa.ToString());
             
-            var newVersionNum = "";
+            var bundleVersion = "";
             //触发事件
             var lastPackageBuildInfo = ClientAssetsHelper.GetPackageBuildInfo(outputPath, platform);
             var lastVersionNum = lastPackageBuildInfo.Version;
             //没有指定版本号，则需要触发版本号的实现逻辑
             if (string.IsNullOrEmpty(setNewVersionNum))
             {
-                BDFrameworkPipelineHelper.OnBeginBuildAllAssets(platform, outputPath, lastVersionNum, out newVersionNum);
+                BDFrameworkPipelineHelper.OnBeginBuildAllAssets(platform, outputPath, lastVersionNum, out bundleVersion);
             }
 
             //项目没有实现提供新的版本号,则内部提供一个版本号
-            if (string.IsNullOrEmpty(newVersionNum) || lastVersionNum == newVersionNum)
+            if (string.IsNullOrEmpty(bundleVersion) || lastVersionNum == bundleVersion)
             {
                 //没指定版本号
                 if (string.IsNullOrEmpty(setNewVersionNum))
                 {
-                    newVersionNum = VersionNumHelper.AddVersionNum(lastVersionNum, add: 1);
+                    bundleVersion = VersionNumHelper.AddVersionNum(lastVersionNum, add: 1);
                 }
                 //指定版本号
                 else
                 {
-                    newVersionNum = VersionNumHelper.AddVersionNum(lastVersionNum, setNewVersionNum);
+                    bundleVersion = VersionNumHelper.AddVersionNum(lastVersionNum, setNewVersionNum);
                 }
             }
 
@@ -137,7 +137,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //4.生成母包资源信息
-            ClientAssetsHelper.GenBasePackageBuildInfo(outputPath, platform, version: newVersionNum);
+            ClientAssetsHelper.GenBasePackageBuildInfo(outputPath, platform, bundleVersion: bundleVersion);
 
             //5.生成本地Assets.info配置
             //这个必须最后生成！！！！
@@ -148,9 +148,9 @@ namespace BDFramework.Editor.BuildPipeline
             var assetsInfoPath = BResources.GetAssetsInfoPath(outputPath, platform);
             FileHelper.WriteAllText(assetsInfoPath, csv);
             //
-            Debug.Log($"<color=yellow>{BApplication.GetPlatformPath(platform)} - 旧版本:{lastPackageBuildInfo.Version} 新版本号:{newVersionNum} </color> ");
+            Debug.Log($"<color=yellow>{BApplication.GetPlatformPath(platform)} - 旧版本:{lastPackageBuildInfo.Version} 新版本号:{bundleVersion} </color> ");
             //完成回调通知
-            BDFrameworkPipelineHelper.OnEndBuildAllAssets(platform, outputPath, newVersionNum);
+            BDFrameworkPipelineHelper.OnEndBuildAllAssets(platform, outputPath, bundleVersion);
         }
     }
 }

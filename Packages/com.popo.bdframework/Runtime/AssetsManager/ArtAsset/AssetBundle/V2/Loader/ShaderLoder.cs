@@ -54,7 +54,7 @@ namespace BDFramework.ResourceMgr.V2
                 }
 
                 BDebug.Log($"warmup shader:{svc.name}", Color.yellow);
-                yield return null;
+                yield return new  WaitForSeconds(0.1f);
             }
 
             //最后加载

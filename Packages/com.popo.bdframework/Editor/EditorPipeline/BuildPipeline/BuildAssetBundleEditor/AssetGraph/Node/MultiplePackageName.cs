@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.Asset;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
@@ -156,7 +157,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //配置表
             subPackage.ConfAndInfoList.Add(BResources.ART_ASSET_INFO_PATH);
             subPackage.ConfAndInfoList.Add(BResources.ART_ASSET_TYPES_PATH);
-            subPackage.ConfAndInfoList.Add(BResources.PACKAGE_BUILD_INFO_PATH);
+            subPackage.ConfAndInfoList.Add(ClientAssetsHelper.PACKAGE_BUILD_INFO_PATH);
 
             MultiplePackage.AssetMultiplePackageConfigList.Add(subPackage);
             //

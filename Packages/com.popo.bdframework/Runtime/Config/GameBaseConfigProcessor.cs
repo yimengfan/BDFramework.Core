@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Text;
+using System.Linq;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Inspector.Config;
 using BDFramework.L2;
 using Sirenix.OdinInspector;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace BDFramework.Configure
 {
@@ -46,7 +51,7 @@ namespace BDFramework.Configure
             public bool IsDebugLog = true;
 
 
-            [LabelText("是否热更")]
+            [LabelText("是否热更资产")]
             [HorizontalGroup("a/a10")]
             public bool IsHotfix = false;
 
@@ -69,6 +74,47 @@ namespace BDFramework.Configure
             [LabelText("语言包")]
             [HorizontalGroup("a/a13")]
             public L2Type L2Type = L2Type.zh_CN;
+
+            /// <summary>
+            /// 获取ios bundleVersion
+            /// The string can only contain numeric characters (0-9) and periods.
+            /// 长度<=18
+            /// </summary>
+            /// <returns></returns>
+            public string GetClientVersionNumForIOS()
+            {
+                string bv = ClientVersionNum;
+#if UNITY_EDITOR
+                ASCIIEncoding asciiEncoding = new ASCIIEncoding();
+                char[] words = new char[] {'0','1','2','3','4','5','6','7','8','9','.' };
+                var bundleVersion = PlayerSettings.bundleVersion.ToUpper().ToCharArray();
+                var count = bundleVersion.Length;
+                StringBuilder sb = new StringBuilder();
+                for (var i = 0; i < count; i++)
+                {
+                    var ch = bundleVersion[i];
+                    if (!words.Contains(ch))
+                    {
+                        if(ch>='A'&&ch<='Z') 
+                        {
+                            var intAsciiCode = asciiEncoding.GetBytes(bundleVersion)[i].ToString();
+                            sb.Append(intAsciiCode);
+                        }
+                        else
+                        {
+                            sb.Append('.');
+                        }
+                    }
+                    else
+                    {
+                        sb.Append(ch);
+                    }
+                }
+                bv = sb.ToString();
+                bv = bv.Substring(0, Mathf.Min(bv.Length, 18));
+#endif
+                return bv;
+            }
         }
         
 
