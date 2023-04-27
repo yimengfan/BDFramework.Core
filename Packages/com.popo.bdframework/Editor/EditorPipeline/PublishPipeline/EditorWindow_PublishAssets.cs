@@ -10,6 +10,7 @@ using BDFramework.Editor.AssetBundle;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
+using BDFramework.Editor.HotfixScript;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Tools.EditorHttpServer;
 using BDFramework.Editor.Unity3dEx;

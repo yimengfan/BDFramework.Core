@@ -23,6 +23,7 @@ public class BDLauncherBridge
     {
         //UI组件类型注册
         //ui类型
+#if ENABLE_ILRUNTIME
         var uitype = typeof(UIBehaviour);
         for (int i = 0; i < mainProjectTypes.Length; i++)
         {
@@ -42,6 +43,7 @@ public class BDLauncherBridge
                 }
             }
         }
+#endif
 
 
 
@@ -51,7 +53,7 @@ public class BDLauncherBridge
             TriggerHotFixGameStart(hotfixTypes);
             //获取管理器列表，开始工作
             BDebug.Log("热更Instance初始化...",Color.red);
-            var hotfixMgrList = ILRuntimeManagerInstHelper.LoadManagerInstance(hotfixTypes);
+            var hotfixMgrList = HotfixCodeManagerInstHelper.LoadManagerInstance(hotfixTypes);
             //启动热更管理器
             foreach (var hotfixMgr in hotfixMgrList)
             {

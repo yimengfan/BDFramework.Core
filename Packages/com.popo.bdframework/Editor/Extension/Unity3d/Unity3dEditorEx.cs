@@ -8,6 +8,7 @@ namespace BDFramework.Editor.Unity3dEx
     /// </summary>
     static public class Unity3dEditorEx
     {
+        #region 宏处理
         /// <summary>
         /// 添加宏
         /// </summary>
@@ -63,5 +64,7 @@ namespace BDFramework.Editor.Unity3dEx
                 PlayerSettings.SetScriptingDefineSymbolsForGroup(bt, symbols);
             }
         }
+
+        #endregion
     }
 }

@@ -7,7 +7,7 @@ using System.Xml;
 using UnityEditor;
 using UnityEngine;
 
-namespace BDFramework.Tool
+namespace BDFramework.Editor.HotfixScript
 {
 
     public static class StripCode

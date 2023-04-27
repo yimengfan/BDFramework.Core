@@ -12,7 +12,7 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
         [MenuItem("BDFrameWork工具箱/Odin BuildPipeline")]
         public static void Open()
         {
-            var window = EditorWindow.GetWindow<EditorWindow_BuildPipeline>("BuildPipeline");
+            var window = EditorWindow.GetWindow<EditorWindow_BuildPipeline>("BDFrameWork工具箱");
 #if ODIN_INSPECTOR
             window.position = GUIHelper.GetEditorWindowRect().AlignCenter(1000, 800);
 #endif

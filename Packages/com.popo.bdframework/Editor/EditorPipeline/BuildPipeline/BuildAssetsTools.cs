@@ -4,6 +4,7 @@ using BDFramework.Asset;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
+using BDFramework.Editor.HotfixScript;
 using BDFramework.Editor.PublishPipeline;
 using BDFramework.Editor.Table;
 using BDFramework.ResourceMgr;
@@ -92,7 +93,7 @@ namespace BDFramework.Editor.BuildPipeline
                 if (opa.HasFlag(BuildPackageOption.BuildHotfixCode) || opa == BuildPackageOption.BuildAll)
                 {
                     Debug.Log("<color=yellow>=====>打包热更代码</color>");
-                    EditorWindow_ScriptBuildDll.RoslynBuild(outputPath, platform, ScriptBuildTools.BuildMode.Release);
+                    HotfixScriptEditorTools.RoslynBuild(outputPath, platform, ScriptBuildTools.BuildMode.Release);
                 }
             }
             catch (Exception e)

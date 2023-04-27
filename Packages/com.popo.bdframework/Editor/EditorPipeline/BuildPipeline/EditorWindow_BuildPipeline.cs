@@ -24,6 +24,13 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
                 return tree;
             }
 
+            //框架设置
+            EditorWindow_BDFrameworkConfig win = new EditorWindow_BDFrameworkConfig();
+            win.frameworkEditorSetting = BDEditorApplication.EditorSetting;
+            tree.Add("框架Setting", win, EditorIcons.SettingsCog);
+
+            
+            //构建包体
             tree.Add("Build", null, EditorIcons.SmartPhone);
             tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.Android)}", new BuildAndroid(setting.Android, setting.AndroidDebug));
             tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer)}", new BuildIOS(setting.iOS, setting.iOSDebug));
@@ -32,7 +39,7 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
             // tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.OSXPlayer)}", new BuildAndroid());
             // tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.WindowsPlayer)}", new BuildAndroid());
             // tree.Add("Test", EditorWindow.GetWindow<EditorWindow_BDFrameworkConfig>());
-            //设置
+            //Player设置
             tree.Add("Player Settings", Resources.FindObjectsOfTypeAll<PlayerSettings>().FirstOrDefault());
             //tree.SortMenuItemsByName();
             //默认选择

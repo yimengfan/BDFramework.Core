@@ -6,6 +6,7 @@ using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.Editor.Environment;
+using BDFramework.Editor.HotfixScript;
 using BDFramework.Editor.PublishPipeline;
 using BDFramework.Editor.SVN;
 using UnityEditor;
@@ -146,7 +147,7 @@ namespace BDFramework.Editor.DevOps
         public static void BuildDLL()
         {
             //检查打包脚本
-            EditorWindow_ScriptBuildDll.RoslynBuild(CI_ASSETS_PATH, RuntimePlatform.Android, ScriptBuildTools.BuildMode.Release);
+            HotfixScriptEditorTools.RoslynBuild(CI_ASSETS_PATH, RuntimePlatform.Android, ScriptBuildTools.BuildMode.Release);
         }
 
         #endregion

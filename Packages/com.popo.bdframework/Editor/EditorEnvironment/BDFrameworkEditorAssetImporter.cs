@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.HotfixScript;
 using BDFramework.Editor.Unity3dEx;
 using BDFramework.Editor.WorkFlow;
 using LitJson;

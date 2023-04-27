@@ -11,7 +11,7 @@ namespace BDFramework.HotFix.Mgr
     /// <summary>
     /// 热更管理器单例工具
     /// </summary>
-    static public class ILRuntimeManagerInstHelper
+    static public class HotfixCodeManagerInstHelper
     {
         /// <summary>
         /// 加载
