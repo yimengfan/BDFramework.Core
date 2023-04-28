@@ -6,6 +6,9 @@ using BDFramework.Editor.DevOps;
 
 namespace BDFramework.Editor.HotfixScript
 {
+    /// <summary>
+    /// 编辑器窗口 - 生成热更DLL
+    /// </summary>
     public class EditorWindow_BuildHotfixDll : EditorWindow
     {
         public void OnGUI()
@@ -28,11 +31,10 @@ namespace BDFramework.Editor.HotfixScript
 
 #if ENABLE_HCLR
                 GUILayout.Label("当前模式:HCLR");
-#endif
-
-#if ENABLE_ILRUNTIME
+#elif ENABLE_ILRUNTIME
                 GUILayout.Label("当前模式:ILRuntime
 #endif
+                
                 GUILayout.BeginHorizontal();
                 {
 #if ENABLE_ILRUNTIME

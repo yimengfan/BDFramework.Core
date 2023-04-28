@@ -147,7 +147,7 @@ namespace BDFramework.Editor.DevOps
         public static void BuildDLL()
         {
             //检查打包脚本
-            HotfixScriptEditorTools.RoslynBuild(CI_ASSETS_PATH, RuntimePlatform.Android, ScriptBuildTools.BuildMode.Release);
+            HotfixScriptEditorTools.RoslynBuild(CI_ASSETS_PATH, RuntimePlatform.Android, Unity3dRoslynBuildTools.BuildMode.Release);
         }
 
         #endregion

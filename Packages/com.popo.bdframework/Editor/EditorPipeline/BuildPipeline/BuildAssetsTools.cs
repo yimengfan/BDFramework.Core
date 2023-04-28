@@ -93,7 +93,7 @@ namespace BDFramework.Editor.BuildPipeline
                 if (opa.HasFlag(BuildPackageOption.BuildHotfixCode) || opa == BuildPackageOption.BuildAll)
                 {
                     Debug.Log("<color=yellow>=====>打包热更代码</color>");
-                    HotfixScriptEditorTools.RoslynBuild(outputPath, platform, ScriptBuildTools.BuildMode.Release);
+                    HotfixScriptEditorTools.RoslynBuild(outputPath, platform, Unity3dRoslynBuildTools.BuildMode.Release);
                 }
             }
             catch (Exception e)
