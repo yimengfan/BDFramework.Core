@@ -79,7 +79,7 @@ namespace BDFramework.Editor.TestRunner
         [MenuItem("BDFrameWork工具箱/TestPipeline/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTestILRuntimeWithRebuildDll()
         {
-            HotfixScriptEditorTools.RoslynBuild(BApplication.DevOpsPublishAssetsPath, BApplication.RuntimePlatform, ScriptBuildTools.BuildMode.Debug);
+            HotfixScriptEditorTools.RoslynBuild(BApplication.DevOpsPublishAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug);
             UnitTestILRuntime();
         }
     }

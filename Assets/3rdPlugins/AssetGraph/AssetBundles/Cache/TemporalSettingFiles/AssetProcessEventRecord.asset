@@ -12,8 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9a5f17c54584a67b7fe58665965f15, type: 3}
   m_Name: AssetProcessEventRecord
   m_EditorClassIdentifier: 
-  m_events: []
-  m_errorEventCount: 94
+  m_events:
+  - m_kind: 1
+    m_timestampUtc: 133270767232858892
+    m_assetName: 
+    m_assetGuid: 
+    m_graphGuid: ec30958a9cb9a414dbb58cbbbf184ea1
+    m_nodeId: 5c54f429-2e9d-45d5-ad93-29577e3649bb
+    m_nodeName: "\u6253\u5305AssetBundle"
+    m_description: System.NullReferenceException:Object reference not set to an instance
+      of an object
+    m_howToFix: See Console for detail.
+  m_errorEventCount: 95
   m_infoEventCount: 0
   m_version: 1
   m_processStartIndex: 0

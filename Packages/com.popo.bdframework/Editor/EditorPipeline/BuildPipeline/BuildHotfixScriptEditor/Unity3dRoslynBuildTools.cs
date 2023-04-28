@@ -28,7 +28,7 @@ namespace BDFramework.Editor.HotfixScript
     /// <summary>
     /// 脚本构建工具
     /// </summary>
-    public class ScriptBuildTools
+    public class Unity3dRoslynBuildTools
     {
         public enum BuildMode
         {

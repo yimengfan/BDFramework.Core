@@ -133,7 +133,7 @@ public class ExpoterMainProjectAsset
         //AssetDatabase.ImportPackage(packagePath,true);
         AssetDatabase.ExportPackage(exportfs, packagePath, op);
         //重新生成clr分析文件
-        HotfixScriptEditorTools.GenCLRBindingByAnalysis(BApplication.RuntimePlatform);
+        ILRuntimeEditorTools.GenCLRBindingByAnalysis(BApplication.RuntimePlatform);
         //debug
 
         EditorUtility.DisplayDialog("提示", "导出成功:\n" + packagePath, "ok");
