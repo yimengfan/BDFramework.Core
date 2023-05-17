@@ -6,7 +6,7 @@
     "ArtRoot"  : 1,
     "CodeRunMode" : 1,
     "IsDebuggerILRuntime" : false,
-    "IsDebugLog"          : true,
+    "IsDebugLog"          : false,
     "IsHotfix"            : false,
     "ClientVersionNum"    : "2.2.0",
     "L2Type"              : 1,

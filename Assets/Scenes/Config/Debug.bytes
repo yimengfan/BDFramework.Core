@@ -3,7 +3,7 @@
   {
     "CodeRoot" : 0,
     "SQLRoot"  : 0,
-    "ArtRoot"  : 3,
+    "ArtRoot"  : 2,
     "CodeRunMode" : 0,
     "IsDebuggerILRuntime" : false,
     "IsDebugLog"          : true,

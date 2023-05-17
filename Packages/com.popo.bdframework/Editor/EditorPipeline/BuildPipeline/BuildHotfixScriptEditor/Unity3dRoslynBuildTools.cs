@@ -126,14 +126,12 @@ namespace BDFramework.Editor.HotfixScript
             }
             catch (Exception e)
             {
-                Debug.LogError(e.Message);
                 if (IsShowTips)
                 {
                     EditorUtility.ClearProgressBar();
                     EditorUtility.DisplayDialog("提示", "请手动删除hotfix文件后重试!", "OK");
                 }
-
-                return;
+                throw e;
             }
 
             if (IsShowTips)
@@ -311,9 +309,10 @@ namespace BDFramework.Editor.HotfixScript
             }
             catch (Exception e)
             {
+               
                 Debug.LogError(e.Message);
                 EditorUtility.ClearProgressBar();
-                return;
+                throw e;
             }
 
             if (IsShowTips)
@@ -540,6 +539,8 @@ namespace BDFramework.Editor.HotfixScript
                         Debug.LogError(diagnostic.ToString());
                     }
                 }
+
+                throw new Exception($"构建{Path.GetFileName(outputdll)}失败!");
             }
 
             return result.Success;

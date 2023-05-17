@@ -3,13 +3,14 @@ using UnityEngine;
 using BDFramework.Editor.Tools;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.DevOps;
+using Sirenix.OdinInspector.Editor;
 
 namespace BDFramework.Editor.HotfixScript
 {
     /// <summary>
     /// 编辑器窗口 - 生成热更DLL
     /// </summary>
-    public class EditorWindow_BuildHotfixDll : EditorWindow
+    public class EditorWindow_BuildHotfixDll : OdinEditorWindow
     {
         public void OnGUI()
         {

@@ -322,7 +322,7 @@ namespace BDFramework.Core.Tools
 
 
         /// <summary>
-        /// 获取AB构建平台
+        /// 获取BuildTarget
         /// </summary>
         /// <param name="platform"></param>
         /// <returns></returns>
@@ -356,7 +356,7 @@ namespace BDFramework.Core.Tools
         }
 
         /// <summary>
-        /// 获取AB构建平台
+        /// 获取TargetGroup
         /// </summary>
         /// <param name="platform"></param>
         /// <returns></returns>
@@ -374,7 +374,6 @@ namespace BDFramework.Core.Tools
                     break;
                 case RuntimePlatform.WindowsEditor:
                 case RuntimePlatform.WindowsPlayer:
-
                 case RuntimePlatform.OSXEditor:
                 case RuntimePlatform.OSXPlayer:
                 {
@@ -384,7 +383,38 @@ namespace BDFramework.Core.Tools
             }
             return target;
         }
-
+        /// <summary>
+        /// 获取获取TargetGroup
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        public static BuildTargetGroup GetBuildTargetGroup(BuildTarget buildTarget)
+        {
+            //构建平台
+            BuildTargetGroup target = BuildTargetGroup.Standalone;
+            switch (buildTarget)
+            {
+                case BuildTarget.Android:
+                {
+                    target = BuildTargetGroup.Android;
+                }
+                    break;
+                case BuildTarget.iOS:
+                {
+                    target = BuildTargetGroup.iOS;
+                }
+                    break;
+                case BuildTarget.StandaloneWindows:
+                case BuildTarget.StandaloneWindows64:
+                case BuildTarget.StandaloneOSX:
+                {
+                    target = BuildTargetGroup.Standalone;
+                }
+                    break;
+            }
+            return target;
+        }
+        
         /// <summary>
         /// 获取runtimeplatform
         /// </summary>

@@ -99,7 +99,7 @@ namespace BDFramework.Editor.BuildPipeline
 
         [HorizontalGroup("b/a3", LabelWidth = 200)]
         [LabelText("场景配置(默认场景自带)")]
-        public bool IsSetBuildSceneConfig = false;
+        public bool IsSetBuildSceneConfig = true;
 
         [HorizontalGroup("b/a4", LabelWidth = 80)]
         [LabelText("打包配置")]

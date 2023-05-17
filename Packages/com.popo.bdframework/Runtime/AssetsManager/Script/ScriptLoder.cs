@@ -80,11 +80,8 @@ namespace BDFramework
             //反射执行
             if (mode == HotfixCodeRunMode.HCLR_or_Mono)
             {
-                new NotSupportedException("暂未实现");
-                BDebug.Log("【ScriptLaunch】反射Dll路径:" + dllPath, Color.red);
+                BDebug.Log("【ScriptLaunch】HCLR执行Dll路径:" + dllPath, Color.red);
                 Assembly assembly;
-                
-                
                 var dllBytes = File.ReadAllBytes(dllPath);
                 var pdbPath = dllPath + ".pdb";
                 if (File.Exists(pdbPath))

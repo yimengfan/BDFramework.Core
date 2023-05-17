@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using BDFramework.Hotfix.Reflection;
 using BDFramework.Mgr;
-using BDFramework.UFlux;
 using UnityEngine;
 
 namespace BDFramework.HotFix.Mgr
@@ -21,6 +20,7 @@ namespace BDFramework.HotFix.Mgr
         static public List<IMgr> LoadManagerInstance(IEnumerable<Type> types)
         {
             //管理器列表
+            BDebug.Log("11111");
             var mgrList = new List<IMgr>();
             foreach (var type in types)
             {
@@ -42,7 +42,8 @@ namespace BDFramework.HotFix.Mgr
                     }
                 }
             }
-            //按执行顺序排序
+          
+            
             //按执行顺序排序
             mgrList.Sort((a, b) =>
             {
@@ -53,9 +54,8 @@ namespace BDFramework.HotFix.Mgr
                 //对比
                 return aOrder.CompareTo(bOrder);
             });
+            
 
-
-            BDebug.Log("[hotfix]管理器加载完成", Color.green);
             foreach (var type in types)
             {
                 if (type != null && type.IsClass)
@@ -66,6 +66,7 @@ namespace BDFramework.HotFix.Mgr
                         //注册类型
                         foreach (var mgr in mgrList)
                         {
+                           
                             var ret = mgr.CheckType(type, mgrAttributes);
                             if (ret)
                             {
@@ -75,13 +76,16 @@ namespace BDFramework.HotFix.Mgr
                     }
                 }
             }
+            BDebug.Log("管理器CheckType完成", Color.green);
             
+            BDebug.Log("管理器数量"+mgrList.Count, Color.red);
             //管理器初始化
             foreach (var m in mgrList)
             {
+                BDebug.Log("[hotfix]init"+m.GetType().FullName, Color.yellow);
                 m.Init();
             }
-
+            BDebug.Log("[hotfix]管理器Init完成", Color.green);
             return mgrList;
         }
     }

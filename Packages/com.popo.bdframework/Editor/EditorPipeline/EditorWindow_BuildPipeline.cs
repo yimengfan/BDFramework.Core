@@ -2,6 +2,7 @@
 using System.Linq;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.BuildPipeline;
+using BDFramework.Editor.HotfixScript;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
@@ -24,6 +25,8 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
                 return tree;
             }
 
+            tree.Add("AssetsPipeline", null, EditorIcons.Airplane);
+            tree.Add("AssetsPipeline/HotfixScript", new EditorWindow_BuildHotfixDll());
             //框架设置
             EditorWindow_BDFrameworkConfig win = new EditorWindow_BDFrameworkConfig();
             win.frameworkEditorSetting = BDEditorApplication.EditorSetting;

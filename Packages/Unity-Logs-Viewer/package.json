@@ -1,0 +1,22 @@
+{
+  "name": "com.sharelib.logviewer",
+  "version": "0.2.0",
+  "displayName": "Unity Log Viewer",
+  "description": "Unity package for check unity runtime log .",
+  "category": "Runtime",
+  "keywords": [
+    "log viewer"
+  ],
+  "samples": [
+    {
+      "displayName": "Log 演示",
+      "description": "包含一个简易的log输出测试场景",
+      "path": "Samples~/Example"
+    }
+  ],
+  "author": {
+    "name": "focus-creative-games",
+    "email": "hybridclr@focus-creative-games.com",
+    "url": "https://github.com/focus-creative-games/"
+  }
+}
