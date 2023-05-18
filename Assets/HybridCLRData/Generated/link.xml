@@ -10,6 +10,7 @@
     <type fullname="ILRuntimeDelegateHelper" preserve="all" />
   </assembly>
   <assembly fullname="BDFramework.Core">
+    <type fullname="BDebug" preserve="all" />
     <type fullname="BDFramework.AssetLoadPathType" preserve="all" />
     <type fullname="BDFramework.BDLauncher" preserve="all" />
     <type fullname="BDFramework.BDLauncher/GameLauncherDelegate" preserve="all" />

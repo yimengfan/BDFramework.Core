@@ -48,7 +48,7 @@ namespace BDFramework
 
             if (loadPathType == AssetLoadPathType.Editor)
             {
-                BDebug.Log("【ScriptLaunch】Editor(非热更)模式!");
+                BDebug.Log("【ScriptLoder】Editor(非热更)模式!");
                 //反射调用，防止编译报错
                 var assembly = Assembly.GetExecutingAssembly();
                 var type = assembly.GetType("BDLauncherBridge");
@@ -61,7 +61,7 @@ namespace BDFramework
             }
             else
             {
-                BDebug.Log("【ScriptLaunch】热更模式!");
+                BDebug.Log("【ScriptLoder】热更模式!");
                 LoadHotfixDLL(loadPathType, runMode, mainProjectTypes);
             }
         }
@@ -80,7 +80,7 @@ namespace BDFramework
             //反射执行
             if (mode == HotfixCodeRunMode.HCLR_or_Mono)
             {
-                BDebug.Log("【ScriptLaunch】HCLR执行Dll路径:" + dllPath, Color.red);
+                BDebug.Log("【ScriptLoder】HCLR执行, Dll路径:" + dllPath, Color.red);
                 Assembly assembly;
                 var dllBytes = File.ReadAllBytes(dllPath);
                 var pdbPath = dllPath + ".pdb";
@@ -93,19 +93,15 @@ namespace BDFramework
                 {
                     assembly = Assembly.Load(dllBytes);
                 }
-                
-                BDebug.Log("【ScriptLaunch】反射加载成功,开始执行Start");
                 var type = typeof(ScriptLoder).Assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                var start =  (Action<Type[],Type[]>)Delegate.CreateDelegate(typeof(Action<Type[],Type[]>), method);
-
+                var startFunc =  (Action<Type[],Type[]>)Delegate.CreateDelegate(typeof(Action<Type[],Type[]>), method);
                 
                 try
                 {
                     var hotfixTypes = assembly.GetTypes();
-                    
                     //开始
-                    start(mainProjecTypes, hotfixTypes);
+                    startFunc(mainProjecTypes, hotfixTypes);
                 }
                 catch (ReflectionTypeLoadException e)
                 {
@@ -114,14 +110,11 @@ namespace BDFramework
                         Debug.LogError(exc);
                     }
                 }
-                // mainFunc();
-                //method.Invoke(null, new object[] {mainProjecTypes, Assembly.GetTypes()});
-                
             }
             //解释执行
             else if (mode == HotfixCodeRunMode.ILRuntime)
             {
-                BDebug.Log("【ScriptLaunch】热更Dll路径:" + dllPath, Color.red);
+                BDebug.Log("【ScriptLoder】热更Dll路径:" + dllPath, Color.red);
                 //解释执行模式
                 ILRuntimeHelper.LoadHotfix(dllPath, CLRBindAction);
                 var hotfixTypes = ILRuntimeHelper.GetHotfixTypes().ToArray();
@@ -129,7 +122,7 @@ namespace BDFramework
             }
             else
             {
-                BDebug.Log("【ScriptLaunch】Dll路径:内置", Color.red);
+                BDebug.Log("【ScriptLoder】Dll路径:内置", Color.magenta);
             }
         }
 
