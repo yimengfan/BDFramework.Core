@@ -27,7 +27,7 @@ namespace BDFramework.Editor.HotfixScript
                 GUILayout.Space(5);
 
 #if !ENABLE_ILRUNTIME && !ENABLE_HCLR
-                HotfixScriptEditorTools.SwitchToHCLR();
+                HotfixScriptTools.SwitchToHCLR();
 #endif
 
 #if ENABLE_HCLR
