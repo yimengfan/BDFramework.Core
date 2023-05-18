@@ -14,12 +14,27 @@ namespace BDFramework
     static public class ScriptLoder
     {
         #region 路径
-        static readonly public string HOTFIX_DEFINE = "hotfix";
+        /// <summary>
+        /// 脚本目录
+        /// </summary>
         static readonly public string SCRIPT_FOLDER_PATH = "script";
+        //HCLR aot patch目录
+        static readonly public string HCLR_AOT_PATCH_PATH = $"{SCRIPT_FOLDER_PATH}/hclr_aot_patch";
+        /// <summary>
+        /// 热更定义
+        /// </summary>
+        static readonly public string HOTFIX_DEFINE = "hotfix";
+        /// <summary>
+        /// 热更dll路径
+        /// </summary>
         static readonly public string DLL_PATH = $"{SCRIPT_FOLDER_PATH}/{HOTFIX_DEFINE}.dll";
+        /// <summary>
+        /// dll pdb路径
+        /// </summary>
         static readonly public string PDB_PATH = DLL_PATH + "pdb";
         #endregion
 
+        
         #region 加密
         /// <summary>
         /// 私钥
@@ -31,7 +46,6 @@ namespace BDFramework
         static public string PublicKey { get; set; } = null;
         #endregion
 
-        
         /// <summary>
         /// 反射注册
         /// </summary>
