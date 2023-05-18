@@ -33,13 +33,13 @@ namespace BDFramework.Editor.HotfixScript
 #if ENABLE_HCLR
                 GUILayout.Label("当前模式:HCLR");
 #elif ENABLE_ILRUNTIME
-                GUILayout.Label("当前模式:ILRuntime
+                GUILayout.Label("当前模式:ILRuntime);
 #endif
                 
                 GUILayout.BeginHorizontal();
                 {
 #if ENABLE_ILRUNTIME
- GUI.color = Color.green;
+                     GUI.color = Color.green;
 #endif
                     if (GUILayout.Button("切换ILRuntime", GUILayout.Width(155), GUILayout.Height(20)))
                     {
