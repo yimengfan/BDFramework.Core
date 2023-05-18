@@ -8,11 +8,15 @@ using UnityEngine;
 
 namespace BDFramework
 {
+    /// <summary>
+    /// 脚本加载器
+    /// </summary>
     static public class ScriptLoder
     {
         #region 路径
+        static readonly public string HOTFIX_DEFINE = "hotfix";
         static readonly public string SCRIPT_FOLDER_PATH = "script";
-        static readonly public string DLL_PATH = SCRIPT_FOLDER_PATH + "/hotfix.dll";
+        static readonly public string DLL_PATH = $"{SCRIPT_FOLDER_PATH}/{HOTFIX_DEFINE}.dll";
         static readonly public string PDB_PATH = DLL_PATH + "pdb";
         #endregion
 

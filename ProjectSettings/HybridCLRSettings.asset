@@ -21,11 +21,7 @@ MonoBehaviour:
   - hotfix
   preserveHotUpdateAssemblies: []
   hotUpdateDllCompileOutputRootDir: HybridCLRData/HotUpdateDlls
-  externalHotUpdateAssembliyDirs:
-  - DevOps/PublishAssets/ios/script
-  - DevOps/PublishAssets/android/script
-  - DevOps/PublishAssets/windows/script
-  - DevOps/PublishAssets/osx/script
+  externalHotUpdateAssembliyDirs: []
   strippedAOTDllOutputRootDir: HybridCLRData/AssembliesPostIl2CppStrip
   patchAOTAssemblies: []
   outputLinkFile: HybridCLRData/Generated/link.xml

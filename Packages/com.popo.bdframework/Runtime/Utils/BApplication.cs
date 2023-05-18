@@ -20,11 +20,8 @@ namespace BDFramework.Core.Tools
         /// <returns></returns>
         static RuntimePlatform[] _supportPlatform = new RuntimePlatform[]
         {
-            RuntimePlatform.Android,
-            RuntimePlatform.IPhonePlayer,
-            /***********新增pc平台************/
-            RuntimePlatform.OSXPlayer,
-            RuntimePlatform.WindowsPlayer
+            RuntimePlatform.Android, RuntimePlatform.IPhonePlayer,
+            /***********新增pc平台************/ RuntimePlatform.OSXPlayer, RuntimePlatform.WindowsPlayer
         };
 
         /// <summary>
@@ -184,14 +181,15 @@ namespace BDFramework.Core.Tools
             RuntimeResourceLoadPath = "Assets/Resource/Runtime";
             //Editor相关目录
             EditorResourcePath = "Assets/Resource_SVN";
-            EditorResourceRuntimePath = EditorResourcePath + "/Runtime";
-            BDEditorCachePath = Library + "/BDFrameCache";
+            EditorResourceRuntimePath =   $"{EditorResourcePath}/Runtime";
+            BDEditorCachePath =  $"{Library}/BDFrameCache";
             //DevOps路径
-            DevOpsPath = ProjectRoot + "/DevOps";
-            DevOpsPublishAssetsPath = DevOpsPath + "/PublishAssets";
-            DevOpsPublishPackagePath = DevOpsPath + "/PublishPackages";
-            DevOpsConfigPath = DevOpsPath + "/Config";
-            DevOpsCIPath = DevOpsPath + "/CI";
+            //跟Assets同级
+            DevOpsPath = $"DevOps";
+            DevOpsPublishAssetsPath = $"{DevOpsPath}/PublishAssets";
+            DevOpsPublishPackagePath = $"{DevOpsPath}/PublishPackages";
+            DevOpsConfigPath = $"{DevOpsPath}/Config";
+            DevOpsCIPath = $"{DevOpsPath}/CI";
         }
 
 
@@ -235,10 +233,8 @@ namespace BDFramework.Core.Tools
         /// <returns></returns>
         static BuildTargetGroup[] _supportBuildTargetGroup = new BuildTargetGroup[]
         {
-            BuildTargetGroup.Android,
-            BuildTargetGroup.iOS,
-            /***********新增pc平台************/
-            BuildTargetGroup.Standalone,
+            BuildTargetGroup.Android, BuildTargetGroup.iOS,
+            /***********新增pc平台************/ BuildTargetGroup.Standalone,
         };
 
         /// <summary>
@@ -381,8 +377,10 @@ namespace BDFramework.Core.Tools
                 }
                     break;
             }
+
             return target;
         }
+
         /// <summary>
         /// 获取获取TargetGroup
         /// </summary>
@@ -412,9 +410,10 @@ namespace BDFramework.Core.Tools
                 }
                     break;
             }
+
             return target;
         }
-        
+
         /// <summary>
         /// 获取runtimeplatform
         /// </summary>
@@ -452,6 +451,33 @@ namespace BDFramework.Core.Tools
         }
 
         #endregion
+
+        #region 平台路径获取
+
+        /// <summary>
+        /// 获取发布资产平台目录
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        static public string GetPlatformDevOpsPublishAssetsPath(RuntimePlatform platform)
+        {
+            var path = GetPlatformPath(platform);
+            return IPath.Combine(DevOpsPublishAssetsPath, path);
+        }
+
+        /// <summary>
+        /// 获取发布包体平台目录
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        static public string GetPlatformDevOpsPublishPackagePath(RuntimePlatform platform)
+        {
+            var path = GetPlatformPath(platform);
+            return IPath.Combine(DevOpsPublishPackagePath, path);
+        }
+
+        #endregion
+
 
 #endif
     }
