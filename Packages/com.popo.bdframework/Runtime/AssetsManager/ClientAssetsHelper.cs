@@ -12,7 +12,7 @@ using UnityEngine;
 namespace BDFramework.Asset
 {
     /// <summary>
-    /// 母包资源构建信息
+    /// 客户端资产管理器
     /// </summary>
     public class ClientPackageBuildInfo
     {

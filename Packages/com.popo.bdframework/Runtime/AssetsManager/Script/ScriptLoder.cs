@@ -31,7 +31,7 @@ namespace BDFramework
         /// <summary>
         /// dll pdb路径
         /// </summary>
-        static readonly public string PDB_PATH = DLL_PATH + "pdb";
+        static readonly public string PDB_PATH = DLL_PATH + ".pdb";
         #endregion
 
         

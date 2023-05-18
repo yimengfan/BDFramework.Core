@@ -22,7 +22,7 @@ namespace BDFramework.Editor.Table
             if (GUILayout.Button("表格导出成Sqlite", GUILayout.Width(300), GUILayout.Height(30)))
             {
                 //3.打包表格
-                Excel2SQLiteTools.AllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform);
+                Excel2SQLiteTools.BuildAllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform);
                 Excel2SQLiteTools.CopySqlToOther(Application.streamingAssetsPath, BApplication.RuntimePlatform);
             }
 

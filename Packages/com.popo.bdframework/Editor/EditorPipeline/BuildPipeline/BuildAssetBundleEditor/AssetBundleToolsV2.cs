@@ -102,7 +102,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// <param name="target">平台</param>
         /// <param name="options">打包参数</param>
         /// <param name="isUseHashName">是否为hash name</param>
-        public static bool GenAssetBundle(RuntimePlatform platform, string outputPath)
+        public static bool BuildAssetBundles(RuntimePlatform platform, string outputPath)
         {
             var buildTarget = BApplication.GetBuildTarget(platform);
             ExcuteAssetGraphBuild(buildTarget, outputPath);

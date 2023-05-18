@@ -45,14 +45,15 @@ namespace BDFramework.Editor.BuildPipeline
         }
 
         /// <summary>
-        /// 构建所有资源
+        /// 构建所有游戏资产
+        /// Dll、table、assetbundle
         /// </summary>
         /// <param name="platform">平台</param>
         /// <param name="outputPath">输出目录</param>
         /// <param name="setNewVersionNum">新版本号</param>
         static public void BuildAllAssets(RuntimePlatform platform, string outputPath, string setNewVersionNum = null, BuildPackageOption opa = BuildPackageOption.BuildAll)
         {
-            Debug.Log("BuildAssetOpt:" + opa.ToString());
+            Debug.Log("BuildAssetOpt:" + opa);
             
             var newVersionNum = "";
             //触发事件
@@ -93,7 +94,7 @@ namespace BDFramework.Editor.BuildPipeline
                 if (opa.HasFlag(BuildPackageOption.BuildHotfixCode) || opa == BuildPackageOption.BuildAll)
                 {
                     Debug.Log("<color=yellow>=====>打包热更代码</color>");
-                    HotfixScriptEditorTools.RoslynBuild(outputPath, platform, Unity3dRoslynBuildTools.BuildMode.Release);
+                    HotfixScriptTools.BuildDll(outputPath, platform, Unity3dRoslynBuildTools.BuildMode.Release);
                 }
             }
             catch (Exception e)
@@ -108,7 +109,7 @@ namespace BDFramework.Editor.BuildPipeline
                 if (opa.HasFlag(BuildPackageOption.BuildSqlite) || opa == BuildPackageOption.BuildAll)
                 {
                     Debug.Log("<color=yellow>=====>打包Sqlite</color>");
-                    var ret = Excel2SQLiteTools.AllExcel2SQLite(outputPath, platform);
+                    var ret = Excel2SQLiteTools.BuildAllExcel2SQLite(outputPath, platform);
 
                     if (!ret)
                     {
@@ -128,7 +129,7 @@ namespace BDFramework.Editor.BuildPipeline
                 if (opa.HasFlag(BuildPackageOption.BuildArtAssets) || opa == BuildPackageOption.BuildAll)
                 {
                     Debug.Log("<color=yellow>=====>打包AssetBundle</color>");
-                    AssetBundleToolsV2.GenAssetBundle(platform,outputPath);
+                    AssetBundleToolsV2.BuildAssetBundles(platform,outputPath);
                 }
             }
             catch (Exception e)

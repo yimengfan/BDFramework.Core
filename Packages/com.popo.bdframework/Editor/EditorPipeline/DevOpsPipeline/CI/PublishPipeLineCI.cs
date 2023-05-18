@@ -105,7 +105,7 @@ namespace BDFramework.Editor.DevOps
         private static bool BuildAssetBundle(RuntimePlatform platform, BuildTarget target)
         {
             //2.打包模式
-            var ret = AssetBundleToolsV2.GenAssetBundle(platform, CI_ASSETS_PATH);
+            var ret = AssetBundleToolsV2.BuildAssetBundles(platform, CI_ASSETS_PATH);
 
             return ret;
         }
@@ -147,7 +147,7 @@ namespace BDFramework.Editor.DevOps
         public static void BuildDLL()
         {
             //检查打包脚本
-            HotfixScriptEditorTools.RoslynBuild(CI_ASSETS_PATH, RuntimePlatform.Android, Unity3dRoslynBuildTools.BuildMode.Release);
+            HotfixScriptTools.BuildDll(CI_ASSETS_PATH, RuntimePlatform.Android, Unity3dRoslynBuildTools.BuildMode.Release);
         }
 
         #endregion

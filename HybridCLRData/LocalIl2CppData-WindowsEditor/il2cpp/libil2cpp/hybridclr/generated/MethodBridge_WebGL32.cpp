@@ -312,14 +312,6 @@ static void __M2N_B12i4u4(const MethodInfo* method, uint16_t* argVarIndexs, Stac
 }
 
 
-// UnityEngine.UIElements.StyleFloat UnityEngine.UIElements.StyleFloat::op_Implicit(System.Single)
-static void __M2N_B12r4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef ValueTypeSizeAlign4<12> (*NativeMethod)(float __arg0, const MethodInfo* method);
-    *(ValueTypeSizeAlign4<12>*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(float*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
 // UnityEngine.Vector3 UnityEngine.Vector3::op_Multiply(System.Single,UnityEngine.Vector3)
 static void __M2N_B12r4B12(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -768,14 +760,6 @@ static void __M2N_B224i4(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 }
 
 
-// UnityEngine.UIElements.StyleColor UnityEngine.UIElements.StyleColor::op_Implicit(UnityEngine.Color)
-static void __M2N_B24B16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef ValueTypeSizeAlign4<24> (*NativeMethod)(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method);
-    *(ValueTypeSizeAlign4<24>*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
 // DG.Tweening.Plugins.Core.PathCore.ControlPoint DG.Tweening.Plugins.Core.PathCore.ControlPoint::op_Addition(DG.Tweening.Plugins.Core.PathCore.ControlPoint,UnityEngine.Vector3)
 static void __M2N_B24B24B12(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -808,14 +792,6 @@ static void __M2N_B24i4B12i4(const MethodInfo* method, uint16_t* argVarIndexs, S
 }
 
 
-// UnityEngine.UIElements.StyleSheets.StyleValue UnityEngine.UIElements.StyleSheets.StyleValue::Create(UnityEngine.UIElements.StyleSheets.StylePropertyID,UnityEngine.Color)
-static void __M2N_B24i4B16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef ValueTypeSizeAlign4<24> (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method);
-    *(ValueTypeSizeAlign4<24>*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
 // T System.Nullable`1::GetValueOrDefault(T)
 static void __M2N_B24i4B24(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -845,14 +821,6 @@ static void __M2N_B24i4i4i4(const MethodInfo* method, uint16_t* argVarIndexs, St
 {
     typedef ValueTypeSizeAlign4<24> (*NativeMethod)(int32_t __arg0, int32_t __arg1, int32_t __arg2, const MethodInfo* method);
     *(ValueTypeSizeAlign4<24>*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), method);
-}
-
-
-// UnityEngine.UIElements.StyleSheets.StyleValue UnityEngine.UIElements.StyleSheets.StyleValue::Create(UnityEngine.UIElements.StyleSheets.StylePropertyID,System.Single)
-static void __M2N_B24i4r4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef ValueTypeSizeAlign4<24> (*NativeMethod)(int32_t __arg0, float __arg1, const MethodInfo* method);
-    *(ValueTypeSizeAlign4<24>*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(float*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -1184,7 +1152,7 @@ static void __M2N_B4u4(const MethodInfo* method, uint16_t* argVarIndexs, StackOb
 }
 
 
-// System.Diagnostics.Tracing.SessionMask System.Diagnostics.Tracing.SessionMask::FromEventKeywords(System.UInt64)
+// Microsoft.CSharp.RuntimeBinder.Semantics.ConstVal Microsoft.CSharp.RuntimeBinder.Semantics.ConstVal::Get(System.UInt64)
 static void __M2N_B4u8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef ValueTypeSizeAlign4<4> (*NativeMethod)(uint64_t __arg0, const MethodInfo* method);
@@ -1560,14 +1528,6 @@ static void __M2N_B8i4i4i4i4(const MethodInfo* method, uint16_t* argVarIndexs, S
 }
 
 
-// UnityEngine.Yoga.YogaSize UnityEngine.Yoga.MeasureFunction::Invoke(UnityEngine.Yoga.YogaNode,System.Single,UnityEngine.Yoga.YogaMeasureMode,System.Single,UnityEngine.Yoga.YogaMeasureMode)
-static void __M2N_B8i4i4r4i4r4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef ValueTypeSizeAlign4<8> (*NativeMethod)(int32_t __arg0, int32_t __arg1, float __arg2, int32_t __arg3, float __arg4, int32_t __arg5, const MethodInfo* method);
-    *(ValueTypeSizeAlign4<8>*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(float*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), *(float*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), method);
-}
-
-
 // System.SequencePosition System.Buffers.ReadOnlySequence`1::GetPosition(System.Int64)
 static void __M2N_B8i4i8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -1581,14 +1541,6 @@ static void __M2N_B8i4i8B8(const MethodInfo* method, uint16_t* argVarIndexs, Sta
 {
     typedef ValueTypeSizeAlign4<8> (*NativeMethod)(int32_t __arg0, int64_t __arg1, ValueTypeSizeAlign4<8> __arg2, const MethodInfo* method);
     *(ValueTypeSizeAlign4<8>*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int64_t*)(localVarBase+argVarIndexs[1]), *(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[2]), method);
-}
-
-
-// UnityEngine.Yoga.YogaSize UnityEngine.Yoga.YogaNode::MeasureInternal(UnityEngine.Yoga.YogaNode,System.Single,UnityEngine.Yoga.YogaMeasureMode,System.Single,UnityEngine.Yoga.YogaMeasureMode)
-static void __M2N_B8i4r4i4r4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef ValueTypeSizeAlign4<8> (*NativeMethod)(int32_t __arg0, float __arg1, int32_t __arg2, float __arg3, int32_t __arg4, const MethodInfo* method);
-    *(ValueTypeSizeAlign4<8>*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(float*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(float*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), method);
 }
 
 
@@ -1808,7 +1760,7 @@ static void __M2N_C32i4(const MethodInfo* method, uint16_t* argVarIndexs, StackO
 }
 
 
-// System.Collections.Generic.Dictionary`2/Enumerator<TKey,TValue> System.Collections.Generic.Dictionary`2::GetEnumerator()
+// System.Collections.Generic.List`1/Enumerator<T> System.Collections.Generic.List`1::GetEnumerator()
 static void __M2N_C40i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef ValueTypeSizeAlign8<40> (*NativeMethod)(int32_t __arg0, const MethodInfo* method);
@@ -2080,38 +2032,6 @@ static void __M2N_i1B16(const MethodInfo* method, uint16_t* argVarIndexs, StackO
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i1B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i1C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i1C8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i1i1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(int8_t __arg0, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int8_t*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
 // System.SByte System.Math::Max(System.SByte,System.SByte)
 static void __M2N_i1i1i1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -2144,51 +2064,11 @@ static void __M2N_i1i4B12(const MethodInfo* method, uint16_t* argVarIndexs, Stac
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i1i4B16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i1i4B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i1i4C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i1i4C8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
 // T System.Nullable`1::GetValueOrDefault(T)
 static void __M2N_i1i4i1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int8_t (*NativeMethod)(int32_t __arg0, int8_t __arg1, const MethodInfo* method);
     *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int8_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i1i4i2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(int32_t __arg0, int16_t __arg1, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int16_t*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -2229,46 +2109,6 @@ static void __M2N_i1i4r8(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 {
     typedef int8_t (*NativeMethod)(int32_t __arg0, double __arg1, const MethodInfo* method);
     *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(double*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i1i4u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(int32_t __arg0, uint8_t __arg1, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint8_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i1i4u2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(int32_t __arg0, uint16_t __arg1, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint16_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i1i4u4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(int32_t __arg0, uint32_t __arg1, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint32_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i1i4u8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(int32_t __arg0, uint64_t __arg1, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint64_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i1i4X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -2328,14 +2168,6 @@ static void __M2N_i1u8(const MethodInfo* method, uint16_t* argVarIndexs, StackOb
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i1X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int8_t (*NativeMethod)(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method);
-    *(int8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
 // System.Int16 System.Numerics.ConstantHelper::GetInt16WithAllBitsSet()
 static void __M2N_i2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -2357,30 +2189,6 @@ static void __M2N_i2B16(const MethodInfo* method, uint16_t* argVarIndexs, StackO
 {
     typedef int16_t (*NativeMethod)(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method);
     *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i2B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i2C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i2C8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[0]), method);
 }
 
 
@@ -2421,46 +2229,6 @@ static void __M2N_i2i4B12(const MethodInfo* method, uint16_t* argVarIndexs, Stac
 {
     typedef int16_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, const MethodInfo* method);
     *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<12>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i2i4B16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i2i4B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i2i4C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i2i4C8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i2i4i1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(int32_t __arg0, int8_t __arg1, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int8_t*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -2509,46 +2277,6 @@ static void __M2N_i2i4r8(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 {
     typedef int16_t (*NativeMethod)(int32_t __arg0, double __arg1, const MethodInfo* method);
     *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(double*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i2i4u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(int32_t __arg0, uint8_t __arg1, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint8_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i2i4u2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(int32_t __arg0, uint16_t __arg1, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint16_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i2i4u4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(int32_t __arg0, uint32_t __arg1, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint32_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i2i4u8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(int32_t __arg0, uint64_t __arg1, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint64_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i2i4X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -2605,14 +2333,6 @@ static void __M2N_i2u8(const MethodInfo* method, uint16_t* argVarIndexs, StackOb
 {
     typedef int16_t (*NativeMethod)(uint64_t __arg0, const MethodInfo* method);
     *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(uint64_t*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i2X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int16_t (*NativeMethod)(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method);
-    *(int16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[0]), method);
 }
 
 
@@ -2952,27 +2672,11 @@ static void __M2N_i4B8B8B28i4r4(const MethodInfo* method, uint16_t* argVarIndexs
 }
 
 
-// UnityEngine.Experimental.TerrainAPI.TerrainUtility/TerrainMap UnityEngine.Experimental.TerrainAPI.TerrainUtility/TerrainMap::CreateFromPlacement(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Experimental.TerrainAPI.TerrainUtility/TerrainMap/TerrainFilter,System.Boolean)
-static void __M2N_i4B8B8i4u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int32_t (*NativeMethod)(ValueTypeSizeAlign4<8> __arg0, ValueTypeSizeAlign4<8> __arg1, int32_t __arg2, uint8_t __arg3, const MethodInfo* method);
-    *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(uint8_t*)(localVarBase+argVarIndexs[3]), method);
-}
-
-
 // ILRuntime.Mono.Cecil.PE.Image ILRuntime.Mono.Cecil.PE.ImageReader::ReadImage(ILRuntime.Mono.Disposable`1<System.IO.Stream>,System.String)
 static void __M2N_i4B8i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(ValueTypeSizeAlign4<8> __arg0, int32_t __arg1, const MethodInfo* method);
     *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// System.Tuple`2<T1,T2> System.Tuple::Create<T1,T2>(T1,T2)
-static void __M2N_i4B8u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int32_t (*NativeMethod)(ValueTypeSizeAlign4<8> __arg0, uint8_t __arg1, const MethodInfo* method);
-    *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[0]), *(uint8_t*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -3048,7 +2752,7 @@ static void __M2N_i4i2(const MethodInfo* method, uint16_t* argVarIndexs, StackOb
 }
 
 
-// System.Int32 <>f__AnonymousType0`1::GetHashCode()
+// System.String Locale::GetText(System.String)
 static void __M2N_i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, const MethodInfo* method);
@@ -3528,7 +3232,7 @@ static void __M2N_i4i4B20B12i4S2i4i4(const MethodInfo* method, uint16_t* argVarI
 }
 
 
-// System.Int32 System.Comparison`1::Invoke(T,T)
+// System.Int32 System.Collections.Generic.Comparer`1::Compare(T,T)
 static void __M2N_i4i4B20B20(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<20> __arg1, ValueTypeSizeAlign4<20> __arg2, const MethodInfo* method);
@@ -3792,7 +3496,7 @@ static void __M2N_i4i4B44B44i4i4(const MethodInfo* method, uint16_t* argVarIndex
 }
 
 
-// System.Int32 System.Collections.Generic.IComparer`1::Compare(T,T)
+// System.Int32 System.Collections.Generic.Comparer`1::Compare(T,T)
 static void __M2N_i4i4B4B4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<4> __arg1, ValueTypeSizeAlign4<4> __arg2, const MethodInfo* method);
@@ -4200,7 +3904,7 @@ static void __M2N_i4i4C16i4(const MethodInfo* method, uint16_t* argVarIndexs, St
 }
 
 
-// System.IAsyncResult UnityEngine.Windows.WebCam.PhotoCapture/OnPhotoModeStartedCallback::BeginInvoke(UnityEngine.Windows.WebCam.PhotoCapture/PhotoCaptureResult,System.AsyncCallback,System.Object)
+// System.Int32 System.Collections.Generic.List`1::IndexOf(T,System.Int32,System.Int32)
 static void __M2N_i4i4C16i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, int32_t __arg2, int32_t __arg3, const MethodInfo* method);
@@ -4208,7 +3912,7 @@ static void __M2N_i4i4C16i4i4(const MethodInfo* method, uint16_t* argVarIndexs, 
 }
 
 
-// System.IAsyncResult UnityEngine.Windows.WebCam.PhotoCapture/OnCapturedToMemoryCallback::BeginInvoke(UnityEngine.Windows.WebCam.PhotoCapture/PhotoCaptureResult,UnityEngine.Windows.WebCam.PhotoCaptureFrame,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Func`3::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static void __M2N_i4i4C16i4i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, int32_t __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method);
@@ -4336,7 +4040,7 @@ static void __M2N_i4i4C24i4i4i4i4(const MethodInfo* method, uint16_t* argVarInde
 }
 
 
-// System.IAsyncResult UnityEngine.Windows.Speech.PhraseRecognizer/PhraseRecognizedDelegate::BeginInvoke(UnityEngine.Windows.Speech.PhraseRecognizedEventArgs,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Action`1::BeginInvoke(T,System.AsyncCallback,System.Object)
 static void __M2N_i4i4C32i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<32> __arg1, int32_t __arg2, int32_t __arg3, const MethodInfo* method);
@@ -4728,14 +4432,6 @@ static void __M2N_i4i4i4B16r4(const MethodInfo* method, uint16_t* argVarIndexs, 
 }
 
 
-// System.IAsyncResult UnityEngine.Experimental.TerrainAPI.TerrainCallbacks/HeightmapChangedCallback::BeginInvoke(UnityEngine.Terrain,UnityEngine.RectInt,System.Boolean,System.AsyncCallback,System.Object)
-static void __M2N_i4i4i4B16u1i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int32_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, ValueTypeSizeAlign4<16> __arg2, uint8_t __arg3, int32_t __arg4, int32_t __arg5, const MethodInfo* method);
-    *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[2]), *(uint8_t*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), method);
-}
-
-
 // System.IAsyncResult System.Action`2::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static void __M2N_i4i4i4B20i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -4925,14 +4621,6 @@ static void __M2N_i4i4i4i4B16r4(const MethodInfo* method, uint16_t* argVarIndexs
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, int32_t __arg2, ValueTypeSizeAlign4<16> __arg3, float __arg4, const MethodInfo* method);
     *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[3]), *(float*)(localVarBase+argVarIndexs[4]), method);
-}
-
-
-// System.IAsyncResult UnityEngine.Experimental.TerrainAPI.TerrainCallbacks/TextureChangedCallback::BeginInvoke(UnityEngine.Terrain,System.String,UnityEngine.RectInt,System.Boolean,System.AsyncCallback,System.Object)
-static void __M2N_i4i4i4i4B16u1i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int32_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, int32_t __arg2, ValueTypeSizeAlign4<16> __arg3, uint8_t __arg4, int32_t __arg5, int32_t __arg6, const MethodInfo* method);
-    *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[3]), *(uint8_t*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), *(int32_t*)(localVarBase+argVarIndexs[6]), method);
 }
 
 
@@ -5472,7 +5160,7 @@ static void __M2N_i4i4i4i4u1i4i4i4i4i4i4(const MethodInfo* method, uint16_t* arg
 }
 
 
-// System.IAsyncResult Microsoft.Win32.UnsafeNativeMethods/ManifestEtw/EtwEnableCallback::BeginInvoke(System.Guid&,System.Int32,System.Byte,System.Int64,System.Int64,Microsoft.Win32.UnsafeNativeMethods/ManifestEtw/EVENT_FILTER_DESCRIPTOR*,System.Void*,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Runtime.Interop.UnsafeNativeMethods/EtwEnableCallback::BeginInvoke(System.Guid&,System.Int32,System.Byte,System.Int64,System.Int64,System.Void*,System.Void*,System.AsyncCallback,System.Object)
 static void __M2N_i4i4i4i4u1i8i8i4i4i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, int32_t __arg2, uint8_t __arg3, int64_t __arg4, int64_t __arg5, int32_t __arg6, int32_t __arg7, int32_t __arg8, int32_t __arg9, const MethodInfo* method);
@@ -5536,19 +5224,11 @@ static void __M2N_i4i4i4i8(const MethodInfo* method, uint16_t* argVarIndexs, Sta
 }
 
 
-// System.IAsyncResult UnityEngine.Video.VideoPlayer/FrameReadyEventHandler::BeginInvoke(UnityEngine.Video.VideoPlayer,System.Int64,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Action`2::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static void __M2N_i4i4i4i8i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, int64_t __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method);
     *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int64_t*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), method);
-}
-
-
-// System.IAsyncResult UnityEngine.Analytics.AnalyticsSessionInfo/SessionStateChanged::BeginInvoke(UnityEngine.Analytics.AnalyticsSessionState,System.Int64,System.Int64,System.Boolean,System.AsyncCallback,System.Object)
-static void __M2N_i4i4i4i8i8u1i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int32_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, int64_t __arg2, int64_t __arg3, uint8_t __arg4, int32_t __arg5, int32_t __arg6, const MethodInfo* method);
-    *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int64_t*)(localVarBase+argVarIndexs[2]), *(int64_t*)(localVarBase+argVarIndexs[3]), *(uint8_t*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), *(int32_t*)(localVarBase+argVarIndexs[6]), method);
 }
 
 
@@ -5600,14 +5280,6 @@ static void __M2N_i4i4i4r4i4i4i4B20(const MethodInfo* method, uint16_t* argVarIn
 }
 
 
-// System.IAsyncResult UnityEngine.Yoga.MeasureFunction::BeginInvoke(UnityEngine.Yoga.YogaNode,System.Single,UnityEngine.Yoga.YogaMeasureMode,System.Single,UnityEngine.Yoga.YogaMeasureMode,System.AsyncCallback,System.Object)
-static void __M2N_i4i4i4r4i4r4i4i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int32_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, float __arg2, int32_t __arg3, float __arg4, int32_t __arg5, int32_t __arg6, int32_t __arg7, const MethodInfo* method);
-    *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(float*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), *(float*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), *(int32_t*)(localVarBase+argVarIndexs[6]), *(int32_t*)(localVarBase+argVarIndexs[7]), method);
-}
-
-
 // DG.Tweening.Core.TweenerCore`3<System.Single,System.Single,DG.Tweening.Plugins.Options.FloatOptions> DG.Tweening.DOTweenModuleAudio::DOSetFloat(UnityEngine.Audio.AudioMixer,System.String,System.Single,System.Single)
 static void __M2N_i4i4i4r4r4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -5621,14 +5293,6 @@ static void __M2N_i4i4i4r4r4i4(const MethodInfo* method, uint16_t* argVarIndexs,
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, float __arg2, float __arg3, int32_t __arg4, const MethodInfo* method);
     *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(float*)(localVarBase+argVarIndexs[2]), *(float*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), method);
-}
-
-
-// System.IAsyncResult UnityEngine.Yoga.BaselineFunction::BeginInvoke(UnityEngine.Yoga.YogaNode,System.Single,System.Single,System.AsyncCallback,System.Object)
-static void __M2N_i4i4i4r4r4i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int32_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, float __arg2, float __arg3, int32_t __arg4, int32_t __arg5, const MethodInfo* method);
-    *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(float*)(localVarBase+argVarIndexs[2]), *(float*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), method);
 }
 
 
@@ -5664,7 +5328,7 @@ static void __M2N_i4i4i4r8(const MethodInfo* method, uint16_t* argVarIndexs, Sta
 }
 
 
-// System.IAsyncResult UnityEngine.Video.VideoPlayer/TimeEventHandler::BeginInvoke(UnityEngine.Video.VideoPlayer,System.Double,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Action`2::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static void __M2N_i4i4i4r8i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, double __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method);
@@ -5768,7 +5432,7 @@ static void __M2N_i4i4i4u1r4(const MethodInfo* method, uint16_t* argVarIndexs, S
 }
 
 
-// System.Resources.ResourceSet System.Resources.ResourceManager::GetResourceSet(System.Globalization.CultureInfo,System.Boolean,System.Boolean)
+// System.Resources.ResourceSet System.Resources.ResourceManager::InternalGetResourceSet(System.Globalization.CultureInfo,System.Boolean,System.Boolean)
 static void __M2N_i4i4i4u1u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, uint8_t __arg2, uint8_t __arg3, const MethodInfo* method);
@@ -6408,14 +6072,6 @@ static void __M2N_i4i4u1u1i4i4(const MethodInfo* method, uint16_t* argVarIndexs,
 }
 
 
-// System.IAsyncResult System.Action`3::BeginInvoke(T1,T2,T3,System.AsyncCallback,System.Object)
-static void __M2N_i4i4u1u1i4i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int32_t (*NativeMethod)(int32_t __arg0, uint8_t __arg1, uint8_t __arg2, int32_t __arg3, int32_t __arg4, int32_t __arg5, const MethodInfo* method);
-    *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint8_t*)(localVarBase+argVarIndexs[1]), *(uint8_t*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), method);
-}
-
-
 // DG.Tweening.Core.TweenerCore`3<UnityEngine.Vector3,DG.Tweening.Plugins.Core.PathCore.Path,DG.Tweening.Plugins.Options.PathOptions> DG.Tweening.DOTweenModuleUtils/Physics::CreateDOTweenPathTween(UnityEngine.MonoBehaviour,System.Boolean,System.Boolean,DG.Tweening.Plugins.Core.PathCore.Path,System.Single,DG.Tweening.PathMode)
 static void __M2N_i4i4u1u1i4r4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -6464,7 +6120,7 @@ static void __M2N_i4i4u2i4i4(const MethodInfo* method, uint16_t* argVarIndexs, S
 }
 
 
-// System.IAsyncResult System.Action`2::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Func`3::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static void __M2N_i4i4u2i4i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, uint16_t __arg1, int32_t __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method);
@@ -6648,7 +6304,7 @@ static void __M2N_i4i4u8i4(const MethodInfo* method, uint16_t* argVarIndexs, Sta
 }
 
 
-// System.Int32 System.Collections.Generic.List`1::IndexOf(T,System.Int32,System.Int32)
+// System.IAsyncResult System.Func`2::BeginInvoke(T,System.AsyncCallback,System.Object)
 static void __M2N_i4i4u8i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, uint64_t __arg1, int32_t __arg2, int32_t __arg3, const MethodInfo* method);
@@ -6656,7 +6312,7 @@ static void __M2N_i4i4u8i4i4(const MethodInfo* method, uint16_t* argVarIndexs, S
 }
 
 
-// System.IAsyncResult System.Func`3::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Action`2::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static void __M2N_i4i4u8i4i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, uint64_t __arg1, int32_t __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method);
@@ -6725,14 +6381,6 @@ static void __M2N_i4i4X1(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 {
     typedef int32_t (*NativeMethod)(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method);
     *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// System.IAsyncResult System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::BeginInvoke(ValueType,System.AsyncCallback,System.Object)
-static void __M2N_i4i4X1i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int32_t (*NativeMethod)(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, int32_t __arg2, int32_t __arg3, const MethodInfo* method);
-    *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), method);
 }
 
 
@@ -6920,14 +6568,6 @@ static void __M2N_i4u2i4(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 }
 
 
-// T UnityEngine.UIElements.KeyboardEventBase`1::GetPooled(System.Char,UnityEngine.KeyCode,UnityEngine.EventModifiers)
-static void __M2N_i4u2i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int32_t (*NativeMethod)(uint16_t __arg0, int32_t __arg1, int32_t __arg2, const MethodInfo* method);
-    *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(uint16_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), method);
-}
-
-
 // System.Int32 System.Char::ConvertToUtf32(System.Char,System.Char)
 static void __M2N_i4u2u2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -6992,14 +6632,6 @@ static void __M2N_i4u8i4i4(const MethodInfo* method, uint16_t* argVarIndexs, Sta
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i4X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int32_t (*NativeMethod)(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method);
-    *(int32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
 // System.Int64 DotNetExtension.DateTimeEx::GetTotalSeconds()
 static void __M2N_i8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -7021,22 +6653,6 @@ static void __M2N_i8B16(const MethodInfo* method, uint16_t* argVarIndexs, StackO
 {
     typedef int64_t (*NativeMethod)(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method);
     *(int64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i8B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int64_t (*NativeMethod)(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method);
-    *(int64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i8C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int64_t (*NativeMethod)(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method);
-    *(int64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[0]), method);
 }
 
 
@@ -7077,30 +6693,6 @@ static void __M2N_i8i4B12(const MethodInfo* method, uint16_t* argVarIndexs, Stac
 {
     typedef int64_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, const MethodInfo* method);
     *(int64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<12>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i8i4B16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int64_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method);
-    *(int64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i8i4B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int64_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method);
-    *(int64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i8i4C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int64_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method);
-    *(int64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -7240,14 +6832,6 @@ static void __M2N_i8i4u8(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_i8i4X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int64_t (*NativeMethod)(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method);
-    *(int64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
 // System.Int64 System.Math::Abs(System.Int64)
 static void __M2N_i8i8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -7309,14 +6893,6 @@ static void __M2N_i8u8(const MethodInfo* method, uint16_t* argVarIndexs, StackOb
 {
     typedef int64_t (*NativeMethod)(uint64_t __arg0, const MethodInfo* method);
     *(int64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(uint64_t*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_i8X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef int64_t (*NativeMethod)(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method);
-    *(int64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[0]), method);
 }
 
 
@@ -7541,14 +7117,6 @@ static void __M2N_r4i4i4r4i4(const MethodInfo* method, uint16_t* argVarIndexs, S
 {
     typedef float (*NativeMethod)(int32_t __arg0, int32_t __arg1, float __arg2, int32_t __arg3, const MethodInfo* method);
     *(float*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(float*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), method);
-}
-
-
-// System.Single UnityEngine.Yoga.BaselineFunction::Invoke(UnityEngine.Yoga.YogaNode,System.Single,System.Single)
-static void __M2N_r4i4i4r4r4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef float (*NativeMethod)(int32_t __arg0, int32_t __arg1, float __arg2, float __arg3, const MethodInfo* method);
-    *(float*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(float*)(localVarBase+argVarIndexs[2]), *(float*)(localVarBase+argVarIndexs[3]), method);
 }
 
 
@@ -8640,14 +8208,6 @@ static void __M2N_u1B8i4B8i4i4u1i4(const MethodInfo* method, uint16_t* argVarInd
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u1C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint8_t (*NativeMethod)(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method);
-    *(uint8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
 // System.Boolean Cysharp.Text.ShimsExtensions::TryFormat(System.DateTimeOffset,System.Span`1<System.Char>,System.Int32&,System.ReadOnlySpan`1<System.Char>)
 static void __M2N_u1C16B12i4B12(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -8677,14 +8237,6 @@ static void __M2N_u1C24C24(const MethodInfo* method, uint16_t* argVarIndexs, Sta
 {
     typedef uint8_t (*NativeMethod)(ValueTypeSizeAlign8<24> __arg0, ValueTypeSizeAlign8<24> __arg1, const MethodInfo* method);
     *(uint8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<24>*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<24>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u1C8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint8_t (*NativeMethod)(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method);
-    *(uint8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[0]), method);
 }
 
 
@@ -8885,14 +8437,6 @@ static void __M2N_u1i4B12i4B12i4(const MethodInfo* method, uint16_t* argVarIndex
 {
     typedef uint8_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, int32_t __arg2, ValueTypeSizeAlign4<12> __arg3, int32_t __arg4, const MethodInfo* method);
     *(uint8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<12>*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(ValueTypeSizeAlign4<12>*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), method);
-}
-
-
-// System.Boolean UnityEngine.Tilemaps.TileBase::GetTileAnimationData(UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileAnimationData&)
-static void __M2N_u1i4B12i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint8_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, int32_t __arg2, int32_t __arg3, const MethodInfo* method);
-    *(uint8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<12>*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), method);
 }
 
 
@@ -9512,7 +9056,7 @@ static void __M2N_u1i4i2i4(const MethodInfo* method, uint16_t* argVarIndexs, Sta
 }
 
 
-// System.Boolean <>f__AnonymousType0`1::Equals(System.Object)
+// System.Boolean Mono.RuntimeClassHandle::Equals(System.Object)
 static void __M2N_u1i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef uint8_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, const MethodInfo* method);
@@ -9744,7 +9288,7 @@ static void __M2N_u1i4i4i4u1i4(const MethodInfo* method, uint16_t* argVarIndexs,
 }
 
 
-// System.Boolean System.Diagnostics.Tracing.EventSource::IsEnabled(System.Diagnostics.Tracing.EventLevel,System.Diagnostics.Tracing.EventKeywords)
+// System.Boolean System.Collections.Generic.Dictionary`2::TryAdd(TKey,TValue)
 static void __M2N_u1i4i4i8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef uint8_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, int64_t __arg2, const MethodInfo* method);
@@ -9757,14 +9301,6 @@ static void __M2N_u1i4i4i8i8i8C8i4(const MethodInfo* method, uint16_t* argVarInd
 {
     typedef uint8_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, int64_t __arg2, int64_t __arg3, int64_t __arg4, ValueTypeSizeAlign8<8> __arg5, int32_t __arg6, const MethodInfo* method);
     *(uint8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int64_t*)(localVarBase+argVarIndexs[2]), *(int64_t*)(localVarBase+argVarIndexs[3]), *(int64_t*)(localVarBase+argVarIndexs[4]), *(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[5]), *(int32_t*)(localVarBase+argVarIndexs[6]), method);
-}
-
-
-// System.Boolean System.Diagnostics.Tracing.EventSource::IsEnabled(System.Diagnostics.Tracing.EventLevel,System.Diagnostics.Tracing.EventKeywords,System.Diagnostics.Tracing.EventChannel)
-static void __M2N_u1i4i4i8u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint8_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, int64_t __arg2, uint8_t __arg3, const MethodInfo* method);
-    *(uint8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int64_t*)(localVarBase+argVarIndexs[2]), *(uint8_t*)(localVarBase+argVarIndexs[3]), method);
 }
 
 
@@ -9805,14 +9341,6 @@ static void __M2N_u1i4i4u1i4(const MethodInfo* method, uint16_t* argVarIndexs, S
 {
     typedef uint8_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, uint8_t __arg2, int32_t __arg3, const MethodInfo* method);
     *(uint8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(uint8_t*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), method);
-}
-
-
-// System.Boolean System.Diagnostics.Tracing.ActivityFilter::PassesActivityFilter(System.Diagnostics.Tracing.ActivityFilter,System.Guid*,System.Boolean,System.Diagnostics.Tracing.EventSource,System.Int32)
-static void __M2N_u1i4i4u1i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint8_t (*NativeMethod)(int32_t __arg0, int32_t __arg1, uint8_t __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method);
-    *(uint8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(uint8_t*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), method);
 }
 
 
@@ -10064,7 +9592,7 @@ static void __M2N_u1i4u1i4i4i4(const MethodInfo* method, uint16_t* argVarIndexs,
 }
 
 
-// System.Boolean System.Diagnostics.Tracing.EventProvider::IsEnabled(System.Byte,System.Int64)
+// System.Boolean System.Runtime.Diagnostics.DiagnosticsEventProvider::IsEnabled(System.Byte,System.Int64)
 static void __M2N_u1i4u1i8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef uint8_t (*NativeMethod)(int32_t __arg0, uint8_t __arg1, int64_t __arg2, const MethodInfo* method);
@@ -10552,14 +10080,6 @@ static void __M2N_u1u8B12i4S2(const MethodInfo* method, uint16_t* argVarIndexs, 
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u1X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint8_t (*NativeMethod)(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method);
-    *(uint8_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
 // System.Char System.IO.MonoIO::get_VolumeSeparatorChar()
 static void __M2N_u2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -10592,30 +10112,6 @@ static void __M2N_u2B16(const MethodInfo* method, uint16_t* argVarIndexs, StackO
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u2B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u2C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u2C8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
 // System.Char System.Convert::ToChar(System.SByte)
 static void __M2N_u2i1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -10645,54 +10141,6 @@ static void __M2N_u2i4B12(const MethodInfo* method, uint16_t* argVarIndexs, Stac
 {
     typedef uint16_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, const MethodInfo* method);
     *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<12>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u2i4B16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u2i4B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u2i4C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u2i4C8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u2i4i1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(int32_t __arg0, int8_t __arg1, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int8_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u2i4i2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(int32_t __arg0, int16_t __arg1, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int16_t*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -10744,43 +10192,11 @@ static void __M2N_u2i4r8(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u2i4u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(int32_t __arg0, uint8_t __arg1, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint8_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
 // System.Char System.Globalization.TextInfo::ToLower(System.Char)
 static void __M2N_u2i4u2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef uint16_t (*NativeMethod)(int32_t __arg0, uint16_t __arg1, const MethodInfo* method);
     *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint16_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u2i4u4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(int32_t __arg0, uint32_t __arg1, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint32_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u2i4u8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(int32_t __arg0, uint64_t __arg1, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint64_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u2i4X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -10864,14 +10280,6 @@ static void __M2N_u2u8(const MethodInfo* method, uint16_t* argVarIndexs, StackOb
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u2X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint16_t (*NativeMethod)(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method);
-    *(uint16_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
 // System.UInt32 System.Threading.TimeoutHelper::GetTime()
 static void __M2N_u4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -10901,38 +10309,6 @@ static void __M2N_u4B16(const MethodInfo* method, uint16_t* argVarIndexs, StackO
 {
     typedef uint32_t (*NativeMethod)(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method);
     *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// System.UInt32 System.Diagnostics.Tracing.SessionMask::op_Explicit(System.Diagnostics.Tracing.SessionMask)
-static void __M2N_u4B4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(ValueTypeSizeAlign4<4> __arg0, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<4>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u4B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u4C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u4C8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[0]), method);
 }
 
 
@@ -10976,43 +10352,11 @@ static void __M2N_u4i4B12i4(const MethodInfo* method, uint16_t* argVarIndexs, St
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u4i4B16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
 // TValue System.Collections.Generic.Dictionary`2::get_Item(TKey)
 static void __M2N_u4i4B4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef uint32_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<4> __arg1, const MethodInfo* method);
     *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<4>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u4i4B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u4i4C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u4i4C8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -11029,22 +10373,6 @@ static void __M2N_u4i4C8i4i4i4i4i4(const MethodInfo* method, uint16_t* argVarInd
 {
     typedef uint32_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, int32_t __arg2, int32_t __arg3, int32_t __arg4, int32_t __arg5, int32_t __arg6, const MethodInfo* method);
     *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), *(int32_t*)(localVarBase+argVarIndexs[6]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u4i4i1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(int32_t __arg0, int8_t __arg1, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int8_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u4i4i2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(int32_t __arg0, int16_t __arg1, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int16_t*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -11112,22 +10440,6 @@ static void __M2N_u4i4r8(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u4i4u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(int32_t __arg0, uint8_t __arg1, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint8_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u4i4u2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(int32_t __arg0, uint16_t __arg1, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint16_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
 // System.UInt32 Mono.Math.BigInteger::op_Modulus(Mono.Math.BigInteger,System.UInt32)
 static void __M2N_u4i4u4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -11141,22 +10453,6 @@ static void __M2N_u4i4u4i4(const MethodInfo* method, uint16_t* argVarIndexs, Sta
 {
     typedef uint32_t (*NativeMethod)(int32_t __arg0, uint32_t __arg1, int32_t __arg2, const MethodInfo* method);
     *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint32_t*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u4i4u8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(int32_t __arg0, uint64_t __arg1, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint64_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u4i4X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -11248,14 +10544,6 @@ static void __M2N_u4u8(const MethodInfo* method, uint16_t* argVarIndexs, StackOb
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u4X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint32_t (*NativeMethod)(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method);
-    *(uint32_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
 // System.UInt64 System.Numerics.ConstantHelper::GetUInt64WithAllBitsSet()
 static void __M2N_u8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -11277,38 +10565,6 @@ static void __M2N_u8B16(const MethodInfo* method, uint16_t* argVarIndexs, StackO
 {
     typedef uint64_t (*NativeMethod)(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method);
     *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// System.UInt64 System.Diagnostics.Tracing.SessionMask::op_Explicit(System.Diagnostics.Tracing.SessionMask)
-static void __M2N_u8B4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(ValueTypeSizeAlign4<4> __arg0, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<4>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u8B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u8C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[0]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u8C8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[0]), method);
 }
 
 
@@ -11341,54 +10597,6 @@ static void __M2N_u8i4B12(const MethodInfo* method, uint16_t* argVarIndexs, Stac
 {
     typedef uint64_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, const MethodInfo* method);
     *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<12>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u8i4B16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u8i4B8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<8>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u8i4C16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<16>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u8i4C8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign8<8>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u8i4i1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(int32_t __arg0, int8_t __arg1, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int8_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u8i4i2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(int32_t __arg0, int16_t __arg1, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int16_t*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -11440,43 +10648,11 @@ static void __M2N_u8i4r8(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u8i4u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(int32_t __arg0, uint8_t __arg1, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint8_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u8i4u2(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(int32_t __arg0, uint16_t __arg1, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint16_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u8i4u4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(int32_t __arg0, uint32_t __arg1, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint32_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
 // T System.Nullable`1::GetValueOrDefault(T)
 static void __M2N_u8i4u8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef uint64_t (*NativeMethod)(int32_t __arg0, uint64_t __arg1, const MethodInfo* method);
     *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(uint64_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static void __M2N_u8i4X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[1]), method);
 }
 
 
@@ -11557,14 +10733,6 @@ static void __M2N_u8u8u8i4(const MethodInfo* method, uint16_t* argVarIndexs, Sta
 {
     typedef uint64_t (*NativeMethod)(uint64_t __arg0, uint64_t __arg1, int32_t __arg2, const MethodInfo* method);
     *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(uint64_t*)(localVarBase+argVarIndexs[0]), *(uint64_t*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), method);
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1::Cast<ValueType>(ValueType)
-static void __M2N_u8X1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef uint64_t (*NativeMethod)(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method);
-    *(uint64_t*)ret = ((NativeMethod)(method->methodPointerCallByInterp))(*(WebGLSpeicalValueType<1>*)(localVarBase+argVarIndexs[0]), method);
 }
 
 
@@ -11672,7 +10840,7 @@ static void __M2N_vB12u4(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 }
 
 
-// System.Void System.Diagnostics.Tracing.EventSource::SetCurrentThreadActivityId(System.Guid)
+// System.Void UnityEngine.Gizmos::set_color(UnityEngine.Color)
 static void __M2N_vB16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef void (*NativeMethod)(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method);
@@ -11725,14 +10893,6 @@ static void __M2N_vB4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackO
 {
     typedef void (*NativeMethod)(ValueTypeSizeAlign4<4> __arg0, int32_t __arg1, const MethodInfo* method);
     ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<4>*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// System.Void UnityEngine.GUI::set_matrix(UnityEngine.Matrix4x4)
-static void __M2N_vB64(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(ValueTypeSizeAlign4<64> __arg0, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(ValueTypeSizeAlign4<64>*)(localVarBase+argVarIndexs[0]), method);
 }
 
 
@@ -11832,14 +10992,6 @@ static void __M2N_vi4B12B12r4(const MethodInfo* method, uint16_t* argVarIndexs, 
 }
 
 
-// System.Void UnityEngine.ParticleSystem::Emit(UnityEngine.Vector3,UnityEngine.Vector3,System.Single,System.Single,UnityEngine.Color32)
-static void __M2N_vi4B12B12r4r4B4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, ValueTypeSizeAlign4<12> __arg2, float __arg3, float __arg4, ValueTypeSizeAlign4<4> __arg5, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<12>*)(localVarBase+argVarIndexs[1]), *(ValueTypeSizeAlign4<12>*)(localVarBase+argVarIndexs[2]), *(float*)(localVarBase+argVarIndexs[3]), *(float*)(localVarBase+argVarIndexs[4]), *(ValueTypeSizeAlign4<4>*)(localVarBase+argVarIndexs[5]), method);
-}
-
-
 // System.Void UnityEngine.Transform::SetPositionAndRotation(UnityEngine.Vector3,UnityEngine.Quaternion)
 static void __M2N_vi4B12B16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -11928,22 +11080,6 @@ static void __M2N_vi4B12r4i4(const MethodInfo* method, uint16_t* argVarIndexs, S
 }
 
 
-// System.Void UnityEngine.ParticleSystem::Emit(UnityEngine.ParticleSystem/Particle)
-static void __M2N_vi4B132(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<132> __arg1, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<132>*)(localVarBase+argVarIndexs[1]), method);
-}
-
-
-// System.Void UnityEngine.ParticleSystem::Emit(UnityEngine.ParticleSystem/EmitParams,System.Int32)
-static void __M2N_vi4B144i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<144> __arg1, int32_t __arg2, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<144>*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), method);
-}
-
-
 // System.Void System.Security.AccessControl.ObjectAce::set_InheritedObjectAceType(System.Guid)
 static void __M2N_vi4B16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -12013,14 +11149,6 @@ static void __M2N_vi4B16i4i4u1u1(const MethodInfo* method, uint16_t* argVarIndex
 {
     typedef void (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, int32_t __arg2, int32_t __arg3, uint8_t __arg4, uint8_t __arg5, const MethodInfo* method);
     ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), *(uint8_t*)(localVarBase+argVarIndexs[4]), *(uint8_t*)(localVarBase+argVarIndexs[5]), method);
-}
-
-
-// System.Void System.Diagnostics.Tracing.ActivityFilter::UpdateKwdTriggers(System.Diagnostics.Tracing.ActivityFilter,System.Guid,System.Diagnostics.Tracing.EventSource,System.Diagnostics.Tracing.EventKeywords)
-static void __M2N_vi4B16i4i8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, int32_t __arg2, int64_t __arg3, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(int64_t*)(localVarBase+argVarIndexs[3]), method);
 }
 
 
@@ -12328,14 +11456,6 @@ static void __M2N_vi4B64(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 }
 
 
-// System.Void UnityEngine.GUIClip/ParentClipScope::.ctor(UnityEngine.Matrix4x4,UnityEngine.Rect)
-static void __M2N_vi4B64B16(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign4<64> __arg1, ValueTypeSizeAlign4<16> __arg2, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(ValueTypeSizeAlign4<64>*)(localVarBase+argVarIndexs[1]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[2]), method);
-}
-
-
 // System.Void UnityEngine.Rendering.CommandBuffer::SetViewProjectionMatrices(UnityEngine.Matrix4x4,UnityEngine.Matrix4x4)
 static void __M2N_vi4B64B64(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -12520,7 +11640,7 @@ static void __M2N_vi4C16(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 }
 
 
-// System.Void UnityEngine.Windows.WebCam.PhotoCapture/OnCapturedToMemoryCallback::Invoke(UnityEngine.Windows.WebCam.PhotoCapture/PhotoCaptureResult,UnityEngine.Windows.WebCam.PhotoCaptureFrame)
+// System.Void System.Xml.Schema.XsdDateTime::.ctor(System.DateTimeOffset,System.Xml.Schema.XsdDateTimeFlags)
 static void __M2N_vi4C16i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef void (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, int32_t __arg2, const MethodInfo* method);
@@ -12552,7 +11672,7 @@ static void __M2N_vi4C24(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 }
 
 
-// System.Void UnityEngine.Windows.Speech.PhraseRecognizer/PhraseRecognizedDelegate::Invoke(UnityEngine.Windows.Speech.PhraseRecognizedEventArgs)
+// System.Void System.Action`1::Invoke(T)
 static void __M2N_vi4C32(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef void (*NativeMethod)(int32_t __arg0, ValueTypeSizeAlign8<32> __arg1, const MethodInfo* method);
@@ -12608,7 +11728,7 @@ static void __M2N_vi4C96(const MethodInfo* method, uint16_t* argVarIndexs, Stack
 }
 
 
-// System.Void System.Diagnostics.Tracing.TraceLoggingDataCollector::AddScalar(System.SByte)
+// System.Void System.Linq.Expressions.Interpreter.InterpretedFrame::Push(System.SByte)
 static void __M2N_vi4i1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef void (*NativeMethod)(int32_t __arg0, int8_t __arg1, const MethodInfo* method);
@@ -12664,7 +11784,7 @@ static void __M2N_vi4i2i4(const MethodInfo* method, uint16_t* argVarIndexs, Stac
 }
 
 
-// System.Void <>f__AnonymousType0`1::.ctor(<message>j__TPar)
+// System.Void Mono.SafeStringMarshal::.ctor(System.String)
 static void __M2N_vi4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, const MethodInfo* method);
@@ -12749,22 +11869,6 @@ static void __M2N_vi4i4B16i4i4(const MethodInfo* method, uint16_t* argVarIndexs,
 {
     typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, ValueTypeSizeAlign4<16> __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method);
     ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), method);
-}
-
-
-// System.Void System.Diagnostics.Tracing.ManifestBuilder::.ctor(System.String,System.Guid,System.String,System.Resources.ResourceManager,System.Diagnostics.Tracing.EventManifestOptions)
-static void __M2N_vi4i4B16i4i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, ValueTypeSizeAlign4<16> __arg2, int32_t __arg3, int32_t __arg4, int32_t __arg5, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), method);
-}
-
-
-// System.Void UnityEngine.Experimental.TerrainAPI.TerrainCallbacks/HeightmapChangedCallback::Invoke(UnityEngine.Terrain,UnityEngine.RectInt,System.Boolean)
-static void __M2N_vi4i4B16u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, ValueTypeSizeAlign4<16> __arg2, uint8_t __arg3, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[2]), *(uint8_t*)(localVarBase+argVarIndexs[3]), method);
 }
 
 
@@ -13072,7 +12176,7 @@ static void __M2N_vi4i4C8i4(const MethodInfo* method, uint16_t* argVarIndexs, St
 }
 
 
-// System.Void System.Collections.Generic.List`1::set_Item(System.Int32,T)
+// System.Void UnityEngine.AndroidJNI::SetSByteField(System.IntPtr,System.IntPtr,System.SByte)
 static void __M2N_vi4i4i1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, int8_t __arg2, const MethodInfo* method);
@@ -13125,14 +12229,6 @@ static void __M2N_vi4i4i4B16(const MethodInfo* method, uint16_t* argVarIndexs, S
 {
     typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, int32_t __arg2, ValueTypeSizeAlign4<16> __arg3, const MethodInfo* method);
     ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[3]), method);
-}
-
-
-// System.Void UnityEngine.Experimental.TerrainAPI.TerrainCallbacks/TextureChangedCallback::Invoke(UnityEngine.Terrain,System.String,UnityEngine.RectInt,System.Boolean)
-static void __M2N_vi4i4i4B16u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, int32_t __arg2, ValueTypeSizeAlign4<16> __arg3, uint8_t __arg4, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[3]), *(uint8_t*)(localVarBase+argVarIndexs[4]), method);
 }
 
 
@@ -13440,14 +12536,6 @@ static void __M2N_vi4i4i4i4i4u1u1(const MethodInfo* method, uint16_t* argVarInde
 }
 
 
-// System.Void System.Diagnostics.Tracing.TraceLoggingTypeInfo`1::.ctor(System.String,System.Diagnostics.Tracing.EventLevel,System.Diagnostics.Tracing.EventOpcode,System.Diagnostics.Tracing.EventKeywords,System.Diagnostics.Tracing.EventTags)
-static void __M2N_vi4i4i4i4i8i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, int32_t __arg2, int32_t __arg3, int64_t __arg4, int32_t __arg5, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), *(int64_t*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), method);
-}
-
-
 // System.Void Cysharp.Text.Utf8FormatSegment::.ctor(System.Int32,System.Int32,System.Int32,System.Buffers.StandardFormat,System.Int32)
 static void __M2N_vi4i4i4i4S2i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -13584,7 +12672,7 @@ static void __M2N_vi4i4i4u1i4u1(const MethodInfo* method, uint16_t* argVarIndexs
 }
 
 
-// System.Void Microsoft.Win32.UnsafeNativeMethods/ManifestEtw/EtwEnableCallback::Invoke(System.Guid&,System.Int32,System.Byte,System.Int64,System.Int64,Microsoft.Win32.UnsafeNativeMethods/ManifestEtw/EVENT_FILTER_DESCRIPTOR*,System.Void*)
+// System.Void System.Runtime.Interop.UnsafeNativeMethods/EtwEnableCallback::Invoke(System.Guid&,System.Int32,System.Byte,System.Int64,System.Int64,System.Void*,System.Void*)
 static void __M2N_vi4i4i4u1i8i8i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, int32_t __arg2, uint8_t __arg3, int64_t __arg4, int64_t __arg5, int32_t __arg6, int32_t __arg7, const MethodInfo* method);
@@ -13645,14 +12733,6 @@ static void __M2N_vi4i4i8i4(const MethodInfo* method, uint16_t* argVarIndexs, St
 {
     typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, int64_t __arg2, int32_t __arg3, const MethodInfo* method);
     ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int64_t*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), method);
-}
-
-
-// System.Void System.Diagnostics.Tracing.ActivityTracker/ActivityInfo::.ctor(System.String,System.Int64,System.Diagnostics.Tracing.ActivityTracker/ActivityInfo,System.Guid,System.Diagnostics.Tracing.EventActivityOptions)
-static void __M2N_vi4i4i8i4B16i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, int64_t __arg2, int32_t __arg3, ValueTypeSizeAlign4<16> __arg4, int32_t __arg5, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(int64_t*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), *(ValueTypeSizeAlign4<16>*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), method);
 }
 
 
@@ -13752,7 +12832,7 @@ static void __M2N_vi4i4r4u1u1(const MethodInfo* method, uint16_t* argVarIndexs, 
 }
 
 
-// System.Void UnityEngine.Video.VideoPlayer/TimeEventHandler::Invoke(UnityEngine.Video.VideoPlayer,System.Double)
+// System.Void UnityEngine.AndroidJNI::SetDoubleField(System.IntPtr,System.IntPtr,System.Double)
 static void __M2N_vi4i4r8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, double __arg2, const MethodInfo* method);
@@ -13864,14 +12944,6 @@ static void __M2N_vi4i4u1u1(const MethodInfo* method, uint16_t* argVarIndexs, St
 }
 
 
-// System.Void System.Diagnostics.Tracing.EventDescriptor::.ctor(System.Int32,System.Byte,System.Byte,System.Int64)
-static void __M2N_vi4i4u1u1i8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, uint8_t __arg2, uint8_t __arg3, int64_t __arg4, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(int32_t*)(localVarBase+argVarIndexs[1]), *(uint8_t*)(localVarBase+argVarIndexs[2]), *(uint8_t*)(localVarBase+argVarIndexs[3]), *(int64_t*)(localVarBase+argVarIndexs[4]), method);
-}
-
-
 // System.Void System.Linq.Expressions.Interpreter.InstructionList::EmitGoto(System.Linq.Expressions.Interpreter.BranchLabel,System.Boolean,System.Boolean,System.Boolean)
 static void __M2N_vi4i4u1u1u1(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
@@ -13880,7 +12952,7 @@ static void __M2N_vi4i4u1u1u1(const MethodInfo* method, uint16_t* argVarIndexs, 
 }
 
 
-// System.Void System.Diagnostics.Tracing.EventDescriptor::.ctor(System.Int32,System.Byte,System.Byte,System.Byte,System.Byte,System.Int32,System.Int64)
+// System.Void System.Runtime.Diagnostics.EventDescriptor::.ctor(System.Int32,System.Byte,System.Byte,System.Byte,System.Byte,System.Int32,System.Int64)
 static void __M2N_vi4i4u1u1u1u1i4i8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef void (*NativeMethod)(int32_t __arg0, int32_t __arg1, uint8_t __arg2, uint8_t __arg3, uint8_t __arg4, uint8_t __arg5, int32_t __arg6, int64_t __arg7, const MethodInfo* method);
@@ -14056,27 +13128,11 @@ static void __M2N_vi4r4i4(const MethodInfo* method, uint16_t* argVarIndexs, Stac
 }
 
 
-// System.Void UnityEngine.Yoga.Native::YGNodeMeasureInvoke(UnityEngine.Yoga.YogaNode,System.Single,UnityEngine.Yoga.YogaMeasureMode,System.Single,UnityEngine.Yoga.YogaMeasureMode,System.IntPtr)
-static void __M2N_vi4r4i4r4i4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, float __arg1, int32_t __arg2, float __arg3, int32_t __arg4, int32_t __arg5, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(float*)(localVarBase+argVarIndexs[1]), *(int32_t*)(localVarBase+argVarIndexs[2]), *(float*)(localVarBase+argVarIndexs[3]), *(int32_t*)(localVarBase+argVarIndexs[4]), *(int32_t*)(localVarBase+argVarIndexs[5]), method);
-}
-
-
 // System.Void DelayedEvent::Start(System.Single,System.Single)
 static void __M2N_vi4r4r4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef void (*NativeMethod)(int32_t __arg0, float __arg1, float __arg2, const MethodInfo* method);
     ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(float*)(localVarBase+argVarIndexs[1]), *(float*)(localVarBase+argVarIndexs[2]), method);
-}
-
-
-// System.Void UnityEngine.Yoga.Native::YGNodeBaselineInvoke(UnityEngine.Yoga.YogaNode,System.Single,System.Single,System.IntPtr)
-static void __M2N_vi4r4r4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-{
-    typedef void (*NativeMethod)(int32_t __arg0, float __arg1, float __arg2, int32_t __arg3, const MethodInfo* method);
-    ((NativeMethod)(method->methodPointerCallByInterp))(*(int32_t*)(localVarBase+argVarIndexs[0]), *(float*)(localVarBase+argVarIndexs[1]), *(float*)(localVarBase+argVarIndexs[2]), *(int32_t*)(localVarBase+argVarIndexs[3]), method);
 }
 
 
@@ -14720,7 +13776,7 @@ static void __M2N_vi4X1i4u1i4i4r4u8u8r4u1i4(const MethodInfo* method, uint16_t* 
 }
 
 
-// System.Void System.GC::AddMemoryPressure(System.Int64)
+// System.Void System.ThrowHelper::ThrowStartOrEndArgumentValidationException(System.Int64)
 static void __M2N_vi8(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef void (*NativeMethod)(int64_t __arg0, const MethodInfo* method);
@@ -14960,7 +14016,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"B12i4r4r4r4", __M2N_B12i4r4r4r4},
 	{"B12i4u1", __M2N_B12i4u1},
 	{"B12i4u4", __M2N_B12i4u4},
-	{"B12r4", __M2N_B12r4},
 	{"B12r4B12", __M2N_B12r4B12},
 	{"B12u1", __M2N_B12u1},
 	{"B16", __M2N_B16},
@@ -15017,17 +14072,14 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"B20i4i4i4i4i4i4", __M2N_B20i4i4i4i4i4i4},
 	{"B20i4i4i4i4u1", __M2N_B20i4i4i4i4u1},
 	{"B224i4", __M2N_B224i4},
-	{"B24B16", __M2N_B24B16},
 	{"B24B24B12", __M2N_B24B24B12},
 	{"B24i4", __M2N_B24i4},
 	{"B24i4B12", __M2N_B24i4B12},
 	{"B24i4B12i4", __M2N_B24i4B12i4},
-	{"B24i4B16", __M2N_B24i4B16},
 	{"B24i4B24", __M2N_B24i4B24},
 	{"B24i4B8", __M2N_B24i4B8},
 	{"B24i4i4", __M2N_B24i4i4},
 	{"B24i4i4i4", __M2N_B24i4i4i4},
-	{"B24i4r4", __M2N_B24i4r4},
 	{"B28i4", __M2N_B28i4},
 	{"B28i4B28", __M2N_B28i4B28},
 	{"B28i4i4", __M2N_B28i4i4},
@@ -15116,10 +14168,8 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"B8i4i4B8", __M2N_B8i4i4B8},
 	{"B8i4i4i4", __M2N_B8i4i4i4},
 	{"B8i4i4i4i4", __M2N_B8i4i4i4i4},
-	{"B8i4i4r4i4r4i4", __M2N_B8i4i4r4i4r4i4},
 	{"B8i4i8", __M2N_B8i4i8},
 	{"B8i4i8B8", __M2N_B8i4i8B8},
-	{"B8i4r4i4r4i4", __M2N_B8i4r4i4r4i4},
 	{"B8i4u1", __M2N_B8i4u1},
 	{"B8i4u1B4", __M2N_B8i4u1B4},
 	{"B8i4u4", __M2N_B8i4u4},
@@ -15181,30 +14231,16 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i1", __M2N_i1},
 	{"i1B12", __M2N_i1B12},
 	{"i1B16", __M2N_i1B16},
-	{"i1B8", __M2N_i1B8},
-	{"i1C16", __M2N_i1C16},
-	{"i1C8", __M2N_i1C8},
-	{"i1i1", __M2N_i1i1},
 	{"i1i1i1", __M2N_i1i1i1},
 	{"i1i2", __M2N_i1i2},
 	{"i1i4", __M2N_i1i4},
 	{"i1i4B12", __M2N_i1i4B12},
-	{"i1i4B16", __M2N_i1i4B16},
-	{"i1i4B8", __M2N_i1i4B8},
-	{"i1i4C16", __M2N_i1i4C16},
-	{"i1i4C8", __M2N_i1i4C8},
 	{"i1i4i1", __M2N_i1i4i1},
-	{"i1i4i2", __M2N_i1i4i2},
 	{"i1i4i4", __M2N_i1i4i4},
 	{"i1i4i4i4", __M2N_i1i4i4i4},
 	{"i1i4i8", __M2N_i1i4i8},
 	{"i1i4r4", __M2N_i1i4r4},
 	{"i1i4r8", __M2N_i1i4r8},
-	{"i1i4u1", __M2N_i1i4u1},
-	{"i1i4u2", __M2N_i1i4u2},
-	{"i1i4u4", __M2N_i1i4u4},
-	{"i1i4u8", __M2N_i1i4u8},
-	{"i1i4X1", __M2N_i1i4X1},
 	{"i1i8", __M2N_i1i8},
 	{"i1r4", __M2N_i1r4},
 	{"i1r8", __M2N_i1r8},
@@ -15212,34 +14248,20 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i1u2", __M2N_i1u2},
 	{"i1u4", __M2N_i1u4},
 	{"i1u8", __M2N_i1u8},
-	{"i1X1", __M2N_i1X1},
 	{"i2", __M2N_i2},
 	{"i2B12", __M2N_i2B12},
 	{"i2B16", __M2N_i2B16},
-	{"i2B8", __M2N_i2B8},
-	{"i2C16", __M2N_i2C16},
-	{"i2C8", __M2N_i2C8},
 	{"i2i1", __M2N_i2i1},
 	{"i2i2", __M2N_i2i2},
 	{"i2i2i2", __M2N_i2i2i2},
 	{"i2i4", __M2N_i2i4},
 	{"i2i4B12", __M2N_i2i4B12},
-	{"i2i4B16", __M2N_i2i4B16},
-	{"i2i4B8", __M2N_i2i4B8},
-	{"i2i4C16", __M2N_i2i4C16},
-	{"i2i4C8", __M2N_i2i4C8},
-	{"i2i4i1", __M2N_i2i4i1},
 	{"i2i4i2", __M2N_i2i4i2},
 	{"i2i4i4", __M2N_i2i4i4},
 	{"i2i4i4i4", __M2N_i2i4i4i4},
 	{"i2i4i8", __M2N_i2i4i8},
 	{"i2i4r4", __M2N_i2i4r4},
 	{"i2i4r8", __M2N_i2i4r8},
-	{"i2i4u1", __M2N_i2i4u1},
-	{"i2i4u2", __M2N_i2i4u2},
-	{"i2i4u4", __M2N_i2i4u4},
-	{"i2i4u8", __M2N_i2i4u8},
-	{"i2i4X1", __M2N_i2i4X1},
 	{"i2i8", __M2N_i2i8},
 	{"i2r4", __M2N_i2r4},
 	{"i2r8", __M2N_i2r8},
@@ -15247,7 +14269,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i2u2", __M2N_i2u2},
 	{"i2u4", __M2N_i2u4},
 	{"i2u8", __M2N_i2u8},
-	{"i2X1", __M2N_i2X1},
 	{"i4", __M2N_i4},
 	{"i4A4", __M2N_i4A4},
 	{"i4B12", __M2N_i4B12},
@@ -15290,9 +14311,7 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i4B8", __M2N_i4B8},
 	{"i4B8B8B28i4", __M2N_i4B8B8B28i4},
 	{"i4B8B8B28i4r4", __M2N_i4B8B8B28i4r4},
-	{"i4B8B8i4u1", __M2N_i4B8B8i4u1},
 	{"i4B8i4", __M2N_i4B8i4},
-	{"i4B8u1", __M2N_i4B8u1},
 	{"i4C16", __M2N_i4C16},
 	{"i4C24", __M2N_i4C24},
 	{"i4C8", __M2N_i4C8},
@@ -15512,7 +14531,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i4i4i4B16B16", __M2N_i4i4i4B16B16},
 	{"i4i4i4B16i4i4", __M2N_i4i4i4B16i4i4},
 	{"i4i4i4B16r4", __M2N_i4i4i4B16r4},
-	{"i4i4i4B16u1i4i4", __M2N_i4i4i4B16u1i4i4},
 	{"i4i4i4B20i4i4", __M2N_i4i4i4B20i4i4},
 	{"i4i4i4B28", __M2N_i4i4i4B28},
 	{"i4i4i4B4", __M2N_i4i4i4B4},
@@ -15537,7 +14555,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i4i4i4i4B12i4", __M2N_i4i4i4i4B12i4},
 	{"i4i4i4i4B16i4", __M2N_i4i4i4i4B16i4},
 	{"i4i4i4i4B16r4", __M2N_i4i4i4i4B16r4},
-	{"i4i4i4i4B16u1i4i4", __M2N_i4i4i4i4B16u1i4i4},
 	{"i4i4i4i4B20i4", __M2N_i4i4i4i4B20i4},
 	{"i4i4i4i4B24i4", __M2N_i4i4i4i4B24i4},
 	{"i4i4i4i4B28i4", __M2N_i4i4i4i4B28i4},
@@ -15614,17 +14631,14 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i4i4i4i4u8i4", __M2N_i4i4i4i4u8i4},
 	{"i4i4i4i8", __M2N_i4i4i4i8},
 	{"i4i4i4i8i4i4", __M2N_i4i4i4i8i4i4},
-	{"i4i4i4i8i8u1i4i4", __M2N_i4i4i4i8i8u1i4i4},
 	{"i4i4i4i8r4", __M2N_i4i4i4i8r4},
 	{"i4i4i4r4", __M2N_i4i4i4r4},
 	{"i4i4i4r4B12i4r4u1", __M2N_i4i4i4r4B12i4r4u1},
 	{"i4i4i4r4i4", __M2N_i4i4i4r4i4},
 	{"i4i4i4r4i4i4", __M2N_i4i4i4r4i4i4},
 	{"i4i4i4r4i4i4i4B20", __M2N_i4i4i4r4i4i4i4B20},
-	{"i4i4i4r4i4r4i4i4i4", __M2N_i4i4i4r4i4r4i4i4i4},
 	{"i4i4i4r4r4", __M2N_i4i4i4r4r4},
 	{"i4i4i4r4r4i4", __M2N_i4i4i4r4r4i4},
-	{"i4i4i4r4r4i4i4", __M2N_i4i4i4r4r4i4i4},
 	{"i4i4i4r4r4i4r4u1u1", __M2N_i4i4i4r4r4i4r4u1u1},
 	{"i4i4i4r4u1", __M2N_i4i4i4r4u1},
 	{"i4i4i4r4u1i4i4", __M2N_i4i4i4r4u1i4i4},
@@ -15722,7 +14736,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i4i4u1u1", __M2N_i4i4u1u1},
 	{"i4i4u1u1i4", __M2N_i4i4u1u1i4},
 	{"i4i4u1u1i4i4", __M2N_i4i4u1u1i4i4},
-	{"i4i4u1u1i4i4i4", __M2N_i4i4u1u1i4i4i4},
 	{"i4i4u1u1i4r4i4", __M2N_i4i4u1u1i4r4i4},
 	{"i4i4u2", __M2N_i4i4u2},
 	{"i4i4u2B12i4B12i4i4", __M2N_i4i4u2B12i4B12i4i4},
@@ -15762,7 +14775,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i4i4u8u8i4i4", __M2N_i4i4u8u8i4i4},
 	{"i4i4u8u8r4", __M2N_i4i4u8u8r4},
 	{"i4i4X1", __M2N_i4i4X1},
-	{"i4i4X1i4i4", __M2N_i4i4X1i4i4},
 	{"i4i8", __M2N_i4i8},
 	{"i4i8i4", __M2N_i4i8i4},
 	{"i4i8i4i4", __M2N_i4i8i4i4},
@@ -15786,7 +14798,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i4u2", __M2N_i4u2},
 	{"i4u2B12", __M2N_i4u2B12},
 	{"i4u2i4", __M2N_i4u2i4},
-	{"i4u2i4i4", __M2N_i4u2i4i4},
 	{"i4u2u2", __M2N_i4u2u2},
 	{"i4u4", __M2N_i4u4},
 	{"i4u4i4", __M2N_i4u4i4},
@@ -15795,20 +14806,14 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i4u8", __M2N_i4u8},
 	{"i4u8i4", __M2N_i4u8i4},
 	{"i4u8i4i4", __M2N_i4u8i4i4},
-	{"i4X1", __M2N_i4X1},
 	{"i8", __M2N_i8},
 	{"i8B12", __M2N_i8B12},
 	{"i8B16", __M2N_i8B16},
-	{"i8B8", __M2N_i8B8},
-	{"i8C16", __M2N_i8C16},
 	{"i8C8", __M2N_i8C8},
 	{"i8i1", __M2N_i8i1},
 	{"i8i2", __M2N_i8i2},
 	{"i8i4", __M2N_i8i4},
 	{"i8i4B12", __M2N_i8i4B12},
-	{"i8i4B16", __M2N_i8i4B16},
-	{"i8i4B8", __M2N_i8i4B8},
-	{"i8i4C16", __M2N_i8i4C16},
 	{"i8i4C8", __M2N_i8i4C8},
 	{"i8i4i1", __M2N_i8i4i1},
 	{"i8i4i2", __M2N_i8i4i2},
@@ -15826,7 +14831,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i8i4u2", __M2N_i8i4u2},
 	{"i8i4u4", __M2N_i8i4u4},
 	{"i8i4u8", __M2N_i8i4u8},
-	{"i8i4X1", __M2N_i8i4X1},
 	{"i8i8", __M2N_i8i8},
 	{"i8i8i8", __M2N_i8i8i8},
 	{"i8r4", __M2N_i8r4},
@@ -15835,7 +14839,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"i8u2", __M2N_i8u2},
 	{"i8u4", __M2N_i8u4},
 	{"i8u8", __M2N_i8u8},
-	{"i8X1", __M2N_i8X1},
 	{"r4", __M2N_r4},
 	{"r4B12", __M2N_r4B12},
 	{"r4B12B12", __M2N_r4B12B12},
@@ -15864,7 +14867,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"r4i4i4i4", __M2N_r4i4i4i4},
 	{"r4i4i4r4", __M2N_r4i4i4r4},
 	{"r4i4i4r4i4", __M2N_r4i4i4r4i4},
-	{"r4i4i4r4r4", __M2N_r4i4i4r4r4},
 	{"r4i4i4r4r4r4r4", __M2N_r4i4i4r4r4r4r4},
 	{"r4i4i8", __M2N_r4i4i8},
 	{"r4i4r4", __M2N_r4i4r4},
@@ -16001,12 +15003,10 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"u1B8B8", __M2N_u1B8B8},
 	{"u1B8B8B8i4i4u1i4", __M2N_u1B8B8B8i4i4u1i4},
 	{"u1B8i4B8i4i4u1i4", __M2N_u1B8i4B8i4i4u1i4},
-	{"u1C16", __M2N_u1C16},
 	{"u1C16B12i4B12", __M2N_u1C16B12i4B12},
 	{"u1C16B12i4S2", __M2N_u1C16B12i4S2},
 	{"u1C16C16", __M2N_u1C16C16},
 	{"u1C24C24", __M2N_u1C24C24},
-	{"u1C8", __M2N_u1C8},
 	{"u1C8B12i4B12", __M2N_u1C8B12i4B12},
 	{"u1C8B12i4S2", __M2N_u1C8B12i4S2},
 	{"u1C8C8", __M2N_u1C8C8},
@@ -16032,7 +15032,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"u1i4B12i4", __M2N_u1i4B12i4},
 	{"u1i4B12i4B12", __M2N_u1i4B12i4B12},
 	{"u1i4B12i4B12i4", __M2N_u1i4B12i4B12i4},
-	{"u1i4B12i4i4", __M2N_u1i4B12i4i4},
 	{"u1i4B12i4S2", __M2N_u1i4B12i4S2},
 	{"u1i4B136", __M2N_u1i4B136},
 	{"u1i4B16", __M2N_u1i4B16},
@@ -16141,13 +15140,11 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"u1i4i4i4u1i4", __M2N_u1i4i4i4u1i4},
 	{"u1i4i4i8", __M2N_u1i4i4i8},
 	{"u1i4i4i8i8i8C8i4", __M2N_u1i4i4i8i8i8C8i4},
-	{"u1i4i4i8u1", __M2N_u1i4i4i8u1},
 	{"u1i4i4r4", __M2N_u1i4i4r4},
 	{"u1i4i4r8", __M2N_u1i4i4r8},
 	{"u1i4i4S2", __M2N_u1i4i4S2},
 	{"u1i4i4u1", __M2N_u1i4i4u1},
 	{"u1i4i4u1i4", __M2N_u1i4i4u1i4},
-	{"u1i4i4u1i4i4", __M2N_u1i4i4u1i4i4},
 	{"u1i4i4u2", __M2N_u1i4i4u2},
 	{"u1i4i4u4", __M2N_u1i4i4u4},
 	{"u1i4i4u8", __M2N_u1i4i4u8},
@@ -16240,35 +15237,21 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"u1u8B12i4B12", __M2N_u1u8B12i4B12},
 	{"u1u8B12i4B12i4", __M2N_u1u8B12i4B12i4},
 	{"u1u8B12i4S2", __M2N_u1u8B12i4S2},
-	{"u1X1", __M2N_u1X1},
 	{"u2", __M2N_u2},
 	{"u2B12", __M2N_u2B12},
 	{"u2B12i4", __M2N_u2B12i4},
 	{"u2B16", __M2N_u2B16},
-	{"u2B8", __M2N_u2B8},
-	{"u2C16", __M2N_u2C16},
-	{"u2C8", __M2N_u2C8},
 	{"u2i1", __M2N_u2i1},
 	{"u2i2", __M2N_u2i2},
 	{"u2i4", __M2N_u2i4},
 	{"u2i4B12", __M2N_u2i4B12},
-	{"u2i4B16", __M2N_u2i4B16},
-	{"u2i4B8", __M2N_u2i4B8},
-	{"u2i4C16", __M2N_u2i4C16},
-	{"u2i4C8", __M2N_u2i4C8},
-	{"u2i4i1", __M2N_u2i4i1},
-	{"u2i4i2", __M2N_u2i4i2},
 	{"u2i4i4", __M2N_u2i4i4},
 	{"u2i4i4i4", __M2N_u2i4i4i4},
 	{"u2i4i4i4u2", __M2N_u2i4i4i4u2},
 	{"u2i4i8", __M2N_u2i4i8},
 	{"u2i4r4", __M2N_u2i4r4},
 	{"u2i4r8", __M2N_u2i4r8},
-	{"u2i4u1", __M2N_u2i4u1},
 	{"u2i4u2", __M2N_u2i4u2},
-	{"u2i4u4", __M2N_u2i4u4},
-	{"u2i4u8", __M2N_u2i4u8},
-	{"u2i4X1", __M2N_u2i4X1},
 	{"u2i8", __M2N_u2i8},
 	{"u2r4", __M2N_u2r4},
 	{"u2r8", __M2N_u2r8},
@@ -16279,29 +15262,18 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"u2u2u2u1", __M2N_u2u2u2u1},
 	{"u2u4", __M2N_u2u4},
 	{"u2u8", __M2N_u2u8},
-	{"u2X1", __M2N_u2X1},
 	{"u4", __M2N_u4},
 	{"u4B12", __M2N_u4B12},
 	{"u4B12u4", __M2N_u4B12u4},
 	{"u4B16", __M2N_u4B16},
-	{"u4B4", __M2N_u4B4},
-	{"u4B8", __M2N_u4B8},
-	{"u4C16", __M2N_u4C16},
-	{"u4C8", __M2N_u4C8},
 	{"u4i1", __M2N_u4i1},
 	{"u4i2", __M2N_u4i2},
 	{"u4i4", __M2N_u4i4},
 	{"u4i4B12", __M2N_u4i4B12},
 	{"u4i4B12i4", __M2N_u4i4B12i4},
-	{"u4i4B16", __M2N_u4i4B16},
 	{"u4i4B4", __M2N_u4i4B4},
-	{"u4i4B8", __M2N_u4i4B8},
-	{"u4i4C16", __M2N_u4i4C16},
-	{"u4i4C8", __M2N_u4i4C8},
 	{"u4i4C8C8i4i4i4i4i4", __M2N_u4i4C8C8i4i4i4i4i4},
 	{"u4i4C8i4i4i4i4i4", __M2N_u4i4C8i4i4i4i4i4},
-	{"u4i4i1", __M2N_u4i4i1},
-	{"u4i4i2", __M2N_u4i4i2},
 	{"u4i4i4", __M2N_u4i4i4},
 	{"u4i4i4C8i4", __M2N_u4i4i4C8i4},
 	{"u4i4i4C8u4i4", __M2N_u4i4i4C8u4i4},
@@ -16310,12 +15282,8 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"u4i4i8", __M2N_u4i4i8},
 	{"u4i4r4", __M2N_u4i4r4},
 	{"u4i4r8", __M2N_u4i4r8},
-	{"u4i4u1", __M2N_u4i4u1},
-	{"u4i4u2", __M2N_u4i4u2},
 	{"u4i4u4", __M2N_u4i4u4},
 	{"u4i4u4i4", __M2N_u4i4u4i4},
-	{"u4i4u8", __M2N_u4i4u8},
-	{"u4i4X1", __M2N_u4i4X1},
 	{"u4i8", __M2N_u4i8},
 	{"u4r4", __M2N_u4r4},
 	{"u4r8", __M2N_u4r8},
@@ -16327,35 +15295,20 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"u4u4u4i4", __M2N_u4u4u4i4},
 	{"u4u4u4u1", __M2N_u4u4u4u1},
 	{"u4u8", __M2N_u4u8},
-	{"u4X1", __M2N_u4X1},
 	{"u8", __M2N_u8},
 	{"u8B12", __M2N_u8B12},
 	{"u8B16", __M2N_u8B16},
-	{"u8B4", __M2N_u8B4},
-	{"u8B8", __M2N_u8B8},
-	{"u8C16", __M2N_u8C16},
-	{"u8C8", __M2N_u8C8},
 	{"u8i1", __M2N_u8i1},
 	{"u8i2", __M2N_u8i2},
 	{"u8i4", __M2N_u8i4},
 	{"u8i4B12", __M2N_u8i4B12},
-	{"u8i4B16", __M2N_u8i4B16},
-	{"u8i4B8", __M2N_u8i4B8},
-	{"u8i4C16", __M2N_u8i4C16},
-	{"u8i4C8", __M2N_u8i4C8},
-	{"u8i4i1", __M2N_u8i4i1},
-	{"u8i4i2", __M2N_u8i4i2},
 	{"u8i4i4", __M2N_u8i4i4},
 	{"u8i4i4i4", __M2N_u8i4i4i4},
 	{"u8i4i4u8", __M2N_u8i4i4u8},
 	{"u8i4i8", __M2N_u8i4i8},
 	{"u8i4r4", __M2N_u8i4r4},
 	{"u8i4r8", __M2N_u8i4r8},
-	{"u8i4u1", __M2N_u8i4u1},
-	{"u8i4u2", __M2N_u8i4u2},
-	{"u8i4u4", __M2N_u8i4u4},
 	{"u8i4u8", __M2N_u8i4u8},
-	{"u8i4X1", __M2N_u8i4X1},
 	{"u8i8", __M2N_u8i8},
 	{"u8r4", __M2N_u8r4},
 	{"u8r8", __M2N_u8r8},
@@ -16366,7 +15319,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"u8u8", __M2N_u8u8},
 	{"u8u8u8", __M2N_u8u8u8},
 	{"u8u8u8i4", __M2N_u8u8u8i4},
-	{"u8X1", __M2N_u8X1},
 	{"v", __M2N_v},
 	{"vB12", __M2N_vB12},
 	{"vB12B12", __M2N_vB12B12},
@@ -16387,7 +15339,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"vB20", __M2N_vB20},
 	{"vB4", __M2N_vB4},
 	{"vB4i4", __M2N_vB4i4},
-	{"vB64", __M2N_vB64},
 	{"vB8", __M2N_vB8},
 	{"vB96i4B16i4", __M2N_vB96i4B16i4},
 	{"vC16i4u1", __M2N_vC16i4u1},
@@ -16400,7 +15351,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"vi4B12B12", __M2N_vi4B12B12},
 	{"vi4B12B12B12B28", __M2N_vi4B12B12B12B28},
 	{"vi4B12B12r4", __M2N_vi4B12B12r4},
-	{"vi4B12B12r4r4B4", __M2N_vi4B12B12r4r4B4},
 	{"vi4B12B16", __M2N_vi4B12B16},
 	{"vi4B12B4B8", __M2N_vi4B12B4B8},
 	{"vi4B12B4B8B8B12B16", __M2N_vi4B12B4B8B8B12B16},
@@ -16412,8 +15362,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"vi4B12i4u4i4", __M2N_vi4B12i4u4i4},
 	{"vi4B12r4", __M2N_vi4B12r4},
 	{"vi4B12r4i4", __M2N_vi4B12r4i4},
-	{"vi4B132", __M2N_vi4B132},
-	{"vi4B144i4", __M2N_vi4B144i4},
 	{"vi4B16", __M2N_vi4B16},
 	{"vi4B16B16", __M2N_vi4B16B16},
 	{"vi4B16B16B16B16", __M2N_vi4B16B16B16B16},
@@ -16423,7 +15371,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"vi4B16i4i4i4i4", __M2N_vi4B16i4i4i4i4},
 	{"vi4B16i4i4u1", __M2N_vi4B16i4i4u1},
 	{"vi4B16i4i4u1u1", __M2N_vi4B16i4i4u1u1},
-	{"vi4B16i4i8", __M2N_vi4B16i4i8},
 	{"vi4B16i4u1u1u1u1", __M2N_vi4B16i4u1u1u1u1},
 	{"vi4B16r4", __M2N_vi4B16r4},
 	{"vi4B16r4r4r4r4i4i4u1i4i4", __M2N_vi4B16r4r4r4r4i4i4u1i4i4},
@@ -16462,7 +15409,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"vi4B4u4", __M2N_vi4B4u4},
 	{"vi4B52", __M2N_vi4B52},
 	{"vi4B64", __M2N_vi4B64},
-	{"vi4B64B16", __M2N_vi4B64B16},
 	{"vi4B64B64", __M2N_vi4B64B64},
 	{"vi4B64i4i4i4i4i4i4", __M2N_vi4B64i4i4i4i4i4i4},
 	{"vi4B68", __M2N_vi4B68},
@@ -16515,8 +15461,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"vi4i4B16B16", __M2N_vi4i4B16B16},
 	{"vi4i4B16i4", __M2N_vi4i4B16i4},
 	{"vi4i4B16i4i4", __M2N_vi4i4B16i4i4},
-	{"vi4i4B16i4i4i4", __M2N_vi4i4B16i4i4i4},
-	{"vi4i4B16u1", __M2N_vi4i4B16u1},
 	{"vi4i4B16u1u1", __M2N_vi4i4B16u1u1},
 	{"vi4i4B20", __M2N_vi4i4B20},
 	{"vi4i4B20i4", __M2N_vi4i4B20i4},
@@ -16562,7 +15506,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"vi4i4i2i4", __M2N_vi4i4i2i4},
 	{"vi4i4i4", __M2N_vi4i4i4},
 	{"vi4i4i4B16", __M2N_vi4i4i4B16},
-	{"vi4i4i4B16u1", __M2N_vi4i4i4B16u1},
 	{"vi4i4i4B20", __M2N_vi4i4i4B20},
 	{"vi4i4i4B4", __M2N_vi4i4i4B4},
 	{"vi4i4i4B4i4", __M2N_vi4i4i4B4i4},
@@ -16601,7 +15544,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"vi4i4i4i4i4u1i4", __M2N_vi4i4i4i4i4u1i4},
 	{"vi4i4i4i4i4u1i4i4i4", __M2N_vi4i4i4i4i4u1i4i4i4},
 	{"vi4i4i4i4i4u1u1", __M2N_vi4i4i4i4i4u1u1},
-	{"vi4i4i4i4i8i4", __M2N_vi4i4i4i4i8i4},
 	{"vi4i4i4i4S2i4", __M2N_vi4i4i4i4S2i4},
 	{"vi4i4i4i4u1", __M2N_vi4i4i4i4u1},
 	{"vi4i4i4i4u1B4i4", __M2N_vi4i4i4i4u1B4i4},
@@ -16627,7 +15569,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"vi4i4i4u4u4i4", __M2N_vi4i4i4u4u4i4},
 	{"vi4i4i8", __M2N_vi4i4i8},
 	{"vi4i4i8i4", __M2N_vi4i4i8i4},
-	{"vi4i4i8i4B16i4", __M2N_vi4i4i8i4B16i4},
 	{"vi4i4i8i4i4", __M2N_vi4i4i8i4i4},
 	{"vi4i4i8i4i8i4i4", __M2N_vi4i4i8i4i8i4i4},
 	{"vi4i4i8i8", __M2N_vi4i4i8i8},
@@ -16654,7 +15595,6 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"vi4i4u1i4i4i4i4", __M2N_vi4i4u1i4i4i4i4},
 	{"vi4i4u1i4i4i4i4u1", __M2N_vi4i4u1i4i4i4i4u1},
 	{"vi4i4u1u1", __M2N_vi4i4u1u1},
-	{"vi4i4u1u1i8", __M2N_vi4i4u1u1i8},
 	{"vi4i4u1u1u1", __M2N_vi4i4u1u1u1},
 	{"vi4i4u1u1u1u1i4i8", __M2N_vi4i4u1u1u1u1i4i8},
 	{"vi4i4u2", __M2N_vi4i4u2},
@@ -16678,9 +15618,7 @@ Managed2NativeMethodInfo hybridclr::interpreter::g_managed2nativeStub[] =
 	{"vi4i8i8i8i8", __M2N_vi4i8i8i8i8},
 	{"vi4r4", __M2N_vi4r4},
 	{"vi4r4i4", __M2N_vi4r4i4},
-	{"vi4r4i4r4i4i4", __M2N_vi4r4i4r4i4i4},
 	{"vi4r4r4", __M2N_vi4r4r4},
-	{"vi4r4r4i4", __M2N_vi4r4r4i4},
 	{"vi4r4r4r4", __M2N_vi4r4r4r4},
 	{"vi4r4r4r4i4", __M2N_vi4r4r4r4i4},
 	{"vi4r4r4r4r4", __M2N_vi4r4r4r4r4},
@@ -17369,7 +16307,7 @@ static ValueTypeSizeAlign4<52> __N2M_B52i4(int32_t __arg0, const MethodInfo* met
 }
 
 
-// UnityEngine.Matrix4x4 UnityEngine.UIElements.ITransform::get_matrix()
+// T System.Collections.Generic.IEnumerator`1::get_Current()
 static ValueTypeSizeAlign4<64> __N2M_B64i4(int32_t __arg0, const MethodInfo* method)
 {
     StackObject args[9] = {*(uint64_t*)&__arg0 };
@@ -17624,26 +16562,6 @@ static ValueTypeSizeAlign4<8> __N2M_B8i4i4i4i4(int32_t __arg0, int32_t __arg1, i
 {
     StackObject args[5] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
     StackObject* ret = args + 4;
-    Interpreter::Execute(method, args, ret);
-    return *(ValueTypeSizeAlign4<8>*)ret;
-}
-
-
-// UnityEngine.Yoga.YogaSize UnityEngine.Yoga.MeasureFunction::Invoke(UnityEngine.Yoga.YogaNode,System.Single,UnityEngine.Yoga.YogaMeasureMode,System.Single,UnityEngine.Yoga.YogaMeasureMode)
-static ValueTypeSizeAlign4<8> __N2M_B8i4i4r4i4r4i4(int32_t __arg0, int32_t __arg1, float __arg2, int32_t __arg3, float __arg4, int32_t __arg5, const MethodInfo* method)
-{
-    StackObject args[7] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4, *(uint64_t*)&__arg5 };
-    StackObject* ret = args + 6;
-    Interpreter::Execute(method, args, ret);
-    return *(ValueTypeSizeAlign4<8>*)ret;
-}
-
-
-// UnityEngine.Yoga.YogaSize UnityEngine.Yoga.MeasureFunction::Invoke(UnityEngine.Yoga.YogaNode,System.Single,UnityEngine.Yoga.YogaMeasureMode,System.Single,UnityEngine.Yoga.YogaMeasureMode)
-static ValueTypeSizeAlign4<8> __N2M_B8i4r4i4r4i4(int32_t __arg0, float __arg1, int32_t __arg2, float __arg3, int32_t __arg4, const MethodInfo* method)
-{
-    StackObject args[6] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4 };
-    StackObject* ret = args + 5;
     Interpreter::Execute(method, args, ret);
     return *(ValueTypeSizeAlign4<8>*)ret;
 }
@@ -18009,58 +16927,8 @@ static int8_t __N2M_i1B12(ValueTypeSizeAlign4<12> __arg0, const MethodInfo* meth
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1B16(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1B8(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1C16(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1C8(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
 // TResult System.Func`2::Invoke(T)
 static int8_t __N2M_i1i1(int8_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1i2(int16_t __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {*(uint64_t*)&__arg0 };
     StackObject* ret = args + 1;
@@ -18089,58 +16957,8 @@ static int8_t __N2M_i1i4B12(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, cons
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1i4B16(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1i4B8(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1i4C16(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1i4C8(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
 // TResult System.Func`2::Invoke(T)
 static int8_t __N2M_i1i4i1(int32_t __arg0, int8_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1i4i2(int32_t __arg0, int16_t __arg1, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = args + 2;
@@ -18199,56 +17017,6 @@ static int8_t __N2M_i1i4r8(int32_t __arg0, double __arg1, const MethodInfo* meth
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1i4u1(int32_t __arg0, uint8_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1i4u2(int32_t __arg0, uint16_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1i4u4(int32_t __arg0, uint32_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1i4u8(int32_t __arg0, uint64_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1i4X1(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
 // TResult System.Func`2::Invoke(T)
 static int8_t __N2M_i1i8(int64_t __arg0, const MethodInfo* method)
 {
@@ -18279,110 +17047,10 @@ static int8_t __N2M_i1r8(double __arg0, const MethodInfo* method)
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1u1(uint8_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1u2(uint16_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1u4(uint32_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1u8(uint64_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int8_t __N2M_i1X1(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int8_t*)ret;
-}
-
-
 // T ServiceStack.Text.Common.ParseMethodUtilities/ParseStringSpanGenericDelegate`1::Invoke(System.ReadOnlySpan`1<System.Char>)
 static int16_t __N2M_i2B12(ValueTypeSizeAlign4<12> __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2B16(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2B8(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2C16(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2C8(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2i1(int8_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
     StackObject* ret = args + 1;
     Interpreter::Execute(method, args, ret);
     return *(int16_t*)ret;
@@ -18413,56 +17081,6 @@ static int16_t __N2M_i2i4(int32_t __arg0, const MethodInfo* method)
 static int16_t __N2M_i2i4B12(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2i4B16(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2i4B8(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2i4C16(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2i4C8(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2i4i1(int32_t __arg0, int8_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = args + 2;
     Interpreter::Execute(method, args, ret);
     return *(int16_t*)ret;
@@ -18529,56 +17147,6 @@ static int16_t __N2M_i2i4r8(int32_t __arg0, double __arg1, const MethodInfo* met
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2i4u1(int32_t __arg0, uint8_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2i4u2(int32_t __arg0, uint16_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2i4u4(int32_t __arg0, uint32_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2i4u8(int32_t __arg0, uint64_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2i4X1(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
 // TResult System.Func`2::Invoke(T)
 static int16_t __N2M_i2i8(int64_t __arg0, const MethodInfo* method)
 {
@@ -18601,56 +17169,6 @@ static int16_t __N2M_i2r4(float __arg0, const MethodInfo* method)
 
 // TResult System.Func`2::Invoke(T)
 static int16_t __N2M_i2r8(double __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2u1(uint8_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2u2(uint16_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2u4(uint32_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2u8(uint64_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int16_t __N2M_i2X1(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {*(uint64_t*)&__arg0 };
     StackObject* ret = args + 1;
@@ -19009,7 +17527,7 @@ static int32_t __N2M_i4B8i4i4(ValueTypeSizeAlign4<8> __arg0, int32_t __arg1, int
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
+// TResult System.Func`2::Invoke(T)
 static int32_t __N2M_i4C16(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {(uint64_t)&__arg0 };
@@ -19079,7 +17597,7 @@ static int32_t __N2M_i4C24i4i4(ValueTypeSizeAlign8<24> __arg0, int32_t __arg1, i
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
+// TResult System.Func`2::Invoke(T)
 static int32_t __N2M_i4C8(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {*(uint64_t*)&__arg0 };
@@ -19179,7 +17697,7 @@ static int32_t __N2M_i4i2i4i4(int16_t __arg0, int32_t __arg1, int32_t __arg2, co
 }
 
 
-// System.Int32 <>f__AnonymousType0`1::GetHashCode()
+// System.Int32 Mono.RuntimeClassHandle::GetHashCode()
 static int32_t __N2M_i4i4(int32_t __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {*(uint64_t*)&__arg0 };
@@ -19459,7 +17977,7 @@ static int32_t __N2M_i4i4B16i4B4i4i4(int32_t __arg0, ValueTypeSizeAlign4<16> __a
 }
 
 
-// System.IAsyncResult System.Action`1::BeginInvoke(T,System.AsyncCallback,System.Object)
+// System.IAsyncResult UnityEngine.Events.UnityAction`1::BeginInvoke(T0,System.AsyncCallback,System.Object)
 static int32_t __N2M_i4i4B16i4i4(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, int32_t __arg2, int32_t __arg3, const MethodInfo* method)
 {
     StackObject args[5] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
@@ -19519,7 +18037,7 @@ static int32_t __N2M_i4i4B20B12i4S2i4i4(int32_t __arg0, ValueTypeSizeAlign4<20> 
 }
 
 
-// System.Int32 System.Comparison`1::Invoke(T,T)
+// System.Int32 System.Collections.Generic.Comparer`1::Compare(T,T)
 static int32_t __N2M_i4i4B20B20(int32_t __arg0, ValueTypeSizeAlign4<20> __arg1, ValueTypeSizeAlign4<20> __arg2, const MethodInfo* method)
 {
     StackObject args[4] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1, (uint64_t)&__arg2 };
@@ -19759,7 +18277,7 @@ static int32_t __N2M_i4i4B44B44i4i4(int32_t __arg0, ValueTypeSizeAlign4<44> __ar
 }
 
 
-// System.Int32 System.Collections.Generic.IComparer`1::Compare(T,T)
+// System.Int32 System.Collections.Generic.Comparer`1::Compare(T,T)
 static int32_t __N2M_i4i4B4B4(int32_t __arg0, ValueTypeSizeAlign4<4> __arg1, ValueTypeSizeAlign4<4> __arg2, const MethodInfo* method)
 {
     StackObject args[4] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2 };
@@ -20159,7 +18677,7 @@ static int32_t __N2M_i4i4C16C16i4i4(int32_t __arg0, ValueTypeSizeAlign8<16> __ar
 }
 
 
-// System.IAsyncResult UnityEngine.Windows.WebCam.PhotoCapture/OnPhotoModeStartedCallback::BeginInvoke(UnityEngine.Windows.WebCam.PhotoCapture/PhotoCaptureResult,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Action`1::BeginInvoke(T,System.AsyncCallback,System.Object)
 static int32_t __N2M_i4i4C16i4i4(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, int32_t __arg2, int32_t __arg3, const MethodInfo* method)
 {
     StackObject args[5] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
@@ -20169,7 +18687,7 @@ static int32_t __N2M_i4i4C16i4i4(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1,
 }
 
 
-// System.IAsyncResult UnityEngine.Windows.WebCam.PhotoCapture/OnCapturedToMemoryCallback::BeginInvoke(UnityEngine.Windows.WebCam.PhotoCapture/PhotoCaptureResult,UnityEngine.Windows.WebCam.PhotoCaptureFrame,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Func`3::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static int32_t __N2M_i4i4C16i4i4i4(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, int32_t __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method)
 {
     StackObject args[6] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4 };
@@ -20309,7 +18827,7 @@ static int32_t __N2M_i4i4C24i4i4i4i4(int32_t __arg0, ValueTypeSizeAlign8<24> __a
 }
 
 
-// System.IAsyncResult UnityEngine.Windows.Speech.PhraseRecognizer/PhraseRecognizedDelegate::BeginInvoke(UnityEngine.Windows.Speech.PhraseRecognizedEventArgs,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Action`1::BeginInvoke(T,System.AsyncCallback,System.Object)
 static int32_t __N2M_i4i4C32i4i4(int32_t __arg0, ValueTypeSizeAlign8<32> __arg1, int32_t __arg2, int32_t __arg3, const MethodInfo* method)
 {
     StackObject args[5] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
@@ -20709,16 +19227,6 @@ static int32_t __N2M_i4i4i4B16i4i4(int32_t __arg0, int32_t __arg1, ValueTypeSize
 }
 
 
-// System.IAsyncResult UnityEngine.Experimental.TerrainAPI.TerrainCallbacks/HeightmapChangedCallback::BeginInvoke(UnityEngine.Terrain,UnityEngine.RectInt,System.Boolean,System.AsyncCallback,System.Object)
-static int32_t __N2M_i4i4i4B16u1i4i4(int32_t __arg0, int32_t __arg1, ValueTypeSizeAlign4<16> __arg2, uint8_t __arg3, int32_t __arg4, int32_t __arg5, const MethodInfo* method)
-{
-    StackObject args[7] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, (uint64_t)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4, *(uint64_t*)&__arg5 };
-    StackObject* ret = args + 6;
-    Interpreter::Execute(method, args, ret);
-    return *(int32_t*)ret;
-}
-
-
 // System.IAsyncResult System.Action`2::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static int32_t __N2M_i4i4i4B20i4i4(int32_t __arg0, int32_t __arg1, ValueTypeSizeAlign4<20> __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method)
 {
@@ -20844,16 +19352,6 @@ static int32_t __N2M_i4i4i4i4(int32_t __arg0, int32_t __arg1, int32_t __arg2, co
 {
     StackObject args[4] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2 };
     StackObject* ret = args + 3;
-    Interpreter::Execute(method, args, ret);
-    return *(int32_t*)ret;
-}
-
-
-// System.IAsyncResult UnityEngine.Experimental.TerrainAPI.TerrainCallbacks/TextureChangedCallback::BeginInvoke(UnityEngine.Terrain,System.String,UnityEngine.RectInt,System.Boolean,System.AsyncCallback,System.Object)
-static int32_t __N2M_i4i4i4i4B16u1i4i4(int32_t __arg0, int32_t __arg1, int32_t __arg2, ValueTypeSizeAlign4<16> __arg3, uint8_t __arg4, int32_t __arg5, int32_t __arg6, const MethodInfo* method)
-{
-    StackObject args[8] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, (uint64_t)&__arg3, *(uint64_t*)&__arg4, *(uint64_t*)&__arg5, *(uint64_t*)&__arg6 };
-    StackObject* ret = args + 7;
     Interpreter::Execute(method, args, ret);
     return *(int32_t*)ret;
 }
@@ -21199,7 +19697,7 @@ static int32_t __N2M_i4i4i4i4u1i4i4i4i4i4i4(int32_t __arg0, int32_t __arg1, int3
 }
 
 
-// System.IAsyncResult Microsoft.Win32.UnsafeNativeMethods/ManifestEtw/EtwEnableCallback::BeginInvoke(System.Guid&,System.Int32,System.Byte,System.Int64,System.Int64,Microsoft.Win32.UnsafeNativeMethods/ManifestEtw/EVENT_FILTER_DESCRIPTOR*,System.Void*,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Runtime.Interop.UnsafeNativeMethods/EtwEnableCallback::BeginInvoke(System.Guid&,System.Int32,System.Byte,System.Int64,System.Int64,System.Void*,System.Void*,System.AsyncCallback,System.Object)
 static int32_t __N2M_i4i4i4i4u1i8i8i4i4i4i4(int32_t __arg0, int32_t __arg1, int32_t __arg2, uint8_t __arg3, int64_t __arg4, int64_t __arg5, int32_t __arg6, int32_t __arg7, int32_t __arg8, int32_t __arg9, const MethodInfo* method)
 {
     StackObject args[11] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4, *(uint64_t*)&__arg5, *(uint64_t*)&__arg6, *(uint64_t*)&__arg7, *(uint64_t*)&__arg8, *(uint64_t*)&__arg9 };
@@ -21239,21 +19737,11 @@ static int32_t __N2M_i4i4i4i8(int32_t __arg0, int32_t __arg1, int64_t __arg2, co
 }
 
 
-// System.IAsyncResult UnityEngine.Video.VideoPlayer/FrameReadyEventHandler::BeginInvoke(UnityEngine.Video.VideoPlayer,System.Int64,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Action`2::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static int32_t __N2M_i4i4i4i8i4i4(int32_t __arg0, int32_t __arg1, int64_t __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method)
 {
     StackObject args[6] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4 };
     StackObject* ret = args + 5;
-    Interpreter::Execute(method, args, ret);
-    return *(int32_t*)ret;
-}
-
-
-// System.IAsyncResult UnityEngine.Analytics.AnalyticsSessionInfo/SessionStateChanged::BeginInvoke(UnityEngine.Analytics.AnalyticsSessionState,System.Int64,System.Int64,System.Boolean,System.AsyncCallback,System.Object)
-static int32_t __N2M_i4i4i4i8i8u1i4i4(int32_t __arg0, int32_t __arg1, int64_t __arg2, int64_t __arg3, uint8_t __arg4, int32_t __arg5, int32_t __arg6, const MethodInfo* method)
-{
-    StackObject args[8] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4, *(uint64_t*)&__arg5, *(uint64_t*)&__arg6 };
-    StackObject* ret = args + 7;
     Interpreter::Execute(method, args, ret);
     return *(int32_t*)ret;
 }
@@ -21279,26 +19767,6 @@ static int32_t __N2M_i4i4i4r4i4i4(int32_t __arg0, int32_t __arg1, float __arg2, 
 }
 
 
-// System.IAsyncResult UnityEngine.Yoga.MeasureFunction::BeginInvoke(UnityEngine.Yoga.YogaNode,System.Single,UnityEngine.Yoga.YogaMeasureMode,System.Single,UnityEngine.Yoga.YogaMeasureMode,System.AsyncCallback,System.Object)
-static int32_t __N2M_i4i4i4r4i4r4i4i4i4(int32_t __arg0, int32_t __arg1, float __arg2, int32_t __arg3, float __arg4, int32_t __arg5, int32_t __arg6, int32_t __arg7, const MethodInfo* method)
-{
-    StackObject args[9] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4, *(uint64_t*)&__arg5, *(uint64_t*)&__arg6, *(uint64_t*)&__arg7 };
-    StackObject* ret = args + 8;
-    Interpreter::Execute(method, args, ret);
-    return *(int32_t*)ret;
-}
-
-
-// System.IAsyncResult UnityEngine.Yoga.BaselineFunction::BeginInvoke(UnityEngine.Yoga.YogaNode,System.Single,System.Single,System.AsyncCallback,System.Object)
-static int32_t __N2M_i4i4i4r4r4i4i4(int32_t __arg0, int32_t __arg1, float __arg2, float __arg3, int32_t __arg4, int32_t __arg5, const MethodInfo* method)
-{
-    StackObject args[7] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4, *(uint64_t*)&__arg5 };
-    StackObject* ret = args + 6;
-    Interpreter::Execute(method, args, ret);
-    return *(int32_t*)ret;
-}
-
-
 // DG.Tweening.Tweener DG.Tweening.Tweener::ChangeEndValue(System.Object,System.Single,System.Boolean)
 static int32_t __N2M_i4i4i4r4u1(int32_t __arg0, int32_t __arg1, float __arg2, uint8_t __arg3, const MethodInfo* method)
 {
@@ -21309,7 +19777,7 @@ static int32_t __N2M_i4i4i4r4u1(int32_t __arg0, int32_t __arg1, float __arg2, ui
 }
 
 
-// System.IAsyncResult UnityEngine.Video.VideoPlayer/TimeEventHandler::BeginInvoke(UnityEngine.Video.VideoPlayer,System.Double,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Action`2::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static int32_t __N2M_i4i4i4r8i4i4(int32_t __arg0, int32_t __arg1, double __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method)
 {
     StackObject args[6] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4 };
@@ -21399,7 +19867,7 @@ static int32_t __N2M_i4i4i4u1i4i4i4i4i4(int32_t __arg0, int32_t __arg1, uint8_t 
 }
 
 
-// System.Resources.ResourceSet System.Resources.ResourceManager::GetResourceSet(System.Globalization.CultureInfo,System.Boolean,System.Boolean)
+// System.Resources.ResourceSet System.Resources.ResourceManager::InternalGetResourceSet(System.Globalization.CultureInfo,System.Boolean,System.Boolean)
 static int32_t __N2M_i4i4i4u1u1(int32_t __arg0, int32_t __arg1, uint8_t __arg2, uint8_t __arg3, const MethodInfo* method)
 {
     StackObject args[5] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
@@ -21899,16 +20367,6 @@ static int32_t __N2M_i4i4u1u1i4i4(int32_t __arg0, uint8_t __arg1, uint8_t __arg2
 }
 
 
-// System.IAsyncResult System.Action`3::BeginInvoke(T1,T2,T3,System.AsyncCallback,System.Object)
-static int32_t __N2M_i4i4u1u1i4i4i4(int32_t __arg0, uint8_t __arg1, uint8_t __arg2, int32_t __arg3, int32_t __arg4, int32_t __arg5, const MethodInfo* method)
-{
-    StackObject args[7] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4, *(uint64_t*)&__arg5 };
-    StackObject* ret = args + 6;
-    Interpreter::Execute(method, args, ret);
-    return *(int32_t*)ret;
-}
-
-
 // System.Int32 System.Char::CompareTo(System.Char)
 static int32_t __N2M_i4i4u2(int32_t __arg0, uint16_t __arg1, const MethodInfo* method)
 {
@@ -21949,7 +20407,7 @@ static int32_t __N2M_i4i4u2i4i4(int32_t __arg0, uint16_t __arg1, int32_t __arg2,
 }
 
 
-// System.IAsyncResult System.Action`2::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Func`3::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static int32_t __N2M_i4i4u2i4i4i4(int32_t __arg0, uint16_t __arg1, int32_t __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method)
 {
     StackObject args[6] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4 };
@@ -22109,7 +20567,7 @@ static int32_t __N2M_i4i4u8i4i4(int32_t __arg0, uint64_t __arg1, int32_t __arg2,
 }
 
 
-// System.IAsyncResult System.Func`3::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
+// System.IAsyncResult System.Action`2::BeginInvoke(T1,T2,System.AsyncCallback,System.Object)
 static int32_t __N2M_i4i4u8i4i4i4(int32_t __arg0, uint64_t __arg1, int32_t __arg2, int32_t __arg3, int32_t __arg4, const MethodInfo* method)
 {
     StackObject args[6] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4 };
@@ -22154,16 +20612,6 @@ static int32_t __N2M_i4i4X1(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, con
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int32_t*)ret;
-}
-
-
-// System.IAsyncResult System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::BeginInvoke(ValueType,System.AsyncCallback,System.Object)
-static int32_t __N2M_i4i4X1i4i4(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, int32_t __arg2, int32_t __arg3, const MethodInfo* method)
-{
-    StackObject args[5] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
-    StackObject* ret = args + 4;
     Interpreter::Execute(method, args, ret);
     return *(int32_t*)ret;
 }
@@ -22409,16 +20857,6 @@ static int32_t __N2M_i4u8u8(uint64_t __arg0, uint64_t __arg1, const MethodInfo* 
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int32_t __N2M_i4X1(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int32_t*)ret;
-}
-
-
 // T DG.Tweening.Core.DOGetter`1::Invoke()
 static int64_t __N2M_i8(const MethodInfo* method)
 {
@@ -22433,46 +20871,6 @@ static int64_t __N2M_i8(const MethodInfo* method)
 static int64_t __N2M_i8B12(ValueTypeSizeAlign4<12> __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int64_t __N2M_i8B16(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int64_t __N2M_i8B8(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int64_t __N2M_i8C16(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int64_t __N2M_i8C8(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
     StackObject* ret = args + 1;
     Interpreter::Execute(method, args, ret);
     return *(int64_t*)ret;
@@ -22511,36 +20909,6 @@ static int64_t __N2M_i8i4(int32_t __arg0, const MethodInfo* method)
 
 // System.Int64 ServiceStack.Text.DefaultMemory::ParseInt64(System.ReadOnlySpan`1<System.Char>)
 static int64_t __N2M_i8i4B12(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int64_t __N2M_i8i4B16(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int64_t __N2M_i8i4B8(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int64_t __N2M_i8i4C16(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
     StackObject* ret = args + 2;
@@ -22689,16 +21057,6 @@ static int64_t __N2M_i8i4u8(int32_t __arg0, uint64_t __arg1, const MethodInfo* m
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int64_t __N2M_i8i4X1(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(int64_t*)ret;
-}
-
-
 // TResult System.Func`2::Invoke(T)
 static int64_t __N2M_i8i8(int64_t __arg0, const MethodInfo* method)
 {
@@ -22761,16 +21119,6 @@ static int64_t __N2M_i8u4(uint32_t __arg0, const MethodInfo* method)
 
 // TResult System.Func`2::Invoke(T)
 static int64_t __N2M_i8u8(uint64_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(int64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static int64_t __N2M_i8X1(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {*(uint64_t*)&__arg0 };
     StackObject* ret = args + 1;
@@ -22969,16 +21317,6 @@ static float __N2M_r4i4i4r4i4(int32_t __arg0, int32_t __arg1, float __arg2, int3
 }
 
 
-// System.Single UnityEngine.Yoga.BaselineFunction::Invoke(UnityEngine.Yoga.YogaNode,System.Single,System.Single)
-static float __N2M_r4i4i4r4r4(int32_t __arg0, int32_t __arg1, float __arg2, float __arg3, const MethodInfo* method)
-{
-    StackObject args[5] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
-    StackObject* ret = args + 4;
-    Interpreter::Execute(method, args, ret);
-    return *(float*)ret;
-}
-
-
 // TResult System.Func`2::Invoke(T)
 static float __N2M_r4i4i8(int32_t __arg0, int64_t __arg1, const MethodInfo* method)
 {
@@ -22994,16 +21332,6 @@ static float __N2M_r4i4r4(int32_t __arg0, float __arg1, const MethodInfo* method
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(float*)ret;
-}
-
-
-// System.Single UnityEngine.Yoga.BaselineFunction::Invoke(UnityEngine.Yoga.YogaNode,System.Single,System.Single)
-static float __N2M_r4i4r4r4(int32_t __arg0, float __arg1, float __arg2, const MethodInfo* method)
-{
-    StackObject args[4] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2 };
-    StackObject* ret = args + 3;
     Interpreter::Execute(method, args, ret);
     return *(float*)ret;
 }
@@ -23599,7 +21927,7 @@ static ValueTypeSize<2> __N2M_S2i2i4(int16_t __arg0, int32_t __arg1, const Metho
 }
 
 
-// UnityEngine.EventInterests UnityEngine.UIElements.BaseVisualElementPanel::get_IMGUIEventInterests()
+// TResult System.Func`2::Invoke(T)
 static ValueTypeSize<2> __N2M_S2i4(int32_t __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {*(uint64_t*)&__arg0 };
@@ -24419,16 +22747,6 @@ static uint8_t __N2M_u1i4B12i4B12(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1
 }
 
 
-// System.Boolean UnityEngine.Tilemaps.TileBase::GetTileAnimationData(UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileAnimationData&)
-static uint8_t __N2M_u1i4B12i4i4(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, int32_t __arg2, int32_t __arg3, const MethodInfo* method)
-{
-    StackObject args[5] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
-    StackObject* ret = args + 4;
-    Interpreter::Execute(method, args, ret);
-    return *(uint8_t*)ret;
-}
-
-
 // System.Boolean Cysharp.Text.Utf8ValueStringBuilder/TryFormat`1::Invoke(T,System.Span`1<System.Byte>,System.Int32&,System.Buffers.StandardFormat)
 static uint8_t __N2M_u1i4B12i4S2(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, int32_t __arg2, ValueTypeSize<2> __arg3, const MethodInfo* method)
 {
@@ -25119,7 +23437,7 @@ static uint8_t __N2M_u1i4i2i4(int32_t __arg0, int16_t __arg1, int32_t __arg2, co
 }
 
 
-// System.Boolean <>f__AnonymousType0`1::Equals(System.Object)
+// System.Boolean Mono.RuntimeClassHandle::Equals(System.Object)
 static uint8_t __N2M_u1i4i4(int32_t __arg0, int32_t __arg1, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
@@ -25899,80 +24217,10 @@ static uint8_t __N2M_u1u8B12i4S2(uint64_t __arg0, ValueTypeSizeAlign4<12> __arg1
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint8_t __N2M_u1X1(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint8_t*)ret;
-}
-
-
 // T ServiceStack.Text.Common.ParseMethodUtilities/ParseStringSpanGenericDelegate`1::Invoke(System.ReadOnlySpan`1<System.Char>)
 static uint16_t __N2M_u2B12(ValueTypeSizeAlign4<12> __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2B16(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2B8(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2C16(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2C8(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i1(int8_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i2(int16_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
     StackObject* ret = args + 1;
     Interpreter::Execute(method, args, ret);
     return *(uint16_t*)ret;
@@ -25993,66 +24241,6 @@ static uint16_t __N2M_u2i4(int32_t __arg0, const MethodInfo* method)
 static uint16_t __N2M_u2i4B12(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i4B16(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i4B8(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i4C16(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i4C8(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i4i1(int32_t __arg0, int8_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i4i2(int32_t __arg0, int16_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = args + 2;
     Interpreter::Execute(method, args, ret);
     return *(uint16_t*)ret;
@@ -26129,48 +24317,8 @@ static uint16_t __N2M_u2i4r8(int32_t __arg0, double __arg1, const MethodInfo* me
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i4u1(int32_t __arg0, uint8_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
 // System.Char System.Globalization.TextInfo::ToLower(System.Char)
 static uint16_t __N2M_u2i4u2(int32_t __arg0, uint16_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i4u4(int32_t __arg0, uint32_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i4u8(int32_t __arg0, uint64_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2i4X1(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = args + 2;
@@ -26209,48 +24357,8 @@ static uint16_t __N2M_u2r8(double __arg0, const MethodInfo* method)
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2u1(uint8_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
 // TResult System.Func`2::Invoke(T)
 static uint16_t __N2M_u2u2(uint16_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2u4(uint32_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2u8(uint64_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint16_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint16_t __N2M_u2X1(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {*(uint64_t*)&__arg0 };
     StackObject* ret = args + 1;
@@ -26279,46 +24387,6 @@ static uint32_t __N2M_u4B12(ValueTypeSizeAlign4<12> __arg0, const MethodInfo* me
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4B16(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4B8(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4C16(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4C8(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
 // Mono.Unity.UnityTls/unitytls_x509verify_result Mono.Unity.UnityTls/unitytls_interface_struct/unitytls_x509verify_explicit_ca_t::Invoke(Mono.Unity.UnityTls/unitytls_x509list_ref,Mono.Unity.UnityTls/unitytls_x509list_ref,System.Byte*,System.IntPtr,Mono.Unity.UnityTls/unitytls_x509verify_callback,System.Void*,Mono.Unity.UnityTls/unitytls_errorstate*)
 static uint32_t __N2M_u4C8C8i4i4i4i4i4(ValueTypeSizeAlign8<8> __arg0, ValueTypeSizeAlign8<8> __arg1, int32_t __arg2, int32_t __arg3, int32_t __arg4, int32_t __arg5, int32_t __arg6, const MethodInfo* method)
 {
@@ -26334,26 +24402,6 @@ static uint32_t __N2M_u4C8i4i4i4i4i4(ValueTypeSizeAlign8<8> __arg0, int32_t __ar
 {
     StackObject args[7] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4, *(uint64_t*)&__arg5 };
     StackObject* ret = args + 6;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i1(int8_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i2(int16_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
     Interpreter::Execute(method, args, ret);
     return *(uint32_t*)ret;
 }
@@ -26389,48 +24437,8 @@ static uint32_t __N2M_u4i4B12i4(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, 
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i4B16(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
 // TValue System.Collections.Generic.Dictionary`2::get_Item(TKey)
 static uint32_t __N2M_u4i4B4(int32_t __arg0, ValueTypeSizeAlign4<4> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i4B8(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i4C16(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i4C8(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = args + 2;
@@ -26474,26 +24482,6 @@ static uint32_t __N2M_u4i4C8u4i4(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, 
 {
     StackObject args[5] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
     StackObject* ret = args + 4;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i4i1(int32_t __arg0, int8_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i4i2(int32_t __arg0, int16_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
     Interpreter::Execute(method, args, ret);
     return *(uint32_t*)ret;
 }
@@ -26579,48 +24567,8 @@ static uint32_t __N2M_u4i4r8(int32_t __arg0, double __arg1, const MethodInfo* me
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i4u1(int32_t __arg0, uint8_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i4u2(int32_t __arg0, uint16_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
 // TValue System.Collections.Generic.Dictionary`2::get_Item(TKey)
 static uint32_t __N2M_u4i4u4(int32_t __arg0, uint32_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i4u8(int32_t __arg0, uint64_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4i4X1(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = args + 2;
@@ -26659,48 +24607,8 @@ static uint32_t __N2M_u4r8(double __arg0, const MethodInfo* method)
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4u1(uint8_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4u2(uint16_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
 // TResult System.Func`2::Invoke(T)
 static uint32_t __N2M_u4u4(uint32_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4u8(uint64_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint32_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint32_t __N2M_u4X1(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {*(uint64_t*)&__arg0 };
     StackObject* ret = args + 1;
@@ -26729,66 +24637,6 @@ static uint64_t __N2M_u8B12(ValueTypeSizeAlign4<12> __arg0, const MethodInfo* me
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8B16(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8B8(ValueTypeSizeAlign4<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8C16(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8C8(ValueTypeSizeAlign8<8> __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i1(int8_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i2(int16_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
 // System.UInt64 System.IO.BinaryReader::ReadUInt64()
 static uint64_t __N2M_u8i4(int32_t __arg0, const MethodInfo* method)
 {
@@ -26803,66 +24651,6 @@ static uint64_t __N2M_u8i4(int32_t __arg0, const MethodInfo* method)
 static uint64_t __N2M_u8i4B12(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i4B16(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i4B8(int32_t __arg0, ValueTypeSizeAlign4<8> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i4C16(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i4C8(int32_t __arg0, ValueTypeSizeAlign8<8> __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i4i1(int32_t __arg0, int8_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i4i2(int32_t __arg0, int16_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = args + 2;
     Interpreter::Execute(method, args, ret);
     return *(uint64_t*)ret;
@@ -26929,48 +24717,8 @@ static uint64_t __N2M_u8i4r8(int32_t __arg0, double __arg1, const MethodInfo* me
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i4u1(int32_t __arg0, uint8_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i4u2(int32_t __arg0, uint16_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i4u4(int32_t __arg0, uint32_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
 // TResult System.Func`2::Invoke(T)
 static uint64_t __N2M_u8i4u8(int32_t __arg0, uint64_t __arg1, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
-    StackObject* ret = args + 2;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8i4X1(int32_t __arg0, WebGLSpeicalValueType<1> __arg1, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = args + 2;
@@ -27009,48 +24757,8 @@ static uint64_t __N2M_u8r8(double __arg0, const MethodInfo* method)
 }
 
 
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8u1(uint8_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8u2(uint16_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8u4(uint32_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
 // TResult System.Func`2::Invoke(T)
 static uint64_t __N2M_u8u8(uint64_t __arg0, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = args + 1;
-    Interpreter::Execute(method, args, ret);
-    return *(uint64_t*)ret;
-}
-
-
-// UnderlyingType System.Diagnostics.Tracing.EnumHelper`1/Transformer`1::Invoke(ValueType)
-static uint64_t __N2M_u8X1(WebGLSpeicalValueType<1> __arg0, const MethodInfo* method)
 {
     StackObject args[2] = {*(uint64_t*)&__arg0 };
     StackObject* ret = args + 1;
@@ -27089,7 +24797,7 @@ static void __N2M_vB12(ValueTypeSizeAlign4<12> __arg0, const MethodInfo* method)
 }
 
 
-// System.Void System.Action`1::Invoke(T)
+// System.Void UnityEngine.Events.UnityAction`1::Invoke(T0)
 static void __N2M_vB16(ValueTypeSizeAlign4<16> __arg0, const MethodInfo* method)
 {
     StackObject args[1] = {(uint64_t)&__arg0 };
@@ -27219,20 +24927,10 @@ static void __N2M_vB96i4B16i4(ValueTypeSizeAlign4<96> __arg0, int32_t __arg1, Va
 }
 
 
-// System.Void UnityEngine.Windows.WebCam.PhotoCapture/OnPhotoModeStartedCallback::Invoke(UnityEngine.Windows.WebCam.PhotoCapture/PhotoCaptureResult)
+// System.Void System.Action`1::Invoke(T)
 static void __N2M_vC16(ValueTypeSizeAlign8<16> __arg0, const MethodInfo* method)
 {
     StackObject args[1] = {(uint64_t)&__arg0 };
-    StackObject* ret = nullptr;
-    Interpreter::Execute(method, args, ret);
-    
-}
-
-
-// System.Void UnityEngine.Windows.WebCam.PhotoCapture/OnCapturedToMemoryCallback::Invoke(UnityEngine.Windows.WebCam.PhotoCapture/PhotoCaptureResult,UnityEngine.Windows.WebCam.PhotoCaptureFrame)
-static void __N2M_vC16i4(ValueTypeSizeAlign8<16> __arg0, int32_t __arg1, const MethodInfo* method)
-{
-    StackObject args[2] = {(uint64_t)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = nullptr;
     Interpreter::Execute(method, args, ret);
     
@@ -27259,7 +24957,7 @@ static void __N2M_vC24(ValueTypeSizeAlign8<24> __arg0, const MethodInfo* method)
 }
 
 
-// System.Void UnityEngine.Windows.Speech.PhraseRecognizer/PhraseRecognizedDelegate::Invoke(UnityEngine.Windows.Speech.PhraseRecognizedEventArgs)
+// System.Void System.Action`1::Invoke(T)
 static void __N2M_vC32(ValueTypeSizeAlign8<32> __arg0, const MethodInfo* method)
 {
     StackObject args[1] = {(uint64_t)&__arg0 };
@@ -27363,16 +25061,6 @@ static void __N2M_vi4B12(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, const M
 static void __N2M_vi4B12i4(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, int32_t __arg2, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1, *(uint64_t*)&__arg2 };
-    StackObject* ret = nullptr;
-    Interpreter::Execute(method, args, ret);
-    
-}
-
-
-// System.Void UnityEngine.Tilemaps.Tile::GetTileData(UnityEngine.Vector3Int,UnityEngine.Tilemaps.ITilemap,UnityEngine.Tilemaps.TileData&)
-static void __N2M_vi4B12i4i4(int32_t __arg0, ValueTypeSizeAlign4<12> __arg1, int32_t __arg2, int32_t __arg3, const MethodInfo* method)
-{
-    StackObject args[4] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
     StackObject* ret = nullptr;
     Interpreter::Execute(method, args, ret);
     
@@ -27739,7 +25427,7 @@ static void __N2M_vi4B96i4u1i4i4r4i4i4r4u1i4(int32_t __arg0, ValueTypeSizeAlign4
 }
 
 
-// System.Void UnityEngine.Windows.WebCam.PhotoCapture/OnPhotoModeStartedCallback::Invoke(UnityEngine.Windows.WebCam.PhotoCapture/PhotoCaptureResult)
+// System.Void System.Collections.Generic.List`1::Add(T)
 static void __N2M_vi4C16(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const MethodInfo* method)
 {
     StackObject args[2] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
@@ -27749,7 +25437,7 @@ static void __N2M_vi4C16(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, const M
 }
 
 
-// System.Void UnityEngine.Windows.WebCam.PhotoCapture/OnCapturedToMemoryCallback::Invoke(UnityEngine.Windows.WebCam.PhotoCapture/PhotoCaptureResult,UnityEngine.Windows.WebCam.PhotoCaptureFrame)
+// System.Void System.Collections.Generic.Dictionary`2::set_Item(TKey,TValue)
 static void __N2M_vi4C16i4(int32_t __arg0, ValueTypeSizeAlign8<16> __arg1, int32_t __arg2, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1, *(uint64_t*)&__arg2 };
@@ -27779,7 +25467,7 @@ static void __N2M_vi4C24(int32_t __arg0, ValueTypeSizeAlign8<24> __arg1, const M
 }
 
 
-// System.Void UnityEngine.Windows.Speech.PhraseRecognizer/PhraseRecognizedDelegate::Invoke(UnityEngine.Windows.Speech.PhraseRecognizedEventArgs)
+// System.Void System.Action`1::Invoke(T)
 static void __N2M_vi4C32(int32_t __arg0, ValueTypeSizeAlign8<32> __arg1, const MethodInfo* method)
 {
     StackObject args[2] = {*(uint64_t*)&__arg0, (uint64_t)&__arg1 };
@@ -27941,16 +25629,6 @@ static void __N2M_vi4i4B16(int32_t __arg0, int32_t __arg1, ValueTypeSizeAlign4<1
 
 // System.Void MessagePack.Unity.Vector4Formatter::Serialize(MessagePack.MessagePackWriter&,UnityEngine.Vector4,MessagePack.MessagePackSerializerOptions)
 static void __N2M_vi4i4B16i4(int32_t __arg0, int32_t __arg1, ValueTypeSizeAlign4<16> __arg2, int32_t __arg3, const MethodInfo* method)
-{
-    StackObject args[4] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, (uint64_t)&__arg2, *(uint64_t*)&__arg3 };
-    StackObject* ret = nullptr;
-    Interpreter::Execute(method, args, ret);
-    
-}
-
-
-// System.Void UnityEngine.Experimental.TerrainAPI.TerrainCallbacks/HeightmapChangedCallback::Invoke(UnityEngine.Terrain,UnityEngine.RectInt,System.Boolean)
-static void __N2M_vi4i4B16u1(int32_t __arg0, int32_t __arg1, ValueTypeSizeAlign4<16> __arg2, uint8_t __arg3, const MethodInfo* method)
 {
     StackObject args[4] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, (uint64_t)&__arg2, *(uint64_t*)&__arg3 };
     StackObject* ret = nullptr;
@@ -28319,16 +25997,6 @@ static void __N2M_vi4i4i4(int32_t __arg0, int32_t __arg1, int32_t __arg2, const 
 }
 
 
-// System.Void UnityEngine.Experimental.TerrainAPI.TerrainCallbacks/TextureChangedCallback::Invoke(UnityEngine.Terrain,System.String,UnityEngine.RectInt,System.Boolean)
-static void __N2M_vi4i4i4B16u1(int32_t __arg0, int32_t __arg1, int32_t __arg2, ValueTypeSizeAlign4<16> __arg3, uint8_t __arg4, const MethodInfo* method)
-{
-    StackObject args[5] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, (uint64_t)&__arg3, *(uint64_t*)&__arg4 };
-    StackObject* ret = nullptr;
-    Interpreter::Execute(method, args, ret);
-    
-}
-
-
 // System.Void System.Action`4::Invoke(T1,T2,T3,T4)
 static void __N2M_vi4i4i4B4(int32_t __arg0, int32_t __arg1, int32_t __arg2, ValueTypeSizeAlign4<4> __arg3, const MethodInfo* method)
 {
@@ -28579,7 +26247,7 @@ static void __N2M_vi4i4i4u1i4i4r4i4i4r4u1i4(int32_t __arg0, int32_t __arg1, int3
 }
 
 
-// System.Void Microsoft.Win32.UnsafeNativeMethods/ManifestEtw/EtwEnableCallback::Invoke(System.Guid&,System.Int32,System.Byte,System.Int64,System.Int64,Microsoft.Win32.UnsafeNativeMethods/ManifestEtw/EVENT_FILTER_DESCRIPTOR*,System.Void*)
+// System.Void System.Runtime.Interop.UnsafeNativeMethods/EtwEnableCallback::Invoke(System.Guid&,System.Int32,System.Byte,System.Int64,System.Int64,System.Void*,System.Void*)
 static void __N2M_vi4i4i4u1i8i8i4i4(int32_t __arg0, int32_t __arg1, int32_t __arg2, uint8_t __arg3, int64_t __arg4, int64_t __arg5, int32_t __arg6, int32_t __arg7, const MethodInfo* method)
 {
     StackObject args[8] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4, *(uint64_t*)&__arg5, *(uint64_t*)&__arg6, *(uint64_t*)&__arg7 };
@@ -28639,16 +26307,6 @@ static void __N2M_vi4i4i8i4(int32_t __arg0, int32_t __arg1, int64_t __arg2, int3
 }
 
 
-// System.Void UnityEngine.Analytics.AnalyticsSessionInfo/SessionStateChanged::Invoke(UnityEngine.Analytics.AnalyticsSessionState,System.Int64,System.Int64,System.Boolean)
-static void __N2M_vi4i4i8i8u1(int32_t __arg0, int32_t __arg1, int64_t __arg2, int64_t __arg3, uint8_t __arg4, const MethodInfo* method)
-{
-    StackObject args[5] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4 };
-    StackObject* ret = nullptr;
-    Interpreter::Execute(method, args, ret);
-    
-}
-
-
 // System.Void DG.Tweening.Plugins.LongPlugin::SetFrom(DG.Tweening.Core.TweenerCore`3<System.Int64,System.Int64,DG.Tweening.Plugins.Options.NoOptions>,System.Int64,System.Boolean,System.Boolean)
 static void __N2M_vi4i4i8u1u1(int32_t __arg0, int32_t __arg1, int64_t __arg2, uint8_t __arg3, uint8_t __arg4, const MethodInfo* method)
 {
@@ -28699,7 +26357,7 @@ static void __N2M_vi4i4r4u1u1(int32_t __arg0, int32_t __arg1, float __arg2, uint
 }
 
 
-// System.Void UnityEngine.Video.VideoPlayer/TimeEventHandler::Invoke(UnityEngine.Video.VideoPlayer,System.Double)
+// System.Void System.Collections.Generic.List`1::set_Item(System.Int32,T)
 static void __N2M_vi4i4r8(int32_t __arg0, int32_t __arg1, double __arg2, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2 };
@@ -28789,7 +26447,7 @@ static void __N2M_vi4i4u1i4(int32_t __arg0, int32_t __arg1, uint8_t __arg2, int3
 }
 
 
-// System.Void Microsoft.Win32.UnsafeNativeMethods/ManifestEtw/EtwEnableCallback::Invoke(System.Guid&,System.Int32,System.Byte,System.Int64,System.Int64,Microsoft.Win32.UnsafeNativeMethods/ManifestEtw/EVENT_FILTER_DESCRIPTOR*,System.Void*)
+// System.Void System.Runtime.Interop.UnsafeNativeMethods/EtwEnableCallback::Invoke(System.Guid&,System.Int32,System.Byte,System.Int64,System.Int64,System.Void*,System.Void*)
 static void __N2M_vi4i4u1i8i8i4i4(int32_t __arg0, int32_t __arg1, uint8_t __arg2, int64_t __arg3, int64_t __arg4, int32_t __arg5, int32_t __arg6, const MethodInfo* method)
 {
     StackObject args[7] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4, *(uint64_t*)&__arg5, *(uint64_t*)&__arg6 };
@@ -28933,16 +26591,6 @@ static void __N2M_vi4i8i4i8(int32_t __arg0, int64_t __arg1, int32_t __arg2, int6
 static void __N2M_vi4i8i8i8i8(int32_t __arg0, int64_t __arg1, int64_t __arg2, int64_t __arg3, int64_t __arg4, const MethodInfo* method)
 {
     StackObject args[5] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3, *(uint64_t*)&__arg4 };
-    StackObject* ret = nullptr;
-    Interpreter::Execute(method, args, ret);
-    
-}
-
-
-// System.Void UnityEngine.Analytics.AnalyticsSessionInfo/SessionStateChanged::Invoke(UnityEngine.Analytics.AnalyticsSessionState,System.Int64,System.Int64,System.Boolean)
-static void __N2M_vi4i8i8u1(int32_t __arg0, int64_t __arg1, int64_t __arg2, uint8_t __arg3, const MethodInfo* method)
-{
-    StackObject args[4] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
     StackObject* ret = nullptr;
     Interpreter::Execute(method, args, ret);
     
@@ -29109,16 +26757,6 @@ static void __N2M_vi4u1i4(int32_t __arg0, uint8_t __arg1, int32_t __arg2, const 
 }
 
 
-// System.Void System.Action`3::Invoke(T1,T2,T3)
-static void __N2M_vi4u1u1i4(int32_t __arg0, uint8_t __arg1, uint8_t __arg2, int32_t __arg3, const MethodInfo* method)
-{
-    StackObject args[4] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2, *(uint64_t*)&__arg3 };
-    StackObject* ret = nullptr;
-    Interpreter::Execute(method, args, ret);
-    
-}
-
-
 // System.Void System.IO.BinaryWriter::Write(System.Char)
 static void __N2M_vi4u2(int32_t __arg0, uint16_t __arg1, const MethodInfo* method)
 {
@@ -29129,7 +26767,7 @@ static void __N2M_vi4u2(int32_t __arg0, uint16_t __arg1, const MethodInfo* metho
 }
 
 
-// System.Void System.Action`2::Invoke(T1,T2)
+// System.Void System.Collections.Generic.Dictionary`2::set_Item(TKey,TValue)
 static void __N2M_vi4u2i4(int32_t __arg0, uint16_t __arg1, int32_t __arg2, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2 };
@@ -29229,7 +26867,7 @@ static void __N2M_vi4u8(int32_t __arg0, uint64_t __arg1, const MethodInfo* metho
 }
 
 
-// System.Void System.Collections.Generic.Dictionary`2::set_Item(TKey,TValue)
+// System.Void System.Action`2::Invoke(T1,T2)
 static void __N2M_vi4u8i4(int32_t __arg0, uint64_t __arg1, int32_t __arg2, const MethodInfo* method)
 {
     StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2 };
@@ -29369,30 +27007,10 @@ static void __N2M_vu1i4(uint8_t __arg0, int32_t __arg1, const MethodInfo* method
 }
 
 
-// System.Void System.Action`3::Invoke(T1,T2,T3)
-static void __N2M_vu1u1i4(uint8_t __arg0, uint8_t __arg1, int32_t __arg2, const MethodInfo* method)
-{
-    StackObject args[3] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1, *(uint64_t*)&__arg2 };
-    StackObject* ret = nullptr;
-    Interpreter::Execute(method, args, ret);
-    
-}
-
-
 // System.Void System.Action`1::Invoke(T)
 static void __N2M_vu2(uint16_t __arg0, const MethodInfo* method)
 {
     StackObject args[1] = {*(uint64_t*)&__arg0 };
-    StackObject* ret = nullptr;
-    Interpreter::Execute(method, args, ret);
-    
-}
-
-
-// System.Void System.Action`2::Invoke(T1,T2)
-static void __N2M_vu2i4(uint16_t __arg0, int32_t __arg1, const MethodInfo* method)
-{
-    StackObject args[2] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = nullptr;
     Interpreter::Execute(method, args, ret);
     
@@ -29423,6 +27041,16 @@ static void __N2M_vu4i4(uint32_t __arg0, int32_t __arg1, const MethodInfo* metho
 static void __N2M_vu8(uint64_t __arg0, const MethodInfo* method)
 {
     StackObject args[1] = {*(uint64_t*)&__arg0 };
+    StackObject* ret = nullptr;
+    Interpreter::Execute(method, args, ret);
+    
+}
+
+
+// System.Void System.Action`2::Invoke(T1,T2)
+static void __N2M_vu8i4(uint64_t __arg0, int32_t __arg1, const MethodInfo* method)
+{
+    StackObject args[2] = {*(uint64_t*)&__arg0, *(uint64_t*)&__arg1 };
     StackObject* ret = nullptr;
     Interpreter::Execute(method, args, ret);
     
@@ -29566,8 +27194,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"B8i4i4B8", (Il2CppMethodPointer)__N2M_B8i4i4B8},
 	{"B8i4i4i4", (Il2CppMethodPointer)__N2M_B8i4i4i4},
 	{"B8i4i4i4i4", (Il2CppMethodPointer)__N2M_B8i4i4i4i4},
-	{"B8i4i4r4i4r4i4", (Il2CppMethodPointer)__N2M_B8i4i4r4i4r4i4},
-	{"B8i4r4i4r4i4", (Il2CppMethodPointer)__N2M_B8i4r4i4r4i4},
 	{"B8i4u4", (Il2CppMethodPointer)__N2M_B8i4u4},
 	{"C16", (Il2CppMethodPointer)__N2M_C16},
 	{"C16B12", (Il2CppMethodPointer)__N2M_C16B12},
@@ -29604,71 +27230,31 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"C8i4r8", (Il2CppMethodPointer)__N2M_C8i4r8},
 	{"C8i4u1", (Il2CppMethodPointer)__N2M_C8i4u1},
 	{"i1B12", (Il2CppMethodPointer)__N2M_i1B12},
-	{"i1B16", (Il2CppMethodPointer)__N2M_i1B16},
-	{"i1B8", (Il2CppMethodPointer)__N2M_i1B8},
-	{"i1C16", (Il2CppMethodPointer)__N2M_i1C16},
-	{"i1C8", (Il2CppMethodPointer)__N2M_i1C8},
 	{"i1i1", (Il2CppMethodPointer)__N2M_i1i1},
-	{"i1i2", (Il2CppMethodPointer)__N2M_i1i2},
 	{"i1i4", (Il2CppMethodPointer)__N2M_i1i4},
 	{"i1i4B12", (Il2CppMethodPointer)__N2M_i1i4B12},
-	{"i1i4B16", (Il2CppMethodPointer)__N2M_i1i4B16},
-	{"i1i4B8", (Il2CppMethodPointer)__N2M_i1i4B8},
-	{"i1i4C16", (Il2CppMethodPointer)__N2M_i1i4C16},
-	{"i1i4C8", (Il2CppMethodPointer)__N2M_i1i4C8},
 	{"i1i4i1", (Il2CppMethodPointer)__N2M_i1i4i1},
-	{"i1i4i2", (Il2CppMethodPointer)__N2M_i1i4i2},
 	{"i1i4i4", (Il2CppMethodPointer)__N2M_i1i4i4},
 	{"i1i4i4i4", (Il2CppMethodPointer)__N2M_i1i4i4i4},
 	{"i1i4i8", (Il2CppMethodPointer)__N2M_i1i4i8},
 	{"i1i4r4", (Il2CppMethodPointer)__N2M_i1i4r4},
 	{"i1i4r8", (Il2CppMethodPointer)__N2M_i1i4r8},
-	{"i1i4u1", (Il2CppMethodPointer)__N2M_i1i4u1},
-	{"i1i4u2", (Il2CppMethodPointer)__N2M_i1i4u2},
-	{"i1i4u4", (Il2CppMethodPointer)__N2M_i1i4u4},
-	{"i1i4u8", (Il2CppMethodPointer)__N2M_i1i4u8},
-	{"i1i4X1", (Il2CppMethodPointer)__N2M_i1i4X1},
 	{"i1i8", (Il2CppMethodPointer)__N2M_i1i8},
 	{"i1r4", (Il2CppMethodPointer)__N2M_i1r4},
 	{"i1r8", (Il2CppMethodPointer)__N2M_i1r8},
-	{"i1u1", (Il2CppMethodPointer)__N2M_i1u1},
-	{"i1u2", (Il2CppMethodPointer)__N2M_i1u2},
-	{"i1u4", (Il2CppMethodPointer)__N2M_i1u4},
-	{"i1u8", (Il2CppMethodPointer)__N2M_i1u8},
-	{"i1X1", (Il2CppMethodPointer)__N2M_i1X1},
 	{"i2B12", (Il2CppMethodPointer)__N2M_i2B12},
-	{"i2B16", (Il2CppMethodPointer)__N2M_i2B16},
-	{"i2B8", (Il2CppMethodPointer)__N2M_i2B8},
-	{"i2C16", (Il2CppMethodPointer)__N2M_i2C16},
-	{"i2C8", (Il2CppMethodPointer)__N2M_i2C8},
-	{"i2i1", (Il2CppMethodPointer)__N2M_i2i1},
 	{"i2i2", (Il2CppMethodPointer)__N2M_i2i2},
 	{"i2i4", (Il2CppMethodPointer)__N2M_i2i4},
 	{"i2i4B12", (Il2CppMethodPointer)__N2M_i2i4B12},
-	{"i2i4B16", (Il2CppMethodPointer)__N2M_i2i4B16},
-	{"i2i4B8", (Il2CppMethodPointer)__N2M_i2i4B8},
-	{"i2i4C16", (Il2CppMethodPointer)__N2M_i2i4C16},
-	{"i2i4C8", (Il2CppMethodPointer)__N2M_i2i4C8},
-	{"i2i4i1", (Il2CppMethodPointer)__N2M_i2i4i1},
 	{"i2i4i2", (Il2CppMethodPointer)__N2M_i2i4i2},
 	{"i2i4i4", (Il2CppMethodPointer)__N2M_i2i4i4},
 	{"i2i4i4i4", (Il2CppMethodPointer)__N2M_i2i4i4i4},
 	{"i2i4i8", (Il2CppMethodPointer)__N2M_i2i4i8},
 	{"i2i4r4", (Il2CppMethodPointer)__N2M_i2i4r4},
 	{"i2i4r8", (Il2CppMethodPointer)__N2M_i2i4r8},
-	{"i2i4u1", (Il2CppMethodPointer)__N2M_i2i4u1},
-	{"i2i4u2", (Il2CppMethodPointer)__N2M_i2i4u2},
-	{"i2i4u4", (Il2CppMethodPointer)__N2M_i2i4u4},
-	{"i2i4u8", (Il2CppMethodPointer)__N2M_i2i4u8},
-	{"i2i4X1", (Il2CppMethodPointer)__N2M_i2i4X1},
 	{"i2i8", (Il2CppMethodPointer)__N2M_i2i8},
 	{"i2r4", (Il2CppMethodPointer)__N2M_i2r4},
 	{"i2r8", (Il2CppMethodPointer)__N2M_i2r8},
-	{"i2u1", (Il2CppMethodPointer)__N2M_i2u1},
-	{"i2u2", (Il2CppMethodPointer)__N2M_i2u2},
-	{"i2u4", (Il2CppMethodPointer)__N2M_i2u4},
-	{"i2u8", (Il2CppMethodPointer)__N2M_i2u8},
-	{"i2X1", (Il2CppMethodPointer)__N2M_i2X1},
 	{"i4", (Il2CppMethodPointer)__N2M_i4},
 	{"i4A4", (Il2CppMethodPointer)__N2M_i4A4},
 	{"i4A4A4", (Il2CppMethodPointer)__N2M_i4A4A4},
@@ -29874,7 +27460,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"i4i4i4B12i4i4i4i4", (Il2CppMethodPointer)__N2M_i4i4i4B12i4i4i4i4},
 	{"i4i4i4B12i4S2i4i4", (Il2CppMethodPointer)__N2M_i4i4i4B12i4S2i4i4},
 	{"i4i4i4B16i4i4", (Il2CppMethodPointer)__N2M_i4i4i4B16i4i4},
-	{"i4i4i4B16u1i4i4", (Il2CppMethodPointer)__N2M_i4i4i4B16u1i4i4},
 	{"i4i4i4B20i4i4", (Il2CppMethodPointer)__N2M_i4i4i4B20i4i4},
 	{"i4i4i4B4", (Il2CppMethodPointer)__N2M_i4i4i4B4},
 	{"i4i4i4B64i4i4", (Il2CppMethodPointer)__N2M_i4i4i4B64i4i4},
@@ -29888,7 +27473,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"i4i4i4i1i4i4", (Il2CppMethodPointer)__N2M_i4i4i4i1i4i4},
 	{"i4i4i4i2i4i4", (Il2CppMethodPointer)__N2M_i4i4i4i2i4i4},
 	{"i4i4i4i4", (Il2CppMethodPointer)__N2M_i4i4i4i4},
-	{"i4i4i4i4B16u1i4i4", (Il2CppMethodPointer)__N2M_i4i4i4i4B16u1i4i4},
 	{"i4i4i4i4B4", (Il2CppMethodPointer)__N2M_i4i4i4i4B4},
 	{"i4i4i4i4B4i4i4", (Il2CppMethodPointer)__N2M_i4i4i4i4B4i4i4},
 	{"i4i4i4i4B8i4", (Il2CppMethodPointer)__N2M_i4i4i4i4B8i4},
@@ -29928,11 +27512,8 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"i4i4i4i4u2i4i4", (Il2CppMethodPointer)__N2M_i4i4i4i4u2i4i4},
 	{"i4i4i4i8", (Il2CppMethodPointer)__N2M_i4i4i4i8},
 	{"i4i4i4i8i4i4", (Il2CppMethodPointer)__N2M_i4i4i4i8i4i4},
-	{"i4i4i4i8i8u1i4i4", (Il2CppMethodPointer)__N2M_i4i4i4i8i8u1i4i4},
 	{"i4i4i4r4", (Il2CppMethodPointer)__N2M_i4i4i4r4},
 	{"i4i4i4r4i4i4", (Il2CppMethodPointer)__N2M_i4i4i4r4i4i4},
-	{"i4i4i4r4i4r4i4i4i4", (Il2CppMethodPointer)__N2M_i4i4i4r4i4r4i4i4i4},
-	{"i4i4i4r4r4i4i4", (Il2CppMethodPointer)__N2M_i4i4i4r4r4i4i4},
 	{"i4i4i4r4u1", (Il2CppMethodPointer)__N2M_i4i4i4r4u1},
 	{"i4i4i4r8i4i4", (Il2CppMethodPointer)__N2M_i4i4i4r8i4i4},
 	{"i4i4i4S2", (Il2CppMethodPointer)__N2M_i4i4i4S2},
@@ -29993,7 +27574,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"i4i4u1i4i4i4i4u1", (Il2CppMethodPointer)__N2M_i4i4u1i4i4i4i4u1},
 	{"i4i4u1u1", (Il2CppMethodPointer)__N2M_i4i4u1u1},
 	{"i4i4u1u1i4i4", (Il2CppMethodPointer)__N2M_i4i4u1u1i4i4},
-	{"i4i4u1u1i4i4i4", (Il2CppMethodPointer)__N2M_i4i4u1u1i4i4i4},
 	{"i4i4u2", (Il2CppMethodPointer)__N2M_i4i4u2},
 	{"i4i4u2B12i4B12i4i4", (Il2CppMethodPointer)__N2M_i4i4u2B12i4B12i4i4},
 	{"i4i4u2B12i4S2i4i4", (Il2CppMethodPointer)__N2M_i4i4u2B12i4S2i4i4},
@@ -30019,7 +27599,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"i4i4u8u8", (Il2CppMethodPointer)__N2M_i4i4u8u8},
 	{"i4i4u8u8i4i4", (Il2CppMethodPointer)__N2M_i4i4u8u8i4i4},
 	{"i4i4X1", (Il2CppMethodPointer)__N2M_i4i4X1},
-	{"i4i4X1i4i4", (Il2CppMethodPointer)__N2M_i4i4X1i4i4},
 	{"i4i8", (Il2CppMethodPointer)__N2M_i4i8},
 	{"i4i8i4i4", (Il2CppMethodPointer)__N2M_i4i8i4i4},
 	{"i4i8i8", (Il2CppMethodPointer)__N2M_i4i8i8},
@@ -30044,20 +27623,12 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"i4u8", (Il2CppMethodPointer)__N2M_i4u8},
 	{"i4u8i4i4", (Il2CppMethodPointer)__N2M_i4u8i4i4},
 	{"i4u8u8", (Il2CppMethodPointer)__N2M_i4u8u8},
-	{"i4X1", (Il2CppMethodPointer)__N2M_i4X1},
 	{"i8", (Il2CppMethodPointer)__N2M_i8},
 	{"i8B12", (Il2CppMethodPointer)__N2M_i8B12},
-	{"i8B16", (Il2CppMethodPointer)__N2M_i8B16},
-	{"i8B8", (Il2CppMethodPointer)__N2M_i8B8},
-	{"i8C16", (Il2CppMethodPointer)__N2M_i8C16},
-	{"i8C8", (Il2CppMethodPointer)__N2M_i8C8},
 	{"i8i1", (Il2CppMethodPointer)__N2M_i8i1},
 	{"i8i2", (Il2CppMethodPointer)__N2M_i8i2},
 	{"i8i4", (Il2CppMethodPointer)__N2M_i8i4},
 	{"i8i4B12", (Il2CppMethodPointer)__N2M_i8i4B12},
-	{"i8i4B16", (Il2CppMethodPointer)__N2M_i8i4B16},
-	{"i8i4B8", (Il2CppMethodPointer)__N2M_i8i4B8},
-	{"i8i4C16", (Il2CppMethodPointer)__N2M_i8i4C16},
 	{"i8i4C8", (Il2CppMethodPointer)__N2M_i8i4C8},
 	{"i8i4i1", (Il2CppMethodPointer)__N2M_i8i4i1},
 	{"i8i4i2", (Il2CppMethodPointer)__N2M_i8i4i2},
@@ -30072,7 +27643,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"i8i4u2", (Il2CppMethodPointer)__N2M_i8i4u2},
 	{"i8i4u4", (Il2CppMethodPointer)__N2M_i8i4u4},
 	{"i8i4u8", (Il2CppMethodPointer)__N2M_i8i4u8},
-	{"i8i4X1", (Il2CppMethodPointer)__N2M_i8i4X1},
 	{"i8i8", (Il2CppMethodPointer)__N2M_i8i8},
 	{"i8r4", (Il2CppMethodPointer)__N2M_i8r4},
 	{"i8r8", (Il2CppMethodPointer)__N2M_i8r8},
@@ -30080,7 +27650,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"i8u2", (Il2CppMethodPointer)__N2M_i8u2},
 	{"i8u4", (Il2CppMethodPointer)__N2M_i8u4},
 	{"i8u8", (Il2CppMethodPointer)__N2M_i8u8},
-	{"i8X1", (Il2CppMethodPointer)__N2M_i8X1},
 	{"r4", (Il2CppMethodPointer)__N2M_r4},
 	{"r4B12", (Il2CppMethodPointer)__N2M_r4B12},
 	{"r4i1", (Il2CppMethodPointer)__N2M_r4i1},
@@ -30100,10 +27669,8 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"r4i4i4i4", (Il2CppMethodPointer)__N2M_r4i4i4i4},
 	{"r4i4i4r4", (Il2CppMethodPointer)__N2M_r4i4i4r4},
 	{"r4i4i4r4i4", (Il2CppMethodPointer)__N2M_r4i4i4r4i4},
-	{"r4i4i4r4r4", (Il2CppMethodPointer)__N2M_r4i4i4r4r4},
 	{"r4i4i8", (Il2CppMethodPointer)__N2M_r4i4i8},
 	{"r4i4r4", (Il2CppMethodPointer)__N2M_r4i4r4},
-	{"r4i4r4r4", (Il2CppMethodPointer)__N2M_r4i4r4r4},
 	{"r4i4r4r4r4r4", (Il2CppMethodPointer)__N2M_r4i4r4r4r4r4},
 	{"r4i4r8", (Il2CppMethodPointer)__N2M_r4i4r8},
 	{"r4i4S1r4B16", (Il2CppMethodPointer)__N2M_r4i4S1r4B16},
@@ -30245,7 +27812,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"u1i4B12B12", (Il2CppMethodPointer)__N2M_u1i4B12B12},
 	{"u1i4B12i4", (Il2CppMethodPointer)__N2M_u1i4B12i4},
 	{"u1i4B12i4B12", (Il2CppMethodPointer)__N2M_u1i4B12i4B12},
-	{"u1i4B12i4i4", (Il2CppMethodPointer)__N2M_u1i4B12i4i4},
 	{"u1i4B12i4S2", (Il2CppMethodPointer)__N2M_u1i4B12i4S2},
 	{"u1i4B136", (Il2CppMethodPointer)__N2M_u1i4B136},
 	{"u1i4B16", (Il2CppMethodPointer)__N2M_u1i4B16},
@@ -30393,22 +27959,9 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"u1u8", (Il2CppMethodPointer)__N2M_u1u8},
 	{"u1u8B12i4B12", (Il2CppMethodPointer)__N2M_u1u8B12i4B12},
 	{"u1u8B12i4S2", (Il2CppMethodPointer)__N2M_u1u8B12i4S2},
-	{"u1X1", (Il2CppMethodPointer)__N2M_u1X1},
 	{"u2B12", (Il2CppMethodPointer)__N2M_u2B12},
-	{"u2B16", (Il2CppMethodPointer)__N2M_u2B16},
-	{"u2B8", (Il2CppMethodPointer)__N2M_u2B8},
-	{"u2C16", (Il2CppMethodPointer)__N2M_u2C16},
-	{"u2C8", (Il2CppMethodPointer)__N2M_u2C8},
-	{"u2i1", (Il2CppMethodPointer)__N2M_u2i1},
-	{"u2i2", (Il2CppMethodPointer)__N2M_u2i2},
 	{"u2i4", (Il2CppMethodPointer)__N2M_u2i4},
 	{"u2i4B12", (Il2CppMethodPointer)__N2M_u2i4B12},
-	{"u2i4B16", (Il2CppMethodPointer)__N2M_u2i4B16},
-	{"u2i4B8", (Il2CppMethodPointer)__N2M_u2i4B8},
-	{"u2i4C16", (Il2CppMethodPointer)__N2M_u2i4C16},
-	{"u2i4C8", (Il2CppMethodPointer)__N2M_u2i4C8},
-	{"u2i4i1", (Il2CppMethodPointer)__N2M_u2i4i1},
-	{"u2i4i2", (Il2CppMethodPointer)__N2M_u2i4i2},
 	{"u2i4i4", (Il2CppMethodPointer)__N2M_u2i4i4},
 	{"u2i4i4i4", (Il2CppMethodPointer)__N2M_u2i4i4i4},
 	{"u2i4i4i4u2", (Il2CppMethodPointer)__N2M_u2i4i4i4u2},
@@ -30416,43 +27969,23 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"u2i4i8", (Il2CppMethodPointer)__N2M_u2i4i8},
 	{"u2i4r4", (Il2CppMethodPointer)__N2M_u2i4r4},
 	{"u2i4r8", (Il2CppMethodPointer)__N2M_u2i4r8},
-	{"u2i4u1", (Il2CppMethodPointer)__N2M_u2i4u1},
 	{"u2i4u2", (Il2CppMethodPointer)__N2M_u2i4u2},
-	{"u2i4u4", (Il2CppMethodPointer)__N2M_u2i4u4},
-	{"u2i4u8", (Il2CppMethodPointer)__N2M_u2i4u8},
-	{"u2i4X1", (Il2CppMethodPointer)__N2M_u2i4X1},
 	{"u2i8", (Il2CppMethodPointer)__N2M_u2i8},
 	{"u2r4", (Il2CppMethodPointer)__N2M_u2r4},
 	{"u2r8", (Il2CppMethodPointer)__N2M_u2r8},
-	{"u2u1", (Il2CppMethodPointer)__N2M_u2u1},
 	{"u2u2", (Il2CppMethodPointer)__N2M_u2u2},
-	{"u2u4", (Il2CppMethodPointer)__N2M_u2u4},
-	{"u2u8", (Il2CppMethodPointer)__N2M_u2u8},
-	{"u2X1", (Il2CppMethodPointer)__N2M_u2X1},
 	{"u4", (Il2CppMethodPointer)__N2M_u4},
 	{"u4B12", (Il2CppMethodPointer)__N2M_u4B12},
-	{"u4B16", (Il2CppMethodPointer)__N2M_u4B16},
-	{"u4B8", (Il2CppMethodPointer)__N2M_u4B8},
-	{"u4C16", (Il2CppMethodPointer)__N2M_u4C16},
-	{"u4C8", (Il2CppMethodPointer)__N2M_u4C8},
 	{"u4C8C8i4i4i4i4i4", (Il2CppMethodPointer)__N2M_u4C8C8i4i4i4i4i4},
 	{"u4C8i4i4i4i4i4", (Il2CppMethodPointer)__N2M_u4C8i4i4i4i4i4},
-	{"u4i1", (Il2CppMethodPointer)__N2M_u4i1},
-	{"u4i2", (Il2CppMethodPointer)__N2M_u4i2},
 	{"u4i4", (Il2CppMethodPointer)__N2M_u4i4},
 	{"u4i4B12", (Il2CppMethodPointer)__N2M_u4i4B12},
 	{"u4i4B12i4", (Il2CppMethodPointer)__N2M_u4i4B12i4},
-	{"u4i4B16", (Il2CppMethodPointer)__N2M_u4i4B16},
 	{"u4i4B4", (Il2CppMethodPointer)__N2M_u4i4B4},
-	{"u4i4B8", (Il2CppMethodPointer)__N2M_u4i4B8},
-	{"u4i4C16", (Il2CppMethodPointer)__N2M_u4i4C16},
-	{"u4i4C8", (Il2CppMethodPointer)__N2M_u4i4C8},
 	{"u4i4C8C8i4i4i4i4i4", (Il2CppMethodPointer)__N2M_u4i4C8C8i4i4i4i4i4},
 	{"u4i4C8i4", (Il2CppMethodPointer)__N2M_u4i4C8i4},
 	{"u4i4C8i4i4i4i4i4", (Il2CppMethodPointer)__N2M_u4i4C8i4i4i4i4i4},
 	{"u4i4C8u4i4", (Il2CppMethodPointer)__N2M_u4i4C8u4i4},
-	{"u4i4i1", (Il2CppMethodPointer)__N2M_u4i4i1},
-	{"u4i4i2", (Il2CppMethodPointer)__N2M_u4i4i2},
 	{"u4i4i4", (Il2CppMethodPointer)__N2M_u4i4i4},
 	{"u4i4i4C8i4", (Il2CppMethodPointer)__N2M_u4i4i4C8i4},
 	{"u4i4i4C8u4i4", (Il2CppMethodPointer)__N2M_u4i4i4C8u4i4},
@@ -30461,54 +27994,26 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"u4i4i8", (Il2CppMethodPointer)__N2M_u4i4i8},
 	{"u4i4r4", (Il2CppMethodPointer)__N2M_u4i4r4},
 	{"u4i4r8", (Il2CppMethodPointer)__N2M_u4i4r8},
-	{"u4i4u1", (Il2CppMethodPointer)__N2M_u4i4u1},
-	{"u4i4u2", (Il2CppMethodPointer)__N2M_u4i4u2},
 	{"u4i4u4", (Il2CppMethodPointer)__N2M_u4i4u4},
-	{"u4i4u8", (Il2CppMethodPointer)__N2M_u4i4u8},
-	{"u4i4X1", (Il2CppMethodPointer)__N2M_u4i4X1},
 	{"u4i8", (Il2CppMethodPointer)__N2M_u4i8},
 	{"u4r4", (Il2CppMethodPointer)__N2M_u4r4},
 	{"u4r8", (Il2CppMethodPointer)__N2M_u4r8},
-	{"u4u1", (Il2CppMethodPointer)__N2M_u4u1},
-	{"u4u2", (Il2CppMethodPointer)__N2M_u4u2},
 	{"u4u4", (Il2CppMethodPointer)__N2M_u4u4},
-	{"u4u8", (Il2CppMethodPointer)__N2M_u4u8},
-	{"u4X1", (Il2CppMethodPointer)__N2M_u4X1},
 	{"u8", (Il2CppMethodPointer)__N2M_u8},
 	{"u8B12", (Il2CppMethodPointer)__N2M_u8B12},
-	{"u8B16", (Il2CppMethodPointer)__N2M_u8B16},
-	{"u8B8", (Il2CppMethodPointer)__N2M_u8B8},
-	{"u8C16", (Il2CppMethodPointer)__N2M_u8C16},
-	{"u8C8", (Il2CppMethodPointer)__N2M_u8C8},
-	{"u8i1", (Il2CppMethodPointer)__N2M_u8i1},
-	{"u8i2", (Il2CppMethodPointer)__N2M_u8i2},
 	{"u8i4", (Il2CppMethodPointer)__N2M_u8i4},
 	{"u8i4B12", (Il2CppMethodPointer)__N2M_u8i4B12},
-	{"u8i4B16", (Il2CppMethodPointer)__N2M_u8i4B16},
-	{"u8i4B8", (Il2CppMethodPointer)__N2M_u8i4B8},
-	{"u8i4C16", (Il2CppMethodPointer)__N2M_u8i4C16},
-	{"u8i4C8", (Il2CppMethodPointer)__N2M_u8i4C8},
-	{"u8i4i1", (Il2CppMethodPointer)__N2M_u8i4i1},
-	{"u8i4i2", (Il2CppMethodPointer)__N2M_u8i4i2},
 	{"u8i4i4", (Il2CppMethodPointer)__N2M_u8i4i4},
 	{"u8i4i4i4", (Il2CppMethodPointer)__N2M_u8i4i4i4},
 	{"u8i4i4u8", (Il2CppMethodPointer)__N2M_u8i4i4u8},
 	{"u8i4i8", (Il2CppMethodPointer)__N2M_u8i4i8},
 	{"u8i4r4", (Il2CppMethodPointer)__N2M_u8i4r4},
 	{"u8i4r8", (Il2CppMethodPointer)__N2M_u8i4r8},
-	{"u8i4u1", (Il2CppMethodPointer)__N2M_u8i4u1},
-	{"u8i4u2", (Il2CppMethodPointer)__N2M_u8i4u2},
-	{"u8i4u4", (Il2CppMethodPointer)__N2M_u8i4u4},
 	{"u8i4u8", (Il2CppMethodPointer)__N2M_u8i4u8},
-	{"u8i4X1", (Il2CppMethodPointer)__N2M_u8i4X1},
 	{"u8i8", (Il2CppMethodPointer)__N2M_u8i8},
 	{"u8r4", (Il2CppMethodPointer)__N2M_u8r4},
 	{"u8r8", (Il2CppMethodPointer)__N2M_u8r8},
-	{"u8u1", (Il2CppMethodPointer)__N2M_u8u1},
-	{"u8u2", (Il2CppMethodPointer)__N2M_u8u2},
-	{"u8u4", (Il2CppMethodPointer)__N2M_u8u4},
 	{"u8u8", (Il2CppMethodPointer)__N2M_u8u8},
-	{"u8X1", (Il2CppMethodPointer)__N2M_u8X1},
 	{"v", (Il2CppMethodPointer)__N2M_v},
 	{"vA4", (Il2CppMethodPointer)__N2M_vA4},
 	{"vB12", (Il2CppMethodPointer)__N2M_vB12},
@@ -30526,7 +28031,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"vB8", (Il2CppMethodPointer)__N2M_vB8},
 	{"vB96i4B16i4", (Il2CppMethodPointer)__N2M_vB96i4B16i4},
 	{"vC16", (Il2CppMethodPointer)__N2M_vC16},
-	{"vC16i4", (Il2CppMethodPointer)__N2M_vC16i4},
 	{"vC192", (Il2CppMethodPointer)__N2M_vC192},
 	{"vC24", (Il2CppMethodPointer)__N2M_vC24},
 	{"vC32", (Il2CppMethodPointer)__N2M_vC32},
@@ -30540,7 +28044,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"vi4A4i4", (Il2CppMethodPointer)__N2M_vi4A4i4},
 	{"vi4B12", (Il2CppMethodPointer)__N2M_vi4B12},
 	{"vi4B12i4", (Il2CppMethodPointer)__N2M_vi4B12i4},
-	{"vi4B12i4i4", (Il2CppMethodPointer)__N2M_vi4B12i4i4},
 	{"vi4B12i4u1i4i4r4i4i4r4u1i4", (Il2CppMethodPointer)__N2M_vi4B12i4u1i4i4r4i4i4r4u1i4},
 	{"vi4B16", (Il2CppMethodPointer)__N2M_vi4B16},
 	{"vi4B16i4", (Il2CppMethodPointer)__N2M_vi4B16i4},
@@ -30598,7 +28101,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"vi4i4B12u1u1", (Il2CppMethodPointer)__N2M_vi4i4B12u1u1},
 	{"vi4i4B16", (Il2CppMethodPointer)__N2M_vi4i4B16},
 	{"vi4i4B16i4", (Il2CppMethodPointer)__N2M_vi4i4B16i4},
-	{"vi4i4B16u1", (Il2CppMethodPointer)__N2M_vi4i4B16u1},
 	{"vi4i4B16u1u1", (Il2CppMethodPointer)__N2M_vi4i4B16u1u1},
 	{"vi4i4B20", (Il2CppMethodPointer)__N2M_vi4i4B20},
 	{"vi4i4B20i4", (Il2CppMethodPointer)__N2M_vi4i4B20i4},
@@ -30635,7 +28137,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"vi4i4i2", (Il2CppMethodPointer)__N2M_vi4i4i2},
 	{"vi4i4i2i4", (Il2CppMethodPointer)__N2M_vi4i4i2i4},
 	{"vi4i4i4", (Il2CppMethodPointer)__N2M_vi4i4i4},
-	{"vi4i4i4B16u1", (Il2CppMethodPointer)__N2M_vi4i4i4B16u1},
 	{"vi4i4i4B4", (Il2CppMethodPointer)__N2M_vi4i4i4B4},
 	{"vi4i4i4B4i4i4B4i4", (Il2CppMethodPointer)__N2M_vi4i4i4B4i4i4B4i4},
 	{"vi4i4i4B8", (Il2CppMethodPointer)__N2M_vi4i4i4B8},
@@ -30667,7 +28168,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"vi4i4i4u4u4i4", (Il2CppMethodPointer)__N2M_vi4i4i4u4u4i4},
 	{"vi4i4i8", (Il2CppMethodPointer)__N2M_vi4i4i8},
 	{"vi4i4i8i4", (Il2CppMethodPointer)__N2M_vi4i4i8i4},
-	{"vi4i4i8i8u1", (Il2CppMethodPointer)__N2M_vi4i4i8i8u1},
 	{"vi4i4i8u1u1", (Il2CppMethodPointer)__N2M_vi4i4i8u1u1},
 	{"vi4i4r4", (Il2CppMethodPointer)__N2M_vi4i4r4},
 	{"vi4i4r4i4", (Il2CppMethodPointer)__N2M_vi4i4r4i4},
@@ -30697,7 +28197,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"vi4i8i4", (Il2CppMethodPointer)__N2M_vi4i8i4},
 	{"vi4i8i4i8", (Il2CppMethodPointer)__N2M_vi4i8i4i8},
 	{"vi4i8i8i8i8", (Il2CppMethodPointer)__N2M_vi4i8i8i8i8},
-	{"vi4i8i8u1", (Il2CppMethodPointer)__N2M_vi4i8i8u1},
 	{"vi4r4", (Il2CppMethodPointer)__N2M_vi4r4},
 	{"vi4r4i4", (Il2CppMethodPointer)__N2M_vi4r4i4},
 	{"vi4r4r4", (Il2CppMethodPointer)__N2M_vi4r4r4},
@@ -30714,7 +28213,6 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"vi4u1", (Il2CppMethodPointer)__N2M_vi4u1},
 	{"vi4u1B24", (Il2CppMethodPointer)__N2M_vi4u1B24},
 	{"vi4u1i4", (Il2CppMethodPointer)__N2M_vi4u1i4},
-	{"vi4u1u1i4", (Il2CppMethodPointer)__N2M_vi4u1u1i4},
 	{"vi4u2", (Il2CppMethodPointer)__N2M_vi4u2},
 	{"vi4u2i4", (Il2CppMethodPointer)__N2M_vi4u2i4},
 	{"vi4u2u2", (Il2CppMethodPointer)__N2M_vi4u2u2},
@@ -30740,12 +28238,11 @@ Native2ManagedMethodInfo hybridclr::interpreter::g_native2managedStub[] =
 	{"vS2", (Il2CppMethodPointer)__N2M_vS2},
 	{"vu1", (Il2CppMethodPointer)__N2M_vu1},
 	{"vu1i4", (Il2CppMethodPointer)__N2M_vu1i4},
-	{"vu1u1i4", (Il2CppMethodPointer)__N2M_vu1u1i4},
 	{"vu2", (Il2CppMethodPointer)__N2M_vu2},
-	{"vu2i4", (Il2CppMethodPointer)__N2M_vu2i4},
 	{"vu4", (Il2CppMethodPointer)__N2M_vu4},
 	{"vu4i4", (Il2CppMethodPointer)__N2M_vu4i4},
 	{"vu8", (Il2CppMethodPointer)__N2M_vu8},
+	{"vu8i4", (Il2CppMethodPointer)__N2M_vu8i4},
 	{"X1", (Il2CppMethodPointer)__N2M_X1},
 	{"X1i4", (Il2CppMethodPointer)__N2M_X1i4},
 	{"X1i4i2", (Il2CppMethodPointer)__N2M_X1i4i2},
@@ -31054,7 +28551,7 @@ static ValueTypeSizeAlign4<52> __N2M_AdjustorThunk_B52i4(int32_t __arg0, const M
 }
 
 
-// UnityEngine.Matrix4x4 UnityEngine.UIElements.ITransform::get_matrix()
+// T System.Collections.Generic.IEnumerator`1::get_Current()
 static ValueTypeSizeAlign4<64> __N2M_AdjustorThunk_B64i4(int32_t __arg0, const MethodInfo* method)
 {
     StackObject args[9] = {(uint64_t)(*(uint8_t**)&__arg0 + sizeof(Il2CppObject)) };
@@ -33154,7 +30651,7 @@ static void __N2M_AdjustorThunk_vi4B16(int32_t __arg0, ValueTypeSizeAlign4<16> _
 }
 
 
-// System.Void System.Collections.Generic.IDictionary`2::Add(TKey,TValue)
+// System.Void System.Collections.Generic.IDictionary`2::set_Item(TKey,TValue)
 static void __N2M_AdjustorThunk_vi4B16i4(int32_t __arg0, ValueTypeSizeAlign4<16> __arg1, int32_t __arg2, const MethodInfo* method)
 {
     StackObject args[3] = {(uint64_t)(*(uint8_t**)&__arg0 + sizeof(Il2CppObject)), (uint64_t)&__arg1, *(uint64_t*)&__arg2 };

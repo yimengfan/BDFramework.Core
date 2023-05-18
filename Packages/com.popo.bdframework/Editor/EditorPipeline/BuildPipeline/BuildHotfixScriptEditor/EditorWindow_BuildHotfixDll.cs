@@ -43,14 +43,14 @@ namespace BDFramework.Editor.HotfixScript
 #endif
                     if (GUILayout.Button("切换ILRuntime", GUILayout.Width(155), GUILayout.Height(20)))
                     {
-                        HotfixScriptEditorTools.SwitchToILRuntime();
+                        HotfixScriptTools.SwitchToILRuntime();
                     }
 #if ENABLE_HCLR
                     GUI.color = Color.green;
 #endif
                     if (GUILayout.Button("切换HCLR", GUILayout.Width(150), GUILayout.Height(20)))
                     {
-                        HotfixScriptEditorTools.SwitchToHCLR();
+                        HotfixScriptTools.SwitchToHCLR();
                     }
 
                     GUI.color = GUI.backgroundColor;
@@ -65,12 +65,12 @@ namespace BDFramework.Editor.HotfixScript
                     //
                     if (GUILayout.Button("1.编译dll(Roslyn-Release)", GUILayout.Width(155), GUILayout.Height(30)))
                     {
-                        HotfixScriptEditorTools.RoslynBuild(Application.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Release);
+                        HotfixScriptTools.BuildDll(Application.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Release);
                     }
 
                     if (GUILayout.Button("编译dll(Roslyn-Debug)", GUILayout.Width(150), GUILayout.Height(30)))
                     {
-                        HotfixScriptEditorTools.RoslynBuild(Application.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug);
+                        HotfixScriptTools.BuildDll(Application.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug);
                     }
                 }
                 GUILayout.EndHorizontal();

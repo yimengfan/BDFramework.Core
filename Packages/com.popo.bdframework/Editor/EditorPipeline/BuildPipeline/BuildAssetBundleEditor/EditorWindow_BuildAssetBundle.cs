@@ -204,7 +204,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             if (ret)
             {
                 //生成Assetbundlebunle
-                AssetBundleToolsV2.GenAssetBundle(platform, outputPath);
+                AssetBundleToolsV2.BuildAssetBundles(platform, outputPath);
                 AssetDatabase.Refresh();
                 Debug.Log("资源打包完毕");
             }
