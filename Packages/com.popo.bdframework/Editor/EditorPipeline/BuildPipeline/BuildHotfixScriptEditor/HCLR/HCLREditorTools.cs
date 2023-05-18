@@ -13,15 +13,15 @@ namespace BDFramework.Editor.HotfixScript
     static public class HCLREditorTools
     {
         
-        /// <summary>
-        /// 测试
-        /// </summary>
-        [MenuItem("xxx")]
-        static public void Test()
-        {
-            PreBuild(BuildTarget.Android);
-        }
-        
+        // /// <summary>
+        // /// 测试
+        // /// </summary>
+        // [MenuItem("xxx")]
+        // static public void Test()
+        // {
+        //     PreBuild(BuildTarget.Android);
+        // }
+        //
         /// <summary>
         /// 在打包前执行
         /// </summary>
