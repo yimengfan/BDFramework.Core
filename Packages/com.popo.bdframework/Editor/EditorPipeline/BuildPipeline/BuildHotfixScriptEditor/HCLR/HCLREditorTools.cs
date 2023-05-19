@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.Tools;
 using HybridCLR.Editor;
 using HybridCLR.Editor.Commands;
 using UnityEditor;
+using UnityEngine;
 
 namespace BDFramework.Editor.HotfixScript
 {
@@ -12,15 +15,19 @@ namespace BDFramework.Editor.HotfixScript
     /// </summary>
     static public class HCLREditorTools
     {
-        
+        //
+        static string libil2cppPath = "HybridCLRData/iOSBuild/build/libil2cpp.a";
         // /// <summary>
         // /// 测试
         // /// </summary>
-        // [MenuItem("xxx")]
-        // static public void Test()
-        // {
-        //     PreBuild(BuildTarget.Android);
-        // }
+        [MenuItem("xxx")]
+        static public void Test()
+        {
+            //PreBuild(BuildTarget.Android);
+
+
+            BuildLibIl2cppForIOS();
+        }
         //
         /// <summary>
         /// 在打包前执行
@@ -41,6 +48,10 @@ namespace BDFramework.Editor.HotfixScript
             MethodBridgeGeneratorCommand.GenerateMethodBridge(target);
             ReversePInvokeWrapperGeneratorCommand.GenerateReversePInvokeWrapper(target);
             AOTReferenceGeneratorCommand.GenerateAOTGenericReference(target);
+            
+#if UNITY_EDITOR_OSX
+            BuildLibIl2cppForIOS();
+#endif
         }
 
         /// <summary>
@@ -89,6 +100,62 @@ namespace BDFramework.Editor.HotfixScript
             } 
             HybridCLRSettings.Save();
 
+        }
+
+        /// <summary>
+        /// 构建libil2cpp.so
+        /// </summary>
+        /// <exception cref="Exception"></exception>
+        static public void BuildLibIl2cppForIOS()
+        {
+            if (Directory.Exists("HybridCLRData/iOSBuild/build"))
+            {
+                Directory.Delete("HybridCLRData/iOSBuild/build",true);
+            }
+            
+            var shPath = "HybridCLRData/iOSBuild/build_libil2cpp.sh";
+            if (File.Exists(shPath))
+            {
+                var cmds = new string[]
+                {
+                    $"cd {BApplication.ProjectRoot}/HybridCLRData/iOSBuild",
+                    "bash ./build_libil2cpp.sh"
+                };
+                CMDTools.RunCmd(cmds,islog:false);
+            }
+            else
+            {
+                throw new Exception("请编译libil2cpp.so for HCLR!!!");
+            }
+            
+            //校验结果
+          
+            if (!File.Exists(libil2cppPath))
+            {
+                throw new Exception($"编译libil2cpp.a 失败！！! [{libil2cppPath}]"); 
+            }
+            else
+            {
+                Debug.Log("<color=yellow>构建libil2cpp.a成功</color> :" + libil2cppPath);
+            }
+        }
+
+
+        /// <summary>
+        /// 拷贝Libil2cpp.a
+        /// </summary>
+        static public void CopyLibIl2cppToXcode(string destDirectPath)
+        {
+            if (File.Exists(libil2cppPath))
+            {
+                var destFilePath = IPath.Combine(destDirectPath,Path.GetFileName(libil2cppPath));
+                File.Copy(libil2cppPath,destFilePath , true);
+                BDebug.Log("<color=green>[HCLR] 拷贝libil2cpp.a 成功!</color>");
+            }
+            else
+            {
+                throw new Exception("拷贝libil2cpp.a 失败!");
+            }
         }
         
     }

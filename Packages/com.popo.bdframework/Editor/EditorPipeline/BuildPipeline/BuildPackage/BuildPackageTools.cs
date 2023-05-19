@@ -473,6 +473,12 @@ namespace BDFramework.Editor.BuildPipeline
             //构建包体
             Debug.Log("------------->Begin build<------------");
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.iOS, opa);
+            
+#if ENABLE_HCLR
+            //HCLR 需要保存
+            var libil2cppPath = IPath.Combine(outputPath,"Libraries");
+            HCLREditorTools.CopyLibIl2cppToXcode(libil2cppPath);
+#endif
             Debug.Log("------------->End build<------------");
 
             //检测xcode

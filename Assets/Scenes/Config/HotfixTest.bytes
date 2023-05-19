@@ -13,7 +13,7 @@
     "ClassType"           : "BDFramework.Configure.GameBaseConfigProcessor+Config"
   },
   {
-    "SqlitePassword" : "password123!!!",
+    "SqlitePassword" : "password1231222\uFF01\uFF01\uFF01",
     "ScriptPubKey"   : "",
     "ScriptPrivateKey" : "",
     "ClassType"        : "BDFramework.Configure.GameCipherConfigProcessor+Config"
