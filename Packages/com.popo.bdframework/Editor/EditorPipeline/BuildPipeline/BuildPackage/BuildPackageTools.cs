@@ -4,8 +4,10 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System.Linq;
+using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Environment;
+using BDFramework.Editor.HotfixScript;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Tools.RuntimeEditor;
 using BDFramework.ResourceMgr;
@@ -74,6 +76,8 @@ namespace BDFramework.Editor.BuildPipeline
             var config = GameObject.FindObjectOfType<BDLauncher>();
             config.ConfigText = textContent;
             Debug.LogFormat("【BuildPackage】 加载配置:{0} \n {1}", buildConfig, config.ConfigText);
+
+            GameConfigManager.Inst.LoadConfig(config.ConfigText.text);
             //保存场景
             AssetDatabase.SaveAssets();
             EditorSceneManager.SaveScene(scene);
@@ -84,8 +88,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// 构建包体，使用当前配置、资源
         /// 这里默认建议使用单场景结构打包
         /// </summary>
-        static public bool Build(BuildMode buildMode, bool isGenAssets, string outdir, BuildTarget buildTarget,
-            BuildAssetsTools.BuildPackageOption buildOption = BuildAssetsTools.BuildPackageOption.BuildAll)
+        static public bool Build(BuildMode buildMode, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildAssetsTools.BuildPackageOption buildOption = BuildAssetsTools.BuildPackageOption.BuildAll)
         {
             string buildConfig = "";
             switch (buildMode)
@@ -107,19 +110,19 @@ namespace BDFramework.Editor.BuildPipeline
             return Build(buildMode, SCENE_PATH, buildConfig, isGenAssets, outdir, buildTarget, buildOption);
         }
 
-        static public bool IsBuilding { get;private set; } = false;
+        static public bool IsBuilding { get; private set; } = false;
+
         /// <summary>
         /// 构建包体，使用当前配置、资源
         /// 这里默认建议使用单场景结构打包.
         /// </summary>
-        static public bool Build(BuildMode buildMode, string buildScene, string buildConfig, bool isGenAssets,
-            string outdir, BuildTarget buildTarget,
-            BuildAssetsTools.BuildPackageOption buildOption = BuildAssetsTools.BuildPackageOption.BuildAll)
+        static public bool Build(BuildMode buildMode, string buildScene, string buildConfig, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildAssetsTools.BuildPackageOption buildOption = BuildAssetsTools.BuildPackageOption.BuildAll)
         {
             if (IsBuilding)
             {
                 return false;
             }
+
             IsBuilding = true;
             //开始构建流程
             string addPackageNameStr = null;
@@ -148,6 +151,31 @@ namespace BDFramework.Editor.BuildPipeline
 
             //不通模式的设置
             //项目名
+
+            #region 容错
+
+            if (PlayerSettings.productName.EndsWith(".Debug") || PlayerSettings.productName.EndsWith(".debug"))
+            {
+                PlayerSettings.productName = PlayerSettings.productName.Substring(0, PlayerSettings.productName.Length - 6);
+            }
+
+            if (PlayerSettings.productName.EndsWith(".Profiler") || PlayerSettings.productName.EndsWith(".profiler"))
+            {
+                PlayerSettings.productName = PlayerSettings.productName.Substring(0, PlayerSettings.productName.Length - 9);
+            }
+
+            if (PlayerSettings.applicationIdentifier.EndsWith(".Debug") || PlayerSettings.applicationIdentifier.EndsWith(".debug"))
+            {
+                PlayerSettings.applicationIdentifier = PlayerSettings.applicationIdentifier.Substring(0, PlayerSettings.productName.Length - 6);
+            }
+
+            if (PlayerSettings.applicationIdentifier.EndsWith(".Profiler") || PlayerSettings.applicationIdentifier.EndsWith(".profiler"))
+            {
+                PlayerSettings.applicationIdentifier = PlayerSettings.applicationIdentifier.Substring(0, PlayerSettings.productName.Length - 9);
+            }
+
+            #endregion
+
             string productNameCache = PlayerSettings.productName;
             string applicationIdentifierCache = PlayerSettings.applicationIdentifier;
             if (addPackageNameStr != null)
@@ -156,7 +184,7 @@ namespace BDFramework.Editor.BuildPipeline
                 {
                     PlayerSettings.productName += addPackageNameStr;
                 }
-                
+
                 //包名
                 if (!PlayerSettings.applicationIdentifier.EndsWith(addPackageNameStr))
                 {
@@ -168,7 +196,8 @@ namespace BDFramework.Editor.BuildPipeline
             //增加平台路径
             var buildRuntimePlatform = BApplication.GetRuntimePlatform(buildTarget);
             var outPlatformDir = IPath.Combine(outdir, BApplication.GetPlatformPath(buildTarget));
-            BDFrameworkPipelineHelper.OnBeginBuildPackage(buildTarget, outdir);
+            BDFrameworkPipelineHelper.OnBeginBuildPackage(buildTarget, outPlatformDir);
+            
             //0.加载场景配置
             Debug.Log("<color=green>===>1.加载场景配置</color>");
             if (!string.IsNullOrEmpty(buildConfig))
@@ -178,21 +207,28 @@ namespace BDFramework.Editor.BuildPipeline
 
             //1.生成资源到Devops
             Debug.Log("<color=green>===>2.生成资产</color>");
+            var assetOutputPath = BApplication.DevOpsPublishAssetsPath;
             if (isGenAssets)
             {
                 try
                 {
-                    BuildAssetsTools.BuildAllAssets(buildRuntimePlatform, BApplication.DevOpsPublishAssetsPath, opa: buildOption);
+                    BuildAssetsTools.BuildAllAssets(buildRuntimePlatform,assetOutputPath , opa: buildOption);
                 }
                 catch (Exception e)
                 {
-                    EditorUtility.DisplayDialog("提示",$"打包资产失败!","ok");
+                    EditorUtility.DisplayDialog("提示", $"打包资产失败!", "ok");
                     throw e;
                 }
             }
 
             bool buildResult = false;
             string outputpath = "";
+            
+            //HCLR 
+#if ENABLE_HCLR
+            HCLREditorTools.PreBuild(buildTarget,assetOutputPath);
+#endif
+            
             //2.拷贝资源并打包
             AssetDatabase.StartAssetEditing(); //停止触发资源导入
             {
@@ -235,8 +271,7 @@ namespace BDFramework.Editor.BuildPipeline
                 }
 
                 //删除目录
-                Directory.Delete(Application.streamingAssetsPath,true);
-                //DeleteCopyAssets(Application.streamingAssetsPath, buildRuntimePlatform);
+                Directory.Delete(Application.streamingAssetsPath, true);
             }
             AssetDatabase.StopAssetEditing(); //恢复触发资源导入
 
@@ -257,6 +292,8 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static private (bool, string) BuildAPK(BuildMode mode, string outdir)
         {
+            var baseConfig = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
+            //
             bool ret = false;
             //开启符号表
             EditorUserBuildSettings.androidCreateSymbolsZip = true;
@@ -299,7 +336,17 @@ namespace BDFramework.Editor.BuildPipeline
             PlayerSettings.keyaliasPass = androidConfig.keyaliasPass;
             Debug.Log("【keystore】" + PlayerSettings.Android.keystoreName);
             //具体安卓的配置
-            PlayerSettings.gcIncremental = true;
+
+            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HCLR_or_Mono)
+            {
+                PlayerSettings.gcIncremental = false;
+                PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, ApiCompatibilityLevel.NET_4_6);
+            }
+            else
+            {
+                PlayerSettings.gcIncremental = true;
+            }
+
             PlayerSettings.Android.preferredInstallLocation = AndroidPreferredInstallLocation.Auto;
             //PlayerSettings.stripEngineCode = true;
             // if (PlayerSettings.GetManagedStrippingLevel(BuildTargetGroup.Android) == ManagedStrippingLevel.High)
@@ -327,8 +374,7 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 case BuildMode.Debug:
                 {
-                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging |
-                          BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
+                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging | BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
                 }
                     break;
                 case BuildMode.Release:
@@ -370,11 +416,21 @@ namespace BDFramework.Editor.BuildPipeline
         /// <param name="mode"></param>
         static private (bool, string) BuildIpa(BuildMode mode, string outdir)
         {
+            var baseConfig = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
             bool ret = false;
             BDEditorApplication.SwitchToiOS();
             //DeleteIL2cppCache();
             //具体IOS的的配置
-            PlayerSettings.gcIncremental = true;
+            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HCLR_or_Mono)
+            {
+                PlayerSettings.gcIncremental = false;
+                PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.iOS, ApiCompatibilityLevel.NET_4_6);
+            }
+            else
+            {
+                PlayerSettings.gcIncremental = true;
+            }
+
             //PlayerSettings.stripEngineCode = true;
             // if (PlayerSettings.GetManagedStrippingLevel(BuildTargetGroup.iOS) == ManagedStrippingcLevel.High)
             // {
@@ -396,8 +452,7 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 case BuildMode.Debug:
                 {
-                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging |
-                          BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
+                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging | BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
                 }
                     break;
                 case BuildMode.Release:
@@ -420,15 +475,19 @@ namespace BDFramework.Editor.BuildPipeline
             //构建包体
             Debug.Log("------------->Begin build<------------");
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.iOS, opa);
+            
+#if ENABLE_HCLR
+            //HCLR 需要保存
+            var libil2cppPath = IPath.Combine(outputPath,"Libraries");
+            HCLREditorTools.CopyLibIl2cppToXcode(libil2cppPath);
+#endif
             Debug.Log("------------->End build<------------");
 
             //检测xcode
             if (File.Exists(plist))
             {
                 //执行shell path
-                var shellPath = mode == BuildMode.Debug
-                    ? BDEditorApplication.EditorSetting.iOSDebug.ExcuteShell
-                    : BDEditorApplication.EditorSetting.iOS.ExcuteShell;
+                var shellPath = mode == BuildMode.Debug ? BDEditorApplication.EditorSetting.iOSDebug.ExcuteShell : BDEditorApplication.EditorSetting.iOS.ExcuteShell;
                 if (File.Exists(shellPath))
                 {
                     //执行BuildIpa的shell
@@ -472,16 +531,26 @@ namespace BDFramework.Editor.BuildPipeline
         /// <param name="mode"></param>
         static private (bool, string) BuildExe(BuildMode mode, string outdir)
         {
+            var baseConfig = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
             bool ret = false;
             BDEditorApplication.SwitchToWindows();
             //DeleteIL2cppCache();
-            PlayerSettings.gcIncremental = true;
-            var outputPath = IPath.Combine(outdir,
-                string.Format("{0}_{1}.exe", Application.identifier, mode.ToString()));
+            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HCLR_or_Mono)
+            {
+                PlayerSettings.gcIncremental = false;
+                PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Standalone, ApiCompatibilityLevel.NET_4_6);
+            }
+            else
+            {
+                PlayerSettings.gcIncremental = true;
+            }
+
+            outdir = IPath.Combine(outdir, Application.identifier);
+            var outputPath = IPath.Combine(outdir, "Launcher.exe");
             //文件夹处理
             if (Directory.Exists(outdir))
             {
-                Directory.Delete(outdir);
+                Directory.Delete(outdir, true);
             }
 
             Directory.CreateDirectory(outdir);
@@ -494,8 +563,7 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 case BuildMode.Debug:
                 {
-                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging |
-                          BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
+                    opa = BuildOptions.CompressWithLz4HC | BuildOptions.Development | BuildOptions.AllowDebugging | BuildOptions.ConnectWithProfiler | BuildOptions.EnableDeepProfilingSupport;
                 }
                     break;
 
@@ -577,13 +645,8 @@ namespace BDFramework.Editor.BuildPipeline
             List<string> blackFile = new List<string>()
             {
                 BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH, //editor信息
-                BResources.ASSETS_INFO_PATH,
-                BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH,
-                BResources.SERVER_ASSETS_VERSION_INFO_PATH,
-                BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH,
-                BResources.SBPBuildLog,
-                BResources.SBPBuildLog2,
-                ".manifest"
+                BResources.ASSETS_INFO_PATH, BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH, BResources.SERVER_ASSETS_VERSION_INFO_PATH, BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH,
+                BResources.SBPBuildLog, BResources.SBPBuildLog2, ".manifest"
             };
             //清空目标文件夹
             if (Directory.Exists(targetpath))
@@ -592,14 +655,12 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //合并路径
-            var sourcepath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform))
-                .ToLower();
+            var sourcepath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform)).ToLower();
             targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform)).ToLower();
             //TODO SVN更新资源
 
             //TODO  重写拷贝逻辑
-            var files = Directory.GetFiles(sourcepath, "*", SearchOption.AllDirectories)
-                .Select((f) => f.ToLower().Replace("\\", "/"));
+            var files = Directory.GetFiles(sourcepath, "*", SearchOption.AllDirectories).Select((f) => f.ToLower().Replace("\\", "/"));
             foreach (var file in files)
             {
                 var fp = IPath.ReplaceBackSlash(file);

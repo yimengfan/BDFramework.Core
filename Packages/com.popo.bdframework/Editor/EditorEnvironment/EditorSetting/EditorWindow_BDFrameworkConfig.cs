@@ -17,9 +17,12 @@ namespace BDFramework.Editor
             window.frameworkEditorSetting = BDEditorApplication.EditorSetting;
             window.Show();
         }
+        
+        
 
         public void OnDestroy()
         {
+            Debug.Log("config win destroy");
             base.OnDestroy();
             if (frameworkEditorSetting != null)
                 frameworkEditorSetting.Save();

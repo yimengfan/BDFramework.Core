@@ -28,5 +28,10 @@ namespace Game.demo_EventManager
             }
             
         }
+
+        public override void Init()
+        {
+            base.Init();
+        }
     }
 }

@@ -125,6 +125,7 @@ namespace BDFramework.Configure
             //log
             if (BDLauncher.Inst)
             {
+                Debug.Log("日志打印:" + con.IsDebugLog);
                 BDLauncher.Inst.GetComponent<BDebug>().IsLog = con.IsDebugLog;
             }
             

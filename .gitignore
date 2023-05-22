@@ -54,3 +54,9 @@ Assets/3rdPlugins/Sirenix.meta
 /ProjectSettings/ProjectSettings.asset
 /BDFrameworkMaster.sln.DotSettings.user
 /BDFramework.EnvCheck.sln.DotSettings.user
+/HybridCLRData/HotUpdateDlls
+/HybridCLRData/AssembliesPostIl2CppStrip
+/HybridCLRData/StrippedAOTDllsTempProj/StandaloneWindows/BDFrameworkTest.profiler
+/HybridCLRData/StrippedAOTDllsTempProj/StandaloneWindows/build
+/HybridCLRData/StrippedAOTDllsTempProj/StandaloneWindows/.vs
+HybridCLRData/StrippedAOTDllsTempProj/

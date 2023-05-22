@@ -6,6 +6,7 @@ using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.Editor.Environment;
+using BDFramework.Editor.HotfixScript;
 using BDFramework.Editor.PublishPipeline;
 using BDFramework.Editor.SVN;
 using UnityEditor;
@@ -104,7 +105,7 @@ namespace BDFramework.Editor.DevOps
         private static bool BuildAssetBundle(RuntimePlatform platform, BuildTarget target)
         {
             //2.打包模式
-            var ret = AssetBundleToolsV2.GenAssetBundle(platform, CI_ASSETS_PATH);
+            var ret = AssetBundleToolsV2.BuildAssetBundles(platform, CI_ASSETS_PATH);
 
             return ret;
         }
@@ -146,7 +147,7 @@ namespace BDFramework.Editor.DevOps
         public static void BuildDLL()
         {
             //检查打包脚本
-            EditorWindow_ScriptBuildDll.RoslynBuild(CI_ASSETS_PATH, RuntimePlatform.Android, ScriptBuildTools.BuildMode.Release);
+            HotfixScriptTools.BuildDll(CI_ASSETS_PATH, RuntimePlatform.Android, Unity3dRoslynBuildTools.BuildMode.Release);
         }
 
         #endregion

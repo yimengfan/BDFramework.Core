@@ -28,7 +28,7 @@ namespace BDFramework.Editor.Table
         public static void ExecuteGenSqlite()
         {
             //生成sql
-            AllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform);
+            BuildAllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform);
             CopySqlToOther(Application.streamingAssetsPath, BApplication.RuntimePlatform);
             AssetDatabase.Refresh();
         }
@@ -37,7 +37,7 @@ namespace BDFramework.Editor.Table
             (int)BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Json2Sqlite)]
         public static void ExecuteJsonToSqlite()
         {
-            AllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform, DBType.Server);
+            BuildAllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform, DBType.Server);
             AssetDatabase.Refresh();
             Debug.Log("表格导出完毕");
         }
@@ -50,7 +50,7 @@ namespace BDFramework.Editor.Table
         /// 默认导出到当前平台目录下
         /// </summary>
         /// <param name="ouptputPath">自定义路径</param>
-        public static bool AllExcel2SQLite(string ouptputPath, RuntimePlatform platform, DBType dbType = DBType.Local,bool isUseCache =false)
+        public static bool BuildAllExcel2SQLite(string ouptputPath, RuntimePlatform platform, DBType dbType = DBType.Local,bool isUseCache =false)
         {
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnBeginBuildSqlite();
@@ -95,7 +95,7 @@ namespace BDFramework.Editor.Table
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnEndBuildSqlite(ouptputPath);
 
-            var version = BDFrameworkPipelineHelper.GetTableSVCNum(platform, ouptputPath);
+            var version = BDFrameworkPipelineHelper.GetTableSVCNum( platform,ouptputPath);
             ClientAssetsHelper.GenBasePackageBuildInfo(ouptputPath, platform, tableSVC: version);
             Debug.Log("导出Sqlite完成!");
 
@@ -228,8 +228,8 @@ namespace BDFramework.Editor.Table
 
             if (type == null)
             {
-                Debug.LogError(table + "类不存在,跳过! 如不需要可无视~");
-                return true;
+                Debug.LogError(table + "类不存在，请检查!");
+                return false;
             }
 
             //

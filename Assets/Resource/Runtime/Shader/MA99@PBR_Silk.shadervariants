@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MA99@PBR_Silk
+  m_Shaders:
+  - first: {fileID: 4800000, guid: d053233f84bf8c047bef2431d30a7eb7, type: 3}
+    second:
+      variants:
+      - keywords: LIGHTMAP_ON USE_DETAILNORMAL _ALPHABLEND_ON _MIXTEX _NORMALMAP
+        passType: 4

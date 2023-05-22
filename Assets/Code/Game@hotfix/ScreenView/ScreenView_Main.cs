@@ -16,15 +16,12 @@ public class ScreenView_Main : IScreenView
 
     public void BeginInit()
     {
+        Debug.Log("进入screenview main in hotfix");
         //一定要设置为true，否则当前是未加载状态
         this.IsLoad = true;
-
         //加载窗口, 0是窗口id,建议自行换成枚举
         UIManager.Inst.LoadWindow( WinEnum.Win_Main);
         UIManager.Inst.ShowWindow( WinEnum.Win_Main);
-        Debug.Log("进入main");
-        
-        
     }
 
     public void BeginExit()
@@ -32,13 +29,4 @@ public class ScreenView_Main : IScreenView
         UIManager.Inst.CloseWindow(WinEnum.Win_Main);
     }
 
-    public void Update(float delta)
-    {
-        
-    }
-
-    public void FixedUpdate(float delta)
-    {
-       
-    }
 }

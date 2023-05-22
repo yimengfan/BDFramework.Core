@@ -51,12 +51,7 @@ namespace BDFramework
         /// <summary>
         /// 华佗执行
         /// </summary>
-        HCLR,
-
-        /// <summary>
-        /// 这里只做预留,因为OSX只支持mono方式
-        /// </summary>
-        Mono
+        HCLR_or_Mono,
     }
 
     /// <summary>

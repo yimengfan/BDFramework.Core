@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.HotfixScript;
 using BDFramework.Editor.Unity3dEx;
 using BDFramework.Editor.WorkFlow;
 using LitJson;
@@ -65,7 +66,7 @@ namespace BDFramework.Editor.Environment
             //1.搜集热更脚本变更
             foreach (string assetPath in importedAssets)
             {
-                if (ScriptBuildTools.IsHotfixScript(assetPath))
+                if (Unity3dRoslynBuildTools.IsHotfixScript(assetPath))
                 {
                     CacheData.HotfixList.Add(assetPath);
                 }
@@ -73,7 +74,7 @@ namespace BDFramework.Editor.Environment
 
             foreach (string assetPath in movedAssets)
             {
-                if (ScriptBuildTools.IsHotfixScript(assetPath))
+                if (Unity3dRoslynBuildTools.IsHotfixScript(assetPath))
                 {
                     CacheData.HotfixList.Add(assetPath);
                 }

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Standard
+  m_Shaders:
+  - first: {fileID: 4800000, guid: 62873910d2c8cdc4a8e7e4b49ecfe37e, type: 3}
+    second:
+      variants:
+      - keywords: LIGHTMAP_ON UNITY_HDR_ON _ALPHABLEND_ON
+        passType: 4
+      - keywords: LIGHTMAP_ON UNITY_HDR_ON _ALPHABLEND_ON _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+          _SPECULARHIGHLIGHTS_OFF
+        passType: 4

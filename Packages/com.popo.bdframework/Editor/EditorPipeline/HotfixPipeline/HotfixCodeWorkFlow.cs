@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.HotfixScript;
 using UnityEngine;
 
 namespace BDFramework.Editor.WorkFlow
@@ -20,7 +21,7 @@ namespace BDFramework.Editor.WorkFlow
             {
                 if (BDEditorApplication.EditorSetting.BuildHotfixDLLSetting.IsNeedAutoBuildDll())
                 {
-                    EditorWindow_ScriptBuildDll.RoslynBuild(Application.streamingAssetsPath, BApplication.RuntimePlatform, ScriptBuildTools.BuildMode.Debug, false);
+                    HotfixScriptTools.BuildDll(Application.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug, false);
                     Debug.Log("自动编译Hotfix.dll成功!");
                 }
                 else if (BDEditorApplication.EditorSetting.BuildHotfixDLLSetting.IsHotfixCodeOutofUnityAssets())

@@ -24,17 +24,7 @@ public class ScreenView_Demo1_Screenview : IScreenView
     {
         //退出设置为false，否则下次进入不会调用begininit
         this.IsLoad = false;
-        //
         Debug.Log("退出Test Screen 1");
     }
-
-    public void Update(float delta)
-    {
-        
-    }
-
-    public void FixedUpdate(float delta)
-    {
-       
-    }
+    
 }

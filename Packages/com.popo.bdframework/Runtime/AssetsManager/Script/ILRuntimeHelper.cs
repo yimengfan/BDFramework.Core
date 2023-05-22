@@ -14,6 +14,8 @@ namespace BDFramework
 {
     static public class ILRuntimeHelper
     {
+        //宏 ENABLE_ILRUNTIME,ENABLE_HCLR
+        
         public static AppDomain AppDomain { get; private set; }
         public static bool IsRunning { get; private set; } = false;
 

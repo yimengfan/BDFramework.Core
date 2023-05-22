@@ -3,12 +3,13 @@
   {
     "CodeRoot" : 0,
     "SQLRoot"  : 0,
-    "ArtRoot"  : 3,
+    "ArtRoot"  : 2,
     "CodeRunMode" : 0,
     "IsDebuggerILRuntime" : false,
     "IsDebugLog"          : true,
     "IsHotfix"            : false,
     "ClientVersionNum"    : "2.2.0",
+    "L2Type"              : 1,
     "ClassType"           : "BDFramework.Configure.GameBaseConfigProcessor+Config"
   },
   {

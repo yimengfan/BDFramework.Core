@@ -46,21 +46,19 @@ namespace BDFramework.ScreenView
             //TODO 
             //一般情况下 打开unity.或者reloadAssembly 会重新初始化框架
             //但是ExitPlaymode后不会触发ReloadAssembly,所以有些静态对象会缓存
+#if UNITY_EDITOR
             if (MainLayer != null)
             {
                 // Debug.LogError("已经执行过Awake -" + this.GetHashCode());
                 return;
             }
-
+#endif
             base.Init();
-            //
-
             MainLayer = this.AddLayer();
             //
             foreach (var classData in this.GetAllClassDatas())
             {
                 var attr = classData.Attribute as ScreenViewAttribute;
-
                 var sv = CreateInstance<IScreenView>(attr.IntTag);
                 //设置name属性
                 sv.Name = attr.IntTag;

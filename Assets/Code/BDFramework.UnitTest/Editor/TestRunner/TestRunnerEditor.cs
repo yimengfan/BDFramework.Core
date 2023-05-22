@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.HotfixScript;
 using DG.Tweening.Plugins.Core.PathCore;
 using Game.ILRuntime;
 using UnityEditor;
@@ -78,7 +79,7 @@ namespace BDFramework.Editor.TestRunner
         [MenuItem("BDFrameWork工具箱/TestPipeline/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTestILRuntimeWithRebuildDll()
         {
-            EditorWindow_ScriptBuildDll.RoslynBuild(BApplication.DevOpsPublishAssetsPath, BApplication.RuntimePlatform, ScriptBuildTools.BuildMode.Debug);
+            HotfixScriptTools.BuildDll(BApplication.DevOpsPublishAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug);
             UnitTestILRuntime();
         }
     }

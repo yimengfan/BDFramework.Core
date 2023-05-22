@@ -10,6 +10,7 @@ using BDFramework.Editor.AssetBundle;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
+using BDFramework.Editor.HotfixScript;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Tools.EditorHttpServer;
 using BDFramework.Editor.Unity3dEx;
@@ -43,14 +44,14 @@ namespace BDFramework.Editor.PublishPipeline
         }
 
         private EditorWindow_Table editorTable;
-        private EditorWindow_ScriptBuildDll editorScript;
+        private EditorWindow_BuildHotfixDll _editor;
         private EditorWindow_BuildAssetBundle editorAsset;
 
         public void Show()
         {
             this.editorTable = new EditorWindow_Table();
             this.editorAsset = new EditorWindow_BuildAssetBundle();
-            this.editorScript = new EditorWindow_ScriptBuildDll();
+            this._editor = new EditorWindow_BuildHotfixDll();
             this.minSize = this.maxSize = new Vector2(1000, 800);
             //
             selectPlatforms.Add(BApplication.RuntimePlatform);
@@ -72,11 +73,11 @@ namespace BDFramework.Editor.PublishPipeline
 
 #if ODIN_INSPECTOR
                 // EXPORT_PATH = BApplication.DevOpsPublishAssetsPath;
-                if (editorScript != null)
+                if (_editor != null)
                 {
                     //GUILayout.BeginVertical();
                     SirenixEditorGUI.BeginBox("脚本", true, GUILayout.Width(220), GUILayout.Height(450));
-                    editorScript.OnGUI();
+                    _editor.OnGUI();
                     SirenixEditorGUI.EndBox();
                     //GUILayout.EndVertical();
                 }

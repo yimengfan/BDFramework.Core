@@ -1,0 +1,18 @@
+{
+    "name": "com.logviewer.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a95244b8805d9b44aaed99115f210660"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -7,7 +7,6 @@ SpriteAtlas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: New Sprite Atlas
-  serializedVersion: 2
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -38,4 +37,3 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex: []
   m_Tag: New Sprite Atlas
   m_IsVariant: 0
-  m_IsPlaceholder: 0
