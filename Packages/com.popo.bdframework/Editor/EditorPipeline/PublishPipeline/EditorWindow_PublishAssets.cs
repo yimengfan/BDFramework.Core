@@ -210,8 +210,8 @@ namespace BDFramework.Editor.PublishPipeline
                     //开始 生成资源
                     foreach (var sp in selectPlatforms)
                     {
-                        BuildAssetsTools.BuildAllAssets(sp, EXPORT_PATH, platformVersionMap[sp]);
                         Debug.Log($"==============>:{sp}");
+                        BuildAssetsTools.BuildAllAssets(sp, EXPORT_PATH, platformVersionMap[sp]);
                         platformVersionMap.Remove(sp);
                     }
 

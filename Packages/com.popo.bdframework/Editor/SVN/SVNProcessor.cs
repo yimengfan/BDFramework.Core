@@ -43,7 +43,7 @@ namespace BDFramework.Editor.SVN
         /// <summary>
         /// 是否打印log
         /// </summary>
-        private bool islog = false;
+        public bool Islog { get; set; } = false;
 
         private SVNProcessor(string svnurl, string user, string psw, string localpath, bool islog)
         {
@@ -51,7 +51,7 @@ namespace BDFramework.Editor.SVN
             this.UserName = user;
             this.Password = psw;
             this.LocalSVNRootPath = Path.GetFullPath(localpath);
-            this.islog = islog;
+            this.Islog = islog;
             
             BDebug.Log($"SVN-账号:{user}，密码:{psw}");
         }
@@ -489,7 +489,55 @@ namespace BDFramework.Editor.SVN
 
             return "null";
         }
+        
+        /// <summary>
+        /// 获取当前 对应Url 的远端最新版本
+        /// </summary>
+        /// <returns></returns>
+        public string GetLastRevision(string url = "")
+        {
+            var infos = GetInfo(string.IsNullOrEmpty(url)?SVNURL:url).Split('\n', '\r');
 
+            foreach (var info in infos)
+            {
+                if (info.StartsWith("Revision:"))
+                {
+                    return info.Replace("Revision:", "");
+                }
+            }
+
+            return "null";
+        }
+        /// <summary>
+        /// 获取所有分支的名字/branches/"
+        /// </summary>
+        /// <param name="svnRepoUrl">仓库的url(PS:不需要包括分支)</param>
+        /// <returns></returns>
+        public string[] GetAllBranchesInfo(string svnRepoUrl="")
+        {
+            var infoPath = this.LocalSVNRootPath + "/info.txt";
+            string cmd = "";
+            if (string.IsNullOrEmpty(svnRepoUrl))
+            {
+                svnRepoUrl =SVNURL.Substring(0,SVNURL.IndexOf("/branches/", StringComparison.Ordinal))+"/branches/";
+                cmd =$"ls {svnRepoUrl} --depth immediates > \"{infoPath}\"";
+            }
+            else
+            {
+                cmd = $"ls {svnRepoUrl}/branches/ --depth immediates > \"{infoPath}\"";
+            }
+
+            //执行svn
+            this.ExecuteSVN(cmd);
+            if (File.Exists(infoPath))
+            {
+                var info = File.ReadAllText(infoPath);
+                File.Delete(infoPath);
+                return info.Split(new char[]{'\n','\r'},StringSplitOptions.RemoveEmptyEntries);
+            }
+
+            return null;
+        }
         #endregion
 
         /// <summary>
@@ -591,7 +639,7 @@ namespace BDFramework.Editor.SVN
                 return;
             }
             //执行cmd
-            CMDTools.RunCmd(argList.ToArray(), svn_exe, svn_exe_path, this.islog);
+            CMDTools.RunCmd(argList.ToArray(), svn_exe, svn_exe_path, this.Islog);
         }
     }
 }
