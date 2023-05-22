@@ -33,7 +33,7 @@ namespace BDFramework.Editor.HotfixScript
         /// 在打包前执行
         /// </summary>
         /// <param name="target"></param>
-        static public void PreBuild( BuildTarget target)
+        static public void PreBuild( BuildTarget target,string assetsOutputDir)
         {
 
             SetBDFramework2HCLRConfig();
@@ -49,6 +49,20 @@ namespace BDFramework.Editor.HotfixScript
             ReversePInvokeWrapperGeneratorCommand.GenerateReversePInvokeWrapper(target);
             AOTReferenceGeneratorCommand.GenerateAOTGenericReference(target);
             
+            //从aot目录拷贝补充元数据的dll到hotfix目录
+            var patchAOTDll = HybridCLRSettings.Instance.patchAOTAssemblies;
+            assetsOutputDir = IPath.Combine(assetsOutputDir, BApplication.GetPlatformPath(target));
+            foreach (var dll in patchAOTDll)
+            {
+                var dllPath = IPath.Combine(  SettingsUtil.GetAssembliesPostIl2CppStripDir(target), dll + ".dll");
+                var destPath = IPath.Combine(assetsOutputDir,ScriptLoder.HCLR_AOT_PATCH_PATH, dll + ".dll");
+                if (File.Exists(dllPath))
+                {
+                    FileHelper.Copy(dllPath,destPath,true);
+                    Debug.Log($"<color=green>拷贝AOT Patch dll:{dll} </color>");
+                }
+            }
+    
 #if UNITY_EDITOR_OSX
             BuildLibIl2cppForIOS();
 #endif
@@ -98,6 +112,8 @@ namespace BDFramework.Editor.HotfixScript
                 }
                 HybridCLRSettings.Instance.patchAOTAssemblies = list.ToArray();
             } 
+            
+            //保存
             HybridCLRSettings.Save();
 
         }

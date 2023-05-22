@@ -24,7 +24,7 @@ static void __M2N_A4(const MethodInfo* method, uint16_t* argVarIndexs, StackObje
 }
 
 
-// TValue System.Collections.Generic.KeyValuePair`2::get_Value()
+// TKey System.Collections.Generic.KeyValuePair`2::get_Key()
 static void __M2N_A4i4(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
 {
     typedef ValueTypeSizeAlign2<4> (*NativeMethod)(int32_t __arg0, const MethodInfo* method);

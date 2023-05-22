@@ -197,6 +197,7 @@ namespace BDFramework.Editor.BuildPipeline
             var buildRuntimePlatform = BApplication.GetRuntimePlatform(buildTarget);
             var outPlatformDir = IPath.Combine(outdir, BApplication.GetPlatformPath(buildTarget));
             BDFrameworkPipelineHelper.OnBeginBuildPackage(buildTarget, outPlatformDir);
+            
             //0.加载场景配置
             Debug.Log("<color=green>===>1.加载场景配置</color>");
             if (!string.IsNullOrEmpty(buildConfig))
@@ -206,11 +207,12 @@ namespace BDFramework.Editor.BuildPipeline
 
             //1.生成资源到Devops
             Debug.Log("<color=green>===>2.生成资产</color>");
+            var assetOutputPath = BApplication.DevOpsPublishAssetsPath;
             if (isGenAssets)
             {
                 try
                 {
-                    BuildAssetsTools.BuildAllAssets(buildRuntimePlatform, BApplication.DevOpsPublishAssetsPath, opa: buildOption);
+                    BuildAssetsTools.BuildAllAssets(buildRuntimePlatform,assetOutputPath , opa: buildOption);
                 }
                 catch (Exception e)
                 {
@@ -224,7 +226,7 @@ namespace BDFramework.Editor.BuildPipeline
             
             //HCLR 
 #if ENABLE_HCLR
-            HCLREditorTools.PreBuild(buildTarget);
+            HCLREditorTools.PreBuild(buildTarget,assetOutputPath);
 #endif
             
             //2.拷贝资源并打包

@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
+using HybridCLR;
 using UnityEngine;
 
 namespace BDFramework
@@ -98,7 +99,25 @@ namespace BDFramework
             //反射执行
             if (mode == HotfixCodeRunMode.HCLR_or_Mono)
             {
+#if ENABLE_HCLR
                 BDebug.Log("【ScriptLoder】HCLR执行, Dll路径:" + dllPath, Color.red);
+                //加载AOT,AOT Pacth 一定在母包内
+                var aotPatch = Path.Combine(BApplication.GetRuntimePlatformPath(), HCLR_AOT_PATCH_PATH);
+                var aotPatchDlls = BetterStreamingAssets.GetFiles(aotPatch,"*.dll");
+                foreach (var path in aotPatchDlls)
+                {
+                    BDebug.Log("【ScriptLoder】HCLR加载AOT Patch:" + path, Color.red);
+                    var dllbytes= BetterStreamingAssets.ReadAllBytes(path);
+                    var err = RuntimeApi.LoadMetadataForAOTAssembly(dllbytes, HomologousImageMode.SuperSet);
+                    Debug.Log($"LoadMetadataForAOTAssembly:{path}. ret:{err}");
+                }
+#else
+                BDebug.Log("【ScriptLoder】DotNet反射执行, Dll路径:" + dllPath, Color.red);
+#endif
+
+
+                
+                //HCLR加载
                 Assembly assembly;
                 var dllBytes = File.ReadAllBytes(dllPath);
                 var pdbPath = dllPath + ".pdb";
@@ -114,7 +133,6 @@ namespace BDFramework
                 var type = typeof(ScriptLoder).Assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
                 var startFunc =  (Action<Type[],Type[]>)Delegate.CreateDelegate(typeof(Action<Type[],Type[]>), method);
-                
                 try
                 {
                     var hotfixTypes = assembly.GetTypes();
