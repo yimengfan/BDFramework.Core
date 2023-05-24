@@ -4,7 +4,7 @@
     "CodeRoot" : 1,
     "SQLRoot"  : 1,
     "ArtRoot"  : 1,
-    "CodeRunMode" : 0,
+    "CodeRunMode" : 1,
     "IsDebuggerILRuntime" : false,
     "IsDebugLog"          : true,
     "IsHotfix"            : false,

@@ -1,6 +1,8 @@
 {
     "name": "EditorSetting",
-    "references": [],
+    "references": [
+        "GUID:caa95b0632dd2a648ba18368372b4250"
+    ],
     "includePlatforms": [
         "Editor"
     ],

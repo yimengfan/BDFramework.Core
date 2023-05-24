@@ -1,10 +1,10 @@
 
 [
   {
-    "CodeRoot" : 0,
-    "SQLRoot"  : 0,
+    "CodeRoot" : 2,
+    "SQLRoot"  : 2,
     "ArtRoot"  : 2,
-    "CodeRunMode" : 0,
+    "CodeRunMode" : 1,
     "IsDebuggerILRuntime" : false,
     "IsDebugLog"          : true,
     "IsHotfix"            : false,

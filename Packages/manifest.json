@@ -46,7 +46,8 @@
       "name": "package.openupm.cn",
       "url": "https://package.openupm.cn",
       "scopes": [
-        "com.ourpalm.ilruntime"
+        "com.ourpalm.ilruntime",
+        "com.focus-creative-games.hybridclr_unity"
       ]
     }
   ]

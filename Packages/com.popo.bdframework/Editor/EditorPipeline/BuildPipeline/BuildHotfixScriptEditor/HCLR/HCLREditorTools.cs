@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if ENABLE_HCLR
+using System;
 using System.Collections.Generic;
 using System.IO;
 using BDFramework.Core.Tools;
@@ -176,3 +177,4 @@ namespace BDFramework.Editor.HotfixScript
         
     }
 }
+#endif

@@ -25,6 +25,7 @@ MonoBehaviour:
     m_Url: https://package.openupm.cn
     m_Scopes:
     - com.ourpalm.ilruntime
+    - com.focus-creative-games.hybridclr_unity
     m_IsDefault: 0
   m_UserSelectedRegistryName: 
   m_UserAddingNewScopedRegistry: 0
@@ -36,10 +37,12 @@ MonoBehaviour:
       m_Url: https://package.openupm.cn
       m_Scopes:
       - com.ourpalm.ilruntime
+      - com.focus-creative-games.hybridclr_unity
       m_IsDefault: 0
     m_Modified: 0
     m_Name: package.openupm.cn
     m_Url: https://package.openupm.cn
     m_Scopes:
     - com.ourpalm.ilruntime
+    - com.focus-creative-games.hybridclr_unity
     m_SelectedScopeIndex: 0

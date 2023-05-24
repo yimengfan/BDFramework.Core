@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿using DG.DemiEditor;
+using Unity.InternalAPIEngineBridge;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -10,6 +12,7 @@ static public class EditorSetting
 {
     static EditorSetting()
     {
+        #region 设置处理
         //设置允许unsafe
         if (!PlayerSettings.allowUnsafeCode)
         {
@@ -33,8 +36,11 @@ static public class EditorSetting
             EditorPrefs.SetBool(settingName, true);
             Debug.Log($"【AutoSetting】{settingName}= true.");
         }
+        
 
-        //
+        #endregion
+
+        #region 宏处理
         BuildTargetGroup[] _supportBuildTargetGroup = new BuildTargetGroup[]
         {
             BuildTargetGroup.Android,
@@ -42,7 +48,7 @@ static public class EditorSetting
             /***********新增pc平台************/
             BuildTargetGroup.Standalone,
         };
-
+        
         foreach (var bt in _supportBuildTargetGroup)
         {
             var symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(bt);
@@ -68,5 +74,12 @@ static public class EditorSetting
                 PlayerSettings.SetScriptingDefineSymbolsForGroup(bt, str);
             }
         }
+
+        #endregion
+      
+        PackageManagerEx.SetBDFramworkOpenUpmEnv();
+        
+      //  DeEditorPackageManager
+      
     }
 }

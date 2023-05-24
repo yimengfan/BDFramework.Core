@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <linker>
   <assembly fullname="Assembly-CSharp">
-    <type fullname="Com.Test.Item.one_item" preserve="all" />
-    <type fullname="Com.Test.Item.rsp_getItem" preserve="all" />
     <type fullname="Game.Client" preserve="all" />
     <type fullname="Game.Data.Local.Hero" preserve="all" />
     <type fullname="Game.Demo.M_StatusListenerEnum" preserve="all" />
@@ -54,10 +52,15 @@
     <type fullname="System.IO.IPath" preserve="all" />
   </assembly>
   <assembly fullname="Google.Protobuf">
+    <type fullname="Google.Protobuf.CodedInputStream" preserve="all" />
+    <type fullname="Google.Protobuf.CodedOutputStream" preserve="all" />
     <type fullname="Google.Protobuf.Collections.RepeatedField`1" preserve="all" />
+    <type fullname="Google.Protobuf.FieldCodec" preserve="all" />
+    <type fullname="Google.Protobuf.FieldCodec`1" preserve="all" />
     <type fullname="Google.Protobuf.IMessage" preserve="all" />
     <type fullname="Google.Protobuf.MessageExtensions" preserve="all" />
     <type fullname="Google.Protobuf.MessageParser`1" preserve="all" />
+    <type fullname="Google.Protobuf.ProtoPreconditions" preserve="all" />
   </assembly>
   <assembly fullname="ILRuntime">
     <type fullname="ILRuntime.CLR.TypeSystem.IType" preserve="all" />
@@ -97,9 +100,11 @@
     <type fullname="System.Diagnostics.DebuggableAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggableAttribute/DebuggingModes" preserve="all" />
     <type fullname="System.Diagnostics.DebuggerHiddenAttribute" preserve="all" />
+    <type fullname="System.Diagnostics.DebuggerNonUserCodeAttribute" preserve="all" />
     <type fullname="System.Double" preserve="all" />
     <type fullname="System.Enum" preserve="all" />
     <type fullname="System.Exception" preserve="all" />
+    <type fullname="System.Func`1" preserve="all" />
     <type fullname="System.Func`2" preserve="all" />
     <type fullname="System.IAsyncResult" preserve="all" />
     <type fullname="System.IDisposable" preserve="all" />
