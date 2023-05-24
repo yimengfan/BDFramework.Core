@@ -86,6 +86,23 @@ namespace BDFramework.Editor.BuildPipeline
 
         #endregion
 
+        
+        #region Tips
+
+        [Space(10)]
+        [GUIColor(0f,1f,0f)]
+        [LabelText("当前热更模式:",true),LabelWidth(80)]
+        [DisableInEditorMode]
+#if ENABLE_ILRUNTIME
+          public string HotFixFunc = "ILRuntime";
+#endif
+#if ENABLE_HCLR
+        public string HotFixFunc = "HCLR";
+#endif
+
+        #endregion
+
+        
 
         #region 自定义构建
 

@@ -85,7 +85,22 @@ namespace BDFramework.Editor.BuildPipeline
 
         #endregion
 
+        #region Tips
 
+        [Space(10)]
+        [GUIColor(0f,1f,0f)]
+        [LabelText("当前热更模式:",true),LabelWidth(80)]
+        [DisableInEditorMode]
+#if ENABLE_ILRUNTIME
+          public string HotFixFunc = "ILRuntime";
+#endif
+#if ENABLE_HCLR
+        public string HotFixFunc = "HCLR";
+#endif
+
+        #endregion
+
+        
         #region 自定义构建
         [Space(20)]
         [Title("自定义构建", titleAlignment: TitleAlignments.Left, Bold = true)]
@@ -96,7 +111,7 @@ namespace BDFramework.Editor.BuildPipeline
         public string BuildScene = BuildPackageTools.SCENE_PATH;
 
         [HorizontalGroup("b/a3", LabelWidth = 80)]
-        [LabelText("场景配置")]
+        [LabelText("场景配置(默认场景自带)")]
         public bool IsSetBuildSceneConfig = true;
 
         [HorizontalGroup("b/a4", LabelWidth = 80)]
