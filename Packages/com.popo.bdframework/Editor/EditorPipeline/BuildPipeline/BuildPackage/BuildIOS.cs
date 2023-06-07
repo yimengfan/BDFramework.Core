@@ -88,11 +88,12 @@ namespace BDFramework.Editor.BuildPipeline
 
         
         #region Tips
-
+#if ENABLE_ILRUNTIME||ENABLE_HCLR
         [Space(10)]
         [GUIColor(0f,1f,0f)]
         [LabelText("当前热更模式:"),LabelWidth(80)]
         [DisableInEditorMode]
+#endif
 #if ENABLE_ILRUNTIME
           public string HotFixFunc = "ILRuntime";
 #elif ENABLE_HCLR
