@@ -221,7 +221,7 @@ namespace BDFramework.Editor.Inspector.Config
             {
                 //同步当前到其他
                 GUI.color = Color.yellow;
-                if (GUILayout.Button($"同步[{curSelectConfigButonName}]配置", GUILayout.Height(30)))
+                if (GUILayout.Button($"同步[{curSelectConfigButonName}]配置到其他", GUILayout.Height(30)))
                 {
                     if (EditorUtility.DisplayDialog("提示", $"只会同步当前[{curSelectConfigButonName}]配置至当其他Config", "OK", "Cancel"))
                     {
@@ -263,7 +263,7 @@ namespace BDFramework.Editor.Inspector.Config
                 if (GUILayout.Button("Clear Persistent", GUILayout.Height(20)))
                 {
                     Debug.Log(Application.persistentDataPath);
-                    var files = Directory.GetFiles(Application.persistentDataPath, "*");
+                    Directory.Delete(Application.persistentDataPath, true);
                 }
             }
             GUILayout.EndHorizontal();

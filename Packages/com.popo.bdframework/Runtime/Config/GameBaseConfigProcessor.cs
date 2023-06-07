@@ -150,12 +150,12 @@ namespace BDFramework.Configure
                 switch (assetLoadPathType)
                 {
                     case AssetLoadPathType.Persistent:
-                        path = Application.persistentDataPath;
+                        path = BApplication.persistentDataPath;
                         break;
                     case AssetLoadPathType.Editor:
                     case AssetLoadPathType.StreamingAsset:
                     {
-                        path = Application.streamingAssetsPath;
+                        path = BApplication.streamingAssetsPath;
                     }
                         break;
                     case AssetLoadPathType.DevOpsPublish:

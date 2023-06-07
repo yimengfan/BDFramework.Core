@@ -21,8 +21,9 @@ namespace BDFramework.Sql
     /// </summary>
     static public class SqliteLoder
     {
+        static readonly string Tag = "SQLite";
+        
         public static string password;
-
         /// <summary>
         /// Password
         /// </summary>
@@ -82,8 +83,8 @@ namespace BDFramework.Sql
         /// <param name="str"></param>
         static public void Init(AssetLoadPathType assetLoadPathType)
         {
+            BDebug.EnableLog(Tag);
             Connection?.Dispose();
-
             var path = GameBaseConfigProcessor.GetLoadPath(assetLoadPathType);
             //用当前平台目录进行加载
             path = GetLocalDBPath(path, BApplication.RuntimePlatform);
@@ -98,7 +99,7 @@ namespace BDFramework.Sql
         {
             if (File.Exists(path))
             {
-                BDebug.Log("DB加载路径:" + path, Color.red);
+                BDebug.Log(Tag,"加载路径:" + path);
                 SQLiteConnectionString cs =
                     new SQLiteConnectionString(path, SQLiteOpenFlags.ReadOnly, true, key: Password);
                 var con = new SQLiteConnection(cs);

@@ -28,8 +28,8 @@ namespace BDFramework.Editor.Table
         public static void ExecuteGenSqlite()
         {
             //生成sql
-            BuildAllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform);
-            CopySqlToOther(Application.streamingAssetsPath, BApplication.RuntimePlatform);
+            BuildAllExcel2SQLite(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
+            CopySqlToOther(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
             AssetDatabase.Refresh();
         }
 
@@ -37,7 +37,7 @@ namespace BDFramework.Editor.Table
             (int)BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Json2Sqlite)]
         public static void ExecuteJsonToSqlite()
         {
-            BuildAllExcel2SQLite(Application.streamingAssetsPath, BApplication.RuntimePlatform, DBType.Server);
+            BuildAllExcel2SQLite(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, DBType.Server);
             AssetDatabase.Refresh();
             Debug.Log("表格导出完毕");
         }
@@ -304,7 +304,7 @@ namespace BDFramework.Editor.Table
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             bool isSuccess = false;
-            SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath, BApplication.RuntimePlatform);
+            SqliteLoder.LoadLocalDBOnEditor(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
             {
                 isSuccess = Excel2SQLite(path, DBType.Local);
             }

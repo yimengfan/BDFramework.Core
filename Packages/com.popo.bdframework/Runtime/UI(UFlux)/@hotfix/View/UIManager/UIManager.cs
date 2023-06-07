@@ -83,7 +83,7 @@ namespace BDFramework.UFlux
                 this.OnHistoryListChangeByCloseWindow(uiIdx, window);
                 this.Status.TriggerEvent(new OnWindowClose(uiIdx));
             });
-            
+
             window.State.AddListener<OnWindowFocus>((o) =>
             {
                 //窗口聚焦
@@ -94,22 +94,66 @@ namespace BDFramework.UFlux
                 //窗口失焦
                 this.Status.TriggerEvent(new OnWindowBlur(uiIdx));
             });
-            
-            
+
 
             return window;
+        }
+
+        /// <summary>
+        /// 设置layer
+        /// </summary>
+        /// <param name="winCom"></param>
+        /// <param name="layer"></param>
+        public void Setlayer(IComponent winCom, UILayer layer)
+        {
+            switch (layer)
+            {
+                case UILayer.Bottom:
+                    winCom.Transform.SetParent(this.Bottom, false);
+                    break;
+                case UILayer.Center:
+                    winCom.Transform.SetParent(this.Center, false);
+                    break;
+                case UILayer.Top:
+                    winCom.Transform.SetParent(this.Top, false);
+                    break;
+            }
         }
 
         #region 资源相关处理
 
         /// <summary>
+        /// 加载
+        /// </summary>
+        /// <param name="uiIndex"></param>
+        /// <param name="layer"></param>
+        public void LoadWindows(Enum[] uiIdxs, UILayer layer = UILayer.Bottom)
+        {
+            foreach (var idx in uiIdxs)
+            {            
+                var index = idx.GetHashCode();
+                LoadWindow(index, layer);
+            }
+
+        }
+
+        
+        /// <summary>
         /// 加载窗口
         /// </summary>
         /// <param name="uiIndexs">窗口枚举</param>
-        public void LoadWindow(Enum uiIndex)
+        public void LoadWindow(Enum uiIndex, UILayer layer = UILayer.Bottom)
         {
             var index = uiIndex.GetHashCode();
+            LoadWindow(index, layer);
+        }
 
+        /// <summary>
+        /// 加载窗口
+        /// </summary>
+        /// <param name="index"></param>
+        private void LoadWindow(int index, UILayer layer = UILayer.Bottom)
+        {
             if (windowMap.ContainsKey(index))
             {
                 var win = windowMap[index] as IComponent;
@@ -131,11 +175,13 @@ namespace BDFramework.UFlux
                     windowMap[index] = window as IWindow;
                     window.Load();
                     window.Transform.gameObject.SetActive(false);
-                    window.Transform.SetParent(this.Bottom, false);
+                    Setlayer(window, layer);
+                    //推送缓存的数据
                     PushCaheData(index);
                 }
             }
         }
+
 
         /// <summary>
         /// 加载窗口
@@ -300,73 +346,73 @@ namespace BDFramework.UFlux
         }
 
         #endregion
-        
+
         #region 打开、关闭
 
         /// <summary>
         /// 显示窗口
         /// </summary>
-        /// <param name="uiIndex">窗口枚举</param>
-        public void ShowWindow(Enum uiEnumIdx, UIMsgData uiMsgData = null, bool resetMask = true,
-            UILayer layer = UILayer.Bottom, bool isAddToHistory = true)
+        /// <param name="uiEnumIdx">ui枚举</param>
+        /// <param name="layer">显示的层级</param>
+        /// <param name="uiMsgData"></param>
+        /// <param name="isAddToHistory"></param>
+        public void ShowWindow(Enum uiEnumIdx,UILayer layer, UIMsgData uiMsgData = null, bool isAddToHistory = true)
         {
             int uiIdx = uiEnumIdx.GetHashCode();
-
-            this.ShowWindow(uiIdx, uiMsgData, resetMask, layer, isAddToHistory);
+            var winCom = this.ShowWindow(uiIdx, uiMsgData, isAddToHistory);
+            Setlayer(winCom,layer);
         }
-
-        /// <summary>
-        /// 显示窗口
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="uiMsgData"></param>
-        /// <param name="resetMask"></param>
-        /// <param name="layer"></param>
-        /// <param name="isAddToHistory"></param>
-        private void ShowWindow(int uiIdx, UIMsgData uiMsgData = null, bool resetMask = true,
-            UILayer layer = UILayer.Bottom, bool isAddToHistory = true)
+        
+          /// <summary>
+          ///  显示窗口
+          /// </summary>
+          /// <param name="uiEnumIdx"></param>
+          /// <param name="uiMsgData"></param>
+          /// <param name="isAddToHistory"></param>
+        public void ShowWindow(Enum uiEnumIdx, UIMsgData uiMsgData = null, bool isAddToHistory = true)
         {
-            if (windowMap.ContainsKey(uiIdx))
+            int uiIdx = uiEnumIdx.GetHashCode();
+            this.ShowWindow(uiIdx, uiMsgData, isAddToHistory);
+        }
+        
+        /// <summary>
+        /// 显示
+        /// </summary>
+        /// <param name="uiIdx"></param>
+        /// <param name="uiMsgData"></param>
+        /// <param name="isAddToHistory"></param>
+        private IComponent ShowWindow(int uiIdx, UIMsgData uiMsgData = null, bool isAddToHistory = true)
+        {
+            if (!windowMap.ContainsKey(uiIdx))
             {
-                var win = windowMap[uiIdx];
-                var winCom = win as IComponent;
+                BDebug.LogError($"未加载UI：{uiIdx},开始同步加载");
+                //同步加载
+                BDebug.LogWatchBegin($"加载{uiIdx}");
+                LoadWindow(uiIdx);
+                BDebug.LogWatchEnd($"加载{uiIdx}");
+            }
 
-                if (!winCom.IsOpen && winCom.IsLoad)
+            //
+            var win = windowMap[uiIdx];
+            var winCom = win as IComponent;
+            if (!winCom.IsOpen && winCom.IsLoad)
+            {
+                //effect
+                if (isAddToHistory)
                 {
-                    switch (layer)
-                    {
-                        case UILayer.Bottom:
-                            winCom.Transform.SetParent(this.Bottom, false);
-                            break;
-                        case UILayer.Center:
-                            winCom.Transform.SetParent(this.Center, false);
-                            break;
-                        case UILayer.Top:
-                            winCom.Transform.SetParent(this.Top, false);
-                            break;
-                    }
-
-                    winCom.Transform.SetAsLastSibling();
-                    win .Open(uiMsgData);
-                    //effect
-                    if (isAddToHistory)
-                    {
-                        AddToHistory(uiIdx);
-                    }
-                }
-                else
-                {
-                    Debug.LogErrorFormat("UI处于[unload,lock,open]状态之一：{0}", uiIdx);
+                    AddToHistory(uiIdx);
                 }
 
- 
+                winCom.Transform.SetAsLastSibling();
+                win.Open(uiMsgData);
             }
             else
             {
-                Debug.LogErrorFormat("未加载UI：{0}", uiIdx);
+                Debug.LogErrorFormat("UI处于[unload,lock,open]状态之一：{0}", uiIdx);
             }
-        }
 
+            return winCom;
+        }
 
         /// <summary>
         /// 关闭窗口
@@ -494,7 +540,7 @@ namespace BDFramework.UFlux
             //保证不会有重复列表
             HistoryList.Remove(uiIdx);
             HistoryList.Add(uiIdx);
-            
+
             //Focus当前窗口
             this.windowMap[uiIdx].OnFocus();
             //Blur上一个窗口
@@ -531,7 +577,7 @@ namespace BDFramework.UFlux
                         isCheckFocus = true;
                         HistoryList.Remove(idx); //移除栈顶
                     }
-                    else if (winCom.IsOpen&& !win.IsFocus && isCheckFocus)
+                    else if (winCom.IsOpen && !win.IsFocus && isCheckFocus)
                     {
                         //这里Reopen 是为了解决窗口后退中 相同窗口反复打开，导致层级变化的问题
                         win.OnFocus();

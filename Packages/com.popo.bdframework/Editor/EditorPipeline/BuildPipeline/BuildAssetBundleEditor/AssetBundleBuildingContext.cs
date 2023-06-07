@@ -246,8 +246,6 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
 
                 //获取上一次打包的数据，跟这次打包数据合并
-
-
                 foreach (var newABI in AssetBundleItemList)
                 {
                     if (string.IsNullOrEmpty(newABI.AssetBundlePath))

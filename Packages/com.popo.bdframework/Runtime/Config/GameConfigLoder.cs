@@ -1,4 +1,6 @@
-﻿namespace BDFramework.Configure
+﻿using System.Linq;
+
+namespace BDFramework.Configure
 {
     /// <summary>
     /// 游戏配置加载器

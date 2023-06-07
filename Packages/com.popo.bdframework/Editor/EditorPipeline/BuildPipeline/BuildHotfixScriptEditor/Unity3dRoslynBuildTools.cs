@@ -117,9 +117,14 @@ namespace BDFramework.Editor.HotfixScript
             try
             {
                 var path = IPath.Combine(_outPath, ScriptLoder.SCRIPT_FOLDER_PATH);
+                //删除旧的dll，按文件删除，防止勿删aot_patch
                 if (Directory.Exists(path))
                 {
-                    Directory.Delete(path, true);
+                    var fs = Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly);
+                    foreach (var f in fs)
+                    {
+                        File.Delete(f);
+                    }
                 }
 
                 Directory.CreateDirectory(path);
@@ -249,7 +254,7 @@ namespace BDFramework.Editor.HotfixScript
         /// <param name="tempCodePath"></param>
         /// <param name="outBaseDllPath"></param>
         /// <param name="outputPath"></param>
-        static public void Build(Dictionary<string, Tuple<List<string>, List<string>>> buildCodeMap, List<string> hotfixCs, List<string> hofixCsDependDllFiles, string outputPath, bool isdebug = false)
+        static private void Build(Dictionary<string, Tuple<List<string>, List<string>>> buildCodeMap, List<string> hotfixCs, List<string> hofixCsDependDllFiles, string outputPath, bool isdebug = false)
         {
             //开始执行
             List<string> genTempDllList = new List<string>();

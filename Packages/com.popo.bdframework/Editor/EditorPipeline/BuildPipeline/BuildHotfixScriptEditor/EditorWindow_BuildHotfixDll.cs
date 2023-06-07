@@ -65,12 +65,12 @@ namespace BDFramework.Editor.HotfixScript
                     //
                     if (GUILayout.Button("1.编译dll(Roslyn-Release)", GUILayout.Width(155), GUILayout.Height(30)))
                     {
-                        HotfixScriptTools.BuildDll(Application.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Release);
+                        HotfixScriptTools.BuildDll(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Release);
                     }
 
                     if (GUILayout.Button("编译dll(Roslyn-Debug)", GUILayout.Width(150), GUILayout.Height(30)))
                     {
-                        HotfixScriptTools.BuildDll(Application.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug);
+                        HotfixScriptTools.BuildDll(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug);
                     }
                 }
                 GUILayout.EndHorizontal();

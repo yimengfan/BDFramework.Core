@@ -142,7 +142,7 @@ namespace BDFramework.Editor.Environment
                 //编辑器下加载初始化
                 BResources.Init(AssetLoadPathType.Editor);
                 //编辑器下管理器注册
-                ManagerInstHelper.Load(Types);
+                ManagerInstHelper.LoadManager(Types);
                 //加载框架配置
                 GameConfigLoder.LoadFrameBaseConfig(); 
                 

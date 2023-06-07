@@ -93,7 +93,7 @@ namespace BDFramework.ResourceMgr.V2
                 platformStr = BApplication.GetRuntimePlatformPath();
                 firstArtDirectory = IPath.Combine(Application.persistentDataPath, platformStr,
                     BResources.ART_ASSET_ROOT_PATH);
-                secArtDirectory = IPath.Combine(Application.streamingAssetsPath, platformStr,
+                secArtDirectory = IPath.Combine(BApplication.streamingAssetsPath, platformStr,
                     BResources.ART_ASSET_ROOT_PATH); //
                 rootPath = Application.persistentDataPath;
             }
@@ -1109,7 +1109,9 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         public void WarmUpShaders()
         {
-            var loadpath = BResources.DUMMY_SHADER_PATH;
+            BDebug.Log($"加载shader ab:{BResources.DUMMY_SHADER_PATH}");
+            var loadpath = BResources.DUMMY_SHADER_PATH;//AB名，所有shader都在这个ab里面
+            //
             this.Load<Object>(loadpath);
             var shaderLoder = GetAssetLoder<ShaderLoder>(loadpath);
             shaderLoder.LoadAllShaders();
@@ -1126,7 +1128,7 @@ namespace BDFramework.ResourceMgr.V2
         /// <returns></returns>
         public Shader FindShader(string shaderName)
         {
-              var loadpath = BResources.DUMMY_SHADER_PATH;
+            var loadpath = BResources.DUMMY_SHADER_PATH;
             var shaderLoder = GetAssetLoder<ShaderLoder>(loadpath);
             return shaderLoder?.FindShader(shaderName);
         }

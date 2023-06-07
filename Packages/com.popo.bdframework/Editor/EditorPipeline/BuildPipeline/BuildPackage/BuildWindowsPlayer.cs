@@ -89,13 +89,14 @@ namespace BDFramework.Editor.BuildPipeline
 
         [Space(10)]
         [GUIColor(0f,1f,0f)]
-        [LabelText("当前热更模式:",true),LabelWidth(80)]
+        [LabelText("当前热更模式:"),LabelWidth(80)]
         [DisableInEditorMode]
 #if ENABLE_ILRUNTIME
           public string HotFixFunc = "ILRuntime";
-#endif
-#if ENABLE_HCLR
-        public string HotFixFunc = "HCLR";
+#elif ENABLE_HCLR
+          public string HotFixFunc = "HCLR";
+#else
+          public string HotFixFunc = "未定义";
 #endif
 
         #endregion

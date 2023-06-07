@@ -148,9 +148,9 @@ namespace BDFramework.Editor
         /// <param name="outputpath"></param>
         virtual public void OnBeginBuildPackage(BuildTarget buildTarget, string outputpath )
         {
-            //设置母包脚本版本号
+            //设置母包脚本版本号=>publish assets
             var githash = GitProcessor.GetVersion(6);
-            ClientAssetsHelper.GenBasePackageBuildInfo(outputpath, BApplication.GetRuntimePlatform(buildTarget),githash);
+            ClientAssetsHelper.GenBasePackageBuildInfo(BApplication.DevOpsPublishAssetsPath,BApplication.GetRuntimePlatform(buildTarget),basePckScriptSVC:githash);
             //
             var config =  ConfigEditorUtil.GetEditorConfig<GameBaseConfigProcessor.Config>();
             switch (buildTarget)

@@ -5,9 +5,7 @@ using System.IO;
 using System.Text;
 using System.Reflection;
 using System;
-using System.Linq;
 using LitJson;
-using ServiceStack.Text;
 using UnityEngine;
 
 
@@ -24,6 +22,7 @@ namespace BDFramework.Editor.Table
         // private DataSet mResultSet;
         private DataTable mSheet = null;
 
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -34,9 +33,17 @@ namespace BDFramework.Editor.Table
             IExcelDataReader mExcelReader = ExcelReaderFactory.CreateOpenXmlReader(mStream);
             var mResultSet = mExcelReader.AsDataSet();
             if (mResultSet.Tables.Count > 0)
-            {
-                //默认读取第一个数据表
+            { 
+                //默认读取第一个数据表,存在多sheet页签时，添加进去
                 mSheet = mResultSet.Tables[0];
+                for (int i = 1; i < mResultSet.Tables.Count; i++)
+                {
+                    foreach (DataRow row in mResultSet.Tables[i].Rows)
+                    {
+                        mSheet.Rows.Add(row.ItemArray);
+                    }
+                }
+               
             }
         }
 

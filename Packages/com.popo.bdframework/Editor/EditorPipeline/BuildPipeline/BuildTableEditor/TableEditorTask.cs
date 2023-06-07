@@ -20,10 +20,10 @@ namespace BDFramework.Editor.Table
         static public void OnForceImpotChangedExcel()
         {
             //判断是否导入设置
-            if (BDEditorApplication.EditorSetting.BuildSqlSetting.IsForceImportChangedExcelOnWillEnterPlaymode)
+            if (BDEditorApplication.EditorSetting.BuildSqlSetting.IsForceImportChangedExcelOnWillEnterPlaymode && BDLauncher.Inst.Config.SQLRoot== AssetLoadPathType.Editor)
             {
-                Debug.Log("【EditorTask】数据库校验...");
-                var dbPath = SqliteLoder.GetLocalDBPath(Application.streamingAssetsPath, BApplication.RuntimePlatform);
+                Debug.Log("【EditorTask】数据库校验begin...");
+                var dbPath = SqliteLoder.GetLocalDBPath(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
                 //获取差异
                 var (changedExcelList, newEcxcelInfoMap) = ExcelEditorTools.GetChangedExcelsFromLocalSql(dbPath);
                 //
@@ -42,7 +42,7 @@ namespace BDFramework.Editor.Table
                     }
                     SqliteLoder.Close();
                     
-                    Excel2SQLiteTools.CopySqlToOther(Application.streamingAssetsPath, BApplication.RuntimePlatform);
+                    Excel2SQLiteTools.CopySqlToOther(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
                     BDebug.Log("-----------------强制导入修改的excel文件.end-----------------", Color.red);
 
                     ExcelEditorTools.SaveExcelCacheInfo(newEcxcelInfoMap);

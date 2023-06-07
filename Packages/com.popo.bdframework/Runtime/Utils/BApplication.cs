@@ -170,9 +170,6 @@ namespace BDFramework.Core.Tools
 
         static private void Init()
         {
-            //Unity路径
-            persistentDataPath = Application.persistentDataPath;
-            streamingAssetsPath = Application.streamingAssetsPath;
             //自定义路径
             ProjectRoot = Application.dataPath.Replace("/Assets", "");
             Library = ProjectRoot + "/Library";
@@ -181,8 +178,8 @@ namespace BDFramework.Core.Tools
             RuntimeResourceLoadPath = "Assets/Resource/Runtime";
             //Editor相关目录
             EditorResourcePath = "Assets/Resource_SVN";
-            EditorResourceRuntimePath =   $"{EditorResourcePath}/Runtime";
-            BDEditorCachePath =  $"{Library}/BDFrameCache";
+            EditorResourceRuntimePath = $"{EditorResourcePath}/Runtime";
+            BDEditorCachePath = $"{Library}/BDFrameCache";
             //DevOps路径
             //跟Assets同级
             DevOpsPath = $"DevOps";
@@ -190,6 +187,13 @@ namespace BDFramework.Core.Tools
             DevOpsPublishPackagePath = $"{DevOpsPath}/PublishPackages";
             DevOpsConfigPath = $"{DevOpsPath}/Config";
             DevOpsCIPath = $"{DevOpsPath}/CI";
+            //Unity路径
+            persistentDataPath = Application.persistentDataPath;
+#if UNITY_EDITOR
+            streamingAssetsPath = DevOpsPublishAssetsPath;
+#else
+            streamingAssetsPath = Application.streamingAssetsPath;
+#endif
         }
 
 
@@ -473,6 +477,28 @@ namespace BDFramework.Core.Tools
         static public string GetPlatformDevOpsPublishPackagePath(RuntimePlatform platform)
         {
             var path = GetPlatformPath(platform);
+            return IPath.Combine(DevOpsPublishPackagePath, path);
+        }
+
+        /// <summary>
+        /// 获取发布资产平台目录
+        /// </summary>
+        /// <param name="bt"></param>
+        /// <returns></returns>
+        static public string GetPlatformDevOpsPublishAssetsPath(BuildTarget bt)
+        {
+            var path = GetPlatformPath(bt);
+            return IPath.Combine(DevOpsPublishAssetsPath, path);
+        }
+
+        /// <summary>
+        /// 获取发布包体平台目录
+        /// </summary>
+        /// <param name="bt"></param>
+        /// <returns></returns>
+        static public string GetPlatformDevOpsPublishPackagePath(BuildTarget bt)
+        {
+            var path = GetPlatformPath(bt);
             return IPath.Combine(DevOpsPublishPackagePath, path);
         }
 

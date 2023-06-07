@@ -30,7 +30,7 @@ namespace BDFramework.Editor.Table
 
             if (excelList.Count > 0)
             {
-                SqliteLoder.LoadLocalDBOnEditor(Application.streamingAssetsPath, BApplication.RuntimePlatform);
+                SqliteLoder.LoadLocalDBOnEditor(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
                 float counter = 1f;
                 foreach (var excel in excelList)
                 {

@@ -762,7 +762,7 @@ namespace BDFramework.ResourceMgr
                 var hash = FileHelper.GetMurmurHash3(persistentHashPath);
                 if (assetHash.Equals(hash))
                 {
-                    BDebug.Log(LogTag,$"hash文件存在 - {assetName} | hash - {assetHash}");
+                    BDebug.Log(LogTag,$"hash文件存在,hash校验通过 - {assetName} | hash - {assetHash}");
                     return true;
                 }
                 else
@@ -823,7 +823,7 @@ namespace BDFramework.ResourceMgr
 
         #endregion
 
-        #region 配置相关路径
+        #region 资源配置相关路径
 
         /// <summary>
         /// 获取版本配置路径
@@ -833,8 +833,8 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         static public string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
         {
-            return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform),
-                BResources.SERVER_ASSETS_VERSION_INFO_PATH);
+            return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform),BResources.SERVER_ASSETS_VERSION_INFO_PATH);
+            
         }
 
         /// <summary>
@@ -843,7 +843,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="rootPath"></param>
         /// <param name="platform"></param>
         /// <returns></returns>
-        static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform)
+        static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform,string version ="")
         {
             return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
         }
@@ -854,8 +854,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="rootPath"></param>
         /// <param name="platform"></param>
         /// <returns></returns>
-        static public string GetAssetsSubPackageInfoPath(string rootPath, RuntimePlatform platform,
-            string subPackageName)
+        static public string GetAssetsSubPackageInfoPath(string rootPath, RuntimePlatform platform, string subPackageName)
         {
             //旧版本兼容逻辑
             if (subPackageName.StartsWith("ServerAssetsSubPackage_"))
@@ -890,13 +889,13 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         static public void SetAUPLEvel(AUPLevel level)
         {
+            BDebug.Log("AUP设置",$"当前:\nasyncUploadBufferSize:{ QualitySettings.asyncUploadBufferSize}\nasyncUploadTimeSlice:{QualitySettings.asyncUploadTimeSlice}\nbackgroundLoadingPriority:{Application.backgroundLoadingPriority}", Color.green);
             QualitySettings.asyncUploadPersistentBuffer = true;
             switch (level)
             {
                 case AUPLevel.LowRender:
                 {
                     //低渲染、高加载时候
-
                     QualitySettings.asyncUploadBufferSize = 32;
                     QualitySettings.asyncUploadTimeSlice = 8;
                     Application.backgroundLoadingPriority = ThreadPriority.High;
@@ -927,6 +926,9 @@ namespace BDFramework.ResourceMgr
                 }
                     break;
             }
+            
+            BDebug.Log("AUP设置",$"设置完:\nasyncUploadBufferSize:{ QualitySettings.asyncUploadBufferSize}\nasyncUploadTimeSlice:{QualitySettings.asyncUploadTimeSlice}\nbackgroundLoadingPriority:{Application.backgroundLoadingPriority}", Color.green);
+
         }
 
         /// <summary>

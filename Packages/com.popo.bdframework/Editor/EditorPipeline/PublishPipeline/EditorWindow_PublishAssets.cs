@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Asset;
+using BDFramework.Assets.VersionContrller;
 using UnityEditor;
 using UnityEngine;
 using BDFramework.Editor.Table;
@@ -199,7 +200,7 @@ namespace BDFramework.Editor.PublishPipeline
 
                 //
                 GUILayout.Space(5);
-                if (GUILayout.Button("一键导出所选平台资产(脚本、美术、表格)", GUILayout.Width(350), GUILayout.Height(30)))
+                if (GUILayout.Button("一键生成所选平台资产(脚本、美术、表格)", GUILayout.Width(350), GUILayout.Height(30)))
                 {
                     if (isBuilding)
                     {
@@ -220,33 +221,40 @@ namespace BDFramework.Editor.PublishPipeline
                 }
 
                 //
+                GUILayout.Label("上传:", EditorGUIHelper.GetFontStyle(Color.red, 15));
                 if (GUILayout.Button("热更资源转hash(生成服务器配置)", GUILayout.Width(350), GUILayout.Height(30)))
+                {
+                    //自动转hash
+                    PublishPipelineTools.PublishAssetsToServer(EXPORT_PATH);
+
+                    EditorUtility.DisplayDialog("提示", $"生成到 {EXPORT_PATH}/{PublishPipelineTools.UPLOAD_FOLDER_SUFFIX} 完成,等待提交到服务器! \n也可以用于本机服务器!", "确定");
+                }
+                
+                if (GUILayout.Button("上传到阿里云OSS", GUILayout.Width(350), GUILayout.Height(30)))
                 {
                     //自动转hash
                     PublishPipelineTools.PublishAssetsToServer(EXPORT_PATH);
                 }
 
-                GUILayout.Space(20);
-                GUILayout.Label("调试功能:", EditorGUIHelper.LabelH4);
-                GUILayout.BeginHorizontal();
-                {
-                    if (GUILayout.Button("拷贝资源到Streaming", GUILayout.Width(175), GUILayout.Height(30)))
-                    {
-                        //拷贝
-                        BuildPackageTools.CopyPublishAssetsTo(Application.streamingAssetsPath, BApplication.RuntimePlatform);
-                        AssetDatabase.Refresh();
-                    }
-
-                    if (GUILayout.Button("删除Streaming资源", GUILayout.Width(175), GUILayout.Height(30)))
-                    {
-                        var target = IPath.Combine(Application.streamingAssetsPath, BApplication.GetRuntimePlatformPath());
-                        Directory.Delete(target, true);
-                    }
-                }
+                // GUILayout.Space(5);
+                // GUILayout.Label("调试功能:", EditorGUIHelper.LabelH4);
+                // GUILayout.BeginHorizontal();
+                // {
+                //     if (GUILayout.Button("拷贝资源到Streaming", GUILayout.Width(175), GUILayout.Height(30)))
+                //     {
+                //         //拷贝
+                //         BuildPackageTools.CopyPublishAssetsTo(Application.streamingAssetsPath, BApplication.RuntimePlatform);
+                //         AssetDatabase.Refresh();
+                //     }
+                //
+                //     if (GUILayout.Button("删除Streaming资源", GUILayout.Width(175), GUILayout.Height(30)))
+                //     {
+                //         var target = IPath.Combine(Application.streamingAssetsPath, BApplication.GetRuntimePlatformPath());
+                //         Directory.Delete(target, true);
+                //     }
+                // }
+                // GUILayout.EndHorizontal();
             }
-            GUILayout.EndHorizontal();
-
-
             GUILayout.EndVertical();
         }
 

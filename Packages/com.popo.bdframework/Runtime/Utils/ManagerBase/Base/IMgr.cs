@@ -26,12 +26,19 @@ namespace BDFramework.Mgr
         void Start();
 
         /// <summary>
-        /// 类型检测
+        /// 实例类型注册
         /// </summary>
         /// <param name="type"></param>
         /// <param name="attributes"></param>
-        bool CheckType(Type type, ManagerAttribute[] attributes);
+        bool RegisterTypes(Type type, ManagerAttribute[] attributes);
 
+        /// <summary>
+        /// 实例类型注册
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="attributes"></param>
+        bool RegisterHotfixTypes(Type type, ManagerAttribute[] attributes);
+        
         /// <summary>
         /// 创建实例
         /// </summary>

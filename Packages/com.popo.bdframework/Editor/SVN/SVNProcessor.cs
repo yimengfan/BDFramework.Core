@@ -520,11 +520,11 @@ namespace BDFramework.Editor.SVN
             if (string.IsNullOrEmpty(svnRepoUrl))
             {
                 svnRepoUrl =SVNURL.Substring(0,SVNURL.IndexOf("/branches/", StringComparison.Ordinal))+"/branches/";
-                cmd =$"ls {svnRepoUrl} --depth immediates > \"{infoPath}\"";
+                cmd =$"ls {svnRepoUrl} --depth immediates > \"{infoPath}\" {GetLoginCmd()}";
             }
             else
             {
-                cmd = $"ls {svnRepoUrl}/branches/ --depth immediates > \"{infoPath}\"";
+                cmd = $"ls {svnRepoUrl}/branches/ --depth immediates > \"{infoPath}\" {GetLoginCmd()}";
             }
 
             //执行svn
@@ -581,6 +581,11 @@ namespace BDFramework.Editor.SVN
         public void Commit(string workpath = "./", string log = "Auto Commit")
         {
             var cmd = $"ci  \"{workpath}\" -m  \"{log}\" ";
+            this.ExecuteSVN(cmd);
+        }
+        public void Commit_useaccount(string workpath = "./", string log = "Auto Commit")
+        {
+            var cmd = $"ci  \"{workpath}\" -m  \"{log}\" --username teamcity --password teamcity";
             this.ExecuteSVN(cmd);
         }
 

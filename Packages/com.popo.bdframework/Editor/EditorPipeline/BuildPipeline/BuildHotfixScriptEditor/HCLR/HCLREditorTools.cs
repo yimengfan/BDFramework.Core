@@ -1,13 +1,15 @@
 ﻿#if ENABLE_HCLR
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Tools;
 using HybridCLR.Editor;
 using HybridCLR.Editor.Commands;
+using LitJson;
 using UnityEditor;
-using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace BDFramework.Editor.HotfixScript
 {
@@ -21,13 +23,13 @@ namespace BDFramework.Editor.HotfixScript
         // /// <summary>
         // /// 测试
         // /// </summary>
-        // [MenuItem("xxx")]
+        //[MenuItem("xxx")]
         static public void Test()
         {
             //PreBuild(BuildTarget.Android);
 
 
-            BuildLibIl2cppForIOS();
+            PreBuild(BuildTarget.Android,BApplication.DevOpsPublishAssetsPath);
         }
         //
         /// <summary>
@@ -36,34 +38,45 @@ namespace BDFramework.Editor.HotfixScript
         /// <param name="target"></param>
         static public void PreBuild( BuildTarget target,string assetsOutputDir)
         {
-
+            if (HybridCLRSettings.Instance == null)
+            {
+                throw new Exception("请先生成HCLR Setting!");
+            }
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            
+            Debug.Log("<color=green>[HCLR]start:</color>");
             SetBDFramework2HCLRConfig();
             //编译补充元数据的DLL
+            Debug.Log("<color=green>[HCLR]gen aot dll!</color>");
             CompileDllCommand.CompileDll(target);
+            CopyCompileDll(target,assetsOutputDir);
             Il2CppDefGeneratorCommand.GenerateIl2CppDef();
+            
             // 这几个生成依赖HotUpdateDlls
+            Debug.Log("<color=green>[HCLR]gen link.xml!</color>");
             LinkGeneratorCommand.GenerateLinkXml(target);
+            
             // 生成裁剪后的aot dll
-            StripAOTDllCommand.GenerateStripedAOTDlls(target,  BApplication.GetBuildTargetGroup(target));
+            Debug.Log("<color=green>[HCLR]gen strip aot dll!</color>");
+            if (IsNeedStripAOTDll(target,assetsOutputDir))
+            {
+                StripAOTDllCommand.GenerateStripedAOTDlls(target,  BApplication.GetBuildTargetGroup(target));
+                CopyStripAOTDll(target,assetsOutputDir);
+            }
+            else
+            {
+                Debug.Log($"<color=yellow>[HCLR]已存在{JsonMapper.ToJson(HybridCLRSettings.Instance.patchAOTAssemblies)}, 不需要 gen strip aot dll !!!</color>");
+            }
+
             // 桥接函数生成依赖于AOT dll，必须保证已经build过，生成AOT dll
+            Debug.Log("<color=green>[HCLR]gen bridge cpp!</color>");
             MethodBridgeGeneratorCommand.GenerateMethodBridge(target);
             ReversePInvokeWrapperGeneratorCommand.GenerateReversePInvokeWrapper(target);
             AOTReferenceGeneratorCommand.GenerateAOTGenericReference(target);
             
-            //从aot目录拷贝补充元数据的dll到hotfix目录
-            var patchAOTDll = HybridCLRSettings.Instance.patchAOTAssemblies;
-            assetsOutputDir = IPath.Combine(assetsOutputDir, BApplication.GetPlatformPath(target));
-            foreach (var dll in patchAOTDll)
-            {
-                var dllPath = IPath.Combine(  SettingsUtil.GetAssembliesPostIl2CppStripDir(target), dll + ".dll");
-                var destPath = IPath.Combine(assetsOutputDir,ScriptLoder.HCLR_AOT_PATCH_PATH, dll + ".dll");
-                if (File.Exists(dllPath))
-                {
-                    FileHelper.Copy(dllPath,destPath,true);
-                    Debug.Log($"<color=green>拷贝AOT Patch dll:{dll} </color>");
-                }
-            }
-    
+            sw.Stop();
+            Debug.Log($"<color=red>[HCLR]end! 耗时:{sw.ElapsedMilliseconds} ms.</color>");
 #if UNITY_EDITOR_OSX
             BuildLibIl2cppForIOS();
 #endif
@@ -173,6 +186,73 @@ namespace BDFramework.Editor.HotfixScript
             {
                 throw new Exception("拷贝libil2cpp.a 失败!");
             }
+        }
+
+
+        
+        /// <summary>
+        /// 拷贝补充元数据的dll到hotfix目录
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="assetsOutputDir"></param>
+        static public void CopyCompileDll(BuildTarget target,string assetsOutputDir)
+        {
+            //从aot目录拷贝补充元数据的dll到hotfix目录
+            var patchAOTDll = HybridCLRSettings.Instance.patchAOTAssemblies;
+            assetsOutputDir = IPath.Combine(assetsOutputDir, BApplication.GetPlatformPath(target));
+            foreach (var dll in patchAOTDll)
+            {
+                var sourceDllPath = IPath.Combine(  SettingsUtil.GetHotUpdateDllsOutputDirByTarget(target), dll + ".dll");
+                var destPath = IPath.Combine(assetsOutputDir,ScriptLoder.HCLR_AOT_PATCH_PATH, dll + ".dll");
+                if (File.Exists(sourceDllPath))
+                {
+                    FileHelper.Copy(sourceDllPath,destPath,true);
+                    Debug.Log($"<color=green>[HCLR]拷贝AOT Patch dll:{dll} </color>");
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 是否需要拷贝StripDll
+        /// </summary>
+        static public bool IsNeedStripAOTDll(BuildTarget target,string assetsOutputDir)
+        {
+            var patchAOTDlls = HybridCLRSettings.Instance.patchAOTAssemblies;
+            assetsOutputDir = IPath.Combine(assetsOutputDir, BApplication.GetPlatformPath(target));
+            foreach (var dll in patchAOTDlls)
+            {
+                var destPath = IPath.Combine(assetsOutputDir,ScriptLoder.HCLR_AOT_PATCH_PATH, dll + ".dll");
+                if (!File.Exists(destPath))
+                {
+                    Debug.Log($"<color=red>[HCLR]不存在AOT Patch dll:{destPath},需要进行strip aot build dll!</color>");
+                    return true;
+                }
+            }
+          
+            return false;
+        }
+        /// <summary>
+        /// 拷贝补充元数据的dll到hotfix目录
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="assetsOutputDir"></param>
+        static public void CopyStripAOTDll(BuildTarget target,string assetsOutputDir)
+        {
+            //从aot目录拷贝补充元数据的dll到hotfix目录
+            var patchAOTDll = HybridCLRSettings.Instance.patchAOTAssemblies;
+            assetsOutputDir = IPath.Combine(assetsOutputDir, BApplication.GetPlatformPath(target));
+            foreach (var dll in patchAOTDll)
+            {
+                var sourceDllPath = IPath.Combine(  SettingsUtil.GetAssembliesPostIl2CppStripDir(target), dll + ".dll");
+                var destPath = IPath.Combine(assetsOutputDir,ScriptLoder.HCLR_AOT_PATCH_PATH, dll + ".dll");
+                if (File.Exists(sourceDllPath))
+                {
+                    FileHelper.Copy(sourceDllPath,destPath,true);
+                    Debug.Log($"<color=green>[HCLR]拷贝Strip AOT Patch dll:{dll} </color>");
+                }
+            }
+
         }
         
     }

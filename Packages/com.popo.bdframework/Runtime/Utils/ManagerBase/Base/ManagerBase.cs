@@ -65,7 +65,50 @@ namespace BDFramework.Mgr
         /// </summary>
         /// <param name="type"></param>
         /// <param name="attributes"></param>
-        virtual public bool CheckType(Type type, ManagerAttribute[] attributes)
+        virtual public bool RegisterTypes(Type type, ManagerAttribute[] attributes)
+        {
+            bool ret = false;
+            foreach (var attr in attributes)
+            {
+                if (attr is V vAttr)
+                {
+                    if (vAttr.IntTag != -1)
+                    {
+                        if (!this.ClassDataMap_IntKey.ContainsKey(vAttr.IntTag))
+                        {
+                            SaveAttribute(vAttr.IntTag, new ClassData() {Attribute = vAttr, Type = type});
+                        }
+                        else if(Application.isPlaying)
+                        {
+                            BDebug.Log($"已存在实体类型(可能被热更覆盖):{type.FullName}",Color.magenta);
+                        }
+                      
+                    }
+                    else if (vAttr.Tag != null)
+                    {
+                        if (!this.ClassDataMap_StringKey.ContainsKey(vAttr.Tag))
+                        {
+                            SaveAttribute(vAttr.Tag, new ClassData() { Attribute = vAttr, Type = type });
+                        }
+                        else if(Application.isPlaying)
+                        {
+                            BDebug.Log($"已存在实体类型(可能被热更覆盖):{type.FullName}",Color.magenta);
+                        }
+                    }
+
+                    ret = true;
+                }
+            }
+
+            return ret;
+        }
+        
+        /// <summary>
+        /// 检测类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="attributes"></param>
+        virtual public bool RegisterHotfixTypes(Type type, ManagerAttribute[] attributes)
         {
             //var vAttr = attribute as V;
             bool ret = false;
@@ -75,10 +118,26 @@ namespace BDFramework.Mgr
                 {
                     if (vAttr.IntTag != -1)
                     {
+                        if (this.ClassDataMap_IntKey.TryGetValue(vAttr.IntTag, out var exsitData))
+                        {
+                            BDebug.Log($"<color=magenta>热更覆盖实体类型</color>: <color=yellow>{type.FullName}</color> => <color=green>{exsitData.Type.FullName}</color>");
+                        }
+                        else
+                        {
+                            BDebug.Log($"<color=magenta>新增热更类型</color>: <color=yellow>{type.FullName}</color>");
+                        }
                         SaveAttribute(vAttr.IntTag, new ClassData() {Attribute = vAttr, Type = type});
                     }
                     else if (vAttr.Tag != null)
                     {
+                        if (this.ClassDataMap_StringKey.TryGetValue(vAttr.Tag,out var exsitData))
+                        {
+                            BDebug.Log($"<color=magenta>热更覆盖实体类型</color>: <color=yellow>{type.FullName}</color> => <color=green>{exsitData.Type.FullName}</color>");
+                        }
+                        else
+                        {
+                            BDebug.Log($"<color=magenta>新增热更类型</color>: <color=yellow>{type.FullName}</color>");
+                        }
                         SaveAttribute(vAttr.Tag, new ClassData() {Attribute = vAttr, Type = type});
                     }
 
@@ -88,7 +147,6 @@ namespace BDFramework.Mgr
 
             return ret;
         }
-
 
         public bool IsStarted { get; private set; }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Net;
+using BDFramework.Assets.VersionContrller;
 using BDFramework.Core.Tools;
 using LitJson;
 using marijnz.EditorCoroutines;
@@ -52,7 +53,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public void AutoOpen()
         {
-            if (!IsTodayOpened() //今天没打开过,保证一天只打开一次
+            if (!IsOpenedSomeDay(10) //7天内不重复
                 && (IsHaveNewVerison() //新版本
                     || !IsExsitOdin() //缺少odin
                     || !IsImportedAsset() //缺少文件
@@ -64,22 +65,33 @@ namespace BDFramework.Editor
 
 
         /// <summary>
-        /// 检测今天是否打开过
+        /// 检测7天内是否打开过
         /// </summary>
         /// <returns></returns>
-        static public bool IsTodayOpened()
+        static public bool IsOpenedSomeDay(int day =10)
         {
-            var path = BApplication.BDEditorCachePath + "/OpenGuideLog_" + DateTime.Today.ToLongDateString();
-            if (!File.Exists(path))
+            for (int i = 0; i < day; i++)
             {
-                FileHelper.WriteAllText(path, "EditorWindow_BDFrameworkStart today is open!");
-
-                return false;
+                var dayStr = DateTime.Today.AddDays(-1*i).ToLongDateString();
+                //Debug.Log(dayStr);
+                var path = BApplication.BDEditorCachePath + "/OpenGuideLog_" +dayStr;
+                if (File.Exists(path))
+                {
+                   
+                   // BDebug.Log($"open in {dayStr}!");
+                    return true;
+                }
             }
 
-            return true;
+            //没打开过，写入打开日志
+            {
+                var log = $"EditorWindow_BDFrameworkStart  is open in { DateTime.Today.ToLongDateString()}!";
+                var path = BApplication.BDEditorCachePath + "/OpenGuideLog_" + DateTime.Today.ToLongDateString();
+                FileHelper.WriteAllText(path, log);
+            }
+            return false;
         }
-
+        
         /// <summary>
         /// 打开窗口
         /// 覆盖show接口
@@ -314,7 +326,8 @@ namespace BDFramework.Editor
                 }
             }
             
-            return BDLauncher.Version != NewVersionNum;
+            var isHaveNewVersion = !VersionNumHelper.GT( BDLauncher.Version, NewVersionNum);
+            return  isHaveNewVersion;
         }
 
         #endregion

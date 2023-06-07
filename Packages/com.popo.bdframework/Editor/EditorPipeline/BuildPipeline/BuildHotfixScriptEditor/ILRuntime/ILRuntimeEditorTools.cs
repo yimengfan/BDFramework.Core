@@ -51,7 +51,7 @@ namespace BDFramework.Editor.HotfixScript
         {
             if (dllpath == "")
             {
-                dllpath = Application.streamingAssetsPath;
+                dllpath = BApplication.streamingAssetsPath;
             }
 
             //路径

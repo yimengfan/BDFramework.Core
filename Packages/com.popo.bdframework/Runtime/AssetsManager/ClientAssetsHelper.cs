@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
+using BDFramework.Assets.VersionContrller;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.Core.Tools;
@@ -30,22 +31,22 @@ namespace BDFramework.Asset
         /// 母包主工程的svn版本号
         /// </summary>
         /// <returns></returns>
-        public string BasePckScriptSVCVersion = "";
-        
+        public string BasePckScriptSVCVersion = "none";
+
         /// <summary>
         /// 热更脚本构建svc版本号
         /// </summary>
-        public string HotfixScriptSVCVersion = "";
-        
+        public string HotfixScriptSVCVersion = "none";
+
         /// <summary>
         /// AB构建svc版本号
         /// </summary>
-        public string AssetBundleSVCVersion = "";
-        
+        public string AssetBundleSVCVersion = "none";
+
         /// <summary>
         /// 表格构建svc版本号
         /// </summary>
-        public string TableSVCVersion = "";
+        public string TableSVCVersion = "none";
     }
 
     /// <summary>
@@ -59,6 +60,7 @@ namespace BDFramework.Asset
         /// 包体构建信息路径
         /// </summary>
         readonly static public string PACKAGE_BUILD_INFO_PATH = "package_build.info";
+
         static ClientAssetsHelper()
         {
             BetterStreamingAssets.Initialize();
@@ -74,32 +76,19 @@ namespace BDFramework.Asset
             SqliteLoder.LOCAL_DB_PATH, //db
             BResources.ART_ASSET_INFO_PATH, BResources.ART_ASSET_TYPES_PATH, //ArtConfig,这两个配置文件是保证 更新资源后逻辑统一.
         };
-
-
-        /// <summary>
-        /// 获取母包资源构建信息
-        /// </summary>
-        /// <returns></returns>
-        static public ClientPackageBuildInfo GetPackageBuildInfo(string ouptputPath, RuntimePlatform platform)
-        {
-            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), PACKAGE_BUILD_INFO_PATH);
-            var buildinfo = new ClientPackageBuildInfo();
-            if (File.Exists(path))
-            {
-                var text = File.ReadAllText(path);
-                buildinfo = JsonMapper.ToObject<ClientPackageBuildInfo>(text);
-            }
-
-            return buildinfo;
-        }
-
-
+        
+#if UNITY_EDITOR
         /// <summary>
         /// 生成母包资源构建信息
         /// </summary>
-        static public void GenBasePackageBuildInfo(string outputPath, RuntimePlatform platform,
-            string bundleVersion = "", string basePckScriptSVC = "", string artAssetsSVC = "", string hotfixScriptSVC = "",
-            string tableSVC = "")
+        /// <param name="outputPath"></param>
+        /// <param name="platform"></param>
+        /// <param name="bundleVersion">bundle版本号</param>
+        /// <param name="basePckScriptSVC">母包的svc版本号</param>
+        /// <param name="artAssetsSVC">美术资产svc版本号</param>
+        /// <param name="hotfixScriptSVC">热更代码svc版本号</param>
+        /// <param name="tableSVC">表格svc版本号</param>
+        static public void GenBasePackageBuildInfo(string outputPath, RuntimePlatform platform, string bundleVersion = "", string basePckScriptSVC = "", string artAssetsSVC = "", string hotfixScriptSVC = "", string tableSVC = "")
         {
             //获取旧BuildAssetInfo
             var info = GetPackageBuildInfo(outputPath, platform);
@@ -107,18 +96,22 @@ namespace BDFramework.Asset
             //写入buildinfo内容
             info.BuildTime = DateTimeEx.GetTotalSeconds();
 
-            //资源版本
-
+            //资源版本号默认自增
             if (!string.IsNullOrEmpty(bundleVersion))
             {
                 info.Version = bundleVersion;
             }
-
-
+            else
+            {
+                info.Version = VersionNumHelper.AddVersionNum(info.Version);
+                BDebug.Log("新版本号:" + info.Version, Color.green);
+            }
+            
             //母包版本信息
             if (!string.IsNullOrEmpty(basePckScriptSVC))
             {
                 info.BasePckScriptSVCVersion = basePckScriptSVC;
+                info.HotfixScriptSVCVersion = basePckScriptSVC; //母包的svc版本号，覆盖热更一次
             }
 
             //美术资产信息
@@ -156,8 +149,7 @@ namespace BDFramework.Asset
             var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), PACKAGE_BUILD_INFO_PATH);
             FileHelper.WriteAllText(path, content);
         }
-
-
+#endif
         /// <summary>
         /// 母包资源检测逻辑
         /// </summary>
@@ -239,33 +231,33 @@ namespace BDFramework.Asset
                     //解析
                     var persistentPackageInfo = JsonMapper.ToObject<ClientPackageBuildInfo>(content);
                     var basePackageInfo = JsonMapper.ToObject<ClientPackageBuildInfo>(basePckBuildInfoContent);
-                    if (persistentPackageInfo.BuildTime >= basePackageInfo.BuildTime)
+                    if (VersionNumHelper.GT( persistentPackageInfo.Version ,basePackageInfo.Version))
                     {
                         //跳出，检测结束
-                        BDebug.Log("【母包资源检测】不复制，母包无新资源");
-                        BDLauncher.Inst.BasePckBuildInfo  = basePackageInfo;
+                        BDebug.Log($"【母包资源检测】不复制，persistent更新!母包无新资源! persistent:{persistentPackageInfo.Version },streaming:{basePackageInfo.Version}!",Color.yellow);
+                        BDLauncher.Inst.BasePckBuildInfo = basePackageInfo;
                         BDLauncher.Inst.HotfixAssetsBuildInfo = persistentPackageInfo;
                         callback?.Invoke();
                         return;
                     }
                     else
                     {
-                        BDebug.Log("【母包资源检测】母包有新资源,即将覆盖persistent旧资源!!!!", Color.yellow);
-                   
+                        BDebug.Log("【母包资源检测】母包有新资源,即将清理旧资源!!!!", Color.yellow);
+
                         ClearOldPersistentAssets();
                         //Streaming版本比较新，说明更新了母包
                         //复制Stream的packageinfo 到persistent
                         FileHelper.WriteAllText(persistentPckBuildInfoPath, basePckBuildInfoContent);
-                        BDLauncher.Inst.BasePckBuildInfo  = basePackageInfo;
-                        BDLauncher.Inst.HotfixAssetsBuildInfo  = basePackageInfo;
+                        BDLauncher.Inst.BasePckBuildInfo = basePackageInfo;
+                        BDLauncher.Inst.HotfixAssetsBuildInfo = basePackageInfo;
                     }
                 }
                 else
                 {
                     BDebug.Log("【母包资源检测】第一次创建package_build.info到persistent目录");
                     var basePackageInfo = JsonMapper.ToObject<ClientPackageBuildInfo>(basePckBuildInfoContent);
-                    BDLauncher.Inst.BasePckBuildInfo  = basePackageInfo;
-                    BDLauncher.Inst.HotfixAssetsBuildInfo  = basePackageInfo;
+                    BDLauncher.Inst.BasePckBuildInfo = basePackageInfo;
+                    BDLauncher.Inst.HotfixAssetsBuildInfo = basePackageInfo;
                     //persistent版本不存在
                     //复制Stream的packageinfo 到persistent
                     FileHelper.WriteAllText(persistentPckBuildInfoPath, basePckBuildInfoContent);
@@ -297,6 +289,31 @@ namespace BDFramework.Asset
             callback?.Invoke();
         }
 
+
+        /// <summary>
+        /// 获取资源构建信息
+        /// </summary>
+        /// <returns></returns>
+        static public ClientPackageBuildInfo GetPackageBuildInfo(string ouptputPath, RuntimePlatform platform)
+        {
+            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), PACKAGE_BUILD_INFO_PATH);
+            var buildinfo = new ClientPackageBuildInfo();
+            if (File.Exists(path))
+            {
+                var text = File.ReadAllText(path);
+                buildinfo = JsonMapper.ToObject<ClientPackageBuildInfo>(text);
+            }
+            return buildinfo;
+        }
+
+        /// <summary>
+        /// 获取母包的资源构建信息
+        /// </summary>
+        /// <returns></returns>
+        static public ClientPackageBuildInfo GetBasePackBuildInfo()
+        {
+            return GetPackageBuildInfo(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
+        }
 
         /// <summary>
         /// 是否存在文件
@@ -358,7 +375,7 @@ namespace BDFramework.Asset
             var runtimes = BApplication.SupportPlatform;
             foreach (var runtime in runtimes)
             {
-                var path = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(runtime));
+                var path = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(runtime),BResources.ART_ASSET_ROOT_PATH);
                 if (Directory.Exists(path))
                 {
                     Directory.Delete(path, true);

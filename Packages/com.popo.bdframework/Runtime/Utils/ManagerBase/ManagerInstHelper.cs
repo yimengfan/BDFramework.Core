@@ -14,6 +14,11 @@ namespace BDFramework.Mgr
     static public class ManagerInstHelper
     {
         /// <summary>
+        /// mgr列表
+        /// </summary>
+        public static List<IMgr> MgrList { get; private set; } = new List<IMgr>();
+
+        /// <summary>
         /// 获取需要搜集的Class
         /// </summary>
         /// <returns></returns>
@@ -25,7 +30,7 @@ namespace BDFramework.Mgr
             foreach (var assembly in assemblyList)
             {
                 //只搜集以下DLLType
-                if (assembly.FullName.StartsWith("BDFramework")//框架相关的类
+                if (assembly.FullName.StartsWith("BDFramework") //框架相关的类
                     || assembly.FullName.StartsWith("Assembly-CSharp,") //unity未定义Assembly的class
                     || assembly.FullName.StartsWith("Assembly-CSharp-firstpass,") //unity未定义Standard Assets的class
                     || assembly.FullName.StartsWith("UnityEngine.UI") //UnityUI类
@@ -48,26 +53,28 @@ namespace BDFramework.Mgr
 
 
         /// <summary>
-        /// mgr列表
-        /// </summary>
-        static List<IMgr> mgrList = new List<IMgr>();
-
-        /// <summary>
         /// 加载管理器 实例
         /// </summary>
         /// <param name="types"></param>
         /// <returns></returns>
-        static public void Load(IEnumerable<Type> types)
+        static public List<string> LoadManager(IEnumerable<Type> types ,IEnumerable<string>  exsitMgrNames = null)
         {
-            if (Application.isPlaying)
-            {
-                BDebug.LogWatchBegin("主工程管理器");
-            }
-            //管理器列表
+            List<string> replacedMgrNames = new List<string>();
+            //搜集管理器
             foreach (var type in types)
             {
                 if (type != null && type.IsClass && (!type.IsAbstract) && typeof(IMgr).IsAssignableFrom(type))
                 {
+                    if (exsitMgrNames != null)
+                    {
+                        if (exsitMgrNames.Contains(type.Name))
+                        {
+                            BDebug.Log($"热更存在Mgr,由热更接管->{type.Name}", Color.magenta);
+                            replacedMgrNames.Add(type.Name);
+                            continue;
+                        }
+                    }
+                    
                     // BDebug.Log("[main]加载管理器-" + type, Color.green);
                     var inst = type.BaseType.GetProperty("Inst", BindingFlags.Static | BindingFlags.Public);
                     if (inst != null)
@@ -75,7 +82,11 @@ namespace BDFramework.Mgr
                         var mgr = inst.GetValue(null, null) as IMgr;
                         if (mgr != null)
                         {
-                            mgrList.Add(mgr);
+                            MgrList.Add(mgr);
+                            if (Application.isPlaying)
+                            {
+                                BDebug.Log("[main] 加载管理器-" + type.FullName, Color.yellow);
+                            }
                         }
                         else
                         {
@@ -90,7 +101,7 @@ namespace BDFramework.Mgr
             }
 
             //按执行顺序排序
-            mgrList.Sort((a, b) =>
+            MgrList.Sort((a, b) =>
             {
                 var aAttr = a.GetType().GetCustomAttribute<ManagerOrder>(false);
                 var bAttr = a.GetType().GetCustomAttribute<ManagerOrder>(false);
@@ -101,6 +112,20 @@ namespace BDFramework.Mgr
             });
 
 
+            //注册类型
+            RegisterType(types);
+
+
+            return replacedMgrNames;
+        }
+
+
+        /// <summary>
+        /// 注册类型
+        /// </summary>
+        /// <param name="types"></param>
+        static public void RegisterType(IEnumerable<Type> types,bool isHotfixType = false)
+        {
             //遍历type执行逻辑
             foreach (var type in types)
             {
@@ -110,9 +135,17 @@ namespace BDFramework.Mgr
                     if (mgrAttributes != null)
                     {
                         //注册类型
-                        foreach (var mgr in mgrList)
+                        foreach (var mgr in MgrList)
                         {
-                            var ret = mgr.CheckType(type, mgrAttributes);
+                            bool ret = false;
+                            if (!isHotfixType)
+                            {
+                                ret = mgr.RegisterTypes(type, mgrAttributes);
+                            }
+                            else
+                            {
+                                 ret = mgr.RegisterHotfixTypes(type, mgrAttributes);
+                            }
                             if (ret)
                             {
                                 break;
@@ -121,27 +154,22 @@ namespace BDFramework.Mgr
                     }
                 }
             }
-
-            if (Application.isPlaying)
-            {
-                BDebug.LogWatchEnd("主工程管理器");
-            }
-
-            //管理器初始化
-            foreach (var mgr in mgrList)
-            {
-                mgr.Init();
-            }
-            
         }
 
-
+        
         /// <summary>
         /// 启动所有管理器
         /// </summary>
         static public void Start()
         {
-            foreach (var mgr in mgrList)
+            //管理器初始化
+            foreach (var mgr in MgrList)
+            {
+                mgr.Init();
+            }
+            BDebug.Log("[main] 主工程管理器启动", Color.red);
+            //管理器启动
+            foreach (var mgr in MgrList)
             {
                 if (!mgr.IsStarted)
                 {
@@ -156,7 +184,7 @@ namespace BDFramework.Mgr
         /// <typeparam name="T"></typeparam>
         static public void Start<T>()
         {
-            var mgr = mgrList.FirstOrDefault((m) => m is T);
+            var mgr = MgrList.FirstOrDefault((m) => m is T);
 
             if (mgr != null && !mgr.IsStarted)
             {

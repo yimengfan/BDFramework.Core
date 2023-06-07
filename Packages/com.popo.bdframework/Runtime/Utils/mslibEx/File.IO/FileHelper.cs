@@ -72,7 +72,7 @@ namespace System.IO
         /// </summary>
         /// <param name="sourceDirt"></param>
         /// <param name="targetDirt"></param>
-        static public void CopyFolderTo(string sourceDirt, string targetDirt)
+        static public void CopyFolderTo(string sourceDirt, string targetDirt ,bool useLowerPath =false)
         {
             if (!Directory.Exists(sourceDirt))
             {
@@ -96,6 +96,10 @@ namespace System.IO
             {
                 var targetfilePath = sfp.Replace(sourceDirt, targetDirt);
                 //复制
+                if (useLowerPath)
+                {
+                    targetfilePath = targetfilePath.ToLower();
+                }
                 FileHelper.Copy(sfp, targetfilePath,true);
             }
         }

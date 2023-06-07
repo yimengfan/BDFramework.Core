@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using BDFramework.Asset;
+using BDFramework.Assets.VersionContrller;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
@@ -145,7 +146,7 @@ namespace BDFramework.Editor.BuildPipeline
             //这个必须最后生成！！！！
             //这个必须最后生成！！！！
             //这个必须最后生成！！！！
-            var allServerAssetItemList = PublishPipelineTools.GetAssetItemList(outputPath, platform);
+            var allServerAssetItemList = PublishPipelineTools.GetGameAssetItemList(outputPath, platform);
             var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
             var assetsInfoPath = BResources.GetAssetsInfoPath(outputPath, platform);
             FileHelper.WriteAllText(assetsInfoPath, csv);

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis/Game_Data_Local_ChapterDes_Binding.cs.meta
+guid: 46f5d222eafc34f699f3e06eab1fe8f4
+========
 guid: f24078f05033c114dabc8da43c4122fe
+>>>>>>>> ymf_dev_0.7.1_hotfix:Packages/com.popo.bdframework/Editor/Unity.InternalAPIEngineBridge/Editor/PackageManifestImporterEditorEx.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

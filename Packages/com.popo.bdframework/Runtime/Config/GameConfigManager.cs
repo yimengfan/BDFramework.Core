@@ -48,11 +48,29 @@ namespace BDFramework.Configure
         public override void Start()
         {
             base.Start();
+            //加载配置
+            var text = GetConfigText();
+            if (!string.IsNullOrEmpty(text))
+            {
+                //执行
+                (configList, configProcessorList) = LoadConfig(text);
+                for (int i = 0; i < configList.Count; i++)
+                {
+                    configProcessorList[i].OnConfigLoad(configList[i]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取配置Text
+        /// </summary>
+        /// <returns></returns>
+        private string GetConfigText()
+        {
             string text = "";
             if (Application.isPlaying)
             {
                 text = BDLauncher.Inst.ConfigText.text;
-                BDebug.Log("GameConfig加载配置:" + BDLauncher.Inst.ConfigText.name, Color.yellow);
             }
             else
             {
@@ -76,16 +94,7 @@ namespace BDFramework.Configure
                 }
             }
 
-            if (!string.IsNullOrEmpty(text))
-            {
-                //执行
-                (configList, configProcessorList) = LoadConfig(text);
-                for (int i = 0; i < configList.Count; i++)
-                {
-                    configProcessorList[i].OnConfigLoad(configList[i]);
-                }
-            }
-
+            return text;
         }
 
         /// <summary>
@@ -134,8 +143,39 @@ namespace BDFramework.Configure
         /// <returns></returns>
         public T GetConfig<T>() where T : ConfigDataBase
         {
-            var con = configList.FirstOrDefault((c) => c is T);
-            return (T)con;
+            var conf = configList.FirstOrDefault((c) => c is T) as T;
+            //没有完全初始化
+            if (conf == null)
+            {
+                conf = configList.FirstOrDefault((c) => c is T) as T;
+           
+                if (conf == null)
+                {
+                    //在整套流程初始化前获取单个config
+                    var text = GetConfigText();
+                    var jsonObj = JsonMapper.ToObject(text);
+                    var typeName = typeof(T).FullName;
+
+                    foreach (JsonData jo in jsonObj)
+                    {
+                        if (jo[nameof(ConfigDataBase.ClassType)].GetString() == typeName)
+                        {
+                            var inst = JsonMapper.ToObject<T>(jo.ToJson());
+                            conf = inst;
+                            break;
+                        }
+                    }
+
+                    //添加临时缓存
+                    if (conf != null)
+                    {
+                        configList.Add(conf);
+                    }
+                }
+            }
+
+
+            return conf;
         }
 
         /// <summary>
@@ -148,6 +188,7 @@ namespace BDFramework.Configure
             var con = configProcessorList.FirstOrDefault((c) => c is T);
             return (T)con;
         }
+
         /// <summary>
         /// 创建新的配置
         /// </summary>

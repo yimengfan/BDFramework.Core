@@ -16,6 +16,10 @@ namespace BDFramework.UFlux.UFluxTest004
         [TransformPath("Content")]
         private Text textContent;
 
+        /// <summary>
+        /// 收到消息
+        /// </summary>
+        /// <param name="msg"></param>
         [UIMessageListener]
         private void TestMessage(Window_SimpleDemo004.UIMsg_Test msg)
         {

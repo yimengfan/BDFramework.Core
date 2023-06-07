@@ -90,6 +90,10 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static public bool Build(BuildMode buildMode, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildAssetsTools.BuildPackageOption buildOption = BuildAssetsTools.BuildPackageOption.BuildAll)
         {
+#if !ENABLE_IL2CPP && !ENABLE_HCLR
+            
+#endif
+            
             string buildConfig = "";
             switch (buildMode)
             {
@@ -164,14 +168,15 @@ namespace BDFramework.Editor.BuildPipeline
                 PlayerSettings.productName = PlayerSettings.productName.Substring(0, PlayerSettings.productName.Length - 9);
             }
 
+            //
             if (PlayerSettings.applicationIdentifier.EndsWith(".Debug") || PlayerSettings.applicationIdentifier.EndsWith(".debug"))
             {
-                PlayerSettings.applicationIdentifier = PlayerSettings.applicationIdentifier.Substring(0, PlayerSettings.productName.Length - 6);
+                PlayerSettings.applicationIdentifier = PlayerSettings.applicationIdentifier.Substring(0, PlayerSettings.applicationIdentifier.Length - 6);
             }
 
             if (PlayerSettings.applicationIdentifier.EndsWith(".Profiler") || PlayerSettings.applicationIdentifier.EndsWith(".profiler"))
             {
-                PlayerSettings.applicationIdentifier = PlayerSettings.applicationIdentifier.Substring(0, PlayerSettings.productName.Length - 9);
+                PlayerSettings.applicationIdentifier = PlayerSettings.applicationIdentifier.Substring(0, PlayerSettings.applicationIdentifier.Length - 9);
             }
 
             #endregion
@@ -234,7 +239,7 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 //拷贝资源
                 Debug.Log("<color=green>===>3.拷贝打包资产</color>");
-                CopyPublishAssetsTo(Application.streamingAssetsPath, buildRuntimePlatform);
+                CopyPublishAssetsTo(BApplication.streamingAssetsPath, buildRuntimePlatform);
                 try
                 {
                     Debug.Log("<color=green>===>4.开始构建包体</color>");
@@ -386,9 +391,9 @@ namespace BDFramework.Editor.BuildPipeline
 
 
             //构建包体
-            Debug.Log("------------->Begin build<------------");
+            Debug.Log("------------->Begin build game client:<------------");
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.Android, opa);
-            Debug.Log("------------->End build<------------");
+            Debug.Log("------------->End build game client!<------------");
 
             //构建出判断
             if (File.Exists(outputPath))

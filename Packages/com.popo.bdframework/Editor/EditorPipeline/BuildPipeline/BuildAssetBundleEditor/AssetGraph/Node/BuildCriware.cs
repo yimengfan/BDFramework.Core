@@ -139,7 +139,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 Directory.Delete(targetPath,true);
             }
             //开始拷贝
-            FileHelper.CopyFolderTo(sourcePath,targetPath);
+            FileHelper.CopyFolderTo(sourcePath,targetPath,true);
             //删除meta
             var metas = Directory.GetFiles(targetPath, "*.meta", SearchOption.AllDirectories);
             foreach (var meta in metas)
