@@ -20,17 +20,19 @@ namespace BDFramework.Editor
     {
         //版本号标记
         //URL 相关
-        private static string WIKI_URL = "https://www.yuque.com/naipaopao/eg6gik";
+        private static string WIKI_URL = "https://www.wolai.com/hPVgjgyR4ZVGgAruqvoTL2";
         private static string GITHUB_URL = "https://github.com/yimengfan/BDFramework.Core";
         private static string Odin_URL = "https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041";
         private static string QQGroup_URL = "https://jq.qq.com/?_wv=1027&k=OSxzhgK4";
 
         //更新日志
-        private static string CHANGEDLOG_URL = "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/CHANGELOG.md";
+        private static string CHANGEDLOG_URL = "https://github.com/yimengfan/BDFramework.Core/blob/master/Packages/com.popo.bdframework/CHANGELOG.md";
+
         //版本号
-        private static string PCKAGE_URL = "https://gitee.com/yimengfan/BDFramework.Core/raw/master/Packages/com.popo.bdframework/package.json";
-        
+        private static string PCKAGE_URL = "https://raw.githubusercontent.com/yimengfan/BDFramework.Core/master/Packages/com.popo.bdframework/package.json";
+
         private static Texture webIcon; //= EditorGUIUtility.IconContent( "BuildSettings.Web.Small" ).image;
+
         //btn样式
         private static GUIContent wikiBtnContent; // = new GUIContent( " 中文Wiki", webIcon );
         private static GUIContent gitBtnContent; // = new GUIContent( " Github", webIcon );
@@ -40,7 +42,7 @@ namespace BDFramework.Editor
         private static GUIStyle errorStyle;
 
 
-        [MenuItem(("BDFrameWork工具箱/框架引导 "+BDLauncher.Version), false, (int) BDEditorGlobalMenuItemOrderEnum.BDFrameworkGuid)]
+        [MenuItem(("BDFrameWork工具箱/框架引导 " + BDLauncher.Version), false, (int)BDEditorGlobalMenuItemOrderEnum.BDFrameworkGuid)]
         static public void Open()
         {
             var win = GetWindow<EditorWindow_BDFrameworkStart>("BDFramework使用引导");
@@ -68,30 +70,29 @@ namespace BDFramework.Editor
         /// 检测7天内是否打开过
         /// </summary>
         /// <returns></returns>
-        static public bool IsOpenedSomeDay(int day =10)
+        static public bool IsOpenedSomeDay(int day = 10)
         {
             for (int i = 0; i < day; i++)
             {
-                var dayStr = DateTime.Today.AddDays(-1*i).ToLongDateString();
+                var dayStr = DateTime.Today.AddDays(-1 * i).ToLongDateString();
                 //Debug.Log(dayStr);
-                var path = BApplication.BDEditorCachePath + "/OpenGuideLog_" +dayStr;
+                var path = BApplication.BDEditorCachePath + "/OpenGuideLog_" + dayStr;
                 if (File.Exists(path))
                 {
-                   
-                   // BDebug.Log($"open in {dayStr}!");
+                    // BDebug.Log($"open in {dayStr}!");
                     return true;
                 }
             }
 
             //没打开过，写入打开日志
             {
-                var log = $"EditorWindow_BDFrameworkStart  is open in { DateTime.Today.ToLongDateString()}!";
+                var log = $"EditorWindow_BDFrameworkStart  is open in {DateTime.Today.ToLongDateString()}!";
                 var path = BApplication.BDEditorCachePath + "/OpenGuideLog_" + DateTime.Today.ToLongDateString();
                 FileHelper.WriteAllText(path, log);
             }
             return false;
         }
-        
+
         /// <summary>
         /// 打开窗口
         /// 覆盖show接口
@@ -118,10 +119,7 @@ namespace BDFramework.Editor
             webIcon = EditorGUIUtility.IconContent("BuildSettings.Web.Small").image;
             wikiBtnContent = new GUIContent(" 中文Wiki", webIcon);
             gitBtnContent = new GUIContent(" Github", webIcon);
-            titleStyle = new GUIStyle("BoldLabel")
-            {
-                margin = new RectOffset(4, 4, 4, 4), padding = new RectOffset(2, 2, 2, 2), fontSize = 13
-            };
+            titleStyle = new GUIStyle("BoldLabel") { margin = new RectOffset(4, 4, 4, 4), padding = new RectOffset(2, 2, 2, 2), fontSize = 13 };
         }
 
         /// <summary>
@@ -302,7 +300,7 @@ namespace BDFramework.Editor
 
             GUI.color = GUI.contentColor;
         }
-        
+
         public class PackageData
         {
             public string version = "null";
@@ -318,16 +316,25 @@ namespace BDFramework.Editor
             if (NewVersionNum == null)
             {
                 WebClient wc = new WebClient();
-                var ret = wc.DownloadString(PCKAGE_URL);
-                var config = JsonMapper.ToObject<PackageData>(ret);
-                if (config != null)
+                //BDebug.Log($"download:{PCKAGE_URL}");
+                try
                 {
-                    NewVersionNum = config.version;
+                    var ret = wc.DownloadString(PCKAGE_URL);
+                    var config = JsonMapper.ToObject<PackageData>(ret);
+                    if (config != null)
+                    {
+                        NewVersionNum = config.version;
+                    }
+                }
+                catch
+                {
+                    NewVersionNum = "0.0.1";
+                    BDebug.LogError($"访问github失败:{PCKAGE_URL}");
                 }
             }
-            
-            var isHaveNewVersion = !VersionNumHelper.GT( BDLauncher.Version, NewVersionNum);
-            return  isHaveNewVersion;
+
+            var isHaveNewVersion = !VersionNumHelper.GT(BDLauncher.Version, NewVersionNum);
+            return isHaveNewVersion;
         }
 
         #endregion
@@ -365,9 +372,16 @@ namespace BDFramework.Editor
                 //本地不存在就缓存到本地
                 if (!File.Exists(newLogPath))
                 {
-                    WebClient wc = new WebClient();
-                    var ret = wc.DownloadString(CHANGEDLOG_URL);
-                    FileHelper.WriteAllText(newLogPath, ret);
+                    try
+                    {
+                        WebClient wc = new WebClient();
+                        var ret = wc.DownloadString(CHANGEDLOG_URL);
+                        FileHelper.WriteAllText(newLogPath, ret);
+                    }
+                    catch (Exception e)
+                    {
+                        BDebug.LogError($"访问github失败:{CHANGEDLOG_URL}");
+                    }
                 }
 
                 this.FrameUpdateNote = File.ReadAllText(newLogPath);

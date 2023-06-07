@@ -1,5 +1,7 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.2.1
+- 废弃gitee仓库.
 ##V2.2.0
 -Framework:简化框架启动流程
 -Hotfix:全面接入HCLR，补全整套自动化流程
