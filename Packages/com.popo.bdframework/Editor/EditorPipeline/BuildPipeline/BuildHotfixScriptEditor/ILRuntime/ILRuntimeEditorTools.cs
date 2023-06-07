@@ -77,9 +77,9 @@ namespace BDFramework.Editor.HotfixScript
             }
 
             //注册
-            ILRuntimeHelper.LoadHotfix(dllpath, mainProjectIlrBindAction, false);
-            BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain, outputPath);
-            ILRuntimeHelper.Dispose();
+            // ILRuntimeHelper.LoadHotfix(dllpath, mainProjectIlrBindAction, false);
+            // BindingCodeGenerator.GenerateBindingCode(ILRuntimeHelper.AppDomain, outputPath);
+            // ILRuntimeHelper.Dispose();
 
 
             /******************移除已经被绑定的部分****************/

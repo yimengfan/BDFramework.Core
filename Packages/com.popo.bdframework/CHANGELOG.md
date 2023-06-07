@@ -1,5 +1,17 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.2.0
+-Framework:简化框架启动流程
+-Hotfix:全面接入HCLR，补全整套自动化流程
+-AssetV2: Editor下使用Devops/PublishAssets目录代替StreamingAssets.
+-Table2Sqlite:  增加多表合并
+-Sqlite:增加相同sql执行的log预警
+-VersionContrller: 修复Asset.info偶发不全的问题
+-Editor: 优化编辑器流程,使用OdevOps替代StreammingAsset
+-Editor:增加部分实际项目中的优化
+-PublishPipeline:增加部分打包期间的数据缓存
+
+
 ##V2.2.0-preview.2
 -UFlux:增加Onfocus、OnBlur事件
 -Sqlite:修复import日志未生效bug
