@@ -21,6 +21,8 @@
     <type fullname="BDFramework.DataListener.StatusListenerServer" preserve="all" />
     <type fullname="BDFramework.DataListener.StatusListenerService" preserve="all" />
     <type fullname="BDFramework.DataListener.ValueListenerEx" preserve="all" />
+    <type fullname="BDFramework.GameStart.IGameStart" preserve="all" />
+    <type fullname="BDFramework.GameStart.IHotfixGameStart" preserve="all" />
     <type fullname="BDFramework.Hotfix.Reflection.ReflectionExtension" preserve="all" />
     <type fullname="BDFramework.ILRuntimeHelper" preserve="all" />
     <type fullname="BDFramework.Mgr.ClassData" preserve="all" />

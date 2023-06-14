@@ -33,7 +33,7 @@ namespace BDFramework.Editor.HotfixScript
 #if ENABLE_HCLR
                 GUILayout.Label("当前模式:HCLR");
 #elif ENABLE_ILRUNTIME
-                GUILayout.Label("当前模式:ILRuntime);
+                GUILayout.Label("当前模式:ILRuntime");
 #endif
                 
                 GUILayout.BeginHorizontal();
@@ -45,6 +45,7 @@ namespace BDFramework.Editor.HotfixScript
                     {
                         HotfixScriptTools.SwitchToILRuntime();
                     }
+                    GUI.color = GUI.backgroundColor;
 #if ENABLE_HCLR
                     GUI.color = Color.green;
 #endif
@@ -78,7 +79,7 @@ namespace BDFramework.Editor.HotfixScript
 #if ENABLE_ILRUNTIME
                 if (GUILayout.Button("2.生成跨域Adapter[没事别瞎点]", GUILayout.Width(305), GUILayout.Height(30)))
                 {
-                    HotfixScriptEditorTools.GenCrossBindAdapter();
+                    //HotfixScriptEditorTools.GenCrossBindAdapter();
                 }
 
                 if (GUILayout.Button("3.生成Link.xml[大部分不需要]", GUILayout.Width(305), GUILayout.Height(30)))

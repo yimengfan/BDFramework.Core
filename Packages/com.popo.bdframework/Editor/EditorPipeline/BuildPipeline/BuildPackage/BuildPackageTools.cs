@@ -239,7 +239,7 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 //拷贝资源
                 Debug.Log("<color=green>===>3.拷贝打包资产</color>");
-                CopyPublishAssetsTo(BApplication.streamingAssetsPath, buildRuntimePlatform);
+                CopyPublishAssetsTo(Application.streamingAssetsPath, buildRuntimePlatform);
                 try
                 {
                     Debug.Log("<color=green>===>4.开始构建包体</color>");
@@ -644,6 +644,7 @@ namespace BDFramework.Editor.BuildPipeline
 
         /// <summary>
         /// 拷贝发布资源
+        /// 这里注意不要传BApplication.Streaming
         /// </summary>
         static public void CopyPublishAssetsTo(string targetpath, RuntimePlatform platform)
         {
@@ -662,9 +663,6 @@ namespace BDFramework.Editor.BuildPipeline
             //合并路径
             var sourcepath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform)).ToLower();
             targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform)).ToLower();
-            //TODO SVN更新资源
-
-            //TODO  重写拷贝逻辑
             var files = Directory.GetFiles(sourcepath, "*", SearchOption.AllDirectories).Select((f) => f.ToLower().Replace("\\", "/"));
             foreach (var file in files)
             {
