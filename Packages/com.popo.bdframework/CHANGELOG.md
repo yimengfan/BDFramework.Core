@@ -1,5 +1,7 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.2.2
+- 修复编辑器下打包时误删文件bug.
 ##V2.2.1
 - 废弃gitee仓库.
 ##V2.2.0
