@@ -1,5 +1,12 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.3
+- UFlux：增加部分元素自动赋值Attribute 、CompnentPath
+- UFlux：增加Attribute Reducer、Subscribe等
+- UFlux：支持在Reduer中进行Dispath.
+- UFlux：增加Icomponent的挂载Window获取RootWindow获取.
+- Sqlite : 修复部分情况时,真机密码获取不到问题.
+
 ##V2.2.2
 - 修复编辑器下打包时误删文件bug.
 ##V2.2.1
