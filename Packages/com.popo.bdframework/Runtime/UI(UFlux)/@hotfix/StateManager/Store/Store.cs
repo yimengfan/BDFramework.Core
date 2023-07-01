@@ -1,11 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using BDFramework.ResourceMgr;
 using BDFramework.UFlux.Reducer;
+using UnityEngine;
 
 namespace BDFramework.UFlux.Contains
 {
+    /// <summary>
+    /// 订阅消息
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    public class SubscribeAttribute : Attribute
+    {
+        /// <summary>
+        /// 订阅枚举Tag
+        /// </summary>
+        public Enum SubscribeTag { get;  set; }
+        /// <summary>
+        /// 订阅inttag
+        /// </summary>
+        public int SubscribeIntTag { get; set; } = -1;
+        // public SubscribeAttribute(Enum @enum)
+        // {
+        //     this.SubscribeTag = @enum;
+        // }
+        public SubscribeAttribute(int @enum)
+        {
+            this.SubscribeIntTag = @enum;
+        }
+        
+    }
     /// <summary>
     /// 一个Store 对应一个 数据状态
     /// </summary>
@@ -39,8 +67,10 @@ namespace BDFramework.UFlux.Contains
         /// </summary>
         public delegate S GetState();
 
-        //当前State
-        private S state;
+        /// <summary>
+        ///当前State
+        /// </summary>
+        public S State { get; private set; }
 
 
         /// <summary>
@@ -49,7 +79,7 @@ namespace BDFramework.UFlux.Contains
         /// <param name="state"></param>
         public Store()
         {
-            this.state = new S();
+            this.State = new S();
         }
 
         #region Reducers
@@ -62,11 +92,10 @@ namespace BDFramework.UFlux.Contains
         /// <param name="reducer"></param>
         public void AddReducer(AReducers<S> reducer)
         {
-            // var paramType = reducer.GetType();
-            // var find      = this.reducerList.Find((r) => r.GetType() != paramType);
             if (this.reducer == null)
             {
                 this.reducer = reducer;
+                reducer.Dispatch += this.Dispatch;
             }
         }
 
@@ -77,27 +106,47 @@ namespace BDFramework.UFlux.Contains
         /// <summary>
         /// callback 包装
         /// </summary>
-        public class CallbackWarpper
+        public class SubscribeCallback
         {
-            public Enum Tag = null;
-            public Action<S> Callback = null;
+            /// <summary>
+            /// 订阅的tag,为null则订阅所有
+            /// </summary>
+            public Enum Tag { get; set; } = null;
+
+            /// <summary>
+            /// IntTag
+            /// </summary>
+            public int IntTag { get; set; } = -9999;
+
+            /// <summary>
+            /// 是否订阅所有
+            /// </summary>
+            /// <returns></returns>
+            public bool IsSubscribeAll()
+            {
+                return (Tag == null && IntTag == -9999);
+            }
+            
+            /// <summary>
+            /// 回调
+            /// </summary>
+            public Action<S> Callback { get; set; } = null;
         }
 
         /// <summary>
         /// 回调包装
         /// </summary>
-        List<CallbackWarpper> callbackList = new List<CallbackWarpper>();
+        private List<SubscribeCallback> SubscribeCallbackList { get; set; } = new List<SubscribeCallback>();
 
         /// <summary>
-        /// 订阅
-        /// 每次State修改后都会触发
+        /// 订阅所有State修改
         /// </summary>
         /// <param name="callback"></param>
         public void Subscribe(Action<S> callback)
         {
-            var callbackWarpper = new CallbackWarpper();
+            var callbackWarpper = new SubscribeCallback();
             callbackWarpper.Callback = callback;
-            callbackList.Add(callbackWarpper);
+            SubscribeCallbackList.Add(callbackWarpper);
         }
 
 
@@ -108,12 +157,25 @@ namespace BDFramework.UFlux.Contains
         /// <param name="callback"></param>
         public void Subscribe(Enum tag, Action<S> callback)
         {
-            var callbackWarpper = new CallbackWarpper();
-            callbackWarpper.Tag = tag;
-            callbackWarpper.Callback = callback;
-            callbackList.Add(callbackWarpper);
+            var sc = new SubscribeCallback();
+            sc.Tag = tag;
+            sc.IntTag = tag.GetHashCode();
+            sc.Callback = callback;
+            SubscribeCallbackList.Add(sc);
         }
-
+        /// <summary>
+        /// 订阅
+        /// 指定事件触发后才会修改
+        /// </summary>
+        /// <param name="callback"></param>
+        public void Subscribe(int tag, Action<S> callback)
+        {
+            var sc = new SubscribeCallback();
+            sc.IntTag = tag;
+            sc.Callback = callback;
+            SubscribeCallbackList.Add(sc);
+        }
+        
         /// <summary>
         /// 订阅包装，不建议业务层直接调用
         /// </summary>
@@ -126,21 +188,61 @@ namespace BDFramework.UFlux.Contains
                 callback?.Invoke(s);
             });
         }
-
         /// <summary>
         /// 订阅包装，不建议业务层直接调用
         /// </summary>
         /// <param name="callback"></param>
-        public void Subscribe(Enum tag, Action<object> callback)
+        // public void Subscribe(Enum tag, Action<object> callback)
+        // {
+        //     this.Subscribe(tag,(s) =>
+        //     {
+        //         //包装用以外部方便做类型转换
+        //         callback?.Invoke(s);
+        //     });
+        // }
+
+        /// <summary>
+        /// 扫描标签订阅对应的事件
+        /// </summary>
+        /// <param name="obj"></param>
+        public void ScanThisSubscribe(object obj)
         {
-            this.Subscribe(tag,(s) =>
+            var ms =obj.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic|BindingFlags.DeclaredOnly);
+            foreach (var m in ms)
             {
-                //包装用以外部方便做类型转换
-                callback?.Invoke(s);
-            });
+                var attrList = m.GetCustomAttributes<SubscribeAttribute>();
+               
+                //注册
+                if (attrList != null && attrList.Count()>0)
+                {
+                    var @params = m.GetParameters();
+                    if (@params.Length == 1 && @params[0].ParameterType == typeof(S))
+                    {
+                        //批量注册订阅
+                        foreach (var attr in attrList)
+                        {
+                            this.Subscribe(attr.SubscribeIntTag, (s) =>
+                            {
+                              
+                                //有参数
+                                m.Invoke(obj, new object[] {s});
+                            
+                             
+                            });
+                        
+                            BDebug.Log($"[Reducer]自动subscribe:{this.GetType().Namespace}.{m.Name}",Color.yellow);
+                        }
+                    }
+                    else
+                    {
+                        BDebug.LogError("注册函数参数不对:" + m.Name + " 请检查");
+                    }
+                }
+                 
+            }
+             
         }
-
-
+        
         /// <summary>
         /// 锁住发布
         /// </summary>
@@ -163,6 +265,11 @@ namespace BDFramework.UFlux.Contains
 
                 return true;
             }
+            else
+            {
+               // BDebug.LogError($"不存在reducer:{actionEnum.ToString()}");
+                SetNewState(actionEnum, this.State);
+            }
 
             return false;
 
@@ -180,28 +287,52 @@ namespace BDFramework.UFlux.Contains
             var executeType = reducer.GetExecuteType(action.ActionTag);
             switch (executeType)
             {
-                case AReducers<S>.ExecuteTypeEnum.Synchronization:
-                {
-                    var oldState = GetCurrentState();
-                   var newstate = reducer.Excute(action.ActionTag, action.Params, oldState);
-                   //设置new state
-                   SetNewState(action.ActionTag, newstate);
+                case AReducers<S>.ExecuteTypeEnum.Sync:
+                { 
+                    var oldState = CopyCurrentState();
+                    var newstate = reducer.Excute(action.ActionTag, action.Params, oldState);
+                    if (newstate != null)
+                    {
+                        //设置new state
+                        SetNewState(action.ActionTag, newstate);
+                    }
+                    else
+                    {
+                        SetNewState(action.ActionTag, oldState);
+                    }
+
+                   
                 }
                     break;
                 case AReducers<S>.ExecuteTypeEnum.Async:
                 {
-                    var oldState = GetCurrentState();
+                    var oldState = CopyCurrentState();
                     var newstate = await reducer.ExcuteAsync(action.ActionTag, action.Params, oldState);
-                    //设置new state
-                    SetNewState(action.ActionTag, newstate);
+                    if (newstate != null)
+                    {
+                        //设置new state
+                        SetNewState(action.ActionTag, newstate);
+                    }
+                    else
+                    {
+                        SetNewState(action.ActionTag, oldState);
+                    }
                 }
                     break;
                 case AReducers<S>.ExecuteTypeEnum.Callback:
                 {
-                    reducer.ExcuteByCallback(action.ActionTag, action.Params, GetCurrentState, (newState) =>
+                    reducer.ExcuteByCallback(action.ActionTag, action.Params, CopyCurrentState, (newstate) =>
                     {
-                        //设置new state
-                        SetNewState(action.ActionTag, newState);
+                       
+                        if (newstate != null)
+                        {
+                            //设置new state
+                            SetNewState(action.ActionTag, newstate);
+                        }
+                        else
+                        {
+                            SetNewState(action.ActionTag, this.State);
+                        }
                     });
                 }
                     break;
@@ -213,28 +344,35 @@ namespace BDFramework.UFlux.Contains
         /// 获取实时的State;
         /// </summary>
         /// <returns></returns>
-        private S GetCurrentState()
+        private S CopyCurrentState()
         {
-            var newState = state.Clone() as S;
-            return newState;
+            if (State != null)
+            {
+                var newState = State.Clone() as S;
+                return newState;
+            }
+            else
+            {
+                return default(S);
+            }
         }
 
         /// <summary>
         /// 触发监听
         /// </summary>
-        private void TriggerCallback(Enum tag = null)
+        private void DispachCallback(Enum tag = null)
         {
             //触发
-            for (int i = 0; i < callbackList.Count; i++)
+            for (int i = 0; i < SubscribeCallbackList.Count; i++)
             {
-                var cbw = callbackList[i];
-                if (cbw.Tag == null)
+                var cbw = SubscribeCallbackList[i];
+                if (cbw.IsSubscribeAll())
                 {
-                    cbw.Callback.Invoke(this.state);
+                    cbw.Callback.Invoke(this.State);
                 }
-                else if (cbw.Tag.GetHashCode() == tag.GetHashCode())
+                else if (tag.GetHashCode() == cbw.IntTag  || (cbw.Tag!=null && tag.GetHashCode() == cbw.Tag.GetHashCode()))
                 {
-                    cbw.Callback.Invoke(this.state);
+                    cbw.Callback.Invoke(this.State);
                 }
             }
         }
@@ -264,11 +402,11 @@ namespace BDFramework.UFlux.Contains
                 stateCacheQueue.Dequeue();
             }
 
-            stateCacheQueue.Enqueue(this.state);
+            stateCacheQueue.Enqueue(this.State);
             //设置
-            this.state = newState;
+            this.State = newState;
             //触发回调
-            TriggerCallback(reducerEnum);
+            DispachCallback(reducerEnum);
         }
 
         /// <summary>

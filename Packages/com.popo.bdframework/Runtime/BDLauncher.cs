@@ -115,6 +115,7 @@ namespace BDFramework
                 SqliteLoder.Init(Config.SQLRoot);
                 //3.脚本,这个启动会开启所有的逻辑
                 ScriptLoder.Init(Config.CodeRoot, Config.CodeRunMode, null);
+
                 //触发回调
                 launchSuccessCallback?.Invoke();
             });

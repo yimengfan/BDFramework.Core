@@ -252,7 +252,8 @@ namespace BDFramework.Editor.Table
                 {
                     ret = false;
                     BDebug.Log(json);
-                    Debug.LogError("导出数据有错,跳过! 错误位置:" + type.Name + ":" + i + "/" + jsonObj.Count + "\n" + e);
+                    Debug.LogError($"导出数据有错,跳过!字段:{type.Name} 行号: {i}/{jsonObj.Count} \n{e}");
+                
                 }
             }
 

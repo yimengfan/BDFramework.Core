@@ -298,6 +298,15 @@ namespace BDFramework.DataListener
         {
             return this.dataMap.Keys.ToList();
         }
+        
+        /// <summary>
+        /// 获取所有监听的key
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetListenerKeys()
+        {
+            return this.callbackMap.Keys.ToList();
+        }
 
 
         /// <summary>

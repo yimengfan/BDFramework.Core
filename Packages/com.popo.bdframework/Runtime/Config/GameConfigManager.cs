@@ -48,6 +48,11 @@ namespace BDFramework.Configure
         public override void Start()
         {
             base.Start();
+            if (this.GetAllClassDatas().Count() == 0)
+            {
+                BDebug.LogError("[GameconfigManger]启动失败，class data 数量为0.");
+            }
+
             //加载配置
             var text = GetConfigText();
             if (!string.IsNullOrEmpty(text))
@@ -136,8 +141,10 @@ namespace BDFramework.Configure
         }
 
 
+        private JsonData configObjCache = null;
         /// <summary>
         /// 获取config
+        /// 未走初始化流程时获取，会单独解析一次
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -147,30 +154,28 @@ namespace BDFramework.Configure
             //没有完全初始化
             if (conf == null)
             {
-                conf = configList.FirstOrDefault((c) => c is T) as T;
-           
-                if (conf == null)
+                //在整套流程初始化前获取单个config
+                if (configObjCache == null)
                 {
-                    //在整套流程初始化前获取单个config
                     var text = GetConfigText();
-                    var jsonObj = JsonMapper.ToObject(text);
-                    var typeName = typeof(T).FullName;
-
-                    foreach (JsonData jo in jsonObj)
+                    configObjCache = JsonMapper.ToObject(text);
+                }
+                //对比类型开始解析
+                var typeName = typeof(T).FullName;
+                foreach (JsonData jo in configObjCache)
+                {
+                    if (jo[nameof(ConfigDataBase.ClassType)].GetString() == typeName)
                     {
-                        if (jo[nameof(ConfigDataBase.ClassType)].GetString() == typeName)
-                        {
-                            var inst = JsonMapper.ToObject<T>(jo.ToJson());
-                            conf = inst;
-                            break;
-                        }
+                        var inst = JsonMapper.ToObject<T>(jo.ToJson());
+                        conf = inst;
+                        break;
                     }
+                }
 
-                    //添加临时缓存
-                    if (conf != null)
-                    {
-                        configList.Add(conf);
-                    }
+                //添加临时缓存
+                if (conf != null)
+                {
+                    configList.Add(conf);
                 }
             }
 
@@ -186,7 +191,7 @@ namespace BDFramework.Configure
         public T GetConfigProcessor<T>() where T : IConfigProcessor
         {
             var con = configProcessorList.FirstOrDefault((c) => c is T);
-            return (T)con;
+            return (T) con;
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 namespace BDFramework.UFlux
 {
     /// <summary>
-    /// 自动初始化，节点自动赋值
+    /// 自动初始化ui组件（只要是UI组件都能被初始化）
     /// </summary>
     public class TransformPathAttribute : AutoInitComponentAttribute
     {
@@ -25,12 +25,17 @@ namespace BDFramework.UFlux
         {
             if (!fieldInfo.FieldType.IsSubclassOf(typeof(UnityEngine.Object)))
             {
+                throw new Exception($"赋值目标不是UI组件,fieldName:{fieldInfo.Name} => {fieldInfo.FieldType.Name} - {this.Path}");
                 return;
             }
-            
+
+            if (!com.Transform)
+            {
+               throw new Exception($"transformRoot为空:{this.Path} type:{fieldInfo.FieldType.Name}");
+                return;
+            }
             Type uiType = fieldInfo.FieldType;
             var node = com.Transform.Find(this.Path);
-
             if (!node)
             {
                 BDebug.LogError($"窗口:{com} 不存在节点:{ this.Path}");
@@ -67,7 +72,11 @@ namespace BDFramework.UFlux
             {
                 return;
             }
-            
+            if (!com.Transform)
+            {
+                throw new Exception($"transformRoot为空:{this.Path} type:{propertyInfo.PropertyType.Name}");
+                return;
+            }
             Type uiType = propertyInfo.PropertyType;
             var node = com.Transform.Find(this.Path);
             if (!node)

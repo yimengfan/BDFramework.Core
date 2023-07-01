@@ -26,8 +26,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// Component 类数据缓存
         /// </summary>
-        static Dictionary<string, ComponentClassCache> ComponentClassCacheMap =
-            new Dictionary<string, ComponentClassCache>();
+        static Dictionary<string, ComponentClassCache> ComponentClassCacheMap = new Dictionary<string, ComponentClassCache>();
 
         /// <summary>
         /// 绑定Windows的值
@@ -43,45 +42,44 @@ namespace BDFramework.UFlux
             if (!ComponentClassCacheMap.TryGetValue(comType.FullName, out classCache))
             {
                 var fields = comType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
-                var properties =
-                    comType.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+                var properties = comType.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
                 var methodes = comType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
 
                 //筛选有属性的,且为自动赋值的
                 classCache = new ComponentClassCache();
                 classCache.FieldInfos = fields.Where((f) =>
+                {
+                    var attrs = f.GetCustomAttributes(false);
+                    for (int i = 0; i < attrs.Length; i++)
                     {
-                        var attrs = f.GetCustomAttributes(false);
-                        for (int i = 0; i < attrs.Length; i++)
-                        {
-                            if (attrs[i] is AutoInitComponentAttribute)
-                                return true;
-                        }
-                        return false;
-                    })
-                    .ToArray();
+                        if (attrs[i] is AutoInitComponentAttribute)
+                            return true;
+                    }
+
+                    return false;
+                }).ToArray();
                 classCache.PropertyInfos = properties.Where((p) =>
+                {
+                    var attrs = p.GetCustomAttributes(false);
+                    for (int i = 0; i < attrs.Length; i++)
                     {
-                        var attrs = p.GetCustomAttributes(false);
-                        for (int i = 0; i < attrs.Length; i++)
-                        {
-                            if (attrs[i] is AutoInitComponentAttribute)
-                                return true;
-                        }
-                        return false;
-                    })
-                    .ToArray();
+                        if (attrs[i] is AutoInitComponentAttribute)
+                            return true;
+                    }
+
+                    return false;
+                }).ToArray();
                 classCache.MethodInfos = methodes.Where((m) =>
+                {
+                    var attrs = m.GetCustomAttributes(false);
+                    for (int i = 0; i < attrs.Length; i++)
                     {
-                        var attrs = m.GetCustomAttributes(false);
-                        for (int i = 0; i < attrs.Length; i++)
-                        {
-                            if (attrs[i] is AutoInitComponentAttribute)
-                                return true;
-                        }
-                        return false;
-                    })
-                    .ToArray();
+                        if (attrs[i] is AutoInitComponentAttribute)
+                            return true;
+                    }
+
+                    return false;
+                }).ToArray();
                 //缓存cls data
                 ComponentClassCacheMap[comType.FullName] = classCache;
             }
@@ -92,7 +90,25 @@ namespace BDFramework.UFlux
                 var attrs = f.GetCustomAttributes(false);
                 for (int i = 0; i < attrs.Length; i++)
                 {
+#if UNITY_EDITOR
+                    try
+                    {
+                        (attrs[i] as AutoInitComponentAttribute)?.AutoSetField(component, f);
+                    }
+                    catch (Exception e)
+                    {
+                        if (e.InnerException != null)
+                        {
+                            BDebug.LogError(e.InnerException.Message + "\n" + e.InnerException.StackTrace);
+                        }
+                        else
+                        {
+                            BDebug.LogError($" 字段:{comType.Name}-{f.Name} type:{f.FieldType} ==>{e.Message} " + e.StackTrace);
+                        }
+                    }
+#else
                     (attrs[i] as AutoInitComponentAttribute)?.AutoSetField(component, f);
+#endif
                 }
             }
 
@@ -140,11 +156,12 @@ namespace BDFramework.UFlux
         /// <typeparam name="T"></typeparam>
         static public T Load<T>(string path) where T : Object
         {
-            var go =  BResources.Load<T>(path);
+            var go = BResources.Load<T>(path);
             if (!go)
             {
                 BDebug.LogError("加载资源:" + path);
             }
+
             return go;
         }
 
@@ -164,17 +181,15 @@ namespace BDFramework.UFlux
         /// <param name="go"></param>
         static public void Instantiate(GameObject go)
         {
-            
         }
 
-        
+
         /// <summary>
         /// 删除接口
         /// </summary>
         /// <param name="go"></param>
         static public void Destroy(GameObject go)
         {
-           
             BResources.Destroy(go);
         }
 

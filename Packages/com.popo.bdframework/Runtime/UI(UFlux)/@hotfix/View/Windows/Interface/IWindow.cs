@@ -1,4 +1,5 @@
-﻿using BDFramework.DataListener;
+﻿using System.Collections.Generic;
+using BDFramework.DataListener;
 
 namespace BDFramework.UFlux
 {
@@ -8,32 +9,38 @@ namespace BDFramework.UFlux
     public interface IWindow
     {
         /// <summary>
+        /// 根节点窗口
+        /// </summary>
+         IWindow Root { get; set; }
+        /// <summary>
+        /// 父节点
+        /// </summary>
+         IWindow Parent { get; set; }
+        
+        /// <summary>
+        /// 组件列表
+        /// </summary>
+        List<IComponent> ComponentList { get; }
+        /// <summary>
         /// 状态管理,事件监听
         /// </summary>
         AStatusListener State { get; }
-        /// <summary>
-        /// 父窗口
-        /// </summary>
-        IWindow Parent { get; }
-
         /// <summary>
         /// 是否处于激活状态
         /// </summary>
         bool IsFocus { get; }
 
         /// <summary>
+        /// 添加组件
+        /// </summary>
+        /// <param name="coms"></param>
+        void AddComponent(params IComponent[] coms);
+        /// <summary>
         /// 发送消息
         /// </summary>
         /// <param name="uiMsg"></param>
         void SendMessage(UIMsgData uiMsg);
 
-        /// <summary>
-        /// 设置父窗口
-        /// </summary>
-        /// <param name="window"></param>
-        void SetParent(IWindow window);
-
-  
         /// <summary>
         /// 开启
         /// </summary>

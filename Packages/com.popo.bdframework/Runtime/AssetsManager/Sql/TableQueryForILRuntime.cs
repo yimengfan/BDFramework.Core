@@ -96,7 +96,7 @@ namespace SQLite4Unity3d
                     sqlCmdCache.Add(sqlCmdText, 1);
                 }
                 var count = sqlCmdCache[sqlCmdText];
-                if (count > 2)
+                if (count > 10)
                 {
                     Debug.LogError($"Sql执行次数过多:<color=yellow>{count}</color>次,sql:" + sqlCmdText);
                 }

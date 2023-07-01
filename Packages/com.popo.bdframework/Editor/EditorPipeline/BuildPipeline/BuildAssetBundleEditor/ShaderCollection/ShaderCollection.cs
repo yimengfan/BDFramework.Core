@@ -125,7 +125,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
           
             foreach (var item in svcMap)
             {
-                var svcPath = $"{BResources.ALL_SHADER_VARAINT_ASSET_PATH}/{item.Key.name.Trim().Replace("/","@")}.shadervariants";
+                var svcPath = $"{BResources.ALL_SHADER_VARAINT_ASSET_PATH}/{item.Key.name.Trim().Replace("/","@")}.shadervariants".ToLower();
                 AssetDatabase.CreateAsset(item.Value, svcPath);
                 var shaderPath = AssetDatabase.GetAssetPath(item.Key);
                 retVcsList.Add(new Tuple<string, string>(shaderPath, svcPath));

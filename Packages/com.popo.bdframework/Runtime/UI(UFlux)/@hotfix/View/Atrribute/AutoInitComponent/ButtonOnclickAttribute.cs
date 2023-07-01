@@ -40,7 +40,7 @@ namespace BDFramework.UFlux
             }
             else
             {
-                BDebug.LogError("未找到Btn:" + this.path);
+                throw  new Exception("未找到Btn:" + this.path);
             }
         }
     }

@@ -167,13 +167,14 @@ namespace BDFramework.Mgr
             {
                 mgr.Init();
             }
-            BDebug.Log("[main] 主工程管理器启动", Color.red);
+         
             //管理器启动
             foreach (var mgr in MgrList)
             {
                 if (!mgr.IsStarted)
                 {
                     mgr.Start();
+                    BDebug.Log($"[main] 主工程管理器启动 {mgr.GetType().Name}", Color.red);
                 }
             }
         }

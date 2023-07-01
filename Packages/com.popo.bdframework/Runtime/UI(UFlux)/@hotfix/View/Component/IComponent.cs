@@ -11,8 +11,14 @@ namespace BDFramework.UFlux
     /// </summary>
     public interface IComponent
     {
+        /// <summary>
+        /// 父组件
+        /// </summary>
+        IWindow Parent { get; set; }
+        /// <summary>
+        /// Tansform节点
+        /// </summary>
         Transform Transform { get; }
-
         /// <summary>
         /// 是否加载
         /// </summary>

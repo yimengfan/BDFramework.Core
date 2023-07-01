@@ -215,7 +215,7 @@ namespace BDFramework.Asset
             if (!IsExsitAsset(basePckBuildInfoPath, isUseBetterStreaming))
             {
                 //不存在Streaming配置
-                BDebug.LogError("【母包资源检测】拷贝失败,不存在：" + basePckBuildInfoPath);
+                BDebug.LogError("【母包资源检测】严重错误！母包不存在：" + basePckBuildInfoPath);
                 callback?.Invoke();
                 return;
             }
@@ -281,7 +281,7 @@ namespace BDFramework.Asset
                 }
                 else
                 {
-                    BDebug.LogError("【母包资源检测】复制失败,本地不存在:" + copytoFile);
+                    BDebug.LogError("母包资源检测】错误！母包不存在:" + copytoFile);
                 }
             }
 

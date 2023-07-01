@@ -14,6 +14,12 @@ namespace BDFramework.UFlux
         public T Props { get; private set; }
 
         /// <summary>
+        /// 父窗口
+        /// 组件必须挂载到窗口上
+        /// </summary>
+        public IWindow Parent { get; set; }
+
+        /// <summary>
         /// 资源节点
         /// </summary>
         public Transform Transform { get; private set; }
@@ -131,16 +137,23 @@ namespace BDFramework.UFlux
             {
                 try
                 {
-                    this.Transform = GameObject.Instantiate(obj).transform;
-                    this.IsLoad = true;
-                    UFluxUtils.InitComponent(this);
-                    //初始化
-                    Init();
+                    if (obj)
+                    {
+                        this.Transform = GameObject.Instantiate(obj).transform;
+                        this.IsLoad = true;
+                        UFluxUtils.InitComponent(this);
+                        //初始化
+                        Init();
+                    }
+                    else
+                    {
+                        throw new Exception($"窗口资源不存在:{resPath}");
+                    }
+
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"窗口初始化出错: {this.resPath}");
-                    Debug.LogError(e);
+                    Debug.LogError($"窗口初始化出错: {this.resPath} \n{e}");
                 }
 
                 callback?.Invoke();

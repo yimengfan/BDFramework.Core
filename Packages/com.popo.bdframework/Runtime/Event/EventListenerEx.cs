@@ -61,7 +61,14 @@ namespace BDFramework.DataListener
         /// <param name="isTriggerCallback"></param>
         static public void TriggerEvent<T>(this AStatusListener dl, T value = null) where T : class
         {
-            dl.TriggerEvent(typeof(T).FullName, value, true);
+            if (value != null)
+            {
+                dl.TriggerEvent(value.GetType().FullName, value, true);
+            }
+            else
+            {
+                dl.TriggerEvent(typeof(T).FullName, value, true);
+            }
         }
 
 

@@ -201,6 +201,11 @@ namespace BDFramework.UFlux
                 }
 
                 cf.Transform = transform.Find(attribute.TransformPath);
+                if (!cf.Transform)
+                {
+                    BDebug.LogError($"不存在节点:{attribute.TransformPath}");
+                    continue;
+                }
                 if (attribute.Type.IsSubclassOf(typeof(UIBehaviour)))
                 {
                     cf.UIBehaviour = cf.Transform.GetComponent(attribute.Type) as UIBehaviour;

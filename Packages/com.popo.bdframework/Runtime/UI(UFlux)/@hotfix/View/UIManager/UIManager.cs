@@ -385,7 +385,7 @@ namespace BDFramework.UFlux
         {
             if (!windowMap.ContainsKey(uiIdx))
             {
-                BDebug.LogError($"未加载UI：{uiIdx},开始同步加载");
+                BDebug.Log($"未加载UI：{uiIdx},开始同步加载");
                 //同步加载
                 BDebug.LogWatchBegin($"加载{uiIdx}");
                 LoadWindow(uiIdx);

@@ -149,6 +149,15 @@ public class BDLauncherBridge
                 break;
             }
 #endif
+
+            
+          
+
+            
+#if !ENABLE_ILRUNTIME && !ENABLE_HCLR
+    BDebug.LogError("请打开BuildDLL面板,开启ILRUNTIME或者HCLR!");
+#endif
+            
         }
 
         //gamestart生命注册

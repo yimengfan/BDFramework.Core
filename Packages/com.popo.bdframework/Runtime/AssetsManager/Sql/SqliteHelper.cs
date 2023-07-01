@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
-using BDFramework.Editor.Inspector.Config;
 using ILRuntime.CLR.Method;
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.CLR.Utils;
@@ -22,8 +21,9 @@ namespace BDFramework.Sql
     static public class SqliteLoder
     {
         static readonly string Tag = "SQLite";
-        
+
         public static string password;
+
         /// <summary>
         /// Password
         /// </summary>
@@ -31,27 +31,15 @@ namespace BDFramework.Sql
         {
             get
             {
-#if UNITY_EDITOR
-                if (Application.isPlaying && !string.IsNullOrEmpty(password))
+                if (!string.IsNullOrEmpty(password))
                 {
                     return password;
                 }
-                else
+                else //配置未初始化的情况
                 {
-                    var conf = ConfigEditorUtil.GetEditorConfig<GameCipherConfigProcessor.Config>();
-                    if (conf != null)
-                    {
-                        return conf.SqlitePassword;
-                    }
-                    else
-                    {
-                       var psw= ConfigEditorUtil.GetEditorConfig(typeof(GameCipherConfigProcessor.Config).FullName, nameof(GameCipherConfigProcessor.Config.SqlitePassword));
-                       return psw;
-                    }
+                    var conf = GameConfigManager.Inst.GetConfig<GameCipherConfigProcessor.Config>();
+                    return conf.SqlitePassword;
                 }
-#else
-                 return password;
-#endif
             }
             set { password = value; }
         }
@@ -99,7 +87,7 @@ namespace BDFramework.Sql
         {
             if (File.Exists(path))
             {
-                BDebug.Log(Tag,"加载路径:" + path);
+                BDebug.Log(Tag, $"加载路径:{path} psw:{Password}", Color.green);
                 SQLiteConnectionString cs =
                     new SQLiteConnectionString(path, SQLiteOpenFlags.ReadOnly, true, key: Password);
                 var con = new SQLiteConnection(cs);

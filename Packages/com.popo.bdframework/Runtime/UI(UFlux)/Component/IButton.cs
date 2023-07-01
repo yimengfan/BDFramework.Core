@@ -165,6 +165,12 @@ namespace BDFramework.UFlux
             }
         }
     }
+    
+    /// <summary>
+    /// 自定义实现的Button，拦截部分按钮，可以做全屏
+    /// 
+    /// </summary>
+    //[RequireComponent(typeof(Image))]
     public class IButton : UIBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 #if !UNITY_EDITOR && ( UNITY_ANDROID || UNITY_IOS)
 ,IPointerExitHandler ,IPointerUpHandler
@@ -207,7 +213,11 @@ namespace BDFramework.UFlux
         private void Awake()
         {
             img         = this.GetComponent<Image>();
-            normalColor = img.color;
+            if (img != null)
+            {
+                normalColor = img.color;
+            }
+          
         }
         /// <summary>
         /// 点摁下事件

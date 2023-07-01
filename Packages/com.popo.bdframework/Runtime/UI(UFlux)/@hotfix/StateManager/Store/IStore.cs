@@ -22,6 +22,6 @@ namespace BDFramework.UFlux.Contains
         /// </summary>
         /// <param name="tag"></param>
         /// <param name="callback"></param>
-        void Subscribe(Enum tag, Action<object> callback);
+        //void Subscribe(Enum tag, Action<object> callback);
     }
 }
