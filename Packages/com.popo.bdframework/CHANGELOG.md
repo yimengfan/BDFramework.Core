@@ -1,5 +1,8 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.3.1
+- Editor:修复引导窗口访问的url
+
 ##V2.3
 - UFlux：增加部分元素自动赋值Attribute 、CompnentPath
 - UFlux：增加Attribute Reducer、Subscribe等

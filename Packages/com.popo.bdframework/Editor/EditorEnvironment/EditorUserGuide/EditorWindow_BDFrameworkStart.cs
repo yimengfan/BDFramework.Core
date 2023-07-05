@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using BDFramework.Assets.VersionContrller;
 using BDFramework.Core.Tools;
+using Cysharp.Threading.Tasks;
 using LitJson;
 using marijnz.EditorCoroutines;
 using UnityEditor;
@@ -26,10 +29,12 @@ namespace BDFramework.Editor
         private static string QQGroup_URL = "https://jq.qq.com/?_wv=1027&k=OSxzhgK4";
 
         //更新日志
-        private static string CHANGEDLOG_URL = "https://github.com/yimengfan/BDFramework.Core/blob/master/Packages/com.popo.bdframework/CHANGELOG.md";
+        private static string CHANGEDLOG_URL = "http://raw.githubusercontent.com/yimengfan/BDFramework.Core/master/Packages/com.popo.bdframework/CHANGELOG.md";
 
         //版本号
-        private static string PCKAGE_URL = "https://raw.githubusercontent.com/yimengfan/BDFramework.Core/master/Packages/com.popo.bdframework/package.json";
+        private static string
+            PCKAGE_URL =
+                "http://raw.githubusercontent.com/yimengfan/BDFramework.Core/master/Packages/com.popo.bdframework/package.json"; //"https://raw.githubusercontent.com/yimengfan/BDFramework.Core/master/Packages/com.popo.bdframework/package.json";
 
         private static Texture webIcon; //= EditorGUIUtility.IconContent( "BuildSettings.Web.Small" ).image;
 
@@ -42,7 +47,7 @@ namespace BDFramework.Editor
         private static GUIStyle errorStyle;
 
 
-        [MenuItem(("BDFrameWork工具箱/框架引导 " + BDLauncher.Version), false, (int)BDEditorGlobalMenuItemOrderEnum.BDFrameworkGuid)]
+        [MenuItem(("BDFrameWork工具箱/框架引导 " + BDLauncher.Version), false, (int) BDEditorGlobalMenuItemOrderEnum.BDFrameworkGuid)]
         static public void Open()
         {
             var win = GetWindow<EditorWindow_BDFrameworkStart>("BDFramework使用引导");
@@ -55,8 +60,8 @@ namespace BDFramework.Editor
         /// </summary>
         static public void AutoOpen()
         {
-            if (!IsOpenedSomeDay(10) //7天内不重复
-                && (IsHaveNewVerison() //新版本
+            if (!IsOpenedSomeDay(10) //10天内不重复
+                && (IsHaveNewVerison().Result //新版本
                     || !IsExsitOdin() //缺少odin
                     || !IsImportedAsset() //缺少文件
                 ))
@@ -119,7 +124,7 @@ namespace BDFramework.Editor
             webIcon = EditorGUIUtility.IconContent("BuildSettings.Web.Small").image;
             wikiBtnContent = new GUIContent(" 中文Wiki", webIcon);
             gitBtnContent = new GUIContent(" Github", webIcon);
-            titleStyle = new GUIStyle("BoldLabel") { margin = new RectOffset(4, 4, 4, 4), padding = new RectOffset(2, 2, 2, 2), fontSize = 13 };
+            titleStyle = new GUIStyle("BoldLabel") {margin = new RectOffset(4, 4, 4, 4), padding = new RectOffset(2, 2, 2, 2), fontSize = 13};
         }
 
         /// <summary>
@@ -284,7 +289,8 @@ namespace BDFramework.Editor
 
             GUILayout.Label("当前版本:" + BDLauncher.Version);
             //
-            if (IsHaveNewVerison())
+            //var ret = IsHaveNewVerison();
+            if (IsHaveNewVerison().Result)
             {
                 GUI.color = Color.red;
                 GUILayout.Label("最新版本:" + NewVersionNum);
@@ -311,27 +317,45 @@ namespace BDFramework.Editor
         /// 是否有新版本
         /// </summary>
         /// <returns></returns>
-        static public bool IsHaveNewVerison()
+        static async public Task<bool> IsHaveNewVerison()
         {
             if (NewVersionNum == null)
             {
-                WebClient wc = new WebClient();
+                var pckPath = Path.Combine(BApplication.BDEditorCachePath, "packageJson_" + DateTime.Today.ToLongDateString());
                 //BDebug.Log($"download:{PCKAGE_URL}");
-                try
+                if (!File.Exists(pckPath))
                 {
-                    var ret = wc.DownloadString(PCKAGE_URL);
-                    var config = JsonMapper.ToObject<PackageData>(ret);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        try
+                        {
+                            WebClient wc = new WebClient();
+                            var ret = wc.DownloadString(PCKAGE_URL);
+                            File.WriteAllText(pckPath, ret);
+                            break;
+                        }
+                        catch (Exception e)
+                        {
+                        }
+                    }
+                }
+
+                if (File.Exists(pckPath))
+                {
+                    var text = File.ReadAllText(pckPath);
+                    var config = JsonMapper.ToObject<PackageData>(text);
                     if (config != null)
                     {
                         NewVersionNum = config.version;
                     }
                 }
-                catch
+                else
                 {
-                    NewVersionNum = "0.0.1";
-                    BDebug.LogError($"访问github失败:{PCKAGE_URL}");
+                    NewVersionNum = "null";
+                    BDebug.LogError($"访问github失败,可能被墙:{PCKAGE_URL}");
                 }
             }
+
 
             var isHaveNewVersion = !VersionNumHelper.GT(BDLauncher.Version, NewVersionNum);
             return isHaveNewVersion;
@@ -344,7 +368,7 @@ namespace BDFramework.Editor
 
         //
         Vector2 scrollPosition = Vector2.zero;
-        private string FrameUpdateNote = "正在获取...";
+        private string FrameNewVersionData { get; set; } = "正在获取...";
 
         /// <summary>
         /// 更新日志
@@ -354,7 +378,7 @@ namespace BDFramework.Editor
             GUILayout.Space(10);
             GUILayout.Label("更新日志", titleStyle);
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, "ProgressBarBack", GUILayout.Height(200), GUILayout.ExpandWidth(true));
-            GUILayout.Label(FrameUpdateNote, "WordWrappedMiniLabel", GUILayout.ExpandHeight(true));
+            GUILayout.Label(FrameNewVersionData, "WordWrappedMiniLabel", GUILayout.ExpandHeight(true));
             GUILayout.EndScrollView();
         }
 
@@ -366,7 +390,8 @@ namespace BDFramework.Editor
         void GetNewChangeLog()
         {
             //有新版本则拉取服务器上的
-            if (IsHaveNewVerison())
+            var isHasNewVersion = IsHaveNewVerison().Result;
+            if (isHasNewVersion)
             {
                 var newLogPath = Path.Combine(BApplication.BDEditorCachePath, "VersionLog_" + NewVersionNum);
                 //本地不存在就缓存到本地
@@ -377,23 +402,31 @@ namespace BDFramework.Editor
                         WebClient wc = new WebClient();
                         var ret = wc.DownloadString(CHANGEDLOG_URL);
                         FileHelper.WriteAllText(newLogPath, ret);
+                        BDebug.Log($"下载changelog成功:{newLogPath}");
                     }
                     catch (Exception e)
                     {
-                        BDebug.LogError($"访问github失败:{CHANGEDLOG_URL}");
+                        BDebug.LogError($"访问github失败，可能被墙:{CHANGEDLOG_URL}\n{e}");
                     }
                 }
 
-                this.FrameUpdateNote = File.ReadAllText(newLogPath);
+                this.FrameNewVersionData = File.ReadAllText(newLogPath);
             }
             else
             {
                 var path = AssetDatabase.GUIDToAssetPath("20c952b57a090a14f86ceff9cc824d05");
                 var localNote = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
-                this.FrameUpdateNote = localNote.text;
+                this.FrameNewVersionData = localNote.text;
+                BDebug.Log($"使用本地changelog:{path}");
             }
         }
 
         #endregion
+
+        private void OnDisable()
+        {
+            this.FrameNewVersionData = null;
+            NewVersionNum = null;
+        }
     }
 }
