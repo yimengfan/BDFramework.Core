@@ -7,7 +7,7 @@ Simple! Easy! Professional! This‘s a powerful Unity3d game workflow!<br />BDFr
 # 社区(Community)
 
 <a name="rwqWf"></a>
-**在线discussions** [点击](https://github.com/yimengfan/BDFramework.Core/discussions)  
+**在线提问、交流**  [点击](https://github.com/yimengfan/BDFramework.Core/discussions)  
 #### 第九第十艺术交流:184111890 （QQ Group:184111890）  [点击加群](https://jq.qq.com/?_wv=1027&k=OSxzhgK4)
 If you find a bug or have some suggestions,please make issue! I'll get back to you!<br />任何问题直接提issue,24小时内必解决 （有时候邮件抽风，没收到，需要在群里at下我~）<br />github地址: [https://github.com/yimengfan/BDFramework.Core](https://github.com/yimengfan/BDFramework.Core)<br />
 
