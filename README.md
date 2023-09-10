@@ -29,9 +29,10 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 
   
 # 发布（Publish）
+### [开发计划](https://www.wolai.com/rYPc8FpYj1Lu9EjYoz1Ci9)
 
 ### [Release版本](https://github.com/yimengfan/BDFramework.Core/releases)
-### [开发计划](https://www.wolai.com/rYPc8FpYj1Lu9EjYoz1Ci9)
+
 注:所有bug修复和新特性加入会先提交到Master分支。待审核期通过，稳定则会发布Release版本
 
 ### Unity3d支持(Unity3d Support )
