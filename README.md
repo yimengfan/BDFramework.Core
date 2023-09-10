@@ -177,9 +177,6 @@ Then open the "**Package Manger"** editor windows. Switch menuitem to "**My Regi
 
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/338267/1649685339014-bc9ded1a-4301-47b9-9c08-0a4553fa0cfe.png#clientId=u9bf72c99-cdb1-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=808&id=u88225e38&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1272&originWidth=2889&originalType=binary&ratio=1&rotation=0&showTitle=true&size=179957&status=done&style=shadow&taskId=ubb1d6962-e623-407b-b35e-4fc35f226d9&title=%E5%8D%8A%E7%83%AD%E6%9B%B4&width=1834.2857975862503 "半热更")
 <a name="BBlYB"></a>
-# Demo：
-
-九宫棋（带一套精简的技能系统）:[https://gitee.com/yimengfan/TheCatChess](https://gitee.com/yimengfan/TheCatChess)
 
 <a name="d2KC6"></a>
 # 贡献者名单
