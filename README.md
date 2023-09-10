@@ -14,8 +14,7 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 <a name="UpQig"></a>
 # 文档(Document)
 
-[**中文 Wiki**](https://www.yuque.com/naipaopao/eg6gik)  
-[**中文 Wiki(new)**](https://www.wolai.com/ky1FVhe7Mudg6ru277gfNr)
+[**中文 Wiki**](https://www.wolai.com/ky1FVhe7Mudg6ru277gfNr)
 
 <a name="sVFFi"></a>
 #### [English Wiki](http://www.nekosang.com/)
@@ -29,7 +28,7 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 
 <a name="ZnfmW"></a>
 ### [Release版本](https://github.com/yimengfan/BDFramework.Core/releases)
-
+### [开发计划](https://www.wolai.com/rYPc8FpYj1Lu9EjYoz1Ci9)
 注:所有bug修复和新特性加入会先提交到Master分支。待审核期通过，稳定则会发布Release版本
 
 <a name="eTY04"></a>
