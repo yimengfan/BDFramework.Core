@@ -104,7 +104,53 @@ namespace BDFramework.EditorTest
         }
         
         
+        [Test, Order(10),Performance]
+        static public void Fast_Search_1()
+        {
+            //单条件查询
+            var ds = SqliteHelper.GetDB(dbname).GetTableRuntime().Where("id = 1").FastFromAll<UniTestSqliteType>();
+            //对比返回数量和id
+            Assert.AreEqual(ds.Count, 1);
+            Assert.AreEqual(ds[0].Id, 1);
+        }
+        /// <summary>
+        /// sselect语句
+        /// </summary>
+        [Test, Order(11),Performance]
+        static public void Fast_Search_100()
+        {
+            //单条件查询
+            var ds = SqliteHelper.GetDB(dbname).GetTableRuntime().Where("id >= 1").And.Where("id <= 100").FastFromAll<UniTestSqliteType>();
+            //对比返回数量和id
+            Assert.AreEqual(ds.Count, 100);
+            Assert.AreEqual(ds[0].Id, 1);
+        }
         
+        /// <summary>
+        /// sselect语句
+        /// </summary>
+        [Test, Order(12),Performance]
+        static public void Fast_Search_1000()
+        {
+            //单条件查询
+            var ds = SqliteHelper.GetDB(dbname).GetTableRuntime().Where("id >= 1001").And.Where("id <= 2000").FastFromAll<UniTestSqliteType>();
+            //对比返回数量和id
+            Assert.AreEqual(ds.Count, 1000);
+            Assert.AreEqual(ds[0].Id, 1001);
+        }
+        /// <summary>
+        /// sselect语句
+        /// </summary>
+        [Test, Order(13),Performance]
+        static public void Fast_Search_10000()
+        {
+            //单条件查询
+            var ds = SqliteHelper.GetDB(dbname).GetTableRuntime().Where("id >= 10001").And.Where("id <= 20000").FastFromAll<UniTestSqliteType>();
+            //对比返回数量和id
+            Assert.AreEqual(ds.Count, 10000);
+            Assert.AreEqual(ds[0].Id, 10001);
+        }
+
         /// <summary>
         /// 关闭数据库
         /// </summary>
