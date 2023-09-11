@@ -12,5 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 108c2ba5daba841b79b8cc5db3dba1fb, type: 3}
   m_Name: AssetBundleBuildMap
   m_EditorClassIdentifier: 
-  m_assetBundles: []
+  m_assetBundles:
+  - m_assetBundleName: bundle_0
+    m_assetBundleVariantName: 
+    m_fullName: bundle_0
+    m_assets:
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Bad/prefab03.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/bad/prefab03.prefab
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Bad/prefab04.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/bad/prefab04.prefab
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Good/prefab01.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/good/prefab01.prefab
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Good/prefab02.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/good/prefab02.prefab
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Good/prefab01.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/good/prefab01.prefab
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Good/prefab02.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/good/prefab02.prefab
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Bad/prefab03.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/bad/prefab03.prefab
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Bad/prefab04.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/bad/prefab04.prefab
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Good/prefab01.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/good/prefab01.prefab
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Good/prefab02.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/good/prefab02.prefab
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Good/prefab01.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/good/prefab01.prefab
+    - original: Assets/AssertUnwantedAssetsInBundleTest_AssetsToDelete/Good/prefab02.prefab
+      lower: assets/assertunwantedassetsinbundletest_assetstodelete/good/prefab02.prefab
+    m_registererId: 310dc301-4a55-4311-aac3-e2c35632f8fd
   m_version: 1
