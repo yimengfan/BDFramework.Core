@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using BDFramework.Sql;
 using LitJson;
 using NUnit.Framework;
-using SQLite4Unity3d;
 using Unity.PerformanceTesting;
 using UnityEngine;
 
