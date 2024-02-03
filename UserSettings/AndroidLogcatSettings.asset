@@ -1,19 +1,13 @@
 {
-    "m_SelectedDeviceId": "127.0.0.1:62025",
+    "m_SelectedDeviceId": "127.0.0.1:62001",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "127.0.0.1:62001",
+        "name": "com.DefaultCompany.BDFramework.Core.debug",
+        "processId": 3925,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
-        {
-            "deviceId": "127.0.0.1:62001",
-            "name": "com.Popo.BDFrameworkTest",
-            "processId": 4086,
-            "exited": true
-        },
         {
             "deviceId": "127.0.0.1:62001",
             "name": "com.vphone.launcher",
@@ -36,6 +30,12 @@
             "deviceId": "127.0.0.1:62001",
             "name": "com.Popo.BDFrameworkTest.profiler",
             "processId": 3564,
+            "exited": true
+        },
+        {
+            "deviceId": "127.0.0.1:62001",
+            "name": "com.DefaultCompany.BDFramework.Core.debug",
+            "processId": 3925,
             "exited": false
         }
     ],

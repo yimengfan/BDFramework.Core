@@ -5,3 +5,6 @@ TestWindow,"[]","[script/hotfix.dll]","[local.db]","[art_assets/art_assets.info,
 TestChar,"[]","[script/hotfix.dll]","[local.db]","[art_assets/art_assets.info,art_assets/art_asset_type.info,package_build.info]"
 TestNull,"[]","[script/hotfix.dll]","[local.db]","[art_assets/art_assets.info,art_assets/art_asset_type.info,package_build.info]"
 TestWindow,"[]","[script/hotfix.dll]","[local.db]","[art_assets/art_assets.info,art_assets/art_asset_type.info,package_build.info]"
+TestChar,"[]","[script/hotfix.dll]","[local.db]","[art_assets/art_assets.info,art_assets/art_asset_type.info,package_build.info]"
+TestNull,"[]","[script/hotfix.dll]","[local.db]","[art_assets/art_assets.info,art_assets/art_asset_type.info,package_build.info]"
+TestWindow,"[]","[script/hotfix.dll]","[local.db]","[art_assets/art_assets.info,art_assets/art_asset_type.info,package_build.info]"
