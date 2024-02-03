@@ -1258,6 +1258,7 @@ const Il2CppAssembly* il2cpp::vm::MetadataCache::LoadAssemblyFromBytes(const cha
     {
         if (ass == newAssembly)
         {
+            il2cpp::vm::Assembly::InvalidateAssemblyList();
             return ass;
         }
     }
@@ -1741,20 +1742,25 @@ int32_t il2cpp::vm::MetadataCache::GetReferenceAssemblyIndexIntoAssemblyTable(in
     return referenceAssemblyIndicies[referencedAssemblyTableIndex];
 }
 
-const TypeDefinitionIndex il2cpp::vm::MetadataCache::GetIndexForTypeDefinition(const Il2CppClass* typeDefinition)
+const TypeDefinitionIndex il2cpp::vm::MetadataCache::GetIndexForTypeDefinition(const Il2CppTypeDefinition* typeDefinition)
 {
-    IL2CPP_ASSERT(typeDefinition->typeDefinition);
+    IL2CPP_ASSERT(typeDefinition);
     if (hybridclr::metadata::IsInterpreterType(typeDefinition))
     {
-        return static_cast<TypeDefinitionIndex>(hybridclr::metadata::MetadataModule::GetTypeEncodeIndex(typeDefinition->typeDefinition));
+        return static_cast<TypeDefinitionIndex>(hybridclr::metadata::MetadataModule::GetTypeEncodeIndex(typeDefinition));
     }
     const Il2CppTypeDefinition* typeDefinitions = (const Il2CppTypeDefinition*)((const char*)s_GlobalMetadata + s_GlobalMetadataHeader->typeDefinitionsOffset);
 
-    IL2CPP_ASSERT(typeDefinition->typeDefinition >= typeDefinitions && typeDefinition->typeDefinition < typeDefinitions + s_GlobalMetadataHeader->typeDefinitionsCount);
+    IL2CPP_ASSERT(typeDefinition >= typeDefinitions && typeDefinition < typeDefinitions + s_GlobalMetadataHeader->typeDefinitionsCount);
 
-    ptrdiff_t index = typeDefinition->typeDefinition - typeDefinitions;
+    ptrdiff_t index = typeDefinition - typeDefinitions;
     IL2CPP_ASSERT(index <= std::numeric_limits<TypeDefinitionIndex>::max());
     return static_cast<TypeDefinitionIndex>(index);
+}
+
+const TypeDefinitionIndex il2cpp::vm::MetadataCache::GetIndexForTypeDefinition(const Il2CppClass* typeDefinition)
+{
+    return GetIndexForTypeDefinition(typeDefinition->typeDefinition);
 }
 
 const GenericParameterIndex il2cpp::vm::MetadataCache::GetIndexForGenericParameter(const Il2CppGenericParameter* genericParameter)

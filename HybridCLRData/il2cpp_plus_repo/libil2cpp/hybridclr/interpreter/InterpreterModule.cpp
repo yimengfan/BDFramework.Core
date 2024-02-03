@@ -21,268 +21,261 @@
 
 namespace hybridclr
 {
-	namespace interpreter
+namespace interpreter
+{
+	il2cpp::os::ThreadLocalValue InterpreterModule::s_machineState;
+
+	static Il2CppHashMap<const char*, Managed2NativeCallMethod, CStringHash, CStringEqualTo> g_managed2natives;
+	static Il2CppHashMap<const char*, Il2CppMethodPointer, CStringHash, CStringEqualTo> g_native2manageds;
+	static Il2CppHashMap<const char*, Il2CppMethodPointer, CStringHash, CStringEqualTo> g_adjustThunks;
+	static Il2CppHashMap<const char*, const char*, CStringHash, CStringEqualTo> g_fullName2signature;
+
+	MachineState& InterpreterModule::GetCurrentThreadMachineState()
 	{
-		il2cpp::os::ThreadLocalValue InterpreterModule::s_machineState;
-
-		static std::unordered_map<const char*, Managed2NativeCallMethod, CStringHash, CStringEqualTo> g_managed2natives;
-		static std::unordered_map<const char*, Il2CppMethodPointer, CStringHash, CStringEqualTo> g_native2manageds;
-		static std::unordered_map<const char*, Il2CppMethodPointer, CStringHash, CStringEqualTo> g_adjustThunks;
-
-		MachineState& InterpreterModule::GetCurrentThreadMachineState()
+		MachineState* state = nullptr;
+		s_machineState.GetValue((void**)&state);
+		if (!state)
 		{
-			MachineState* state = nullptr;
-			s_machineState.GetValue((void**)&state);
-			if (!state)
+			state = new MachineState();
+			s_machineState.SetValue(state);
+		}
+		return *state;
+	}
+
+	void InterpreterModule::FreeThreadLocalMachineState()
+	{
+		MachineState* state = nullptr;
+		s_machineState.GetValue((void**)&state);
+		if (state)
+		{
+			delete state;
+			s_machineState.SetValue(nullptr);
+		}
+	}
+
+	void InterpreterModule::Initialize()
+	{
+		for (size_t i = 0; ; i++)
+		{
+			Managed2NativeMethodInfo& method = g_managed2nativeStub[i];
+			if (!method.signature)
 			{
-				state = new MachineState();
-				s_machineState.SetValue(state);
+				break;
 			}
-			return *state;
+			g_managed2natives.insert({ method.signature, method.method });
+		}
+		for (size_t i = 0; ; i++)
+		{
+			Native2ManagedMethodInfo& method = g_native2managedStub[i];
+			if (!method.signature)
+			{
+				break;
+			}
+			g_native2manageds.insert({ method.signature, method.method });
 		}
 
-		void InterpreterModule::FreeThreadLocalMachineState()
+		for (size_t i = 0; ; i++)
 		{
-			MachineState* state = nullptr;
-			s_machineState.GetValue((void**)&state);
-			if (state)
+			NativeAdjustThunkMethodInfo& method = g_adjustThunkStub[i];
+			if (!method.signature)
 			{
-				delete state;
-				s_machineState.SetValue(nullptr);
+				break;
 			}
+			g_adjustThunks.insert({ method.signature, method.method });
 		}
-
-		void InterpreterModule::Initialize()
+		for (size_t i = 0 ; ; i++)
 		{
-			for (size_t i = 0; ; i++)
+			FullName2Signature& nameSig = g_fullName2SignatureStub[i];
+			if (!nameSig.fullName)
 			{
-				Managed2NativeMethodInfo& method = g_managed2nativeStub[i];
-				if (!method.signature)
-				{
-					break;
-				}
-				g_managed2natives.insert({ method.signature, method.method });
+				break;
 			}
-			for (size_t i = 0; ; i++)
-			{
-				Native2ManagedMethodInfo& method = g_native2managedStub[i];
-				if (!method.signature)
-				{
-					break;
-				}
-				g_native2manageds.insert({ method.signature, method.method });
-			}
-
-			for (size_t i = 0; ; i++)
-			{
-				NativeAdjustThunkMethodInfo& method = g_adjustThunkStub[i];
-				if (!method.signature)
-				{
-					break;
-				}
-				g_adjustThunks.insert({ method.signature, method.method });
-			}
+			g_fullName2signature.insert({ nameSig.fullName, nameSig.signature });
 		}
+	}
 
-		void InterpreterModule::NotSupportNative2Managed()
+	void InterpreterModule::NotSupportNative2Managed()
+	{
+		il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException("NotSupportNative2Managed"));
+	}
+
+	void InterpreterModule::NotSupportAdjustorThunk()
+	{
+		il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException("NotSupportAdjustorThunk"));
+	}
+
+	const char* InterpreterModule::GetValueTypeSignature(const char* fullName)
+	{
+		auto it = g_fullName2signature.find(fullName);
+		return it != g_fullName2signature.end() ? it->second : "$";
+	}
+
+	static void* NotSupportInvoke(Il2CppMethodPointer, const MethodInfo* method, void*, void**)
+	{
+		char sigName[1000];
+		ComputeSignature(method, true, sigName, sizeof(sigName) - 1);
+		TEMP_FORMAT(errMsg, "Invoke method missing. sinature:%s %s.%s::%s", sigName, method->klass->namespaze, method->klass->name, method->name);
+		il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException(errMsg));
+		return nullptr;
+	}
+
+	template<typename T>
+	const Managed2NativeCallMethod GetManaged2NativeMethod(const T* method, bool forceStatic)
+	{
+		char sigName[1000];
+		ComputeSignature(method, !forceStatic, sigName, sizeof(sigName) - 1);
+		auto it = g_managed2natives.find(sigName);
+		return it != g_managed2natives.end() ? it->second : nullptr;
+	}
+
+	template<typename T>
+	const Il2CppMethodPointer GetNative2ManagedMethod(const T* method, bool forceStatic)
+	{
+		char sigName[1000];
+		ComputeSignature(method, !forceStatic, sigName, sizeof(sigName) - 1);
+		auto it = g_native2manageds.find(sigName);
+		return it != g_native2manageds.end() ? it->second : InterpreterModule::NotSupportNative2Managed;
+	}
+
+	template<typename T>
+	const Il2CppMethodPointer GetNativeAdjustMethodMethod(const T* method, bool forceStatic)
+	{
+		char sigName[1000];
+		ComputeSignature(method, !forceStatic, sigName, sizeof(sigName) - 1);
+		auto it = g_adjustThunks.find(sigName);
+		return it != g_adjustThunks.end() ? it->second : InterpreterModule::NotSupportAdjustorThunk;
+	}
+
+	static void RaiseMethodNotSupportException(const MethodInfo* method, const char* desc)
+	{
+		TEMP_FORMAT(errMsg, "%s. %s.%s::%s", desc, method->klass->namespaze, method->klass->name, method->name);
+		il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException(errMsg));
+	}
+
+	static void RaiseMethodNotSupportException(const Il2CppMethodDefinition* method, const char* desc)
+	{
+		Il2CppClass* klass = il2cpp::vm::GlobalMetadata::GetTypeInfoFromTypeDefinitionIndex(method->declaringType);
+		TEMP_FORMAT(errMsg, "%s. %s.%s::%s", desc, klass->namespaze, klass->name, il2cpp::vm::GlobalMetadata::GetStringFromIndex(method->nameIndex));
+		il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException(errMsg));
+	}
+
+	Il2CppMethodPointer InterpreterModule::GetMethodPointer(const Il2CppMethodDefinition* method)
+	{
+		Il2CppMethodPointer ncm = GetNative2ManagedMethod(method, false);
+		return ncm ? ncm : (Il2CppMethodPointer)NotSupportNative2Managed;
+	}
+
+	Il2CppMethodPointer InterpreterModule::GetMethodPointer(const MethodInfo* method)
+	{
+		Il2CppMethodPointer ncm = GetNative2ManagedMethod(method, false);
+		return ncm ? ncm : (Il2CppMethodPointer)NotSupportNative2Managed;
+	}
+
+	Il2CppMethodPointer InterpreterModule::GetAdjustThunkMethodPointer(const Il2CppMethodDefinition* method)
+	{
+		return GetNativeAdjustMethodMethod(method, false);
+	}
+
+	Il2CppMethodPointer InterpreterModule::GetAdjustThunkMethodPointer(const MethodInfo* method)
+	{
+		return GetNativeAdjustMethodMethod(method, false);
+	}
+
+	void InterpreterModule::Managed2NativeCallByReflectionInvoke(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
+	{
+		if (hybridclr::metadata::IsInterpreterImplement(method))
 		{
-			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException("NotSupportNative2Managed"));
+			Interpreter::Execute(method,  localVarBase + argVarIndexs[0], ret);
+			return;
 		}
-
-		void InterpreterModule::NotSupportAdjustorThunk()
-		{
-			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException("NotSupportAdjustorThunk"));
-		}
-
-		static void* NotSupportInvoke(Il2CppMethodPointer, const MethodInfo* method, void*, void**)
+		if (method->invoker_method == nullptr)
 		{
 			char sigName[1000];
 			ComputeSignature(method, true, sigName, sizeof(sigName) - 1);
-			TEMP_FORMAT(errMsg, "Invoke method missing. ABI:%s sinature:%s %s.%s::%s", HYBRIDCLR_ABI_NAME, sigName, method->klass->namespaze, method->klass->name, method->name);
-			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException(errMsg));
-			return nullptr;
-		}
 
-		template<typename T>
-		const Managed2NativeCallMethod GetManaged2NativeMethod(const T* method, bool forceStatic)
-		{
-			char sigName[1000];
-			ComputeSignature(method, !forceStatic, sigName, sizeof(sigName) - 1);
-			auto it = g_managed2natives.find(sigName);
-			return it != g_managed2natives.end() ? it->second : nullptr;
+			TEMP_FORMAT(errMsg, "GetManaged2NativeMethodPointer. sinature:%s not support.", sigName);
+			RaiseMethodNotSupportException(method, errMsg);
 		}
-
-		template<typename T>
-		const Il2CppMethodPointer GetNative2ManagedMethod(const T* method, bool forceStatic)
+		if (!InitAndGetInterpreterDirectlyCallMethodPointer(method))
 		{
-			char sigName[1000];
-			ComputeSignature(method, !forceStatic, sigName, sizeof(sigName) - 1);
-			auto it = g_native2manageds.find(sigName);
-			return it != g_native2manageds.end() ? it->second : InterpreterModule::NotSupportNative2Managed;
+			RaiseAOTGenericMethodNotInstantiatedException(method);
 		}
-
-		template<typename T>
-		const Il2CppMethodPointer GetNativeAdjustMethodMethod(const T* method, bool forceStatic)
+		void* thisPtr;
+		uint16_t* argVarIndexBase;
+		if (hybridclr::metadata::IsInstanceMethod(method))
 		{
-			char sigName[1000];
-			ComputeSignature(method, !forceStatic, sigName, sizeof(sigName) - 1);
-			auto it = g_adjustThunks.find(sigName);
-			return it != g_adjustThunks.end() ? it->second : InterpreterModule::NotSupportAdjustorThunk;
+			thisPtr = localVarBase[argVarIndexs[0]].obj;
+			argVarIndexBase = argVarIndexs + 1;
 		}
-
-		static void RaiseMethodNotSupportException(const MethodInfo* method, const char* desc)
+		else
 		{
-			TEMP_FORMAT(errMsg, "%s. %s.%s::%s", desc, method->klass->namespaze, method->klass->name, method->name);
-			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException(errMsg));
+			thisPtr = nullptr;
+			argVarIndexBase = argVarIndexs;
 		}
-
-		static void RaiseMethodNotSupportException(const Il2CppMethodDefinition* method, const char* desc)
+		void* invokeParams[256];
+		for (uint8_t i = 0; i < method->parameters_count; i++)
 		{
-			Il2CppClass* klass = il2cpp::vm::GlobalMetadata::GetTypeInfoFromTypeDefinitionIndex(method->declaringType);
-			TEMP_FORMAT(errMsg, "%s. %s.%s::%s", desc, klass->namespaze, klass->name, il2cpp::vm::GlobalMetadata::GetStringFromIndex(method->nameIndex));
-			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException(errMsg));
-		}
-
-		Il2CppMethodPointer InterpreterModule::GetMethodPointer(const Il2CppMethodDefinition* method)
-		{
-			Il2CppMethodPointer ncm = GetNative2ManagedMethod(method, false);
-			return ncm ? ncm : (Il2CppMethodPointer)NotSupportNative2Managed;
-		}
-
-		Il2CppMethodPointer InterpreterModule::GetMethodPointer(const MethodInfo* method)
-		{
-			Il2CppMethodPointer ncm = GetNative2ManagedMethod(method, false);
-			return ncm ? ncm : (Il2CppMethodPointer)NotSupportNative2Managed;
-		}
-
-		Il2CppMethodPointer InterpreterModule::GetAdjustThunkMethodPointer(const Il2CppMethodDefinition* method)
-		{
-			return GetNativeAdjustMethodMethod(method, false);
-		}
-
-		Il2CppMethodPointer InterpreterModule::GetAdjustThunkMethodPointer(const MethodInfo* method)
-		{
-			return GetNativeAdjustMethodMethod(method, false);
-		}
-
-		void InterpreterModule::Managed2NativeCallByReflectionInvoke(const MethodInfo* method, uint16_t* argVarIndexs, StackObject* localVarBase, void* ret)
-		{
-			if (hybridclr::metadata::IsInterpreterImplement(method))
+			const Il2CppType* argType = GET_METHOD_PARAMETER_TYPE(method->parameters[i]);
+			StackObject* argValue = localVarBase + argVarIndexBase[i];
+			if (!argType->byref && hybridclr::metadata::IsValueType(argType))
 			{
-				IL2CPP_ASSERT(method->parameters_count <= 32);
-				StackObject newArgs[32];
-				int32_t argBaseOffset;
-				if (hybridclr::metadata::IsInstanceMethod(method))
+				invokeParams[i] = argValue;
+			}
+			else
+			{
+				invokeParams[i] = argValue->ptr;
+			}
+		}
+#if HYBRIDCLR_UNITY_2021_OR_NEW
+		method->invoker_method(method->methodPointerCallByInterp, method, thisPtr, invokeParams, ret);
+#else
+		void* retObj = method->invoker_method(method->methodPointerCallByInterp, method, thisPtr, invokeParams);
+		if (ret)
+		{
+			const Il2CppType* returnType = method->return_type;
+			if (hybridclr::metadata::IsValueType(returnType))
+			{
+				Il2CppClass* returnKlass = il2cpp::vm::Class::FromIl2CppType(returnType);
+				if (il2cpp::vm::Class::IsNullable(returnKlass))
 				{
-					newArgs[0] = localVarBase[argVarIndexs[0]];
-					argBaseOffset = 1;
+					il2cpp::vm::Object::UnboxNullable((Il2CppObject*)retObj, returnKlass->element_class, ret);
 				}
 				else
 				{
-					argBaseOffset = 0;
-				}
-				for (uint8_t i = 0; i < method->parameters_count; i++)
-				{
-					int32_t argOffset = argBaseOffset + i;
-					const Il2CppType* argType = GET_METHOD_PARAMETER_TYPE(method->parameters[i]);
-					StackObject* argValue = localVarBase + argVarIndexs[argOffset];
-					if (IsPassArgAsValue(argType))
-					{
-						newArgs[argOffset] = *argValue;
-					}
-					else
-					{
-						newArgs[argOffset].ptr = argValue;
-					}
-				}
-
-				hybridclr::interpreter::Interpreter::Execute(method, newArgs, ret);
-				return;
-			}
-			if (method->invoker_method == nullptr)
-			{
-				char sigName[1000];
-				ComputeSignature(method, true, sigName, sizeof(sigName) - 1);
-
-				TEMP_FORMAT(errMsg, "GetManaged2NativeMethodPointer. ABI:%s sinature:%s not support.", HYBRIDCLR_ABI_NAME, sigName);
-				RaiseMethodNotSupportException(method, errMsg);
-			}
-			void* thisPtr;
-			uint16_t* argVarIndexBase;
-			if (hybridclr::metadata::IsInstanceMethod(method))
-			{
-				thisPtr = localVarBase[argVarIndexs[0]].obj;
-				argVarIndexBase = argVarIndexs + 1;
-				if (IS_CLASS_VALUE_TYPE(method->klass))
-				{
-					thisPtr = (Il2CppObject*)thisPtr - 1;
+					std::memcpy(ret, il2cpp::vm::Object::Unbox((Il2CppObject*)retObj), il2cpp::vm::Class::GetValueSize(returnKlass, nullptr));
 				}
 			}
 			else
 			{
-				thisPtr = nullptr;
-				argVarIndexBase = argVarIndexs;
+				*(void**)ret = retObj;
 			}
-			void* invokeParams[256];
-			for (uint8_t i = 0; i < method->parameters_count; i++)
-			{
-				const Il2CppType* argType = GET_METHOD_PARAMETER_TYPE(method->parameters[i]);
-				StackObject* argValue = localVarBase + argVarIndexBase[i];
-				if (!argType->byref && hybridclr::metadata::IsValueType(argType))
-				{
-					invokeParams[i] = argValue;
-				}
-				else
-				{
-					invokeParams[i] = argValue->ptr;
-				}
-			}
-#if HYBRIDCLR_UNITY_2021_OR_NEW
-			method->invoker_method(method->methodPointer, method, thisPtr, invokeParams, ret);
-#else
-			void* retObj = method->invoker_method(method->methodPointer, method, thisPtr, invokeParams);
-			if (ret)
-			{
-				const Il2CppType* returnType = method->return_type;
-				if (hybridclr::metadata::IsValueType(returnType))
-				{
-					Il2CppClass* returnKlass = il2cpp::vm::Class::FromIl2CppType(returnType);
-					if (il2cpp::vm::Class::IsNullable(returnKlass))
-					{
-						il2cpp::vm::Object::UnboxNullable((Il2CppObject*)retObj, returnKlass->element_class, ret);
-					}
-					else
-					{
-						std::memcpy(ret, il2cpp::vm::Object::Unbox((Il2CppObject*)retObj), il2cpp::vm::Class::GetValueSize(returnKlass, nullptr));
-					}
-				}
-				else
-				{
-					*(void**)ret = retObj;
-				}
-			}
+		}
 #endif
-		}
+	}
 
-		Managed2NativeCallMethod InterpreterModule::GetManaged2NativeMethodPointer(const MethodInfo* method, bool forceStatic)
+	Managed2NativeCallMethod InterpreterModule::GetManaged2NativeMethodPointer(const MethodInfo* method, bool forceStatic)
+	{
+		if (method->methodPointerCallByInterp == NotSupportNative2Managed 
+#if HYBRIDCLR_UNITY_2021_OR_NEW
+			|| method->has_full_generic_sharing_signature
+#endif
+			)
 		{
-			if (method->methodPointerCallByInterp == NotSupportNative2Managed)
-			{
-				return Managed2NativeCallByReflectionInvoke;
-			}
-			char sigName[1000];
-			ComputeSignature(method, !forceStatic, sigName, sizeof(sigName) - 1);
-			auto it = g_managed2natives.find(sigName);
-			return it != g_managed2natives.end() ? it->second : Managed2NativeCallByReflectionInvoke;
+			return Managed2NativeCallByReflectionInvoke;
 		}
+		char sigName[1000];
+		ComputeSignature(method, !forceStatic, sigName, sizeof(sigName) - 1);
+		auto it = g_managed2natives.find(sigName);
+		return it != g_managed2natives.end() ? it->second : Managed2NativeCallByReflectionInvoke;
+	}
 
-		Managed2NativeCallMethod InterpreterModule::GetManaged2NativeMethodPointer(const metadata::ResolveStandAloneMethodSig& method)
-		{
-			char sigName[1000];
-			ComputeSignature(&method.returnType, method.params, method.paramCount, metadata::IsPrologHasThis(method.flags), sigName, sizeof(sigName) - 1);
-			auto it = g_managed2natives.find(sigName);
-			return it != g_managed2natives.end() ? it->second : Managed2NativeCallByReflectionInvoke;
-		}
+	Managed2NativeCallMethod InterpreterModule::GetManaged2NativeMethodPointer(const metadata::ResolveStandAloneMethodSig& method)
+	{
+		char sigName[1000];
+		ComputeSignature(&method.returnType, method.params, method.paramCount, metadata::IsPrologHasThis(method.flags), sigName, sizeof(sigName) - 1);
+		auto it = g_managed2natives.find(sigName);
+		return it != g_managed2natives.end() ? it->second : Managed2NativeCallByReflectionInvoke;
+	}
 
 	static void RaiseExecutionEngineExceptionMethodIsNotFound(const MethodInfo* method)
 	{
@@ -292,17 +285,24 @@ namespace hybridclr
 			RaiseExecutionEngineException(il2cpp::vm::Method::GetNameWithGenericTypes(method).c_str());
 	}
 
-#ifdef HYBRIDCLR_UNITY_2021_OR_NEW
-	static void InterpterInvoke(Il2CppMethodPointer methodPointer, const MethodInfo* method, void* __this, void** __args, void* __ret)
+	#ifdef HYBRIDCLR_UNITY_2021_OR_NEW
+	
+	static void InterpreterInvoke(Il2CppMethodPointer methodPointer, const MethodInfo* method, void* __this, void** __args, void* __ret)
 	{
+		InterpMethodInfo* imi = method->interpData ? (InterpMethodInfo*)method->interpData : InterpreterModule::GetInterpMethodInfo(method);
 		bool isInstanceMethod = metadata::IsInstanceMethod(method);
-		StackObject args[256];
+		StackObject* args = (StackObject*)alloca(sizeof(StackObject) * imi->argStackObjectSize);
 		if (isInstanceMethod)
 		{
-			__this = (Il2CppObject*)__this + (methodPointer != method->methodPointerCallByInterp);
+			if (IS_CLASS_VALUE_TYPE(method->klass))
+			{
+				__this = (Il2CppObject*)__this + (methodPointer != method->methodPointerCallByInterp);
+			}
 			args[0].ptr = __this;
 		}
-		ConvertInvokeArgs(args + isInstanceMethod, method, __args);
+		
+		MethodArgDesc* argDescs = imi->args + isInstanceMethod;
+		ConvertInvokeArgs(args + isInstanceMethod, method, argDescs, __args);
 		Interpreter::Execute(method, args, __ret);
 	}
 
@@ -339,7 +339,8 @@ namespace hybridclr
 				{
 					il2cpp::vm::Exception::RaiseNullReferenceException();
 				}
-				curMethod->invoker_method(curMethod->methodPointer, curMethod, curTarget, __args, __ret);
+				curTarget += (IS_CLASS_VALUE_TYPE(curMethod->klass));
+				curMethod->invoker_method(curMethod->methodPointerCallByInterp, curMethod, curTarget, __args, __ret);
 				break;
 			}
 			case -1:
@@ -351,7 +352,7 @@ namespace hybridclr
 				{
 					newArgs[k + 1] = __args[k];
 				}
-				curMethod->invoker_method(curMethod->methodPointer, curMethod, nullptr, newArgs, __ret);
+				curMethod->invoker_method(curMethod->methodPointerCallByInterp, curMethod, nullptr, newArgs, __ret);
 				break;
 			}
 			case 1:
@@ -362,7 +363,7 @@ namespace hybridclr
 				{
 					il2cpp::vm::Exception::RaiseNullReferenceException();
 				}
-				curMethod->invoker_method(curMethod->methodPointer, curMethod, curTarget, __args + 1, __ret);
+				curMethod->invoker_method(curMethod->methodPointerCallByInterp, curMethod, curTarget, __args + 1, __ret);
 				break;
 			}
 			default:
@@ -373,17 +374,22 @@ namespace hybridclr
 			}
 		}
 	}
-#else
-	static void* InterpterInvoke(Il2CppMethodPointer methodPointer, const MethodInfo* method, void* __this, void** __args)
+	#else
+	static void* InterpreterInvoke(Il2CppMethodPointer methodPointer, const MethodInfo* method, void* __this, void** __args)
 	{
 		StackObject args[256];
 		bool isInstanceMethod = metadata::IsInstanceMethod(method);
 		if (isInstanceMethod)
 		{
-			__this = (Il2CppObject*)__this + (methodPointer != method->methodPointerCallByInterp);
+			if (IS_CLASS_VALUE_TYPE(method->klass))
+			{
+				__this = (Il2CppObject*)__this + (methodPointer != method->methodPointerCallByInterp);
+			}
 			args[0].ptr = __this;
 		}
-		ConvertInvokeArgs(args + isInstanceMethod, method, __args);
+		InterpMethodInfo* imi = method->interpData ? (InterpMethodInfo*)method->interpData : InterpreterModule::GetInterpMethodInfo(method);
+		MethodArgDesc* argDescs = imi->args + isInstanceMethod;
+		ConvertInvokeArgs(args + isInstanceMethod, method, argDescs, __args);
 		if (method->return_type->type == IL2CPP_TYPE_VOID)
 		{
 			Interpreter::Execute(method, args, nullptr);
@@ -431,7 +437,8 @@ namespace hybridclr
 				{
 					il2cpp::vm::Exception::RaiseNullReferenceException();
 				}
-				ret = curMethod->invoker_method(curMethod->methodPointer, curMethod, curTarget, __args);
+				curTarget += (IS_CLASS_VALUE_TYPE(curMethod->klass));
+				ret = curMethod->invoker_method(curMethod->methodPointerCallByInterp, curMethod, curTarget, __args);
 				break;
 			}
 			case -1:
@@ -443,7 +450,7 @@ namespace hybridclr
 				{
 					newArgs[k + 1] = __args[k];
 				}
-				ret = curMethod->invoker_method(curMethod->methodPointer, curMethod, nullptr, newArgs);
+				ret = curMethod->invoker_method(curMethod->methodPointerCallByInterp, curMethod, nullptr, newArgs);
 				break;
 			}
 			case 1:
@@ -454,8 +461,7 @@ namespace hybridclr
 				{
 					il2cpp::vm::Exception::RaiseNullReferenceException();
 				}
-				curTarget = curTarget - IS_CLASS_VALUE_TYPE(curMethod->klass);
-				ret = curMethod->invoker_method(curMethod->methodPointer, curMethod, curTarget, __args + 1);
+				ret = curMethod->invoker_method(curMethod->methodPointerCallByInterp, curMethod, curTarget, __args + 1);
 				break;
 			}
 			default:
@@ -467,25 +473,25 @@ namespace hybridclr
 		}
 		return ret;
 	}
-#endif
+	#endif
 
 	InvokerMethod InterpreterModule::GetMethodInvoker(const Il2CppMethodDefinition* method)
 	{
 		Il2CppClass* klass = il2cpp::vm::GlobalMetadata::GetTypeInfoFromTypeDefinitionIndex(method->declaringType);
 		const char* methodName = il2cpp::vm::GlobalMetadata::GetStringFromIndex(method->nameIndex);
 		// special for Delegate::DynamicInvoke
-		return !klass || !metadata::IsChildTypeOfMulticastDelegate(klass) || strcmp(methodName, "Invoke") ? InterpterInvoke : InterpreterDelegateInvoke;
+		return !klass || !metadata::IsChildTypeOfMulticastDelegate(klass) || strcmp(methodName, "Invoke") ? InterpreterInvoke : InterpreterDelegateInvoke;
 	}
 
 	InvokerMethod InterpreterModule::GetMethodInvoker(const MethodInfo* method)
 	{
 		Il2CppClass* klass = method->klass;
-		return !klass || !metadata::IsChildTypeOfMulticastDelegate(klass) || strcmp(method->name, "Invoke") ? InterpterInvoke : InterpreterDelegateInvoke;
+		return !klass || !metadata::IsChildTypeOfMulticastDelegate(klass) || strcmp(method->name, "Invoke") ? InterpreterInvoke : InterpreterDelegateInvoke;
 	}
 
 	bool InterpreterModule::IsImplementsByInterpreter(const MethodInfo* method)
 	{
-		return method->invoker_method == InterpreterDelegateInvoke || method->invoker_method == InterpterInvoke;
+		return method->invoker_method == InterpreterDelegateInvoke || method->invoker_method == InterpreterInvoke;
 	}
 
 	InterpMethodInfo* InterpreterModule::GetInterpMethodInfo(const MethodInfo* methodInfo)
@@ -510,7 +516,7 @@ namespace hybridclr
 			TEMP_FORMAT(errMsg, "Method body is null. %s.%s::%s", methodInfo->klass->namespaze, methodInfo->klass->name, methodInfo->name);
 			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException(errMsg));
 		}
-		InterpMethodInfo* imi = new (IL2CPP_MALLOC_ZERO(sizeof(InterpMethodInfo))) InterpMethodInfo;
+		InterpMethodInfo* imi = new (HYBRIDCLR_MALLOC_ZERO(sizeof(InterpMethodInfo))) InterpMethodInfo;
 		transform::HiTransform::Transform(image, methodInfo, *methodBody, *imi);
 		il2cpp::os::Atomic::FullMemoryBarrier();
 		const_cast<MethodInfo*>(methodInfo)->interpData = imi;

@@ -138,6 +138,7 @@ namespace vm
         static int32_t GetReferenceAssemblyIndexIntoAssemblyTable(int32_t referencedAssemblyTableIndex);
 
         static const TypeDefinitionIndex GetIndexForTypeDefinition(const Il2CppClass* typeDefinition);
+        static const TypeDefinitionIndex GetIndexForTypeDefinition(const Il2CppTypeDefinition* typeDef);
         static const GenericParameterIndex GetIndexForGenericParameter(const Il2CppGenericParameter* genericParameter);
         static const MethodIndex GetIndexForMethodDefinition(const MethodInfo* method);
 

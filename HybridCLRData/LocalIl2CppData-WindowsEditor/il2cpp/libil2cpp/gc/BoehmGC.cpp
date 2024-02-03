@@ -27,6 +27,9 @@ static GC_push_other_roots_proc default_push_other_roots;
 typedef Il2CppHashMap<char*, char*, il2cpp::utils::PassThroughHash<char*> > RootMap;
 static RootMap s_Roots;
 
+typedef Il2CppHashMap<void*, il2cpp::gc::GarbageCollector::GetDynamicRootDataProc, il2cpp::utils::PassThroughHash<void*> > DynamicRootMap;
+static DynamicRootMap s_DynamicRoots;
+
 static void push_other_roots(void);
 #endif // !IL2CPP_TINY_WITHOUT_DEBUGGER
 
@@ -426,11 +429,52 @@ void il2cpp::gc::GarbageCollector::UnregisterRoot(char* start)
     GC_call_with_alloc_lock(deregister_root, start);
 }
 
+struct DynamicRootData
+{
+    void* root;
+    il2cpp::gc::GarbageCollector::GetDynamicRootDataProc getRootDataFunc;
+};
+
+static void* register_dynamic_root(void* arg)
+{
+    DynamicRootData* rootData = (DynamicRootData*)arg;
+    IL2CPP_ASSERT(s_DynamicRoots.find(rootData->root) == s_DynamicRoots.end());
+    s_DynamicRoots.add(rootData->root, rootData->getRootDataFunc);
+    
+    return NULL;
+}
+
+static void* deregister_dynamic_root(void* arg)
+{
+    IL2CPP_ASSERT(s_DynamicRoots.find(arg) != s_DynamicRoots.end());
+    s_DynamicRoots.erase(arg);
+    return NULL;
+}
+
+void il2cpp::gc::GarbageCollector::RegisterDynamicRoot(void* root, GetDynamicRootDataProc getRootDataFunc)
+{
+    DynamicRootData rootData = {root, getRootDataFunc};
+    GC_call_with_alloc_lock(register_dynamic_root, &rootData);
+}
+
+void il2cpp::gc::GarbageCollector::UnregisterDynamicRoot(void* root)
+{
+    GC_call_with_alloc_lock(deregister_dynamic_root, root);
+}
+
 static void
 push_other_roots(void)
 {
     for (RootMap::iterator iter = s_Roots.begin(); iter != s_Roots.end(); ++iter)
         GC_push_all(iter->first, iter->second);
+    for (auto dynamicRootEntry : s_DynamicRoots)
+    {
+        std::pair<char*, size_t> dynamicRootData = dynamicRootEntry.second(dynamicRootEntry.first);
+        if (dynamicRootData.first)
+        {
+            GC_push_all(dynamicRootData.first, dynamicRootData.first + dynamicRootData.second);
+        }
+    }
     if (default_push_other_roots)
         default_push_other_roots();
 }

@@ -21,49 +21,55 @@ namespace vm
 {
     static il2cpp::os::FastMutex s_assemblyLock;
     // copy on write
-    static AssemblyVector s_emptyAssemblies;
-    static AssemblyVector* s_Assemblies = &s_emptyAssemblies;
-    static AssemblyVector* s_lastValidAssemblies = &s_emptyAssemblies;
+    static int32_t s_assemblyVersion = 0;
+    static AssemblyVector s_Assemblies;
+
+    static int32_t s_snapshotAssemblyVersion = 0;
+    static AssemblyVector* s_snapshotAssemblies = &s_Assemblies;
+
+    static void CopyValidAssemblies(AssemblyVector& dst, const AssemblyVector& src)
+    {
+        for (AssemblyVector::const_iterator assIt = src.begin(); assIt != src.end(); ++assIt)
+        {
+            const Il2CppAssembly* ass = *assIt;
+            if (ass->token)
+            {
+                dst.push_back(ass);
+            }
+        }
+    }
 
     AssemblyVector* Assembly::GetAllAssemblies()
     {
         os::FastAutoLock lock(&s_assemblyLock);
+        if (s_assemblyVersion != s_snapshotAssemblyVersion)
+        {
+            s_snapshotAssemblies = new AssemblyVector();
+            CopyValidAssemblies(*s_snapshotAssemblies, s_Assemblies);
+            s_snapshotAssemblyVersion = s_assemblyVersion;
+        }
 
-        size_t validAssCount = 0;
-        bool assemblyChange = false;
-        for (AssemblyVector::const_iterator assIt = s_Assemblies->begin(); assIt != s_Assemblies->end(); ++assIt)
+        return s_snapshotAssemblies;
+    }
+
+
+    void Assembly::GetAllAssemblies(AssemblyVector& assemblies)
+    {
+        os::FastAutoLock lock(&s_assemblyLock);
+        if (s_assemblyVersion != s_snapshotAssemblyVersion)
         {
-            const Il2CppAssembly* ass = *assIt;
-            if (ass->token == 0)
-            {
-                continue;
-            }
-            if (s_lastValidAssemblies->size() <= validAssCount || (*s_lastValidAssemblies)[validAssCount] != ass)
-            {
-                assemblyChange = true;
-                break;
-            }
-            ++validAssCount;
+            CopyValidAssemblies(assemblies, s_Assemblies);
         }
-        if (assemblyChange)
+        else
         {
-            s_lastValidAssemblies = new AssemblyVector();
-            for (AssemblyVector::const_iterator assIt = s_Assemblies->begin(); assIt != s_Assemblies->end(); ++assIt)
-            {
-                const Il2CppAssembly* ass = *assIt;
-                if (ass->token)
-                {
-                    s_lastValidAssemblies->push_back(ass);
-                }
-            }
+            assemblies = *s_snapshotAssemblies;
         }
-        return s_lastValidAssemblies;
     }
 
     const Il2CppAssembly* Assembly::GetLoadedAssembly(const char* name)
     {
         os::FastAutoLock lock(&s_assemblyLock);
-        AssemblyVector& assemblies = *s_Assemblies;
+        AssemblyVector& assemblies = s_Assemblies;
         for (AssemblyVector::const_reverse_iterator assembly = assemblies.rbegin(); assembly != assemblies.rend(); ++assembly)
         {
             if (strcmp((*assembly)->aname.name, name) == 0)
@@ -149,18 +155,24 @@ namespace vm
     {
         os::FastAutoLock lock(&s_assemblyLock);
 
-        AssemblyVector* oldAssemblies = s_Assemblies;
+        s_Assemblies.push_back(assembly);
+        ++s_assemblyVersion;
+    }
 
-        // TODO IL2CPP_MALLOC ???
-        AssemblyVector* newAssemblies = oldAssemblies ? new AssemblyVector(*oldAssemblies) : new AssemblyVector();
-        newAssemblies->push_back(assembly);
-        s_Assemblies = newAssemblies;
-        // can't delete oldAssemblies because may be using by other thread
-        if (oldAssemblies)
-        {
-            // can't delete
-            // delete oldAssemblies;
-        }
+    void Assembly::InvalidateAssemblyList()
+    {
+        os::FastAutoLock lock(&s_assemblyLock);
+
+        ++s_assemblyVersion;
+    }
+
+    void Assembly::ClearAllAssemblies()
+    {
+        os::FastAutoLock lock(&s_assemblyLock);
+        s_Assemblies.clear();
+        delete s_snapshotAssemblies;
+        s_snapshotAssemblies = &s_Assemblies;
+        s_assemblyVersion = s_snapshotAssemblyVersion = 0;
     }
 
     void Assembly::Initialize()

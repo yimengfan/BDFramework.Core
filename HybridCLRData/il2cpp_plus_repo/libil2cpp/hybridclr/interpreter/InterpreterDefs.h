@@ -15,10 +15,6 @@ namespace hybridclr
 			I2,
 			U2,
 			U8,
-			SR, // structure reference
-			S_16, // struct size <= 16
-			S_24, // struct size <= 24
-			S_32, // struct size <= 32
 			S_N,  // struct size = 3，5，6，7， > 8, size is described by stackObjectSize
 		};
 
@@ -75,6 +71,8 @@ namespace hybridclr
 			int32_t exFlowCount;
 			int32_t exFlowCapaticy;
 
+			int32_t oldLocalPoolBottomIdx;
+
 			ExceptionFlowInfo* GetCurExFlow() const
 			{
 				return exFlowCount > 0 ? exFlowBase + exFlowCount - 1 : nullptr;
@@ -97,16 +95,17 @@ namespace hybridclr
 			Il2CppClass* exKlass;
 		};
 
-		struct ArgDesc
+		struct MethodArgDesc
 		{
 			LocationDataType type;
-			uint32_t stackObjectSize; //
+			uint32_t stackObjectSize;
+			bool passbyValWhenInvoke;
 		};
 
 		struct InterpMethodInfo
 		{
 			const MethodInfo* method;
-			ArgDesc* args;
+			MethodArgDesc* args;
 			uint32_t argCount;
 			uint32_t argStackObjectSize;
 			byte* codes;
@@ -117,7 +116,7 @@ namespace hybridclr
 			uint32_t localStackSize; // args + locals StackObject size
 			std::vector<uint64_t> resolveDatas;
 			std::vector<InterpExceptionClause*> exClauses;
-			uint32_t isTrivialCopyArgs : 1;
+			bool initLocals;
 		};
 	}
 }

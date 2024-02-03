@@ -29,7 +29,7 @@ namespace metadata
 		const Table& typeDefTb = _rawImage.GetTable(TableType::TYPEDEF);
 		uint32_t typeCount = typeDefTb.rowNum;
 		_typeDefs.resize(typeCount);
-		_aotTypeIndex2TypeDefs.reserve(typeCount);
+		_aotTypeIndex2TypeDefs.resize(typeCount);
 
 		Il2CppImage* image = _aotAssembly->image;
 		for (uint32_t index = 0; index < typeCount; index++)
@@ -147,7 +147,7 @@ namespace metadata
 		const Table& methodTb = _rawImage.GetTable(TableType::METHOD);
 		uint32_t methodCount = methodTb.rowNum;
 		_methodDefs.resize(methodCount);
-		_token2MethodDefs.reserve(methodCount * 2);
+		_token2MethodDefs.resize(methodCount * 2);
 		uint32_t typeCount = (uint32_t)_typeDefs.size();
 		for (SuperSetTypeDefDetail& type : _typeDefs)
 		{
@@ -271,7 +271,7 @@ namespace metadata
 		{
 			uint32_t rowIndex = method->homoRowIndex;
 			TbMethod methodData = _rawImage.ReadMethod(rowIndex);
-			MethodBody* body = new (IL2CPP_MALLOC_ZERO(sizeof(MethodBody))) MethodBody();
+			MethodBody* body = new (HYBRIDCLR_MALLOC_ZERO(sizeof(MethodBody))) MethodBody();
 			ReadMethodBody(*method->aotMethodDef, methodData, *body);
 			method->body = body;
 		}
@@ -401,7 +401,6 @@ namespace metadata
 		default:
 		{
 			RaiseBadImageException("Image::ReadTypeFromResolutionScope invaild TableType");
-			break;
 		}
 		}
 		IL2CPP_ASSERT(type.data.typeHandle);

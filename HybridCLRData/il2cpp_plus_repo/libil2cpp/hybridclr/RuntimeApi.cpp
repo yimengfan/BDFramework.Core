@@ -1,43 +1,39 @@
-#include "CommonDef.h"
+#include "RuntimeApi.h"
+
+#include "codegen/il2cpp-codegen.h"
+#include "vm/InternalCalls.h"
+#include "vm/Array.h"
+#include "vm/Exception.h"
 
 #include "metadata/MetadataModule.h"
-#include "Config.h"
+#include "RuntimeConfig.h"
 
-extern "C"
+namespace hybridclr
 {
-
-	IL2CPP_EXPORT int32_t DEFAULT_CALL RuntimeApi_LoadMetadataForAOTAssembly(void* dllBytes, uint32_t dllSize, int32_t mode)
+	void RuntimeApi::RegisterInternalCalls()
 	{
-		return (int32_t)hybridclr::metadata::MetadataModule::LoadMetadataForAOTAssembly(dllBytes, dllSize, (hybridclr::metadata::HomologousImageMode)mode);
+		il2cpp::vm::InternalCalls::Add("HybridCLR.RuntimeApi::LoadMetadataForAOTAssembly(System.Byte[],HybridCLR.HomologousImageMode)", (Il2CppMethodPointer)LoadMetadataForAOTAssembly);
+		il2cpp::vm::InternalCalls::Add("HybridCLR.RuntimeApi::GetRuntimeOption(HybridCLR.RuntimeOptionId)", (Il2CppMethodPointer)GetRuntimeOption);
+		il2cpp::vm::InternalCalls::Add("HybridCLR.RuntimeApi::SetRuntimeOption(HybridCLR.RuntimeOptionId,System.Int32)", (Il2CppMethodPointer)SetRuntimeOption);
 	}
 
-	IL2CPP_EXPORT uint32_t DEFAULT_CALL RuntimeApi_GetInterpreterThreadObjectStackSize()
+	int32_t RuntimeApi::LoadMetadataForAOTAssembly(Il2CppArray* dllBytes, int32_t mode)
 	{
-		return hybridclr::Config::GetIns().GetInterpreterThreadObjectStackSize();
+		if (!dllBytes)
+		{
+			il2cpp::vm::Exception::RaiseNullReferenceException();
+		}
+		return (int32_t)hybridclr::metadata::MetadataModule::LoadMetadataForAOTAssembly(il2cpp::vm::Array::GetFirstElementAddress(dllBytes), il2cpp::vm::Array::GetByteLength(dllBytes), (hybridclr::metadata::HomologousImageMode)mode);
 	}
 
-	IL2CPP_EXPORT void DEFAULT_CALL RuntimeApi_SetInterpreterThreadObjectStackSize(uint32_t size)
+	int32_t RuntimeApi::GetRuntimeOption(int32_t optionId)
 	{
-		hybridclr::Config::GetIns().SetInterpreterThreadObjectStackSize(size);
+		return hybridclr::RuntimeConfig::GetRuntimeOption((hybridclr::RuntimeOptionId)optionId);
 	}
 
-	IL2CPP_EXPORT uint32_t DEFAULT_CALL RuntimeApi_GetInterpreterThreadFrameStackSize()
+	void RuntimeApi::SetRuntimeOption(int32_t optionId, int32_t value)
 	{
-		return hybridclr::Config::GetIns().GetInterpreterThreadFrameStackSize();
+		hybridclr::RuntimeConfig::SetRuntimeOption((hybridclr::RuntimeOptionId)optionId, value);
 	}
 
-	IL2CPP_EXPORT void DEFAULT_CALL RuntimeApi_SetInterpreterThreadFrameStackSize(uint32_t size)
-	{
-		hybridclr::Config::GetIns().SetInterpreterThreadFrameStackSize(size);
-	}
-
-	IL2CPP_EXPORT uint32_t DEFAULT_CALL RuntimeApi_GetInterpreterThreadExceptionFlowSize()
-	{
-		return hybridclr::Config::GetIns().GetInterpreterThreadExceptionFlowSize();
-	}
-
-	IL2CPP_EXPORT void DEFAULT_CALL RuntimeApi_SetInterpreterThreadExceptionFlowSize(uint32_t size)
-	{
-		hybridclr::Config::GetIns().SetInterpreterThreadExceptionFlowSize(size);
-	}
 }

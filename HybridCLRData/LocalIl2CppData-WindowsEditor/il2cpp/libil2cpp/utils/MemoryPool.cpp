@@ -67,15 +67,14 @@ namespace utils
 
     void* MemoryPool::Calloc(size_t count, size_t size)
     {
-        void* ret = Malloc(count * size);
-        return memset(ret, 0, count * size);
+        return Malloc(count * size);
     }
 
     MemoryPool::Region* MemoryPool::AddRegion(size_t size)
     {
         Region* region = (Region*)IL2CPP_MALLOC(sizeof(Region));
         size_t allocationSize = std::max(kDefaultRegionSize, MakeMultipleOf(size, kPageSize));
-        region->start = region->current = (char*)IL2CPP_MALLOC(allocationSize);
+        region->start = region->current = (char*)IL2CPP_MALLOC_ZERO(allocationSize);
         region->size = region->free = allocationSize;
         m_Regions.push_back(region);
 

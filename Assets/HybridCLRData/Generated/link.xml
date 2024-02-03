@@ -8,7 +8,6 @@
     <type fullname="ILRuntimeDelegateHelper" preserve="all" />
   </assembly>
   <assembly fullname="BDFramework.Core">
-    <type fullname="BDebug" preserve="all" />
     <type fullname="BDFramework.AssetLoadPathType" preserve="all" />
     <type fullname="BDFramework.BDLauncher" preserve="all" />
     <type fullname="BDFramework.BDLauncher/GameLauncherDelegate" preserve="all" />
@@ -44,6 +43,7 @@
     <type fullname="BDFramework.VersionController.AssetsVersionController" preserve="all" />
     <type fullname="BDFramework.VersionController.AssetsVersionController/RetStatus" preserve="all" />
     <type fullname="BDFramework.VersionController.UpdateMode" preserve="all" />
+    <type fullname="BDebug" preserve="all" />
     <type fullname="DotNetExtension.DateTimeEx" preserve="all" />
     <type fullname="IEnumeratorTool" preserve="all" />
     <type fullname="LitJson.JsonMapper" preserve="all" />
@@ -73,6 +73,50 @@
     <type fullname="ILRuntime.Mono.Cecil.MemberReference" preserve="all" />
     <type fullname="ILRuntime.Mono.Cecil.TypeReference" preserve="all" />
   </assembly>
+  <assembly fullname="System">
+    <type fullname="System.Collections.Generic.Queue`1" preserve="all" />
+    <type fullname="System.Diagnostics.Stopwatch" preserve="all" />
+    <type fullname="System.Net.WebClient" preserve="all" />
+  </assembly>
+  <assembly fullname="System.Core">
+    <type fullname="System.Linq.Enumerable" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.CoreModule">
+    <type fullname="UnityEngine.Application" preserve="all" />
+    <type fullname="UnityEngine.Behaviour" preserve="all" />
+    <type fullname="UnityEngine.Color" preserve="all" />
+    <type fullname="UnityEngine.Component" preserve="all" />
+    <type fullname="UnityEngine.Debug" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityAction" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityAction`1" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityEvent" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityEventBase" preserve="all" />
+    <type fullname="UnityEngine.Events.UnityEvent`1" preserve="all" />
+    <type fullname="UnityEngine.GameObject" preserve="all" />
+    <type fullname="UnityEngine.Material" preserve="all" />
+    <type fullname="UnityEngine.Object" preserve="all" />
+    <type fullname="UnityEngine.Random" preserve="all" />
+    <type fullname="UnityEngine.RectTransform" preserve="all" />
+    <type fullname="UnityEngine.Sprite" preserve="all" />
+    <type fullname="UnityEngine.Transform" preserve="all" />
+    <type fullname="UnityEngine.WaitForSeconds" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.UI">
+    <type fullname="UnityEngine.EventSystems.UIBehaviour" preserve="all" />
+    <type fullname="UnityEngine.UI.Button" preserve="all" />
+    <type fullname="UnityEngine.UI.Button/ButtonClickedEvent" preserve="all" />
+    <type fullname="UnityEngine.UI.Graphic" preserve="all" />
+    <type fullname="UnityEngine.UI.Image" preserve="all" />
+    <type fullname="UnityEngine.UI.ScrollRect" preserve="all" />
+    <type fullname="UnityEngine.UI.Selectable" preserve="all" />
+    <type fullname="UnityEngine.UI.Text" preserve="all" />
+    <type fullname="UnityEngine.UI.Toggle" preserve="all" />
+    <type fullname="UnityEngine.UI.Toggle/ToggleEvent" preserve="all" />
+    <type fullname="UnityEngine.UI.ToggleGroup" preserve="all" />
+  </assembly>
+  <assembly fullname="ZString">
+    <type fullname="Cysharp.Text.ZString" preserve="all" />
+  </assembly>
   <assembly fullname="mscorlib">
     <type fullname="System.Action" preserve="all" />
     <type fullname="System.Action`1" preserve="all" />
@@ -81,6 +125,8 @@
     <type fullname="System.Array" preserve="all" />
     <type fullname="System.AsyncCallback" preserve="all" />
     <type fullname="System.Attribute" preserve="all" />
+    <type fullname="System.AttributeTargets" preserve="all" />
+    <type fullname="System.AttributeUsageAttribute" preserve="all" />
     <type fullname="System.Boolean" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2/Enumerator" preserve="all" />
@@ -110,11 +156,11 @@
     <type fullname="System.Func`2" preserve="all" />
     <type fullname="System.IAsyncResult" preserve="all" />
     <type fullname="System.IDisposable" preserve="all" />
-    <type fullname="System.Int32" preserve="all" />
-    <type fullname="System.Int64" preserve="all" />
     <type fullname="System.IO.File" preserve="all" />
     <type fullname="System.IO.MemoryStream" preserve="all" />
     <type fullname="System.IO.Stream" preserve="all" />
+    <type fullname="System.Int32" preserve="all" />
+    <type fullname="System.Int64" preserve="all" />
     <type fullname="System.MulticastDelegate" preserve="all" />
     <type fullname="System.NotSupportedException" preserve="all" />
     <type fullname="System.Object" preserve="all" />
@@ -150,52 +196,5 @@
     <type fullname="System.Threading.Tasks.Task`1" preserve="all" />
     <type fullname="System.Type" preserve="all" />
     <type fullname="System.ValueType" preserve="all" />
-  </assembly>
-  <assembly fullname="System">
-    <type fullname="System.Collections.Generic.Queue`1" preserve="all" />
-    <type fullname="System.Diagnostics.Stopwatch" preserve="all" />
-    <type fullname="System.Net.DownloadStringCompletedEventArgs" preserve="all" />
-    <type fullname="System.Net.DownloadStringCompletedEventHandler" preserve="all" />
-    <type fullname="System.Net.WebClient" preserve="all" />
-    <type fullname="System.Uri" preserve="all" />
-  </assembly>
-  <assembly fullname="System.Core">
-    <type fullname="System.Linq.Enumerable" preserve="all" />
-  </assembly>
-  <assembly fullname="UnityEngine.CoreModule">
-    <type fullname="UnityEngine.Application" preserve="all" />
-    <type fullname="UnityEngine.Behaviour" preserve="all" />
-    <type fullname="UnityEngine.Color" preserve="all" />
-    <type fullname="UnityEngine.Component" preserve="all" />
-    <type fullname="UnityEngine.Debug" preserve="all" />
-    <type fullname="UnityEngine.Events.UnityAction" preserve="all" />
-    <type fullname="UnityEngine.Events.UnityAction`1" preserve="all" />
-    <type fullname="UnityEngine.Events.UnityEvent" preserve="all" />
-    <type fullname="UnityEngine.Events.UnityEvent`1" preserve="all" />
-    <type fullname="UnityEngine.Events.UnityEventBase" preserve="all" />
-    <type fullname="UnityEngine.GameObject" preserve="all" />
-    <type fullname="UnityEngine.Material" preserve="all" />
-    <type fullname="UnityEngine.Object" preserve="all" />
-    <type fullname="UnityEngine.Random" preserve="all" />
-    <type fullname="UnityEngine.RectTransform" preserve="all" />
-    <type fullname="UnityEngine.Sprite" preserve="all" />
-    <type fullname="UnityEngine.Transform" preserve="all" />
-    <type fullname="UnityEngine.WaitForSeconds" preserve="all" />
-  </assembly>
-  <assembly fullname="UnityEngine.UI">
-    <type fullname="UnityEngine.EventSystems.UIBehaviour" preserve="all" />
-    <type fullname="UnityEngine.UI.Button" preserve="all" />
-    <type fullname="UnityEngine.UI.Button/ButtonClickedEvent" preserve="all" />
-    <type fullname="UnityEngine.UI.Graphic" preserve="all" />
-    <type fullname="UnityEngine.UI.Image" preserve="all" />
-    <type fullname="UnityEngine.UI.ScrollRect" preserve="all" />
-    <type fullname="UnityEngine.UI.Selectable" preserve="all" />
-    <type fullname="UnityEngine.UI.Text" preserve="all" />
-    <type fullname="UnityEngine.UI.Toggle" preserve="all" />
-    <type fullname="UnityEngine.UI.Toggle/ToggleEvent" preserve="all" />
-    <type fullname="UnityEngine.UI.ToggleGroup" preserve="all" />
-  </assembly>
-  <assembly fullname="ZString">
-    <type fullname="Cysharp.Text.ZString" preserve="all" />
   </assembly>
 </linker>

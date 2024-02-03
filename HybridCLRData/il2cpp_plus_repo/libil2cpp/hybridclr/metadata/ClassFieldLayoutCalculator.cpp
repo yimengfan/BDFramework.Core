@@ -1,6 +1,7 @@
 #include "ClassFieldLayoutCalculator.h"
 
 #include "metadata/FieldLayout.h"
+#include "metadata/GenericMetadata.h"
 #include "vm/Field.h"
 
 #include "InterpreterImage.h"
@@ -28,8 +29,11 @@ namespace metadata
         SizeAndAlignment sa = { };
         if (type->byref)
         {
-            sa.size = sizeof(voidptr_t);
+            sa.size = sa.nativeSize = sizeof(voidptr_t);
             sa.alignment = IL2CPP_ALIGN_OF(voidptr_t);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            sa.naturalAlignment = sa.alignment;
+#endif
             return sa;
         }
 
@@ -38,38 +42,59 @@ namespace metadata
         case IL2CPP_TYPE_I1:
         case IL2CPP_TYPE_U1:
         case IL2CPP_TYPE_BOOLEAN:
-            sa.size = sizeof(int8_t);
+            sa.size = sa.nativeSize = sizeof(int8_t);
             sa.alignment = IL2CPP_ALIGN_OF(int8_t);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            sa.naturalAlignment = sa.alignment;
+#endif
             return sa;
         case IL2CPP_TYPE_I2:
         case IL2CPP_TYPE_U2:
         case IL2CPP_TYPE_CHAR:
-            sa.size = sizeof(int16_t);
+            sa.size = sa.nativeSize = sizeof(int16_t);
             sa.alignment = IL2CPP_ALIGN_OF(int16_t);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            sa.naturalAlignment = sa.alignment;
+#endif
             return sa;
         case IL2CPP_TYPE_I4:
         case IL2CPP_TYPE_U4:
-            sa.size = sizeof(int32_t);
+            sa.size = sa.nativeSize = sizeof(int32_t);
             sa.alignment = IL2CPP_ALIGN_OF(int32_t);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            sa.naturalAlignment = sa.alignment;
+#endif
             return sa;
         case IL2CPP_TYPE_I8:
         case IL2CPP_TYPE_U8:
-            sa.size = sizeof(int64_t);
+            sa.size = sa.nativeSize = sizeof(int64_t);
             sa.alignment = IL2CPP_ALIGN_OF(int64_t);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            sa.naturalAlignment = sa.alignment;
+#endif
             return sa;
         case IL2CPP_TYPE_I:
         case IL2CPP_TYPE_U:
             // TODO should we use pointer or int32_t here?
-            sa.size = sizeof(intptr_t);
+            sa.size = sa.nativeSize = sizeof(intptr_t);
             sa.alignment = IL2CPP_ALIGN_OF(intptr_t);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            sa.naturalAlignment = sa.alignment;
+#endif
             return sa;
         case IL2CPP_TYPE_R4:
-            sa.size = sizeof(float);
+            sa.size = sa.nativeSize = sizeof(float);
             sa.alignment = IL2CPP_ALIGN_OF(float);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            sa.naturalAlignment = sa.alignment;
+#endif
             return sa;
         case IL2CPP_TYPE_R8:
-            sa.size = sizeof(double);
+            sa.size = sa.nativeSize = sizeof(double);
             sa.alignment = IL2CPP_ALIGN_OF(double);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            sa.naturalAlignment = sa.alignment;
+#endif
             return sa;
         case IL2CPP_TYPE_PTR:
         case IL2CPP_TYPE_FNPTR:
@@ -78,19 +103,30 @@ namespace metadata
         case IL2CPP_TYPE_ARRAY:
         case IL2CPP_TYPE_CLASS:
         case IL2CPP_TYPE_OBJECT:
+            sa.size = sa.nativeSize = sizeof(voidptr_t);
+            sa.alignment = IL2CPP_ALIGN_OF(voidptr_t);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            sa.naturalAlignment = sa.alignment;
+#endif
+            return sa;
         case IL2CPP_TYPE_VAR:
         case IL2CPP_TYPE_MVAR:
-            sa.size = sizeof(voidptr_t);
-            sa.alignment = IL2CPP_ALIGN_OF(voidptr_t);
+            sa.size = sa.nativeSize = 1;
+            sa.alignment = 1;
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            sa.naturalAlignment = sa.alignment;
+#endif
             return sa;
         case IL2CPP_TYPE_VALUETYPE:
         {
             CalcClassNotStaticFields(type);
-            ClassLayoutInfo& classLayout = _classMap[type];
+            ClassLayoutInfo& classLayout = *_classMap[type];
             sa.size = classLayout.instanceSize - sizeof(Il2CppObject);
             sa.nativeSize = classLayout.nativeSize;
             sa.alignment = classLayout.alignment;
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
             sa.naturalAlignment = classLayout.naturalAlignment;
+#endif
             return sa;
         }
         case IL2CPP_TYPE_GENERICINST:
@@ -101,16 +137,21 @@ namespace metadata
             if (IsValueType(typeDef))
             {
                 CalcClassNotStaticFields(type);
-                ClassLayoutInfo& classLayout = _classMap[type];
+                ClassLayoutInfo& classLayout = *_classMap[type];
                 sa.size = classLayout.instanceSize - sizeof(Il2CppObject);
                 sa.nativeSize = classLayout.nativeSize;
                 sa.alignment = classLayout.alignment;
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
                 sa.naturalAlignment = classLayout.naturalAlignment;
+#endif
             }
             else
             {
-                sa.size = sizeof(voidptr_t);
-                sa.naturalAlignment = sa.alignment = IL2CPP_ALIGN_OF(voidptr_t);
+                sa.size = sa.nativeSize = sizeof(voidptr_t);
+                sa.alignment = IL2CPP_ALIGN_OF(voidptr_t);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+                sa.naturalAlignment = sa.alignment;
+#endif
             }
             return sa;
         }
@@ -138,20 +179,24 @@ namespace metadata
         data.actualClassSize = actualParentSize;
         IL2CPP_ASSERT(parentAlignment <= std::numeric_limits<uint8_t>::max());
         data.minimumAlignment = static_cast<uint8_t>(parentAlignment);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
         data.naturalAlignment = 0;
+#endif
         data.nativeSize = 0;
         for (FieldLayout* field : fields)
         {
             SizeAndAlignment sa = GetTypeSizeAndAlignment(field->type);
-            field->size = sa.nativeSize ? sa.nativeSize : sa.size;
+            field->size = sa.size;// sa.nativeSize > 0 ? sa.nativeSize : sa.size;
 
             // For fields, we might not want to take the actual alignment of the type - that might account for
             // packing. When a type is used as a field, we should not care about its alignment with packing,
             // instead let's use its natural alignment, without regard for packing. So if it's alignment
             // is less than the compiler's minimum alignment (4 bytes), lets use the natural alignment if we have it.
             uint8_t alignment = sa.alignment;
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
             if (alignment < 4 && sa.naturalAlignment != 0)
                 alignment = sa.naturalAlignment;
+#endif
             if (packing != 0)
                 alignment = std::min(sa.alignment, packing);
             int32_t offset = data.actualClassSize;
@@ -163,7 +208,9 @@ namespace metadata
             data.FieldOffsets.push_back(offset);
             data.actualClassSize = offset + std::max(sa.size, (int32_t)1);
             data.minimumAlignment = std::max(data.minimumAlignment, alignment);
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
             data.naturalAlignment = std::max({ data.naturalAlignment, sa.alignment, sa.naturalAlignment });
+#endif
             data.nativeSize += sa.size;
         }
 
@@ -212,9 +259,10 @@ namespace metadata
 		{
 			return;
 		}
-		ClassLayoutInfo& layout = _classMap[type] = {};
+		ClassLayoutInfo& layout = *(_classMap[type] = new (HYBRIDCLR_MALLOC_ZERO(sizeof(ClassLayoutInfo))) ClassLayoutInfo());
 		layout.type = type;
 		const Il2CppTypeDefinition* typeDef = GetUnderlyingTypeDefinition(type);
+        const char* typeName = il2cpp::vm::GlobalMetadata::GetStringFromIndex(typeDef->nameIndex);
 		std::vector<FieldLayout>& fields = layout.fields;
         fields.resize(typeDef->field_count, {});
 
@@ -227,7 +275,9 @@ namespace metadata
             layout.actualSize = klass->actualSize;
             layout.nativeSize = klass->native_size;
             layout.alignment = klass->minimumAlignment;
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
             layout.naturalAlignment = klass->naturalAligment;
+#endif
             return;
         }
 
@@ -258,9 +308,31 @@ namespace metadata
             } 
 		}
 
+        if (il2cpp::metadata::GenericMetadata::ContainsGenericParameters(type)
+            || ((type->type == IL2CPP_TYPE_VALUETYPE || type->type == IL2CPP_TYPE_CLASS) && typeDef->genericContainerIndex != kGenericContainerIndexInvalid))
+        {
+            layout.instanceSize = 0;
+            layout.actualSize = 0;
+            layout.nativeSize = -1;
+            layout.alignment = 1;
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            layout.naturalAlignment = 1;
+#endif
+            return;
+        }
 
 
-        uint8_t packingSize = (uint8_t)_image->GetPackingSize(typeDef);
+        TbClassLayout classLayoutData = _image->GetClassLayout(typeDef);
+        uint8_t packingSize = (uint8_t)classLayoutData.packingSize;
+        int32_t classSize = (int32_t)(classLayoutData.classSize + sizeof(Il2CppObject));
+
+
+        std::vector<FieldLayout*> instanceFields;
+        for (FieldLayout& field : fields)
+        {
+            if (IsInstanceField(field.type))
+                instanceFields.push_back(&field);
+        }
 
         bool isExplictLayout = typeDef->flags & TYPE_ATTRIBUTE_EXPLICIT_LAYOUT;
         if (isExplictLayout)
@@ -268,28 +340,44 @@ namespace metadata
             IL2CPP_ASSERT(IsValueType(typeDef));
             IL2CPP_ASSERT(isCurAssemblyType);
             int32_t instanceSize = IL2CPP_SIZEOF_STRUCT_WITH_NO_INSTANCE_FIELDS + sizeof(Il2CppObject);
-            for (FieldLayout& field : fields)
+            if (classLayoutData.classSize > 0)
+			{
+                instanceSize = std::max(instanceSize, (int32_t)classLayoutData.classSize + (int32_t)sizeof(Il2CppObject));
+			}
+            int32_t maxAlignment = 1;
+            int32_t nativeSize = 1;
+            for (FieldLayout* field : instanceFields)
             {
-                if (!IsInstanceField(field.type))
+                SizeAndAlignment sa = GetTypeSizeAndAlignment(field->type);
+                instanceSize = std::max(instanceSize, field->offset + (int32_t)sa.size);
+                maxAlignment = std::max(maxAlignment, (int32_t)sa.alignment);
+                if (packingSize != 0)
                 {
-                    continue;
-                }
-                SizeAndAlignment sa = GetTypeSizeAndAlignment(field.type);
-                instanceSize = std::max(instanceSize, field.offset + (int32_t)sa.size);
+					maxAlignment = std::min(maxAlignment, (int32_t)packingSize);
+				}
+                nativeSize = AlignTo(std::max(nativeSize, field->offset + sa.nativeSize - (int32_t)sizeof(Il2CppObject)), maxAlignment);
             }
-            // TODO FIXME. not consider packingSize
-
-            layout.naturalAlignment = layout.alignment = std::max(packingSize, (uint8_t)1);
+            layout.alignment = maxAlignment;
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
+            layout.naturalAlignment = layout.alignment;
+#endif
             layout.actualSize = layout.instanceSize = AlignTo(instanceSize, layout.alignment);
-            layout.nativeSize = -1;
+            layout.nativeSize = nativeSize;
+            if (classLayoutData.classSize > 0)
+            {
+                layout.actualSize = std::max(layout.actualSize, classSize);
+                layout.instanceSize = std::max(layout.instanceSize, classSize);
+                layout.nativeSize = std::max((int32_t)classLayoutData.classSize, layout.nativeSize);
+            }
         }
         else
         {
             uint8_t parentMinimumAligment;
             int32_t parentActualSize = 0;
+            bool isValueType = IsValueType(typeDef);
             if (typeDef->parentIndex != kInvalidIndex)
             {
-                if (IsValueType(typeDef))
+                if (isValueType)
                 {
                     parentMinimumAligment = 1;
                     parentActualSize = sizeof(Il2CppObject);
@@ -297,6 +385,7 @@ namespace metadata
                 else
                 {
                     const Il2CppType* parentType = il2cpp::vm::GlobalMetadata::GetIl2CppTypeFromIndex(typeDef->parentIndex);
+                    parentType = TryInflateIfNeed(parentType, gc, true);
                     CalcClassNotStaticFields(parentType);
                     ClassLayoutInfo* parentLayout = GetClassLayoutInfo(parentType);
                     parentActualSize = parentLayout->actualSize;
@@ -309,28 +398,30 @@ namespace metadata
                 parentMinimumAligment = PTR_SIZE;
             }
 
-            std::vector<FieldLayout*> instanceFields;
-            for (FieldLayout& field : fields)
-            {
-                if (IsInstanceField(field.type))
-                    instanceFields.push_back(&field);
-            }
-
             FieldLayoutData layoutData;
             LayoutFields(parentActualSize, parentMinimumAligment, packingSize, instanceFields, layoutData);
-            if (fields.empty() && IsValueType(type))
+            if (instanceFields.empty() && isValueType)
             {
-                layoutData.classSize = layoutData.actualClassSize = layoutData.nativeSize = IL2CPP_SIZEOF_STRUCT_WITH_NO_INSTANCE_FIELDS + sizeof(Il2CppObject);;
+                layoutData.classSize = layoutData.actualClassSize = IL2CPP_SIZEOF_STRUCT_WITH_NO_INSTANCE_FIELDS + sizeof(Il2CppObject);
+                layoutData.nativeSize = IL2CPP_SIZEOF_STRUCT_WITH_NO_INSTANCE_FIELDS;
             }
             layout.alignment = layoutData.minimumAlignment;
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
             layout.naturalAlignment = layoutData.naturalAlignment;
+#endif
             layout.actualSize = layoutData.actualClassSize;
             layout.instanceSize = layoutData.classSize;
-            layout.nativeSize = layoutData.nativeSize;
+            layout.nativeSize = AlignTo(layoutData.nativeSize, layout.alignment);
 
-            if (!IsValueType(typeDef))
+            if (!isValueType)
             {
                 layout.nativeSize = -1;
+            }
+            if (classLayoutData.classSize > 0)
+            {
+                layout.actualSize = std::max(layout.actualSize, classSize);
+                layout.instanceSize = std::max(layout.instanceSize, classSize);
+                layout.nativeSize = isValueType ? std::max((int32_t)classLayoutData.classSize, layout.nativeSize) : -1;
             }
         }
 	}
@@ -338,7 +429,7 @@ namespace metadata
 	void ClassFieldLayoutCalculator::CalcClassStaticFields(const Il2CppType* type)
 	{
         IL2CPP_ASSERT(_classMap.find(type) != _classMap.end());
-        ClassLayoutInfo& layout = _classMap[type];
+        ClassLayoutInfo& layout = *_classMap[type];
 
         std::vector<FieldLayout*> staticFields;
         std::vector<FieldLayout*> threadStaticFields;

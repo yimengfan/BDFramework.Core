@@ -9,7 +9,7 @@
 #include "vm/StackTrace.h"
 
 #include "../metadata/MetadataUtil.h"
-#include "../Config.h"
+#include "../RuntimeConfig.h"
 
 #include "InterpreterDefs.h"
 #include "MemoryUtil.h"
@@ -39,10 +39,10 @@ namespace interpreter
 	public:
 		MachineState()
 		{
-			Config& hc = Config::GetIns();
 			_stackSize = -1;
 			_stackBase = nullptr;
 			_stackTopIdx = 0;
+			_localPoolBottomIdx = -1;
 
 			_frameBase = nullptr;
 			_frameCount = -1;
@@ -57,15 +57,30 @@ namespace interpreter
 		{
 			if (_stackBase)
 			{
-				il2cpp::gc::GarbageCollector::FreeFixed(_stackBase);
+				//il2cpp::gc::GarbageCollector::FreeFixed(_stackBase);
+				il2cpp::gc::GarbageCollector::UnregisterDynamicRoot(this);
+				HYBRIDCLR_FREE(_stackBase);
 			}
 			if (_frameBase)
 			{
-				IL2CPP_FREE(_frameBase);
+				HYBRIDCLR_FREE(_frameBase);
 			}
 			if (_exceptionFlowBase)
 			{
-				IL2CPP_FREE(_exceptionFlowBase);
+				HYBRIDCLR_FREE(_exceptionFlowBase);
+			}
+		}
+
+		static std::pair<char*, size_t> GetGCRootData(void* root)
+		{
+			MachineState* machineState = (MachineState*)root;
+			if (machineState->_stackBase && machineState->_stackTopIdx > 0)
+			{
+				return std::make_pair((char*)machineState->_stackBase, machineState->_stackTopIdx * sizeof(StackObject));
+			}
+			else
+			{
+				return std::make_pair(nullptr, 0);
 			}
 		}
 
@@ -86,13 +101,13 @@ namespace interpreter
 
 		StackObject* AllocStackSlot(int32_t slotNum)
 		{
-			if (_stackTopIdx + slotNum > _stackSize)
+			if (_stackTopIdx + slotNum > _localPoolBottomIdx)
 			{
 				if (!_stackBase)
 				{
 					InitEvalStack();
 				}
-				if (_stackTopIdx + slotNum > _stackSize)
+				if (_stackTopIdx + slotNum > _localPoolBottomIdx)
 				{
 					il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetStackOverflowException("AllocStackSlot"));
 				}
@@ -105,6 +120,26 @@ namespace interpreter
 			return dataPtr;
 		}
 
+		void* AllocLocalloc(size_t size)
+		{
+			IL2CPP_ASSERT(size % 8 == 0);
+			int32_t slotNum = (int32_t)(size / 8);
+			IL2CPP_ASSERT(slotNum > 0);
+			if (_stackTopIdx + slotNum > _localPoolBottomIdx)
+			{
+				if (!_stackBase)
+				{
+					InitEvalStack();
+				}
+				if (_stackTopIdx + slotNum > _localPoolBottomIdx)
+				{
+					il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetStackOverflowException("AllocLocalloc"));
+				}
+			}
+			_localPoolBottomIdx -= slotNum;
+			return _stackBase + _localPoolBottomIdx;
+		}
+
 		void SetStackTop(int32_t oldTop)
 		{
 			_stackTopIdx = oldTop;
@@ -113,6 +148,16 @@ namespace interpreter
 		uint32_t GetFrameTopIdx() const
 		{
 			return _frameTopIdx;
+		}
+
+		int32_t GetLocalPoolBottomIdx() const
+		{
+			return _localPoolBottomIdx;
+		}
+
+		void SetLocalPoolBottomIdx(int32_t idx)
+		{
+			_localPoolBottomIdx = idx;
 		}
 
 		InterpFrame* PushFrame()
@@ -213,17 +258,21 @@ namespace interpreter
 
 		void CollectFrames(il2cpp::vm::StackFrames* stackFrames)
 		{
+			if (_frameTopIdx <= 0)
+			{
+				return;
+			}
+			stackFrames->insert(stackFrames->begin(), _frameTopIdx, Il2CppStackFrameInfo());
 			for (int32_t i = 0; i < _frameTopIdx; i++)
 			{
 				InterpFrame* frame = _frameBase + i;
 				const MethodInfo* method = frame->method->method;
-				Il2CppStackFrameInfo stackFrameInfo = {
+				(*stackFrames)[i] = {
 					method
 #if HYBRIDCLR_UNITY_2020_OR_NEW
 					, (uintptr_t)method->methodPointer
 #endif
 				};
-				stackFrames->push_back(stackFrameInfo);
 			}
 		}
 
@@ -232,32 +281,31 @@ namespace interpreter
 
 		void InitEvalStack()
 		{
-			Config& hc = Config::GetIns();
-			_stackSize = (int32_t)hc.GetInterpreterThreadObjectStackSize();
-			_stackBase = (StackObject*)il2cpp::gc::GarbageCollector::AllocateFixed(hc.GetInterpreterThreadObjectStackSize() * sizeof(StackObject), nullptr);
-			std::memset(_stackBase, 0, _stackSize * sizeof(StackObject));
+			_stackSize = (int32_t)RuntimeConfig::GetInterpreterThreadObjectStackSize();
+			_stackBase = (StackObject*)HYBRIDCLR_MALLOC_ZERO(RuntimeConfig::GetInterpreterThreadObjectStackSize() * sizeof(StackObject));
 			_stackTopIdx = 0;
+			_localPoolBottomIdx = _stackSize;
+			il2cpp::gc::GarbageCollector::RegisterDynamicRoot(this, GetGCRootData);
 		}
 
 		void InitFrames()
 		{
-			Config& hc = Config::GetIns();
-			_frameBase = (InterpFrame*)IL2CPP_CALLOC(hc.GetInterpreterThreadFrameStackSize(), sizeof(InterpFrame));
-			_frameCount = (int32_t)hc.GetInterpreterThreadFrameStackSize();
+			_frameBase = (InterpFrame*)HYBRIDCLR_CALLOC(RuntimeConfig::GetInterpreterThreadFrameStackSize(), sizeof(InterpFrame));
+			_frameCount = (int32_t)RuntimeConfig::GetInterpreterThreadFrameStackSize();
 			_frameTopIdx = 0;
 		}
 
 		void InitExceptionFlows()
 		{
-			Config& hc = Config::GetIns();
-			_exceptionFlowBase = (ExceptionFlowInfo*)IL2CPP_CALLOC(hc.GetInterpreterThreadExceptionFlowSize(), sizeof(ExceptionFlowInfo));
-			_exceptionFlowCount = (int32_t)hc.GetInterpreterThreadExceptionFlowSize();
+			_exceptionFlowBase = (ExceptionFlowInfo*)HYBRIDCLR_CALLOC(RuntimeConfig::GetInterpreterThreadExceptionFlowSize(), sizeof(ExceptionFlowInfo));
+			_exceptionFlowCount = (int32_t)RuntimeConfig::GetInterpreterThreadExceptionFlowSize();
 			_exceptionFlowTopIdx = 0;
 		}
 
 		StackObject* _stackBase;
 		int32_t _stackSize;
 		int32_t _stackTopIdx;
+		int32_t _localPoolBottomIdx;
 
 		InterpFrame* _frameBase;
 		int32_t _frameTopIdx;
@@ -309,70 +357,25 @@ namespace interpreter
 			}
 		}
 
-		InterpFrame* EnterFrameFromInterpreter(const InterpMethodInfo* imi, StackObject* argBase)
+		InterpFrame* EnterFrameFromInterpreter(const InterpMethodInfo* imi, StackObject* argBase);
+
+
+		InterpFrame* EnterFrameFromNative(const InterpMethodInfo* imi, StackObject* argBase);
+
+		InterpFrame* LeaveFrame();
+
+		void* AllocLoc(size_t originSize, bool fillZero)
 		{
-#if IL2CPP_ENABLE_PROFILER
-			il2cpp_codegen_profiler_method_enter(imi->method);
-#endif
-			int32_t oldStackTop = _machineState.GetStackTop();
-			StackObject* stackBasePtr = _machineState.AllocStackSlot(imi->maxStackSize - imi->argStackObjectSize);
-			InterpFrame* newFrame = _machineState.PushFrame();
-			*newFrame = { imi, argBase, oldStackTop, nullptr, nullptr, nullptr, 0, 0 };
-			PUSH_STACK_FRAME(imi->method);
-			return newFrame;
-		}
-
-
-		InterpFrame* EnterFrameFromNative(const InterpMethodInfo* imi, StackObject* argBase)
-		{
-#if IL2CPP_ENABLE_PROFILER
-			il2cpp_codegen_profiler_method_enter(imi->method);
-#endif
-			int32_t oldStackTop = _machineState.GetStackTop();
-			StackObject* stackBasePtr = _machineState.AllocStackSlot(imi->maxStackSize);
-			InterpFrame* newFrame = _machineState.PushFrame();
-			*newFrame = { imi, stackBasePtr, oldStackTop, nullptr, nullptr, nullptr, 0, 0 };
-
-			// if not prepare arg stack. copy from args
-			if (imi->args)
+			if (originSize == 0)
 			{
-				IL2CPP_ASSERT(imi->argCount == metadata::GetActualArgumentNum(imi->method));
-				if (imi->isTrivialCopyArgs)
-				{
-					CopyStackObject(stackBasePtr, argBase, imi->argStackObjectSize);
-				}
-				else
-				{
-					CopyArgs(stackBasePtr, argBase, imi->args, imi->argCount, imi->argStackObjectSize);
-				}
+				return nullptr;
 			}
-			PUSH_STACK_FRAME(imi->method);
-			return newFrame;
-		}
-
-		InterpFrame* LeaveFrame()
-		{
-			IL2CPP_ASSERT(_machineState.GetFrameTopIdx() > _frameBaseIdx);
-			POP_STACK_FRAME();
-			InterpFrame* frame = _machineState.GetTopFrame();
-#if IL2CPP_ENABLE_PROFILER
-			il2cpp_codegen_profiler_method_exit(frame->method->method);
-#endif
-			if (frame->exFlowBase)
+			size_t size = (originSize + 7) & ~(size_t)7;
+			void* data = _machineState.AllocLocalloc(size);
+			if (fillZero)
 			{
-				_machineState.SetExceptionFlowTop(frame->exFlowBase);
+				std::memset(data, 0, size);
 			}
-			_machineState.PopFrame();
-			_machineState.SetStackTop(frame->oldStackTop);
-			return _machineState.GetFrameTopIdx() > _frameBaseIdx ? _machineState.GetTopFrame() : nullptr;
-		}
-
-		void* AllocLoc(size_t size)
-		{
-			uint32_t soNum = (uint32_t)((size + sizeof(StackObject) - 1) / sizeof(StackObject));
-			//void* data = _machineState.AllocStackSlot(soNum);
-			//std::memset(data, 0, soNum * 8);
-			void* data = IL2CPP_MALLOC_ZERO(size);
 			return data;
  		}
 

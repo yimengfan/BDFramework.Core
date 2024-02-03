@@ -84,12 +84,7 @@ namespace metadata
             return iter->second;
 
         if (copyMethodPtr)
-        {
-            Il2CppGenericMethod *newGMethod = vm::MetadataAllocGenericMethod();
-            newGMethod->methodDefinition = gmethod->methodDefinition;
-            newGMethod->context = gmethod->context;
-            gmethod = newGMethod;
-        }
+            gmethod = MetadataCache::GetGenericMethod(gmethod->methodDefinition, gmethod->context.class_inst, gmethod->context.method_inst);
 
         const MethodInfo* methodDefinition = gmethod->methodDefinition;
         Il2CppClass* declaringClass = methodDefinition->klass;

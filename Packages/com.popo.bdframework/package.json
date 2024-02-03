@@ -7,7 +7,7 @@
   "dependencies": {
     "com.ourpalm.ilruntime": "2.0.2",
     "com.unity.scriptablebuildpipeline": "1.20.2",
-    "com.focus-creative-games.hybridclr_unity": "2.4.2"
+    "com.code-philosophy.hybridclr": "5.0.0"
   },
   "keywords": [
     "BDFramework",

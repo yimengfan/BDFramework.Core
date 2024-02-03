@@ -225,6 +225,7 @@ namespace metadata
 			return GetImage(DecodeImageIndex(index))->GetFieldOrParameterDefalutValueByRawIndex(DecodeMetadataIndex(index));
 		}
 
+#if HYBRIDCLR_UNITY_2020
 		static bool HasAttribute(const Il2CppImage* image, uint32_t token, Il2CppClass* attribute)
 		{
 			return GetImage(image)->HasAttributeByToken(token, attribute);
@@ -234,6 +235,7 @@ namespace metadata
 		{
 			return GetImage(image)->GetCustomAttributeDataRange(token);
 		}
+#endif
 
 		static bool IsImplementedByInterpreter(MethodInfo* method)
 		{
@@ -272,9 +274,9 @@ namespace metadata
 	private:
 		static void InitReversePInvokeInfo();
 
-		static std::unordered_map<const char*, int32_t, CStringHash, CStringEqualTo> s_methodSig2Indexs;
-		static std::unordered_map<const MethodInfo*, const ReversePInvokeInfo*> s_methodInfo2ReverseInfos;
-		static std::unordered_map<Il2CppMethodPointer, const ReversePInvokeInfo*> s_methodPointer2ReverseInfos;
+		static Il2CppHashMap<const char*, int32_t, CStringHash, CStringEqualTo> s_methodSig2Indexs;
+		static Il2CppHashMap<const MethodInfo*, const ReversePInvokeInfo*, il2cpp::utils::PointerHash<MethodInfo>> s_methodInfo2ReverseInfos;
+		static Il2CppHashMap<Il2CppMethodPointer, const ReversePInvokeInfo*, il2cpp::utils::PassThroughHash<Il2CppMethodPointer>> s_methodPointer2ReverseInfos;
 		static std::vector<ReversePInvokeInfo> s_reverseInfos;
 	};
 }

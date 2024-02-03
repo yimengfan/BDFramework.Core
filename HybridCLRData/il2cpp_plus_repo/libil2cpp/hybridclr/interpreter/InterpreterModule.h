@@ -37,11 +37,13 @@ namespace interpreter
 
 		static bool HasImplementCallNative2Managed(const MethodInfo* method)
 		{
+			IL2CPP_ASSERT(method->methodPointerCallByInterp != NotSupportAdjustorThunk);
 			return method->methodPointerCallByInterp != (Il2CppMethodPointer)NotSupportNative2Managed;
 		}
 
 		static bool HasImplementCallVirtualNative2Managed(const MethodInfo* method)
 		{
+			IL2CPP_ASSERT(method->virtualMethodPointerCallByInterp != NotSupportNative2Managed);
 			return method->virtualMethodPointerCallByInterp != (Il2CppMethodPointer)NotSupportAdjustorThunk;
 		}
 
@@ -49,6 +51,8 @@ namespace interpreter
 
 		static void NotSupportNative2Managed();
 		static void NotSupportAdjustorThunk();
+
+		static const char* GetValueTypeSignature(const char* fullName);
 	private:
 
 		static il2cpp::os::ThreadLocalValue s_machineState;

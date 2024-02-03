@@ -14,16 +14,10 @@ namespace metadata
 
     bool Il2CppGenericContextCompare::Compare(const Il2CppGenericContext* gc1, const Il2CppGenericContext* gc2)
     {
-        IL2CPP_NOT_IMPLEMENTED_NO_ASSERT(Il2CppGenericContextCompare::Compare, "We should ensure GenericInst uniqueness and do direct comparison");
-        // return gc1->class_inst == gc2->class_inst && gc1->method_inst == gc2->method_inst;
-
-        if ((!gc1->class_inst && gc2->class_inst) || (gc1->class_inst && !gc2->class_inst))
-            return false;
-        if ((!gc1->method_inst && gc2->method_inst) || (gc1->method_inst && !gc2->method_inst))
-            return false;
-
-        return (!gc1->class_inst || Il2CppGenericInstCompare::Compare(gc1->class_inst, gc2->class_inst)) &&
-            (!gc1->method_inst || Il2CppGenericInstCompare::Compare(gc1->method_inst, gc2->method_inst));
+        //bool ret = gc1->class_inst == gc2->class_inst && gc1->method_inst == gc2->method_inst;
+        //IL2CPP_ASSERT(ret == (Il2CppGenericInstCompare::Compare(gc1->class_inst, gc2->class_inst) && Il2CppGenericInstCompare::Compare(gc1->method_inst, gc2->method_inst)));
+        return Il2CppGenericInstCompare::Compare(gc1->class_inst, gc2->class_inst) && Il2CppGenericInstCompare::Compare(gc1->method_inst, gc2->method_inst);
+        //return ret;
     }
 } /* namespace vm */
 } /* namespace il2cpp */

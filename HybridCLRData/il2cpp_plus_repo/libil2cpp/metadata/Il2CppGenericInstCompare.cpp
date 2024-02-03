@@ -19,12 +19,29 @@ namespace metadata
         else if (!t1.isNormal())
             return true;
 
-        if (t1.key->type_argc != t2.key->type_argc)
+        return AreEqual(t1.key, t2.key);
+    }
+
+    bool Il2CppGenericInstCompare::Compare(const Il2CppGenericInst* t1, const Il2CppGenericInst* t2)
+    {
+        if (t1)
+        {
+            return t2 && AreEqual(t1, t2);
+        }
+        else
+        {
+            return !t2;
+        }
+    }
+
+    bool Il2CppGenericInstCompare::AreEqual(const Il2CppGenericInst* t1, const Il2CppGenericInst* t2)
+    {
+        if (t1->type_argc != t2->type_argc)
             return false;
 
-        for (size_t i = 0; i < t1.key->type_argc; ++i)
+        for (size_t i = 0; i < t1->type_argc; ++i)
         {
-            if (!Il2CppTypeEqualityComparer::AreEqual(t1.key->type_argv[i], t2.key->type_argv[i]))
+            if (!Il2CppTypeEqualityComparer::AreEqual(t1->type_argv[i], t2->type_argv[i]))
                 return false;
         }
 
@@ -32,3 +49,4 @@ namespace metadata
     }
 } /* namespace vm */
 } /* namespace il2cpp */
+

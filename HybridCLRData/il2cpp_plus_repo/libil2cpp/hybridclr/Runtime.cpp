@@ -8,9 +8,10 @@
 #include "vm/Reflection.h"
 #include "icalls/mscorlib/System.Reflection/Assembly.h"
 
+#include "RuntimeApi.h"
 #include "interpreter/InterpreterModule.h"
 #include "metadata/MetadataModule.h"
-#include "transform/Transform.h"
+#include "transform/TransformModule.h"
 
 
 namespace hybridclr
@@ -18,7 +19,9 @@ namespace hybridclr
 
 	void Runtime::Initialize()
 	{
+		RuntimeApi::RegisterInternalCalls();
 		metadata::MetadataModule::Initialize();
 		interpreter::InterpreterModule::Initialize();
+		transform::TransformModule::Initialize();
 	}
 }
