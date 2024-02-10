@@ -71,8 +71,7 @@ namespace BDFramework.Editor.HotfixScript
                         break;
                     case BuildTarget.StandaloneOSX:
                     {
-                        BDEditorApplication.SwitchToMacOSX
-                            ();
+                        BDEditorApplication.SwitchToMacOSX();
                     }
                         break;
                 }

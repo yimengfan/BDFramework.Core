@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "127.0.0.1:62001",
+    "m_SelectedDeviceId": "127.0.0.1:62025",
     "m_SelectedPackage": {
-        "deviceId": "127.0.0.1:62001",
-        "name": "com.DefaultCompany.BDFramework.Core.debug",
-        "processId": 3925,
+        "deviceId": "127.0.0.1:62025",
+        "name": "com.DefaultCompany.BDFramework.Core.profiler",
+        "processId": 3657,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -36,6 +36,12 @@
             "deviceId": "127.0.0.1:62001",
             "name": "com.DefaultCompany.BDFramework.Core.debug",
             "processId": 3925,
+            "exited": false
+        },
+        {
+            "deviceId": "127.0.0.1:62025",
+            "name": "com.DefaultCompany.BDFramework.Core.profiler",
+            "processId": 3657,
             "exited": false
         }
     ],

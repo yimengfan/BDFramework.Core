@@ -127,7 +127,7 @@ namespace BDFramework
 #else
                 BDebug.Log("【ScriptLoder】DotNet反射执行, Dll路径:" + dllPath, Color.red);
 #endif
-
+             
 
                 //HCLR加载
                 Assembly assembly;
@@ -141,6 +141,7 @@ namespace BDFramework
                 }
                 else
                 {
+                    BDebug.Log("【ScriptLoder】HCLR执行, Dll路径:" + dllPath, Color.red);
                     assembly = Assembly.Load(dllBytes);
                 }
 
