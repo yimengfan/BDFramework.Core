@@ -1,5 +1,8 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.4
+- HotfixDLL:升级HyCLR到5.0.0版本
+
 ##V2.3.1
 - Editor:修复引导窗口访问的url
 
