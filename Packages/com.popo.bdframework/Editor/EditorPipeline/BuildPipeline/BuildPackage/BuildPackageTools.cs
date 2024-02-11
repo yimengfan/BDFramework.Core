@@ -342,7 +342,7 @@ namespace BDFramework.Editor.BuildPipeline
             Debug.Log("【keystore】" + PlayerSettings.Android.keystoreName);
             //具体安卓的配置
 
-            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HCLR_or_Mono)
+            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HyCLR)
             {
                 PlayerSettings.gcIncremental = false;
                 PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, ApiCompatibilityLevel.NET_4_6);
@@ -426,7 +426,7 @@ namespace BDFramework.Editor.BuildPipeline
             BDEditorApplication.SwitchToiOS();
             //DeleteIL2cppCache();
             //具体IOS的的配置
-            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HCLR_or_Mono)
+            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HyCLR)
             {
                 PlayerSettings.gcIncremental = false;
                 PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.iOS, ApiCompatibilityLevel.NET_4_6);
@@ -483,8 +483,8 @@ namespace BDFramework.Editor.BuildPipeline
             
 #if ENABLE_HCLR
             //HCLR 需要保存
-            var libil2cppPath = IPath.Combine(outputPath,"Libraries");
-            HCLREditorTools.CopyLibIl2cppToXcode(libil2cppPath);
+            // var libil2cppPath = IPath.Combine(outputPath,"Libraries");
+            // HCLREditorTools.CopyLibIl2cppToXcode(libil2cppPath);
 #endif
             Debug.Log("------------->End build<------------");
 
@@ -536,11 +536,12 @@ namespace BDFramework.Editor.BuildPipeline
         /// <param name="mode"></param>
         static private (bool, string) BuildExe(BuildMode mode, string outdir)
         {
+
             var baseConfig = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
             bool ret = false;
             BDEditorApplication.SwitchToWindows();
             //DeleteIL2cppCache();
-            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HCLR_or_Mono)
+            if (baseConfig.CodeRoot != AssetLoadPathType.Editor && baseConfig.CodeRunMode == HotfixCodeRunMode.HyCLR)
             {
                 PlayerSettings.gcIncremental = false;
                 PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Standalone, ApiCompatibilityLevel.NET_4_6);

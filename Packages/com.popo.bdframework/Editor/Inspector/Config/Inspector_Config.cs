@@ -1,30 +1,32 @@
-﻿#if ODIN_INSPECTOR
+﻿using BDFramework.Editor.Tools;
+using UnityEditor;
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BDFramework.Configure;
+using UnityEditor.SceneManagement;
+#if ODIN_INSPECTOR
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
-using UnityEditor;
-using UnityEditor.SceneManagement;
-using UnityEngine;
-
+#endif
 namespace BDFramework.Editor.Inspector.Config
 {
     [CustomEditor(typeof(BDFramework.Config))]
     public class Inspector_Config : UnityEditor.Editor
     {
-        /// <summary>
-        /// config实例map缓存
-        /// </summary>
-        private Dictionary<Type, Tuple<ConfigDataBase, PropertyTree>> configInstanceMap = new Dictionary<Type, Tuple<ConfigDataBase, PropertyTree>>();
-
+        
+#if !ODIN_INSPECTOR
+        public override void OnInspectorGUI()
+        {
+            GUILayout.Label("安装Odin后，插件生效!", EditorGUIHelper.LabelH4);
+        }
+#else
         public override void OnInspectorGUI()
         {
             var config = target as BDFramework.Config;
-
             //渲染Select config
             ONGUI_SelcectConfig();
             //渲染具体配置
@@ -32,6 +34,10 @@ namespace BDFramework.Editor.Inspector.Config
             //
             ONGUI_Bottom();
         }
+        /// <summary>
+        /// config实例map缓存
+        /// </summary>
+        private Dictionary<Type, Tuple<ConfigDataBase, PropertyTree>> configInstanceMap = new Dictionary<Type, Tuple<ConfigDataBase, PropertyTree>>();
 
 
         //上次打开scene名
@@ -319,6 +325,6 @@ namespace BDFramework.Editor.Inspector.Config
                 }
             }
         }
+#endif
     }
 }
-#endif

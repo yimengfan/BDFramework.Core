@@ -40,7 +40,7 @@ namespace BDFramework.Configure
 
             [LabelText("热更代码执行模式")]
             [HorizontalGroup("a/a4")]
-            public HotfixCodeRunMode CodeRunMode = HotfixCodeRunMode.ILRuntime;
+            public HotfixCodeRunMode CodeRunMode = HotfixCodeRunMode.HyCLR;
 
             [LabelText("是否开启ILRuntime调试")]
             [HorizontalGroup("a/a5")]

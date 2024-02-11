@@ -44,14 +44,10 @@ namespace BDFramework
     public enum HotfixCodeRunMode
     {
         /// <summary>
-        /// ILRuntime解释执行
-        /// </summary>
-        ILRuntime = 0,
-
-        /// <summary>
         /// 华佗执行
         /// </summary>
-        HCLR_or_Mono,
+        HyCLR=1,
+        Mono64,
     }
 
     /// <summary>

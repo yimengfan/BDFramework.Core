@@ -56,29 +56,29 @@ namespace BDFramework.Editor.HotfixScript
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnBeginBuildHotfixDLL();
 
-            var targetPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
-            //1.分析之前先删除,然后生成临时文件防止报错
-            // if (Directory.Exists(targetPath))
-            // {
-            //     Directory.Delete(targetPath, true);
-            // }
-
-            var fileContent = @"
-        namespace ILRuntime.Runtime.Generated
-        {
-            class CLRBindings
-            {
-                internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2> s_UnityEngine_Vector2_Binding_Binder = null;
-                internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3> s_UnityEngine_Vector3_Binding_Binder = null;
-                internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector4> s_UnityEngine_Vector4_Binding_Binder = null;
-                internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Quaternion> s_UnityEngine_Quaternion_Binding_Binder = null;
-                public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
-                {
-                }
-            } 
-        }   ";
-            FileHelper.WriteAllText(targetPath + "/CLRBindings.cs", fileContent);
-            AssetDatabase.Refresh(); //这里必须要刷新
+        //     var targetPath = "Assets/Code/BDFramework.Game/ILRuntime/Binding/Analysis";
+        //     //1.分析之前先删除,然后生成临时文件防止报错
+        //     // if (Directory.Exists(targetPath))
+        //     // {
+        //     //     Directory.Delete(targetPath, true);
+        //     // }
+        //
+        //     var fileContent = @"
+        // namespace ILRuntime.Runtime.Generated
+        // {
+        //     class CLRBindings
+        //     {
+        //         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2> s_UnityEngine_Vector2_Binding_Binder = null;
+        //         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3> s_UnityEngine_Vector3_Binding_Binder = null;
+        //         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector4> s_UnityEngine_Vector4_Binding_Binder = null;
+        //         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Quaternion> s_UnityEngine_Quaternion_Binding_Binder = null;
+        //         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
+        //         {
+        //         }
+        //     } 
+        // }   ";
+        //     FileHelper.WriteAllText(targetPath + "/CLRBindings.cs", fileContent);
+        //     AssetDatabase.Refresh(); //这里必须要刷新
 
             //2.生成DLL
             Unity3dRoslynBuildTools.BuildDll(outpath, platform, mode, isShowTips);

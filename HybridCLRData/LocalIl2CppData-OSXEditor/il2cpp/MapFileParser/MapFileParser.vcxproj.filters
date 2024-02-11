@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="UnitTest++">
+      <UniqueIdentifier>{2afc7767-c4d8-4eaf-96e1-01e75df575e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MSVC">
+      <UniqueIdentifier>{3bfe37cb-c3a6-4063-ae19-850a0882ba50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Clang">
+      <UniqueIdentifier>{be95804f-d385-4b2b-b2ba-e24c45d5aff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests">
+      <UniqueIdentifier>{02c888c0-13e1-4872-a0ba-3fd0c97f8a08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests\MSVC">
+      <UniqueIdentifier>{f9e2a8fc-b652-4f32-a968-4e6b9a56b184}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests\Clang">
+      <UniqueIdentifier>{760df566-81fb-444c-831b-d3062717b4db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests\SNC">
+      <UniqueIdentifier>{f92862b1-4e84-49e0-b1e2-1a56e9a7c85a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SNC">
+      <UniqueIdentifier>{f0e5fb7a-12d5-4f35-8582-88d9e9c2bc17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Statistics">
+      <UniqueIdentifier>{20671abf-70e8-4a7e-98c7-70adb93aceab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests\Statistics">
+      <UniqueIdentifier>{995d7138-1993-4591-b859-49c378028f52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GCC">
+      <UniqueIdentifier>{bfc60893-9759-4291-b99f-d69847a117ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests\GCC">
+      <UniqueIdentifier>{5eb7721c-35be-4fbd-a365-923a38ac440d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SymbolInfoWriter.cpp" />
+    <ClCompile Include="Tests\MSVC\MSVCMapFileParserTests.cpp">
+      <Filter>Tests\MSVC</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\MSVC\MSVCSectionParserTests.cpp">
+      <Filter>Tests\MSVC</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\MSVC\MSVCSymbolParserTests.cpp">
+      <Filter>Tests\MSVC</Filter>
+    </ClCompile>
+    <ClCompile Include="MSVC\MSVCMapFileParser.cpp">
+      <Filter>MSVC</Filter>
+    </ClCompile>
+    <ClCompile Include="MSVC\MSVCSectionParser.cpp">
+      <Filter>MSVC</Filter>
+    </ClCompile>
+    <ClCompile Include="MSVC\MSVCSymbolParser.cpp">
+      <Filter>MSVC</Filter>
+    </ClCompile>
+    <ClCompile Include="Clang\ClangMapFileParser.cpp">
+      <Filter>Clang</Filter>
+    </ClCompile>
+    <ClCompile Include="Clang\ClangSectionParser.cpp">
+      <Filter>Clang</Filter>
+    </ClCompile>
+    <ClCompile Include="Clang\ClangSymbolParser.cpp">
+      <Filter>Clang</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Clang\ClangSymbolParserTests.cpp">
+      <Filter>Tests\Clang</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Clang\ClangSectionParserTests.cpp">
+      <Filter>Tests\Clang</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Clang\ClangMapFileParserTests.cpp">
+      <Filter>Tests\Clang</Filter>
+    </ClCompile>
+    <ClCompile Include="Driver.cpp" />
+    <ClCompile Include="Tests\DriverTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\SymbolInfoWriterTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\SNC\SNCMapFileParserTests.cpp">
+      <Filter>Tests\SNC</Filter>
+    </ClCompile>
+    <ClCompile Include="SNC\SNCMapFileParser.cpp">
+      <Filter>SNC</Filter>
+    </ClCompile>
+    <ClCompile Include="Statistics.cpp" />
+    <ClCompile Include="Tests\Statistics\HighLevelBreakdownTests.cpp">
+      <Filter>Tests\Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Statistics\HighLevelBreakdown.cpp">
+      <Filter>Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Statistics\TenLargestSymbols.cpp">
+      <Filter>Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Statistics\TenLargestSymbolsTests.cpp">
+      <Filter>Tests\Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Statistics\AllSymbolSizes.cpp">
+      <Filter>Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\Statistics\AllSymbolSizesTests.cpp">
+      <Filter>Tests\Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="GCC\GCCSymbolParser.cpp">
+      <Filter>GCC</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\GCC\GCCSymbolParserTests.cpp">
+      <Filter>Tests\GCC</Filter>
+    </ClCompile>
+    <ClCompile Include="GCC\GCCMapFileParser.cpp">
+      <Filter>GCC</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\GCC\GCCMapFileParserTests.cpp">
+      <Filter>Tests\GCC</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MapFile.h" />
+    <ClInclude Include="Section.h" />
+    <ClInclude Include="Segment.h" />
+    <ClInclude Include="Symbol.h" />
+    <ClInclude Include="SymbolInfoWriter.h" />
+    <ClInclude Include="MSVC\MSVCMapFileParser.h">
+      <Filter>MSVC</Filter>
+    </ClInclude>
+    <ClInclude Include="MSVC\MSVCSectionParser.h">
+      <Filter>MSVC</Filter>
+    </ClInclude>
+    <ClInclude Include="MSVC\MSVCSymbolParser.h">
+      <Filter>MSVC</Filter>
+    </ClInclude>
+    <ClInclude Include="MapFileParser.h" />
+    <ClInclude Include="Clang\ClangMapFileParser.h">
+      <Filter>Clang</Filter>
+    </ClInclude>
+    <ClInclude Include="Clang\ClangSectionParser.h">
+      <Filter>Clang</Filter>
+    </ClInclude>
+    <ClInclude Include="Clang\ClangSymbolParser.h">
+      <Filter>Clang</Filter>
+    </ClInclude>
+    <ClInclude Include="Driver.h" />
+    <ClInclude Include="ParseBuffer.h" />
+    <ClInclude Include="SNC\SNCMapFileParser.h">
+      <Filter>SNC</Filter>
+    </ClInclude>
+    <ClInclude Include="Statistics.h" />
+    <ClInclude Include="Statistics\HighLevelBreakdown.h">
+      <Filter>Statistics</Filter>
+    </ClInclude>
+    <ClInclude Include="Statistics\TenLargestSymbols.h">
+      <Filter>Statistics</Filter>
+    </ClInclude>
+    <ClInclude Include="Statistics\AllSymbolSizes.h">
+      <Filter>Statistics</Filter>
+    </ClInclude>
+    <ClInclude Include="GCC\GCCSymbolParser.h">
+      <Filter>GCC</Filter>
+    </ClInclude>
+    <ClInclude Include="GCC\GCCMapFileParser.h">
+      <Filter>GCC</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

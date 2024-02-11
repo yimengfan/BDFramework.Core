@@ -26,34 +26,17 @@ namespace BDFramework.Editor.HotfixScript
                 GUILayout.Label("1.脚本打包", EditorGUIHelper.LabelH2);
                 GUILayout.Space(5);
 
-#if !ENABLE_ILRUNTIME && !ENABLE_HCLR
+#if !ENABLE_HCLR
                 HotfixScriptTools.SwitchToHCLR();
+                AssetDatabase.Refresh();
 #endif
-
-#if ENABLE_HCLR
-                GUILayout.Label("当前模式:HCLR");
-#elif ENABLE_ILRUNTIME
-                GUILayout.Label("当前模式:ILRuntime");
-#endif
-                
                 GUILayout.BeginHorizontal();
                 {
-#if ENABLE_ILRUNTIME
-                     GUI.color = Color.green;
-#endif
-                    if (GUILayout.Button("切换ILRuntime", GUILayout.Width(155), GUILayout.Height(20)))
-                    {
-                        HotfixScriptTools.SwitchToILRuntime();
-                    }
-                    GUI.color = GUI.backgroundColor;
-#if ENABLE_HCLR
                     GUI.color = Color.green;
-#endif
                     if (GUILayout.Button("切换HCLR", GUILayout.Width(150), GUILayout.Height(20)))
                     {
                         HotfixScriptTools.SwitchToHCLR();
                     }
-
                     GUI.color = GUI.backgroundColor;
                 }
                 GUILayout.EndHorizontal();

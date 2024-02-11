@@ -87,7 +87,7 @@ namespace BDFramework.Editor.HotfixScript
                 Debug.Log("<color=green>[HCLR]start:</color>");
                 SetBDFramework2HCLRConfig();
                 //编译补充元数据的DLL
-                if (IsNeedStripAOTDll(target, assetsOutputDir))
+                if (IsNeedHyCLRGenALL(target, assetsOutputDir))
                 {
                     PrebuildCommand.GenerateAll();
                     //拷贝用于补充泛型
@@ -107,9 +107,9 @@ namespace BDFramework.Editor.HotfixScript
             }
             sw.Stop();
             Debug.Log($"<color=red>[HCLR]end! 耗时:{sw.ElapsedMilliseconds} ms.</color>");
-#if UNITY_EDITOR_OSX
-            BuildLibIl2cppForIOS();
-#endif
+// #if UNITY_EDITOR_OSX
+//             BuildLibIl2cppForIOS();
+// #endif
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace BDFramework.Editor.HotfixScript
             }
             else
             {
-                throw new Exception("请编译libil2cpp.so for HCLR!!!");
+                throw new Exception("构建libil2cpp.so失败!请编译libil2cpp.so for HCLR!!!");
             }
 
             //校验结果
@@ -245,7 +245,7 @@ namespace BDFramework.Editor.HotfixScript
         /// <summary>
         /// 是否需要拷贝StripDll
         /// </summary>
-        static public bool IsNeedStripAOTDll(BuildTarget target, string assetsOutputDir)
+        static public bool IsNeedHyCLRGenALL(BuildTarget target, string assetsOutputDir)
         {
             // var patchAOTDlls = HybridCLRSettings.Instance.patchAOTAssemblies;
             // assetsOutputDir = IPath.Combine(assetsOutputDir, BApplication.GetPlatformPath(target));
@@ -259,6 +259,22 @@ namespace BDFramework.Editor.HotfixScript
             //     }
             // }
 
+            //1. h文件判断
+           var defH = BApplication.ProjectRoot + "/HybridCLRData/il2cpp_plus_repo/libil2cpp/hybridclr/Il2CppCompatibleDef.h";
+           if (File.Exists(defH))
+           {
+               var lines = File.ReadAllLines(defH);
+               var exsitErrorDef = lines.FirstOrDefault((s => s.Contains("HybridCLR/Generate/All")));
+               return exsitErrorDef!=null;
+               
+           }
+           else
+           {
+               throw new Exception("不存在defH文件，需要更新逻辑HrCLR业务逻辑" + defH);
+           }
+           
+           
+            //2.dll判断
             string aotDllDir = SettingsUtil.GetAssembliesPostIl2CppStripDir(target);
             List<string> aotAssemblyNames = Directory.Exists(aotDllDir)
                 ? Directory.GetFiles(aotDllDir, "*.dll", SearchOption.TopDirectoryOnly).Select(Path.GetFileNameWithoutExtension).ToList()

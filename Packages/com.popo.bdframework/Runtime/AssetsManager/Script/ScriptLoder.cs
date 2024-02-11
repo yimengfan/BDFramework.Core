@@ -107,7 +107,7 @@ namespace BDFramework
             //路径
             var dllPath = Path.Combine(GameBaseConfigProcessor.GetLoadPath(loadPathType), BApplication.GetRuntimePlatformPath(), DLL_PATH);
             //反射执行
-            if (mode == HotfixCodeRunMode.HCLR_or_Mono)
+            if (mode == HotfixCodeRunMode.HyCLR)
             {
 #if ENABLE_HCLR && !UNITY_EDITOR
 
@@ -163,14 +163,14 @@ namespace BDFramework
                 }
             }
             //解释执行
-            else if (mode == HotfixCodeRunMode.ILRuntime)
-            {
-                BDebug.Log("【ScriptLoder】热更Dll路径:" + dllPath, Color.red);
-                //解释执行模式
-                ILRuntimeHelper.LoadHotfix(dllPath, CLRBindAction);
-                var hotfixTypes = ILRuntimeHelper.GetHotfixTypes().ToArray();
-                ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] { mainProjecTypes, hotfixTypes });
-            }
+            // else if (mode == HotfixCodeRunMode.ILRuntime)
+            // {
+            //     BDebug.Log("【ScriptLoder】热更Dll路径:" + dllPath, Color.red);
+            //     //解释执行模式
+            //     ILRuntimeHelper.LoadHotfix(dllPath, CLRBindAction);
+            //     var hotfixTypes = ILRuntimeHelper.GetHotfixTypes().ToArray();
+            //     ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] { mainProjecTypes, hotfixTypes });
+            // }
             else
             {
                 BDebug.Log("【ScriptLoder】Dll路径:内置", Color.magenta);

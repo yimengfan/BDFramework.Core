@@ -49,7 +49,15 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
             var selectMenuitem = tree.MenuItems.Find((m) => m.Name.Equals("Build"));
             if (selectMenuitem != null && selectMenuitem.ChildMenuItems.Count > 0)
             {
-                selectMenuitem = selectMenuitem.ChildMenuItems.Find((m) => m.Name.Equals(BApplication.GetPlatformPath(BApplication.RuntimePlatform)));
+                var result = selectMenuitem.ChildMenuItems.Find((m) => m.Name.Equals(BApplication.GetPlatformPath(BApplication.RuntimePlatform)));
+                if (result == null)
+                {
+                    selectMenuitem = selectMenuitem.ChildMenuItems.Find((m) => m.Name.StartsWith(BApplication.GetPlatformPath(BApplication.RuntimePlatform)));
+                }
+                else
+                {
+                    selectMenuitem = result;
+                }
             }
 
             selectMenuitem.Select(true);

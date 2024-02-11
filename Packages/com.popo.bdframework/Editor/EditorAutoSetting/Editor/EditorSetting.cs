@@ -1,4 +1,5 @@
-﻿using Unity.InternalAPIEngineBridge;
+﻿using BDFramework.Editor.Unity3dEx;
+using Unity.InternalAPIEngineBridge;
 using UnityEditor;
 using UnityEngine;
 
@@ -46,32 +47,13 @@ static public class EditorSetting
             BuildTargetGroup.iOS,
             /***********新增pc平台************/
             BuildTargetGroup.Standalone,
+            
         };
         
         foreach (var bt in _supportBuildTargetGroup)
         {
-            var symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(bt);
-            if (!symbols.Contains("ENABLE_IL2CPP"))
-            {
-                string str = "";
-                if (!string.IsNullOrEmpty(symbols))
-                {
-                    if (!str.EndsWith(";"))
-                    {
-                        str = symbols + ";ENABLE_IL2CPP";
-                    }
-                    else
-                    {
-                        str = symbols + "ENABLE_IL2CPP";
-                    }
-                }
-                else
-                {
-                    str = "ENABLE_IL2CPP";
-                }
-
-                PlayerSettings.SetScriptingDefineSymbolsForGroup(bt, str);
-            }
+            Unity3dEditorEx.AddSymbols(bt,"ENABLE_IL2CPP");
+            Unity3dEditorEx.AddSymbols(bt,"ENABLE_HCLR");
         }
 
         #endregion
