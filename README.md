@@ -11,10 +11,29 @@ Simple! Easy! Professional! This‘s a powerful Unity3d game workflow!<br />BDFr
 
 If you find a bug or have some suggestions,please make issue! I'll get back to you
 
-任何问题直接提issue,24小时内必解决 （有时候邮件抽风，没收到，需要在群里at下我~）  
+任何问题直接提issue,24小时内必解决 （有时候邮件抽风，没收到，需要在群里at下我~） 
 
 # 安装使用(Start)  
-#### OpenUPM(强烈推荐): [链接](https://www.wolai.com/4CdvGJ93AXPJ2kLMC49F2Z)  
+#### OpenUPM(强烈推荐): [链接](https://www.wolai.com/4CdvGJ93AXPJ2kLMC49F2Z)   
+# 发布（Publish）
+
+#### 稳定版本托管在OpenUPM :  [链接](https://www.wolai.com/4CdvGJ93AXPJ2kLMC49F2Z)   
+
+### 支持2019、2021 、团结引擎, Unity6以上Runtime付费 不再提供支持维护！！！  
+### 支持2019、2021 、团结引擎, Unity6以上Runtime付费 不再提供支持维护！！！  
+### 支持2019、2021 、团结引擎, Unity6以上Runtime付费 不再提供支持维护！！！  
+
+#### Unity2018 - [ObsoleteBranch](https://github.com/yimengfan/BDFramework.Core/tree/2018.4.23LTS)  
+#### Unity2019 - [链接](https://www.wolai.com/4CdvGJ93AXPJ2kLMC49F2Z)    （当前主干）  
+#### Unity2021 - [待测试]
+#### 团结引擎 - [待测试]  
+
+版本开发流程：<br />=》修改、Fixed bug、新功能加入 基于**Master（目前为Unity2019）**<br />=》Merge to Unity2021测试  
+
+#### [开发计划](https://www.wolai.com/rYPc8FpYj1Lu9EjYoz1Ci9)  
+
+
+
 
 
 # 文档(Document)
@@ -28,22 +47,6 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 #### [博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
 
   
-# 发布（Publish）
-### [开发计划](https://www.wolai.com/rYPc8FpYj1Lu9EjYoz1Ci9)
-
-### [Release版本](https://github.com/yimengfan/BDFramework.Core/releases)
-
-注:所有bug修复和新特性加入会先提交到Master分支。待审核期通过，稳定则会发布Release版本
-
-### Unity3d支持(Unity3d Support )
-#### Unity2018 - [ObsoleteBranch](https://github.com/yimengfan/BDFramework.Core/tree/2018.4.23LTS)
-<a name="KksVM"></a>
-#### _Unity2019 - Master_ （推荐）
-<a name="zbYcr"></a>
-#### Unity2020 - [TestBranch](https://github.com/yimengfan/BDFramework.Core/tree/2020.4LTS)
-<a name="J516L"></a>
-#### Unity2021 - [TestBranch](https://github.com/yimengfan/BDFramework.Core/tree/2021.2.13f1)
-版本开发流程：<br />=》修改、Fixed bug、新功能加入 基于**Master（目前为Unity2019）**<br />=》Merge to Unity2020 、Unity2021测试
 
 ## V2.1版本:
 
@@ -52,7 +55,7 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 #### -增加HotfixPipeline！
 #### -全面支持DevOps工作流.
 ## V2版本:
-#### 1.全面升级为UPM管理: [urp版本安装引导](https://www.yuque.com/naipaopao/eg6gik/xy8dm4)
+#### 1.全面升级为UPM管理
 
 #### 2.全面适配URP管线工作流
 
@@ -89,7 +92,7 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 
 - 重新定制目录管理规范、指导管理.
 - 一套API自动切换AB和Editor模式，保留Resources.load习惯.
-- 可视化连线打包逻辑、0冗余打包.
+- 可视化打包逻辑配置、0冗余打包.
 - 可扩展打包规则
 - 分包机制.
 - 打包逻辑纠错机制.
@@ -146,7 +149,9 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 <a name="d2KC6"></a>
 # 贡献者名单
 
-[@gaojiexx](https://github.com/gaojiexx)  <br />[@ricashao](https://github.com/ricashao)  <br />[@瞎哥](https://github.com/AfarMiss)  <br />如果需要项目方案定制、企业支持,可以联系 QQ:755737878  <br />也随时欢迎交流各种技术.  
-
-如果您有好的修改或者拓展，也随时欢迎讨论和提PR.
+[@gaojiexx](https://github.com/gaojiexx)  
+[@ricashao](https://github.com/ricashao)  
+如果需要项目方案定制、企业支持,可以联系 QQ:755737878.  
+也随时欢迎交流各种技术.  
+如果您有好的修改或者拓展，也随时欢迎讨论和提PR.  
  
