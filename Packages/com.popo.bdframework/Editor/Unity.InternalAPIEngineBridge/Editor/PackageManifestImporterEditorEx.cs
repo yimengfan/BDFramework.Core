@@ -20,8 +20,8 @@ namespace Unity.InternalAPIEngineBridge
         /// <returns></returns>
         static public void SetBDFramworkOpenUpmEnv()
         {
-            string pckName = "package.openupm.cn";
-            string url = "https://package.openupm.cn";
+            string pckName = "package.openupm.com";
+            string url = "https://package.openupm.com";
             //scope
             var packageContent = File.ReadAllText("Packages/com.popo.bdframework/package.json");
             var jo = JSONParser.SimpleParse(packageContent);
