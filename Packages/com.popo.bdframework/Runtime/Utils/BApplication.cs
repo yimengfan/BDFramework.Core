@@ -14,6 +14,8 @@ namespace BDFramework.Core.Tools
     /// </summary>
     static public class BApplication
     {
+        static public bool IsPlaying { get; set; }
+
         /// <summary>
         /// 定义 支持的平台
         /// </summary>

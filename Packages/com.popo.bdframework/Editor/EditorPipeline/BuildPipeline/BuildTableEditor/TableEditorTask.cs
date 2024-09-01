@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using System.Threading;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Task;
@@ -19,6 +19,10 @@ namespace BDFramework.Editor.Table
         [EditorTask.EditorTaskOnWillEnterPlaymodeAttribute("强制导入修改的Excel")]
         static public void OnForceImpotChangedExcel()
         {
+            if (BDLauncher.Inst == null)
+            {
+                return;
+            }
             //判断是否导入设置
             if (BDEditorApplication.EditorSetting.BuildSqlSetting.IsForceImportChangedExcelOnWillEnterPlaymode && BDLauncher.Inst.Config.SQLRoot== AssetLoadPathType.Editor)
             {

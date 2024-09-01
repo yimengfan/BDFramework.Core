@@ -1,10 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using BDFramework.DataListener;
 using UnityEngine;
 using BDFramework.Mgr;
 using BDFramework.UFlux.WindowStatus;
 using LitJson;
+using Sirenix.Utilities;
 
 
 namespace BDFramework.UFlux
@@ -66,7 +69,7 @@ namespace BDFramework.UFlux
 
             //根据attribute创建窗口
             var attr = classData.Attribute as UIAttribute;
-            var window = Activator.CreateInstance(classData.Type, new object[] { attr.ResourcePath }) as IWindow;
+            var window = Activator.CreateInstance(classData.Type, new object[] {attr.ResourcePath}) as IWindow;
             //设置DI
             SetWindowDI(window);
 
@@ -130,14 +133,13 @@ namespace BDFramework.UFlux
         public void LoadWindows(Enum[] uiIdxs, UILayer layer = UILayer.Bottom)
         {
             foreach (var idx in uiIdxs)
-            {            
+            {
                 var index = idx.GetHashCode();
                 LoadWindow(index, layer);
             }
-
         }
 
-        
+
         /// <summary>
         /// 加载窗口
         /// </summary>
@@ -352,29 +354,52 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 显示窗口
         /// </summary>
+        /// <param name="uiMsgData"></param>
+        /// <param name="isAddToHistory"></param>
+        /// <typeparam name="T"></typeparam>
+        public void ShowWindow<T>(UIMsgData uiMsgData = null, bool isAddToHistory = true) where T : IWindow
+        {
+            var type = typeof(T);
+            var cd = GetClassData(type);
+            if (cd == null)
+            {
+                var _attrs = type.GetCustomAttributes<UIAttribute>(false);
+                this.RegisterTypes(type, _attrs.ToArray());
+                cd = GetClassData(type);
+            }
+
+            //显示窗口
+            var attr = cd.Attribute as UIAttribute;
+            ShowWindow(attr.IntTag, uiMsgData, isAddToHistory);
+        }
+
+
+        /// <summary>
+        /// 显示窗口
+        /// </summary>
         /// <param name="uiEnumIdx">ui枚举</param>
         /// <param name="layer">显示的层级</param>
         /// <param name="uiMsgData"></param>
         /// <param name="isAddToHistory"></param>
-        public void ShowWindow(Enum uiEnumIdx,UILayer layer, UIMsgData uiMsgData = null, bool isAddToHistory = true)
+        public void ShowWindow(Enum uiEnumIdx, UILayer layer, UIMsgData uiMsgData = null, bool isAddToHistory = true)
         {
             int uiIdx = uiEnumIdx.GetHashCode();
             var winCom = this.ShowWindow(uiIdx, uiMsgData, isAddToHistory);
-            Setlayer(winCom,layer);
+            Setlayer(winCom, layer);
         }
-        
-          /// <summary>
-          ///  显示窗口
-          /// </summary>
-          /// <param name="uiEnumIdx"></param>
-          /// <param name="uiMsgData"></param>
-          /// <param name="isAddToHistory"></param>
+
+        /// <summary>
+        ///  显示窗口
+        /// </summary>
+        /// <param name="uiEnumIdx"></param>
+        /// <param name="uiMsgData"></param>
+        /// <param name="isAddToHistory"></param>
         public void ShowWindow(Enum uiEnumIdx, UIMsgData uiMsgData = null, bool isAddToHistory = true)
         {
             int uiIdx = uiEnumIdx.GetHashCode();
             this.ShowWindow(uiIdx, uiMsgData, isAddToHistory);
         }
-        
+
         /// <summary>
         /// 显示
         /// </summary>

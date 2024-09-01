@@ -77,9 +77,11 @@ namespace BDFramework
                 BDebug.LogError("GameConfig配置为null,请检查!");
             }
 
+          
             //添加不删除的组件
             if (Application.isPlaying)
             {
+                BApplication.IsPlaying = true;
                 DontDestroyOnLoad(this);
             }
         }

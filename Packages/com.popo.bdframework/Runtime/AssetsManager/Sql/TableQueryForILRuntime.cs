@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BDFramework.Core.Tools;
 using Cysharp.Text;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -85,7 +86,7 @@ namespace SQLite4Unity3d
 
 
 #if UNITY_EDITOR
-            if (Application.isPlaying)
+            if (BApplication.IsPlaying)
             {
                 if (sqlCmdCache.ContainsKey(sqlCmdText))
                 {

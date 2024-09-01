@@ -24,6 +24,11 @@ namespace System.IO
             {
                 return a;
             }
+            else if (a.EndsWith("/") && b.StartsWith("/"))  //同时有去掉一个，
+            {
+                a = a.Remove(a.Length - 1);
+                return ZString.Concat(a, b);
+            }
             else if (a.EndsWith("/") || b.StartsWith("/")) //目录格式
             {
                 return ZString.Concat(a, b);

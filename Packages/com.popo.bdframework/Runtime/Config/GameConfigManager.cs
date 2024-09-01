@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -73,9 +73,9 @@ namespace BDFramework.Configure
         private string GetConfigText()
         {
             string text = "";
-            if (Application.isPlaying)
+            if (Application.isPlaying &&  BDLauncher.Inst)
             {
-                text = BDLauncher.Inst.ConfigText.text;
+                text = BDLauncher.Inst.ConfigText?.text;
             }
             else
             {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -104,11 +104,19 @@ namespace BDFramework.Sql
         /// <summary>
         /// 加载db ReadWriteCreate
         /// </summary>
-        static public SQLiteConnection LoadDBReadWriteCreate(string path)
+        static public SQLiteConnection LoadDBReadWriteCreate(string path, bool isUsePsw = true)
         {
             BDebug.Log($" DB Path:{path}  <color=yellow>password:{Password}</color>");
-            SQLiteConnectionString cs = new SQLiteConnectionString(path,
-                SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, true, key: Password);
+            SQLiteConnectionString cs;
+            if (isUsePsw)
+            {
+                cs = new SQLiteConnectionString(path,
+                    SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, true, key: Password);
+            }
+            else
+            {
+                cs = new SQLiteConnectionString(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, true);
+            }
             var con = new SQLiteConnection(cs);
             SqLiteConnectionMap[Path.GetFileNameWithoutExtension(path)] = con;
             return con;
@@ -179,6 +187,12 @@ namespace BDFramework.Sql
             return path;
         }
 
+        static public string LoadLocalDBOnEditor()
+        {
+            var ret = LoadLocalDBOnEditor(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
+            return ret;
+        }
+
 
         /// <summary>
         /// 编辑器下加载DB，可读写|创建
@@ -187,15 +201,16 @@ namespace BDFramework.Sql
         static public void LoadServerDBOnEditor(string root, RuntimePlatform platform)
         {
             //用当前平台目录进行加载
+            BDebug.Log("Server.db 不使用加密,否则服务器不好处理库!!!", Color.yellow);
             var path = GetServerDBPath(root, platform);
-            LoadSQLOnEditor(path);
+            LoadSQLOnEditor(path,false);
         }
 
         /// <summary>
         /// 加载Sql
         /// </summary>
         /// <param name="sqlPath"></param>
-        static public void LoadSQLOnEditor(string sqlPath)
+        static public void LoadSQLOnEditor(string sqlPath, bool isUsePsw = true)
         {
             //
             Connection?.Dispose();
@@ -210,7 +225,7 @@ namespace BDFramework.Sql
             if (Application.isEditor)
             {
                 //editor下 不在执行的时候，直接创建
-                Connection = LoadDBReadWriteCreate(sqlPath);
+                Connection = LoadDBReadWriteCreate(sqlPath,isUsePsw);
                 BDebug.Log("DB加载路径:" + sqlPath, Color.red);
             }
         }

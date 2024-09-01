@@ -115,7 +115,7 @@ namespace UnityEngine.AssetGraph.DataModel.Version2 {
 
 	        public static string PackagePath => AssetDatabase.GUIDToAssetPath("8549600cb67d5234aa836c3f0e2f221f");//"Packages/com.unity.assetgraph";
 	        
-	        public static string DefaultBasePath => "Assets/3rdPlugins/AssetGraph";
+	        public static string DefaultBasePath => "Assets/AssetGraph";
 
 	        public static string BasePath => UserSettings.ConfigBaseDir;
 
