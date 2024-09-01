@@ -1,4 +1,4 @@
-﻿namespace NugetForUnity
+namespace NugetForUnity
 {
     /// <summary>
     /// Represents a file entry inside a .nuspec file.

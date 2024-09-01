@@ -1,4 +1,4 @@
-﻿using BDFramework.Editor.Tools;
+using BDFramework.Editor.Tools;
 using System;
 using Debug = UnityEngine.Debug;
 namespace Game.Editor.PublishPipeline

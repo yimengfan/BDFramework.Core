@@ -1,4 +1,4 @@
-﻿namespace BDFramework.Editor
+namespace BDFramework.Editor
 {
     /// <summary>
     /// 编辑器扩展生命周期

@@ -1,4 +1,4 @@
-﻿using BDFramework;
+using BDFramework;
 using System.Collections.Generic;
 using UnityEngine;
 using System;

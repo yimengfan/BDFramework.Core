@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BDFramework.Core.Tools;
 using BDFramework.Sql;

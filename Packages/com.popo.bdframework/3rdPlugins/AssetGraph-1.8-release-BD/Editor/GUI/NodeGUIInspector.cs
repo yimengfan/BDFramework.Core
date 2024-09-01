@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using System;
 using System.Linq;
 using Model = UnityEngine.AssetGraph.DataModel.Version2;

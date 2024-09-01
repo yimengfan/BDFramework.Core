@@ -1,4 +1,4 @@
-﻿#if ENABLE_MANAGED_JOBS
+#if ENABLE_MANAGED_JOBS
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 using System;

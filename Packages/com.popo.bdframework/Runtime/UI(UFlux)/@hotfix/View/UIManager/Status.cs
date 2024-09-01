@@ -1,4 +1,4 @@
-﻿namespace BDFramework.UFlux.WindowStatus
+namespace BDFramework.UFlux.WindowStatus
 {
     /// <summary>
     /// 窗口打开

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;

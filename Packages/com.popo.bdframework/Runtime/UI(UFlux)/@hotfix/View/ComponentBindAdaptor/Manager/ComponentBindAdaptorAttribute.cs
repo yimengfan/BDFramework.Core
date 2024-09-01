@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BDFramework.Mgr;
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.Mono.Cecil;

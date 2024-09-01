@@ -1,4 +1,4 @@
-﻿namespace BDFramework.Editor.BuildPipeline
+namespace BDFramework.Editor.BuildPipeline
 {
     public class BuildMacOSX
     {

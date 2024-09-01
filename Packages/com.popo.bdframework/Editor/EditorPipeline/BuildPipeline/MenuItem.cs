@@ -1,4 +1,4 @@
-﻿using BDFramework.Editor.PublishPipeline;
+using BDFramework.Editor.PublishPipeline;
 using BDFramework.Editor.Table;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;

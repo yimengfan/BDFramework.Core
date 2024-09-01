@@ -1,4 +1,4 @@
-﻿namespace BDFramework.Editor.Unity3dEx.PluginsEx.Odin.Attribute
+namespace BDFramework.Editor.Unity3dEx.PluginsEx.Odin.Attribute
 {
     /// <summary>
     /// Odin拓展，下拉列表选择文件

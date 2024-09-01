@@ -1,4 +1,4 @@
-﻿namespace BDFramework.Editor.Tools.Utils
+namespace BDFramework.Editor.Tools.Utils
 {
     /// <summary>
     /// 阿里云工具包

@@ -1,4 +1,4 @@
-﻿using BDFramework.Mgr;
+using BDFramework.Mgr;
 
 namespace BDFramework.UFlux
 {

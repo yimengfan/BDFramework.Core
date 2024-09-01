@@ -1,4 +1,4 @@
-﻿namespace BDFramework.UFlux.Extension
+namespace BDFramework.UFlux.Extension
 {
    static public class ObjectsExtension
     {

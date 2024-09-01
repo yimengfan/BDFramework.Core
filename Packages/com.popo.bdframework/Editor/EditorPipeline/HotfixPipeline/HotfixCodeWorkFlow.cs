@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.HotfixScript;
 using UnityEngine;

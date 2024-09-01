@@ -1,4 +1,4 @@
-﻿using BDFramework.ResourceMgr;
+using BDFramework.ResourceMgr;
 using UnityEngine;
 
 

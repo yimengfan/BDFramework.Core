@@ -1,4 +1,4 @@
-﻿namespace BDFramework.UFlux
+namespace BDFramework.UFlux
 {
     public interface ISubComponent
     {

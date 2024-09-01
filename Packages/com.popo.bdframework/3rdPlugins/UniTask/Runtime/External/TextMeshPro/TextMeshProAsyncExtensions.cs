@@ -1,4 +1,4 @@
-﻿#if UNITASK_TEXTMESHPRO_SUPPORT
+#if UNITASK_TEXTMESHPRO_SUPPORT
 
 using System;
 using System.Threading;

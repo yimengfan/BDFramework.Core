@@ -1,4 +1,4 @@
-﻿using BDFramework.UFlux.View.Props;
+using BDFramework.UFlux.View.Props;
 using UnityEngine;
 
 namespace BDFramework.UFlux

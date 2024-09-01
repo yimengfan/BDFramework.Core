@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Collections.Generic;
 using Model=UnityEngine.AssetGraph.DataModel.Version2;
 

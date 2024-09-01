@@ -1,4 +1,4 @@
-﻿#if ODIN_INSPECTOR && UNITY_EDITOR
+#if ODIN_INSPECTOR && UNITY_EDITOR
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 /// <summary>

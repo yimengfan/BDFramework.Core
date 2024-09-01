@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Threading;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Task;

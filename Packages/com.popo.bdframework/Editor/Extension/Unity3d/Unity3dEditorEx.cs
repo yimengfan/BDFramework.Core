@@ -1,4 +1,4 @@
-﻿using BDFramework.Core.Tools;
+using BDFramework.Core.Tools;
 using UnityEditor;
 
 namespace BDFramework.Editor.Unity3dEx

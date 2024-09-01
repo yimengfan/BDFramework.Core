@@ -1,4 +1,4 @@
-﻿using LitJson;
+using LitJson;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;

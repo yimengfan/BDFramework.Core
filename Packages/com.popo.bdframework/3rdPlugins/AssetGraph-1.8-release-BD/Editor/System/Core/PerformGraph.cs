@@ -1,4 +1,4 @@
-﻿using UnityEngine.Assertions;
+using UnityEngine.Assertions;
 using UnityEditor;
 using System.Linq;
 using System.Collections.Generic;

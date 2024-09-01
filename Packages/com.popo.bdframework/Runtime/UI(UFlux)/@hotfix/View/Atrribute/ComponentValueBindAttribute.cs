@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.Mono.Cecil;
 using UnityEngine;

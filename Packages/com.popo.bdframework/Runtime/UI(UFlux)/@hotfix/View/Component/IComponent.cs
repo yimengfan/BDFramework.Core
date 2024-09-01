@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BDFramework.DataListener;
 using BDFramework.UFlux.View.Props;
 using UnityEngine;

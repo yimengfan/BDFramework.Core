@@ -1,4 +1,4 @@
-﻿namespace BDFramework.Configure
+namespace BDFramework.Configure
 {
     /// <summary>
     /// Config处理器的基类
