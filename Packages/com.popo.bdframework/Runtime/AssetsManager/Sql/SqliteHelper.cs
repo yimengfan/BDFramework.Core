@@ -167,9 +167,9 @@ namespace BDFramework.Sql
         /// <summary>
         /// 获取DB路径
         /// </summary>
-        static public string GetServerDBPath(string root, RuntimePlatform platform)
+        static public string GetServerDBPath(string root)
         {
-            return IPath.Combine(root, BApplication.GetPlatformPath(platform), SERVER_DB_PATH);
+            return IPath.Combine(root, "server_data", SERVER_DB_PATH);
         }
 
         #region Editor下加载
@@ -198,11 +198,11 @@ namespace BDFramework.Sql
         /// 编辑器下加载DB，可读写|创建
         /// </summary>
         /// <param name="str"></param>
-        static public void LoadServerDBOnEditor(string root, RuntimePlatform platform)
+        static public void LoadServerDBOnEditor(string root)
         {
             //用当前平台目录进行加载
-            BDebug.Log("Server.db 不使用加密,否则服务器不好处理库!!!", Color.yellow);
-            var path = GetServerDBPath(root, platform);
+            BDebug.Log("Server.db 不使用加密,否则服务器不好处理!!!", Color.yellow);
+            var path = GetServerDBPath(root);
             LoadSQLOnEditor(path,false);
         }
 
@@ -408,7 +408,7 @@ namespace BDFramework.Sql
         /// <summary>
         /// db map
         /// </summary>
-        private static Dictionary<string, SQLiteService> DBServiceMap = new Dictionary<string, SQLiteService>();
+        private static Dictionary<string, SQLiteService> DBServiceMap { get; set; } = new Dictionary<string, SQLiteService>();
 
         /// <summary>
         /// 获取一个DB

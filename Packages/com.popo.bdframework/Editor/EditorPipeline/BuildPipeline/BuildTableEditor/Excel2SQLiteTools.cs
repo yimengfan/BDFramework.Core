@@ -69,7 +69,7 @@ namespace BDFramework.Editor.Table
                     SqliteLoder.LoadLocalDBOnEditor(ouptputPath, platform);
                     break;
                 case DBType.Server:
-                    SqliteLoder.LoadServerDBOnEditor(ouptputPath, platform);
+                    SqliteLoder.LoadServerDBOnEditor(ouptputPath);
                     break;
             }
 
