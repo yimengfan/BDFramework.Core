@@ -43,7 +43,7 @@ namespace Game.Data.Server
         /// <summary>
         /// 公式
         /// </summary>
-        public List<string> Params_Expression {get;set;}
+        public string[] Params_Expression {get;set;}
         /// <summary>
         /// 参数列表，数值类型(固定数值)
         /// </summary>
