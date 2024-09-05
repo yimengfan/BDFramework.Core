@@ -12,7 +12,7 @@ namespace BDFramework.EditorTest
     /// <summary>
     /// Sqlite单元测试
     /// </summary>
-    public class SqliteTest
+    public class SqliteUnitTest
     {
         /// <summary>
         /// 单元测试的数据库

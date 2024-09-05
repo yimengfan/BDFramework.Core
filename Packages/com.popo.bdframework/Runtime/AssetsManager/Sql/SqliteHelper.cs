@@ -236,10 +236,29 @@ namespace BDFramework.Sql
         /// <param name="root"></param>
         /// <param name="platform"></param>
         /// <returns></returns>
-        static public string DeleteDBFile(string root, RuntimePlatform platform)
+        static public string DeleteLocalDBFile(string root, RuntimePlatform platform)
         {
             //用当前平台目录进行加载
             var path = GetLocalDBPath(root, platform);
+
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            return path;
+        }
+        
+        /// <summary>
+        /// 删除数据库
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        static public string DeleteServerDBFile(string root)
+        {
+            //用当前平台目录进行加载
+            var path = GetServerDBPath(root);
 
             if (File.Exists(path))
             {
