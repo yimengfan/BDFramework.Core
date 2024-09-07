@@ -4,8 +4,8 @@ using System.Reflection;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.HotfixScript;
-using DG.Tweening.Plugins.Core.PathCore;
-using Game.ILRuntime;
+// using DG.Tweening.Plugins.Core.PathCore;
+// using Game.ILRuntime;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -58,16 +58,16 @@ namespace BDFramework.Editor.TestRunner
         {
             //执行热更单元测试
             var dllPath =IPath.Combine(GameBaseConfigProcessor.GetLoadPath(AssetLoadPathType.DevOpsPublish), BApplication.GetRuntimePlatformPath(), ScriptLoder.DLL_PATH);
-            ILRuntimeHelper.LoadHotfix(dllPath,GameLogicCLRBinding.Bind);
+            // ILRuntimeHelper.LoadHotfix(dllPath,GameLogicCLRBinding.Bind);
             try
             {
-                ILRuntimeHelper.AppDomain.Invoke("BDFramework.UnitTest.TestRunner", "RunHotfixUnitTest", null, new object[] { });
+                // ILRuntimeHelper.AppDomain.Invoke("BDFramework.UnitTest.TestRunner", "RunHotfixUnitTest", null, new object[] { });
             }
             catch (Exception e)
             {
                 Debug.LogError(e.Message);
             }
-            ILRuntimeHelper.Dispose();
+            HotfixAssembliesHelper.Dispose();
             //清理当前appdomian 数据
             var path = AssetDatabase.GUIDToAssetPath("2b7a02d2757164147959db0911d95ce6");
             AssetDatabase.ImportAsset(path);

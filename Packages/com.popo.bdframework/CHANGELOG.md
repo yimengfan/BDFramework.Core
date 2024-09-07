@@ -1,5 +1,10 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V3.0.0
+【Sqlite】
+- 优化解析速度
+- 增加UniTest
+
 ##V2.4.1
 - 迁移至openupm.com
 - HotfixDLL:升级HyCLR到5.4.1版本

@@ -39,8 +39,6 @@ using System.Threading;
 using AssetsManager.Sql;
 using BDFramework;
 using BDFramework.Core.Tools;
-using ILRuntime.Reflection;
-using ILRuntime.Runtime.Intepreter;
 using LitJson;
 using UnityEngine;
 using Utils.mslibEx;
@@ -2785,8 +2783,8 @@ namespace SQLite4Unity3d
 
 
             TableAttribute tableAttr = null;
-            if (!(type is ILRuntimeType))
-            {
+            // if (!(type is ILRuntimeType))
+            // {
                 var typeInfo = type.GetTypeInfo();
 #if ENABLE_IL2CPP
                 tableAttr = typeInfo.GetCustomAttribute<TableAttribute>();
@@ -2797,7 +2795,7 @@ namespace SQLite4Unity3d
                         .Select(x => (TableAttribute) Orm.InflateAttribute(x))
                         .FirstOrDefault();
 #endif
-            }
+            // }
 
 
             TableName = (tableAttr != null && !string.IsNullOrEmpty(tableAttr.Name)) ? tableAttr.Name : MappedType.Name;
@@ -3116,11 +3114,11 @@ namespace SQLite4Unity3d
 
         public static Type GetType(object obj)
         {
-            if (obj is ILTypeInstance ilInst)
-            {
-                return ilInst.Type.ReflectionType;
-            }
-            else
+            // if (obj is ILTypeInstance ilInst)
+            // {
+            //     return ilInst.Type.ReflectionType;
+            // }
+            // else
             {
                 if (obj == null)
                     return typeof(object);
@@ -3164,10 +3162,10 @@ namespace SQLite4Unity3d
         public static string SqlType(TableMapping.Column p, bool storeDateTimeAsTicks, bool storeTimeSpanAsTicks)
         {
             var clrType = p.ColumnType;
-            if (clrType is ILRuntimeWrapperType ilrtype)
-            {
-                clrType = ilrtype.RealType;
-            }
+            // if (clrType is ILRuntimeWrapperType ilrtype)
+            // {
+            //     clrType = ilrtype.RealType;
+            // }
 
             if (clrType == typeof(Boolean) || clrType == typeof(Byte) || clrType == typeof(UInt16) || clrType == typeof(SByte) || clrType == typeof(Int16) || clrType == typeof(Int32) || clrType == typeof(UInt32) || clrType == typeof(Int64))
             {
@@ -3499,7 +3497,7 @@ namespace SQLite4Unity3d
                     //For ILR
                     if (isILRuntime)
                     {
-                        obj = ILRuntimeHelper.CreateInstance(map.MappedType);
+                        obj = HotfixAssembliesHelper.CreateInstance(map.MappedType);
                     }
                     else
                     {
@@ -3805,12 +3803,13 @@ namespace SQLite4Unity3d
             }
             else
             {
-                //For ILR
-                if (clrType is ILRuntimeWrapperType iltype)
-                {
-                    clrType = iltype.RealType;
-                }
-                else if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                // //For ILR
+                // if (clrType is ILRuntimeWrapperType iltype)
+                // {
+                //     clrType = iltype.RealType;
+                // }
+                // else 
+                if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
                     clrType = clrType.GenericTypeArguments[0];
                 }

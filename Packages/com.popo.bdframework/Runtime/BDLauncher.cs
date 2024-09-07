@@ -143,7 +143,7 @@ namespace BDFramework
         {
 #if UNITY_EDITOR
             SqliteLoder.Close();
-            ILRuntimeHelper.Dispose();
+            HotfixAssembliesHelper.Dispose();
 #endif
         }
 

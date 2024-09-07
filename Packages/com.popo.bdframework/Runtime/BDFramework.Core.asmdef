@@ -1,7 +1,6 @@
 {
     "name": "BDFramework.Core",
     "references": [
-        "GUID:7a1fa966b0ea23f40a6a4dc4dab1e297",
         "GUID:33661e06c33d31b4c9223810bf503247",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
         "GUID:fd90820330fb0fe4e85121cb3a49d0cc",
