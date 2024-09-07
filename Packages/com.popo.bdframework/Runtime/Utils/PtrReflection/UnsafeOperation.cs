@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using Unity.Collections.LowLevel.Unsafe;
 using MonoVTable = System.IntPtr;

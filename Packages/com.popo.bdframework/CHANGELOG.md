@@ -1,6 +1,8 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
 ##V3.0.0
+【HofixScript】
+- 移除全局ILRuntime的依赖
 【Sqlite】
 - 优化解析速度
 - 增加UniTest

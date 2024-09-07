@@ -52,7 +52,17 @@ namespace BDFramework
             IsRunning = false;
         }
 
-        #region hotfix类型
+
+        /// <summary>
+        /// 获取主入口assembly
+        /// </summary>
+        /// <returns></returns>
+        static public Assembly GetMainAssembly()
+        {
+           return hotfixAssemblyList[0];
+        }
+
+
 
         static private List<Type> hotfixTypeList = null;
 
@@ -68,33 +78,16 @@ namespace BDFramework
 
                 foreach (var assembly in hotfixAssemblyList)
                 {
-                    var types= assembly.GetTypes();
-                    
+                    var types = assembly.GetTypes();
+
                     hotfixTypeList.AddRange(types);
                 }
-
             }
 
             return hotfixTypeList;
         }
 
-        #endregion
 
-
-        /// <summary>
-        /// 所有UIComponent的类型
-        /// </summary>
-        // public static Dictionary<string, Type> UIComponentTypes { get; set; } = new Dictionary<string, Type>();
-
-        #region 辅助工具类
-
-        /// <summary>
-        /// 打印堆栈
-        /// </summary>
-        static public void LogStackTrace()
-        {
-            // ILRuntimeHelper.AppDomain.DebugService.GetStackTrace()
-        }
 
 
         /// <summary>
@@ -102,7 +95,7 @@ namespace BDFramework
         /// </summary>
         /// <param name="value_type"></param>
         /// <returns></returns>
-        static public object CreateInstance(Type value_type)
+        static public object CreateHotfixInstance(Type value_type)
         {
             object instance = null;
             // if (value_type is ILRuntime.Reflection.ILRuntimeType ilrType)
@@ -120,7 +113,5 @@ namespace BDFramework
 
             return instance;
         }
-
-        #endregion
     }
 }

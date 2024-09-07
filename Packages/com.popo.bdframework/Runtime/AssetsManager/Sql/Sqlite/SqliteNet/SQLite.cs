@@ -3497,7 +3497,7 @@ namespace SQLite4Unity3d
                     //For ILR
                     if (isILRuntime)
                     {
-                        obj = HotfixAssembliesHelper.CreateInstance(map.MappedType);
+                        obj = HotfixAssembliesHelper.CreateHotfixInstance(map.MappedType);
                     }
                     else
                     {

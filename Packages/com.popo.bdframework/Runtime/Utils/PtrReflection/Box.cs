@@ -1,4 +1,4 @@
-﻿namespace PtrReflection
+namespace PtrReflection
 {
 
     public class Box<T> : IBox
