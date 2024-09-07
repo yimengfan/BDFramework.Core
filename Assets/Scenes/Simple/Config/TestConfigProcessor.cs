@@ -26,5 +26,5 @@ namespace Game.Config
             
             Debug.Log($"[配置中心]测试条目1:\n{JsonMapper.ToJson(con,true)}");
         }
-    }
+    } 
 }

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using BDFramework.Sql;
 using LitJson;
 using NUnit.Framework;
@@ -48,15 +50,92 @@ namespace BDFramework.EditorTest
                 SqliteHelper.GetDB(dbname).CreateTable<UniTestSqliteType>();
                 SqliteHelper.GetDB(dbname).InsertTable(insertList);
             }
-            var ret = SqliteHelper.GetDB(dbname).GetTableRuntime().FromAll<UniTestSqliteType>();
-            Debug.Log($"<color=yellow>插入条目：{ret.Count}</color>");
+
+
             Assert.That(true);
         }
+        
+        
+        /// <summary>
+        /// 数据库反序列化测试
+        /// </summary>
+        [Test, Order(1), Performance]
+        static public void SqlItemDeSerializeTest()
+        {
+                        var rets = SqliteHelper.GetDB(dbname).GetTableRuntime().FromAll<UniTestSqliteType>();
+            Debug.Log($"<color=yellow>插入条目：{rets.Count}</color>");
+            //反序列化判断
+            var source = new UniTestSqliteType() { };
+            foreach (var item in rets)
+            {
+                //判断是否相等
+                var ret = source.TestBool.Equals(item.TestBool);
+                if (!ret)
+                {
+                    Assert.Fail("Bool类型校验失败");
+                }
+                ret = source.TestInt.Equals(item.TestInt);
+                if (!ret)
+                {
+                    Assert.Fail("Int类型校验失败");
+                }
+                ret = source.TestString.Equals(item.TestString);
+                if (!ret)
+                {
+                    Assert.Fail("String类型校验失败");
+                }
+                ret = source.TestFloat - item.TestFloat < Double.Epsilon;
+                if (!ret)
+                {
+                    Assert.Fail("Float类型校验失败");
+                }
+                ret = source.TestDouble - item.TestDouble < Double.Epsilon;
+                if (!ret)
+                {
+                    Assert.Fail("Double类型校验失败");
+                }
+                //数组判断相等
+                var boolExceptArray = source.TestBoolArray.Except(item.TestBoolArray);
+                if (boolExceptArray.Count() != 0)
+                {
+                    Assert.Fail("BoolArray类型校验失败");
+                }
+                var intExceptArray = source.TestIntArray.Except(item.TestIntArray);
+                if (intExceptArray.Count() != 0)
+                {
+                    Assert.Fail("intArray类型校验失败");
+                }
+                var stringExceptArray = source.TestStringArray.Except(item.TestStringArray);
+                if (stringExceptArray.Count() != 0)
+                {
+                    Assert.Fail("stringArray类型校验失败");
+                }
 
+                for (int i = 0; i < source.TestFloatArray.Length; i++)
+                {
+                    ret = source.TestFloatArray[i] - item.TestFloatArray[i] < Double.Epsilon;
+                    if (!ret)
+                    {
+                        Assert.Fail("FloatArray类型校验失败");
+                    }
+                }
+                
+                for (int i = 0; i < source.TestDoubleArray.Length; i++)
+                {
+                    ret = source.TestDoubleArray[i] - item.TestDoubleArray[i] < Double.Epsilon;
+                    if (!ret)
+                    {
+                        Assert.Fail("DoubleArray类型校验失败");
+                    }
+                }
+            }
+
+        }
+        
         /// <summary>
         /// sselect语句
         /// </summary>
-        [Test, Order(1),Performance]
+        [Test, Order(1), Performance]
         static public void Where()
         {
             //单条件查询

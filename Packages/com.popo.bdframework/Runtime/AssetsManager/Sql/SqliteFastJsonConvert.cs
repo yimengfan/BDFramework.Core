@@ -43,7 +43,7 @@ namespace AssetsManager.Sql
             sb.Append("[");
             for (int i = 0; i < array.Length; i++)
             {
-                sb.Append(array[i]);
+                sb.Append(array[i].ToString().ToLower());
                 if (i < array.Length - 1)
                 {
                     sb.Append(",");

@@ -14,7 +14,7 @@ namespace BDFramework.EditorTest
                 // 测试方法
        // [MenuItem("BDFrameWork工具箱/TestPipeline/Sqlite/json序列化")]
        [Test, Order(1),Performance]
-        public static void Main()
+        public static void Benchmark_DeSerialize()
         {
             // 整型数组测试
             TestIntArraySerialization();
@@ -35,6 +35,12 @@ namespace BDFramework.EditorTest
             TestStringArraySerialization();
             Debug.Log("<color=red>-------------------------</color>");
         }
+        
+        [Test, Order(1),Performance]
+        public static void DeSerializeValueTest()
+        {
+            
+        }
 
         static private void TestIntArraySerialization()
         {
@@ -45,7 +51,7 @@ namespace BDFramework.EditorTest
             Debug.Log("json ints: " + jsonInts2);
             if (!jsonInts.Equals(jsonInts2))
             {
-                Debug.LogError("int 序列化失败!");
+                Assert.Fail("int 序列化失败!");
             }
 
             int[] intResult = SqliteFastJsonConvert. DeserializeArrayInt(jsonInts);
@@ -54,7 +60,7 @@ namespace BDFramework.EditorTest
             {
                 if (intResult[i] != intResult2[i])
                 {
-                    Debug.LogError("int 反序列化失败!");
+                    Assert.Fail("int 反序列化失败!");
                     break;
                 }
             }
@@ -72,7 +78,7 @@ namespace BDFramework.EditorTest
             Debug.Log("json longs: " + jsonLongs2);
             if (!jsonLongs.Equals(jsonLongs2))
             {
-                Debug.LogError("long 序列化失败!");
+                Assert.Fail("long 序列化失败!");
             }
 
             long[] longResult = SqliteFastJsonConvert. DeserializeArrayLong(jsonLongs);
@@ -81,7 +87,7 @@ namespace BDFramework.EditorTest
             {
                 if (longResult[i] != longResult2[i])
                 {
-                    Debug.LogError("long 反序列化失败!");
+                    Assert.Fail("long 反序列化失败!");
                     break;
                 }
             }
@@ -99,7 +105,7 @@ namespace BDFramework.EditorTest
             Debug.Log("json floats: " + jsonFloats2);
             if (!jsonFloats.Equals(jsonFloats2))
             {
-                Debug.LogError("float 序列化失败!");
+                Assert.Fail("float 序列化失败!");
             }
 
             float[] floatResult = SqliteFastJsonConvert. DeserializeArrayFloat(jsonFloats);
@@ -108,7 +114,7 @@ namespace BDFramework.EditorTest
             {
                 if (Math.Abs(floatResult[i] - floatResult2[i]) > 0.0001f) // 浮点数比较时要考虑精度
                 {
-                    Debug.LogError("float 反序列化失败!");
+                    Assert.Fail("float 反序列化失败!");
                     break;
                 }
             }
@@ -126,7 +132,7 @@ namespace BDFramework.EditorTest
             Debug.Log("json doubles: " + jsonDoubles2);
             if (!jsonDoubles.Equals(jsonDoubles2))
             {
-                Debug.LogError("double 序列化失败!");
+                Assert.Fail("double 序列化失败!");
             }
 
             double[] doubleResult = SqliteFastJsonConvert. DeserializeArrayDouble(jsonDoubles);
@@ -135,7 +141,7 @@ namespace BDFramework.EditorTest
             {
                 if (Math.Abs(doubleResult[i] - doubleResult2[i]) > 0.0001) // 双精度浮点数比较时要考虑精度
                 {
-                    Debug.LogError("double 反序列化失败!");
+                    Assert.Fail("double 反序列化失败!");
                     break;
                 }
             }
@@ -153,7 +159,7 @@ namespace BDFramework.EditorTest
             Debug.Log("json bools: " + jsonBools2);
             if (!jsonBools.Equals(jsonBools2))
             {
-                Debug.LogError("bool 序列化失败!");
+                Assert.Fail("bool 序列化失败!");
             }
 
             bool[] boolResult =SqliteFastJsonConvert. DeserializeArrayBool(jsonBools);
@@ -162,7 +168,7 @@ namespace BDFramework.EditorTest
             {
                 if (boolResult[i] != boolResult2[i])
                 {
-                    Debug.LogError("bool 反序列化失败!");
+                    Assert.Fail("bool 反序列化失败!");
                     break;
                 }
             }
@@ -180,7 +186,7 @@ namespace BDFramework.EditorTest
             Debug.Log("json strings: " + jsonStrings2);
             if (!jsonStrings.Equals(jsonStrings2))
             {
-                Debug.LogError("string 序列化失败!");
+                Assert.Fail("string 序列化失败!");
             }
 
             string[] stringResult = SqliteFastJsonConvert.DeserializeArrayString(jsonStrings);
@@ -189,7 +195,8 @@ namespace BDFramework.EditorTest
             {
                 if (stringResult[i] != stringResult2[i])
                 {
-                    Debug.LogError("string 反序列化失败!");
+
+                    Assert.Fail("string 反序列化失败!");
                     break;
                 }
             }
