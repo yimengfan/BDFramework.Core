@@ -30,27 +30,6 @@ public class BDLauncherBridge
         
         //UI组件类型注册
         //ui类型
-#if ENABLE_ILRUNTIME
-        var uitype = typeof(UIBehaviour);
-        for (int i = 0; i < mainProjectTypes.Length; i++)
-        {
-            var type = mainProjectTypes[i];
-            //注册所有uiComponent
-            bool ret = type.IsSubclassOf(uitype);
-            if (ret)
-            {
-                if (!ILRuntimeHelper.UIComponentTypes.ContainsKey(type.Name))
-                {
-                    //因为Attribute typeof（Type）后无法获取fullname
-                    ILRuntimeHelper.UIComponentTypes[type.FullName] = type;
-                }
-                else
-                {
-                    BDebug.LogError("有重名UI组件，请注意" + type.FullName);
-                }
-            }
-        }
-#endif
 
         //执行主工程逻辑
         BDebug.Log("【Launch】主工程管理器初始化..", Color.red);

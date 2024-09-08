@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
+using HybridCLR;
 using UnityEngine;
 #if ENABLE_HCLR
 using HybridCLR;
