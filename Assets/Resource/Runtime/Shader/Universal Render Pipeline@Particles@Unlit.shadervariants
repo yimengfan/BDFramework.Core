@@ -6,7 +6,7 @@ ShaderVariantCollection:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Universal Render Pipeline@Particles@Unlit
+  m_Name: universal render pipeline@particles@unlit
   m_Shaders:
   - first: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
     second:

@@ -215,7 +215,16 @@ namespace BDFramework.Asset
             if (!IsExsitAsset(basePckBuildInfoPath, isUseBetterStreaming))
             {
                 //不存在Streaming配置
-                BDebug.LogError("【母包资源检测】严重错误！母包不存在：" + basePckBuildInfoPath);
+                if (!Application.isEditor)
+                {
+                    BDebug.LogError($"【母包资源检测】严重错误！母包配置不存在：{basePckBuildInfoPath}" );
+                }
+                else
+                {
+                    BDLauncher.Inst.BasePckBuildInfo = new ClientPackageBuildInfo();
+                    BDLauncher.Inst.HotfixAssetsBuildInfo = new ClientPackageBuildInfo();
+                    BDebug.Log($"【母包资源检测】Editor不存在母包配置,直接构造：{basePckBuildInfoPath}" ,Color.red);
+                }
                 callback?.Invoke();
                 return;
             }
@@ -281,7 +290,7 @@ namespace BDFramework.Asset
                 }
                 else
                 {
-                    BDebug.LogError("母包资源检测】错误！母包不存在:" + copytoFile);
+                    BDebug.LogError($"母包资源检测】错误！母包配置不存在:{copytoFile}" );
                 }
             }
 

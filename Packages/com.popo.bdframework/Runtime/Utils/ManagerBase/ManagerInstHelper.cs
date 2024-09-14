@@ -16,7 +16,7 @@ namespace BDFramework.Mgr
         /// <summary>
         /// mgr列表
         /// </summary>
-        public static List<IMgr> MgrList { get; private set; } = new List<IMgr>();
+        private static List<IMgr> MgrList { get;  set; } = new List<IMgr>();
 
         /// <summary>
         /// 获取需要搜集的Class
@@ -57,7 +57,7 @@ namespace BDFramework.Mgr
         /// </summary>
         /// <param name="types"></param>
         /// <returns></returns>
-        static public List<string> LoadManager(IEnumerable<Type> types ,IEnumerable<string>  exsitMgrNames = null)
+        static public List<string> LoadManager(IEnumerable<Type> types, IEnumerable<string> exsitMgrNames = null)
         {
             List<string> replacedMgrNames = new List<string>();
             //搜集管理器
@@ -65,16 +65,14 @@ namespace BDFramework.Mgr
             {
                 if (type != null && type.IsClass && (!type.IsAbstract) && typeof(IMgr).IsAssignableFrom(type))
                 {
-                    if (exsitMgrNames != null)
+                    if (exsitMgrNames != null && exsitMgrNames.Contains(type.Name))
                     {
-                        if (exsitMgrNames.Contains(type.Name))
-                        {
-                            BDebug.Log($"热更存在Mgr,由热更接管->{type.Name}", Color.magenta);
-                            replacedMgrNames.Add(type.Name);
-                            continue;
-                        }
+                        BDebug.Log($"热更存在Mgr,由热更接管->{type.Name}", Color.magenta);
+                        replacedMgrNames.Add(type.Name);
+                        continue;
                     }
-                    
+
+
                     // BDebug.Log("[main]加载管理器-" + type, Color.green);
                     var inst = type.BaseType.GetProperty("Inst", BindingFlags.Static | BindingFlags.Public);
                     if (inst != null)
@@ -124,7 +122,7 @@ namespace BDFramework.Mgr
         /// 注册类型
         /// </summary>
         /// <param name="types"></param>
-        static public void RegisterType(IEnumerable<Type> types,bool isHotfixType = false)
+        static public void RegisterType(IEnumerable<Type> types, bool isHotfixType = false)
         {
             //遍历type执行逻辑
             foreach (var type in types)
@@ -144,8 +142,9 @@ namespace BDFramework.Mgr
                             }
                             else
                             {
-                                 ret = mgr.RegisterHotfixTypes(type, mgrAttributes);
+                                ret = mgr.RegisterHotfixTypes(type, mgrAttributes);
                             }
+
                             if (ret)
                             {
                                 break;
@@ -156,7 +155,7 @@ namespace BDFramework.Mgr
             }
         }
 
-        
+
         /// <summary>
         /// 启动所有管理器
         /// </summary>
@@ -167,7 +166,7 @@ namespace BDFramework.Mgr
             {
                 mgr.Init();
             }
-         
+
             //管理器启动
             foreach (var mgr in MgrList)
             {

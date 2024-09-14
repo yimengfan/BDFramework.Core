@@ -61,20 +61,17 @@ public class BDLauncherBridge
             //初始化manager
             var hotfixMgrList= HotfixManagerInstHelper.LoadManager(hotfixTypes);
             var hotfixMgrNames = hotfixMgrList.Select((m) => m.GetType().Name);
-            var replacedMgrTypes=  ManagerInstHelper.LoadManager(mainProjectTypes,hotfixMgrNames);
-           
+            ManagerInstHelper.LoadManager(mainProjectTypes,hotfixMgrNames);
             //热更实体生效：主工程实体类型被覆盖
             ManagerInstHelper.RegisterType(hotfixTypes,true);
-            
             //热更manager接管"主工程类型"：主工程manager被覆盖
-            HotfixManagerInstHelper.RegisterMainProjectType(replacedMgrTypes,mainProjectTypes);
-            
+            HotfixManagerInstHelper.RegisterMainProjectType(mainProjectTypes);
             //触发GameStart
             TriggerMainProjectGameStart(mainProjectTypes);
             TriggerHotFixGameStart(hotfixTypes);
-            
-            //启动管理器
+            //启动主工程管理器
             ManagerInstHelper.Start();
+            //启动热更管理器
             HotfixManagerInstHelper.Start();
         }
         else
