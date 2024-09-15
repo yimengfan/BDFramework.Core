@@ -139,10 +139,8 @@ namespace BDFramework
 
         void OnApplicationQuit()
         {
-#if UNITY_EDITOR
+
             SqliteLoder.Close();
-            ILRuntimeHelper.Dispose();
-#endif
         }
 
         #endregion

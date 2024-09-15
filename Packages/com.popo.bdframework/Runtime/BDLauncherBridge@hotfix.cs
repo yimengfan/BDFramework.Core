@@ -28,29 +28,7 @@ public class BDLauncherBridge
      
 
         
-        //UI组件类型注册
-        //ui类型
-#if ENABLE_ILRUNTIME
-        var uitype = typeof(UIBehaviour);
-        for (int i = 0; i < mainProjectTypes.Length; i++)
-        {
-            var type = mainProjectTypes[i];
-            //注册所有uiComponent
-            bool ret = type.IsSubclassOf(uitype);
-            if (ret)
-            {
-                if (!ILRuntimeHelper.UIComponentTypes.ContainsKey(type.Name))
-                {
-                    //因为Attribute typeof（Type）后无法获取fullname
-                    ILRuntimeHelper.UIComponentTypes[type.FullName] = type;
-                }
-                else
-                {
-                    BDebug.LogError("有重名UI组件，请注意" + type.FullName);
-                }
-            }
-        }
-#endif
+
 
         //执行主工程逻辑
         BDebug.Log("【Launch】主工程管理器初始化..", Color.red);
@@ -128,32 +106,11 @@ public class BDLauncherBridge
                 continue;
             }
 
-#if ENABLE_ILRUNTIME
-             var interfaceTypes = type.GetInterfaces();
-            for (int j = 0; j < interfaceTypes.Length; j++)
-            {
-                var interfaceType = interfaceTypes[j];
-                if (interfaceType.Name.Contains(nameof(IHotfixGameStart)))
-                {
-                    hotfixStart = Activator.CreateInstance(type) as IHotfixGameStart;
-                    break;
-                }
-            }
-#elif ENABLE_HCLR
             if (type.GetInterface(nameof(IHotfixGameStart)) != null)
             {
                 hotfixStart = Activator.CreateInstance(type) as IHotfixGameStart;
                 break;
             }
-#endif
-
-            
-          
-
-            
-#if !ENABLE_ILRUNTIME && !ENABLE_HCLR
-    BDebug.LogError("请打开BuildDLL面板,开启ILRUNTIME或者HCLR!");
-#endif
             
         }
 
