@@ -1,0 +1,46 @@
+
+[
+  {
+    "CodeRoot" : 3,
+    "SQLRoot"  : 3,
+    "ArtRoot"  : 3,
+    "CodeRunMode" : 1,
+    "IsDebuggerILRuntime" : false,
+    "IsDebugLog"          : true,
+    "IsHotfix"            : false,
+    "ClientVersionNum"    : "0.0.0",
+    "L2Type"              : 1,
+    "ClassType"           : "BDFramework.Configure.GameBaseConfigProcessor+Config"
+  },
+  {
+    "SqlitePassword" : "password123!!!",
+    "ScriptPubKey"   : "",
+    "ScriptPrivateKey" : "",
+    "ClassType"        : "BDFramework.Configure.GameCipherConfigProcessor+Config"
+  },
+  {
+    "IsNeedNet" : false,
+    "FileServerUrl" : "192.168.0.222",
+    "GateServerIp"  : "",
+    "Port"          : 0,
+    "ClassType"     : "Game.Config.ServerConfigProcessor+Config"
+  },
+  {
+    "Test1" : "111",
+    "Test2" : "111",
+    "Test3" : "111",
+    "ClassType" : "Game.Config.TestConfigProcessor+Config"
+  },
+  {
+    "Test1" : "222",
+    "Test2" : "222",
+    "Test3" : "222",
+    "ClassType" : "Game.Config.TestConfigProcessor2+Config"
+  },
+  {
+    "Test1" : "333",
+    "Test2" : "333",
+    "Test3" : "333",
+    "ClassType" : "Game.Config.TestConfigProcessor3+Config"
+  }
+]

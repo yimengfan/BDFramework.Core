@@ -6,7 +6,7 @@ ShaderVariantCollection:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MA99@PBR_Silk
+  m_Name: ma99@pbr_silk
   m_Shaders:
   - first: {fileID: 4800000, guid: d053233f84bf8c047bef2431d30a7eb7, type: 3}
     second:

@@ -1,4 +1,5 @@
 using BDFramework.GameStart;
+using UnityEngine;
 
 namespace Game
 {
@@ -6,7 +7,7 @@ namespace Game
     {
         public void Start()
         {
-            BDebug.Log("主工程代码启动!","red");
+            BDebug.Log("主工程代码启动!",Color.red);
         }
 
         public void Update()

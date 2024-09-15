@@ -19,14 +19,12 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 
 #### 稳定版本托管在OpenUPM :  [链接](https://www.wolai.com/4CdvGJ93AXPJ2kLMC49F2Z)   
 
-### 支持2019、2021 、团结引擎, Unity6以上Runtime付费 不再提供支持维护！！！  
-### 支持2019、2021 、团结引擎, Unity6以上Runtime付费 不再提供支持维护！！！  
-### 支持2019、2021 、团结引擎, Unity6以上Runtime付费 不再提供支持维护！！！  
+### 支持奇数版本:2019、2021 、 Unity6（2023）
 
 #### Unity2018 - [ObsoleteBranch](https://github.com/yimengfan/BDFramework.Core/tree/2018.4.23LTS)  
 #### Unity2019 - [链接](https://www.wolai.com/4CdvGJ93AXPJ2kLMC49F2Z)    （当前主干）  
 #### Unity2021 - [待测试]
-#### 团结引擎 - [待测试]  
+#### Unity6(2023) - [待测试]  
 
 版本开发流程：<br />=》修改、Fixed bug、新功能加入 基于**Master（目前为Unity2019）**<br />=》Merge to Unity2021测试  
 

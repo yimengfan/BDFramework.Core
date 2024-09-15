@@ -7,6 +7,12 @@ A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 - 优化解析速度
 - 增加UniTest
 
+##V2.4.3
+- 增加Editor下各种测试的支持:重复加载manager、package.info的搜集.
+
+##V2.4.2
+- 增加Editor下各种测试的支持.
+
 ##V2.4.1
 - 迁移至openupm.com
 - HotfixDLL:升级HyCLR到5.4.1版本
