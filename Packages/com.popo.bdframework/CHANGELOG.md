@@ -1,9 +1,10 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V2.5.0
+- [UI]修复UIManager中LoseFocus对卸载ui的访问
 ##V2.4.3
 - 增加Editor下各种测试的支持:重复加载manager、package.info的搜集.
-
-##V2.4.3
+##V2.4.2
 - 增加Editor下各种测试的支持.
 ##V2.4.1
 - 迁移至openupm.com
