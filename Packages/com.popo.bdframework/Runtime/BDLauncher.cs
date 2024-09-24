@@ -24,7 +24,7 @@ namespace BDFramework
         /// <summary>
         /// 框架版本号
         /// </summary>
-        public const string Version  = "2.4.3";
+        public const string Version  = "2.5.0";
 
         /// <summary>
         /// 客户端配置信息

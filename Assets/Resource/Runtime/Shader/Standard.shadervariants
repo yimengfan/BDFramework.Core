@@ -6,7 +6,7 @@ ShaderVariantCollection:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: standard
+  m_Name: Standard
   m_Shaders:
   - first: {fileID: 4800000, guid: 62873910d2c8cdc4a8e7e4b49ecfe37e, type: 3}
     second:

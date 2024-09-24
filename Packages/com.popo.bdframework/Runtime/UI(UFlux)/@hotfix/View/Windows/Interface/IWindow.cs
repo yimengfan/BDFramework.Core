@@ -62,7 +62,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 丢失焦点
         /// </summary>
-        void OnBlur();
+        void LoseFocus();
 
         /// <summary>
         /// 注册子窗口

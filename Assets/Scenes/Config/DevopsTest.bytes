@@ -8,7 +8,7 @@
     "IsDebuggerILRuntime" : false,
     "IsDebugLog"          : true,
     "IsHotfix"            : false,
-    "ClientVersionNum"    : "0.0.0",
+    "ClientVersionNum"    : "2.5.0",
     "L2Type"              : 1,
     "ClassType"           : "BDFramework.Configure.GameBaseConfigProcessor+Config"
   },

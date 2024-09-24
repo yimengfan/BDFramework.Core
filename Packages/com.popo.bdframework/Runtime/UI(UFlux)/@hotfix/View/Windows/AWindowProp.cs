@@ -94,7 +94,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 丢失焦点
         /// </summary>
-        public void OnBlur()
+        public void LoseFocus()
         {
             this.IsFocus = false;
             this.State.TriggerEvent<OnWindowBlur>();
