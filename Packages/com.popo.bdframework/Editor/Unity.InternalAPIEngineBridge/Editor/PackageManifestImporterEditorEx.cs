@@ -3,6 +3,9 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEditor.PackageManager.UI;
+#if UNITY_2021_1_OR_NEWER
+using UnityEditor.PackageManager.UI.Internal;
+#endif
 using UnityEditorInternal;
 using UnityEngine;
 
@@ -35,26 +38,37 @@ namespace Unity.InternalAPIEngineBridge
             {
                 foreach (var scope in scopes)
                 {
-                    Debug.Log($"<color=yellow>添加OpenUPM包: {scope}</color>" );
+                    Debug.Log($"<color=yellow>添加OpenUPM包: {scope}</color>");
                 }
 
                 //添加
                 PackageManagerProjectSettings.instance.AddRegistry(reginfo);
-                UpmRegistryClient.instance.AddRegistry(reginfo.name, reginfo.url, reginfo.scopes);
+
+#if UNITY_2021_1_OR_NEWER
+                var upmRegistryClient = ServicesContainer.instance.Resolve<UpmRegistryClient>();
+                upmRegistryClient.AddRegistry(reginfo.name, reginfo.url, reginfo.scopes);
+#else
+                  UpmRegistryClient.instance.AddRegistry(reginfo.name, reginfo.url, reginfo.scopes);
+#endif
             }
             else
             {
                 var except = scopes.Except(find.scopes).ToArray();
                 foreach (var scope in except)
                 {
-                    Debug.Log($"<color=yellow>添加OpenUPM包: {scope}</color>" );
+                    Debug.Log($"<color=yellow>添加OpenUPM包: {scope}</color>");
                 }
 
                 //更新
                 if (except.Length > 0)
                 {
                     PackageManagerProjectSettings.instance.UpdateRegistry(pckName, reginfo);
-                    UpmRegistryClient.instance.UpdateRegistry(reginfo.name, reginfo.name, reginfo.url, reginfo.scopes);
+#if UNITY_2021_1_OR_NEWER
+                    var upmRegistryClient = ServicesContainer.instance.Resolve<UpmRegistryClient>();
+                    upmRegistryClient.AddRegistry(reginfo.name, reginfo.url, reginfo.scopes);
+#else
+                  UpmRegistryClient.instance.AddRegistry(reginfo.name, reginfo.url, reginfo.scopes);
+#endif
                 }
             }
         }

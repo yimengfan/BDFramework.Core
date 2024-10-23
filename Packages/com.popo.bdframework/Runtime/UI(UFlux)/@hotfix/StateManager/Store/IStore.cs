@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BDFramework.UFlux.Reducer;
 
 namespace BDFramework.UFlux.Contains

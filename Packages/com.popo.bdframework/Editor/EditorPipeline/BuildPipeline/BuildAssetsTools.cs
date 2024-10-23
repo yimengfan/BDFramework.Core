@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using BDFramework.Asset;
 using BDFramework.Assets.VersionContrller;

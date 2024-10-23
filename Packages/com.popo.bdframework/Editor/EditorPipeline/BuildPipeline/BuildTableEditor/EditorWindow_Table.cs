@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Tools;
 using LitJson;

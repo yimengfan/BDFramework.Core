@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using BDFramework.Editor.Unity3dEx.PluginsEx.Odin.Attribute;
 using UnityEditor;

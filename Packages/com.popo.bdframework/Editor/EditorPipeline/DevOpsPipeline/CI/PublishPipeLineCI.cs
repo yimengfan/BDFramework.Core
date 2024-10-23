@@ -60,10 +60,10 @@ namespace BDFramework.Editor.DevOps
             var devops_setting = BDEditorApplication.EditorSetting.DevOpsSetting;
             //资源仓库
             var store = devops_setting.AssetServiceVCSData;
-            AssetsSvnProcessor = SVNProcessor.CreateSVNProccesor(store.Url, store.UserName, store.Psw, CI_ASSETS_PATH);
+            AssetsSvnProcessor = SVNProcessor.Create(store.Url, store.UserName, store.Psw, CI_ASSETS_PATH);
             //svn仓库
             store = devops_setting.PackageServiceVCSData;
-            PackageSvnProcessor = SVNProcessor.CreateSVNProccesor(store.Url, store.UserName, store.Psw, CI_PACKAGE_PATH);
+            PackageSvnProcessor = SVNProcessor.Create(store.Url, store.UserName, store.Psw, CI_PACKAGE_PATH);
         }
 
 

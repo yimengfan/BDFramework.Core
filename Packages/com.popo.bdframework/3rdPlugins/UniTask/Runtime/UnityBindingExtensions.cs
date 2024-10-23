@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using UnityEngine;
 #if !UNITY_2019_1_OR_NEWER || UNITASK_UGUI_SUPPORT

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -94,7 +94,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 丢失焦点
         /// </summary>
-        public void LoseFocus()
+        public void OnBlur()
         {
             this.IsFocus = false;
             this.State.TriggerEvent<OnWindowBlur>();

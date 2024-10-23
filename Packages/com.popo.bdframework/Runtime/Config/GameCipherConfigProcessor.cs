@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BDFramework.Sql;
 using Sirenix.OdinInspector;
 

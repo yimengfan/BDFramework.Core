@@ -8,7 +8,7 @@ using BDFramework.Editor;
 using BDFramework.Editor.Environment;
 using BDFramework.Editor.Unity3dEx;
 using BDFramework.GameStart;
-using ILRuntime.Runtime.CLRBinding;
+// using ILRuntime.Runtime.CLRBinding;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;

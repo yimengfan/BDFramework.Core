@@ -1,4 +1,4 @@
-﻿// asmdef Version Defines, enabled when com.unity.addressables is imported.
+// asmdef Version Defines, enabled when com.unity.addressables is imported.
 
 #if UNITASK_ADDRESSABLE_SUPPORT
 

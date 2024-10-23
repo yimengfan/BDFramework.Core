@@ -1,4 +1,4 @@
-﻿using System.CodeDom;
+using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
@@ -233,7 +233,18 @@ Excel格式如下:
                 string type = null;
                 if (fieldTypes != null && fieldTypes.Count >= jsonData.Count)
                 {
+                    
                     type = fieldTypes[i].ToString();
+                    if (type.Contains("List<"))
+                    {
+                        // 正则表达式匹配 List<T>
+                        string pattern = @"list<([^>]+)>";
+                        // 替换为 T[]
+                        string replacement = "$1[]";
+                        // 执行替换，使用 IgnoreCase 选项以忽略大小写
+                        type = Regex.Replace(type, pattern, replacement, RegexOptions.IgnoreCase);
+                    }
+                    
                 }
 
                 //添加字段

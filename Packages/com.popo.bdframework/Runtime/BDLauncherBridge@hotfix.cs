@@ -1,4 +1,4 @@
-﻿using BDFramework;
+using BDFramework;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -30,27 +30,6 @@ public class BDLauncherBridge
         
         //UI组件类型注册
         //ui类型
-#if ENABLE_ILRUNTIME
-        var uitype = typeof(UIBehaviour);
-        for (int i = 0; i < mainProjectTypes.Length; i++)
-        {
-            var type = mainProjectTypes[i];
-            //注册所有uiComponent
-            bool ret = type.IsSubclassOf(uitype);
-            if (ret)
-            {
-                if (!ILRuntimeHelper.UIComponentTypes.ContainsKey(type.Name))
-                {
-                    //因为Attribute typeof（Type）后无法获取fullname
-                    ILRuntimeHelper.UIComponentTypes[type.FullName] = type;
-                }
-                else
-                {
-                    BDebug.LogError("有重名UI组件，请注意" + type.FullName);
-                }
-            }
-        }
-#endif
 
         //执行主工程逻辑
         BDebug.Log("【Launch】主工程管理器初始化..", Color.red);
@@ -61,17 +40,20 @@ public class BDLauncherBridge
             //初始化manager
             var hotfixMgrList= HotfixManagerInstHelper.LoadManager(hotfixTypes);
             var hotfixMgrNames = hotfixMgrList.Select((m) => m.GetType().Name);
-            ManagerInstHelper.LoadManager(mainProjectTypes,hotfixMgrNames);
+            var replacedMgrTypes=  ManagerInstHelper.LoadManager(mainProjectTypes,hotfixMgrNames);
+           
             //热更实体生效：主工程实体类型被覆盖
             ManagerInstHelper.RegisterType(hotfixTypes,true);
+            
             //热更manager接管"主工程类型"：主工程manager被覆盖
-            HotfixManagerInstHelper.RegisterMainProjectType(mainProjectTypes);
+            HotfixManagerInstHelper.RegisterMainProjectType(replacedMgrTypes,mainProjectTypes);
+            
             //触发GameStart
             TriggerMainProjectGameStart(mainProjectTypes);
             TriggerHotFixGameStart(hotfixTypes);
-            //启动主工程管理器
+            
+            //启动管理器
             ManagerInstHelper.Start();
-            //启动热更管理器
             HotfixManagerInstHelper.Start();
         }
         else

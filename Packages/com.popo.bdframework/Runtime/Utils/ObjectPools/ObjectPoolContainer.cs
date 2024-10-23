@@ -1,4 +1,4 @@
-﻿namespace BDFramework.ResourceMgr
+namespace BDFramework.ResourceMgr
 {
 	/// <summary>
 	/// Pool容器

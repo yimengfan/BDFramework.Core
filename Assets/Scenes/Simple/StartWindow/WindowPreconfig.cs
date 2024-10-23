@@ -4,8 +4,6 @@ using BDFramework;
 using BDFramework.VersionController;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
-using BDFramework.VersionController;
-using Game.ILRuntime;
 using LitJson;
 using UnityEngine;
 using UnityEngine.UI;

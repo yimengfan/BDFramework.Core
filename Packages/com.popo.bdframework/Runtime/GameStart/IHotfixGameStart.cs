@@ -1,4 +1,4 @@
-﻿namespace BDFramework.GameStart
+namespace BDFramework.GameStart
 {
     public interface IHotfixGameStart
     {

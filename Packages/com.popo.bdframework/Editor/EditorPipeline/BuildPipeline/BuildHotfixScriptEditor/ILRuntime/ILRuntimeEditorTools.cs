@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Reflection;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Environment;
 using BDFramework.GameStart;
-using ILRuntime.Runtime.CLRBinding;
+// using ILRuntime.Runtime.CLRBinding;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -177,7 +177,7 @@ namespace BDFramework.Editor.HotfixScript
             var clrbinding = IPath.Combine(output, "CLRBindings.cs");
             var prebinding = IPath.Combine(output, "PreCLRBinding.cs");
             //
-            BindingCodeGenerator.GenerateBindingCode(preBindingTypes, output, excludeMethods: blackMethodList);
+            // BindingCodeGenerator.GenerateBindingCode(preBindingTypes, output, excludeMethods: blackMethodList);
             var oldContent = File.ReadAllText(clrbinding);
             var newContent = oldContent.Replace("class CLRBindings", "class PreCLRBinding");
             //写入新的,删除老的

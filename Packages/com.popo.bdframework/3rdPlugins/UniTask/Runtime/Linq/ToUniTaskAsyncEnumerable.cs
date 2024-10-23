@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks.Internal;
+using Cysharp.Threading.Tasks.Internal;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

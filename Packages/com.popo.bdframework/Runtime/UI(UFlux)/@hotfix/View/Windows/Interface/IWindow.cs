@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using BDFramework.DataListener;
 
 namespace BDFramework.UFlux
@@ -62,7 +62,7 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 丢失焦点
         /// </summary>
-        void LoseFocus();
+        void OnBlur();
 
         /// <summary>
         /// 注册子窗口

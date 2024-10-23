@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
+using HybridCLR;
 using UnityEngine;
 #if ENABLE_HCLR
 using HybridCLR;
@@ -16,6 +17,7 @@ namespace BDFramework
     static public class ScriptLoder
     {
         private static readonly string Tag = "ScriptLoder";
+
         #region 路径
 
         /// <summary>
@@ -71,13 +73,12 @@ namespace BDFramework
         /// <param name="mainProjectTypes">UPM隔离了dll,需要手动传入</param>
         static public void Init(AssetLoadPathType loadPathType, HotfixCodeRunMode runMode, Type[] mainProjectTypes)
         {
-            
             BDebug.EnableLog(Tag);
-           // CLRBindAction = clrBindingAction;
+            // CLRBindAction = clrBindingAction;
 
             if (loadPathType == AssetLoadPathType.Editor)
             {
-                BDebug.Log(Tag,"Editor(非热更)模式!");
+                BDebug.Log(Tag, "Editor(非热更)模式!");
                 //反射调用，防止编译报错
                 var assembly = Assembly.GetExecutingAssembly();
                 var type = assembly.GetType("BDLauncherBridge");
@@ -86,11 +87,11 @@ namespace BDFramework
                 // var list = new List<Type>();
                 // list.AddRange(mainProjectTypes);
                 // list.AddRange(typeof(BDLauncher).Assembly.GetTypes());
-                method.Invoke(null, new object[] { mainProjectTypes, null });
+                method.Invoke(null, new object[] {mainProjectTypes, null});
             }
             else
             {
-                BDebug.Log(Tag,"热更模式!");
+                BDebug.Log(Tag, "热更模式!");
                 LoadHotfixDLL(loadPathType, runMode, mainProjectTypes);
             }
         }
@@ -109,27 +110,26 @@ namespace BDFramework
             //反射执行
             if (mode == HotfixCodeRunMode.HyCLR)
             {
-#if ENABLE_HCLR && !UNITY_EDITOR
-
-              
-                BDebug.Log("【ScriptLoder】HCLR执行, Dll路径:" + dllPath, Color.red);
-                //加载AOT,AOT Pacth 一定在母包内
-                var aotPatch = Path.Combine(BApplication.GetRuntimePlatformPath(), HCLR_AOT_PATCH_PATH);
-                var aotPatchDlls = BetterStreamingAssets.GetFiles(aotPatch, "*.dll");
-                foreach (var path in aotPatchDlls)
+                if (!Application.isEditor)
                 {
-                    BDebug.Log("【ScriptLoder】HCLR加载AOT Patch:" + path, Color.red);
-                    var dllbytes = BetterStreamingAssets.ReadAllBytes(path);
-                    var err = RuntimeApi.LoadMetadataForAOTAssembly(dllbytes, HomologousImageMode.SuperSet);
-                    Debug.Log($"LoadMetadataForAOTAssembly:{path}. ret:{err}");
+                    BDebug.Log("【ScriptLoder】HCLR执行, Dll路径:" + dllPath, Color.red);
+                    //加载AOT,AOT Pacth 一定在母包内
+                    var aotPatch = Path.Combine(BApplication.GetRuntimePlatformPath(), HCLR_AOT_PATCH_PATH);
+                    var aotPatchDlls = BetterStreamingAssets.GetFiles(aotPatch, "*.dll");
+                    foreach (var path in aotPatchDlls)
+                    {
+                        BDebug.Log("【ScriptLoder】HCLR加载AOT Patch:" + path, Color.red);
+                        var dllbytes = BetterStreamingAssets.ReadAllBytes(path);
+                        var err = RuntimeApi.LoadMetadataForAOTAssembly(dllbytes, HomologousImageMode.SuperSet);
+                        Debug.Log($"LoadMetadataForAOTAssembly:{path}. ret:{err}");
+                    }
                 }
-                
-#else
-                BDebug.Log("【ScriptLoder】DotNet反射执行, Dll路径:" + dllPath, Color.red);
-#endif
-             
+                else
+                {
+                    BDebug.Log("【ScriptLoder】Editor下反射执行, Dll路径:" + dllPath, Color.red);
+                }
 
-                //HCLR加载
+                //HyCLR加载
                 Assembly assembly;
                 var dllBytes = File.ReadAllBytes(dllPath);
                 var pdbPath = dllPath + ".pdb";
@@ -147,7 +147,7 @@ namespace BDFramework
 
                 var type = typeof(ScriptLoder).Assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
-                var startFunc = (Action<Type[], Type[]>)Delegate.CreateDelegate(typeof(Action<Type[], Type[]>), method);
+                var startFunc = (Action<Type[], Type[]>) Delegate.CreateDelegate(typeof(Action<Type[], Type[]>), method);
                 try
                 {
                     var hotfixTypes = assembly.GetTypes();

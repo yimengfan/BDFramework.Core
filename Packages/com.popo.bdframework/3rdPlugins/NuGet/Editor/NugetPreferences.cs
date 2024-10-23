@@ -1,4 +1,4 @@
-﻿namespace NugetForUnity
+namespace NugetForUnity
 {
     using UnityEditor;
     using UnityEngine;

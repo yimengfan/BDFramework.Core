@@ -1,4 +1,4 @@
-﻿namespace BDFramework.Editor.AssetBundle
+namespace BDFramework.Editor.AssetBundle
 {
     /// <summary>
     /// AssetBundle的缓存服务

@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 
 namespace UnityEngine.AssetGraph {
 	public class GraphBackground {

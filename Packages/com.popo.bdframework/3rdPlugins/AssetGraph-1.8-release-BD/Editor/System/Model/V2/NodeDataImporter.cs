@@ -1,4 +1,4 @@
-﻿using V1=AssetBundleGraph;
+using V1=AssetBundleGraph;
 
 namespace UnityEngine.AssetGraph.DataModel.Version2 {
 	public interface NodeDataImporter {

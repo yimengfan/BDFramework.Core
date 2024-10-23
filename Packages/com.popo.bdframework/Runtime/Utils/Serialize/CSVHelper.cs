@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Linq;

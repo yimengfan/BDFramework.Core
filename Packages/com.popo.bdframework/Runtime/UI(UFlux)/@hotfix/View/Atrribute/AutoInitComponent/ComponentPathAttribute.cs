@@ -1,12 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using ILRuntime.CLR.TypeSystem;
-using ILRuntime.Reflection;
-using ILRuntime.Runtime.Intepreter;
-using UnityEngine;
 
 namespace BDFramework.UFlux
 {
@@ -51,17 +45,17 @@ namespace BDFramework.UFlux
             }
             else
             {
-                var list = (IList) ILRuntimeHelper.CreateInstance(fieldType);
+                var list = (IList) HotfixAssembliesHelper.CreateHotfixInstance(fieldType);
                 fieldInfo.SetValue(com, list);
 
                 // 泛型T类型
                 Type argType = null;
-                if (fieldInfo is ILRuntimeFieldInfo runtimeFieldInfo)
-                {
-                    var value = runtimeFieldInfo.ILFieldType.GenericArguments[0].Value;
-                    argType = value.ReflectionType;
-                }
-                else
+                // if (fieldInfo is ILRuntimeFieldInfo runtimeFieldInfo)
+                // {
+                //     var value = runtimeFieldInfo.ILFieldType.GenericArguments[0].Value;
+                //     argType = value.ReflectionType;
+                // }
+                // else
                 {
                     argType = fieldType.GenericTypeArguments[0];
                 }
@@ -116,7 +110,7 @@ namespace BDFramework.UFlux
             }
             else
             {
-                var list = (IList) ILRuntimeHelper.CreateInstance(fieldType);
+                var list = (IList) HotfixAssembliesHelper.CreateHotfixInstance(fieldType);
                 propertyInfo.SetValue(com, list);
 
                 // 泛型T类型

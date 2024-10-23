@@ -1,4 +1,4 @@
-﻿namespace BDFramework.L2
+namespace BDFramework.L2
 {
     public enum L2Type
     {

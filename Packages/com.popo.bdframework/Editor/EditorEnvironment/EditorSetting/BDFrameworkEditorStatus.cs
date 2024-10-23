@@ -1,4 +1,4 @@
-﻿namespace BDFramework.Editor
+namespace BDFramework.Editor
 {
 
     public enum BDFrameworkEditorStatus

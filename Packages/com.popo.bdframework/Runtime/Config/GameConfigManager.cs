@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BDFramework.Core.Tools;
 using BDFramework.Editor.Inspector.Config;
 using BDFramework.Mgr;
 using LitJson;
@@ -73,9 +74,9 @@ namespace BDFramework.Configure
         private string GetConfigText()
         {
             string text = "";
-            if (Application.isPlaying)
+            if (Application.isPlaying &&  BDLauncher.Inst)
             {
-                text = BDLauncher.Inst.ConfigText.text;
+                text = BDLauncher.Inst.ConfigText?.text;
             }
             else
             {
@@ -83,6 +84,7 @@ namespace BDFramework.Configure
                 if (launcher && launcher.ConfigText)
                 {
                     text = launcher.ConfigText.text;
+                    if(BApplication.IsPlaying)
                     BDebug.Log("GameConfig加载配置:" + launcher.ConfigText.name, Color.yellow);
                 }
                 else

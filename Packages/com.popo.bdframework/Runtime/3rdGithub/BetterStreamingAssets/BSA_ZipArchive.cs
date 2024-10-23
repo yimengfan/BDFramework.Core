@@ -1,4 +1,4 @@
-﻿// Better Streaming Assets, Piotr Gwiazdowski <gwiazdorrr+github at gmail.com>, 2017
+// Better Streaming Assets, Piotr Gwiazdowski <gwiazdorrr+github at gmail.com>, 2017
 // Bits below are copied from or inspired by System.IO.Compression.dll; leaving comments from
 // original source code and attaching license
 

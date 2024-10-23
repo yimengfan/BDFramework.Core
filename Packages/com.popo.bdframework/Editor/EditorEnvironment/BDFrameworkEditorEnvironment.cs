@@ -129,14 +129,15 @@ namespace BDFramework.Editor.Environment
                 //BDEditor初始化
                 BDEditorApplication.Init();
                 //加载主工程的DLL Type
-                var assemblyPath = BApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll";
-                var editorAssemlyPath = BApplication.Library + "/ScriptAssemblies/Assembly-CSharp-Editor.dll";
-                if (File.Exists(assemblyPath) && File.Exists(editorAssemlyPath))
-                {
-                    var gAssembly = Assembly.LoadFile(assemblyPath);
-                    var eAssemlby = Assembly.LoadFile(editorAssemlyPath);
-                    Types = CollectTypes(gAssembly, eAssemlby).ToArray();
-                }
+                Types = ManagerInstHelper.GetMainProjectTypes();
+                // var assemblyPath = BApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll";
+                // var editorAssemlyPath = BApplication.Library + "/ScriptAssemblies/Assembly-CSharp-Editor.dll";
+                // if (File.Exists(assemblyPath) && File.Exists(editorAssemlyPath))
+                // {
+                //     var gAssembly = Assembly.LoadFile(assemblyPath);
+                //     var eAssemlby = Assembly.LoadFile(editorAssemlyPath);
+                //     Types = CollectTypes(gAssembly, eAssemlby).ToArray();
+                // }
 
                 
                 //编辑器下加载初始化
@@ -178,25 +179,25 @@ namespace BDFramework.Editor.Environment
         /// </summary>
         static public Type[] Types { get; private set; } = new Type[] { };
 
-        /// <summary>
-        /// 外部注册主工程的Assembly
-        /// </summary>
-        /// <param name="gameLogicAssembly"></param>
-        /// <param name="gameEditorAssembly"></param>
-        static public List<Type> CollectTypes(Assembly gameLogicAssembly, Assembly gameEditorAssembly)
-        {
-            //编辑器所有类
-            List<Type> typeList = new List<Type>();
-            typeList.AddRange(gameLogicAssembly.GetTypes());
-            typeList.AddRange(gameEditorAssembly.GetTypes());
-            //BD编辑器下所有的类
-            typeList.AddRange(typeof(BDFrameworkEditorEnvironment).Assembly.GetTypes());
-            //BDRuntime下所有类
-            typeList.AddRange(typeof(BDLauncher).Assembly.GetTypes());
-
-            //
-            return typeList;
-        }
+        // /// <summary>
+        // /// 外部注册主工程的Assembly
+        // /// </summary>
+        // /// <param name="gameLogicAssembly"></param>
+        // /// <param name="gameEditorAssembly"></param>
+        // static public List<Type> CollectTypes(Assembly gameLogicAssembly, Assembly gameEditorAssembly)
+        // {
+        //     //编辑器所有类
+        //     List<Type> typeList = new List<Type>();
+        //     typeList.AddRange(gameLogicAssembly.GetTypes());
+        //     typeList.AddRange(gameEditorAssembly.GetTypes());
+        //     //BD编辑器下所有的类
+        //     typeList.AddRange(typeof(BDFrameworkEditorEnvironment).Assembly.GetTypes());
+        //     //BDRuntime下所有类
+        //     typeList.AddRange(typeof(BDLauncher).Assembly.GetTypes());
+        //
+        //     //
+        //     return typeList;
+        // }
 
         #endregion
 

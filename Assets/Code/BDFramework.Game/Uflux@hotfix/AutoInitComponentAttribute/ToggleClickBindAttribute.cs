@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using ILRuntime.Reflection;
+// using ILRuntime.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,11 +21,11 @@ namespace BDFramework.UFlux
         {
             if (!initialized)
             {
-                if (fieldInfo is ILRuntimeFieldInfo runtimeFieldInfo)
-                {
-                    cacheAction = (Action<bool>) runtimeFieldInfo.GetValue(com);
-                }
-                else
+                // if (fieldInfo is ILRuntimeFieldInfo runtimeFieldInfo)
+                // {
+                //     cacheAction = (Action<bool>) runtimeFieldInfo.GetValue(com);
+                // }
+                // else
                 {  
                     cacheAction = (Action<bool>) fieldInfo.GetValue(com);
                 }
@@ -51,11 +51,11 @@ namespace BDFramework.UFlux
                     if (action == null)
                     {
                         // 区分热更延迟添加监听事件
-                        if (fieldInfo is ILRuntimeFieldInfo runtimeFieldInfo)
-                        {
-                            action = (Action<bool>) runtimeFieldInfo.GetValue(com);
-                        }
-                        else
+                        // if (fieldInfo is ILRuntimeFieldInfo runtimeFieldInfo)
+                        // {
+                        //     action = (Action<bool>) runtimeFieldInfo.GetValue(com);
+                        // }
+                        // else
                         {  
                             action = (Action<bool>) fieldInfo.GetValue(com);
                         }

@@ -36,11 +36,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
+using AssetsManager.Sql;
 using BDFramework;
-using ILRuntime.Reflection;
-using ILRuntime.Runtime.Intepreter;
+using BDFramework.Core.Tools;
 using LitJson;
-using MessagePack;
 using UnityEngine;
 using Utils.mslibEx;
 using Debug = System.Diagnostics.Debug;
@@ -422,7 +421,7 @@ namespace SQLite4Unity3d
 
             LibVersionNumber = SQLite3.LibVersionNumber();
 #if DEBUG
-            if (Application.isPlaying)
+            if (BApplication.IsPlaying)
             {
                 UnityEngine.Debug.Log($"Sqlite Ver: {LibVersionNumber}");
             }
@@ -2784,8 +2783,8 @@ namespace SQLite4Unity3d
 
 
             TableAttribute tableAttr = null;
-            if (!(type is ILRuntimeType))
-            {
+            // if (!(type is ILRuntimeType))
+            // {
                 var typeInfo = type.GetTypeInfo();
 #if ENABLE_IL2CPP
                 tableAttr = typeInfo.GetCustomAttribute<TableAttribute>();
@@ -2796,8 +2795,8 @@ namespace SQLite4Unity3d
                         .Select(x => (TableAttribute) Orm.InflateAttribute(x))
                         .FirstOrDefault();
 #endif
-            }
-            
+            // }
+
 
             TableName = (tableAttr != null && !string.IsNullOrEmpty(tableAttr.Name)) ? tableAttr.Name : MappedType.Name;
             WithoutRowId = tableAttr != null ? tableAttr.WithoutRowId : false;
@@ -2847,7 +2846,7 @@ namespace SQLite4Unity3d
             {
                 return GetFieldsFromValueTuple(type);
             }
-            
+
             var members = new List<MemberInfo>();
             var memberNames = new HashSet<string>();
             var newMembers = new List<MemberInfo>();
@@ -3115,11 +3114,11 @@ namespace SQLite4Unity3d
 
         public static Type GetType(object obj)
         {
-            if (obj is ILTypeInstance ilInst)
-            {
-                return ilInst.Type.ReflectionType;
-            }
-            else
+            // if (obj is ILTypeInstance ilInst)
+            // {
+            //     return ilInst.Type.ReflectionType;
+            // }
+            // else
             {
                 if (obj == null)
                     return typeof(object);
@@ -3131,7 +3130,6 @@ namespace SQLite4Unity3d
 
                 return obj.GetType();
             }
-
         }
 
         public static string SqlDecl(TableMapping.Column p, bool storeDateTimeAsTicks, bool storeTimeSpanAsTicks)
@@ -3164,11 +3162,11 @@ namespace SQLite4Unity3d
         public static string SqlType(TableMapping.Column p, bool storeDateTimeAsTicks, bool storeTimeSpanAsTicks)
         {
             var clrType = p.ColumnType;
-            if (clrType is ILRuntimeWrapperType ilrtype)
-            {
-                clrType = ilrtype.RealType;
-            }
-            
+            // if (clrType is ILRuntimeWrapperType ilrtype)
+            // {
+            //     clrType = ilrtype.RealType;
+            // }
+
             if (clrType == typeof(Boolean) || clrType == typeof(Byte) || clrType == typeof(UInt16) || clrType == typeof(SByte) || clrType == typeof(Int16) || clrType == typeof(Int32) || clrType == typeof(UInt32) || clrType == typeof(Int64))
             {
                 return "integer";
@@ -3499,7 +3497,7 @@ namespace SQLite4Unity3d
                     //For ILR
                     if (isILRuntime)
                     {
-                        obj = ILRuntimeHelper.CreateInstance(map.MappedType);
+                        obj = HotfixAssembliesHelper.CreateHotfixInstance(map.MappedType);
                     }
                     else
                     {
@@ -3523,7 +3521,7 @@ namespace SQLite4Unity3d
                         }
                     }
 
-                   
+
                     OnInstanceCreated(obj);
                     yield return (T) obj;
                 }
@@ -3533,7 +3531,7 @@ namespace SQLite4Unity3d
                 var total = serchSqlTime + deSerializeTime;
                 if (total > 10)
                 {
-                    if (Application.isPlaying)
+                    if (BApplication.IsPlaying)
                     {
                         UnityEngine.Debug.LogError($"<color=white>sql消耗较高!</color>:<color=yellow>{total}ms</color>，查询结果数量:<color=red>{count}</color>, 执行sql耗时: <color=yellow>{serchSqlTime} ms</color>,反序列化耗时：<color=yellow>{deSerializeTime}ms</color>");
                     }
@@ -3761,9 +3759,11 @@ namespace SQLite4Unity3d
                 //ForILR:数组当成json串存储,文档存储
                 else if (value.GetType().IsArray || value.GetType().FullName.Contains(".List"))
                 {
-                    byte[] bytes = MessagePackSerializer.Serialize(value);
-                    
-                    SQLite3.BindBlob(stmt, index, bytes, bytes.Length, NegativePointer);
+                    var json = SqliteFastJsonConvert.Serialize(value);
+
+                    // SQLite3.BindBlob(stmt, index, bytes, bytes.Length, NegativePointer);
+
+                    SQLite3.BindText(stmt, index, json, -1, NegativePointer);
                 }
                 else
                 {
@@ -3803,12 +3803,13 @@ namespace SQLite4Unity3d
             }
             else
             {
-                //For ILR
-                if (clrType is ILRuntimeWrapperType iltype)
-                {
-                    clrType = iltype.RealType;
-                }
-                else if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                // //For ILR
+                // if (clrType is ILRuntimeWrapperType iltype)
+                // {
+                //     clrType = iltype.RealType;
+                // }
+                // else 
+                if (clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
                     clrType = clrType.GenericTypeArguments[0];
                 }
@@ -3936,59 +3937,14 @@ namespace SQLite4Unity3d
                     return new UriBuilder(text);
                 }
                 //ForILR:数组当成json串存储,文档存储
-                else if (clrType.IsArray ||clrType.FullName.Contains(".List"))
+                else if (clrType.IsArray || clrType.FullName.Contains(".List"))
                 {
-                    var bytes = SQLite3.ColumnByteArray(stmt, index);
-                   
-
+                    var str = SQLite3.ColumnString(stmt, index);
                     if (clrType.IsArray)
                     {
-                        if (clrType == typeof(int[]))
-                        {
-                            return MessagePackSerializer.Deserialize<int[]>(bytes);
-                        }
-                        else if (clrType == typeof(string[]))
-                        {
-                            return MessagePackSerializer.Deserialize<string[]>(bytes);
-                        }
-                        else if (clrType == typeof(float[]))
-                        {
-                            return MessagePackSerializer.Deserialize<float[]>(bytes);
-                        }
-                        else if (clrType == typeof(bool[]))
-                        {
-                            return MessagePackSerializer.Deserialize<bool[]>(bytes);
-                        }
-                        else if (clrType == typeof(double[]))
-                        {
-                            return MessagePackSerializer.Deserialize<double[]>(bytes);
-                        }
+                        return SqliteFastJsonConvert.DeserializeArray(clrType, str);
                     }
-                    else
-                    {
-                        var elementType = clrType.GenericTypeArguments[0];
-                        if (elementType == typeof(int))
-                        {
-                            return MessagePackSerializer.Deserialize<List<int>>(bytes);
-                        }
-                        else if (elementType == typeof(string))
-                        {
-                            return MessagePackSerializer.Deserialize<List<string>>(bytes);
-                        }
-                        else if (elementType == typeof(float))
-                        {
-                            return MessagePackSerializer.Deserialize<List<float>>(bytes);
-                        }
-                        else if (elementType == typeof(bool))
-                        {
-                            return MessagePackSerializer.Deserialize<List<bool>>(bytes);
-                        }
-                        else if (elementType == typeof(double))
-                        {
-                            return MessagePackSerializer.Deserialize<List<double>>(bytes);
-                        }
-                    }
-                  
+
 
                     return null;
                 }

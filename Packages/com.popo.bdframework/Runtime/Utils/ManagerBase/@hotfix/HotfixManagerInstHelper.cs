@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using BDFramework.Hotfix.Reflection;
 using BDFramework.Mgr;
 using LitJson;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using UnityEngine;
 
 namespace BDFramework.HotFix.Mgr
@@ -94,14 +93,14 @@ namespace BDFramework.HotFix.Mgr
         /// <summary>
         /// 注册主工程类型
         /// </summary>
-        /// <param name="aotTypes"></param>
-        static public void RegisterMainProjectType(IEnumerable<Type> aotTypes)
+        /// <param name="types"></param>
+        static public void RegisterMainProjectType(IEnumerable<string> replaceMgrNames, IEnumerable<Type> types)
         {
-            // if (replaceMgrNames.Count() > 0)
-            // {
-            //     var replacedMgrList = hotfixMgrList.Where((mgr) => replaceMgrNames.Contains(mgr.GetType().Name));
-            //  BDebug.Log($"热更mgr接管:{JsonMapper.ToJson(replacedMgrList.Select((m)=>m.GetType().Name).ToArray(),true)}", Color.magenta);
-                foreach (var type in aotTypes)
+            if (replaceMgrNames.Count() > 0)
+            {
+                var replacedMgrList = hotfixMgrList.Where((mgr) => replaceMgrNames.Contains(mgr.GetType().Name));
+                BDebug.Log($"热更mgr接管:{JsonMapper.ToJson(replacedMgrList.Select((m)=>m.GetType().Name).ToArray(),true)}", Color.magenta);
+                foreach (var type in types)
                 {
                     if (type != null && type.IsClass)
                     {
@@ -109,7 +108,7 @@ namespace BDFramework.HotFix.Mgr
                         if (mgrAttributes != null)
                         {
                             //注册类型
-                            foreach (var mgr in hotfixMgrList)
+                            foreach (var mgr in replacedMgrList)
                             {
                                 var ret = mgr.RegisterTypes(type, mgrAttributes);
                                 if (ret)
@@ -122,8 +121,8 @@ namespace BDFramework.HotFix.Mgr
                 }
                 
                 //添加出去
-                //ManagerInstHelper.MgrList.AddRange(replacedMgrList);
-            // }
+                ManagerInstHelper.MgrList.AddRange(replacedMgrList);
+            }
         }
 
         /// <summary>
@@ -134,7 +133,7 @@ namespace BDFramework.HotFix.Mgr
             //管理器初始化
             foreach (var m in hotfixMgrList)
             {
-                
+                BDebug.Log("[hotfix ]init" + m.GetType().FullName, Color.yellow);
                 m.Init();
             }
 
@@ -142,7 +141,6 @@ namespace BDFramework.HotFix.Mgr
             foreach (var hotfixMgr in hotfixMgrList)
             {
                 hotfixMgr.Start();
-                BDebug.Log("[Hotfix]热更管理器启动" + hotfixMgr.GetType().FullName, Color.yellow);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace BDFramework.Editor
+namespace BDFramework.Editor
 {
     using UnityEditor;
     using UnityEngine;

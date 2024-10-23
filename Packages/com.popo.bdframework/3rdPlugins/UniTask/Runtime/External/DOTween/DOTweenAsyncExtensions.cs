@@ -1,4 +1,4 @@
-﻿// asmdef Version Defines, enabled when com.demigiant.dotween is imported.
+// asmdef Version Defines, enabled when com.demigiant.dotween is imported.
 
 #if UNITASK_DOTWEEN_SUPPORT
 

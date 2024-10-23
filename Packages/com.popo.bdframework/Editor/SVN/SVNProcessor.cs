@@ -7,9 +7,7 @@ using System.Linq;
 using System.Text;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Tools;
-using ILRuntime.Runtime;
 using LitJson;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -20,12 +18,14 @@ namespace BDFramework.Editor.SVN
         /// <summary>
         /// 移除未在版本控制的文件
         /// </summary>
-        public static readonly string CleanUp_RemoveUnversioned= "--remove-unversioned";
+        public static readonly string CleanUp_RemoveUnversioned = "--remove-unversioned";
+
         /// <summary>
         /// 移除已忽略的文件
         /// </summary>
-        public static readonly string CleanUp_RemoveIgnored= "--remove-ignored";
+        public static readonly string CleanUp_RemoveIgnored = "--remove-ignored";
     }
+
     /// <summary>
     /// SVN的处理器
     /// </summary>
@@ -45,49 +45,64 @@ namespace BDFramework.Editor.SVN
         /// </summary>
         public bool Islog { get; set; } = false;
 
-        private SVNProcessor(string svnurl, string user, string psw, string localpath, bool islog)
+        private SVNProcessor(string svnurl, string localpath, string user, string psw,  bool islog)
         {
             this.SVNURL = svnurl;
             this.UserName = user;
             this.Password = psw;
             this.LocalSVNRootPath = Path.GetFullPath(localpath);
             this.Islog = islog;
-            
-            BDebug.Log($"SVN-账号:{user}，密码:{psw}");
+            Console.WriteLine($"SVN-账号:{user}，密码:{psw}");
+        }
+
+        private SVNProcessor(string localpath, bool islog)
+        {
+            this.LocalSVNRootPath = Path.GetFullPath(localpath);
+            this.Islog = islog;
         }
 
 
         /// <summary>
-        ///  svn处理器
+        ///  创建一个完整的svn处理器，
         /// </summary>
         /// <param name="svnurl"></param>
+        /// <param name="localpath"></param>
         /// <param name="user"></param>
         /// <param name="psw"></param>
-        static public SVNProcessor CreateSVNProccesor(string svnurl, string user, string psw, string localpath, bool islog = true)
+        /// <param name="islog"></param>
+        static public SVNProcessor Create(string svnurl, string localpath, string user = null, string psw = null, bool islog = true)
         {
-// #if UNITY_EDITOR_WIN
-//             var svn_exe_path = $"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~";
-//             //设置环境变量
-//             var value = System.Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Machine);
-//             if (!value.Contains(svn_exe_path))
-//             {
-//                 Debug.Log("当前环境变量:" + value);
-//
-//                 var newValue = value + (";" + svn_exe_path);
-//                 System.Environment.SetEnvironmentVariable("Path", newValue, EnvironmentVariableTarget.Machine);
-//                 Debug.Log("设置svn环境变量:" + svn_exe_path);
-//
-//                 var value2 = System.Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Machine);
-//                 if (value2.Contains(svn_exe_path))
-//                 {
-//                     Debug.Log("设置svn环境变量 成功!");
-//                 }
-//             }
-// #endif
-            var svn = new SVNProcessor(svnurl, user, psw, localpath, islog);
+            var svn = new SVNProcessor(svnurl,  localpath,user, psw, islog);
+            
+            //判断远程地址是否一致
+            if (svn.IsExsitSvnStore())
+            {
+                var info = svn.GetInfo();
+                // if (info == null)
+                // {
+                //     Debug.LogError("svn info 获取失败！！！！");
+                // }
+                //
+                // else if (!svnurl.StartsWith(info.Repository_Root))
+                // {
+                //     BDebug.Log($"仓库不一致,当前仓库:{info.Repository_Root},切换仓库:" +svnurl , Color.red);
+                //     svn.Relocate(svnurl);
+                //     svn.ExecuteSVN();
+                // }
+            }
             return svn;
         }
 
+        /// <summary>
+        /// 打开一个已经checkout的仓库，需要本地
+        /// </summary>
+        /// <param name="localpath"></param>
+        /// <param name="islog"></param>
+        static public SVNProcessor OpenStore(string localpath, bool islog = true)
+        {
+            var svn = new SVNProcessor(localpath, islog);
+            return svn;
+        }
 
         private string curWorkDirect = "";
 
@@ -97,15 +112,26 @@ namespace BDFramework.Editor.SVN
         /// <returns></returns>
         private string GetLoginCmd()
         {
-            return $" --username {this.UserName} --password {this.Password} ";
+            if (!string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password))
+            {
+                return $" --username \"{this.UserName}\" --password \"{this.Password}\" ";
+            }
+
+            return "";
         }
+
         /// <summary>
         /// 是否存在svn仓库
         /// </summary>
         /// <returns></returns>
         public bool IsExsitSvnStore()
         {
-            var svnmark = IPath.Combine(this.LocalSVNRootPath, ".svn");
+            return IsExsitSvnStore(this.LocalSVNRootPath);
+        }
+
+        static public bool IsExsitSvnStore(string path)
+        {
+            var svnmark = Path.Combine(path, ".svn");
             if (Directory.Exists(svnmark))
             {
                 return true;
@@ -162,7 +188,7 @@ namespace BDFramework.Editor.SVN
         /// 清理
         /// </summary>
         /// <param name="option">cleanup 参数</param>
-        public void CleanUp(string option="")
+        public void CleanUp(string option = "")
         {
             var cmd = $"cleanup {option} \"{this.LocalSVNRootPath}\"";
             this.ExecuteSVN(cmd);
@@ -381,21 +407,92 @@ namespace BDFramework.Editor.SVN
         /// </summary>
         /// <param name="newRepositoryUrl">新仓库地址</param>
         /// <param name="localSvnPath">本地仓库</param>
-        public void Switch(string newRepositoryUrl, string localSvnPath = "./")
+        public void Switch(string newRepositoryUrl, string localSvnPath = "./" )
         {
+            BDebug.Log("切换到:" + newRepositoryUrl ,Color.yellow);
+            
             var cmd = $"switch  {newRepositoryUrl} {localSvnPath} {GetLoginCmd()}";
-
             this.ExecuteSVN(cmd);
         }
-
+        /// <summary>
+        /// svn切换远端仓库
+        /// </summary>
+        /// <param name="newRepositoryUrl">新仓库地址</param>
+        /// <param name="localSvnPath">本地仓库</param>
+        public void Relocate(string newRepositoryUrl, string oldRepositoryUrl = "" )
+        {
+            if (string.IsNullOrEmpty(oldRepositoryUrl))
+            {
+                var info = GetInfo();
+                oldRepositoryUrl = info.Repository_Root;
+            }
+            BDebug.Log("切换到:" + newRepositoryUrl ,Color.yellow);
+            var cmd = $"relocate  {oldRepositoryUrl}   {newRepositoryUrl} {GetLoginCmd()}";
+            this.ExecuteSVN(cmd);
+        }
 
         #region 当前版本信息
 
         /// <summary>
+        /// svninfo信息
+        /// </summary>
+        public class SVNInfo
+        {
+            /// <summary>
+            /// 工作路径
+            /// </summary>
+            public string Working_Copy_Root_Path { get; set; }
+
+            /// <summary>
+            /// 远程url
+            /// </summary>
+            public string URL { get; set; }
+
+            /// <summary>
+            /// 远程仓库根目录
+            /// </summary>
+            public string Repository_Root { get; set; }
+
+            /// <summary>
+            /// 工作目录，除根目录以外的
+            /// </summary>
+            public string Relative_URL { get; set; }
+
+            /// <summary>
+            /// uiid
+            /// </summary>
+            public string Repository_UUID { get; set; }
+
+            /// <summary>
+            /// 当前版本
+            /// </summary>
+            public string Revision { get; set; }
+
+            public string Node_Kind { get; set; }
+            public string Schedule { get; set; }
+
+            /// <summary>
+            /// 当前文件夹，上次修改的Version
+            /// </summary>
+            public string Last_Changed_Rev { get; set; }
+
+            /// <summary>
+            /// 修改作者
+            /// </summary>
+            public string Last_Changed_Author { get; set; }
+
+            /// <summary>
+            /// 修改日期
+            /// </summary>
+            public string Last_Changed_Date { get; set; }
+        }
+
+        /// <summary>
         /// 获取版本
+        /// 带上url就是获取远程数据
         /// </summary>
         /// <returns></returns>
-        public string GetInfo(string workpath = "./", string svnurl = null)
+        public SVNInfo GetInfo(string workpath = "./", string svnurl = null)
         {
             var infoPath = this.LocalSVNRootPath + "/info.txt";
             string cmd = "";
@@ -412,64 +509,75 @@ namespace BDFramework.Editor.SVN
             this.ExecuteSVN(cmd);
             if (File.Exists(infoPath))
             {
-                var info = File.ReadAllText(infoPath);
+                var infoText = File.ReadAllText(infoPath);
                 File.Delete(infoPath);
-                return info;
+                //
+                var infos = infoText.Split('\n', '\r');
+                var svninfo = new SVNInfo();
+                var ps = svninfo.GetType().GetProperties();
+                foreach (var p in ps)
+                {
+                    var key = p.Name.Replace("_", " ");
+                    key = $"{key}:";
+                    foreach (var info in infos)
+                    {
+                        if (info.StartsWith(key))
+                        {
+                            var info_value = info.Replace(key, "");
+                            p.SetValue(svninfo, info_value);
+                            break;
+                        }
+                    }
+                }
+
+                //容错
+                if (string.IsNullOrEmpty(svninfo.Repository_Root))
+                {
+                  //  throw new Exception("请确认目录为svn仓库,且本机svn 命令行支持已经安装！！！ path:"+ this.LocalSVNRootPath);
+                }
+
+                return svninfo;
             }
 
-            return "";
+            return null;
         }
 
         /// <summary>
-        /// 获取当前版本
+        /// 获取当前版本,仓库最新，不是当前目录最新
+        /// 带上url就是获取远程数据
         /// </summary>
         /// <returns></returns>
         public string GetRevision(string workpath = "./")
         {
-            var infos = GetInfo(workpath).Split('\n', '\r');
-
-            foreach (var info in infos)
-            {
-                if (info.StartsWith("Revision:"))
-                {
-                    return info.Replace("Revision:", "");
-                }
-            }
-
+            var info = GetInfo(workpath);
+            return info.Revision;
             return "null";
         }
 
+
+        /// <summary>
+        /// 获取当前目录最新版本
+        /// 获取当前目录，最新的修改，
+        /// </summary>
+        /// <returns></returns>
+        public string GetLastChangeRev(string url = "")
+        {
+            var info = GetInfo(url);
+            return info.Last_Changed_Rev;
+            return "null";
+        }
 
         /// <summary>
         /// 获取最新版本号
         /// </summary>
         /// <returns></returns>
-        public string GetLeastVersion(string workpath = "./")
+        public string GetServerVersion(string workpath = "./")
         {
-            var infos = GetInfo(workpath).Split('\n', '\r');
-            //获取远程仓库
-            var response_url = "";
-            foreach (var info in infos)
-            {
-                if (info.StartsWith("Repository Root:"))
-                {
-                    response_url = info.Replace("Repository Root:", "");
-                    break;
-                }
-            }
-            
-            //解析
-            infos = GetInfo(response_url).Split('\n', '\r');
-
-            foreach (var info in infos)
-            {
-                if (info.StartsWith("Revision:"))
-                {
-                    return info.Replace("Revision:", "");
-                }
-            }
-
-            return "null";
+            var info = GetInfo(workpath);
+            //获取远程仓库，
+            var response_url = info.Repository_Root;
+            //获取远程最新的修改
+            return GetLastChangeRev(this.SVNURL);
         }
 
         /// <summary>
@@ -478,49 +586,23 @@ namespace BDFramework.Editor.SVN
         /// <param name="workpath"></param>
         public string GetRelativeUrl(string workpath = "./")
         {
-            var infos = GetInfo(workpath).Split('\n', '\r');
-            foreach (var info in infos)
-            {
-                if (info.StartsWith("Relative URL:"))
-                {
-                    return info.Replace("Relative URL:", "");
-                }
-            }
-
-            return "null";
+            var info = GetInfo(workpath);
+            return info.Relative_URL;
         }
-        
-        /// <summary>
-        /// 获取当前 对应Url 的远端最新版本
-        /// </summary>
-        /// <returns></returns>
-        public string GetLastRevision(string url = "")
-        {
-            var infos = GetInfo(string.IsNullOrEmpty(url)?SVNURL:url).Split('\n', '\r');
 
-            foreach (var info in infos)
-            {
-                if (info.StartsWith("Revision:"))
-                {
-                    return info.Replace("Revision:", "");
-                }
-            }
-
-            return "null";
-        }
         /// <summary>
         /// 获取所有分支的名字/branches/"
         /// </summary>
         /// <param name="svnRepoUrl">仓库的url(PS:不需要包括分支)</param>
         /// <returns></returns>
-        public string[] GetAllBranchesInfo(string svnRepoUrl="")
+        public string[] GetAllBranchesInfo(string svnRepoUrl = "")
         {
             var infoPath = this.LocalSVNRootPath + "/info.txt";
             string cmd = "";
             if (string.IsNullOrEmpty(svnRepoUrl))
             {
-                svnRepoUrl =SVNURL.Substring(0,SVNURL.IndexOf("/branches/", StringComparison.Ordinal))+"/branches/";
-                cmd =$"ls {svnRepoUrl} --depth immediates > \"{infoPath}\" {GetLoginCmd()}";
+                svnRepoUrl = SVNURL.Substring(0, SVNURL.IndexOf("/branches/", StringComparison.Ordinal)) + "/branches/";
+                cmd = $"ls {svnRepoUrl} --depth immediates > \"{infoPath}\" {GetLoginCmd()}";
             }
             else
             {
@@ -533,11 +615,12 @@ namespace BDFramework.Editor.SVN
             {
                 var info = File.ReadAllText(infoPath);
                 File.Delete(infoPath);
-                return info.Split(new char[]{'\n','\r'},StringSplitOptions.RemoveEmptyEntries);
+                return info.Split(new char[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
             }
 
-            return null;
+            return new string[] {"0.0.0"};
         }
+
         #endregion
 
         /// <summary>
@@ -562,7 +645,6 @@ namespace BDFramework.Editor.SVN
         /// <param name="log"></param>
         public void CommitFolder(string floder = "./", string log = "Auto Commit")
         {
-            
             //删除Resource_SVN表格
             var delFiles = this.GetFileNameByStatus(Status.Deleted, floder);
             this.Delete(delFiles);
@@ -570,22 +652,17 @@ namespace BDFramework.Editor.SVN
             var addFiles = this.GetFileNameByStatus(Status.NewFile, floder);
             this.ForceAdd(addFiles.ToArray());
             //motify
-            var motifyFiles = this.GetStatus(Status.Motify,floder);
+            var motifyFiles = this.GetStatus(Status.Motify, floder);
             this.ForceAdd(motifyFiles);
         }
-        
+
 
         /// <summary>
         /// 提交，因为cmd设置问题，中文log会让commit失败~
         /// </summary>
         public void Commit(string workpath = "./", string log = "Auto Commit")
         {
-            var cmd = $"ci  \"{workpath}\" -m  \"{log}\" ";
-            this.ExecuteSVN(cmd);
-        }
-        public void Commit_useaccount(string workpath = "./", string log = "Auto Commit")
-        {
-            var cmd = $"ci  \"{workpath}\" -m  \"{log}\" --username teamcity --password teamcity";
+            var cmd = $"ci  \"{workpath}\" -m  \"{log}\" {GetLoginCmd()} ";
             this.ExecuteSVN(cmd);
         }
 
@@ -604,6 +681,21 @@ namespace BDFramework.Editor.SVN
             cmdList.Add(cmd);
         }
 
+
+       static private string svn_exe_path = $"Packages/com.popo.bdframework/Editor/SVN/GreenSVN~/svn.exe";
+
+        /// <summary>
+        /// 设置svnexe路径
+        /// </summary>
+        /// <param name="svnExe"></param>
+        public void SetSVNExe(string svnExe)
+        {
+            if (File.Exists(svnExe))
+            {
+                svn_exe_path = svnExe;
+            }
+        }
+
         Process process = null;
 
         /// <summary>
@@ -616,33 +708,39 @@ namespace BDFramework.Editor.SVN
                 Directory.CreateDirectory(this.LocalSVNRootPath);
             }
 
+            
             var argList = new List<string>();
-#if UNITY_EDITOR_OSX
-            var svn_exe_path = "/opt/homebrew/bin/svn";
-            var cd_dir = $"cd \"{this.LocalSVNRootPath}\"";
-#elif UNITY_EDITOR_WIN
+            //exe路径
 
-            var svn_exe_path = $"{BApplication.ProjectRoot}/Packages/com.popo.bdframework/Editor/SVN/GreenSVN~/svn.exe";
-            var out_utf8 = "cmd /c chcp 65001"; //chcp 65001";
+#if UNITY_EDITOR_WIN
+   var out_utf8 = "cmd /c chcp 65001"; //chcp 65001";
             var cd_dir = $"cd /d \"{this.LocalSVNRootPath}\"";
             argList.Add(out_utf8);
-#endif
-            var svn_exe = "svn";
+            //命令行
             argList.Add(cd_dir);
             
+#elif UNITY_EDITOR_OSX
+            var cd_dir = $"cd  \"{this.LocalSVNRootPath}\"";
+            //命令行
+            argList.Add(cd_dir);
+#endif
+         
+
+            var svn_exe = "svn";
             //替换命令行
             foreach (var arg in args)
             {
                 //添加svn命名
                 argList.Add($"{svn_exe} {arg}");
             }
-         
+
             if (!File.Exists(svn_exe_path))
             {
-                Debug.LogError($"找不到svn执行文件，请安装：{svn_exe_path}!");
-                Debug.Log($"执行命令行:{JsonMapper.ToJson(argList, true)}");
+                UnityEngine.Debug.LogError($"找不到svn执行文件，请安装：{svn_exe_path}!");
+                UnityEngine.Debug.LogError($"执行命令行:{JsonMapper.ToJson(argList)}");
                 return;
             }
+
             //执行cmd
             CMDTools.RunCmd(argList.ToArray(), svn_exe, svn_exe_path, this.Islog);
         }

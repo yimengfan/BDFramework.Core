@@ -1,6 +1,6 @@
-﻿using System;
-using ILRuntime.CLR.TypeSystem;
-using ILRuntime.Mono.Cecil;
+using System;
+// using ILRuntime.CLR.TypeSystem;
+// using ILRuntime.Mono.Cecil;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -44,13 +44,13 @@ namespace BDFramework.UFlux
             this.FunctionName = functionName;
             this.TransformPath = transformPath;
             //这里故意让破坏优化 ilrbug
-            var ot = (object) uiType;
+            //var ot = (object) uiType;
             string typeFullname = "";
-            if (ot is TypeReference)
-            {
-                typeFullname = ((TypeReference) ot).FullName;
-            }
-            else
+            // if (ot is TypeReference)
+            // {
+            //     typeFullname = ((TypeReference) ot).FullName;
+            // }
+            // else
             {
                 typeFullname = uiType.FullName;
             }

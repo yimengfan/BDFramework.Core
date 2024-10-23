@@ -1,4 +1,4 @@
-﻿namespace NugetForUnity
+namespace NugetForUnity
 {
     using System.Collections.Generic;
     using System.Linq;

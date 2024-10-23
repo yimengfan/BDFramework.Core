@@ -55,12 +55,15 @@ namespace BDFramework.Editor.Tools
                 p.StartInfo.FileName = CmdPath;
                 p.StartInfo.StandardOutputEncoding = Encoding.GetEncoding("gb2312");
                 p.StartInfo.StandardErrorEncoding = Encoding.GetEncoding("gb2312");
-#endif
-                //FBX工具调用时，不能接受空环境变量
+                
+                
+                  //FBX工具调用时，不能接受空环境变量
                 if (!string.IsNullOrEmpty(envName))
                 {
                     p.StartInfo.EnvironmentVariables.Add(envName, envValue);
                 }
+#endif
+              
 
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 p.StartInfo.UseShellExecute = false; //是否使用操作系统shell启动
@@ -74,7 +77,10 @@ namespace BDFramework.Editor.Tools
                 {
                     if (isLog &&!string.IsNullOrEmpty(e.Data))
                     {
-                        Debug.Log(e.Data);
+                        if (!e.Data.Contains("Microsoft Windows [版本") && !e.Data.Contains("保留所有权利"))
+                        {
+                            Debug.Log(e.Data);
+                        }
                     }
                 };
                 p.ErrorDataReceived += (s, e) =>

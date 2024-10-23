@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Management.Instrumentation;
 using BDFramework.Core.Tools;

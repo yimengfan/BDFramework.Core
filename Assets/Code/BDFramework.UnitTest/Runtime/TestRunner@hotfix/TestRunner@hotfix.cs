@@ -118,15 +118,15 @@ namespace BDFramework.UnitTest
             List<Type> types = new List<Type>();
             //判断不同的模式
 
-            if (testType == TestType.MonoOrCLR)
-            {
-                var assembly = typeof(ILRuntimeDelegateHelper).Assembly;
-                types = assembly.GetTypes().ToList();
-            }
-            else if (testType == TestType.ILRuntime)
-            {
-                types = ILRuntimeHelper.GetHotfixTypes();
-            }
+            // if (testType == TestType.MonoOrCLR)
+            // {
+            //     var assembly = typeof(ILRuntimeDelegateHelper).Assembly;
+            //     types = assembly.GetTypes().ToList();
+            // }
+            // else if (testType == TestType.ILRuntime)
+            // {
+                types = HotfixAssembliesHelper.GetHotfixTypes();
+            // }
 
             var attribute = typeof(UnitTestBaseAttribute);
             //测试用例类
@@ -152,7 +152,7 @@ namespace BDFramework.UnitTest
                 foreach (MethodInfo method in methods)
                 {
                     UnitTestBaseAttribute mattr = null;
-                    if (ILRuntimeHelper.IsRunning)
+                    if (HotfixAssembliesHelper.IsRunning)
                     {
                         mattr = method.GetAttributeInILRuntime<UnitTestBaseAttribute>();
                     }

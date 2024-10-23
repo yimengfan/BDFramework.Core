@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BDFramework.ResourceMgr.V2;
 
 namespace BResource.AssetBundle.V2

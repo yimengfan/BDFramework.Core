@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using Model = UnityEngine.AssetGraph.DataModel.Version2;
 
 namespace UnityEngine.AssetGraph

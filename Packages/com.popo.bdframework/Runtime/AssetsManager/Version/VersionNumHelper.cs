@@ -1,4 +1,4 @@
-﻿namespace  BDFramework.Assets.VersionContrller
+namespace  BDFramework.Assets.VersionContrller
 {
     /// <summary>
     /// 版本号帮助

@@ -1,4 +1,4 @@
-﻿namespace UnityEngine.AssetGraph {
+namespace UnityEngine.AssetGraph {
 
 	public class LogUtility {
 

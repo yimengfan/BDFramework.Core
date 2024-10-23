@@ -24,7 +24,7 @@ namespace BDFramework
         /// <summary>
         /// 框架版本号
         /// </summary>
-        public const string Version  = "2.5.0";
+        public const string Version  = "3.0.0";
 
         /// <summary>
         /// 客户端配置信息
@@ -77,9 +77,11 @@ namespace BDFramework
                 BDebug.LogError("GameConfig配置为null,请检查!");
             }
 
+          
             //添加不删除的组件
             if (Application.isPlaying)
             {
+                BApplication.IsPlaying = true;
                 DontDestroyOnLoad(this);
             }
         }
@@ -141,7 +143,7 @@ namespace BDFramework
         {
 #if UNITY_EDITOR
             SqliteLoder.Close();
-            ILRuntimeHelper.Dispose();
+            HotfixAssembliesHelper.Dispose();
 #endif
         }
 

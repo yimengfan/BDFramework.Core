@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using Model=UnityEngine.AssetGraph.DataModel.Version2;
 

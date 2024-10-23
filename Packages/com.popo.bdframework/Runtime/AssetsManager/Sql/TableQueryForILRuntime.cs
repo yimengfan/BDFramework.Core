@@ -1,5 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using BDFramework.Core.Tools;
 using Cysharp.Text;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -85,7 +87,7 @@ namespace SQLite4Unity3d
 
 
 #if UNITY_EDITOR
-            if (Application.isPlaying)
+            if (BApplication.IsPlaying)
             {
                 if (sqlCmdCache.ContainsKey(sqlCmdText))
                 {
@@ -146,7 +148,7 @@ namespace SQLite4Unity3d
         /// <returns></returns>
         public TableQueryForILRuntime Where(string where)
         {
-            this.@where = ZString.Concat(this.@where, " ", where); // string.Format((" " + where), where);
+            this.@where = ZString.Concat(this.@where, " ", where); 
             return this;
         }
 
@@ -183,29 +185,52 @@ namespace SQLite4Unity3d
         /// </summary>
         public TableQueryForILRuntime WhereIn<T>(string field, IEnumerable<T> values)
         {
-            var sqlIn = string.Join(",", values);
-            this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlIn);
-
+            string sqlcmd = "";
+            if (typeof(T) == typeof(string))
+            {
+                sqlcmd = string.Join(",", values.Select(v => $"'{v}'"));
+            }
+            else
+            {
+                sqlcmd = string.Join(",", values);
+            }
+            this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlcmd);
             return this;
         }
 
         /// <summary>
         /// In语句查询
         /// </summary>
-        public TableQueryForILRuntime WhereIn(string field, params object[] objs)
+        public TableQueryForILRuntime WhereIn(string field, params object[] values)
         {
-            var sqlIn = string.Join(",", objs);
-            this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlIn);
+            string sqlcmd = "";
+            if (values[0] is string)
+            {
+                sqlcmd = string.Join(",", values.Select(v => $"'{v}'"));
+            }
+            else
+            {
+                sqlcmd = string.Join(",", values);
+            }
+            this.@where = ZString.Format("{0} {1} in ({2})", this.@where, field, sqlcmd);
 
             return this;
         }
 
         /// <summary>
-        /// 仿MyBatis CRUD 更符合nameof规范
+        ///  where 语句
         /// </summary>
         public TableQueryForILRuntime WhereEqual(string where, object value)
         {
-            var query = ZString.Format("{0} = {1}", where, value);
+            string query;
+            if (value is string)
+            {
+                query = ZString.Format("{0} = '{1}'", where, value);
+            }
+            else
+            {
+                query = ZString.Format("{0} = {1}", where, value);
+            }
             this.@where = ZString.Concat(this.@where, " ", query);
             return this;
         }
@@ -217,21 +242,24 @@ namespace SQLite4Unity3d
         /// <returns></returns>
         public TableQueryForILRuntime WhereOr(string field, string operation = "", params object[] objs)
         {
-            string sql = "";
+            string sqlcmd = "";
             for (int i = 0; i < objs.Length; i++)
             {
-                var value = objs[i].ToString();
-                if (sql == "")
+                var value = objs[i];
+                if(value is string)
                 {
-                    sql = ZString.Format(" {0} {1} {2}", field, operation, value);
+                    value = ZString.Format("'{0}'", value);
+                }
+                if (string.IsNullOrEmpty(sqlcmd))
+                {
+                    sqlcmd = ZString.Format(" {0} {1} {2}", field, operation, value);
                 }
                 else
                 {
-                    sql += ZString.Format(" or {0} {1} {2}", field, operation, value);
+                    sqlcmd += ZString.Format(" or {0} {1} {2}", field, operation, value);
                 }
             }
-
-            this.@where = sql;
+            this.@where = sqlcmd;
             return this;
         }
 
@@ -242,21 +270,25 @@ namespace SQLite4Unity3d
         /// <returns></returns>
         public TableQueryForILRuntime WhereAnd(string field, string operation = "", params object[] objs)
         {
-            string sql = "";
+            string sqlcmd = "";
             for (int i = 0; i < objs.Length; i++)
             {
-                var value = objs[i].ToString();
-                if (sql == "")
+                var value = objs[i];
+                if(value is string)
                 {
-                    sql += ZString.Format(" {0} {1} {2}", field, operation, value);
+                    value = ZString.Format("'{0}'", value);
+                }
+                if (string.IsNullOrEmpty(sqlcmd))
+                {
+                    sqlcmd = ZString.Format(" {0} {1} {2}", field, operation, value);
                 }
                 else
                 {
-                    sql += ZString.Format(" and {0} {1} {2}", field, operation, value);
+                    sqlcmd += ZString.Format(" and {0} {1} {2}", field, operation, value);
                 }
             }
 
-            this.@where = sql;
+            this.@where = sqlcmd;
             return this;
         }
 

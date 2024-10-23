@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
 using UnityEditor;

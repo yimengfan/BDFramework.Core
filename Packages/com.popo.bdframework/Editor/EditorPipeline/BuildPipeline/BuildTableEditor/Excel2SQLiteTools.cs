@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +7,7 @@ using BDFramework.Core.Tools;
 using BDFramework.Editor.Environment;
 using LitJson;
 using BDFramework.Sql;
+using Telepathy;
 using UnityEditor;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace BDFramework.Editor.Table
     static public class Excel2SQLiteTools
     {
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false,
-            (int)BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_GenSqlite)]
+            (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_GenSqlite)]
         public static void ExecuteGenSqlite()
         {
             //生成sql
@@ -34,7 +35,7 @@ namespace BDFramework.Editor.Table
         }
 
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite[Server]", false,
-            (int)BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Json2Sqlite)]
+            (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Json2Sqlite)]
         public static void ExecuteJsonToSqlite()
         {
             BuildAllExcel2SQLite(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, DBType.Server);
@@ -50,15 +51,23 @@ namespace BDFramework.Editor.Table
         /// 默认导出到当前平台目录下
         /// </summary>
         /// <param name="ouptputPath">自定义路径</param>
-        public static bool BuildAllExcel2SQLite(string ouptputPath, RuntimePlatform platform, DBType dbType = DBType.Local,bool isUseCache =false)
+        public static bool BuildAllExcel2SQLite(string ouptputPath, RuntimePlatform platform, DBType dbType = DBType.Local, bool isUseCache = false)
         {
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnBeginBuildSqlite();
             //删除旧的，重新创建
             if (!isUseCache)
             {
-                SqliteLoder.DeleteDBFile(ouptputPath, platform);
+                if (dbType == DBType.Local)
+                {
+                    SqliteLoder.DeleteLocalDBFile(ouptputPath, platform);
+                }
+                else
+                {
+                    SqliteLoder.DeleteServerDBFile(ouptputPath);
+                }
             }
+
             //清空表日志
             //SqliteHelper.DB.Connection.DropTable<TableLog>();
             //
@@ -69,7 +78,7 @@ namespace BDFramework.Editor.Table
                     SqliteLoder.LoadLocalDBOnEditor(ouptputPath, platform);
                     break;
                 case DBType.Server:
-                    SqliteLoder.LoadServerDBOnEditor(ouptputPath, platform);
+                    SqliteLoder.LoadServerDBOnEditor(ouptputPath);
                     break;
             }
 
@@ -95,7 +104,7 @@ namespace BDFramework.Editor.Table
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnEndBuildSqlite(ouptputPath);
 
-            var version = BDFrameworkPipelineHelper.GetTableSVCNum( platform,ouptputPath);
+            var version = BDFrameworkPipelineHelper.GetTableSVCNum(platform, ouptputPath);
             ClientAssetsHelper.GenBasePackageBuildInfo(ouptputPath, platform, tableSVC: version);
             Debug.Log("导出Sqlite完成!");
 
@@ -111,7 +120,7 @@ namespace BDFramework.Editor.Table
         public static bool Excel2SQLite(string excelPath, DBType dbType)
         {
             BDebug.Log($"导表:{excelPath}", Color.yellow);
-            
+
             bool isSuccess = false;
             excelPath = IPath.FormatPathOnUnity3d(excelPath);
             //收集所有的类型
@@ -253,7 +262,6 @@ namespace BDFramework.Editor.Table
                     ret = false;
                     BDebug.Log(json);
                     Debug.LogError($"导出数据有错,跳过!字段:{type.Name} 行号: {i}/{jsonObj.Count} \n{e}");
-                
                 }
             }
 

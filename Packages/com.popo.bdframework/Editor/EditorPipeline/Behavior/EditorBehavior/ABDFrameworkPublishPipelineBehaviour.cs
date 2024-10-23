@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BDFramework.Asset;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
