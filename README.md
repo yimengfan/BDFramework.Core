@@ -4,6 +4,17 @@
 
 Simple! Easy! Professional! This‘s a powerful Unity3d game workflow!<br />BDFramework的设计理念永远是：**工业化、流水线化、专业化！**<br />永远致力于打造高效的商业游戏工作流.<br />BDFramework大部分功能开发都是围绕一整条工作流，以**Pipeline**的形式放出.<br />如:**BuildPipeline、PublishPipeline、DevOps** 等...<br />对于第三方库使用也都是为了Pipeline深度定制，很多时候为了一些使用体验优化会编写大量的Editor编码.<br />这也是BDFramework的设计理念之一：<br />**能编辑器解决的，就不要业务层解决！能自动化的，就不要手动!**<br />BDFramework没有什么看上去很酷炫的功能，大都是一点一滴的积累，一点点的增加自动化，一点点的增加业务编码的体验.也正是因为有这样的坚持，才会有这套框架的出现.<br />更多的是做一些商业技术方案的分享和讨论.<br />因为一些特殊原因，只能放出一些游戏基建方案Pipeline的实现，<br />不会有对具体业务逻辑的解决方案，所以整套workflow更像是一套游戏开发脚手架.<br />望理解！<br />最后,<br />虽然该框架能开箱即用，但我个人建议且鼓励 ：**进行自己的思考，并为自己项目进行改造！**<br />有任何疑问也欢迎讨论~
 
+
+# 文档(Document)
+
+[**中文 Wiki**](https://www.wolai.com/ky1FVhe7Mudg6ru277gfNr)
+
+#### [English Wiki](http://www.nekosang.com/)
+
+#### [视频教程（video）](https://www.bilibili.com/video/av78814115/)
+
+#### [博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
+
 # 社区(Community)
 
 #### 在线提问、交流(Online Discussions): [点击](https://github.com/yimengfan/BDFramework.Core/discussions)  
@@ -33,16 +44,6 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 
 
 
-
-# 文档(Document)
-
-[**中文 Wiki**](https://www.wolai.com/ky1FVhe7Mudg6ru277gfNr)
-
-#### [English Wiki](http://www.nekosang.com/)
-
-#### [视频教程（video）](https://www.bilibili.com/video/av78814115/)
-
-#### [博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
 
   
 
