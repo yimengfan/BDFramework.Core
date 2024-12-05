@@ -16,9 +16,9 @@ namespace BDFramework.UFlux
     //[RequireComponent(typeof(Image))]
     public class IButton : UIBehaviour, IPointerDownHandler, IPointerUpHandler,//down up
         IBeginDragHandler, IDragHandler, IEndDragHandler,// drag
-        IPointerExitHandler , IPointerEnterHandler, // point enter\exit
+        IPointerExitHandler , IPointerEnterHandler // point enter\exit
 #if UNITY_EDITOR
-        IPointerClickHandler
+        ,IPointerClickHandler
 #endif
     {
         private Color normalColor;
