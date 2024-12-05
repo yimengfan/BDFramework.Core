@@ -1,5 +1,8 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V3.0.1
+【BuildCode】
+- 修复2021构建hotfix.dll问题
 ##V3.0.0
 【Framework】
 - 增加unity2021支持
