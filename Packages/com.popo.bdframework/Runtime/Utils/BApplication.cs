@@ -192,9 +192,9 @@ namespace BDFramework.Core.Tools
             //Unity路径
             persistentDataPath = Application.persistentDataPath;
 #if UNITY_EDITOR
-            streamingAssetsPath = DevOpsPublishAssetsPath;
-#else
             streamingAssetsPath = Application.streamingAssetsPath;
+#else
+            streamingAssetsPath = DevOpsPublishAssetsPath;
 #endif
         }
 
