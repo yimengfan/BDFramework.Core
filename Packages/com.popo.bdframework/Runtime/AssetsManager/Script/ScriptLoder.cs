@@ -3,7 +3,6 @@ using System.IO;
 using System.Reflection;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
-using HybridCLR;
 using UnityEngine;
 #if ENABLE_HCLR
 using HybridCLR;
@@ -120,8 +119,10 @@ namespace BDFramework
                     {
                         BDebug.Log("【ScriptLoder】HCLR加载AOT Patch:" + path, Color.red);
                         var dllbytes = BetterStreamingAssets.ReadAllBytes(path);
+                        #if ENABLE_HCLR
                         var err = RuntimeApi.LoadMetadataForAOTAssembly(dllbytes, HomologousImageMode.SuperSet);
                         Debug.Log($"LoadMetadataForAOTAssembly:{path}. ret:{err}");
+                        #endif
                     }
                 }
                 else
