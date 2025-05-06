@@ -1,5 +1,8 @@
 A Simple、Eesy、Profassional Game workflow!   - BDFramework.
 ---更新记录---
+##V3.0.2
+【Editor】
+- 修复没有ENABLE_HCLR宏时部分报错
 ##V3.0.1
 【BuildCode】
 - 修复2021构建hotfix.dll问题
