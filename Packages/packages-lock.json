@@ -1,11 +1,10 @@
 {
   "dependencies": {
     "com.code-philosophy.hybridclr": {
-      "version": "5.4.1",
+      "version": "file:com.code-philosophy.hybridclr@5.0.0",
       "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.popo.bdframework": {
       "version": "file:com.popo.bdframework",
