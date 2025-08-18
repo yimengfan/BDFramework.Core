@@ -138,19 +138,3 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 - 其他大量的定制Editor，以保证使用体验...(太多了统计不过来)
 
 **有很多细枝末节的系统就不列举了...**  
-
-
-# 项目实践流程：
-
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/338267/1649685339014-bc9ded1a-4301-47b9-9c08-0a4553fa0cfe.png#clientId=u9bf72c99-cdb1-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=808&id=u88225e38&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1272&originWidth=2889&originalType=binary&ratio=1&rotation=0&showTitle=true&size=179957&status=done&style=shadow&taskId=ubb1d6962-e623-407b-b35e-4fc35f226d9&title=%E5%8D%8A%E7%83%AD%E6%9B%B4&width=1834.2857975862503 "半热更")
-<a name="BBlYB"></a>
-
-<a name="d2KC6"></a>
-# 贡献者名单
-
-[@gaojiexx](https://github.com/gaojiexx)  
-[@ricashao](https://github.com/ricashao)  
-如果需要项目方案定制、企业支持,可以联系 QQ:755737878.  
-也随时欢迎交流各种技术.  
-如果您有好的修改或者拓展，也随时欢迎讨论和提PR.  
- 
