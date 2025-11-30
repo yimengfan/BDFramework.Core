@@ -69,7 +69,7 @@ namespace BDFramework.Editor.PublishPipeline
             GUILayout.BeginHorizontal();
             {
 #if !ODIN_INSPECTOR
-                GUILayout.Label("缺少Odin!");
+                GUILayout.Label("缺少Odin! 编辑器绘制Error!!!!",EditorGUIHelper.LabelH1);
 #endif
 
 #if ODIN_INSPECTOR
