@@ -1,0 +1,39 @@
+{
+    "versions": [
+    {
+        "unity_version":"2019",
+        "hybridclr" : { "branch":"v8.7.0"},
+        "il2cpp_plus": { "branch":"v2019-8.1.0"}
+    },
+    {
+        "unity_version":"2020",
+        "hybridclr" : { "branch":"v8.7.0"},
+        "il2cpp_plus": { "branch":"v2020-8.1.0"}
+    },
+    {
+        "unity_version":"2021",
+        "hybridclr" : { "branch":"v8.7.0"},
+        "il2cpp_plus": { "branch":"v2021-8.1.0"}
+    },
+    {
+        "unity_version":"2022",
+        "hybridclr" : { "branch":"v8.7.0"},
+        "il2cpp_plus": { "branch":"v2022-8.2.0"}
+    },
+    {
+        "unity_version":"2022-tuanjie",
+        "hybridclr" : { "branch":"v8.7.0"},
+        "il2cpp_plus": { "branch":"v2022-tuanjie-8.7.0"}
+    },
+    {
+        "unity_version":"2023",
+        "hybridclr" : { "branch":"v8.7.0"},
+        "il2cpp_plus": { "branch":"v2023-8.1.0"}
+    },
+    {
+        "unity_version":"6000",
+        "hybridclr" : { "branch":"v8.7.0"},
+        "il2cpp_plus": { "branch":"v6000-8.7.0"}
+    }
+    ]
+}

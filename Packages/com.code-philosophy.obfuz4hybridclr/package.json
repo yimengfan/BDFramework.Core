@@ -1,0 +1,22 @@
+{
+  "name": "com.code-philosophy.obfuz4hybridclr",
+  "version": "3.0.0",
+  "displayName": "Obfuz4HybridCLR",
+  "description": "Obfuz4HybridCLR is a obfuz extension for HybridCLR",
+  "category": "Scripting",
+  "documentationUrl": "https://www.obfuz.com",
+  "changelogUrl": "https://github.com/focus-creative-games/obfuz/commits/main/",
+  "licensesUrl": "https://github.com/focus-creative-games/obfuz/blob/main/com.code-philosophy.obfuz4hybridclr/LICENSE",
+  "keywords": [
+    "obfuz",
+    "obfuscation",
+    "obfuscator",
+    "confuser",
+    "code-philosophy"
+  ],
+  "author": {
+    "name": "Code Philosophy",
+    "email": "obfuz@code-philosophy.com",
+    "url": "https://code-philosophy.com"
+  }
+}
