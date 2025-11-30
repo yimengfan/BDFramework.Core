@@ -5,25 +5,25 @@ using System.Reflection;
 namespace BDFramework.UFlux
 {
     /// <summary>
-    /// 继承于Acomponent的自动注册
+    /// 继承于AComponent的自动注册
     /// </summary>
-    public class ComponentPathAttribute : AutoInitComponentAttribute
+    public class UfluxComponentPathAttribute : AutoAssignAttribute
     {
         private readonly string path;
 
-        public ComponentPathAttribute(string path)
+        public UfluxComponentPathAttribute(string path)
         {
             this.path = path;
         }
 
-        public override void AutoSetField(IComponent com, FieldInfo fieldInfo)
+        public override void AutoSetField(IComponent winComponent, FieldInfo fieldInfo)
         {
-            if (!com.Transform)
+            if (!winComponent.Transform)
             {
-                BDebug.Log($"component的Transform为null:{com.GetType().FullName}");
+                BDebug.Log($"component的Transform为null:{winComponent.GetType().FullName}");
             }
 
-            var transform = com.Transform.Find(this.path);
+            var transform = winComponent.Transform.Find(this.path);
 
             if (!transform)
             {
@@ -35,10 +35,10 @@ namespace BDFramework.UFlux
             if (!fieldType.IsGenericType)
             {
                 var instance = (IComponent) Activator.CreateInstance(fieldType, new object[] {transform});
-                fieldInfo.SetValue(com, instance);
+                fieldInfo.SetValue(winComponent, instance);
                 instance.Init();
 
-                if (com is IWindow window)
+                if (winComponent is IWindow window)
                 {
                     window.AddComponent(instance);
                 }
@@ -46,7 +46,7 @@ namespace BDFramework.UFlux
             else
             {
                 var list = (IList) HotfixAssembliesHelper.CreateHotfixInstance(fieldType);
-                fieldInfo.SetValue(com, list);
+                fieldInfo.SetValue(winComponent, list);
 
                 // 泛型T类型
                 Type argType = null;
@@ -67,7 +67,7 @@ namespace BDFramework.UFlux
                     instance.Init();
                     list.Add(instance);
 
-                    if (com is IWindow window)
+                    if (winComponent is IWindow window)
                     {
                         window.AddComponent(instance);
                     }
@@ -78,17 +78,17 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 自动设置属性
         /// </summary>
-        /// <param name="com"></param>
+        /// <param name="winComponent"></param>
         /// <param name="propertyInfo"></param>
         /// <exception cref="Exception"></exception>
-        public override void AutoSetProperty(IComponent com, PropertyInfo propertyInfo)
+        public override void AutoSetProperty(IComponent winComponent, PropertyInfo propertyInfo)
         {
-            if (!com.Transform)
+            if (!winComponent.Transform)
             {
-                BDebug.Log($"component的Transform为null:{com.GetType().FullName}");
+                BDebug.Log($"component的Transform为null:{winComponent.GetType().FullName}");
             }
 
-            var transform = com.Transform.Find(this.path);
+            var transform = winComponent.Transform.Find(this.path);
 
             if (!transform)
             {
@@ -100,10 +100,10 @@ namespace BDFramework.UFlux
             if (!fieldType.IsGenericType)
             {
                 var instance = (IComponent) Activator.CreateInstance(fieldType, new object[] {transform});
-                propertyInfo.SetValue(com, instance);
+                propertyInfo.SetValue(winComponent, instance);
                 instance.Init();
 
-                if (com is IWindow window)
+                if (winComponent is IWindow window)
                 {
                     window.AddComponent(instance);
                 }
@@ -111,7 +111,7 @@ namespace BDFramework.UFlux
             else
             {
                 var list = (IList) HotfixAssembliesHelper.CreateHotfixInstance(fieldType);
-                propertyInfo.SetValue(com, list);
+                propertyInfo.SetValue(winComponent, list);
 
                 // 泛型T类型
                 Type argType = null;
@@ -123,7 +123,7 @@ namespace BDFramework.UFlux
                     instance.Init();
                     list.Add(instance);
 
-                    if (com is IWindow window)
+                    if (winComponent is IWindow window)
                     {
                         window.AddComponent(instance);
                     }

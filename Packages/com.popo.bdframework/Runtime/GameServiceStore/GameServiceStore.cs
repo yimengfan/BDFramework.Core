@@ -12,13 +12,13 @@ namespace BDFramework.GameServiceStore
         /// <summary>
         /// 游戏服务仓库
         /// </summary>
-        static private Dictionary<string, GameInterfaceService> serviceStoreMap = new Dictionary<string, GameInterfaceService>();
+        static private Dictionary<string, ServiceContainer> serviceStoreMap = new Dictionary<string, ServiceContainer>();
 
         /// <summary>
         /// 获取一个service
         /// </summary>
         /// <typeparam name="T">模块</typeparam>
-        static public GameInterfaceService GetService<T>() where T : new()
+        static public ServiceContainer GetService<T>() where T : new()
         {
             return GetService<T>();
         }
@@ -27,12 +27,12 @@ namespace BDFramework.GameServiceStore
         /// </summary>
         /// <param name="moduleName"></param>
         /// <returns></returns>
-        static public GameInterfaceService GetService(string moduleName)
+        static public ServiceContainer GetService(string moduleName)
         {
             serviceStoreMap.TryGetValue(moduleName, out var service);
             if (service == null)
             {
-                service = new GameInterfaceService();
+                service = new ServiceContainer();
                 serviceStoreMap[moduleName] = service;
             }
             return service;

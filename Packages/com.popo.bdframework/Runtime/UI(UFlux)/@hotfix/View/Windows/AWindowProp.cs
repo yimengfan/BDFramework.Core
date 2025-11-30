@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using BDFramework.DataListener;
+using BDFramework.GameServiceStore;
 using BDFramework.Hotfix.Reflection;
 using BDFramework.UFlux.View.Props;
 using BDFramework.UFlux.WindowStatus;
@@ -22,11 +23,13 @@ namespace BDFramework.UFlux
         /// 根节点
         /// </summary>
         public IWindow Root { get; set; }
-        /// <summary>
-        /// 父节点
-        /// </summary>
-        // public IWindow Parent { get;   set; }
 
+
+        /// <summary>
+        /// 窗口的一些服务容器
+        /// </summary>
+        public ServiceContainer ServiceContainer { get; private set; } = new ServiceContainer();
+        
         /// <summary>
         /// 组件列表
         /// </summary>

@@ -106,6 +106,10 @@ namespace BDFramework.UFlux
 
 
             var o = UFluxUtils.Load<GameObject>(resPath);
+            if (!o)
+            {
+                Debug.LogError("[Uflux]不存在路径:" + resPath);
+            }
             this.Transform = GameObject.Instantiate(o).transform;
             this.IsLoad = true;
             UFluxUtils.InitComponent(this);

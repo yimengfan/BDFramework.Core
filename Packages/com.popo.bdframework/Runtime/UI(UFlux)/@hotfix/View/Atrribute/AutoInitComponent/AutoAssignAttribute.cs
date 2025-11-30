@@ -7,14 +7,14 @@ namespace BDFramework.UFlux
     /// <summary>
     /// 自动初始化Component属性基类
     /// </summary>
-    public class AutoInitComponentAttribute : Attribute
+   abstract public class AutoAssignAttribute : Attribute
     {
-        virtual public void AutoSetField(IComponent com, FieldInfo fieldInfo)
+        virtual public void AutoSetField(IComponent winComponent, FieldInfo fieldInfo)
         {
             
         }
 
-        virtual public void AutoSetProperty(IComponent com, PropertyInfo propertyInfo)
+        virtual public void AutoSetProperty(IComponent winComponent, PropertyInfo propertyInfo)
         {
             
         }

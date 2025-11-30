@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,9 +8,10 @@ using UnityEngine.EventSystems;
 namespace BDFramework.UFlux
 {
     /// <summary>
-    /// 自动初始化ui组件（只要是UI组件都能被初始化）
+    /// 自动初始化ui组件
+    /// 只要是UI组件都能被初始化
     /// </summary>
-    public class TransformPathAttribute : AutoInitComponentAttribute
+    public class TransformPathAttribute : AutoAssignAttribute
     {
         public string Path;
 
@@ -16,47 +19,18 @@ namespace BDFramework.UFlux
         {
             this.Path = path;
         }
+
         /// <summary>
         /// 设置字段
         /// </summary>
-        /// <param name="com"></param>
+        /// <param name="winComponent"></param>
         /// <param name="fieldInfo"></param>
-        public override void AutoSetField(IComponent com, FieldInfo fieldInfo)
+        public override void AutoSetField(IComponent winComponent, FieldInfo fieldInfo)
         {
-            if (!fieldInfo.FieldType.IsSubclassOf(typeof(UnityEngine.Object)))
+            var value = GetTypeValue(winComponent, fieldInfo.FieldType, fieldInfo);
+            if (value != null)
             {
-                throw new Exception($"赋值目标不是UI组件,fieldName:{fieldInfo.Name} => {fieldInfo.FieldType.Name} - {this.Path}");
-                return;
-            }
-
-            if (!com.Transform)
-            {
-               throw new Exception($"transformRoot为空:{this.Path} type:{fieldInfo.FieldType.Name}");
-                return;
-            }
-            Type uiType = fieldInfo.FieldType;
-            var node = com.Transform.Find(this.Path);
-            if (!node)
-            {
-                BDebug.LogError($"窗口:{com} 不存在节点:{ this.Path}");
-                return;
-            }
-
-            if (uiType == typeof(Transform))
-            {
-                fieldInfo.SetValue(com, node);
-            }
-            else
-            {
-                var ui = node.GetComponent(uiType);
-                if (ui)
-                {
-                    fieldInfo.SetValue(com,ui);
-                }
-                else
-                {
-                    BDebug.LogError($"窗口:{com} 节点:{ this.Path} 不存在:{uiType.FullName}");
-                }
+                fieldInfo.SetValue(winComponent, value);
             }
         }
 
@@ -64,42 +38,118 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 设置property
         /// </summary>
-        /// <param name="com"></param>
+        /// <param name="winComponent"></param>
         /// <param name="propertyInfo"></param>
-        public override void AutoSetProperty(IComponent com, PropertyInfo propertyInfo)
+        public override void AutoSetProperty(IComponent winComponent, PropertyInfo propertyInfo)
         {
-            if (!propertyInfo.PropertyType.IsSubclassOf(typeof(UnityEngine.Object)))
+            var value = GetTypeValue(winComponent, propertyInfo.PropertyType, propertyInfo);
+            if (value != null)
             {
-                return;
+                propertyInfo.SetValue(winComponent, value);
             }
-            if (!com.Transform)
+        }
+
+
+        /// <summary>
+        /// 获取类型值
+        /// </summary>
+        /// <param name="winComponent"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public object GetTypeValue(IComponent winComponent, Type type, MemberInfo memberInfo)
+        {
+            if (!winComponent.Transform)
             {
-                throw new Exception($"transformRoot为空:{this.Path} type:{propertyInfo.PropertyType.Name}");
-                return;
-            }
-            Type uiType = propertyInfo.PropertyType;
-            var node = com.Transform.Find(this.Path);
-            if (!node)
-            {
-                BDebug.LogError("节点存在:" + this.Path);
+                throw new Exception($"【窗口:{winComponent.Transform.name}】 Transform Root为空:{this.Path} type:{memberInfo.Name}");
             }
 
-            if (uiType == typeof(Transform))
+            var memberInfoTransformNode = winComponent.Transform.Find(this.Path);
+            if (!memberInfoTransformNode)
             {
-                propertyInfo.SetValue(com, node);
+                BDebug.LogError($"【窗口:{winComponent.Transform.name}】 不存在节点:{this.Path}");
+                return null;
             }
-            else
+
+            //是否为数组 或者泛型
+            if (type.IsArray || (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>)))
             {
-                var ui = node.GetComponent(uiType);
-                if (ui)
+                var elementType = type.IsArray ? type.GetElementType() : type.GetGenericArguments()[0];
+                var retArray = Array.CreateInstance(elementType, memberInfoTransformNode.childCount);
+
+                for (int i = 0; i < memberInfoTransformNode.childCount; i++)
                 {
-                    propertyInfo.SetValue(com,ui);
+                    var childNode = memberInfoTransformNode.GetChild(i);
+                    object elementValue = null;
+
+                    if (elementType == typeof(Transform))
+                    {
+                        elementValue = memberInfoTransformNode;
+                    }
+                    else if (elementType.IsSubclassOf(typeof(UnityEngine.Object)))
+                    {
+                        var uicom = childNode.GetComponent(elementType);
+                        if (uicom)
+                        {
+                            elementValue = uicom;
+                        }
+                        else
+                        {
+                            BDebug.LogError($"【窗口:{winComponent.Transform.name}】 子节点:{this.Path} 不存在UI组件:{type.FullName}");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"【窗口:{winComponent.Transform.name}】{memberInfo.Name} 不是UI组件 : => {type.Name}");
+                    }
+
+                    retArray.SetValue(elementValue, i);
+                }
+
+
+                //返回数组
+                if (type.IsArray)
+                {
+                    return retArray;
                 }
                 else
                 {
-                    BDebug.LogError("窗口:" + com + "组件不存在:" + uiType.FullName + " - " + this.Path);
+                    //返回list
+                    var retList = Activator.CreateInstance(type) as IList;
+                    foreach (var item in retArray)
+                    {
+                        retList.Add(item);
+                    }
+
+                    return retList;
                 }
             }
+            //非数组
+            else
+            {
+                if (type == typeof(Transform))
+                {
+                    return memberInfoTransformNode;
+                }
+                else if (type.IsSubclassOf(typeof(UnityEngine.Object)))
+                {
+                    var uicom = memberInfoTransformNode.GetComponent(type);
+                    if (uicom)
+                    {
+                        return uicom;
+                    }
+                    else
+                    {
+                        BDebug.LogError($"【窗口:{winComponent.Transform.name}】 子节点:{this.Path} 不存在UI组件:{type.FullName}");
+                        return null;
+                    }
+                }
+                else
+                {
+                    throw new Exception($"【窗口:{winComponent.Transform.name}】 自动赋值字段值 不是UI组件 :{memberInfo.Name} => {type.Name} - {this.Path}");
+                }
+            }
+
+            return null;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace BDFramework.UFlux
     /// <summary>
     /// 自动初始化，按钮点击注册属性
     /// </summary>
-    public class ButtonOnclickAttribute : AutoInitComponentAttribute
+    public class ButtonOnclickAttribute : AutoAssignAttribute
     {
         private string path;
 

@@ -6,7 +6,7 @@ namespace BDFramework.GameServiceStore
     /// <summary>
     /// 游戏Service
     /// </summary>
-    public class GameInterfaceService
+    public class ServiceContainer
     {
         private List<object> singletonList = new List<object>();
 
@@ -68,9 +68,9 @@ namespace BDFramework.GameServiceStore
         /// </summary>
         /// <param name="t"></param>
         /// <typeparam name="T"></typeparam>
-        public T GetInterface<T>(T t) where T : class
+        public T GetService<T>() where T : class
         {
-            return GetInterface(typeof(T)) as T;
+            return GetService(typeof(T)) as T;
         }
 
 
@@ -80,7 +80,7 @@ namespace BDFramework.GameServiceStore
         /// </summary>
         /// <param name="type"></param>
         /// <typeparam name="T"></typeparam>
-        private object GetInterface(Type type) //where T : class
+        private object GetService(Type type) //where T : class
         {
             var ret = this.singletonList.FindLast((o) => o.GetType() == type);
             if (ret == null)

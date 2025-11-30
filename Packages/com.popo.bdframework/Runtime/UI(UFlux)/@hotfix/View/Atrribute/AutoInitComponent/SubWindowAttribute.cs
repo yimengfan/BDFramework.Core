@@ -6,7 +6,7 @@ namespace BDFramework.UFlux
     /// <summary>
     /// 初始化SubWindows节点，并注册到当前窗口.
     /// </summary>
-    public class SubWindowAttribute : AutoInitComponentAttribute
+    public class SubWindowAttribute : AutoAssignAttribute
     {
         public string Path;
 
@@ -18,23 +18,23 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 设置字段
         /// </summary>
-        /// <param name="com"></param>
+        /// <param name="winComponent"></param>
         /// <param name="fieldInfo"></param>
-        public override void AutoSetField(IComponent com, FieldInfo fieldInfo)
+        public override void AutoSetField(IComponent winComponent, FieldInfo fieldInfo)
         {
             Type uiType = fieldInfo.FieldType;
-            var transform = com.Transform.Find(this.Path);
+            var transform = winComponent.Transform.Find(this.Path);
             // if (uiType.IsSubclassOf(typeof(AWindow)))
             // {
                 if (!transform)
                 {
-                    BDebug.LogError($"窗口:{com} 不存在节点:{this.Path}");
+                    BDebug.LogError($"窗口:{winComponent} 不存在节点:{this.Path}");
                     return;
                 }
 
                 var subWindow = Activator.CreateInstance(uiType, new object[] { transform }) as IWindow;
-                fieldInfo.SetValue(com, subWindow);
-                (com as IWindow).RegisterSubWindow(subWindow);
+                fieldInfo.SetValue(winComponent, subWindow);
+                (winComponent as IWindow).RegisterSubWindow(subWindow);
                
             // }
             // else
@@ -47,23 +47,23 @@ namespace BDFramework.UFlux
         /// <summary>
         /// 设置property
         /// </summary>
-        /// <param name="com"></param>
+        /// <param name="winComponent"></param>
         /// <param name="propertyInfo"></param>
-        public override void AutoSetProperty(IComponent com, PropertyInfo propertyInfo)
+        public override void AutoSetProperty(IComponent winComponent, PropertyInfo propertyInfo)
         {
             Type uiType = propertyInfo.PropertyType;
-            var transform = com.Transform.Find(this.Path);
+            var transform = winComponent.Transform.Find(this.Path);
             // if (uiType.IsSubclassOf(typeof(AWindow)))
             // {
                 if (!transform)
                 {
-                    BDebug.LogError($"窗口:{com} 不存在节点:{this.Path}");
+                    BDebug.LogError($"窗口:{winComponent} 不存在节点:{this.Path}");
                     return;
                 }
 
                 var subWindow = Activator.CreateInstance(uiType, new object[] { transform }) as IWindow;
-                propertyInfo.SetValue(com, subWindow);
-                (com as IWindow).RegisterSubWindow(subWindow);
+                propertyInfo.SetValue(winComponent, subWindow);
+                (winComponent as IWindow).RegisterSubWindow(subWindow);
             // }
             // else
             // {

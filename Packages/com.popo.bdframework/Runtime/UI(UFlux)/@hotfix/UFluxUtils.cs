@@ -52,7 +52,7 @@ namespace BDFramework.UFlux
                     var attrs = f.GetCustomAttributes(false);
                     for (int i = 0; i < attrs.Length; i++)
                     {
-                        if (attrs[i] is AutoInitComponentAttribute)
+                        if (attrs[i] is AutoAssignAttribute)
                             return true;
                     }
 
@@ -63,7 +63,7 @@ namespace BDFramework.UFlux
                     var attrs = p.GetCustomAttributes(false);
                     for (int i = 0; i < attrs.Length; i++)
                     {
-                        if (attrs[i] is AutoInitComponentAttribute)
+                        if (attrs[i] is AutoAssignAttribute)
                             return true;
                     }
 
@@ -74,7 +74,7 @@ namespace BDFramework.UFlux
                     var attrs = m.GetCustomAttributes(false);
                     for (int i = 0; i < attrs.Length; i++)
                     {
-                        if (attrs[i] is AutoInitComponentAttribute)
+                        if (attrs[i] is AutoAssignAttribute)
                             return true;
                     }
 
@@ -93,7 +93,7 @@ namespace BDFramework.UFlux
 #if UNITY_EDITOR
                     try
                     {
-                        (attrs[i] as AutoInitComponentAttribute)?.AutoSetField(component, f);
+                        (attrs[i] as AutoAssignAttribute)?.AutoSetField(component, f);
                     }
                     catch (Exception e)
                     {
@@ -117,7 +117,7 @@ namespace BDFramework.UFlux
                 var attrs = p.GetCustomAttributes(false);
                 for (int i = 0; i < attrs.Length; i++)
                 {
-                    (attrs[i] as AutoInitComponentAttribute)?.AutoSetProperty(component, p);
+                    (attrs[i] as AutoAssignAttribute)?.AutoSetProperty(component, p);
                 }
             }
 
@@ -126,7 +126,7 @@ namespace BDFramework.UFlux
                 var attrs = m.GetCustomAttributes(false);
                 for (int i = 0; i < attrs.Length; i++)
                 {
-                    (attrs[i] as AutoInitComponentAttribute)?.AutoSetMethod(component, m);
+                    (attrs[i] as AutoAssignAttribute)?.AutoSetMethod(component, m);
                 }
             }
         }
