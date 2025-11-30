@@ -56,7 +56,7 @@ namespace BDFramework.Editor.Table
 		/// <summary>
 		/// 显示当前窗口	
 		/// </summary>
-		[MenuItem("Assets/ExcelTools")]
+		[MenuItem("Assets/【BD工具箱】ExcelTools/表格转换工具")]
 		static void ShowExcelTools()
 		{
 			Init();

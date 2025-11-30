@@ -117,7 +117,7 @@ namespace BDFramework.Editor.Table
         /// 需要主动连接数据库
         /// </summary>
         /// <param name="excelPath"></param>
-        public static bool Excel2SQLite(string excelPath, DBType dbType)
+        public static bool Excel2SQLite(string excelPath, DBType dbType, bool isForce = false)
         {
             BDebug.Log($"导表:{excelPath}", Color.yellow);
 
@@ -126,12 +126,11 @@ namespace BDFramework.Editor.Table
             //收集所有的类型
             CollectTableTypes();
             var excelHash = FileHelper.GetMurmurHash3(excelPath);
-
             //table判断
             SqliteHelper.DB.Connection.CreateTable<TableLog>();
             var table = SqliteHelper.DB.GetTable<TableLog>();
             var importLog = table?.Where((ie) => ie.Path == excelPath).FirstOrDefault();
-            if (importLog == null || !importLog.Hash.Equals(excelHash))
+            if (isForce || importLog == null || !importLog.Hash.Equals(excelHash))
             {
                 //开始导表
                 var excel = new ExcelExchangeTools(excelPath);
@@ -242,10 +241,8 @@ namespace BDFramework.Editor.Table
             }
 
             //
-            EditorUtility.DisplayProgressBar("Excel2Sqlite",
-                string.Format("生成：{0} 记录条目:{1}", type.FullName, jsonObj.Count), 1);
-            Debug.LogFormat("导出 [{0}]:{1}", dbname,
-                filePath.Replace(Application.dataPath + "\\", "") + "=>【" + type.FullName + "】");
+            EditorUtility.DisplayProgressBar("Excel2Sqlite", string.Format("生成：{0} 记录条目:{1}", type.FullName, jsonObj.Count), 1);
+            Debug.LogFormat("导出 [{0}]:{1}", dbname, filePath.Replace(Application.dataPath + "\\", "") + "=>【" + type.FullName + "】");
             //数据库创建表
             bool ret = true;
             SqliteHelper.DB.CreateTable(type);
@@ -301,21 +298,21 @@ namespace BDFramework.Editor.Table
         #region 按钮 Excel2Sqlite
 
         //当返回真时启用
-        [MenuItem("Assets/Excel导入到数据库", true)]
+        [MenuItem("Assets/BDFramework工具箱/ExcelTools/Excel导入到数据库", true)]
         private static bool MenuItem_Excel2SqliteValidation()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             return path.ToLower().EndsWith(".xlsx");
         }
 
-        [MenuItem("Assets/Excel导入到数据库")]
+        [MenuItem("Assets/BDFramework工具箱/ExcelTools/Excel导入到数据库")]
         public static void MenuItem_Excel2Sqlite()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             bool isSuccess = false;
             SqliteLoder.LoadLocalDBOnEditor(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
             {
-                isSuccess = Excel2SQLite(path, DBType.Local);
+                isSuccess = Excel2SQLite(path, DBType.Local, true);
             }
             SqliteLoder.Close();
             EditorUtility.ClearProgressBar();

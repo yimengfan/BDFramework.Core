@@ -257,7 +257,7 @@ Excel格式如下:
         }
 
 
-        [MenuItem("Assets/Excel导出脚本[程序目录]", true)]
+        [MenuItem("Assets/【BD工具箱】ExcelTools/Excel导出脚本[程序目录]", true)]
         private static bool SingleExcel2ClassValidation()
         {
             if (Selection.activeObject == null)
@@ -274,7 +274,7 @@ Excel格式如下:
             return true;
         }
 
-        [MenuItem("Assets/Excel生成脚本[程序目录]")]
+        [MenuItem("Assets/【BD工具箱】ExcelTools/Excel生成脚本[程序目录]")]
         public static void SingleExcel2Class()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
