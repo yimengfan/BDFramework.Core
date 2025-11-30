@@ -8,6 +8,7 @@ using BDFramework.Mgr;
 using BDFramework.UFlux.WindowStatus;
 using LitJson;
 using Sirenix.Utilities;
+using UnityEngine.UI;
 
 
 namespace BDFramework.UFlux
@@ -51,6 +52,9 @@ namespace BDFramework.UFlux
                 Center = uiroot.Find("Center")?.transform;
                 Top = uiroot.Find("Top")?.transform;
             }
+            //
+            // var canvas = uiroot.GetComponent<CanvasScaler>();
+            // var screenSize = canvas.referenceResolution
         }
 
         /// <summary>
