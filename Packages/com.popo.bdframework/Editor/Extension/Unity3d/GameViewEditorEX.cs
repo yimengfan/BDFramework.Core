@@ -1,40 +1,26 @@
-﻿// csharp
-#if UNITY_EDITOR
-using System;
+﻿using System;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace BDFramework.UFlux
+namespace BDFramework.Editor.Unity3dEx
 {
-    public partial class UIManager
+    /// <summary>
+    /// 游戏视口的扩展
+    /// </summary>
+    public class GameViewEditorEX
     {
         /// <summary>
-        /// 编辑器下脚本重载后自动调整 GameView 尺寸
+        /// 设置gameView的尺寸
         /// </summary>
-        [InitializeOnLoadMethod]
-        private static void OnEditorScriptsReloaded()
+        /// <param name="target"></param>
+      static  public void SetGameviewSize(Vector2 target)
         {
-            EnsureGameViewMatchesCanvas();
-        }
-        /// <summary>
-        /// 检查Gameview
-        /// </summary>
-      static  private void EnsureGameViewMatchesCanvas()
-        {
-            var uiroot = GameObject.Find("UIRoot")?.transform;
-            if (!uiroot) return;
-
-            var scaler = uiroot.GetComponent<CanvasScaler>();
-            if (!scaler) return;
-
-            var target = scaler.referenceResolution;
-            if (target.x <= 0 || target.y <= 0) return;
-
+            
+       
             // 获取 GameView 尺寸
-            var gameViewType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameView");
-            var gv = EditorWindow.GetWindow(gameViewType);
+            var gv =GetGameViewWindow();
+            var gameViewType = gv.GetType();
             if (gv == null) return;
 
             // 当前 Game 视图实际像素尺寸
@@ -132,9 +118,28 @@ namespace BDFramework.UFlux
                 var selectedSizeIndexProp = gameViewType.GetProperty("selectedSizeIndex", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                 selectedSizeIndexProp.SetValue(gv, foundIndex);
                 
-                Debug.Log($"自动设置GameView尺寸:{scaler.referenceResolution}");
+                Debug.Log($"自动设置GameView尺寸:{target}");
             }
+        }
+        
+        
+        /// <summary>
+        /// 获取已存在的 GameView，没有时才创建
+        /// </summary>
+        private static EditorWindow GetGameViewWindow()
+        {
+            var gameViewType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameView");
+            if (gameViewType == null) return null;
+
+            // 先查找已有实例
+            var existing = Resources.FindObjectsOfTypeAll(gameViewType);
+            if (existing != null && existing.Length > 0)
+            {
+                return existing[0] as EditorWindow;
+            }
+
+            // 实在没有再创建
+            return EditorWindow.GetWindow(gameViewType);
         }
     }
 }
-#endif
