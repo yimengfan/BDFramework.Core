@@ -185,7 +185,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                     }
                     else if (Path.GetExtension(dp).Equals(".asset", StringComparison.OrdinalIgnoreCase)) //依赖的ScripttableObject,会
                     {
-                        scriptObjectAssets.Add(AssetBundleToolsV2.AssetPathToGUID(dp));
+                        scriptObjectAssets.Add(BuildTools_AssetBundleV2.AssetPathToGUID(dp));
                     }
                 }
             }

@@ -110,7 +110,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                 foreach (var ar in comingAssetReferenceList)
                 {
                     //包含runtime资产的判断
-                    if (AssetBundleToolsV2.IsRuntimePath(ar.importFrom) && !this.IsIncludeRuntimeAssets)
+                    if (BuildTools_AssetBundleV2.IsRuntimePath(ar.importFrom) && !this.IsIncludeRuntimeAssets)
                     {
                         continue;
                     }

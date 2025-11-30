@@ -72,7 +72,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
             //获取buildingAssetinfo
             (this.BuildAssetInfos, this.runtimeAssetsPathList) =
-                AssetBundleToolsV2.GetBuildingAssetInfos(assetDirectories, buildInfoCache);
+                BuildTools_AssetBundleV2.GetBuildingAssetInfos(assetDirectories, buildInfoCache);
             //保存回cache
             BuildPipelineAssetCacheImporter.SaveBuildingAssetInfosCache(this.BuildAssetInfos);
 
@@ -426,7 +426,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 if (BDEditorApplication.EditorSetting.BuildAssetBundleSetting.IsEnableObfuscation)
                 {
                     Debug.Log("<color=green>----->6.混淆AB</color>");
-                    AssetBundleToolsV2.MixAssetBundle(BuildParams.OutputPath, platform);
+                    BuildTools_AssetBundleV2.MixAssetBundle(BuildParams.OutputPath, platform);
                 }
 
                 //The end.最后处理

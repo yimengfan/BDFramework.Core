@@ -23,7 +23,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
     /// <summary>
     /// AssetGraph构建AssetBundle
     /// </summary>
-    static public class AssetBundleToolsV2
+    static public class BuildTools_AssetBundleV2
     {
         /// <summary>
         /// Runtime的定义
@@ -817,7 +817,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// <returns></returns>
         static public bool IsRuntimePath(string path)
         {
-            return path.Contains(AssetBundleToolsV2.RUNTIME_PATH, StringComparison.OrdinalIgnoreCase);
+            return path.Contains(BuildTools_AssetBundleV2.RUNTIME_PATH, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

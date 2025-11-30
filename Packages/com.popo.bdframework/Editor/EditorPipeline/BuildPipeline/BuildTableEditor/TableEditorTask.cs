@@ -41,12 +41,12 @@ namespace BDFramework.Editor.Table
                         foreach (var excel in changedExcelList)
                         {
                             var path = AssetDatabase.GUIDToAssetPath(excel);
-                            Excel2SQLiteTools.Excel2SQLite(path, DBType.Local);
+                            BuildTools_Excel2SQLite.Excel2SQLite(path, DBType.Local);
                         }
                     }
                     SqliteLoder.Close();
                     
-                    Excel2SQLiteTools.CopySqlToOther(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
+                    BuildTools_Excel2SQLite.CopySqlToOther(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
                     BDebug.Log("-----------------强制导入修改的excel文件.end-----------------", Color.red);
 
                     ExcelEditorTools.SaveExcelCacheInfo(newEcxcelInfoMap);

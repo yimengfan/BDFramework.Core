@@ -359,13 +359,13 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         {
             //创建
             var assetInfo = new AssetInfo();
-            assetInfo.GUID = AssetBundleToolsV2.AssetPathToGUID(assetPath);
-            assetInfo.Hash = AssetBundleToolsV2.GetAssetsHash(assetPath);
+            assetInfo.GUID = BuildTools_AssetBundleV2.AssetPathToGUID(assetPath);
+            assetInfo.Hash = BuildTools_AssetBundleV2.GetAssetsHash(assetPath);
             //默认颗粒度 给自己
             assetInfo.ABName = assetPath;
             assetInfo.Type = GetAssetTypeIdx(assetPath);
             //依赖列表
-            var dependeAssetList = AssetBundleToolsV2.GetDependAssetList(assetPath);
+            var dependeAssetList = BuildTools_AssetBundleV2.GetDependAssetList(assetPath);
             assetInfo.DependAssetList = new List<string>(dependeAssetList);
 
             return assetInfo;
@@ -379,7 +379,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         private int GetAssetTypeIdx(string assetPath)
         {
             //判断资源类型
-            var type = AssetBundleToolsV2.GetMainAssetTypeAtPath(assetPath);
+            var type = BuildTools_AssetBundleV2.GetMainAssetTypeAtPath(assetPath);
             if (type == null)
             {
                 Debug.LogError("获取资源类型失败:" + assetPath);
@@ -493,7 +493,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             //使用guid 作为ab名
             foreach (var mainAsset in this.AssetInfoMap)
             {
-                var guid = AssetBundleToolsV2.AssetPathToGUID(mainAsset.Value.ABName);
+                var guid = BuildTools_AssetBundleV2.AssetPathToGUID(mainAsset.Value.ABName);
                 if (!string.IsNullOrEmpty(guid))
                 {
                     mainAsset.Value.ABName = guid;
@@ -507,7 +507,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 {
                     var dependAssetPath = mainAsset.Value.DependAssetList[i];
 
-                    guid = AssetBundleToolsV2.AssetPathToGUID(dependAssetPath);
+                    guid = BuildTools_AssetBundleV2.AssetPathToGUID(dependAssetPath);
                     if (!string.IsNullOrEmpty(guid))
                     {
                         mainAsset.Value.DependAssetList[i] = guid;
@@ -586,9 +586,9 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             {
                 //runtime路径下，写入配置
                 //剔除文件夹
-                if (AssetBundleToolsV2.IsRuntimePathAssetWithoutFolder(assetInfo.Key))
+                if (BuildTools_AssetBundleV2.IsRuntimePathAssetWithoutFolder(assetInfo.Key))
                 {
-                    var loadPath = AssetBundleToolsV2.GetAbsPathFormRuntime(assetInfo.Key);
+                    var loadPath = BuildTools_AssetBundleV2.GetAbsPathFormRuntime(assetInfo.Key);
                     //添加
                     var abItem = new AssetBundleItem(assetbundleItemList.Count, loadPath, "",  (int)assetInfo.Value.AssetBundleLoadType,assetInfo.Value.GUID, assetInfo.Value.Type, new int[] { });
 
@@ -606,7 +606,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 //保留GUID
                 if (assetInfo.Value.IsKeepGUID && assetInfo.Value.ArtAssetsInfoIdx == -1)
                 {
-                    if (!AssetBundleToolsV2.IsRuntimePath(assetInfo.Key))
+                    if (!BuildTools_AssetBundleV2.IsRuntimePath(assetInfo.Key))
                     {
                         var abItem = new AssetBundleItem(assetbundleItemList.Count, "", "",  (int)assetInfo.Value.AssetBundleLoadType,assetInfo.Value.GUID, assetInfo.Value.Type, new int[] { });
                         assetbundleItemList.Add(abItem);
@@ -690,7 +690,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             {
                 AssetBundleItem checkABItem = null;
                 //使用runtime加载
-                if (AssetBundleToolsV2.IsRuntimePathAssetWithoutFolder(assetInfo.Key))
+                if (BuildTools_AssetBundleV2.IsRuntimePathAssetWithoutFolder(assetInfo.Key))
                 {
                     if (assetInfo.Value.ArtAssetsInfoIdx < 0 || assetInfo.Value.ArtAssetsInfoIdx > assetbundleItemList.Count)
                     {

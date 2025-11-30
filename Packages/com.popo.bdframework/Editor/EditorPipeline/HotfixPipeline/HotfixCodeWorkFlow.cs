@@ -21,7 +21,7 @@ namespace BDFramework.Editor.WorkFlow
             {
                 if (BDEditorApplication.EditorSetting.BuildHotfixDLLSetting.IsNeedAutoBuildDll())
                 {
-                    HotfixScriptTools.BuildDll(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug, false);
+                    BuildTools_HotfixScript.BuildDLL(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug, false);
                     Debug.Log("自动编译Hotfix.dll成功!");
                 }
                 else if (BDEditorApplication.EditorSetting.BuildHotfixDLLSetting.IsHotfixCodeOutofUnityAssets())

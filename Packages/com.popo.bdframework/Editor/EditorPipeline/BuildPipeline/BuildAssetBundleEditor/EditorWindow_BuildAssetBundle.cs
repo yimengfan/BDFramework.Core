@@ -148,7 +148,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                             var ret = EditorUtility.DisplayDialog("提示", "是否要混淆AssetBundle? \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
                             if (ret)
                             {
-                                AssetBundleToolsV2.MixAssetBundle(BApplication.DevOpsPublishAssetsPath, platform);
+                                BuildTools_AssetBundleV2.MixAssetBundle(BApplication.DevOpsPublishAssetsPath, platform);
                             }
                         }
                         //
@@ -213,7 +213,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             if (ret)
             {
                 //生成Assetbundlebunle
-                AssetBundleToolsV2.BuildAssetBundles(platform, outputPath);
+                BuildTools_AssetBundleV2.BuildAssetBundles(platform, outputPath);
                 AssetDatabase.Refresh();
                 Debug.Log("资源打包完毕");
             }

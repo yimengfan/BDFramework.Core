@@ -19,7 +19,7 @@ namespace BDFramework.Editor.HotfixScript
     /// <summary>
     /// 热更代码工具
     /// </summary>
-    static public class HotfixScriptTools
+    static public class BuildTools_HotfixScript
     {
         static string ENABLE_ILRUNTIME = "ENABLE_ILRUNTIME";
         static private string ENABLE_HCLR = "ENABLE_HCLR";
@@ -51,7 +51,7 @@ namespace BDFramework.Editor.HotfixScript
         /// <param name="outpath"></param>
         /// <param name="platform"></param>
         /// <param name="mode"></param>
-        static public void BuildDll(string outpath, RuntimePlatform platform, Unity3dRoslynBuildTools.BuildMode mode, bool isShowTips = true)
+        static public void BuildDLL(string outpath, RuntimePlatform platform, Unity3dRoslynBuildTools.BuildMode mode, bool isShowTips = true)
         {
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnBeginBuildHotfixDLL();

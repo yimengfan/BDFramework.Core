@@ -22,14 +22,14 @@ namespace BDFramework.Editor.Table
     /// <summary>
     /// Excel转Sqlite工具
     /// </summary>
-    static public class Excel2SQLiteTools
+    static public class BuildTools_Excel2SQLite
     {
         [MenuItem("BDFrameWork工具箱/3.表格/表格->生成SQLite", false,
             (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_GenSqlite)]
         public static void ExecuteGenSqlite()
         {
             //生成sql
-            BuildAllExcel2SQLite(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
+            BuildSqlite(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
             CopySqlToOther(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
             AssetDatabase.Refresh();
         }
@@ -38,7 +38,7 @@ namespace BDFramework.Editor.Table
             (int) BDEditorGlobalMenuItemOrderEnum.BuildPackage_Table_Json2Sqlite)]
         public static void ExecuteJsonToSqlite()
         {
-            BuildAllExcel2SQLite(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, DBType.Server);
+            BuildSqlite(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, DBType.Server);
             AssetDatabase.Refresh();
             Debug.Log("表格导出完毕");
         }
@@ -51,7 +51,7 @@ namespace BDFramework.Editor.Table
         /// 默认导出到当前平台目录下
         /// </summary>
         /// <param name="ouptputPath">自定义路径</param>
-        public static bool BuildAllExcel2SQLite(string ouptputPath, RuntimePlatform platform, DBType dbType = DBType.Local, bool isUseCache = false)
+        public static bool BuildSqlite(string ouptputPath, RuntimePlatform platform, DBType dbType = DBType.Local, bool isUseCache = false)
         {
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnBeginBuildSqlite();

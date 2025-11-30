@@ -20,7 +20,7 @@ namespace BDFramework.Editor.BuildPipeline
     /// 构建包体工具
     /// 这里是第一次构建母包
     /// </summary>
-    static public class BuildPackageTools
+    static public class BuildTools_ClientPackage
     {
         public enum BuildMode
         {
@@ -55,7 +55,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// <summary>
         /// build包体工具
         /// </summary>
-        static BuildPackageTools()
+        static BuildTools_ClientPackage()
         {
             //初始化框架编辑器下
             BDFrameworkEditorEnvironment.InitEditorEnvironment();
@@ -88,7 +88,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// 构建包体，使用当前配置、资源
         /// 这里默认建议使用单场景结构打包
         /// </summary>
-        static public bool Build(BuildMode buildMode, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildAssetsTools.BuildPackageOption buildOption = BuildAssetsTools.BuildPackageOption.BuildAll)
+        static public bool Build(BuildMode buildMode, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildTools_Assets.BuildPackageOption buildOption = BuildTools_Assets.BuildPackageOption.BuildAll)
         {
 #if !ENABLE_IL2CPP && !ENABLE_HCLR
             
@@ -120,7 +120,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// 构建包体，使用当前配置、资源
         /// 这里默认建议使用单场景结构打包.
         /// </summary>
-        static public bool Build(BuildMode buildMode, string buildScene, string buildConfig, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildAssetsTools.BuildPackageOption buildOption = BuildAssetsTools.BuildPackageOption.BuildAll)
+        static public bool Build(BuildMode buildMode, string buildScene, string buildConfig, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildTools_Assets.BuildPackageOption buildOption = BuildTools_Assets.BuildPackageOption.BuildAll)
         {
             if (IsBuilding)
             {
@@ -217,7 +217,7 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 try
                 {
-                    BuildAssetsTools.BuildAllAssets(buildRuntimePlatform,assetOutputPath , opa: buildOption);
+                    BuildTools_Assets.Build(buildRuntimePlatform,assetOutputPath , opa: buildOption);
                 }
                 catch (Exception e)
                 {
@@ -231,7 +231,7 @@ namespace BDFramework.Editor.BuildPipeline
             
             //HCLR 
 #if ENABLE_HCLR
-            HCLREditorTools.PreBuild(buildTarget,assetOutputPath);
+            HyCLREditorTools.PreBuild(buildTarget,assetOutputPath);
 #endif
             
             //2.拷贝资源并打包

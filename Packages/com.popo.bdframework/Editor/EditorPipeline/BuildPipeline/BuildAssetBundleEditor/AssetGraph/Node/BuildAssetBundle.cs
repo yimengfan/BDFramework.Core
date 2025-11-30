@@ -114,7 +114,7 @@ namespace BDFramework.Editor.AssetGraph.Node
             //获取ab列表
             var newAssetBundleItemList = tempBuildAssetsInfo.GetAssetBundleItems();
             //对比差异文件
-           var changedAssetList = AssetBundleToolsV2.GetChangedAssetsByFileHash(this.BuildingCtx.BuildParams.OutputPath, target, tempBuildAssetsInfo);
+           var changedAssetList = BuildTools_AssetBundleV2.GetChangedAssetsByFileHash(this.BuildingCtx.BuildParams.OutputPath, target, tempBuildAssetsInfo);
         //    var changedAssetList2 = AssetBundleToolsV2.GetChangedAssetsByCompareAB(this.BuildingCtx.BuildParams.OutputPath, target, newAssetBundleItemList);
             //搜集所有的 asset reference 
             var comingAssetReferenceList = AssetGraphTools.GetComingAssets(incoming);

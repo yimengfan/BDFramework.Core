@@ -20,18 +20,7 @@ namespace BDFramework.Editor.DevOps
     /// </summary>
     static public class PublishPipeLineCI
     {
-        static public string CI_ASSETS_PATH = "";
-        static public string CI_PACKAGE_PATH = "";
 
-        /// <summary>
-        /// 资源svn仓库处理器
-        /// </summary>
-        static private SVNProcessor AssetsSvnProcessor { get; set; } = null;
-
-        /// <summary>
-        /// 包体svn仓库处理器
-        /// </summary>
-        static private SVNProcessor PackageSvnProcessor { get; set; } = null;
 
         static PublishPipeLineCI()
         {
@@ -40,15 +29,7 @@ namespace BDFramework.Editor.DevOps
             {
                 BDFrameworkEditorEnvironment.InitEditorEnvironment();
             }
-            //
-            CI_ASSETS_PATH = BApplication.DevOpsPublishAssetsPath; // IPath.Combine(BDApplication.DevOpsPath, "CI_TEMP");
-            CI_PACKAGE_PATH = BApplication.DevOpsPublishPackagePath; // IPath.Combine(CI_ROOT_PATH, "CI_BUILD_PCK");
-            if (!Directory.Exists(CI_ASSETS_PATH))
-            {
-                Directory.CreateDirectory(CI_ASSETS_PATH);
-            }
 
-            CreateSVNProccesor();
         }
 
         /// <summary>
@@ -60,57 +41,11 @@ namespace BDFramework.Editor.DevOps
             var devops_setting = BDEditorApplication.EditorSetting.DevOpsSetting;
             //资源仓库
             var store = devops_setting.AssetServiceVCSData;
-            AssetsSvnProcessor = SVNProcessor.Create(store.Url, store.UserName, store.Psw, CI_ASSETS_PATH);
-            //svn仓库
+              //svn仓库
             store = devops_setting.PackageServiceVCSData;
-            PackageSvnProcessor = SVNProcessor.Create(store.Url, store.UserName, store.Psw, CI_PACKAGE_PATH);
-        }
+           }
 
 
-        #region 构建资源
-
-        /// <summary>
-        /// 构建iOS
-        /// </summary>
-        [CI(Des = "构建资源iOS")]
-        public static void BuildAssetBundle_iOS()
-        {
-            //更新
-            SVNUpdate(AssetsSvnProcessor);
-
-            //构建
-            var ret = BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
-
-            //提交
-            SVNCommit(BuildTarget.iOS, AssetsSvnProcessor);
-        }
-
-        /// <summary>
-        /// 构建Android
-        /// </summary>
-        [CI(Des = "构建资源Android")]
-        public static void BuildAssetBundle_Android()
-        {
-            // //更新
-            SVNUpdate(AssetsSvnProcessor);
-            //构建
-            var ret = BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
-            //提交
-            SVNCommit(BuildTarget.Android, AssetsSvnProcessor);
-        }
-
-        /// <summary>
-        /// 构建资源
-        /// </summary>
-        private static bool BuildAssetBundle(RuntimePlatform platform, BuildTarget target)
-        {
-            //2.打包模式
-            var ret = AssetBundleToolsV2.BuildAssetBundles(platform, CI_ASSETS_PATH);
-
-            return ret;
-        }
-
-        #endregion
 
 
         #region 代码打包检查
@@ -146,9 +81,7 @@ namespace BDFramework.Editor.DevOps
         /// </summary>
         public static void BuildDLL()
         {
-            //检查打包脚本
-            HotfixScriptTools.BuildDll(CI_ASSETS_PATH, RuntimePlatform.Android, Unity3dRoslynBuildTools.BuildMode.Release);
-        }
+          }
 
         #endregion
 
@@ -161,7 +94,7 @@ namespace BDFramework.Editor.DevOps
         static public void PublishPackage_AndroidDebug()
         {
             //更新
-            BuildPackage(BuildTarget.Android, BuildPackageTools.BuildMode.Debug);
+            BuildPackage(BuildTarget.Android, BuildTools_ClientPackage.BuildMode.Debug);
         }
 
         /// <summary>
@@ -170,7 +103,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包Android-Release")]
         static public void PublishPackage_AndroidRelease()
         {
-            BuildPackage(BuildTarget.Android, BuildPackageTools.BuildMode.Release);
+            BuildPackage(BuildTarget.Android, BuildTools_ClientPackage.BuildMode.Release);
         }
 
         /// <summary>
@@ -179,7 +112,7 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包iOS-Debug")]
         static public void PublishPackage_iOSDebug()
         {
-            BuildPackage(BuildTarget.iOS, BuildPackageTools.BuildMode.Debug);
+            BuildPackage(BuildTarget.iOS, BuildTools_ClientPackage.BuildMode.Debug);
         }
 
         /// <summary>
@@ -188,19 +121,16 @@ namespace BDFramework.Editor.DevOps
         [CI(Des = "发布母包iOS-Release")]
         static public void PublishPackage_iOSRelease()
         {
-            BuildPackage(BuildTarget.iOS, BuildPackageTools.BuildMode.Release);
+            BuildPackage(BuildTarget.iOS, BuildTools_ClientPackage.BuildMode.Release);
         }
 
 
         /// <summary>
         /// 构建包体
         /// </summary>
-        static private void BuildPackage(BuildTarget buildTarget, BuildPackageTools.BuildMode buildMode)
+        static private void BuildPackage(BuildTarget buildTarget, BuildTools_ClientPackage.BuildMode buildMode)
         {
-            //- 默认下载svn管理的仓库,用来打包
-            SVNUpdate(AssetsSvnProcessor);
-            //- 更新包体仓库
-            SVNUpdate(PackageSvnProcessor);
+
             // var localPath = string.Format("{0}/{1}/Art", CI_ASSETS_PATH, BDApplication.GetPlatformPath(platform));
             // //1.下载资源已有、Sql
             // //2.打包dll
@@ -219,79 +149,14 @@ namespace BDFramework.Editor.DevOps
             //加载配置
             // BuildPackageTools.LoadConfig(buildMode);
             //
-            Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
-            var ret = BuildPackageTools.Build(buildMode, false, CI_PACKAGE_PATH, buildTarget);
-            if (ret)
-            {
-                Debug.Log("【CI】Build package success，begin commit!");
-                SVNCommit(buildTarget, PackageSvnProcessor);
-            }
-            else
-            {
-                Debug.Log("【CI】Build package fail，dont commit!");
-            }
+            // Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
+            // var ret = BuildTools_ClientPackage.Build(buildMode, false, CI_PACKAGE_PATH, buildTarget);
+
         }
 
         #endregion
 
-        #region SVN操作
 
-        /// <summary>
-        /// SVN更新
-        /// </summary>
-        static private void SVNUpdate(SVNProcessor svnProcessor)
-        {
-            //存在仓库
-            if (svnProcessor.IsExsitSvnStore())
-            {
-                svnProcessor.CleanUp();
-                svnProcessor.RevertForce();
-                svnProcessor.Update();
-            }
-            else
-            {
-                svnProcessor.CheckOut();
-            }
-        }
-
-        /// <summary>
-        /// SVN提交
-        /// </summary>
-        static private void SVNCommit(BuildTarget buildTarget, SVNProcessor svnProcessor)
-        {
-            //存在仓库
-            var svntag = svnProcessor.LocalSVNRootPath + "/.svn";
-            if (Directory.Exists(svntag))
-            {
-                //1.获取被删除文件提交
-                var delFiles = svnProcessor.GetStatus(SVNProcessor.Status.Deleted);
-                svnProcessor.ForceDelete(delFiles);
-                //2.添加修改的文件
-                var motifyFiles = svnProcessor.GetStatus(SVNProcessor.Status.Motify);
-                svnProcessor.ForceAdd(motifyFiles);
-                //3.添加新文件
-                var addFiles = svnProcessor.GetStatus(SVNProcessor.Status.NewFile);
-                svnProcessor.ForceAdd(addFiles);
-                //提交
-                svnProcessor.Commit(log: $"{buildTarget.ToString()} - AssetBundle Commit !");
-            }
-        }
-
-        #endregion
-
-        #region Git操作
-
-        #endregion
-
-        /// <summary>
-        /// 发布包体 iOSRelease
-        /// </summary>
-        [CI(Des = "Test")]
-        static public void Test()
-        {
-            Debug.Log("Test CI passed!");
-            SVNCommit(BuildTarget.NoTarget, PackageSvnProcessor);
-            //var b = BDEditorApplication.IsPlatformModuleInstalled(BuildTargetGroup.Android, BuildTarget.Android);
-        }
+        
     }
 }

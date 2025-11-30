@@ -58,7 +58,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建Debug包体", "OK", "Cancel"))
             {
-                BuildPackageTools.Build(BuildPackageTools.BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
             }
         }
         
@@ -69,7 +69,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForProfiling包体", "OK", "Cancel"))
             {
-                BuildPackageTools.Build(BuildPackageTools.BuildMode.Profiler, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Profiler, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
             }
         }
 
@@ -80,7 +80,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForPublish版本包体？", "OK", "Cancel"))
             {
-                BuildPackageTools.Build(BuildPackageTools.BuildMode.Release, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Release, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
             }
         }
 
@@ -114,7 +114,7 @@ namespace BDFramework.Editor.BuildPipeline
         [HorizontalGroup("b/a2", LabelWidth = 80)]
         [LabelText("打包场景")]
         [Ex_SelectFileFromPath("Assets/Scenes","*.unity")]
-        public string BuildScene = BuildPackageTools.SCENE_PATH;
+        public string BuildScene = BuildTools_ClientPackage.SCENE_PATH;
 
         [HorizontalGroup("b/a3", LabelWidth = 200)]
         [LabelText("场景配置(默认场景自带)")]
@@ -124,7 +124,7 @@ namespace BDFramework.Editor.BuildPipeline
         [LabelText("打包配置")]
         [EnableIf(nameof(IsSetBuildSceneConfig))]
         [Ex_SelectFileFromPath("Assets/Scenes/Config/","*.bytes")]
-        public string BuildSceneConfig = BuildPackageTools.SceneConfigs[0];
+        public string BuildSceneConfig = BuildTools_ClientPackage.SceneConfigs[0];
 
         //
         [HorizontalGroup("b/a5", LabelWidth = 80)]
@@ -136,7 +136,7 @@ namespace BDFramework.Editor.BuildPipeline
         [LabelText("构建选项")]
         [EnableIf(nameof(IsReBuildAssets))]
         [EnumToggleButtons]
-        public BuildAssetsTools.BuildPackageOption BuildPackageOption = BuildAssetsTools.BuildPackageOption.BuildAll;
+        public BuildTools_Assets.BuildPackageOption BuildPackageOption = BuildTools_Assets.BuildPackageOption.BuildAll;
 
 
         [HorizontalGroup("b/a7")]
@@ -144,7 +144,7 @@ namespace BDFramework.Editor.BuildPipeline
         [Button("自定义构建（Debug）", ButtonSizes.Large, ButtonStyle.CompactBox)]
         public void Btn_CustomBuildDebug()
         {
-            CustomBuild(BuildPackageTools.BuildMode.Debug);
+            CustomBuild(BuildTools_ClientPackage.BuildMode.Debug);
         }
         
         [HorizontalGroup("b/a7")]
@@ -152,7 +152,7 @@ namespace BDFramework.Editor.BuildPipeline
         [Button("自定义构建（ReleaseForProfiling）", ButtonSizes.Large, ButtonStyle.CompactBox)]
         public void Btn_CustomBuildReleaseForProfiling()
         {
-            CustomBuild(BuildPackageTools.BuildMode.Profiler);
+            CustomBuild(BuildTools_ClientPackage.BuildMode.Profiler);
         }
 
         [HorizontalGroup("b/a8")]
@@ -160,7 +160,7 @@ namespace BDFramework.Editor.BuildPipeline
         [Button("自定义构建（构建发布版本）", ButtonSizes.Large, ButtonStyle.CompactBox)]
         public void Btn_CustomBuildReleaseForPublish()
         {
-            CustomBuild(BuildPackageTools.BuildMode.Release);
+            CustomBuild(BuildTools_ClientPackage.BuildMode.Release);
         }
         
         #endregion
@@ -179,10 +179,10 @@ namespace BDFramework.Editor.BuildPipeline
 
         /// 自定义构建
         /// </summary>
-        public void CustomBuild(BuildPackageTools.BuildMode buildMode)
+        public void CustomBuild(BuildTools_ClientPackage.BuildMode buildMode)
         {
             var buildConfig = this.IsSetBuildSceneConfig ? this.BuildSceneConfig : null;
-            BuildPackageTools.Build(buildMode, this.BuildScene, buildConfig, IsReBuildAssets, BApplication.DevOpsPublishPackagePath, BuildTarget, BuildPackageOption);
+            BuildTools_ClientPackage.Build(buildMode, this.BuildScene, buildConfig, IsReBuildAssets, BApplication.DevOpsPublishPackagePath, BuildTarget, BuildPackageOption);
         }
 
 
@@ -197,7 +197,7 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 try
                 {
-                    BuildAssetsTools.BuildAllAssets(platform, BApplication.DevOpsPublishAssetsPath, opa: BuildPackageOption);
+                    BuildTools_Assets.Build(platform, BApplication.DevOpsPublishAssetsPath, opa: BuildPackageOption);
                 }
                 catch (Exception e)
                 {

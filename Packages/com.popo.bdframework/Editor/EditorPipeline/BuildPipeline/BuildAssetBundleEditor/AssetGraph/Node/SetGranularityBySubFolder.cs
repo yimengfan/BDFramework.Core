@@ -210,7 +210,7 @@ namespace BDFramework.Editor.AssetGraph.Node
                     }
 
 
-                    var rootguid = AssetBundleToolsV2.AssetPathToGUID(rootfloderPath);
+                    var rootguid = BuildTools_AssetBundleV2.AssetPathToGUID(rootfloderPath);
                     Debug.Log($"父目录:{rootfloderPath} - {rootguid}");
                     //搜集子目录
                     var subfolders = Directory.GetDirectories(rootfloderPath, "*", SearchOption.TopDirectoryOnly);

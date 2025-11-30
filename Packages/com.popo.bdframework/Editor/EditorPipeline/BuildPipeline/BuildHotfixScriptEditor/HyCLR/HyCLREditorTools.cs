@@ -19,7 +19,7 @@ namespace BDFramework.Editor.HotfixScript
     /// <summary>
     /// HCLR 编辑器工具
     /// </summary>
-    static public class HCLREditorTools
+    static public class HyCLREditorTools
     {
         //
         private static string libil2cppPath { get; set; } = "HybridCLRData/iOSBuild/build/libil2cpp.a";
@@ -28,13 +28,13 @@ namespace BDFramework.Editor.HotfixScript
         // /// 测试
         // /// </summary>
         //[MenuItem("xxx")]
-        static public void Test()
-        {
-            //PreBuild(BuildTarget.Android);
-
-
-            PreBuild(BuildTarget.Android, BApplication.DevOpsPublishAssetsPath);
-        }
+        // static public void Test()
+        // {
+        //     //PreBuild(BuildTarget.Android);
+        //
+        //
+        //     PreBuild(BuildTarget.Android, BApplication.DevOpsPublishAssetsPath);
+        // }
 
         //
         /// <summary>
@@ -85,25 +85,17 @@ namespace BDFramework.Editor.HotfixScript
             sw.Start();
             {
                 Debug.Log("<color=green>[HCLR]start:</color>");
-                SetBDFramework2HCLRConfig();
+                // SetBDFramework2HCLRConfig();
+                //安装华佗
+                var installer = new HybridCLR.Editor.Installer.InstallerController();
+                if (!installer.HasInstalledHybridCLR())
+                {
+                    installer.InstallDefaultHybridCLR();
+                }
                 //编译补充元数据的DLL
-                if (IsNeedHyCLRGenALL(target, assetsOutputDir))
-                {
-                    PrebuildCommand.GenerateAll();
-                    //拷贝用于补充泛型
-                    CopyStripAOTDll(target, assetsOutputDir);
-                }
-                else
-                {
-                    Debug.Log($"<color=yellow>[HCLR]已存在{JsonMapper.ToJson(HybridCLRSettings.Instance.patchAOTAssemblies)}, 不需要 gen strip aot dll !!!</color>");
-                }
-
-                // 桥接函数生成依赖于AOT dll，必须保证已经build过，生成AOT dll
-                Debug.Log("<color=green>[HCLR]gen bridge cpp!</color>");
-                // MethodBridgeGeneratorCommand.GenerateMethodBridge(target);
-                // ReversePInvokeWrapperGeneratorCommand.GenerateReversePInvokeWrapper(target);
-                // AOTReferenceGeneratorCommand.GenerateAOTGenericReference(target);
-                MethodBridgeGeneratorCommand.CompileAndGenerateMethodBridge();
+                PrebuildCommand.GenerateAll();
+                //拷贝用于补充泛型
+                CopyAOTMetadataDLL(target, assetsOutputDir);
             }
             sw.Stop();
             Debug.Log($"<color=red>[HCLR]end! 耗时:{sw.ElapsedMilliseconds} ms.</color>");
@@ -260,20 +252,20 @@ namespace BDFramework.Editor.HotfixScript
             // }
 
             //1. h文件判断
-           var defH = BApplication.ProjectRoot + "/HybridCLRData/il2cpp_plus_repo/libil2cpp/hybridclr/Il2CppCompatibleDef.h";
-           if (File.Exists(defH))
-           {
-               var lines = File.ReadAllLines(defH);
-               var exsitErrorDef = lines.FirstOrDefault((s => s.Contains("HybridCLR/Generate/All")));
-               return exsitErrorDef!=null;
-               
-           }
-           else
-           {
-               throw new Exception("不存在defH文件，需要更新逻辑HrCLR业务逻辑" + defH);
-           }
-           
-           
+            // var defH = BApplication.ProjectRoot + "/HybridCLRData/il2cpp_plus_repo/libil2cpp/hybridclr/Il2CppCompatibleDef.h";
+            // if (File.Exists(defH))
+            // {
+            //     var lines = File.ReadAllLines(defH);
+            //     var exsitErrorDef = lines.FirstOrDefault((s => s.Contains("HybridCLR/Generate/All")));
+            //     return exsitErrorDef!=null;
+            //     
+            // }
+            // else
+            // {
+            //     throw new Exception("不存在defH文件，需要更新逻辑HrCLR业务逻辑" + defH);
+            // }
+            //
+
             //2.dll判断
             string aotDllDir = SettingsUtil.GetAssembliesPostIl2CppStripDir(target);
             List<string> aotAssemblyNames = Directory.Exists(aotDllDir)
@@ -296,7 +288,7 @@ namespace BDFramework.Editor.HotfixScript
         /// </summary>
         /// <param name="target"></param>
         /// <param name="assetsOutputDir"></param>
-        static public void CopyStripAOTDll(BuildTarget target, string assetsOutputDir)
+        static public void CopyAOTMetadataDLL(BuildTarget target, string assetsOutputDir)
         {
             //从aot目录拷贝补充元数据的dll到hotfix目录
             var patchAOTDll = HybridCLRSettings.Instance.patchAOTAssemblies;
@@ -308,7 +300,7 @@ namespace BDFramework.Editor.HotfixScript
                 if (File.Exists(sourceDllPath))
                 {
                     FileHelper.Copy(sourceDllPath, destPath, true);
-                    Debug.Log($"<color=green>[HCLR]拷贝Strip AOT Patch dll:{dll} </color>");
+                    Debug.Log($"<color=green>[HyCLR]拷贝 AOT Patch dll:{dll} </color>");
                 }
             }
         }

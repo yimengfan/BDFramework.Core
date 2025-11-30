@@ -17,7 +17,7 @@ namespace BDFramework.Editor.BuildPipeline
     /// <summary>
     /// 构建资源的工具
     /// </summary>
-    static public class BuildAssetsTools
+    static public class BuildTools_Assets
     {
         /// <summary>
         /// 构建包体操作
@@ -52,7 +52,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// <param name="platform">平台</param>
         /// <param name="outputPath">输出目录</param>
         /// <param name="setNewVersionNum">新版本号</param>
-        static public void BuildAllAssets(RuntimePlatform platform, string outputPath, string setNewVersionNum = null, BuildPackageOption opa = BuildPackageOption.BuildAll)
+        static public void Build(RuntimePlatform platform, string outputPath, string setNewVersionNum = null, BuildPackageOption opa = BuildPackageOption.BuildAll)
         {
             Debug.Log("BuildAssetOpt:" + opa);
             
@@ -95,7 +95,7 @@ namespace BDFramework.Editor.BuildPipeline
                 if (opa.HasFlag(BuildPackageOption.BuildHotfixCode) || opa == BuildPackageOption.BuildAll)
                 {
                     Debug.Log("<color=yellow>=====>打包热更代码</color>");
-                    HotfixScriptTools.BuildDll(outputPath, platform, Unity3dRoslynBuildTools.BuildMode.Release);
+                    BuildTools_HotfixScript.BuildDLL(outputPath, platform, Unity3dRoslynBuildTools.BuildMode.Release);
                 }
             }
             catch (Exception e)
@@ -110,7 +110,7 @@ namespace BDFramework.Editor.BuildPipeline
                 if (opa.HasFlag(BuildPackageOption.BuildSqlite) || opa == BuildPackageOption.BuildAll)
                 {
                     Debug.Log("<color=yellow>=====>打包Sqlite</color>");
-                    var ret = Excel2SQLiteTools.BuildAllExcel2SQLite(outputPath, platform);
+                    var ret = BuildTools_Excel2SQLite.BuildSqlite(outputPath, platform);
 
                     if (!ret)
                     {
@@ -130,7 +130,7 @@ namespace BDFramework.Editor.BuildPipeline
                 if (opa.HasFlag(BuildPackageOption.BuildArtAssets) || opa == BuildPackageOption.BuildAll)
                 {
                     Debug.Log("<color=yellow>=====>打包AssetBundle</color>");
-                    AssetBundleToolsV2.BuildAssetBundles(platform,outputPath);
+                    BuildTools_AssetBundleV2.BuildAssetBundles(platform,outputPath);
                 }
             }
             catch (Exception e)

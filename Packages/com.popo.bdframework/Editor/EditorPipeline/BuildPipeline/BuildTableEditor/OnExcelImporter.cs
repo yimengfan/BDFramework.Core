@@ -35,7 +35,7 @@ namespace BDFramework.Editor.Table
                 foreach (var excel in excelList)
                 {
                   
-                    Excel2SQLiteTools.Excel2SQLite(excel, DBType.Local);
+                    BuildTools_Excel2SQLite.Excel2SQLite(excel, DBType.Local);
                     EditorUtility.DisplayProgressBar("自动导表", excel, counter / excelList.Count);
                     counter++;
                 }

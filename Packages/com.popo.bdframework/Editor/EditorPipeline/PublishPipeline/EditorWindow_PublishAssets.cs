@@ -213,7 +213,7 @@ namespace BDFramework.Editor.PublishPipeline
                     foreach (var sp in selectPlatforms)
                     {
                         Debug.Log($"==============>:{sp}");
-                        BuildAssetsTools.BuildAllAssets(sp, EXPORT_PATH, platformVersionMap[sp]);
+                        BuildTools_Assets.Build(sp, EXPORT_PATH, platformVersionMap[sp]);
                         platformVersionMap.Remove(sp);
                     }
 
