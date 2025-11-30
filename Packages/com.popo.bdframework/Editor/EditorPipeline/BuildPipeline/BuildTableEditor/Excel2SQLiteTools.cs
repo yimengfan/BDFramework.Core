@@ -298,14 +298,14 @@ namespace BDFramework.Editor.Table
         #region 按钮 Excel2Sqlite
 
         //当返回真时启用
-        [MenuItem("Assets/BDFramework工具箱/ExcelTools/Excel导入到数据库", true)]
+        [MenuItem("Assets/【BD工具箱】ExcelTools/Excel导入到数据库", true)]
         private static bool MenuItem_Excel2SqliteValidation()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             return path.ToLower().EndsWith(".xlsx");
         }
 
-        [MenuItem("Assets/BDFramework工具箱/ExcelTools/Excel导入到数据库")]
+        [MenuItem("Assets/【BD工具箱】ExcelTools/Excel导入到数据库")]
         public static void MenuItem_Excel2Sqlite()
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);

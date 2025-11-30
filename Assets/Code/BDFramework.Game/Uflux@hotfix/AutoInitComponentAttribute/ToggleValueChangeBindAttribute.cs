@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BDFramework.UFlux
 {
-    public class ToggleValueChangeBindAttribute : AutoInitComponentAttribute
+    public class ToggleValueChangeBindAttribute : AutoAssignAttribute
     {
         private readonly string path;
         

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace BDFramework.UFlux
 {
-    public class ToggleClickBindAttribute : AutoInitComponentAttribute
+    public class ToggleClickBindAttribute : AutoAssignAttribute
     {
         private readonly string path;
         private bool initialized;

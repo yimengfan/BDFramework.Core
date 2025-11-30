@@ -34,12 +34,12 @@ namespace BDFramework.UFlux.Test
         /// <summary>
         /// 左边的英雄信息组件
         /// </summary>
-        [ComponentPath("Hero/Content")]
+        [UfluxComponentPath("Hero/Content")]
         private Com_HeroData com_HeroDataContent { get; set; }
         /// <summary>
         /// 左边的英雄信息组件
         /// </summary>
-        [ComponentPath("Hero/Content2")]
+        [UfluxComponentPath("Hero/Content2")]
         private Com_HeroData com_HeroDataContent2{ get; set; }
         
         public Window_Demo06(string path) : base(path)

@@ -49,7 +49,7 @@ public class BDebug : MonoBehaviour
     /// <summary>
     /// Enable的log tag
     /// </summary>
-    public List<LogTag> LogTagList = new List<LogTag>();
+    public List<LogTag> DisableLogTagList = new List<LogTag>();
 
     /// <summary>
     /// 启动
@@ -205,7 +205,7 @@ public class BDebug : MonoBehaviour
     /// <returns></returns>
     static bool IsEnableTag(string tag)
     {
-        var find = Inst.LogTagList.Find((t) => t.Tag == tag);
+        var find = Inst.DisableLogTagList.Find((t) => t.Tag == tag);
         if (find != null)
         {
             return find.IsLog;
@@ -219,19 +219,19 @@ public class BDebug : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     [Conditional("ENABLE_BDEBUG")]
-    static public void EnableLog(string tag)
+    static public void DisableLog(string tag)
     {
-        var idx = Inst.LogTagList.FindIndex((t) => t.Tag == tag);
+        var idx = Inst.DisableLogTagList.FindIndex((t) => t.Tag == tag);
         if (idx < 0)
         {
             var log = new LogTag() { Tag = tag, IsLog = true };
 
-            Inst.LogTagList.Add(log);
+            Inst.DisableLogTagList.Add(log);
 
-            idx = Inst.LogTagList.Count - 1;
+            idx = Inst.DisableLogTagList.Count - 1;
         }
 
-        Inst.LogTagList[idx].IsLog = true;
+        Inst.DisableLogTagList[idx].IsLog = true;
     }
 
     /// <summary>
@@ -239,17 +239,17 @@ public class BDebug : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     [Conditional("ENABLE_BDEBUG")]
-    static public void DisableTag(string tag)
+    static public void EnableLog(string tag)
     {
         if (Inst)
         {
-            var idx = Inst.LogTagList.FindIndex((t) => t.Tag == tag);
+            var idx = Inst.DisableLogTagList.FindIndex((t) => t.Tag == tag);
             if (idx < 0)
             {
-                Inst.LogTagList.Add(new LogTag() { Tag = tag, IsLog = true });
-                idx = Inst.LogTagList.Count - 1;
+                Inst.DisableLogTagList.Add(new LogTag() { Tag = tag, IsLog = true });
+                idx = Inst.DisableLogTagList.Count - 1;
             }
-            Inst.LogTagList[idx].IsLog = false;
+            Inst.DisableLogTagList[idx].IsLog = false;
         }
     }
 

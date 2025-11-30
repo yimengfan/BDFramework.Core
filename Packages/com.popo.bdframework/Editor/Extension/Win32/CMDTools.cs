@@ -32,7 +32,7 @@ namespace BDFramework.Editor.Tools
             }
             else
             {
-                BDebug.DisableTag(LogTag);
+                BDebug.DisableLog(LogTag);
             }
             //执行
             //var listenThread = new Thread(()=>

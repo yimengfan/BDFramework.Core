@@ -77,7 +77,9 @@ namespace BDFramework.Editor.SVN
             //判断远程地址是否一致
             if (svn.IsExsitSvnStore())
             {
-                var info = svn.GetInfo();
+                
+                
+                // var info = svn.GetInfo();
                 // if (info == null)
                 // {
                 //     Debug.LogError("svn info 获取失败！！！！");

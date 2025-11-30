@@ -32,14 +32,14 @@ namespace BDFramework.Editor.Tools.RuntimeEditor
             }
 
             //开启log与否
-            debug.LogTagList.Sort((a, b) =>
+            debug.DisableLogTagList.Sort((a, b) =>
             {
                 //用tag排序
                 return string.Compare(a.Tag, b.Tag);
             });
             //
-            GUILayout.Label("Tag num:" + debug.LogTagList.Count);
-            foreach (var tag in debug.LogTagList)
+            GUILayout.Label("Tag num:" + debug.DisableLogTagList.Count);
+            foreach (var tag in debug.DisableLogTagList)
             {
                 GUILayout.BeginHorizontal();
                 {

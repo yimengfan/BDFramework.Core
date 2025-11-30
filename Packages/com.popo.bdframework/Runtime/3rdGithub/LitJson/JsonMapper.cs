@@ -967,6 +967,12 @@ namespace LitJson
             writer.WriteObjectStart();
             foreach (PropertyMetadata p_data in props)
             {
+                //避免递归出现
+                // if (p_data.Info.ReflectedType.Equals(obj.GetType()))
+                // {
+                //     continue;
+                // }
+                
                 if (p_data.IsField)
                 {
                     writer.WritePropertyName(p_data.Info.Name);
