@@ -14,8 +14,18 @@ namespace BDFramework.ResourceMgr
     /// </summary>
     public enum LoadPathType
     {
+        /// <summary>
+        /// 位于 */Runtime/xxxx 的路径
+        /// </summary>
         RuntimePath,
-        GUID
+        /// <summary>
+        /// 通过guid加载
+        /// </summary>
+        GUID,
+        /// <summary>
+        /// 从Assets开始的路径
+        /// </summary>
+        AssetsPath,
     }
 
     public interface IResMgr

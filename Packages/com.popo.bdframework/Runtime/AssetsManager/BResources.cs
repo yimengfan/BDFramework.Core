@@ -107,8 +107,6 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         readonly static public string SERVER_ASSETS_SUB_PACKAGE_INFO_PATH = "server_assets_subpack_{0}.info";
 
-
-
         #endregion
 
         #region 配置相关
@@ -143,7 +141,7 @@ namespace BDFramework.ResourceMgr
         static public void Init(AssetLoadPathType loadPathType)
         {
             //BDebug.EnableLog(LoadTaskGroup.LogTag);
-            BDebug.Log(BResources.LogTag,"加载路径:" + loadPathType.ToString());
+            BDebug.Log(BResources.LogTag, "加载路径:" + loadPathType.ToString());
             if (loadPathType == AssetLoadPathType.Editor)
             {
 #if UNITY_EDITOR
@@ -214,8 +212,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="groupName">加载组,用以对资源加载分组</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Load<T>(string assetLoadPath, LoadPathType pathType = LoadPathType.RuntimePath,
-            string groupName = null) where T : UnityEngine.Object
+        public static T Load<T>(string assetLoadPath, LoadPathType pathType = LoadPathType.RuntimePath, string groupName = null) where T : UnityEngine.Object
         {
             if (string.IsNullOrEmpty(assetLoadPath))
             {
@@ -645,9 +642,9 @@ namespace BDFramework.ResourceMgr
         /// 从对象池加载
         /// </summary>
         /// <returns></returns>
-        static public GameObject LoadFormPool(string assetPath)
+        static public GameObject LoadFormPool(string assetPath,LoadPathType pathType = LoadPathType.RuntimePath)
         {
-            var obj = Load<GameObject>(assetPath);
+            var obj = Load<GameObject>(assetPath,pathType);
             if (obj != null)
             {
                 return GameObjectPoolManager.SpawnObject(obj);
@@ -762,7 +759,7 @@ namespace BDFramework.ResourceMgr
                 var hash = FileHelper.GetMurmurHash3(persistentHashPath);
                 if (assetHash.Equals(hash))
                 {
-                    BDebug.Log(LogTag,$"hash文件存在,hash校验通过 - {assetName} | hash - {assetHash}");
+                    BDebug.Log(LogTag, $"hash文件存在,hash校验通过 - {assetName} | hash - {assetHash}");
                     return true;
                 }
                 else
@@ -833,8 +830,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         static public string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
         {
-            return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform),BResources.SERVER_ASSETS_VERSION_INFO_PATH);
-            
+            return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_VERSION_INFO_PATH);
         }
 
         /// <summary>
@@ -843,7 +839,7 @@ namespace BDFramework.ResourceMgr
         /// <param name="rootPath"></param>
         /// <param name="platform"></param>
         /// <returns></returns>
-        static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform,string version ="")
+        static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform, string version = "")
         {
             return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
         }
@@ -889,7 +885,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         static public void SetAUPLEvel(AUPLevel level)
         {
-            BDebug.Log("AUP设置",$"当前:\nasyncUploadBufferSize:{ QualitySettings.asyncUploadBufferSize}\nasyncUploadTimeSlice:{QualitySettings.asyncUploadTimeSlice}\nbackgroundLoadingPriority:{Application.backgroundLoadingPriority}", Color.green);
+            BDebug.Log("AUP设置", $"当前:\nasyncUploadBufferSize:{QualitySettings.asyncUploadBufferSize}\nasyncUploadTimeSlice:{QualitySettings.asyncUploadTimeSlice}\nbackgroundLoadingPriority:{Application.backgroundLoadingPriority}", Color.green);
             QualitySettings.asyncUploadPersistentBuffer = true;
             switch (level)
             {
@@ -926,9 +922,8 @@ namespace BDFramework.ResourceMgr
                 }
                     break;
             }
-            
-            BDebug.Log("AUP设置",$"设置完:\nasyncUploadBufferSize:{ QualitySettings.asyncUploadBufferSize}\nasyncUploadTimeSlice:{QualitySettings.asyncUploadTimeSlice}\nbackgroundLoadingPriority:{Application.backgroundLoadingPriority}", Color.green);
 
+            BDebug.Log("AUP设置", $"设置完:\nasyncUploadBufferSize:{QualitySettings.asyncUploadBufferSize}\nasyncUploadTimeSlice:{QualitySettings.asyncUploadTimeSlice}\nbackgroundLoadingPriority:{Application.backgroundLoadingPriority}", Color.green);
         }
 
         /// <summary>
