@@ -1,7 +1,19 @@
 {
   "dependencies": {
     "com.code-philosophy.hybridclr": {
-      "version": "file:com.code-philosophy.hybridclr@5.0.0",
+      "version": "file:com.code-philosophy.hybridclr",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.code-philosophy.obfuz": {
+      "version": "file:com.code-philosophy.obfuz",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.code-philosophy.obfuz4hybridclr": {
+      "version": "file:com.code-philosophy.obfuz4hybridclr",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -12,7 +24,6 @@
       "source": "embedded",
       "dependencies": {
         "com.unity.scriptablebuildpipeline": "1.20.2",
-        "com.code-philosophy.hybridclr": "5.0.0",
         "com.unity.test-framework": "1.3.9",
         "com.unity.test-framework.performance": "2.8.1-preview"
       }
