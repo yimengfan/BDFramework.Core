@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest tests/test_upload_to_filebrowser.py -v)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

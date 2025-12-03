@@ -62,3 +62,6 @@ Assets/3rdPlugins/Sirenix.meta
 HybridCLRData/StrippedAOTDllsTempProj/
 /HybridCLRData/hybridclr_repo
 Assets/AssetGraph/AssetBundles/Cache/
+Packages/com.popo.bdframework/Tools~/PthonTools/.idea
+.vscode
+Packages/com.popo.bdframework/Tools~/PthonTools/src/__pycache__
