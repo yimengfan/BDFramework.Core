@@ -157,7 +157,7 @@ namespace BDFramework.Sql
         /// </summary>
         static public string GetLocalDBPath(string root, RuntimePlatform platform)
         {
-            return IPath.Combine(root, BApplication.GetPlatformPath(platform), LOCAL_DB_PATH);
+            return IPath.Combine(root, BApplication.GetPlatformLoadPath(platform), LOCAL_DB_PATH);
         }
 
         /// <summary>

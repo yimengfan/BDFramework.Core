@@ -35,10 +35,10 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
             
             //构建包体
             tree.Add("Build", null, EditorIcons.SmartPhone);
-            tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.Android)}", new BuildAndroid(setting.Android, setting.AndroidDebug));
-            tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.IPhonePlayer)}", new BuildIOS(setting.iOS, setting.iOSDebug));
-            tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.WindowsPlayer)}", new BuildWindowsPlayer(setting.WindowsPlayer, setting.WindowsPlayerDebug));
-            tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.OSXPlayer)}(待实现)", new BuildMacOSX());
+            tree.Add($"Build/{BApplication.GetPlatformLoadPath(RuntimePlatform.Android)}", new BuildAndroid(setting.Android, setting.AndroidDebug));
+            tree.Add($"Build/{BApplication.GetPlatformLoadPath(RuntimePlatform.IPhonePlayer)}", new BuildIOS(setting.iOS, setting.iOSDebug));
+            tree.Add($"Build/{BApplication.GetPlatformLoadPath(RuntimePlatform.WindowsPlayer)}", new BuildWindowsPlayer(setting.WindowsPlayer, setting.WindowsPlayerDebug));
+            tree.Add($"Build/{BApplication.GetPlatformLoadPath(RuntimePlatform.OSXPlayer)}(待实现)", new BuildMacOSX());
             // tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.OSXPlayer)}", new BuildAndroid());
             // tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.WindowsPlayer)}", new BuildAndroid());
             // tree.Add("Test", EditorWindow.GetWindow<EditorWindow_BDFrameworkConfig>());
@@ -49,10 +49,10 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
             var selectMenuitem = tree.MenuItems.Find((m) => m.Name.Equals("Build"));
             if (selectMenuitem != null && selectMenuitem.ChildMenuItems.Count > 0)
             {
-                var result = selectMenuitem.ChildMenuItems.Find((m) => m.Name.Equals(BApplication.GetPlatformPath(BApplication.RuntimePlatform)));
+                var result = selectMenuitem.ChildMenuItems.Find((m) => m.Name.Equals(BApplication.GetPlatformLoadPath(BApplication.RuntimePlatform)));
                 if (result == null)
                 {
-                    selectMenuitem = selectMenuitem.ChildMenuItems.Find((m) => m.Name.StartsWith(BApplication.GetPlatformPath(BApplication.RuntimePlatform)));
+                    selectMenuitem = selectMenuitem.ChildMenuItems.Find((m) => m.Name.StartsWith(BApplication.GetPlatformLoadPath(BApplication.RuntimePlatform)));
                 }
                 else
                 {

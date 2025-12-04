@@ -208,6 +208,9 @@ namespace BDFramework.Editor.BuildPipeline
                 LoadConfig(buildScene, buildConfig);
             }
 
+#if ENABLE_HYCLR
+            HyCLREditorTools.PreBuild(buildTarget);
+#endif
             //1.生成资源到Devops
             Debug.Log("<color=green>===>2.生成资产</color>");
             var assetOutputPath = BApplication.DevOpsPublishAssetsPath;
@@ -215,7 +218,7 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 try
                 {
-                    BuildTools_Assets.Build(buildRuntimePlatform,assetOutputPath , opa: buildOption);
+                    BuildTools_Assets.BuildAll(buildRuntimePlatform,assetOutputPath , opa: buildOption);
                 }
                 catch (Exception e)
                 {
@@ -228,15 +231,13 @@ namespace BDFramework.Editor.BuildPipeline
             string outputpath = "";
             
             //HCLR 
-#if ENABLE_HYCLR
-            HyCLREditorTools.PreBuild(buildTarget,assetOutputPath);
-#endif
+
             
             //2.拷贝资源并打包
             AssetDatabase.StartAssetEditing(); //停止触发资源导入
             {
                 //拷贝资源
-                Debug.Log("<color=green>===>3.拷贝打包资产</color>");
+                Debug.Log("<color=green>===>3.拷贝打包资产: DevopsPublish => streamingAssetsPath</color>");
                 CopyPublishAssetsTo(Application.streamingAssetsPath, buildRuntimePlatform);
                 try
                 {
@@ -603,41 +604,7 @@ namespace BDFramework.Editor.BuildPipeline
         #region Mac OSX
 
         #endregion
-
-        /// <summary>
-        /// 删除il2cpp
-        /// 部分版本下cahce有bug
-        /// </summary>
-        static private void DeleteIL2cppCache()
-        {
-#if UNITY_2019
-            var directs = Directory.GetDirectories(BApplication.Library, "*", SearchOption.TopDirectoryOnly);
-            foreach (var dirt in directs)
-            {
-                if (dirt.Contains("il2cpp"))
-                {
-                    try
-                    {
-                        Directory.Delete(dirt, true);
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError("文件被占用，可能导致il2cpp沿用老的缓存!");
-                    }
-
-                    Debug.Log("【删除il2cpp cache】" + dirt);
-                }
-            }
-
-            //删除
-            var tempdirt = Path.Combine(BApplication.ProjectRoot, "Temp/StagingArea");
-            if (Directory.Exists(tempdirt))
-            {
-                Directory.Delete(tempdirt, true);
-            }
-#endif
-        }
-
+        
 
         #region 资产操作类
 
@@ -660,8 +627,8 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //合并路径
-            var sourcepath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(platform)).ToLower();
-            targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform)).ToLower();
+            var sourcepath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformLoadPath(platform)).ToLower();
+            targetpath = IPath.Combine(targetpath, BApplication.GetPlatformLoadPath(platform)).ToLower();
             var files = Directory.GetFiles(sourcepath, "*", SearchOption.AllDirectories).Select((f) => f.ToLower().Replace("\\", "/"));
             foreach (var file in files)
             {
@@ -714,7 +681,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// <param name="platform"></param>
         static public void DeleteCopyAssets(string targetpath, RuntimePlatform platform)
         {
-            targetpath = IPath.Combine(targetpath, BApplication.GetPlatformPath(platform));
+            targetpath = IPath.Combine(targetpath, BApplication.GetPlatformLoadPath(platform));
             //优先删除拷贝的美术资源，防止构建完再导入  其他资源等工作流完全切入DevOps再进行删除
             var copyArtPath = IPath.Combine(targetpath, BResources.ART_ASSET_ROOT_PATH);
             if (Directory.Exists(copyArtPath))

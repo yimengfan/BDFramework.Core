@@ -151,7 +151,7 @@ namespace BDFramework.Core.Tools
         /// <summary>
         /// 发布包体路径
         /// </summary>
-        public static string DevOpsPublishPackagePath { get; private set; }
+        public static string DevOpsPublishClientPackagePath { get; private set; }
 
         /// <summary>
         /// Devops 配置文件路径
@@ -186,11 +186,18 @@ namespace BDFramework.Core.Tools
             //跟Assets同级
             DevOpsPath = $"DevOps";
             DevOpsPublishAssetsPath = $"{DevOpsPath}/PublishAssets";
-            DevOpsPublishPackagePath = $"{DevOpsPath}/PublishPackages";
+            DevOpsPublishClientPackagePath = $"{DevOpsPath}/PublishPackages";
             DevOpsConfigPath = $"{DevOpsPath}/Config";
             DevOpsCIPath = $"{DevOpsPath}/CI";
             //Unity路径
+#if UNITY_EDITOR
+            persistentDataPath = ProjectRoot + "/.AppData";
+#elif UNITY_STANDALONE_WIN|| UNITY_STANDALONE_OSX 
+            persistentDataPath = Application.dataPath + "/.AppData";;
+#else
             persistentDataPath = Application.persistentDataPath;
+#endif
+         
 #if UNITY_EDITOR
             streamingAssetsPath = DevOpsPublishAssetsPath;
 #else
@@ -205,14 +212,16 @@ namespace BDFramework.Core.Tools
         /// <returns></returns>
         static public string GetRuntimePlatformPath()
         {
-            return GetPlatformPath(RuntimePlatform);
+            return GetPlatformLoadPath(RuntimePlatform);
         }
+
+
 
         /// <summary>
         /// 平台资源的父路径
         /// 这里建议用BDApplication.platform进行传参
         /// </summary>
-        public static string GetPlatformPath(RuntimePlatform platform)
+        public static string GetPlatformLoadPath(RuntimePlatform platform)
         {
             switch (platform)
             {
@@ -319,7 +328,7 @@ namespace BDFramework.Core.Tools
         public static string GetPlatformPath(BuildTarget buildTarget)
         {
             var platform = GetRuntimePlatform(buildTarget);
-            return GetPlatformPath(platform);
+            return GetPlatformLoadPath(platform);
         }
 
 
@@ -459,7 +468,24 @@ namespace BDFramework.Core.Tools
         #endregion
 
         #region 平台路径获取
+        /// <summary>
+        /// 平台资源的父路径
+        /// </summary>
+        public static string GetPlatformLoadPath(BuildTarget bt)
+        {
+            var platform = GetRuntimePlatform(bt);
 
+            return GetPlatformLoadPath(platform);
+        }
+        /// <summary>
+        /// 平台资源的父路径
+        /// </summary>
+        public static string GetPlatformLoadPath(string dir, BuildTarget bt)
+        {
+            var platform = GetRuntimePlatform(bt);
+            var platpath = GetPlatformLoadPath(platform);
+            return  IPath.Combine(dir, platpath);
+        }
         /// <summary>
         /// 获取发布资产平台目录
         /// </summary>
@@ -467,7 +493,7 @@ namespace BDFramework.Core.Tools
         /// <returns></returns>
         static public string GetPlatformDevOpsPublishAssetsPath(RuntimePlatform platform)
         {
-            var path = GetPlatformPath(platform);
+            var path = GetPlatformLoadPath(platform);
             return IPath.Combine(DevOpsPublishAssetsPath, path);
         }
 
@@ -478,8 +504,8 @@ namespace BDFramework.Core.Tools
         /// <returns></returns>
         static public string GetPlatformDevOpsPublishPackagePath(RuntimePlatform platform)
         {
-            var path = GetPlatformPath(platform);
-            return IPath.Combine(DevOpsPublishPackagePath, path);
+            var path = GetPlatformLoadPath(platform);
+            return IPath.Combine(DevOpsPublishClientPackagePath, path);
         }
 
         /// <summary>
@@ -501,7 +527,7 @@ namespace BDFramework.Core.Tools
         static public string GetPlatformDevOpsPublishPackagePath(BuildTarget bt)
         {
             var path = GetPlatformPath(bt);
-            return IPath.Combine(DevOpsPublishPackagePath, path);
+            return IPath.Combine(DevOpsPublishClientPackagePath, path);
         }
 
         #endregion

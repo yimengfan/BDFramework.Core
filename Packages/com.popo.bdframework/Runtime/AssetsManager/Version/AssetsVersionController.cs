@@ -776,7 +776,7 @@ namespace BDFramework.VersionController
                     case AssetLoadPathType.StreamingAsset:
                     {
                         //TODO ：BSA 读取，不需要Streaming前缀
-                        var steamingAssetsInfoPath = IPath.Combine(BApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
+                        var steamingAssetsInfoPath = IPath.Combine(BApplication.GetPlatformLoadPath(platform), BResources.ASSETS_INFO_PATH);
                         //var steamingAssetsInfoPath = GetAssetsInfoPath(BDApplication.streamingAssetsPath, platform);
                         if (BetterStreamingAssets.FileExists(steamingAssetsInfoPath))
                         {
@@ -841,7 +841,7 @@ namespace BDFramework.VersionController
         {
             var failDownloadList = new List<AssetItem>();
             //url构建
-            var platform = BApplication.GetPlatformPath(BApplication.RuntimePlatform);
+            var platform = BApplication.GetPlatformLoadPath(BApplication.RuntimePlatform);
             serverUrl = IPath.Combine(serverUrl, platform);
             localSaveAssetsPath = IPath.Combine(localSaveAssetsPath, platform);
             //1.任务缓存
@@ -928,7 +928,7 @@ namespace BDFramework.VersionController
         {
             var failDownloadList = new List<AssetItem>();
             //url构建
-            var platform = BApplication.GetPlatformPath(BApplication.RuntimePlatform);
+            var platform = BApplication.GetPlatformLoadPath(BApplication.RuntimePlatform);
             serverUrl = IPath.Combine(serverUrl, platform);
             localSaveAssetsPath = IPath.Combine(localSaveAssetsPath, platform);
             //1.任务缓存

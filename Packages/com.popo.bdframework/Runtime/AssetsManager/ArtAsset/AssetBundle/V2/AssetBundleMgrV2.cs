@@ -81,7 +81,7 @@ namespace BDFramework.ResourceMgr.V2
             if (Application.isEditor)
             {
                 //editor下可以自行输入
-                platformStr = BApplication.GetPlatformPath(platform);
+                platformStr = BApplication.GetPlatformLoadPath(platform);
                 firstArtDirectory = IPath.Combine(rootPath, platformStr, BResources.ART_ASSET_ROOT_PATH);
                 //devops为第二寻址
                 secArtDirectory = IPath.Combine(BApplication.DevOpsPublishAssetsPath, platformStr,

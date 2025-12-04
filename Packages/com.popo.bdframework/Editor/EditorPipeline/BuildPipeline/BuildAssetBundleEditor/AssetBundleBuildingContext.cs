@@ -161,7 +161,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             //设置编辑器状态
             BDEditorApplication.EditorStatus = BDFrameworkEditorStatus.BuildAssetBundle;
             var platform = BApplication.GetRuntimePlatform(buildTarget);
-            var platformOutputPath = IPath.Combine(BuildParams.OutputPath, BApplication.GetPlatformPath(platform));
+            var platformOutputPath = IPath.Combine(BuildParams.OutputPath, BApplication.GetPlatformLoadPath(platform));
             string abOutputPath = IPath.Combine(platformOutputPath, BResources.ART_ASSET_ROOT_PATH);
             //创建ab。SBP下ab很稳定，
             if (Directory.Exists(abOutputPath))
@@ -334,7 +334,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
                 //5.检测本地的Manifest和构建预期对比
                 Debug.Log("<color=green>----->5.校验AB依赖</color>");
-                var abRootPath = IPath.Combine(BuildParams.OutputPath, BApplication.GetPlatformPath(platform),
+                var abRootPath = IPath.Combine(BuildParams.OutputPath, BApplication.GetPlatformLoadPath(platform),
                     BResources.ART_ASSET_ROOT_PATH);
                 var previewABUnitMap = BuildAssetInfos.PreGetAssetbundleUnit();
                 var manifestList = Directory.GetFiles(abRootPath, "*.manifest", SearchOption.AllDirectories);
@@ -574,7 +574,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             var abBuildList = GetAssetbundleBuildList(buildAssetInfos);
             var buildContent = new BundleBuildContent(abBuildList);
             //2.构建参数
-            string abOutputPath = IPath.Combine(inputParams.OutputPath, BApplication.GetPlatformPath(platform),
+            string abOutputPath = IPath.Combine(inputParams.OutputPath, BApplication.GetPlatformLoadPath(platform),
                 BResources.ART_ASSET_ROOT_PATH);
             if (!Directory.Exists(abOutputPath))
             {
@@ -621,7 +621,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 case ReturnCode.SuccessCached:
                 {
                     BDebug.Log("打包结果:" + retCode.ToString(),Color.green);
-                    string buildinfoOutputPath = IPath.Combine(inputParams.OutputPath, BApplication.GetPlatformPath(platform),
+                    string buildinfoOutputPath = IPath.Combine(inputParams.OutputPath, BApplication.GetPlatformLoadPath(platform),
                         "build_result.info");
                     if (results != null)
                     {

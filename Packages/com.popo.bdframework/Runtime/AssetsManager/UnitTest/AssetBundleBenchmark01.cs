@@ -254,7 +254,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         //package信息
         var pakInfo = ClientAssetsHelper.GetPackageBuildInfo(abPath, platform);
         // Profiler.BeginSample("Benchmark Load");
-        var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformPath(platform), pakInfo.Version);
+        var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformLoadPath(platform), pakInfo.Version);
         if (!Directory.Exists(benchmarkDataOutpath))
         {
             Directory.CreateDirectory(benchmarkDataOutpath);
@@ -852,7 +852,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         var pakInfo = ClientAssetsHelper.GetPackageBuildInfo(abPath, platform);
 
         Profiler.BeginSample("Benchmark Load");
-        var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "BenchMark", BApplication.GetPlatformPath(platform), pakInfo.Version);
+        var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "BenchMark", BApplication.GetPlatformLoadPath(platform), pakInfo.Version);
         //
         if (!Directory.Exists(benchmarkDataOutpath))
         {
@@ -1366,7 +1366,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         //package信息
         var pakInfo = ClientAssetsHelper.GetPackageBuildInfo(abPath, platform);
 
-        var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformPath(platform), pakInfo.Version);
+        var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformLoadPath(platform), pakInfo.Version);
         if (!Directory.Exists(benchmarkDataOutpath))
         {
             Directory.CreateDirectory(benchmarkDataOutpath);

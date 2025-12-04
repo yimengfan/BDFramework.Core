@@ -872,7 +872,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             byte[][] mixSourceBytes = new byte[mixAssets.Length][];
             for (int i = 0; i < mixAssets.Length; i++)
             {
-                var path = IPath.Combine(outpath, BApplication.GetPlatformPath(platform),
+                var path = IPath.Combine(outpath, BApplication.GetPlatformLoadPath(platform),
                     BResources.ART_ASSET_ROOT_PATH, mixAssets[i]);
                 var mixBytes = File.ReadAllBytes(path);
                 mixSourceBytes[i] = mixBytes;
@@ -901,7 +901,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 var idx = (int) (Random.Range(0, (mixSourceAssetbundleItems.Length - 1) * 10000) / 10000);
                 var mixBytes = mixSourceBytes[idx];
                 //
-                var abpath = IPath.Combine(outpath, BApplication.GetPlatformPath(platform),
+                var abpath = IPath.Combine(outpath, BApplication.GetPlatformLoadPath(platform),
                     BResources.ART_ASSET_ROOT_PATH, sourceItem.AssetBundlePath);
                 if (!File.Exists(abpath))
                 {
@@ -1032,7 +1032,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         [MenuItem("BDFrameWork工具箱/测试")]
         static public void Test()
         {
-            var fs = Directory.GetFiles(BApplication.DevOpsPublishPackagePath, "*", SearchOption.AllDirectories);
+            var fs = Directory.GetFiles(BApplication.DevOpsPublishClientPackagePath, "*", SearchOption.AllDirectories);
             foreach (var f in fs)
             {
                 Debug.Log(f);

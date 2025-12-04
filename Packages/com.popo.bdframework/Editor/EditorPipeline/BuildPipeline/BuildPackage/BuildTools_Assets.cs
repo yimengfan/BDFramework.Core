@@ -52,7 +52,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// <param name="platform">平台</param>
         /// <param name="outputPath">输出目录</param>
         /// <param name="setNewVersionNum">新版本号</param>
-        static public void Build(RuntimePlatform platform, string outputPath, string setNewVersionNum = null, BuildPackageOption opa = BuildPackageOption.BuildAll)
+        static public void BuildAll(RuntimePlatform platform, string outputPath, string setNewVersionNum = null, BuildPackageOption opa = BuildPackageOption.BuildAll)
         {
             Debug.Log("BuildAssetOpt:" + opa);
             
@@ -83,7 +83,7 @@ namespace BDFramework.Editor.BuildPipeline
 
 
             //开始构建资源
-            var _outputPath = Path.Combine(outputPath, BApplication.GetPlatformPath(platform));
+            var _outputPath = Path.Combine(outputPath, BApplication.GetPlatformLoadPath(platform));
             if (!Directory.Exists(_outputPath))
             {
                 Directory.CreateDirectory(_outputPath);
@@ -151,7 +151,7 @@ namespace BDFramework.Editor.BuildPipeline
             var assetsInfoPath = BResources.GetAssetsInfoPath(outputPath, platform);
             FileHelper.WriteAllText(assetsInfoPath, csv);
             //
-            Debug.Log($"<color=yellow>{BApplication.GetPlatformPath(platform)} - 旧版本:{lastPackageBuildInfo.Version} 新版本号:{bundleVersion} </color> ");
+            Debug.Log($"<color=yellow>{BApplication.GetPlatformLoadPath(platform)} - 旧版本:{lastPackageBuildInfo.Version} 新版本号:{bundleVersion} </color> ");
             //完成回调通知
             BDFrameworkPipelineHelper.OnEndBuildAllAssets(platform, outputPath, bundleVersion);
         }

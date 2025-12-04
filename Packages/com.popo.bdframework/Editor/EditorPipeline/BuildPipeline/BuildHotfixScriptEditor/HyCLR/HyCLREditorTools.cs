@@ -1,4 +1,4 @@
-﻿#if ENABLE_HYCLR
+﻿
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,12 +24,24 @@ namespace BDFramework.Editor.HotfixScript
     static public class HyCLREditorTools
     {
 
-        //
+        [MenuItem("BDFrameWork工具箱/Test/HyCLREditorTools.BuildHotfixDLL")]
+        static public void BuildHotfixDLL_Test()
+        {
+            BuildHotfixDLL(BApplication.DevOpsPublishAssetsPath, BuildTarget.StandaloneWindows64);
+        }
+
+        [MenuItem("BDFrameWork工具箱/Test/HyCLREditorTools.PreBuild")]
+        static public void PreBuild_Test()
+        {
+            PreBuild(BuildTarget.StandaloneWindows64);
+        }
+
+        
         /// <summary>
         /// 在打包前执行
         /// </summary>
         /// <param name="target"></param>
-        static public void PreBuild(BuildTarget target, string assetsOutputDir)
+        static public void PreBuild(BuildTarget target)
         {
             if (HybridCLRSettings.Instance == null)
             {
@@ -69,8 +81,8 @@ namespace BDFramework.Editor.HotfixScript
             }
 
 
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            var tag = $"[HCLR] PreBuild for {target}";
+            BDebug.LogWatchBegin(tag);
             {
                 Debug.Log("<color=green>[HCLR]start:</color>");
                 // SetBDFramework2HCLRConfig();
@@ -84,21 +96,13 @@ namespace BDFramework.Editor.HotfixScript
                 //编译补充元数据的DLL
                 PrebuildCommand.GenerateAll();
                 //拷贝用于补充泛型
-                CopyAOTMetadataDLL(target, assetsOutputDir);
+                var sourceDir = SettingsUtil.GetAssembliesPostIl2CppStripDir(target);
+                CopyAOTMetadataDLL(sourceDir,Application.streamingAssetsPath, target);
             }
-            sw.Stop();
-            Debug.Log($"<color=red>[HCLR]end! 耗时:{sw.ElapsedMilliseconds} ms.</color>");
-// #if UNITY_EDITOR_OSX
-//             BuildLibIl2cppForIOS();
-// #endif
+            BDebug.LogWatchEnd(tag);
         }
 
-        [MenuItem("HybridCLR/BuildHotfixDLL_test")]
-        static public void BuildHotfixDLL_Test()
-        {
-            BuildHotfixDLL("", BuildTarget.StandaloneWindows64);
-        }
-
+  
         /// <summary>
         /// 编译热更dll
         /// </summary>
@@ -106,7 +110,6 @@ namespace BDFramework.Editor.HotfixScript
         static public void BuildHotfixDLL(string outputDir, BuildTarget target)
         {
             bool isBuildSuccess = false;
-      
             void WatchLog(string condition, string stackTrace, LogType type) {
                 if (type == LogType.Error && condition.Contains("Fail")) {
                     isBuildSuccess = false;
@@ -115,7 +118,7 @@ namespace BDFramework.Editor.HotfixScript
             }
             isBuildSuccess = true;
             //核心构建逻辑
-            string tmpOutputPath = Path.GetFullPath("HybridCLRData\\HotUpdateAssets_temp");
+            string tmpOutputPath = Path.GetFullPath("HybridCLRData\\out_hotfixdlls_temp");
             if (Directory.Exists(tmpOutputPath))
             {
                 Directory.Delete(tmpOutputPath,true);
@@ -130,13 +133,70 @@ namespace BDFramework.Editor.HotfixScript
             if (!isBuildSuccess) {
                 throw new Exception("build hotfix_dll failed");
             }
-            //
-            if (Directory.Exists(outputDir))
-            {
-                Directory.Delete(outputDir,true);
-            }
+
+            CopyHotfixDLLs(tmpOutputPath, outputDir,target);
+   
+            
         }
         
+        /// <summary>
+        /// 拷贝热更dll
+        /// </summary>
+        /// <param name="sourceDir"></param>
+        /// <param name="destDir"></param>
+       static public void CopyHotfixDLLs(string sourceDir, string destDir,BuildTarget target)
+       {
+           var destDLLRootDir = $"{BApplication.GetPlatformLoadPath(destDir,target)}/{ScriptLoder.HOTFIX_DLL_PATH}";
+            if (Directory.Exists(destDLLRootDir))
+            {
+                Directory.Delete(destDLLRootDir,true);
+            }
+            Directory.CreateDirectory(destDLLRootDir);
+         
+            //
+            var hotfixDlls = HybridCLRSettings.Instance.hotUpdateAssemblies;
+            foreach (var hd in hotfixDlls)
+            {
+                var source = $"{sourceDir}/{hd}.dll";
+                var destPath = $"{destDLLRootDir}/{hd}{ScriptLoder.HOT_DLL_EXTENSION}";
+
+                if (!File.Exists(source))
+                {
+                   Debug.LogError("不存在热更代码:" + source);
+                     continue;
+                }
+                
+                BDebug.Log($"{source} => {destPath}", Color.yellow);
+                FileHelper.Copy(source, destPath, true);
+            }
+        }
+
+
+        /// <summary>
+        /// 拷贝补充元数据的dll到hotfix目录
+        /// </summary>
+        /// <param name="destDir"></param>
+        /// <param name="target"></param>
+        static public void CopyAOTMetadataDLL(string sourceDir,string destDir, BuildTarget target)
+        {
+            //从aot目录拷贝补充元数据的dll到hotfix目录
+            var aotDLLs = HybridCLRSettings.Instance.patchAOTAssemblies;
+            var destPlatformDir = BApplication.GetPlatformLoadPath(destDir, target);
+            foreach (var aotDll in aotDLLs)
+            {
+                var sourceDllPath = IPath.Combine(sourceDir, aotDll + ".dll");
+                var destPath = IPath.Combine(destPlatformDir, ScriptLoder.HYCLR_AOT_PATCH_PATH, aotDll + ScriptLoder.HOT_DLL_EXTENSION);
+                if (File.Exists(sourceDllPath))
+                {
+                    FileHelper.Copy(sourceDllPath, destPath, true);
+                    Debug.Log($"<color=green>[HyCLR]拷贝 AOT Patch dll:{aotDll} </color>");
+                }
+                else
+                {
+                    throw new Exception("不存在aot dll：" + sourceDllPath);
+                }
+            }
+        }
         
         /// <summary>
         /// 设置HCLR配置
@@ -181,58 +241,17 @@ namespace BDFramework.Editor.HotfixScript
 
                 HybridCLRSettings.Instance.patchAOTAssemblies = list.ToArray();
             }
-
+            
             //保存
             HybridCLRSettings.Save();
         }
 
 
 
-        /// <summary>
-        /// 拷贝补充元数据的dll到hotfix目录
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="assetsOutputDir"></param>
-        static public void CopyCompileDll(BuildTarget target, string assetsOutputDir)
-        {
-            //从aot目录拷贝补充元数据的dll到hotfix目录
-            var patchAOTDll = HybridCLRSettings.Instance.patchAOTAssemblies;
-            assetsOutputDir = IPath.Combine(assetsOutputDir, BApplication.GetPlatformPath(target));
-            foreach (var dll in patchAOTDll)
-            {
-                var sourceDllPath = IPath.Combine(SettingsUtil.GetHotUpdateDllsOutputDirByTarget(target), dll + ".dll");
-                var destPath = IPath.Combine(assetsOutputDir, ScriptLoder.HCLR_AOT_PATCH_PATH, dll + ".dll");
-                if (File.Exists(sourceDllPath))
-                {
-                    FileHelper.Copy(sourceDllPath, destPath, true);
-                    Debug.Log($"<color=green>[HCLR]拷贝AOT Patch dll:{dll} </color>");
-                }
-            }
-        }
+
 
         
 
-        /// <summary>
-        /// 拷贝补充元数据的dll到hotfix目录
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="assetsOutputDir"></param>
-        static public void CopyAOTMetadataDLL(BuildTarget target, string assetsOutputDir)
-        {
-            //从aot目录拷贝补充元数据的dll到hotfix目录
-            var patchAOTDll = HybridCLRSettings.Instance.patchAOTAssemblies;
-            assetsOutputDir = IPath.Combine(assetsOutputDir, BApplication.GetPlatformPath(target));
-            foreach (var dll in patchAOTDll)
-            {
-                var sourceDllPath = IPath.Combine(SettingsUtil.GetAssembliesPostIl2CppStripDir(target), dll + ".dll");
-                var destPath = IPath.Combine(assetsOutputDir, ScriptLoder.HCLR_AOT_PATCH_PATH, dll + ".dll");
-                if (File.Exists(sourceDllPath))
-                {
-                    FileHelper.Copy(sourceDllPath, destPath, true);
-                    Debug.Log($"<color=green>[HyCLR]拷贝 AOT Patch dll:{dll} </color>");
-                }
-            }
-        }
         
         /// <summary>
         /// 获取hotfix dll路径
@@ -251,4 +270,3 @@ namespace BDFramework.Editor.HotfixScript
         }
     }
 }
-#endif

@@ -58,7 +58,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建Debug包体", "OK", "Cancel"))
             {
-                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Debug, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Debug, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget);
             }
         }
         
@@ -69,7 +69,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForProfiling包体", "OK", "Cancel"))
             {
-                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Profiler, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Profiler, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget);
             }
         }
 
@@ -80,7 +80,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForPublish版本包体？", "OK", "Cancel"))
             {
-                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Release, true, BApplication.DevOpsPublishPackagePath, BuildTarget);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Release, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget);
             }
         }
 
@@ -182,7 +182,7 @@ namespace BDFramework.Editor.BuildPipeline
         public void CustomBuild(BuildTools_ClientPackage.BuildMode buildMode)
         {
             var buildConfig = this.IsSetBuildSceneConfig ? this.BuildSceneConfig : null;
-            BuildTools_ClientPackage.Build(buildMode, this.BuildScene, buildConfig, IsReBuildAssets, BApplication.DevOpsPublishPackagePath, BuildTarget, BuildPackageOption);
+            BuildTools_ClientPackage.Build(buildMode, this.BuildScene, buildConfig, IsReBuildAssets, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildPackageOption);
         }
 
 
@@ -197,7 +197,7 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 try
                 {
-                    BuildTools_Assets.Build(platform, BApplication.DevOpsPublishAssetsPath, opa: BuildPackageOption);
+                    BuildTools_Assets.BuildAll(platform, BApplication.DevOpsPublishAssetsPath, opa: BuildPackageOption);
                 }
                 catch (Exception e)
                 {
@@ -207,7 +207,7 @@ namespace BDFramework.Editor.BuildPipeline
               
             }
             //拷贝到iospack
-            var iosPackDir = IPath.Combine(BApplication.DevOpsPublishPackagePath, BApplication.GetPlatformPath(BuildTarget));
+            var iosPackDir = IPath.Combine(BApplication.DevOpsPublishClientPackagePath, BApplication.GetPlatformPath(BuildTarget));
             var outDirs = Directory.GetDirectories(iosPackDir, "*", SearchOption.TopDirectoryOnly);
             //
             var iosSourcePackPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetPlatformPath(BuildTarget));

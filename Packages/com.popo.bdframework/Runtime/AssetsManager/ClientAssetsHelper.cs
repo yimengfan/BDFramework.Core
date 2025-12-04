@@ -144,7 +144,7 @@ namespace BDFramework.Asset
             //转json
             var content = JsonMapper.ToJson(info);
             //写入本地
-            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), PACKAGE_BUILD_INFO_PATH);
+            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformLoadPath(platform), PACKAGE_BUILD_INFO_PATH);
             FileHelper.WriteAllText(path, content);
         }
 #endif
@@ -156,7 +156,7 @@ namespace BDFramework.Asset
         {
             bool isUseBetterStreaming = false;
             //persistent路径
-            var persistentPlatformPath = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(platform));
+            var persistentPlatformPath = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformLoadPath(platform));
             //母包路径
             string basePckPath = "";
 
@@ -198,11 +198,11 @@ namespace BDFramework.Asset
             string basePckPlatformPath = "";
             if (isUseBetterStreaming)
             {
-                basePckPlatformPath = BApplication.GetPlatformPath(platform);
+                basePckPlatformPath = BApplication.GetPlatformLoadPath(platform);
             }
             else
             {
-                basePckPlatformPath = IPath.Combine(basePckPath, BApplication.GetPlatformPath(platform));
+                basePckPlatformPath = IPath.Combine(basePckPath, BApplication.GetPlatformLoadPath(platform));
             }
 
             //packageinfo
@@ -303,7 +303,7 @@ namespace BDFramework.Asset
         /// <returns></returns>
         static public ClientPackageBuildInfo GetPackageBuildInfo(string ouptputPath, RuntimePlatform platform)
         {
-            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformPath(platform), PACKAGE_BUILD_INFO_PATH);
+            var path = IPath.Combine(ouptputPath, BApplication.GetPlatformLoadPath(platform), PACKAGE_BUILD_INFO_PATH);
             var buildinfo = new ClientPackageBuildInfo();
             if (File.Exists(path))
             {
@@ -382,7 +382,7 @@ namespace BDFramework.Asset
             var runtimes = BApplication.SupportPlatform;
             foreach (var runtime in runtimes)
             {
-                var path = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(runtime),BResources.ART_ASSET_ROOT_PATH);
+                var path = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformLoadPath(runtime),BResources.ART_ASSET_ROOT_PATH);
                 if (Directory.Exists(path))
                 {
                     Directory.Delete(path, true);

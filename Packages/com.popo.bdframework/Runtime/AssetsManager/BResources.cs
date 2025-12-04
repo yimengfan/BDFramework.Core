@@ -695,7 +695,7 @@ namespace BDFramework.ResourceMgr
         {
             //本地是否下载过hash文件(之前下到一半就中止了)
             var persistentHashPath = IPath.Combine(BApplication.persistentDataPath,
-                BApplication.GetPlatformPath(platform), assetHashName);
+                BApplication.GetPlatformLoadPath(platform), assetHashName);
             if (File.Exists(persistentHashPath))
             {
                 var hash = FileHelper.GetMurmurHash3(persistentHashPath);
@@ -711,7 +711,7 @@ namespace BDFramework.ResourceMgr
 
             //persistent判断
             var persistentAssetPath = IPath.Combine(BApplication.persistentDataPath,
-                BApplication.GetPlatformPath(platform), assetName);
+                BApplication.GetPlatformLoadPath(platform), assetName);
             if (File.Exists(persistentAssetPath))
             {
                 return true;
@@ -723,7 +723,7 @@ namespace BDFramework.ResourceMgr
             {
                 //devops
                 var devopsAssetPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath,
-                    BApplication.GetPlatformPath(platform), assetName);
+                    BApplication.GetPlatformLoadPath(platform), assetName);
                 if (File.Exists(devopsAssetPath))
                 {
                     return true;
@@ -732,7 +732,7 @@ namespace BDFramework.ResourceMgr
             else
             {
                 //Streaming 文件判断,无需Streaming前缀
-                var streamingAssetPath = IPath.Combine(BApplication.GetPlatformPath(platform), assetName);
+                var streamingAssetPath = IPath.Combine(BApplication.GetPlatformLoadPath(platform), assetName);
                 if (BetterStreamingAssets.FileExists(streamingAssetPath))
                 {
                     return true;
@@ -753,7 +753,7 @@ namespace BDFramework.ResourceMgr
         {
             //本地是否下载过hash文件(之前下到一半就中止了),hash文件只会在
             var persistentHashPath = IPath.Combine(BApplication.persistentDataPath,
-                BApplication.GetPlatformPath(platform), assetHash);
+                BApplication.GetPlatformLoadPath(platform), assetHash);
             if (File.Exists(persistentHashPath))
             {
                 var hash = FileHelper.GetMurmurHash3(persistentHashPath);
@@ -770,7 +770,7 @@ namespace BDFramework.ResourceMgr
 
             //persistent判断
             var persistentAssetPath = IPath.Combine(BApplication.persistentDataPath,
-                BApplication.GetPlatformPath(platform), assetName);
+                BApplication.GetPlatformLoadPath(platform), assetName);
             if (File.Exists(persistentAssetPath))
             {
                 var hash = FileHelper.GetMurmurHash3(persistentAssetPath);
@@ -787,7 +787,7 @@ namespace BDFramework.ResourceMgr
             {
                 //devops
                 var devopsAssetPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath,
-                    BApplication.GetPlatformPath(platform), assetName);
+                    BApplication.GetPlatformLoadPath(platform), assetName);
                 if (File.Exists(devopsAssetPath))
                 {
                     var hash = FileHelper.GetMurmurHash3(devopsAssetPath);
@@ -801,7 +801,7 @@ namespace BDFramework.ResourceMgr
             else
             {
                 //Streaming 文件判断,无需Streaming前缀
-                var streamingAssetPath = IPath.Combine(BApplication.GetPlatformPath(platform), assetName);
+                var streamingAssetPath = IPath.Combine(BApplication.GetPlatformLoadPath(platform), assetName);
                 if (BetterStreamingAssets.FileExists(streamingAssetPath))
                 {
                     var bytes = BetterStreamingAssets.ReadAllBytes(streamingAssetPath);
@@ -830,7 +830,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         static public string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
         {
-            return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), BResources.SERVER_ASSETS_VERSION_INFO_PATH);
+            return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), BResources.SERVER_ASSETS_VERSION_INFO_PATH);
         }
 
         /// <summary>
@@ -841,7 +841,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform, string version = "")
         {
-            return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), BResources.ASSETS_INFO_PATH);
+            return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), BResources.ASSETS_INFO_PATH);
         }
 
         /// <summary>
@@ -855,12 +855,12 @@ namespace BDFramework.ResourceMgr
             //旧版本兼容逻辑
             if (subPackageName.StartsWith("ServerAssetsSubPackage_"))
             {
-                return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), subPackageName);
+                return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), subPackageName);
             }
             else
             {
                 var subPackagePath = string.Format(BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageName);
-                return IPath.Combine(rootPath, BApplication.GetPlatformPath(platform), subPackagePath);
+                return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), subPackagePath);
             }
         }
 

@@ -5,9 +5,8 @@ using BDFramework.Configure;
 using BDFramework.Core.Tools;
 
 using UnityEngine;
-#if ENABLE_HYCLR
 using HybridCLR;
-#endif
+
 
 namespace BDFramework
 {
@@ -17,18 +16,19 @@ namespace BDFramework
     static public class ScriptLoder
     {
         private static readonly string Tag = "ScriptLoder";
-
-
+        
         /// <summary>
         /// aot patch路径
         /// </summary>
-        static readonly public string HCLR_AOT_PATCH_PATH = $"script/aot_patch_dll";
-
+        static readonly public string HYCLR_AOT_PATCH_PATH = $"script/aot_patch_dll";
         /// <summary>
         /// 热更dll定义
         /// </summary>
         static readonly public string HOTFIX_DLL_PATH = $"script/hotfix_dll";
-        
+        /// <summary>
+        /// 热更代码后缀
+        /// </summary>
+        static readonly public string HOT_DLL_EXTENSION = ".zlua.bytes";
 
 
 
@@ -81,10 +81,10 @@ namespace BDFramework
                 {
                     //--------------------元数据DLL加载------------------------
                     //加载AOT,AOT Pacth 一定在母包Streaming内
-                    var aotPatchRoot = Path.Combine(BApplication.GetRuntimePlatformPath(), HCLR_AOT_PATCH_PATH);
+                    var aotPatchRoot = Path.Combine(BApplication.GetRuntimePlatformPath(), HYCLR_AOT_PATCH_PATH);
                     BDebug.Log($"---------------【ScriptLoder】HCLR执行, Dll路径:{aotPatchRoot}---------------"  , Color.red);
                     //
-                    var aotPatchDlls = BetterStreamingAssets.GetFiles(aotPatchRoot, "*.dll.bytes");
+                    var aotPatchDlls = BetterStreamingAssets.GetFiles(aotPatchRoot, "*"+"*"+HOT_DLL_EXTENSION);
                     foreach (var path in aotPatchDlls)
                     {
                         BDebug.Log("【ScriptLoder】HCLR加载AOT Patch:" + path, Color.yellow);
@@ -102,7 +102,7 @@ namespace BDFramework
                 string[] hotfixDlls = null;
                 if (Directory.Exists(hotfixdllRootPath))
                 {
-                    hotfixDlls = Directory.GetFiles(hotfixdllRootPath, "*.dll.bytes");
+                    hotfixDlls = Directory.GetFiles(hotfixdllRootPath, "*"+HOT_DLL_EXTENSION);
                 }
                 
                 if(hotfixDlls!=null && hotfixDlls.Length>0)
@@ -118,9 +118,9 @@ namespace BDFramework
                 else
                 {
                     //streaming加载
-                    hotfixdllRootPath = Path.Combine(BApplication.GetRuntimePlatformPath(), HCLR_AOT_PATCH_PATH);
+                    hotfixdllRootPath = Path.Combine(BApplication.GetRuntimePlatformPath(), HYCLR_AOT_PATCH_PATH);
                     BDebug.Log($"---------------【ScriptLoder】重新寻址 HyCLR执行  Dll路径:{hotfixdllRootPath}---------------", Color.red);
-                    hotfixDlls = BetterStreamingAssets.GetFiles(hotfixdllRootPath, "*.dll.bytes");
+                    hotfixDlls = BetterStreamingAssets.GetFiles(hotfixdllRootPath, "*"+HOT_DLL_EXTENSION);
                     if (hotfixDlls == null || hotfixDlls.Length == 0)
                     {
                         throw new Exception("【ScriptLoder】HyCLR热更DLL不存在! 路径:" + hotfixdllRootPath);
@@ -170,7 +170,7 @@ namespace BDFramework
         /// </summary>
         static public string GetLocalDLLPath(string root, RuntimePlatform platform)
         {
-            return IPath.Combine(root, BApplication.GetPlatformPath(platform),HOTFIX_DLL_PATH);
+            return IPath.Combine(root, BApplication.GetPlatformLoadPath(platform),HOTFIX_DLL_PATH);
         }
 
 

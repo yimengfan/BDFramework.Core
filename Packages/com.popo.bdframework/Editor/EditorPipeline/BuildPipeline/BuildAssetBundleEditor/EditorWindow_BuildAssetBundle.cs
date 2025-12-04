@@ -110,7 +110,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 {
                     GUILayout.BeginHorizontal();
                     {
-                        GUILayout.Label(BApplication.GetPlatformPath(platform), GUILayout.Width(60));
+                        GUILayout.Label(BApplication.GetPlatformLoadPath(platform), GUILayout.Width(60));
 
                         GUILayout.Space(20);
 
@@ -125,7 +125,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                         
                         if (GUILayout.Button("Build", GUILayout.Width(60)))
                         {
-                            var ret = EditorUtility.DisplayDialog("提示", "是否要构建AssetBundle? \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
+                            var ret = EditorUtility.DisplayDialog("提示", "是否要构建AssetBundle? \n平台:" + BApplication.GetPlatformLoadPath(platform), "Ok", "Cancel");
                             if (ret)
                             {
                                 //开始打包
@@ -136,7 +136,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                         GUI.color = Color.green;
                         if (GUILayout.Button("Build --cache", GUILayout.Width(90)))
                         {
-                            var ret = EditorUtility.DisplayDialog("提示", "正常构建一次后，没有进行颗粒度、资源依赖、路径等大规模修改，可以使用缓存加速编译. \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
+                            var ret = EditorUtility.DisplayDialog("提示", "正常构建一次后，没有进行颗粒度、资源依赖、路径等大规模修改，可以使用缓存加速编译. \n平台:" + BApplication.GetPlatformLoadPath(platform), "Ok", "Cancel");
                             if (ret)
                             {
                                 
@@ -145,7 +145,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                         
                         if (GUILayout.Button("混淆AB", GUILayout.Width(60)))
                         {
-                            var ret = EditorUtility.DisplayDialog("提示", "是否要混淆AssetBundle? \n平台:" + BApplication.GetPlatformPath(platform), "Ok", "Cancel");
+                            var ret = EditorUtility.DisplayDialog("提示", "是否要混淆AssetBundle? \n平台:" + BApplication.GetPlatformLoadPath(platform), "Ok", "Cancel");
                             if (ret)
                             {
                                 BuildTools_AssetBundleV2.MixAssetBundle(BApplication.DevOpsPublishAssetsPath, platform);

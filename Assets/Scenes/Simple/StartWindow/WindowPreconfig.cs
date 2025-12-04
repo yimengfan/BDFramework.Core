@@ -262,7 +262,7 @@ public class WindowPreconfig : MonoBehaviour
     {
         foreach (var runtime in BApplication.SupportPlatform)
         {
-            var path = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformPath(runtime));
+            var path = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformLoadPath(runtime));
             if (Directory.Exists(path))
             {
                 Directory.Delete(path,true);

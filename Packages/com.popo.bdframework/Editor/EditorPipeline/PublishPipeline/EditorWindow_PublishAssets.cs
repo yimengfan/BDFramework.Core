@@ -148,7 +148,7 @@ namespace BDFramework.Editor.PublishPipeline
                     {
                         var isHas = selectPlatforms.Contains(sp);
                         //选择
-                        var isSelcet = GUILayout.Toggle(isHas, $"生成{BApplication.GetPlatformPath(sp)}资产", GUILayout.Width(150));
+                        var isSelcet = GUILayout.Toggle(isHas, $"生成{BApplication.GetPlatformLoadPath(sp)}资产", GUILayout.Width(150));
                         //
                         if (isHas != isSelcet)
                         {
@@ -213,7 +213,7 @@ namespace BDFramework.Editor.PublishPipeline
                     foreach (var sp in selectPlatforms)
                     {
                         Debug.Log($"==============>:{sp}");
-                        BuildTools_Assets.Build(sp, EXPORT_PATH, platformVersionMap[sp]);
+                        BuildTools_Assets.BuildAll(sp, EXPORT_PATH, platformVersionMap[sp]);
                         platformVersionMap.Remove(sp);
                     }
 
@@ -324,7 +324,7 @@ namespace BDFramework.Editor.PublishPipeline
                     GUILayout.Label("项目根目录/DevOps/PublishAssets/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX + "/*");
                     if (GUILayout.Button("打开", GUILayout.Width(40)))
                     {
-                        var dir = BApplication.DevOpsPublishPackagePath + "/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX;
+                        var dir = BApplication.DevOpsPublishClientPackagePath + "/" + PublishPipelineTools.UPLOAD_FOLDER_SUFFIX;
                         EditorUtility.RevealInFinder(dir);
                     }
                 }

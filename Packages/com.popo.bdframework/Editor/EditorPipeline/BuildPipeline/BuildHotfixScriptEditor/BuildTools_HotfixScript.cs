@@ -43,16 +43,13 @@ namespace BDFramework.Editor.HotfixScript
         /// <param name="outpath"></param>
         /// <param name="platform"></param>
         /// <param name="mode"></param>
-        static public void BuildDLL(string outpath, RuntimePlatform platform, bool isShowTips = true)
+        static public void BuildDLL(string outpath, RuntimePlatform platform)
         {
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnBeginBuildHotfixDLL();
-            var hotfixDllRoot  = ScriptLoder.GetLocalDLLPath(outpath, platform);
             //开始构建热更dll
             var buildTarget = BApplication.GetBuildTarget(platform);
-            HyCLREditorTools.BuildHotfixDLL(hotfixDllRoot, buildTarget);
-            //
-            CopyDLLToOther(outpath, platform);
+            HyCLREditorTools.BuildHotfixDLL(outpath, buildTarget);
             AssetDatabase.Refresh();
             //触发bd环境周期
             BDFrameworkPipelineHelper.OnEndBuildDLL(outpath);
