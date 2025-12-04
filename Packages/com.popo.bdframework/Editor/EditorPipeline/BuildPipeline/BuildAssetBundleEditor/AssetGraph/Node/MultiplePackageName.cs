@@ -15,6 +15,11 @@ using UnityEngine;
 using UnityEngine.AssetGraph;
 using UnityEngine.AssetGraph.DataModel.Version2;
 
+#if ENABLE_HYCLR
+using BDFramework.Editor.HotfixScript;
+using HybridCLR.Editor.Settings;
+#endif
+
 namespace BDFramework.Editor.AssetGraph.Node
 {
     /// <summary>
@@ -115,7 +120,7 @@ namespace BDFramework.Editor.AssetGraph.Node
         /// </summary>
         /// <param name="ctx"></param>
         public override void Build(BuildTarget buildTarget, NodeData nodeData, IEnumerable<PerformGraph.AssetGroups> incoming, IEnumerable<ConnectionData> connectionsToOutput, PerformGraph.Output outputFunc,
-            Action<NodeData, string, float> progressFunc)
+        Action<NodeData, string, float> progressFunc)
         {
             var assetIdList = new List<int>();
             //寻找当前分包,包含的资源
@@ -151,7 +156,12 @@ namespace BDFramework.Editor.AssetGraph.Node
             subPackage.ArtAssetsIdList = assetIdList.Distinct().ToList();
             subPackage.ArtAssetsIdList.Sort();
             //热更代码
-            subPackage.HotfixCodePathList.Add(ScriptLoder.DLL_PATH);
+#if ENABLE_HYCLR
+
+            var hotfixDlls = HyCLREditorTools.GetHotfixDLLPaths();
+            subPackage.HotfixCodePathList.AddRange(hotfixDlls);
+#endif
+
             //热更表格
             subPackage.TablePathList.Add(SqliteLoder.LOCAL_DB_PATH);
             //配置表

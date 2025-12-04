@@ -53,7 +53,7 @@ static public class EditorSetting
         foreach (var bt in _supportBuildTargetGroup)
         {
             Unity3dEditorEx.AddSymbols(bt,"ENABLE_IL2CPP");
-            Unity3dEditorEx.AddSymbols(bt,"ENABLE_HCLR");
+            Unity3dEditorEx.AddSymbols(bt,"ENABLE_HYCLR");
         }
 
         #endregion

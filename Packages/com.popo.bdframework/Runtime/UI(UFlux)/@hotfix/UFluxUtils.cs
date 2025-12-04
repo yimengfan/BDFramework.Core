@@ -106,8 +106,9 @@ namespace BDFramework.UFlux
                             BDebug.LogError($" 字段:{comType.Name}-{f.Name} type:{f.FieldType} ==>{e.Message} " + e.StackTrace);
                         }
                     }
+                    
 #else
-                    (attrs[i] as AutoInitComponentAttribute)?.AutoSetField(component, f);
+                    (attrs[i] as AutoAssignAttribute )?.AutoSetField(component, f);
 #endif
                 }
             }

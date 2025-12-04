@@ -40,11 +40,11 @@ namespace BDFramework.Editor
         /// <summary>
         /// 获取最近修改的热更代码
         /// </summary>
-        static public string[] GetLeastHotfixCodes()
-        {
-            return BDFrameworkAssetImporter.CacheData?.HotfixList.ToArray();
-        }
-        
+        // static public string[] GetLeastHotfixCodes()
+        // {
+        //     return BDFrameworkAssetImporter.CacheData?.HotfixList.ToArray();
+        // }
+        //
 
         #region 平台切换
 

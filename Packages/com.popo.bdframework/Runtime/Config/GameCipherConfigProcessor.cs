@@ -42,9 +42,7 @@ namespace BDFramework.Configure
             var con = config as Config;
             //Sqlite秘钥
             SqliteLoder.Password = con.SqlitePassword;
-            //DLL秘钥
-            ScriptLoder.PrivateKey = con.ScriptPrivateKey;
-            ScriptLoder.PublicKey = con.ScriptPubKey;
+
         }
     }
     

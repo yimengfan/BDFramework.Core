@@ -121,7 +121,7 @@ public class BDLauncherBridge
                     break;
                 }
             }
-#elif ENABLE_HCLR
+#elif ENABLE_HYCLR
             if (type.GetInterface(nameof(IHotfixGameStart)) != null)
             {
                 hotfixStart = Activator.CreateInstance(type) as IHotfixGameStart;
@@ -133,7 +133,7 @@ public class BDLauncherBridge
           
 
             
-#if !ENABLE_ILRUNTIME && !ENABLE_HCLR
+#if !ENABLE_ILRUNTIME && !ENABLE_HYCLR
     BDebug.LogError("请打开BuildDLL面板,开启ILRUNTIME或者HCLR!");
 #endif
             

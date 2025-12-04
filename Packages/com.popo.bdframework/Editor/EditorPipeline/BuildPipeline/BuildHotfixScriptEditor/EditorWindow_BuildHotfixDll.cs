@@ -26,17 +26,22 @@ namespace BDFramework.Editor.HotfixScript
                 GUILayout.Label("1.脚本打包", EditorGUIHelper.LabelH2);
                 GUILayout.Space(5);
 
-#if !ENABLE_HCLR
-                HotfixScriptTools.SwitchToHCLR();
-                AssetDatabase.Refresh();
+
+#if ENABLE_HYCLR
+
+                GUILayout.Label("已启用HyCLR宏!");
+#else
+                  GUILayout.Label("未HyCLR宏,请手动点击下方按钮设置!");
 #endif
+
                 GUILayout.BeginHorizontal();
                 {
                     GUI.color = Color.green;
-                    if (GUILayout.Button("切换HCLR", GUILayout.Width(150), GUILayout.Height(20)))
+                    if (GUILayout.Button("添加:BD->HyCLR配置", GUILayout.Width(200), GUILayout.Height(20)))
                     {
-                        BuildTools_HotfixScript.SwitchToHCLR();
+                        BuildTools_HotfixScript.SetHyCLRConfig();
                     }
+
                     GUI.color = GUI.backgroundColor;
                 }
                 GUILayout.EndHorizontal();
@@ -47,34 +52,19 @@ namespace BDFramework.Editor.HotfixScript
                 GUILayout.BeginHorizontal();
                 {
                     //
-                    if (GUILayout.Button("1.编译dll(Roslyn-Release)", GUILayout.Width(155), GUILayout.Height(30)))
+                    if (GUILayout.Button("1.编译热更dll", GUILayout.Width(155), GUILayout.Height(30)))
                     {
-                        BuildTools_HotfixScript.BuildDLL(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Release);
+                        BuildTools_HotfixScript.BuildDLL(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);
                     }
 
-                    if (GUILayout.Button("编译dll(Roslyn-Debug)", GUILayout.Width(150), GUILayout.Height(30)))
-                    {
-                        BuildTools_HotfixScript.BuildDLL(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug);
-                    }
+                    // if (GUILayout.Button("编译dll(Roslyn-Debug)", GUILayout.Width(150), GUILayout.Height(30)))
+                    // {
+                    //     BuildTools_HotfixScript.BuildDLL(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug);
+                    // }
                 }
                 GUILayout.EndHorizontal();
 
-#if ENABLE_ILRUNTIME
-                if (GUILayout.Button("2.生成跨域Adapter[没事别瞎点]", GUILayout.Width(305), GUILayout.Height(30)))
-                {
-                    //HotfixScriptEditorTools.GenCrossBindAdapter();
-                }
 
-                if (GUILayout.Button("3.生成Link.xml[大部分不需要]", GUILayout.Width(305), GUILayout.Height(30)))
-                {
-                    StripCode.GenLinkXml();
-                }
-
-                if (GUILayout.Button("4.预检查工程代码", GUILayout.Width(305), GUILayout.Height(30)))
-                {
-                    PublishPipeLineCI.CheckEditorCode();
-                }
-#endif
 
                 if (BDEditorApplication.EditorSetting != null)
                 {

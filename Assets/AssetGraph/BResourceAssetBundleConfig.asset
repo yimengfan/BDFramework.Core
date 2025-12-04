@@ -15,12 +15,12 @@ MonoBehaviour:
   m_allNodes:
   - m_name: "\u641C\u96C6\u56FE\u96C6"
     m_id: 4e93d487-bd56-4bd3-a305-231aeed30565
-    m_x: 672
-    m_y: 540
+    m_x: 648
+    m_y: 552
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectSpriteAtlas, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|e30=
+      m_instanceData: B64|eyJJc09ubHlPbmVTaGFkZXJWYXJhaW50IjpmYWxzZX0=
     m_inputPoints:
     - id: 4bd99a94-2b91-4b23-b0e6-c04bf371d6ea
       label: '-'
@@ -45,8 +45,8 @@ MonoBehaviour:
         height: 23
   - m_name: "\u641C\u96C6shader\u53D8\u4F53"
     m_id: ecbfb000-a67d-4e67-9eab-0fc9da0bfb6d
-    m_x: 864
-    m_y: 540
+    m_x: 876
+    m_y: 552
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.CollectShaderKeyWord, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -75,7 +75,7 @@ MonoBehaviour:
         height: 23
   - m_name: "[\u9897\u7C92\u5EA6]\u6D4B\u8BD5\u6A21\u578B\u5B50\u76EE\u5F55"
     m_id: 9b6fd495-850f-40e2-91b0-ee3f235fc35c
-    m_x: 1428
+    m_x: 1452
     m_y: 768
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.SetGranularityByFolder, BDFramework.Editor,
@@ -366,7 +366,7 @@ MonoBehaviour:
   - m_name: "[\u5206\u7EC4]Group by path"
     m_id: 73d7c30e-095a-4c3e-987f-09ad004c37e3
     m_x: 1092
-    m_y: 516
+    m_y: 540
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.FilterGroupByPath, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -440,7 +440,7 @@ MonoBehaviour:
     m_nodeInstance:
       m_className: BDFramework.Editor.AssetGraph.Node.BDFrameworkAssetsEnv, BDFramework.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_instanceData: B64|eyJBc3NldEdyYXBoV2luZG93c01vZGUiOjF9
+      m_instanceData: B64|e30=
     m_inputPoints:
     - id: 427fdfad-5e23-44d2-963d-cf9c18745157
       label: '-'

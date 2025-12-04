@@ -3,8 +3,9 @@ using System.IO;
 using System.Reflection;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
+
 using UnityEngine;
-#if ENABLE_HCLR
+#if ENABLE_HYCLR
 using HybridCLR;
 #endif
 
@@ -17,52 +18,19 @@ namespace BDFramework
     {
         private static readonly string Tag = "ScriptLoder";
 
-        #region 路径
 
         /// <summary>
-        /// 脚本目录
+        /// aot patch路径
         /// </summary>
-        static readonly public string SCRIPT_FOLDER_PATH = "script";
-
-        //HCLR aot patch目录
-        static readonly public string HCLR_AOT_PATCH_PATH = $"{SCRIPT_FOLDER_PATH}/hclr_aot_patch";
+        static readonly public string HCLR_AOT_PATCH_PATH = $"script/aot_patch_dll";
 
         /// <summary>
-        /// 热更定义
+        /// 热更dll定义
         /// </summary>
-        static readonly public string HOTFIX_DEFINE = "hotfix";
-
-        /// <summary>
-        /// 热更dll路径
-        /// </summary>
-        static readonly public string DLL_PATH = $"{SCRIPT_FOLDER_PATH}/{HOTFIX_DEFINE}.dll";
-
-        /// <summary>
-        /// dll pdb路径
-        /// </summary>
-        static readonly public string PDB_PATH = DLL_PATH + ".pdb";
-
-        #endregion
+        static readonly public string HOTFIX_DLL_PATH = $"script/hotfix_dll";
+        
 
 
-        #region 加密
-
-        /// <summary>
-        /// 私钥
-        /// </summary>
-        static public string PrivateKey { get; set; } = null;
-
-        /// <summary>
-        /// 公钥
-        /// </summary>
-        static public string PublicKey { get; set; } = null;
-
-        #endregion
-
-        /// <summary>
-        /// 反射注册
-        /// </summary>
-        private static Action<bool> CLRBindAction { get; set; }
 
         /// <summary>
         /// 脚本加载入口
@@ -105,47 +73,73 @@ namespace BDFramework
         static public void LoadHotfixDLL(AssetLoadPathType loadPathType, HotfixCodeRunMode mode, Type[] mainProjecTypes)
         {
             //路径
-            var dllPath = Path.Combine(GameBaseConfigProcessor.GetLoadPath(loadPathType), BApplication.GetRuntimePlatformPath(), DLL_PATH);
-            //反射执行
+         
+            //加载元数据
             if (mode == HotfixCodeRunMode.HyCLR)
             {
                 if (!Application.isEditor)
                 {
-                    BDebug.Log("【ScriptLoder】HCLR执行, Dll路径:" + dllPath, Color.red);
-                    //加载AOT,AOT Pacth 一定在母包内
-                    var aotPatch = Path.Combine(BApplication.GetRuntimePlatformPath(), HCLR_AOT_PATCH_PATH);
-                    var aotPatchDlls = BetterStreamingAssets.GetFiles(aotPatch, "*.dll");
+                    //--------------------元数据DLL加载------------------------
+                    //加载AOT,AOT Pacth 一定在母包Streaming内
+                    var aotPatchRoot = Path.Combine(BApplication.GetRuntimePlatformPath(), HCLR_AOT_PATCH_PATH);
+                    BDebug.Log($"---------------【ScriptLoder】HCLR执行, Dll路径:{aotPatchRoot}---------------"  , Color.red);
+                    //
+                    var aotPatchDlls = BetterStreamingAssets.GetFiles(aotPatchRoot, "*.dll.bytes");
                     foreach (var path in aotPatchDlls)
                     {
-                        BDebug.Log("【ScriptLoder】HCLR加载AOT Patch:" + path, Color.red);
+                        BDebug.Log("【ScriptLoder】HCLR加载AOT Patch:" + path, Color.yellow);
                         var dllbytes = BetterStreamingAssets.ReadAllBytes(path);
-                        #if ENABLE_HCLR
                         var err = RuntimeApi.LoadMetadataForAOTAssembly(dllbytes, HomologousImageMode.SuperSet);
                         Debug.Log($"LoadMetadataForAOTAssembly:{path}. ret:{err}");
-                        #endif
+         
+                    }
+                }
+
+
+                //---------------------热更DLL加载------------------------
+                var hotfixdllRootPath = Path.Combine(GameBaseConfigProcessor.GetLoadPath(loadPathType), BApplication.GetRuntimePlatformPath());
+                BDebug.Log($"---------------【ScriptLoder】HCLR执行, Dll路径:{hotfixdllRootPath}---------------", Color.red);
+                string[] hotfixDlls = null;
+                if (Directory.Exists(hotfixdllRootPath))
+                {
+                    hotfixDlls = Directory.GetFiles(hotfixdllRootPath, "*.dll.bytes");
+                }
+                
+                if(hotfixDlls!=null && hotfixDlls.Length>0)
+                {
+                 
+                    foreach (var hotfixDll in hotfixDlls)
+                    {
+                        var dllBytes = File.ReadAllBytes(hotfixDll);
+                        BDebug.Log($"【ScriptLoder】{loadPathType} -:" + hotfixDll, Color.yellow);
+                        Assembly.Load(dllBytes);
                     }
                 }
                 else
                 {
-                    BDebug.Log("【ScriptLoder】Editor下反射执行, Dll路径:" + dllPath, Color.red);
+                    //streaming加载
+                    hotfixdllRootPath = Path.Combine(BApplication.GetRuntimePlatformPath(), HCLR_AOT_PATCH_PATH);
+                    BDebug.Log($"---------------【ScriptLoder】重新寻址 HyCLR执行  Dll路径:{hotfixdllRootPath}---------------", Color.red);
+                    hotfixDlls = BetterStreamingAssets.GetFiles(hotfixdllRootPath, "*.dll.bytes");
+                    if (hotfixDlls == null || hotfixDlls.Length == 0)
+                    {
+                        throw new Exception("【ScriptLoder】HyCLR热更DLL不存在! 路径:" + hotfixdllRootPath);
+                    }
+                    //
+                    foreach (var hotfixDll in hotfixDlls)
+                    {
+                        var dllBytes = BetterStreamingAssets.ReadAllBytes(hotfixDll);
+                        BDebug.Log($"【ScriptLoder】{AssetLoadPathType.StreamingAsset} -:" + hotfixDll, Color.yellow);
+                        Assembly.Load(dllBytes);
+                    }
                 }
 
-                //HyCLR加载
-                Assembly assembly;
-                var dllBytes = File.ReadAllBytes(dllPath);
-                var pdbPath = dllPath + ".pdb";
-                if (File.Exists(pdbPath))
-                {
-                    BDebug.Log("【ScriptLoder】加载pdb:" + pdbPath, Color.yellow);
-                    var pdbBytes = File.ReadAllBytes(pdbPath);
-                    assembly = Assembly.Load(dllBytes, pdbBytes);
-                }
-                else
-                {
-                    BDebug.Log("【ScriptLoder】HCLR执行, Dll路径:" + dllPath, Color.red);
-                    assembly = Assembly.Load(dllBytes);
-                }
+  
 
+
+
+                //---------------------启动------------------------
+                Assembly assembly = null;
                 var type = typeof(ScriptLoder).Assembly.GetType("BDLauncherBridge");
                 var method = type.GetMethod("Start", BindingFlags.Public | BindingFlags.Static);
                 var startFunc = (Action<Type[], Type[]>) Delegate.CreateDelegate(typeof(Action<Type[], Type[]>), method);
@@ -163,15 +157,7 @@ namespace BDFramework
                     }
                 }
             }
-            //解释执行
-            // else if (mode == HotfixCodeRunMode.ILRuntime)
-            // {
-            //     BDebug.Log("【ScriptLoder】热更Dll路径:" + dllPath, Color.red);
-            //     //解释执行模式
-            //     ILRuntimeHelper.LoadHotfix(dllPath, CLRBindAction);
-            //     var hotfixTypes = ILRuntimeHelper.GetHotfixTypes().ToArray();
-            //     ILRuntimeHelper.AppDomain.Invoke("BDLauncherBridge", "Start", null, new object[] { mainProjecTypes, hotfixTypes });
-            // }
+
             else
             {
                 BDebug.Log("【ScriptLoder】Dll路径:内置", Color.magenta);
@@ -184,7 +170,9 @@ namespace BDFramework
         /// </summary>
         static public string GetLocalDLLPath(string root, RuntimePlatform platform)
         {
-            return IPath.Combine(root, BApplication.GetPlatformPath(platform), DLL_PATH);
+            return IPath.Combine(root, BApplication.GetPlatformPath(platform),HOTFIX_DLL_PATH);
         }
+
+
     }
 }

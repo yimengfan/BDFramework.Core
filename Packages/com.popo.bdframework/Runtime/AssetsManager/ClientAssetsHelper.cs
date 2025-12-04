@@ -71,8 +71,6 @@ namespace BDFramework.Asset
         /// </summary>
         static string[] PersistentOnlyFiles = new string[]
         {
-            ScriptLoder.DLL_PATH, //DLL,
-            ScriptLoder.PDB_PATH, //PBD文件
             SqliteLoder.LOCAL_DB_PATH, //db
             BResources.ART_ASSET_INFO_PATH, BResources.ART_ASSET_TYPES_PATH, //ArtConfig,这两个配置文件是保证 更新资源后逻辑统一.
         };

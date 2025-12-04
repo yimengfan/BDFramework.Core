@@ -87,7 +87,7 @@ namespace BDFramework.Editor.BuildPipeline
 
         #region Tips
 
-#if ENABLE_ILRUNTIME||ENABLE_HCLR
+#if ENABLE_ILRUNTIME||ENABLE_HYCLR
         [Space(10)]
         [GUIColor(0f,1f,0f)]
         [LabelText("当前热更模式:"),LabelWidth(80)]
@@ -96,8 +96,8 @@ namespace BDFramework.Editor.BuildPipeline
         
 #if ENABLE_ILRUNTIME
           public string HotFixFunc = "ILRuntime";
-#elif ENABLE_HCLR
-          public string HotFixFunc = "HCLR";
+#elif ENABLE_HYCLR
+          public string HotFixFunc = "HYCLR";
 #else
           public string HotFixFunc = "未定义";
 #endif

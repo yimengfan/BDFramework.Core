@@ -16,19 +16,19 @@ namespace BDFramework.Editor.WorkFlow
         static public void OnCodeChanged()
         {
             //获取最近修改的代码
-            var codes = BDEditorApplication.GetLeastHotfixCodes();
-            if (codes != null && codes.Length > 0) //修改过Hotfix
-            {
-                if (BDEditorApplication.EditorSetting.BuildHotfixDLLSetting.IsNeedAutoBuildDll())
-                {
-                    BuildTools_HotfixScript.BuildDLL(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug, false);
-                    Debug.Log("自动编译Hotfix.dll成功!");
-                }
-                else if (BDEditorApplication.EditorSetting.BuildHotfixDLLSetting.IsHotfixCodeOutofUnityAssets())
-                {
-                    MoveCodeToBDWorkSpace(codes);
-                }
-            }
+            // var codes = BDEditorApplication.GetLeastHotfixCodes();
+            // if (codes != null && codes.Length > 0) //修改过Hotfix
+            // {
+            //     if (BDEditorApplication.EditorSetting.BuildHotfixDLLSetting.IsNeedAutoBuildDll())
+            //     {
+            //         BuildTools_HotfixScript.BuildDLL(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, false);
+            //         Debug.Log("自动编译Hotfix.dll成功!");
+            //     }
+            //     else if (BDEditorApplication.EditorSetting.BuildHotfixDLLSetting.IsHotfixCodeOutofUnityAssets())
+            //     {
+            //         MoveCodeToBDWorkSpace(codes);
+            //     }
+            // }
         }
 
 

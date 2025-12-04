@@ -90,9 +90,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static public bool Build(BuildMode buildMode, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildTools_Assets.BuildPackageOption buildOption = BuildTools_Assets.BuildPackageOption.BuildAll)
         {
-#if !ENABLE_IL2CPP && !ENABLE_HCLR
-            
-#endif
+
             
             string buildConfig = "";
             switch (buildMode)
@@ -230,7 +228,7 @@ namespace BDFramework.Editor.BuildPipeline
             string outputpath = "";
             
             //HCLR 
-#if ENABLE_HCLR
+#if ENABLE_HYCLR
             HyCLREditorTools.PreBuild(buildTarget,assetOutputPath);
 #endif
             
@@ -481,7 +479,7 @@ namespace BDFramework.Editor.BuildPipeline
             Debug.Log("------------->Begin build<------------");
             UnityEditor.BuildPipeline.BuildPlayer(scenes, outputPath, BuildTarget.iOS, opa);
             
-#if ENABLE_HCLR
+#if ENABLE_HYCLR
             //HCLR 需要保存
             // var libil2cppPath = IPath.Combine(outputPath,"Libraries");
             // HCLREditorTools.CopyLibIl2cppToXcode(libil2cppPath);

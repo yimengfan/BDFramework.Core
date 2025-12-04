@@ -33,24 +33,24 @@ namespace BDFramework.Editor.Environment
             get { return BApplication.BDEditorCachePath + "/ImporterCache"; }
         }
 
-        static private BDAssetImpoterCache _CacheData;
-
-        /// <summary>
-        /// 上次修改Hotfix的脚本
-        /// 这里为了解决 在play模式下修改代码，play结束后 editordll 生命被释放，所以需要缓存
-        /// </summary>
-        public static BDAssetImpoterCache CacheData
-        {
-            get
-            {
-                if (File.Exists(ImporterCahcePath) && _CacheData == null)
-                {
-                    _CacheData = JsonMapper.ToObject<BDAssetImpoterCache>(File.ReadAllText(ImporterCahcePath));
-                }
-
-                return _CacheData;
-            }
-        }
+        // static private BDAssetImpoterCache _CacheData;
+        //
+        // /// <summary>
+        // /// 上次修改Hotfix的脚本
+        // /// 这里为了解决 在play模式下修改代码，play结束后 editordll 生命被释放，所以需要缓存
+        // /// </summary>
+        // public static BDAssetImpoterCache CacheData
+        // {
+        //     get
+        //     {
+        //         if (File.Exists(ImporterCahcePath) && _CacheData == null)
+        //         {
+        //             _CacheData = JsonMapper.ToObject<BDAssetImpoterCache>(File.ReadAllText(ImporterCahcePath));
+        //         }
+        //
+        //         return _CacheData;
+        //     }
+        // }
 
 
         /// <summary>
@@ -62,30 +62,30 @@ namespace BDFramework.Editor.Environment
         /// <param name="movedFromAssetPaths"></param>
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
-            _CacheData = new BDAssetImpoterCache();
+            // _CacheData = new BDAssetImpoterCache();
             //1.搜集热更脚本变更
-            foreach (string assetPath in importedAssets)
-            {
-                if (Unity3dRoslynBuildTools.IsHotfixScript(assetPath))
-                {
-                    CacheData.HotfixList.Add(assetPath);
-                }
-            }
-
-            foreach (string assetPath in movedAssets)
-            {
-                if (Unity3dRoslynBuildTools.IsHotfixScript(assetPath))
-                {
-                    CacheData.HotfixList.Add(assetPath);
-                }
-            }
-
-            FileHelper.WriteAllText(ImporterCahcePath, JsonMapper.ToJson(CacheData));
+            // foreach (string assetPath in importedAssets)
+            // {
+            //     if (Unity3dRoslynBuildTools.IsHotfixScript(assetPath))
+            //     {
+            //         CacheData.HotfixList.Add(assetPath);
+            //     }
+            // }
+            //
+            // foreach (string assetPath in movedAssets)
+            // {
+            //     if (Unity3dRoslynBuildTools.IsHotfixScript(assetPath))
+            //     {
+            //         CacheData.HotfixList.Add(assetPath);
+            //     }
+            // }
+            //
+            // FileHelper.WriteAllText(ImporterCahcePath, JsonMapper.ToJson(CacheData));
             //编译dll
-            if (CacheData.HotfixList.Count > 0)
-            {
-                HotfixCodeWorkFlow.OnCodeChanged();
-            }
+            // if (CacheData.HotfixList.Count > 0)
+            // {
+            //     HotfixCodeWorkFlow.OnCodeChanged();
+            // }
 
             //2.判断是否导入Odin，是则加入命名空间
             foreach (string impoter in importedAssets)

@@ -62,22 +62,22 @@ namespace BDFramework.Editor.TestRunner
         [MenuItem("BDFrameWork工具箱/TestPipeline/执行UnitTest-ILRuntime", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTestILRuntime()
         {
-            //执行热更单元测试
-            var dllPath = IPath.Combine(GameBaseConfigProcessor.GetLoadPath(AssetLoadPathType.DevOpsPublish), BApplication.GetRuntimePlatformPath(), ScriptLoder.DLL_PATH);
-            // ILRuntimeHelper.LoadHotfix(dllPath,GameLogicCLRBinding.Bind);
-            try
-            {
-                // ILRuntimeHelper.AppDomain.Invoke("BDFramework.UnitTest.TestRunner", "RunHotfixUnitTest", null, new object[] { });
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
-            }
-
-            HotfixAssembliesHelper.Dispose();
-            //清理当前appdomian 数据
-            var path = AssetDatabase.GUIDToAssetPath("2b7a02d2757164147959db0911d95ce6");
-            AssetDatabase.ImportAsset(path);
+            // //执行热更单元测试
+            // var dllPath = IPath.Combine(GameBaseConfigProcessor.GetLoadPath(AssetLoadPathType.DevOpsPublish), BApplication.GetRuntimePlatformPath(), ScriptLoder.DLL_PATH);
+            // // ILRuntimeHelper.LoadHotfix(dllPath,GameLogicCLRBinding.Bind);
+            // try
+            // {
+            //     // ILRuntimeHelper.AppDomain.Invoke("BDFramework.UnitTest.TestRunner", "RunHotfixUnitTest", null, new object[] { });
+            // }
+            // catch (Exception e)
+            // {
+            //     Debug.LogError(e.Message);
+            // }
+            //
+            // HotfixAssembliesHelper.Dispose();
+            // //清理当前appdomian 数据
+            // var path = AssetDatabase.GUIDToAssetPath("2b7a02d2757164147959db0911d95ce6");
+            // AssetDatabase.ImportAsset(path);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace BDFramework.Editor.TestRunner
         [MenuItem("BDFrameWork工具箱/TestPipeline/执行逻辑测试-ILRuntime(Rebuild DLL)", false, (int) BDEditorGlobalMenuItemOrderEnum.TestPepelineEditor)]
         public static void UnitTestILRuntimeWithRebuildDll()
         {
-            BuildTools_HotfixScript.BuildDLL(BApplication.DevOpsPublishAssetsPath, BApplication.RuntimePlatform, Unity3dRoslynBuildTools.BuildMode.Debug);
+            BuildTools_HotfixScript.BuildDLL(BApplication.DevOpsPublishAssetsPath, BApplication.RuntimePlatform);
             UnitTestILRuntime();
         }
     }

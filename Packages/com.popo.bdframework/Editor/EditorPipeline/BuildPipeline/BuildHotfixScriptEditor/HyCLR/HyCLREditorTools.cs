@@ -1,4 +1,4 @@
-﻿#if ENABLE_HCLR
+﻿#if ENABLE_HYCLR
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,12 +6,14 @@ using System.IO;
 using System.Linq;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Tools;
+using BDFramework.Sql;
 using Cysharp.Threading.Tasks;
 using HybridCLR.Editor;
 using HybridCLR.Editor.Commands;
 using HybridCLR.Editor.Settings;
 using LitJson;
 using UnityEditor;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 namespace BDFramework.Editor.HotfixScript
@@ -21,20 +23,6 @@ namespace BDFramework.Editor.HotfixScript
     /// </summary>
     static public class HyCLREditorTools
     {
-        //
-        private static string libil2cppPath { get; set; } = "HybridCLRData/iOSBuild/build/libil2cpp.a";
-
-        // /// <summary>
-        // /// 测试
-        // /// </summary>
-        //[MenuItem("xxx")]
-        // static public void Test()
-        // {
-        //     //PreBuild(BuildTarget.Android);
-        //
-        //
-        //     PreBuild(BuildTarget.Android, BApplication.DevOpsPublishAssetsPath);
-        // }
 
         //
         /// <summary>
@@ -92,6 +80,7 @@ namespace BDFramework.Editor.HotfixScript
                 {
                     installer.InstallDefaultHybridCLR();
                 }
+
                 //编译补充元数据的DLL
                 PrebuildCommand.GenerateAll();
                 //拷贝用于补充泛型
@@ -104,6 +93,51 @@ namespace BDFramework.Editor.HotfixScript
 // #endif
         }
 
+        [MenuItem("HybridCLR/BuildHotfixDLL_test")]
+        static public void BuildHotfixDLL_Test()
+        {
+            BuildHotfixDLL("", BuildTarget.StandaloneWindows64);
+        }
+
+        /// <summary>
+        /// 编译热更dll
+        /// </summary>
+
+        static public void BuildHotfixDLL(string outputDir, BuildTarget target)
+        {
+            bool isBuildSuccess = false;
+      
+            void WatchLog(string condition, string stackTrace, LogType type) {
+                if (type == LogType.Error && condition.Contains("Fail")) {
+                    isBuildSuccess = false;
+                    Debug.LogError(stackTrace);
+                }
+            }
+            isBuildSuccess = true;
+            //核心构建逻辑
+            string tmpOutputPath = Path.GetFullPath("HybridCLRData\\HotUpdateAssets_temp");
+            if (Directory.Exists(tmpOutputPath))
+            {
+                Directory.Delete(tmpOutputPath,true);
+            }
+
+            Directory.CreateDirectory(tmpOutputPath);
+            
+            //
+            Application.logMessageReceived += WatchLog;
+            CompileDllCommand.CompileDll(tmpOutputPath,target,false);
+            Application.logMessageReceived -= WatchLog;
+            if (!isBuildSuccess) {
+                throw new Exception("build hotfix_dll failed");
+            }
+            //
+            if (Directory.Exists(outputDir))
+            {
+                Directory.Delete(outputDir,true);
+            }
+        }
+        
+        
         /// <summary>
         /// 设置HCLR配置
         /// </summary>
@@ -113,31 +147,29 @@ namespace BDFramework.Editor.HotfixScript
             //BD的hotfix dll
             {
                 var list = new List<string>(HybridCLRSettings.Instance.hotUpdateAssemblies);
-                if (!list.Contains(ScriptLoder.HOTFIX_DEFINE))
+
+                string[] hotfixAssemblies = new string[]
                 {
-                    list.Add(ScriptLoder.HOTFIX_DEFINE);
-                    HybridCLRSettings.Instance.hotUpdateAssemblies = list.ToArray();
-                }
-            }
-            //BD框架的搜索目录
-            {
-                var list = new List<string>(HybridCLRSettings.Instance.externalHotUpdateAssembliyDirs);
-                foreach (var platform in BApplication.SupportPlatform)
+                    "Assembly-CSharp",
+                    "Assembly-CSharp-firstpass",
+                    "BDFramework.Core"
+                };
+
+                foreach (var hotfix in hotfixAssemblies)
                 {
-                    var scriptPath = IPath.Combine(BApplication.GetPlatformDevOpsPublishAssetsPath(platform), ScriptLoder.SCRIPT_FOLDER_PATH);
-                    scriptPath = IPath.ReplaceBackSlash(scriptPath);
-                    if (!list.Contains(scriptPath))
+                    if (!list.Contains(hotfix))
                     {
-                        list.Add(scriptPath);
+                        list.Add(hotfix);
                     }
                 }
 
-                HybridCLRSettings.Instance.externalHotUpdateAssembliyDirs = list.ToArray();
+                HybridCLRSettings.Instance.hotUpdateAssemblies = list.ToArray();
             }
+
 
             //Patch AOT
             {
-                string[] aotAssemblies = new string[] {"mscorlib", "System", "System.Core"};
+                string[] aotAssemblies = new string[] { "mscorlib", "System", "System.Core" };
                 var list = new List<string>(HybridCLRSettings.Instance.patchAOTAssemblies);
                 foreach (var aotAssembly in aotAssemblies)
                 {
@@ -154,61 +186,6 @@ namespace BDFramework.Editor.HotfixScript
             HybridCLRSettings.Save();
         }
 
-        /// <summary>
-        /// 构建libil2cpp.so
-        /// </summary>
-        /// <exception cref="Exception"></exception>
-        static public void BuildLibIl2cppForIOS()
-        {
-            if (Directory.Exists("HybridCLRData/iOSBuild/build"))
-            {
-                Directory.Delete("HybridCLRData/iOSBuild/build", true);
-            }
-
-            var shPath = "HybridCLRData/iOSBuild/build_libil2cpp.sh";
-            if (File.Exists(shPath))
-            {
-                var cmds = new string[]
-                {
-                    $"cd {BApplication.ProjectRoot}/HybridCLRData/iOSBuild",
-                    "bash ./build_libil2cpp.sh"
-                };
-                CMDTools.RunCmd(cmds, islog: false);
-            }
-            else
-            {
-                throw new Exception("构建libil2cpp.so失败!请编译libil2cpp.so for HCLR!!!");
-            }
-
-            //校验结果
-
-            if (!File.Exists(libil2cppPath))
-            {
-                throw new Exception($"编译libil2cpp.a 失败！！! [{libil2cppPath}]");
-            }
-            else
-            {
-                Debug.Log("<color=yellow>构建libil2cpp.a成功</color> :" + libil2cppPath);
-            }
-        }
-
-
-        /// <summary>
-        /// 拷贝Libil2cpp.a
-        /// </summary>
-        static public void CopyLibIl2cppToXcode(string destDirectPath)
-        {
-            if (File.Exists(libil2cppPath))
-            {
-                var destFilePath = IPath.Combine(destDirectPath, Path.GetFileName(libil2cppPath));
-                File.Copy(libil2cppPath, destFilePath, true);
-                BDebug.Log("<color=green>[HCLR] 拷贝libil2cpp.a 成功!</color>");
-            }
-            else
-            {
-                throw new Exception("拷贝libil2cpp.a 失败!");
-            }
-        }
 
 
         /// <summary>
@@ -233,55 +210,7 @@ namespace BDFramework.Editor.HotfixScript
             }
         }
 
-
-        /// <summary>
-        /// 是否需要拷贝StripDll
-        /// </summary>
-        static public bool IsNeedHyCLRGenALL(BuildTarget target, string assetsOutputDir)
-        {
-            // var patchAOTDlls = HybridCLRSettings.Instance.patchAOTAssemblies;
-            // assetsOutputDir = IPath.Combine(assetsOutputDir, BApplication.GetPlatformPath(target));
-            // foreach (var dll in patchAOTDlls)
-            // {
-            //     var destPath = IPath.Combine(assetsOutputDir,ScriptLoder.HCLR_AOT_PATCH_PATH, dll + ".dll");
-            //     if (!File.Exists(destPath))
-            //     {
-            //         Debug.Log($"<color=red>[HCLR]不存在AOT Patch dll:{destPath},需要进行strip aot build dll!</color>");
-            //         return true;
-            //     }
-            // }
-
-            //1. h文件判断
-            // var defH = BApplication.ProjectRoot + "/HybridCLRData/il2cpp_plus_repo/libil2cpp/hybridclr/Il2CppCompatibleDef.h";
-            // if (File.Exists(defH))
-            // {
-            //     var lines = File.ReadAllLines(defH);
-            //     var exsitErrorDef = lines.FirstOrDefault((s => s.Contains("HybridCLR/Generate/All")));
-            //     return exsitErrorDef!=null;
-            //     
-            // }
-            // else
-            // {
-            //     throw new Exception("不存在defH文件，需要更新逻辑HrCLR业务逻辑" + defH);
-            // }
-            //
-
-            //2.dll判断
-            string aotDllDir = SettingsUtil.GetAssembliesPostIl2CppStripDir(target);
-            List<string> aotAssemblyNames = Directory.Exists(aotDllDir)
-                ? Directory.GetFiles(aotDllDir, "*.dll", SearchOption.TopDirectoryOnly).Select(Path.GetFileNameWithoutExtension).ToList()
-                : new List<string>();
-            if (aotAssemblyNames.Count == 0)
-            {
-                return true;
-                throw new Exception($"no aot assembly found. please run `HybridCLR/Generate/All` or `HybridCLR/Generate/AotDlls` to generate aot dlls before runing `HybridCLR/Generate/MethodBridge`");
-            }
-            else
-            {
-                Debug.Log($"<color=yellow>[HCLR]已存在{JsonMapper.ToJson(aotAssemblyNames)}, 不需要 gen strip aot dll !!!</color>");
-                return false;
-            }
-        }
+        
 
         /// <summary>
         /// 拷贝补充元数据的dll到hotfix目录
@@ -303,6 +232,22 @@ namespace BDFramework.Editor.HotfixScript
                     Debug.Log($"<color=green>[HyCLR]拷贝 AOT Patch dll:{dll} </color>");
                 }
             }
+        }
+        
+        /// <summary>
+        /// 获取hotfix dll路径
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        static public string[] GetHotfixDLLPaths()
+        {
+            List<string> retlist = new List<string>();
+            foreach (var hotfix in   HybridCLRSettings.Instance.hotUpdateAssemblies)
+            {
+                var path = $"{ScriptLoder.HOTFIX_DLL_PATH}/{hotfix}.dll.bytes";
+                retlist.Add(path);
+            }
+            return retlist.ToArray();
         }
     }
 }
