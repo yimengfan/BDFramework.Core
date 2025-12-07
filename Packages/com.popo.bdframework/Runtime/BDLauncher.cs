@@ -40,10 +40,7 @@ namespace BDFramework
         /// </summary>
         public ClientPackageBuildInfo BasePckBuildInfo { get; set; }
         
-        /// <summary>
-        /// 热更资源信息
-        /// </summary>
-        public ClientPackageBuildInfo HotfixAssetsBuildInfo { get; set; }
+
         
         /// <summary>
         /// Config的Text
@@ -108,19 +105,14 @@ namespace BDFramework
 
             //开始资源检测
             BDebug.Log(Tag,"框架资源版本验证!", Color.yellow);
-            ClientAssetsHelper.CheckBasePackageVersion(BApplication.RuntimePlatform, () =>
-            {
-                BDebug.Log(Tag,"资产版本验证完毕,开始初始化资产...",Color.green);
-                //1.美术资产初始化
-                BResources.Init(Config.ArtRoot);
-                //2.sql初始化
-                SqliteLoder.Init(Config.SQLRoot);
-                //3.脚本,这个启动会开启所有的逻辑
-                ScriptLoder.Init(Config.CodeRoot, Config.CodeRunMode, null);
-
-                //触发回调
-                launchSuccessCallback?.Invoke();
-            });
+            ClientAssetsHelper.CheckPackageAssets(BApplication.RuntimePlatform);
+            BDebug.Log(Tag,"资产版本验证完毕,开始初始化资产...",Color.green);
+            //1.美术资产初始化
+            BResources.Init(Config.ArtRoot);
+            //2.sql初始化
+            SqliteLoder.Init(Config.SQLRoot);
+            //3.脚本,这个启动会开启所有的逻辑
+            ScriptLoder.Init(Config.CodeRoot, Config.CodeRunMode, null);
         }
 
         #endregion

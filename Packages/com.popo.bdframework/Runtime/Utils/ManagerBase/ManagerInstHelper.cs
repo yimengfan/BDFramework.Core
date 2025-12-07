@@ -43,6 +43,8 @@ namespace BDFramework.Mgr
                 }
             }
 
+            Debug.Log($"框架托管DLL:{ string.Join(",", typeList.Select(t => t.FullName)) }");
+            
 #if UNITY_EDITOR
             typeList.Sort((a, b) => a.FullName.CompareTo(b.FullName));
 #endif
