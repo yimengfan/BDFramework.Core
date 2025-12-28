@@ -37,7 +37,7 @@ namespace BDFramework.Editor.HotfixScript
                 GUILayout.BeginHorizontal();
                 {
                     GUI.color = Color.green;
-                    if (GUILayout.Button("添加:BD->HyCLR配置", GUILayout.Width(200), GUILayout.Height(20)))
+                    if (GUILayout.Button("添加配置:BDFrameowork->HyCLR", GUILayout.Width(200), GUILayout.Height(20)))
                     {
                         BuildTools_HotfixScript.SetHyCLRConfig();
                     }

@@ -863,6 +863,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// </summary>
         static public void MixAssetBundle(string outpath, RuntimePlatform platform)
         {
+            var platformOutpath = IPath.Combine(outpath, BApplication.GetPlatformLoadPath(platform));
             var mixAssets = GetMixAssets();
             if (mixAssets.Length == 0)
             {
@@ -872,14 +873,14 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             byte[][] mixSourceBytes = new byte[mixAssets.Length][];
             for (int i = 0; i < mixAssets.Length; i++)
             {
-                var path = IPath.Combine(outpath, BApplication.GetPlatformLoadPath(platform), BResources.ART_ASSET_ROOT_PATH, mixAssets[i]);
+                var path = IPath.Combine(platformOutpath, BResources.ART_ASSET_ROOT_PATH, mixAssets[i]);
                 var mixBytes = File.ReadAllBytes(path);
                 mixSourceBytes[i] = mixBytes;
             }
 
             //构建ab管理器对象
             AssetBundleMgrV2 abv2 = new AssetBundleMgrV2();
-            abv2.Init(outpath);
+            abv2.Init(platformOutpath);
             //
             var mixSourceAssetbundleItems = abv2.AssetBundleConfig.AssetbundleItemList
                 .Where((abi) => abi.IsAssetBundleSourceFile() && mixAssets.Contains(abi.AssetBundlePath)).ToArray();

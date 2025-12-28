@@ -63,6 +63,7 @@ namespace BDFramework.ResourceMgr.V2
 
         /// <summary>
         /// 初始化
+        /// 传入路径要带上平台
         /// </summary>
         /// <param name="rootPath"></param>
         public void Init(string firstDir ,string secondDir="")
@@ -74,8 +75,8 @@ namespace BDFramework.ResourceMgr.V2
             }
 
             //1.设置加载路径
-            this.firstFindDir = IPath.Combine(firstDir, BResources.ART_ASSET_ROOT_PATH);
-            this.secFindDir = IPath.Combine(secondDir, BResources.ART_ASSET_ROOT_PATH); 
+            this.firstFindDir = firstDir;//IPath.Combine(firstDir, BResources.ART_ASSET_ROOT_PATH);
+            this.secFindDir = secondDir;// IPath.Combine(secondDir, BResources.ART_ASSET_ROOT_PATH); 
             //2.寻址路径格式化
             this.firstFindDir = IPath.FormatPathOnRuntime(firstFindDir);
             this.secFindDir = IPath.FormatPathOnRuntime(secFindDir);
