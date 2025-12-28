@@ -100,7 +100,7 @@ namespace BDFramework
             }
             //---------------------热更DLL加载-多寻址------------------------
             var hotfixdllRootPath = Path.Combine(firstDir, HOTFIX_DLL_PATH);
-            BDebug.Log($"【ScriptLoder】HCLR执行, Dll路径:{hotfixdllRootPath}", Color.red);
+            BDebug.Log(Tag,$"HCLR执行, Dll路径:{hotfixdllRootPath}", Color.green);
             string[] hotfixDlls = null;
             if (Directory.Exists(hotfixdllRootPath))
             {
@@ -112,7 +112,7 @@ namespace BDFramework
                 foreach (var hotfixDll in hotfixDlls)
                 {
                     var dllBytes = File.ReadAllBytes(hotfixDll);
-                    BDebug.Log($"【ScriptLoder】 " + hotfixDll, Color.yellow);
+                    BDebug.Log(Tag,$"加载:{hotfixDll}", Color.green);
                     Assembly.Load(dllBytes);
                 }
             }

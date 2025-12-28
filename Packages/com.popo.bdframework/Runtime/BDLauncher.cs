@@ -27,7 +27,7 @@ namespace BDFramework
         /// <summary>
         /// 框架版本号
         /// </summary>
-        public const string Version = "3.0.2";
+        public const string Version  = "4.0.0";
 
         /// <summary>
         /// 客户端配置信息
@@ -108,8 +108,8 @@ namespace BDFramework
             {
                 firstLoadDir = secondLoadDir;
             }
-            BDebug.Log(Tag, "第一寻址路径:" + firstLoadDir);
-            BDebug.Log(Tag, "第二寻址路径:" + secondLoadDir);
+            BDebug.Log(Tag, "第一寻址路径: " + firstLoadDir, Color.magenta);
+            BDebug.Log(Tag, "第二寻址路径: " + secondLoadDir,Color.magenta);
             ClientAssetsUtils.CheckBasePackageAssets(firstLoadDir,secondLoadDir);
             //平台
             BDebug.Log(Tag, "----------资源版本验证.end----------", Color.yellow);

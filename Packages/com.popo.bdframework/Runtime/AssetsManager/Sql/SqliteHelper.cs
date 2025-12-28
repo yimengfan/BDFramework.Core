@@ -65,11 +65,12 @@ namespace BDFramework.Sql
         /// <param name="str"></param>
         static public void Init(AssetLoadPathType assetLoadPathType, string firstDir, string secondDir)
         {
-            BDebug.EnableLog(Tag);
             Connection?.Dispose();
             //db 一定在第一寻址路径
             var db_path = IPath.Combine(firstDir, LOCAL_DB_PATH);
             Connection = LoadDBReadOnly(db_path);
+            BDebug.Log(Tag, $"加载路径:{db_path}",Color.green );
+          
         }
 
 

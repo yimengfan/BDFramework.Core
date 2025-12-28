@@ -211,7 +211,7 @@ public class BDebug : MonoBehaviour
             return find.IsLog;
         }
 
-        return false;
+        return true;
     }
 
     /// <summary>
@@ -224,14 +224,14 @@ public class BDebug : MonoBehaviour
         var idx = Inst.DisableLogTagList.FindIndex((t) => t.Tag == tag);
         if (idx < 0)
         {
-            var log = new LogTag() { Tag = tag, IsLog = true };
+            var log = new LogTag() { Tag = tag, IsLog = false };
 
             Inst.DisableLogTagList.Add(log);
 
             idx = Inst.DisableLogTagList.Count - 1;
         }
 
-        Inst.DisableLogTagList[idx].IsLog = true;
+        Inst.DisableLogTagList[idx].IsLog = false;
     }
 
     /// <summary>
@@ -249,7 +249,7 @@ public class BDebug : MonoBehaviour
                 Inst.DisableLogTagList.Add(new LogTag() { Tag = tag, IsLog = true });
                 idx = Inst.DisableLogTagList.Count - 1;
             }
-            Inst.DisableLogTagList[idx].IsLog = false;
+            Inst.DisableLogTagList[idx].IsLog = true;
         }
     }
 

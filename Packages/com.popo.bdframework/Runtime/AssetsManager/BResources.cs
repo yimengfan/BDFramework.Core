@@ -128,7 +128,7 @@ namespace BDFramework.ResourceMgr
         static public void Init(AssetLoadPathType loadPathType, string firstDir = "", string secondDir = "")
         {
             //BDebug.EnableLog(LoadTaskGroup.LogTag);
-            BDebug.Log(BResources.LogTag, "加载路径:" + loadPathType.ToString());
+            BDebug.Log(BResources.LogTag, $"加载路径:{firstDir} - {secondDir}",Color.yellow );
             if (loadPathType == AssetLoadPathType.Editor)
             {
 #if UNITY_EDITOR

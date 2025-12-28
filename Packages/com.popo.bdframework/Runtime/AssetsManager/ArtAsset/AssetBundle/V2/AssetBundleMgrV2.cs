@@ -80,10 +80,6 @@ namespace BDFramework.ResourceMgr.V2
             //2.寻址路径格式化
             this.firstFindDir = IPath.FormatPathOnRuntime(firstFindDir);
             this.secFindDir = IPath.FormatPathOnRuntime(secFindDir);
-
-            BDebug.Log(BResources.LogTag, $"firstDir:{firstFindDir}", Color.red);
-            BDebug.Log(BResources.LogTag, $"secDir:{secFindDir}", Color.red);
-            
             //3.加载ArtConfig
             this.AssetBundleConfig = LoadAssetbundleConfig(firstFindDir);
 

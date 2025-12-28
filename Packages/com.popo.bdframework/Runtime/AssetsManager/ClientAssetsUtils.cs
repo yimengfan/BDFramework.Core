@@ -150,16 +150,26 @@ namespace BDFramework.Asset
         /// <returns></returns>
         static public void CheckBasePackageAssets(string firstPath, string secondPath)
         {
+            if (firstPath.Equals(secondPath))
+            {
+                BDebug.Log("【母包资源检测】跳过！");
+                return;
+            }
+            
             //
-            BDebug.Log("【资源包】执行母包资源检测逻辑！");
+            BDebug.Log("【母包资源检测】执行检测逻辑！");
             //母包的build.info信息 => streamingassets/android/package_build.info
-            var clientPckBuildInfoPath = IPath.Combine(secondPath, PACKAGE_BUILD_INFO_PATH);
-            if (BetterStreamingAssets.FileExists(clientPckBuildInfoPath))
+            var streamingPckBuildInfoPath = IPath.Combine(secondPath, PACKAGE_BUILD_INFO_PATH);
+#if UNITY_ANDROID
+            if (BetterStreamingAssets.FileExists(streamingPckBuildInfoPath))
+#else
+            if (File.Exists(streamingPckBuildInfoPath))
+#endif
             {
                 //不存在Streaming配置
                 if (!Application.isEditor)
                 {
-                    throw new Exception($"【母包资源检测】严重错误！母包配置不存在：{clientPckBuildInfoPath}");
+                    throw new Exception($"【母包资源检测】严重错误！母包配置不存在：{streamingPckBuildInfoPath}");
                 }
                 else
                 {
@@ -182,13 +192,33 @@ namespace BDFramework.Asset
                 var copyFile = PersistentOnlyFiles[i];
                 //复制新版本的资产
                 var persistentPath = IPath.Combine(firstPath, copyFile);
-                var basePckAssetPath = IPath.Combine(secondPath, copyFile);
+                var streamingAssetPath = IPath.Combine(secondPath, copyFile);
                 //开始拷贝
                 if (!File.Exists(persistentPath))
                 {
-                    var bytes = BetterStreamingAssets.ReadAllBytes(basePckAssetPath);
-                    FileHelper.WriteAllBytes(persistentPath, bytes);
-                    BDebug.Log($"【母包资源检测】streaming->persistent 复制成功! {basePckAssetPath}=>{persistentPath}");
+#if UNITY_ANDROID
+                    if (BetterStreamingAssets.FileExists(streamingAssetPath))
+                    {
+                        var bytes = BetterStreamingAssets.ReadAllBytes(streamingAssetPath);
+                        FileHelper.WriteAllBytes(persistentPath, bytes);
+                        BDebug.Log($"【母包资源检测】streaming->persistent 复制成功! {streamingAssetPath}=>{persistentPath}");
+                    }   
+                    else
+                    {
+                        BDebug.LogError($"【母包资源检测】streaming->persistent 复制error! 不存在:{streamingAssetPath}");
+                    }
+#else
+                    if (File.Exists(streamingAssetPath))
+                    {
+                        var bytes = File.ReadAllBytes(streamingAssetPath);
+                        FileHelper.WriteAllBytes(persistentPath, bytes);
+                        BDebug.Log($"【母包资源检测】streaming->persistent 复制成功! {streamingAssetPath}=>{persistentPath}");
+                    }
+                    else
+                    {
+                        BDebug.LogError($"【母包资源检测】streaming->persistent 复制error! 不存在:{streamingAssetPath}");
+                    }
+#endif
                 }
             }
         }

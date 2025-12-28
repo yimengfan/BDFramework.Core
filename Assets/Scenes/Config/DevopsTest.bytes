@@ -1,9 +1,9 @@
 
 [
   {
-    "CodeRoot" : 3,
-    "SQLRoot"  : 3,
-    "ArtRoot"  : 3,
+    "CodeRoot" : 1,
+    "SQLRoot"  : 1,
+    "ArtRoot"  : 1,
     "CodeRunMode" : 1,
     "IsDebugLog"  : true,
     "ClientVersionNum" : "4.0.0",
