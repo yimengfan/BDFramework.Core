@@ -1,0 +1,18 @@
+{
+    "name": "AOT",
+    "references": [
+        "GUID:c06a7519c3a2b51479f0b061176e08d3",
+        "GUID:38782fc8e87cac14f9cb740af8b2232a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "DOTween.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

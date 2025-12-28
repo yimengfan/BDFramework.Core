@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using AssetsManager;
 using BDFramework.Asset;
 using ServiceStack.Text;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace BDFramework.ResourceMgr.V2

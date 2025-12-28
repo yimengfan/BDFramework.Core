@@ -84,13 +84,18 @@ namespace BDFramework.Editor.HotfixScript
             var tag = $"[HCLR] PreBuild for {target}";
             BDebug.LogWatchBegin(tag);
             {
-                Debug.Log("<color=green>[HCLR]start:</color>");
+                BDebug.Log("[HCLR]start:", Color.green);
                 // SetBDFramework2HCLRConfig();
                 //安装华佗
                 var installer = new HybridCLR.Editor.Installer.InstallerController();
                 if (!installer.HasInstalledHybridCLR())
                 {
+                    BDebug.Log("[HCLR]开始安装华佗...", Color.magenta);
                     installer.InstallDefaultHybridCLR();
+                }
+                else
+                {
+                    BDebug.Log("[HCLR]华佗已经安装,跳过", Color.green);
                 }
 
                 //编译补充元数据的DLL

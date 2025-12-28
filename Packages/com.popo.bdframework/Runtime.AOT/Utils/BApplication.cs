@@ -484,7 +484,7 @@ namespace BDFramework.Core.Tools
         {
             var platform = GetRuntimePlatform(bt);
             var platpath = GetPlatformLoadPath(platform);
-            return  IPath.Combine(dir, platpath);
+            return  Path.Combine(dir, platpath);
         }
         /// <summary>
         /// 获取发布资产平台目录
@@ -494,7 +494,7 @@ namespace BDFramework.Core.Tools
         static public string GetPlatformDevOpsPublishAssetsPath(RuntimePlatform platform)
         {
             var path = GetPlatformLoadPath(platform);
-            return IPath.Combine(DevOpsPublishAssetsPath, path);
+            return Path.Combine(DevOpsPublishAssetsPath, path);
         }
 
         /// <summary>
@@ -505,7 +505,7 @@ namespace BDFramework.Core.Tools
         static public string GetPlatformDevOpsPublishPackagePath(RuntimePlatform platform)
         {
             var path = GetPlatformLoadPath(platform);
-            return IPath.Combine(DevOpsPublishClientPackagePath, path);
+            return Path.Combine(DevOpsPublishClientPackagePath, path);
         }
 
         /// <summary>
@@ -516,7 +516,7 @@ namespace BDFramework.Core.Tools
         static public string GetPlatformDevOpsPublishAssetsPath(BuildTarget bt)
         {
             var path = GetPlatformPath(bt);
-            return IPath.Combine(DevOpsPublishAssetsPath, path);
+            return Path.Combine(DevOpsPublishAssetsPath, path);
         }
 
         /// <summary>
@@ -527,7 +527,7 @@ namespace BDFramework.Core.Tools
         static public string GetPlatformDevOpsPublishPackagePath(BuildTarget bt)
         {
             var path = GetPlatformPath(bt);
-            return IPath.Combine(DevOpsPublishClientPackagePath, path);
+            return Path.Combine(DevOpsPublishClientPackagePath, path);
         }
 
         #endregion

@@ -148,7 +148,7 @@ namespace BDFramework.Editor.BuildPipeline
             //这个必须最后生成！！！！
             var allServerAssetItemList = PublishPipelineTools.GetGameAssetItemList(outputPath, platform);
             var csv = CsvSerializer.SerializeToString(allServerAssetItemList);
-            var assetsInfoPath = BResources.GetAssetsInfoPath(outputPath, platform);
+            var assetsInfoPath = BResourcesAOT.GetAssetsInfoPath(outputPath, platform);
             FileHelper.WriteAllText(assetsInfoPath, csv);
             //
             Debug.Log($"<color=yellow>{BApplication.GetPlatformLoadPath(platform)} - 旧版本:{lastPackageBuildInfo.Version} 新版本号:{bundleVersion} </color> ");

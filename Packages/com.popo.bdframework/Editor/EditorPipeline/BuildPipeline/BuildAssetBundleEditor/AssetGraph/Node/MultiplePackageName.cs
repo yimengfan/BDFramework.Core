@@ -8,7 +8,6 @@ using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
-using BDFramework.VersionController;
 using ServiceStack.Text;
 using UnityEditor;
 using UnityEngine;

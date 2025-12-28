@@ -3,7 +3,6 @@ using System.Collections;
 using System.IO;
 using System.Text.RegularExpressions;
 using BDFramework.Assets.VersionContrller;
-using BDFramework.ResourceMgr;
 using BDFramework.Sql;
 using BDFramework.Core.Tools;
 using Cysharp.Text;
@@ -139,8 +138,7 @@ namespace BDFramework.Asset
         /// </summary>
         static string[] PersistentOnlyFiles = new string[]
         {
-            SqliteLoder.LOCAL_DB_PATH, //db =>只能在persistent下进行io
-            BResources.ART_ASSET_INFO_PATH, BResources.ART_ASSET_TYPES_PATH, //ArtConfig,这两个配置文件是保证 更新资源后逻辑统一.
+            SqliteLoderAOT.LOCAL_DB_PATH, //db =>只能在persistent下进行io
         };
 
 
@@ -331,6 +329,133 @@ namespace BDFramework.Asset
                 }
             }
         }
+        
+        #region 资源校验、判断
+
+        /// <summary>
+        /// 是否存在资源文件
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="serverAsset"></param>
+        /// <returns></returns>
+        static public bool IsExsitAsset(RuntimePlatform platform, string assetName, string assetHashName)
+        {
+            //本地是否下载过hash文件(之前下到一半就中止了)
+            var persistentHashPath = ClientAssetsUtils.GetPersistentAssetPath(assetHashName);
+            if (File.Exists(persistentHashPath))
+            {
+                var hash = FileHelper.GetMurmurHash3(persistentHashPath);
+                if (assetHashName.Equals(hash))
+                {
+                    return true;
+                }
+                else
+                {
+                    File.Delete(persistentHashPath);
+                }
+            }
+
+            //persistent判断
+            var persistentAssetPath = ClientAssetsUtils.GetPersistentAssetPath(assetName);
+            if (File.Exists(persistentAssetPath))
+            {
+                return true;
+            }
+
+            /************母包资源的判断*************/
+
+
+            //devops
+            var streamingAssetPath = ClientAssetsUtils.GetStreamingAssetPath(assetName);
+#if UNITY_ANDROID
+                //安卓特殊处理
+                //Streaming 文件判断,无需Streaming前缀
+                if (BetterStreamingAssets.FileExists(streamingAssetPath))
+                {
+                    return true;
+                }
+#else
+                if (File.Exists(streamingAssetPath))
+                {
+                    return true;
+                }
+#endif
+
+
+            return false;
+        }
+
+
+        /// <summary>
+        /// 是否存在资源.并且校验hash
+        /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="serverAsset"></param>
+        /// <returns></returns>
+        static public bool IsExsitAssetWithCheckHash(RuntimePlatform platform, string assetName, string assetHash)
+        {
+            //本地是否下载过hash文件(之前下到一半就中止了),hash文件只会在
+            var persistentHashPath = ClientAssetsUtils.GetPersistentAssetPath(assetHash);
+            if (File.Exists(persistentHashPath))
+            {
+                var hash = FileHelper.GetMurmurHash3(persistentHashPath);
+                if (assetHash.Equals(hash))
+                {
+                    BDebug.Log($"hash文件存在,hash校验通过 - {assetName} | hash - {assetHash}");
+                    return true;
+                }
+                else
+                {
+                    File.Delete(persistentHashPath);
+                }
+            }
+
+            //persistent判断
+            var persistentAssetPath = ClientAssetsUtils.GetPersistentAssetPath(assetName);
+            if (File.Exists(persistentAssetPath))
+            {
+                var hash = FileHelper.GetMurmurHash3(persistentAssetPath);
+                if (assetHash.Equals(hash))
+                {
+                    BDebug.Log($"【AB校验】persistent存在 - {assetName} | hash - {assetHash}");
+                    return true;
+                }
+            }
+
+
+            /************母包资源的判断*************/
+            var streamingAssetPath = ClientAssetsUtils.GetStreamingAssetPath(assetName);
+
+#if UNITY_ANDROID
+            //安卓特殊处理
+            //Streaming 文件判断,无需Streaming前缀
+            if (BetterStreamingAssets.FileExists(streamingAssetPath))
+            {
+                var bytes = BetterStreamingAssets.ReadAllBytes(streamingAssetPath);
+                var hash = FileHelper.GetMurmurHash3(bytes);
+                if (assetHash.Equals(hash))
+                {
+                    BDebug.Log($"【AB校验】streaming存在 - {assetName} | hash - {assetHash}");
+                    return true;
+                }
+            }
+#else
+            if (File.Exists(streamingAssetPath))
+            {
+                var hash = FileHelper.GetMurmurHash3(streamingAssetPath);
+                if (assetHash.Equals(hash))
+                {
+                    BDebug.Log($"【AB校验】devops存在 - {assetName} | hash - {assetHash}");
+                    return true;
+                }
+            }
+#endif
+
+
+            return false;
+        }
+
+        #endregion
 
 #if UNITY_EDITOR
         /// <summary>

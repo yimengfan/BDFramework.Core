@@ -6,7 +6,6 @@ using System.IO;
 using BDFramework.Asset;
 using BDFramework.ResourceMgr.V2;
 using BDFramework.Core.Tools;
-using BDFramework.VersionController;
 using Cysharp.Text;
 using Object = UnityEngine.Object;
 
@@ -21,36 +20,36 @@ namespace BDFramework.ResourceMgr
 
         #region 美术资源相关路径
 
-        /// <summary>
-        /// 美术根目录
-        /// </summary>
-        readonly static public string ART_ASSET_ROOT_PATH = "art_assets";
-
-        /// <summary>
-        /// 美术资源config配置
-        /// </summary>
-        readonly static public string ART_ASSET_INFO_PATH = ART_ASSET_ROOT_PATH + "/art_assets.info";
-
-        /// <summary>
-        /// 资源信息
-        /// </summary>
-        readonly static public string ART_ASSET_TYPES_PATH = ART_ASSET_ROOT_PATH + "/art_asset_type.info";
-
-        /// <summary>
-        /// 构建时的信息(Editor用)
-        /// </summary>
-        readonly static public string EDITOR_ART_ASSET_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/EditorBuild.Info";
-
-        /// <summary>
-        /// SBP build信息
-        /// </summary>
-        readonly static public string SBPBuildLog = "buildlogtep.json";
-
-        readonly static public string SBPBuildLog2 = "build_result.info";
+         /// <summary>
+         /// 美术根目录
+         /// </summary>
+         readonly static public string ART_ASSET_ROOT_PATH = "art_assets";
+        
+         /// <summary>
+         /// 美术资源config配置
+         /// </summary>
+         readonly static public string ART_ASSET_INFO_PATH = ART_ASSET_ROOT_PATH + "/art_assets.info";
+        
+         /// <summary>
+         /// 资源信息
+         /// </summary>
+         readonly static public string ART_ASSET_TYPES_PATH = ART_ASSET_ROOT_PATH + "/art_asset_type.info";
+        
+         /// <summary>
+         /// 构建时的信息(Editor用)
+         /// </summary>
+         readonly static public string EDITOR_ART_ASSET_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/EditorBuild.Info";
+        
+         /// <summary>
+         /// SBP build信息
+         /// </summary>
+         readonly static public string SBPBuildLog = "buildlogtep.json";
+        
+         readonly static public string SBPBuildLog2 = "build_result.info";
         /// <summary>
         /// 旧打包资源配置
         /// </summary>
-        //readonly static public string AIR_ASSET_OLD_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/OldBuild.Info";
+        readonly static public string AIR_ASSET_OLD_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/OldBuild.Info";
 
         /// <summary>
         /// ShaderVariant加载地址
@@ -85,27 +84,27 @@ namespace BDFramework.ResourceMgr
         #endregion
 
         #region 所有资源相关配置路径
-
+        
         /// <summary>
         /// 客户端-资源包服务器信息
         /// </summary>
         readonly static public string ASSETS_INFO_PATH = "assets.info";
-
+        
         /// <summary>
         /// 客户端-资源分包信息
         /// </summary>
         readonly static public string ASSETS_SUB_PACKAGE_CONFIG_PATH = "assets_subpack.info";
-
+        
         /// <summary>
         /// 服务器-资源包版本配置
         /// </summary>
         readonly static public string SERVER_ASSETS_VERSION_INFO_PATH = "server_assets_version.info";
-
+        
         /// <summary>
         /// 服务器-资源分包信息
         /// </summary>
         readonly static public string SERVER_ASSETS_SUB_PACKAGE_INFO_PATH = "server_assets_subpack_{0}.info";
-
+        
         #endregion
 
 
@@ -521,39 +520,7 @@ namespace BDFramework.ResourceMgr
 
         #endregion
 
-        #region 资源版本控制
-
-        /// <summary>
-        /// 版本控制器
-        /// </summary>
-        static public AssetsVersionController AssetsVersionController { get; private set; } =
-            new AssetsVersionController();
-
-        /// <summary>
-        /// 获取子包的信息
-        /// </summary>
-        static public void GetServerSubPacks(string serverUrl, Action<Dictionary<string, string>> callback)
-        {
-            AssetsVersionController.GetServerSubPackageInfos(serverUrl, callback);
-        }
-
-        /// <summary>
-        /// 开始版本控制
-        /// </summary>
-        /// <param name="updateMode"></param>
-        /// <param name="serverUrl"></param>
-        /// <param name="assetsPackageName">分包名,如果不填则为下载所有</param>
-        /// <param name="onProccess">下载进度</param>
-        /// <param name="onTaskEndCallback">结果回调</param>
-        static public void StartAssetsVersionControl(UpdateMode updateMode, string serverUrl,
-            string assetsPackageName = "", Action<AssetItem, List<AssetItem>> onDownloadProccess = null,
-            Action<AssetsVersionController.RetStatus, string> onTaskEndCallback = null)
-        {
-            AssetsVersionController.UpdateAssets(updateMode, serverUrl, assetsPackageName, onDownloadProccess,
-                onTaskEndCallback);
-        }
-
-        #endregion
+ 
 
         #region 对象池
 
@@ -655,190 +622,9 @@ namespace BDFramework.ResourceMgr
 
         #endregion
 
-        #region 资源校验、判断
-
-        /// <summary>
-        /// 是否存在资源文件
-        /// </summary>
-        /// <param name="platform"></param>
-        /// <param name="serverAsset"></param>
-        /// <returns></returns>
-        static public bool IsExsitAsset(RuntimePlatform platform, string assetName, string assetHashName)
-        {
-            //本地是否下载过hash文件(之前下到一半就中止了)
-            var persistentHashPath = ClientAssetsUtils.GetPersistentAssetPath(assetHashName);
-            if (File.Exists(persistentHashPath))
-            {
-                var hash = FileHelper.GetMurmurHash3(persistentHashPath);
-                if (assetHashName.Equals(hash))
-                {
-                    return true;
-                }
-                else
-                {
-                    File.Delete(persistentHashPath);
-                }
-            }
-
-            //persistent判断
-            var persistentAssetPath = ClientAssetsUtils.GetPersistentAssetPath(assetName);
-            if (File.Exists(persistentAssetPath))
-            {
-                return true;
-            }
-
-            /************母包资源的判断*************/
 
 
-            //devops
-            var streamingAssetPath = ClientAssetsUtils.GetStreamingAssetPath(assetName);
-#if UNITY_ANDROID
-                //安卓特殊处理
-                //Streaming 文件判断,无需Streaming前缀
-                if (BetterStreamingAssets.FileExists(streamingAssetPath))
-                {
-                    return true;
-                }
-
-#else
-            if (File.Exists(streamingAssetPath))
-            {
-                return true;
-            }
-#endif
-
-
-            return false;
-        }
-
-
-        /// <summary>
-        /// 是否存在资源.并且校验hash
-        /// </summary>
-        /// <param name="platform"></param>
-        /// <param name="serverAsset"></param>
-        /// <returns></returns>
-        static public bool IsExsitAssetWithCheckHash(RuntimePlatform platform, string assetName, string assetHash)
-        {
-            //本地是否下载过hash文件(之前下到一半就中止了),hash文件只会在
-            var persistentHashPath = ClientAssetsUtils.GetPersistentAssetPath(assetHash);
-            if (File.Exists(persistentHashPath))
-            {
-                var hash = FileHelper.GetMurmurHash3(persistentHashPath);
-                if (assetHash.Equals(hash))
-                {
-                    BDebug.Log(LogTag, $"hash文件存在,hash校验通过 - {assetName} | hash - {assetHash}");
-                    return true;
-                }
-                else
-                {
-                    File.Delete(persistentHashPath);
-                }
-            }
-
-            //persistent判断
-            var persistentAssetPath = ClientAssetsUtils.GetPersistentAssetPath(assetName);
-            if (File.Exists(persistentAssetPath))
-            {
-                var hash = FileHelper.GetMurmurHash3(persistentAssetPath);
-                if (assetHash.Equals(hash))
-                {
-                    BDebug.Log($"【AB校验】persistent存在 - {assetName} | hash - {assetHash}");
-                    return true;
-                }
-            }
-
-
-            /************母包资源的判断*************/
-            var streamingAssetPath = ClientAssetsUtils.GetStreamingAssetPath(assetName);
-
-#if UNITY_ANDROID
-            //安卓特殊处理
-            //Streaming 文件判断,无需Streaming前缀
-            if (BetterStreamingAssets.FileExists(streamingAssetPath))
-            {
-                var bytes = BetterStreamingAssets.ReadAllBytes(streamingAssetPath);
-                var hash = FileHelper.GetMurmurHash3(bytes);
-                if (assetHash.Equals(hash))
-                {
-                    BDebug.Log($"【AB校验】streaming存在 - {assetName} | hash - {assetHash}");
-                    return true;
-                }
-            }
-#else
-            if (File.Exists(streamingAssetPath))
-            {
-                var hash = FileHelper.GetMurmurHash3(streamingAssetPath);
-                if (assetHash.Equals(hash))
-                {
-                    BDebug.Log($"【AB校验】devops存在 - {assetName} | hash - {assetHash}");
-                    return true;
-                }
-            }
-#endif
-
-
-            return false;
-        }
-
-        #endregion
-
-        #region 资源配置相关路径
-
-        /// <summary>
-        /// 获取版本配置路径
-        /// </summary>
-        /// <param name="rootPath"></param>
-        /// <param name="platform"></param>
-        /// <returns></returns>
-        static public string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
-        {
-            return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), BResources.SERVER_ASSETS_VERSION_INFO_PATH);
-        }
-
-        /// <summary>
-        /// 获取资源信息路径
-        /// </summary>
-        /// <param name="rootPath"></param>
-        /// <param name="platform"></param>
-        /// <returns></returns>
-        static public string GetAssetsInfoPath(string rootPath)
-        {
-            return IPath.Combine(rootPath, BResources.ASSETS_INFO_PATH);
-        }
-
-        /// <summary>
-        /// 获取资源信息路径
-        /// </summary>
-        /// <param name="rootPath"></param>
-        /// <param name="platform"></param>
-        /// <returns></returns>
-        static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform)
-        {
-            return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), BResources.ASSETS_INFO_PATH);
-        }
-
-        /// <summary>
-        /// 获取分包设置路径
-        /// </summary>
-        /// <param name="rootPath"></param>
-        /// <param name="platform"></param>
-        /// <returns></returns>
-        static public string GetAssetsSubPackageInfoPath(string rootPath, RuntimePlatform platform, string subPackageName)
-        {
-            //旧版本兼容逻辑
-            if (subPackageName.StartsWith("ServerAssetsSubPackage_"))
-            {
-                return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), subPackageName);
-            }
-            else
-            {
-                var subPackagePath = string.Format(BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageName);
-                return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), subPackagePath);
-            }
-        }
-
-        #endregion
+  
 
         #region AUP设置
 

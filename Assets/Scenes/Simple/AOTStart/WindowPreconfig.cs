@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.IO;
-using BDFramework;
-using BDFramework.VersionController;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
 using LitJson;
@@ -55,7 +53,7 @@ public class WindowPreconfig : MonoBehaviour
     void Onclick_PassAndLaunch()
     {
         //直接启动
-        BDLauncher.Inst.Launch();
+        // BDLauncher.Inst.Launch();
         //
         this.StartCoroutine(IE_Destroy());
     }
@@ -70,7 +68,7 @@ public class WindowPreconfig : MonoBehaviour
         var url = "http://" + this.inputField.text;
         float totalSize = -1;
         float curDoanloadSize = -1;
-        BResources.StartAssetsVersionControl(UpdateMode.CompareWithRepair, url, null, (curDownload, allDownloadList) =>
+        BResourcesAOT.StartAssetsVersionControl(UpdateMode.CompareWithRepair, url, null, (curDownload, allDownloadList) =>
             {
                 if (totalSize == -1)
                 {
@@ -117,7 +115,7 @@ public class WindowPreconfig : MonoBehaviour
         var url = "http://" + this.inputField.text;
         float totalSize =0;
         float curDoanloadSize = 0;
-        BResources.StartAssetsVersionControl(UpdateMode.Repair, url, null, (curDownload, allDownloadList) =>
+        BResourcesAOT.StartAssetsVersionControl(UpdateMode.Repair, url, null, (curDownload, allDownloadList) =>
         {
             if (totalSize == 0)
             {
@@ -162,7 +160,7 @@ public class WindowPreconfig : MonoBehaviour
     private void OnClick_GetSubPackage()
     {
         var url = "http://" + inputField.text;
-        BResources.GetServerSubPacks(url, (map) =>
+        BResourcesAOT.GetServerSubPacks(url, (map) =>
         {
             //获取到子包
             Debug.Log("获取到子包信息:\n" + JsonMapper.ToJson(map,true));
@@ -206,7 +204,7 @@ public class WindowPreconfig : MonoBehaviour
         var url = "http://" + this.inputField.text;
         float totalSize = -1;
         float curDoanloadSize = -1;
-        BResources.StartAssetsVersionControl(UpdateMode.Compare, url, subPackageName, (curDownload, allDownloadList) =>
+        BResourcesAOT.StartAssetsVersionControl(UpdateMode.Compare, url, subPackageName, (curDownload, allDownloadList) =>
             {
                 if (totalSize == -1)
                 {
@@ -262,7 +260,7 @@ public class WindowPreconfig : MonoBehaviour
     {
         foreach (var runtime in BApplication.SupportPlatform)
         {
-            var path = IPath.Combine(Application.persistentDataPath, BApplication.GetPlatformLoadPath(runtime));
+            var path = IPath.Combine(BApplication.persistentDataPath, BApplication.GetPlatformLoadPath(runtime));
             if (Directory.Exists(path))
             {
                 Directory.Delete(path,true);

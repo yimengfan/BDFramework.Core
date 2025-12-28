@@ -11,7 +11,6 @@ using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.Editor.Inspector.Config;
 using BDFramework.ResourceMgr;
 using BDFramework.ResourceMgr.V2;
-using BDFramework.VersionController;
 using DotNetExtension;
 using LitJson;
 using ServiceStack.Text;
@@ -300,7 +299,7 @@ namespace BDFramework.Editor
                         }
                     });
                     //写入本地配置
-                    var subPackageInfoPath = BResources.GetAssetsSubPackageInfoPath(IPath.Combine(outputRootPath, UPLOAD_FOLDER_SUFFIX), platform, subPackageConfigItem.PackageName);
+                    var subPackageInfoPath = BResourcesAOT.GetAssetsSubPackageInfoPath(IPath.Combine(outputRootPath, UPLOAD_FOLDER_SUFFIX), platform, subPackageConfigItem.PackageName);
                     var configContent = CsvSerializer.SerializeToString(subPackageItemList);
                     FileHelper.WriteAllText(subPackageInfoPath, configContent);
                     Debug.Log("生成分包文件:" + Path.GetFileName(subPackageInfoPath));

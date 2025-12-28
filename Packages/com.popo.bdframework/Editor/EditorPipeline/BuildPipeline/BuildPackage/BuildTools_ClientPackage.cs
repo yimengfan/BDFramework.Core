@@ -120,6 +120,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         static public bool Build(BuildMode buildMode, string buildScene, string buildConfig, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildTools_Assets.BuildPackageOption buildOption = BuildTools_Assets.BuildPackageOption.BuildAll)
         {
+            BDebug.Log("=========>开始构建母包流程<==========", Color.yellow );
             if (IsBuilding)
             {
                 return false;
@@ -202,17 +203,18 @@ namespace BDFramework.Editor.BuildPipeline
             BDFrameworkPipelineHelper.OnBeginBuildPackage(buildTarget, outPlatformDir);
             
             //0.加载场景配置
-            Debug.Log("<color=green>===>1.加载场景配置</color>");
+            BDebug.Log("===>1.加载场景配置", Color.yellow );
             if (!string.IsNullOrEmpty(buildConfig))
             {
                 LoadConfig(buildScene, buildConfig);
             }
 
 #if ENABLE_HYCLR
+            BDebug.Log("===>开始处理华佗", Color.magenta );
             HyCLREditorTools.PreBuild(buildTarget);
 #endif
             //1.生成资源到Devops
-            Debug.Log("<color=green>===>2.生成资产</color>");
+            BDebug.Log("===>2.生成资产", Color.yellow );
             var assetOutputPath = BApplication.DevOpsPublishAssetsPath;
             if (isGenAssets)
             {
@@ -237,11 +239,11 @@ namespace BDFramework.Editor.BuildPipeline
             AssetDatabase.StartAssetEditing(); //停止触发资源导入
             {
                 //拷贝资源
-                Debug.Log("<color=green>===>3.拷贝打包资产: DevopsPublish => streamingAssetsPath</color>");
-                CopyPublishAssetsTo(Application.streamingAssetsPath, buildRuntimePlatform);
+                BDebug.Log("===>3.拷贝打包资产: DevopsPublish => streamingAssetsPath", Color.yellow );
+                CopyDevopsPublishAssetsTo(Application.streamingAssetsPath, buildRuntimePlatform);
                 try
                 {
-                    Debug.Log("<color=green>===>4.开始构建包体</color>");
+                    BDebug.Log("===>4.开始构建包体", Color.yellow );
                     switch (buildTarget)
                     {
                         case BuildTarget.Android:
@@ -268,6 +270,7 @@ namespace BDFramework.Editor.BuildPipeline
                     }
 
                     BDFrameworkPipelineHelper.OnEndBuildPackage(buildTarget, outputpath);
+                    BDebug.Log("===>5.构建结束", Color.yellow );
                 }
                 catch (Exception e)
                 {
@@ -275,6 +278,7 @@ namespace BDFramework.Editor.BuildPipeline
                 }
 
                 //删除目录
+                BDebug.Log("=========>构建母包结束,开始清理<==========", Color.yellow );
                 Directory.Delete(Application.streamingAssetsPath, true);
             }
             AssetDatabase.StopAssetEditing(); //恢复触发资源导入
@@ -612,12 +616,13 @@ namespace BDFramework.Editor.BuildPipeline
         /// 拷贝发布资源
         /// 这里注意不要传BApplication.Streaming
         /// </summary>
-        static public void CopyPublishAssetsTo(string targetpath, RuntimePlatform platform)
+        static public void CopyDevopsPublishAssetsTo(string targetpath, RuntimePlatform platform)
         {
             List<string> blackFile = new List<string>()
             {
                 BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH, //editor信息
-                BResources.ASSETS_INFO_PATH, BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH, BResources.SERVER_ASSETS_VERSION_INFO_PATH, BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH,
+                BResources.ASSETS_INFO_PATH, BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH,
+                BResources.SERVER_ASSETS_VERSION_INFO_PATH, BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH,
                 BResources.SBPBuildLog, BResources.SBPBuildLog2, ".manifest"
             };
             //清空目标文件夹

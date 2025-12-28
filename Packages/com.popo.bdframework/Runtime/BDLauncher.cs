@@ -95,7 +95,7 @@ namespace BDFramework
         /// <param name="launchSuccessCallback"></param>
         /// <param name="mainProjectTypes">Editor模式下,UPM隔离了DLL需要手动传入</param>
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
-        public void Launch(string gameId = "default", Action launchSuccessCallback = null)
+        public void Launch(string gameId = "default")
         {
             var clientVersion = this.Config.ClientVersionNum;
             BDebug.EnableLog(Tag);

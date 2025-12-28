@@ -4,7 +4,8 @@
         "GUID:33661e06c33d31b4c9223810bf503247",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
         "GUID:fd90820330fb0fe4e85121cb3a49d0cc",
-        "GUID:13ba8ce62aa80c74598530029cb2d649"
+        "GUID:13ba8ce62aa80c74598530029cb2d649",
+        "GUID:38782fc8e87cac14f9cb740af8b2232a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -12,10 +13,7 @@
     "overrideReferences": false,
     "precompiledReferences": [
         "Sirenix.OdinInspector.Attributes.dll",
-        "Sirenix.Serialization.dll",
-        "ILRuntim.Mono.Cecil.dll",
-        "ILRuntime.Mono.Cecil.Mdb.dll",
-        "ILRuntime.Mono.Cecil.Pdb.dll"
+        "Sirenix.Serialization.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

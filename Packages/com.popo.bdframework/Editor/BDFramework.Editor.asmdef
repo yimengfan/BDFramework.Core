@@ -2,6 +2,7 @@
     "name": "BDFramework.Editor",
     "references": [
         "GUID:90a5d688c87639542bc27aac9d4173c1",
+        "GUID:38782fc8e87cac14f9cb740af8b2232a",
         "GUID:dd7e32a5331fc4d8490ba36efe45cb0d",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
         "GUID:5c1ff9bd975acec488150743d53a93ca",

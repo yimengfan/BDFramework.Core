@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 using System.Runtime.Versioning;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
-using BDFramework.VersionController;
+using BDFramework.ResourceMgr;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
