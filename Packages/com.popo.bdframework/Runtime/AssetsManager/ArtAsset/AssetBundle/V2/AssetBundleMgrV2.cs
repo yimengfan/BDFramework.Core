@@ -81,6 +81,9 @@ namespace BDFramework.ResourceMgr.V2
             this.firstFindDir = IPath.FormatPathOnRuntime(firstFindDir);
             this.secFindDir = IPath.FormatPathOnRuntime(secFindDir);
 
+            BDebug.Log(BResources.LogTag, $"firstDir:{firstFindDir}", Color.red);
+            BDebug.Log(BResources.LogTag, $"secDir:{secFindDir}", Color.red);
+            
             //3.加载ArtConfig
             this.AssetBundleConfig = LoadAssetbundleConfig(firstFindDir);
 
@@ -88,8 +91,7 @@ namespace BDFramework.ResourceMgr.V2
             IEnumeratorTool.StartCoroutine(this.IE_AsyncLoadTaskUpdate());
             IEnumeratorTool.StartCoroutine(this.IE_UnLoadTaskUpdate());
 
-            BDebug.Log(BResources.LogTag, $"firstDir:{firstFindDir}", Color.red);
-            BDebug.Log(BResources.LogTag, $"secDir:{secFindDir}", Color.red);
+  
         }
 
         /// <summary>
@@ -234,11 +236,11 @@ namespace BDFramework.ResourceMgr.V2
         public string FindMultiAddressAsset(string assetbundleFileName)
         {
             //第一地址
-            var p = IPath.Combine(this.firstFindDir, assetbundleFileName);
+            var p = IPath.Combine(this.firstFindDir,BResources.ART_ASSET_ROOT_PATH ,assetbundleFileName);
             //寻址到第二路径
             if (!File.Exists(p))
             {
-                p = IPath.Combine(this.secFindDir, assetbundleFileName);
+                p = IPath.Combine(this.secFindDir,BResources.ART_ASSET_ROOT_PATH, assetbundleFileName);
             }
 
             return p;

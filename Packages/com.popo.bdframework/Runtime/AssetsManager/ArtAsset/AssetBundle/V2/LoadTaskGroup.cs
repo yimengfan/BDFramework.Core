@@ -287,7 +287,7 @@ namespace BDFramework.ResourceMgr
                         BDebug.Log(
                             LogTag,$"<color=red>Id:{this.Id}</color> --> 加载依赖完成:{item}  -  {UnityEditor.AssetDatabase.GUIDToAssetPath(item.AssetBundlePath)}!  <color=green>剩余:{loadingTaskList.Count + dependAssetBundleList.Count - (curLoadIdx + 1)}/{dependAssetBundleList.Count}</color>");
 #else
-                  BDebug.Log(
+                        BDebug.Log(
                             LogTag,$"<color=red>Id:{this.Id}</color> -->  加载依赖完成:{item.AssetBundlePath}!  剩余:{loadingTaskList.Count + dependAssetBundleList.Count - (curLoadIdx + 1)}/{dependAssetBundleList.Count}");
 #endif
                       

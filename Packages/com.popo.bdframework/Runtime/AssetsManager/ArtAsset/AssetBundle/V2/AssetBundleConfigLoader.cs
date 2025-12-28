@@ -53,14 +53,14 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         /// <param name="configPath"></param>
         /// <param name="onLoaded"></param>
-        public void Load(string configDir)
+        public void Load(string rootDir)
         {
 #if UNITY_EDITOR
             //这里用于editor加载后的覆盖写入
-            this.configPath = IPath.Combine(configDir, BResources.ART_ASSET_INFO_PATH);
+            this.configPath = IPath.Combine(rootDir, BResources.ART_ASSET_INFO_PATH);
 #endif
-            var atContent = ClientAssetsUtils.ReadAllText(configDir, configDir, BResources.ART_ASSET_TYPES_PATH);
-            var aiContent =  ClientAssetsUtils.ReadAllText(configDir, configDir, BResources.ART_ASSET_INFO_PATH);
+            var atContent = ClientAssetsUtils.ReadAllText(rootDir, rootDir, BResources.ART_ASSET_TYPES_PATH);
+            var aiContent =  ClientAssetsUtils.ReadAllText(rootDir, rootDir, BResources.ART_ASSET_INFO_PATH);
             //资源类型配置
             if (atContent ==  null || aiContent==null)
             {

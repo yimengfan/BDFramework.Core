@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18011689, g: 0.22551697, b: 0.3066923, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -472,7 +472,6 @@ MonoBehaviour:
   m_Script: {fileID: -614279893, guid: 3b8ad62e537bc86418adf879fac81ef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsLog: 1
 --- !u!114 &1247277305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,97 +484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ff4051e75dc9443879b116bd65c930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fpsCounter:
-    enabled: 1
-    anchor: 1
-    color: {r: 0.33333334, g: 0.85490197, b: 0.4, a: 1}
-    style: 1
-    updateInterval: 0.5
-    warningLevelValue: 50
-    criticalLevelValue: 20
-    resetAverageOnNewScene: 1
-    resetMinMaxOnNewScene: 1
-    minMaxIntervalsToSkip: 3
-    realtimeFPSFoldout: 0
-    realtimeFPS: 1
-    milliseconds: 1
-    averageFoldout: 0
-    average: 1
-    averageMilliseconds: 1
-    averageNewLine: 1
-    averageSamples: 50
-    minMaxFoldout: 0
-    minMax: 1
-    minMaxMilliseconds: 0
-    minMaxNewLine: 1
-    minMaxTwoLines: 0
-    renderFoldout: 0
-    render: 0
-    renderNewLine: 1
-    renderAutoAdd: 1
-    colorWarning: {r: 0.9254902, g: 0.8784314, b: 0.34509805, a: 1}
-    colorCritical: {r: 0.9764706, g: 0.35686275, b: 0.35686275, a: 1}
-    colorRender: {r: 0.654902, g: 0.43137255, b: 0.81960785, a: 1}
-  memoryCounter:
-    enabled: 1
-    anchor: 1
-    color: {r: 0.91764706, g: 0.93333334, b: 0.39607844, a: 1}
-    style: 1
-    updateInterval: 0.5
-    precise: 1
-    total: 1
-    allocated: 1
-    monoUsage: 1
-    gfx: 1
-  deviceInfoCounter:
-    enabled: 1
-    anchor: 1
-    color: {r: 0.6745098, g: 0.6745098, b: 0.6745098, a: 1}
-    style: 0
-    platform: 1
-    cpuModel: 1
-    cpuModelNewLine: 1
-    gpuModel: 1
-    gpuModelNewLine: 1
-    gpuApi: 1
-    gpuApiNewLine: 1
-    gpuSpec: 1
-    gpuSpecNewLine: 1
-    ramSize: 1
-    ramSizeNewLine: 1
-    screenData: 1
-    screenDataNewLine: 1
-    deviceModel: 1
-    deviceModelNewLine: 1
-  hotKey: 96
-  circleGesture: 0
-  hotKeyCtrl: 0
-  hotKeyShift: 0
-  hotKeyAlt: 0
-  keepAlive: 1
-  operationMode: 2
-  forceFrameRate: 0
-  forcedFrameRate: -1
-  background: 1
-  backgroundColor: {r: 0, g: 0, b: 0, a: 0.60784316}
-  backgroundPadding: 5
-  shadow: 0
-  shadowColor: {r: 0, g: 0, b: 0, a: 0.5019608}
-  shadowDistance: {x: 1, y: -1}
-  outline: 0
-  outlineColor: {r: 0, g: 0, b: 0, a: 0.5019608}
-  outlineDistance: {x: 1, y: -1}
-  autoScale: 0
-  scaleFactor: 1.25
-  labelsFont: {fileID: 0}
-  fontSize: 14
-  lineSpacing: 1
-  countersSpacing: 0
-  paddingOffset: {x: 5, y: 5}
-  pixelPerfect: 1
-  sortingOrder: 10000
-  lookAndFeelFoldout: 0
-  advancedFoldout: 0
 --- !u!114 &1247277306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,4 +794,48 @@ Transform:
   - {fileID: 223198459}
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1901999184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1901999186}
+  - component: {fileID: 1901999185}
+  m_Layer: 0
+  m_Name: BDebug
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1901999185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901999184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a4c7238f14b4f89a7d98cd7c5255554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLog: 1
+--- !u!4 &1901999186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901999184}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

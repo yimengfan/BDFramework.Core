@@ -257,7 +257,7 @@ namespace BDFramework.Asset
             }
 
 #endif
-            Debug.LogError("不存在:" + fileName);
+            Debug.LogError($"不存在:{path} & {path2}");
             return null;
         }
 

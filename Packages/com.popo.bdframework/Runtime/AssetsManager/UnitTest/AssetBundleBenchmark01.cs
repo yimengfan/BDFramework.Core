@@ -180,6 +180,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
     private void Start()
     {
         this.Init();
+        
     }
 
 
@@ -202,6 +203,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         //获取gameview
         //  var assembly = typeof(UnityEditor.EditorWindow).Assembly;
         // System.Type GameViewType = assembly.GetType("UnityEditor.GameView");
+        curRuntimePlatform = BApplication.RuntimePlatform;
     }
 
     /// <summary>
@@ -245,14 +247,23 @@ public class AssetBundleBenchmark01 : MonoBehaviour
     /// <returns></returns>
     IEnumerator IE_01_LoadAll(bool isAsyncLoad, RuntimePlatform platform)
     {
+        BResources.UnloadAssets();
         //加载
         BResources.SetAUPLEvel(curAupLevel);
-        var abPath = Application.isEditor ? BApplication.DevOpsPublishAssetsPath : Application.persistentDataPath;
-        BResources.InitLoadAssetBundleEnv(abPath, platform);
-        BResources.ResLoader.WarmUpShaders();
-
+        // var abPath = Application.isEditor ? BApplication.DevOpsPublishAssetsPath : Application.persistentDataPath;
+        // BResources.InitLoadAssetBundleEnv(abPath, platform);
+        // BResources.ResLoader.WarmUpShaders();
+        var abRootPath = "";
+        if (Application.isEditor)
+        {
+             abRootPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetRuntimePlatformPath());
+        }
+        else
+        {
+            throw new Exception("暂不支持真机测试");
+        }
         //package信息
-        var pakInfo = ClientAssetsUtils.GetPackageBuildInfo(abPath, platform);
+        var pakInfo = ClientAssetsUtils.GetPackageBuildInfo(abRootPath, platform);
         // Profiler.BeginSample("Benchmark Load");
         var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformLoadPath(platform), pakInfo.Version);
         if (!Directory.Exists(benchmarkDataOutpath))
@@ -273,8 +284,8 @@ public class AssetBundleBenchmark01 : MonoBehaviour
 
 
             var typeName = AssetBundleLoader.AssetBundleConfig.AssetTypes.AssetTypeList[assetdata.AssetType];
-            var runtimePath = string.IsNullOrEmpty(assetdata.GUID) ? assetdata.LoadPath : assetdata.GUID;
-            var loadtype = string.IsNullOrEmpty(assetdata.GUID) ? LoadPathType.RuntimePath : LoadPathType.GUID;
+            var runtimePath = string.IsNullOrEmpty(assetdata.LoadPath) ? assetdata.GUID : assetdata.LoadPath;
+            var loadtype = string.IsNullOrEmpty(assetdata.LoadPath) ? LoadPathType.GUID : LoadPathType.RuntimePath;
             //加载
             Debug.Log($"<color=yellow>【LoadTest】</color>: {runtimePath} ");
             Debug.Log($"Create task frame: <color=red>{Time.frameCount} </color>");
@@ -843,13 +854,19 @@ public class AssetBundleBenchmark01 : MonoBehaviour
     /// <returns></returns>
     async static void IE_02_LoadAll(bool isAsyncLoad, RuntimePlatform platform)
     {
+        BResources.UnloadAssets();
         //加载器
-        var abPath = Application.isEditor ? BApplication.DevOpsPublishAssetsPath : Application.persistentDataPath;
-        BResources.SetAUPLEvel(BResources.AUPLevel.Low);
-        BResources.InitLoadAssetBundleEnv(abPath, platform);
-        BResources.ResLoader.WarmUpShaders();
+        var abRootPath = "";
+        if (Application.isEditor)
+        {
+            abRootPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetRuntimePlatformPath());
+        }
+        else
+        {
+            throw new Exception("暂不支持真机测试");
+        }
         //资源信息
-        var pakInfo = ClientAssetsUtils.GetPackageBuildInfo(abPath, platform);
+        var pakInfo = ClientAssetsUtils.GetPackageBuildInfo(abRootPath, platform);
 
         Profiler.BeginSample("Benchmark Load");
         var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "BenchMark", BApplication.GetPlatformLoadPath(platform), pakInfo.Version);
@@ -870,8 +887,8 @@ public class AssetBundleBenchmark01 : MonoBehaviour
             }
 
             var typeName = AssetBundleLoader.AssetBundleConfig.AssetTypes.AssetTypeList[assetdata.AssetType];
-            var runtimePath = string.IsNullOrEmpty(assetdata.GUID) ? assetdata.LoadPath : assetdata.GUID;
-            var loadtype = string.IsNullOrEmpty(assetdata.GUID) ? LoadPathType.RuntimePath : LoadPathType.GUID;
+            var runtimePath = string.IsNullOrEmpty(assetdata.LoadPath) ? assetdata.GUID : assetdata.LoadPath;
+            var loadtype = string.IsNullOrEmpty(assetdata.LoadPath) ? LoadPathType.GUID : LoadPathType.RuntimePath;
             //加载
             Debug.Log($"<color=yellow>【LoadTest】</color>: {runtimePath} ");
             Debug.Log("create task frame:" + Time.frameCount);
@@ -1358,13 +1375,19 @@ public class AssetBundleBenchmark01 : MonoBehaviour
     {
         BResources.UnloadAssets();
         //加载
-        BResources.SetAUPLEvel(curAupLevel);
-        var abPath = Application.isEditor ? BApplication.DevOpsPublishAssetsPath : Application.persistentDataPath;
-        BResources.InitLoadAssetBundleEnv(abPath, platform);
-        BResources.ResLoader.WarmUpShaders();
+        //加载器
+        var abRootPath = "";
+        if (Application.isEditor)
+        {
+            abRootPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetRuntimePlatformPath());
+        }
+        else
+        {
+            throw new Exception("暂不支持真机测试");
+        }
+        //资源信息
+        var pakInfo = ClientAssetsUtils.GetPackageBuildInfo(abRootPath, platform);
 
-        //package信息
-        var pakInfo = ClientAssetsUtils.GetPackageBuildInfo(abPath, platform);
 
         var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformLoadPath(platform), pakInfo.Version);
         if (!Directory.Exists(benchmarkDataOutpath))
@@ -1386,8 +1409,8 @@ public class AssetBundleBenchmark01 : MonoBehaviour
             }
 
             var typeName = AssetBundleLoader.AssetBundleConfig.AssetTypes.AssetTypeList[assetdata.AssetType];
-            var runtimePath = string.IsNullOrEmpty(assetdata.GUID) ? assetdata.LoadPath : assetdata.GUID;
-            var loadtype = string.IsNullOrEmpty(assetdata.GUID) ? LoadPathType.RuntimePath : LoadPathType.GUID;
+            var runtimePath = string.IsNullOrEmpty(assetdata.LoadPath) ? assetdata.GUID : assetdata.LoadPath;
+            var loadtype = string.IsNullOrEmpty(assetdata.LoadPath) ? LoadPathType.GUID : LoadPathType.RuntimePath;
 
             bool isCancel = false;
             bool isLoad = false;

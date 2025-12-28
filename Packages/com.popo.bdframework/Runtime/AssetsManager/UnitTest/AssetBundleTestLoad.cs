@@ -1,6 +1,9 @@
 using System;
+using System.IO;
+using BDFramework.Asset;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -9,17 +12,26 @@ namespace AssetsManager.UnitTest
 {
     public class AssetBundleTestLoad : MonoBehaviour
     {
-        private void Awake()
+        private void Start()
         {
             //初始化
-            var abPath = Application.isEditor ? BApplication.DevOpsPublishAssetsPath : Application.persistentDataPath;
-            BResources.InitLoadAssetBundleEnv(abPath, BApplication.RuntimePlatform);
+            if (Application.isEditor)
+            {
+                var abRootPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, BApplication.GetRuntimePlatformPath());
+                BResources.InitLoadAssetBundleEnv(abRootPath, BApplication.RuntimePlatform);
+            }
+            else
+            {
+                throw new Exception("暂不支持真机测试");
+            }
+
+
             BResources.ResLoader.WarmUpShaders();
         }
 
         public Transform Parent;
         public string Path;
-        
+
         [HorizontalGroup("a")]
         [HorizontalGroup("a/a1")]
         [Button("同步加载")]
@@ -27,7 +39,6 @@ namespace AssetsManager.UnitTest
         {
             var go = BResources.Load<Object>(this.Path);
             GameObject.Instantiate(go);
-
         }
 
 

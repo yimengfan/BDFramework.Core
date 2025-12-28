@@ -5,12 +5,10 @@
     "SQLRoot"  : 3,
     "ArtRoot"  : 3,
     "CodeRunMode" : 1,
-    "IsDebuggerILRuntime" : false,
-    "IsDebugLog"          : true,
-    "IsHotfix"            : false,
-    "ClientVersionNum"    : "0.0.0",
-    "L2Type"              : 1,
-    "ClassType"           : "BDFramework.Configure.GameBaseConfigProcessor+Config"
+    "IsDebugLog"  : true,
+    "ClientVersionNum" : "4.0.0",
+    "L2Type"           : 1,
+    "ClassType"        : "BDFramework.Configure.GameBaseConfigProcessor+Config"
   },
   {
     "SqlitePassword" : "password123!!!",
