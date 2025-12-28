@@ -5,6 +5,17 @@ namespace  BDFramework.Assets.VersionContrller
     /// </summary>
     static public class VersionNumHelper
     {
+       public struct VersionNum
+        {
+           public int bigNum;
+           public  int smallNum;
+           public int additiveNum;
+
+           public string ToString()
+           {
+               return $"{bigNum}.{smallNum}.{additiveNum}";
+           }
+        }
         /// <summary>
         ///  对比,并添加一个版本号
         /// 大版本.迭代版本.自增版本 =》1.0.53
@@ -12,8 +23,8 @@ namespace  BDFramework.Assets.VersionContrller
         /// </summary>
         static public string AddVersionNum(string lastVersionNum, string newVersionNum, int add = 1)
         {
-           var (newBigNum, newSmallNum, newAdditiveNum) = ParseVersion(newVersionNum);
-           return AddVersionNum(lastVersionNum, newBigNum, newSmallNum, newAdditiveNum, add);
+           var  ver = ParseVersion(newVersionNum);
+           return AddVersionNum(lastVersionNum, ver.bigNum, ver.smallNum, ver.additiveNum, add);
         }
 
         /// <summary>
@@ -30,21 +41,21 @@ namespace  BDFramework.Assets.VersionContrller
         static public string AddVersionNum(string lastVersionNum, int bigNum = 0, int smallNum = 0, int additiveNum = 0, int add = 1)
         {
             //版本号赋值
-            var (lastBigNum, lastSmallNum, lastAdditiveNum) = ParseVersion(lastVersionNum);
-            var retBigNum = bigNum > lastBigNum ? bigNum : lastBigNum;
-            var retSmallNum = smallNum > lastSmallNum ? smallNum : lastSmallNum;
+            var lastVer = ParseVersion(lastVersionNum);
+            var retBigNum = bigNum > lastVer.bigNum ? bigNum : lastVer.bigNum;
+            var retSmallNum = smallNum > lastVer.smallNum ? smallNum : lastVer.smallNum ;
             int retAdditiveNum = 0;
             //自增版本号赋值
             //当大版本，迭代版本修改时,自增版本自动归零,否则默认add 1
-            if (bigNum == lastBigNum && smallNum == lastSmallNum)
+            if (bigNum == lastVer.bigNum && smallNum == lastVer.smallNum )
             {
-                if (additiveNum > lastAdditiveNum)
+                if (additiveNum > lastVer.additiveNum )
                 {
                     retAdditiveNum = additiveNum;
                 }
                 else
                 {
-                    retAdditiveNum = lastAdditiveNum + add;
+                    retAdditiveNum = lastVer.additiveNum + add;
                 }
             }
             else
@@ -62,21 +73,20 @@ namespace  BDFramework.Assets.VersionContrller
         /// </summary>
         /// <param name="version"></param>
         /// <returns></returns>
-        static (int, int, int) ParseVersion(string version)
+        static public VersionNum ParseVersion(string version)
         {
-            int bigNum = 0;
-            int smallNum = 0;
-            int additiveNum = 0;
+
+            var ver = new VersionNum();
             //版本号解析，格式要求 1.0.53
             var ints = version.Split('.');
             if(ints.Length>0)
-            int.TryParse(ints[0], out bigNum);
+            int.TryParse(ints[0], out ver.bigNum);
             if(ints.Length>1)
-            int.TryParse(ints[1], out smallNum);
+            int.TryParse(ints[1], out ver.smallNum);
             if(ints.Length>2)
-            int.TryParse(ints[2], out additiveNum);
+            int.TryParse(ints[2], out ver.additiveNum);
 
-            return (bigNum, smallNum, additiveNum);
+            return ver;
         }
 
         /// <summary>
@@ -88,9 +98,9 @@ namespace  BDFramework.Assets.VersionContrller
         static public bool Compare(string a, string b)
         {
             //a==b  true
-            var (ab,@as,aa) = ParseVersion(a);
-            var (bb, bs, ba) = ParseVersion(b);
-            if(ab>=bb && @as>=bs && aa>=ba)
+            var aver= ParseVersion(a);
+            var bver = ParseVersion(b);
+            if(aver.bigNum>=bver.bigNum && aver.smallNum>=bver.smallNum && aver.additiveNum>=bver.additiveNum)
             {
                 return true;
             }
@@ -107,17 +117,17 @@ namespace  BDFramework.Assets.VersionContrller
         {
             //a>=b  true
             //a<b  false
-            var (ab,@as,aa) = ParseVersion(a);
-            var (bb, bs, ba) = ParseVersion(b);
-            if(ab>bb)
+            var aver = ParseVersion(a);
+            var bver = ParseVersion(b);
+            if(aver.bigNum>bver.bigNum)
             {
                 return true;
             }
-            else if(ab == bb &&@as > bs)
+            else if(aver.bigNum == bver.bigNum &&aver.smallNum > bver.smallNum )
             {
                 return true;
             }
-            else if(ab ==bb && @as == bs && aa >= ba)
+            else if(aver.bigNum == bver.bigNum &&aver.smallNum == bver.smallNum  && aver.additiveNum >= bver.additiveNum)
             {
                 return true;
             }

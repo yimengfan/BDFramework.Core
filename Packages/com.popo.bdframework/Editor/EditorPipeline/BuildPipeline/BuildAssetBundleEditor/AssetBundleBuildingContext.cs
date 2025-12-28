@@ -449,7 +449,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
             //更新
             var version = BDFrameworkPipelineHelper.GetArtSVCNum(platform, BuildParams.OutputPath);
-            ClientAssetsHelper.GenBasePackageBuildInfo(BuildParams.OutputPath, platform, artAssetsSVC: version);
+            ClientAssetsUtils.GenBasePackageBuildInfo(BuildParams.OutputPath, platform, artAssetsSVC: version);
             BDebug.Log($"7.回写版本号:{version}", Color.green);
         }
 

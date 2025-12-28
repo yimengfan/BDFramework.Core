@@ -23,19 +23,9 @@ namespace BDFramework
         Editor = 0,
 
         /// <summary>
-        /// 用户可读写沙盒
+        /// 热更
         /// </summary>
-        Persistent,
-
-        /// <summary>
-        /// Streaming
-        /// </summary>
-        StreamingAsset,
-
-        /// <summary>
-        /// devop的发布目录
-        /// </summary>
-        DevOpsPublish
+        Hotfix = 1,
     }
 
     /// <summary>

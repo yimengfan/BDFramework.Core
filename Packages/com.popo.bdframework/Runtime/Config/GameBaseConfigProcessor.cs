@@ -42,24 +42,17 @@ namespace BDFramework.Configure
             [HorizontalGroup("a/a4")]
             public HotfixCodeRunMode CodeRunMode = HotfixCodeRunMode.HyCLR;
 
-            [LabelText("是否开启ILRuntime调试")]
-            [HorizontalGroup("a/a5")]
-            public bool IsDebuggerILRuntime = false;
 
             [LabelText("是否打印日志")]
             [HorizontalGroup("a/a6")]
             public bool IsDebugLog = true;
 
 
-            [LabelText("是否热更资产")]
-            [HorizontalGroup("a/a10")]
-            public bool IsHotfix = false;
-
             [Space(5)]
             [LabelText("客户端版本")]
             [HorizontalGroup("a/a12")]
             public string ClientVersionNum = "0.0.0";
-            
+
 #if UNITY_EDITOR
             [HorizontalGroup("a/a12", width: 150)]
             [LabelText("更新所有配置版本号")]
@@ -70,7 +63,7 @@ namespace BDFramework.Configure
                 ConfigEditorUtil.UpdateClientVersionToAll(ClientVersionNum);
             }
 #endif
-            
+
             [LabelText("语言包")]
             [HorizontalGroup("a/a13")]
             public L2Type L2Type = L2Type.zh_CN;
@@ -86,7 +79,7 @@ namespace BDFramework.Configure
                 string bv = ClientVersionNum;
 #if UNITY_EDITOR
                 ASCIIEncoding asciiEncoding = new ASCIIEncoding();
-                char[] words = new char[] {'0','1','2','3','4','5','6','7','8','9','.' };
+                char[] words = new char[] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'};
                 var bundleVersion = PlayerSettings.bundleVersion.ToUpper().ToCharArray();
                 var count = bundleVersion.Length;
                 StringBuilder sb = new StringBuilder();
@@ -95,7 +88,7 @@ namespace BDFramework.Configure
                     var ch = bundleVersion[i];
                     if (!words.Contains(ch))
                     {
-                        if(ch>='A'&&ch<='Z') 
+                        if (ch >= 'A' && ch <= 'Z')
                         {
                             var intAsciiCode = asciiEncoding.GetBytes(bundleVersion)[i].ToString();
                             sb.Append(intAsciiCode);
@@ -110,16 +103,16 @@ namespace BDFramework.Configure
                         sb.Append(ch);
                     }
                 }
+
                 bv = sb.ToString();
                 bv = bv.Substring(0, Mathf.Min(bv.Length, 18));
 #endif
                 return bv;
             }
         }
-        
 
 
-        public  void OnConfigLoad(ConfigDataBase config)
+        public void OnConfigLoad(ConfigDataBase config)
         {
             var con = config as Config;
             //log
@@ -127,12 +120,6 @@ namespace BDFramework.Configure
             {
                 Debug.Log("日志打印:" + con.IsDebugLog);
                 BDLauncher.Inst.GetComponent<BDebug>().IsLog = con.IsDebugLog;
-            }
-            
-            //纠正配置
-            if (!Application.isEditor)
-            {
-                con.ArtRoot = AssetLoadPathType.Persistent;
             }
         }
 
@@ -144,34 +131,23 @@ namespace BDFramework.Configure
         static public string GetLoadPath(AssetLoadPathType assetLoadPathType)
         {
             var path = "";
-            //Editor下按照加载路径区分
-            if (Application.isEditor)
-            {
-                switch (assetLoadPathType)
-                {
-                    case AssetLoadPathType.Persistent:
-                        path = BApplication.persistentDataPath;
-                        break;
-                    case AssetLoadPathType.Editor:
-                    case AssetLoadPathType.StreamingAsset:
-                    {
-                        path = BApplication.streamingAssetsPath;
-                    }
-                        break;
-                    case AssetLoadPathType.DevOpsPublish:
-                    {
-                        path = BApplication.DevOpsPublishAssetsPath;
-                    }
-                        break;
-                }
-            }
-            else
-            {
-                //真机环境默认都在persistent下，
-                //因为需要io.不在的各个模块会自行拷贝
-                path = Application.persistentDataPath;
-            }
 
+            //Editor下 全部走DevOpsPublishAssetsPath
+            switch (assetLoadPathType)
+            {
+                case AssetLoadPathType.Editor:
+                {
+                    path = BApplication.DevOpsPublishAssetsPath;
+                }
+                    break;
+                case AssetLoadPathType.Hotfix:
+                {
+                    //开了hotfix,环境默认都在persistent下. 
+                    //因为需要io.不在的各个模块会自行拷贝
+                    path = BApplication.persistentDataPath;
+                }
+                    break;
+            }
             return path;
         }
     }

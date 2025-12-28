@@ -371,6 +371,7 @@ namespace BDFramework.VersionController
                 }
                     break;
             }
+
             BDebug.LogWatchEnd("差异列表");
             BDebug.Log(LogTag, $" 配置数量:{serverAssetsInfoList.Count} ,本地存在{serverAssetsInfoList.Count - diffDownloadQueue.Count},下载文件数量{diffDownloadQueue.Count}", Color.yellow);
 
@@ -381,7 +382,7 @@ namespace BDFramework.VersionController
             #region 根据差异文件下载
 
             BDebug.Log(LogTag, "4.下载资源:", Color.red);
-            if(diffDownloadQueue.Count>0)
+            if (diffDownloadQueue.Count > 0)
             {
                 var failDownloadList = await DownloadAssets(serverUrl, localSaveAssetsPath, diffDownloadQueue, onDownloadProccess);
                 if (failDownloadList.Count > 0)
@@ -402,11 +403,12 @@ namespace BDFramework.VersionController
             string localAssetInfoPath = "";
             if (isDownloadSubPackageMode)
             {
-                localAssetInfoPath = BResources.GetAssetsSubPackageInfoPath(BApplication.persistentDataPath, platform, subPackageName);
+                localAssetInfoPath =  ClientAssetsUtils.GetPersistentAssetPath(subPackageName);
+                //BResources.GetAssetsSubPackageInfoPath(BApplication.persistentDataPath, platform, subPackageName);
             }
             else
             {
-                localAssetInfoPath = BResources.GetAssetsInfoPath(BApplication.persistentDataPath, platform);
+                localAssetInfoPath = ClientAssetsUtils.GetPersistentAssetPath(BResources.ASSETS_INFO_PATH);//BResources.GetAssetsInfoPath();
             }
 
             //写入Asset.Info
@@ -449,10 +451,9 @@ namespace BDFramework.VersionController
                         if (ret == null)
                         {
                             await UniTask.SwitchToMainThread();
-                            onTaskEndCallback?.Invoke(RetStatus.DeleteOldAssets,localPath);
+                            onTaskEndCallback?.Invoke(RetStatus.DeleteOldAssets, localPath);
                             BDebug.Log(LogTag, "删除过期资源:" + localPath);
                             File.Delete(assetPath);
-                            
                         }
                     }
                 }
@@ -464,7 +465,7 @@ namespace BDFramework.VersionController
             foreach (var serverAssetItem in serverAssetsInfoList)
             {
                 var ret = BResources.IsExsitAssetWithCheckHash(platform, serverAssetItem.LocalPath, serverAssetItem.HashName);
-               
+
                 await UniTask.SwitchToMainThread();
                 onTaskEndCallback?.Invoke(RetStatus.Checkassets, serverAssetItem.HashName);
                 if (!ret)
@@ -512,10 +513,10 @@ namespace BDFramework.VersionController
             var serverAssetsContent = "";
 
             //1.判断版本号
-            if ( VersionNumHelper.GT(localVersionInfo.Version , serverVersionInfo.Version))
+            if (VersionNumHelper.GT(localVersionInfo.Version, serverVersionInfo.Version))
             {
                 suc = $"本地版本相同或更新,无需下载! serVer:{serverVersionInfo.Version}  localVer:{localVersionInfo.Version}";
-                BDebug.Log(LogTag, suc , Color.red);
+                BDebug.Log(LogTag, suc, Color.red);
                 return (err, suc, null, null, null);
             }
 
@@ -531,7 +532,7 @@ namespace BDFramework.VersionController
             localAssetsInfoList = LoadLocalSubPacakgeAssetInfo(platform, localVersionInfo);
 
             //加载本地asset.info
-            var localAssetsInfo = this.LoadLocalAssetInfo(platform);
+            var localAssetsInfo = this.LoadLocalAssetInfo();
             localAssetsInfoList.AddRange(localAssetsInfo);
             //去重
             localAssetsInfoList = localAssetsInfoList.Distinct().ToList();
@@ -608,7 +609,7 @@ namespace BDFramework.VersionController
             localAssetsInfoList = LoadLocalSubPacakgeAssetInfo(platform, localVersionInfo);
 
             //2.加载本地asset.info
-            var localAssetsInfo = this.LoadLocalAssetInfo(platform);
+            var localAssetsInfo = this.LoadLocalAssetInfo();
             localAssetsInfoList.AddRange(localAssetsInfo);
             //去重、排序
             localAssetsInfoList = localAssetsInfoList.Distinct().ToList();
@@ -652,7 +653,7 @@ namespace BDFramework.VersionController
 
             string err = null;
             AssetsVersionInfo serverVersionInfo = null;
-            AssetsVersionInfo localVersionInfo  = null;
+            AssetsVersionInfo localVersionInfo = null;
             //开始下载服务器配置
             for (int i = 0; i < RETRY_COUNT; i++)
             {
@@ -677,13 +678,12 @@ namespace BDFramework.VersionController
                 if (File.Exists(localAssetsVersionInfoPath))
                 {
                     localVersionInfo = JsonMapper.ToObject<AssetsVersionInfo>(File.ReadAllText(localAssetsVersionInfoPath));
-              
                 }
                 else
                 {
                     await UniTask.SwitchToMainThread();
                     BDebug.Log("Persistent不存在server_assets_version.info, 使用母包的package_build.info! ", Color.yellow);
-                    var basePackBuildInfo = ClientAssetsHelper.GetBasePackBuildInfo();
+                    var basePackBuildInfo = ClientAssetsUtils.GetBasePackBuildInfo();
                     localVersionInfo = new AssetsVersionInfo();
                     if (basePackBuildInfo != null)
                     {
@@ -754,11 +754,11 @@ namespace BDFramework.VersionController
         /// <summary>
         /// 加载本地的Asset.info
         /// </summary>
-        private List<AssetItem> LoadLocalAssetInfo(RuntimePlatform platform)
+        private List<AssetItem> LoadLocalAssetInfo()
         {
             var retList = new List<AssetItem>();
             //优先加载persistent的Assets.info
-            var persistentAssetInfoPath = BResources.GetAssetsInfoPath(BApplication.persistentDataPath, platform);
+            var persistentAssetInfoPath = ClientAssetsUtils.GetPersistentAssetPath(BResources.ASSETS_INFO_PATH);
             if (File.Exists(persistentAssetInfoPath))
             {
                 var content = File.ReadAllText(persistentAssetInfoPath);
@@ -767,36 +767,21 @@ namespace BDFramework.VersionController
             //streaming 和其他的Assets.info
             else
             {
-                //根据加载模式不同,寻找不同目录下的其他配置
-                //打包时，本地会带一份ServerAssets.info以标记当前包携带的资源
-                var config = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
-                switch (config.ArtRoot)
+                var steamingAssetsInfoPath = ClientAssetsUtils.GetStreamingAssetPath(BResources.ASSETS_INFO_PATH);
+#if UNITY_ANDROID
+                if (BetterStreamingAssets.FileExists(steamingAssetsInfoPath))
                 {
-                    case AssetLoadPathType.Persistent:
-                    case AssetLoadPathType.StreamingAsset:
-                    {
-                        //TODO ：BSA 读取，不需要Streaming前缀
-                        var steamingAssetsInfoPath = IPath.Combine(BApplication.GetPlatformLoadPath(platform), BResources.ASSETS_INFO_PATH);
-                        //var steamingAssetsInfoPath = GetAssetsInfoPath(BDApplication.streamingAssetsPath, platform);
-                        if (BetterStreamingAssets.FileExists(steamingAssetsInfoPath))
-                        {
-                            var content = BetterStreamingAssets.ReadAllText(steamingAssetsInfoPath);
-                            retList = CsvSerializer.DeserializeFromString<List<AssetItem>>(content);
-                        }
-                    }
-                        break;
-                    case AssetLoadPathType.DevOpsPublish:
-                    {
-                        var path = GameBaseConfigProcessor.GetLoadPath(config.ArtRoot);
-                        var devopsAssetInfoPath = BResources.GetAssetsInfoPath(path, platform);
-                        if (File.Exists(devopsAssetInfoPath))
-                        {
-                            var content = File.ReadAllText(devopsAssetInfoPath);
-                            retList = CsvSerializer.DeserializeFromString<List<AssetItem>>(content);
-                        }
-                    }
-                        break;
+                    var content = BetterStreamingAssets.ReadAllText(steamingAssetsInfoPath);
+                    retList = CsvSerializer.DeserializeFromString<List<AssetItem>>(content);
                 }
+#else
+
+                if (File.Exists(steamingAssetsInfoPath))
+                {
+                    var content = File.ReadAllText(steamingAssetsInfoPath);
+                    retList = CsvSerializer.DeserializeFromString<List<AssetItem>>(content);
+                }
+#endif
             }
 
             return retList;

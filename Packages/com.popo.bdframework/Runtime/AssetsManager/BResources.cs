@@ -3,10 +3,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using BDFramework.Configure;
+using BDFramework.Asset;
 using BDFramework.ResourceMgr.V2;
 using BDFramework.Core.Tools;
-using BDFramework.ResourceMgrV2;
 using BDFramework.VersionController;
 using Cysharp.Text;
 using Object = UnityEngine.Object;
@@ -109,14 +108,6 @@ namespace BDFramework.ResourceMgr
 
         #endregion
 
-        #region 配置相关
-
-        /// <summary>
-        /// 客户端-资源包服务器信息
-        /// </summary>
-        readonly static public string Launcher_CONF__PATH = "LauncherConfig";
-
-        #endregion
 
         /// <summary>
         /// 加载器
@@ -128,17 +119,13 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         static private Dictionary<string, IResMgr> loaderCacheMap = new Dictionary<string, IResMgr>();
 
-        /// <summary>
-        /// 资产加载路径类型
-        /// </summary>
-        static public AssetLoadPathType AssetPathType { get; private set; } = AssetLoadPathType.Editor;
 
         /// <summary>
         /// 初始化
         /// </summary>
         /// <param name="abModel"></param>
         /// <param name="callback"></param>
-        static public void Init(AssetLoadPathType loadPathType)
+        static public void Init(AssetLoadPathType loadPathType, string firstDir = "", string secondDir = "")
         {
             //BDebug.EnableLog(LoadTaskGroup.LogTag);
             BDebug.Log(BResources.LogTag, "加载路径:" + loadPathType.ToString());
@@ -147,17 +134,16 @@ namespace BDFramework.ResourceMgr
 #if UNITY_EDITOR
                 //防止编译报错
                 ResLoader = new DevResourceMgr();
-                ResLoader.Init(null, RuntimePlatform.WindowsEditor);
+                ResLoader.Init(null, null);
 #endif
             }
             else
             {
-                var path = GameBaseConfigProcessor.GetLoadPath(loadPathType);
                 ResLoader = new AssetBundleMgrV2();
-                ResLoader.Init(path, BApplication.RuntimePlatform);
+                ResLoader.Init(firstDir, secondDir);
             }
 
-            AssetPathType = loadPathType;
+
             //初始化对象池
             InitObjectPools();
         }
@@ -175,7 +161,7 @@ namespace BDFramework.ResourceMgr
             if (!loaderCacheMap.TryGetValue(key, out var loder))
             {
                 ResLoader = new AssetBundleMgrV2();
-                ResLoader.Init(path, platform);
+                ResLoader.Init(path);
                 loaderCacheMap[key] = ResLoader;
             }
             else
@@ -185,20 +171,6 @@ namespace BDFramework.ResourceMgr
 
             //初始化对象池
             InitObjectPools();
-        }
-
-        /// <summary>
-        /// 远程资源地址
-        /// </summary>
-        private static string RemoteAssetsUrl = "";
-
-        /// <summary>
-        /// 设置网络寻址
-        /// 网络寻址模式
-        /// </summary>
-        static public void SetRemoteAssetsUrl(string url)
-        {
-            RemoteAssetsUrl = url;
         }
 
 
@@ -642,9 +614,9 @@ namespace BDFramework.ResourceMgr
         /// 从对象池加载
         /// </summary>
         /// <returns></returns>
-        static public GameObject LoadFormPool(string assetPath,LoadPathType pathType = LoadPathType.RuntimePath)
+        static public GameObject LoadFormPool(string assetPath, LoadPathType pathType = LoadPathType.RuntimePath)
         {
-            var obj = Load<GameObject>(assetPath,pathType);
+            var obj = Load<GameObject>(assetPath, pathType);
             if (obj != null)
             {
                 return GameObjectPoolManager.SpawnObject(obj);
@@ -694,8 +666,7 @@ namespace BDFramework.ResourceMgr
         static public bool IsExsitAsset(RuntimePlatform platform, string assetName, string assetHashName)
         {
             //本地是否下载过hash文件(之前下到一半就中止了)
-            var persistentHashPath = IPath.Combine(BApplication.persistentDataPath,
-                BApplication.GetPlatformLoadPath(platform), assetHashName);
+            var persistentHashPath = ClientAssetsUtils.GetPersistentAssetPath(assetHashName);
             if (File.Exists(persistentHashPath))
             {
                 var hash = FileHelper.GetMurmurHash3(persistentHashPath);
@@ -710,8 +681,7 @@ namespace BDFramework.ResourceMgr
             }
 
             //persistent判断
-            var persistentAssetPath = IPath.Combine(BApplication.persistentDataPath,
-                BApplication.GetPlatformLoadPath(platform), assetName);
+            var persistentAssetPath = ClientAssetsUtils.GetPersistentAssetPath(assetName);
             if (File.Exists(persistentAssetPath))
             {
                 return true;
@@ -719,25 +689,24 @@ namespace BDFramework.ResourceMgr
 
             /************母包资源的判断*************/
 
-            if (Application.isEditor && BDLauncher.Inst.Config.ArtRoot == AssetLoadPathType.DevOpsPublish)
-            {
-                //devops
-                var devopsAssetPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath,
-                    BApplication.GetPlatformLoadPath(platform), assetName);
-                if (File.Exists(devopsAssetPath))
-                {
-                    return true;
-                }
-            }
-            else
-            {
+
+            //devops
+            var streamingAssetPath = ClientAssetsUtils.GetStreamingAssetPath(assetName);
+#if UNITY_ANDROID
+                //安卓特殊处理
                 //Streaming 文件判断,无需Streaming前缀
-                var streamingAssetPath = IPath.Combine(BApplication.GetPlatformLoadPath(platform), assetName);
                 if (BetterStreamingAssets.FileExists(streamingAssetPath))
                 {
                     return true;
                 }
+
+#else
+            if (File.Exists(streamingAssetPath))
+            {
+                return true;
             }
+#endif
+
 
             return false;
         }
@@ -752,8 +721,7 @@ namespace BDFramework.ResourceMgr
         static public bool IsExsitAssetWithCheckHash(RuntimePlatform platform, string assetName, string assetHash)
         {
             //本地是否下载过hash文件(之前下到一半就中止了),hash文件只会在
-            var persistentHashPath = IPath.Combine(BApplication.persistentDataPath,
-                BApplication.GetPlatformLoadPath(platform), assetHash);
+            var persistentHashPath = ClientAssetsUtils.GetPersistentAssetPath(assetHash);
             if (File.Exists(persistentHashPath))
             {
                 var hash = FileHelper.GetMurmurHash3(persistentHashPath);
@@ -769,8 +737,7 @@ namespace BDFramework.ResourceMgr
             }
 
             //persistent判断
-            var persistentAssetPath = IPath.Combine(BApplication.persistentDataPath,
-                BApplication.GetPlatformLoadPath(platform), assetName);
+            var persistentAssetPath = ClientAssetsUtils.GetPersistentAssetPath(assetName);
             if (File.Exists(persistentAssetPath))
             {
                 var hash = FileHelper.GetMurmurHash3(persistentAssetPath);
@@ -783,36 +750,32 @@ namespace BDFramework.ResourceMgr
 
 
             /************母包资源的判断*************/
-            if (Application.isEditor && BDLauncher.Inst.Config.ArtRoot == AssetLoadPathType.DevOpsPublish)
+            var streamingAssetPath = ClientAssetsUtils.GetStreamingAssetPath(assetName);
+
+#if UNITY_ANDROID
+            //安卓特殊处理
+            //Streaming 文件判断,无需Streaming前缀
+            if (BetterStreamingAssets.FileExists(streamingAssetPath))
             {
-                //devops
-                var devopsAssetPath = IPath.Combine(BApplication.DevOpsPublishAssetsPath,
-                    BApplication.GetPlatformLoadPath(platform), assetName);
-                if (File.Exists(devopsAssetPath))
+                var bytes = BetterStreamingAssets.ReadAllBytes(streamingAssetPath);
+                var hash = FileHelper.GetMurmurHash3(bytes);
+                if (assetHash.Equals(hash))
                 {
-                    var hash = FileHelper.GetMurmurHash3(devopsAssetPath);
-                    if (assetHash.Equals(hash))
-                    {
-                        BDebug.Log($"【AB校验】devops存在 - {assetName} | hash - {assetHash}");
-                        return true;
-                    }
+                    BDebug.Log($"【AB校验】streaming存在 - {assetName} | hash - {assetHash}");
+                    return true;
                 }
             }
-            else
+#else
+            if (File.Exists(streamingAssetPath))
             {
-                //Streaming 文件判断,无需Streaming前缀
-                var streamingAssetPath = IPath.Combine(BApplication.GetPlatformLoadPath(platform), assetName);
-                if (BetterStreamingAssets.FileExists(streamingAssetPath))
+                var hash = FileHelper.GetMurmurHash3(streamingAssetPath);
+                if (assetHash.Equals(hash))
                 {
-                    var bytes = BetterStreamingAssets.ReadAllBytes(streamingAssetPath);
-                    var hash = FileHelper.GetMurmurHash3(bytes);
-                    if (assetHash.Equals(hash))
-                    {
-                        BDebug.Log($"【AB校验】streaming存在 - {assetName} | hash - {assetHash}");
-                        return true;
-                    }
+                    BDebug.Log($"【AB校验】devops存在 - {assetName} | hash - {assetHash}");
+                    return true;
                 }
             }
+#endif
 
 
             return false;
@@ -839,7 +802,18 @@ namespace BDFramework.ResourceMgr
         /// <param name="rootPath"></param>
         /// <param name="platform"></param>
         /// <returns></returns>
-        static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform, string version = "")
+        static public string GetAssetsInfoPath(string rootPath)
+        {
+            return IPath.Combine(rootPath, BResources.ASSETS_INFO_PATH);
+        }
+
+        /// <summary>
+        /// 获取资源信息路径
+        /// </summary>
+        /// <param name="rootPath"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
+        static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform)
         {
             return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), BResources.ASSETS_INFO_PATH);
         }

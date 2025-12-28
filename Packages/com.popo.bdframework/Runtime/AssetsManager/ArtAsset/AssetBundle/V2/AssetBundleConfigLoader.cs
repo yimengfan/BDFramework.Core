@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using AssetsManager;
+using BDFramework.Asset;
 using ServiceStack.Text;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -51,89 +53,52 @@ namespace BDFramework.ResourceMgr.V2
         /// </summary>
         /// <param name="configPath"></param>
         /// <param name="onLoaded"></param>
-        public void Load(string platformPath)
+        public void Load(string configDir)
         {
-            string assetsInfoPath = IPath.Combine(platformPath, BResources.ART_ASSET_INFO_PATH);
-            string assetTypePath = IPath.Combine(platformPath, BResources.ART_ASSET_TYPES_PATH);
-
+#if UNITY_EDITOR
+            //这里用于editor加载后的覆盖写入
+            this.configPath = IPath.Combine(configDir, BResources.ART_ASSET_INFO_PATH);
+#endif
+            var atContent = ClientAssetsUtils.ReadAllText(configDir, configDir, BResources.ART_ASSET_TYPES_PATH);
+            var aiContent =  ClientAssetsUtils.ReadAllText(configDir, configDir, BResources.ART_ASSET_INFO_PATH);
             //资源类型配置
-            if (!string.IsNullOrEmpty(assetTypePath) && File.Exists(assetTypePath))
+            if (atContent ==  null || aiContent==null)
             {
-                var content = File.ReadAllText(assetTypePath);
-                // var list = CsvSerializer.DeserializeFromString<List<string>>(content);
-                // var wlist = new List<AssetTypes>()
-                // {
-                //     new AssetTypes()
-                //     {
-                //         AssetTypeList = list,
-                //     }
-                // };
-                // var str = CsvSerializer.SerializeToCsv(wlist);
-                // File.WriteAllText(assetTypePath, str);
-                // //
-                // content = File.ReadAllText(assetTypePath);
-                var records = CsvSerializer.DeserializeFromString<List<AssetTypeConfig>>(content);
-                this.AssetTypes = records[0];
-                //创建不同类型的映射表
-                foreach (var assetType in this.AssetTypes.AssetTypeList)
-                {
-                    this.assetTypeABIdxMap[assetType] = new LoadPathIdxMap();
-                }
+                BDebug.LogError("assets配置文件不存在!!!");
+                return;
             }
-            else
+            var records = CsvSerializer.DeserializeFromString<List<AssetTypeConfig>>(atContent);
+            this.AssetTypes = records[0];
+            //创建不同类型的映射表
+            foreach (var assetType in this.AssetTypes.AssetTypeList)
             {
-                BDebug.LogError("配置文件不存在:" + assetsInfoPath);
+                this.assetTypeABIdxMap[assetType] = new LoadPathIdxMap();
             }
 
-            //资源配置
-            if (!string.IsNullOrEmpty(assetsInfoPath) && File.Exists(assetsInfoPath))
+            BDebug.LogWatchBegin("AssetbundleV2-加载config:");
+            this.AssetbundleItemList = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(aiContent);
+            BDebug.LogWatchEnd("AssetbundleV2-加载config:");
+            //
+            foreach (var abItem in this.AssetbundleItemList)
             {
-                this.configPath = assetsInfoPath;
-
-                BDebug.LogWatchBegin("AssetbundleV2-加载config:");
-                var content = File.ReadAllText(assetsInfoPath);
-                this.AssetbundleItemList = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(content);
-                BDebug.LogWatchEnd("AssetbundleV2-加载config:");
-
-                //
-                foreach (var abItem in this.AssetbundleItemList)
+                //可以被加载的资源
+                if (abItem.IsLoadConfig())
                 {
-                    //可以被加载的资源
-                    if (abItem.IsLoadConfig())
+                    var assettype = this.AssetTypes.AssetTypeList[abItem.AssetType];
+                    var map = this.assetTypeABIdxMap[assettype];
+                    if (!string.IsNullOrEmpty(abItem.LoadPath))
                     {
-                        var assettype = this.AssetTypes.AssetTypeList[abItem.AssetType];
-                        var map = this.assetTypeABIdxMap[assettype];
-                        if (!string.IsNullOrEmpty(abItem.LoadPath))
-                        {
-                            map[abItem.LoadPath] = abItem.Id;
-                        }
-                        else if (!string.IsNullOrEmpty(abItem.GUID))
-                        {
-                            map[abItem.GUID] = abItem.Id;
-                        }
+                        map[abItem.LoadPath] = abItem.Id;
+                    }
+                    else if (!string.IsNullOrEmpty(abItem.GUID))
+                    {
+                        map[abItem.GUID] = abItem.Id;
                     }
                 }
             }
-            else
-            {
-                BDebug.LogError("配置文件不存在:" + assetsInfoPath);
-            }
-
-            //初始化常用资源类型
-            // if (this.AssetTypes != null)
-            // {
-            //     //Prefab
-            //     var clsName = typeof(GameObject).FullName;
-            //     AssetType.VALID_TYPE_PREFAB = this.AssetTypes.AssetTypeList.FindIndex((at) => at.Equals(clsName, StringComparison.OrdinalIgnoreCase));
-            //     //图集
-            //     clsName = typeof(SpriteAtlas).FullName;
-            //     AssetType.VALID_TYPE_SPRITE_ATLAS = this.AssetTypes.AssetTypeList.FindIndex((at) => at.Equals(clsName, StringComparison.OrdinalIgnoreCase));
-            //     //...
-            //     //其他省略，需要时候再加
-            // }
 
 
-            BDebug.Log(BResources.LogTag,"资源加载初始化完成,资源总量:" + this.AssetbundleItemList?.Count);
+            BDebug.Log(BResources.LogTag, "资源加载初始化完成,资源总量:" + this.AssetbundleItemList?.Count);
         }
 
 
@@ -207,7 +172,7 @@ namespace BDFramework.ResourceMgr.V2
                                 assetBundleItem = item;
                                 break;
                             }
-                            else if (item.LoadPath!=null && item.LoadPath.Equals(loadPath, StringComparison.OrdinalIgnoreCase))
+                            else if (item.LoadPath != null && item.LoadPath.Equals(loadPath, StringComparison.OrdinalIgnoreCase))
                             {
                                 assetBundleItem = item;
                                 break;
@@ -325,7 +290,6 @@ namespace BDFramework.ResourceMgr.V2
             return null;
         }
 
-        
         #endregion
 
 

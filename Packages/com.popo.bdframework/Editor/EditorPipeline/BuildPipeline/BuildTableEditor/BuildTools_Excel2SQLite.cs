@@ -105,7 +105,7 @@ namespace BDFramework.Editor.Table
             BDFrameworkPipelineHelper.OnEndBuildSqlite(ouptputPath);
 
             var version = BDFrameworkPipelineHelper.GetTableSVCNum(platform, ouptputPath);
-            ClientAssetsHelper.GenBasePackageBuildInfo(ouptputPath, platform, tableSVC: version);
+            ClientAssetsUtils.GenBasePackageBuildInfo(ouptputPath, platform, tableSVC: version);
             Debug.Log("导出Sqlite完成!");
 
 

@@ -252,7 +252,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         BResources.ResLoader.WarmUpShaders();
 
         //package信息
-        var pakInfo = ClientAssetsHelper.GetPackageBuildInfo(abPath, platform);
+        var pakInfo = ClientAssetsUtils.GetPackageBuildInfo(abPath, platform);
         // Profiler.BeginSample("Benchmark Load");
         var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformLoadPath(platform), pakInfo.Version);
         if (!Directory.Exists(benchmarkDataOutpath))
@@ -849,7 +849,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         BResources.InitLoadAssetBundleEnv(abPath, platform);
         BResources.ResLoader.WarmUpShaders();
         //资源信息
-        var pakInfo = ClientAssetsHelper.GetPackageBuildInfo(abPath, platform);
+        var pakInfo = ClientAssetsUtils.GetPackageBuildInfo(abPath, platform);
 
         Profiler.BeginSample("Benchmark Load");
         var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "BenchMark", BApplication.GetPlatformLoadPath(platform), pakInfo.Version);
@@ -1364,7 +1364,7 @@ public class AssetBundleBenchmark01 : MonoBehaviour
         BResources.ResLoader.WarmUpShaders();
 
         //package信息
-        var pakInfo = ClientAssetsHelper.GetPackageBuildInfo(abPath, platform);
+        var pakInfo = ClientAssetsUtils.GetPackageBuildInfo(abPath, platform);
 
         var benchmarkDataOutpath = IPath.Combine(BApplication.DevOpsPublishAssetsPath, "Benchmark", BApplication.GetPlatformLoadPath(platform), pakInfo.Version);
         if (!Directory.Exists(benchmarkDataOutpath))

@@ -13,7 +13,7 @@ namespace BDFramework.UnitTest
         static public void Register()
         {
             //这里开启Assetbundle模式
-            BResources.Init(AssetLoadPathType.DevOpsPublish);
+            // BResources.Init(AssetLoadPathType.DevOpsPublish);
         }
         
         [UnitTest(10000,"关闭")]

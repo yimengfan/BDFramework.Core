@@ -872,8 +872,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             byte[][] mixSourceBytes = new byte[mixAssets.Length][];
             for (int i = 0; i < mixAssets.Length; i++)
             {
-                var path = IPath.Combine(outpath, BApplication.GetPlatformLoadPath(platform),
-                    BResources.ART_ASSET_ROOT_PATH, mixAssets[i]);
+                var path = IPath.Combine(outpath, BApplication.GetPlatformLoadPath(platform), BResources.ART_ASSET_ROOT_PATH, mixAssets[i]);
                 var mixBytes = File.ReadAllBytes(path);
                 mixSourceBytes[i] = mixBytes;
             }

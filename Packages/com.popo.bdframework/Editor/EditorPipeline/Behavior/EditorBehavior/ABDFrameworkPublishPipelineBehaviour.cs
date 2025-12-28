@@ -150,7 +150,7 @@ namespace BDFramework.Editor
         {
             //设置母包脚本版本号=>publish assets
             var githash = GitProcessor.GetVersion(6);
-            ClientAssetsHelper.GenBasePackageBuildInfo(BApplication.DevOpsPublishAssetsPath,BApplication.GetRuntimePlatform(buildTarget),basePckScriptSVC:githash);
+            ClientAssetsUtils.GenBasePackageBuildInfo(BApplication.DevOpsPublishAssetsPath,BApplication.GetRuntimePlatform(buildTarget),basePckScriptSVC:githash);
             //
             var config =  ConfigEditorUtil.GetEditorConfig<GameBaseConfigProcessor.Config>();
             switch (buildTarget)

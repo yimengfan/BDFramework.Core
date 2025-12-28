@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using AssetsManager;
 using BDFramework.Asset;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
@@ -21,10 +23,11 @@ namespace BDFramework
     public class BDLauncher : MonoBehaviour
     {
         private static readonly string Tag = "Launch";
+
         /// <summary>
         /// 框架版本号
         /// </summary>
-        public const string Version  = "3.0.2";
+        public const string Version = "3.0.2";
 
         /// <summary>
         /// 客户端配置信息
@@ -35,13 +38,8 @@ namespace BDFramework
             get { return GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>(); }
         }
 
-        /// <summary>
-        /// 客户端母包信息
-        /// </summary>
-        public ClientPackageBuildInfo BasePckBuildInfo { get; set; }
-        
 
-        
+
         /// <summary>
         /// Config的Text
         /// </summary>
@@ -56,6 +54,7 @@ namespace BDFramework
         static public GameLauncherDelegate OnLateUpdate { get; set; }
 
         #endregion
+
         static public BDLauncher Inst { get; private set; }
 
         // Use this for initialization
@@ -74,7 +73,7 @@ namespace BDFramework
                 BDebug.LogError("GameConfig配置为null,请检查!");
             }
 
-          
+
             //添加不删除的组件
             if (Application.isPlaying)
             {
@@ -98,21 +97,28 @@ namespace BDFramework
         /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
         public void Launch(string gameId = "default", Action launchSuccessCallback = null)
         {
+            var clientVersion = this.Config.ClientVersionNum;
             BDebug.EnableLog(Tag);
             BDebug.Log("框架版本:" + Version, Color.cyan);
-            BDebug.Log(Tag,"Persistent:" + BApplication.persistentDataPath);
-            BDebug.Log(Tag,"StreamingAsset:" + BApplication.streamingAssetsPath);
-
+            BDebug.Log("母包版本:" + clientVersion, Color.cyan);
             //开始资源检测
-            BDebug.Log(Tag,"框架资源版本验证!", Color.yellow);
-            ClientAssetsHelper.CheckPackageAssets(BApplication.RuntimePlatform);
-            BDebug.Log(Tag,"资产版本验证完毕,开始初始化资产...",Color.green);
+            BDebug.Log(Tag, "----------资源版本验证----------", Color.yellow);
+            var  (firstLoadDir,secondLoadDir)= ClientAssetsUtils.GetMultiAssetsLoadPath(BApplication.RuntimePlatform, Version);
+            if (Application.isEditor)
+            {
+                firstLoadDir = secondLoadDir;
+            }
+            BDebug.Log(Tag, "第一寻址路径:" + firstLoadDir);
+            BDebug.Log(Tag, "第二寻址路径:" + secondLoadDir);
+            ClientAssetsUtils.CheckBasePackageAssets(firstLoadDir,secondLoadDir);
+            //平台
+            BDebug.Log(Tag, "----------资源版本验证.end----------", Color.yellow);
             //1.美术资产初始化
-            BResources.Init(Config.ArtRoot);
+            BResources.Init(Config.ArtRoot, firstLoadDir, secondLoadDir);
             //2.sql初始化
-            SqliteLoder.Init(Config.SQLRoot);
+            SqliteLoder.Init(Config.SQLRoot, firstLoadDir, secondLoadDir);
             //3.脚本,这个启动会开启所有的逻辑
-            ScriptLoder.Init(Config.CodeRoot, Config.CodeRunMode, null);
+            ScriptLoder.Init(Config.CodeRoot, firstLoadDir, secondLoadDir);
         }
 
         #endregion

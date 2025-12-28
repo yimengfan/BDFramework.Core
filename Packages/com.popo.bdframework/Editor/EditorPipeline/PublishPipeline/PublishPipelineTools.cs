@@ -72,7 +72,7 @@ namespace BDFramework.Editor
                     }
 
                     //获取资源版本号
-                    var basePckInfo = ClientAssetsHelper.GetPackageBuildInfo(path, platform);
+                    var basePckInfo = ClientAssetsUtils.GetPackageBuildInfo(path, platform);
                     var versionNum = basePckInfo.Version;
                     //发布资源处理前,处理前回调
                     BDFrameworkPipelineHelper.OnBeginPublishAssets(platform, sourcePath, versionNum);

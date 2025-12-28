@@ -33,8 +33,9 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 初始化
         /// </summary>
-        /// <param name="rootPath"></param>
-        void Init(string rootPath, RuntimePlatform platform);
+        /// <param name="firstDir">第一寻址</param>
+        /// <param name="secondDir">第二寻址</param>
+        void Init(string firstDir,string secondDir=null);
 
         /// <summary>
         /// 加载资源

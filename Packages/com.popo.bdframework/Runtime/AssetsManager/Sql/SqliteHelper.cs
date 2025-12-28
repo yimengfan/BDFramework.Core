@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
-
 using SQLite4Unity3d;
 using UnityEngine;
 
@@ -58,21 +57,19 @@ namespace BDFramework.Sql
         /// <summary>
         /// DB连接库
         /// </summary>
-        private static Dictionary<string, SQLiteConnection> SqLiteConnectionMap =
-            new Dictionary<string, SQLiteConnection>();
+        private static Dictionary<string, SQLiteConnection> SqLiteConnectionMap = new Dictionary<string, SQLiteConnection>();
 
         /// <summary>
-        /// runtime下加载，只读
+        /// runtime下加载
         /// </summary>
         /// <param name="str"></param>
-        static public void Init(AssetLoadPathType assetLoadPathType)
+        static public void Init(AssetLoadPathType assetLoadPathType, string firstDir, string secondDir)
         {
             BDebug.EnableLog(Tag);
             Connection?.Dispose();
-            var path = GameBaseConfigProcessor.GetLoadPath(assetLoadPathType);
-            //用当前平台目录进行加载
-            path = GetLocalDBPath(path, BApplication.RuntimePlatform);
-            Connection = LoadDBReadOnly(path);
+            //db 一定在第一寻址路径
+            var db_path = IPath.Combine(firstDir, LOCAL_DB_PATH);
+            Connection = LoadDBReadOnly(db_path);
         }
 
 
@@ -84,8 +81,7 @@ namespace BDFramework.Sql
             if (File.Exists(path))
             {
                 BDebug.Log(Tag, $"加载路径:{path} psw:{Password}", Color.green);
-                SQLiteConnectionString cs =
-                    new SQLiteConnectionString(path, SQLiteOpenFlags.ReadOnly, true, key: Password);
+                SQLiteConnectionString cs = new SQLiteConnectionString(path, SQLiteOpenFlags.ReadOnly, true, key: Password);
                 var con = new SQLiteConnection(cs);
                 SqLiteConnectionMap[Path.GetFileNameWithoutExtension(path)] = con;
                 return con;
@@ -113,6 +109,7 @@ namespace BDFramework.Sql
             {
                 cs = new SQLiteConnectionString(path, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create, true);
             }
+
             var con = new SQLiteConnection(cs);
             SqLiteConnectionMap[Path.GetFileNameWithoutExtension(path)] = con;
             return con;
@@ -155,20 +152,20 @@ namespace BDFramework.Sql
         /// <summary>
         /// 获取DB路径
         /// </summary>
-        static public string GetLocalDBPath(string root, RuntimePlatform platform)
-        {
-            return IPath.Combine(root, BApplication.GetPlatformLoadPath(platform), LOCAL_DB_PATH);
-        }
-
-        /// <summary>
-        /// 获取DB路径
-        /// </summary>
         static public string GetServerDBPath(string root)
         {
             return IPath.Combine(root, "server_data", SERVER_DB_PATH);
         }
 
         #region Editor下加载
+
+        /// <summary>
+        /// 获取DB路径
+        /// </summary>
+        static public string GetLocalDBPath(string root, RuntimePlatform platform)
+        {
+            return IPath.Combine(root, BApplication.GetPlatformLoadPath(platform), LOCAL_DB_PATH);
+        }
 
         /// <summary>
         /// 编辑器下加载DB，可读写|创建
@@ -199,7 +196,7 @@ namespace BDFramework.Sql
             //用当前平台目录进行加载
             BDebug.Log("Server.db 不使用加密,否则服务器不好处理!!!", Color.yellow);
             var path = GetServerDBPath(root);
-            LoadSQLOnEditor(path,false);
+            LoadSQLOnEditor(path, false);
         }
 
         /// <summary>
@@ -221,7 +218,7 @@ namespace BDFramework.Sql
             if (Application.isEditor)
             {
                 //editor下 不在执行的时候，直接创建
-                Connection = LoadDBReadWriteCreate(sqlPath,isUsePsw);
+                Connection = LoadDBReadWriteCreate(sqlPath, isUsePsw);
                 BDebug.Log("DB加载路径:" + sqlPath, Color.red);
             }
         }
@@ -244,7 +241,7 @@ namespace BDFramework.Sql
 
             return path;
         }
-        
+
         /// <summary>
         /// 删除数据库
         /// </summary>
@@ -445,7 +442,5 @@ namespace BDFramework.Sql
 
             return db;
         }
-
-        
     }
 }

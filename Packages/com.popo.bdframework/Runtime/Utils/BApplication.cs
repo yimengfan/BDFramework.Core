@@ -84,7 +84,7 @@ namespace BDFramework.Core.Tools
 #elif UNITY_PS4
                 return RuntimePlatform.PS4;
 #elif UNITY_PS5
-                RuntimePlatform.PS5;
+               return   RuntimePlatform.PS5;
 #elif UNITY_LUMIN
                 return RuntimePlatform.Lumin; // Magic Leap OS 
 #else
