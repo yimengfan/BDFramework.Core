@@ -187,7 +187,7 @@ namespace UnityEngine.AssetGraph.DataModel.Version2 {
             new ToggleOption<BuildOptions>("Install In Build Folder", BuildOptions.InstallInBuildFolder),
             new ToggleOption<BuildOptions>("Show Built Player", BuildOptions.ShowBuiltPlayer),
             new ToggleOption<BuildOptions>("Strict Mode", BuildOptions.StrictMode),
-            new ToggleOption<BuildOptions>("Symlink Libraries", BuildOptions.SymlinkLibraries),
+            new ToggleOption<BuildOptions>("Symlink Libraries", BuildOptions.SymlinkSources),
             new ToggleOption<BuildOptions>("Uncompressed AssetBundle", BuildOptions.UncompressedAssetBundle)
 		};
         

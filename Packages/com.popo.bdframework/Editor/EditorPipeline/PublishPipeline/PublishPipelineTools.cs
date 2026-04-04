@@ -299,7 +299,7 @@ namespace BDFramework.Editor
                         }
                     });
                     //写入本地配置
-                    var subPackageInfoPath = BResourcesAOT.GetAssetsSubPackageInfoPath(IPath.Combine(outputRootPath, UPLOAD_FOLDER_SUFFIX), platform, subPackageConfigItem.PackageName);
+                    var subPackageInfoPath = BResources.GetAssetsSubPackageInfoPath(IPath.Combine(outputRootPath, UPLOAD_FOLDER_SUFFIX), platform, subPackageConfigItem.PackageName);
                     var configContent = CsvSerializer.SerializeToString(subPackageItemList);
                     FileHelper.WriteAllText(subPackageInfoPath, configContent);
                     Debug.Log("生成分包文件:" + Path.GetFileName(subPackageInfoPath));

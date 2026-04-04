@@ -1,50 +1,13 @@
 {
     "m_SelectedDeviceId": "127.0.0.1:62025",
-    "m_SelectedPackage": {
-        "deviceId": "127.0.0.1:62025",
-        "name": "com.DefaultCompany.BDFramework.Core.profiler",
-        "processId": 3657,
+    "m_SelectedProcess": {
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
-    "m_KnownPackagesForSerialization": [
-        {
-            "deviceId": "127.0.0.1:62001",
-            "name": "com.vphone.launcher",
-            "processId": 2070,
-            "exited": true
-        },
-        {
-            "deviceId": "127.0.0.1:62001",
-            "name": "com.Popo.BDFrameworkTest",
-            "processId": 3113,
-            "exited": true
-        },
-        {
-            "deviceId": "127.0.0.1:62001",
-            "name": "com.Popo.BDFrameworkTest",
-            "processId": 3588,
-            "exited": true
-        },
-        {
-            "deviceId": "127.0.0.1:62001",
-            "name": "com.Popo.BDFrameworkTest.profiler",
-            "processId": 3564,
-            "exited": true
-        },
-        {
-            "deviceId": "127.0.0.1:62001",
-            "name": "com.DefaultCompany.BDFramework.Core.debug",
-            "processId": 3925,
-            "exited": false
-        },
-        {
-            "deviceId": "127.0.0.1:62025",
-            "name": "com.DefaultCompany.BDFramework.Core.profiler",
-            "processId": 3657,
-            "exited": false
-        }
-    ],
+    "m_KnownProcessesForSerialization": [],
     "m_Tags": {
         "m_Entries": [
             {
@@ -77,8 +40,11 @@
             }
         ]
     },
+    "m_ExtraWindowState": {
+        "Type": 0,
+        "Height": 0.0
+    },
     "m_MemoryViewerState": {
-        "MemoryWindowHeight": 300.0,
         "MemoryWindowWidth": 170.0,
         "MemoryTypeEnabled": [
             true,
@@ -93,7 +59,7 @@
             true
         ],
         "MemoryGroup": 2,
-        "Behavior": 2
+        "AutoCapture": true
     },
     "m_FilterOptions": {
         "m_Filter": "",
@@ -111,5 +77,28 @@
         "BitRateK": 20000,
         "DisplayIdEnabled": false,
         "DisplayId": ""
-    }
+    },
+    "m_ScreenCaptureSettings": {
+        "Mode": 0,
+        "m_LastSaveLocation": [
+            "/Users/naipaopao/Documents/GitHub/BDFramework.Core",
+            "/Users/naipaopao/Documents/GitHub/BDFramework.Core"
+        ]
+    },
+    "m_QueryLayoutSettings": {
+        "LastLayoutSaveLocation": "",
+        "LastScreenshotSaveLocation": ""
+    },
+    "m_InputSettings": {
+        "ShiftModifier": false,
+        "SendText": "",
+        "PosixKillSignal": 0,
+        "TargetProcess": {
+            "deviceId": "",
+            "name": "",
+            "processId": 0,
+            "exited": false
+        }
+    },
+    "m_AutoScroll": 2
 }

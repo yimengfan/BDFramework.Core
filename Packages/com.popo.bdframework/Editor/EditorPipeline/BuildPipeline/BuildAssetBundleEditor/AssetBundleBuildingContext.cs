@@ -592,7 +592,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 port = Convert.ToUInt16(address[1]);
             }
 
-            bool iscanConnectCacheServer = AssetDatabaseExperimental.CanConnectToCacheServer(ip, port);
+            bool iscanConnectCacheServer = AssetDatabase.CanConnectToCacheServer(ip, port);
             //SBP
             if (!iscanConnectCacheServer)
             {

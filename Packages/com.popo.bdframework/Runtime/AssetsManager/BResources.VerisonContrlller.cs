@@ -9,7 +9,7 @@ namespace BDFramework.ResourceMgr
     /// <summary>
     /// BResources 版本控制扩展
     /// </summary>
-    static public partial class BResourcesAOT
+    static public partial class BResources
     {
         /// <summary>
         /// 美术根目录
@@ -73,7 +73,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         static public string GetServerAssetsVersionInfoPath(string rootPath, RuntimePlatform platform)
         {
-            return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), BResourcesAOT.SERVER_ASSETS_VERSION_INFO_PATH);
+            return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), BResources.SERVER_ASSETS_VERSION_INFO_PATH);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         static public string GetAssetsInfoPath(string rootPath)
         {
-            return IPath.Combine(rootPath, BResourcesAOT.ASSETS_INFO_PATH);
+            return IPath.Combine(rootPath, BResources.ASSETS_INFO_PATH);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace BDFramework.ResourceMgr
         /// <returns></returns>
         static public string GetAssetsInfoPath(string rootPath, RuntimePlatform platform)
         {
-            return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), BResourcesAOT.ASSETS_INFO_PATH);
+            return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), BResources.ASSETS_INFO_PATH);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                var subPackagePath = string.Format(BResourcesAOT.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageName);
+                var subPackagePath = string.Format(BResources.SERVER_ASSETS_SUB_PACKAGE_INFO_PATH, subPackageName);
                 return IPath.Combine(rootPath, BApplication.GetPlatformLoadPath(platform), subPackagePath);
             }
         }

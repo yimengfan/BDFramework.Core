@@ -100,27 +100,28 @@ namespace BDFramework.ResourceMgr
     public enum UpdateMode
     {
         /// <summary>
+        /// 简单对比
         /// 1.对比版本: 本地、服务器版本信息,版本号相同跳过
         /// 2.获取差异: 对比本地与服务器差异(只对比配置和判断文件是否存在)
         /// 3.下载资源: 根据差异信息下载
         /// </summary>
-        Compare,
-
+        CompareSimple,
         /// <summary>
+        /// 建议使用该模式，防止核心资源(db、dll) 被篡改
+        /// 1.对比版本: 跟Compare模式一致
+        /// 2.获取核心资产差异:db、dll
+        /// 本质上时:每次版本变化做一次修复
+        /// </summary>
+        CompareWithRepairCoreAssets,
+        /// <summary>
+        /// 修复模式
         /// 1.对比版本: 不对比
         /// 2.获取差异: 遍历服务器版本,判断本地文件和hash值
         /// 3.下载资源: 根据差异信息下载
         /// </summary>
-        Repair,
+        RepairFull,
 
-        /// <summary>
-        /// 1.对比版本: 跟Compare模式一致
-        /// 2.获取差异: 跟Repair模式一致
-        /// 3.下载资源: 根据差异信息下载
-        /// 本质上时:每次版本变化做一次修复
-        /// 建议使用该模式,平时开启Remote资源加载防止资源丢失
-        /// </summary>
-        CompareWithRepair,
+
     }
 
     /// <summary>
@@ -169,7 +170,8 @@ namespace BDFramework.ResourceMgr
             Checkassets = 0,
             DeleteOldAssets,
             Error,
-            Success
+            Success,
+            SuccessNeedRestart
         }
 
 
@@ -307,8 +309,8 @@ namespace BDFramework.ResourceMgr
             //
             switch (updateMode)
             {
-                case UpdateMode.Compare:
-                case UpdateMode.CompareWithRepair: //CP模式对比版本与Compare一致
+                case UpdateMode.CompareSimple:
+                case UpdateMode.CompareWithRepairCoreAssets: //CP模式对比版本与Compare一致
                 {
                     if (isDownloadSubPackageMode)
                     {
@@ -322,10 +324,10 @@ namespace BDFramework.ResourceMgr
                     }
                 }
                     break;
-                case UpdateMode.Repair:
+                case UpdateMode.RepairFull:
                 {
                     //服务器路径
-                    var serverAssetInfosUrl = BResourcesAOT.GetAssetsInfoPath(serverUrl, platform);
+                    var serverAssetInfosUrl = BResources.GetAssetsInfoPath(serverUrl, platform);
                     //下载服务器Assets.info
                     (err, serverAssetsInfoList, serverAssetsContent) = LoadServerAssetInfo(serverAssetInfosUrl);
                 }
@@ -359,13 +361,13 @@ namespace BDFramework.ResourceMgr
             BDebug.LogWatchBegin("差异列表");
             switch (updateMode)
             {
-                case UpdateMode.Compare:
+                case UpdateMode.CompareSimple:
                 {
                     diffDownloadQueue = Compare(localAssetsInfoList, serverAssetsInfoList, platform);
                 }
                     break;
-                case UpdateMode.Repair:
-                case UpdateMode.CompareWithRepair: //CP 获取差异模式与Repair一致
+                case UpdateMode.RepairFull:
+                case UpdateMode.CompareWithRepairCoreAssets: //CP 获取差异模式与Repair一致
                 {
                     diffDownloadQueue = Repair(serverAssetsInfoList, platform);
                 }
@@ -408,7 +410,7 @@ namespace BDFramework.ResourceMgr
             }
             else
             {
-                localAssetInfoPath = ClientAssetsUtils.GetPersistentAssetPath(BResourcesAOT.ASSETS_INFO_PATH);//BResources.GetAssetsInfoPath();
+                localAssetInfoPath = ClientAssetsUtils.GetPersistentAssetPath(BResources.ASSETS_INFO_PATH);//BResources.GetAssetsInfoPath();
             }
 
             //写入Asset.Info
@@ -429,7 +431,7 @@ namespace BDFramework.ResourceMgr
                 localVersionInfo.Version = serverVersionInfo.Version;
             }
 
-            var localAssetsVersionInfoPath = BResourcesAOT.GetServerAssetsVersionInfoPath(localSaveAssetsPath, platform);
+            var localAssetsVersionInfoPath = BResources.GetServerAssetsVersionInfoPath(localSaveAssetsPath, platform);
             File.WriteAllText(localAssetsVersionInfoPath, JsonMapper.ToJson(localVersionInfo));
             BDebug.Log(LogTag, $"写入{Path.GetFileName(localAssetsVersionInfoPath)}");
 
@@ -439,7 +441,7 @@ namespace BDFramework.ResourceMgr
             BDebug.Log(LogTag, "【版本控制】6.过期资源检查~", Color.red);
             if (!isDownloadSubPackageMode)
             {
-                var artAssetsPath = IPath.Combine(localSavePlatformPath, BResourcesAOT.ART_ASSET_ROOT_PATH);
+                var artAssetsPath = IPath.Combine(localSavePlatformPath, BResources.ART_ASSET_ROOT_PATH);
                 if (Directory.Exists(artAssetsPath))
                 {
                     var persistentArtAssets = Directory.GetFiles(artAssetsPath, "*", SearchOption.AllDirectories);
@@ -524,7 +526,7 @@ namespace BDFramework.ResourceMgr
             BDebug.Log(LogTag, $"全量下载模式! serVer:{serverVersionInfo.Version} localVer:{localVersionInfo.Version} ", Color.red);
             {
                 //服务器路径
-                var serverAssetInfosUrl = BResourcesAOT.GetAssetsInfoPath(serverUrl, platform);
+                var serverAssetInfosUrl = BResources.GetAssetsInfoPath(serverUrl, platform);
                 //下载服务器Assets.info
                 (err, serverAssetsInfoList, serverAssetsContent) = LoadServerAssetInfo(serverAssetInfosUrl);
             }
@@ -600,7 +602,7 @@ namespace BDFramework.ResourceMgr
             BDebug.Log(LogTag, $"分包下载模式! server:{serverSubPckVersion} local:{localSubPckVersion} ", Color.red);
             {
                 //服务器路径
-                var serverAssetInfosUrl = BResourcesAOT.GetAssetsSubPackageInfoPath(serverUrl, platform, subPackageName);
+                var serverAssetInfosUrl = BResources.GetAssetsSubPackageInfoPath(serverUrl, platform, subPackageName);
                 //下载服务器配置
                 (err, serverAssetsInfoList, serverAssetsContent) = LoadServerAssetInfo(serverAssetInfosUrl);
             }
@@ -649,7 +651,7 @@ namespace BDFramework.ResourceMgr
         {
             var platform = BApplication.RuntimePlatform;
             //本地、服务器版本信息的路径
-            var serverAssetsVersionInfoUrl = BResourcesAOT.GetServerAssetsVersionInfoPath(serverUrl, platform);
+            var serverAssetsVersionInfoUrl = BResources.GetServerAssetsVersionInfoPath(serverUrl, platform);
 
             string err = null;
             AssetsVersionInfo serverVersionInfo = null;
@@ -674,7 +676,7 @@ namespace BDFramework.ResourceMgr
             //判断本地路径
             if (!string.IsNullOrEmpty(localSaveAssetsPath))
             {
-                var localAssetsVersionInfoPath = BResourcesAOT.GetServerAssetsVersionInfoPath(localSaveAssetsPath, platform);
+                var localAssetsVersionInfoPath = BResources.GetServerAssetsVersionInfoPath(localSaveAssetsPath, platform);
                 if (File.Exists(localAssetsVersionInfoPath))
                 {
                     localVersionInfo = JsonMapper.ToObject<AssetsVersionInfo>(File.ReadAllText(localAssetsVersionInfoPath));
@@ -758,7 +760,7 @@ namespace BDFramework.ResourceMgr
         {
             var retList = new List<AssetItem>();
             //优先加载persistent的Assets.info
-            var persistentAssetInfoPath = ClientAssetsUtils.GetPersistentAssetPath(BResourcesAOT.ASSETS_INFO_PATH);
+            var persistentAssetInfoPath = ClientAssetsUtils.GetPersistentAssetPath(BResources.ASSETS_INFO_PATH);
             if (File.Exists(persistentAssetInfoPath))
             {
                 var content = File.ReadAllText(persistentAssetInfoPath);
@@ -767,7 +769,7 @@ namespace BDFramework.ResourceMgr
             //streaming 和其他的Assets.info
             else
             {
-                var steamingAssetsInfoPath = ClientAssetsUtils.GetStreamingAssetPath(BResourcesAOT.ASSETS_INFO_PATH);
+                var steamingAssetsInfoPath = ClientAssetsUtils.GetStreamingAssetPath(BResources.ASSETS_INFO_PATH);
 #if UNITY_ANDROID
                 if (BetterStreamingAssets.FileExists(steamingAssetsInfoPath))
                 {
@@ -799,7 +801,7 @@ namespace BDFramework.ResourceMgr
 
             foreach (var kv in localVersionInfo.SubPckMap)
             {
-                var subPackageInfoPath = BResourcesAOT.GetAssetsSubPackageInfoPath(BApplication.persistentDataPath, platform, kv.Key);
+                var subPackageInfoPath = BResources.GetAssetsSubPackageInfoPath(BApplication.persistentDataPath, platform, kv.Key);
                 if (File.Exists(subPackageInfoPath))
                 {
                     var content = File.ReadAllText(subPackageInfoPath);

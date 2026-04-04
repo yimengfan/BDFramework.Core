@@ -138,7 +138,7 @@ namespace BDFramework.Asset
         /// </summary>
         static string[] PersistentOnlyFiles = new string[]
         {
-            SqliteLoderAOT.LOCAL_DB_PATH, //db =>只能在persistent下进行io
+            SqliteLoder.LOCAL_DB_PATH, //db =>只能在persistent下进行io
         };
 
 

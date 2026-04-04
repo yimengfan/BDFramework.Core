@@ -19,38 +19,7 @@ namespace BDFramework.ResourceMgr
         public static string LogTag = "BResourcesV2";
 
         #region 美术资源相关路径
-
-         /// <summary>
-         /// 美术根目录
-         /// </summary>
-         readonly static public string ART_ASSET_ROOT_PATH = "art_assets";
         
-         /// <summary>
-         /// 美术资源config配置
-         /// </summary>
-         readonly static public string ART_ASSET_INFO_PATH = ART_ASSET_ROOT_PATH + "/art_assets.info";
-        
-         /// <summary>
-         /// 资源信息
-         /// </summary>
-         readonly static public string ART_ASSET_TYPES_PATH = ART_ASSET_ROOT_PATH + "/art_asset_type.info";
-        
-         /// <summary>
-         /// 构建时的信息(Editor用)
-         /// </summary>
-         readonly static public string EDITOR_ART_ASSET_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/EditorBuild.Info";
-        
-         /// <summary>
-         /// SBP build信息
-         /// </summary>
-         readonly static public string SBPBuildLog = "buildlogtep.json";
-        
-         readonly static public string SBPBuildLog2 = "build_result.info";
-        /// <summary>
-        /// 旧打包资源配置
-        /// </summary>
-        readonly static public string AIR_ASSET_OLD_BUILD_INFO_PATH = ART_ASSET_ROOT_PATH + "/OldBuild.Info";
-
         /// <summary>
         /// ShaderVariant加载地址
         /// </summary>
@@ -83,29 +52,7 @@ namespace BDFramework.ResourceMgr
 
         #endregion
 
-        #region 所有资源相关配置路径
-        
-        /// <summary>
-        /// 客户端-资源包服务器信息
-        /// </summary>
-        readonly static public string ASSETS_INFO_PATH = "assets.info";
-        
-        /// <summary>
-        /// 客户端-资源分包信息
-        /// </summary>
-        readonly static public string ASSETS_SUB_PACKAGE_CONFIG_PATH = "assets_subpack.info";
-        
-        /// <summary>
-        /// 服务器-资源包版本配置
-        /// </summary>
-        readonly static public string SERVER_ASSETS_VERSION_INFO_PATH = "server_assets_version.info";
-        
-        /// <summary>
-        /// 服务器-资源分包信息
-        /// </summary>
-        readonly static public string SERVER_ASSETS_SUB_PACKAGE_INFO_PATH = "server_assets_subpack_{0}.info";
-        
-        #endregion
+
 
 
         /// <summary>

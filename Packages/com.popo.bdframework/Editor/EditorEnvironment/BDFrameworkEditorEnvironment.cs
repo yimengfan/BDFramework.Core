@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using BDFramework.Configure;
-using BDFramework.Core.Debugger;
 using BDFramework.Mgr;
 using BDFramework.ResourceMgr;
 using BDFramework.Core.Tools;
@@ -149,8 +148,6 @@ namespace BDFramework.Editor.Environment
                 
                 //Editor的管理器初始化
                 BDFrameworkPipelineHelper.Init();
-                //调试器启动
-                DebuggerServerProcessManager.Inst.Start();
                 //Pipeline初始化
                 HotfixPipelineTools.Init();
                 //编辑器初始化
