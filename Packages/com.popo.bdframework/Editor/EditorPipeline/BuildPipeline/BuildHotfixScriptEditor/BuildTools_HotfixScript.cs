@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using BDFramework.Core.Tools;
-using BDFramework.Editor;
-using BDFramework.Editor.Environment;
+﻿using BDFramework.Core.Tools;
 using BDFramework.Editor.Unity3dEx;
-using BDFramework.GameStart;
-// using ILRuntime.Runtime.CLRBinding;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
-using Debug = System.Diagnostics.Debug;
 
 namespace BDFramework.Editor.HotfixScript
 {
@@ -55,39 +44,39 @@ namespace BDFramework.Editor.HotfixScript
             BDFrameworkPipelineHelper.OnEndBuildDLL(outpath);
         }
 
-        /// <summary>
-        /// 拷贝当前到其他目录
-        /// </summary>
-        /// <param name="sourceh"></param>
-        public static void CopyDLLToOther(string root, RuntimePlatform sourcePlatform)
-        {
-            var source = ScriptLoder.GetLocalDLLPath(root, sourcePlatform);
-            var bytes = File.ReadAllBytes(source);
-            var sourcePdb = source + ".pdb";
-            byte[] pdbBytes = null;
-            if (File.Exists(sourcePdb))
-            {
-                pdbBytes = File.ReadAllBytes(sourcePdb);
-            }
-
-            //拷贝当前到其他目录
-            foreach (var sp in BApplication.SupportPlatform)
-            {
-                var outpath = ScriptLoder.GetLocalDLLPath(root, sp);
-                if (source == outpath)
-                {
-                    continue;
-                }
-
-                FileHelper.WriteAllBytes(outpath, bytes);
-                //pdb
-                if (pdbBytes != null)
-                {
-                    FileHelper.WriteAllBytes(outpath + ".pdb", pdbBytes);
-                }
-            }
-        }
-
+        //
+        // /// 拷贝当前到其他目录
+        // /// </summary>
+        // /// <param name="sourceh"></param>
+        // public static void CopyDLLToOther(string root, RuntimePlatform sourcePlatform)
+        // {
+        //     var source = ScriptLoder.GetLocalDLLPath(root, sourcePlatform);
+        //     var bytes = File.ReadAllBytes(source);
+        //     var sourcePdb = source + ".pdb";
+        //     byte[] pdbBytes = null;
+        //     if (File.Exists(sourcePdb))
+        //     {
+        //         pdbBytes = File.ReadAllBytes(sourcePdb);
+        //     }
+        //
+        //     //拷贝当前到其他目录
+        //     foreach (var sp in BApplication.SupportPlatform)
+        //     {
+        //         var outpath = ScriptLoder.GetLocalDLLPath(root, sp);
+        //         if (source == outpath)
+        //         {
+        //             continue;
+        //         }
+        //
+        //         FileHelper.WriteAllBytes(outpath, bytes);
+        //         //pdb
+        //         if (pdbBytes != null)
+        //         {
+        //             FileHelper.WriteAllBytes(outpath + ".pdb", pdbBytes);
+        //         }
+        //     }
+        // }
+        //
 
     }
 }

@@ -24,7 +24,7 @@ namespace BDFramework.Editor.Table
                 return;
             }
             //判断是否导入设置
-            if (BDEditorApplication.EditorSetting.BuildSqlSetting.IsForceImportChangedExcelOnWillEnterPlaymode && BDLauncher.Inst.Config.SQLRoot== AssetLoadPathType.Editor)
+            if (BDEditorApplication.EditorSetting.BuildSqlSetting.IsForceImportChangedExcelOnWillEnterPlaymode )
             {
                 Debug.Log("【EditorTask】数据库校验begin...");
                 var dbPath = SqliteLoder.GetLocalDBPath(BApplication.streamingAssetsPath, BApplication.RuntimePlatform);

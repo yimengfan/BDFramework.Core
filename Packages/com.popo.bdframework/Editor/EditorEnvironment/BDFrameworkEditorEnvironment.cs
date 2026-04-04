@@ -112,7 +112,7 @@ namespace BDFramework.Editor.Environment
             //是否为batchmode
             if (Application.isBatchMode)
             {
-                Debug.Log("BDFramework version:" + BDLauncher.Version);
+                Debug.Log("BDFramework version:" + BDLauncher.FrameworkVersion);
             }
 
             //只有在非Playing的时候才初始化
@@ -128,7 +128,7 @@ namespace BDFramework.Editor.Environment
                 //BDEditor初始化
                 BDEditorApplication.Init();
                 //加载主工程的DLL Type
-                Types = ManagerInstHelper.GetMainProjectTypes();
+                Types = ManagerInstHelper.GetHostingTypes();
                 // var assemblyPath = BApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll";
                 // var editorAssemlyPath = BApplication.Library + "/ScriptAssemblies/Assembly-CSharp-Editor.dll";
                 // if (File.Exists(assemblyPath) && File.Exists(editorAssemlyPath))

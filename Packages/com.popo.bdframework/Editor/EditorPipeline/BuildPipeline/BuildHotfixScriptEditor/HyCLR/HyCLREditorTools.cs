@@ -151,7 +151,7 @@ namespace BDFramework.Editor.HotfixScript
         /// <param name="destDir"></param>
        static public void CopyHotfixDLLs(string sourceDir, string destDir,BuildTarget target)
        {
-           var destDLLRootDir = $"{BApplication.GetPlatformLoadPath(destDir,target)}/{ScriptLoder.HOTFIX_DLL_PATH}";
+           var destDLLRootDir = $"{BApplication.GetPlatformLoadPath(destDir,target)}/{HotfixScriptLoder.HOTFIX_DLL_PATH}";
             if (Directory.Exists(destDLLRootDir))
             {
                 Directory.Delete(destDLLRootDir,true);
@@ -163,7 +163,7 @@ namespace BDFramework.Editor.HotfixScript
             foreach (var hd in hotfixDlls)
             {
                 var source = $"{sourceDir}/{hd}.dll";
-                var destPath = $"{destDLLRootDir}/{hd}{ScriptLoder.HOT_DLL_EXTENSION}";
+                var destPath = $"{destDLLRootDir}/{hd}{HotfixScriptLoder.HOT_DLL_EXTENSION}";
 
                 if (!File.Exists(source))
                 {
@@ -190,7 +190,7 @@ namespace BDFramework.Editor.HotfixScript
             foreach (var aotDll in aotDLLs)
             {
                 var sourceDllPath = IPath.Combine(sourceDir, aotDll + ".dll");
-                var destPath = IPath.Combine(destPlatformDir, ScriptLoder.HYCLR_AOT_PATCH_PATH, aotDll + ScriptLoder.HOT_DLL_EXTENSION);
+                var destPath = IPath.Combine(destPlatformDir, HotfixScriptLoder.HYCLR_AOT_PATCH_PATH, aotDll + HotfixScriptLoder.HOT_DLL_EXTENSION);
                 if (File.Exists(sourceDllPath))
                 {
                     FileHelper.Copy(sourceDllPath, destPath, true);
@@ -268,7 +268,7 @@ namespace BDFramework.Editor.HotfixScript
             List<string> retlist = new List<string>();
             foreach (var hotfix in   HybridCLRSettings.Instance.hotUpdateAssemblies)
             {
-                var path = $"{ScriptLoder.HOTFIX_DLL_PATH}/{hotfix}.dll.bytes";
+                var path = $"{HotfixScriptLoder.HOTFIX_DLL_PATH}/{hotfix}.dll.bytes";
                 retlist.Add(path);
             }
             return retlist.ToArray();

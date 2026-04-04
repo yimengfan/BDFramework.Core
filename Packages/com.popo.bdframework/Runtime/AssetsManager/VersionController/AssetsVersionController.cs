@@ -33,6 +33,7 @@ namespace BDFramework.ResourceMgr
 
         /// <summary>
         /// 版本号
+        /// x.y.z 三段式版本号
         /// </summary>
         public string Version { get; set; } = "";
 
@@ -384,9 +385,12 @@ namespace BDFramework.ResourceMgr
             #region 根据差异文件下载
 
             BDebug.Log(LogTag, "4.下载资源:", Color.red);
+            bool isNeedRestart = false;
             if (diffDownloadQueue.Count > 0)
             {
-                var failDownloadList = await DownloadAssets(serverUrl, localSaveAssetsPath, diffDownloadQueue, onDownloadProccess);
+                var downloadResult = await DownloadAssets(serverUrl, localSaveAssetsPath, diffDownloadQueue, onDownloadProccess);
+                var failDownloadList = downloadResult.Item1;
+                isNeedRestart = downloadResult.Item2;
                 if (failDownloadList.Count > 0)
                 {
                     onTaskEndCallback(RetStatus.Error, "部分资源未下载完毕!");
@@ -486,7 +490,7 @@ namespace BDFramework.ResourceMgr
             await UniTask.SwitchToMainThread();
             if (err == null)
             {
-                onTaskEndCallback?.Invoke(RetStatus.Success, null);
+                onTaskEndCallback?.Invoke(isNeedRestart ? RetStatus.SuccessNeedRestart : RetStatus.Success, null);
             }
             else
             {
@@ -911,9 +915,10 @@ namespace BDFramework.ResourceMgr
         /// <param name="downloadQueue"></param>
         /// <param name="onDownloadProccess"></param>
         /// <returns></returns>
-        async private Task<List<AssetItem>> DownloadAssets(string serverUrl, string localSaveAssetsPath, Queue<AssetItem> downloadQueue, Action<AssetItem, List<AssetItem>> onDownloadProccess)
+        async private Task<(List<AssetItem>, bool)> DownloadAssets(string serverUrl, string localSaveAssetsPath, Queue<AssetItem> downloadQueue, Action<AssetItem, List<AssetItem>> onDownloadProccess)
         {
             var failDownloadList = new List<AssetItem>();
+            bool isNeedRestart = false;
             //url构建
             var platform = BApplication.GetPlatformLoadPath(BApplication.RuntimePlatform);
             serverUrl = IPath.Combine(serverUrl, platform);
@@ -989,10 +994,30 @@ namespace BDFramework.ResourceMgr
 
                     //移动(重命名)
                     FileHelper.Move(localHashPath, localRealPath);
+                    if (IsRestartRequiredAsset(assetItem))
+                    {
+                        isNeedRestart = true;
+                    }
                 }
             }
 
-            return failDownloadList;
+            return (failDownloadList, isNeedRestart);
+        }
+
+        /// <summary>
+        /// 是否为需要重启才能生效的资源
+        /// </summary>
+        private bool IsRestartRequiredAsset(AssetItem assetItem)
+        {
+            var localPath = assetItem?.LocalPath;
+            if (string.IsNullOrEmpty(localPath))
+            {
+                return false;
+            }
+
+            return localPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase)
+                   || localPath.EndsWith(".dll.bytes", StringComparison.OrdinalIgnoreCase)
+                   ||localPath.EndsWith(".zlua.bytes", StringComparison.OrdinalIgnoreCase);
         }
 
         #endregion

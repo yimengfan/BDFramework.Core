@@ -1,7 +1,10 @@
 {
     "name": "BDFramework.AOT",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:13ba8ce62aa80c74598530029cb2d649",
+        "GUID:3743e71edcd5bd8499007797ef02cbfb"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

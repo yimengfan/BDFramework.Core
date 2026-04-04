@@ -47,7 +47,7 @@ namespace BDFramework.Editor
         private static GUIStyle errorStyle;
 
 
-        [MenuItem(("BDFrameWork工具箱/框架引导 " + BDLauncher.Version), false, (int) BDEditorGlobalMenuItemOrderEnum.BDFrameworkGuid)]
+        [MenuItem(("BDFrameWork工具箱/框架引导 " + BDLauncher.FrameworkVersion), false, (int) BDEditorGlobalMenuItemOrderEnum.BDFrameworkGuid)]
         static public void Open()
         {
             var win = GetWindow<EditorWindow_BDFrameworkStart>("BDFramework使用引导");
@@ -258,7 +258,7 @@ namespace BDFramework.Editor
             if (File.Exists(path))
             {
                 var version = File.ReadAllText(path);
-                if (version == BDLauncher.Version)
+                if (version == BDLauncher.FrameworkVersion)
                 {
                     return true;
                 }
@@ -287,7 +287,7 @@ namespace BDFramework.Editor
             DrawLine();
             GUI.color = Color.green;
 
-            GUILayout.Label("当前版本:" + BDLauncher.Version);
+            GUILayout.Label("当前版本:" + BDLauncher.FrameworkVersion);
             //
             //var ret = IsHaveNewVerison();
             if (IsHaveNewVerison().Result)
@@ -357,7 +357,7 @@ namespace BDFramework.Editor
             }
 
 
-            var isHaveNewVersion = !VersionNumHelper.GT(BDLauncher.Version, NewVersionNum);
+            var isHaveNewVersion = !VersionNumHelper.GT(BDLauncher.FrameworkVersion, NewVersionNum);
             return isHaveNewVersion;
         }
 

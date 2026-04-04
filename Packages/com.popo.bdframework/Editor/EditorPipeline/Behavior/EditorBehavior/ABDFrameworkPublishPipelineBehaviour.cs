@@ -171,7 +171,7 @@ namespace BDFramework.Editor
                     //设置build number
                     PlayerSettings.iOS.buildNumber = buildNumber.ToString();
                     //设置版本号
-                    PlayerSettings.bundleVersion = config.GetClientVersionNumForIOS();
+                    PlayerSettings.bundleVersion = "0.1.0";
                     
                     BDebug.Log($"APP版本号：Version:{ PlayerSettings.bundleVersion} / BundleVersion:{PlayerSettings.iOS.buildNumber}", Color.yellow);
 

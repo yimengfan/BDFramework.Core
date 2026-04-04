@@ -146,7 +146,7 @@ namespace BDFramework.Asset
         /// 母包资源检测逻辑
         /// </summary>
         /// <returns></returns>
-        static public void CheckBasePackageAssets(string firstPath, string secondPath)
+        static public void CheckBaseClientAssets(string firstPath, string secondPath)
         {
             if (firstPath.Equals(secondPath))
             {
