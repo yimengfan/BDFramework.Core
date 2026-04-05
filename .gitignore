@@ -69,3 +69,4 @@ Packages/com.popo.bdframework/Tools~/PthonTools/src/__pycache__
 DevOps/PublishAssets/
 Assets/StreamingAssets.meta
 Assets/StreamingAssets/
+*.pyc
