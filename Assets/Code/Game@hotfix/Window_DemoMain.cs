@@ -186,7 +186,7 @@ public class Window_DemoMain : AWindow
     {
         var path = Application.persistentDataPath;
         //开始下载
-        BResourcesAOT.StartAssetsVersionControl(UpdateMode.Repair, "http://127.0.0.1", null, (idx, totalNum) =>
+        BResources.StartAssetsVersionControl(UpdateMode.RepairFull, "http://127.0.0.1", null, (idx, totalNum) =>
         {
             //进度通知
             Debug.LogFormat("资源更新进度：{0}/{1}", idx, totalNum);
