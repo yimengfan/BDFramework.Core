@@ -1,6 +1,8 @@
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 
 namespace BDFramework
@@ -92,14 +94,15 @@ namespace BDFramework
             QuitFramework();
         }
         
-        #if UNITY_EDITOR
+     
 
         /// <summary>
         /// 退出框架
         /// </summary>
+        [Conditional("UNITY_EDITOR")]
         public void QuitFramework()
         {
-#if UNITY_EDITOR
+
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblies)
             {
@@ -122,9 +125,8 @@ namespace BDFramework
             }
 
             Debug.LogWarning("未找到类型: BDFramework.BDLauncherHotfix");
-#endif
         }
         
-        #endif
+   
     }
 }

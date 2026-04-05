@@ -123,7 +123,7 @@ namespace BDFramework.Editor.HotfixScript
             }
             isBuildSuccess = true;
             //核心构建逻辑
-            string tmpOutputPath = Path.GetFullPath("HybridCLRData\\out_hotfixdlls_temp");
+            string tmpOutputPath = IPath.ReplaceBackSlash(Path.GetFullPath(IPath.Combine("HybridCLRData", "out_hotfixdlls_temp")));
             if (Directory.Exists(tmpOutputPath))
             {
                 Directory.Delete(tmpOutputPath,true);
@@ -151,7 +151,8 @@ namespace BDFramework.Editor.HotfixScript
         /// <param name="destDir"></param>
        static public void CopyHotfixDLLs(string sourceDir, string destDir,BuildTarget target)
        {
-           var destDLLRootDir = $"{BApplication.GetPlatformLoadPath(destDir,target)}/{HotfixScriptLoder.HOTFIX_DLL_PATH}";
+           sourceDir = IPath.ReplaceBackSlash(sourceDir);
+           var destDLLRootDir = IPath.Combine(BApplication.GetPlatformLoadPath(destDir,target), HotfixScriptLoder.HOTFIX_DLL_PATH);
             if (Directory.Exists(destDLLRootDir))
             {
                 Directory.Delete(destDLLRootDir,true);
@@ -162,8 +163,8 @@ namespace BDFramework.Editor.HotfixScript
             var hotfixDlls = HybridCLRSettings.Instance.hotUpdateAssemblies;
             foreach (var hd in hotfixDlls)
             {
-                var source = $"{sourceDir}/{hd}.dll";
-                var destPath = $"{destDLLRootDir}/{hd}{HotfixScriptLoder.HOT_DLL_EXTENSION}";
+                var source = IPath.Combine(sourceDir, hd + ".dll");
+                var destPath = IPath.Combine(destDLLRootDir, hd + HotfixScriptLoder.HOT_DLL_EXTENSION);
 
                 if (!File.Exists(source))
                 {
@@ -173,6 +174,14 @@ namespace BDFramework.Editor.HotfixScript
                 
                 BDebug.Log($"{source} => {destPath}", Color.yellow);
                 FileHelper.Copy(source, destPath, true);
+                if(File.Exists(destPath))
+                {
+                    BDebug.Log("热更打包成功 =>" + destPath, Color.green);
+                }
+                else
+                {
+                    Debug.LogError("热更打包失败 =>" + destPath);
+                }
             }
         }
 

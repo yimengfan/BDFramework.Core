@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.IO;
+using BDFramework;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
 using LitJson;
@@ -53,7 +54,8 @@ public class WindowPreconfig : MonoBehaviour
     void Onclick_PassAndLaunch()
     {
         //直接启动
-        // BDLauncher.Inst.Launch();
+        
+         BDLauncherHotfix.Launch();
         //
         this.StartCoroutine(IE_Destroy());
     }
@@ -68,7 +70,8 @@ public class WindowPreconfig : MonoBehaviour
         var url = "http://" + this.inputField.text;
         float totalSize = -1;
         float curDoanloadSize = -1;
-        BResourcesAOT.StartAssetsVersionControl(UpdateMode.CompareWithRepair, url, null, (curDownload, allDownloadList) =>
+        
+        BResources.StartAssetsVersionControl(UpdateMode.CompareWithRepairCoreAssets, url, null, (curDownload, allDownloadList) =>
             {
                 if (totalSize == -1)
                 {
@@ -96,6 +99,11 @@ public class WindowPreconfig : MonoBehaviour
                        // this.Onclick_PassAndLaunch();
                     }
                         break;
+                    case AssetsVersionController.RetStatus.SuccessNeedRestart:
+                    {
+                        this.text_DownloadProcess.text = "下载完毕，有代码更新，请重启游戏";
+                    }
+                        break;
                     case AssetsVersionController.RetStatus.Error:
                     {
                         //错误
@@ -115,7 +123,7 @@ public class WindowPreconfig : MonoBehaviour
         var url = "http://" + this.inputField.text;
         float totalSize =0;
         float curDoanloadSize = 0;
-        BResourcesAOT.StartAssetsVersionControl(UpdateMode.Repair, url, null, (curDownload, allDownloadList) =>
+        BResources.StartAssetsVersionControl(UpdateMode.RepairFull, url, null, (curDownload, allDownloadList) =>
         {
             if (totalSize == 0)
             {
@@ -143,6 +151,11 @@ public class WindowPreconfig : MonoBehaviour
                     // this.Onclick_PassAndLaunch();
                 }
                     break;
+                case AssetsVersionController.RetStatus.SuccessNeedRestart:
+                {
+                    this.text_DownloadProcess.text = "下载完毕，请重启游戏";
+                }
+                    break;
                 case AssetsVersionController.RetStatus.Error:
                 {
                     //错误
@@ -160,7 +173,7 @@ public class WindowPreconfig : MonoBehaviour
     private void OnClick_GetSubPackage()
     {
         var url = "http://" + inputField.text;
-        BResourcesAOT.GetServerSubPacks(url, (map) =>
+        BResources.GetServerSubPacks(url, (map) =>
         {
             //获取到子包
             Debug.Log("获取到子包信息:\n" + JsonMapper.ToJson(map,true));
@@ -204,7 +217,7 @@ public class WindowPreconfig : MonoBehaviour
         var url = "http://" + this.inputField.text;
         float totalSize = -1;
         float curDoanloadSize = -1;
-        BResourcesAOT.StartAssetsVersionControl(UpdateMode.Compare, url, subPackageName, (curDownload, allDownloadList) =>
+        BResources.StartAssetsVersionControl(UpdateMode.CompareSimple, url, subPackageName, (curDownload, allDownloadList) =>
             {
                 if (totalSize == -1)
                 {
@@ -229,6 +242,12 @@ public class WindowPreconfig : MonoBehaviour
                         this.text_DownloadProcess.text = "下载完毕";
                         
                         Debug.Log("分包下载完毕,此时资源不全,进入游戏可能会有bug!");
+                    }
+                        break;
+                    case AssetsVersionController.RetStatus.SuccessNeedRestart:
+                    {
+                        this.text_DownloadProcess.text = "下载完毕，请重启游戏";
+                        Debug.Log("分包下载完毕，且包含 DLL 更新，请重启游戏后再进入。");
                     }
                         break;
                     case AssetsVersionController.RetStatus.Error:

@@ -4,6 +4,9 @@ using System.IO;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using SQLite4Unity3d;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 namespace BDFramework.Sql
 {
@@ -97,6 +100,7 @@ namespace BDFramework.Sql
         static public SQLiteConnection LoadDBReadWriteCreate(string path, bool isUsePsw = true)
         {
             BDebug.Log($" DB Path:{path}  <color=yellow>password:{Password}</color>");
+            EnsureEditorSqlCipherReady();
             SQLiteConnectionString cs;
             if (isUsePsw)
             {
@@ -154,6 +158,43 @@ namespace BDFramework.Sql
         {
             return IPath.Combine(root, "server_data", SERVER_DB_PATH);
         }
+
+#if UNITY_EDITOR
+        private static void EnsureEditorSqlCipherReady()
+        {
+            if (!Application.isEditor)
+            {
+                return;
+            }
+
+            try
+            {
+                SQLite3.LibVersionNumber();
+            }
+            catch (Exception e)
+            {
+                var pluginPath = IPath.Combine(Application.dataPath, "../Packages/com.popo.bdframework/Plugins/Sqlite/macOS/sqlcipher.bundle");
+                pluginPath = Path.GetFullPath(pluginPath);
+                var pluginExists = File.Exists(pluginPath);
+                var editorCpu = SystemInfo.processorType;
+                var message =
+                    $"SQLCipher 原生库加载失败!\n" +
+                    $"Plugin: {pluginPath}\n" +
+                    $"Exists: {pluginExists}\n" +
+                    $"OS: {SystemInfo.operatingSystem}\n" +
+                    $"CPU: {editorCpu}\n" +
+                    $"Unity: {Application.unityVersion}\n" +
+                    $"Active BuildTarget: {EditorUserBuildSettings.activeBuildTarget}\n" +
+                    $"Exception: {e}";
+                Debug.LogError(message);
+                throw new Exception(message, e);
+            }
+        }
+#else
+        private static void EnsureEditorSqlCipherReady()
+        {
+        }
+#endif
 
         #region Editor下加载
 

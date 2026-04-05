@@ -6,7 +6,7 @@
     "ArtRoot"  : 0,
     "CodeRunMode" : 1,
     "IsDebugLog"  : true,
-    "ClientVersionNum" : "4.0.0",
+    "ClientVersionNum" : "0.1.0",
     "L2Type"           : 1,
     "ClassType"        : "BDFramework.Configure.GameBaseConfigProcessor+Config"
   },
