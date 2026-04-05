@@ -96,7 +96,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         public static string GetDefaultClientVersion()
         {
-            var clientVersion = "0.1.0";//BDEditorApplication.EditorSetting?.BuildClientPackage?.ClientVersion;
+            var clientVersion = BDEditorApplication.EditorSetting?.BuildClientPackage?.ClientVersion;
             if (!string.IsNullOrWhiteSpace(clientVersion))
             {
                 return clientVersion.Trim();

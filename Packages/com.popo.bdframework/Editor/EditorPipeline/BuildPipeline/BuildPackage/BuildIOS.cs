@@ -43,7 +43,7 @@ namespace BDFramework.Editor.BuildPipeline
 
         [VerticalGroup("a")]
         [LabelText("锁住配置")]
-        [InfoBox("构建Xcode工程后,会调用 DevOps/CI/BuildIpa_{buildmode}.shell 脚本进行生成ipa.")]
+        [InfoBox("构建Xcode工程后,会调用 DevOps/CI/BuildTools/BuildIOS.shell 脚本执行后续自动化流程。")]
         public bool IsLock = true;
 
         [PropertySpace(8)]

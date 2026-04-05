@@ -371,7 +371,7 @@ namespace BDFramework.Editor
         [FilePath(ParentFolder = "")]
         [LabelText("生成Xcode后执行")]
         [LabelWidth(200)]
-        public string ExcuteShell = "DevOps/CI/BuildIOS.shell";
+        public string ExcuteShell = "DevOps/CI/BuildTools/BuildIOS.shell";
 
         [Space(10)]
         [LabelText("包体仓库")]

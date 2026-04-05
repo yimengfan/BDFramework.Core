@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# -----------------------------------------------
+# BDFramework.Core iOS post-build automation hook
+# -----------------------------------------------
+# 用途：
+# 1. 这是生成 Xcode 工程后的默认自动化入口。
+# 2. 当前仓库把可执行的 CI / 构建脚本收拢到了 `DevOps/CI/` 目录。
+# 3. 如果你们有自己的打包、签名、上传、通知流程，请直接在这里继续扩展。
+#
+# 注意：
+# - 这个脚本默认只输出提示，不做真实 ipa 签名或上传。
+# - 这样可以避免默认配置指向一个不存在的文件，同时给 CI 接入留明确扩展点。
+# - 如果你们后续改为 Jenkins / TeamCity / Fastlane 驱动，也可以保留这里作为兼容入口。
+
+set -euo pipefail
+
+echo "[BuildIOS.shell] Start iOS post-build hook"
+echo "[BuildIOS.shell] Current working directory: $(pwd)"
+echo "[BuildIOS.shell] This is a placeholder hook under DevOps/CI/BuildTools/BuildIOS.shell"
+echo "[BuildIOS.shell] Please extend this script with your own signing / export / upload workflow if needed."
+echo "[BuildIOS.shell] Done"
+
