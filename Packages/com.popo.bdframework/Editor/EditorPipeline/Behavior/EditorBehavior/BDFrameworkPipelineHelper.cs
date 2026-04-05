@@ -422,7 +422,8 @@ namespace BDFramework.Editor
         /// </summary>
         /// <param name="buildTarget"></param>
         /// <param name="outputpath"></param>
-        static public void OnBeginBuildPackage(BuildTarget buildTarget, string outputpath)
+        /// <param name="clientVersion"></param>
+        static public void OnBeginBuildPackage(BuildTarget buildTarget, string outputpath, string clientVersion)
         {
             var  isCallSuccess = false;
             var fname = nameof(ABDFrameworkPublishPipelineBehaviour.OnBeginBuildPackage);
@@ -434,14 +435,14 @@ namespace BDFramework.Editor
                 {
                     Debug.Log($"执行:{inst.GetType()}.{fname}");
                     isCallSuccess = true;
-                    inst.OnBeginBuildPackage(buildTarget, outputpath);
+                    inst.OnBeginBuildPackage(buildTarget, outputpath, clientVersion);
                 }
             }
             
             if (!isCallSuccess)
             {
                 Debug.Log($"执行:{@BaseBehaviour.GetType()}.{fname}");
-                @BaseBehaviour.OnBeginBuildPackage(buildTarget, outputpath);
+                @BaseBehaviour.OnBeginBuildPackage(buildTarget, outputpath, clientVersion);
             }
         }
 

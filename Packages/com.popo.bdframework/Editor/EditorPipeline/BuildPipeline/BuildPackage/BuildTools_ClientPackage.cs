@@ -8,6 +8,7 @@ using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Environment;
 using BDFramework.Editor.HotfixScript;
+using BDFramework.Editor.Inspector.Config;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Tools.RuntimeEditor;
 using BDFramework.ResourceMgr;
@@ -22,6 +23,8 @@ namespace BDFramework.Editor.BuildPipeline
     /// </summary>
     static public class BuildTools_ClientPackage
     {
+        public const string DefaultClientVersion = "0.1.0";
+
         public enum BuildMode
         {
             /// <summary>
@@ -67,28 +70,123 @@ namespace BDFramework.Editor.BuildPipeline
         /// </summary>
         /// <param name="mode"></param>
         /// <param name="buildScene"></param>
-        static void LoadConfig(string buildScene, string buildConfig)
+        sealed class BuildConfigOverrideContext
+        {
+            public string ConfigPath { get; }
+            public string OriginalContent { get; }
+
+            public BuildConfigOverrideContext(string configPath, string originalContent)
+            {
+                this.ConfigPath = configPath;
+                this.OriginalContent = originalContent;
+            }
+
+            public void Restore()
+            {
+                if (!string.IsNullOrEmpty(this.ConfigPath))
+                {
+                    FileHelper.WriteAllText(this.ConfigPath, this.OriginalContent);
+                    AssetDatabase.Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取默认母包版本号
+        /// </summary>
+        public static string GetDefaultClientVersion()
+        {
+            var clientVersion = "0.1.0";//BDEditorApplication.EditorSetting?.BuildClientPackage?.ClientVersion;
+            if (!string.IsNullOrWhiteSpace(clientVersion))
+            {
+                return clientVersion.Trim();
+            }
+
+            try
+            {
+                var config = ConfigEditorUtil.GetEditorConfig<GameBaseConfigProcessor.Config>();
+                if (!string.IsNullOrWhiteSpace(config?.ClientVersionNum))
+                {
+                    return config.ClientVersionNum.Trim();
+                }
+            }
+            catch
+            {
+            }
+
+            return DefaultClientVersion;
+        }
+
+        static string NormalizeClientVersion(string clientVersion)
+        {
+            return string.IsNullOrWhiteSpace(clientVersion) ? GetDefaultClientVersion() : clientVersion.Trim();
+        }
+
+        static BuildConfigOverrideContext OverrideBuildConfigClientVersion(string buildConfigPath, string clientVersion)
+        {
+            if (string.IsNullOrEmpty(buildConfigPath) || string.IsNullOrEmpty(clientVersion) || !File.Exists(buildConfigPath))
+            {
+                return null;
+            }
+
+            var originalContent = File.ReadAllText(buildConfigPath);
+            var configList = GameConfigManager.Inst.LoadConfig(originalContent).Item1;
+            var baseConfig = configList.OfType<GameBaseConfigProcessor.Config>().FirstOrDefault();
+            if (baseConfig == null || string.Equals(baseConfig.ClientVersionNum, clientVersion, StringComparison.Ordinal))
+            {
+                return null;
+            }
+
+            baseConfig.ClientVersionNum = clientVersion;
+            ConfigEditorUtil.SaveConfig(buildConfigPath, configList);
+            AssetDatabase.Refresh();
+            Debug.Log($"【BuildPackage】 覆盖母包配置版本号: {buildConfigPath} => {clientVersion}");
+            return new BuildConfigOverrideContext(buildConfigPath, originalContent);
+        }
+
+        /// <summary>
+        /// 加载场景上的配置
+        /// </summary>
+        static BuildConfigOverrideContext LoadConfig(string buildScene, string buildConfig, string clientVersion)
         {
             var scene = EditorSceneManager.OpenScene(buildScene);
-            //打开场景保存配置
-            TextAsset textContent = null;
-            textContent = AssetDatabase.LoadAssetAtPath<TextAsset>(buildConfig);
-            var config = GameObject.FindObjectOfType<BDLauncher>();
-            config.ConfigText = textContent;
-            Debug.LogFormat("【BuildPackage】 加载配置:{0} \n {1}", buildConfig, config.ConfigText);
+            var launcher = GameObject.FindObjectOfType<BDLauncher>();
+            if (launcher == null)
+            {
+                throw new Exception($"【BuildPackage】 场景中未找到BDLauncher: {buildScene}");
+            }
 
-            GameConfigManager.Inst.LoadConfig(config.ConfigText.text);
-            //保存场景
+            var resolvedBuildConfig = buildConfig;
+            if (string.IsNullOrEmpty(resolvedBuildConfig) && launcher.ConfigText != null)
+            {
+                resolvedBuildConfig = AssetDatabase.GetAssetPath(launcher.ConfigText);
+            }
+
+            var overrideContext = OverrideBuildConfigClientVersion(resolvedBuildConfig, clientVersion);
+            if (!string.IsNullOrEmpty(resolvedBuildConfig))
+            {
+                var textContent = AssetDatabase.LoadAssetAtPath<TextAsset>(resolvedBuildConfig);
+                if (textContent == null)
+                {
+                    throw new Exception($"【BuildPackage】 未找到构建配置: {resolvedBuildConfig}");
+                }
+
+                launcher.ConfigText = textContent;
+                Debug.LogFormat("【BuildPackage】 加载配置:{0} \n {1}", resolvedBuildConfig, launcher.ConfigText);
+                GameConfigManager.Inst.LoadConfig(launcher.ConfigText.text);
+            }
+            launcher.ClientVersion = clientVersion;
             AssetDatabase.SaveAssets();
             EditorSceneManager.SaveScene(scene);
             AssetDatabase.Refresh();
+            return overrideContext;
         }
 
         /// <summary>
         /// 构建包体，使用当前配置、资源
         /// 这里默认建议使用单场景结构打包
         /// </summary>
-        static public bool Build(BuildMode buildMode, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildTools_Assets.BuildPackageOption buildOption = BuildTools_Assets.BuildPackageOption.BuildAll)
+        static public bool Build(BuildMode buildMode, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildTools_Assets.BuildPackageOption buildOption = BuildTools_Assets.BuildPackageOption.BuildAll, string clientVersion = null)
         {
 
             
@@ -109,7 +207,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //build
-            return Build(buildMode, SCENE_PATH, buildConfig, isGenAssets, outdir, buildTarget, buildOption);
+            return Build(buildMode, SCENE_PATH, buildConfig, isGenAssets, outdir, buildTarget, buildOption, clientVersion);
         }
 
         static public bool IsBuilding { get; private set; } = false;
@@ -118,7 +216,7 @@ namespace BDFramework.Editor.BuildPipeline
         /// 构建包体，使用当前配置、资源
         /// 这里默认建议使用单场景结构打包.
         /// </summary>
-        static public bool Build(BuildMode buildMode, string buildScene, string buildConfig, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildTools_Assets.BuildPackageOption buildOption = BuildTools_Assets.BuildPackageOption.BuildAll)
+        static public bool Build(BuildMode buildMode, string buildScene, string buildConfig, bool isGenAssets, string outdir, BuildTarget buildTarget, BuildTools_Assets.BuildPackageOption buildOption = BuildTools_Assets.BuildPackageOption.BuildAll, string clientVersion = null)
         {
             BDebug.Log("=========>开始构建母包流程<==========", Color.yellow );
             if (IsBuilding)
@@ -127,6 +225,7 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             IsBuilding = true;
+            clientVersion = NormalizeClientVersion(clientVersion);
             //开始构建流程
             string addPackageNameStr = null;
             if (buildMode != BuildMode.Release)
@@ -200,44 +299,42 @@ namespace BDFramework.Editor.BuildPipeline
             //增加平台路径
             var buildRuntimePlatform = BApplication.GetRuntimePlatform(buildTarget);
             var outPlatformDir = IPath.Combine(outdir, BApplication.GetPlatformPath(buildTarget));
-            BDFrameworkPipelineHelper.OnBeginBuildPackage(buildTarget, outPlatformDir);
-            
-            //0.加载场景配置
-            BDebug.Log("===>1.加载场景配置", Color.yellow );
-            if (!string.IsNullOrEmpty(buildConfig))
-            {
-                LoadConfig(buildScene, buildConfig);
-            }
-
-#if ENABLE_HYCLR
-            BDebug.Log("===>开始处理华佗", Color.magenta );
-            HyCLREditorTools.PreBuild(buildTarget);
-#endif
-            //1.生成资源到Devops
-            BDebug.Log("===>2.生成资产", Color.yellow );
-            var assetOutputPath = BApplication.DevOpsPublishAssetsPath;
-            if (isGenAssets)
-            {
-                try
-                {
-                    BuildTools_Assets.BuildAll(buildRuntimePlatform,assetOutputPath , opa: buildOption);
-                }
-                catch (Exception e)
-                {
-                    EditorUtility.DisplayDialog("提示", $"打包资产失败!", "ok");
-                    throw e;
-                }
-            }
-
+            BuildConfigOverrideContext configOverrideContext = null;
+            var isAssetEditing = false;
             bool buildResult = false;
             string outputpath = "";
-            
-            //HCLR 
 
-            
-            //2.拷贝资源并打包
-            AssetDatabase.StartAssetEditing(); //停止触发资源导入
+            try
             {
+                BDFrameworkPipelineHelper.OnBeginBuildPackage(buildTarget, outPlatformDir, clientVersion);
+
+                //0.加载场景配置
+                BDebug.Log($"===>1.加载场景配置(母包版本:{clientVersion})", Color.yellow );
+                configOverrideContext = LoadConfig(buildScene, buildConfig, clientVersion);
+
+#if ENABLE_HYCLR
+                BDebug.Log("===>开始处理华佗", Color.magenta );
+                HyCLREditorTools.PreBuild(buildTarget);
+#endif
+                //1.生成资源到Devops
+                BDebug.Log("===>2.生成资产", Color.yellow );
+                var assetOutputPath = BApplication.DevOpsPublishAssetsPath;
+                if (isGenAssets)
+                {
+                    try
+                    {
+                        BuildTools_Assets.BuildAll(buildRuntimePlatform, assetOutputPath, opa: buildOption);
+                    }
+                    catch (Exception e)
+                    {
+                        EditorUtility.DisplayDialog("提示", $"打包资产失败!", "ok");
+                        throw e;
+                    }
+                }
+
+                //2.拷贝资源并打包
+                AssetDatabase.StartAssetEditing();
+                isAssetEditing = true;
                 //拷贝资源
                 BDebug.Log("===>3.拷贝打包资产: DevopsPublish => streamingAssetsPath", Color.yellow );
                 CopyDevopsPublishAssetsTo(Application.streamingAssetsPath, buildRuntimePlatform);
@@ -279,15 +376,25 @@ namespace BDFramework.Editor.BuildPipeline
 
                 //删除目录
                 BDebug.Log("=========>构建母包结束,开始清理<==========", Color.yellow );
-                Directory.Delete(Application.streamingAssetsPath, true);
+                if (Directory.Exists(Application.streamingAssetsPath))
+                {
+                    Directory.Delete(Application.streamingAssetsPath, true);
+                }
             }
-            AssetDatabase.StopAssetEditing(); //恢复触发资源导入
+            finally
+            {
+                if (isAssetEditing)
+                {
+                    AssetDatabase.StopAssetEditing();
+                }
 
-            //恢复包名
-            PlayerSettings.productName = productNameCache;
-            PlayerSettings.applicationIdentifier = applicationIdentifierCache;
-            AssetDatabase.SaveAssets();
-            IsBuilding = false;
+                configOverrideContext?.Restore();
+                PlayerSettings.productName = productNameCache;
+                PlayerSettings.applicationIdentifier = applicationIdentifierCache;
+                AssetDatabase.SaveAssets();
+                IsBuilding = false;
+            }
+
             //返回构建结果
             return buildResult;
         }

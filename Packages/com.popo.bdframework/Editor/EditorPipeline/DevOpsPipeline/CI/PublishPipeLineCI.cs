@@ -1,14 +1,8 @@
 ﻿using System;
-using System.IO;
 using BDFramework.Core.Tools;
-using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline;
-using BDFramework.Editor.BuildPipeline.AssetBundle;
 using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.Editor.Environment;
-using BDFramework.Editor.HotfixScript;
-using BDFramework.Editor.PublishPipeline;
-using BDFramework.Editor.SVN;
 using UnityEditor;
 using UnityEditor.Build.Player;
 using UnityEngine;
@@ -31,19 +25,6 @@ namespace BDFramework.Editor.DevOps
             }
 
         }
-
-        /// <summary>
-        /// 创建svn的处理器
-        /// </summary>
-        static private void CreateSVNProccesor()
-        {
-            //获取设置
-            var devops_setting = BDEditorApplication.EditorSetting.DevOpsSetting;
-            //资源仓库
-            var store = devops_setting.AssetServiceVCSData;
-              //svn仓库
-            store = devops_setting.PackageServiceVCSData;
-           }
 
 
 
@@ -87,13 +68,39 @@ namespace BDFramework.Editor.DevOps
 
         #region 发布母包
 
+        const string CLIENT_VERSION_ARG = "-clientVersion";
+
+        static private string GetCommandLineArg(string argName)
+        {
+            var args = System.Environment.GetCommandLineArgs();
+            for (int i = 0; i < args.Length - 1; i++)
+            {
+                if (string.Equals(args[i], argName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return args[i + 1];
+                }
+            }
+
+            return null;
+        }
+
+        static private string GetClientVersion()
+        {
+            var clientVersion = GetCommandLineArg(CLIENT_VERSION_ARG);
+            if (!string.IsNullOrWhiteSpace(clientVersion))
+            {
+                return clientVersion.Trim();
+            }
+
+            return BuildTools_ClientPackage.GetDefaultClientVersion();
+        }
+
         /// <summary>
         /// 发布包体 AndroidDebug
         /// </summary>
         [CI(Des = "发布母包Android-Debug")]
         static public void PublishPackage_AndroidDebug()
         {
-            //更新
             BuildPackage(BuildTarget.Android, BuildTools_ClientPackage.BuildMode.Debug);
         }
 
@@ -124,34 +131,71 @@ namespace BDFramework.Editor.DevOps
             BuildPackage(BuildTarget.iOS, BuildTools_ClientPackage.BuildMode.Release);
         }
 
+        /// <summary>
+        /// 发布包体 WindowsDebug
+        /// </summary>
+        [CI(Des = "发布母包Windows-Debug")]
+        static public void PublishPackage_WindowsDebug()
+        {
+            BuildPackage(BuildTarget.StandaloneWindows64, BuildTools_ClientPackage.BuildMode.Debug);
+        }
+
+        /// <summary>
+        /// 发布包体 WindowsRelease
+        /// </summary>
+        [CI(Des = "发布母包Windows-Release")]
+        static public void PublishPackage_WindowsRelease()
+        {
+            BuildPackage(BuildTarget.StandaloneWindows64, BuildTools_ClientPackage.BuildMode.Release);
+        }
+
+        /// <summary>
+        /// BatchMode: 构建 Android Release 母包
+        /// </summary>
+        [CI(Des = "BatchMode构建母包Android-Release")]
+        static public void BuildClientPackageAndroid()
+        {
+            BuildPackage(BuildTarget.Android, BuildTools_ClientPackage.BuildMode.Release);
+        }
+
+        /// <summary>
+        /// BatchMode: 构建 iOS Release 母包
+        /// </summary>
+        [CI(Des = "BatchMode构建母包iOS-Release")]
+        static public void BuildClientPackageIOS()
+        {
+            BuildPackage(BuildTarget.iOS, BuildTools_ClientPackage.BuildMode.Release);
+        }
+
+        /// <summary>
+        /// BatchMode: 构建 Windows Release 母包
+        /// </summary>
+        [CI(Des = "BatchMode构建母包Windows-Release")]
+        static public void BuildClientPackageWindows()
+        {
+            BuildPackage(BuildTarget.StandaloneWindows64, BuildTools_ClientPackage.BuildMode.Release);
+        }
+
 
         /// <summary>
         /// 构建包体
         /// </summary>
         static private void BuildPackage(BuildTarget buildTarget, BuildTools_ClientPackage.BuildMode buildMode)
         {
+            var clientVersion = GetClientVersion();
+            Debug.Log($"【CI】BuildTarget:{buildTarget} BuildMode:{buildMode} ClientVersion:{clientVersion}");
+            var ret = BuildTools_ClientPackage.Build(
+                buildMode,
+                true,
+                BApplication.DevOpsPublishClientPackagePath,
+                buildTarget,
+                BuildTools_Assets.BuildPackageOption.BuildAll,
+                clientVersion);
 
-            // var localPath = string.Format("{0}/{1}/Art", CI_ASSETS_PATH, BDApplication.GetPlatformPath(platform));
-            // //1.下载资源已有、Sql
-            // //2.打包dll
-            // ScriptBuildTools.BuildMode mode = buildMode == BuildPackageTools.BuildMode.Debug ? ScriptBuildTools.BuildMode.Debug : ScriptBuildTools.BuildMode.Release;
-            // EditorWindow_ScriptBuildDll.RoslynBuild(CI_ASSETS_PATH, platform, mode);
-            // //3.构建空包即可
-            //构建资源
-            // if (platform == RuntimePlatform.Android)
-            // {
-            //     BuildAssetBundle(RuntimePlatform.Android, BuildTarget.Android);
-            // }
-            // else if (platform == RuntimePlatform.IPhonePlayer)
-            // {
-            //     BuildAssetBundle(RuntimePlatform.IPhonePlayer, BuildTarget.iOS);
-            // }
-            //加载配置
-            // BuildPackageTools.LoadConfig(buildMode);
-            //
-            // Debug.Log("【CI】 outdir:" + CI_PACKAGE_PATH);
-            // var ret = BuildTools_ClientPackage.Build(buildMode, false, CI_PACKAGE_PATH, buildTarget);
-
+            if (!ret)
+            {
+                throw new Exception($"【CI】构建母包失败! Target:{buildTarget} Mode:{buildMode} ClientVersion:{clientVersion}");
+            }
         }
 
         #endregion

@@ -317,6 +317,14 @@ namespace BDFramework.Editor
 
     #region 打包证书设置
 
+    [Serializable]
+    public class BuildClientPackageSetting
+    {
+        [LabelText("母包版本")]
+        [LabelWidth(100)]
+        public string ClientVersion = "0.1.0";
+    }
+
     /// <summary>
     /// Android打包设置
     /// </summary>

@@ -41,6 +41,9 @@ namespace BDFramework.Editor.BuildPipeline
         [LabelText("锁住配置")]
         public bool IsLock = true;
 
+        [PropertySpace(8)] [BoxGroup("母包设置")] [LabelText("母包版本")]
+        public string ClientVersion = "0.1.0";
+
         #endregion
 
 
@@ -54,7 +57,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建Debug包体", "OK", "Cancel"))
             {
-                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Debug, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Debug, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildTools_Assets.BuildPackageOption.BuildAll, this.ClientVersion);
             }
         }
         
@@ -65,7 +68,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForProfiling包体", "OK", "Cancel"))
             {
-                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Profiler, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Profiler, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildTools_Assets.BuildPackageOption.BuildAll, this.ClientVersion);
             }
         }
 
@@ -76,7 +79,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "是否构建ReleaseForPublish版本包体？", "OK", "Cancel"))
             {
-                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Release, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Release, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildTools_Assets.BuildPackageOption.BuildAll, this.ClientVersion);
             }
         }
 
@@ -169,7 +172,7 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Debug, true, BApplication.DevOpsPublishClientPackagePath,BuildTarget);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Debug, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildTools_Assets.BuildPackageOption.BuildAll, BuildTools_ClientPackage.GetDefaultClientVersion());
             }
         }
 
@@ -180,17 +183,18 @@ namespace BDFramework.Editor.BuildPipeline
         {
             if (EditorUtility.DisplayDialog("提示", "此操作会重新编译资源,是否继续？", "OK", "Cancel"))
             {
-                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Release, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget);
+                BuildTools_ClientPackage.Build(BuildTools_ClientPackage.BuildMode.Release, true, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildTools_Assets.BuildPackageOption.BuildAll, BuildTools_ClientPackage.GetDefaultClientVersion());
             }
         }
 
 
+        /// <summary>
         /// 自定义构建
         /// </summary>
         public void CustomBuild(BuildTools_ClientPackage.BuildMode buildMode)
         {
             var buildConfig = this.IsSetBuildSceneConfig ? this.BuildSceneConfig : null;
-            BuildTools_ClientPackage.Build(buildMode, this.BuildScene, buildConfig, IsReBuildAssets, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildPackageOption);
+            BuildTools_ClientPackage.Build(buildMode, this.BuildScene, buildConfig, IsReBuildAssets, BApplication.DevOpsPublishClientPackagePath, BuildTarget, BuildPackageOption, this.ClientVersion);
         }
     }
 }

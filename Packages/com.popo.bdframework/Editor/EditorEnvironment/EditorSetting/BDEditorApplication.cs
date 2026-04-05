@@ -19,6 +19,7 @@ namespace BDFramework.Editor
     {
         /// <summary>
         /// 编辑器设置
+        /// 这个只用于编辑器本身的设置，不要做任何业务
         /// </summary>
         static public BDFrameworkEditorSetting EditorSetting { get; private set; }
         

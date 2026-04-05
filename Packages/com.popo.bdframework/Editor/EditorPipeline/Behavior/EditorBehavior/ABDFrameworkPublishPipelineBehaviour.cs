@@ -146,20 +146,22 @@ namespace BDFramework.Editor
         /// </summary>
         /// <param name="buildTarget"></param>
         /// <param name="outputpath"></param>
-        virtual public void OnBeginBuildPackage(BuildTarget buildTarget, string outputpath )
+        /// <param name="clientVersion"></param>
+        virtual public void OnBeginBuildPackage(BuildTarget buildTarget, string outputpath, string clientVersion)
         {
             //设置母包脚本版本号=>publish assets
             var githash = GitProcessor.GetVersion(6);
             ClientAssetsUtils.GenBasePackageBuildInfo(BApplication.DevOpsPublishAssetsPath,BApplication.GetRuntimePlatform(buildTarget),basePckScriptSVC:githash);
             //
             var config =  ConfigEditorUtil.GetEditorConfig<GameBaseConfigProcessor.Config>();
+            config.ClientVersionNum = clientVersion;
             switch (buildTarget)
             {
                 case BuildTarget.Android:
                 {
                     PlayerSettings.Android.bundleVersionCode++;
                     //设置版本号
-                    PlayerSettings.bundleVersion = config.ClientVersionNum;
+                    PlayerSettings.bundleVersion = clientVersion;
                     BDebug.Log($"APP版本号：Version:{ PlayerSettings.bundleVersion} / BundleVersion:{PlayerSettings.Android.bundleVersionCode}", Color.yellow);
                 }
                     break;
@@ -171,10 +173,18 @@ namespace BDFramework.Editor
                     //设置build number
                     PlayerSettings.iOS.buildNumber = buildNumber.ToString();
                     //设置版本号
-                    PlayerSettings.bundleVersion = "0.1.0";
+                    PlayerSettings.bundleVersion = config.GetClientVersionNumForIOS();
                     
                     BDebug.Log($"APP版本号：Version:{ PlayerSettings.bundleVersion} / BundleVersion:{PlayerSettings.iOS.buildNumber}", Color.yellow);
 
+                }
+                    break;
+                case BuildTarget.StandaloneWindows:
+                case BuildTarget.StandaloneWindows64:
+                case BuildTarget.StandaloneOSX:
+                {
+                    PlayerSettings.bundleVersion = clientVersion;
+                    BDebug.Log($"APP版本号：Version:{ PlayerSettings.bundleVersion}", Color.yellow);
                 }
                     break;
             }
