@@ -1,0 +1,3 @@
+[submodule ".BD-DevOps"]
+	path = .BD-DevOps
+	url = https://github.com/yimengfan/BDFramework.DevOps.git
