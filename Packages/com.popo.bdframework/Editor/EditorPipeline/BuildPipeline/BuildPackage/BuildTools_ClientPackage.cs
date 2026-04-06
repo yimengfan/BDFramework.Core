@@ -91,6 +91,38 @@ namespace BDFramework.Editor.BuildPipeline
             }
         }
 
+        sealed class BuildPlayerSettingsScope : IDisposable
+        {
+            readonly bool previousDevelopment;
+            readonly bool previousAllowDebugging;
+            readonly bool previousConnectProfiler;
+            readonly bool previousDeepProfilingSupport;
+
+            public BuildPlayerSettingsScope(BuildMode buildMode)
+            {
+                this.previousDevelopment = EditorUserBuildSettings.development;
+                this.previousAllowDebugging = EditorUserBuildSettings.allowDebugging;
+                this.previousConnectProfiler = EditorUserBuildSettings.connectProfiler;
+                this.previousDeepProfilingSupport = EditorUserBuildSettings.buildWithDeepProfilingSupport;
+
+                var isDebugBuild = buildMode == BuildMode.Debug;
+                EditorUserBuildSettings.development = isDebugBuild;
+                EditorUserBuildSettings.allowDebugging = isDebugBuild;
+                EditorUserBuildSettings.connectProfiler = isDebugBuild;
+                EditorUserBuildSettings.buildWithDeepProfilingSupport = isDebugBuild;
+
+                Debug.Log($"【BuildPackage】 同步 EditorUserBuildSettings => mode:{buildMode} development:{EditorUserBuildSettings.development} allowDebugging:{EditorUserBuildSettings.allowDebugging} connectProfiler:{EditorUserBuildSettings.connectProfiler} deepProfiling:{EditorUserBuildSettings.buildWithDeepProfilingSupport}");
+            }
+
+            public void Dispose()
+            {
+                EditorUserBuildSettings.development = this.previousDevelopment;
+                EditorUserBuildSettings.allowDebugging = this.previousAllowDebugging;
+                EditorUserBuildSettings.connectProfiler = this.previousConnectProfiler;
+                EditorUserBuildSettings.buildWithDeepProfilingSupport = this.previousDeepProfilingSupport;
+            }
+        }
+
         /// <summary>
         /// 获取默认母包版本号
         /// </summary>
@@ -300,6 +332,7 @@ namespace BDFramework.Editor.BuildPipeline
             var buildRuntimePlatform = BApplication.GetRuntimePlatform(buildTarget);
             var outPlatformDir = IPath.Combine(outdir, BApplication.GetPlatformPath(buildTarget));
             BuildConfigOverrideContext configOverrideContext = null;
+            BuildPlayerSettingsScope buildPlayerSettingsScope = null;
             var isAssetEditing = false;
             bool buildResult = false;
             string outputpath = "";
@@ -311,6 +344,7 @@ namespace BDFramework.Editor.BuildPipeline
                 //0.加载场景配置
                 BDebug.Log($"===>1.加载场景配置(母包版本:{clientVersion})", Color.yellow );
                 configOverrideContext = LoadConfig(buildScene, buildConfig, clientVersion);
+                buildPlayerSettingsScope = new BuildPlayerSettingsScope(buildMode);
 
 #if ENABLE_HYCLR
                 BDebug.Log("===>开始处理华佗", Color.magenta );
@@ -389,6 +423,7 @@ namespace BDFramework.Editor.BuildPipeline
                 }
 
                 configOverrideContext?.Restore();
+                buildPlayerSettingsScope?.Dispose();
                 PlayerSettings.productName = productNameCache;
                 PlayerSettings.applicationIdentifier = applicationIdentifierCache;
                 AssetDatabase.SaveAssets();
