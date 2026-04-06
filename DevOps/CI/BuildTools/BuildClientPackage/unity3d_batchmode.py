@@ -177,7 +177,68 @@ def get_default_unity_version(host_os: str) -> str:
     return unity_version
 
 
-def build_unity_candidates(host_os: str, unity_version: str) -> list[str]:
+def dedupe_candidates(candidates: Sequence[str]) -> list[str]:
+    """按声明顺序去重候选路径。"""
+    deduped_candidates: list[str] = []
+    seen_candidates: set[str] = set()
+    for candidate in candidates:
+        if candidate in seen_candidates:
+            continue
+        seen_candidates.add(candidate)
+        deduped_candidates.append(candidate)
+    return deduped_candidates
+
+
+def build_windows_unity_candidates(
+    unity_version: str,
+    invalid_env_unity_path: str | None = None,
+) -> list[str]:
+    """构建 Windows 平台的 Unity 路径候选。"""
+    root_candidates: list[Path] = []
+
+    for env_name in ("ProgramFiles", "ProgramFiles(x86)", "ProgramW6432"):
+        env_value = os.environ.get(env_name, "").strip()
+        if env_value:
+            root_candidates.append(Path(env_value))
+
+    for drive in ("C:\\", "D:\\", "E:\\"):
+        root_candidates.append(Path(drive))
+        root_candidates.append(Path(drive) / "Program Files")
+
+    if invalid_env_unity_path:
+        invalid_path = Path(invalid_env_unity_path)
+        for candidate in (invalid_path.parent, *invalid_path.parents):
+            if str(candidate) in (invalid_path.anchor, "."):
+                continue
+            root_candidates.append(candidate)
+            root_candidates.append(candidate.parent)
+
+    roots = dedupe_candidates([str(candidate) for candidate in root_candidates if str(candidate)])
+    subpath_templates = [
+        r"Unity\Hub\Editor\{version}\Editor\Unity.exe",
+        r"Unity Hub\Editor\{version}\Editor\Unity.exe",
+        r"Unity3d\Hub\Editor\{version}\Editor\Unity.exe",
+        r"Unity3d\{version}\Editor\Unity.exe",
+        r"Unity\{version}\Editor\Unity.exe",
+        r"UnityEditors\{version}\Editor\Unity.exe",
+        r"Editor\Unity\{version}\Editor\Unity.exe",
+        r"Unity {version}\Editor\Unity.exe",
+    ]
+
+    candidates: list[str] = []
+    for root in roots:
+        normalized_root = root.rstrip("\\/")
+        for subpath_template in subpath_templates:
+            candidates.append(rf"{normalized_root}\{subpath_template.format(version=unity_version)}")
+
+    return dedupe_candidates(candidates)
+
+
+def build_unity_candidates(
+    host_os: str,
+    unity_version: str,
+    invalid_env_unity_path: str | None = None,
+) -> list[str]:
     """根据宿主系统和 Unity 版本生成候选 Unity 可执行路径。"""
     host_groups = get_unity_path_groups(host_os)
     candidates = normalize_named_paths(
@@ -196,23 +257,13 @@ def build_unity_candidates(host_os: str, unity_version: str) -> list[str]:
     )
     if host_os == "windows":
         candidates.extend(
-            [
-                rf"D:\Unity3d\Unity {unity_version}\Editor\Unity.exe",
-                rf"D:\Program Files\Unity\Hub\Editor\{unity_version}\Editor\Unity.exe",
-                rf"D:\Unity\Hub\Editor\{unity_version}\Editor\Unity.exe",
-                rf"C:\Unity\Hub\Editor\{unity_version}\Editor\Unity.exe",
-            ]
+            build_windows_unity_candidates(
+                unity_version,
+                invalid_env_unity_path=invalid_env_unity_path,
+            )
         )
 
-    deduped_candidates: list[str] = []
-    seen_candidates: set[str] = set()
-    for candidate in candidates:
-        if candidate in seen_candidates:
-            continue
-        seen_candidates.add(candidate)
-        deduped_candidates.append(candidate)
-
-    return deduped_candidates
+    return dedupe_candidates(candidates)
 
 
 def resolve_unity_executable(
@@ -256,7 +307,11 @@ def resolve_unity_executable(
             f"Supported versions: {supported_versions}"
         )
 
-    candidates = build_unity_candidates(host_os, selected_unity_version)
+    candidates = build_unity_candidates(
+        host_os,
+        selected_unity_version,
+        invalid_env_unity_path=invalid_env_unity_path,
+    )
     if not candidates:
         raise UnityBatchModeError(
             f"No Unity executable candidates configured for version={selected_unity_version}, host_os={host_os}"
