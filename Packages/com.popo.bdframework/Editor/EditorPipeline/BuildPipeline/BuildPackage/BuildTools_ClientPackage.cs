@@ -679,28 +679,35 @@ namespace BDFramework.Editor.BuildPipeline
             //检测xcode
             if (File.Exists(plist))
             {
+                ret = true;
+
                 //执行shell path
                 var shellPath = mode == BuildMode.Debug ? BDEditorApplication.EditorSetting.iOSDebug.ExcuteShell : BDEditorApplication.EditorSetting.iOS.ExcuteShell;
                 if (File.Exists(shellPath))
                 {
-                    //执行BuildIpa的shell
-                    Debug.Log("即将执行:" + shellPath);
-                    CMDTools.RunCmdFile(shellPath);
-
-                    var ipaPath = outputPath + ".ipa";
-                    if (File.Exists(ipaPath))
+                    if (CMDTools.CanRunCmdFile(shellPath))
                     {
-                        ret = true;
+                        Debug.Log("即将执行:" + shellPath);
+                        CMDTools.RunCmdFile(shellPath);
+
+                        var ipaPath = outputPath + ".ipa";
+                        if (File.Exists(ipaPath))
+                        {
+                            outputPath = ipaPath;
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"iOS 后置脚本未生成 ipa，保留 Xcode 工程输出: {outputPath}");
+                        }
                     }
                     else
                     {
-                        Debug.LogError("【BDFramework】 not found:" + ipaPath);
+                        Debug.LogWarning($"当前宿主 {Application.platform} 不支持直接执行 iOS 后置脚本 {shellPath}，保留 Xcode 工程输出: {outputPath}");
                     }
                 }
                 else
                 {
-                    //For ci
-                    throw new Exception($"没找到编译shell/cmd脚本: {shellPath}! 后续请配合Jekins/Teamcity出包!");
+                    Debug.LogWarning($"未找到 iOS 后置脚本: {shellPath}，保留 Xcode 工程输出: {outputPath}");
                 }
 
                 if (!Application.isBatchMode)

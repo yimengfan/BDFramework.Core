@@ -1,5 +1,7 @@
 ﻿using LitJson;
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Threading;
 using Debug = UnityEngine.Debug;
@@ -162,10 +164,52 @@ namespace BDFramework.Editor.Tools
         /// 执行脚本
         /// </summary>
         /// <param name="args">执行的脚本名</param>
+        static public bool CanRunCmdFile(string shellpath)
+        {
+            var extension = Path.GetExtension(shellpath)?.ToLowerInvariant();
+
+#if UNITY_EDITOR_WIN
+            return extension == ".cmd" || extension == ".bat" || extension == ".exe" || extension == ".com";
+#else
+            return true;
+#endif
+        }
+
         static public void RunCmdFile(string shellpath, string args = "")
         {
             Process process = new Process();
-            process.StartInfo.FileName = shellpath;
+            var extension = Path.GetExtension(shellpath)?.ToLowerInvariant();
+
+#if UNITY_EDITOR_WIN
+            if (extension == ".cmd" || extension == ".bat")
+            {
+                process.StartInfo.FileName = CmdPath;
+                process.StartInfo.Arguments = $"/c \"\"{shellpath}\" {args}\"";
+                process.StartInfo.StandardOutputEncoding = Encoding.GetEncoding("gb2312");
+                process.StartInfo.StandardErrorEncoding = Encoding.GetEncoding("gb2312");
+            }
+            else if (extension == ".exe" || extension == ".com")
+            {
+                process.StartInfo.FileName = shellpath;
+                process.StartInfo.Arguments = args;
+            }
+            else
+            {
+                throw new PlatformNotSupportedException($"当前 Windows 宿主不支持直接执行该脚本: {shellpath}");
+            }
+#else
+            if (extension == ".sh" || extension == ".shell" || string.IsNullOrEmpty(extension))
+            {
+                process.StartInfo.FileName = "/bin/bash";
+                process.StartInfo.Arguments = $"\"{shellpath}\" {args}".Trim();
+            }
+            else
+            {
+                process.StartInfo.FileName = shellpath;
+                process.StartInfo.Arguments = args;
+            }
+#endif
+
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = false;
@@ -192,7 +236,6 @@ namespace BDFramework.Editor.Tools
 
             //执行
             Debug.Log("执行:\n" + args);
-            process.StartInfo.Arguments = args;
             //开始
             process.Start();
             process.BeginOutputReadLine();
