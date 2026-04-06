@@ -18,6 +18,25 @@
 - `config/settings.py`
 - `common.py`（废弃兼容占位，不再承载流程）
 
+## TeamCity 自动化映射
+
+测试用 TeamCity Kotlin DSL 位于：
+
+- `.test-DevOps/.teamcity/settings.kts`
+
+Python 脚本和 TeamCity 任务的索引文档位于：
+
+- `.test-DevOps/.teamcity/BUILD_CLIENT_PACKAGE_INDEX.md`
+
+当前约定：
+
+- `build_android.py` → `BuildClientPackage_android`
+- `build_ios.py` → `BuildClientPackage_ios`
+- `build_windows.py` → `BuildClientPackage_windows`
+- 根聚合任务：`BuildClientPackage`
+
+> 规则：根任务名称允许单独维护；子任务名称、脚本路径、参数入口必须和这里的 Python 脚本保持一致。
+
 ## 支持的 CI 宿主环境
 
 - Android：`macOS` / `Windows` / `Linux`
@@ -35,6 +54,14 @@
 - `--unity-version`
 - `--project-dir`
 - `--dry-run`
+
+TeamCity 侧通过 `%build.extra.args%` 透传这些可选参数，例如：
+
+- `--unity-version 2022.3.74f1`
+- `--project-dir /path/to/UnityProject`
+- `--dry-run`
+
+如果某台 TeamCity Agent 上默认 Python 命令不是 `python`，请同步覆盖 `%ci.python.command%`，例如改成 `python3`、`py -3` 或绝对路径。
 
 用于只打印 Unity 命令，不真正执行 Unity，适合：
 
@@ -167,7 +194,7 @@ $env:UNITY_PATH = 'C:\Program Files\Unity\Hub\Editor\2021.3.58f1\Editor\Unity.ex
 
 - 使用明确阶段日志，例如：`Step 1/5`、`Step 2/5`
 - 打印：宿主系统、目标平台、clientVersion、Unity 路径、C# executeMethod、日志文件路径
-- 失败时打印可直接定位的问题和后续检查点
+- 失败时打印可直接定位的问题、Unity 日志尾部和后续检查点
 
 ### 3. 边界情况
 
@@ -185,3 +212,22 @@ $env:UNITY_PATH = 'C:\Program Files\Unity\Hub\Editor\2021.3.58f1\Editor\Unity.ex
 - 新平台脚本继续保持 `build_xxx.py` 为流程主体
 - 新增共通逻辑时，先判断它是否真的只属于 Unity 调用层
 - 如果不是纯 Unity 调用辅助，不要继续塞进共享模块
+
+## 与 TeamCity 同步时必须检查的项
+
+以下内容有任何改动，都必须同步更新：
+
+1. `.test-DevOps/.teamcity/settings.kts`
+2. `.test-DevOps/.teamcity/BUILD_CLIENT_PACKAGE_INDEX.md`
+3. `.test-DevOps/README.md`
+
+重点检查：
+
+- Python 脚本文件名是否变化
+- 参数入口是否变化
+- `config/settings.py` 中的 `allowed_hosts` 是否变化
+- `config/settings.py` 中的 `method` 是否变化
+- TeamCity 子任务名称是否仍满足 `BuildClientPackage_xxx` 约定
+
+补充提醒：`.test-DevOps/.teamcity/settings.kts` 是 Kotlin Script，脚本级常量请使用普通 `val`，不要使用脚本级 `const val`；如果某个 TeamCity 实例会引用脚本级成员，也优先写成 `val xxx = BuildType({ ... })`，不要写成命名 `object`，否则 TeamCity 服务端可能回退到 last known good settings。
+

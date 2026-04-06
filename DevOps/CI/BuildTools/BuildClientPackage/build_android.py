@@ -18,6 +18,7 @@ from unity3d_batchmode import (
     ensure_platform_allowed,
     get_execute_method,
     get_log_path,
+    read_log_tail,
     resolve_unity_executable,
     resolve_project_dir,
     run_batchmode,
@@ -110,6 +111,7 @@ def main() -> int:
     print("[BuildClientPackage][Android] ===== Step 5/5: execute =====")
     return_code = run_batchmode(command, dry_run=args.dry_run)
     if return_code != 0:
+        print(read_log_tail(log_path))
         raise UnityBatchModeError(
             "Android client package build failed. "
             f"exit_code={return_code}, log={log_path}"

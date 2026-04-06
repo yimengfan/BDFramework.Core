@@ -327,6 +327,25 @@ def run_batchmode(command: Sequence[str], *, dry_run: bool = False) -> int:
     return completed.returncode
 
 
+def read_log_tail(log_path: Path, *, max_lines: int = 120) -> str:
+    """读取 Unity 日志尾部，方便在 CI 失败时直接输出关键信息。"""
+    if not log_path.exists():
+        return f"[UnityBatchMode] log file does not exist: {log_path}"
+
+    try:
+        raw_lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError as exc:
+        return f"[UnityBatchMode] failed to read log file: {log_path}. error={exc}"
+
+    if max_lines <= 0:
+        tail_lines = raw_lines
+    else:
+        tail_lines = raw_lines[-max_lines:]
+
+    header = f"[UnityBatchMode] log tail ({len(tail_lines)}/{len(raw_lines)} lines) from {log_path}"
+    return "\n".join([header, *tail_lines])
+
+
 def quote_argument(value: str) -> str:
     """输出适合日志展示的命令参数。"""
     if any(ch in value for ch in (" ", "\t", "\n", '"')):

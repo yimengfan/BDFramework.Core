@@ -1,3 +1,6 @@
 [submodule ".BD-DevOps"]
 	path = .BD-DevOps
 	url = https://github.com/yimengfan/BDFramework.DevOps.git
+[submodule ".test-DevOps"]
+	path = .test-DevOps
+	url = http://gitlab.funtoo.games/m12s/DevOps.git
