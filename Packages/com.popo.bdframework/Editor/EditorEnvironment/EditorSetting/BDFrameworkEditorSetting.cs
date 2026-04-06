@@ -79,6 +79,12 @@ namespace BDFramework.Editor
         #region 平台打包
 
         [ShowIf(nameof(pageType), PageType.BuildPackage)]
+        [BoxGroup("母包设置")]
+        [HideLabel]
+        [InlineProperty]
+        public BuildClientPackageSetting BuildClientPackage = new BuildClientPackageSetting();
+
+        [ShowIf(nameof(pageType), PageType.BuildPackage)]
         [BoxGroup("Android设置[Release]")]
         [HideLabel]
         [InlineProperty]
