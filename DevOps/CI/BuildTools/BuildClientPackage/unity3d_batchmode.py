@@ -345,6 +345,9 @@ def get_disk_root(reference_dir: Path) -> Path:
     """获取当前磁盘根目录。"""
     resolved_reference_dir = reference_dir.resolve()
 
+    if os.name == "nt":
+        return Path(resolved_reference_dir.anchor or os.path.abspath(os.sep))
+
     if os.name != "nt":
         completed = subprocess.run(
             ["df", "-P", str(resolved_reference_dir)],
