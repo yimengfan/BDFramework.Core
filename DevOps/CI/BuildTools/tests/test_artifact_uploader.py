@@ -102,6 +102,98 @@ class ErroringUploadHandler(BaseHTTPRequestHandler):
 		return
 
 
+class RecoveringErrorHTTPServer(ThreadingHTTPServer):
+	def __init__(
+		self,
+		server_address: tuple[str, int],
+		*,
+		metadata_available: bool,
+		metadata_returns_sha256: bool,
+		download_available: bool,
+		integrity_status: str,
+	) -> None:
+		super().__init__(server_address, RecoveringErrorUploadHandler)
+		self.metadata_available = metadata_available
+		self.metadata_returns_sha256 = metadata_returns_sha256
+		self.download_available = download_available
+		self.integrity_status = integrity_status
+		self.uploaded_files: dict[str, dict[str, str | bytes]] = {}
+
+
+class RecoveringErrorUploadHandler(BaseHTTPRequestHandler):
+	protocol_version = "HTTP/1.1"
+
+	def do_PUT(self) -> None:  # noqa: N802 - stdlib handler signature
+		content_length = int(self.headers.get("Content-Length", "0"))
+		body = self.rfile.read(content_length)
+		parsed = urlparse(self.path)
+		remote_path = unquote(parsed.path.split("/api/files/", 1)[1])
+		self.server.uploaded_files[remote_path] = {  # type: ignore[attr-defined]
+			"body": body,
+			"sha256": self.headers.get("X-Checksum-Sha256", ""),
+		}
+
+		payload = json.dumps({"detail": "Internal Server Error"}).encode("utf-8")
+		self.send_response(500)
+		self.send_header("Content-Type", "application/json")
+		self.send_header("Content-Length", str(len(payload)))
+		self.end_headers()
+		self.wfile.write(payload)
+
+	def do_GET(self) -> None:  # noqa: N802 - stdlib handler signature
+		parsed = urlparse(self.path)
+		if parsed.path.startswith("/api/files/"):
+			remote_path = unquote(parsed.path.split("/api/files/", 1)[1])
+			record = self.server.uploaded_files.get(remote_path)  # type: ignore[attr-defined]
+			if not self.server.metadata_available or record is None:  # type: ignore[attr-defined]
+				payload = json.dumps({"detail": "Not Found"}).encode("utf-8")
+				self.send_response(404)
+				self.send_header("Content-Type", "application/json")
+				self.send_header("Content-Length", str(len(payload)))
+				self.end_headers()
+				self.wfile.write(payload)
+				return
+
+			payload_dict = {
+				"path": remote_path,
+				"size": len(record["body"]),
+				"integrity_status": self.server.integrity_status,  # type: ignore[attr-defined]
+			}
+			if self.server.metadata_returns_sha256:  # type: ignore[attr-defined]
+				payload_dict["sha256"] = record["sha256"]
+			payload = json.dumps(payload_dict).encode("utf-8")
+			self.send_response(200)
+			self.send_header("Content-Type", "application/json")
+			self.send_header("Content-Length", str(len(payload)))
+			self.end_headers()
+			self.wfile.write(payload)
+			return
+
+		if parsed.path.startswith("/files/"):
+			remote_path = unquote(parsed.path.split("/files/", 1)[1])
+			record = self.server.uploaded_files.get(remote_path)  # type: ignore[attr-defined]
+			if not self.server.download_available or record is None:  # type: ignore[attr-defined]
+				self.send_response(404)
+				self.send_header("Content-Length", "0")
+				self.end_headers()
+				return
+
+			body = record["body"]
+			self.send_response(200)
+			self.send_header("Content-Type", "application/octet-stream")
+			self.send_header("Content-Length", str(len(body)))
+			self.end_headers()
+			self.wfile.write(body)
+			return
+
+		self.send_response(404)
+		self.send_header("Content-Length", "0")
+		self.end_headers()
+
+	def log_message(self, format: str, *args: object) -> None:
+		return
+
+
 def make_upload_server() -> tuple[RecordingHTTPServer, str, threading.Thread]:
 	server = RecordingHTTPServer(("127.0.0.1", 0))
 	thread = threading.Thread(target=server.serve_forever, daemon=True)
@@ -116,6 +208,26 @@ def make_error_upload_server(
 	payload: dict[str, str],
 ) -> tuple[ErroringHTTPServer, str, threading.Thread]:
 	server = ErroringHTTPServer(("127.0.0.1", 0), status_code, payload)
+	thread = threading.Thread(target=server.serve_forever, daemon=True)
+	thread.start()
+	base_url = f"http://127.0.0.1:{server.server_port}"
+	return server, base_url, thread
+
+
+def make_recovering_error_upload_server(
+	*,
+	metadata_available: bool,
+	metadata_returns_sha256: bool,
+	download_available: bool,
+	integrity_status: str,
+) -> tuple[RecoveringErrorHTTPServer, str, threading.Thread]:
+	server = RecoveringErrorHTTPServer(
+		("127.0.0.1", 0),
+		metadata_available=metadata_available,
+		metadata_returns_sha256=metadata_returns_sha256,
+		download_available=download_available,
+		integrity_status=integrity_status,
+	)
 	thread = threading.Thread(target=server.serve_forever, daemon=True)
 	thread.start()
 	base_url = f"http://127.0.0.1:{server.server_port}"
@@ -396,6 +508,65 @@ def test_upload_single_file_surfaces_server_error_detail(tmp_path: Path) -> None
 
 		assert "status=409" in str(exc_info.value)
 		assert "Artifact already exists." in str(exc_info.value)
+	finally:
+		server.shutdown()
+		thread.join(timeout=5)
+		server.server_close()
+
+
+def test_upload_single_file_recovers_when_server_returns_500_but_file_is_remotely_available(
+	tmp_path: Path,
+) -> None:
+	server, base_url, thread = make_recovering_error_upload_server(
+		metadata_available=True,
+		metadata_returns_sha256=False,
+		download_available=True,
+		integrity_status="missing",
+	)
+	try:
+		build_file = tmp_path / "Launcher.apk"
+		build_file.write_bytes(b"android package")
+
+		result = upload_single_file(
+			build_file,
+			remote_path="ClientPackage_android/239/Launcher.apk",
+			settings=resolve_file_server_settings(server_url=base_url),
+		)
+
+		assert result.remote_path == "ClientPackage_android/239/Launcher.apk"
+		assert result.sha256 == hashlib.sha256(b"android package").hexdigest()
+		assert result.size == len(b"android package")
+		assert result.status_code == 500
+		assert result.integrity_status == "missing"
+	finally:
+		server.shutdown()
+		thread.join(timeout=5)
+		server.server_close()
+
+
+def test_upload_single_file_raises_when_server_returns_500_and_remote_verification_fails(
+	tmp_path: Path,
+) -> None:
+	server, base_url, thread = make_recovering_error_upload_server(
+		metadata_available=False,
+		metadata_returns_sha256=False,
+		download_available=False,
+		integrity_status="missing",
+	)
+	try:
+		build_file = tmp_path / "Launcher.apk"
+		build_file.write_bytes(b"android package")
+
+		with pytest.raises(ArtifactUploadError) as exc_info:
+			upload_single_file(
+				build_file,
+				remote_path="ClientPackage_android/239/Launcher.apk",
+				settings=resolve_file_server_settings(server_url=base_url),
+				timeout_seconds=2,
+			)
+
+		assert "status=500" in str(exc_info.value)
+		assert "recovery_check=metadata status=404" in str(exc_info.value)
 	finally:
 		server.shutdown()
 		thread.join(timeout=5)
