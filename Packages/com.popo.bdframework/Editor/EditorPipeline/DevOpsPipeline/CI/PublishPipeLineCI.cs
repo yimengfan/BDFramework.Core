@@ -111,7 +111,27 @@ namespace BDFramework.Editor.DevOps
 #endif
         }
 
-        static private string FindJdkFromEnvironment()
+        static private bool TryApplyAndroidJdkPath(string candidate, string source)
+        {
+            if (!IsValidJdkPath(candidate))
+            {
+                return false;
+            }
+
+            try
+            {
+                AndroidExternalToolsSettings.jdkRootPath = candidate;
+                Debug.Log($"【CI】已为 Unity Android External Tools 配置 JDK({source}): {AndroidExternalToolsSettings.jdkRootPath}");
+                return true;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"【CI】JDK 候选路径被 Unity 拒绝({source}): {candidate}，原因: {exception.Message}");
+                return false;
+            }
+        }
+
+        static private bool TryConfigureAndroidJdkFromCandidates()
         {
             var envNames = new[]
             {
@@ -125,10 +145,9 @@ namespace BDFramework.Editor.DevOps
             foreach (var envName in envNames)
             {
                 var candidate = System.Environment.GetEnvironmentVariable(envName);
-                if (IsValidJdkPath(candidate))
+                if (TryApplyAndroidJdkPath(candidate, $"环境变量 {envName}"))
                 {
-                    Debug.Log($"【CI】使用环境变量 {envName} 提供的 JDK: {candidate}");
-                    return candidate;
+                    return true;
                 }
             }
 
@@ -150,22 +169,20 @@ namespace BDFramework.Editor.DevOps
 
                 foreach (var candidate in Directory.GetDirectories(root))
                 {
-                    if (IsValidJdkPath(candidate))
+                    if (TryApplyAndroidJdkPath(candidate, "自动探测"))
                     {
-                        Debug.Log($"【CI】使用自动探测到的 JDK: {candidate}");
-                        return candidate;
+                        return true;
                     }
                 }
 
-                if (IsValidJdkPath(root))
+                if (TryApplyAndroidJdkPath(root, "自动探测"))
                 {
-                    Debug.Log($"【CI】使用自动探测到的 JDK: {root}");
-                    return root;
+                    return true;
                 }
             }
 #endif
 
-            return null;
+            return false;
         }
 
         static private void EnsureAndroidJdkForBatchMode()
@@ -181,11 +198,8 @@ namespace BDFramework.Editor.DevOps
                 return;
             }
 
-            var detectedJdkPath = FindJdkFromEnvironment();
-            if (IsValidJdkPath(detectedJdkPath))
+            if (TryConfigureAndroidJdkFromCandidates())
             {
-                AndroidExternalToolsSettings.jdkRootPath = detectedJdkPath;
-                Debug.Log($"【CI】已为 Unity Android External Tools 配置 JDK: {AndroidExternalToolsSettings.jdkRootPath}");
                 return;
             }
 
