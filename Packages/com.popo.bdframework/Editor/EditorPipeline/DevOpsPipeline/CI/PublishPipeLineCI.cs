@@ -123,7 +123,7 @@ namespace BDFramework.Editor.DevOps
 
             foreach (var envName in envNames)
             {
-                var candidate = Environment.GetEnvironmentVariable(envName);
+                var candidate = System.Environment.GetEnvironmentVariable(envName);
                 if (IsValidJdkPath(candidate))
                 {
                     Debug.Log($"【CI】使用环境变量 {envName} 提供的 JDK: {candidate}");
