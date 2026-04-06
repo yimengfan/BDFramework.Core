@@ -22,9 +22,11 @@ from unity3d_batchmode import (
     get_log_path,
     read_log_tail,
     resolve_build_metadata,
+    resolve_artifact_root_dir,
     resolve_unity_executable,
     resolve_project_dir,
     run_batchmode,
+    stage_build_artifacts,
 )
 
 
@@ -48,20 +50,10 @@ def parse_args() -> argparse.Namespace:
         help="Optional CI build name. If omitted, try resolving from environment.",
     )
     parser.add_argument(
-        "--tc-build-name",
-        dest="build_name",
-        help=argparse.SUPPRESS,
-    )
-    parser.add_argument(
         "--build-number",
         dest="build_number",
         default=None,
         help="Optional CI build number. If provided, Unity clientVersion becomes major.minor.buildNumber.",
-    )
-    parser.add_argument(
-        "--tc-build-number",
-        dest="build_number",
-        help=argparse.SUPPRESS,
     )
     parser.add_argument(
         "--unity-version",
@@ -72,6 +64,11 @@ def parse_args() -> argparse.Namespace:
         "--project-dir",
         default=None,
         help="Optional Unity project directory. If omitted, infer the default project root from config/script location.",
+    )
+    parser.add_argument(
+        "--artifact-root-dir",
+        default=None,
+        help="Optional CI artifact output root. If provided, copy Unity default outputs to this directory after a successful build.",
     )
     parser.add_argument(
         "--dry-run",
@@ -136,6 +133,9 @@ def main() -> int:
     print(f"[BuildClientPackage][iOS] projectDir={project_dir}")
     print(f"[BuildClientPackage][iOS] method={execute_method}")
     print(f"[BuildClientPackage][iOS] log={log_path}")
+    artifact_root_dir = resolve_artifact_root_dir(args.artifact_root_dir)
+    if artifact_root_dir:
+        print(f"[BuildClientPackage][iOS] artifactRootDir={artifact_root_dir}")
 
     print("[BuildClientPackage][iOS] ===== Step 4/5: build Unity command =====")
     command = build_batchmode_command(
@@ -153,6 +153,13 @@ def main() -> int:
         raise UnityBatchModeError(
             "iOS client package build failed. "
             f"exit_code={return_code}, log={log_path}"
+        )
+
+    if not args.dry_run:
+        stage_build_artifacts(
+            PLATFORM_KEY,
+            project_dir=project_dir,
+            artifact_root_dir=args.artifact_root_dir,
         )
 
     print("[BuildClientPackage][iOS] build finished successfully")

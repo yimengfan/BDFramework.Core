@@ -10,6 +10,7 @@ Unity BatchMode 辅助模块。
 """
 
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -517,8 +518,140 @@ def get_disk_root(reference_dir: Path) -> Path:
 
 def get_ci_log_root_name() -> str:
     """返回共享 CI 日志根目录名，允许由外部 CI 覆盖。"""
-    raw_value = os.environ.get("CI_LOG_ROOT_NAME", "").strip() or DEFAULT_CI_LOG_ROOT_NAME
+    raw_value = os.environ.get("CI_LOG_ROOT_NAME", "").strip()
+    if not raw_value and os.environ.get("TEAMCITY_VERSION", "").strip():
+        raw_value = "TCLog"
+    if not raw_value:
+        raw_value = DEFAULT_CI_LOG_ROOT_NAME
     return sanitize_for_filename(raw_value)
+
+
+def resolve_artifact_root_dir(artifact_root_dir: str | None) -> str | None:
+    """解析当前 CI 传入的制品根目录。"""
+    return (artifact_root_dir or "").strip() or None
+
+
+def escape_teamcity_service_message(raw_value: str) -> str:
+    """按 TeamCity service message 规则转义文本。"""
+    return (
+        raw_value.replace("|", "||")
+        .replace("'", "|'")
+        .replace("\n", "|n")
+        .replace("\r", "|r")
+        .replace("[", "|[")
+        .replace("]", "|]")
+    )
+
+
+def emit_teamcity_publish_artifacts(artifact_rule: str) -> None:
+    """在 TeamCity 环境下动态发布制品。"""
+    if not os.environ.get("TEAMCITY_VERSION", "").strip():
+        return
+
+    escaped_rule = escape_teamcity_service_message(artifact_rule)
+    safe_console_print(f"##teamcity[publishArtifacts '{escaped_rule}']")
+
+
+def resolve_output_dir(output_dir: str, *, project_dir: Path) -> Path:
+    """把相对或绝对输出目录规范化为可写路径。"""
+    candidate = Path(output_dir)
+    if candidate.is_absolute():
+        return candidate
+
+    return (project_dir / candidate).resolve()
+
+
+def get_publish_package_dir(platform_key: str, *, project_dir: Path) -> Path:
+    """返回 Unity 默认包体输出目录，不改变 Unity 内部输出结构。"""
+    return project_dir / "DevOps" / "PublishPackages" / platform_key
+
+
+def remove_output_path(target_path: Path) -> None:
+    """删除已有输出，避免重复构建时混入旧文件。"""
+    if not target_path.exists():
+        return
+
+    if target_path.is_dir():
+        shutil.rmtree(target_path)
+    else:
+        target_path.unlink()
+
+
+def copy_output_entry(source_path: Path, destination_path: Path) -> None:
+    """复制文件或目录到目标制品目录。"""
+    if source_path.is_dir():
+        shutil.copytree(source_path, destination_path)
+        return
+
+    destination_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(source_path, destination_path)
+
+
+def get_teamcity_artifact_rule_path(
+    artifact_root_dir: str,
+    *,
+    artifact_output_dir: Path,
+    project_dir: Path,
+) -> str:
+    """生成用于 TeamCity service message 的制品规则路径。"""
+    configured_path = Path(artifact_root_dir)
+    if not configured_path.is_absolute():
+        return artifact_root_dir.replace("\\", "/").rstrip("/")
+
+    try:
+        relative_path = artifact_output_dir.relative_to(project_dir)
+        return str(relative_path).replace("\\", "/")
+    except ValueError:
+        return str(artifact_output_dir).replace("\\", "/")
+
+
+def stage_build_artifacts(
+    platform_key: str,
+    *,
+    project_dir: Path,
+    artifact_root_dir: str | None,
+) -> Path | None:
+    """把 Unity 默认输出复制到 CI 指定的制品根目录。"""
+    resolved_artifact_root_dir = resolve_artifact_root_dir(artifact_root_dir)
+    if resolved_artifact_root_dir is None:
+        return None
+
+    source_dir = get_publish_package_dir(platform_key, project_dir=project_dir)
+    if not source_dir.exists():
+        raise UnityBatchModeError(
+            f"Artifact source directory does not exist: {source_dir}"
+        )
+
+    source_entries = [
+        path for path in source_dir.iterdir() if path.name not in {".DS_Store"}
+    ]
+    if not source_entries:
+        raise UnityBatchModeError(
+            f"Artifact source directory is empty: {source_dir}"
+        )
+
+    artifact_output_dir = resolve_output_dir(
+        resolved_artifact_root_dir,
+        project_dir=project_dir,
+    )
+    remove_output_path(artifact_output_dir)
+    artifact_output_dir.mkdir(parents=True, exist_ok=True)
+
+    for source_entry in source_entries:
+        copy_output_entry(source_entry, artifact_output_dir / source_entry.name)
+
+    safe_console_print(
+        f"[UnityBatchMode] staged artifacts: source={source_dir} target={artifact_output_dir}"
+    )
+    teamcity_rule_path = get_teamcity_artifact_rule_path(
+        resolved_artifact_root_dir,
+        artifact_output_dir=artifact_output_dir,
+        project_dir=project_dir,
+    )
+    emit_teamcity_publish_artifacts(
+        f"{teamcity_rule_path}/** => {teamcity_rule_path}"
+    )
+    return artifact_output_dir
 
 
 def get_log_path(
