@@ -108,6 +108,15 @@ def detect_host_os() -> str:
     raise UnityBatchModeError(f"Unsupported host OS: {sys.platform}")
 
 
+def configure_live_console_output() -> None:
+    """尽量让 CI 下的 stdout/stderr 按行刷新，避免 TeamCity 长时间看不到脚本日志。"""
+    for stream_name in ("stdout", "stderr"):
+        stream = getattr(sys, stream_name, None)
+        reconfigure = getattr(stream, "reconfigure", None)
+        if callable(reconfigure):
+            reconfigure(line_buffering=True)
+
+
 def get_default_project_dir() -> Path:
     """获取默认 Unity 工程目录。
 

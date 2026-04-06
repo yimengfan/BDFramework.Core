@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 
 from unity3d_batchmode import (
+    configure_live_console_output,
     UnityBatchModeError,
     build_batchmode_command,
     compose_client_version,
@@ -83,6 +84,7 @@ def validate_client_version(client_version: str) -> str:
 
 
 def main() -> int:
+    configure_live_console_output()
     print("[BuildClientPackage][Windows] ===== Step 1/5: parse args =====")
     args = parse_args()
     client_version_prefix = validate_client_version(args.client_version)
