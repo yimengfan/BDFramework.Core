@@ -170,6 +170,7 @@ namespace BDFramework.Editor.DevOps
                 yield return Path.Combine(userDir, "AppData", "Local", "Android", "Sdk");
             }
 #endif
+            return new List<string>();
         }
 
         static private IEnumerable<string> GetUnityEmbeddedAndroidToolCandidates(params string[] relativePaths)

@@ -2,12 +2,28 @@
 
 母包 CI Python 入口，当前位于 `DevOps/CI/BuildTools/BuildClientPackage/`。
 
+实现前先读 [CI 总索引](../../README.md)，再读 [BuildTools 索引](../README.md)。本文只保留 `BuildClientPackage/` 模块规范；公共规范和跨模块约束不再在这里重复维护。
+
 ## 设计原则
 
 1. `build_android.py` / `build_ios.py` / `build_windows.py` 是执行主体。
 2. 不再把完整流程统一塞到一个 generic `common.py` 中。
 3. 只有 Unity BatchMode 的共通能力抽到 `unity3d_batchmode.py`。
-4. 脚本内必须保留充分注释、流程日志和边界处理，方便 CI 排查问题。
+4. 平台差异只允许收敛在平台 key、日志前缀和 Unity `executeMethod` 这类模块特有配置点。
+
+## 主要流程
+
+三个平台入口脚本都必须保持相同的七步主流程，差异只允许出现在 `PLATFORM_KEY`、日志前缀和平台对应的 Unity `executeMethod`：
+
+1. 解析参数，并校验 `clientVersion`
+2. 解析 `buildName` / `buildNumber`，校验宿主机是否允许执行该平台流程
+3. 解析 Unity 可执行路径、Unity 工程目录、C# `executeMethod` 和日志路径
+4. 清理 `DevOps/PublishPackages/<platform>/` 目录；`--dry-run` 时跳过
+5. 组装 Unity BatchMode 命令
+6. 执行 Unity；失败时必须输出 Unity 日志尾部后再抛错
+7. 上传 `DevOps/PublishPackages/<platform>/`；`--dry-run` 时跳过
+
+对应单元测试位于：`DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py`
 
 ## 文件说明
 
@@ -19,24 +35,20 @@
 - `config/settings.py`
 - `common.py`（废弃兼容占位，不再承载流程）
 
-## TeamCity 自动化映射
+## TeamCity 验证入口
 
-测试用 TeamCity Kotlin DSL 位于：
+`BuildClientPackage` 已接入 TeamCity。凡是修改脚本参数、主流程、步骤日志、输出目录、上传逻辑或 TeamCity DSL，都必须在结束前补做 TeamCity 验证。
 
-- `.test-DevOps/.teamcity/settings.kts`
+统一入口：
 
-Python 脚本和 TeamCity 任务的索引文档位于：
+- TeamCity 总流程与任务映射：`../../../../.test-DevOps/README.md`
+- TeamCity Web API 触发与排查：`../../../../.test-DevOps/teamcityskill/README.md`
 
-- `.test-DevOps/README.md`
+当前常用 buildType id：
 
-当前约定：
-
-- `build_android.py` → `BuildClientPackage_android`
-- `build_ios.py` → `BuildClientPackage_ios`
-- `build_windows.py` → `BuildClientPackage_windows`
-- 根聚合任务：`BuildClientPackage`
-
-> 规则：根任务名称允许单独维护；子任务名称、脚本路径、参数入口必须和这里的 Python 脚本保持一致。
+- `BDFrameworkCore_BuildClientPackageAndroid`
+- `BDFrameworkCore_BuildClientPackageIos`
+- `BDFrameworkCore_BuildClientPackageWindows`
 
 ## 支持的 CI 宿主环境
 
@@ -101,16 +113,9 @@ python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-versio
 
 ## 文件服务器上传
 
-BuildTools 现在提供公共上传模块：`DevOps/CI/BuildTools/Common/artifact_uploader.py`。
+Step 7 会调用 `../Common/artifact_uploader.py`，把 `DevOps/PublishPackages/<platform>/` 上传到 `ClientPackage_<platform>/<buildnum>/...`。
 
-说明：
-
-- `build_android.py` / `build_ios.py` / `build_windows.py` 在真实构建成功后会直接调用这个模块上传母包
-- 默认读取 `DevOps/CI/BuildTools/buildtools.toml`
-- 已封装四类远端目录：`ClientPackage_{平台}/{buildnum}`、`Code_{平台}/{buildnum}`、`AssetBundle_{平台}/{buildnum}`、`Table/{buildnum}`
-- 上传接口支持进度回调，当前 BuildClientPackage 会把每个文件的上传开始/完成事件直接打到 CI 日志
-
-详细说明见：`DevOps/CI/BuildTools/Common/README.md`
+上传模块的配置来源、远端目录规则、remote smoke test 和公共 API 统一维护在 [BuildTools Common](../Common/README.md)，这里不再重复展开。
 
 ## Unity 路径
 
@@ -213,23 +218,14 @@ export UNITY_PATH="/Applications/Unity2021.3.58f1/Unity.app/Contents/MacOS/Unity
 $env:UNITY_PATH = 'C:\Program Files\Unity\Hub\Editor\2021.3.58f1\Editor\Unity.exe'
 ```
 
-## 脚本编写规范
+## 模块补充规范
 
-### 1. 注释规范
+在遵守 [CI 公共规范](../../README.md) 的前提下，本模块额外要求：
 
-- 文件头写清楚职责边界
-- 关键函数写明“为什么这样做”
-- 对平台限制、版本参数、日志路径等关键点补注释
-
-### 2. 日志规范
-
-- 使用明确阶段日志，例如：`Step 1/5`、`Step 2/5`
-- 打印：宿主系统、目标平台、clientVersion、Unity 路径、C# executeMethod、日志文件路径
-- 失败时打印可直接定位的问题、Unity 日志尾部和后续检查点
-
-### 3. 边界情况
-
-脚本至少要处理：
+1. 三个平台入口必须保持同一套七步主流程，平台差异只能出现在 `PLATFORM_KEY`、日志前缀和平台对应的 Unity `executeMethod`。
+2. 流程日志必须与 `DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py` 中的步骤断言保持一致。
+3. 失败路径必须输出 Unity 日志尾部和下一步检查点，不能只返回非 0 退出码。
+4. 下列边界情况至少要被显式处理：
 
 - `clientVersion` 为空
 - `clientVersion` 含异常空白字符
@@ -237,6 +233,25 @@ $env:UNITY_PATH = 'C:\Program Files\Unity\Hub\Editor\2021.3.58f1\Editor\Unity.ex
 - `UNITY_PATH` 指向不存在路径
 - 候选 Unity 路径全部不存在
 - Unity BatchMode 返回非 0 退出码
+
+## 变更与测试强制规范
+
+以下规则对 `DevOps/CI/BuildTools/BuildClientPackage/` 及其对应测试文件是阻塞性的，不满足就不能结束本次修改：
+
+1. 只要修改主流程、参数入口、步骤日志、Unity 调用、输出目录清理、上传逻辑，就必须同步新增或更新 pytest 单元测试。
+2. 主流程相关改动，至少要覆盖：`dry-run` 成功路径、非 `dry-run` 成功路径、Unity 失败后输出日志尾并抛错路径。
+3. 每次修改后都必须重新执行并通过以下测试：
+
+```bash
+python -m pytest \
+	DevOps/CI/BuildTools/tests/test_buildclientpackage_helpers.py \
+	DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py \
+	-q
+```
+
+4. 如果改动影响 TeamCity 映射流程，还必须执行受影响的 TeamCity 构建，并确认最终状态、关键流程日志和远端母包目录符合预期。
+5. 如果新增平台入口，必须同步把它纳入主流程参数化测试。
+6. 如果修改 README 中记录的步骤、参数或规则，必须保证测试名称和断言仍能对应当前行为。
 
 ## 维护建议
 
@@ -246,21 +261,12 @@ $env:UNITY_PATH = 'C:\Program Files\Unity\Hub\Editor\2021.3.58f1\Editor\Unity.ex
 
 ## 与 TeamCity 同步时必须检查的项
 
-以下内容有任何改动，都必须同步更新：
-
-1. `.test-DevOps/.teamcity/settings.kts`
-2. `.test-DevOps/.teamcity/BUILD_CLIENT_PACKAGE_INDEX.md`
-3. `.test-DevOps/README.md`
-
 重点检查：
 
-- Python 脚本文件名是否变化
-- 参数入口是否变化
-- `config/settings.py` 中的 `allowed_hosts` 是否变化
-- `config/settings.py` 中的 `method` 是否变化
-- TeamCity 子任务名称是否仍满足 `BuildClientPackage_xxx` 约定
+- Python 脚本文件名、参数入口和 `%build.extra.args%` 透传是否仍与脚本保持一致
+- `config/settings.py` 中的 `allowed_hosts`、`method` 和默认路径配置是否变化
+- TeamCity 任务命令、`%ci.python.command%`、上传远端目录是否仍与当前实现一致
+- CI 日志里是否还能看到清空输出目录、Unity 执行、上传开始、上传进度、上传完成这些关键阶段
 
-强制要求：只要修改了 TeamCity DSL、脚本参数入口、BuildTools 上传配置、上传远端目录规则或 TeamCity 相关环境参数，就必须重新触发受影响的 TeamCity 任务，并确认最终任务状态、日志中的上传进度以及远端母包目录都与预期一致；不能只看 DSL 已加载或本地 dry-run 通过。
-
-补充提醒：`.test-DevOps/.teamcity/settings.kts` 是 Kotlin Script，脚本级常量请使用普通 `val`，不要使用脚本级 `const val`；如果某个 TeamCity 实例会引用脚本级成员，也优先写成 `val xxx = BuildType({ ... })`，不要写成命名 `object`，否则 TeamCity 服务端可能回退到 last known good settings。
+具体 DSL 文件和排查步骤统一以 `../../../../.test-DevOps/README.md` 为准；不要在本文档里再维护另一份重复的 TeamCity 映射说明。
 

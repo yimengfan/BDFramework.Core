@@ -2,6 +2,8 @@
 
 公共 Python 模块目录，当前先提供文件服务器上传能力。
 
+实现前先读 [CI 总索引](../../README.md)，再读 [BuildTools 索引](../README.md)。本文只保留 `Common/` 模块规范。
+
 ## 文件说明
 
 - `artifact_uploader.py`：上传到 `/.test-DevOps/GameFileServer/` 的公共模块
@@ -185,3 +187,11 @@ python -m pytest -q -s DevOps/CI/BuildTools/tests/test_artifact_uploader_remote.
 - 测试会轮询 `GET /api/files?prefix=...&recursive=false`，确认远程列表里已经出现该文件，并再次下载远端文件校验内容和 SHA256。
 - 某些已部署服务可能会在文件已落盘后仍返回 500；这个 smoke test 以“远程列表可见且下载内容一致”作为最终成功依据。
 - 文件服务器默认禁用 API 删除，所以这些 smoke test 产物不会自动清理；如果要清理，只能在运维机器上手工删除。
+
+## 模块补充规范
+
+在遵守 [CI 公共规范](../../README.md) 的前提下，本模块额外要求：
+
+1. 远端目录规则、配置解析、上传回调或错误恢复逻辑变更后，必须同步更新并执行 `DevOps/CI/BuildTools/tests/test_artifact_uploader.py`。
+2. 真实上传、远端列表校验或下载回读逻辑变更后，必须执行 `python -m pytest -q -s DevOps/CI/BuildTools/tests/test_artifact_uploader_remote.py --run-remote-artifact-tests`。
+3. 如果将来把本模块直接接入 TeamCity 构建，必须同步把 TeamCity 验证入口补到 `../../README.md` 与本文档，避免规则散落到多个位置。
