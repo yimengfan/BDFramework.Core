@@ -96,36 +96,57 @@ namespace BDFramework.Editor
             SwitchToBuildTarget(BuildTarget.StandaloneOSX);
         }
         
-        delegate bool IsModuleNotInstalled_type(BuildTargetGroup buildTargetGroup, BuildTarget buildTarget);
-        static private IsModuleNotInstalled_type IsModuleNotInstalledType_Impl;
+        static private Type ModuleManagerType;
+        static private MethodInfo ModuleManagerGetTargetStringMethod;
+        static private MethodInfo ModuleManagerIsPlatformSupportLoadedMethod;
+        static private bool IsModuleManagerInitialized;
+
+        static private void InitModuleManagerReflection()
+        {
+            if (IsModuleManagerInitialized)
+            {
+                return;
+            }
+
+            IsModuleManagerInitialized = true;
+            var unityEditorAssembly = typeof(EditorWindow).Assembly;
+            ModuleManagerType = unityEditorAssembly.GetType("UnityEditor.Modules.ModuleManager");
+            if (ModuleManagerType == null)
+            {
+                return;
+            }
+
+            const BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+            ModuleManagerGetTargetStringMethod = ModuleManagerType.GetMethod("GetTargetStringFromBuildTarget", flags);
+            ModuleManagerIsPlatformSupportLoadedMethod = ModuleManagerType.GetMethod("IsPlatformSupportLoaded", flags);
+        }
+
         /// <summary>
         /// 是否安装平台
         /// </summary>
         /// <param name="buildTargetGroup"></param>
         /// <param name="buildTarget"></param>
         /// <returns></returns>
-        static  public bool IsPlatformModuleInstalled(BuildTargetGroup buildTargetGroup, BuildTarget buildTarget)
+        static public bool IsPlatformModuleInstalled(BuildTargetGroup buildTargetGroup, BuildTarget buildTarget)
         {
-            if (IsModuleNotInstalledType_Impl == null)
+            InitModuleManagerReflection();
+            if (ModuleManagerGetTargetStringMethod != null && ModuleManagerIsPlatformSupportLoadedMethod != null)
             {
-                var getwindows = EditorWindow.GetWindow<BuildPlayerWindow>();
-                if (getwindows != null)
+                try
                 {
-                    try
+                    var targetName = ModuleManagerGetTargetStringMethod.Invoke(null, new object[] { buildTargetGroup, buildTarget }) as string;
+                    if (!string.IsNullOrEmpty(targetName))
                     {
-                        getwindows.Close();
+                        return (bool)ModuleManagerIsPlatformSupportLoadedMethod.Invoke(null, new object[] { targetName });
                     }
-                    catch (Exception e)
-                    {
-                    }
-
-                    var method = typeof(BuildPlayerWindow).GetMethod("IsModuleNotInstalled" , BindingFlags.NonPublic | BindingFlags.Instance);
-                    IsModuleNotInstalledType_Impl = Delegate.CreateDelegate(typeof(IsModuleNotInstalled_type), getwindows,method) as IsModuleNotInstalled_type;
                 }
-
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"检测平台模块安装状态失败，改为依赖平台切换结果判断。target={buildTarget}, error={e.Message}");
+                }
             }
 
-            return !IsModuleNotInstalledType_Impl(buildTargetGroup, buildTarget);
+            return true;
         }
         #endregion
     }
