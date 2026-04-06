@@ -194,7 +194,25 @@ def build_unity_candidates(host_os: str, unity_version: str) -> list[str]:
             unity_version=unity_version,
         )
     )
-    return candidates
+    if host_os == "windows":
+        candidates.extend(
+            [
+                rf"D:\Unity3d\Unity {unity_version}\Editor\Unity.exe",
+                rf"D:\Program Files\Unity\Hub\Editor\{unity_version}\Editor\Unity.exe",
+                rf"D:\Unity\Hub\Editor\{unity_version}\Editor\Unity.exe",
+                rf"C:\Unity\Hub\Editor\{unity_version}\Editor\Unity.exe",
+            ]
+        )
+
+    deduped_candidates: list[str] = []
+    seen_candidates: set[str] = set()
+    for candidate in candidates:
+        if candidate in seen_candidates:
+            continue
+        seen_candidates.add(candidate)
+        deduped_candidates.append(candidate)
+
+    return deduped_candidates
 
 
 def resolve_unity_executable(
@@ -210,6 +228,7 @@ def resolve_unity_executable(
     3. config/settings.py 中按宿主系统配置的默认版本
     """
     env_unity_path = os.environ.get("UNITY_PATH", "").strip()
+    invalid_env_unity_path: str | None = None
     if env_unity_path:
         unity_path = Path(env_unity_path)
         if unity_path.exists():
@@ -220,8 +239,10 @@ def resolve_unity_executable(
                 f"path={env_unity_path}"
             )
             return unity_path, unity_version or "ENV:UNITY_PATH"
-        raise UnityBatchModeError(
-            f"UNITY_PATH is set but does not exist: {env_unity_path}"
+        invalid_env_unity_path = env_unity_path
+        print(
+            "[UnityBatchMode] UNITY_PATH does not exist, continue searching fallback candidates. "
+            f"path={env_unity_path}"
         )
 
     host_os = detect_host_os()
@@ -259,6 +280,7 @@ def resolve_unity_executable(
         f"Host OS: {host_os}. "
         f"Requested Unity version: {selected_unity_version}. "
         f"Candidates: {candidates}. "
+        f"Invalid UNITY_PATH: {invalid_env_unity_path}. "
         "Please set env UNITY_PATH or update SETTINGS['unity']['paths'] in config/settings.py"
     )
 
