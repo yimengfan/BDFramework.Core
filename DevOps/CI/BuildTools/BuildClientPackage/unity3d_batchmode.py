@@ -197,7 +197,11 @@ def build_unity_candidates(host_os: str, unity_version: str) -> list[str]:
     return candidates
 
 
-def resolve_unity_executable(unity_version: str | None = None) -> tuple[Path, str]:
+def resolve_unity_executable(
+    unity_version: str | None = None,
+    *,
+    allow_missing: bool = False,
+) -> tuple[Path, str]:
     """按优先级解析 Unity 可执行文件路径，并返回实际使用的版本。
 
     优先级：
@@ -209,6 +213,12 @@ def resolve_unity_executable(unity_version: str | None = None) -> tuple[Path, st
     if env_unity_path:
         unity_path = Path(env_unity_path)
         if unity_path.exists():
+            return unity_path, unity_version or "ENV:UNITY_PATH"
+        if allow_missing:
+            print(
+                "[UnityBatchMode] UNITY_PATH does not exist, but dry-run allows continuing. "
+                f"path={env_unity_path}"
+            )
             return unity_path, unity_version or "ENV:UNITY_PATH"
         raise UnityBatchModeError(
             f"UNITY_PATH is set but does not exist: {env_unity_path}"
@@ -235,6 +245,14 @@ def resolve_unity_executable(unity_version: str | None = None) -> tuple[Path, st
         candidate_path = Path(candidate)
         if candidate_path.exists():
             return candidate_path, selected_unity_version
+
+    if allow_missing:
+        fallback_candidate = Path(candidates[0])
+        print(
+            "[UnityBatchMode] Unity executable not found on disk, but dry-run allows continuing. "
+            f"candidate={fallback_candidate}"
+        )
+        return fallback_candidate, selected_unity_version
 
     raise UnityBatchModeError(
         "Unity executable not found. "

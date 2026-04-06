@@ -104,7 +104,10 @@ def main() -> int:
         print(f"[BuildClientPackage][Windows] tcBuildNumber={tc_build_number}")
 
     print("[BuildClientPackage][Windows] ===== Step 3/5: resolve Unity =====")
-    unity_path, actual_unity_version = resolve_unity_executable(args.unity_version)
+    unity_path, actual_unity_version = resolve_unity_executable(
+        args.unity_version,
+        allow_missing=args.dry_run,
+    )
     project_dir = resolve_project_dir(args.project_dir)
     execute_method = get_execute_method(PLATFORM_KEY)
     log_path = get_log_path(
