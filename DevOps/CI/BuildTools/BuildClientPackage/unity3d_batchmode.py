@@ -22,7 +22,7 @@ from config.settings import SETTINGS
 SCRIPT_DIR = Path(__file__).resolve().parent
 LOG_DIR = SCRIPT_DIR / SETTINGS["log_dir_name"]
 LOG_DIR.mkdir(parents=True, exist_ok=True)
-TC_LOG_ROOT_NAME = "TCLog"
+DEFAULT_CI_LOG_ROOT_NAME = "CILog"
 UNITY_LOG_POLL_INTERVAL_SECONDS = 1.0
 UNITY_SUCCESS_LOG_MARKERS = (
     "===>5.构建结束",
@@ -419,23 +419,35 @@ def sanitize_for_filename(raw_value: str) -> str:
     return sanitized or "unknown"
 
 
-def resolve_teamcity_metadata(
+def resolve_build_metadata(
     build_name: str | None,
     build_number: str | None,
 ) -> tuple[str | None, str | None]:
-    """解析 TeamCity 任务名和构建号。"""
+    """解析当前 CI 构建名和构建号。"""
     resolved_build_name = (build_name or "").strip() or None
     resolved_build_number = (build_number or "").strip() or None
 
     if resolved_build_name is None:
-        for env_name in ("TC_BUILD_NAME", "TEAMCITY_BUILDCONF_NAME"):
+        for env_name in (
+            "CI_BUILD_NAME",
+            "BUILD_NAME",
+            "TEAMCITY_BUILDCONF_NAME",
+            "JOB_NAME",
+            "TC_BUILD_NAME",
+        ):
             env_value = os.environ.get(env_name, "").strip()
             if env_value:
                 resolved_build_name = env_value
                 break
 
     if resolved_build_number is None:
-        for env_name in ("TC_BUILD_NUMBER", "BUILD_NUMBER", "TEAMCITY_BUILD_NUMBER"):
+        for env_name in (
+            "CI_BUILD_NUMBER",
+            "BUILD_NUMBER",
+            "TEAMCITY_BUILD_NUMBER",
+            "GITHUB_RUN_NUMBER",
+            "TC_BUILD_NUMBER",
+        ):
             env_value = os.environ.get(env_name, "").strip()
             if env_value:
                 resolved_build_number = env_value
@@ -445,7 +457,7 @@ def resolve_teamcity_metadata(
 
 
 def compose_client_version(client_version: str, build_number: str | None) -> str:
-    """按 TeamCity 构建号组装 Unity 使用的 clientVersion。"""
+    """按 CI 构建号组装 Unity 使用的 clientVersion。"""
     normalized = client_version.strip()
     if not normalized:
         raise UnityBatchModeError("clientVersion is empty")
@@ -467,7 +479,7 @@ def compose_client_version(client_version: str, build_number: str | None) -> str
     version_parts = [segment.strip() for segment in normalized.split(".") if segment.strip()]
     if len(version_parts) < 2:
         raise UnityBatchModeError(
-            "clientVersion must provide at least major.minor when TeamCity build number is enabled. "
+            "clientVersion must provide at least major.minor when build number is enabled. "
             f"Received: {normalized!r}"
         )
 
@@ -503,6 +515,12 @@ def get_disk_root(reference_dir: Path) -> Path:
     return Path(anchor)
 
 
+def get_ci_log_root_name() -> str:
+    """返回共享 CI 日志根目录名，允许由外部 CI 覆盖。"""
+    raw_value = os.environ.get("CI_LOG_ROOT_NAME", "").strip() or DEFAULT_CI_LOG_ROOT_NAME
+    return sanitize_for_filename(raw_value)
+
+
 def get_log_path(
     platform_key: str,
     client_version: str,
@@ -511,9 +529,9 @@ def get_log_path(
     build_name: str | None,
     build_number: str | None,
 ) -> Path:
-    """生成该次构建的日志文件路径。"""
+    """生成该次 CI 构建的日志文件路径。"""
     safe_version = sanitize_for_filename(client_version)
-    resolved_build_name, resolved_build_number = resolve_teamcity_metadata(
+    resolved_build_name, resolved_build_number = resolve_build_metadata(
         build_name,
         build_number,
     )
@@ -521,7 +539,7 @@ def get_log_path(
     if resolved_build_name and resolved_build_number:
         log_dir = (
             get_disk_root(project_dir)
-            / TC_LOG_ROOT_NAME
+            / get_ci_log_root_name()
             / sanitize_for_filename(resolved_build_name)
             / sanitize_for_filename(resolved_build_number)
         )
@@ -534,7 +552,7 @@ def get_log_path(
         fallback_log_dir = LOG_DIR
         fallback_log_dir.mkdir(parents=True, exist_ok=True)
         safe_console_print(
-            "[UnityBatchMode] failed to prepare TeamCity log directory, "
+            "[UnityBatchMode] failed to prepare CI log directory, "
             f"fallback to local logs. target={log_dir}, error={exc}"
         )
         log_dir = fallback_log_dir

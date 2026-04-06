@@ -26,7 +26,7 @@
 
 Python 脚本和 TeamCity 任务的索引文档位于：
 
-- `.test-DevOps/.teamcity/BUILD_CLIENT_PACKAGE_INDEX.md`
+- `.test-DevOps/README.md`
 
 当前约定：
 
@@ -51,6 +51,8 @@ Python 脚本和 TeamCity 任务的索引文档位于：
 
 ## 可选参数
 
+- `--build-name`
+- `--build-number`
 - `--unity-version`
 - `--project-dir`
 - `--dry-run`
@@ -76,10 +78,21 @@ python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-versio
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_ios.py --client-version 0.1.0
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0
 
+python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --build-name local_android --build-number 123
+python3 DevOps/CI/BuildTools/BuildClientPackage/build_ios.py --client-version 0.1.0 --build-name local_ios --build-number 123
+python3 DevOps/CI/BuildTools/BuildClientPackage/build_windows.py --client-version 0.1.0 --build-name local_windows --build-number 123
+
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --unity-version 2022.3.74f1
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_ios.py --client-version 0.1.0 --project-dir /path/to/UnityProject
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --dry-run
 ```
+
+## CI 元数据
+
+- Python 脚本统一使用通用命名：`--build-name`、`--build-number`
+- 环境变量优先读取通用 CI 名称：`CI_BUILD_NAME`、`CI_BUILD_NUMBER`
+- 为兼容已有 TeamCity/Jenkins 环境，脚本仍会兜底读取已有平台环境变量，但文档和 DSL 不再使用 `tc` 前缀参数
+- 共享日志根目录由 `CI_LOG_ROOT_NAME` 控制；未设置时默认使用 `CILog`
 
 ## Unity 路径
 
@@ -228,6 +241,8 @@ $env:UNITY_PATH = 'C:\Program Files\Unity\Hub\Editor\2021.3.58f1\Editor\Unity.ex
 - `config/settings.py` 中的 `allowed_hosts` 是否变化
 - `config/settings.py` 中的 `method` 是否变化
 - TeamCity 子任务名称是否仍满足 `BuildClientPackage_xxx` 约定
+
+强制要求：只要修改了 TeamCity DSL、脚本参数入口、`artifactRules` 或 TeamCity 相关环境参数，就必须重新触发受影响的 TeamCity 任务，并确认最终任务状态与预期一致；不能只看 DSL 已加载或本地 dry-run 通过。
 
 补充提醒：`.test-DevOps/.teamcity/settings.kts` 是 Kotlin Script，脚本级常量请使用普通 `val`，不要使用脚本级 `const val`；如果某个 TeamCity 实例会引用脚本级成员，也优先写成 `val xxx = BuildType({ ... })`，不要写成命名 `object`，否则 TeamCity 服务端可能回退到 last known good settings。
 

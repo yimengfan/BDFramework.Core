@@ -21,7 +21,7 @@ from unity3d_batchmode import (
     get_execute_method,
     get_log_path,
     read_log_tail,
-    resolve_teamcity_metadata,
+    resolve_build_metadata,
     resolve_unity_executable,
     resolve_project_dir,
     run_batchmode,
@@ -42,14 +42,26 @@ def parse_args() -> argparse.Namespace:
         help="Client package major.minor version, for example: 0.1",
     )
     parser.add_argument(
-        "--tc-build-name",
+        "--build-name",
+        dest="build_name",
         default=None,
-        help="Optional TeamCity build configuration name. If omitted, try resolving from environment.",
+        help="Optional CI build name. If omitted, try resolving from environment.",
+    )
+    parser.add_argument(
+        "--tc-build-name",
+        dest="build_name",
+        help=argparse.SUPPRESS,
+    )
+    parser.add_argument(
+        "--build-number",
+        dest="build_number",
+        default=None,
+        help="Optional CI build number. If provided, Unity clientVersion becomes major.minor.buildNumber.",
     )
     parser.add_argument(
         "--tc-build-number",
-        default=None,
-        help="Optional TeamCity build number. If provided, Unity clientVersion becomes major.minor.buildNumber.",
+        dest="build_number",
+        help=argparse.SUPPRESS,
     )
     parser.add_argument(
         "--unity-version",
@@ -88,11 +100,11 @@ def main() -> int:
     print("[BuildClientPackage][iOS] ===== Step 1/5: parse args =====")
     args = parse_args()
     client_version_prefix = validate_client_version(args.client_version)
-    tc_build_name, tc_build_number = resolve_teamcity_metadata(
-        args.tc_build_name,
-        args.tc_build_number,
+    build_name, build_number = resolve_build_metadata(
+        args.build_name,
+        args.build_number,
     )
-    client_version = compose_client_version(client_version_prefix, tc_build_number)
+    client_version = compose_client_version(client_version_prefix, build_number)
 
     print("[BuildClientPackage][iOS] ===== Step 2/5: validate host =====")
     host_os = detect_host_os()
@@ -100,10 +112,10 @@ def main() -> int:
     print(f"[BuildClientPackage][iOS] host_os={host_os}")
     print(f"[BuildClientPackage][iOS] clientVersionPrefix={client_version_prefix}")
     print(f"[BuildClientPackage][iOS] clientVersion={client_version}")
-    if tc_build_name:
-        print(f"[BuildClientPackage][iOS] tcBuildName={tc_build_name}")
-    if tc_build_number:
-        print(f"[BuildClientPackage][iOS] tcBuildNumber={tc_build_number}")
+    if build_name:
+        print(f"[BuildClientPackage][iOS] buildName={build_name}")
+    if build_number:
+        print(f"[BuildClientPackage][iOS] buildNumber={build_number}")
 
     print("[BuildClientPackage][iOS] ===== Step 3/5: resolve Unity =====")
     unity_path, actual_unity_version = resolve_unity_executable(
@@ -116,8 +128,8 @@ def main() -> int:
         PLATFORM_KEY,
         client_version,
         project_dir=project_dir,
-        build_name=tc_build_name,
-        build_number=tc_build_number,
+        build_name=build_name,
+        build_number=build_number,
     )
     print(f"[BuildClientPackage][iOS] unity={unity_path}")
     print(f"[BuildClientPackage][iOS] unityVersion={actual_unity_version}")
