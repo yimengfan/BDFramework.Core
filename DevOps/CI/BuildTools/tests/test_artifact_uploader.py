@@ -151,7 +151,7 @@ def test_build_artifact_remote_paths_match_expected_layout() -> None:
 			platform="windows",
 			build_number="238",
 		)
-		== "Code_windows/238"
+		== "ClientRes_Code_windows/238"
 	)
 	assert (
 		build_artifact_remote_path(
@@ -160,7 +160,7 @@ def test_build_artifact_remote_paths_match_expected_layout() -> None:
 			build_number="240",
 			remote_relative_path="catalogs/main.bytes",
 		)
-		== "AssetBundle_ios/240/catalogs/main.bytes"
+		== "ClientRes_AssetBundle_ios/240/catalogs/main.bytes"
 	)
 	assert (
 		build_artifact_remote_path(
@@ -168,7 +168,7 @@ def test_build_artifact_remote_paths_match_expected_layout() -> None:
 			build_number="777",
 			remote_relative_path="global/config.bytes",
 		)
-		== "Table/777/global/config.bytes"
+		== "ClientRes_table/777/global/config.bytes"
 	)
 
 
@@ -365,12 +365,12 @@ def test_upload_code_single_build_file_returns_submit_result(tmp_path: Path) -> 
 		)
 
 		assert len(results) == 1
-		assert results[0].remote_path == "Code_android/239/hotfix/Assembly-CSharp.dll"
+		assert results[0].remote_path == "ClientRes_Code_android/239/hotfix/Assembly-CSharp.dll"
 		assert results[0].sha256 == hashlib.sha256(b"compiled hotfix").hexdigest()
 		assert results[0].status_code == 201
 		assert results[0].integrity_status == "verified"
 		assert [request["remote_path"] for request in server.requests] == [
-			"Code_android/239/hotfix/Assembly-CSharp.dll"
+			"ClientRes_Code_android/239/hotfix/Assembly-CSharp.dll"
 		]
 	finally:
 		server.shutdown()
@@ -415,8 +415,8 @@ def test_upload_table_single_file_supports_nested_remote_name(tmp_path: Path) ->
 			settings=resolve_file_server_settings(server_url=base_url),
 		)
 
-		assert [result.remote_path for result in results] == ["Table/501/mobile/all.bytes"]
-		assert [request["remote_path"] for request in server.requests] == ["Table/501/mobile/all.bytes"]
+		assert [result.remote_path for result in results] == ["ClientRes_table/501/mobile/all.bytes"]
+		assert [request["remote_path"] for request in server.requests] == ["ClientRes_table/501/mobile/all.bytes"]
 	finally:
 		server.shutdown()
 		thread.join(timeout=5)

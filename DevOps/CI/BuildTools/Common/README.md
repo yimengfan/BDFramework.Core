@@ -11,9 +11,9 @@
 
 1. 统一四类制品的远端目录规则，不让调用方散落拼接：
    - `ClientPackage_{平台}/{buildnum}/xxx`
-   - `Code_{平台}/{buildnum}/xxx`
-   - `AssetBundle_{平台}/{buildnum}/xxx`
-   - `Table/{buildnum}/xxx`
+  - `ClientRes_Code_{平台}/{buildnum}/xxx`
+  - `ClientRes_AssetBundle_{平台}/{buildnum}/xxx`
+  - `ClientRes_table/{buildnum}/xxx`
 2. 既支持上传单文件，也支持把整个目录递归上传。
 3. 默认优先读取 `DevOps/CI/BuildTools/buildtools.toml`，整个 BuildTools 共用同一份配置。
 4. 支持单独配置“客户端访问文件服务器的 IP”，避免把服务端 `0.0.0.0` 监听地址误当成可访问地址。
@@ -165,3 +165,23 @@ python3 DevOps/CI/BuildTools/Common/artifact_uploader.py \
 ```bash
 python -m pytest -q DevOps/CI/BuildTools/tests/test_artifact_uploader.py
 ```
+
+## 远程集成测试
+
+如果需要验证“真实文件已提交到当前配置的文件服务器，且远程列表接口里能看到该文件”，使用：
+
+- `DevOps/CI/BuildTools/tests/test_artifact_uploader_remote.py`
+
+执行命令：
+
+```bash
+python -m pytest -q -s DevOps/CI/BuildTools/tests/test_artifact_uploader_remote.py --run-remote-artifact-tests
+```
+
+说明：
+
+- 这个测试会读取 `DevOps/CI/BuildTools/buildtools.toml`，并真实上传文件到当前配置的远端服务器。
+- 测试会把文件写到 `ClientRes_table/remote-smoke-tests/<run-id>/artifact_uploader_remote_test.txt`。
+- 测试会轮询 `GET /api/files?prefix=...&recursive=false`，确认远程列表里已经出现该文件，并再次下载远端文件校验内容和 SHA256。
+- 某些已部署服务可能会在文件已落盘后仍返回 500；这个 smoke test 以“远程列表可见且下载内容一致”作为最终成功依据。
+- 文件服务器默认禁用 API 删除，所以这些 smoke test 产物不会自动清理；如果要清理，只能在运维机器上手工删除。
