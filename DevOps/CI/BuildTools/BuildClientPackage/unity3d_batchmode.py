@@ -21,6 +21,7 @@ from config.settings import SETTINGS
 SCRIPT_DIR = Path(__file__).resolve().parent
 LOG_DIR = SCRIPT_DIR / SETTINGS["log_dir_name"]
 LOG_DIR.mkdir(parents=True, exist_ok=True)
+TC_LOG_ROOT_NAME = "TCLog"
 
 
 class UnityBatchModeError(RuntimeError):
@@ -267,10 +268,124 @@ def sanitize_for_filename(raw_value: str) -> str:
     return sanitized or "unknown"
 
 
-def get_log_path(platform_key: str, client_version: str) -> Path:
+def resolve_teamcity_metadata(
+    build_name: str | None,
+    build_number: str | None,
+) -> tuple[str | None, str | None]:
+    """解析 TeamCity 任务名和构建号。"""
+    resolved_build_name = (build_name or "").strip() or None
+    resolved_build_number = (build_number or "").strip() or None
+
+    if resolved_build_name is None:
+        for env_name in ("TC_BUILD_NAME", "TEAMCITY_BUILDCONF_NAME"):
+            env_value = os.environ.get(env_name, "").strip()
+            if env_value:
+                resolved_build_name = env_value
+                break
+
+    if resolved_build_number is None:
+        for env_name in ("TC_BUILD_NUMBER", "BUILD_NUMBER", "TEAMCITY_BUILD_NUMBER"):
+            env_value = os.environ.get(env_name, "").strip()
+            if env_value:
+                resolved_build_number = env_value
+                break
+
+    return resolved_build_name, resolved_build_number
+
+
+def compose_client_version(client_version: str, build_number: str | None) -> str:
+    """按 TeamCity 构建号组装 Unity 使用的 clientVersion。"""
+    normalized = client_version.strip()
+    if not normalized:
+        raise UnityBatchModeError("clientVersion is empty")
+
+    if any(ch in normalized for ch in ('\n', '\r', '\t')):
+        raise UnityBatchModeError(
+            f"clientVersion contains unsupported whitespace characters: {normalized!r}"
+        )
+
+    normalized_build_number = (build_number or "").strip()
+    if not normalized_build_number:
+        return normalized
+
+    if any(ch in normalized_build_number for ch in ('\n', '\r', '\t', ' ')):
+        raise UnityBatchModeError(
+            f"buildNumber contains unsupported whitespace characters: {normalized_build_number!r}"
+        )
+
+    version_parts = [segment.strip() for segment in normalized.split(".") if segment.strip()]
+    if len(version_parts) < 2:
+        raise UnityBatchModeError(
+            "clientVersion must provide at least major.minor when TeamCity build number is enabled. "
+            f"Received: {normalized!r}"
+        )
+
+    return f"{version_parts[0]}.{version_parts[1]}.{normalized_build_number}"
+
+
+def get_disk_root(reference_dir: Path) -> Path:
+    """获取当前磁盘根目录。"""
+    resolved_reference_dir = reference_dir.resolve()
+
+    if os.name != "nt":
+        completed = subprocess.run(
+            ["df", "-P", str(resolved_reference_dir)],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        if completed.returncode == 0:
+            output_lines = [line.strip() for line in completed.stdout.splitlines() if line.strip()]
+            if len(output_lines) >= 2:
+                mount_point = output_lines[1].rsplit(maxsplit=1)[-1]
+                if mount_point:
+                    return Path(mount_point)
+
+    for candidate in (resolved_reference_dir, *resolved_reference_dir.parents):
+        if candidate.is_mount():
+            return candidate
+
+    anchor = resolved_reference_dir.anchor or os.path.abspath(os.sep)
+    return Path(anchor)
+
+
+def get_log_path(
+    platform_key: str,
+    client_version: str,
+    *,
+    project_dir: Path,
+    build_name: str | None,
+    build_number: str | None,
+) -> Path:
     """生成该次构建的日志文件路径。"""
     safe_version = sanitize_for_filename(client_version)
-    return LOG_DIR / f"{platform_key}_{safe_version}.log"
+    resolved_build_name, resolved_build_number = resolve_teamcity_metadata(
+        build_name,
+        build_number,
+    )
+
+    if resolved_build_name and resolved_build_number:
+        log_dir = (
+            get_disk_root(project_dir)
+            / TC_LOG_ROOT_NAME
+            / sanitize_for_filename(resolved_build_name)
+            / sanitize_for_filename(resolved_build_number)
+        )
+    else:
+        log_dir = LOG_DIR
+
+    try:
+        log_dir.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        fallback_log_dir = LOG_DIR
+        fallback_log_dir.mkdir(parents=True, exist_ok=True)
+        print(
+            "[UnityBatchMode] failed to prepare TeamCity log directory, "
+            f"fallback to local logs. target={log_dir}, error={exc}"
+        )
+        log_dir = fallback_log_dir
+
+    return log_dir / f"{platform_key}_{safe_version}.log"
 
 
 def get_execute_method(platform_key: str) -> str:
