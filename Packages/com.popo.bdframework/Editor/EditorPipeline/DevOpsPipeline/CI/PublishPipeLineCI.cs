@@ -172,6 +172,25 @@ namespace BDFramework.Editor.DevOps
 #endif
         }
 
+        static private IEnumerable<string> GetUnityEmbeddedAndroidToolCandidates(params string[] relativePaths)
+        {
+            var applicationContentsPath = EditorApplication.applicationContentsPath;
+            if (string.IsNullOrWhiteSpace(applicationContentsPath) || !Directory.Exists(applicationContentsPath))
+            {
+                yield break;
+            }
+
+            foreach (var relativePath in relativePaths)
+            {
+                if (string.IsNullOrWhiteSpace(relativePath))
+                {
+                    continue;
+                }
+
+                yield return Path.Combine(applicationContentsPath, relativePath);
+            }
+        }
+
         static private bool TryApplyAndroidJdkPath(string candidate, string source)
         {
             if (!IsValidJdkPath(candidate))
@@ -207,6 +226,16 @@ namespace BDFramework.Editor.DevOps
             {
                 var candidate = System.Environment.GetEnvironmentVariable(envName);
                 if (TryApplyAndroidJdkPath(candidate, $"环境变量 {envName}"))
+                {
+                    return true;
+                }
+            }
+
+            foreach (var candidate in GetUnityEmbeddedAndroidToolCandidates(
+                         Path.Combine("PlaybackEngines", "AndroidPlayer", "OpenJDK"),
+                         Path.Combine("PlaybackEngines", "AndroidPlayer", "Tools", "OpenJDK")))
+            {
+                if (TryApplyAndroidJdkPath(candidate, "Unity 内置 Android Support"))
                 {
                     return true;
                 }
@@ -306,6 +335,15 @@ namespace BDFramework.Editor.DevOps
                 }
             }
 
+            foreach (var candidate in GetUnityEmbeddedAndroidToolCandidates(
+                         Path.Combine("PlaybackEngines", "AndroidPlayer", "SDK")))
+            {
+                if (TryApplyAndroidSdkPath(candidate, "Unity 内置 Android Support"))
+                {
+                    return true;
+                }
+            }
+
 #if UNITY_EDITOR_WIN
             var roots = new List<string>
             {
@@ -343,6 +381,15 @@ namespace BDFramework.Editor.DevOps
             {
                 var candidate = System.Environment.GetEnvironmentVariable(envName);
                 if (TryApplyAndroidNdkPath(candidate, $"环境变量 {envName}"))
+                {
+                    return true;
+                }
+            }
+
+            foreach (var candidate in GetUnityEmbeddedAndroidToolCandidates(
+                         Path.Combine("PlaybackEngines", "AndroidPlayer", "NDK")))
+            {
+                if (TryApplyAndroidNdkPath(candidate, "Unity 内置 Android Support"))
                 {
                     return true;
                 }
