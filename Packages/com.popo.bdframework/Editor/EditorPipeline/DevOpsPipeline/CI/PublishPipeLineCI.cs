@@ -119,6 +119,7 @@ namespace BDFramework.Editor.DevOps
                 "UNITY_JDK",
                 "JDK_HOME",
                 "JAVA_HOME",
+                "TEAMCITY_JRE",
             };
 
             foreach (var envName in envNames)
