@@ -75,7 +75,7 @@ SETTINGS = {
             "method": "BDFramework.Editor.DevOps.PublishPipeLineCI.BuildClientPackageAndroid",
         },
         "ios": {
-            "allowed_hosts": ["mac"],
+            "allowed_hosts": ["mac", "windows", "linux"],
             "method": "BDFramework.Editor.DevOps.PublishPipeLineCI.BuildClientPackageIOS",
         },
         "windows": {

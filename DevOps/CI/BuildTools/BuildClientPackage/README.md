@@ -40,10 +40,10 @@ Python 脚本和 TeamCity 任务的索引文档位于：
 ## 支持的 CI 宿主环境
 
 - Android：`macOS` / `Windows` / `Linux`
-- iOS：仅 `macOS`
+- iOS：`macOS` / `Windows` / `Linux`
 - Windows：`macOS` / `Windows` / `Linux`
 
-> 说明：Windows 包是否能在非 Windows 宿主上真正完成构建，最终仍取决于 Unity 能力和你的 CI 环境模块安装情况。
+> 说明：iOS / Windows 包是否能在非原生宿主上真正完成构建，最终仍取决于 Unity 能力和你的 CI 环境模块安装情况。
 
 ## 必填参数
 

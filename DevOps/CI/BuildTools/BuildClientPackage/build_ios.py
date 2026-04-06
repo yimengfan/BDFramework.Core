@@ -3,8 +3,8 @@ from __future__ import annotations
 """iOS 母包 CI 入口。
 
 说明：
-1. iOS 只能在 macOS 宿主机上执行，因为最终需要导出 Xcode 工程 / IPA。
-2. 本文件自己管理流程日志、参数解析和边界处理。
+1. 本文件自己管理流程日志、参数解析和边界处理。
+2. 是否能在当前宿主机真正完成 iOS 构建，取决于 Unity 模块能力与 CI 环境配置。
 3. 仅把 Unity BatchMode 共通能力交给 unity3d_batchmode.py。
 4. 调用方可以选择 Unity 版本，并指定需要构建的 Unity 工程目录。
 """
