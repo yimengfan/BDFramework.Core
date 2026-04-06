@@ -24,9 +24,6 @@ LOG_DIR = SCRIPT_DIR / SETTINGS["log_dir_name"]
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 TC_LOG_ROOT_NAME = "TCLog"
 UNITY_LOG_POLL_INTERVAL_SECONDS = 1.0
-UNITY_HANG_AFTER_COMPLETION_TIMEOUT_SECONDS = 15.0
-UNITY_STALLED_LOG_TIMEOUT_SECONDS = 300.0
-UNITY_TERMINATE_WAIT_SECONDS = 10.0
 UNITY_SUCCESS_LOG_MARKERS = (
     "===>5.构建结束",
     "Build Success :",
@@ -645,28 +642,6 @@ def emit_unity_log_updates(
         classify_unity_log_line(line, state)
 
 
-def terminate_hung_unity_process(process: subprocess.Popen[object]) -> None:
-    """在 Unity 构建已完成但进程未退出时，主动结束该进程。"""
-    process.terminate()
-    try:
-        process.wait(timeout=UNITY_TERMINATE_WAIT_SECONDS)
-    except subprocess.TimeoutExpired:
-        process.kill()
-        process.wait()
-
-
-def get_stalled_log_timeout_seconds() -> float:
-    """返回无日志输出时的兜底超时时间，允许通过环境变量覆盖。"""
-    raw_value = os.environ.get(
-        "UNITY_STALLED_LOG_TIMEOUT_SECONDS",
-        str(int(UNITY_STALLED_LOG_TIMEOUT_SECONDS)),
-    ).strip()
-    try:
-        return float(raw_value)
-    except ValueError:
-        return UNITY_STALLED_LOG_TIMEOUT_SECONDS
-
-
 def run_batchmode(command: Sequence[str], *, dry_run: bool = False) -> int:
     """执行 Unity BatchMode。
 
@@ -691,50 +666,14 @@ def run_batchmode(command: Sequence[str], *, dry_run: bool = False) -> int:
     print(f"[UnityBatchMode] streaming log file: {log_path}")
     process = subprocess.Popen(command)
     state = UnityLogStreamingState()
-    stalled_log_timeout_seconds = max(get_stalled_log_timeout_seconds(), 0.0)
 
     while True:
         emit_unity_log_updates(log_path, state)
-        idle_seconds = time.monotonic() - state.last_activity_at
 
         return_code = process.poll()
         if return_code is not None:
             emit_unity_log_updates(log_path, state, flush_partial=True)
             return return_code
-
-        if state.saw_completion_marker:
-            if idle_seconds >= UNITY_HANG_AFTER_COMPLETION_TIMEOUT_SECONDS:
-                completion_status = (
-                    "success"
-                    if state.completed_successfully is True
-                    else "failure"
-                )
-                print(
-                    "[UnityBatchMode] detected completed Unity log output but the process is still alive. "
-                    f"status={completion_status}, idleSeconds={idle_seconds:.1f}. terminating Unity process."
-                )
-                terminate_hung_unity_process(process)
-                emit_unity_log_updates(log_path, state, flush_partial=True)
-
-                if state.completed_successfully is True:
-                    return 0
-                if process.returncode and process.returncode != 0:
-                    return process.returncode
-                return 1
-
-        if stalled_log_timeout_seconds > 0 and idle_seconds >= stalled_log_timeout_seconds:
-            print(
-                "[UnityBatchMode] Unity log output stalled for too long while the process is still alive. "
-                f"idleSeconds={idle_seconds:.1f}. terminating Unity process to prevent TeamCity from hanging forever."
-            )
-            terminate_hung_unity_process(process)
-            emit_unity_log_updates(log_path, state, flush_partial=True)
-
-            if state.completed_successfully is True:
-                return 0
-            if process.returncode and process.returncode != 0:
-                return process.returncode
-            return 1
 
         time.sleep(UNITY_LOG_POLL_INTERVAL_SECONDS)
 

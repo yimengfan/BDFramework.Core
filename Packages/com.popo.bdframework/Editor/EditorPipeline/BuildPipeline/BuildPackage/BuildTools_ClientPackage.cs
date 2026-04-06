@@ -545,7 +545,10 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 Debug.Log("Build Success :" + outputPath);
                 ret = true;
-                EditorUtility.RevealInFinder(outputPath);
+                if (!Application.isBatchMode)
+                {
+                    EditorUtility.RevealInFinder(outputPath);
+                }
             }
             else
             {
@@ -660,7 +663,10 @@ namespace BDFramework.Editor.BuildPipeline
                     throw new Exception($"没找到编译shell/cmd脚本: {shellPath}! 后续请配合Jekins/Teamcity出包!");
                 }
 
-                EditorUtility.RevealInFinder(outputPath);
+                if (!Application.isBatchMode)
+                {
+                    EditorUtility.RevealInFinder(outputPath);
+                }
             }
             else
             {
