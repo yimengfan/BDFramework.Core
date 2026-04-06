@@ -60,6 +60,21 @@ class UnityLogStreamingState:
         self.completed_successfully: bool | None = None
 
 
+def safe_console_print(message: object = "") -> None:
+    """向当前控制台输出文本，遇到宿主编码不兼容时自动降级替换字符。"""
+    text = str(message)
+    encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
+    data = (text + "\n").encode(encoding, errors="replace")
+    stdout_buffer = getattr(sys.stdout, "buffer", None)
+    if stdout_buffer is not None:
+        stdout_buffer.write(data)
+        stdout_buffer.flush()
+        return
+
+    sys.stdout.write(data.decode(encoding, errors="replace"))
+    sys.stdout.flush()
+
+
 def get_project_settings() -> dict:
     """获取工程相关配置。"""
     return SETTINGS["project"]
@@ -326,13 +341,13 @@ def resolve_unity_executable(
         if unity_path.exists():
             return unity_path, unity_version or "ENV:UNITY_PATH"
         if allow_missing:
-            print(
+            safe_console_print(
                 "[UnityBatchMode] UNITY_PATH does not exist, but dry-run allows continuing. "
                 f"path={env_unity_path}"
             )
             return unity_path, unity_version or "ENV:UNITY_PATH"
         invalid_env_unity_path = env_unity_path
-        print(
+        safe_console_print(
             "[UnityBatchMode] UNITY_PATH does not exist, continue searching fallback candidates. "
             f"path={env_unity_path}"
         )
@@ -365,7 +380,7 @@ def resolve_unity_executable(
 
     if allow_missing:
         fallback_candidate = Path(candidates[0])
-        print(
+        safe_console_print(
             "[UnityBatchMode] Unity executable not found on disk, but dry-run allows continuing. "
             f"candidate={fallback_candidate}"
         )
@@ -518,7 +533,7 @@ def get_log_path(
     except OSError as exc:
         fallback_log_dir = LOG_DIR
         fallback_log_dir.mkdir(parents=True, exist_ok=True)
-        print(
+        safe_console_print(
             "[UnityBatchMode] failed to prepare TeamCity log directory, "
             f"fallback to local logs. target={log_dir}, error={exc}"
         )
@@ -638,7 +653,7 @@ def emit_unity_log_updates(
 
     state.last_activity_at = time.monotonic()
     for line in emitted_lines:
-        print(line)
+        safe_console_print(line)
         classify_unity_log_line(line, state)
 
 
@@ -651,11 +666,11 @@ def run_batchmode(command: Sequence[str], *, dry_run: bool = False) -> int:
     - CI 脚本自检
     - 排查参数拼接问题
     """
-    print("[UnityBatchMode] command=")
-    print(" ".join(quote_argument(arg) for arg in command))
+    safe_console_print("[UnityBatchMode] command=")
+    safe_console_print(" ".join(quote_argument(arg) for arg in command))
 
     if dry_run:
-        print("[UnityBatchMode] dry-run enabled, skip Unity execution.")
+        safe_console_print("[UnityBatchMode] dry-run enabled, skip Unity execution.")
         return 0
 
     log_path = extract_log_path_from_command(command)
@@ -663,7 +678,7 @@ def run_batchmode(command: Sequence[str], *, dry_run: bool = False) -> int:
         completed = subprocess.run(command)
         return completed.returncode
 
-    print(f"[UnityBatchMode] streaming log file: {log_path}")
+    safe_console_print(f"[UnityBatchMode] streaming log file: {log_path}")
     process = subprocess.Popen(command)
     state = UnityLogStreamingState()
 
