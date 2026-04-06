@@ -12,6 +12,7 @@ Unity BatchMode 辅助模块。
 import os
 import subprocess
 import sys
+import time
 from pathlib import Path
 from typing import Sequence
 
@@ -22,10 +23,43 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 LOG_DIR = SCRIPT_DIR / SETTINGS["log_dir_name"]
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 TC_LOG_ROOT_NAME = "TCLog"
+UNITY_LOG_POLL_INTERVAL_SECONDS = 1.0
+UNITY_HANG_AFTER_COMPLETION_TIMEOUT_SECONDS = 15.0
+UNITY_TERMINATE_WAIT_SECONDS = 10.0
+UNITY_SUCCESS_LOG_MARKERS = (
+    "===>5.构建结束",
+    "Build Success :",
+    "打包Exe成功~",
+    "build finished successfully",
+)
+UNITY_FAILURE_LOG_MARKERS = (
+    "打包失败!",
+    "【CI】构建母包失败",
+    "Package not exsit",
+    "Scripts have compiler errors.",
+    "Build Finished, Result: Failure.",
+    "executeMethod method",
+)
+UNITY_EXIT_LOG_MARKERS = (
+    "Application will terminate with return code",
+    "Exiting without the bug reporter.",
+    "BatchMode quit successfully invoked",
+)
 
 
 class UnityBatchModeError(RuntimeError):
     """Unity BatchMode 调用相关错误。"""
+
+
+class UnityLogStreamingState:
+    """维护 Unity 日志增量读取状态。"""
+
+    def __init__(self) -> None:
+        self.offset = 0
+        self.partial_line = ""
+        self.last_activity_at = time.monotonic()
+        self.saw_completion_marker = False
+        self.completed_successfully: bool | None = None
 
 
 def get_project_settings() -> dict:
@@ -529,6 +563,97 @@ def build_batchmode_command(
     ]
 
 
+def extract_log_path_from_command(command: Sequence[str]) -> Path | None:
+    """从 Unity 命令行参数中提取 -logFile 对应路径。"""
+    for index, value in enumerate(command[:-1]):
+        if value == "-logFile":
+            return Path(command[index + 1])
+    return None
+
+
+def classify_unity_log_line(line: str, state: UnityLogStreamingState) -> None:
+    """根据日志内容识别构建完成/失败标记。"""
+    normalized_line = line.casefold()
+
+    if any(marker.casefold() in normalized_line for marker in UNITY_SUCCESS_LOG_MARKERS):
+        state.saw_completion_marker = True
+        state.completed_successfully = True
+        return
+
+    if any(marker.casefold() in normalized_line for marker in UNITY_FAILURE_LOG_MARKERS):
+        state.saw_completion_marker = True
+        state.completed_successfully = False
+        return
+
+    if any(marker.casefold() in normalized_line for marker in UNITY_EXIT_LOG_MARKERS):
+        state.saw_completion_marker = True
+        if "return code 0" in normalized_line:
+            state.completed_successfully = True
+        elif "return code" in normalized_line and "return code 0" not in normalized_line:
+            state.completed_successfully = False
+
+
+def emit_unity_log_updates(
+    log_path: Path,
+    state: UnityLogStreamingState,
+    *,
+    flush_partial: bool = False,
+) -> None:
+    """把 Unity -logFile 的新增内容实时输出到当前控制台。"""
+    if not log_path.exists():
+        return
+
+    try:
+        file_size = log_path.stat().st_size
+    except OSError:
+        return
+
+    if file_size < state.offset:
+        state.offset = 0
+        state.partial_line = ""
+
+    try:
+        with log_path.open("r", encoding="utf-8", errors="replace") as handle:
+            handle.seek(state.offset)
+            chunk = handle.read()
+            state.offset = handle.tell()
+    except OSError:
+        return
+
+    if not chunk and not flush_partial:
+        return
+
+    text = state.partial_line + chunk
+    state.partial_line = ""
+    emitted_lines: list[str] = []
+
+    for line in text.splitlines(keepends=True):
+        if line.endswith(("\n", "\r")):
+            emitted_lines.append(line.rstrip("\r\n"))
+        elif flush_partial:
+            emitted_lines.append(line.rstrip("\r\n"))
+        else:
+            state.partial_line = line
+
+    if not emitted_lines:
+        return
+
+    state.last_activity_at = time.monotonic()
+    for line in emitted_lines:
+        print(line)
+        classify_unity_log_line(line, state)
+
+
+def terminate_hung_unity_process(process: subprocess.Popen[object]) -> None:
+    """在 Unity 构建已完成但进程未退出时，主动结束该进程。"""
+    process.terminate()
+    try:
+        process.wait(timeout=UNITY_TERMINATE_WAIT_SECONDS)
+    except subprocess.TimeoutExpired:
+        process.kill()
+        process.wait()
+
+
 def run_batchmode(command: Sequence[str], *, dry_run: bool = False) -> int:
     """执行 Unity BatchMode。
 
@@ -545,8 +670,45 @@ def run_batchmode(command: Sequence[str], *, dry_run: bool = False) -> int:
         print("[UnityBatchMode] dry-run enabled, skip Unity execution.")
         return 0
 
-    completed = subprocess.run(command)
-    return completed.returncode
+    log_path = extract_log_path_from_command(command)
+    if log_path is None:
+        completed = subprocess.run(command)
+        return completed.returncode
+
+    print(f"[UnityBatchMode] streaming log file: {log_path}")
+    process = subprocess.Popen(command)
+    state = UnityLogStreamingState()
+
+    while True:
+        emit_unity_log_updates(log_path, state)
+
+        return_code = process.poll()
+        if return_code is not None:
+            emit_unity_log_updates(log_path, state, flush_partial=True)
+            return return_code
+
+        if state.saw_completion_marker:
+            idle_seconds = time.monotonic() - state.last_activity_at
+            if idle_seconds >= UNITY_HANG_AFTER_COMPLETION_TIMEOUT_SECONDS:
+                completion_status = (
+                    "success"
+                    if state.completed_successfully is True
+                    else "failure"
+                )
+                print(
+                    "[UnityBatchMode] detected completed Unity log output but the process is still alive. "
+                    f"status={completion_status}, idleSeconds={idle_seconds:.1f}. terminating Unity process."
+                )
+                terminate_hung_unity_process(process)
+                emit_unity_log_updates(log_path, state, flush_partial=True)
+
+                if state.completed_successfully is True:
+                    return 0
+                if process.returncode and process.returncode != 0:
+                    return process.returncode
+                return 1
+
+        time.sleep(UNITY_LOG_POLL_INTERVAL_SECONDS)
 
 
 def read_log_tail(log_path: Path, *, max_lines: int = 120) -> str:
