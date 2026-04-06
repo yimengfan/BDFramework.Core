@@ -1,0 +1,13 @@
+[artifact_file_server]
+# BuildTools 共享文件服务器访问配置。
+# 推荐所有 BuildTools 模块统一读取这一个配置文件，不再复用其他目录下的配置。
+ip = "192.168.0.240"
+port = 20001
+scheme = "http"
+
+# 如果你已经有完整访问地址，也可以直接写 base_url，优先级高于 ip/port/scheme。
+# base_url = "http://192.168.0.240:20001"
+
+# token = ""
+upload_chunk_size_kb = 1024
+hash_chunk_size_kb = 1024
