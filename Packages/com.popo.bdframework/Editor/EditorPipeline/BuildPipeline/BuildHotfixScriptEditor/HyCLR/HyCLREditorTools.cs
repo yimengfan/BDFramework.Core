@@ -51,33 +51,15 @@ namespace BDFramework.Editor.HotfixScript
 
             if (target != EditorUserBuildSettings.activeBuildTarget)
             {
-                switch (EditorUserBuildSettings.activeBuildTarget)
+                Debug.Log($"[HCLR] 当前平台 {EditorUserBuildSettings.activeBuildTarget} 与目标平台 {target} 不一致，开始切换目标平台。");
+                var switched = BDEditorApplication.SwitchToBuildTarget(target);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+
+                if (!switched || target != EditorUserBuildSettings.activeBuildTarget)
                 {
-                    case BuildTarget.Android:
-                    {
-                        BDEditorApplication.SwitchToAndroid();
-                    }
-                        break;
-                    case BuildTarget.iOS:
-                    {
-                        BDEditorApplication.SwitchToiOS();
-                    }
-                        break;
-                    case BuildTarget.StandaloneWindows:
-                    case BuildTarget.StandaloneWindows64:
-                    {
-                        BDEditorApplication.SwitchToWindows();
-                    }
-                        break;
-                    case BuildTarget.StandaloneOSX:
-                    {
-                        BDEditorApplication.SwitchToMacOSX();
-                    }
-                        break;
+                    throw new Exception("请将平台切换至目标平台:" + target.ToString());
                 }
-
-
-                throw new Exception("请将平台切换至目标平台:" + target.ToString());
             }
 
 

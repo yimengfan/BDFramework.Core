@@ -50,12 +50,25 @@ namespace BDFramework.Editor
         #region 平台切换
 
         /// <summary>
+        /// 切换到指定目标平台
+        /// </summary>
+        static public bool SwitchToBuildTarget(BuildTarget buildTarget)
+        {
+            var buildTargetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+            if (buildTargetGroup == BuildTargetGroup.Unknown)
+            {
+                throw new Exception("未知的构建目标组:" + buildTarget);
+            }
+
+            return EditorUserBuildSettings.SwitchActiveBuildTarget(buildTargetGroup, buildTarget);
+        }
+
+        /// <summary>
         /// 切换到安卓
         /// </summary>
         static public void SwitchToAndroid()
         {
-            //切换到Android
-            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
+            SwitchToBuildTarget(BuildTarget.Android);
         }
         
         /// <summary>
@@ -63,8 +76,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public void SwitchToiOS()
         {
-            //切换到Android
-            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.iOS, BuildTarget.iOS);
+            SwitchToBuildTarget(BuildTarget.iOS);
         }
 
         
@@ -73,8 +85,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public void SwitchToWindows()
         {
-            //切换到Android
-            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
+            SwitchToBuildTarget(BuildTarget.StandaloneWindows64);
         }
         
         /// <summary>
@@ -82,8 +93,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public void SwitchToMacOSX()
         {
-            //切换到Android
-            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
+            SwitchToBuildTarget(BuildTarget.StandaloneOSX);
         }
         
         delegate bool IsModuleNotInstalled_type(BuildTargetGroup buildTargetGroup, BuildTarget buildTarget);

@@ -123,6 +123,41 @@ namespace BDFramework.Editor.BuildPipeline
             }
         }
 
+        static BuildTargetGroup ResolveBuildTargetGroup(BuildTarget buildTarget)
+        {
+            var buildTargetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+            if (buildTargetGroup == BuildTargetGroup.Unknown)
+            {
+                throw new Exception("未知的构建目标组:" + buildTarget);
+            }
+
+            return buildTargetGroup;
+        }
+
+        static void EnsureActiveBuildTarget(BuildTarget buildTarget)
+        {
+            if (EditorUserBuildSettings.activeBuildTarget == buildTarget)
+            {
+                return;
+            }
+
+            var buildTargetGroup = ResolveBuildTargetGroup(buildTarget);
+            if (!BDEditorApplication.IsPlatformModuleInstalled(buildTargetGroup, buildTarget))
+            {
+                throw new Exception($"未安装目标平台模块: {buildTarget}");
+            }
+
+            Debug.Log($"【BuildPackage】 切换构建平台: {EditorUserBuildSettings.activeBuildTarget} => {buildTarget}");
+            var switched = BDEditorApplication.SwitchToBuildTarget(buildTarget);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            if (!switched || EditorUserBuildSettings.activeBuildTarget != buildTarget)
+            {
+                throw new Exception($"切换目标平台失败: {buildTarget}");
+            }
+        }
+
         /// <summary>
         /// 获取默认母包版本号
         /// </summary>
@@ -282,6 +317,8 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             AssetDatabase.Refresh();
+            EnsureActiveBuildTarget(buildTarget);
+            var buildTargetGroup = ResolveBuildTargetGroup(buildTarget);
 
             //不通模式的设置
             //项目名
@@ -299,20 +336,21 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             //
-            if (PlayerSettings.applicationIdentifier.EndsWith(".Debug") || PlayerSettings.applicationIdentifier.EndsWith(".debug"))
+            var applicationIdentifier = PlayerSettings.GetApplicationIdentifier(buildTargetGroup);
+            if (applicationIdentifier.EndsWith(".Debug") || applicationIdentifier.EndsWith(".debug"))
             {
-                PlayerSettings.applicationIdentifier = PlayerSettings.applicationIdentifier.Substring(0, PlayerSettings.applicationIdentifier.Length - 6);
+                applicationIdentifier = applicationIdentifier.Substring(0, applicationIdentifier.Length - 6);
             }
 
-            if (PlayerSettings.applicationIdentifier.EndsWith(".Profiler") || PlayerSettings.applicationIdentifier.EndsWith(".profiler"))
+            if (applicationIdentifier.EndsWith(".Profiler") || applicationIdentifier.EndsWith(".profiler"))
             {
-                PlayerSettings.applicationIdentifier = PlayerSettings.applicationIdentifier.Substring(0, PlayerSettings.applicationIdentifier.Length - 9);
+                applicationIdentifier = applicationIdentifier.Substring(0, applicationIdentifier.Length - 9);
             }
 
             #endregion
 
             string productNameCache = PlayerSettings.productName;
-            string applicationIdentifierCache = PlayerSettings.applicationIdentifier;
+            string applicationIdentifierCache = applicationIdentifier;
             if (addPackageNameStr != null)
             {
                 if (!PlayerSettings.productName.EndsWith(addPackageNameStr))
@@ -321,11 +359,13 @@ namespace BDFramework.Editor.BuildPipeline
                 }
 
                 //包名
-                if (!PlayerSettings.applicationIdentifier.EndsWith(addPackageNameStr))
+                if (!applicationIdentifier.EndsWith(addPackageNameStr))
                 {
-                    PlayerSettings.applicationIdentifier += addPackageNameStr;
+                    applicationIdentifier += addPackageNameStr;
                 }
             }
+
+            PlayerSettings.SetApplicationIdentifier(buildTargetGroup, applicationIdentifier);
 
 
             //增加平台路径
@@ -425,7 +465,7 @@ namespace BDFramework.Editor.BuildPipeline
                 configOverrideContext?.Restore();
                 buildPlayerSettingsScope?.Dispose();
                 PlayerSettings.productName = productNameCache;
-                PlayerSettings.applicationIdentifier = applicationIdentifierCache;
+                PlayerSettings.SetApplicationIdentifier(buildTargetGroup, applicationIdentifierCache);
                 AssetDatabase.SaveAssets();
                 IsBuilding = false;
             }
