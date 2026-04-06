@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import argparse
 
+from package_artifacts import clear_publish_package_dir, upload_publish_package
+
 from unity3d_batchmode import (
     configure_live_console_output,
     UnityBatchModeError,
@@ -22,15 +24,14 @@ from unity3d_batchmode import (
     get_log_path,
     read_log_tail,
     resolve_build_metadata,
-    resolve_artifact_root_dir,
     resolve_unity_executable,
     resolve_project_dir,
     run_batchmode,
-    stage_build_artifacts,
 )
 
 
 PLATFORM_KEY = "windows"
+LOG_PREFIX = "[BuildClientPackage][Windows]"
 
 
 def parse_args() -> argparse.Namespace:
@@ -66,11 +67,6 @@ def parse_args() -> argparse.Namespace:
         help="Optional Unity project directory. If omitted, infer the default project root from config/script location.",
     )
     parser.add_argument(
-        "--artifact-root-dir",
-        default=None,
-        help="Optional CI artifact output root. If provided, copy Unity default outputs to this directory after a successful build.",
-    )
-    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Only print the final Unity command, do not execute Unity.",
@@ -94,7 +90,7 @@ def validate_client_version(client_version: str) -> str:
 
 def main() -> int:
     configure_live_console_output()
-    print("[BuildClientPackage][Windows] ===== Step 1/5: parse args =====")
+    print(f"{LOG_PREFIX} ===== Step 1/7: parse args =====")
     args = parse_args()
     client_version_prefix = validate_client_version(args.client_version)
     build_name, build_number = resolve_build_metadata(
@@ -103,18 +99,18 @@ def main() -> int:
     )
     client_version = compose_client_version(client_version_prefix, build_number)
 
-    print("[BuildClientPackage][Windows] ===== Step 2/5: validate host =====")
+    print(f"{LOG_PREFIX} ===== Step 2/7: validate host =====")
     host_os = detect_host_os()
     ensure_platform_allowed(PLATFORM_KEY)
-    print(f"[BuildClientPackage][Windows] host_os={host_os}")
-    print(f"[BuildClientPackage][Windows] clientVersionPrefix={client_version_prefix}")
-    print(f"[BuildClientPackage][Windows] clientVersion={client_version}")
+    print(f"{LOG_PREFIX} host_os={host_os}")
+    print(f"{LOG_PREFIX} clientVersionPrefix={client_version_prefix}")
+    print(f"{LOG_PREFIX} clientVersion={client_version}")
     if build_name:
-        print(f"[BuildClientPackage][Windows] buildName={build_name}")
+        print(f"{LOG_PREFIX} buildName={build_name}")
     if build_number:
-        print(f"[BuildClientPackage][Windows] buildNumber={build_number}")
+        print(f"{LOG_PREFIX} buildNumber={build_number}")
 
-    print("[BuildClientPackage][Windows] ===== Step 3/5: resolve Unity =====")
+    print(f"{LOG_PREFIX} ===== Step 3/7: resolve Unity =====")
     unity_path, actual_unity_version = resolve_unity_executable(
         args.unity_version,
         allow_missing=args.dry_run,
@@ -128,16 +124,20 @@ def main() -> int:
         build_name=build_name,
         build_number=build_number,
     )
-    print(f"[BuildClientPackage][Windows] unity={unity_path}")
-    print(f"[BuildClientPackage][Windows] unityVersion={actual_unity_version}")
-    print(f"[BuildClientPackage][Windows] projectDir={project_dir}")
-    print(f"[BuildClientPackage][Windows] method={execute_method}")
-    print(f"[BuildClientPackage][Windows] log={log_path}")
-    artifact_root_dir = resolve_artifact_root_dir(args.artifact_root_dir)
-    if artifact_root_dir:
-        print(f"[BuildClientPackage][Windows] artifactRootDir={artifact_root_dir}")
+    print(f"{LOG_PREFIX} unity={unity_path}")
+    print(f"{LOG_PREFIX} unityVersion={actual_unity_version}")
+    print(f"{LOG_PREFIX} projectDir={project_dir}")
+    print(f"{LOG_PREFIX} method={execute_method}")
+    print(f"{LOG_PREFIX} log={log_path}")
 
-    print("[BuildClientPackage][Windows] ===== Step 4/5: build Unity command =====")
+    print(f"{LOG_PREFIX} ===== Step 4/7: reset output dir =====")
+    if args.dry_run:
+        print(f"{LOG_PREFIX} dry-run enabled, skip clearing publish output directory")
+    else:
+        publish_output_dir = clear_publish_package_dir(PLATFORM_KEY, project_dir=project_dir)
+        print(f"{LOG_PREFIX} publishOutputDir={publish_output_dir}")
+
+    print(f"{LOG_PREFIX} ===== Step 5/7: build Unity command =====")
     command = build_batchmode_command(
         unity_path=unity_path,
         project_dir=project_dir,
@@ -146,7 +146,7 @@ def main() -> int:
         log_path=log_path,
     )
 
-    print("[BuildClientPackage][Windows] ===== Step 5/5: execute =====")
+    print(f"{LOG_PREFIX} ===== Step 6/7: execute =====")
     return_code = run_batchmode(command, dry_run=args.dry_run)
     if return_code != 0:
         print(read_log_tail(log_path))
@@ -155,14 +155,19 @@ def main() -> int:
             f"exit_code={return_code}, log={log_path}"
         )
 
-    if not args.dry_run:
-        stage_build_artifacts(
+    print(f"{LOG_PREFIX} ===== Step 7/7: upload client package =====")
+    if args.dry_run:
+        print(f"{LOG_PREFIX} dry-run enabled, skip client package upload")
+    else:
+        upload_publish_package(
             PLATFORM_KEY,
             project_dir=project_dir,
-            artifact_root_dir=args.artifact_root_dir,
+            build_number=build_number,
+            client_version=client_version,
+            log_prefix=LOG_PREFIX,
         )
 
-    print("[BuildClientPackage][Windows] build finished successfully")
+    print(f"{LOG_PREFIX} build finished successfully")
     return 0
 
 
@@ -170,6 +175,6 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except UnityBatchModeError as exc:
-        print(f"[BuildClientPackage][Windows][ERROR] {exc}")
+        print(f"{LOG_PREFIX}[ERROR] {exc}")
         raise SystemExit(2)
 
