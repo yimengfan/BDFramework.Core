@@ -54,7 +54,7 @@ namespace BDFramework.Editor
         /// </summary>
         static public bool SwitchToBuildTarget(BuildTarget buildTarget)
         {
-            var buildTargetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+            var buildTargetGroup = UnityEditor.BuildPipeline.GetBuildTargetGroup(buildTarget);
             if (buildTargetGroup == BuildTargetGroup.Unknown)
             {
                 throw new Exception("未知的构建目标组:" + buildTarget);
