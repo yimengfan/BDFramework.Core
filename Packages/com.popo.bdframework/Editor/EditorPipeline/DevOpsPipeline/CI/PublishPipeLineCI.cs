@@ -156,6 +156,8 @@ namespace BDFramework.Editor.DevOps
             {
                 @"C:\Program Files\Java",
                 @"C:\Program Files\OpenJDK",
+                @"C:\Program Files\Zulu",
+                @"C:\Program Files\Azul",
                 @"C:\Program Files\Microsoft",
                 @"C:\Program Files\Android\Android Studio",
             };
