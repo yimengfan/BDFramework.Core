@@ -23,7 +23,10 @@ from urllib.parse import quote, urlencode, urlparse
 try:
 	import tomllib
 except ModuleNotFoundError:  # pragma: no cover - Python < 3.11 fallback
-	import tomli as tomllib
+	try:
+		import tomli as tomllib
+	except ModuleNotFoundError:  # pragma: no cover - optional dependency absent on CI agent
+		tomllib = None
 
 
 DEFAULT_TIMEOUT_SECONDS = 600
@@ -102,10 +105,93 @@ def parse_token_values(value: Any) -> tuple[str, ...]:
 def load_toml_file(path: Path) -> dict[str, Any]:
 	"""读取 TOML 配置文件。"""
 	with path.open("rb") as handle:
-		data = tomllib.load(handle)
+		content = handle.read()
+
+	if tomllib is not None:
+		data = tomllib.loads(content.decode("utf-8"))
+	else:
+		data = load_minimal_toml(content.decode("utf-8"))
+
 	if not isinstance(data, dict):
 		raise ArtifactUploadError(f"Config root must be a TOML table: {path}")
 	return data
+
+
+def parse_minimal_toml_value(raw_value: str) -> Any:
+	"""解析 BuildTools 当前配置需要的最小 TOML 值子集。
+
+	支持的值类型：
+	1. 双引号 / 单引号字符串
+	2. 整数
+	3. 布尔值
+	4. 一维字符串数组
+
+	这已经覆盖了 BuildTools 当前 `artifact_file_server` 的配置需求，
+	可以避免在 CI agent 缺少 tomli 时因为一个简单配置文件直接失败。
+	"""
+	normalized = raw_value.strip()
+	if not normalized:
+		return ""
+
+	if normalized.startswith("[") and normalized.endswith("]"):
+		inner = normalized[1:-1].strip()
+		if not inner:
+			return []
+		items: list[str] = []
+		for part in inner.split(","):
+			value = parse_minimal_toml_value(part)
+			items.append(str(value))
+		return items
+
+	if (normalized.startswith('"') and normalized.endswith('"')) or (
+		normalized.startswith("'") and normalized.endswith("'")
+	):
+		return normalized[1:-1]
+
+	if normalized.lower() in {"true", "false"}:
+		return normalized.lower() == "true"
+
+	try:
+		return int(normalized)
+	except ValueError:
+		return normalized
+
+
+def load_minimal_toml(content: str) -> dict[str, Any]:
+	"""读取最小 TOML 子集。
+
+	只支持当前 BuildTools 配置实际使用到的简单 table + key/value 结构。
+	如果后续配置升级到更复杂语法，应优先在运行环境安装 tomli / 使用 Python 3.11+。
+	"""
+	root: dict[str, Any] = {}
+	current_table: dict[str, Any] = root
+
+	for raw_line in content.splitlines():
+		line = raw_line.split("#", 1)[0].strip()
+		if not line:
+			continue
+
+		if line.startswith("[") and line.endswith("]"):
+			table_name = line[1:-1].strip()
+			if not table_name:
+				raise ArtifactUploadError("Invalid TOML table name in minimal parser.")
+			current_table = root.setdefault(table_name, {})
+			if not isinstance(current_table, dict):
+				raise ArtifactUploadError(
+					f"TOML table conflicts with scalar value: {table_name}"
+				)
+			continue
+
+		if "=" not in line:
+			raise ArtifactUploadError(f"Invalid TOML line in minimal parser: {raw_line!r}")
+
+		key, value = line.split("=", 1)
+		normalized_key = key.strip()
+		if not normalized_key:
+			raise ArtifactUploadError(f"Invalid TOML key in minimal parser: {raw_line!r}")
+		current_table[normalized_key] = parse_minimal_toml_value(value)
+
+	return root
 
 
 def resolve_optional_config_path(

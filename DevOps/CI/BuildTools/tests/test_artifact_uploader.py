@@ -21,6 +21,7 @@ from Common.artifact_uploader import (
 	ArtifactUploadError,
 	build_artifact_remote_path,
 	build_artifact_remote_root,
+	load_minimal_toml,
 	normalize_relative_remote_path,
 	resolve_file_server_settings,
 	upload_client_package,
@@ -192,6 +193,31 @@ tokens = ["token-a", "token-b"]
 	assert settings.token == "token-a"
 	assert settings.upload_chunk_size_bytes == 256 * 1024
 	assert settings.hash_chunk_size_bytes == 128 * 1024
+
+
+def test_load_minimal_toml_supports_buildtools_config_shape() -> None:
+	parsed = load_minimal_toml(
+		"""
+[artifact_file_server]
+ip = "192.168.10.24"
+port = 28080
+scheme = "http"
+tokens = ["token-a", "token-b"]
+upload_chunk_size_kb = 256
+hash_chunk_size_kb = 128
+""".strip()
+	)
+
+	assert parsed == {
+		"artifact_file_server": {
+			"ip": "192.168.10.24",
+			"port": 28080,
+			"scheme": "http",
+			"tokens": ["token-a", "token-b"],
+			"upload_chunk_size_kb": 256,
+			"hash_chunk_size_kb": 128,
+		}
+	}
 
 
 def test_resolve_file_server_settings_prefers_explicit_inputs_over_buildtools_config(tmp_path: Path) -> None:
