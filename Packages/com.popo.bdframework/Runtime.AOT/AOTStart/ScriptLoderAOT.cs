@@ -61,7 +61,7 @@ namespace BDFramework
             var platform = GetPlatformLoadPath();
             var firstLoadDir = Path.Combine(Application.persistentDataPath, clientVersion, platform);
 #if UNITY_ANDROID
-            var  secondLoadDir = platformStr; //BetterStreaming 加载
+            var secondLoadDir = platform; //BetterStreaming 加载
 #else
             var secondLoadDir = Path.Combine(Application.streamingAssetsPath, platform);
 #endif
@@ -106,10 +106,10 @@ namespace BDFramework
 
 
 #if UNITY_ANDROID
-                hotfixdllRootPath = Path.Combine(GetRuntimePlatformPath(), HYCLR_AOT_PATCH_PATH);
+                hotfixdllRootPath = Path.Combine(GetPlatformLoadPath(), HOTFIX_DLL_PATH);
                 hotfixDlls = BetterStreamingAssets.GetFiles(hotfixdllRootPath, "*" + HOT_DLL_EXTENSION);
 #else
-                hotfixdllRootPath = Path.Combine(secondLoadDir, HYCLR_AOT_PATCH_PATH);
+                hotfixdllRootPath = Path.Combine(secondLoadDir, HOTFIX_DLL_PATH);
                 hotfixDlls = Directory.GetFiles(hotfixdllRootPath, "*" + HOT_DLL_EXTENSION);
 #endif
                 Debug.Log($"【AOT.Load】重新寻址 HyCLR执行  Dll路径:{hotfixdllRootPath}");
