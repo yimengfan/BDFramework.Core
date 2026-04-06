@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.Editor.Environment;
 using UnityEditor;
+using UnityEditor.Android;
 using UnityEditor.Build.Player;
 using UnityEngine;
 
@@ -95,6 +97,100 @@ namespace BDFramework.Editor.DevOps
             return BuildTools_ClientPackage.GetDefaultClientVersion();
         }
 
+        static private bool IsValidJdkPath(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path))
+            {
+                return false;
+            }
+
+#if UNITY_EDITOR_WIN
+            return File.Exists(Path.Combine(path, "bin", "javac.exe"));
+#else
+            return File.Exists(Path.Combine(path, "bin", "javac"));
+#endif
+        }
+
+        static private string FindJdkFromEnvironment()
+        {
+            var envNames = new[]
+            {
+                "UNITY_JDK_PATH",
+                "UNITY_JDK",
+                "JDK_HOME",
+                "JAVA_HOME",
+            };
+
+            foreach (var envName in envNames)
+            {
+                var candidate = Environment.GetEnvironmentVariable(envName);
+                if (IsValidJdkPath(candidate))
+                {
+                    Debug.Log($"【CI】使用环境变量 {envName} 提供的 JDK: {candidate}");
+                    return candidate;
+                }
+            }
+
+#if UNITY_EDITOR_WIN
+            var roots = new[]
+            {
+                @"C:\Program Files\Java",
+                @"C:\Program Files\OpenJDK",
+                @"C:\Program Files\Microsoft",
+                @"C:\Program Files\Android\Android Studio",
+            };
+
+            foreach (var root in roots)
+            {
+                if (!Directory.Exists(root))
+                {
+                    continue;
+                }
+
+                foreach (var candidate in Directory.GetDirectories(root))
+                {
+                    if (IsValidJdkPath(candidate))
+                    {
+                        Debug.Log($"【CI】使用自动探测到的 JDK: {candidate}");
+                        return candidate;
+                    }
+                }
+
+                if (IsValidJdkPath(root))
+                {
+                    Debug.Log($"【CI】使用自动探测到的 JDK: {root}");
+                    return root;
+                }
+            }
+#endif
+
+            return null;
+        }
+
+        static private void EnsureAndroidJdkForBatchMode()
+        {
+            if (!Application.isBatchMode)
+            {
+                return;
+            }
+
+            if (IsValidJdkPath(AndroidExternalToolsSettings.jdkRootPath))
+            {
+                Debug.Log($"【CI】Unity Android JDK 已配置: {AndroidExternalToolsSettings.jdkRootPath}");
+                return;
+            }
+
+            var detectedJdkPath = FindJdkFromEnvironment();
+            if (IsValidJdkPath(detectedJdkPath))
+            {
+                AndroidExternalToolsSettings.jdkRootPath = detectedJdkPath;
+                Debug.Log($"【CI】已为 Unity Android External Tools 配置 JDK: {AndroidExternalToolsSettings.jdkRootPath}");
+                return;
+            }
+
+            Debug.LogWarning("【CI】未找到可用 JDK；如果 TeamCity Agent 已安装 JDK，请设置 JAVA_HOME/JDK_HOME/UNITY_JDK_PATH。");
+        }
+
         /// <summary>
         /// 发布包体 AndroidDebug
         /// </summary>
@@ -184,6 +280,12 @@ namespace BDFramework.Editor.DevOps
         {
             var clientVersion = GetClientVersion();
             Debug.Log($"【CI】BuildTarget:{buildTarget} BuildMode:{buildMode} ClientVersion:{clientVersion}");
+
+            if (buildTarget == BuildTarget.Android)
+            {
+                EnsureAndroidJdkForBatchMode();
+            }
+
             var ret = BuildTools_ClientPackage.Build(
                 buildMode,
                 true,
