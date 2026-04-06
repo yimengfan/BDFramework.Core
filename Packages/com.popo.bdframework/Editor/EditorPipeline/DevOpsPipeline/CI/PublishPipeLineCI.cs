@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.BuildPipeline;
@@ -111,6 +112,66 @@ namespace BDFramework.Editor.DevOps
 #endif
         }
 
+        static private bool IsValidAndroidSdkPath(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path))
+            {
+                return false;
+            }
+
+#if UNITY_EDITOR_WIN
+            if (File.Exists(Path.Combine(path, "platform-tools", "adb.exe")))
+            {
+                return true;
+            }
+#else
+            if (File.Exists(Path.Combine(path, "platform-tools", "adb")))
+            {
+                return true;
+            }
+#endif
+
+            return Directory.Exists(Path.Combine(path, "platforms")) || Directory.Exists(Path.Combine(path, "cmdline-tools"));
+        }
+
+        static private bool IsValidAndroidNdkPath(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path))
+            {
+                return false;
+            }
+
+#if UNITY_EDITOR_WIN
+            if (File.Exists(Path.Combine(path, "ndk-build.cmd")))
+            {
+                return true;
+            }
+#else
+            if (File.Exists(Path.Combine(path, "ndk-build")))
+            {
+                return true;
+            }
+#endif
+
+            return File.Exists(Path.Combine(path, "source.properties")) && Directory.Exists(Path.Combine(path, "toolchains"));
+        }
+
+        static private IEnumerable<string> GetWindowsUserAndroidSdkCandidates()
+        {
+#if UNITY_EDITOR_WIN
+            var usersRoot = @"C:\Users";
+            if (!Directory.Exists(usersRoot))
+            {
+                yield break;
+            }
+
+            foreach (var userDir in Directory.GetDirectories(usersRoot))
+            {
+                yield return Path.Combine(userDir, "AppData", "Local", "Android", "Sdk");
+            }
+#endif
+        }
+
         static private bool TryApplyAndroidJdkPath(string candidate, string source)
         {
             if (!IsValidJdkPath(candidate))
@@ -187,6 +248,159 @@ namespace BDFramework.Editor.DevOps
             return false;
         }
 
+        static private bool TryApplyAndroidSdkPath(string candidate, string source)
+        {
+            if (!IsValidAndroidSdkPath(candidate))
+            {
+                return false;
+            }
+
+            try
+            {
+                AndroidExternalToolsSettings.sdkRootPath = candidate;
+                Debug.Log($"【CI】已为 Unity Android External Tools 配置 SDK({source}): {AndroidExternalToolsSettings.sdkRootPath}");
+                return true;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"【CI】SDK 候选路径被 Unity 拒绝({source}): {candidate}，原因: {exception.Message}");
+                return false;
+            }
+        }
+
+        static private bool TryApplyAndroidNdkPath(string candidate, string source)
+        {
+            if (!IsValidAndroidNdkPath(candidate))
+            {
+                return false;
+            }
+
+            try
+            {
+                AndroidExternalToolsSettings.ndkRootPath = candidate;
+                Debug.Log($"【CI】已为 Unity Android External Tools 配置 NDK({source}): {AndroidExternalToolsSettings.ndkRootPath}");
+                return true;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"【CI】NDK 候选路径被 Unity 拒绝({source}): {candidate}，原因: {exception.Message}");
+                return false;
+            }
+        }
+
+        static private bool TryConfigureAndroidSdkFromCandidates()
+        {
+            var envNames = new[]
+            {
+                "UNITY_ANDROID_SDK",
+                "ANDROID_SDK_ROOT",
+                "ANDROID_HOME",
+            };
+
+            foreach (var envName in envNames)
+            {
+                var candidate = System.Environment.GetEnvironmentVariable(envName);
+                if (TryApplyAndroidSdkPath(candidate, $"环境变量 {envName}"))
+                {
+                    return true;
+                }
+            }
+
+#if UNITY_EDITOR_WIN
+            var roots = new List<string>
+            {
+                @"C:\Android\Sdk",
+                @"D:\Android\Sdk",
+                @"C:\Program Files\Android\Android Studio\sdk",
+                @"C:\Program Files\Android\Android Studio\Sdk",
+            };
+            roots.AddRange(GetWindowsUserAndroidSdkCandidates());
+
+            foreach (var root in roots)
+            {
+                if (TryApplyAndroidSdkPath(root, "自动探测"))
+                {
+                    return true;
+                }
+            }
+#endif
+
+            return false;
+        }
+
+        static private bool TryConfigureAndroidNdkFromCandidates()
+        {
+            var envNames = new[]
+            {
+                "UNITY_ANDROID_NDK",
+                "ANDROID_NDK_ROOT",
+                "ANDROID_NDK_HOME",
+                "NDK_ROOT",
+                "NDK_HOME",
+            };
+
+            foreach (var envName in envNames)
+            {
+                var candidate = System.Environment.GetEnvironmentVariable(envName);
+                if (TryApplyAndroidNdkPath(candidate, $"环境变量 {envName}"))
+                {
+                    return true;
+                }
+            }
+
+            if (IsValidAndroidSdkPath(AndroidExternalToolsSettings.sdkRootPath))
+            {
+                var sdkNdkBundle = Path.Combine(AndroidExternalToolsSettings.sdkRootPath, "ndk-bundle");
+                if (TryApplyAndroidNdkPath(sdkNdkBundle, "SDK 派生路径"))
+                {
+                    return true;
+                }
+
+                var sdkNdkRoot = Path.Combine(AndroidExternalToolsSettings.sdkRootPath, "ndk");
+                if (Directory.Exists(sdkNdkRoot))
+                {
+                    foreach (var candidate in Directory.GetDirectories(sdkNdkRoot))
+                    {
+                        if (TryApplyAndroidNdkPath(candidate, "SDK 派生路径"))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+#if UNITY_EDITOR_WIN
+            var roots = new[]
+            {
+                @"C:\Android\Sdk\ndk-bundle",
+                @"D:\Android\Sdk\ndk-bundle",
+                @"C:\Android\Ndk",
+                @"D:\Android\Ndk",
+            };
+
+            foreach (var root in roots)
+            {
+                if (TryApplyAndroidNdkPath(root, "自动探测"))
+                {
+                    return true;
+                }
+
+                if (Directory.Exists(root))
+                {
+                    foreach (var candidate in Directory.GetDirectories(root))
+                    {
+                        if (TryApplyAndroidNdkPath(candidate, "自动探测"))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+#endif
+
+            return false;
+        }
+
         static private void EnsureAndroidJdkForBatchMode()
         {
             if (!Application.isBatchMode)
@@ -206,6 +420,48 @@ namespace BDFramework.Editor.DevOps
             }
 
             Debug.LogWarning("【CI】未找到可用 JDK；如果 TeamCity Agent 已安装 JDK，请设置 JAVA_HOME/JDK_HOME/UNITY_JDK_PATH。");
+        }
+
+        static private void EnsureAndroidSdkForBatchMode()
+        {
+            if (!Application.isBatchMode)
+            {
+                return;
+            }
+
+            if (IsValidAndroidSdkPath(AndroidExternalToolsSettings.sdkRootPath))
+            {
+                Debug.Log($"【CI】Unity Android SDK 已配置: {AndroidExternalToolsSettings.sdkRootPath}");
+                return;
+            }
+
+            if (TryConfigureAndroidSdkFromCandidates())
+            {
+                return;
+            }
+
+            Debug.LogWarning("【CI】未找到可用 Android SDK；如果 TeamCity Agent 已安装 SDK，请设置 ANDROID_SDK_ROOT 或 ANDROID_HOME。");
+        }
+
+        static private void EnsureAndroidNdkForBatchMode()
+        {
+            if (!Application.isBatchMode)
+            {
+                return;
+            }
+
+            if (IsValidAndroidNdkPath(AndroidExternalToolsSettings.ndkRootPath))
+            {
+                Debug.Log($"【CI】Unity Android NDK 已配置: {AndroidExternalToolsSettings.ndkRootPath}");
+                return;
+            }
+
+            if (TryConfigureAndroidNdkFromCandidates())
+            {
+                return;
+            }
+
+            Debug.LogWarning("【CI】未找到可用 Android NDK；如果 TeamCity Agent 已安装 NDK，请设置 ANDROID_NDK_ROOT/ANDROID_NDK_HOME/NDK_ROOT。");
         }
 
         /// <summary>
@@ -301,6 +557,8 @@ namespace BDFramework.Editor.DevOps
             if (buildTarget == BuildTarget.Android)
             {
                 EnsureAndroidJdkForBatchMode();
+                EnsureAndroidSdkForBatchMode();
+                EnsureAndroidNdkForBatchMode();
             }
 
             var ret = BuildTools_ClientPackage.Build(
