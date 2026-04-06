@@ -787,6 +787,7 @@ namespace BDFramework.Editor.BuildPipeline
             //检测xcode
             if (File.Exists(outputPath))
             {
+                ret = true;
                 Debug.Log("打包Exe成功~");
             }
             else
