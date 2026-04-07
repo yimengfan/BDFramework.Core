@@ -110,20 +110,15 @@ Unity 导出 iOS Xcode 工程后，会固定调用 `DevOps/CI/BuildTools/BuildCl
 - 环境变量
 - 命令行参数
 
-如果你们团队希望把常用签名参数、scheme、导出方式、默认 project_dir 固化到仓库里，推荐直接写到 `buildtools.toml` 的 `[ios_xcode]` 段，例如：
+如果你们团队希望把常用签名参数固化到仓库里，推荐只把签名信息写到 `buildtools.toml` 的 `[ios_xcode]` 段；其余构建行为继续使用脚本默认值，必要时再通过环境变量或命令行覆盖。例如：
 
 ```toml
 [ios_xcode]
-configuration = "Release"
-export_method = "development"
 signing_style = "manual"
 team_id = "ABCDE12345"
 bundle_identifier = "com.demo.game"
 code_sign_identity = "Apple Distribution: Team Name (ABCDE12345)"
 provisioning_profile_specifier = "Demo AdHoc"
-destination = "generic/platform=iOS"
-clean = true
-allow_provisioning_updates = true
 ```
 
 常用覆盖项既支持环境变量，也支持直接执行脚本时传命令行参数：
@@ -144,32 +139,19 @@ allow_provisioning_updates = true
 
 `[ios_xcode]` 支持的键：
 
-- `project_dir`
-- `search_root`
-- `workspace`
-- `xcodeproj`
-- `scheme`
-- `configuration`
-- `export_method`
-- `export_options_plist`
-- `team_id`
 - `signing_style`
+- `team_id`
 - `bundle_identifier`
 - `code_sign_identity`
 - `provisioning_profile_specifier`
 - `provisioning_profile`
-- `archive_path`
-- `export_dir`
-- `ipa_path`
-- `destination`
-- `dry_run`
-- `clean`
-- `allow_provisioning_updates`
-- `allow_provisioning_device_registration`
+
+非签名参数例如 `project_dir`、`configuration`、`export_method`、`destination`、`clean`、`allow_provisioning_updates` 仍然支持环境变量或命令行覆盖，但不再建议写入 `buildtools.toml`。
 
 如果使用手动签名，至少提供：
 
 - `BUILD_XCODE_SIGN_STYLE=manual`
+- `BUILD_XCODE_TEAM_ID`
 - `BUILD_XCODE_PROVISIONING_PROFILE_SPECIFIER`
 - `BUILD_XCODE_BUNDLE_IDENTIFIER`
 

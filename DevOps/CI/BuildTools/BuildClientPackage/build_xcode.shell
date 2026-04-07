@@ -10,7 +10,7 @@
 #
 # 注意：
 # - Unity 侧会检查 `<xcode_output>.ipa` 是否存在，因此脚本最终会把导出的 ipa 复制成这个固定命名。
-# - 团队共享默认值推荐放到 DevOps/CI/BuildTools/buildtools.toml 的 [ios_xcode]；这里的脚本头部只保留兜底默认值。
+# - buildtools.toml 的 [ios_xcode] 只建议放签名相关信息；其余构建行为默认值尽量保留在脚本头部或命令行里。
 # - 如果后续改为 Jenkins / TeamCity / Fastlane 驱动，也可以继续直接调用这个脚本。
 
 set -euo pipefail
@@ -386,28 +386,12 @@ if not isinstance(section, dict):
     raise SystemExit('buildtools [ios_xcode] section must be a TOML table')
 
 supported_keys = (
-    'project_dir',
-    'search_root',
-    'workspace',
-    'xcodeproj',
-    'scheme',
-    'configuration',
-    'export_method',
-    'export_options_plist',
-    'team_id',
-    'signing_style',
-    'bundle_identifier',
-    'code_sign_identity',
-    'provisioning_profile_specifier',
-    'provisioning_profile',
-    'archive_path',
-    'export_dir',
-    'ipa_path',
-    'destination',
-    'dry_run',
-    'clean',
-    'allow_provisioning_updates',
-    'allow_provisioning_device_registration',
+	'signing_style',
+	'team_id',
+	'bundle_identifier',
+	'code_sign_identity',
+	'provisioning_profile_specifier',
+	'provisioning_profile',
 )
 
 for key in supported_keys:

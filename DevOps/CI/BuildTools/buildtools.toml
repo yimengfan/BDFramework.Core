@@ -13,31 +13,21 @@ upload_chunk_size_kb = 1024
 hash_chunk_size_kb = 1024
 
 [ios_xcode]
-# iOS Xcode 后置脚本共享默认值。
+# iOS Xcode 后置脚本签名配置。
 # Build 面板在 Unity 导出 Xcode 后会固定调用 BuildClientPackage/build_xcode.shell。
-# 团队共享签名、scheme、导出方式等默认值统一维护在这里。
+# 这里只保留签名相关信息；configuration / export_method / destination / clean 等非签名参数
+# 统一走 build_xcode.shell 顶部默认值，必要时再用环境变量或命令行覆盖。
 # 优先级：shell 顶部默认值 < buildtools.toml < 环境变量 < 命令行参数。
 # 相对路径会按仓库根目录解析。
-configuration = "Release"
-export_method = "development"
+# 当前工程如果继续使用 Unity 模板默认 bundle id，个人团队自动签名通常会失败。
 signing_style = "automatic"
-destination = "generic/platform=iOS"
-dry_run = false
-clean = true
-allow_provisioning_updates = true
-allow_provisioning_device_registration = false
+team_id = "T264C9FRXG"
+bundle_identifier = "com.DefaultCompany.BDFramework.Core"
 
-# project_dir = "DevOps/PublishPackages/ios/com.demo.game"
-# search_root = "DevOps/PublishPackages/ios"
-# workspace = "DevOps/PublishPackages/ios/com.demo.game/Unity-iPhone.xcworkspace"
-# xcodeproj = "DevOps/PublishPackages/ios/com.demo.game/Unity-iPhone.xcodeproj"
-# scheme = "Unity-iPhone"
-# export_options_plist = "DevOps/CI/BuildTools/exportOptions.plist"
+# 手动签名时，再补下面两项或三项：
 # team_id = "ABCDE12345"
 # bundle_identifier = "com.demo.game"
+# signing_style = "manual"
 # code_sign_identity = "Apple Distribution: Team Name (ABCDE12345)"
 # provisioning_profile_specifier = "Demo AdHoc"
 # provisioning_profile = "00000000-0000-0000-0000-000000000000"
-# archive_path = "Library/BuildXcode/com.demo.game.xcarchive"
-# export_dir = "Library/BuildXcode/com.demo.game.export"
-# ipa_path = "DevOps/PublishPackages/ios/com.demo.game.ipa"
