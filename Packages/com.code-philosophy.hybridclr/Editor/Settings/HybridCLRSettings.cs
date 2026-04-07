@@ -73,13 +73,8 @@ namespace HybridCLR.Editor.Settings
             return "ProjectSettings/HybridCLRSettings.asset";
         }
 
-        private void ApplyProjectDefaultPathsWhenSettingsMissing(string settingsFilePath)
+        private void ApplyProjectDefaultPathsWhenSettingsMissing()
         {
-            if (File.Exists(settingsFilePath))
-            {
-                return;
-            }
-
             const string repoGeneratedDir = "HybridCLRData/Generated";
             const string defaultLinkFile = "HybridCLRGenerate/link.xml";
             const string defaultAOTReferenceFile = "HybridCLRGenerate/AOTGenericReferences.cs";
@@ -112,7 +107,7 @@ namespace HybridCLR.Editor.Settings
             Object[] objs = InternalEditorUtility.LoadSerializedFileAndForget(filePath);
             s_Instance = objs.Length > 0 ? (HybridCLRSettings)objs[0] : (s_Instance ?? CreateInstance<HybridCLRSettings>());
             s_Instance.EnsureInitialized();
-            s_Instance.ApplyProjectDefaultPathsWhenSettingsMissing(filePath);
+            s_Instance.ApplyProjectDefaultPathsWhenSettingsMissing();
             return s_Instance;
         }
 

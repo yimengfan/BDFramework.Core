@@ -68,6 +68,7 @@ namespace BDFramework.Editor.HotfixScript
             {
                 BDebug.Log("[HCLR]start:", Color.green);
                 SetBDFramework2HCLRConfig();
+                CleanupLegacyGeneratedOutputs();
                 //安装华佗
                 var installer = new HybridCLR.Editor.Installer.InstallerController();
                 if (!installer.HasInstalledHybridCLR())
@@ -87,6 +88,41 @@ namespace BDFramework.Editor.HotfixScript
                 CopyAOTMetadataDLL(sourceDir,Application.streamingAssetsPath, target);
             }
             BDebug.LogWatchEnd(tag);
+        }
+
+        static void CleanupLegacyGeneratedOutputs()
+        {
+            const string legacyGeneratedDir = "Assets/HybridCLRGenerate";
+            const string legacyLinkFile = legacyGeneratedDir + "/link.xml";
+            const string legacyAotReferenceFile = legacyGeneratedDir + "/AOTGenericReferences.cs";
+            string currentLinkFile = string.IsNullOrEmpty(HybridCLRSettings.Instance.outputLinkFile)
+                ? string.Empty
+                : IPath.ReplaceBackSlash(HybridCLRSettings.Instance.outputLinkFile);
+            string currentAotReferenceFile = string.IsNullOrEmpty(HybridCLRSettings.Instance.outputAOTGenericReferenceFile)
+                ? string.Empty
+                : IPath.ReplaceBackSlash(HybridCLRSettings.Instance.outputAOTGenericReferenceFile);
+
+            DeleteLegacyGeneratedOutputIfMigrated(legacyLinkFile, currentLinkFile);
+            DeleteLegacyGeneratedOutputIfMigrated(legacyAotReferenceFile, currentAotReferenceFile);
+        }
+
+        static void DeleteLegacyGeneratedOutputIfMigrated(string legacyPath, string currentPath)
+        {
+            if (string.IsNullOrEmpty(currentPath) || currentPath == legacyPath || !File.Exists(legacyPath))
+            {
+                return;
+            }
+
+            File.Delete(legacyPath);
+            Debug.Log($"[HCLR]清理旧生成文件: {legacyPath}");
+
+            string legacyMetaPath = legacyPath + ".meta";
+            if (File.Exists(legacyMetaPath))
+            {
+                File.Delete(legacyMetaPath);
+            }
+
+            AssetDatabase.Refresh();
         }
 
   
