@@ -209,3 +209,98 @@ def test_run_batchmode_dry_run_prints_command_and_skips_execution(
     assert messages[0] == "[UnityBatchMode] command="
     assert messages[1].startswith('"/Applications/Unity Hub/Editor/2022.3.74f1/Unity"')
     assert messages[-1] == "[UnityBatchMode] dry-run enabled, skip Unity execution."
+
+
+def test_run_batchmode_terminates_stuck_process_after_success_marker(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    messages: list[str] = []
+    log_path = tmp_path / "unity.log"
+    command = ["/Applications/Unity", "-logFile", str(log_path)]
+
+    class FakeProcess:
+        def __init__(self) -> None:
+            self.returncode: int | None = None
+            self.terminated = False
+            self.killed = False
+
+        def poll(self) -> int | None:
+            return self.returncode
+
+        def terminate(self) -> None:
+            self.terminated = True
+            self.returncode = 0
+
+        def wait(self, timeout: float | None = None) -> int:
+            return self.returncode or 0
+
+        def kill(self) -> None:
+            self.killed = True
+            self.returncode = -9
+
+    process = FakeProcess()
+
+    def fake_emit(log_path_value, state, *, flush_partial: bool = False) -> None:
+        assert log_path_value == log_path
+        if not flush_partial:
+            state.saw_completion_marker = True
+            state.completed_successfully = True
+            state.last_activity_at = 0.0
+
+    monkeypatch.setattr(batchmode_logs, "safe_console_print", messages.append)
+    monkeypatch.setattr(batchmode_logs, "cleanup_stale_hybridclr_outputs", lambda _: ())
+    monkeypatch.setattr(batchmode_logs, "extract_project_dir_from_command", lambda _: None)
+    monkeypatch.setattr(batchmode_logs, "extract_log_path_from_command", lambda _: log_path)
+    monkeypatch.setattr(batchmode_logs, "emit_unity_log_updates", fake_emit)
+    monkeypatch.setattr(batchmode_logs.subprocess, "Popen", lambda _: process)
+    monkeypatch.setattr(batchmode_logs.time, "monotonic", lambda: 31.0)
+    monkeypatch.setattr(batchmode_logs.time, "sleep", lambda _: None)
+
+    assert batchmode_logs.run_batchmode(command) == 0
+    assert process.terminated is True
+    assert process.killed is False
+    assert any("completion marker detected but Unity process is still running" in message for message in messages)
+
+
+def test_run_batchmode_terminates_stuck_process_after_failure_marker(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    log_path = tmp_path / "unity.log"
+    command = ["/Applications/Unity", "-logFile", str(log_path)]
+
+    class FakeProcess:
+        def __init__(self) -> None:
+            self.returncode: int | None = None
+
+        def poll(self) -> int | None:
+            return self.returncode
+
+        def terminate(self) -> None:
+            self.returncode = 0
+
+        def wait(self, timeout: float | None = None) -> int:
+            return self.returncode or 0
+
+        def kill(self) -> None:
+            self.returncode = -9
+
+    process = FakeProcess()
+
+    def fake_emit(log_path_value, state, *, flush_partial: bool = False) -> None:
+        assert log_path_value == log_path
+        if not flush_partial:
+            state.saw_completion_marker = True
+            state.completed_successfully = False
+            state.last_activity_at = 0.0
+
+    monkeypatch.setattr(batchmode_logs, "cleanup_stale_hybridclr_outputs", lambda _: ())
+    monkeypatch.setattr(batchmode_logs, "extract_project_dir_from_command", lambda _: None)
+    monkeypatch.setattr(batchmode_logs, "extract_log_path_from_command", lambda _: log_path)
+    monkeypatch.setattr(batchmode_logs, "emit_unity_log_updates", fake_emit)
+    monkeypatch.setattr(batchmode_logs.subprocess, "Popen", lambda _: process)
+    monkeypatch.setattr(batchmode_logs.time, "monotonic", lambda: 31.0)
+    monkeypatch.setattr(batchmode_logs.time, "sleep", lambda _: None)
+
+    assert batchmode_logs.run_batchmode(command) == 1
