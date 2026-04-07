@@ -1,20 +1,95 @@
-#if ODIN_INSPECTOR && UNITY_EDITOR
-using Sirenix.OdinInspector.Editor;
+#if UNITY_EDITOR
+using System;
+using System.Linq;
+using BDFramework.Core.Tools;
 using UnityEditor;
+using UnityEditor.Compilation;
+using UnityEngine;
+
 /// <summary>
 /// odin的设置
 /// </summary>
-public class OdinSetting
+public static class OdinSetting
 {
-    
     [InitializeOnLoadMethod]
     public static void SetEditorOnlyMode()
     {
-       var ret =  EditorOnlyModeConfig.Instance.IsEditorOnlyModeEnabled();
-       if (!ret)
-       {
-           EditorOnlyModeConfig.Instance.EnableEditorOnlyMode(false);
-       }
+        if (EditorApplication.isCompiling)
+        {
+            return;
+        }
+
+        if (HasOdinAssemblies())
+        {
+            return;
+        }
+
+        if (!RemoveOdinSymbols())
+        {
+            return;
+        }
+
+        Debug.Log("[OdinSetting] 未检测到 Odin 相关程序集，已移除 ProjectSettings 中的 Odin 宏并重新触发编译。");
+        CompilationPipeline.RequestScriptCompilation();
+    }
+
+    private static bool HasOdinAssemblies()
+    {
+        return AppDomain.CurrentDomain
+            .GetAssemblies()
+            .Any(assembly =>
+            {
+                if (assembly == null || assembly.IsDynamic)
+                {
+                    return false;
+                }
+
+                var assemblyName = assembly.GetName().Name;
+                if (string.IsNullOrEmpty(assemblyName))
+                {
+                    return false;
+                }
+
+                return assemblyName.IndexOf("Sirenix", StringComparison.OrdinalIgnoreCase) >= 0
+                       || assemblyName.IndexOf("Odin", StringComparison.OrdinalIgnoreCase) >= 0;
+            });
+    }
+
+    private static bool RemoveOdinSymbols()
+    {
+        var isChanged = false;
+        foreach (var buildTargetGroup in BApplication.SupportBuildTargetGroups)
+        {
+            var rawSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
+            if (string.IsNullOrWhiteSpace(rawSymbols))
+            {
+                continue;
+            }
+
+            var newSymbols = string.Join(";",
+                rawSymbols
+                    .Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(symbol => symbol.Trim())
+                    .Where(symbol => !string.IsNullOrEmpty(symbol))
+                    .Where(symbol => !IsOdinSymbol(symbol))
+                    .Distinct());
+
+            if (string.Equals(rawSymbols, newSymbols, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, newSymbols);
+            isChanged = true;
+        }
+
+        return isChanged;
+    }
+
+    private static bool IsOdinSymbol(string symbol)
+    {
+        return symbol.IndexOf("ODIN", StringComparison.OrdinalIgnoreCase) >= 0
+               || symbol.IndexOf("SIRENIX", StringComparison.OrdinalIgnoreCase) >= 0;
     }
 }
 
@@ -31,53 +106,53 @@ namespace Sirenix.OdinInspector
     {
     }
 
-    public class Title : Attribute
+    public class TitleAttribute : Attribute
     {
         public bool Bold = false;
-        public Title(string str, TitleAlignments titleAlignment = TitleAlignments.Left)
+        public TitleAttribute(string str, TitleAlignments titleAlignment = TitleAlignments.Left)
         {
         }
     }
 
-    public class LabelText : Attribute
+    public class LabelTextAttribute : Attribute
     {
-        public LabelText(string str, bool xx = true)
+        public LabelTextAttribute(string str, bool xx = true)
         {
         }
     }
 
-    public class PropertyOrder : Attribute
+    public class PropertyOrderAttribute : Attribute
     {
-        public PropertyOrder(int order)
+        public PropertyOrderAttribute(int order)
         {
         }
     }
 
-    public class ShowInInspector : Attribute
+    public class ShowInInspectorAttribute : Attribute
     {
     }
 
-    public class ReadOnly : Attribute
+    public class ReadOnlyAttribute : Attribute
     {
     }
 
-    public class MultiLineProperty : Attribute
+    public class MultiLinePropertyAttribute : Attribute
     {
-        public MultiLineProperty(int lines = 3)
+        public MultiLinePropertyAttribute(int lines = 3)
         {
         }
     }
 
-    public class OnInspectorGUI : Attribute
+    public class OnInspectorGUIAttribute : Attribute
     {
-        public OnInspectorGUI(string str)
+        public OnInspectorGUIAttribute(string str)
         {
         }
     }
 
-    public class LabelWidth : Attribute
+    public class LabelWidthAttribute : Attribute
     {
-        public LabelWidth(int i)
+        public LabelWidthAttribute(int i)
         {
         }
     }
@@ -95,19 +170,19 @@ namespace Sirenix.OdinInspector
         CompactBox,
     }
 
-    public class Button : Attribute
+    public class ButtonAttribute : Attribute
     {
         public string Name;
 
-        public Button(string str ="")
+        public ButtonAttribute(string str ="")
         {
         }
 
-        public Button(ButtonSizes size)
+        public ButtonAttribute(ButtonSizes size)
         {
         }
 
-        public Button(string str, ButtonSizes size= ButtonSizes.Large, ButtonStyle buttonStyle = ButtonStyle.CompactBox)
+        public ButtonAttribute(string str, ButtonSizes size= ButtonSizes.Large, ButtonStyle buttonStyle = ButtonStyle.CompactBox)
         {
         }
     }
@@ -123,9 +198,9 @@ namespace Sirenix.OdinInspector
     {
     }
 
-    public class BoxGroup : Attribute
+    public class BoxGroupAttribute : Attribute
     {
-        public BoxGroup(string str, bool paramsBool = false)
+        public BoxGroupAttribute(string str, bool paramsBool = false)
         {
         }
     }
@@ -136,48 +211,48 @@ namespace Sirenix.OdinInspector
         Left
     }
 
-    public class TitleGroup : Attribute
+    public class TitleGroupAttribute : Attribute
     {
-        public TitleGroup(string str, TitleAlignments alignment = TitleAlignments.Centered)
+        public TitleGroupAttribute(string str, TitleAlignments alignment = TitleAlignments.Centered)
         {
         }
     }
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
-    public class HorizontalGroup : Attribute
+    public class HorizontalGroupAttribute : Attribute
     {
         public int LabelWidth = 0;
-        public HorizontalGroup(string str, int width = 0)
+        public HorizontalGroupAttribute(string str, int width = 0)
         {
 
         }
     }
     
-    public class VerticalGroup : Attribute
+    public class VerticalGroupAttribute : Attribute
     {
-        public VerticalGroup(string str, int width = 10)
+        public VerticalGroupAttribute(string str, int width = 10)
         {
 
         }
     }
     
 
-    public class GUIColor: Attribute
+    public class GUIColorAttribute: Attribute
     {
-        public GUIColor(float x, float y, float z)
+        public GUIColorAttribute(float x, float y, float z)
         {
             
         }
     }
 
-    public class HideLabel : Attribute
+    public class HideLabelAttribute : Attribute
     {
     }
 
-    public class DisableInEditorMode : Attribute
+    public class DisableInEditorModeAttribute : Attribute
     {
     }
 
-    public class FilePath : Attribute
+    public class FilePathAttribute : Attribute
     {
         public string Extensions;
         public string ParentFolder;
@@ -188,37 +263,37 @@ namespace Sirenix.OdinInspector
         Info
     }
 
-    public class InfoBox : Attribute
+    public class InfoBoxAttribute : Attribute
     {
-        public InfoBox(string str,InfoMessageType type = InfoMessageType.Info)
+        public InfoBoxAttribute(string str,InfoMessageType type = InfoMessageType.Info)
         {
         }
     }
 
-    public class ShowIf : Attribute
+    public class ShowIfAttribute : Attribute
     {
-        public ShowIf(string name, object value)
+        public ShowIfAttribute(string name, object value)
         {
         }
     }
 
-    public class PropertySpace : Attribute
+    public class PropertySpaceAttribute : Attribute
     {
-        public PropertySpace(int value = 0)
+        public PropertySpaceAttribute(int value = 0)
         {
         }
     }
     
-    public class DisableIf : Attribute
+    public class DisableIfAttribute : Attribute
     {
-        public DisableIf(string  str = "")
+        public DisableIfAttribute(string  str = "")
         {
             
         }
     }
-    public class EnableIf : Attribute
+    public class EnableIfAttribute : Attribute
     {
-        public EnableIf(string  str = "")
+        public EnableIfAttribute(string  str = "")
         {
             
         }
