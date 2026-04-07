@@ -192,7 +192,7 @@ BuildTools 现在提供公共上传模块：`DevOps/CI/BuildTools/Common/artifac
 
 - `build_android.py` / `build_ios.py` / `build_windows.py` 在真实构建成功后会直接调用这个模块上传母包
 - 默认读取 `DevOps/CI/BuildTools/buildtools.toml`
-- 已封装四类远端目录：`ClientPackage_{平台}/{buildnum}`、`Code_{平台}/{buildnum}`、`AssetBundle_{平台}/{buildnum}`、`Table/{buildnum}`
+- 已封装四类远端目录：`ClientPackage_{平台}/{buildnum}`、`ClientRes_Code_{平台}/{buildnum}`、`ClientRes_AssetBundle_{平台}/{buildnum}`、`ClientRes_table/{buildnum}`
 - 上传接口支持进度回调，当前 BuildClientPackage 会把每个文件的上传开始/完成事件直接打到 CI 日志
 
 详细说明见：`DevOps/CI/BuildTools/Common/README.md`
