@@ -46,6 +46,28 @@ namespace Sirenix.OdinInspector
         }
     }
 
+    public class PropertyOrder : Attribute
+    {
+        public PropertyOrder(int order)
+        {
+        }
+    }
+
+    public class ShowInInspector : Attribute
+    {
+    }
+
+    public class ReadOnly : Attribute
+    {
+    }
+
+    public class MultiLineProperty : Attribute
+    {
+        public MultiLineProperty(int lines = 3)
+        {
+        }
+    }
+
     public class OnInspectorGUI : Attribute
     {
         public OnInspectorGUI(string str)
