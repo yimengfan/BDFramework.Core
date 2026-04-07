@@ -69,17 +69,7 @@ namespace BDFramework.Editor.HotfixScript
                 BDebug.Log("[HCLR]start:", Color.green);
                 SetBDFramework2HCLRConfig();
                 CleanupLegacyGeneratedOutputs();
-                //安装华佗
-                var installer = new HybridCLR.Editor.Installer.InstallerController();
-                if (!installer.HasInstalledHybridCLR())
-                {
-                    BDebug.Log("[HCLR]开始安装华佗...", Color.magenta);
-                    installer.InstallDefaultHybridCLR();
-                }
-                else
-                {
-                    BDebug.Log("[HCLR]华佗已经安装,跳过", Color.green);
-                }
+                EnsureHybridClrInstalled(new HybridCLR.Editor.Installer.InstallerController());
 
                 //编译补充元数据的DLL
                 PrebuildCommand.GenerateAll();
@@ -88,6 +78,65 @@ namespace BDFramework.Editor.HotfixScript
                 CopyAOTMetadataDLL(sourceDir,Application.streamingAssetsPath, target);
             }
             BDebug.LogWatchEnd(tag);
+        }
+
+        static void EnsureHybridClrInstalled(HybridCLR.Editor.Installer.InstallerController installer)
+        {
+            if (installer.HasInstalledHybridCLR())
+            {
+                BDebug.Log("[HCLR]华佗已经安装,跳过", Color.green);
+                return;
+            }
+
+            Debug.Log("[HCLR] 未检测到本地安装，优先尝试仓库内置 libil2cpp 缓存。");
+            if (TryInstallHybridClrFromLocalCache(installer))
+            {
+                Debug.Log($"[HCLR] 已使用仓库缓存初始化成功: {SettingsUtil.LocalIl2CppDir}");
+                return;
+            }
+
+            Debug.Log("[HCLR] 仓库缓存不可用或初始化失败，回退到默认安装流程。");
+            installer.InstallDefaultHybridCLR();
+
+            if (!installer.HasInstalledHybridCLR())
+            {
+                throw new Exception($"HybridCLR 初始化失败，未生成本地 il2cpp 目录: {SettingsUtil.LocalIl2CppDir}");
+            }
+
+            Debug.Log($"[HCLR] 默认安装完成: {SettingsUtil.LocalIl2CppDir}");
+        }
+
+        static bool TryInstallHybridClrFromLocalCache(HybridCLR.Editor.Installer.InstallerController installer)
+        {
+            var localLibil2cppDir = GetLocalHybridClrLibil2cppDir();
+            if (string.IsNullOrEmpty(localLibil2cppDir))
+            {
+                return false;
+            }
+
+            try
+            {
+                Debug.Log($"[HCLR] 使用仓库缓存安装 HybridCLR: {localLibil2cppDir}");
+                installer.InstallFromLocal(localLibil2cppDir);
+                return installer.HasInstalledHybridCLR();
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[HCLR] 仓库缓存初始化失败，将尝试默认安装。原因: {e}");
+                return false;
+            }
+        }
+
+        static string GetLocalHybridClrLibil2cppDir()
+        {
+            var localLibil2cppDir = IPath.ReplaceBackSlash(Path.GetFullPath(IPath.Combine(SettingsUtil.HybridCLRDataDir, "il2cpp_plus_repo", "libil2cpp")));
+            if (!Directory.Exists(localLibil2cppDir))
+            {
+                return null;
+            }
+
+            var hybridClrDir = IPath.Combine(localLibil2cppDir, "hybridclr");
+            return Directory.Exists(hybridClrDir) ? localLibil2cppDir : null;
         }
 
         static void CleanupLegacyGeneratedOutputs()
