@@ -1,19 +1,28 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using BDFramework.Core.Tools;
+using BDFramework.Logs;
 using Cysharp.Text;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
+[DefaultExecutionOrder(-10000)]
 public class BDebug : MonoBehaviour
 {
     /// <summary>
     ///启用宏
     /// </summary>
     public readonly static string ENABLE_BDEBUG = "ENABLE_BDEBUG";
+    /// <summary>
+    /// Ispector的log
+    /// </summary>
+    public bool IsLog = true;
+
+    [Header("启用Log加密")]
+    public bool EnablePlayerLogEncryption = true;
+
+    [Tooltip("为空时使用默认密码；生产环境建议启动时覆盖")]
+    public string PlayerLogEncryptPassword = LogCrypto.DEFAULT_PASSWORD;
 
     //
     private static BDebug inst;
@@ -35,10 +44,6 @@ public class BDebug : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Ispector的log
-    /// </summary>
-    public bool IsLog = true;
 
     public class LogTag
     {
@@ -51,12 +56,114 @@ public class BDebug : MonoBehaviour
     /// </summary>
     public List<LogTag> DisableLogTagList = new List<LogTag>();
 
+    private static bool IsConsoleLogEnabled
+    {
+        get { return inst == null || inst.IsLog; }
+    }
+
+    public static string PlayerLogRootPath
+    {
+        get
+        {
+#if UNITY_EDITOR
+            return string.Empty;
+#else
+            return Persistence.LogRootDirectory;
+#endif
+        }
+    }
+
+    public static string CurrentPlayerLogFilePath
+    {
+        get
+        {
+#if UNITY_EDITOR
+            return string.Empty;
+#else
+            return Persistence.CurrentFilePath;
+#endif
+        }
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void RuntimeInitPlayerLogSerialize()
+    {
+#if !UNITY_EDITOR
+        Persistence.Initialize(BuildPersistenceSettings());
+#endif
+    }
+
+    private static PersistenceSettings BuildPersistenceSettings()
+    {
+        if (inst != null)
+        {
+            return new PersistenceSettings()
+            {
+                EnablePersistence = true,
+                EnableEncryption = inst.EnablePlayerLogEncryption,
+                EncryptPassword = inst.PlayerLogEncryptPassword,
+            }.Normalize();
+        }
+
+        return PersistenceSettings.CreatePlayerDefault();
+    }
+
+    private static void ApplyPersistenceSettings()
+    {
+        if (Application.isPlaying && !Application.isEditor)
+        {
+            Persistence.Initialize(BuildPersistenceSettings());
+        }
+    }
+
+    public static void FlushPlayerLogs()
+    {
+#if !UNITY_EDITOR
+        Persistence.Flush();
+#endif
+    }
+
+    public static string ExportPlayerLogToText(string binFilePath, string txtFilePath = null, string password = null)
+    {
+        return LogReader.ExportToText(binFilePath, txtFilePath, password);
+    }
+
     /// <summary>
     /// 启动
     /// </summary>
     private void Awake()
     {
+        if (inst != null && inst != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         inst = this;
+
+        if (Application.isPlaying)
+        {
+            DontDestroyOnLoad(gameObject);
+            ApplyPersistenceSettings();
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+#if !UNITY_EDITOR
+        if (inst == this)
+        {
+            Persistence.Shutdown();
+        }
+#endif
+    }
+
+    private void OnDestroy()
+    {
+        if (inst == this)
+        {
+            inst = null;
+        }
     }
 
     /// <summary>
@@ -66,7 +173,7 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     public static void Log(object log)
     {
-        if (Inst != null && Inst.IsLog)
+        if (IsConsoleLogEnabled)
         {
             Debug.Log(log);
         }
@@ -100,7 +207,7 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     public static void Log(string log, Color color)
     {
-        if (Inst.IsLog)
+        if (IsConsoleLogEnabled)
         {
             log = ZString.Format("<color=#{0}>{1}</color>", ColorUtility.ToHtmlStringRGBA(color), log);
             Debug.Log(log);
@@ -146,7 +253,7 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     public static void LogFormat(string format, params object[] args)
     {
-        if (Inst.IsLog)
+        if (IsConsoleLogEnabled)
         {
             Debug.LogFormat(format, args);
         }
@@ -175,7 +282,7 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     public static void LogError(object log)
     {
-        if (Inst.IsLog)
+        if (IsConsoleLogEnabled)
         {
             Debug.LogError(log);
         }
@@ -205,10 +312,19 @@ public class BDebug : MonoBehaviour
     /// <returns></returns>
     static bool IsEnableTag(string tag)
     {
-        var find = Inst.DisableLogTagList.Find((t) => t.Tag == tag);
-        if (find != null)
+        var owner = inst;
+        if (owner == null)
         {
-            return find.IsLog;
+            return true;
+        }
+
+        lock (owner.DisableLogTagList)
+        {
+            var find = owner.DisableLogTagList.Find((t) => t.Tag == tag);
+            if (find != null)
+            {
+                return find.IsLog;
+            }
         }
 
         return true;
@@ -221,17 +337,26 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     static public void DisableLog(string tag)
     {
-        var idx = Inst.DisableLogTagList.FindIndex((t) => t.Tag == tag);
-        if (idx < 0)
+        var owner = Inst;
+        if (owner == null)
         {
-            var log = new LogTag() { Tag = tag, IsLog = false };
-
-            Inst.DisableLogTagList.Add(log);
-
-            idx = Inst.DisableLogTagList.Count - 1;
+            return;
         }
 
-        Inst.DisableLogTagList[idx].IsLog = false;
+        lock (owner.DisableLogTagList)
+        {
+            var idx = owner.DisableLogTagList.FindIndex((t) => t.Tag == tag);
+            if (idx < 0)
+            {
+                var log = new LogTag() { Tag = tag, IsLog = false };
+
+                owner.DisableLogTagList.Add(log);
+
+                idx = owner.DisableLogTagList.Count - 1;
+            }
+
+            owner.DisableLogTagList[idx].IsLog = false;
+        }
     }
 
     /// <summary>
@@ -241,15 +366,20 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     static public void EnableLog(string tag)
     {
-        if (Inst)
+        var owner = Inst;
+        if (owner)
         {
-            var idx = Inst.DisableLogTagList.FindIndex((t) => t.Tag == tag);
-            if (idx < 0)
+            lock (owner.DisableLogTagList)
             {
-                Inst.DisableLogTagList.Add(new LogTag() { Tag = tag, IsLog = true });
-                idx = Inst.DisableLogTagList.Count - 1;
+                var idx = owner.DisableLogTagList.FindIndex((t) => t.Tag == tag);
+                if (idx < 0)
+                {
+                    owner.DisableLogTagList.Add(new LogTag() { Tag = tag, IsLog = true });
+                    idx = owner.DisableLogTagList.Count - 1;
+                }
+
+                owner.DisableLogTagList[idx].IsLog = true;
             }
-            Inst.DisableLogTagList[idx].IsLog = true;
         }
     }
 
@@ -258,7 +388,8 @@ public class BDebug : MonoBehaviour
     /// <summary>
     /// watch缓存
     /// </summary>
-    static private Dictionary<string, Stopwatch> watchMap = new Dictionary<string, Stopwatch>();
+    static private readonly ConcurrentDictionary<string, Stopwatch> watchMap =
+        new ConcurrentDictionary<string, Stopwatch>();
 
 
     /// <summary>
@@ -268,7 +399,7 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     static public void LogWatchBegin(string watchTag)
     {
-        Stopwatch sw = new Stopwatch();
+        var sw = new Stopwatch();
         watchMap[watchTag] = sw;
         sw.Start();
     }
@@ -280,8 +411,7 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     static public void LogWatchEnd(string watchTag, string color = "")
     {
-        watchMap.TryGetValue(watchTag, out var sw);
-        if (sw != null)
+        if (watchMap.TryRemove(watchTag, out var sw))
         {
             sw.Stop();
             if (string.IsNullOrEmpty(color))
@@ -293,8 +423,6 @@ public class BDebug : MonoBehaviour
                 Debug.Log(
                     $"<color={color}>【{watchTag}】</color> 耗时：<color=yellow>{sw.ElapsedTicks / 10000f} ms</color>");
             }
-
-            watchMap.Remove(watchTag);
         }
     }
 
@@ -306,9 +434,7 @@ public class BDebug : MonoBehaviour
     [Conditional("ENABLE_BDEBUG")]
     static public void LogWatchEnd(string logTag, string watchTag, string color = "")
     {
-        watchMap.TryGetValue(watchTag, out var sw);
-
-        if (sw != null)
+        if (watchMap.TryRemove(watchTag, out var sw))
         {
             sw.Stop();
             if (string.IsNullOrEmpty(color))
@@ -320,7 +446,6 @@ public class BDebug : MonoBehaviour
                 BDebug.Log(logTag, $"<color={color}>【{watchTag}】 耗时：{sw.ElapsedTicks / 10000f} ms</color>");
             }
 
-            watchMap.Remove(watchTag);
         }
     }
 }
