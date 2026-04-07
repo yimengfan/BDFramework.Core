@@ -6,6 +6,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	public static readonly IReadOnlyList<string> PatchedAOTAssemblyList = new List<string>
 	{
 		"BDFramework.AOT.dll",
+		"DOTween.dll",
 		"Google.Protobuf.dll",
 		"ServiceStack.Text.dll",
 		"System.Core.dll",
@@ -115,13 +116,16 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Action<object,uint>
 	// System.Action<object,ushort>
 	// System.Action<object>
+	// System.ArraySegment.Enumerator<byte>
 	// System.ArraySegment.Enumerator<ushort>
+	// System.ArraySegment<byte>
 	// System.ArraySegment<ushort>
 	// System.Buffers.ArrayPool<ushort>
 	// System.Buffers.MemoryManager<ushort>
 	// System.Buffers.TlsOverPerCoreLockedStacksArrayPool.LockedStack<ushort>
 	// System.Buffers.TlsOverPerCoreLockedStacksArrayPool.PerCoreLockedStacks<ushort>
 	// System.Buffers.TlsOverPerCoreLockedStacksArrayPool<ushort>
+	// System.ByReference<byte>
 	// System.ByReference<ushort>
 	// System.Collections.Generic.ArraySortHelper<SQLite4Unity3d.SQLiteConnection.IndexedColumn>
 	// System.Collections.Generic.ArraySortHelper<System.Collections.Generic.KeyValuePair<object,object>>
@@ -169,6 +173,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary<object,object>
 	// System.Collections.Generic.EqualityComparer<SQLite4Unity3d.SQLiteConnection.IndexInfo>
 	// System.Collections.Generic.EqualityComparer<ServiceStack.Text.Common.DeserializeDictionary.TypesKey<ServiceStack.Text.Json.JsonTypeSerializer>>
+	// System.Collections.Generic.EqualityComparer<byte>
 	// System.Collections.Generic.EqualityComparer<int>
 	// System.Collections.Generic.EqualityComparer<object>
 	// System.Collections.Generic.HashSet.Enumerator<object>
@@ -257,6 +262,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ObjectComparer<object>
 	// System.Collections.Generic.ObjectEqualityComparer<SQLite4Unity3d.SQLiteConnection.IndexInfo>
 	// System.Collections.Generic.ObjectEqualityComparer<ServiceStack.Text.Common.DeserializeDictionary.TypesKey<ServiceStack.Text.Json.JsonTypeSerializer>>
+	// System.Collections.Generic.ObjectEqualityComparer<byte>
 	// System.Collections.Generic.ObjectEqualityComparer<int>
 	// System.Collections.Generic.ObjectEqualityComparer<object>
 	// System.Collections.Generic.Queue.Enumerator<System.Collections.Generic.KeyValuePair<object,object>>
@@ -299,17 +305,24 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Func<System.IntPtr,int,short>
 	// System.Func<System.IntPtr,int,uint>
 	// System.Func<System.IntPtr,int,ushort>
+	// System.Func<System.Threading.Tasks.VoidTaskResult>
+	// System.Func<System.ValueTuple<object,byte>>
 	// System.Func<byte,byte>
 	// System.Func<byte,object>
 	// System.Func<int>
+	// System.Func<object,System.Threading.Tasks.VoidTaskResult>
+	// System.Func<object,System.ValueTuple<object,byte>>
 	// System.Func<object,byte>
 	// System.Func<object,int>
+	// System.Func<object,object,System.Threading.Tasks.VoidTaskResult>
+	// System.Func<object,object,System.ValueTuple<object,byte>>
 	// System.Func<object,object,int>
 	// System.Func<object,object,object,object>
 	// System.Func<object,object,object>
 	// System.Func<object,object>
 	// System.Func<object>
 	// System.Linq.Buffer<SQLite4Unity3d.SQLiteConnection.IndexedColumn>
+	// System.Linq.Buffer<int>
 	// System.Linq.Buffer<object>
 	// System.Linq.Enumerable.<DistinctIterator>d__68<object>
 	// System.Linq.Enumerable.Iterator<SQLite4Unity3d.SQLiteConnection.IndexedColumn>
@@ -357,28 +370,56 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Predicate<int>
 	// System.Predicate<object>
 	// System.ReadOnlyMemory<ushort>
+	// System.ReadOnlySpan.Enumerator<byte>
+	// System.ReadOnlySpan.Enumerator<ushort>
+	// System.ReadOnlySpan<byte>
 	// System.ReadOnlySpan<ushort>
+	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.Threading.Tasks.VoidTaskResult>
+	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.ValueTuple<object,byte>>
 	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>
+	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter<System.Threading.Tasks.VoidTaskResult>
+	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter<System.ValueTuple<object,byte>>
 	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter<int>
 	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter<object>
+	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable<System.Threading.Tasks.VoidTaskResult>
+	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable<System.ValueTuple<object,byte>>
 	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable<int>
 	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable<object>
+	// System.Runtime.CompilerServices.TaskAwaiter<System.Threading.Tasks.VoidTaskResult>
+	// System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<object,byte>>
 	// System.Runtime.CompilerServices.TaskAwaiter<int>
 	// System.Runtime.CompilerServices.TaskAwaiter<object>
+	// System.Span<byte>
 	// System.Span<ushort>
+	// System.Threading.Tasks.ContinuationTaskFromResultTask<System.Threading.Tasks.VoidTaskResult>
+	// System.Threading.Tasks.ContinuationTaskFromResultTask<System.ValueTuple<object,byte>>
 	// System.Threading.Tasks.ContinuationTaskFromResultTask<int>
 	// System.Threading.Tasks.ContinuationTaskFromResultTask<object>
+	// System.Threading.Tasks.Task<System.Threading.Tasks.VoidTaskResult>
+	// System.Threading.Tasks.Task<System.ValueTuple<object,byte>>
 	// System.Threading.Tasks.Task<int>
 	// System.Threading.Tasks.Task<object>
+	// System.Threading.Tasks.TaskFactory.<>c<System.Threading.Tasks.VoidTaskResult>
+	// System.Threading.Tasks.TaskFactory.<>c<System.ValueTuple<object,byte>>
 	// System.Threading.Tasks.TaskFactory.<>c<int>
 	// System.Threading.Tasks.TaskFactory.<>c<object>
+	// System.Threading.Tasks.TaskFactory.<>c__DisplayClass32_0<System.Threading.Tasks.VoidTaskResult>
+	// System.Threading.Tasks.TaskFactory.<>c__DisplayClass32_0<System.ValueTuple<object,byte>>
 	// System.Threading.Tasks.TaskFactory.<>c__DisplayClass32_0<int>
 	// System.Threading.Tasks.TaskFactory.<>c__DisplayClass32_0<object>
+	// System.Threading.Tasks.TaskFactory.<>c__DisplayClass35_0<System.Threading.Tasks.VoidTaskResult>
+	// System.Threading.Tasks.TaskFactory.<>c__DisplayClass35_0<System.ValueTuple<object,byte>>
 	// System.Threading.Tasks.TaskFactory.<>c__DisplayClass35_0<int>
 	// System.Threading.Tasks.TaskFactory.<>c__DisplayClass35_0<object>
+	// System.Threading.Tasks.TaskFactory<System.Threading.Tasks.VoidTaskResult>
+	// System.Threading.Tasks.TaskFactory<System.ValueTuple<object,byte>>
 	// System.Threading.Tasks.TaskFactory<int>
 	// System.Threading.Tasks.TaskFactory<object>
+	// System.Tuple<object,object,object>
 	// System.Tuple<object,object>
+	// System.ValueTuple<object,byte>
+	// System.ValueTuple<object,object,object,object,object>
+	// System.ValueTuple<object,object,object>
 	// System.ValueTuple<object,object>
 	// UnityEngine.Events.InvokableCall<byte>
 	// UnityEngine.Events.UnityAction<byte>
@@ -394,12 +435,16 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Cysharp.Text.Utf16ValueStringBuilder.AppendFormat<object>(string,object)
 		// System.Void Cysharp.Text.Utf16ValueStringBuilder.AppendFormatInternal<object>(object,int,System.ReadOnlySpan<System.Char>,string)
 		// string Cysharp.Text.ZString.Concat<object,object,int>(object,object,int)
+		// string Cysharp.Text.ZString.Concat<object,object,object,object,object,object,object>(object,object,object,object,object,object,object)
+		// string Cysharp.Text.ZString.Concat<object,object,object,object,object>(object,object,object,object,object)
 		// string Cysharp.Text.ZString.Concat<object,object,object>(object,object,object)
 		// string Cysharp.Text.ZString.Concat<object,object>(object,object)
 		// string Cysharp.Text.ZString.Format<object,object,object>(string,object,object,object)
 		// string Cysharp.Text.ZString.Format<object,object>(string,object,object)
 		// string Cysharp.Text.ZString.Format<object>(string,object)
 		// Cysharp.Threading.Tasks.UniTask.Awaiter Cysharp.Threading.Tasks.EnumeratorAsyncExtensions.GetAwaiter<object>(object)
+		// object DG.Tweening.TweenSettingsExtensions.SetDelay<object>(object,float)
+		// object DG.Tweening.TweenSettingsExtensions.SetEase<object>(object,DG.Tweening.Ease)
 		// Google.Protobuf.FieldCodec<object> Google.Protobuf.FieldCodec.ForMessage<object>(uint,Google.Protobuf.MessageParser<object>)
 		// object LitJson.JsonMapper.ToObject<object>(string,System.Type)
 		// object ServiceStack.AutoMappingUtils.ConvertTo<object>(object)
@@ -430,6 +475,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Collections.Generic.IEnumerable<object> System.Linq.Enumerable.Select<SQLite4Unity3d.SQLiteConnection.IndexedColumn,object>(System.Collections.Generic.IEnumerable<SQLite4Unity3d.SQLiteConnection.IndexedColumn>,System.Func<SQLite4Unity3d.SQLiteConnection.IndexedColumn,object>)
 		// System.Collections.Generic.IEnumerable<object> System.Linq.Enumerable.Select<byte,object>(System.Collections.Generic.IEnumerable<byte>,System.Func<byte,object>)
 		// System.Collections.Generic.IEnumerable<object> System.Linq.Enumerable.Select<object,object>(System.Collections.Generic.IEnumerable<object>,System.Func<object,object>)
+		// int[] System.Linq.Enumerable.ToArray<int>(System.Collections.Generic.IEnumerable<int>)
 		// object[] System.Linq.Enumerable.ToArray<object>(System.Collections.Generic.IEnumerable<object>)
 		// System.Collections.Generic.List<int> System.Linq.Enumerable.ToList<int>(System.Collections.Generic.IEnumerable<int>)
 		// System.Collections.Generic.List<object> System.Linq.Enumerable.ToList<object>(System.Collections.Generic.IEnumerable<object>)
@@ -442,11 +488,32 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// object System.Reflection.CustomAttributeExtensions.GetCustomAttribute<object>(System.Reflection.MemberInfo,bool)
 		// System.Collections.Generic.IEnumerable<object> System.Reflection.CustomAttributeExtensions.GetCustomAttributes<object>(System.Reflection.MemberInfo)
 		// System.Collections.Generic.IEnumerable<object> System.Reflection.CustomAttributeExtensions.GetCustomAttributes<object>(System.Reflection.MemberInfo,bool)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter,BDFramework.ResourceMgr.AssetsVersionController.<GetServerVersionInfo>d__7>(Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter&,BDFramework.ResourceMgr.AssetsVersionController.<GetServerVersionInfo>d__7&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8>(Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter&,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<object,byte>>,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8>(System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<object,byte>>&,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,BDFramework.ResourceMgr.AssetsVersionController.<GetServerVersionInfo>d__7>(System.Runtime.CompilerServices.TaskAwaiter<object>&,BDFramework.ResourceMgr.AssetsVersionController.<GetServerVersionInfo>d__7&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8>(System.Runtime.CompilerServices.TaskAwaiter<object>&,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.Threading.Tasks.VoidTaskResult>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter,BDFramework.ResourceMgr.AssetsVersionController.<GetServerVersionInfo>d__7>(Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter&,BDFramework.ResourceMgr.AssetsVersionController.<GetServerVersionInfo>d__7&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.Threading.Tasks.VoidTaskResult>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8>(Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter&,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.Threading.Tasks.VoidTaskResult>.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<object,byte>>,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8>(System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<object,byte>>&,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.Threading.Tasks.VoidTaskResult>.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,BDFramework.ResourceMgr.AssetsVersionController.<GetServerVersionInfo>d__7>(System.Runtime.CompilerServices.TaskAwaiter<object>&,BDFramework.ResourceMgr.AssetsVersionController.<GetServerVersionInfo>d__7&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.Threading.Tasks.VoidTaskResult>.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8>(System.Runtime.CompilerServices.TaskAwaiter<object>&,BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.ValueTuple<object,byte>>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssets>d__18>(Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter&,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssets>d__18&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.ValueTuple<object,byte>>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.SwitchToThreadPoolAwaitable.Awaiter,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssets>d__18>(Cysharp.Threading.Tasks.SwitchToThreadPoolAwaitable.Awaiter&,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssets>d__18&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.ValueTuple<object,byte>>.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssets>d__18>(System.Runtime.CompilerServices.TaskAwaiter<object>&,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssets>d__18&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssetVersionInfo>d__12>(Cysharp.Threading.Tasks.SwitchToMainThreadAwaitable.Awaiter&,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssetVersionInfo>d__12&)
 		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,BDFramework.Core.Tools.Http.BWebClient.<DownloadStringTaskAsync>d__0>(System.Runtime.CompilerServices.TaskAwaiter<object>&,BDFramework.Core.Tools.Http.BWebClient.<DownloadStringTaskAsync>d__0&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssetVersionInfo>d__12>(System.Runtime.CompilerServices.TaskAwaiter<object>&,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssetVersionInfo>d__12&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssetsInfo>d__13>(System.Runtime.CompilerServices.TaskAwaiter<object>&,BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssetsInfo>d__13&)
 		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,BDFramework.UFlux.Reducer.AReducers.<ExcuteAsync>d__28<object>>(System.Runtime.CompilerServices.TaskAwaiter<object>&,BDFramework.UFlux.Reducer.AReducers.<ExcuteAsync>d__28<object>&)
 		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,BDFramework.UFlux.Test.Reducer_Demo06.<RequestServerByAsync>d__5>(System.Runtime.CompilerServices.TaskAwaiter<object>&,BDFramework.UFlux.Test.Reducer_Demo06.<RequestServerByAsync>d__5&)
 		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter<object>,BDFramework.UFlux.Test.Reducer_Demo06Copy.<RequestServerByAsync>d__3>(System.Runtime.CompilerServices.TaskAwaiter<object>&,BDFramework.UFlux.Test.Reducer_Demo06Copy.<RequestServerByAsync>d__3&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start<BDFramework.ResourceMgr.AssetsVersionController.<GetServerVersionInfo>d__7>(BDFramework.ResourceMgr.AssetsVersionController.<GetServerVersionInfo>d__7&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start<BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8>(BDFramework.ResourceMgr.AssetsVersionController.<StartVersionControl>d__8&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.ValueTuple<object,byte>>.Start<BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssets>d__18>(BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssets>d__18&)
 		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.Start<BDFramework.Core.Tools.Http.BWebClient.<DownloadStringTaskAsync>d__0>(BDFramework.Core.Tools.Http.BWebClient.<DownloadStringTaskAsync>d__0&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.Start<BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssetVersionInfo>d__12>(BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssetVersionInfo>d__12&)
+		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.Start<BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssetsInfo>d__13>(BDFramework.ResourceMgr.AssetsVersionController.<DownloadAssetsInfo>d__13&)
 		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.Start<BDFramework.UFlux.Reducer.AReducers.<ExcuteAsync>d__28<object>>(BDFramework.UFlux.Reducer.AReducers.<ExcuteAsync>d__28<object>&)
 		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.Start<BDFramework.UFlux.Test.Reducer_Demo06.<RequestServerByAsync>d__5>(BDFramework.UFlux.Test.Reducer_Demo06.<RequestServerByAsync>d__5&)
 		// System.Void System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>.Start<BDFramework.UFlux.Test.Reducer_Demo06Copy.<RequestServerByAsync>d__3>(BDFramework.UFlux.Test.Reducer_Demo06Copy.<RequestServerByAsync>d__3&)
@@ -458,6 +525,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Start<BDFramework.UFlux.Contains.Store.<Dispatch>d__24<object>>(BDFramework.UFlux.Contains.Store.<Dispatch>d__24<object>&)
 		// System.Void System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Start<BDFramework.UnitTest.APITest_LitJson.<AwaitAsyncTest>d__8>(BDFramework.UnitTest.APITest_LitJson.<AwaitAsyncTest>d__8&)
 		// System.Void System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Start<HotfixCheck.<TestAction>d__1>(HotfixCheck.<TestAction>d__1&)
+		// bool System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<uint>()
 		// ushort& System.Runtime.CompilerServices.Unsafe.Add<ushort>(ushort&,int)
 		// int& System.Runtime.CompilerServices.Unsafe.As<int,int>(int&)
 		// int& System.Runtime.CompilerServices.Unsafe.As<object,int>(object&)
@@ -466,7 +534,11 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// object& System.Runtime.CompilerServices.Unsafe.As<object,object>(object&)
 		// ushort& System.Runtime.CompilerServices.Unsafe.As<byte,ushort>(byte&)
 		// System.Void* System.Runtime.CompilerServices.Unsafe.AsPointer<object>(object&)
+		// uint System.Runtime.CompilerServices.Unsafe.ReadUnaligned<uint>(byte&)
 		// int System.Runtime.CompilerServices.Unsafe.SizeOf<object>()
+		// int System.Runtime.CompilerServices.Unsafe.SizeOf<uint>()
+		// byte& System.Runtime.InteropServices.MemoryMarshal.GetReference<byte>(System.ReadOnlySpan<byte>)
+		// uint System.Runtime.InteropServices.MemoryMarshal.Read<uint>(System.ReadOnlySpan<byte>)
 		// System.Threading.Tasks.Task<int> System.Threading.Tasks.TaskFactory.StartNew<int>(System.Func<int>,System.Threading.CancellationToken,System.Threading.Tasks.TaskCreationOptions,System.Threading.Tasks.TaskScheduler)
 		// System.Threading.Tasks.Task<object> System.Threading.Tasks.TaskFactory.StartNew<object>(System.Func<object>,System.Threading.CancellationToken,System.Threading.Tasks.TaskCreationOptions,System.Threading.Tasks.TaskScheduler)
 		// System.Tuple<object,object> System.Tuple.Create<object,object>(object,object)

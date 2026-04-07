@@ -73,11 +73,46 @@ namespace HybridCLR.Editor.Settings
             return "ProjectSettings/HybridCLRSettings.asset";
         }
 
+        private void ApplyProjectDefaultPathsWhenSettingsMissing(string settingsFilePath)
+        {
+            if (File.Exists(settingsFilePath))
+            {
+                return;
+            }
+
+            const string repoGeneratedDir = "HybridCLRData/Generated";
+            const string defaultLinkFile = "HybridCLRGenerate/link.xml";
+            const string defaultAOTReferenceFile = "HybridCLRGenerate/AOTGenericReferences.cs";
+            string repoGeneratedLinkFile = $"{repoGeneratedDir}/link.xml";
+            string repoGeneratedAOTReferenceFile = $"{repoGeneratedDir}/AOTGenericReferences.cs";
+
+            if (outputLinkFile == defaultLinkFile && File.Exists(Path.Combine(Application.dataPath, repoGeneratedLinkFile)))
+            {
+                outputLinkFile = repoGeneratedLinkFile;
+            }
+
+            if (outputAOTGenericReferenceFile == defaultAOTReferenceFile && File.Exists(Path.Combine(Application.dataPath, repoGeneratedAOTReferenceFile)))
+            {
+                outputAOTGenericReferenceFile = repoGeneratedAOTReferenceFile;
+            }
+        }
+
+        private void EnsureInitialized()
+        {
+            hotUpdateAssemblyDefinitions = hotUpdateAssemblyDefinitions ?? System.Array.Empty<AssemblyDefinitionAsset>();
+            hotUpdateAssemblies = hotUpdateAssemblies ?? System.Array.Empty<string>();
+            preserveHotUpdateAssemblies = preserveHotUpdateAssemblies ?? System.Array.Empty<string>();
+            externalHotUpdateAssembliyDirs = externalHotUpdateAssembliyDirs ?? System.Array.Empty<string>();
+            patchAOTAssemblies = patchAOTAssemblies ?? System.Array.Empty<string>();
+        }
+
         public static HybridCLRSettings LoadOrCreate()
         {
             string filePath = GetFilePath();
             Object[] objs = InternalEditorUtility.LoadSerializedFileAndForget(filePath);
             s_Instance = objs.Length > 0 ? (HybridCLRSettings)objs[0] : (s_Instance ?? CreateInstance<HybridCLRSettings>());
+            s_Instance.EnsureInitialized();
+            s_Instance.ApplyProjectDefaultPathsWhenSettingsMissing(filePath);
             return s_Instance;
         }
 

@@ -67,7 +67,7 @@ namespace BDFramework.Editor.HotfixScript
             BDebug.LogWatchBegin(tag);
             {
                 BDebug.Log("[HCLR]start:", Color.green);
-                // SetBDFramework2HCLRConfig();
+                SetBDFramework2HCLRConfig();
                 //安装华佗
                 var installer = new HybridCLR.Editor.Installer.InstallerController();
                 if (!installer.HasInstalledHybridCLR())
@@ -202,7 +202,7 @@ namespace BDFramework.Editor.HotfixScript
             //HCLR Setting
             //BD的hotfix dll
             {
-                var list = new List<string>(HybridCLRSettings.Instance.hotUpdateAssemblies);
+                var list = new List<string>(HybridCLRSettings.Instance.hotUpdateAssemblies ?? Array.Empty<string>());
 
                 string[] hotfixAssemblies = new string[]
                 {
@@ -226,7 +226,7 @@ namespace BDFramework.Editor.HotfixScript
             //Patch AOT
             {
                 string[] aotAssemblies = new string[] { "mscorlib", "System", "System.Core" };
-                var list = new List<string>(HybridCLRSettings.Instance.patchAOTAssemblies);
+                var list = new List<string>(HybridCLRSettings.Instance.patchAOTAssemblies ?? Array.Empty<string>());
                 foreach (var aotAssembly in aotAssemblies)
                 {
                     if (!list.Contains(aotAssembly))
