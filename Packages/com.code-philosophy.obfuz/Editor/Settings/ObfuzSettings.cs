@@ -117,40 +117,10 @@ namespace Obfuz.Settings
 
         protected static string SettingsPath => "ProjectSettings/Obfuz.asset";
 
-        private void EnsureInitialized(bool disableBuildPipelineByDefault)
-        {
-            if (buildPipelineSettings == null)
-            {
-                buildPipelineSettings = new BuildPipelineSettings();
-                if (disableBuildPipelineByDefault)
-                {
-                    buildPipelineSettings.enable = false;
-                }
-            }
-
-            compatibilitySettings = compatibilitySettings ?? new CompatibilitySettings();
-            assemblySettings = assemblySettings ?? new AssemblySettings();
-            obfuscationPassSettings = obfuscationPassSettings ?? new ObfuscationPassSettings();
-            secretSettings = secretSettings ?? new SecretSettings();
-            encryptionVMSettings = encryptionVMSettings ?? new EncryptionVMSettings();
-            symbolObfusSettings = symbolObfusSettings ?? new SymbolObfuscationSettings();
-            constEncryptSettings = constEncryptSettings ?? new ConstEncryptionSettings();
-            removeConstFieldSettings = removeConstFieldSettings ?? new RemoveConstFieldSettings();
-            evalStackObfusSettings = evalStackObfusSettings ?? new EvalStackObfuscationSettings();
-            fieldEncryptSettings = fieldEncryptSettings ?? new FieldEncryptionSettings();
-            callObfusSettings = callObfusSettings ?? new CallObfuscationSettings();
-            exprObfusSettings = exprObfusSettings ?? new ExprObfuscationSettings();
-            controlFlowObfusSettings = controlFlowObfusSettings ?? new ControlFlowObfuscationSettings();
-            garbageCodeGenerationSettings = garbageCodeGenerationSettings ?? new GarbageCodeGenerationSettings();
-            watermarkSettings = watermarkSettings ?? new WatermarkSettings();
-            polymorphicDllSettings = polymorphicDllSettings ?? new PolymorphicDllSettings();
-        }
-
         private static ObfuzSettings LoadOrCreate()
         {
             string filePath = SettingsPath;
             var arr = InternalEditorUtility.LoadSerializedFileAndForget(filePath);
-            bool createdNewSettings = false;
             //Debug.Log($"typeof arr:{arr?.GetType()} arr[0]:{(arr != null && arr.Length > 0 ? arr[0].GetType(): null)}");
 
             if (arr != null && arr.Length > 0 && arr[0] is ObfuzSettings obfuzSettings)
@@ -160,10 +130,7 @@ namespace Obfuz.Settings
             else
             {
                 s_Instance = s_Instance ?? CreateInstance<ObfuzSettings>();
-                createdNewSettings = true;
             }
-
-            s_Instance.EnsureInitialized(createdNewSettings);
             return s_Instance;
         }
 

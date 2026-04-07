@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c414eef017e565c4db1442ec64ec52fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildPipelineSettings:
+    enable: 0
+    linkXmlProcessCallbackOrder: 10000
+    obfuscationProcessCallbackOrder: 10000
+  compatibilitySettings:
+    targetRuntime: 0
+  assemblySettings:
+    assembliesToObfuscate: []
+    nonObfuscatedButReferencingObfuscatedAssemblies: []
+    additionalAssemblySearchPaths: []
+    obfuscateObfuzRuntime: 1
+  obfuscationPassSettings:
+    enabledPasses: -1
+    ruleFiles: []
+  secretSettings:
+    defaultStaticSecretKey: Code Philosophy-Static
+    defaultDynamicSecretKey: Code Philosophy-Dynamic
+    staticSecretKeyOutputPath: Assets/Resources/Obfuz/defaultStaticSecretKey.bytes
+    dynamicSecretKeyOutputPath: Assets/Resources/Obfuz/defaultDynamicSecretKey.bytes
+    randomSeed: 0
+    assembliesUsingDynamicSecretKeys: []
+  encryptionVMSettings:
+    codeGenerationSecretKey: Obfuz
+    encryptionOpCodeCount: 256
+    codeOutputPath: Assets/Obfuz/GeneratedEncryptionVirtualMachine.cs
+  symbolObfusSettings:
+    debug: 0
+    obfuscatedNamePrefix: $
+    useConsistentNamespaceObfuscation: 1
+    detectReflectionCompatibility: 1
+    keepUnknownSymbolInSymbolMappingFile: 1
+    symbolMappingFile: Assets/Obfuz/SymbolObfus/symbol-mapping.xml
+    debugSymbolMappingFile: Assets/Obfuz/SymbolObfus/symbol-mapping-debug.xml
+    ruleFiles: []
+    customRenamePolicyTypes: []
+  constEncryptSettings:
+    encryptionLevel: 1
+    ruleFiles: []
+  removeConstFieldSettings:
+    ruleFiles: []
+  evalStackObfusSettings:
+    ruleFiles: []
+  fieldEncryptSettings:
+    encryptionLevel: 1
+    ruleFiles: []
+  callObfusSettings:
+    proxyMode: 0
+    obfuscationLevel: 1
+    maxProxyMethodCountPerDispatchMethod: 100
+    obfuscateCallToMethodInMscorlib: 0
+    ruleFiles: []
+  exprObfusSettings:
+    ruleFiles: []
+  controlFlowObfusSettings:
+    minInstructionCountOfBasicBlockToObfuscate: 3
+    ruleFiles: []
+  garbageCodeGenerationSettings:
+    codeGenerationSecret: Garbage Code
+    defaultTask:
+      codeGenerationRandomSeed: 0
+      classNamespace: __GarbageCode
+      classNamePrefix: __GeneratedGarbageClass
+      classCount: 100
+      methodCountPerClass: 10
+      fieldCountPerClass: 50
+      garbageCodeType: 1
+      outputPath: Assets/Obfuz/GarbageCode
+    additionalTasks: []
+  watermarkSettings:
+    text: Obfuscated by Obfuz
+    signatureLength: 256
+  polymorphicDllSettings:
+    enable: 1
+    codeGenerationSecretKey: obfuz-polymorphic-key
+    disableLoadStandardDll: 0
