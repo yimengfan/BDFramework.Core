@@ -11,3 +11,33 @@ scheme = "http"
 # token = ""
 upload_chunk_size_kb = 1024
 hash_chunk_size_kb = 1024
+
+[ios_xcode]
+# iOS Xcode 后置脚本共享默认值。
+# Build 面板在 Unity 导出 Xcode 后会固定调用 BuildClientPackage/build_xcode.shell。
+# 团队共享签名、scheme、导出方式等默认值统一维护在这里。
+# 优先级：shell 顶部默认值 < buildtools.toml < 环境变量 < 命令行参数。
+# 相对路径会按仓库根目录解析。
+configuration = "Release"
+export_method = "development"
+signing_style = "automatic"
+destination = "generic/platform=iOS"
+dry_run = false
+clean = true
+allow_provisioning_updates = true
+allow_provisioning_device_registration = false
+
+# project_dir = "DevOps/PublishPackages/ios/com.demo.game"
+# search_root = "DevOps/PublishPackages/ios"
+# workspace = "DevOps/PublishPackages/ios/com.demo.game/Unity-iPhone.xcworkspace"
+# xcodeproj = "DevOps/PublishPackages/ios/com.demo.game/Unity-iPhone.xcodeproj"
+# scheme = "Unity-iPhone"
+# export_options_plist = "DevOps/CI/BuildTools/exportOptions.plist"
+# team_id = "ABCDE12345"
+# bundle_identifier = "com.demo.game"
+# code_sign_identity = "Apple Distribution: Team Name (ABCDE12345)"
+# provisioning_profile_specifier = "Demo AdHoc"
+# provisioning_profile = "00000000-0000-0000-0000-000000000000"
+# archive_path = "Library/BuildXcode/com.demo.game.xcarchive"
+# export_dir = "Library/BuildXcode/com.demo.game.export"
+# ipa_path = "DevOps/PublishPackages/ios/com.demo.game.ipa"

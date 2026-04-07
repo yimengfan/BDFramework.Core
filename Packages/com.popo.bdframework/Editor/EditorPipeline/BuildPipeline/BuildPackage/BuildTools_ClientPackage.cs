@@ -24,6 +24,7 @@ namespace BDFramework.Editor.BuildPipeline
     static public class BuildTools_ClientPackage
     {
         public const string DefaultClientVersion = "0.1.0";
+        const string IOSPostBuildShellRelativePath = "DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell";
 
         public enum BuildMode
         {
@@ -187,6 +188,17 @@ namespace BDFramework.Editor.BuildPipeline
         static string NormalizeClientVersion(string clientVersion)
         {
             return string.IsNullOrWhiteSpace(clientVersion) ? GetDefaultClientVersion() : clientVersion.Trim();
+        }
+
+        static string GetIOSPostBuildShellPath()
+        {
+            return IPath.Combine(BApplication.ProjectRoot, IOSPostBuildShellRelativePath);
+        }
+
+        static string BuildIOSPostBuildShellArgs(string xcodeProjectDir, BuildMode mode)
+        {
+            var configuration = mode == BuildMode.Debug ? "Debug" : "Release";
+            return $"--project-dir \"{xcodeProjectDir}\" --configuration {configuration}";
         }
 
         static BuildConfigOverrideContext OverrideBuildConfigClientVersion(string buildConfigPath, string clientVersion)
@@ -681,14 +693,18 @@ namespace BDFramework.Editor.BuildPipeline
             {
                 ret = true;
 
-                //执行shell path
-                var shellPath = mode == BuildMode.Debug ? BDEditorApplication.EditorSetting.iOSDebug.ExcuteShell : BDEditorApplication.EditorSetting.iOS.ExcuteShell;
+                var shellPath = GetIOSPostBuildShellPath();
                 if (File.Exists(shellPath))
                 {
                     if (CMDTools.CanRunCmdFile(shellPath))
                     {
-                        Debug.Log("即将执行:" + shellPath);
-                        CMDTools.RunCmdFile(shellPath);
+                        var shellArgs = BuildIOSPostBuildShellArgs(outputPath, mode);
+                        Debug.Log($"即将执行: {shellPath} {shellArgs}");
+                        var shellExitCode = CMDTools.RunCmdFile(shellPath, shellArgs);
+                        if (shellExitCode != 0)
+                        {
+                            throw new Exception($"iOS 后置脚本执行失败，exitCode={shellExitCode} path={shellPath} args={shellArgs}");
+                        }
 
                         var ipaPath = outputPath + ".ipa";
                         if (File.Exists(ipaPath))

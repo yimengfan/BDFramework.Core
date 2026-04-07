@@ -30,6 +30,7 @@ def create_publish_output(
     *,
     platform_key: str = "windows",
     include_do_not_publish: bool = False,
+    additional_do_not_publish_dir_names: tuple[str, ...] = (),
 ) -> Path:
     output_dir = project_dir / "DevOps" / "PublishPackages" / platform_key
     app_dir = output_dir / APP_DIR_NAME
@@ -46,6 +47,13 @@ def create_publish_output(
         (app_dir / "不要发布").mkdir(parents=True)
         (app_dir / "不要发布" / "notes.txt").write_text(
             "debug-only payload",
+            encoding="utf-8",
+        )
+
+    for dir_name in additional_do_not_publish_dir_names:
+        (app_dir / dir_name).mkdir(parents=True)
+        (app_dir / dir_name / "notes.txt").write_text(
+            f"debug-only payload for {dir_name}",
             encoding="utf-8",
         )
 
@@ -140,7 +148,13 @@ def test_prepare_publish_package_upload_source_for_ios_uses_xcode_project_zip(
 def test_prepare_publish_package_upload_source_for_windows_splits_runtime_and_do_not_publish(
     tmp_path: Path,
 ) -> None:
-    output_dir = create_publish_output(tmp_path, include_do_not_publish=True)
+    output_dir = create_publish_output(
+        tmp_path,
+        include_do_not_publish=True,
+        additional_do_not_publish_dir_names=(
+            f"{APP_DIR_NAME}_BurstDebugInformation_DoNotShip",
+        ),
+    )
 
     prepared_dir = prepare_publish_package_upload_source(
         "windows",
@@ -153,6 +167,7 @@ def test_prepare_publish_package_upload_source_for_windows_splits_runtime_and_do
     assert set(prepared_files) == {
         f"{APP_DIR_NAME}.zip",
         f"{APP_DIR_NAME}_不要发布.zip",
+        f"{APP_DIR_NAME}_{APP_DIR_NAME}_BurstDebugInformation_DoNotShip.zip",
     }
     assert read_zip_entries(prepared_files[f"{APP_DIR_NAME}.zip"]) == [
         f"{APP_DIR_NAME}/BuildReport/summary.json",
@@ -161,6 +176,11 @@ def test_prepare_publish_package_upload_source_for_windows_splits_runtime_and_do
     ]
     assert read_zip_entries(prepared_files[f"{APP_DIR_NAME}_不要发布.zip"]) == [
         f"{APP_DIR_NAME}/不要发布/notes.txt",
+    ]
+    assert read_zip_entries(
+        prepared_files[f"{APP_DIR_NAME}_{APP_DIR_NAME}_BurstDebugInformation_DoNotShip.zip"]
+    ) == [
+        f"{APP_DIR_NAME}/{APP_DIR_NAME}_BurstDebugInformation_DoNotShip/notes.txt",
     ]
 
 

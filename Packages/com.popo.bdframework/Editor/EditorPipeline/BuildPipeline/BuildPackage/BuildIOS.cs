@@ -1,50 +1,39 @@
 using System;
 using System.IO;
-using System.Management.Instrumentation;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Unity3dEx.PluginsEx.Odin.Attribute;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 
 namespace BDFramework.Editor.BuildPipeline
 {
     /// <summary>
-    /// 构建Android面板
+    /// 构建 iOS 面板
     /// </summary>
     [Serializable]
     public class BuildIOS
     {
         static private BuildTarget BuildTarget = BuildTarget.iOS;
-
-        public BuildIOS(iOSSetting releaseSetting, iOSSetting debugSettingSetting)
-        {
-            this.iOSReleaseSetting = releaseSetting;
-            this.iOSDebugSetting = debugSettingSetting;
-        }
+        const string IOSPostBuildShellPath = "DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell";
+        const string IOSBuildToolsConfigPath = "DevOps/CI/BuildTools/buildtools.toml";
 
 
         #region 打包参数
 
-        [BoxGroup("IOS设置[Release]")]
-        [HideLabel]
-        [InlineProperty]
-        [DisableIf("IsLock")]
-        public iOSSetting iOSReleaseSetting = new iOSSetting();
-
-
-        [BoxGroup("IOS设置[Debug]")]
-        [HideLabel]
-        [InlineProperty]
-        [DisableIf("IsLock")]
-        public iOSSetting iOSDebugSetting = new iOSSetting();
-
-        [VerticalGroup("a")]
-        [LabelText("锁住配置")]
-        [InfoBox("构建Xcode工程后,会调用 DevOps/CI/BuildTools/BuildIOS.shell 脚本执行后续自动化流程。")]
-        public bool IsLock = true;
+        [PropertyOrder(-20)]
+        [ShowInInspector]
+        [ReadOnly]
+        [LabelText("iOS 构建说明")]
+        [MultiLineProperty(9)]
+        public string IOSBuildGuide =
+            "1. 点击本页按钮后，Unity 先导出 Xcode 到 DevOps/PublishPackages/ios/<bundle id>。\n" +
+            "2. 导出完成后，编辑器固定调用 " + IOSPostBuildShellPath + "。\n" +
+            "3. Unity 会自动传入 --project-dir；Debug 按钮额外传 --configuration Debug，Release / ReleaseForProfiling 传 Release。\n" +
+            "4. 团队共享签名、导出方式、scheme 等默认值统一配置在 " + IOSBuildToolsConfigPath + " 的 [ios_xcode]。\n" +
+            "5. shell 文件头部只保留本机兜底默认值；临时覆盖请使用 BUILD_XCODE_* 环境变量或手动执行脚本参数。\n" +
+            "6. shell 成功后会在 Xcode 目录同级输出同名 ipa。";
 
         [PropertySpace(8)]
         [BoxGroup("母包设置")]

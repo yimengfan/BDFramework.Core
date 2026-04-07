@@ -34,6 +34,7 @@ SKIPPED_OUTPUT_FILENAMES = {".DS_Store"}
 IOS_INFO_PLIST_FILENAME = "Info.plist"
 WINDOWS_LAUNCHER_FILENAME = "Launcher.exe"
 WINDOWS_DO_NOT_PUBLISH_DIRNAME = "不要发布"
+WINDOWS_BURST_DO_NOT_SHIP_SUFFIX = "_BurstDebugInformation_DoNotShip"
 
 
 @dataclass(frozen=True)
@@ -137,10 +138,17 @@ def find_windows_runtime_dir(source_dir: Path) -> Path:
 
 def find_windows_do_not_publish_dirs(runtime_dir: Path) -> list[Path]:
     """收集 Windows 输出中需要单独归档的“不要发布”目录。"""
+    normalized_chinese_dirname = WINDOWS_DO_NOT_PUBLISH_DIRNAME.casefold()
+    normalized_burst_suffix = WINDOWS_BURST_DO_NOT_SHIP_SUFFIX.casefold()
+
     return [
         candidate
-        for candidate in sorted(runtime_dir.rglob(WINDOWS_DO_NOT_PUBLISH_DIRNAME))
+        for candidate in sorted(runtime_dir.rglob("*"))
         if candidate.is_dir()
+        and (
+            candidate.name.casefold() == normalized_chinese_dirname
+            or candidate.name.casefold().endswith(normalized_burst_suffix)
+        )
     ]
 
 

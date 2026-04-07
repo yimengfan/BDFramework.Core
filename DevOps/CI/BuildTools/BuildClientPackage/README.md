@@ -2,53 +2,42 @@
 
 母包 CI Python 入口，当前位于 `DevOps/CI/BuildTools/BuildClientPackage/`。
 
-实现前先读 [CI 总索引](../../README.md)，再读 [BuildTools 索引](../README.md)。本文只保留 `BuildClientPackage/` 模块规范；公共规范和跨模块约束不再在这里重复维护。
-
 ## 设计原则
 
 1. `build_android.py` / `build_ios.py` / `build_windows.py` 是执行主体。
 2. 不再把完整流程统一塞到一个 generic `common.py` 中。
 3. 只有 Unity BatchMode 的共通能力抽到 `unity3d_batchmode.py`。
-4. 平台差异只允许收敛在平台 key、日志前缀和 Unity `executeMethod` 这类模块特有配置点。
-
-## 主要流程
-
-三个平台入口脚本都必须保持相同的七步主流程，差异只允许出现在 `PLATFORM_KEY`、日志前缀和平台对应的 Unity `executeMethod`：
-
-1. 解析参数，并校验 `clientVersion`
-2. 解析 `buildName` / `buildNumber`，校验宿主机是否允许执行该平台流程
-3. 解析 Unity 可执行路径、Unity 工程目录、C# `executeMethod` 和日志路径
-4. 清理 `DevOps/PublishPackages/<platform>/` 目录；`--dry-run` 时跳过
-5. 组装 Unity BatchMode 命令
-6. 执行 Unity；失败时必须输出 Unity 日志尾部后再抛错
-7. 上传 `DevOps/PublishPackages/<platform>/`；`--dry-run` 时跳过
-
-对应单元测试位于：`DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py`
+4. 脚本内必须保留充分注释、流程日志和边界处理，方便 CI 排查问题。
 
 ## 文件说明
 
 - `build_android.py`
 - `build_ios.py`
 - `build_windows.py`
+- `build_xcode.shell`
 - `unity3d_batchmode.py`
 - `package_artifacts.py`
 - `config/settings.py`
 - `common.py`（废弃兼容占位，不再承载流程）
 
-## TeamCity 验证入口
+## TeamCity 自动化映射
 
-`BuildClientPackage` 已接入 TeamCity。凡是修改脚本参数、主流程、步骤日志、输出目录、上传逻辑或 TeamCity DSL，都必须在结束前补做 TeamCity 验证。
+测试用 TeamCity Kotlin DSL 位于：
 
-统一入口：
+- `.test-DevOps/.teamcity/settings.kts`
 
-- TeamCity 总流程与任务映射：`../../../../.test-DevOps/README.md`
-- TeamCity Web API 触发与排查：`../../../../.test-DevOps/teamcityskill/README.md`
+Python 脚本和 TeamCity 任务的索引文档位于：
 
-当前常用 buildType id：
+- `.test-DevOps/README.md`
 
-- `BDFrameworkCore_BuildClientPackageAndroid`
-- `BDFrameworkCore_BuildClientPackageIos`
-- `BDFrameworkCore_BuildClientPackageWindows`
+当前约定：
+
+- `build_android.py` → `BuildClientPackage_android`
+- `build_ios.py` → `BuildClientPackage_ios`
+- `build_windows.py` → `BuildClientPackage_windows`
+- 根聚合任务：`BuildClientPackage`
+
+> 规则：根任务名称允许单独维护；子任务名称、脚本路径、参数入口必须和这里的 Python 脚本保持一致。
 
 ## 支持的 CI 宿主环境
 
@@ -100,6 +89,106 @@ python3 DevOps/CI/BuildTools/BuildClientPackage/build_ios.py --client-version 0.
 python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-version 0.1.0 --dry-run
 ```
 
+## iOS Xcode 后置脚本
+
+Unity 导出 iOS Xcode 工程后，会固定调用 `DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell`，并显式传入 `--project-dir <xcode_output>`；脚本完成 archive / export 后，会在 Xcode 输出目录的同级目录生成同名 `ipa`：例如 Xcode 目录是 `.../ios/com.demo.game`，则默认 ipa 是 `.../ios/com.demo.game.ipa`。
+
+默认行为：
+
+- Unity 正常会传入 `--project-dir`；如果你手动执行脚本，也可以退回到 `DevOps/PublishPackages/ios/` 下自动选择最新的 Unity Xcode 输出目录
+- 优先使用 `.xcworkspace`，找不到时回退到 `.xcodeproj`
+- scheme 默认优先 `Unity-iPhone`
+- configuration 默认 `Release`
+- export method 默认 `development`
+- 最终 `ipa` 默认生成在 Xcode 输出目录同级，不放进 Xcode 目录内部
+- `xcarchive` 和 `export` 中间目录默认放到 `Library/BuildXcode/`，避免污染最终上传目录
+
+配置优先级：
+
+- `build_xcode.shell` 文件头部的脚本默认值
+- `DevOps/CI/BuildTools/buildtools.toml -> [ios_xcode]`
+- 环境变量
+- 命令行参数
+
+如果你们团队希望把常用签名参数、scheme、导出方式、默认 project_dir 固化到仓库里，推荐直接写到 `buildtools.toml` 的 `[ios_xcode]` 段，例如：
+
+```toml
+[ios_xcode]
+configuration = "Release"
+export_method = "development"
+signing_style = "manual"
+team_id = "ABCDE12345"
+bundle_identifier = "com.demo.game"
+code_sign_identity = "Apple Distribution: Team Name (ABCDE12345)"
+provisioning_profile_specifier = "Demo AdHoc"
+destination = "generic/platform=iOS"
+clean = true
+allow_provisioning_updates = true
+```
+
+常用覆盖项既支持环境变量，也支持直接执行脚本时传命令行参数：
+
+- `BUILD_XCODE_CONFIG` / `--config`
+- `BUILD_XCODE_PROJECT_DIR` / `--project-dir`
+- `BUILD_XCODE_SCHEME` / `--scheme`
+- `BUILD_XCODE_CONFIGURATION` / `--configuration`
+- `BUILD_XCODE_EXPORT_METHOD` / `--export-method`
+- `BUILD_XCODE_TEAM_ID` / `--team-id`
+- `BUILD_XCODE_SIGN_STYLE` / `--signing-style`
+- `BUILD_XCODE_CODE_SIGN_IDENTITY` / `--code-sign-identity`
+- `BUILD_XCODE_PROVISIONING_PROFILE_SPECIFIER` / `--provisioning-profile-specifier`
+- `BUILD_XCODE_PROVISIONING_PROFILE` / `--provisioning-profile`
+- `BUILD_XCODE_BUNDLE_IDENTIFIER` / `--bundle-identifier`
+- `BUILD_XCODE_EXPORT_OPTIONS_PLIST` / `--export-options-plist`
+- `BUILD_XCODE_DRY_RUN=1` / `--dry-run`
+
+`[ios_xcode]` 支持的键：
+
+- `project_dir`
+- `search_root`
+- `workspace`
+- `xcodeproj`
+- `scheme`
+- `configuration`
+- `export_method`
+- `export_options_plist`
+- `team_id`
+- `signing_style`
+- `bundle_identifier`
+- `code_sign_identity`
+- `provisioning_profile_specifier`
+- `provisioning_profile`
+- `archive_path`
+- `export_dir`
+- `ipa_path`
+- `destination`
+- `dry_run`
+- `clean`
+- `allow_provisioning_updates`
+- `allow_provisioning_device_registration`
+
+如果使用手动签名，至少提供：
+
+- `BUILD_XCODE_SIGN_STYLE=manual`
+- `BUILD_XCODE_PROVISIONING_PROFILE_SPECIFIER`
+- `BUILD_XCODE_BUNDLE_IDENTIFIER`
+
+示例：
+
+```bash
+BUILD_XCODE_TEAM_ID=ABCDE12345 \
+BUILD_XCODE_EXPORT_METHOD=development \
+DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell --project-dir DevOps/PublishPackages/ios/com.demo.game
+
+DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell \
+	--project-dir DevOps/PublishPackages/ios/com.demo.game \
+	--configuration Release \
+	--signing-style manual \
+	--bundle-identifier com.demo.game \
+	--provisioning-profile-specifier "Demo AdHoc" \
+	--export-method ad-hoc
+```
+
 ## CI 元数据
 
 - Python 脚本统一使用通用命名：`--build-name`、`--build-number`
@@ -109,13 +198,22 @@ python3 DevOps/CI/BuildTools/BuildClientPackage/build_android.py --client-versio
 - 非 dry-run 构建会在 Unity 执行前清空 `DevOps/PublishPackages/<platform>/`，避免旧输出污染本次母包
 - 构建成功后，脚本会直接调用 `DevOps/CI/BuildTools/Common/artifact_uploader.py` 对应模块接口上传母包
 - 上传目录优先使用 `buildNumber` 作为远端版本段；如果没有 `buildNumber`，则回退到 `clientVersion`
+- iOS 上传前会把 `DevOps/PublishPackages/ios/` 下的 Xcode 工程目录压成单个 zip，只上传 zip，不上传 `.ipa`
+- Windows 上传前会把可运行目录压成单个 zip；如果输出里存在名为 `不要发布` 的目录，或 Unity Burst 自动生成的 `*_BurstDebugInformation_DoNotShip` 目录，会再分别单独压成 zip 一起上传
 - dry-run 只验证参数和 Unity 命令拼接，不会清空输出目录，也不会触发上传
 
 ## 文件服务器上传
 
-Step 7 会调用 `../Common/artifact_uploader.py`，把 `DevOps/PublishPackages/<platform>/` 上传到 `ClientPackage_<platform>/<buildnum>/...`。
+BuildTools 现在提供公共上传模块：`DevOps/CI/BuildTools/Common/artifact_uploader.py`。
 
-上传模块的配置来源、远端目录规则、remote smoke test 和公共 API 统一维护在 [BuildTools Common](../Common/README.md)，这里不再重复展开。
+说明：
+
+- `build_android.py` / `build_ios.py` / `build_windows.py` 在真实构建成功后会直接调用这个模块上传母包
+- 默认读取 `DevOps/CI/BuildTools/buildtools.toml`
+- 已封装四类远端目录：`ClientPackage_{平台}/{buildnum}`、`Code_{平台}/{buildnum}`、`AssetBundle_{平台}/{buildnum}`、`Table/{buildnum}`
+- 上传接口支持进度回调，当前 BuildClientPackage 会把每个文件的上传开始/完成事件直接打到 CI 日志
+
+详细说明见：`DevOps/CI/BuildTools/Common/README.md`
 
 ## Unity 路径
 
@@ -218,14 +316,23 @@ export UNITY_PATH="/Applications/Unity2021.3.58f1/Unity.app/Contents/MacOS/Unity
 $env:UNITY_PATH = 'C:\Program Files\Unity\Hub\Editor\2021.3.58f1\Editor\Unity.exe'
 ```
 
-## 模块补充规范
+## 脚本编写规范
 
-在遵守 [CI 公共规范](../../README.md) 的前提下，本模块额外要求：
+### 1. 注释规范
 
-1. 三个平台入口必须保持同一套七步主流程，平台差异只能出现在 `PLATFORM_KEY`、日志前缀和平台对应的 Unity `executeMethod`。
-2. 流程日志必须与 `DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py` 中的步骤断言保持一致。
-3. 失败路径必须输出 Unity 日志尾部和下一步检查点，不能只返回非 0 退出码。
-4. 下列边界情况至少要被显式处理：
+- 文件头写清楚职责边界
+- 关键函数写明“为什么这样做”
+- 对平台限制、版本参数、日志路径等关键点补注释
+
+### 2. 日志规范
+
+- 使用明确阶段日志，例如：`Step 1/5`、`Step 2/5`
+- 打印：宿主系统、目标平台、clientVersion、Unity 路径、C# executeMethod、日志文件路径
+- 失败时打印可直接定位的问题、Unity 日志尾部和后续检查点
+
+### 3. 边界情况
+
+脚本至少要处理：
 
 - `clientVersion` 为空
 - `clientVersion` 含异常空白字符
@@ -233,25 +340,6 @@ $env:UNITY_PATH = 'C:\Program Files\Unity\Hub\Editor\2021.3.58f1\Editor\Unity.ex
 - `UNITY_PATH` 指向不存在路径
 - 候选 Unity 路径全部不存在
 - Unity BatchMode 返回非 0 退出码
-
-## 变更与测试强制规范
-
-以下规则对 `DevOps/CI/BuildTools/BuildClientPackage/` 及其对应测试文件是阻塞性的，不满足就不能结束本次修改：
-
-1. 只要修改主流程、参数入口、步骤日志、Unity 调用、输出目录清理、上传逻辑，就必须同步新增或更新 pytest 单元测试。
-2. 主流程相关改动，至少要覆盖：`dry-run` 成功路径、非 `dry-run` 成功路径、Unity 失败后输出日志尾并抛错路径。
-3. 每次修改后都必须重新执行并通过以下测试：
-
-```bash
-python -m pytest \
-	DevOps/CI/BuildTools/tests/test_buildclientpackage_helpers.py \
-	DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py \
-	-q
-```
-
-4. 如果改动影响 TeamCity 映射流程，还必须执行受影响的 TeamCity 构建，并确认最终状态、关键流程日志和远端母包目录符合预期。
-5. 如果新增平台入口，必须同步把它纳入主流程参数化测试。
-6. 如果修改 README 中记录的步骤、参数或规则，必须保证测试名称和断言仍能对应当前行为。
 
 ## 维护建议
 
@@ -261,12 +349,21 @@ python -m pytest \
 
 ## 与 TeamCity 同步时必须检查的项
 
+以下内容有任何改动，都必须同步更新：
+
+1. `.test-DevOps/.teamcity/settings.kts`
+2. `.test-DevOps/.teamcity/BUILD_CLIENT_PACKAGE_INDEX.md`
+3. `.test-DevOps/README.md`
+
 重点检查：
 
-- Python 脚本文件名、参数入口和 `%build.extra.args%` 透传是否仍与脚本保持一致
-- `config/settings.py` 中的 `allowed_hosts`、`method` 和默认路径配置是否变化
-- TeamCity 任务命令、`%ci.python.command%`、上传远端目录是否仍与当前实现一致
-- CI 日志里是否还能看到清空输出目录、Unity 执行、上传开始、上传进度、上传完成这些关键阶段
+- Python 脚本文件名是否变化
+- 参数入口是否变化
+- `config/settings.py` 中的 `allowed_hosts` 是否变化
+- `config/settings.py` 中的 `method` 是否变化
+- TeamCity 子任务名称是否仍满足 `BuildClientPackage_xxx` 约定
 
-具体 DSL 文件和排查步骤统一以 `../../../../.test-DevOps/README.md` 为准；不要在本文档里再维护另一份重复的 TeamCity 映射说明。
+强制要求：只要修改了 TeamCity DSL、脚本参数入口、BuildTools 上传配置、上传远端目录规则或 TeamCity 相关环境参数，就必须重新触发受影响的 TeamCity 任务，并确认最终任务状态、日志中的上传进度以及远端母包目录都与预期一致；不能只看 DSL 已加载或本地 dry-run 通过。
+
+补充提醒：`.test-DevOps/.teamcity/settings.kts` 是 Kotlin Script，脚本级常量请使用普通 `val`，不要使用脚本级 `const val`；如果某个 TeamCity 实例会引用脚本级成员，也优先写成 `val xxx = BuildType({ ... })`，不要写成命名 `object`，否则 TeamCity 服务端可能回退到 last known good settings。
 
