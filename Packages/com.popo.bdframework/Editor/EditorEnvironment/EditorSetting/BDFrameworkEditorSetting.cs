@@ -97,19 +97,6 @@ namespace BDFramework.Editor
         public AndroidSetting AndroidDebug = new AndroidSetting();
 
         [ShowIf(nameof(pageType), PageType.BuildPackage)]
-        [BoxGroup("iOS设置[Release]")]
-        [HideLabel]
-        [InlineProperty]
-        public iOSSetting iOS = new iOSSetting();
-
-
-        [ShowIf(nameof(pageType), PageType.BuildPackage)]
-        [BoxGroup("iOS设置[Debug]")]
-        [HideLabel]
-        [InlineProperty]
-        public iOSSetting iOSDebug = new iOSSetting();
-
-        [ShowIf(nameof(pageType), PageType.BuildPackage)]
         [BoxGroup("Windows设置[Release]")]
         [HideLabel]
         [InlineProperty]
@@ -353,31 +340,6 @@ namespace BDFramework.Editor
         [LabelText("keyalias密码")]
         [LabelWidth(100)]
         public string keyaliasPass;
-
-        [Space(10)]
-        [LabelText("包体仓库")]
-        [LabelWidth(100)]
-        public VCSData VSC = new VCSData();
-    }
-
-    /// <summary>
-    /// iOS打包设置
-    /// </summary>
-    [Serializable]
-    public class iOSSetting
-    {
-        [LabelText("证书")]
-        [LabelWidth(100)]
-        public string Licese;
-
-        [LabelText("密钥")]
-        [LabelWidth(100)]
-        public string Key;
-
-        [FilePath(ParentFolder = "")]
-        [LabelText("生成Xcode后执行")]
-        [LabelWidth(200)]
-        public string ExcuteShell = "DevOps/CI/BuildTools/BuildIOS.shell";
 
         [Space(10)]
         [LabelText("包体仓库")]

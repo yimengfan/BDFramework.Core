@@ -175,7 +175,7 @@ namespace BDFramework.Editor.Tools
 #endif
         }
 
-        static public void RunCmdFile(string shellpath, string args = "")
+        static public int RunCmdFile(string shellpath, string args = "")
         {
             Process process = new Process();
             var extension = Path.GetExtension(shellpath)?.ToLowerInvariant();
@@ -242,8 +242,10 @@ namespace BDFramework.Editor.Tools
             process.BeginErrorReadLine();
             //
             process.WaitForExit();
+            var exitCode = process.ExitCode;
             process.Close();
             process.Dispose();
+            return exitCode;
         }
     }
 }

@@ -36,7 +36,7 @@ namespace BDFramework.Editor.EditorPipeline.BuildPipeline
             //构建包体
             tree.Add("Build", null, EditorIcons.SmartPhone);
             tree.Add($"Build/{BApplication.GetPlatformLoadPath(RuntimePlatform.Android)}", new BuildAndroid(setting.Android, setting.AndroidDebug));
-            tree.Add($"Build/{BApplication.GetPlatformLoadPath(RuntimePlatform.IPhonePlayer)}", new BuildIOS(setting.iOS, setting.iOSDebug));
+            tree.Add($"Build/{BApplication.GetPlatformLoadPath(RuntimePlatform.IPhonePlayer)}", new BuildIOS());
             tree.Add($"Build/{BApplication.GetPlatformLoadPath(RuntimePlatform.WindowsPlayer)}", new BuildWindowsPlayer(setting.WindowsPlayer, setting.WindowsPlayerDebug));
             tree.Add($"Build/{BApplication.GetPlatformLoadPath(RuntimePlatform.OSXPlayer)}(待实现)", new BuildMacOSX());
             // tree.Add($"Build/{BApplication.GetPlatformPath(RuntimePlatform.OSXPlayer)}", new BuildAndroid());
