@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 import sys
 from types import SimpleNamespace
+import zipfile
 
 
 BUILD_TOOLS_ROOT = Path(__file__).resolve().parents[1]
@@ -15,22 +16,58 @@ from package_artifacts import (
     build_publish_package_summary,
     clear_publish_package_dir,
     list_publish_package_files,
+    prepare_publish_package_upload_source,
     upload_publish_package,
 )
 from unity3d_batchmode import get_ci_log_root_name
 
 
-def create_publish_output(project_dir: Path, *, platform_key: str = "windows") -> Path:
+APP_DIR_NAME = "com.popo.bdframework.demo"
+
+
+def create_publish_output(
+    project_dir: Path,
+    *,
+    platform_key: str = "windows",
+    include_do_not_publish: bool = False,
+) -> Path:
     output_dir = project_dir / "DevOps" / "PublishPackages" / platform_key
-    (output_dir / "Game_Data").mkdir(parents=True)
-    (output_dir / "BuildReport").mkdir(parents=True)
-    (output_dir / "Launcher.exe").write_bytes(b"launcher payload")
-    (output_dir / "Game_Data" / "globalgamemanagers").write_bytes(b"game data payload")
-    (output_dir / "BuildReport" / "summary.json").write_text(
+    app_dir = output_dir / APP_DIR_NAME
+    (app_dir / "Game_Data").mkdir(parents=True)
+    (app_dir / "BuildReport").mkdir(parents=True)
+    (app_dir / "Launcher.exe").write_bytes(b"launcher payload")
+    (app_dir / "Game_Data" / "globalgamemanagers").write_bytes(b"game data payload")
+    (app_dir / "BuildReport" / "summary.json").write_text(
         '{"result": "success", "platform": "windows"}',
         encoding="utf-8",
     )
+
+    if include_do_not_publish:
+        (app_dir / "不要发布").mkdir(parents=True)
+        (app_dir / "不要发布" / "notes.txt").write_text(
+            "debug-only payload",
+            encoding="utf-8",
+        )
+
     return output_dir
+
+
+def create_ios_publish_output(project_dir: Path) -> Path:
+    output_dir = project_dir / "DevOps" / "PublishPackages" / "ios"
+    xcode_dir = output_dir / APP_DIR_NAME
+    (xcode_dir / "Classes").mkdir(parents=True)
+    (xcode_dir / "Info.plist").write_text("<plist />", encoding="utf-8")
+    (xcode_dir / "Classes" / "AppDelegate.mm").write_text(
+        "// xcode payload",
+        encoding="utf-8",
+    )
+    (output_dir / f"{APP_DIR_NAME}.ipa").write_bytes(b"ipa payload")
+    return output_dir
+
+
+def read_zip_entries(zip_path: Path) -> list[str]:
+    with zipfile.ZipFile(zip_path) as archive:
+        return sorted(archive.namelist())
 
 
 def test_get_ci_log_root_name_uses_teamcity_default(monkeypatch) -> None:
@@ -69,6 +106,7 @@ def test_build_publish_package_summary_prefers_build_number(tmp_path: Path) -> N
     )
 
     assert summary.source_dir == output_dir
+    assert summary.upload_source_path == output_dir
     assert summary.build_label == "238"
     assert summary.remote_root == "ClientPackage_windows/238"
     assert summary.file_count == 3
@@ -79,12 +117,59 @@ def test_build_publish_package_summary_prefers_build_number(tmp_path: Path) -> N
     )
 
 
+def test_prepare_publish_package_upload_source_for_ios_uses_xcode_project_zip(
+    tmp_path: Path,
+) -> None:
+    output_dir = create_ios_publish_output(tmp_path)
+
+    prepared_dir = prepare_publish_package_upload_source(
+        "ios",
+        source_dir=output_dir,
+        staging_dir=tmp_path / "staging",
+    )
+
+    prepared_files = list_publish_package_files(prepared_dir)
+
+    assert [file_path.name for file_path in prepared_files] == [f"{APP_DIR_NAME}.zip"]
+    assert read_zip_entries(prepared_files[0]) == [
+        f"{APP_DIR_NAME}/Classes/AppDelegate.mm",
+        f"{APP_DIR_NAME}/Info.plist",
+    ]
+
+
+def test_prepare_publish_package_upload_source_for_windows_splits_runtime_and_do_not_publish(
+    tmp_path: Path,
+) -> None:
+    output_dir = create_publish_output(tmp_path, include_do_not_publish=True)
+
+    prepared_dir = prepare_publish_package_upload_source(
+        "windows",
+        source_dir=output_dir,
+        staging_dir=tmp_path / "staging",
+    )
+
+    prepared_files = {file_path.name: file_path for file_path in list_publish_package_files(prepared_dir)}
+
+    assert set(prepared_files) == {
+        f"{APP_DIR_NAME}.zip",
+        f"{APP_DIR_NAME}_不要发布.zip",
+    }
+    assert read_zip_entries(prepared_files[f"{APP_DIR_NAME}.zip"]) == [
+        f"{APP_DIR_NAME}/BuildReport/summary.json",
+        f"{APP_DIR_NAME}/Game_Data/globalgamemanagers",
+        f"{APP_DIR_NAME}/Launcher.exe",
+    ]
+    assert read_zip_entries(prepared_files[f"{APP_DIR_NAME}_不要发布.zip"]) == [
+        f"{APP_DIR_NAME}/不要发布/notes.txt",
+    ]
+
+
 def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
     tmp_path: Path,
     monkeypatch,
     capsys,
 ) -> None:
-    output_dir = create_publish_output(tmp_path)
+    output_dir = create_publish_output(tmp_path, include_do_not_publish=True)
     fake_settings = SimpleNamespace(
         base_url="http://127.0.0.1:20001",
         config_path=Path("/tmp/buildtools.toml"),
@@ -100,18 +185,25 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
         on_uploaded=None,
         **_,
     ):
-        assert Path(source_path) == output_dir
+        prepared_dir = Path(source_path)
         assert platform == "windows"
         assert build_number == "0.1.238"
         assert settings is fake_settings
+        assert prepared_dir != output_dir
+        assert prepared_dir.is_dir()
+
+        files = list_publish_package_files(prepared_dir)
+        assert {file_path.name for file_path in files} == {
+            f"{APP_DIR_NAME}.zip",
+            f"{APP_DIR_NAME}_不要发布.zip",
+        }
 
         results = []
-        files = list_publish_package_files(output_dir)
         total_files = len(files)
         for index, file_path in enumerate(files, start=1):
             remote_path = (
                 f"ClientPackage_windows/0.1.238/"
-                f"{file_path.relative_to(output_dir).as_posix()}"
+                f"{file_path.relative_to(prepared_dir).as_posix()}"
             )
             if on_uploading is not None:
                 on_uploading(index, total_files, file_path, remote_path)
@@ -144,9 +236,12 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
     )
     output = capsys.readouterr().out
 
-    assert len(results) == 3
+    assert len(results) == 2
+    assert f"[TestUpload] uploadSourceDir={output_dir}" in output
+    assert "[TestUpload] uploadPreparedSource=" in output
     assert "[TestUpload] uploadBuildLabel=0.1.238" in output
     assert "[TestUpload] uploadRemoteRoot=ClientPackage_windows/0.1.238" in output
-    assert "[TestUpload] uploadProgress=1/3 state=uploading" in output
-    assert "[TestUpload] uploadProgress=3/3 state=uploaded" in output
-    assert "[TestUpload] uploadedFiles=3" in output
+    assert "[TestUpload] uploadFileCount=2" in output
+    assert "[TestUpload] uploadProgress=1/2 state=uploading" in output
+    assert "[TestUpload] uploadProgress=2/2 state=uploaded" in output
+    assert "[TestUpload] uploadedFiles=2" in output

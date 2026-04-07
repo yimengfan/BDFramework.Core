@@ -8,10 +8,13 @@ from __future__ import annotations
 3. 业务入口仍然是各平台 build_xxx.py，避免重新堆回 generic common.py。
 """
 
+from collections.abc import Callable
 import shutil
 import sys
+import tempfile
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+import zipfile
 
 
 BUILD_TOOLS_ROOT = Path(__file__).resolve().parents[1]
@@ -28,6 +31,9 @@ from unity3d_batchmode import UnityBatchModeError  # noqa: E402
 
 
 SKIPPED_OUTPUT_FILENAMES = {".DS_Store"}
+IOS_INFO_PLIST_FILENAME = "Info.plist"
+WINDOWS_LAUNCHER_FILENAME = "Launcher.exe"
+WINDOWS_DO_NOT_PUBLISH_DIRNAME = "不要发布"
 
 
 @dataclass(frozen=True)
@@ -35,6 +41,7 @@ class PublishPackageSummary:
     """描述一次母包上传前的本地输出概况。"""
 
     source_dir: Path
+    upload_source_path: Path
     build_label: str
     remote_root: str
     file_count: int
@@ -76,6 +83,145 @@ def list_publish_package_files(source_dir: Path) -> list[Path]:
     return files
 
 
+def _is_relative_to(path: Path, parent: Path) -> bool:
+    """兼容 Python 3.9 的 Path.is_relative_to 判定。"""
+    try:
+        path.relative_to(parent)
+    except ValueError:
+        return False
+    return True
+
+
+def _find_unique_publish_dir(
+    source_dir: Path,
+    *,
+    description: str,
+    predicate: Callable[[Path], bool],
+) -> Path:
+    """从母包输出目录中定位唯一的目标目录。"""
+    if predicate(source_dir):
+        return source_dir
+
+    candidates = [
+        child_path
+        for child_path in sorted(source_dir.iterdir())
+        if child_path.is_dir() and predicate(child_path)
+    ]
+    if not candidates:
+        raise UnityBatchModeError(f"{description} directory does not exist under: {source_dir}")
+    if len(candidates) > 1:
+        candidate_names = ", ".join(candidate.name for candidate in candidates)
+        raise UnityBatchModeError(
+            f"Multiple {description} directories found under {source_dir}: {candidate_names}"
+        )
+    return candidates[0]
+
+
+def find_ios_xcode_project_dir(source_dir: Path) -> Path:
+    """定位 iOS 导出的 Xcode 工程目录。"""
+    return _find_unique_publish_dir(
+        source_dir,
+        description="iOS Xcode project",
+        predicate=lambda candidate: (candidate / IOS_INFO_PLIST_FILENAME).is_file(),
+    )
+
+
+def find_windows_runtime_dir(source_dir: Path) -> Path:
+    """定位 Windows 可运行母包目录。"""
+    return _find_unique_publish_dir(
+        source_dir,
+        description="Windows runtime",
+        predicate=lambda candidate: (candidate / WINDOWS_LAUNCHER_FILENAME).is_file(),
+    )
+
+
+def find_windows_do_not_publish_dirs(runtime_dir: Path) -> list[Path]:
+    """收集 Windows 输出中需要单独归档的“不要发布”目录。"""
+    return [
+        candidate
+        for candidate in sorted(runtime_dir.rglob(WINDOWS_DO_NOT_PUBLISH_DIRNAME))
+        if candidate.is_dir()
+    ]
+
+
+def create_zip_archive(
+    zip_path: Path,
+    *,
+    source_root: Path,
+    file_paths: list[Path],
+    archive_root: PurePosixPath,
+) -> Path:
+    """按给定根目录把一组选中文件打成 zip。"""
+    members: list[tuple[Path, PurePosixPath]] = []
+    for file_path in sorted(file_paths):
+        if not file_path.is_file() or file_path.name in SKIPPED_OUTPUT_FILENAMES:
+            continue
+        relative_path = PurePosixPath(file_path.relative_to(source_root).as_posix())
+        members.append((file_path, archive_root / relative_path))
+
+    if not members:
+        raise UnityBatchModeError(f"No files found to archive from: {source_root}")
+
+    zip_path.parent.mkdir(parents=True, exist_ok=True)
+    if zip_path.exists():
+        zip_path.unlink()
+
+    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for local_path, archive_path in members:
+            archive.write(local_path, archive_path.as_posix())
+
+    return zip_path
+
+
+def prepare_publish_package_upload_source(
+    platform_key: str,
+    *,
+    source_dir: Path,
+    staging_dir: Path,
+) -> Path:
+    """根据平台把待上传母包整理成最终上传源目录。"""
+    if platform_key == "ios":
+        prepared_dir = staging_dir / platform_key
+        xcode_project_dir = find_ios_xcode_project_dir(source_dir)
+        create_zip_archive(
+            prepared_dir / f"{xcode_project_dir.name}.zip",
+            source_root=xcode_project_dir,
+            file_paths=list_publish_package_files(xcode_project_dir),
+            archive_root=PurePosixPath(xcode_project_dir.name),
+        )
+        return prepared_dir
+
+    if platform_key == "windows":
+        prepared_dir = staging_dir / platform_key
+        runtime_dir = find_windows_runtime_dir(source_dir)
+        do_not_publish_dirs = find_windows_do_not_publish_dirs(runtime_dir)
+
+        runtime_files = [
+            file_path
+            for file_path in list_publish_package_files(runtime_dir)
+            if not any(_is_relative_to(file_path, skipped_dir) for skipped_dir in do_not_publish_dirs)
+        ]
+        create_zip_archive(
+            prepared_dir / f"{runtime_dir.name}.zip",
+            source_root=runtime_dir,
+            file_paths=runtime_files,
+            archive_root=PurePosixPath(runtime_dir.name),
+        )
+
+        for skipped_dir in do_not_publish_dirs:
+            zip_suffix = skipped_dir.relative_to(runtime_dir).as_posix().replace("/", "_")
+            create_zip_archive(
+                prepared_dir / f"{runtime_dir.name}_{zip_suffix}.zip",
+                source_root=runtime_dir,
+                file_paths=list_publish_package_files(skipped_dir),
+                archive_root=PurePosixPath(runtime_dir.name),
+            )
+
+        return prepared_dir
+
+    return source_dir
+
+
 def resolve_upload_build_label(build_number: str | None, client_version: str) -> str:
     """解析上传目录版本段。
 
@@ -99,10 +245,12 @@ def build_publish_package_summary(
     project_dir: Path,
     build_number: str | None,
     client_version: str,
+    upload_source_path: Path | None = None,
 ) -> PublishPackageSummary:
     """扫描本地母包输出目录，并生成上传摘要。"""
     source_dir = get_publish_package_dir(platform_key, project_dir=project_dir)
-    files = list_publish_package_files(source_dir)
+    resolved_upload_source_path = upload_source_path or source_dir
+    files = list_publish_package_files(resolved_upload_source_path)
     build_label = resolve_upload_build_label(build_number, client_version)
     remote_root = build_artifact_remote_root(
         "client-package",
@@ -112,6 +260,7 @@ def build_publish_package_summary(
     total_bytes = sum(file_path.stat().st_size for file_path in files)
     return PublishPackageSummary(
         source_dir=source_dir,
+        upload_source_path=resolved_upload_source_path,
         build_label=build_label,
         remote_root=remote_root,
         file_count=len(files),
@@ -128,43 +277,54 @@ def upload_publish_package(
     log_prefix: str,
 ) -> list[UploadedArtifact]:
     """上传 Unity 默认输出目录下的母包，并输出适合 CI 观察的进度日志。"""
-    summary = build_publish_package_summary(
-        platform_key,
-        project_dir=project_dir,
-        build_number=build_number,
-        client_version=client_version,
-    )
+    source_dir = get_publish_package_dir(platform_key, project_dir=project_dir)
     settings = resolve_file_server_settings()
 
-    print(f"{log_prefix} uploadSourceDir={summary.source_dir}")
-    print(f"{log_prefix} uploadBuildLabel={summary.build_label}")
-    print(f"{log_prefix} uploadRemoteRoot={summary.remote_root}")
-    print(f"{log_prefix} uploadServerUrl={settings.base_url}")
-    if settings.config_path is not None:
-        print(f"{log_prefix} uploadConfig={settings.config_path}")
-    print(f"{log_prefix} uploadFileCount={summary.file_count}")
-    print(f"{log_prefix} uploadTotalBytes={summary.total_bytes}")
-
-    def on_uploading(index: int, total: int, local_path: Path, remote_path: str) -> None:
-        print(
-            f"{log_prefix} uploadProgress={index}/{total} state=uploading "
-            f"local={local_path} remote={remote_path}"
+    with tempfile.TemporaryDirectory(prefix=f"buildclientpackage_{platform_key}_") as temp_dir:
+        prepared_source_path = prepare_publish_package_upload_source(
+            platform_key,
+            source_dir=source_dir,
+            staging_dir=Path(temp_dir),
+        )
+        summary = build_publish_package_summary(
+            platform_key,
+            project_dir=project_dir,
+            build_number=build_number,
+            client_version=client_version,
+            upload_source_path=prepared_source_path,
         )
 
-    def on_uploaded(index: int, total: int, result: UploadedArtifact) -> None:
-        integrity_status = result.integrity_status or "unknown"
-        print(
-            f"{log_prefix} uploadProgress={index}/{total} state=uploaded "
-            f"remote={result.remote_path} size={result.size} integrity={integrity_status}"
-        )
+        print(f"{log_prefix} uploadSourceDir={summary.source_dir}")
+        if summary.upload_source_path != summary.source_dir:
+            print(f"{log_prefix} uploadPreparedSource={summary.upload_source_path}")
+        print(f"{log_prefix} uploadBuildLabel={summary.build_label}")
+        print(f"{log_prefix} uploadRemoteRoot={summary.remote_root}")
+        print(f"{log_prefix} uploadServerUrl={settings.base_url}")
+        if settings.config_path is not None:
+            print(f"{log_prefix} uploadConfig={settings.config_path}")
+        print(f"{log_prefix} uploadFileCount={summary.file_count}")
+        print(f"{log_prefix} uploadTotalBytes={summary.total_bytes}")
 
-    results = upload_client_package(
-        summary.source_dir,
-        platform=platform_key,
-        build_number=summary.build_label,
-        settings=settings,
-        on_uploading=on_uploading,
-        on_uploaded=on_uploaded,
-    )
-    print(f"{log_prefix} uploadedFiles={len(results)}")
-    return results
+        def on_uploading(index: int, total: int, local_path: Path, remote_path: str) -> None:
+            print(
+                f"{log_prefix} uploadProgress={index}/{total} state=uploading "
+                f"local={local_path} remote={remote_path}"
+            )
+
+        def on_uploaded(index: int, total: int, result: UploadedArtifact) -> None:
+            integrity_status = result.integrity_status or "unknown"
+            print(
+                f"{log_prefix} uploadProgress={index}/{total} state=uploaded "
+                f"remote={result.remote_path} size={result.size} integrity={integrity_status}"
+            )
+
+        results = upload_client_package(
+            summary.upload_source_path,
+            platform=platform_key,
+            build_number=summary.build_label,
+            settings=settings,
+            on_uploading=on_uploading,
+            on_uploaded=on_uploaded,
+        )
+        print(f"{log_prefix} uploadedFiles={len(results)}")
+        return results
