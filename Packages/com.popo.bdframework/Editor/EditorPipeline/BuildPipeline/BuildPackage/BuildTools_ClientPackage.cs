@@ -124,6 +124,14 @@ namespace BDFramework.Editor.BuildPipeline
             }
         }
 
+        static bool ShouldPrepareHybridClrForBuild()
+        {
+            var baseConfig = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
+            return baseConfig != null
+                   && baseConfig.CodeRoot != AssetLoadPathType.Editor
+                   && baseConfig.CodeRunMode == HotfixCodeRunMode.HyCLR;
+        }
+
         static BuildTargetGroup ResolveBuildTargetGroup(BuildTarget buildTarget)
         {
             var buildTargetGroup = UnityEditor.BuildPipeline.GetBuildTargetGroup(buildTarget);
@@ -398,10 +406,11 @@ namespace BDFramework.Editor.BuildPipeline
                 configOverrideContext = LoadConfig(buildScene, buildConfig, clientVersion);
                 buildPlayerSettingsScope = new BuildPlayerSettingsScope(buildMode);
 
-#if ENABLE_HYCLR
-                BDebug.Log("===>开始处理华佗", Color.magenta );
-                HyCLREditorTools.PreBuild(buildTarget);
-#endif
+                if (ShouldPrepareHybridClrForBuild())
+                {
+                    BDebug.Log("===>开始处理华佗", Color.magenta );
+                    HyCLREditorTools.PreBuild(buildTarget);
+                }
                 //1.生成资源到Devops
                 BDebug.Log("===>2.生成资产", Color.yellow );
                 var assetOutputPath = BApplication.DevOpsPublishAssetsPath;
