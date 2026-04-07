@@ -24,48 +24,48 @@ namespace BDFramework.Configure
         [Serializable]
         public class Config : ConfigDataBase
         {
-            [VerticalGroup("a")]
-            [HorizontalGroup("a/a1")]
-            [LabelText("代码路径")]
+            [VerticalGroupAttribute("a")]
+            [HorizontalGroupAttribute("a/a1")]
+            [LabelTextAttribute("代码路径")]
             public AssetLoadPathType CodeRoot = AssetLoadPathType.Editor;
 
-            [LabelText("SQLite路径")]
-            [HorizontalGroup("a/a2")]
+            [LabelTextAttribute("SQLite路径")]
+            [HorizontalGroupAttribute("a/a2")]
             public AssetLoadPathType SQLRoot = AssetLoadPathType.Editor;
 
-            [LabelText("资源路径")]
-            [HorizontalGroup("a/a3")]
+            [LabelTextAttribute("资源路径")]
+            [HorizontalGroupAttribute("a/a3")]
             public AssetLoadPathType ArtRoot = AssetLoadPathType.Editor;
 
 
-            [LabelText("热更代码执行模式")]
-            [HorizontalGroup("a/a4")]
+            [LabelTextAttribute("热更代码执行模式")]
+            [HorizontalGroupAttribute("a/a4")]
             public HotfixCodeRunMode CodeRunMode = HotfixCodeRunMode.HyCLR;
 
 
-            [LabelText("是否打印日志")]
-            [HorizontalGroup("a/a6")]
+            [LabelTextAttribute("是否打印日志")]
+            [HorizontalGroupAttribute("a/a6")]
             public bool IsDebugLog = true;
 
 
             [Space(5)]
-            [LabelText("客户端版本")]
-            [HorizontalGroup("a/a12")]
+            [LabelTextAttribute("客户端版本")]
+            [HorizontalGroupAttribute("a/a12")]
             public string ClientVersionNum = "0.0.0";
 
 #if UNITY_EDITOR
-            [HorizontalGroup("a/a12", width: 150)]
-            [LabelText("更新所有配置版本号")]
-            [Button]
-            [GUIColor(0, 1, 0)]
+            [HorizontalGroupAttribute("a/a12", width: 150)]
+            [LabelTextAttribute("更新所有配置版本号")]
+            [ButtonAttribute]
+            [GUIColorAttribute(0, 1, 0)]
             public void UpdateClientToAllConfig()
             {
                 ConfigEditorUtil.UpdateClientVersionToAll(ClientVersionNum);
             }
 #endif
 
-            [LabelText("语言包")]
-            [HorizontalGroup("a/a13")]
+            [LabelTextAttribute("语言包")]
+            [HorizontalGroupAttribute("a/a13")]
             public L2Type L2Type = L2Type.zh_CN;
 
             /// <summary>

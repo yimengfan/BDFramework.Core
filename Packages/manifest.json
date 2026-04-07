@@ -48,7 +48,6 @@
       "name": "package.openupm.com",
       "url": "https://package.openupm.com",
       "scopes": [
-        "com.ourpalm.ilruntime",
         "com.code-philosophy.hybridclr"
       ]
     }

@@ -18,17 +18,17 @@ namespace BDFramework.Configure
             /// <summary>
             /// 数据库密码
             /// </summary>
-            [LabelText("Sqlite密码")]
+            [LabelTextAttribute("Sqlite密码")]
             public string SqlitePassword = "password123!!!";
             /// <summary>
             /// 公钥
             /// </summary>
-            [LabelText("DLL公钥")]
+            [LabelTextAttribute("DLL公钥")]
             public string ScriptPubKey = "";
             /// <summary>
             /// 私钥
             /// </summary>
-            [LabelText("DLL私钥")]
+            [LabelTextAttribute("DLL私钥")]
             public string ScriptPrivateKey = "";
         }
 

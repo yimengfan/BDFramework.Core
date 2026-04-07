@@ -32,9 +32,9 @@ namespace AssetsManager.UnitTest
         public Transform Parent;
         public string Path;
 
-        [HorizontalGroup("a")]
-        [HorizontalGroup("a/a1")]
-        [Button("同步加载")]
+        [HorizontalGroupAttribute("a")]
+        [HorizontalGroupAttribute("a/a1")]
+        [ButtonAttribute("同步加载")]
         public void Btn_Load()
         {
             var go = BResources.Load<Object>(this.Path);
@@ -42,8 +42,8 @@ namespace AssetsManager.UnitTest
         }
 
 
-        [HorizontalGroup("a/a1")]
-        [Button("异步加载")]
+        [HorizontalGroupAttribute("a/a1")]
+        [ButtonAttribute("异步加载")]
         public void Async_Load()
         {
             BResources.AsyncLoad<GameObject>(this.Path, (go) =>
