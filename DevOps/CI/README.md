@@ -41,7 +41,7 @@
 | 目录 | 职责 | 说明文档 | 必跑验证 |
 | --- | --- | --- | --- |
 | `BuildTools/` | CI Python 脚本与公共模块目录 | `BuildTools/README.md` | 按子模块 README 执行对应 pytest、smoke test 与 TeamCity 验证 |
-| `BuildTools/BuildClientPackage/` | Unity 母包构建入口 | `BuildTools/BuildClientPackage/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_buildclientpackage_helpers.py DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py -q`；若改动影响 TeamCity，再执行受影响的 TeamCity 构建 |
+| `BuildTools/BuildClientPackage/` | Unity 母包构建入口 | `BuildTools/BuildClientPackage/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_buildclientpackage_helpers.py DevOps/CI/BuildTools/tests/test_buildclientpackage_batchmode.py DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py -q`；若改动影响 TeamCity，再执行受影响的 TeamCity 构建 |
 | `BuildTools/Common/` | 公共上传模块与配置解析 | `BuildTools/Common/README.md` | `python -m pytest -q DevOps/CI/BuildTools/tests/test_artifact_uploader.py`；若改动影响真实上传链路，再执行 remote smoke test |
 
 ## 变更检查清单

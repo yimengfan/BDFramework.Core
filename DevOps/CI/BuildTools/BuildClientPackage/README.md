@@ -15,10 +15,29 @@
 - `build_ios.py`
 - `build_windows.py`
 - `build_xcode.shell`
+- `_unity_batchmode_shared.py`
+- `_unity_batchmode_paths.py`
+- `_unity_batchmode_logs.py`
 - `unity3d_batchmode.py`
 - `package_artifacts.py`
 - `config/settings.py`
 - `common.py`（废弃兼容占位，不再承载流程）
+
+## 共享层维护标准
+
+- `build_android.py` / `build_ios.py` / `build_windows.py` 继续作为平台流程主体，负责步骤编排、阶段日志、失败出口和上传时机。
+- `unity3d_batchmode.py` 只保留稳定导出接口与职责说明，不再新增具体实现。
+- Unity 路径、宿主机差异、工程目录推导统一放进 `_unity_batchmode_paths.py`。
+- Unity 进程调用、`-logFile` 增量输出和日志尾部读取统一放进 `_unity_batchmode_logs.py`。
+- 配置读取、异常、CI 元数据、日志路径拼装、命令参数拼装等纯共享 helper 放进 `_unity_batchmode_shared.py`。
+- 新增共享逻辑时，如果它需要知道平台业务、上传策略或流程顺序，就不要放进共享层。
+- 共享层行为有变化时，必须同步更新 pytest、README 中的行为描述，以及受影响的步骤日志断言。
+
+## 验证命令
+
+```bash
+python -m pytest DevOps/CI/BuildTools/tests/test_buildclientpackage_helpers.py DevOps/CI/BuildTools/tests/test_buildclientpackage_batchmode.py DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py -q
+```
 
 ## TeamCity 自动化映射
 
@@ -327,6 +346,7 @@ $env:UNITY_PATH = 'C:\Program Files\Unity\Hub\Editor\2021.3.58f1\Editor\Unity.ex
 
 - 新平台脚本继续保持 `build_xxx.py` 为流程主体
 - 新增共通逻辑时，先判断它是否真的只属于 Unity 调用层
+- `unity3d_batchmode.py` 只做导出层；新增实现直接放到 `_unity_batchmode_*.py`
 - 如果不是纯 Unity 调用辅助，不要继续塞进共享模块
 
 ## 与 TeamCity 同步时必须检查的项
