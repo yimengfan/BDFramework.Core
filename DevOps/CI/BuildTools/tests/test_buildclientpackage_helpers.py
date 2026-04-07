@@ -19,7 +19,7 @@ from package_artifacts import (
     prepare_publish_package_upload_source,
     upload_publish_package,
 )
-from unity3d_batchmode import get_ci_log_root_name
+from unity3d_batchmode import cleanup_stale_hybridclr_outputs, get_ci_log_root_name
 
 
 APP_DIR_NAME = "com.popo.bdframework.demo"
@@ -101,6 +101,33 @@ def test_clear_publish_package_dir_recreates_empty_directory(tmp_path: Path) -> 
     assert cleared_dir.exists()
     assert cleared_dir.is_dir()
     assert list(cleared_dir.iterdir()) == []
+
+
+def test_cleanup_stale_hybridclr_outputs_removes_legacy_generated_files(tmp_path: Path) -> None:
+    legacy_dir = tmp_path / "Assets" / "HybridCLRGenerate"
+    legacy_dir.mkdir(parents=True)
+    legacy_aot_file = legacy_dir / "AOTGenericReferences.cs"
+    legacy_link_file = legacy_dir / "link.xml"
+    legacy_aot_meta = Path(f"{legacy_aot_file}.meta")
+    legacy_link_meta = Path(f"{legacy_link_file}.meta")
+    legacy_aot_file.write_text("public class AOTGenericReferences {}", encoding="utf-8")
+    legacy_link_file.write_text("<linker />", encoding="utf-8")
+    legacy_aot_meta.write_text("meta", encoding="utf-8")
+    legacy_link_meta.write_text("meta", encoding="utf-8")
+
+    removed_paths = cleanup_stale_hybridclr_outputs(tmp_path)
+
+    assert removed_paths == (
+        legacy_aot_file,
+        legacy_aot_meta,
+        legacy_link_file,
+        legacy_link_meta,
+    )
+    assert not legacy_aot_file.exists()
+    assert not legacy_aot_meta.exists()
+    assert not legacy_link_file.exists()
+    assert not legacy_link_meta.exists()
+    assert not legacy_dir.exists()
 
 
 def test_build_publish_package_summary_prefers_build_number(tmp_path: Path) -> None:

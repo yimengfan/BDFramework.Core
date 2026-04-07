@@ -606,6 +606,39 @@ def extract_log_path_from_command(command: Sequence[str]) -> Path | None:
     return None
 
 
+def extract_project_dir_from_command(command: Sequence[str]) -> Path | None:
+    """从 Unity 命令行参数中提取 -projectPath 对应目录。"""
+    for index, value in enumerate(command[:-1]):
+        if value == "-projectPath":
+            return Path(command[index + 1])
+    return None
+
+
+def cleanup_stale_hybridclr_outputs(project_dir: Path) -> tuple[Path, ...]:
+    """在启动 Unity 前清理旧的 HybridCLR 生成物，避免触发重复脚本编译。"""
+    legacy_dir = project_dir / "Assets" / "HybridCLRGenerate"
+    removed_paths: list[Path] = []
+
+    for relative_path in ("AOTGenericReferences.cs", "link.xml"):
+        legacy_path = legacy_dir / relative_path
+        if legacy_path.exists():
+            legacy_path.unlink()
+            removed_paths.append(legacy_path)
+
+        legacy_meta_path = Path(f"{legacy_path}.meta")
+        if legacy_meta_path.exists():
+            legacy_meta_path.unlink()
+            removed_paths.append(legacy_meta_path)
+
+    if legacy_dir.exists():
+        try:
+            legacy_dir.rmdir()
+        except OSError:
+            pass
+
+    return tuple(removed_paths)
+
+
 def classify_unity_log_line(line: str, state: UnityLogStreamingState) -> None:
     """根据日志内容识别构建完成/失败标记。"""
     normalized_line = line.casefold()
@@ -694,6 +727,12 @@ def run_batchmode(command: Sequence[str], *, dry_run: bool = False) -> int:
     if dry_run:
         safe_console_print("[UnityBatchMode] dry-run enabled, skip Unity execution.")
         return 0
+
+    project_dir = extract_project_dir_from_command(command)
+    if project_dir is not None:
+        removed_paths = cleanup_stale_hybridclr_outputs(project_dir)
+        for removed_path in removed_paths:
+            safe_console_print(f"[UnityBatchMode] removed stale HybridCLR output: {removed_path}")
 
     log_path = extract_log_path_from_command(command)
     if log_path is None:
