@@ -647,6 +647,13 @@ def build_request_path(base_url: str, remote_path: str, overwrite: bool | None) 
 	return request_path
 
 
+def build_download_request_path(base_url: str, remote_path: str) -> str:
+	"""生成文件下载请求路径。"""
+	parsed = urlparse(base_url)
+	base_path = parsed.path.rstrip("/")
+	return f"{base_path}/files/{quote(remote_path, safe='/')}"
+
+
 def create_http_connection(base_url: str, *, timeout_seconds: int) -> http.client.HTTPConnection:
 	"""为目标服务创建 HTTP 连接。"""
 	parsed = urlparse(base_url)
@@ -666,6 +673,127 @@ def parse_upload_response_body(response_body: bytes) -> dict[str, Any]:
 	except (UnicodeDecodeError, json.JSONDecodeError):
 		return {}
 	return payload if isinstance(payload, dict) else {}
+
+
+def build_authorization_headers(settings: FileServerClientSettings) -> dict[str, str]:
+	"""构建共享鉴权请求头。"""
+	if not settings.token:
+		return {}
+	return {"Authorization": f"Bearer {settings.token}"}
+
+
+def fetch_remote_metadata(
+	*,
+	remote_path: str,
+	settings: FileServerClientSettings,
+	timeout_seconds: int,
+) -> tuple[int, dict[str, Any], bytes]:
+	"""读取远端文件元数据。"""
+	request_path = build_request_path(settings.base_url, remote_path, overwrite=None)
+	connection = create_http_connection(settings.base_url, timeout_seconds=timeout_seconds)
+	try:
+		connection.request("GET", request_path, headers=build_authorization_headers(settings))
+		response = connection.getresponse()
+		response_body = response.read()
+	finally:
+		connection.close()
+
+	return response.status, parse_upload_response_body(response_body), response_body
+
+
+def fetch_remote_download_sha256(
+	*,
+	remote_path: str,
+	settings: FileServerClientSettings,
+	timeout_seconds: int,
+) -> tuple[int, str | None, int | None]:
+	"""下载远端文件并计算 SHA256，用于上传失败后的恢复确认。"""
+	request_path = build_download_request_path(settings.base_url, remote_path)
+	connection = create_http_connection(settings.base_url, timeout_seconds=timeout_seconds)
+	try:
+		connection.request("GET", request_path, headers=build_authorization_headers(settings))
+		response = connection.getresponse()
+		if response.status != 200:
+			response.read()
+			return response.status, None, None
+
+		hasher = hashlib.sha256()
+		total_size = 0
+		while True:
+			chunk = response.read(settings.hash_chunk_size_bytes)
+			if not chunk:
+				break
+			total_size += len(chunk)
+			hasher.update(chunk)
+	finally:
+		connection.close()
+
+	return 200, hasher.hexdigest(), total_size
+
+
+def try_recover_failed_upload(
+	*,
+	remote_path: str,
+	local_path: Path,
+	file_size: int,
+	sha256: str,
+	response_status: int,
+	settings: FileServerClientSettings,
+	timeout_seconds: int,
+) -> tuple[UploadedArtifact | None, str]:
+	"""当服务端返回 5xx 时，尝试确认文件是否其实已经成功落盘。"""
+	metadata_status, metadata_payload, _ = fetch_remote_metadata(
+		remote_path=remote_path,
+		settings=settings,
+		timeout_seconds=timeout_seconds,
+	)
+	if metadata_status != 200:
+		return None, f"metadata status={metadata_status}"
+
+	remote_size = int(metadata_payload.get("size") or file_size)
+	resolved_remote_path = str(metadata_payload.get("path") or remote_path)
+	remote_sha256 = str(metadata_payload.get("sha256") or "").strip()
+	integrity_status = (
+		str(metadata_payload.get("integrity_status"))
+		if metadata_payload.get("integrity_status") is not None
+		else None
+	)
+
+	if remote_size != file_size:
+		return None, f"metadata size_mismatch expected={file_size} actual={remote_size}"
+
+	if remote_sha256:
+		if remote_sha256 != sha256:
+			return None, f"metadata sha256_mismatch expected={sha256} actual={remote_sha256}"
+		return UploadedArtifact(
+			local_path=local_path,
+			remote_path=resolved_remote_path,
+			size=remote_size,
+			sha256=remote_sha256,
+			status_code=response_status,
+			integrity_status=integrity_status,
+		), "metadata verified"
+
+	download_status, downloaded_sha256, downloaded_size = fetch_remote_download_sha256(
+		remote_path=remote_path,
+		settings=settings,
+		timeout_seconds=timeout_seconds,
+	)
+	if download_status != 200:
+		return None, f"download status={download_status}"
+	if downloaded_size != file_size:
+		return None, f"download size_mismatch expected={file_size} actual={downloaded_size}"
+	if downloaded_sha256 != sha256:
+		return None, f"download sha256_mismatch expected={sha256} actual={downloaded_sha256}"
+
+	return UploadedArtifact(
+		local_path=local_path,
+		remote_path=resolved_remote_path,
+		size=remote_size,
+		sha256=sha256,
+		status_code=response_status,
+		integrity_status=integrity_status,
+	), "download verified"
 
 
 def upload_single_file(
@@ -704,8 +832,7 @@ def upload_single_file(
 		"Content-Type": content_type,
 		"X-Checksum-Sha256": sha256,
 	}
-	if settings.token:
-		headers["Authorization"] = f"Bearer {settings.token}"
+	headers.update(build_authorization_headers(settings))
 
 	connection = create_http_connection(settings.base_url, timeout_seconds=timeout_seconds)
 	try:
@@ -730,6 +857,19 @@ def upload_single_file(
 	payload = parse_upload_response_body(response_body)
 	if response.status != 201:
 		message = payload.get("detail") or response_body.decode("utf-8", errors="replace")
+		if response.status >= 500:
+			recovered_artifact, recovery_check = try_recover_failed_upload(
+				remote_path=resolved_remote_path,
+				local_path=resolved_local_path,
+				file_size=file_size,
+				sha256=sha256,
+				response_status=response.status,
+				settings=settings,
+				timeout_seconds=timeout_seconds,
+			)
+			if recovered_artifact is not None:
+				return recovered_artifact
+			message = f"{message}, recovery_check={recovery_check}"
 		raise ArtifactUploadError(
 			"File upload failed. "
 			f"local={resolved_local_path}, remote={resolved_remote_path}, "
