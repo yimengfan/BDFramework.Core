@@ -23,7 +23,10 @@ from urllib.parse import quote, urlencode, urlparse
 try:
 	import tomllib
 except ModuleNotFoundError:  # pragma: no cover - Python < 3.11 fallback
-	import tomli as tomllib
+	try:
+		import tomli as tomllib
+	except ModuleNotFoundError:  # pragma: no cover - TeamCity old Python fallback
+		tomllib = None
 
 
 DEFAULT_TIMEOUT_SECONDS = 600
@@ -99,10 +102,191 @@ def parse_token_values(value: Any) -> tuple[str, ...]:
 	return tuple(unique_items)
 
 
+def split_toml_value_and_comment(line: str) -> str:
+	"""移除 TOML 行内注释，忽略字符串内部的 #。"""
+	in_single_quote = False
+	in_double_quote = False
+
+	for index, char in enumerate(line):
+		if char == '"' and not in_single_quote:
+			is_escaped = index > 0 and line[index - 1] == "\\"
+			if not is_escaped:
+				in_double_quote = not in_double_quote
+		elif char == "'" and not in_double_quote:
+			in_single_quote = not in_single_quote
+		elif char == "#" and not in_single_quote and not in_double_quote:
+			return line[:index].rstrip()
+
+	return line.rstrip()
+
+
+def find_toml_delimiter(value: str, delimiter: str) -> int:
+	"""在忽略字符串和数组内部内容时查找分隔符。"""
+	in_single_quote = False
+	in_double_quote = False
+	array_depth = 0
+
+	for index, char in enumerate(value):
+		if char == '"' and not in_single_quote:
+			is_escaped = index > 0 and value[index - 1] == "\\"
+			if not is_escaped:
+				in_double_quote = not in_double_quote
+		elif char == "'" and not in_double_quote:
+			in_single_quote = not in_single_quote
+		elif not in_single_quote and not in_double_quote:
+			if char == "[":
+				array_depth += 1
+			elif char == "]":
+				array_depth = max(0, array_depth - 1)
+			elif char == delimiter and array_depth == 0:
+				return index
+
+	return -1
+
+
+def split_toml_array_items(raw_value: str) -> list[str]:
+	"""按最小 TOML 规则拆分数组元素。"""
+	items: list[str] = []
+	current: list[str] = []
+	in_single_quote = False
+	in_double_quote = False
+	array_depth = 0
+
+	for index, char in enumerate(raw_value):
+		if char == '"' and not in_single_quote:
+			is_escaped = index > 0 and raw_value[index - 1] == "\\"
+			if not is_escaped:
+				in_double_quote = not in_double_quote
+			current.append(char)
+			continue
+
+		if char == "'" and not in_double_quote:
+			in_single_quote = not in_single_quote
+			current.append(char)
+			continue
+
+		if not in_single_quote and not in_double_quote:
+			if char == "[":
+				array_depth += 1
+			elif char == "]":
+				array_depth = max(0, array_depth - 1)
+			elif char == "," and array_depth == 0:
+				item = "".join(current).strip()
+				if not item:
+					raise ArtifactUploadError("Minimal TOML parser does not support empty array items.")
+				items.append(item)
+				current = []
+				continue
+
+		current.append(char)
+
+	last_item = "".join(current).strip()
+	if last_item:
+		items.append(last_item)
+	return items
+
+
+def parse_minimal_toml_value(raw_value: str) -> Any:
+	"""解析 BuildTools 需要的最小 TOML 值类型。"""
+	value = raw_value.strip()
+	if not value:
+		raise ArtifactUploadError("Minimal TOML parser received an empty value.")
+
+	if value.startswith("["):
+		if not value.endswith("]"):
+			raise ArtifactUploadError(f"Minimal TOML parser found an unterminated array: {value!r}")
+		inner = value[1:-1].strip()
+		if not inner:
+			return []
+		return [parse_minimal_toml_value(item) for item in split_toml_array_items(inner)]
+
+	if value.startswith('"'):
+		try:
+			return json.loads(value)
+		except json.JSONDecodeError as exc:
+			raise ArtifactUploadError(f"Minimal TOML parser failed to decode string: {value!r}") from exc
+
+	if value.startswith("'") and value.endswith("'") and len(value) >= 2:
+		return value[1:-1]
+
+	if value in {"true", "false"}:
+		return value == "true"
+
+	numeric_value = value[1:] if value.startswith(("+", "-")) else value
+	if numeric_value.isdigit():
+		return int(value, 10)
+
+	raise ArtifactUploadError(
+		"Minimal TOML parser only supports strings, integers, booleans, and arrays. "
+		f"Unsupported value: {value!r}"
+	)
+
+
+def ensure_toml_table(root: dict[str, Any], section_name: str) -> dict[str, Any]:
+	"""按 section 路径创建并返回 TOML 表。"""
+	section_parts = [part.strip() for part in section_name.split(".")]
+	if not section_parts or any(not part for part in section_parts):
+		raise ArtifactUploadError(f"Minimal TOML parser found an invalid table name: {section_name!r}")
+
+	current: dict[str, Any] = root
+	for part in section_parts:
+		next_value = current.get(part)
+		if next_value is None:
+			next_table: dict[str, Any] = {}
+			current[part] = next_table
+			current = next_table
+			continue
+		if not isinstance(next_value, dict):
+			raise ArtifactUploadError(
+				"Minimal TOML parser cannot redefine a value as a table. "
+				f"section={section_name!r}"
+			)
+		current = next_value
+	return current
+
+
+def load_minimal_toml(content: str) -> dict[str, Any]:
+	"""解析 BuildTools 当前配置形状所需的最小 TOML 子集。"""
+	result: dict[str, Any] = {}
+	current_table = result
+
+	for line_number, raw_line in enumerate(content.splitlines(), start=1):
+		line = split_toml_value_and_comment(raw_line).strip()
+		if not line:
+			continue
+
+		if line.startswith("["):
+			if not line.endswith("]"):
+				raise ArtifactUploadError(
+					f"Minimal TOML parser found an unterminated table header at line {line_number}: {raw_line!r}"
+				)
+			section_name = line[1:-1].strip()
+			current_table = ensure_toml_table(result, section_name)
+			continue
+
+		delimiter_index = find_toml_delimiter(line, "=")
+		if delimiter_index < 0:
+			raise ArtifactUploadError(
+				f"Minimal TOML parser expected key/value assignment at line {line_number}: {raw_line!r}"
+			)
+
+		key = line[:delimiter_index].strip()
+		if not key:
+			raise ArtifactUploadError(f"Minimal TOML parser found an empty key at line {line_number}.")
+
+		value = line[delimiter_index + 1 :].strip()
+		current_table[key] = parse_minimal_toml_value(value)
+
+	return result
+
+
 def load_toml_file(path: Path) -> dict[str, Any]:
 	"""读取 TOML 配置文件。"""
-	with path.open("rb") as handle:
-		data = tomllib.load(handle)
+	if tomllib is not None:
+		with path.open("rb") as handle:
+			data = tomllib.load(handle)
+	else:
+		data = load_minimal_toml(path.read_text(encoding="utf-8"))
 	if not isinstance(data, dict):
 		raise ArtifactUploadError(f"Config root must be a TOML table: {path}")
 	return data
