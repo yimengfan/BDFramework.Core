@@ -64,6 +64,7 @@ namespace BDFramework.Editor.HotfixScript
 
 
             var tag = $"[HCLR] PreBuild for {target}";
+            Debug.Log($"[HCLR] PreBuild start target={target}");
             BDebug.LogWatchBegin(tag);
             {
                 BDebug.Log("[HCLR]start:", Color.green);
@@ -78,13 +79,14 @@ namespace BDFramework.Editor.HotfixScript
                 CopyAOTMetadataDLL(sourceDir,Application.streamingAssetsPath, target);
             }
             BDebug.LogWatchEnd(tag);
+            Debug.Log($"[HCLR] PreBuild finished target={target}");
         }
 
         static void EnsureHybridClrInstalled(HybridCLR.Editor.Installer.InstallerController installer)
         {
             if (installer.HasInstalledHybridCLR())
             {
-                BDebug.Log("[HCLR]华佗已经安装,跳过", Color.green);
+                Debug.Log($"[HCLR] 本地安装已存在: {SettingsUtil.LocalIl2CppDir}");
                 return;
             }
 

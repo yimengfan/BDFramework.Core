@@ -12,6 +12,7 @@ using BDFramework.Editor.Inspector.Config;
 using BDFramework.Editor.Tools;
 using BDFramework.Editor.Tools.RuntimeEditor;
 using BDFramework.ResourceMgr;
+using HybridCLR.Editor.Settings;
 using UnityEditor.SceneManagement;
 using Debug = UnityEngine.Debug;
 
@@ -124,12 +125,35 @@ namespace BDFramework.Editor.BuildPipeline
             }
         }
 
-        static bool ShouldPrepareHybridClrForBuild()
+        static bool ShouldPrepareHybridClrForBuild(BuildTargetGroup buildTargetGroup, out string reason)
         {
             var baseConfig = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
-            return baseConfig != null
-                   && baseConfig.CodeRoot != AssetLoadPathType.Editor
-                   && baseConfig.CodeRunMode == HotfixCodeRunMode.HyCLR;
+            var scriptingBackend = PlayerSettings.GetScriptingBackend(buildTargetGroup);
+            var hybridClrSettings = HybridCLRSettings.Instance;
+
+            var matchesGameConfig = baseConfig != null
+                                    && baseConfig.CodeRoot != AssetLoadPathType.Editor
+                                    && baseConfig.CodeRunMode == HotfixCodeRunMode.HyCLR;
+            if (matchesGameConfig)
+            {
+                reason = $"gameConfig CodeRoot={baseConfig.CodeRoot} CodeRunMode={baseConfig.CodeRunMode}";
+                return true;
+            }
+
+            var packageRequiresPreparedHybridClr = hybridClrSettings != null
+                                                   && hybridClrSettings.enable
+                                                   && !hybridClrSettings.useGlobalIl2cpp
+                                                   && scriptingBackend == ScriptingImplementation.IL2CPP;
+            if (packageRequiresPreparedHybridClr)
+            {
+                var codeRoot = baseConfig != null ? baseConfig.CodeRoot.ToString() : "<null>";
+                var codeRunMode = baseConfig != null ? baseConfig.CodeRunMode.ToString() : "<null>";
+                reason = $"hybridClrPackage enabled for IL2CPP build CodeRoot={codeRoot} CodeRunMode={codeRunMode}";
+                return true;
+            }
+
+            reason = $"skip CodeRoot={(baseConfig != null ? baseConfig.CodeRoot.ToString() : "<null>")} CodeRunMode={(baseConfig != null ? baseConfig.CodeRunMode.ToString() : "<null>")} scriptingBackend={scriptingBackend} hybridClrEnabled={(hybridClrSettings != null ? hybridClrSettings.enable.ToString() : "<null>")} useGlobalIl2cpp={(hybridClrSettings != null ? hybridClrSettings.useGlobalIl2cpp.ToString() : "<null>")}";
+            return false;
         }
 
         static BuildTargetGroup ResolveBuildTargetGroup(BuildTarget buildTarget)
@@ -406,10 +430,13 @@ namespace BDFramework.Editor.BuildPipeline
                 configOverrideContext = LoadConfig(buildScene, buildConfig, clientVersion);
                 buildPlayerSettingsScope = new BuildPlayerSettingsScope(buildMode);
 
-                if (ShouldPrepareHybridClrForBuild())
+                var shouldPrepareHybridClr = ShouldPrepareHybridClrForBuild(buildTargetGroup, out var hybridClrPrepareReason);
+                Debug.Log($"【BuildPackage】 HybridCLR 预处理判定 => shouldPrepare:{shouldPrepareHybridClr} reason:{hybridClrPrepareReason}");
+                if (shouldPrepareHybridClr)
                 {
-                    BDebug.Log("===>开始处理华佗", Color.magenta );
+                    Debug.Log($"【BuildPackage】 开始执行 HybridCLR 预处理: {hybridClrPrepareReason}");
                     HyCLREditorTools.PreBuild(buildTarget);
+                    Debug.Log("【BuildPackage】 HybridCLR 预处理完成");
                 }
                 //1.生成资源到Devops
                 BDebug.Log("===>2.生成资产", Color.yellow );
