@@ -28,6 +28,7 @@
 
 - 如果改动模块已经接入 TeamCity，或者本次修改会影响 TeamCity DSL、构建参数、脚本入口、步骤日志、输出目录、上传逻辑，就必须执行受影响的 TeamCity 测试。
 - 验证时至少确认：任务最终状态、关键流程日志、产物路径或远端上传目录。
+- 通过 TeamCity Web API 或辅助脚本手动触发验证任务时，必须带上 `Comment` 和 `Tags`；`Comment` 至少要明确这次测试对应的目标 buildType。
 - TeamCity 执行与排查入口统一维护在 `../../.test-DevOps/README.md` 和 `../../.test-DevOps/teamcityskill/README.md`。
 
 ### 4. 文档拆分原则
