@@ -120,16 +120,33 @@ def test_prepare_assetbundle_upload_source_requires_declared_art_assets_files(tm
     output_root = tmp_path / "output"
     platform_dir = output_root / "ios"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
+    (platform_dir / ART_ASSETS_DIRNAME / "existing.bundle").write_bytes(b"bundle")
     (platform_dir / ART_ASSETS_DIRNAME / "buildlogtep.json").write_text("{}", encoding="utf-8")
     (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
     (platform_dir / ASSETS_INFO_FILENAME).write_text(
-        "1,100,art_assets/real.bundle,0.1\n2,101,art_assets/buildlogtep.json,0.2\n",
+        "1,100,art_assets/existing.bundle,0.1\n2,101,art_assets/real.bundle,0.2\n3,102,art_assets/buildlogtep.json,0.3\n",
         encoding="utf-8",
     )
 
     with pytest.raises(ClientResourceArtifactsError, match="missing declared art_assets files"):
         prepare_assetbundle_upload_source(
             "ios",
+            output_root=output_root,
+            staging_dir=tmp_path / "staging",
+        )
+
+
+def test_prepare_assetbundle_upload_source_requires_real_payload_file(tmp_path: Path) -> None:
+    output_root = tmp_path / "output"
+    platform_dir = output_root / "android"
+    (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
+    (platform_dir / ART_ASSETS_DIRNAME / "buildlogtep.json").write_text("{}", encoding="utf-8")
+    (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
+    (platform_dir / ASSETS_INFO_FILENAME).write_text("header-only", encoding="utf-8")
+
+    with pytest.raises(ClientResourceArtifactsError, match="does not contain any real art_assets payload files"):
+        prepare_assetbundle_upload_source(
+            "android",
             output_root=output_root,
             staging_dir=tmp_path / "staging",
         )

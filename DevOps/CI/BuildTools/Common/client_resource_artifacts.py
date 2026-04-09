@@ -532,22 +532,20 @@ def validate_assetbundle_upload_source(prepared_dir: Path) -> None:
     if optional_subpack.exists():
         declared_art_asset_paths.update(parse_assetbundle_manifest_paths(optional_subpack))
 
-    if not declared_art_asset_paths:
+    if not has_real_assetbundle_payload(actual_art_asset_paths):
         raise ClientResourceArtifactsError(
-            f"ClientRes assetbundle manifest does not declare any art_assets files: {prepared_dir / ASSETS_INFO_FILENAME}"
+            "ClientRes assetbundle staging does not contain any real art_assets payload files. "
+            f"actual={sorted(actual_art_asset_paths)}"
         )
+
+    if not declared_art_asset_paths:
+        return
 
     missing_art_asset_paths = sorted(declared_art_asset_paths - actual_art_asset_paths)
     if missing_art_asset_paths:
         raise ClientResourceArtifactsError(
             "ClientRes assetbundle staging is missing declared art_assets files. "
             f"missing={missing_art_asset_paths}"
-        )
-
-    if not has_real_assetbundle_payload(actual_art_asset_paths):
-        raise ClientResourceArtifactsError(
-            "ClientRes assetbundle staging does not contain any real art_assets payload files. "
-            f"actual={sorted(actual_art_asset_paths)}"
         )
 
 
