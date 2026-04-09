@@ -21,13 +21,17 @@ from Common.client_resource_artifacts import (  # noqa: E402
     SCRIPT_DIRNAME,
     SERVER_DATA_DIRNAME,
     SERVER_DB_FILENAME,
+    build_expected_remote_files,
     build_upload_summary,
     list_source_files,
     prepare_assetbundle_upload_source,
     prepare_clean_ci_output_root,
     prepare_code_upload_source,
     prepare_table_upload_source,
+    upload_client_res_assetbundle,
+    validate_uploaded_artifacts,
 )
+from Common.artifact_uploader import FileServerClientSettings, UploadedArtifact  # noqa: E402
 
 
 def test_prepare_clean_ci_output_root_recreates_existing_directory(tmp_path: Path) -> None:
@@ -140,3 +144,187 @@ def test_build_upload_summary_uses_new_remote_layout_names(tmp_path: Path) -> No
     assert summary.file_count == 1
     assert summary.total_bytes == len(b"client")
     assert list_source_files(prepared_dir) == [prepared_dir / "client.db"]
+
+
+def test_validate_uploaded_artifacts_checks_remote_listing_and_logs_success(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    prepared_dir = tmp_path / "prepared"
+    (prepared_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
+    first_file = prepared_dir / ART_ASSETS_DIRNAME / "first.bundle"
+    second_file = prepared_dir / PACKAGE_BUILD_INFO_FILENAME
+    first_file.write_bytes(b"bundle")
+    second_file.write_text("pkg", encoding="utf-8")
+
+    summary = build_upload_summary(
+        prepared_dir,
+        artifact_type="asset-bundle",
+        platform="android",
+        build_label="42",
+    )
+    expected_files = build_expected_remote_files(prepared_dir, remote_root=summary.remote_root)
+    results = [
+        UploadedArtifact(
+            local_path=local_path,
+            remote_path=remote_path,
+            size=local_path.stat().st_size,
+            sha256=f"sha-{index}",
+            status_code=201,
+            integrity_status="verified",
+        )
+        for index, (local_path, remote_path) in enumerate(expected_files, start=1)
+    ]
+
+    def fake_fetch_remote_listing(*, prefix, settings, recursive, limit, timeout_seconds):
+        assert prefix == summary.remote_root
+        assert recursive is True
+        assert limit >= summary.file_count
+        return 200, {
+            "count": len(expected_files),
+            "entries": [
+                {
+                    "path": remote_path,
+                    "type": "file",
+                    "size": local_path.stat().st_size,
+                }
+                for local_path, remote_path in expected_files
+            ],
+        }, b""
+
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.fetch_remote_listing",
+        fake_fetch_remote_listing,
+    )
+
+    validate_uploaded_artifacts(
+        summary,
+        results=results,
+        settings=FileServerClientSettings(base_url="http://fileserver", token=None, config_path=None),
+        log_prefix="[TestUpload]",
+    )
+
+    output = capsys.readouterr().out
+    assert "[TestUpload] uploadVerifiedFiles=2" in output
+    assert "[TestUpload] uploadVerifiedRemoteFiles=2" in output
+
+
+def test_validate_uploaded_artifacts_raises_when_remote_listing_misses_file(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    prepared_dir = tmp_path / "prepared"
+    (prepared_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
+    first_file = prepared_dir / ART_ASSETS_DIRNAME / "first.bundle"
+    second_file = prepared_dir / PACKAGE_BUILD_INFO_FILENAME
+    first_file.write_bytes(b"bundle")
+    second_file.write_text("pkg", encoding="utf-8")
+
+    summary = build_upload_summary(
+        prepared_dir,
+        artifact_type="asset-bundle",
+        platform="windows",
+        build_label="501",
+    )
+    expected_files = build_expected_remote_files(prepared_dir, remote_root=summary.remote_root)
+    results = [
+        UploadedArtifact(
+            local_path=local_path,
+            remote_path=remote_path,
+            size=local_path.stat().st_size,
+            sha256=f"sha-{index}",
+            status_code=201,
+            integrity_status="verified",
+        )
+        for index, (local_path, remote_path) in enumerate(expected_files, start=1)
+    ]
+
+    def fake_fetch_remote_listing(*, prefix, settings, recursive, limit, timeout_seconds):
+        return 200, {
+            "count": 1,
+            "entries": [
+                {
+                    "path": expected_files[0][1],
+                    "type": "file",
+                    "size": expected_files[0][0].stat().st_size,
+                }
+            ],
+        }, b""
+
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.fetch_remote_listing",
+        fake_fetch_remote_listing,
+    )
+
+    with pytest.raises(ClientResourceArtifactsError, match="Missing remote uploaded files"):
+        validate_uploaded_artifacts(
+            summary,
+            results=results,
+            settings=FileServerClientSettings(base_url="http://fileserver", token=None, config_path=None),
+            log_prefix="[TestUpload]",
+        )
+
+
+def test_upload_client_res_assetbundle_invokes_aggregate_validation(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    output_root = tmp_path / "output"
+    platform_dir = output_root / "android"
+    (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
+    (platform_dir / ART_ASSETS_DIRNAME / "catalog.bytes").write_bytes(b"catalog")
+    (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
+    (platform_dir / ASSETS_INFO_FILENAME).write_text("assets", encoding="utf-8")
+
+    settings = FileServerClientSettings(base_url="http://fileserver", token=None, config_path=None)
+    captured: dict[str, object] = {}
+
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.resolve_file_server_settings",
+        lambda: settings,
+    )
+
+    def fake_upload_asset_bundle(*args, **kwargs):
+        source_path = Path(args[0])
+        files = list_source_files(source_path)
+        remote_root = "ClientRes_Assetbundle_android/77"
+        return [
+            UploadedArtifact(
+                local_path=file_path,
+                remote_path=f"{remote_root}/{file_path.relative_to(source_path).as_posix()}",
+                size=file_path.stat().st_size,
+                sha256=f"sha-{index}",
+                status_code=201,
+                integrity_status="verified",
+            )
+            for index, file_path in enumerate(files, start=1)
+        ]
+
+    def fake_validate(summary, *, results, settings, log_prefix):
+        captured["summary"] = summary
+        captured["results"] = results
+        captured["settings"] = settings
+        captured["log_prefix"] = log_prefix
+
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.upload_asset_bundle",
+        fake_upload_asset_bundle,
+    )
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.validate_uploaded_artifacts",
+        fake_validate,
+    )
+
+    results = upload_client_res_assetbundle(
+        "android",
+        output_root=output_root,
+        build_number="77",
+        fallback_build_label="0.1.77",
+        log_prefix="[BuildAssetbundle][Android]",
+    )
+
+    assert len(results) == 3
+    assert captured["settings"] == settings
+    assert captured["log_prefix"] == "[BuildAssetbundle][Android]"
+    assert captured["summary"].remote_root == "ClientRes_Assetbundle_android/77"

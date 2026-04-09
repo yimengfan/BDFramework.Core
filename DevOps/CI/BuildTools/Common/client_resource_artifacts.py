@@ -11,12 +11,15 @@ from __future__ import annotations
 from collections.abc import Callable
 import shutil
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import tempfile
 
 from Common.artifact_uploader import (
+    DEFAULT_TIMEOUT_SECONDS,
+    FileServerClientSettings,
     UploadedArtifact,
     build_artifact_remote_root,
+    fetch_remote_listing,
     resolve_file_server_settings,
     upload_asset_bundle,
     upload_code,
@@ -227,6 +230,184 @@ def emit_upload_callbacks(log_prefix: str) -> tuple[
     return on_uploading, on_uploaded
 
 
+def build_expected_remote_files(
+    prepared_source_path: Path,
+    *,
+    remote_root: str,
+) -> list[tuple[Path, str]]:
+    """把本地 staging 文件映射到期望的远端路径。"""
+    resolved_source_path = prepared_source_path.resolve()
+    resolved_remote_root = PurePosixPath(remote_root)
+    expected_files: list[tuple[Path, str]] = []
+
+    for file_path in list_source_files(resolved_source_path):
+        resolved_file_path = file_path.resolve()
+        if resolved_source_path.is_file():
+            remote_path = str(resolved_remote_root / resolved_file_path.name)
+        else:
+            remote_path = str(
+                resolved_remote_root / PurePosixPath(resolved_file_path.relative_to(resolved_source_path).as_posix())
+            )
+        expected_files.append((resolved_file_path, remote_path))
+
+    return expected_files
+
+
+def fetch_remote_uploaded_file_entries(
+    summary: ClientResourceUploadSummary,
+    *,
+    settings: FileServerClientSettings,
+    timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
+) -> dict[str, dict[str, object]]:
+    """递归读取当前上传根目录下的远端文件清单。"""
+    limit = min(max(summary.file_count * 4 + 16, 128), 2000)
+    status, payload, raw_body = fetch_remote_listing(
+        prefix=summary.remote_root,
+        settings=settings,
+        recursive=True,
+        limit=limit,
+        timeout_seconds=timeout_seconds,
+    )
+    if status != 200:
+        detail = payload.get("detail") if isinstance(payload, dict) else None
+        detail_text = detail or raw_body.decode("utf-8", errors="replace")
+        raise ClientResourceArtifactsError(
+            f"Remote upload listing failed: root={summary.remote_root}, status={status}, detail={detail_text}"
+        )
+
+    entries = payload.get("entries") if isinstance(payload, dict) else None
+    if not isinstance(entries, list):
+        raise ClientResourceArtifactsError(
+            f"Remote upload listing returned invalid payload: root={summary.remote_root}, payload={payload!r}"
+        )
+
+    remote_files: dict[str, dict[str, object]] = {}
+    for entry in entries:
+        if not isinstance(entry, dict):
+            continue
+        if entry.get("type") != "file":
+            continue
+
+        remote_path = str(entry.get("path") or "").strip()
+        if not remote_path:
+            continue
+        remote_files[remote_path] = entry
+
+    return remote_files
+
+
+def validate_uploaded_artifacts(
+    summary: ClientResourceUploadSummary,
+    *,
+    results: list[UploadedArtifact],
+    settings: FileServerClientSettings,
+    log_prefix: str,
+) -> None:
+    """验证 staging 文件集合与远端已上传文件集合是否一致。"""
+    expected_files = build_expected_remote_files(
+        summary.prepared_source_path,
+        remote_root=summary.remote_root,
+    )
+    expected_by_local_path = {local_path: remote_path for local_path, remote_path in expected_files}
+    if len(expected_by_local_path) != summary.file_count:
+        raise ClientResourceArtifactsError(
+            "Upload summary file count mismatch. "
+            f"expected={len(expected_by_local_path)}, summary={summary.file_count}, root={summary.remote_root}"
+        )
+
+    uploaded_by_local_path: dict[Path, UploadedArtifact] = {}
+    duplicate_local_paths: list[str] = []
+    for result in results:
+        local_path = Path(result.local_path).resolve()
+        if local_path in uploaded_by_local_path:
+            duplicate_local_paths.append(str(local_path))
+            continue
+        uploaded_by_local_path[local_path] = result
+
+    if duplicate_local_paths:
+        raise ClientResourceArtifactsError(
+            f"Duplicate uploaded artifact results detected: {sorted(duplicate_local_paths)}"
+        )
+
+    missing_local_paths = sorted(
+        str(local_path)
+        for local_path in expected_by_local_path
+        if local_path not in uploaded_by_local_path
+    )
+    unexpected_local_paths = sorted(
+        str(local_path)
+        for local_path in uploaded_by_local_path
+        if local_path not in expected_by_local_path
+    )
+    if missing_local_paths or unexpected_local_paths:
+        raise ClientResourceArtifactsError(
+            "Uploaded artifact set does not match local staging files. "
+            f"missing={missing_local_paths}, unexpected={unexpected_local_paths}"
+        )
+
+    remote_path_mismatches: list[str] = []
+    size_mismatches: list[str] = []
+    uploaded_total_bytes = 0
+    for local_path, expected_remote_path in expected_by_local_path.items():
+        result = uploaded_by_local_path[local_path]
+        if result.remote_path != expected_remote_path:
+            remote_path_mismatches.append(
+                f"local={local_path} expected={expected_remote_path} actual={result.remote_path}"
+            )
+
+        expected_size = local_path.stat().st_size
+        if result.size != expected_size:
+            size_mismatches.append(
+                f"local={local_path} expected={expected_size} actual={result.size}"
+            )
+        uploaded_total_bytes += result.size
+
+    if remote_path_mismatches or size_mismatches:
+        raise ClientResourceArtifactsError(
+            "Uploaded artifact metadata mismatch. "
+            f"remotePaths={remote_path_mismatches}, sizes={size_mismatches}"
+        )
+
+    if uploaded_total_bytes != summary.total_bytes:
+        raise ClientResourceArtifactsError(
+            "Uploaded artifact byte total mismatch. "
+            f"expected={summary.total_bytes}, actual={uploaded_total_bytes}, root={summary.remote_root}"
+        )
+
+    remote_files = fetch_remote_uploaded_file_entries(summary, settings=settings)
+    expected_remote_paths = {remote_path for _, remote_path in expected_files}
+    missing_remote_paths = sorted(
+        remote_path for remote_path in expected_remote_paths if remote_path not in remote_files
+    )
+    if missing_remote_paths:
+        raise ClientResourceArtifactsError(
+            f"Missing remote uploaded files: root={summary.remote_root}, files={missing_remote_paths}"
+        )
+
+    remote_size_mismatches: list[str] = []
+    for local_path, expected_remote_path in expected_by_local_path.items():
+        remote_entry = remote_files.get(expected_remote_path, {})
+        remote_size = remote_entry.get("size")
+        if remote_size is None:
+            continue
+        expected_size = local_path.stat().st_size
+        if int(remote_size) != expected_size:
+            remote_size_mismatches.append(
+                f"remote={expected_remote_path} expected={expected_size} actual={remote_size}"
+            )
+
+    if remote_size_mismatches:
+        raise ClientResourceArtifactsError(
+            f"Remote uploaded file size mismatch: root={summary.remote_root}, sizes={remote_size_mismatches}"
+        )
+
+    extra_remote_file_count = max(0, len(remote_files) - len(expected_remote_paths))
+    print(f"{log_prefix} uploadVerifiedFiles={len(expected_remote_paths)}")
+    print(f"{log_prefix} uploadVerifiedBytes={uploaded_total_bytes}")
+    print(f"{log_prefix} uploadVerifiedRemoteFiles={len(remote_files)}")
+    print(f"{log_prefix} uploadVerifiedExtraRemoteFiles={extra_remote_file_count}")
+
+
 def prepare_code_upload_source(
     platform_key: str,
     *,
@@ -380,6 +561,12 @@ def upload_client_res_code(
             on_uploading=on_uploading,
             on_uploaded=on_uploaded,
         )
+        validate_uploaded_artifacts(
+            summary,
+            results=results,
+            settings=settings,
+            log_prefix=log_prefix,
+        )
         print(f"{log_prefix} uploadedFiles={len(results)}")
         return results
 
@@ -423,6 +610,12 @@ def upload_client_res_assetbundle(
             on_uploading=on_uploading,
             on_uploaded=on_uploaded,
         )
+        validate_uploaded_artifacts(
+            summary,
+            results=results,
+            settings=settings,
+            log_prefix=log_prefix,
+        )
         print(f"{log_prefix} uploadedFiles={len(results)}")
         return results
 
@@ -463,6 +656,12 @@ def upload_client_res_table(
             settings=settings,
             on_uploading=on_uploading,
             on_uploaded=on_uploaded,
+        )
+        validate_uploaded_artifacts(
+            summary,
+            results=results,
+            settings=settings,
+            log_prefix=log_prefix,
         )
         print(f"{log_prefix} uploadedFiles={len(results)}")
         return results

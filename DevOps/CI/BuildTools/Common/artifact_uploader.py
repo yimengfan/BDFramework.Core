@@ -32,6 +32,7 @@ except ModuleNotFoundError:  # pragma: no cover - Python < 3.11 fallback
 DEFAULT_TIMEOUT_SECONDS = 600
 DEFAULT_UPLOAD_CHUNK_SIZE_BYTES = 1024 * 1024
 DEFAULT_HASH_CHUNK_SIZE_BYTES = 1024 * 1024
+DEFAULT_REMOTE_LIST_LIMIT = 2000
 SKIPPED_LOCAL_FILENAMES = {".DS_Store"}
 BUILD_TOOLS_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG_PATH = BUILD_TOOLS_ROOT / "buildtools.toml"
@@ -654,6 +655,26 @@ def build_download_request_path(base_url: str, remote_path: str) -> str:
 	return f"{base_path}/files/{quote(remote_path, safe='/')}"
 
 
+def build_list_request_path(
+	base_url: str,
+	*,
+	prefix: str,
+	recursive: bool,
+	limit: int,
+) -> str:
+	"""生成目录列表请求路径。"""
+	parsed = urlparse(base_url)
+	base_path = parsed.path.rstrip("/")
+	query = urlencode(
+		{
+			"prefix": prefix,
+			"recursive": "true" if recursive else "false",
+			"limit": str(limit),
+		}
+	)
+	return f"{base_path}/api/files?{query}"
+
+
 def create_http_connection(base_url: str, *, timeout_seconds: int) -> http.client.HTTPConnection:
 	"""为目标服务创建 HTTP 连接。"""
 	parsed = urlparse(base_url)
@@ -690,6 +711,35 @@ def fetch_remote_metadata(
 ) -> tuple[int, dict[str, Any], bytes]:
 	"""读取远端文件元数据。"""
 	request_path = build_request_path(settings.base_url, remote_path, overwrite=None)
+	connection = create_http_connection(settings.base_url, timeout_seconds=timeout_seconds)
+	try:
+		connection.request("GET", request_path, headers=build_authorization_headers(settings))
+		response = connection.getresponse()
+		response_body = response.read()
+	finally:
+		connection.close()
+
+	return response.status, parse_upload_response_body(response_body), response_body
+
+
+def fetch_remote_listing(
+	*,
+	prefix: str,
+	settings: FileServerClientSettings,
+	recursive: bool,
+	limit: int = DEFAULT_REMOTE_LIST_LIMIT,
+	timeout_seconds: int,
+) -> tuple[int, dict[str, Any], bytes]:
+	"""读取远端目录列表。"""
+	if limit <= 0:
+		raise ArtifactUploadError(f"Directory listing limit must be positive: {limit}")
+
+	request_path = build_list_request_path(
+		settings.base_url,
+		prefix=prefix,
+		recursive=recursive,
+		limit=limit,
+	)
 	connection = create_http_connection(settings.base_url, timeout_seconds=timeout_seconds)
 	try:
 		connection.request("GET", request_path, headers=build_authorization_headers(settings))
