@@ -34,6 +34,7 @@ ASSETS_SUBPACK_INFO_FILENAME = "assets_subpack.info"
 SCRIPT_DIRNAME = "script"
 ART_ASSETS_DIRNAME = "art_assets"
 ART_ASSET_METADATA_FILENAMES = {"art_asset_type.info", "art_assets.info", "buildlogtep.json"}
+SCRIPT_METADATA_FILENAMES = set()
 LOCAL_DB_FILENAME = "local.db"
 CLIENT_DB_FILENAME = "client.db"
 SERVER_DATA_DIRNAME = "server_data"
@@ -124,6 +125,16 @@ def ensure_existing_path(path: Path, *, description: str) -> Path:
     if not path.exists():
         raise ClientResourceArtifactsError(f"{description} does not exist: {path}")
     return path
+
+
+def ensure_non_empty_file(path: Path, *, description: str) -> Path:
+    """校验文件存在且非空。"""
+    resolved_path = ensure_existing_path(path, description=description)
+    if not resolved_path.is_file():
+        raise ClientResourceArtifactsError(f"{description} is not a file: {resolved_path}")
+    if resolved_path.stat().st_size <= 0:
+        raise ClientResourceArtifactsError(f"{description} must not be empty: {resolved_path}")
+    return resolved_path
 
 
 def copy_path(source_path: Path, destination_path: Path) -> None:
@@ -442,6 +453,8 @@ def prepare_code_upload_source(
     if optional_subpack.exists():
         copy_path(optional_subpack, prepared_dir / ASSETS_SUBPACK_INFO_FILENAME)
 
+    validate_code_upload_source(prepared_dir)
+
     return prepared_dir
 
 
@@ -489,8 +502,8 @@ def prepare_assetbundle_upload_source(
     return prepared_dir
 
 
-def parse_assetbundle_manifest_paths(info_file_path: Path) -> set[str]:
-    """从 assets.info / assets_subpack.info 中提取声明的 art_assets 路径。"""
+def parse_manifest_paths(info_file_path: Path, *, relative_prefix: str | None = None) -> set[str]:
+    """从 assets.info / assets_subpack.info 中提取声明路径。"""
     declared_paths: set[str] = set()
     if not info_file_path.exists():
         return declared_paths
@@ -505,10 +518,55 @@ def parse_assetbundle_manifest_paths(info_file_path: Path) -> set[str]:
             continue
 
         relative_path = parts[2].strip()
-        if relative_path.startswith(f"{ART_ASSETS_DIRNAME}/"):
-            declared_paths.add(relative_path)
+        if relative_prefix is not None and not relative_path.startswith(relative_prefix):
+            continue
+
+        declared_paths.add(relative_path)
 
     return declared_paths
+
+
+def parse_assetbundle_manifest_paths(info_file_path: Path) -> set[str]:
+    """从 assets.info / assets_subpack.info 中提取声明的 art_assets 路径。"""
+    return parse_manifest_paths(info_file_path, relative_prefix=f"{ART_ASSETS_DIRNAME}/")
+
+
+def parse_code_manifest_paths(info_file_path: Path) -> set[str]:
+    """从 assets.info / assets_subpack.info 中提取声明的 script 路径。"""
+    return parse_manifest_paths(info_file_path, relative_prefix=f"{SCRIPT_DIRNAME}/")
+
+
+def validate_code_upload_source(prepared_dir: Path) -> None:
+    """校验 assets.info 声明的脚本文件都已经落到 staging。"""
+    script_dir = ensure_existing_path(
+        prepared_dir / SCRIPT_DIRNAME,
+        description="ClientRes code script directory",
+    )
+    actual_script_paths = {
+        file_path.relative_to(prepared_dir).as_posix()
+        for file_path in list_source_files(script_dir)
+    }
+
+    if not any(PurePosixPath(relative_path).name not in SCRIPT_METADATA_FILENAMES for relative_path in actual_script_paths):
+        raise ClientResourceArtifactsError(
+            "ClientRes code staging does not contain any script payload files. "
+            f"actual={sorted(actual_script_paths)}"
+        )
+
+    declared_script_paths = parse_code_manifest_paths(prepared_dir / ASSETS_INFO_FILENAME)
+    optional_subpack = prepared_dir / ASSETS_SUBPACK_INFO_FILENAME
+    if optional_subpack.exists():
+        declared_script_paths.update(parse_code_manifest_paths(optional_subpack))
+
+    if not declared_script_paths:
+        return
+
+    missing_script_paths = sorted(declared_script_paths - actual_script_paths)
+    if missing_script_paths:
+        raise ClientResourceArtifactsError(
+            "ClientRes code staging is missing declared script files. "
+            f"missing={missing_script_paths}"
+        )
 
 
 def has_real_assetbundle_payload(relative_paths: set[str]) -> bool:
@@ -564,11 +622,11 @@ def prepare_table_upload_source(
     prepared_dir.mkdir(parents=True, exist_ok=True)
 
     copy_path(
-        ensure_existing_path(platform_dir / LOCAL_DB_FILENAME, description="ClientRes table local.db"),
+        ensure_non_empty_file(platform_dir / LOCAL_DB_FILENAME, description="ClientRes table local.db"),
         prepared_dir / CLIENT_DB_FILENAME,
     )
     copy_path(
-        ensure_existing_path(
+        ensure_non_empty_file(
             output_root / SERVER_DATA_DIRNAME / SERVER_DB_FILENAME,
             description="ClientRes table server.db",
         ),

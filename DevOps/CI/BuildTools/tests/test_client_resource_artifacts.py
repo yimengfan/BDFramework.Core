@@ -93,6 +93,25 @@ def test_prepare_code_upload_source_requires_package_build_info(tmp_path: Path) 
         )
 
 
+def test_prepare_code_upload_source_requires_declared_script_files(tmp_path: Path) -> None:
+    output_root = tmp_path / "output"
+    platform_dir = output_root / "ios"
+    (platform_dir / SCRIPT_DIRNAME / "hotfix").mkdir(parents=True)
+    (platform_dir / SCRIPT_DIRNAME / "hotfix" / "Assembly-CSharp.dll.bytes").write_bytes(b"dll")
+    (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
+    (platform_dir / ASSETS_INFO_FILENAME).write_text(
+        "1,100,script/hotfix/Assembly-CSharp.dll.bytes,0.1\n2,101,script/hotfix/Assembly-CSharp.pdb.bytes,0.2\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ClientResourceArtifactsError, match="missing declared script files"):
+        prepare_code_upload_source(
+            "ios",
+            output_root=output_root,
+            staging_dir=tmp_path / "staging",
+        )
+
+
 def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: Path) -> None:
     output_root = tmp_path / "output"
     platform_dir = output_root / "windows"
@@ -170,6 +189,23 @@ def test_prepare_table_upload_source_renames_local_db_to_client_db(tmp_path: Pat
     assert (prepared / CLIENT_DB_FILENAME).read_bytes() == b"local-db"
     assert (prepared / SERVER_DB_FILENAME).read_bytes() == b"server-db"
     assert (prepared / PACKAGE_BUILD_INFO_FILENAME).read_text(encoding="utf-8") == "pkg"
+
+
+def test_prepare_table_upload_source_requires_non_empty_databases(tmp_path: Path) -> None:
+    output_root = tmp_path / "output"
+    platform_dir = output_root / "osx"
+    (output_root / SERVER_DATA_DIRNAME).mkdir(parents=True)
+    platform_dir.mkdir(parents=True)
+    (platform_dir / LOCAL_DB_FILENAME).write_bytes(b"")
+    (output_root / SERVER_DATA_DIRNAME / SERVER_DB_FILENAME).write_bytes(b"server-db")
+    (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
+
+    with pytest.raises(ClientResourceArtifactsError, match="local.db must not be empty"):
+        prepare_table_upload_source(
+            "osx",
+            output_root=output_root,
+            staging_dir=tmp_path / "staging",
+        )
 
 
 def test_build_upload_summary_uses_new_remote_layout_names(tmp_path: Path) -> None:

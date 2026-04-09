@@ -111,6 +111,13 @@ upload_client_package(
 - `upload_client_package()` / `upload_code()` / `upload_asset_bundle()` / `upload_table()`：四类制品快捷入口
 - `prepare_clean_ci_output_root()`：生成并清空当前 ClientRes 任务的隔离输出目录
 - `prepare_code_upload_source()` / `prepare_assetbundle_upload_source()` / `prepare_table_upload_source()`：把 Unity 输出整理成当前类型真正需要上传的 staging 目录
+- `validate_uploaded_artifacts()`：上传后递归比对远端目录，确认整批文件数量、路径、大小都符合预期
+
+ClientRes 类型专项校验：
+
+- Code：`prepare_code_upload_source()` 会校验 `script/` 目录存在真实 payload，并且 `assets.info` / `assets_subpack.info` 中声明的 `script/*` 全部已经落到 staging
+- Assetbundle：`prepare_assetbundle_upload_source()` 会校验 `art_assets/` 存在真实 payload，并且 `assets.info` / `assets_subpack.info` 中声明的 `art_assets/*` 全部已经落到 staging
+- Table：`prepare_table_upload_source()` 会校验 `local.db` / `server.db` 存在且非空，再重命名为 `client.db` / `server.db` 上传
 
 上传入口都支持两个可选回调：
 

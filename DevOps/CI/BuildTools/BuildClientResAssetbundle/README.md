@@ -8,6 +8,7 @@
 2. 三个平台脚本只负责传入平台、日志前缀和 Unity `executeMethod`；公共流程统一复用 `Common/client_resource_flow.py`。
 3. 真实构建前必须清理隔离输出目录，默认写到 `Library/CIOutputs/clientres_assetbundle/<build_name>/<build_number>/<platform>/`。
 4. 上传前只保留 Assetbundle 相关目录和配置文件，不把热更代码或表格产物混进上传源。
+5. BatchMode 的 Assetbundle CI 在进入 Unity 构建前会先清理 SBP / AssetGraph 相关缓存，避免 TeamCity agent 上的脏缓存导致 `Library/BuildCache` 缺失 `CAB-*` 文件。
 
 ## 文件说明
 
@@ -68,6 +69,11 @@ python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py De
 - `package_build.info`
 - `assets.info`
 - `assets_subpack.info`（如果本次 Unity 输出里存在）
+
+整理完成后还会执行两层校验：
+
+- 本地 staging 语义校验：`art_assets/` 里必须有真实 payload，且 `assets.info` / `assets_subpack.info` 声明的 `art_assets/*` 不能缺失
+- 远端上传结果校验：递归拉取文件服务器目录，校验整批文件路径和大小都与本地 staging 一致
 
 ## 示例
 

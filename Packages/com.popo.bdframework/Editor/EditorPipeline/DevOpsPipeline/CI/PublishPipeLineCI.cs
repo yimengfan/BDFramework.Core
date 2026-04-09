@@ -9,6 +9,7 @@ using BDFramework.Editor.Table;
 using UnityEditor;
 using UnityEditor.Android;
 using UnityEditor.Build.Player;
+using UnityEditor.Build.Pipeline.Utilities;
 using UnityEngine;
 
 namespace BDFramework.Editor.DevOps
@@ -611,6 +612,33 @@ namespace BDFramework.Editor.DevOps
         }
 
 
+        static private void DeleteDirectoryIfExists(string path, string description)
+        {
+            if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path))
+            {
+                return;
+            }
+
+            Debug.Log($"【CI】清理{description}:{path}");
+            Directory.Delete(path, true);
+        }
+
+
+        static private void PrepareBatchModeAssetbundleCaches()
+        {
+            if (!Application.isBatchMode)
+            {
+                return;
+            }
+
+            Debug.Log("【CI】准备清理Assetbundle构建缓存");
+            BuildCache.PurgeCache(false);
+            DeleteDirectoryIfExists(UnityEngine.AssetGraph.DataModel.Version2.Settings.Path.CachePath, "AssetGraph缓存");
+            DeleteDirectoryIfExists(UnityEngine.AssetGraph.DataModel.Version2.Settings.Path.BundleBuilderCachePath, "AssetGraph BundleBuilder缓存");
+            AssetDatabase.Refresh();
+        }
+
+
         /// <summary>
         /// 构建包体
         /// </summary>
@@ -653,6 +681,11 @@ namespace BDFramework.Editor.DevOps
                 EnsureAndroidJdkForBatchMode();
                 EnsureAndroidSdkForBatchMode();
                 EnsureAndroidNdkForBatchMode();
+            }
+
+            if (buildOption.HasFlag(BuildTools_Assets.BuildPackageOption.BuildArtAssets))
+            {
+                PrepareBatchModeAssetbundleCaches();
             }
 
             BuildTools_Assets.BuildAll(
