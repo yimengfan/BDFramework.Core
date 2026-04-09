@@ -1,0 +1,1 @@
+# BuildClientResCode scripts package.

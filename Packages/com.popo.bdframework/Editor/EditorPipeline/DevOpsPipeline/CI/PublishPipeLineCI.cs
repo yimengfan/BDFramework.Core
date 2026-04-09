@@ -5,6 +5,7 @@ using BDFramework.Core.Tools;
 using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.Editor.Environment;
+using BDFramework.Editor.Table;
 using UnityEditor;
 using UnityEditor.Android;
 using UnityEditor.Build.Player;
@@ -17,6 +18,7 @@ namespace BDFramework.Editor.DevOps
     /// </summary>
     static public class PublishPipeLineCI
     {
+        const string CI_OUTPUT_ROOT_ARG = "-ciOutputRoot";
 
 
         static PublishPipeLineCI()
@@ -594,6 +596,21 @@ namespace BDFramework.Editor.DevOps
         }
 
 
+        static private string GetCIOutputRoot(string defaultOutputRoot)
+        {
+            var outputRoot = GetCommandLineArg(CI_OUTPUT_ROOT_ARG);
+            if (!string.IsNullOrWhiteSpace(outputRoot))
+            {
+                var resolvedOutputRoot = Path.GetFullPath(outputRoot.Trim());
+                Directory.CreateDirectory(resolvedOutputRoot);
+                return resolvedOutputRoot;
+            }
+
+            Directory.CreateDirectory(defaultOutputRoot);
+            return defaultOutputRoot;
+        }
+
+
         /// <summary>
         /// 构建包体
         /// </summary>
@@ -620,6 +637,84 @@ namespace BDFramework.Editor.DevOps
             if (!ret)
             {
                 throw new Exception($"【CI】构建母包失败! Target:{buildTarget} Mode:{buildMode} ClientVersion:{clientVersion}");
+            }
+        }
+
+
+        static private void BuildClientRes(BuildTarget buildTarget, BuildTools_Assets.BuildPackageOption buildOption)
+        {
+            var clientVersion = GetClientVersion();
+            var outputRoot = GetCIOutputRoot(BApplication.DevOpsPublishAssetsPath);
+            var platform = BApplication.GetRuntimePlatform(buildTarget);
+            Debug.Log($"【CI】BuildClientRes Target:{buildTarget} Platform:{platform} Option:{buildOption} ClientVersion:{clientVersion} OutputRoot:{outputRoot}");
+
+            if (buildTarget == BuildTarget.Android)
+            {
+                EnsureAndroidJdkForBatchMode();
+                EnsureAndroidSdkForBatchMode();
+                EnsureAndroidNdkForBatchMode();
+            }
+
+            BuildTools_Assets.BuildAll(
+                platform,
+                outputRoot,
+                setNewVersionNum: clientVersion,
+                opa: buildOption);
+        }
+
+        [CI(Des = "BatchMode构建热更代码Android")]
+        static public void BuildCodeAndroid()
+        {
+            BuildClientRes(BuildTarget.Android, BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
+        }
+
+        [CI(Des = "BatchMode构建热更代码iOS")]
+        static public void BuildCodeIOS()
+        {
+            BuildClientRes(BuildTarget.iOS, BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
+        }
+
+        [CI(Des = "BatchMode构建热更代码Windows")]
+        static public void BuildCodeWindows()
+        {
+            BuildClientRes(BuildTarget.StandaloneWindows64, BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
+        }
+
+        [CI(Des = "BatchMode构建热更Assetbundle Android")]
+        static public void BuildAssetbundleAndroid()
+        {
+            BuildClientRes(BuildTarget.Android, BuildTools_Assets.BuildPackageOption.BuildArtAssets);
+        }
+
+        [CI(Des = "BatchMode构建热更Assetbundle iOS")]
+        static public void BuildAssetbundleIOS()
+        {
+            BuildClientRes(BuildTarget.iOS, BuildTools_Assets.BuildPackageOption.BuildArtAssets);
+        }
+
+        [CI(Des = "BatchMode构建热更Assetbundle Windows")]
+        static public void BuildAssetbundleWindows()
+        {
+            BuildClientRes(BuildTarget.StandaloneWindows64, BuildTools_Assets.BuildPackageOption.BuildArtAssets);
+        }
+
+        [CI(Des = "BatchMode构建统一表格")]
+        static public void BuildTable()
+        {
+            var outputRoot = GetCIOutputRoot(BApplication.DevOpsPublishAssetsPath);
+            var platform = BApplication.RuntimePlatform;
+            Debug.Log($"【CI】BuildTable Platform:{platform} OutputRoot:{outputRoot}");
+
+            var buildClientDb = BuildTools_Excel2SQLite.BuildSqlite(outputRoot, platform, DBType.Local);
+            if (!buildClientDb)
+            {
+                throw new Exception($"【CI】构建 client.db 失败! Platform:{platform} OutputRoot:{outputRoot}");
+            }
+
+            var buildServerDb = BuildTools_Excel2SQLite.BuildSqlite(outputRoot, platform, DBType.Server);
+            if (!buildServerDb)
+            {
+                throw new Exception($"【CI】构建 server.db 失败! Platform:{platform} OutputRoot:{outputRoot}");
             }
         }
 

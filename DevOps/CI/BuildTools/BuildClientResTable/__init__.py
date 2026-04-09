@@ -1,0 +1,1 @@
+# BuildClientResTable scripts package.

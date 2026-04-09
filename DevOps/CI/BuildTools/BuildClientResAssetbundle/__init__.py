@@ -1,0 +1,1 @@
+# BuildClientResAssetbundle scripts package.

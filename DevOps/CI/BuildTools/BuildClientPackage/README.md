@@ -54,7 +54,9 @@ Python 脚本和 TeamCity 任务的索引文档位于：
 - `build_android.py` → `BuildClientPackage_android`
 - `build_ios.py` → `BuildClientPackage_ios`
 - `build_windows.py` → `BuildClientPackage_windows`
-- 根聚合任务：`BuildClientPackage`
+- 聚合任务：`BuildClientPackage`（位于 TeamCity `ClientPackage` 子项目下）
+
+TeamCity 页面中，这四个母包相关任务统一位于 `ClientPackage` 子项目（页签）下。
 
 > 规则：根任务名称允许单独维护；子任务名称、脚本路径、参数入口必须和这里的 Python 脚本保持一致。
 
@@ -211,7 +213,7 @@ BuildTools 现在提供公共上传模块：`DevOps/CI/BuildTools/Common/artifac
 
 - `build_android.py` / `build_ios.py` / `build_windows.py` 在真实构建成功后会直接调用这个模块上传母包
 - 默认读取 `DevOps/CI/BuildTools/buildtools.toml`
-- 已封装四类远端目录：`ClientPackage_{平台}/{buildnum}`、`ClientRes_Code_{平台}/{buildnum}`、`ClientRes_AssetBundle_{平台}/{buildnum}`、`ClientRes_table/{buildnum}`
+- 已封装四类远端目录：`ClientPackage_{平台}/{buildnum}`、`ClientRes_Code_{平台}/{buildnum}`、`ClientRes_Assetbundle_{平台}/{buildnum}`、`ClientRes_Table/{buildnum}`
 - 上传接口支持进度回调，当前 BuildClientPackage 会把每个文件的上传开始/完成事件直接打到 CI 日志
 
 详细说明见：`DevOps/CI/BuildTools/Common/README.md`

@@ -570,7 +570,7 @@ def build_artifact_remote_root(
 	build_label = validate_path_segment(str(build_number), "build_number")
 
 	if resolved_type is ArtifactType.TABLE:
-		return f"ClientRes_table/{build_label}"
+		return f"ClientRes_Table/{build_label}"
 
 	platform_label = validate_path_segment(platform or "", "platform")
 	if resolved_type is ArtifactType.CLIENT_PACKAGE:
@@ -578,7 +578,7 @@ def build_artifact_remote_root(
 	if resolved_type is ArtifactType.CODE:
 		return f"ClientRes_Code_{platform_label}/{build_label}"
 	if resolved_type is ArtifactType.ASSET_BUNDLE:
-		return f"ClientRes_AssetBundle_{platform_label}/{build_label}"
+		return f"ClientRes_Assetbundle_{platform_label}/{build_label}"
 
 	raise ArtifactUploadError(f"Unsupported artifact type: {artifact_type!r}")
 

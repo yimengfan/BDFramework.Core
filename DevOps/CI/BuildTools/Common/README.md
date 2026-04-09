@@ -1,12 +1,14 @@
 # BuildTools Common
 
-公共 Python 模块目录，当前先提供文件服务器上传能力。
+公共 Python 模块目录，当前提供文件服务器上传能力，以及 `ClientRes_*` 任务共享的输出整理和 BatchMode 流程 facade。
 
 实现前先读 [CI 总索引](../../README.md)，再读 [BuildTools 索引](../README.md)。本文只保留 `Common/` 模块规范。
 
 ## 文件说明
 
 - `artifact_uploader.py`：上传到 `/.test-DevOps/GameFileServer/` 的公共模块
+- `client_resource_artifacts.py`：`ClientRes_Code / ClientRes_Assetbundle / ClientRes_Table` 的隔离输出、产物筛选和上传摘要 helper
+- `client_resource_flow.py`：`ClientRes_*` 三类任务复用的 BatchMode 参数、日志和执行主流程
 - `__init__.py`：对外导出公共 API
 
 ## 设计目标
@@ -14,12 +16,13 @@
 1. 统一四类制品的远端目录规则，不让调用方散落拼接：
    - `ClientPackage_{平台}/{buildnum}/xxx`
   - `ClientRes_Code_{平台}/{buildnum}/xxx`
-  - `ClientRes_AssetBundle_{平台}/{buildnum}/xxx`
-  - `ClientRes_table/{buildnum}/xxx`
+  - `ClientRes_Assetbundle_{平台}/{buildnum}/xxx`
+  - `ClientRes_Table/{buildnum}/xxx`
 2. 既支持上传单文件，也支持把整个目录递归上传。
 3. 默认优先读取 `DevOps/CI/BuildTools/buildtools.toml`，整个 BuildTools 共用同一份配置。
 4. 支持单独配置“客户端访问文件服务器的 IP”，避免把服务端 `0.0.0.0` 监听地址误当成可访问地址。
 5. 上传函数支持进度回调，方便 CI 在长时间上传目录时持续输出阶段日志。
+6. `ClientRes_*` 共享 helper 必须先清理隔离输出目录，再筛选当前类型需要的文件，避免把历史构建残留或其他类型产物重复上传。
 
 ## 模块加载规范
 
@@ -106,6 +109,8 @@ upload_client_package(
 - `build_artifact_remote_path()`：生成完整远端路径
 - `upload_artifact()`：通用上传入口
 - `upload_client_package()` / `upload_code()` / `upload_asset_bundle()` / `upload_table()`：四类制品快捷入口
+- `prepare_clean_ci_output_root()`：生成并清空当前 ClientRes 任务的隔离输出目录
+- `prepare_code_upload_source()` / `prepare_assetbundle_upload_source()` / `prepare_table_upload_source()`：把 Unity 输出整理成当前类型真正需要上传的 staging 目录
 
 上传入口都支持两个可选回调：
 
@@ -183,7 +188,7 @@ python -m pytest -q -s DevOps/CI/BuildTools/tests/test_artifact_uploader_remote.
 说明：
 
 - 这个测试会读取 `DevOps/CI/BuildTools/buildtools.toml`，并真实上传文件到当前配置的远端服务器。
-- 测试会把文件写到 `ClientRes_table/remote-smoke-tests/<run-id>/artifact_uploader_remote_test.txt`。
+- 测试会把文件写到 `ClientRes_Table/remote-smoke-tests/<run-id>/artifact_uploader_remote_test.txt`。
 - 测试会轮询 `GET /api/files?prefix=...&recursive=false`，确认远程列表里已经出现该文件，并再次下载远端文件校验内容和 SHA256。
 - 某些已部署服务可能会在文件已落盘后仍返回 500；这个 smoke test 以“远程列表可见且下载内容一致”作为最终成功依据。
 - 文件服务器默认禁用 API 删除，所以这些 smoke test 产物不会自动清理；如果要清理，只能在运维机器上手工删除。
@@ -195,3 +200,4 @@ python -m pytest -q -s DevOps/CI/BuildTools/tests/test_artifact_uploader_remote.
 1. 远端目录规则、配置解析、上传回调或错误恢复逻辑变更后，必须同步更新并执行 `DevOps/CI/BuildTools/tests/test_artifact_uploader.py`。
 2. 真实上传、远端列表校验或下载回读逻辑变更后，必须执行 `python -m pytest -q -s DevOps/CI/BuildTools/tests/test_artifact_uploader_remote.py --run-remote-artifact-tests`。
 3. 如果将来把本模块直接接入 TeamCity 构建，必须同步把 TeamCity 验证入口补到 `../../README.md` 与本文档，避免规则散落到多个位置。
+4. 新增 ClientRes 共享逻辑时，只允许抽取真正跨类型复用的部分；如果 helper 已经开始耦合具体平台业务或 TeamCity 规则，就应该回收到对应构建类型目录。

@@ -37,12 +37,23 @@
 - 模块 README 只保留模块职责、主流程、配置、测试命令、TeamCity 入口和模块特有约束。
 - 新增 CI 模块时，必须同时补充：模块 README、单元测试、执行测试入口，以及本文档中的索引记录。
 
+### 5. 构建管线强制规范
+
+- TeamCity DSL、Jenkinsfile、shell pipeline 之类的管线层只负责调度参数、任务依赖和执行入口，不承载业务构建逻辑。
+- 具体业务实现统一落在 `DevOps/CI/BuildTools/` 下的 Python 脚本里；如果是新的构建类型，必须新建独立目录，不要继续把不同类型流程塞进旧目录。
+- 同一种构建类型允许拆成多个平台脚本，但共享逻辑要尽量下沉到 `Common/` 或该类型目录内部的共享模块，避免复制粘贴长流程。
+- 每次真实构建前，必须清理对应的 CI 输出目录，避免旧产物混入本次上传。推荐把隔离输出写到 `Library/CIOutputs/<build_kind>/...` 或模块 README 指定的专用目录。
+- 任何上传目录命名、产物筛选规则、步骤日志或参数协议变化，都必须同步更新 README、pytest 断言和 TeamCity DSL，不能只改实现。
+
 ## 模块索引
 
 | 目录 | 职责 | 说明文档 | 必跑验证 |
 | --- | --- | --- | --- |
 | `BuildTools/` | CI Python 脚本与公共模块目录 | `BuildTools/README.md` | 按子模块 README 执行对应 pytest、smoke test 与 TeamCity 验证 |
 | `BuildTools/BuildClientPackage/` | Unity 母包构建入口 | `BuildTools/BuildClientPackage/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_buildclientpackage_helpers.py DevOps/CI/BuildTools/tests/test_buildclientpackage_batchmode.py DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py -q`；若改动影响 TeamCity，再执行受影响的 TeamCity 构建 |
+| `BuildTools/BuildClientResCode/` | 三端热更代码构建与上传入口 | `BuildTools/BuildClientResCode/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Code` 相关任务 |
+| `BuildTools/BuildClientResAssetbundle/` | 三端热更 Assetbundle 构建与上传入口 | `BuildTools/BuildClientResAssetbundle/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Assetbundle` 相关任务 |
+| `BuildTools/BuildClientResTable/` | 统一表格构建与上传入口 | `BuildTools/BuildClientResTable/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Table` 相关任务 |
 | `BuildTools/Common/` | 公共上传模块与配置解析 | `BuildTools/Common/README.md` | `python -m pytest -q DevOps/CI/BuildTools/tests/test_artifact_uploader.py`；若改动影响真实上传链路，再执行 remote smoke test |
 
 ## 变更检查清单
