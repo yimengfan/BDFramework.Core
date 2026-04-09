@@ -33,6 +33,7 @@ ASSETS_INFO_FILENAME = "assets.info"
 ASSETS_SUBPACK_INFO_FILENAME = "assets_subpack.info"
 SCRIPT_DIRNAME = "script"
 ART_ASSETS_DIRNAME = "art_assets"
+ART_ASSET_METADATA_FILENAMES = {"art_asset_type.info", "art_assets.info", "buildlogtep.json"}
 LOCAL_DB_FILENAME = "local.db"
 CLIENT_DB_FILENAME = "client.db"
 SERVER_DATA_DIRNAME = "server_data"
@@ -483,7 +484,71 @@ def prepare_assetbundle_upload_source(
     if optional_subpack.exists():
         copy_path(optional_subpack, prepared_dir / ASSETS_SUBPACK_INFO_FILENAME)
 
+    validate_assetbundle_upload_source(prepared_dir)
+
     return prepared_dir
+
+
+def parse_assetbundle_manifest_paths(info_file_path: Path) -> set[str]:
+    """从 assets.info / assets_subpack.info 中提取声明的 art_assets 路径。"""
+    declared_paths: set[str] = set()
+    if not info_file_path.exists():
+        return declared_paths
+
+    for raw_line in info_file_path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+
+        parts = line.split(",", 3)
+        if len(parts) < 3:
+            continue
+
+        relative_path = parts[2].strip()
+        if relative_path.startswith(f"{ART_ASSETS_DIRNAME}/"):
+            declared_paths.add(relative_path)
+
+    return declared_paths
+
+
+def has_real_assetbundle_payload(relative_paths: set[str]) -> bool:
+    """判断 art_assets 集合里是否包含真正的资源文件，而不只是元数据文件。"""
+    return any(PurePosixPath(relative_path).name not in ART_ASSET_METADATA_FILENAMES for relative_path in relative_paths)
+
+
+def validate_assetbundle_upload_source(prepared_dir: Path) -> None:
+    """校验 assets.info 声明的资源文件都已经落到 staging。"""
+    art_assets_dir = ensure_existing_path(
+        prepared_dir / ART_ASSETS_DIRNAME,
+        description="ClientRes assetbundle art_assets directory",
+    )
+    actual_art_asset_paths = {
+        file_path.relative_to(prepared_dir).as_posix()
+        for file_path in list_source_files(art_assets_dir)
+    }
+
+    declared_art_asset_paths = parse_assetbundle_manifest_paths(prepared_dir / ASSETS_INFO_FILENAME)
+    optional_subpack = prepared_dir / ASSETS_SUBPACK_INFO_FILENAME
+    if optional_subpack.exists():
+        declared_art_asset_paths.update(parse_assetbundle_manifest_paths(optional_subpack))
+
+    if not declared_art_asset_paths:
+        raise ClientResourceArtifactsError(
+            f"ClientRes assetbundle manifest does not declare any art_assets files: {prepared_dir / ASSETS_INFO_FILENAME}"
+        )
+
+    missing_art_asset_paths = sorted(declared_art_asset_paths - actual_art_asset_paths)
+    if missing_art_asset_paths:
+        raise ClientResourceArtifactsError(
+            "ClientRes assetbundle staging is missing declared art_assets files. "
+            f"missing={missing_art_asset_paths}"
+        )
+
+    if not has_real_assetbundle_payload(actual_art_asset_paths):
+        raise ClientResourceArtifactsError(
+            "ClientRes assetbundle staging does not contain any real art_assets payload files. "
+            f"actual={sorted(actual_art_asset_paths)}"
+        )
 
 
 def prepare_table_upload_source(

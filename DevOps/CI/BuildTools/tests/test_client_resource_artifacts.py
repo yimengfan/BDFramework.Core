@@ -12,6 +12,7 @@ if str(BUILD_TOOLS_ROOT) not in sys.path:
 
 from Common.client_resource_artifacts import (  # noqa: E402
     ART_ASSETS_DIRNAME,
+    ART_ASSET_METADATA_FILENAMES,
     ASSETS_INFO_FILENAME,
     ASSETS_SUBPACK_INFO_FILENAME,
     CLIENT_DB_FILENAME,
@@ -23,7 +24,9 @@ from Common.client_resource_artifacts import (  # noqa: E402
     SERVER_DB_FILENAME,
     build_expected_remote_files,
     build_upload_summary,
+    has_real_assetbundle_payload,
     list_source_files,
+    parse_assetbundle_manifest_paths,
     prepare_assetbundle_upload_source,
     prepare_clean_ci_output_root,
     prepare_code_upload_source,
@@ -96,7 +99,10 @@ def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: 
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
     (platform_dir / ART_ASSETS_DIRNAME / "catalog.bytes").write_bytes(b"catalog")
     (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
-    (platform_dir / ASSETS_INFO_FILENAME).write_text("assets", encoding="utf-8")
+    (platform_dir / ASSETS_INFO_FILENAME).write_text(
+        "1,100,art_assets/catalog.bytes,0.1\n",
+        encoding="utf-8",
+    )
 
     prepared = prepare_assetbundle_upload_source(
         "windows",
@@ -106,8 +112,27 @@ def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: 
 
     assert (prepared / ART_ASSETS_DIRNAME / "catalog.bytes").read_bytes() == b"catalog"
     assert (prepared / PACKAGE_BUILD_INFO_FILENAME).read_text(encoding="utf-8") == "pkg"
-    assert (prepared / ASSETS_INFO_FILENAME).read_text(encoding="utf-8") == "assets"
+    assert "art_assets/catalog.bytes" in (prepared / ASSETS_INFO_FILENAME).read_text(encoding="utf-8")
     assert not (prepared / ASSETS_SUBPACK_INFO_FILENAME).exists()
+
+
+def test_prepare_assetbundle_upload_source_requires_declared_art_assets_files(tmp_path: Path) -> None:
+    output_root = tmp_path / "output"
+    platform_dir = output_root / "ios"
+    (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
+    (platform_dir / ART_ASSETS_DIRNAME / "buildlogtep.json").write_text("{}", encoding="utf-8")
+    (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
+    (platform_dir / ASSETS_INFO_FILENAME).write_text(
+        "1,100,art_assets/real.bundle,0.1\n2,101,art_assets/buildlogtep.json,0.2\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ClientResourceArtifactsError, match="missing declared art_assets files"):
+        prepare_assetbundle_upload_source(
+            "ios",
+            output_root=output_root,
+            staging_dir=tmp_path / "staging",
+        )
 
 
 def test_prepare_table_upload_source_renames_local_db_to_client_db(tmp_path: Path) -> None:
@@ -146,6 +171,25 @@ def test_build_upload_summary_uses_new_remote_layout_names(tmp_path: Path) -> No
     assert list_source_files(prepared_dir) == [prepared_dir / "client.db"]
 
 
+def test_parse_assetbundle_manifest_paths_extracts_art_assets_only(tmp_path: Path) -> None:
+    info_path = tmp_path / ASSETS_INFO_FILENAME
+    info_path.write_text(
+        "1,100,art_assets/real.bundle,0.1\n2,101,other/path.bin,0.2\n3,102,art_assets/buildlogtep.json,0.3\n",
+        encoding="utf-8",
+    )
+
+    assert parse_assetbundle_manifest_paths(info_path) == {
+        "art_assets/real.bundle",
+        "art_assets/buildlogtep.json",
+    }
+
+
+def test_has_real_assetbundle_payload_ignores_metadata_only_entries() -> None:
+    metadata_only = {f"art_assets/{name}" for name in ART_ASSET_METADATA_FILENAMES}
+    assert has_real_assetbundle_payload(metadata_only) is False
+    assert has_real_assetbundle_payload({*metadata_only, "art_assets/real.bundle"}) is True
+
+
 def test_validate_uploaded_artifacts_checks_remote_listing_and_logs_success(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -155,8 +199,10 @@ def test_validate_uploaded_artifacts_checks_remote_listing_and_logs_success(
     (prepared_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
     first_file = prepared_dir / ART_ASSETS_DIRNAME / "first.bundle"
     second_file = prepared_dir / PACKAGE_BUILD_INFO_FILENAME
+    third_file = prepared_dir / ASSETS_INFO_FILENAME
     first_file.write_bytes(b"bundle")
     second_file.write_text("pkg", encoding="utf-8")
+    third_file.write_text("1,100,art_assets/first.bundle,0.1\n", encoding="utf-8")
 
     summary = build_upload_summary(
         prepared_dir,
@@ -206,8 +252,8 @@ def test_validate_uploaded_artifacts_checks_remote_listing_and_logs_success(
     )
 
     output = capsys.readouterr().out
-    assert "[TestUpload] uploadVerifiedFiles=2" in output
-    assert "[TestUpload] uploadVerifiedRemoteFiles=2" in output
+    assert "[TestUpload] uploadVerifiedFiles=3" in output
+    assert "[TestUpload] uploadVerifiedRemoteFiles=3" in output
 
 
 def test_validate_uploaded_artifacts_raises_when_remote_listing_misses_file(
@@ -218,8 +264,10 @@ def test_validate_uploaded_artifacts_raises_when_remote_listing_misses_file(
     (prepared_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
     first_file = prepared_dir / ART_ASSETS_DIRNAME / "first.bundle"
     second_file = prepared_dir / PACKAGE_BUILD_INFO_FILENAME
+    third_file = prepared_dir / ASSETS_INFO_FILENAME
     first_file.write_bytes(b"bundle")
     second_file.write_text("pkg", encoding="utf-8")
+    third_file.write_text("1,100,art_assets/first.bundle,0.1\n", encoding="utf-8")
 
     summary = build_upload_summary(
         prepared_dir,
@@ -275,7 +323,10 @@ def test_upload_client_res_assetbundle_invokes_aggregate_validation(
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
     (platform_dir / ART_ASSETS_DIRNAME / "catalog.bytes").write_bytes(b"catalog")
     (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
-    (platform_dir / ASSETS_INFO_FILENAME).write_text("assets", encoding="utf-8")
+    (platform_dir / ASSETS_INFO_FILENAME).write_text(
+        "1,100,art_assets/catalog.bytes,0.1\n",
+        encoding="utf-8",
+    )
 
     settings = FileServerClientSettings(base_url="http://fileserver", token=None, config_path=None)
     captured: dict[str, object] = {}
