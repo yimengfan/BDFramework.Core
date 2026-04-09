@@ -624,6 +624,36 @@ namespace BDFramework.Editor.DevOps
         }
 
 
+        static private void EnsureClientResBuildTarget(BuildTarget buildTarget)
+        {
+            if (EditorUserBuildSettings.activeBuildTarget == buildTarget)
+            {
+                return;
+            }
+
+            var buildTargetGroup = UnityEditor.BuildPipeline.GetBuildTargetGroup(buildTarget);
+            if (buildTargetGroup == BuildTargetGroup.Unknown)
+            {
+                throw new Exception($"【CI】未知的构建目标组:{buildTarget}");
+            }
+
+            if (!BDEditorApplication.IsPlatformModuleInstalled(buildTargetGroup, buildTarget))
+            {
+                throw new Exception($"【CI】未安装目标平台模块:{buildTarget}");
+            }
+
+            Debug.Log($"【CI】切换ClientRes构建平台: {EditorUserBuildSettings.activeBuildTarget} => {buildTarget}");
+            var switched = BDEditorApplication.SwitchToBuildTarget(buildTarget);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            if (!switched || EditorUserBuildSettings.activeBuildTarget != buildTarget)
+            {
+                throw new Exception($"【CI】切换ClientRes目标平台失败:{buildTarget}");
+            }
+        }
+
+
         static private void PrepareBatchModeAssetbundleCaches()
         {
             if (!Application.isBatchMode)
@@ -682,6 +712,8 @@ namespace BDFramework.Editor.DevOps
                 EnsureAndroidSdkForBatchMode();
                 EnsureAndroidNdkForBatchMode();
             }
+
+            EnsureClientResBuildTarget(buildTarget);
 
             if (buildOption.HasFlag(BuildTools_Assets.BuildPackageOption.BuildArtAssets))
             {
