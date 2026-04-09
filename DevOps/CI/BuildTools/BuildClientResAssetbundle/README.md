@@ -8,7 +8,7 @@
 2. 三个平台脚本只负责传入平台、日志前缀和 Unity `executeMethod`；公共流程统一复用 `Common/client_resource_flow.py`。
 3. 真实构建前必须清理隔离输出目录，默认写到 `Library/CIOutputs/clientres_assetbundle/<build_name>/<build_number>/<platform>/`。
 4. 上传前只保留 Assetbundle 相关目录和配置文件，不把热更代码或表格产物混进上传源。
-5. BatchMode 的 Assetbundle CI 在进入 Unity 构建前会先清理 SBP / AssetGraph 相关缓存，避免 TeamCity agent 上的脏缓存导致 `Library/BuildCache` 缺失 `CAB-*` 文件。
+5. BatchMode 的 Assetbundle CI 在进入 Unity 构建前会先清理 SBP / AssetGraph 相关缓存，并在 Unity SBP 阶段禁用 `BuildCache`，避免 TeamCity agent 上的 `WriteSerializedFiles` 读取失效 `CAB-*` 缓存文件。
 
 ## 文件说明
 

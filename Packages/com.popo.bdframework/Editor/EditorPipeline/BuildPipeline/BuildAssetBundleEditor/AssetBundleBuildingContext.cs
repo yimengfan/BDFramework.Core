@@ -603,9 +603,17 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 // }
             }
 
-            buildParams.UseCache = true;
-            buildParams.CacheServerHost = ip;
-            buildParams.CacheServerPort = port;
+            var disableBuildCacheForBatchMode = Application.isBatchMode;
+            buildParams.UseCache = !disableBuildCacheForBatchMode;
+            if (disableBuildCacheForBatchMode)
+            {
+                Debug.LogWarning("【BuildAssetbundle】BatchMode检测到CI环境，禁用SBP BuildCache以避免WriteSerializedFiles读取失效的CAB缓存文件。");
+            }
+            else
+            {
+                buildParams.CacheServerHost = ip;
+                buildParams.CacheServerPort = port;
+            }
             //LZ4压缩
             buildParams.BundleCompression = BuildCompression.LZ4;
             buildParams.AppendHash = false;
