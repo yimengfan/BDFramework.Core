@@ -37,6 +37,12 @@ from Common.client_resource_artifacts import (  # noqa: E402
 from Common.artifact_uploader import FileServerClientSettings, UploadedArtifact  # noqa: E402
 
 
+def write_asset_info(target_path: Path, rows: list[tuple[str, str, str, str]]) -> None:
+    content = ["Id,HashName,LocalPath,FileSize"]
+    content.extend(",".join(row) for row in rows)
+    target_path.write_text("\n".join(content) + "\n", encoding="utf-8")
+
+
 def test_prepare_clean_ci_output_root_recreates_existing_directory(tmp_path: Path) -> None:
     project_dir = tmp_path / "BDFramework.Core"
     output_root = project_dir / "Library" / "CIOutputs" / "clientres_code" / "Nightly" / "18" / "android"
@@ -63,7 +69,13 @@ def test_prepare_code_upload_source_keeps_script_and_required_infos(tmp_path: Pa
     (platform_dir / SCRIPT_DIRNAME / "hotfix").mkdir(parents=True)
     (platform_dir / SCRIPT_DIRNAME / "hotfix" / "Assembly-CSharp.dll.bytes").write_bytes(b"dll")
     (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
-    (platform_dir / ASSETS_INFO_FILENAME).write_text("assets", encoding="utf-8")
+    write_asset_info(
+        platform_dir / ASSETS_INFO_FILENAME,
+        [
+            ("1", "100", PACKAGE_BUILD_INFO_FILENAME, "0.1"),
+            ("2", "101", "script/hotfix/Assembly-CSharp.dll.bytes", "0.2"),
+        ],
+    )
     (platform_dir / ASSETS_SUBPACK_INFO_FILENAME).write_text("subpack", encoding="utf-8")
 
     prepared = prepare_code_upload_source(
@@ -72,9 +84,10 @@ def test_prepare_code_upload_source_keeps_script_and_required_infos(tmp_path: Pa
         staging_dir=tmp_path / "staging",
     )
 
-    assert (prepared / SCRIPT_DIRNAME / "hotfix" / "Assembly-CSharp.dll.bytes").read_bytes() == b"dll"
-    assert (prepared / PACKAGE_BUILD_INFO_FILENAME).read_text(encoding="utf-8") == "pkg"
-    assert (prepared / ASSETS_INFO_FILENAME).read_text(encoding="utf-8") == "assets"
+    assert (prepared / "100").read_text(encoding="utf-8") == "pkg"
+    assert (prepared / "101").read_bytes() == b"dll"
+    assert not (prepared / SCRIPT_DIRNAME).exists()
+    assert "HashName,LocalPath" in (prepared / ASSETS_INFO_FILENAME).read_text(encoding="utf-8")
     assert (prepared / ASSETS_SUBPACK_INFO_FILENAME).read_text(encoding="utf-8") == "subpack"
 
 
@@ -83,7 +96,13 @@ def test_prepare_code_upload_source_requires_package_build_info(tmp_path: Path) 
     platform_dir = output_root / "ios"
     (platform_dir / SCRIPT_DIRNAME / "hotfix").mkdir(parents=True)
     (platform_dir / SCRIPT_DIRNAME / "hotfix" / "Assembly-CSharp.dll.bytes").write_bytes(b"dll")
-    (platform_dir / ASSETS_INFO_FILENAME).write_text("assets", encoding="utf-8")
+    write_asset_info(
+        platform_dir / ASSETS_INFO_FILENAME,
+        [
+            ("1", "100", PACKAGE_BUILD_INFO_FILENAME, "0.1"),
+            ("2", "101", "script/hotfix/Assembly-CSharp.dll.bytes", "0.2"),
+        ],
+    )
 
     with pytest.raises(ClientResourceArtifactsError, match="package_build.info"):
         prepare_code_upload_source(
@@ -99,12 +118,16 @@ def test_prepare_code_upload_source_requires_declared_script_files(tmp_path: Pat
     (platform_dir / SCRIPT_DIRNAME / "hotfix").mkdir(parents=True)
     (platform_dir / SCRIPT_DIRNAME / "hotfix" / "Assembly-CSharp.dll.bytes").write_bytes(b"dll")
     (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
-    (platform_dir / ASSETS_INFO_FILENAME).write_text(
-        "1,100,script/hotfix/Assembly-CSharp.dll.bytes,0.1\n2,101,script/hotfix/Assembly-CSharp.pdb.bytes,0.2\n",
-        encoding="utf-8",
+    write_asset_info(
+        platform_dir / ASSETS_INFO_FILENAME,
+        [
+            ("1", "100", PACKAGE_BUILD_INFO_FILENAME, "0.1"),
+            ("2", "101", "script/hotfix/Assembly-CSharp.dll.bytes", "0.2"),
+            ("3", "102", "script/hotfix/Assembly-CSharp.pdb.bytes", "0.3"),
+        ],
     )
 
-    with pytest.raises(ClientResourceArtifactsError, match="missing declared script files"):
+    with pytest.raises(ClientResourceArtifactsError, match="Assembly-CSharp.pdb.bytes"):
         prepare_code_upload_source(
             "ios",
             output_root=output_root,
@@ -118,9 +141,12 @@ def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: 
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
     (platform_dir / ART_ASSETS_DIRNAME / "catalog.bytes").write_bytes(b"catalog")
     (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
-    (platform_dir / ASSETS_INFO_FILENAME).write_text(
-        "1,100,art_assets/catalog.bytes,0.1\n",
-        encoding="utf-8",
+    write_asset_info(
+        platform_dir / ASSETS_INFO_FILENAME,
+        [
+            ("1", "100", PACKAGE_BUILD_INFO_FILENAME, "0.1"),
+            ("2", "101", "art_assets/catalog.bytes", "0.2"),
+        ],
     )
 
     prepared = prepare_assetbundle_upload_source(
@@ -129,8 +155,9 @@ def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: 
         staging_dir=tmp_path / "staging",
     )
 
-    assert (prepared / ART_ASSETS_DIRNAME / "catalog.bytes").read_bytes() == b"catalog"
-    assert (prepared / PACKAGE_BUILD_INFO_FILENAME).read_text(encoding="utf-8") == "pkg"
+    assert (prepared / "100").read_text(encoding="utf-8") == "pkg"
+    assert (prepared / "101").read_bytes() == b"catalog"
+    assert not (prepared / ART_ASSETS_DIRNAME).exists()
     assert "art_assets/catalog.bytes" in (prepared / ASSETS_INFO_FILENAME).read_text(encoding="utf-8")
     assert not (prepared / ASSETS_SUBPACK_INFO_FILENAME).exists()
 
@@ -142,12 +169,17 @@ def test_prepare_assetbundle_upload_source_requires_declared_art_assets_files(tm
     (platform_dir / ART_ASSETS_DIRNAME / "existing.bundle").write_bytes(b"bundle")
     (platform_dir / ART_ASSETS_DIRNAME / "buildlogtep.json").write_text("{}", encoding="utf-8")
     (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
-    (platform_dir / ASSETS_INFO_FILENAME).write_text(
-        "1,100,art_assets/existing.bundle,0.1\n2,101,art_assets/real.bundle,0.2\n3,102,art_assets/buildlogtep.json,0.3\n",
-        encoding="utf-8",
+    write_asset_info(
+        platform_dir / ASSETS_INFO_FILENAME,
+        [
+            ("1", "100", PACKAGE_BUILD_INFO_FILENAME, "0.1"),
+            ("2", "101", "art_assets/existing.bundle", "0.2"),
+            ("3", "102", "art_assets/real.bundle", "0.3"),
+            ("4", "103", "art_assets/buildlogtep.json", "0.4"),
+        ],
     )
 
-    with pytest.raises(ClientResourceArtifactsError, match="missing declared art_assets files"):
+    with pytest.raises(ClientResourceArtifactsError, match="art_assets/real.bundle"):
         prepare_assetbundle_upload_source(
             "ios",
             output_root=output_root,
@@ -161,7 +193,13 @@ def test_prepare_assetbundle_upload_source_requires_real_payload_file(tmp_path: 
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
     (platform_dir / ART_ASSETS_DIRNAME / "buildlogtep.json").write_text("{}", encoding="utf-8")
     (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
-    (platform_dir / ASSETS_INFO_FILENAME).write_text("header-only", encoding="utf-8")
+    write_asset_info(
+        platform_dir / ASSETS_INFO_FILENAME,
+        [
+            ("1", "100", PACKAGE_BUILD_INFO_FILENAME, "0.1"),
+            ("2", "101", "art_assets/buildlogtep.json", "0.2"),
+        ],
+    )
 
     with pytest.raises(ClientResourceArtifactsError, match="does not contain any real art_assets payload files"):
         prepare_assetbundle_upload_source(
@@ -226,9 +264,13 @@ def test_build_upload_summary_uses_new_remote_layout_names(tmp_path: Path) -> No
 
 def test_parse_assetbundle_manifest_paths_extracts_art_assets_only(tmp_path: Path) -> None:
     info_path = tmp_path / ASSETS_INFO_FILENAME
-    info_path.write_text(
-        "1,100,art_assets/real.bundle,0.1\n2,101,other/path.bin,0.2\n3,102,art_assets/buildlogtep.json,0.3\n",
-        encoding="utf-8",
+    write_asset_info(
+        info_path,
+        [
+            ("1", "100", "art_assets/real.bundle", "0.1"),
+            ("2", "101", "other/path.bin", "0.2"),
+            ("3", "102", "art_assets/buildlogtep.json", "0.3"),
+        ],
     )
 
     assert parse_assetbundle_manifest_paths(info_path) == {
@@ -249,13 +291,19 @@ def test_validate_uploaded_artifacts_checks_remote_listing_and_logs_success(
     capsys,
 ) -> None:
     prepared_dir = tmp_path / "prepared"
-    (prepared_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
-    first_file = prepared_dir / ART_ASSETS_DIRNAME / "first.bundle"
-    second_file = prepared_dir / PACKAGE_BUILD_INFO_FILENAME
+    prepared_dir.mkdir(parents=True)
+    first_file = prepared_dir / "100"
+    second_file = prepared_dir / "101"
     third_file = prepared_dir / ASSETS_INFO_FILENAME
     first_file.write_bytes(b"bundle")
     second_file.write_text("pkg", encoding="utf-8")
-    third_file.write_text("1,100,art_assets/first.bundle,0.1\n", encoding="utf-8")
+    write_asset_info(
+        third_file,
+        [
+            ("1", "100", "art_assets/first.bundle", "0.1"),
+            ("2", "101", PACKAGE_BUILD_INFO_FILENAME, "0.2"),
+        ],
+    )
 
     summary = build_upload_summary(
         prepared_dir,
@@ -314,13 +362,19 @@ def test_validate_uploaded_artifacts_raises_when_remote_listing_misses_file(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     prepared_dir = tmp_path / "prepared"
-    (prepared_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
-    first_file = prepared_dir / ART_ASSETS_DIRNAME / "first.bundle"
-    second_file = prepared_dir / PACKAGE_BUILD_INFO_FILENAME
+    prepared_dir.mkdir(parents=True)
+    first_file = prepared_dir / "100"
+    second_file = prepared_dir / "101"
     third_file = prepared_dir / ASSETS_INFO_FILENAME
     first_file.write_bytes(b"bundle")
     second_file.write_text("pkg", encoding="utf-8")
-    third_file.write_text("1,100,art_assets/first.bundle,0.1\n", encoding="utf-8")
+    write_asset_info(
+        third_file,
+        [
+            ("1", "100", "art_assets/first.bundle", "0.1"),
+            ("2", "101", PACKAGE_BUILD_INFO_FILENAME, "0.2"),
+        ],
+    )
 
     summary = build_upload_summary(
         prepared_dir,
@@ -376,9 +430,12 @@ def test_upload_client_res_assetbundle_invokes_aggregate_validation(
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
     (platform_dir / ART_ASSETS_DIRNAME / "catalog.bytes").write_bytes(b"catalog")
     (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
-    (platform_dir / ASSETS_INFO_FILENAME).write_text(
-        "1,100,art_assets/catalog.bytes,0.1\n",
-        encoding="utf-8",
+    write_asset_info(
+        platform_dir / ASSETS_INFO_FILENAME,
+        [
+            ("1", "100", PACKAGE_BUILD_INFO_FILENAME, "0.1"),
+            ("2", "101", "art_assets/catalog.bytes", "0.2"),
+        ],
     )
 
     settings = FileServerClientSettings(base_url="http://fileserver", token=None, config_path=None)

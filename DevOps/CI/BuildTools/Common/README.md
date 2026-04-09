@@ -23,7 +23,8 @@
 4. 支持单独配置“客户端访问文件服务器的 IP”，避免把服务端 `0.0.0.0` 监听地址误当成可访问地址。
 5. 上传函数支持进度回调，方便 CI 在长时间上传目录时持续输出阶段日志。
 6. `ClientRes_*` 共享 helper 必须先清理隔离输出目录，再筛选当前类型需要的文件，避免把历史构建残留或其他类型产物重复上传。
-7. `ClientRes_*` 对应的 Unity CI 入口在执行真正构建前必须显式切换 Editor active build target 到目标平台，不能依赖 TeamCity agent 上一次残留的平台状态。
+7. `ClientRes_*` 对应的 Unity BatchMode 命令必须显式传入 `-buildTarget` 到目标平台，不能在 Editor 内切换平台，也不能依赖 TeamCity agent 上一次残留的平台状态。
+8. `ClientRes_*` 共享 flow / artifact helper 的注释和日志规范与 `BuildClientPackage` 保持一致：文件头说明职责边界，关键函数说明为什么这样做，CI 日志按 `Step n/m` 输出宿主系统、目标平台、clientVersion、Unity 路径、executeMethod 和日志路径。
 
 ## 模块加载规范
 
@@ -116,8 +117,8 @@ upload_client_package(
 
 ClientRes 类型专项校验：
 
-- Code：`prepare_code_upload_source()` 会校验 `script/` 目录存在真实 payload，并且 `assets.info` / `assets_subpack.info` 中声明的 `script/*` 全部已经落到 staging
-- Assetbundle：`prepare_assetbundle_upload_source()` 会校验 `art_assets/` 存在真实 payload，并且 `assets.info` / `assets_subpack.info` 中声明的 `art_assets/*` 全部已经落到 staging
+- Code：`prepare_code_upload_source()` 会保留 `assets.info` 和可选的 `assets_subpack.info`，再按 `assets.info` 的 `HashName <- LocalPath` 关系把 `package_build.info`、`script/*` 等文件整理成服务器 hash 布局；校验 hash 文件集合与 `assets.info` 一致，且声明中存在真实 `script/*` payload
+- Assetbundle：`prepare_assetbundle_upload_source()` 会保留 `assets.info` 和可选的 `assets_subpack.info`，再按 `assets.info` 的 `HashName <- LocalPath` 关系把 `package_build.info`、`art_assets/*` 等文件整理成服务器 hash 布局；`assets_subpack.info` 只原样上传，不参与资源清单解析；校验 hash 文件集合与 `assets.info` 一致，且声明中存在真实 `art_assets/*` payload
 - Table：`prepare_table_upload_source()` 会校验 `local.db` / `server.db` 存在且非空，再重命名为 `client.db` / `server.db` 上传
 
 上传入口都支持两个可选回调：

@@ -8,6 +8,7 @@ from __future__ import annotations
 3. TeamCity DSL 只调度 Python 入口脚本，真正的产物组织与上传规则放在这里收敛。
 """
 
+import csv
 from collections.abc import Callable
 import shutil
 from dataclasses import dataclass
@@ -57,6 +58,16 @@ class ClientResourceUploadSummary:
     remote_root: str
     file_count: int
     total_bytes: int
+
+
+@dataclass(frozen=True)
+class AssetInfoEntry:
+    """描述 assets.info 中的一条服务器资源映射。"""
+
+    asset_id: str
+    hash_name: str
+    local_path: str
+    file_size: str
 
 
 def sanitize_path_fragment(raw_value: str | None, *, fallback: str) -> str:
@@ -420,6 +431,172 @@ def validate_uploaded_artifacts(
     print(f"{log_prefix} uploadVerifiedExtraRemoteFiles={extra_remote_file_count}")
 
 
+def is_asset_info_header(columns: list[str]) -> bool:
+    """判断当前 CSV 行是否为标准 assets.info 表头。"""
+    if len(columns) < 4:
+        return False
+
+    normalized_columns = [column.strip().lower() for column in columns[:4]]
+    return normalized_columns == ["id", "hashname", "localpath", "filesize"]
+
+
+def normalize_asset_hash_name(raw_value: str, *, info_file_path: Path, line_number: int) -> str:
+    """规范化 assets.info 中的 HashName 字段。"""
+    normalized_hash_name = raw_value.strip()
+    if not normalized_hash_name:
+        raise ClientResourceArtifactsError(
+            f"Invalid assets.info hash name: file={info_file_path}, line={line_number}"
+        )
+    if "/" in normalized_hash_name or "\\" in normalized_hash_name:
+        raise ClientResourceArtifactsError(
+            "Invalid assets.info hash name, nested paths are not supported: "
+            f"file={info_file_path}, line={line_number}, hash={normalized_hash_name}"
+        )
+
+    return normalized_hash_name
+
+
+def normalize_asset_local_path(raw_value: str, *, info_file_path: Path, line_number: int) -> str:
+    """规范化 assets.info 中的 LocalPath 字段。"""
+    normalized_local_path = raw_value.strip().replace("\\", "/")
+    pure_local_path = PurePosixPath(normalized_local_path)
+    if not normalized_local_path or pure_local_path.is_absolute() or ".." in pure_local_path.parts:
+        raise ClientResourceArtifactsError(
+            f"Invalid assets.info local path: file={info_file_path}, line={line_number}, path={raw_value!r}"
+        )
+
+    normalized_local_path = pure_local_path.as_posix()
+    if normalized_local_path in {"", "."}:
+        raise ClientResourceArtifactsError(
+            f"Invalid assets.info local path: file={info_file_path}, line={line_number}, path={raw_value!r}"
+        )
+
+    return normalized_local_path
+
+
+def parse_asset_info_entries(info_file_path: Path) -> list[AssetInfoEntry]:
+    """读取标准 assets.info，返回 HashName 和 LocalPath 的映射集合。"""
+    if not info_file_path.exists():
+        return []
+
+    entries: list[AssetInfoEntry] = []
+    with info_file_path.open("r", encoding="utf-8", newline="") as file_handle:
+        for line_number, row in enumerate(csv.reader(file_handle), start=1):
+            if not row:
+                continue
+
+            normalized_row = [column.strip() for column in row]
+            if not any(normalized_row):
+                continue
+            if is_asset_info_header(normalized_row):
+                continue
+            if len(normalized_row) < 4:
+                raise ClientResourceArtifactsError(
+                    f"Invalid assets.info row: file={info_file_path}, line={line_number}, row={row!r}"
+                )
+
+            asset_id, hash_name, local_path, file_size = normalized_row[:4]
+            entries.append(
+                AssetInfoEntry(
+                    asset_id=asset_id,
+                    hash_name=normalize_asset_hash_name(
+                        hash_name,
+                        info_file_path=info_file_path,
+                        line_number=line_number,
+                    ),
+                    local_path=normalize_asset_local_path(
+                        local_path,
+                        info_file_path=info_file_path,
+                        line_number=line_number,
+                    ),
+                    file_size=file_size,
+                )
+            )
+
+    return entries
+
+
+def copy_manifest_hash_files(
+    platform_dir: Path,
+    prepared_dir: Path,
+    *,
+    asset_entries: list[AssetInfoEntry],
+    source_description: str,
+) -> None:
+    """按 assets.info 把原始资源整理成服务器需要的 hash 文件布局。"""
+    staged_hashes: dict[str, str] = {}
+    for asset_entry in asset_entries:
+        previous_local_path = staged_hashes.get(asset_entry.hash_name)
+        if previous_local_path is not None:
+            if previous_local_path != asset_entry.local_path:
+                raise ClientResourceArtifactsError(
+                    f"{source_description} assets.info contains duplicate hash names. "
+                    f"hash={asset_entry.hash_name}, first={previous_local_path}, second={asset_entry.local_path}"
+                )
+            continue
+
+        source_path = ensure_existing_path(
+            platform_dir / Path(asset_entry.local_path),
+            description=f"{source_description} manifest source file ({asset_entry.local_path})",
+        )
+        copy_path(source_path, prepared_dir / asset_entry.hash_name)
+        staged_hashes[asset_entry.hash_name] = asset_entry.local_path
+
+
+def collect_staged_hash_names(prepared_dir: Path) -> set[str]:
+    """收集 staging 根目录下的 hash 文件名，并拒绝旧的目录式布局。"""
+    staged_hash_names: set[str] = set()
+    unexpected_nested_files: list[str] = []
+
+    for file_path in list_source_files(prepared_dir):
+        relative_path = file_path.relative_to(prepared_dir).as_posix()
+        if relative_path in {ASSETS_INFO_FILENAME, ASSETS_SUBPACK_INFO_FILENAME}:
+            continue
+        if "/" in relative_path:
+            unexpected_nested_files.append(relative_path)
+            continue
+
+        staged_hash_names.add(relative_path)
+
+    if unexpected_nested_files:
+        raise ClientResourceArtifactsError(
+            "ClientRes staging contains unexpected nested files. "
+            f"files={sorted(unexpected_nested_files)}"
+        )
+
+    return staged_hash_names
+
+
+def describe_manifest_hashes(asset_entries: list[AssetInfoEntry], hash_names: set[str]) -> list[str]:
+    """把缺失或多余的 hash 文件转换成便于定位的日志描述。"""
+    local_path_by_hash = {
+        asset_entry.hash_name: asset_entry.local_path
+        for asset_entry in asset_entries
+    }
+    return [
+        f"{hash_name}<-{local_path_by_hash.get(hash_name, '<unknown>')}"
+        for hash_name in sorted(hash_names)
+    ]
+
+
+def validate_hashed_manifest_files(prepared_dir: Path, *, source_description: str) -> list[AssetInfoEntry]:
+    """校验 staging 中的 hash 文件集合与 assets.info 的声明完全一致。"""
+    asset_entries = parse_asset_info_entries(prepared_dir / ASSETS_INFO_FILENAME)
+    declared_hash_names = {asset_entry.hash_name for asset_entry in asset_entries}
+    actual_hash_names = collect_staged_hash_names(prepared_dir)
+
+    missing_hash_names = declared_hash_names - actual_hash_names
+    unexpected_hash_names = actual_hash_names - declared_hash_names
+    if missing_hash_names or unexpected_hash_names:
+        raise ClientResourceArtifactsError(
+            f"{source_description} staging hash files do not match assets.info. "
+            f"missing={describe_manifest_hashes(asset_entries, missing_hash_names)}, "
+            f"unexpected={sorted(unexpected_hash_names)}"
+        )
+
+    return asset_entries
+
+
 def prepare_code_upload_source(
     platform_key: str,
     *,
@@ -432,26 +609,26 @@ def prepare_code_upload_source(
         description=f"ClientRes code platform output ({platform_key})",
     )
     prepared_dir = staging_dir / platform_key
+    assets_info_path = ensure_existing_path(
+        platform_dir / ASSETS_INFO_FILENAME,
+        description="ClientRes code assets.info",
+    )
 
     copy_path(
-        ensure_existing_path(platform_dir / SCRIPT_DIRNAME, description="ClientRes code script directory"),
-        prepared_dir / SCRIPT_DIRNAME,
-    )
-    copy_path(
-        ensure_existing_path(
-            platform_dir / PACKAGE_BUILD_INFO_FILENAME,
-            description="ClientRes code package_build.info",
-        ),
-        prepared_dir / PACKAGE_BUILD_INFO_FILENAME,
-    )
-    copy_path(
-        ensure_existing_path(platform_dir / ASSETS_INFO_FILENAME, description="ClientRes code assets.info"),
+        assets_info_path,
         prepared_dir / ASSETS_INFO_FILENAME,
     )
 
     optional_subpack = platform_dir / ASSETS_SUBPACK_INFO_FILENAME
     if optional_subpack.exists():
         copy_path(optional_subpack, prepared_dir / ASSETS_SUBPACK_INFO_FILENAME)
+
+    copy_manifest_hash_files(
+        platform_dir,
+        prepared_dir,
+        asset_entries=parse_asset_info_entries(assets_info_path),
+        source_description="ClientRes code",
+    )
 
     validate_code_upload_source(prepared_dir)
 
@@ -470,26 +647,13 @@ def prepare_assetbundle_upload_source(
         description=f"ClientRes assetbundle platform output ({platform_key})",
     )
     prepared_dir = staging_dir / platform_key
+    assets_info_path = ensure_existing_path(
+        platform_dir / ASSETS_INFO_FILENAME,
+        description="ClientRes assetbundle assets.info",
+    )
 
     copy_path(
-        ensure_existing_path(
-            platform_dir / ART_ASSETS_DIRNAME,
-            description="ClientRes assetbundle art_assets directory",
-        ),
-        prepared_dir / ART_ASSETS_DIRNAME,
-    )
-    copy_path(
-        ensure_existing_path(
-            platform_dir / PACKAGE_BUILD_INFO_FILENAME,
-            description="ClientRes assetbundle package_build.info",
-        ),
-        prepared_dir / PACKAGE_BUILD_INFO_FILENAME,
-    )
-    copy_path(
-        ensure_existing_path(
-            platform_dir / ASSETS_INFO_FILENAME,
-            description="ClientRes assetbundle assets.info",
-        ),
+        assets_info_path,
         prepared_dir / ASSETS_INFO_FILENAME,
     )
 
@@ -497,27 +661,23 @@ def prepare_assetbundle_upload_source(
     if optional_subpack.exists():
         copy_path(optional_subpack, prepared_dir / ASSETS_SUBPACK_INFO_FILENAME)
 
+    copy_manifest_hash_files(
+        platform_dir,
+        prepared_dir,
+        asset_entries=parse_asset_info_entries(assets_info_path),
+        source_description="ClientRes assetbundle",
+    )
+
     validate_assetbundle_upload_source(prepared_dir)
 
     return prepared_dir
 
 
 def parse_manifest_paths(info_file_path: Path, *, relative_prefix: str | None = None) -> set[str]:
-    """从 assets.info / assets_subpack.info 中提取声明路径。"""
+    """从 assets.info 中提取声明的 LocalPath。"""
     declared_paths: set[str] = set()
-    if not info_file_path.exists():
-        return declared_paths
-
-    for raw_line in info_file_path.read_text(encoding="utf-8").splitlines():
-        line = raw_line.strip()
-        if not line:
-            continue
-
-        parts = line.split(",", 3)
-        if len(parts) < 3:
-            continue
-
-        relative_path = parts[2].strip()
+    for asset_entry in parse_asset_info_entries(info_file_path):
+        relative_path = asset_entry.local_path
         if relative_prefix is not None and not relative_path.startswith(relative_prefix):
             continue
 
@@ -527,45 +687,34 @@ def parse_manifest_paths(info_file_path: Path, *, relative_prefix: str | None = 
 
 
 def parse_assetbundle_manifest_paths(info_file_path: Path) -> set[str]:
-    """从 assets.info / assets_subpack.info 中提取声明的 art_assets 路径。"""
+    """从 assets.info 中提取声明的 art_assets 路径。"""
     return parse_manifest_paths(info_file_path, relative_prefix=f"{ART_ASSETS_DIRNAME}/")
 
 
 def parse_code_manifest_paths(info_file_path: Path) -> set[str]:
-    """从 assets.info / assets_subpack.info 中提取声明的 script 路径。"""
+    """从 assets.info 中提取声明的 script 路径。"""
     return parse_manifest_paths(info_file_path, relative_prefix=f"{SCRIPT_DIRNAME}/")
 
 
 def validate_code_upload_source(prepared_dir: Path) -> None:
-    """校验 assets.info 声明的脚本文件都已经落到 staging。"""
-    script_dir = ensure_existing_path(
-        prepared_dir / SCRIPT_DIRNAME,
-        description="ClientRes code script directory",
+    """校验 code staging 使用 hash 布局且包含真实脚本 payload。"""
+    asset_entries = validate_hashed_manifest_files(
+        prepared_dir,
+        source_description="ClientRes code",
     )
-    actual_script_paths = {
-        file_path.relative_to(prepared_dir).as_posix()
-        for file_path in list_source_files(script_dir)
+    declared_script_paths = {
+        asset_entry.local_path
+        for asset_entry in asset_entries
+        if asset_entry.local_path.startswith(f"{SCRIPT_DIRNAME}/")
     }
 
-    if not any(PurePosixPath(relative_path).name not in SCRIPT_METADATA_FILENAMES for relative_path in actual_script_paths):
+    if not any(
+        PurePosixPath(relative_path).name not in SCRIPT_METADATA_FILENAMES
+        for relative_path in declared_script_paths
+    ):
         raise ClientResourceArtifactsError(
             "ClientRes code staging does not contain any script payload files. "
-            f"actual={sorted(actual_script_paths)}"
-        )
-
-    declared_script_paths = parse_code_manifest_paths(prepared_dir / ASSETS_INFO_FILENAME)
-    optional_subpack = prepared_dir / ASSETS_SUBPACK_INFO_FILENAME
-    if optional_subpack.exists():
-        declared_script_paths.update(parse_code_manifest_paths(optional_subpack))
-
-    if not declared_script_paths:
-        return
-
-    missing_script_paths = sorted(declared_script_paths - actual_script_paths)
-    if missing_script_paths:
-        raise ClientResourceArtifactsError(
-            "ClientRes code staging is missing declared script files. "
-            f"missing={missing_script_paths}"
+            f"declared={sorted(declared_script_paths)}"
         )
 
 
@@ -575,35 +724,21 @@ def has_real_assetbundle_payload(relative_paths: set[str]) -> bool:
 
 
 def validate_assetbundle_upload_source(prepared_dir: Path) -> None:
-    """校验 assets.info 声明的资源文件都已经落到 staging。"""
-    art_assets_dir = ensure_existing_path(
-        prepared_dir / ART_ASSETS_DIRNAME,
-        description="ClientRes assetbundle art_assets directory",
+    """校验 assetbundle staging 使用 hash 布局且包含真实资源 payload。"""
+    asset_entries = validate_hashed_manifest_files(
+        prepared_dir,
+        source_description="ClientRes assetbundle",
     )
-    actual_art_asset_paths = {
-        file_path.relative_to(prepared_dir).as_posix()
-        for file_path in list_source_files(art_assets_dir)
+    declared_art_asset_paths = {
+        asset_entry.local_path
+        for asset_entry in asset_entries
+        if asset_entry.local_path.startswith(f"{ART_ASSETS_DIRNAME}/")
     }
 
-    declared_art_asset_paths = parse_assetbundle_manifest_paths(prepared_dir / ASSETS_INFO_FILENAME)
-    optional_subpack = prepared_dir / ASSETS_SUBPACK_INFO_FILENAME
-    if optional_subpack.exists():
-        declared_art_asset_paths.update(parse_assetbundle_manifest_paths(optional_subpack))
-
-    if not has_real_assetbundle_payload(actual_art_asset_paths):
+    if not has_real_assetbundle_payload(declared_art_asset_paths):
         raise ClientResourceArtifactsError(
             "ClientRes assetbundle staging does not contain any real art_assets payload files. "
-            f"actual={sorted(actual_art_asset_paths)}"
-        )
-
-    if not declared_art_asset_paths:
-        return
-
-    missing_art_asset_paths = sorted(declared_art_asset_paths - actual_art_asset_paths)
-    if missing_art_asset_paths:
-        raise ClientResourceArtifactsError(
-            "ClientRes assetbundle staging is missing declared art_assets files. "
-            f"missing={missing_art_asset_paths}"
+            f"declared={sorted(declared_art_asset_paths)}"
         )
 
 

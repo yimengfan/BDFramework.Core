@@ -136,7 +136,13 @@ def test_run_platform_resource_build_executes_expected_flow(
 
     def fake_run_batchmode(command, *, dry_run: bool):
         events.append("run_batchmode")
-        assert command[-3:] == ["-ciOutputRoot", str(ci_output_root), "-quit"]
+        assert command[-5:] == [
+            "-buildTarget",
+            "Android",
+            "-ciOutputRoot",
+            str(ci_output_root),
+            "-quit",
+        ]
         assert dry_run is False
         return 0
 
@@ -168,6 +174,7 @@ def test_run_platform_resource_build_executes_expected_flow(
 
     output = capsys.readouterr().out
     assert "ciOutputRoot=/tmp/BDFramework.Core/Library/CIOutputs" in output
+    assert "unityBuildTarget=Android" in output
     assert "build finished successfully" in output
     assert events == [
         "configure_live_console_output",
@@ -205,7 +212,12 @@ def test_run_platform_resource_build_dry_run_skips_upload(
     monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: Path("/tmp/log.log"))
     monkeypatch.setattr(resource_flow, "prepare_clean_ci_output_root", lambda *args, **kwargs: Path("/tmp/output"))
     monkeypatch.setattr(resource_flow, "build_batchmode_command", lambda **kwargs: ["Unity", "-quit"])
-    monkeypatch.setattr(resource_flow, "run_batchmode", lambda command, *, dry_run: 0)
+
+    def fake_run_batchmode(command, *, dry_run):
+        assert command[-5:] == ["-buildTarget", "Android", "-ciOutputRoot", "/tmp/output", "-quit"]
+        return 0
+
+    monkeypatch.setattr(resource_flow, "run_batchmode", fake_run_batchmode)
 
     uploaded = False
 

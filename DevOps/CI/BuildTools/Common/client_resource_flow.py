@@ -43,6 +43,12 @@ TABLE_OUTPUT_PLATFORM_BY_HOST = {
     "linux": "linux",
 }
 
+UNITY_BATCHMODE_BUILD_TARGET_BY_PLATFORM = {
+    "android": "Android",
+    "ios": "iOS",
+    "windows": "Win64",
+}
+
 
 def parse_platform_args(description: str) -> argparse.Namespace:
     """解析 Code / Assetbundle 三端任务的公共参数。"""
@@ -173,7 +179,12 @@ def run_platform_resource_build(
     print(f"{log_prefix} ===== Step 2/7: validate host =====")
     host_os = detect_host_os()
     ensure_platform_allowed(platform_key)
+    unity_build_target = UNITY_BATCHMODE_BUILD_TARGET_BY_PLATFORM.get(platform_key)
+    if unity_build_target is None:
+        raise UnityBatchModeError(f"Unsupported Unity build target platform: {platform_key}")
+
     print(f"{log_prefix} host_os={host_os}")
+    print(f"{log_prefix} unityBuildTarget={unity_build_target}")
     print(f"{log_prefix} clientVersionPrefix={client_version_prefix}")
     print(f"{log_prefix} clientVersion={client_version}")
     if build_name:
@@ -212,12 +223,16 @@ def run_platform_resource_build(
 
     print(f"{log_prefix} ===== Step 5/7: build Unity command =====")
     command = insert_command_argument(
-        build_batchmode_command(
-            unity_path=unity_path,
-            project_dir=project_dir,
-            execute_method=execute_method,
-            client_version=client_version,
-            log_path=log_path,
+        insert_command_argument(
+            build_batchmode_command(
+                unity_path=unity_path,
+                project_dir=project_dir,
+                execute_method=execute_method,
+                client_version=client_version,
+                log_path=log_path,
+            ),
+            flag="-buildTarget",
+            value=unity_build_target,
         ),
         flag="-ciOutputRoot",
         value=str(ci_output_root),

@@ -8,7 +8,7 @@
 2. 三个平台脚本只负责传入平台、日志前缀和 Unity `executeMethod`；公共流程统一复用 `Common/client_resource_flow.py`。
 3. 真实构建前必须清理隔离输出目录，默认写到 `Library/CIOutputs/clientres_assetbundle/<build_name>/<build_number>/<platform>/`。
 4. 上传前只保留 Assetbundle 相关目录和配置文件，不把热更代码或表格产物混进上传源。
-5. BatchMode 的 Assetbundle CI 在进入 Unity 构建前会先显式切换 Editor active build target 到目标平台，再清理 SBP / AssetGraph 相关缓存，并在 Unity SBP 阶段禁用 `BuildCache`，避免 TeamCity agent 上残留平台状态或失效 `CAB-*` 缓存导致 `WriteSerializedFiles` 异常。
+5. BatchMode 的 Assetbundle CI 会在 Unity 命令行里显式追加 `-buildTarget` 到目标平台，不在 Editor 内切换平台；进入资源构建前仍会清理 SBP / AssetGraph 相关缓存，避免 TeamCity agent 残留状态把当前任务带到错误平台上下文。
 
 ## 文件说明
 
@@ -65,14 +65,13 @@ python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py De
 
 上传前会从隔离输出目录里整理以下内容：
 
-- `art_assets/`
-- `package_build.info`
 - `assets.info`
 - `assets_subpack.info`（如果本次 Unity 输出里存在）
+- `assets.info` 中声明的 `HashName` 文件，包括 `package_build.info`、`art_assets/*` 等对应的服务器 hash payload
 
 整理完成后还会执行两层校验：
 
-- 本地 staging 语义校验：`art_assets/` 里必须有真实 payload，且 `assets.info` / `assets_subpack.info` 声明的 `art_assets/*` 不能缺失
+- 本地 staging 语义校验：只以 `assets.info` 作为资源清单，把 `LocalPath -> HashName` 整理成服务器布局；`assets_subpack.info` 仅原样上传，不参与资源存在性判断；hash 文件集合必须与 `assets.info` 一致，且声明中必须存在真实 `art_assets/*` payload
 - 远端上传结果校验：递归拉取文件服务器目录，校验整批文件路径和大小都与本地 staging 一致
 
 ## 示例

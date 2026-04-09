@@ -8,6 +8,7 @@
 2. 三个平台脚本只保留最薄的一层入口，通用参数、日志、Unity 命令和上传逻辑统一复用 `Common/client_resource_flow.py` 与 `Common/client_resource_artifacts.py`。
 3. 真实构建前必须清理隔离输出目录，默认写到 `Library/CIOutputs/clientres_code/<build_name>/<build_number>/<platform>/`。
 4. 上传前只整理热更代码当前需要的文件，不直接整目录上传 Unity 输出根。
+5. BatchMode 的 Code CI 会在 Unity 命令行里显式追加 `-buildTarget` 到目标平台，不在 Editor 内切换平台；CI 日志和注释规范与 `BuildClientPackage` 保持一致。
 
 ## 文件说明
 
@@ -64,10 +65,11 @@ python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py De
 
 上传前会从隔离输出目录里整理以下内容：
 
-- `script/`
-- `package_build.info`
 - `assets.info`
 - `assets_subpack.info`（如果本次 Unity 输出里存在）
+- `assets.info` 中声明的 `HashName` 文件，包括 `package_build.info`、`script/*` 等对应的服务器 hash payload
+
+整理完成后还会执行本地 staging 校验：只以 `assets.info` 作为资源清单，把 `LocalPath -> HashName` 整理成服务器布局；`assets_subpack.info` 仅原样上传，不参与资源存在性判断；hash 文件集合必须与 `assets.info` 一致，且声明中必须存在真实 `script/*` payload。
 
 ## 示例
 
