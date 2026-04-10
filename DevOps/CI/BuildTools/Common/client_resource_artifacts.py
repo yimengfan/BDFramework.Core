@@ -6,6 +6,8 @@ from __future__ import annotations
 1. 这里只处理隔离输出目录、产物筛选、临时整理与上传。
 2. Unity BatchMode 参数解析、日志和进程控制统一复用 BuildClientPackage 的共享 facade。
 3. TeamCity DSL 只调度 Python 入口脚本，真正的产物组织与上传规则放在这里收敛。
+4. Code / Assetbundle / Table 上传成功后，这里还负责刷新共享的 `clientRes_{platform}/version.info`，
+    让运行时只通过一个文件服务器入口就能拿到三段构建号。
 """
 
 import csv
@@ -25,6 +27,11 @@ from Common.artifact_uploader import (
     upload_asset_bundle,
     upload_code,
     upload_table,
+)
+from Common.client_resource_version_manifest import (
+    publish_client_resource_version_manifest,
+    publish_table_version_manifests,
+    resolve_manifest_build_label,
 )
 
 
@@ -989,6 +996,17 @@ def upload_client_res_code(
             settings=settings,
             log_prefix=log_prefix,
         )
+        manifest_build_label = resolve_manifest_build_label(build_number, fallback_build_label)
+        if manifest_build_label is None:
+            print(f"{log_prefix} skipVersionManifest=true reason=build label is empty or contains '.'")
+        else:
+            manifest = publish_client_resource_version_manifest(
+                platform_key,
+                component_kind="code",
+                build_label=manifest_build_label,
+                settings=settings,
+            )
+            print(f"{log_prefix} sharedVersionManifest={manifest.to_text()}")
         print(f"{log_prefix} uploadedFiles={len(results)}")
         return results
 
@@ -1032,6 +1050,17 @@ def upload_client_res_assetbundle(
             on_uploading=on_uploading,
             on_uploaded=on_uploaded,
         )
+        manifest_build_label = resolve_manifest_build_label(build_number, fallback_build_label)
+        if manifest_build_label is None:
+            print(f"{log_prefix} skipVersionManifest=true reason=build label is empty or contains '.'")
+        else:
+            manifest = publish_client_resource_version_manifest(
+                platform_key,
+                component_kind="assetbundle",
+                build_label=manifest_build_label,
+                settings=settings,
+            )
+            print(f"{log_prefix} sharedVersionManifest={manifest.to_text()}")
         validate_uploaded_artifacts(
             summary,
             results=results,
@@ -1079,6 +1108,18 @@ def upload_client_res_table(
             on_uploading=on_uploading,
             on_uploaded=on_uploaded,
         )
+        manifest_build_label = resolve_manifest_build_label(build_number, fallback_build_label)
+        if manifest_build_label is None:
+            print(f"{log_prefix} skipVersionManifest=true reason=build label is empty or contains '.'")
+        else:
+            manifests = publish_table_version_manifests(
+                build_label=manifest_build_label,
+                settings=settings,
+            )
+            joined_manifest = ",".join(
+                f"{platform}:{manifest.to_text()}" for platform, manifest in manifests.items()
+            )
+            print(f"{log_prefix} sharedVersionManifest={joined_manifest}")
         validate_uploaded_artifacts(
             summary,
             results=results,

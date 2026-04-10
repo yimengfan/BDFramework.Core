@@ -136,6 +136,17 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// 获取文件服务器模式的子包信息。
+        /// 这套入口只读取 clientRes_{platform}/version.info 协议，不回退旧版资源版控。
+        /// 当前以 DevOps 模式 API 暴露，必须保证服务器端正确维护 clientRes_{platform}/version.info 文件，并且构建产物按照协议上传到对应路径。
+        /// </summary>
+        static public void GetServerSubPacksWithDevOps(string serverUrl, Action<Dictionary<string, string>> callback,
+            Action<string> onError = null)
+        {
+            AssetsVersionController.GetServerSubPackageInfosWithDevOps(serverUrl, callback, onError);
+        }
+
+        /// <summary>
         /// 开始版本控制
         /// </summary>
         /// <param name="updateMode"></param>
@@ -148,6 +159,19 @@ namespace BDFramework.ResourceMgr
             Action<AssetsVersionController.RetStatus, string> onTaskEndCallback = null)
         {
             AssetsVersionController.UpdateAssets(updateMode, serverUrl, assetsPackageName, onDownloadProccess, onTaskEndCallback);
+        }
+
+        /// <summary>
+        /// 使用文件服务器模式开始资源版本控制。
+        /// 这套入口与旧版 StartAssetsVersionControl 隔离维护；调用方显式选择哪套协议，就只会进入对应逻辑。
+        /// 当前以 DevOps 模式 API 暴露，必须保证服务器端正确维护 clientRes_{platform}/version.info 文件，并且构建产物按照协议上传到对应路径。
+        /// </summary>
+        static public void StartAssetsVersionControlWithDevOps(UpdateMode updateMode, string serverUrl,
+            string assetsPackageName = "", Action<AssetItem, List<AssetItem>> onDownloadProccess = null,
+            Action<AssetsVersionController.RetStatus, string> onTaskEndCallback = null)
+        {
+            AssetsVersionController.UpdateAssetsWithDevOps(updateMode, serverUrl, assetsPackageName, onDownloadProccess,
+                onTaskEndCallback);
         }
 
         #endregion

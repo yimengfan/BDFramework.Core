@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.IO;
+using System.Linq;
 using BDFramework;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
@@ -54,10 +55,47 @@ public class WindowPreconfig : MonoBehaviour
     void Onclick_PassAndLaunch()
     {
         //直接启动
-        
-         BDLauncherHotfix.Launch();
+        if (!TryLaunchHotfixEntry())
+        {
+            return;
+        }
+
         //
         this.StartCoroutine(IE_Destroy());
+    }
+
+    private static bool TryLaunchHotfixEntry()
+    {
+        var launcherType = System.AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(GetLoadableTypes)
+            .FirstOrDefault(type => type.FullName == "BDFramework.BDLauncherBridge"
+                                    || type.FullName == "BDFramework.BDLauncherHotfix"
+                                    || type.Name == "BDLauncherBridge"
+                                    || type.Name == "BDLauncherHotfix");
+
+        var launchMethod = launcherType?.GetMethod("Launch",
+            System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic |
+            System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.FlattenHierarchy);
+        if (launchMethod == null)
+        {
+            Debug.LogWarning("未找到 BDLauncherBridge/BDLauncherHotfix 的 Launch 入口，当前工程可能未加载对应热更入口程序集。");
+            return false;
+        }
+
+        launchMethod.Invoke(null, null);
+        return true;
+    }
+
+    private static System.Collections.Generic.IEnumerable<System.Type> GetLoadableTypes(System.Reflection.Assembly assembly)
+    {
+        try
+        {
+            return assembly.GetTypes();
+        }
+        catch (System.Reflection.ReflectionTypeLoadException exception)
+        {
+            return exception.Types.Where(type => type != null);
+        }
     }
 
 

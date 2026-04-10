@@ -1,6 +1,14 @@
 from __future__ import annotations
 
+"""Tests for ClientRes artifact staging and upload integration helpers.
+
+Focus:
+1. Staging directories only keep the files required by each resource type.
+2. Upload wrappers publish the shared file-server version pointer after successful uploads.
+"""
+
 from pathlib import Path
+from types import SimpleNamespace
 import sys
 
 import pytest
@@ -32,6 +40,8 @@ from Common.client_resource_artifacts import (  # noqa: E402
     prepare_clean_ci_output_root,
     prepare_code_upload_source,
     prepare_table_upload_source,
+    upload_client_res_code,
+    upload_client_res_table,
     relativize_asset_info_entries,
     upload_client_res_assetbundle,
     validate_uploaded_artifacts,
@@ -300,6 +310,136 @@ def test_build_upload_summary_uses_new_remote_layout_names(tmp_path: Path) -> No
     assert list_source_files(prepared_dir) == [prepared_dir / "client.db"]
 
 
+def test_upload_client_res_code_publishes_shared_version_manifest(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    settings = SimpleNamespace(base_url="http://fileserver", config_path=None)
+    prepared_dir = tmp_path / "prepared_code"
+    prepared_dir.mkdir(parents=True)
+    captured_publish: dict[str, object] = {}
+    captured_validate: dict[str, object] = {}
+
+    monkeypatch.setattr("Common.client_resource_artifacts.resolve_file_server_settings", lambda: settings)
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.prepare_code_upload_source",
+        lambda *args, **kwargs: prepared_dir,
+    )
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.build_upload_summary",
+        lambda *args, **kwargs: SimpleNamespace(
+            prepared_source_path=prepared_dir,
+            build_label="238",
+            remote_root="ClientRes_Code_android/238",
+            file_count=1,
+            total_bytes=8,
+        ),
+    )
+    monkeypatch.setattr("Common.client_resource_artifacts.log_upload_summary", lambda *args, **kwargs: None)
+    monkeypatch.setattr("Common.client_resource_artifacts.emit_upload_callbacks", lambda _prefix: (None, None))
+    monkeypatch.setattr("Common.client_resource_artifacts.upload_code", lambda *args, **kwargs: ["uploaded"])
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.validate_uploaded_artifacts",
+        lambda summary, *, results, settings, log_prefix: captured_validate.update(
+            {
+                "summary": summary,
+                "results": results,
+                "settings": settings,
+                "log_prefix": log_prefix,
+            }
+        ),
+    )
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.publish_client_resource_version_manifest",
+        lambda platform, **kwargs: captured_publish.update({"platform": platform, **kwargs})
+        or SimpleNamespace(to_text=lambda: "238.0.0"),
+    )
+
+    results = upload_client_res_code(
+        "android",
+        output_root=tmp_path / "output",
+        build_number="238",
+        fallback_build_label="0.1.238",
+        log_prefix="[BuildCode][Android]",
+    )
+
+    assert results == ["uploaded"]
+    assert captured_publish == {
+        "platform": "android",
+        "component_kind": "code",
+        "build_label": "238",
+        "settings": settings,
+    }
+    assert captured_validate["results"] == ["uploaded"]
+    assert captured_validate["settings"] == settings
+    assert captured_validate["log_prefix"] == "[BuildCode][Android]"
+    assert captured_validate["summary"].remote_root == "ClientRes_Code_android/238"
+
+
+def test_upload_client_res_table_publishes_all_platform_manifests(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    settings = SimpleNamespace(base_url="http://fileserver", config_path=None)
+    prepared_dir = tmp_path / "prepared_table"
+    prepared_dir.mkdir(parents=True)
+    captured_publish: dict[str, object] = {}
+    captured_validate: dict[str, object] = {}
+
+    monkeypatch.setattr("Common.client_resource_artifacts.resolve_file_server_settings", lambda: settings)
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.prepare_table_upload_source",
+        lambda *args, **kwargs: prepared_dir,
+    )
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.build_upload_summary",
+        lambda *args, **kwargs: SimpleNamespace(
+            prepared_source_path=prepared_dir,
+            build_label="501",
+            remote_root="ClientRes_Table/501",
+            file_count=2,
+            total_bytes=16,
+        ),
+    )
+    monkeypatch.setattr("Common.client_resource_artifacts.log_upload_summary", lambda *args, **kwargs: None)
+    monkeypatch.setattr("Common.client_resource_artifacts.emit_upload_callbacks", lambda _prefix: (None, None))
+    monkeypatch.setattr("Common.client_resource_artifacts.upload_table", lambda *args, **kwargs: ["uploaded"])
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.validate_uploaded_artifacts",
+        lambda summary, *, results, settings, log_prefix: captured_validate.update(
+            {
+                "summary": summary,
+                "results": results,
+                "settings": settings,
+                "log_prefix": log_prefix,
+            }
+        ),
+    )
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.publish_table_version_manifests",
+        lambda **kwargs: captured_publish.update(kwargs)
+        or {"android": SimpleNamespace(to_text=lambda: "0.0.501")},
+    )
+
+    results = upload_client_res_table(
+        "osx",
+        output_root=tmp_path / "output",
+        build_number="501",
+        fallback_build_label="table",
+        log_prefix="[BuildTable]",
+    )
+
+    assert results == ["uploaded"]
+    assert captured_publish == {
+        "build_label": "501",
+        "settings": settings,
+    }
+    assert captured_validate["results"] == ["uploaded"]
+    assert captured_validate["settings"] == settings
+    assert captured_validate["log_prefix"] == "[BuildTable]"
+    assert captured_validate["summary"].remote_root == "ClientRes_Table/501"
+
+
 def test_parse_assetbundle_manifest_paths_extracts_art_assets_only(tmp_path: Path) -> None:
     info_path = tmp_path / ASSETS_INFO_FILENAME
     write_asset_info(
@@ -496,6 +636,7 @@ def test_upload_client_res_assetbundle_invokes_aggregate_validation(
 
     settings = FileServerClientSettings(base_url="http://fileserver", token=None, config_path=None)
     captured: dict[str, object] = {}
+    captured_publish: dict[str, object] = {}
 
     monkeypatch.setattr(
         "Common.client_resource_artifacts.resolve_file_server_settings",
@@ -532,6 +673,11 @@ def test_upload_client_res_assetbundle_invokes_aggregate_validation(
         "Common.client_resource_artifacts.validate_uploaded_artifacts",
         fake_validate,
     )
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.publish_client_resource_version_manifest",
+        lambda platform, **kwargs: captured_publish.update({"platform": platform, **kwargs})
+        or SimpleNamespace(to_text=lambda: "0.77.0"),
+    )
 
     results = upload_client_res_assetbundle(
         "android",
@@ -545,3 +691,9 @@ def test_upload_client_res_assetbundle_invokes_aggregate_validation(
     assert captured["settings"] == settings
     assert captured["log_prefix"] == "[BuildAssetbundle][Android]"
     assert captured["summary"].remote_root == "ClientRes_Assetbundle_android/77"
+    assert captured_publish == {
+        "platform": "android",
+        "component_kind": "assetbundle",
+        "build_label": "77",
+        "settings": settings,
+    }

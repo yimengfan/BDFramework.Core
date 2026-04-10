@@ -7,7 +7,6 @@ using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.Editor.Environment;
 using BDFramework.Editor.Table;
 using UnityEditor;
-using UnityEditor.Android;
 using UnityEditor.Build.Player;
 using UnityEditor.Build.Pipeline.Utilities;
 using UnityEngine;
@@ -195,6 +194,74 @@ namespace BDFramework.Editor.DevOps
             }
         }
 
+        static private Type androidExternalToolsSettingsType;
+        static private bool androidExternalToolsSettingsResolved;
+
+        static private Type GetAndroidExternalToolsSettingsType()
+        {
+            if (androidExternalToolsSettingsResolved)
+            {
+                return androidExternalToolsSettingsType;
+            }
+
+            androidExternalToolsSettingsResolved = true;
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                var candidate = assembly.GetType("UnityEditor.Android.AndroidExternalToolsSettings");
+                if (candidate != null)
+                {
+                    androidExternalToolsSettingsType = candidate;
+                    break;
+                }
+            }
+
+            if (androidExternalToolsSettingsType == null)
+            {
+                Debug.LogWarning("【CI】当前 Unity Editor 未提供 AndroidExternalToolsSettings，跳过 Android External Tools 自动配置。");
+            }
+
+            return androidExternalToolsSettingsType;
+        }
+
+        static private bool TryGetAndroidExternalToolsPathProperty(string propertyName,
+            out System.Reflection.PropertyInfo propertyInfo)
+        {
+            propertyInfo = GetAndroidExternalToolsSettingsType()?.GetProperty(propertyName,
+                System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+            return propertyInfo != null && propertyInfo.PropertyType == typeof(string);
+        }
+
+        static private string GetAndroidExternalToolsPath(string propertyName)
+        {
+            if (!TryGetAndroidExternalToolsPathProperty(propertyName, out var propertyInfo))
+            {
+                return string.Empty;
+            }
+
+            return propertyInfo.GetValue(null) as string ?? string.Empty;
+        }
+
+        static private bool TrySetAndroidExternalToolsPath(string propertyName, string candidate, string source,
+            string toolName)
+        {
+            if (!TryGetAndroidExternalToolsPathProperty(propertyName, out var propertyInfo))
+            {
+                return false;
+            }
+
+            try
+            {
+                propertyInfo.SetValue(null, candidate);
+                Debug.Log($"【CI】已为 Unity Android External Tools 配置 {toolName}({source}): {GetAndroidExternalToolsPath(propertyName)}");
+                return true;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"【CI】{toolName} 候选路径被 Unity 拒绝({source}): {candidate}，原因: {exception.Message}");
+                return false;
+            }
+        }
+
         static private bool TryApplyAndroidJdkPath(string candidate, string source)
         {
             if (!IsValidJdkPath(candidate))
@@ -204,9 +271,7 @@ namespace BDFramework.Editor.DevOps
 
             try
             {
-                AndroidExternalToolsSettings.jdkRootPath = candidate;
-                Debug.Log($"【CI】已为 Unity Android External Tools 配置 JDK({source}): {AndroidExternalToolsSettings.jdkRootPath}");
-                return true;
+                return TrySetAndroidExternalToolsPath("jdkRootPath", candidate, source, "JDK");
             }
             catch (Exception exception)
             {
@@ -290,9 +355,7 @@ namespace BDFramework.Editor.DevOps
 
             try
             {
-                AndroidExternalToolsSettings.sdkRootPath = candidate;
-                Debug.Log($"【CI】已为 Unity Android External Tools 配置 SDK({source}): {AndroidExternalToolsSettings.sdkRootPath}");
-                return true;
+                return TrySetAndroidExternalToolsPath("sdkRootPath", candidate, source, "SDK");
             }
             catch (Exception exception)
             {
@@ -310,9 +373,7 @@ namespace BDFramework.Editor.DevOps
 
             try
             {
-                AndroidExternalToolsSettings.ndkRootPath = candidate;
-                Debug.Log($"【CI】已为 Unity Android External Tools 配置 NDK({source}): {AndroidExternalToolsSettings.ndkRootPath}");
-                return true;
+                return TrySetAndroidExternalToolsPath("ndkRootPath", candidate, source, "NDK");
             }
             catch (Exception exception)
             {
@@ -399,15 +460,16 @@ namespace BDFramework.Editor.DevOps
                 }
             }
 
-            if (IsValidAndroidSdkPath(AndroidExternalToolsSettings.sdkRootPath))
+            var sdkRootPath = GetAndroidExternalToolsPath("sdkRootPath");
+            if (IsValidAndroidSdkPath(sdkRootPath))
             {
-                var sdkNdkBundle = Path.Combine(AndroidExternalToolsSettings.sdkRootPath, "ndk-bundle");
+                var sdkNdkBundle = Path.Combine(sdkRootPath, "ndk-bundle");
                 if (TryApplyAndroidNdkPath(sdkNdkBundle, "SDK 派生路径"))
                 {
                     return true;
                 }
 
-                var sdkNdkRoot = Path.Combine(AndroidExternalToolsSettings.sdkRootPath, "ndk");
+                var sdkNdkRoot = Path.Combine(sdkRootPath, "ndk");
                 if (Directory.Exists(sdkNdkRoot))
                 {
                     foreach (var candidate in Directory.GetDirectories(sdkNdkRoot))
@@ -459,9 +521,10 @@ namespace BDFramework.Editor.DevOps
                 return;
             }
 
-            if (IsValidJdkPath(AndroidExternalToolsSettings.jdkRootPath))
+            var jdkRootPath = GetAndroidExternalToolsPath("jdkRootPath");
+            if (IsValidJdkPath(jdkRootPath))
             {
-                Debug.Log($"【CI】Unity Android JDK 已配置: {AndroidExternalToolsSettings.jdkRootPath}");
+                Debug.Log($"【CI】Unity Android JDK 已配置: {jdkRootPath}");
                 return;
             }
 
@@ -480,9 +543,10 @@ namespace BDFramework.Editor.DevOps
                 return;
             }
 
-            if (IsValidAndroidSdkPath(AndroidExternalToolsSettings.sdkRootPath))
+            var sdkRootPath = GetAndroidExternalToolsPath("sdkRootPath");
+            if (IsValidAndroidSdkPath(sdkRootPath))
             {
-                Debug.Log($"【CI】Unity Android SDK 已配置: {AndroidExternalToolsSettings.sdkRootPath}");
+                Debug.Log($"【CI】Unity Android SDK 已配置: {sdkRootPath}");
                 return;
             }
 
@@ -501,9 +565,10 @@ namespace BDFramework.Editor.DevOps
                 return;
             }
 
-            if (IsValidAndroidNdkPath(AndroidExternalToolsSettings.ndkRootPath))
+            var ndkRootPath = GetAndroidExternalToolsPath("ndkRootPath");
+            if (IsValidAndroidNdkPath(ndkRootPath))
             {
-                Debug.Log($"【CI】Unity Android NDK 已配置: {AndroidExternalToolsSettings.ndkRootPath}");
+                Debug.Log($"【CI】Unity Android NDK 已配置: {ndkRootPath}");
                 return;
             }
 

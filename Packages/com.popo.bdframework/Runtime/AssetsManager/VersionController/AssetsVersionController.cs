@@ -211,7 +211,8 @@ namespace BDFramework.ResourceMgr
             UniTask.RunOnThreadPool(() =>
             {
                 //开始版本控制逻辑
-                StartVersionControl(updateMode, serverConfigUrl, BApplication.persistentDataPath, assetsPackageName, onDownloadProccess, onTaskEndCallback);
+                StartVersionControl(updateMode, serverConfigUrl, BApplication.persistentDataPath, assetsPackageName,
+                    onDownloadProccess, onTaskEndCallback);
             });
         }
 
@@ -897,7 +898,7 @@ namespace BDFramework.ResourceMgr
                 if (File.Exists(localHashPath))
                 {
                     if (File.Exists(localRealPath))
-                    {
+                     {
                         File.Delete(localRealPath);
                     }
 

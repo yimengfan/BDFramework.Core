@@ -9,7 +9,22 @@
 - `artifact_uploader.py`：上传到 `/.test-DevOps/GameFileServer/` 的公共模块
 - `client_resource_artifacts.py`：`ClientRes_Code / ClientRes_Assetbundle / ClientRes_Table` 的隔离输出、产物筛选和上传摘要 helper
 - `client_resource_flow.py`：`ClientRes_*` 三类任务复用的 BatchMode 参数、日志和执行主流程
+- `client_resource_version_manifest.py`：维护 `clientRes_{platform}/version.info` 共享版控清单，格式固定为 `code.assetbundle.table`
 - `__init__.py`：对外导出公共 API
+
+## 共享版控指针
+
+`client_resource_version_manifest.py` 的职责不是再上传一份资源，而是维护运行时进入文件服务器版控流程所需的单一入口：
+
+- 路径：`clientRes_{platform}/version.info`
+- 内容：`{code build}.{assetbundle build}.{table build}`
+- 示例：`clientRes_ios/version.info -> 101.202.303`
+
+运行时会先读这份指针文件，再分别到下面三个目录拉对应版本的资源：
+
+- `ClientRes_Code_{platform}/{build}/...`
+- `ClientRes_Assetbundle_{platform}/{build}/...`
+- `ClientRes_Table/{build}/...`
 
 ## 设计目标
 
@@ -25,6 +40,7 @@
 6. `ClientRes_*` 共享 helper 必须先清理隔离输出目录，再筛选当前类型需要的文件，避免把历史构建残留或其他类型产物重复上传。
 7. `ClientRes_*` 对应的 Unity BatchMode 命令必须显式传入 `-buildTarget` 到目标平台，不能在 Editor 内切换平台，也不能依赖 TeamCity agent 上一次残留的平台状态。
 8. `ClientRes_*` 共享 flow / artifact helper 的注释和日志规范与 `BuildClientPackage` 保持一致：文件头说明职责边界，关键函数说明为什么这样做，CI 日志按 `Step n/m` 输出宿主系统、目标平台、clientVersion、Unity 路径、executeMethod 和日志路径。
+7. `ClientRes_Code / ClientRes_Assetbundle / ClientRes_Table` 上传成功后，会同步刷新 `clientRes_{platform}/version.info`，供运行时的 DevOps 文件服务器版控协议读取三段构建号。
 
 ## 模块加载规范
 

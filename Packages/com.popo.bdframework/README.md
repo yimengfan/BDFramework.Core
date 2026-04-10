@@ -12,6 +12,12 @@ If you find a bug or have some suggestions,please make issue! I'll get back to y
 ## 文档(Document)  
  ### [中文 Wiki](https://www.wolai.com/hPVgjgyR4ZVGgAruqvoTL2)  
  #### [English Wiki](http://www.nekosang.com)  
+
+- [本地文档索引](Documentation~/README.md)
+- [启动流程分析（本地文档）](Documentation~/startup-flow.md)
+- [启动场景最小配置清单](Documentation~/startup-scene-checklist.md)
+- [资源更新与启动衔接](Documentation~/resource-update-launch-integration.md)
+- [管理器注册与 asmdef 约束](Documentation~/manager-registration-and-asmdef.md)
  #### [  视频教程（video）](https://www.bilibili.com/video/av78814115/)
  #### [  博客（Blog）](https://zhuanlan.zhihu.com/c_177032018)
  ### [  更新日志 ](https://github.com/yimengfan/BDFramework.Core/wiki/V0.01-%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)  

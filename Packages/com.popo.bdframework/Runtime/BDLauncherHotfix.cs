@@ -9,9 +9,10 @@ using UnityEngine;
 namespace BDFramework
 {
     /// <summary>
-    /// BDLauncherBridge 负责热更逻辑的启动
+    /// BDLauncherBridge 负责热更逻辑的启动。
+    /// 新旧分支合并后，Bridge 作为业务语义名保留，兼容入口由同文件内的 BDLauncherHotfix 转发。
     /// </summary>
-    public class BDLauncherHotfix
+    public class BDLauncherBridge
     {
         private static readonly string Tag = "Launch";
 
@@ -73,5 +74,22 @@ namespace BDFramework
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// 兼容旧工程仍通过 BDLauncherHotfix 调用启动与退出逻辑。
+    /// 该类只做转发，不改变当前 Bridge 入口的行为。
+    /// </summary>
+    public class BDLauncherHotfix
+    {
+        public static void Launch(string gameId = "default")
+        {
+            BDLauncherBridge.Launch(gameId);
+        }
+
+        public void OnApplicationQuit()
+        {
+            new BDLauncherBridge().OnApplicationQuit();
+        }
     }
 }

@@ -8,6 +8,10 @@ using Debug = UnityEngine.Debug;
 namespace BDFramework
 {
 
+    /// <summary>
+    ///  1.全局这里作为启动器 =>加载默认的 热更.dll。
+    ///  
+    /// </summary>
     public partial class BDLauncher : MonoBehaviour
     {
         private static readonly string Tag = "Launch";
@@ -64,7 +68,7 @@ namespace BDFramework
         /// </summary>
         private void Start()
         {
-            Debug.Log("------------------AOT Start: -----------------------");
+            Debug.Log("------------------AOT Start-----------------------");
             //启动 aot 脚本
             ScriptLoderAOT.Load(ClientVersion);
             Debug.Log("------------------AOT Complete！ -----------------------");
@@ -106,7 +110,7 @@ namespace BDFramework
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblies)
             {
-                var type = assembly.GetType("BDFramework.BDLauncherHotfix");
+                var type = assembly.GetType("BDFramework.BDLauncherBridge");
                 if (type == null)
                 {
                     continue;
@@ -115,7 +119,7 @@ namespace BDFramework
                 var method = type.GetMethod("OnApplicationQuit", BindingFlags.Public | BindingFlags.Instance);
                 if (method == null)
                 {
-                    Debug.LogWarning("未找到 BDLauncherHotfix.OnApplicationQuit");
+                    Debug.LogWarning("未找到 BDLauncherBridge.OnApplicationQuit");
                     return;
                 }
 
@@ -124,7 +128,7 @@ namespace BDFramework
                 return;
             }
 
-            Debug.LogWarning("未找到类型: BDFramework.BDLauncherHotfix");
+            Debug.LogWarning("未找到类型: BDFramework.BDLauncherBridge");
         }
         
    

@@ -1,5 +1,7 @@
 # DevOps CI
 
+`AI_RULES_INDEX.md` 维护 `DevOps/CI/` 的 AI 模块规范索引、阅读顺序和验证入口；本文继续承担公共规范与模块目录说明。
+
 `DevOps/CI/` 下的公共规范、文档入口和模块索引统一维护在这里。
 
 每次实现或修改 `DevOps/CI/` 内功能时，先读本文档，再读具体模块 README；如果改动涉及 TeamCity，再继续读 `.test-DevOps/README.md` 和 `.test-DevOps/teamcityskill/README.md`。
