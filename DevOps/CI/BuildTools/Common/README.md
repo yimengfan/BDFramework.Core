@@ -118,7 +118,7 @@ upload_client_package(
 ClientRes 类型专项校验：
 
 - Code：`prepare_code_upload_source()` 会保留 `assets.info` 和可选的 `assets_subpack.info`，再按 `assets.info` 的 `HashName <- LocalPath` 关系把 `package_build.info`、`script/*` 等文件整理成服务器 hash 布局；校验 hash 文件集合与 `assets.info` 一致，且声明中存在真实 `script/*` payload
-- Assetbundle：`prepare_assetbundle_upload_source()` 会保留 `assets.info` 和可选的 `assets_subpack.info`，再按 `assets.info` 的 `HashName <- LocalPath` 关系把 `package_build.info`、`art_assets/*` 等文件整理成服务器 hash 布局；`assets_subpack.info` 只原样上传，不参与资源清单解析；校验 hash 文件集合与 `assets.info` 一致，且声明中存在真实 `art_assets/*` payload
+- Assetbundle：`prepare_assetbundle_upload_source()` 会保留 `assets.info` 和可选的 `assets_subpack.info`，再按 `assets.info` 的 `HashName <- LocalPath` 关系把 `package_build.info`、`art_assets/*` 等文件整理成服务器 hash 布局；如果顶层 `assets.info` 没带出真实 `art_assets/*` payload，则回退读取 `art_assets/art_assets.info` 补齐并重写 staging 的 `assets.info`；`assets_subpack.info` 只原样上传，不参与资源清单解析；校验 hash 文件集合与 `assets.info` 一致，且声明中存在真实 `art_assets/*` payload
 - Table：`prepare_table_upload_source()` 会校验 `local.db` / `server.db` 存在且非空，再重命名为 `client.db` / `server.db` 上传
 
 上传入口都支持两个可选回调：

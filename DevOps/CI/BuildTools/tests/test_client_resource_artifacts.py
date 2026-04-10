@@ -162,6 +162,42 @@ def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: 
     assert not (prepared / ASSETS_SUBPACK_INFO_FILENAME).exists()
 
 
+def test_prepare_assetbundle_upload_source_falls_back_to_art_assets_info_when_assets_info_has_no_payload(
+    tmp_path: Path,
+) -> None:
+    output_root = tmp_path / "output"
+    platform_dir = output_root / "android"
+    (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
+    (platform_dir / ART_ASSETS_DIRNAME / "catalog.bytes").write_bytes(b"catalog")
+    (platform_dir / ART_ASSETS_DIRNAME / "art_asset_type.info").write_text("type", encoding="utf-8")
+    (platform_dir / ART_ASSETS_DIRNAME / "art_assets.info").write_text(
+        "Id,AssetType,LoadPath,GUID,AssetBundleLoadType,AssetBundlePath,Hash,AssetsPackSourceHash,Mix,DependAssetIds\n"
+        '1,-1,,,0,catalog.bytes,555,123,0,"[]"\n',
+        encoding="utf-8",
+    )
+    (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
+    write_asset_info(
+        platform_dir / ASSETS_INFO_FILENAME,
+        [
+            ("1000001", "100", PACKAGE_BUILD_INFO_FILENAME, "0.1"),
+            ("1000002", "101", "art_assets/art_asset_type.info", "0.2"),
+            ("1000003", "102", "art_assets/art_assets.info", "0.3"),
+        ],
+    )
+
+    prepared = prepare_assetbundle_upload_source(
+        "android",
+        output_root=output_root,
+        staging_dir=tmp_path / "staging",
+    )
+
+    assert (prepared / "100").read_text(encoding="utf-8") == "pkg"
+    assert (prepared / "101").read_text(encoding="utf-8") == "type"
+    assert "catalog.bytes" in (prepared / "102").read_text(encoding="utf-8")
+    assert (prepared / "555").read_bytes() == b"catalog"
+    assert "art_assets/catalog.bytes" in (prepared / ASSETS_INFO_FILENAME).read_text(encoding="utf-8")
+
+
 def test_prepare_assetbundle_upload_source_requires_declared_art_assets_files(tmp_path: Path) -> None:
     output_root = tmp_path / "output"
     platform_dir = output_root / "ios"

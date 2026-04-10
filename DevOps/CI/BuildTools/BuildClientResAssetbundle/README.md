@@ -71,7 +71,7 @@ python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py De
 
 整理完成后还会执行两层校验：
 
-- 本地 staging 语义校验：只以 `assets.info` 作为资源清单，把 `LocalPath -> HashName` 整理成服务器布局；`assets_subpack.info` 仅原样上传，不参与资源存在性判断；hash 文件集合必须与 `assets.info` 一致，且声明中必须存在真实 `art_assets/*` payload
+- 本地 staging 语义校验：优先以顶层 `assets.info` 作为资源清单，把 `LocalPath -> HashName` 整理成服务器布局；如果它没有带出真实 `art_assets/*` payload，则回退读取 `art_assets/art_assets.info` 补齐并重写 staging 的 `assets.info`；`assets_subpack.info` 仅原样上传，不参与资源存在性判断；hash 文件集合必须与 `assets.info` 一致，且声明中必须存在真实 `art_assets/*` payload
 - 远端上传结果校验：递归拉取文件服务器目录，校验整批文件路径和大小都与本地 staging 一致
 
 ## 示例

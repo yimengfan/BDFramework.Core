@@ -35,6 +35,9 @@ ASSETS_SUBPACK_INFO_FILENAME = "assets_subpack.info"
 SCRIPT_DIRNAME = "script"
 ART_ASSETS_DIRNAME = "art_assets"
 ART_ASSET_METADATA_FILENAMES = {"art_asset_type.info", "art_assets.info", "buildlogtep.json"}
+ART_ASSET_TYPE_INFO_LOCAL_PATH = f"{ART_ASSETS_DIRNAME}/art_asset_type.info"
+ART_ASSETS_INFO_LOCAL_PATH = f"{ART_ASSETS_DIRNAME}/art_assets.info"
+ART_ASSET_BUILD_LOG_LOCAL_PATH = f"{ART_ASSETS_DIRNAME}/buildlogtep.json"
 SCRIPT_METADATA_FILENAMES = set()
 LOCAL_DB_FILENAME = "local.db"
 CLIENT_DB_FILENAME = "client.db"
@@ -516,6 +519,113 @@ def parse_asset_info_entries(info_file_path: Path) -> list[AssetInfoEntry]:
     return entries
 
 
+def build_asset_file_size_label(file_path: Path) -> str:
+    """按 Unity 侧 assets.info 的规则格式化文件大小字段。"""
+    file_size_kb = int(((file_path.stat().st_size / 1024.0) * 100.0)) / 100.0
+    if file_size_kb.is_integer():
+        return str(int(file_size_kb))
+    return str(file_size_kb)
+
+
+def write_asset_info_entries(output_path: Path, asset_entries: list[AssetInfoEntry]) -> None:
+    """把整理后的服务器资源映射重新写成标准 assets.info。"""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    rows = ["Id,HashName,LocalPath,FileSize"]
+    rows.extend(
+        f"{asset_entry.asset_id},{asset_entry.hash_name},{asset_entry.local_path},{asset_entry.file_size}"
+        for asset_entry in asset_entries
+    )
+    output_path.write_text("\n".join(rows) + "\n", encoding="utf-8")
+
+
+def parse_art_assets_info_entries(platform_dir: Path) -> list[AssetInfoEntry]:
+    """从 art_assets.info 回退恢复 Assetbundle payload 的服务器资源映射。"""
+    art_assets_info_path = platform_dir / ART_ASSETS_INFO_LOCAL_PATH
+    if not art_assets_info_path.exists():
+        return []
+
+    asset_entries: list[AssetInfoEntry] = []
+    with art_assets_info_path.open("r", encoding="utf-8", newline="") as file_handle:
+        for line_number, row in enumerate(csv.reader(file_handle), start=1):
+            if not row:
+                continue
+
+            normalized_row = [column.strip() for column in row]
+            if not any(normalized_row):
+                continue
+            if normalized_row[:7] == [
+                "Id",
+                "AssetType",
+                "LoadPath",
+                "GUID",
+                "AssetBundleLoadType",
+                "AssetBundlePath",
+                "Hash",
+            ]:
+                continue
+            if len(normalized_row) < 7:
+                raise ClientResourceArtifactsError(
+                    f"Invalid art_assets.info row: file={art_assets_info_path}, line={line_number}, row={row!r}"
+                )
+
+            asset_id = normalized_row[0]
+            asset_bundle_path = normalized_row[5]
+            hash_name = normalized_row[6]
+            if not asset_bundle_path or not hash_name:
+                continue
+
+            local_path = normalize_asset_local_path(
+                f"{ART_ASSETS_DIRNAME}/{asset_bundle_path}",
+                info_file_path=art_assets_info_path,
+                line_number=line_number,
+            )
+            source_path = platform_dir / Path(local_path)
+            file_size = build_asset_file_size_label(source_path) if source_path.exists() else "0"
+            asset_entries.append(
+                AssetInfoEntry(
+                    asset_id=asset_id,
+                    hash_name=normalize_asset_hash_name(
+                        hash_name,
+                        info_file_path=art_assets_info_path,
+                        line_number=line_number,
+                    ),
+                    local_path=local_path,
+                    file_size=file_size,
+                )
+            )
+
+    return asset_entries
+
+
+def resolve_assetbundle_asset_info_entries(platform_dir: Path, asset_entries: list[AssetInfoEntry]) -> list[AssetInfoEntry]:
+    """必要时使用 art_assets.info 回退补齐 Assetbundle payload 映射。"""
+    has_declared_art_payload = has_real_assetbundle_payload(
+        {
+            asset_entry.local_path
+            for asset_entry in asset_entries
+            if asset_entry.local_path.startswith(f"{ART_ASSETS_DIRNAME}/")
+        }
+    )
+    if has_declared_art_payload:
+        return asset_entries
+
+    fallback_art_entries = parse_art_assets_info_entries(platform_dir)
+    if not fallback_art_entries:
+        return asset_entries
+
+    merged_entries_by_local_path = {
+        asset_entry.local_path: asset_entry
+        for asset_entry in asset_entries
+    }
+    for asset_entry in fallback_art_entries:
+        merged_entries_by_local_path.setdefault(asset_entry.local_path, asset_entry)
+
+    return sorted(
+        merged_entries_by_local_path.values(),
+        key=lambda asset_entry: int(asset_entry.asset_id),
+    )
+
+
 def copy_manifest_hash_files(
     platform_dir: Path,
     prepared_dir: Path,
@@ -651,11 +761,12 @@ def prepare_assetbundle_upload_source(
         platform_dir / ASSETS_INFO_FILENAME,
         description="ClientRes assetbundle assets.info",
     )
-
-    copy_path(
-        assets_info_path,
-        prepared_dir / ASSETS_INFO_FILENAME,
+    asset_entries = resolve_assetbundle_asset_info_entries(
+        platform_dir,
+        parse_asset_info_entries(assets_info_path),
     )
+
+    write_asset_info_entries(prepared_dir / ASSETS_INFO_FILENAME, asset_entries)
 
     optional_subpack = platform_dir / ASSETS_SUBPACK_INFO_FILENAME
     if optional_subpack.exists():
@@ -664,7 +775,7 @@ def prepare_assetbundle_upload_source(
     copy_manifest_hash_files(
         platform_dir,
         prepared_dir,
-        asset_entries=parse_asset_info_entries(assets_info_path),
+        asset_entries=asset_entries,
         source_description="ClientRes assetbundle",
     )
 
