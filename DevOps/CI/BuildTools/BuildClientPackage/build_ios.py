@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """iOS 母包 CI 入口。
 
 说明：
@@ -8,6 +6,8 @@ from __future__ import annotations
 3. 仅把 Unity BatchMode 共通能力交给 unity3d_batchmode.py。
 4. 调用方可以选择 Unity 版本，并指定需要构建的 Unity 工程目录。
 """
+
+from __future__ import annotations
 
 import argparse
 
@@ -89,6 +89,7 @@ def validate_client_version(client_version: str) -> str:
 
 
 def main() -> int:
+    """执行 iOS 母包构建、日志回收和产物上传主流程。"""
     configure_live_console_output()
     print(f"{LOG_PREFIX} ===== Step 1/7: parse args =====")
     args = parse_args()

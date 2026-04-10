@@ -1,6 +1,6 @@
-from __future__ import annotations
-
 """Shared BatchMode flow for ClientRes Code / Assetbundle / Table scripts."""
+
+from __future__ import annotations
 
 import argparse
 from pathlib import Path

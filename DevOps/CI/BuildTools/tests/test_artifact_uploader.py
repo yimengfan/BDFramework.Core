@@ -1,11 +1,11 @@
-from __future__ import annotations
-
 """BuildTools 公共上传模块测试。
 
 这些测试重点覆盖两类事情：
 1. 远端目录规则和 BuildTools 全局配置解析是否符合预期。
 2. 构造一组接近真实构建产物的文件后，上传结果是否能正确返回提交元数据。
 """
+
+from __future__ import annotations
 
 import hashlib
 import json
@@ -35,15 +35,19 @@ BUILD_TOOLS_ROOT = Path(__file__).resolve().parents[1]
 
 
 class RecordingHTTPServer(ThreadingHTTPServer):
+	"""HTTP server that records successful upload requests for assertions."""
 	def __init__(self, server_address: tuple[str, int]) -> None:
+		"""HTTP server that records successful upload requests for assertions."""
 		super().__init__(server_address, RecordingUploadHandler)
 		self.requests: list[dict[str, str]] = []
 
 
 class RecordingUploadHandler(BaseHTTPRequestHandler):
+	"""Request handler that stores successful upload request metadata."""
 	protocol_version = "HTTP/1.1"
 
 	def do_PUT(self) -> None:  # noqa: N802 - stdlib handler signature
+		"""Store successful upload request metadata and respond with verified file info."""
 		content_length = int(self.headers.get("Content-Length", "0"))
 		body = self.rfile.read(content_length)
 		parsed = urlparse(self.path)
@@ -79,16 +83,20 @@ class RecordingUploadHandler(BaseHTTPRequestHandler):
 
 
 class ErroringHTTPServer(ThreadingHTTPServer):
+	"""HTTP server that always returns a configured upload error payload."""
 	def __init__(self, server_address: tuple[str, int], status_code: int, payload: dict[str, str]) -> None:
+		"""HTTP server that always returns a configured upload error payload."""
 		super().__init__(server_address, ErroringUploadHandler)
 		self.status_code = status_code
 		self.payload = payload
 
 
 class ErroringUploadHandler(BaseHTTPRequestHandler):
+	"""Request handler that simulates deterministic upload failures."""
 	protocol_version = "HTTP/1.1"
 
 	def do_PUT(self) -> None:  # noqa: N802 - stdlib handler signature
+		"""Consume the upload body and return the configured error response."""
 		content_length = int(self.headers.get("Content-Length", "0"))
 		self.rfile.read(content_length)
 		payload = json.dumps(self.server.payload).encode("utf-8")  # type: ignore[attr-defined]
@@ -103,6 +111,7 @@ class ErroringUploadHandler(BaseHTTPRequestHandler):
 
 
 class RecoveringErrorHTTPServer(ThreadingHTTPServer):
+	"""HTTP server that returns upload errors while exposing follow-up verification endpoints."""
 	def __init__(
 		self,
 		server_address: tuple[str, int],
@@ -112,6 +121,7 @@ class RecoveringErrorHTTPServer(ThreadingHTTPServer):
 		download_available: bool,
 		integrity_status: str,
 	) -> None:
+		"""HTTP server that returns upload errors while exposing follow-up verification endpoints."""
 		super().__init__(server_address, RecoveringErrorUploadHandler)
 		self.metadata_available = metadata_available
 		self.metadata_returns_sha256 = metadata_returns_sha256
@@ -121,9 +131,11 @@ class RecoveringErrorHTTPServer(ThreadingHTTPServer):
 
 
 class RecoveringErrorUploadHandler(BaseHTTPRequestHandler):
+	"""Request handler that simulates partial upload success with recovery probes."""
 	protocol_version = "HTTP/1.1"
 
 	def do_PUT(self) -> None:  # noqa: N802 - stdlib handler signature
+		"""Record uploaded bytes but intentionally answer with a 500 response."""
 		content_length = int(self.headers.get("Content-Length", "0"))
 		body = self.rfile.read(content_length)
 		parsed = urlparse(self.path)
@@ -141,6 +153,7 @@ class RecoveringErrorUploadHandler(BaseHTTPRequestHandler):
 		self.wfile.write(payload)
 
 	def do_GET(self) -> None:  # noqa: N802 - stdlib handler signature
+		"""Serve metadata or file downloads so recovery checks can verify partial success."""
 		parsed = urlparse(self.path)
 		if parsed.path.startswith("/api/files/"):
 			remote_path = unquote(parsed.path.split("/api/files/", 1)[1])
@@ -195,6 +208,7 @@ class RecoveringErrorUploadHandler(BaseHTTPRequestHandler):
 
 
 def make_upload_server() -> tuple[RecordingHTTPServer, str, threading.Thread]:
+	"""Start a recording upload server and return the server, base URL, and thread."""
 	server = RecordingHTTPServer(("127.0.0.1", 0))
 	thread = threading.Thread(target=server.serve_forever, daemon=True)
 	thread.start()
@@ -207,6 +221,7 @@ def make_error_upload_server(
 	status_code: int,
 	payload: dict[str, str],
 ) -> tuple[ErroringHTTPServer, str, threading.Thread]:
+	"""Start an upload server that always responds with the configured error payload."""
 	server = ErroringHTTPServer(("127.0.0.1", 0), status_code, payload)
 	thread = threading.Thread(target=server.serve_forever, daemon=True)
 	thread.start()
@@ -221,6 +236,7 @@ def make_recovering_error_upload_server(
 	download_available: bool,
 	integrity_status: str,
 ) -> tuple[RecoveringErrorHTTPServer, str, threading.Thread]:
+	"""Start an upload server that supports post-failure remote verification checks."""
 	server = RecoveringErrorHTTPServer(
 		("127.0.0.1", 0),
 		metadata_available=metadata_available,
@@ -249,6 +265,7 @@ def create_mock_client_build_output(root_dir: Path) -> Path:
 
 
 def test_build_artifact_remote_paths_match_expected_layout() -> None:
+	"""Verify artifact remote paths follow the expected client package, code, assetbundle, and table layout."""
 	assert (
 		build_artifact_remote_root(
 			ArtifactType.CLIENT_PACKAGE,
@@ -285,6 +302,7 @@ def test_build_artifact_remote_paths_match_expected_layout() -> None:
 
 
 def test_resolve_file_server_settings_reads_client_ip_and_chunk_values(tmp_path: Path) -> None:
+	"""Verify file server settings resolve client IP, port, token, and chunk sizes from TOML."""
 	config_path = tmp_path / "buildtools.toml"
 	config_path.write_text(
 		"""
@@ -308,6 +326,7 @@ tokens = ["token-a", "token-b"]
 
 
 def test_load_minimal_toml_supports_buildtools_config_shape() -> None:
+	"""Verify the minimal TOML loader supports the BuildTools artifact file server config shape."""
 	parsed = load_minimal_toml(
 		"""
 [artifact_file_server]
@@ -333,6 +352,7 @@ hash_chunk_size_kb = 128
 
 
 def test_resolve_file_server_settings_prefers_explicit_inputs_over_buildtools_config(tmp_path: Path) -> None:
+	"""Verify explicit server URL and token inputs override BuildTools config values."""
 	config_path = tmp_path / "buildtools.toml"
 	config_path.write_text(
 		"""
@@ -361,6 +381,7 @@ def test_resolve_file_server_settings_prefers_env_over_buildtools_config(
 	tmp_path: Path,
 	monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+	"""Verify environment overrides take precedence over BuildTools config defaults."""
 	config_path = tmp_path / "buildtools.toml"
 	config_path.write_text(
 		"""
@@ -390,12 +411,14 @@ hash_chunk_size_kb = 256
 
 
 def test_buildtools_global_config_exists_for_shared_defaults() -> None:
+	"""Verify the shared BuildTools config file exists for default artifact upload settings."""
 	config_path = BUILD_TOOLS_ROOT / "buildtools.toml"
 	assert config_path.exists()
 	assert resolve_file_server_settings().config_path == config_path
 
 
 def test_build_artifact_remote_root_rejects_invalid_segments() -> None:
+	"""Verify remote root construction rejects invalid platform and build number segments."""
 	with pytest.raises(ArtifactUploadError, match="platform cannot contain path separators"):
 		build_artifact_remote_root(
 			ArtifactType.CLIENT_PACKAGE,
@@ -411,6 +434,7 @@ def test_build_artifact_remote_root_rejects_invalid_segments() -> None:
 
 
 def test_normalize_relative_remote_path_rejects_invalid_paths() -> None:
+	"""Verify remote relative path normalization rejects absolute paths and parent segments."""
 	with pytest.raises(ArtifactUploadError, match="absolute path"):
 		normalize_relative_remote_path("/absolute/output.zip")
 
@@ -419,6 +443,7 @@ def test_normalize_relative_remote_path_rejects_invalid_paths() -> None:
 
 
 def test_upload_client_package_directory_preserves_relative_layout(tmp_path: Path) -> None:
+	"""Verify client package directory uploads preserve the original relative file layout on the remote server."""
 	server, base_url, thread = make_upload_server()
 	try:
 		package_dir = create_mock_client_build_output(tmp_path)
@@ -463,6 +488,7 @@ def test_upload_client_package_directory_preserves_relative_layout(tmp_path: Pat
 
 
 def test_upload_code_single_build_file_returns_submit_result(tmp_path: Path) -> None:
+	"""Verify single code-file uploads return the submitted remote path and integrity metadata."""
 	server, base_url, thread = make_upload_server()
 	try:
 		code_file = tmp_path / "hotfix.dll"
@@ -491,6 +517,7 @@ def test_upload_code_single_build_file_returns_submit_result(tmp_path: Path) -> 
 
 
 def test_upload_single_file_surfaces_server_error_detail(tmp_path: Path) -> None:
+	"""Verify upload errors surface the server status code and detail payload."""
 	server, base_url, thread = make_error_upload_server(
 		status_code=409,
 		payload={"detail": "Artifact already exists."},
@@ -517,6 +544,7 @@ def test_upload_single_file_surfaces_server_error_detail(tmp_path: Path) -> None
 def test_upload_single_file_recovers_when_server_returns_500_but_file_is_remotely_available(
 	tmp_path: Path,
 ) -> None:
+	"""Verify upload recovery succeeds when the file is remotely available after a 500 response."""
 	server, base_url, thread = make_recovering_error_upload_server(
 		metadata_available=True,
 		metadata_returns_sha256=False,
@@ -547,6 +575,7 @@ def test_upload_single_file_recovers_when_server_returns_500_but_file_is_remotel
 def test_upload_single_file_raises_when_server_returns_500_and_remote_verification_fails(
 	tmp_path: Path,
 ) -> None:
+	"""Verify upload recovery raises when a 500 response cannot be confirmed through remote checks."""
 	server, base_url, thread = make_recovering_error_upload_server(
 		metadata_available=False,
 		metadata_returns_sha256=False,
@@ -574,6 +603,7 @@ def test_upload_single_file_raises_when_server_returns_500_and_remote_verificati
 
 
 def test_upload_table_single_file_supports_nested_remote_name(tmp_path: Path) -> None:
+	"""Verify table uploads preserve nested remote relative paths."""
 	server, base_url, thread = make_upload_server()
 	try:
 		table_file = tmp_path / "all.bytes"
@@ -595,6 +625,7 @@ def test_upload_table_single_file_supports_nested_remote_name(tmp_path: Path) ->
 
 
 def test_upload_client_package_reports_progress_callbacks(tmp_path: Path) -> None:
+	"""Verify client package uploads report progress and completion callbacks for every file."""
 	server, base_url, thread = make_upload_server()
 	progress_events: list[tuple[int, int, str, str]] = []
 	completed_events: list[tuple[int, int, str]] = []
@@ -632,6 +663,7 @@ def test_upload_client_package_reports_progress_callbacks(tmp_path: Path) -> Non
 
 
 def test_upload_client_package_rejects_empty_directory(tmp_path: Path) -> None:
+	"""Verify client package uploads reject empty source directories."""
 	empty_output_dir = tmp_path / "BuildClientPackage_android"
 	empty_output_dir.mkdir()
 

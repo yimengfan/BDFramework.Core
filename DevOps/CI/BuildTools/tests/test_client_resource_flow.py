@@ -1,3 +1,5 @@
+"""Tests for the shared ClientRes batchmode flow wrappers and orchestration helpers."""
+
 from __future__ import annotations
 
 import importlib
@@ -18,6 +20,7 @@ from Common import client_resource_flow as resource_flow  # noqa: E402
 def test_build_client_res_code_wrappers_delegate_to_common_flow(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    """Verify code wrapper entry scripts forward their platform metadata to the shared flow."""
     module = importlib.import_module("BuildClientResCode.build_android")
     captured: dict[str, object] = {}
 
@@ -41,6 +44,7 @@ def test_build_client_res_code_wrappers_delegate_to_common_flow(
 def test_build_client_res_assetbundle_wrappers_delegate_to_common_flow(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    """Verify assetbundle wrapper entry scripts forward their platform metadata to the shared flow."""
     module = importlib.import_module("BuildClientResAssetbundle.build_ios")
     captured: dict[str, object] = {}
 
@@ -64,6 +68,7 @@ def test_build_client_res_assetbundle_wrappers_delegate_to_common_flow(
 def test_build_table_wrapper_delegates_to_common_flow(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    """Verify the table wrapper forwards its batchmode metadata to the shared table flow."""
     module = importlib.import_module("BuildClientResTable.build_table")
     captured: dict[str, object] = {}
 
@@ -95,6 +100,7 @@ def test_run_platform_resource_build_executes_expected_flow(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
+    """Verify platform resource builds execute the expected Unity and upload phases."""
     events: list[str] = []
     args = SimpleNamespace(
         client_version=" 0.1 ",
@@ -190,6 +196,7 @@ def test_run_platform_resource_build_dry_run_skips_upload(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
+    """Verify dry-run platform resource builds skip artifact upload after Unity succeeds."""
     args = SimpleNamespace(
         client_version="0.1",
         build_name=None,
@@ -248,6 +255,7 @@ def test_run_table_resource_build_uploads_shared_dbs(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
+    """Verify table resource builds upload the shared client and server DB outputs."""
     events: list[str] = []
     args = SimpleNamespace(
         client_version=None,

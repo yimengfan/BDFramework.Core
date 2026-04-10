@@ -1,3 +1,5 @@
+"""Android 热更代码构建入口。"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -20,6 +22,7 @@ LOG_PREFIX = "[BuildCode][Android]"
 
 
 def main() -> int:
+    """执行 Android 热更代码的 Unity 构建与上传主流程。"""
     return run_platform_resource_build(
         platform_key="android",
         log_prefix=LOG_PREFIX,

@@ -1,11 +1,11 @@
-from __future__ import annotations
-
 """Tests for ClientRes artifact staging and upload integration helpers.
 
 Focus:
 1. Staging directories only keep the files required by each resource type.
 2. Upload wrappers publish the shared file-server version pointer after successful uploads.
 """
+
+from __future__ import annotations
 
 from pathlib import Path
 from types import SimpleNamespace
@@ -50,12 +50,14 @@ from Common.artifact_uploader import FileServerClientSettings, UploadedArtifact 
 
 
 def write_asset_info(target_path: Path, rows: list[tuple[str, str, str, str]]) -> None:
+    """Write a minimal assets.info CSV file used by ClientRes artifact tests."""
     content = ["Id,HashName,LocalPath,FileSize"]
     content.extend(",".join(row) for row in rows)
     target_path.write_text("\n".join(content) + "\n", encoding="utf-8")
 
 
 def test_prepare_clean_ci_output_root_recreates_existing_directory(tmp_path: Path) -> None:
+    """Verify CI output roots are recreated without stale files."""
     project_dir = tmp_path / "BDFramework.Core"
     output_root = project_dir / "Library" / "CIOutputs" / "clientres_code" / "Nightly" / "18" / "android"
     output_root.mkdir(parents=True)
@@ -76,6 +78,7 @@ def test_prepare_clean_ci_output_root_recreates_existing_directory(tmp_path: Pat
 
 
 def test_prepare_code_upload_source_keeps_script_and_required_infos(tmp_path: Path) -> None:
+    """Verify code staging keeps hashed payload files and required metadata."""
     output_root = tmp_path / "output"
     platform_dir = output_root / "android"
     (platform_dir / SCRIPT_DIRNAME / "hotfix").mkdir(parents=True)
@@ -104,6 +107,7 @@ def test_prepare_code_upload_source_keeps_script_and_required_infos(tmp_path: Pa
 
 
 def test_prepare_code_upload_source_requires_package_build_info(tmp_path: Path) -> None:
+    """Verify code staging fails when package_build.info is missing."""
     output_root = tmp_path / "output"
     platform_dir = output_root / "ios"
     (platform_dir / SCRIPT_DIRNAME / "hotfix").mkdir(parents=True)
@@ -125,6 +129,7 @@ def test_prepare_code_upload_source_requires_package_build_info(tmp_path: Path) 
 
 
 def test_prepare_code_upload_source_requires_declared_script_files(tmp_path: Path) -> None:
+    """Verify code staging rejects script entries declared in assets.info but missing on disk."""
     output_root = tmp_path / "output"
     platform_dir = output_root / "ios"
     (platform_dir / SCRIPT_DIRNAME / "hotfix").mkdir(parents=True)
@@ -148,6 +153,7 @@ def test_prepare_code_upload_source_requires_declared_script_files(tmp_path: Pat
 
 
 def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: Path) -> None:
+    """Verify assetbundle staging keeps hashed art_assets payloads and required metadata."""
     output_root = tmp_path / "output"
     platform_dir = output_root / "windows"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
@@ -177,6 +183,7 @@ def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: 
 def test_prepare_assetbundle_upload_source_falls_back_to_art_assets_info_when_assets_info_has_no_payload(
     tmp_path: Path,
 ) -> None:
+    """Verify assetbundle staging falls back to art_assets.info when assets.info omits real payload files."""
     output_root = tmp_path / "output"
     platform_dir = output_root / "android"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
@@ -211,6 +218,7 @@ def test_prepare_assetbundle_upload_source_falls_back_to_art_assets_info_when_as
 
 
 def test_prepare_assetbundle_upload_source_requires_declared_art_assets_files(tmp_path: Path) -> None:
+    """Verify assetbundle staging rejects art_assets files declared but absent on disk."""
     output_root = tmp_path / "output"
     platform_dir = output_root / "ios"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
@@ -236,6 +244,7 @@ def test_prepare_assetbundle_upload_source_requires_declared_art_assets_files(tm
 
 
 def test_prepare_assetbundle_upload_source_requires_real_payload_file(tmp_path: Path) -> None:
+    """Verify assetbundle staging rejects metadata-only art_assets outputs."""
     output_root = tmp_path / "output"
     platform_dir = output_root / "android"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
@@ -258,6 +267,7 @@ def test_prepare_assetbundle_upload_source_requires_real_payload_file(tmp_path: 
 
 
 def test_prepare_table_upload_source_renames_local_db_to_client_db(tmp_path: Path) -> None:
+    """Verify table staging renames local.db to client.db and keeps server.db."""
     output_root = tmp_path / "output"
     platform_dir = output_root / "osx"
     (output_root / SERVER_DATA_DIRNAME).mkdir(parents=True)
@@ -278,6 +288,7 @@ def test_prepare_table_upload_source_renames_local_db_to_client_db(tmp_path: Pat
 
 
 def test_prepare_table_upload_source_requires_non_empty_databases(tmp_path: Path) -> None:
+    """Verify table staging rejects empty local.db payloads."""
     output_root = tmp_path / "output"
     platform_dir = output_root / "osx"
     (output_root / SERVER_DATA_DIRNAME).mkdir(parents=True)
@@ -295,6 +306,7 @@ def test_prepare_table_upload_source_requires_non_empty_databases(tmp_path: Path
 
 
 def test_build_upload_summary_uses_new_remote_layout_names(tmp_path: Path) -> None:
+    """Verify upload summaries use the new shared remote root naming rules."""
     prepared_dir = tmp_path / "prepared"
     prepared_dir.mkdir()
     (prepared_dir / "client.db").write_bytes(b"client")
@@ -314,6 +326,7 @@ def test_upload_client_res_code_publishes_shared_version_manifest(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
+    """Verify code uploads publish the shared version pointer after validation."""
     settings = SimpleNamespace(base_url="http://fileserver", config_path=None)
     prepared_dir = tmp_path / "prepared_code"
     prepared_dir.mkdir(parents=True)
@@ -380,6 +393,7 @@ def test_upload_client_res_table_publishes_all_platform_manifests(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
+    """Verify table uploads publish shared version pointers for every runtime platform."""
     settings = SimpleNamespace(base_url="http://fileserver", config_path=None)
     prepared_dir = tmp_path / "prepared_table"
     prepared_dir.mkdir(parents=True)
@@ -441,6 +455,7 @@ def test_upload_client_res_table_publishes_all_platform_manifests(
 
 
 def test_parse_assetbundle_manifest_paths_extracts_art_assets_only(tmp_path: Path) -> None:
+    """Verify assetbundle manifest parsing only returns art_assets entries."""
     info_path = tmp_path / ASSETS_INFO_FILENAME
     write_asset_info(
         info_path,
@@ -458,6 +473,7 @@ def test_parse_assetbundle_manifest_paths_extracts_art_assets_only(tmp_path: Pat
 
 
 def test_relativize_asset_info_entries_rewrites_windows_absolute_paths() -> None:
+    """Verify absolute Windows asset paths are relativized against the platform output root."""
     entries = [
         AssetInfoEntry(
             asset_id="1",
@@ -476,6 +492,7 @@ def test_relativize_asset_info_entries_rewrites_windows_absolute_paths() -> None
 
 
 def test_has_real_assetbundle_payload_ignores_metadata_only_entries() -> None:
+    """Verify metadata-only assetbundle entries do not count as real payload files."""
     metadata_only = {f"art_assets/{name}" for name in ART_ASSET_METADATA_FILENAMES}
     assert has_real_assetbundle_payload(metadata_only) is False
     assert has_real_assetbundle_payload({*metadata_only, "art_assets/real.bundle"}) is True
@@ -486,6 +503,7 @@ def test_validate_uploaded_artifacts_checks_remote_listing_and_logs_success(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
+    """Verify uploaded artifact validation checks the remote listing and logs the verified file count."""
     prepared_dir = tmp_path / "prepared"
     prepared_dir.mkdir(parents=True)
     first_file = prepared_dir / "100"
@@ -557,6 +575,7 @@ def test_validate_uploaded_artifacts_raises_when_remote_listing_misses_file(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    """Verify uploaded artifact validation fails when the remote listing is missing expected files."""
     prepared_dir = tmp_path / "prepared"
     prepared_dir.mkdir(parents=True)
     first_file = prepared_dir / "100"
@@ -621,6 +640,7 @@ def test_upload_client_res_assetbundle_invokes_aggregate_validation(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    """Verify assetbundle uploads run aggregate validation before publishing the shared version pointer."""
     output_root = tmp_path / "output"
     platform_dir = output_root / "android"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)

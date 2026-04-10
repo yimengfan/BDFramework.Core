@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """BuildClientPackage Unity batchmode shared helpers.
 
 这里放不依赖具体平台流程的通用能力：
@@ -9,6 +7,8 @@ from __future__ import annotations
 
 平台主流程仍必须留在 build_android.py / build_ios.py / build_windows.py。
 """
+
+from __future__ import annotations
 
 import os
 import subprocess

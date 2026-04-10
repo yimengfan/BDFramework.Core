@@ -1,3 +1,5 @@
+"""iOS 热更 Assetbundle 构建入口。"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -20,6 +22,7 @@ LOG_PREFIX = "[BuildAssetbundle][iOS]"
 
 
 def main() -> int:
+    """执行 iOS 热更 Assetbundle 的 Unity 构建与上传主流程。"""
     return run_platform_resource_build(
         platform_key="ios",
         log_prefix=LOG_PREFIX,

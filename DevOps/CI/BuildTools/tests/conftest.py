@@ -1,3 +1,8 @@
+"""Shared pytest configuration for BuildTools tests.
+
+This file registers the optional remote-artifact flag and marker used by CI upload integration tests.
+"""
+
 from __future__ import annotations
 
 import sys
@@ -10,6 +15,7 @@ if str(BUILD_TOOLS_ROOT) not in sys.path:
 
 
 def pytest_addoption(parser) -> None:
+    """Register the CLI switch that enables remote artifact integration tests."""
     parser.addoption(
         "--run-remote-artifact-tests",
         action="store_true",
@@ -19,6 +25,7 @@ def pytest_addoption(parser) -> None:
 
 
 def pytest_configure(config) -> None:
+    """Register pytest markers used by the remote artifact test suite."""
     config.addinivalue_line(
         "markers",
         "remote_artifact: integration test that uploads to the configured remote artifact file server",

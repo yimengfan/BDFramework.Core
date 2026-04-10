@@ -1,3 +1,5 @@
+"""Tests for BuildClientPackage batchmode path and log helpers."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -17,6 +19,7 @@ import _unity_batchmode_shared as batchmode_shared
 
 
 def test_normalize_named_paths_formats_versioned_entries_in_order() -> None:
+    """Verify versioned Unity path templates are expanded in declaration order."""
     candidates = batchmode_paths.normalize_named_paths(
         host_os="mac",
         group_name="versioned",
@@ -37,6 +40,7 @@ def test_resolve_project_dir_rejects_missing_markers(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
+    """Verify project directory resolution fails when required Unity markers are missing."""
     project_dir = tmp_path / "BDFramework.Core"
     project_dir.mkdir()
     monkeypatch.setattr(
@@ -53,6 +57,7 @@ def test_resolve_unity_executable_prefers_existing_env_path(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
+    """Verify an existing UNITY_PATH override wins over fallback candidate discovery."""
     unity_path = tmp_path / "Unity"
     unity_path.write_text("unity binary", encoding="utf-8")
     monkeypatch.setenv("UNITY_PATH", str(unity_path))
@@ -67,6 +72,7 @@ def test_resolve_unity_executable_falls_back_after_invalid_env_path(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
+    """Verify an invalid UNITY_PATH override falls back to discovered editor candidates."""
     fallback_path = tmp_path / "Unity"
     fallback_path.write_text("unity binary", encoding="utf-8")
     messages: list[str] = []
@@ -109,6 +115,7 @@ def test_resolve_unity_executable_allow_missing_returns_first_candidate(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
+    """Verify dry-run mode can continue with the first candidate even when it is missing."""
     missing_candidate = tmp_path / "Unity"
     messages: list[str] = []
 
@@ -140,6 +147,7 @@ def test_get_log_path_uses_ci_root_when_build_metadata_present(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
+    """Verify CI build metadata redirects logs into the shared CI log root."""
     project_dir = tmp_path / "workspace"
     project_dir.mkdir()
     monkeypatch.setenv("CI_LOG_ROOT_NAME", "CI logs")
@@ -162,6 +170,7 @@ def test_emit_unity_log_updates_buffers_partial_lines(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
+    """Verify log streaming buffers partial lines until a trailing newline is observed."""
     log_path = tmp_path / "unity.log"
     messages: list[str] = []
     state = batchmode_logs.UnityLogStreamingState()
@@ -185,6 +194,7 @@ def test_emit_unity_log_updates_buffers_partial_lines(
 def test_run_batchmode_dry_run_prints_command_and_skips_execution(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    """Verify dry-run batchmode prints the command and never starts a Unity process."""
     messages: list[str] = []
     command = [
         "/Applications/Unity Hub/Editor/2022.3.74f1/Unity",
@@ -215,6 +225,7 @@ def test_run_batchmode_terminates_stuck_process_after_success_marker(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
+    """Verify successful completion markers terminate Unity when the process stays alive."""
     messages: list[str] = []
     log_path = tmp_path / "unity.log"
     command = ["/Applications/Unity", "-logFile", str(log_path)]
@@ -267,6 +278,7 @@ def test_run_batchmode_terminates_stuck_process_after_failure_marker(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
+    """Verify failed completion markers still force the lingering Unity process to stop."""
     log_path = tmp_path / "unity.log"
     command = ["/Applications/Unity", "-logFile", str(log_path)]
 

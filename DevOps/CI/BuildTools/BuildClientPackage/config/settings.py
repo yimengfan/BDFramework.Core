@@ -1,9 +1,13 @@
-from __future__ import annotations
+"""BuildClientPackage 配置常量。
 
- # 说明：
-# 1. 这里放“配置”，不放执行流程。
-# 2. 每个平台的 build_xxx.py 才是 CI 的执行主体。
-# 3. 这里仅提供 Unity BatchMode 相关的候选路径、方法名、日志目录等公共常量。
+说明：
+1. 这里放“配置”，不放执行流程。
+2. 每个平台的 build_xxx.py 才是 CI 的执行主体。
+3. 这里仅提供 Unity BatchMode 相关的候选路径、方法名、日志目录等公共常量。
+4. `SETTINGS` 是关键配置对象，供 BuildClientPackage 路径解析、命令构建和日志落盘逻辑共同消费。
+"""
+
+from __future__ import annotations
 
 SETTINGS = {
     # Unity 工程相关配置。

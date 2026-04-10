@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Shared helpers for ClientRes Code / Assetbundle / Table CI scripts.
 
 职责边界：
@@ -9,6 +7,8 @@ from __future__ import annotations
 4. Code / Assetbundle / Table 上传成功后，这里还负责刷新共享的 `clientRes_{platform}/version.info`，
     让运行时只通过一个文件服务器入口就能拿到三段构建号。
 """
+
+from __future__ import annotations
 
 import csv
 from collections.abc import Callable

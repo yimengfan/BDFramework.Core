@@ -1,3 +1,8 @@
+"""Remote smoke tests for the artifact uploader.
+
+These tests talk to the configured file server and verify upload, listing, metadata, and download visibility.
+"""
+
 from __future__ import annotations
 
 import hashlib
@@ -31,6 +36,7 @@ def fetch_remote_json(
     token: str | None,
     timeout_seconds: float = 20.0,
 ) -> tuple[int, dict[str, object]]:
+    """Fetch a JSON response from the remote file server and normalize error handling."""
     headers = {"Accept": "application/json"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
@@ -59,6 +65,7 @@ def fetch_remote_directory_listing(
     prefix: str,
     recursive: bool,
 ) -> tuple[int, dict[str, object]]:
+    """Fetch a directory listing from the remote file server listing API."""
     query = urlencode(
         {
             "prefix": prefix,
@@ -77,6 +84,7 @@ def fetch_remote_metadata(
     token: str | None,
     remote_path: str,
 ) -> tuple[int, dict[str, object]]:
+    """Fetch metadata for a single remote artifact path."""
     return fetch_remote_json(
         f"{base_url.rstrip('/')}/api/files/{quote(remote_path, safe='/')}",
         token=token,
@@ -90,6 +98,7 @@ def download_remote_file(
     remote_path: str,
     timeout_seconds: float = 20.0,
 ) -> bytes:
+    """Download a remote file payload for post-upload verification."""
     headers: dict[str, str] = {}
     if token:
         headers["Authorization"] = f"Bearer {token}"
@@ -114,6 +123,7 @@ def wait_for_remote_list_entry(
     timeout_seconds: float = 15.0,
     poll_interval_seconds: float = 1.0,
 ) -> dict[str, object]:
+    """Poll the remote listing API until the uploaded file becomes visible or times out."""
     deadline = time.monotonic() + timeout_seconds
     last_status = 0
     last_payload: dict[str, object] = {}
@@ -146,6 +156,7 @@ def wait_for_remote_list_entry(
 
 @pytest.fixture
 def remote_file_server_settings(request):
+    """Provide configured remote file server settings for smoke tests or skip when disabled."""
     if not request.config.getoption("--run-remote-artifact-tests"):
         pytest.skip(
             "remote artifact integration tests are disabled by default; "
@@ -159,6 +170,7 @@ def test_remote_upload_is_visible_in_remote_directory_listing(
     tmp_path: Path,
     remote_file_server_settings,
 ) -> None:
+    """Verify uploaded artifacts become visible through listing, metadata, and download APIs."""
     settings = remote_file_server_settings
 
     health_status, health_payload = fetch_remote_json(

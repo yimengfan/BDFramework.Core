@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """BuildClientPackage Unity batchmode 公共导出层。
 
 维护约束：
@@ -10,6 +8,8 @@ from __future__ import annotations
 
 如果某段逻辑需要知道平台业务流程、上传策略或阶段编排，它就不应该进入这里。
 """
+
+from __future__ import annotations
 
 from _unity_batchmode_logs import (
     UnityLogStreamingState,

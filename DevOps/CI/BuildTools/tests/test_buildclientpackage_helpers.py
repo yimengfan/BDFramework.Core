@@ -1,3 +1,5 @@
+"""Tests for BuildClientPackage output preparation and upload helpers."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -32,6 +34,7 @@ def create_publish_output(
     include_do_not_publish: bool = False,
     additional_do_not_publish_dir_names: tuple[str, ...] = (),
 ) -> Path:
+    """Create a mock Windows publish output tree for helper tests."""
     output_dir = project_dir / "DevOps" / "PublishPackages" / platform_key
     app_dir = output_dir / APP_DIR_NAME
     (app_dir / "Game_Data").mkdir(parents=True)
@@ -61,6 +64,7 @@ def create_publish_output(
 
 
 def create_ios_publish_output(project_dir: Path) -> Path:
+    """Create a mock iOS publish output tree for helper tests."""
     output_dir = project_dir / "DevOps" / "PublishPackages" / "ios"
     xcode_dir = output_dir / APP_DIR_NAME
     (xcode_dir / "Classes").mkdir(parents=True)
@@ -74,11 +78,13 @@ def create_ios_publish_output(project_dir: Path) -> Path:
 
 
 def read_zip_entries(zip_path: Path) -> list[str]:
+    """Return the sorted entry list for a generated ZIP archive."""
     with zipfile.ZipFile(zip_path) as archive:
         return sorted(archive.namelist())
 
 
 def test_get_ci_log_root_name_uses_teamcity_default(monkeypatch) -> None:
+    """Verify TeamCity builds default the shared log root to TCLog."""
     monkeypatch.delenv("CI_LOG_ROOT_NAME", raising=False)
     monkeypatch.setenv("TEAMCITY_VERSION", "2025.11")
 
@@ -86,6 +92,7 @@ def test_get_ci_log_root_name_uses_teamcity_default(monkeypatch) -> None:
 
 
 def test_get_ci_log_root_name_prefers_explicit_value(monkeypatch) -> None:
+    """Verify an explicit CI log root overrides the TeamCity default."""
     monkeypatch.setenv("CI_LOG_ROOT_NAME", "CI logs")
     monkeypatch.setenv("TEAMCITY_VERSION", "2025.11")
 
@@ -93,6 +100,7 @@ def test_get_ci_log_root_name_prefers_explicit_value(monkeypatch) -> None:
 
 
 def test_clear_publish_package_dir_recreates_empty_directory(tmp_path: Path) -> None:
+    """Verify clearing a publish output directory recreates an empty upload root."""
     output_dir = create_publish_output(tmp_path)
 
     cleared_dir = clear_publish_package_dir("windows", project_dir=tmp_path)
@@ -104,6 +112,7 @@ def test_clear_publish_package_dir_recreates_empty_directory(tmp_path: Path) -> 
 
 
 def test_cleanup_stale_hybridclr_outputs_removes_legacy_generated_files(tmp_path: Path) -> None:
+    """Verify stale HybridCLR generated outputs and meta files are removed together."""
     legacy_dir = tmp_path / "Assets" / "HybridCLRGenerate"
     legacy_dir.mkdir(parents=True)
     legacy_aot_file = legacy_dir / "AOTGenericReferences.cs"
@@ -131,6 +140,7 @@ def test_cleanup_stale_hybridclr_outputs_removes_legacy_generated_files(tmp_path
 
 
 def test_build_publish_package_summary_prefers_build_number(tmp_path: Path) -> None:
+    """Verify package upload summaries prefer the CI build number as the remote label."""
     output_dir = create_publish_output(tmp_path)
 
     summary = build_publish_package_summary(
@@ -155,6 +165,7 @@ def test_build_publish_package_summary_prefers_build_number(tmp_path: Path) -> N
 def test_prepare_publish_package_upload_source_for_ios_uses_xcode_project_zip(
     tmp_path: Path,
 ) -> None:
+    """Verify iOS publish outputs are repackaged as a single Xcode project ZIP."""
     output_dir = create_ios_publish_output(tmp_path)
 
     prepared_dir = prepare_publish_package_upload_source(
@@ -175,6 +186,7 @@ def test_prepare_publish_package_upload_source_for_ios_uses_xcode_project_zip(
 def test_prepare_publish_package_upload_source_for_windows_splits_runtime_and_do_not_publish(
     tmp_path: Path,
 ) -> None:
+    """Verify Windows publish outputs split runtime payloads and do-not-publish payloads into separate ZIPs."""
     output_dir = create_publish_output(
         tmp_path,
         include_do_not_publish=True,
@@ -216,6 +228,7 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
     monkeypatch,
     capsys,
 ) -> None:
+    """Verify package upload falls back to clientVersion and emits progress logs for each ZIP."""
     output_dir = create_publish_output(tmp_path, include_do_not_publish=True)
     fake_settings = SimpleNamespace(
         base_url="http://127.0.0.1:20001",

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Android 母包 CI 入口。
 
 注意：
@@ -8,6 +6,8 @@ from __future__ import annotations
 3. 只有 Unity BatchMode 命令拼装/执行相关能力放到 unity3d_batchmode.py。
 4. 调用方可以显式传入 Unity 版本和工程目录；不传时走默认配置。
 """
+
+from __future__ import annotations
 
 import argparse
 
@@ -96,6 +96,7 @@ def validate_client_version(client_version: str) -> str:
 
 
 def main() -> int:
+    """执行 Android 母包构建、日志回收和产物上传主流程。"""
     configure_live_console_output()
     print(f"{LOG_PREFIX} ===== Step 1/7: parse args =====")
     args = parse_args()

@@ -1,3 +1,5 @@
+"""共享表格资源构建入口。"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -20,6 +22,7 @@ LOG_PREFIX = "[BuildTable]"
 
 
 def main() -> int:
+    """执行统一表格资源的 Unity 构建与上传主流程。"""
     return run_table_resource_build(
         log_prefix=LOG_PREFIX,
         description="Build shared client.db / server.db via Unity batchmode.",

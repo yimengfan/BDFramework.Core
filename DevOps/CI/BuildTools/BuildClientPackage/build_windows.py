@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Windows 母包 CI 入口。
 
 说明：
@@ -8,6 +6,8 @@ from __future__ import annotations
 3. 为了便于排查问题，这里保留完整步骤日志和显式异常信息。
 4. 调用方可以显式选择 Unity 版本，并单独传入工程目录。
 """
+
+from __future__ import annotations
 
 import argparse
 
@@ -89,6 +89,7 @@ def validate_client_version(client_version: str) -> str:
 
 
 def main() -> int:
+    """执行 Windows 母包构建、日志回收和产物上传主流程。"""
     configure_live_console_output()
     print(f"{LOG_PREFIX} ===== Step 1/7: parse args =====")
     args = parse_args()

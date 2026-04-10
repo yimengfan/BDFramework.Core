@@ -1,10 +1,10 @@
-from __future__ import annotations
-
 """BuildClientPackage Unity 与工程路径解析 helpers。
 
 宿主机差异、Unity 版本候选和工程目录推导是最容易继续膨胀的部分，
 所以单独拆到这里维护。新增路径规则时，只改本模块，不要把分支再塞回门面文件。
 """
+
+from __future__ import annotations
 
 import os
 from pathlib import Path

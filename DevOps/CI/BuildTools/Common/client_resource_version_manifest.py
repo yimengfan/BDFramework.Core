@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """ClientRes 共享版控指针 helper。
 
 作用：
@@ -10,6 +8,8 @@ from __future__ import annotations
 Example:
     ``clientRes_ios/version.info`` -> ``101.202.303``
 """
+
+from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path

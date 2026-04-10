@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """BuildTools 公共文件服务器上传模块。
 
 设计原则：
@@ -7,6 +5,8 @@ from __future__ import annotations
 2. 统一封装四类制品的远端目录规则，避免调用方各自手写路径。
 3. 同时支持“单文件上传”和“目录递归上传”，便于 CI 在产物落地后直接复用。
 """
+
+from __future__ import annotations
 
 import argparse
 import hashlib

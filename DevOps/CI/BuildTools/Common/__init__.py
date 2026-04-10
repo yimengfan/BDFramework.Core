@@ -1,3 +1,8 @@
+"""BuildTools 公共上传与资源辅助接口导出。
+
+该包给各个 CI 入口脚本提供稳定的公共 API，避免入口文件直接依赖过多内部模块。
+"""
+
 from .artifact_uploader import (
     ArtifactType,
     ArtifactUploadError,

@@ -1,3 +1,5 @@
+"""Tests for the platform-specific BuildClientPackage entry flows."""
+
 from __future__ import annotations
 
 import importlib
@@ -32,6 +34,7 @@ BUILD_SCRIPT_CASES = (
 
 @pytest.fixture(params=BUILD_SCRIPT_CASES)
 def build_script_module(request):
+    """Load each platform build script module covered by the shared main-flow tests."""
     module_name, platform_key, log_prefix = request.param
     module = importlib.import_module(module_name)
     return module, platform_key, log_prefix
@@ -44,6 +47,7 @@ def install_flow_fakes(
     dry_run: bool,
     return_code: int = 0,
 ):
+    """Install shared fake collaborators and return the captured flow context."""
     resolved_project_dir = Path("/tmp/BDFramework.Core")
     unity_path = Path(
         "/Applications/Unity/Hub/Editor/2022.3.74f1/Unity.app/Contents/MacOS/Unity"
@@ -199,6 +203,7 @@ def test_main_dry_run_executes_main_flow_without_side_effects(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
+    """Verify dry-run execution skips destructive steps while preserving the main flow order."""
     module, platform_key, log_prefix = build_script_module
     context = install_flow_fakes(monkeypatch, module, dry_run=True)
 
@@ -233,6 +238,7 @@ def test_main_non_dry_run_clears_output_and_uploads_artifact(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
+    """Verify non-dry-run execution clears output and uploads the built client package."""
     module, _, log_prefix = build_script_module
     context = install_flow_fakes(monkeypatch, module, dry_run=False)
 
@@ -261,6 +267,7 @@ def test_main_reads_log_tail_and_raises_on_batchmode_failure(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
+    """Verify batchmode failures surface the log tail before raising an execution error."""
     module, platform_key, _ = build_script_module
     context = install_flow_fakes(monkeypatch, module, dry_run=False, return_code=17)
 

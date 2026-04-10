@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """BuildClientPackage 输出目录与母包上传辅助。
 
 职责边界：
@@ -7,6 +5,8 @@ from __future__ import annotations
 2. Unity 可执行文件查找、BatchMode 命令拼接、日志流式输出仍由 unity3d_batchmode.py 负责。
 3. 业务入口仍然是各平台 build_xxx.py，避免重新堆回 generic common.py。
 """
+
+from __future__ import annotations
 
 from collections.abc import Callable
 import shutil

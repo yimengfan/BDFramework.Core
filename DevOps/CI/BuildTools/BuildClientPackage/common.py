@@ -9,6 +9,7 @@
 
 
 def __getattr__(name: str):
+    """阻止继续从废弃的 common 模块读取导出符号。"""
     raise RuntimeError(
         "common.py is deprecated. "
         "Use build_android.py / build_ios.py / build_windows.py as the entry flow, "
