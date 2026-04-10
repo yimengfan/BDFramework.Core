@@ -12,6 +12,7 @@ using UnityEditor;
 using UnityEditor.Build.Content;
 using UnityEditor.Build.Pipeline;
 using UnityEditor.Build.Pipeline.Interfaces;
+using UnityEditor.Build.Pipeline.Utilities;
 using UnityEditor.Experimental;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -56,6 +57,26 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         /// Assetbundle列表
         /// </summary>
         public List<AssetBundleItem> AssetBundleItemList { get; private set; }
+
+        /// <summary>
+        /// iOS 不支持桌面 BC/DXT 压缩格式，CI 复用缓存时容易把旧平台导入结果带进 SBP。
+        /// </summary>
+        private static readonly HashSet<string> UnsupportedIOSTextureFormatNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "DXT1",
+            "DXT1Crunched",
+            "DXT5",
+            "DXT5Crunched",
+            "BC1",
+            "BC1Crunched",
+            "BC3",
+            "BC3Crunched",
+            "BC4",
+            "BC5",
+            "BC6H",
+            "BC7",
+            "BC7Crunched",
+        };
 
         /// <summary>
         /// 搜集打包资产信息
@@ -564,6 +585,107 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         //
 
         /// <summary>
+        /// 仅在 iOS BatchMode 重试时触发，清理被旧平台缓存污染的纹理导入结果。
+        /// </summary>
+        private void RepairIOSBatchModeTextureImports(
+            List<KeyValuePair<string, BuildAssetInfos.AssetInfo>> buildAssetInfos)
+        {
+            const string platformName = "iPhone";
+            var textureAssetPaths = buildAssetInfos
+                .Select((info) => info.Key)
+                .Where((path) => !string.IsNullOrEmpty(path))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .Where((path) => AssetImporter.GetAtPath(path) is TextureImporter)
+                .ToList();
+
+            if (textureAssetPaths.Count == 0)
+            {
+                Debug.LogWarning("【BuildAssetbundle】iOS重试未找到需要重导入的纹理资源。");
+                return;
+            }
+
+            var resetOverrideLogs = new List<string>();
+            for (int i = 0; i < textureAssetPaths.Count; i++)
+            {
+                var assetPath = textureAssetPaths[i];
+                var textureImporter = AssetImporter.GetAtPath(assetPath) as TextureImporter;
+                if (textureImporter == null)
+                {
+                    continue;
+                }
+
+                var iosSettings = textureImporter.GetPlatformTextureSettings(platformName);
+                if (iosSettings.overridden && UnsupportedIOSTextureFormatNames.Contains(iosSettings.format.ToString()))
+                {
+                    var formatName = iosSettings.format.ToString();
+                    iosSettings.overridden = false;
+                    textureImporter.SetPlatformTextureSettings(iosSettings);
+                    textureImporter.SaveAndReimport();
+                    resetOverrideLogs.Add($"{assetPath} format={formatName}");
+                    continue;
+                }
+
+                AssetDatabase.ImportAsset(assetPath,
+                    ImportAssetOptions.ForceUpdate | ImportAssetOptions.ForceSynchronousImport);
+            }
+
+            Debug.LogWarning($"【BuildAssetbundle】iOS重试强制重导入纹理完成，count:{textureAssetPaths.Count}");
+            if (resetOverrideLogs.Count > 0)
+            {
+                Debug.LogWarning($"【BuildAssetbundle】iOS重试清理了非法纹理覆盖，count:{resetOverrideLogs.Count}");
+                foreach (var log in resetOverrideLogs.Take(20))
+                {
+                    Debug.LogWarning($"【BuildAssetbundle】{log}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// WriteSerializedFiles 失败后，先清理 SBP 临时目录再重试，避免继续引用失效 CAB 文件。
+        /// </summary>
+        private void CleanupSBPTemporaryBuildData()
+        {
+            var contentBuildDataPath = IPath.Combine(BApplication.ProjectRoot, "Temp", "ContentBuildData");
+            if (!Directory.Exists(contentBuildDataPath))
+            {
+                return;
+            }
+
+            Debug.LogWarning($"【BuildAssetbundle】清理SBP临时目录:{contentBuildDataPath}");
+            Directory.Delete(contentBuildDataPath, true);
+        }
+
+        /// <summary>
+        /// iOS BatchMode 在 agent 复用 Library 时会偶发沿用旧平台纹理导入结果。
+        /// SBP 首次失败后，做一次纹理重导入和临时目录清理，再重试一次即可自愈该类问题。
+        /// </summary>
+        private ReturnCode RetryIOSBatchModeBuildIfNeeded(
+            RuntimePlatform platform,
+            ReturnCode retCode,
+            List<KeyValuePair<string, BuildAssetInfos.AssetInfo>> buildAssetInfos,
+            BundleBuildParameters buildParams,
+            BundleBuildContent buildContent,
+            out IBundleBuildResults results)
+        {
+            results = null;
+            var isIOSBatchMode = Application.isBatchMode && platform == RuntimePlatform.IPhonePlayer;
+            if (!isIOSBatchMode || retCode == ReturnCode.Success || retCode == ReturnCode.SuccessCached)
+            {
+                return retCode;
+            }
+
+            Debug.LogWarning($"【BuildAssetbundle】iOS BatchMode首次SBP失败，准备修复纹理导入缓存并重试。retCode:{retCode}");
+            RepairIOSBatchModeTextureImports(buildAssetInfos);
+            CleanupSBPTemporaryBuildData();
+            BuildCache.PurgeCache(false);
+            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate | ImportAssetOptions.ForceSynchronousImport);
+
+            var retryRetCode = ContentPipeline.BuildAssetBundles(buildParams, buildContent, out results);
+            Debug.LogWarning($"【BuildAssetbundle】iOS BatchMode SBP重试结果:{retryRetCode}");
+            return retryRetCode;
+        }
+
+        /// <summary>
         /// SBP模式构建
         /// </summary>
         private void BuildAssetBundle_SBP(List<AssetBundleItem> assetBundleItemList,
@@ -621,6 +743,8 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
             IBundleBuildResults results;
             ReturnCode retCode = ContentPipeline.BuildAssetBundles(buildParams, buildContent, out results);
+            retCode = RetryIOSBatchModeBuildIfNeeded(platform, retCode, buildAssetInfos, buildParams, buildContent,
+                out results);
 
 
             switch (retCode)
@@ -642,7 +766,6 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 {
                     throw new Exception($"SBP打包失败，请查询UnityEditor.Build.PipelineReturnCode:{retCode}");
                 }
-                    break;
             }
             
 
