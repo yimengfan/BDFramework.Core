@@ -13,6 +13,7 @@ if str(BUILD_TOOLS_ROOT) not in sys.path:
 from Common.client_resource_artifacts import (  # noqa: E402
     ART_ASSETS_DIRNAME,
     ART_ASSET_METADATA_FILENAMES,
+    AssetInfoEntry,
     ASSETS_INFO_FILENAME,
     ASSETS_SUBPACK_INFO_FILENAME,
     CLIENT_DB_FILENAME,
@@ -31,6 +32,7 @@ from Common.client_resource_artifacts import (  # noqa: E402
     prepare_clean_ci_output_root,
     prepare_code_upload_source,
     prepare_table_upload_source,
+    relativize_asset_info_entries,
     upload_client_res_assetbundle,
     validate_uploaded_artifacts,
 )
@@ -313,6 +315,24 @@ def test_parse_assetbundle_manifest_paths_extracts_art_assets_only(tmp_path: Pat
         "art_assets/real.bundle",
         "art_assets/buildlogtep.json",
     }
+
+
+def test_relativize_asset_info_entries_rewrites_windows_absolute_paths() -> None:
+    entries = [
+        AssetInfoEntry(
+            asset_id="1",
+            hash_name="100",
+            local_path="D:/ci/clientres/android/android/art_assets/catalog.bytes",
+            file_size="0.1",
+        )
+    ]
+
+    normalized_entries = relativize_asset_info_entries(
+        Path("D:/ci/clientres/android/android"),
+        entries,
+    )
+
+    assert normalized_entries[0].local_path == "art_assets/catalog.bytes"
 
 
 def test_has_real_assetbundle_payload_ignores_metadata_only_entries() -> None:

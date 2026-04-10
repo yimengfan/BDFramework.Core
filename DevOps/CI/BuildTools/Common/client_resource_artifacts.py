@@ -477,6 +477,14 @@ def normalize_asset_local_path(raw_value: str, *, info_file_path: Path, line_num
     return normalized_local_path
 
 
+def is_absolute_asset_path(raw_value: str) -> bool:
+    """判断 LocalPath 是否已经变成了绝对路径。"""
+    normalized_local_path = raw_value.strip().replace("\\", "/")
+    if normalized_local_path.startswith("/"):
+        return True
+    return len(normalized_local_path) >= 3 and normalized_local_path[1] == ":" and normalized_local_path[2] == "/"
+
+
 def parse_asset_info_entries(info_file_path: Path) -> list[AssetInfoEntry]:
     """读取标准 assets.info，返回 HashName 和 LocalPath 的映射集合。"""
     if not info_file_path.exists():
@@ -517,6 +525,49 @@ def parse_asset_info_entries(info_file_path: Path) -> list[AssetInfoEntry]:
             )
 
     return entries
+
+
+def relativize_asset_info_entries(platform_dir: Path, asset_entries: list[AssetInfoEntry]) -> list[AssetInfoEntry]:
+    """把 assets.info 中落成绝对路径的 LocalPath 还原成平台目录内的相对路径。"""
+    normalized_platform_dir = platform_dir.as_posix().replace("\\", "/").rstrip("/")
+    normalized_platform_dir_lower = normalized_platform_dir.lower()
+    normalized_entries: list[AssetInfoEntry] = []
+
+    for asset_entry in asset_entries:
+        normalized_local_path = asset_entry.local_path.replace("\\", "/")
+        if not is_absolute_asset_path(normalized_local_path):
+            normalized_entries.append(asset_entry)
+            continue
+
+        if normalized_local_path.lower() == normalized_platform_dir_lower:
+            raise ClientResourceArtifactsError(
+                "assets.info local path points to the platform root directory instead of a file. "
+                f"platformDir={platform_dir}, localPath={asset_entry.local_path}"
+            )
+
+        platform_prefix = normalized_platform_dir + "/"
+        platform_prefix_lower = platform_prefix.lower()
+        if not normalized_local_path.lower().startswith(platform_prefix_lower):
+            raise ClientResourceArtifactsError(
+                "assets.info local path points outside the platform output directory. "
+                f"platformDir={platform_dir}, localPath={asset_entry.local_path}"
+            )
+
+        relative_local_path = normalized_local_path[len(platform_prefix):]
+        normalized_entries.append(
+            AssetInfoEntry(
+                asset_id=asset_entry.asset_id,
+                hash_name=asset_entry.hash_name,
+                local_path=normalize_asset_local_path(
+                    relative_local_path,
+                    info_file_path=platform_dir / ASSETS_INFO_FILENAME,
+                    line_number=0,
+                ),
+                file_size=asset_entry.file_size,
+            )
+        )
+
+    return normalized_entries
 
 
 def build_asset_file_size_label(file_path: Path) -> str:
@@ -723,11 +774,12 @@ def prepare_code_upload_source(
         platform_dir / ASSETS_INFO_FILENAME,
         description="ClientRes code assets.info",
     )
-
-    copy_path(
-        assets_info_path,
-        prepared_dir / ASSETS_INFO_FILENAME,
+    asset_entries = relativize_asset_info_entries(
+        platform_dir,
+        parse_asset_info_entries(assets_info_path),
     )
+
+    write_asset_info_entries(prepared_dir / ASSETS_INFO_FILENAME, asset_entries)
 
     optional_subpack = platform_dir / ASSETS_SUBPACK_INFO_FILENAME
     if optional_subpack.exists():
@@ -736,7 +788,7 @@ def prepare_code_upload_source(
     copy_manifest_hash_files(
         platform_dir,
         prepared_dir,
-        asset_entries=parse_asset_info_entries(assets_info_path),
+        asset_entries=asset_entries,
         source_description="ClientRes code",
     )
 
@@ -763,7 +815,10 @@ def prepare_assetbundle_upload_source(
     )
     asset_entries = resolve_assetbundle_asset_info_entries(
         platform_dir,
-        parse_asset_info_entries(assets_info_path),
+        relativize_asset_info_entries(
+            platform_dir,
+            parse_asset_info_entries(assets_info_path),
+        ),
     )
 
     write_asset_info_entries(prepared_dir / ASSETS_INFO_FILENAME, asset_entries)
