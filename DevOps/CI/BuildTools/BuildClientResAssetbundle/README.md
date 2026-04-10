@@ -8,7 +8,7 @@
 2. 三个平台脚本只负责传入平台、日志前缀和 Unity `executeMethod`；公共流程统一复用 `Common/client_resource_flow.py`。
 3. 真实构建前必须清理隔离输出目录，默认写到 `Library/CIOutputs/clientres_assetbundle/<build_name>/<build_number>/<platform>/`。
 4. 上传前只保留 Assetbundle 相关目录和配置文件，不把热更代码或表格产物混进上传源。
-5. BatchMode 的 Assetbundle CI 会在 Unity 命令行里显式追加 `-buildTarget` 到目标平台，不在 Editor 内切换平台；进入资源构建前仍会清理 SBP / AssetGraph 相关缓存，避免 TeamCity agent 残留状态把当前任务带到错误平台上下文。
+5. BatchMode 的 Assetbundle CI 会在 Unity 命令行里显式追加 `-buildTarget` 到目标平台，不在 Editor 内切换平台；如果当前任务带了 CI 构建元数据，共享 flow 还会把 `-projectPath` 切到原工程同级的 `/{platform}/{repo-name}/` 隔离 git worktree，让每个平台拥有独立工程目录和 `Library/Temp`。
 
 ## 文件说明
 

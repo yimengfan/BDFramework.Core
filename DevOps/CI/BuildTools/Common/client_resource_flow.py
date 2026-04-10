@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
+import shutil
+import subprocess
 import sys
 
 from Common.client_resource_artifacts import (
@@ -48,6 +51,109 @@ UNITY_BATCHMODE_BUILD_TARGET_BY_PLATFORM = {
     "ios": "iOS",
     "windows": "Win64",
 }
+
+
+def has_ci_build_metadata(build_name: str | None, build_number: str | None) -> bool:
+    """只在真实 CI 上启用平台隔离工程，避免本地临时调试也被强制迁移目录。"""
+    return any(
+        (
+            (build_name or "").strip(),
+            (build_number or "").strip(),
+            os.environ.get("TEAMCITY_VERSION", "").strip(),
+        )
+    )
+
+
+def run_git_command(*, repo_dir: Path, args: list[str]) -> str:
+    """ClientRes CI 平台隔离依赖 git worktree；这里统一封装命令和错误出口。"""
+    completed = subprocess.run(
+        ["git", *args],
+        cwd=repo_dir,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode != 0:
+        command_text = " ".join(["git", *args])
+        raise UnityBatchModeError(
+            "Failed to prepare isolated CI project directory. "
+            f"command={command_text}, cwd={repo_dir}, stderr={completed.stderr.strip()}"
+        )
+
+    return completed.stdout.strip()
+
+
+def parse_git_worktree_paths(raw_output: str) -> set[Path]:
+    """解析 git worktree list --porcelain，识别当前仓库已经注册的 worktree 目录。"""
+    worktree_paths: set[Path] = set()
+    for line in raw_output.splitlines():
+        if not line.startswith("worktree "):
+            continue
+        worktree_paths.add(Path(line[len("worktree ") :]).resolve())
+    return worktree_paths
+
+
+def remove_existing_project_dir(project_dir: Path) -> None:
+    """删除旧的隔离工程目录，确保每次 CI 都从当前 revision 重新展开。"""
+    if not project_dir.exists():
+        return
+
+    if project_dir.is_dir():
+        shutil.rmtree(project_dir)
+        return
+
+    project_dir.unlink()
+
+
+def prepare_platform_ci_project_dir(
+    *,
+    base_project_dir: Path,
+    platform_key: str,
+    build_name: str | None,
+    build_number: str | None,
+    log_prefix: str,
+) -> Path:
+    """CI 下把 Unity 工程切到平台隔离 worktree，彻底隔离跨平台 Library/Temp 复用。"""
+    if not has_ci_build_metadata(build_name, build_number):
+        print(f"{log_prefix} ciProjectIsolation=disabled")
+        return base_project_dir
+
+    if base_project_dir.parent.name.lower() == platform_key.lower():
+        print(f"{log_prefix} ciProjectIsolation=already_isolated")
+        return base_project_dir
+
+    repo_root = Path(
+        run_git_command(repo_dir=base_project_dir, args=["rev-parse", "--show-toplevel"])
+    ).resolve()
+    isolated_project_dir = (repo_root.parent / platform_key / repo_root.name).resolve()
+    if isolated_project_dir == repo_root:
+        print(f"{log_prefix} ciProjectIsolation=base_project")
+        return repo_root
+
+    print(f"{log_prefix} ciProjectIsolation=enabled")
+    print(f"{log_prefix} ciProjectRoot={isolated_project_dir}")
+
+    run_git_command(repo_dir=repo_root, args=["worktree", "prune"])
+    registered_worktrees = parse_git_worktree_paths(
+        run_git_command(repo_dir=repo_root, args=["worktree", "list", "--porcelain"])
+    )
+    if isolated_project_dir in registered_worktrees:
+        print(f"{log_prefix} ciProjectAction=remove_existing_worktree")
+        run_git_command(
+            repo_dir=repo_root,
+            args=["worktree", "remove", "--force", str(isolated_project_dir)],
+        )
+    elif isolated_project_dir.exists():
+        print(f"{log_prefix} ciProjectAction=remove_existing_path")
+        remove_existing_project_dir(isolated_project_dir)
+
+    isolated_project_dir.parent.mkdir(parents=True, exist_ok=True)
+    print(f"{log_prefix} ciProjectAction=create_worktree")
+    run_git_command(
+        repo_dir=repo_root,
+        args=["worktree", "add", "--force", "--detach", str(isolated_project_dir), "HEAD"],
+    )
+    return isolated_project_dir
 
 
 def parse_platform_args(description: str) -> argparse.Namespace:
@@ -197,7 +303,14 @@ def run_platform_resource_build(
         args.unity_version,
         allow_missing=args.dry_run,
     )
-    project_dir = resolve_project_dir(args.project_dir)
+    base_project_dir = resolve_project_dir(args.project_dir)
+    project_dir = prepare_platform_ci_project_dir(
+        base_project_dir=base_project_dir,
+        platform_key=platform_key,
+        build_name=build_name,
+        build_number=build_number,
+        log_prefix=log_prefix,
+    )
     log_path = get_log_path(
         platform_key,
         client_version,
@@ -207,6 +320,7 @@ def run_platform_resource_build(
     )
     print(f"{log_prefix} unity={unity_path}")
     print(f"{log_prefix} unityVersion={actual_unity_version}")
+    print(f"{log_prefix} baseProjectDir={base_project_dir}")
     print(f"{log_prefix} projectDir={project_dir}")
     print(f"{log_prefix} method={execute_method}")
     print(f"{log_prefix} log={log_path}")

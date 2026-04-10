@@ -724,13 +724,6 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
                 //         "建议配置 CacheServer,避免相同资产打包Assetbundle不一致!! (Project Setting/Editor/CacheServer(project specific))");
                 // }
             }
-
-            var disableBuildCacheForBatchMode = Application.isBatchMode;
-            buildParams.UseCache = !disableBuildCacheForBatchMode;
-            if (disableBuildCacheForBatchMode)
-            {
-                Debug.LogWarning("【BuildAssetbundle】BatchMode检测到CI环境，禁用SBP BuildCache以避免WriteSerializedFiles读取失效的CAB缓存文件。");
-            }
             else
             {
                 buildParams.CacheServerHost = ip;

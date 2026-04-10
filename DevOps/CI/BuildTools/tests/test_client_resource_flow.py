@@ -110,10 +110,11 @@ def test_run_platform_resource_build_executes_expected_flow(
         project_dir="/tmp/BDFramework.Core",
         dry_run=False,
     )
-    project_dir = Path("/tmp/BDFramework.Core")
+    base_project_dir = Path("/tmp/BDFramework.Core")
+    project_dir = Path("/tmp/android/BDFramework.Core")
     unity_path = Path("/Applications/Unity/Hub/Editor/2022.3.74f1/Unity.app/Contents/MacOS/Unity")
     log_path = Path(f"/tmp/TCLog/Nightly_Build/238/{artifact_kind}_0.1.238.log")
-    ci_output_root = Path(f"/tmp/BDFramework.Core/Library/CIOutputs/{artifact_kind}/Nightly_Build/238/android")
+    ci_output_root = Path(f"/tmp/android/BDFramework.Core/Library/CIOutputs/{artifact_kind}/Nightly_Build/238/android")
 
     monkeypatch.setattr(resource_flow, "configure_live_console_output", lambda: events.append("configure_live_console_output"))
     monkeypatch.setattr(resource_flow, "parse_platform_args", lambda _description: args)
@@ -125,7 +126,12 @@ def test_run_platform_resource_build_executes_expected_flow(
         "resolve_unity_executable",
         lambda unity_version, *, allow_missing: (events.append("resolve_unity_executable") or (unity_path, "2022.3.74f1")),
     )
-    monkeypatch.setattr(resource_flow, "resolve_project_dir", lambda project_dir_arg: project_dir)
+    monkeypatch.setattr(resource_flow, "resolve_project_dir", lambda project_dir_arg: base_project_dir)
+    monkeypatch.setattr(
+        resource_flow,
+        "prepare_platform_ci_project_dir",
+        lambda **kwargs: (events.append("prepare_platform_ci_project_dir") or project_dir),
+    )
     monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: log_path)
     monkeypatch.setattr(
         resource_flow,
@@ -179,13 +185,16 @@ def test_run_platform_resource_build_executes_expected_flow(
     )
 
     output = capsys.readouterr().out
-    assert "ciOutputRoot=/tmp/BDFramework.Core/Library/CIOutputs" in output
+    assert "ciOutputRoot=/tmp/android/BDFramework.Core/Library/CIOutputs" in output
     assert "unityBuildTarget=Android" in output
+    assert "baseProjectDir=/tmp/BDFramework.Core" in output
+    assert "projectDir=/tmp/android/BDFramework.Core" in output
     assert "build finished successfully" in output
     assert events == [
         "configure_live_console_output",
         "ensure_platform_allowed:android",
         "resolve_unity_executable",
+        "prepare_platform_ci_project_dir",
         "build_batchmode_command",
         "run_batchmode",
         upload_attr,
@@ -216,6 +225,11 @@ def test_run_platform_resource_build_dry_run_skips_upload(
         lambda unity_version, *, allow_missing: (Path("/Applications/Unity"), "2021.3.58f1"),
     )
     monkeypatch.setattr(resource_flow, "resolve_project_dir", lambda project_dir_arg: Path("/tmp/BDFramework.Core"))
+    monkeypatch.setattr(
+        resource_flow,
+        "prepare_platform_ci_project_dir",
+        lambda **kwargs: Path("/tmp/android/BDFramework.Core"),
+    )
     monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: Path("/tmp/log.log"))
     monkeypatch.setattr(resource_flow, "prepare_clean_ci_output_root", lambda *args, **kwargs: Path("/tmp/output"))
     monkeypatch.setattr(resource_flow, "build_batchmode_command", lambda **kwargs: ["Unity", "-quit"])
@@ -249,6 +263,96 @@ def test_run_platform_resource_build_dry_run_skips_upload(
     output = capsys.readouterr().out
     assert "dry-run enabled, skip artifact upload" in output
     assert uploaded is False
+
+
+def test_prepare_platform_ci_project_dir_skips_isolation_without_ci_metadata(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys,
+) -> None:
+    monkeypatch.delenv("TEAMCITY_VERSION", raising=False)
+    base_project_dir = tmp_path / "BDFramework.Core"
+    base_project_dir.mkdir()
+
+    resolved_project_dir = resource_flow.prepare_platform_ci_project_dir(
+        base_project_dir=base_project_dir,
+        platform_key="ios",
+        build_name=None,
+        build_number=None,
+        log_prefix="[BuildAssetbundle][iOS]",
+    )
+
+    assert resolved_project_dir == base_project_dir
+    assert "ciProjectIsolation=disabled" in capsys.readouterr().out
+
+
+def test_prepare_platform_ci_project_dir_recreates_platform_worktree(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys,
+) -> None:
+    base_project_dir = tmp_path / "BDFramework.Core"
+    base_project_dir.mkdir()
+    expected_project_dir = tmp_path / "ios" / "BDFramework.Core"
+    recorded_commands: list[tuple[list[str], Path]] = []
+
+    def fake_run(command, *, cwd, check, capture_output, text):
+        recorded_commands.append((command, Path(cwd)))
+        command_args = command[1:]
+        if command_args == ["rev-parse", "--show-toplevel"]:
+            return SimpleNamespace(returncode=0, stdout=str(base_project_dir), stderr="")
+        if command_args == ["worktree", "prune"]:
+            return SimpleNamespace(returncode=0, stdout="", stderr="")
+        if command_args == ["worktree", "list", "--porcelain"]:
+            return SimpleNamespace(
+                returncode=0,
+                stdout=f"worktree {base_project_dir}\nHEAD deadbeef\n",
+                stderr="",
+            )
+        if command_args == [
+            "worktree",
+            "add",
+            "--force",
+            "--detach",
+            str(expected_project_dir),
+            "HEAD",
+        ]:
+            return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+        raise AssertionError(f"Unexpected git command: {command}")
+
+    monkeypatch.setattr(resource_flow.subprocess, "run", fake_run)
+
+    resolved_project_dir = resource_flow.prepare_platform_ci_project_dir(
+        base_project_dir=base_project_dir,
+        platform_key="ios",
+        build_name="BuildAssetbundle_ios",
+        build_number="11",
+        log_prefix="[BuildAssetbundle][iOS]",
+    )
+
+    assert resolved_project_dir == expected_project_dir
+    assert recorded_commands == [
+        (["git", "rev-parse", "--show-toplevel"], base_project_dir),
+        (["git", "worktree", "prune"], base_project_dir),
+        (["git", "worktree", "list", "--porcelain"], base_project_dir),
+        (
+            [
+                "git",
+                "worktree",
+                "add",
+                "--force",
+                "--detach",
+                str(expected_project_dir),
+                "HEAD",
+            ],
+            base_project_dir,
+        ),
+    ]
+    output = capsys.readouterr().out
+    assert "ciProjectIsolation=enabled" in output
+    assert f"ciProjectRoot={expected_project_dir}" in output
+    assert "ciProjectAction=create_worktree" in output
 
 
 def test_run_table_resource_build_uploads_shared_dbs(

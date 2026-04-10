@@ -8,7 +8,7 @@
 2. 三个平台脚本只保留最薄的一层入口，通用参数、日志、Unity 命令和上传逻辑统一复用 `Common/client_resource_flow.py` 与 `Common/client_resource_artifacts.py`。
 3. 真实构建前必须清理隔离输出目录，默认写到 `Library/CIOutputs/clientres_code/<build_name>/<build_number>/<platform>/`。
 4. 上传前只整理热更代码当前需要的文件，不直接整目录上传 Unity 输出根。
-5. BatchMode 的 Code CI 会在 Unity 命令行里显式追加 `-buildTarget` 到目标平台，不在 Editor 内切换平台；CI 日志和注释规范与 `BuildClientPackage` 保持一致。
+5. BatchMode 的 Code CI 会在 Unity 命令行里显式追加 `-buildTarget` 到目标平台，不在 Editor 内切换平台；如果当前任务带了 CI 构建元数据，共享 flow 还会把 `-projectPath` 切到原工程同级的 `/{platform}/{repo-name}/` 隔离 git worktree，让每个平台拥有独立工程目录和 `Library/Temp`；CI 日志和注释规范与 `BuildClientPackage` 保持一致。
 
 ## 文件说明
 
