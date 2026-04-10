@@ -1,5 +1,12 @@
+[buildtools_external_config]
+# BuildTools 外部集成配置术语：
+# 1. external service config：业务无关的外部服务地址、端口、协议、鉴权，例如文件服务器、CI 服务器。
+# 2. external signing config：业务无关的签名/证书元数据，例如 iOS Xcode 的 team id、profile、签名模式。
+# 3. external test config：访问外部系统的 smoke test / 集成测试开关、命名和超时参数。
+# 4. 这类配置必须集中放在 buildtools.toml，并通过 Common/buildtools_config.py 统一读取，不要散落到各脚本内部。
+
 [artifact_file_server]
-# BuildTools 共享文件服务器访问配置。
+# external service config: BuildTools 共享文件服务器访问配置。
 # 推荐所有 BuildTools 模块统一读取这一个配置文件，不再复用其他目录下的配置。
 ip = "127.0.0.1"
 port = 20001
@@ -12,8 +19,16 @@ scheme = "http"
 upload_chunk_size_kb = 1024
 hash_chunk_size_kb = 1024
 
+[ci_server]
+# external service config: 业务无关的 CI 服务器连接信息。
+# TeamCity / Jenkins / GitHub Actions 之类的接入如果需要固定地址或项目标识，统一从这里读取。
+# provider = "teamcity"
+# base_url = "https://ci.example.com"
+# project_name = "BDFramework.Core"
+# token_env = "TEAMCITY_TOKEN"
+
 [ios_xcode]
-# iOS Xcode 后置脚本签名配置。
+# external signing config: iOS Xcode 后置脚本签名配置。
 # Build 面板在 Unity 导出 Xcode 后会固定调用 BuildClientPackage/build_xcode.shell。
 # 这里只保留签名相关信息；其余构建行为默认值放在 build_xcode.shell 里。
 # 优先级：shell 顶部默认值 < buildtools.toml < 环境变量 < 命令行参数。
@@ -29,3 +44,13 @@ bundle_identifier = "com.demo.game"
 # code_sign_identity = "Apple Distribution: Team Name (ABCDE12345)"
 # provisioning_profile_specifier = "Demo AdHoc"
 # provisioning_profile = "00000000-0000-0000-0000-000000000000"
+
+[tests.remote_artifact]
+# external test config: 远端文件服务器 smoke test 配置。
+# 只有显式执行 pytest --run-remote-artifact-tests 且 enabled=true 时才会真的访问远端服务器。
+enabled = false
+build_number = "remote-smoke-tests"
+filename = "artifact_uploader_remote_test.txt"
+request_timeout_seconds = 20
+listing_timeout_seconds = 15
+poll_interval_seconds = 1

@@ -20,26 +20,34 @@
 - 流程型脚本必须保留清晰的阶段日志，让 CI 日志可以直接对照代码定位问题。
 - 关键函数和关键分支优先解释“为什么这样做”，不要只写变量字面含义。
 
-### 2. 测试分层
+### 2. 外部配置统一来源
+
+- BuildTools 里的业务无关外部配置统一称为 external integration config，按用途拆成 external service config、external signing config、external test config。
+- 文件服务器、CI 服务器、签名/证书元数据、remote smoke test 参数都必须写在 `DevOps/CI/BuildTools/buildtools.toml` 或 `buildtools.toml.example`，不能在脚本里散落新的配置源。
+- Python 与 shell 入口读取这些配置时，必须复用 `DevOps/CI/BuildTools/Common/buildtools_config.py` 或其公共封装，不要在各模块再复制一份 TOML 解析逻辑。
+- `.github/hooks/buildtools-config-guard.json` 会对 agent 的写操作做确定性拦截，禁止在 `DevOps/CI/BuildTools` 源码里重新引入 ad hoc TOML 解析或直接散读共享 config section。
+- 变更 section 名称、键名、优先级或默认值时，必须同时更新代码、README、`buildtools.toml(.example)` 和 pytest。
+
+### 3. 测试分层
 
 - 核心逻辑必须实现单元测试，至少覆盖成功路径、关键边界和主要失败路径。
 - 只要模块存在真实执行链路，就必须提供可执行的 e2e / smoke / remote 测试；模块 README 里必须写清楚执行命令、前置条件和跳过条件。
 - 逻辑修改后，README、测试断言、步骤日志和脚本行为必须保持一致。
 
-### 3. TeamCity 验证
+### 4. TeamCity 验证
 
 - 如果改动模块已经接入 TeamCity，或者本次修改会影响 TeamCity DSL、构建参数、脚本入口、步骤日志、输出目录、上传逻辑，就必须执行受影响的 TeamCity 测试。
 - 验证时至少确认：任务最终状态、关键流程日志、产物路径或远端上传目录。
 - 通过 TeamCity Web API 或辅助脚本手动触发验证任务时，必须带上 `Comment` 和 `Tags`；`Comment` 至少要明确这次测试对应的目标 buildType。
 - TeamCity 执行与排查入口统一维护在 `../../.test-DevOps/README.md` 和 `../../.test-DevOps/teamcityskill/README.md`。
 
-### 4. 文档拆分原则
+### 5. 文档拆分原则
 
 - 公共规范只维护在本文档，不要在每个模块 README 里重复拷贝同一套规则。
 - 模块 README 只保留模块职责、主流程、配置、测试命令、TeamCity 入口和模块特有约束。
 - 新增 CI 模块时，必须同时补充：模块 README、单元测试、执行测试入口，以及本文档中的索引记录。
 
-### 5. 构建管线强制规范
+### 6. 构建管线强制规范
 
 - TeamCity DSL、Jenkinsfile、shell pipeline 之类的管线层只负责调度参数、任务依赖和执行入口，不承载业务构建逻辑。
 - 具体业务实现统一落在 `DevOps/CI/BuildTools/` 下的 Python 脚本里；如果是新的构建类型，必须新建独立目录，不要继续把不同类型流程塞进旧目录。

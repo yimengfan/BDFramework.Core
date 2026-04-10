@@ -7,8 +7,13 @@ using UnityEngine;
 namespace BDFramework.ResourceMgr
 {
     /// <summary>
-    /// BResources 版本控制扩展
+    /// BResources 资源版本控制公共入口。
+    /// 这个 partial 同时保留旧版资源版控 API 和显式文件服务器模式 API，调用方必须显式选择具体协议入口。
     /// </summary>
+    /// <remarks>
+    /// 典型用法是启动页在资源校验阶段调用 <c>StartAssetsVersionControl(...)</c> 或
+    /// <c>StartAssetsVersionControlWithDevOps(...)</c>，然后在成功回调里决定是否进入 <c>BDLauncherHotfix.Launch()</c>。
+    /// </remarks>
     static public partial class BResources
     {
         /// <summary>

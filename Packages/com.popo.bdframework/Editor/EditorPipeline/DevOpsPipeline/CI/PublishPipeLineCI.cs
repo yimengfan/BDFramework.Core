@@ -14,10 +14,18 @@ using UnityEngine;
 namespace BDFramework.Editor.DevOps
 {
     /// <summary>
-    /// 构建相关的CI接口
+    /// BDFramework Editor 侧的 CI 发布入口集合。
+    /// 该类把母包、热更代码、AssetBundle 和表格的 BatchMode 入口集中到同一个协调器里，供 TeamCity 或命令行通过 <c>-executeMethod</c> 调用。
     /// </summary>
+    /// <example>
+    /// Unity -batchmode -projectPath &lt;project&gt; -executeMethod BDFramework.Editor.DevOps.PublishPipeLineCI.BuildCodeAndroid
+    /// </example>
     static public class PublishPipeLineCI
     {
+        /// <summary>
+        /// BatchMode 下指定 CI 构建输出根目录的命令行参数。
+        /// 该目录由 Python / TeamCity 侧构建脚本传入，Unity 构建产物会统一落到这里，供后续上传流程消费。
+        /// </summary>
         const string CI_OUTPUT_ROOT_ARG = "-ciOutputRoot";
 
 
@@ -75,6 +83,9 @@ namespace BDFramework.Editor.DevOps
 
         const string CLIENT_VERSION_ARG = "-clientVersion";
 
+        /// <summary>
+        /// 从当前 Unity 进程命令行中读取指定参数值。
+        /// </summary>
         static private string GetCommandLineArg(string argName)
         {
             var args = System.Environment.GetCommandLineArgs();
@@ -89,6 +100,10 @@ namespace BDFramework.Editor.DevOps
             return null;
         }
 
+        /// <summary>
+        /// 解析本次 CI 构建应使用的 clientVersion。
+        /// 如果命令行没有显式传入，就回退到 BuildTools_ClientPackage 的默认版本号规则。
+        /// </summary>
         static private string GetClientVersion()
         {
             var clientVersion = GetCommandLineArg(CLIENT_VERSION_ARG);
@@ -197,6 +212,10 @@ namespace BDFramework.Editor.DevOps
         static private Type androidExternalToolsSettingsType;
         static private bool androidExternalToolsSettingsResolved;
 
+        /// <summary>
+        /// 获取 Unity Android External Tools 设置类型。
+        /// 这里使用轻量反射，是为了兼容未安装 Android 模块的 Unity Editor，避免直接强引用该类型导致 CI 编译失败。
+        /// </summary>
         static private Type GetAndroidExternalToolsSettingsType()
         {
             if (androidExternalToolsSettingsResolved)
@@ -205,6 +224,8 @@ namespace BDFramework.Editor.DevOps
             }
 
             androidExternalToolsSettingsResolved = true;
+
+            // 框架基础设施层在这里使用受控反射，只负责探测 Unity 提供的 AndroidExternalToolsSettings。
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 var candidate = assembly.GetType("UnityEditor.Android.AndroidExternalToolsSettings");
@@ -223,6 +244,9 @@ namespace BDFramework.Editor.DevOps
             return androidExternalToolsSettingsType;
         }
 
+        /// <summary>
+        /// 获取 Android External Tools 上某个路径属性的反射句柄。
+        /// </summary>
         static private bool TryGetAndroidExternalToolsPathProperty(string propertyName,
             out System.Reflection.PropertyInfo propertyInfo)
         {
@@ -231,6 +255,9 @@ namespace BDFramework.Editor.DevOps
             return propertyInfo != null && propertyInfo.PropertyType == typeof(string);
         }
 
+        /// <summary>
+        /// 读取 Android External Tools 上当前配置的某个路径值。
+        /// </summary>
         static private string GetAndroidExternalToolsPath(string propertyName)
         {
             if (!TryGetAndroidExternalToolsPathProperty(propertyName, out var propertyInfo))
@@ -241,6 +268,9 @@ namespace BDFramework.Editor.DevOps
             return propertyInfo.GetValue(null) as string ?? string.Empty;
         }
 
+        /// <summary>
+        /// 尝试把探测到的候选路径写回 Unity Android External Tools 设置。
+        /// </summary>
         static private bool TrySetAndroidExternalToolsPath(string propertyName, string candidate, string source,
             string toolName)
         {
@@ -280,6 +310,9 @@ namespace BDFramework.Editor.DevOps
             }
         }
 
+        /// <summary>
+        /// 按“环境变量 -&gt; Unity 内置 Android Support -&gt; 本机常见安装目录”的顺序探测可用 JDK。
+        /// </summary>
         static private bool TryConfigureAndroidJdkFromCandidates()
         {
             var envNames = new[]
@@ -382,6 +415,9 @@ namespace BDFramework.Editor.DevOps
             }
         }
 
+        /// <summary>
+        /// 按“环境变量 -&gt; Unity 内置 Android Support -&gt; 本机常见安装目录”的顺序探测可用 Android SDK。
+        /// </summary>
         static private bool TryConfigureAndroidSdkFromCandidates()
         {
             var envNames = new[]
@@ -431,6 +467,9 @@ namespace BDFramework.Editor.DevOps
             return false;
         }
 
+        /// <summary>
+        /// 按“环境变量 -&gt; Unity 内置 Android Support -&gt; SDK 派生路径 -&gt; 本机常见安装目录”的顺序探测可用 Android NDK。
+        /// </summary>
         static private bool TryConfigureAndroidNdkFromCandidates()
         {
             var envNames = new[]
@@ -514,6 +553,9 @@ namespace BDFramework.Editor.DevOps
             return false;
         }
 
+        /// <summary>
+        /// 在 BatchMode Android 构建前确保 Unity 已配置可用 JDK。
+        /// </summary>
         static private void EnsureAndroidJdkForBatchMode()
         {
             if (!Application.isBatchMode)
@@ -536,6 +578,9 @@ namespace BDFramework.Editor.DevOps
             Debug.LogWarning("【CI】未找到可用 JDK；如果 TeamCity Agent 已安装 JDK，请设置 JAVA_HOME/JDK_HOME/UNITY_JDK_PATH。");
         }
 
+        /// <summary>
+        /// 在 BatchMode Android 构建前确保 Unity 已配置可用 Android SDK。
+        /// </summary>
         static private void EnsureAndroidSdkForBatchMode()
         {
             if (!Application.isBatchMode)
@@ -558,6 +603,9 @@ namespace BDFramework.Editor.DevOps
             Debug.LogWarning("【CI】未找到可用 Android SDK；如果 TeamCity Agent 已安装 SDK，请设置 ANDROID_SDK_ROOT 或 ANDROID_HOME。");
         }
 
+        /// <summary>
+        /// 在 BatchMode Android 构建前确保 Unity 已配置可用 Android NDK。
+        /// </summary>
         static private void EnsureAndroidNdkForBatchMode()
         {
             if (!Application.isBatchMode)
@@ -662,6 +710,10 @@ namespace BDFramework.Editor.DevOps
         }
 
 
+        /// <summary>
+        /// 解析本次 CI 构建的产物根目录。
+        /// 优先读取命令行里的 <c>-ciOutputRoot</c>，否则回退到框架默认的发布目录。
+        /// </summary>
         static private string GetCIOutputRoot(string defaultOutputRoot)
         {
             var outputRoot = GetCommandLineArg(CI_OUTPUT_ROOT_ARG);
@@ -677,6 +729,9 @@ namespace BDFramework.Editor.DevOps
         }
 
 
+        /// <summary>
+        /// 清理一个可选存在的目录，并输出显式日志说明清理来源。
+        /// </summary>
         static private void DeleteDirectoryIfExists(string path, string description)
         {
             if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path))
@@ -689,6 +744,10 @@ namespace BDFramework.Editor.DevOps
         }
 
 
+        /// <summary>
+        /// 在 BatchMode AssetBundle 构建前清理 Unity 与 AssetGraph 的缓存目录。
+        /// 这样可以避免 CI 连续构建时复用到陈旧缓存，导致热更资源结果不一致。
+        /// </summary>
         static private void PrepareBatchModeAssetbundleCaches()
         {
             if (!Application.isBatchMode)
@@ -705,10 +764,11 @@ namespace BDFramework.Editor.DevOps
 
 
         /// <summary>
-        /// 构建包体
+        /// 构建指定平台的母包。
         /// </summary>
         static private void BuildPackage(BuildTarget buildTarget, BuildTools_ClientPackage.BuildMode buildMode)
         {
+            // Phase 1: 解析本次构建使用的版本号，并在 Android 平台提前补齐 Unity External Tools。
             var clientVersion = GetClientVersion();
             Debug.Log($"【CI】BuildTarget:{buildTarget} BuildMode:{buildMode} ClientVersion:{clientVersion}");
 
@@ -719,6 +779,7 @@ namespace BDFramework.Editor.DevOps
                 EnsureAndroidNdkForBatchMode();
             }
 
+            // Phase 2: 统一委托现有母包构建管线执行真正的打包逻辑。
             var ret = BuildTools_ClientPackage.Build(
                 buildMode,
                 true,
@@ -734,8 +795,13 @@ namespace BDFramework.Editor.DevOps
         }
 
 
+        /// <summary>
+        /// 构建指定平台的热更资源产物。
+        /// 根据传入的构建选项，这里会协调热更代码、AssetBundle 或两者组合的 CI 输出路径和前置清理步骤。
+        /// </summary>
         static private void BuildClientRes(BuildTarget buildTarget, BuildTools_Assets.BuildPackageOption buildOption)
         {
+            // Phase 1: 解析版本号、输出目录和运行平台，并为 Android 补齐 External Tools。
             var clientVersion = GetClientVersion();
             var outputRoot = GetCIOutputRoot(BApplication.DevOpsPublishAssetsPath);
             var platform = BApplication.GetRuntimePlatform(buildTarget);
@@ -753,6 +819,7 @@ namespace BDFramework.Editor.DevOps
                 PrepareBatchModeAssetbundleCaches();
             }
 
+            // Phase 2: 统一委托 BuildTools_Assets 输出 CI 需要消费的热更制品目录。
             BuildTools_Assets.BuildAll(
                 platform,
                 outputRoot,
@@ -760,49 +827,73 @@ namespace BDFramework.Editor.DevOps
                 opa: buildOption);
         }
 
+        /// <summary>
+        /// BatchMode: 构建 Android 热更代码。
+        /// </summary>
         [CI(Des = "BatchMode构建热更代码Android")]
         static public void BuildCodeAndroid()
         {
             BuildClientRes(BuildTarget.Android, BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
         }
 
+        /// <summary>
+        /// BatchMode: 构建 iOS 热更代码。
+        /// </summary>
         [CI(Des = "BatchMode构建热更代码iOS")]
         static public void BuildCodeIOS()
         {
             BuildClientRes(BuildTarget.iOS, BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
         }
 
+        /// <summary>
+        /// BatchMode: 构建 Windows 热更代码。
+        /// </summary>
         [CI(Des = "BatchMode构建热更代码Windows")]
         static public void BuildCodeWindows()
         {
             BuildClientRes(BuildTarget.StandaloneWindows64, BuildTools_Assets.BuildPackageOption.BuildHotfixCode);
         }
 
+        /// <summary>
+        /// BatchMode: 构建 Android 热更 AssetBundle。
+        /// </summary>
         [CI(Des = "BatchMode构建热更Assetbundle Android")]
         static public void BuildAssetbundleAndroid()
         {
             BuildClientRes(BuildTarget.Android, BuildTools_Assets.BuildPackageOption.BuildArtAssets);
         }
 
+        /// <summary>
+        /// BatchMode: 构建 iOS 热更 AssetBundle。
+        /// </summary>
         [CI(Des = "BatchMode构建热更Assetbundle iOS")]
         static public void BuildAssetbundleIOS()
         {
             BuildClientRes(BuildTarget.iOS, BuildTools_Assets.BuildPackageOption.BuildArtAssets);
         }
 
+        /// <summary>
+        /// BatchMode: 构建 Windows 热更 AssetBundle。
+        /// </summary>
         [CI(Des = "BatchMode构建热更Assetbundle Windows")]
         static public void BuildAssetbundleWindows()
         {
             BuildClientRes(BuildTarget.StandaloneWindows64, BuildTools_Assets.BuildPackageOption.BuildArtAssets);
         }
 
+        /// <summary>
+        /// BatchMode: 构建统一表格数据库。
+        /// 产物会写到 CI 输出根目录，供后续上传脚本发布为共享 Table 制品。
+        /// </summary>
         [CI(Des = "BatchMode构建统一表格")]
         static public void BuildTable()
         {
+            // Phase 1: 解析输出目录并记录运行平台，确保 client.db / server.db 会落到 CI 约定目录。
             var outputRoot = GetCIOutputRoot(BApplication.DevOpsPublishAssetsPath);
             var platform = BApplication.RuntimePlatform;
             Debug.Log($"【CI】BuildTable Platform:{platform} OutputRoot:{outputRoot}");
 
+            // Phase 2: 依次构建 client.db 与 server.db，任何一步失败都直接中止当前 BatchMode 任务。
             var buildClientDb = BuildTools_Excel2SQLite.BuildSqlite(outputRoot, platform, DBType.Local);
             if (!buildClientDb)
             {

@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "python3 .github/hooks/scripts/validate_buildtools_config_patch.py",
+        "timeout": 15
+      }
+    ]
+  }
+}

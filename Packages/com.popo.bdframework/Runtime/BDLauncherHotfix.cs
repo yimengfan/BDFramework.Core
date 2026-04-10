@@ -9,9 +9,13 @@ using UnityEngine;
 namespace BDFramework
 {
     /// <summary>
-    /// BDLauncherBridge 负责热更逻辑的启动。
-    /// 新旧分支合并后，Bridge 作为业务语义名保留，兼容入口由同文件内的 BDLauncherHotfix 转发。
+    /// 运行时第二阶段启动协调器。
+    /// 当 <c>BDLauncher</c> 完成程序集装载后，业务侧需要显式调用这里来串起配置加载、资源初始化、SQLite 初始化和管理器启动。
     /// </summary>
+    /// <remarks>
+    /// 典型用法是在更新页收到 <c>AssetsVersionController.RetStatus.Success</c> 后调用
+    /// <c>BDLauncherHotfix.Launch()</c>，而不是在 <c>BDLauncher.Start()</c> 里直接进入业务流程。
+    /// </remarks>
     public class BDLauncherBridge
     {
         private static readonly string Tag = "Launch";
@@ -20,25 +24,25 @@ namespace BDFramework
         #region 启动热更逻辑
 
         /// <summary>
-        /// 初始化
-        /// 修改版本,让这个启动逻辑由使用者自行处理
+        /// 启动框架主体，包括配置、资源、SQLite 和热更管理器系统。
         /// </summary>
-        /// <param name="gameId"></param>
-        /// <param name="launchSuccessCallback"></param>
-        /// <param name="mainProjectTypes">Editor模式下,UPM隔离了DLL需要手动传入</param>
-        /// <param name="GameId">单游戏更新启动不需要id，多游戏更新需要id号</param>
+        /// <param name="gameId">保留给多游戏启动场景的兼容参数；当前默认流程未直接使用该值。</param>
         static public void Launch(string gameId = "default")
         {
+            // Phase 1: 标记框架进入运行时阶段，并准备协程执行工具。
             BApplication.IsPlaying = true;
             BDLauncher.Inst.gameObject.AddComponent<IEnumeratorTool>();
+
+            // Phase 2: 先加载框架基础配置，解析后续资源与数据库初始化所需的路径和版本号。
             GameConfigLoder.LoadFrameBaseConfig();
             var Config = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
-            //
+
             BDebug.EnableLog(Tag);
             var clientVersion = Config.ClientVersionNum;
             BDebug.Log("框架版本:" + BDLauncher.FrameworkVersion, Color.cyan);
             BDebug.Log("母包版本:" + clientVersion, Color.cyan);
-            //开始资源检测
+
+            // Phase 3: 先完成资源双路径解析与母包基础资源修复，确保资源系统和数据库有稳定输入。
             BDebug.Log(Tag, "----------资源版本验证----------", Color.yellow);
             var (firstLoadDir, secondLoadDir) =
                 ClientAssetsUtils.GetMultiAssetsLoadPath(BApplication.RuntimePlatform, clientVersion);
@@ -50,14 +54,11 @@ namespace BDFramework
             BDebug.Log(Tag, "第一寻址路径: " + firstLoadDir, Color.magenta);
             BDebug.Log(Tag, "第二寻址路径: " + secondLoadDir, Color.magenta);
             ClientAssetsUtils.CheckBaseClientAssets(firstLoadDir, secondLoadDir);
-            //平台
             BDebug.Log(Tag, "----------资源版本验证.end----------", Color.yellow);
           
-            //1.美术资产初始化
+            // Phase 4: 依次启动资源、SQLite 与热更管理器，真正进入框架业务运行态。
             BResources.Init(Config.ArtRoot, firstLoadDir, secondLoadDir);
-            //2.sql初始化
             SqliteLoder.Init(Config.SQLRoot, firstLoadDir, secondLoadDir);
-            //3.脚本,这个启动会开启所有的逻辑
             HotfixScriptLoder.Start();
         }
 
@@ -65,7 +66,10 @@ namespace BDFramework
 
         #region 生命周期
 
-      public  void OnApplicationQuit()
+                /// <summary>
+                /// 在 Editor 退出阶段释放 SQLite 和热更程序集相关资源。
+                /// </summary>
+            public  void OnApplicationQuit()
         {
 #if UNITY_EDITOR
             SqliteLoder.Close();
@@ -77,16 +81,23 @@ namespace BDFramework
     }
 
     /// <summary>
-    /// 兼容旧工程仍通过 BDLauncherHotfix 调用启动与退出逻辑。
-    /// 该类只做转发，不改变当前 Bridge 入口的行为。
+    /// 兼容旧工程仍通过 <c>BDLauncherHotfix</c> 访问启动与退出逻辑。
+    /// 该类只做转发，不改变当前 <c>BDLauncherBridge</c> 的业务语义和执行顺序。
     /// </summary>
     public class BDLauncherHotfix
     {
+        /// <summary>
+        /// 兼容旧入口名的框架启动方法。
+        /// </summary>
+        /// <param name="gameId">保留给旧工程的兼容参数，会原样转发给 Bridge。</param>
         public static void Launch(string gameId = "default")
         {
             BDLauncherBridge.Launch(gameId);
         }
 
+        /// <summary>
+        /// 兼容旧入口名的退出收尾方法。
+        /// </summary>
         public void OnApplicationQuit()
         {
             new BDLauncherBridge().OnApplicationQuit();

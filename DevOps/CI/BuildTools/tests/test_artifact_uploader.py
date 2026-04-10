@@ -326,7 +326,7 @@ tokens = ["token-a", "token-b"]
 
 
 def test_load_minimal_toml_supports_buildtools_config_shape() -> None:
-	"""Verify the minimal TOML loader supports the BuildTools artifact file server config shape."""
+	"""Verify the minimal TOML loader supports file-server and remote-test BuildTools config tables."""
 	parsed = load_minimal_toml(
 		"""
 [artifact_file_server]
@@ -336,6 +336,15 @@ scheme = "http"
 tokens = ["token-a", "token-b"]
 upload_chunk_size_kb = 256
 hash_chunk_size_kb = 128
+
+[ci_server]
+provider = "teamcity"
+base_url = "https://ci.example.com"
+
+[tests.remote_artifact]
+enabled = true
+build_number = "remote-smoke-tests"
+filename = "artifact_uploader_remote_test.txt"
 """.strip()
 	)
 
@@ -347,6 +356,17 @@ hash_chunk_size_kb = 128
 			"tokens": ["token-a", "token-b"],
 			"upload_chunk_size_kb": 256,
 			"hash_chunk_size_kb": 128,
+		},
+		"ci_server": {
+			"provider": "teamcity",
+			"base_url": "https://ci.example.com",
+		},
+		"tests": {
+			"remote_artifact": {
+				"enabled": True,
+				"build_number": "remote-smoke-tests",
+				"filename": "artifact_uploader_remote_test.txt",
+			},
 		}
 	}
 

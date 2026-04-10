@@ -14,19 +14,27 @@ import http.client
 import json
 import mimetypes
 import os
+import sys
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path, PurePosixPath
 from typing import Any, Callable, Iterator
 from urllib.parse import quote, urlencode, urlparse
 
-try:
-	import tomllib
-except ModuleNotFoundError:  # pragma: no cover - Python < 3.11 fallback
-	try:
-		import tomli as tomllib
-	except ModuleNotFoundError:  # pragma: no cover - TeamCity old Python fallback
-		tomllib = None
+BUILD_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(BUILD_TOOLS_ROOT) not in sys.path:
+	sys.path.insert(0, str(BUILD_TOOLS_ROOT))
+
+from Common.buildtools_config import (  # noqa: E402
+	BuildToolsConfigError,
+	BuildToolsFileServerConfig,
+	get_config_section as shared_get_config_section,
+	load_buildtools_external_config,
+	load_minimal_toml as shared_load_minimal_toml,
+	load_toml_file as shared_load_toml_file,
+	parse_token_values as shared_parse_token_values,
+	resolve_buildtools_config_path,
+)
 
 
 DEFAULT_TIMEOUT_SECONDS = 600
@@ -34,9 +42,6 @@ DEFAULT_UPLOAD_CHUNK_SIZE_BYTES = 1024 * 1024
 DEFAULT_HASH_CHUNK_SIZE_BYTES = 1024 * 1024
 DEFAULT_REMOTE_LIST_LIMIT = 2000
 SKIPPED_LOCAL_FILENAMES = {".DS_Store"}
-BUILD_TOOLS_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CONFIG_PATH = BUILD_TOOLS_ROOT / "buildtools.toml"
-DEFAULT_CONFIG_EXAMPLE_PATH = BUILD_TOOLS_ROOT / "buildtools.toml.example"
 
 
 class ArtifactUploadError(RuntimeError):
@@ -86,21 +91,10 @@ UploadCompleteCallback = Callable[[int, int, UploadedArtifact], None]
 
 def parse_token_values(value: Any) -> tuple[str, ...]:
 	"""把 token 字段标准化为去重后的字符串元组。"""
-	if value is None:
-		return ()
-
-	if isinstance(value, str):
-		items = [part.strip() for part in value.replace(";", ",").split(",") if part.strip()]
-	elif isinstance(value, (list, tuple)):
-		items = [str(part).strip() for part in value if str(part).strip()]
-	else:
-		raise ArtifactUploadError(f"Unsupported token value: {value!r}")
-
-	unique_items: list[str] = []
-	for item in items:
-		if item not in unique_items:
-			unique_items.append(item)
-	return tuple(unique_items)
+	try:
+		return shared_parse_token_values(value)
+	except BuildToolsConfigError as exc:
+		raise ArtifactUploadError(str(exc)) from exc
 
 
 def split_toml_value_and_comment(line: str) -> str:
@@ -248,82 +242,39 @@ def ensure_toml_table(root: dict[str, Any], section_name: str) -> dict[str, Any]
 
 def load_minimal_toml(content: str) -> dict[str, Any]:
 	"""解析 BuildTools 当前配置形状所需的最小 TOML 子集。"""
-	result: dict[str, Any] = {}
-	current_table = result
-
-	for line_number, raw_line in enumerate(content.splitlines(), start=1):
-		line = split_toml_value_and_comment(raw_line).strip()
-		if not line:
-			continue
-
-		if line.startswith("["):
-			if not line.endswith("]"):
-				raise ArtifactUploadError(
-					f"Minimal TOML parser found an unterminated table header at line {line_number}: {raw_line!r}"
-				)
-			section_name = line[1:-1].strip()
-			current_table = ensure_toml_table(result, section_name)
-			continue
-
-		delimiter_index = find_toml_delimiter(line, "=")
-		if delimiter_index < 0:
-			raise ArtifactUploadError(
-				f"Minimal TOML parser expected key/value assignment at line {line_number}: {raw_line!r}"
-			)
-
-		key = line[:delimiter_index].strip()
-		if not key:
-			raise ArtifactUploadError(f"Minimal TOML parser found an empty key at line {line_number}.")
-
-		value = line[delimiter_index + 1 :].strip()
-		current_table[key] = parse_minimal_toml_value(value)
-
-	return result
+	try:
+		return shared_load_minimal_toml(content)
+	except BuildToolsConfigError as exc:
+		raise ArtifactUploadError(str(exc)) from exc
 
 
 def load_toml_file(path: Path) -> dict[str, Any]:
 	"""读取 TOML 配置文件。"""
-	if tomllib is not None:
-		with path.open("rb") as handle:
-			data = tomllib.load(handle)
-	else:
-		data = load_minimal_toml(path.read_text(encoding="utf-8"))
-	if not isinstance(data, dict):
-		raise ArtifactUploadError(f"Config root must be a TOML table: {path}")
-	return data
+	try:
+		return shared_load_toml_file(path)
+	except BuildToolsConfigError as exc:
+		raise ArtifactUploadError(str(exc)) from exc
 
 
 def resolve_optional_config_path(
 	config_path: str | os.PathLike[str] | None,
 ) -> Path | None:
 	"""解析客户端要读取的 BuildTools 全局配置路径。"""
-	raw_candidate = (
-		str(config_path).strip()
-		if config_path is not None
-		else os.environ.get("ARTIFACT_FILE_SERVER_CONFIG", "").strip()
-		or os.environ.get("ARTIFACT_SERVER_CONFIG", "").strip()
-	)
-	if raw_candidate:
-		candidate = Path(raw_candidate).expanduser().resolve()
-		if not candidate.exists():
-			raise ArtifactUploadError(f"File server config does not exist: {candidate}")
-		return candidate
-
-	if DEFAULT_CONFIG_PATH.exists():
-		return DEFAULT_CONFIG_PATH
-	if DEFAULT_CONFIG_EXAMPLE_PATH.exists():
-		return DEFAULT_CONFIG_EXAMPLE_PATH
-	return None
+	try:
+		return resolve_buildtools_config_path(
+			config_path,
+			env_var_names=("ARTIFACT_FILE_SERVER_CONFIG", "ARTIFACT_SERVER_CONFIG"),
+		)
+	except BuildToolsConfigError as exc:
+		raise ArtifactUploadError(str(exc)) from exc
 
 
 def get_config_section(config_data: dict[str, Any], section_name: str) -> dict[str, Any]:
 	"""安全读取 TOML 二级配置表。"""
-	section = config_data.get(section_name, {}) if isinstance(config_data, dict) else {}
-	if section in (None, ""):
-		return {}
-	if not isinstance(section, dict):
-		raise ArtifactUploadError(f"Config section must be a TOML table: {section_name}")
-	return section
+	try:
+		return shared_get_config_section(config_data, section_name)
+	except BuildToolsConfigError as exc:
+		raise ArtifactUploadError(str(exc)) from exc
 
 
 def get_file_server_section(config_data: dict[str, Any]) -> dict[str, Any]:
@@ -354,7 +305,7 @@ def normalize_base_url(base_url: str) -> str:
 
 
 def resolve_base_url(
-	file_server_section: dict[str, Any],
+	file_server_config: BuildToolsFileServerConfig,
 	*,
 	server_url: str | None,
 ) -> str:
@@ -376,24 +327,24 @@ def resolve_base_url(
 	if env_server_url:
 		return normalize_base_url(env_server_url)
 
-	configured_base_url = str(file_server_section.get("base_url") or "").strip()
+	configured_base_url = file_server_config.base_url or ""
 	if configured_base_url:
 		return normalize_base_url(configured_base_url)
 
 	host = (
 		os.environ.get("ARTIFACT_FILE_SERVER_IP", "").strip()
 		or os.environ.get("ARTIFACT_FILE_SERVER_HOST", "").strip()
-		or str(file_server_section.get("ip") or file_server_section.get("host") or "").strip()
+		or (file_server_config.host or "")
 		or "127.0.0.1"
 	)
 	port = (
 		os.environ.get("ARTIFACT_FILE_SERVER_PORT", "").strip()
-		or str(file_server_section.get("port") or "").strip()
+		or (str(file_server_config.port) if file_server_config.port is not None else "")
 		or "20001"
 	)
 	scheme = (
 		os.environ.get("ARTIFACT_FILE_SERVER_SCHEME", "").strip()
-		or str(file_server_section.get("scheme") or "").strip()
+		or (file_server_config.scheme or "")
 		or "http"
 	)
 
@@ -404,7 +355,7 @@ def resolve_base_url(
 
 
 def resolve_token(
-	file_server_section: dict[str, Any],
+	file_server_config: BuildToolsFileServerConfig,
 	*,
 	token: str | None,
 ) -> str | None:
@@ -424,21 +375,20 @@ def resolve_token(
 		if parsed_tokens:
 			return parsed_tokens[0]
 
-	configured_token = str(file_server_section.get("token") or "").strip()
+	configured_token = file_server_config.token or ""
 	if configured_token:
 		return configured_token
 
-	parsed_tokens = parse_token_values(file_server_section.get("tokens"))
+	parsed_tokens = file_server_config.tokens
 	if parsed_tokens:
 		return parsed_tokens[0]
 	return None
 
 
 def resolve_chunk_size_bytes(
-	file_server_section: dict[str, Any],
+	configured_value: int | None,
 	*,
 	env_name: str,
-	config_key: str,
 	default_value: int,
 ) -> int:
 	"""读取块大小配置。"""
@@ -446,9 +396,8 @@ def resolve_chunk_size_bytes(
 	if raw_value:
 		return int(raw_value) * 1024
 
-	configured = file_server_section.get(config_key)
-	if configured is not None:
-		return int(configured) * 1024
+	if configured_value is not None:
+		return int(configured_value) * 1024
 
 	return default_value
 
@@ -466,29 +415,32 @@ def resolve_file_server_settings(
 	2. 再从 BuildTools 全局配置里把“客户端访问地址”“鉴权 token”“上传块大小”统一解出来。
 	3. 最终返回一个可复用的 settings，供多个上传动作共享。
 	"""
-	resolved_config_path = resolve_optional_config_path(config_path)
-	config_data = load_toml_file(resolved_config_path) if resolved_config_path else {}
-	file_server_section = get_file_server_section(config_data)
+	try:
+		external_config = load_buildtools_external_config(
+			config_path=config_path,
+			env_var_names=("ARTIFACT_FILE_SERVER_CONFIG", "ARTIFACT_SERVER_CONFIG"),
+		)
+	except BuildToolsConfigError as exc:
+		raise ArtifactUploadError(str(exc)) from exc
 
-	base_url = resolve_base_url(file_server_section, server_url=server_url)
-	resolved_token = resolve_token(file_server_section, token=token)
+	file_server_config = external_config.file_server
+	base_url = resolve_base_url(file_server_config, server_url=server_url)
+	resolved_token = resolve_token(file_server_config, token=token)
 	upload_chunk_size_bytes = resolve_chunk_size_bytes(
-		file_server_section,
+		file_server_config.upload_chunk_size_kb,
 		env_name="ARTIFACT_FILE_SERVER_CHUNK_SIZE_KB",
-		config_key="upload_chunk_size_kb",
 		default_value=DEFAULT_UPLOAD_CHUNK_SIZE_BYTES,
 	)
 	hash_chunk_size_bytes = resolve_chunk_size_bytes(
-		file_server_section,
+		file_server_config.hash_chunk_size_kb,
 		env_name="ARTIFACT_FILE_SERVER_HASH_CHUNK_SIZE_KB",
-		config_key="hash_chunk_size_kb",
 		default_value=DEFAULT_HASH_CHUNK_SIZE_BYTES,
 	)
 
 	return FileServerClientSettings(
 		base_url=base_url,
 		token=resolved_token,
-		config_path=resolved_config_path,
+		config_path=external_config.config_path,
 		upload_chunk_size_bytes=upload_chunk_size_bytes,
 		hash_chunk_size_bytes=hash_chunk_size_bytes,
 	)
@@ -1212,7 +1164,7 @@ def parse_cli_args() -> argparse.Namespace:
 	parser.add_argument(
 		"--server-url",
 		default=None,
-		help="Optional file server base URL. Defaults to local fileserver.toml or ARTIFACT_FILE_SERVER_URL.",
+		help="Optional file server base URL. Defaults to buildtools.toml artifact_file_server settings or ARTIFACT_FILE_SERVER_URL.",
 	)
 	parser.add_argument(
 		"--token",
@@ -1222,7 +1174,7 @@ def parse_cli_args() -> argparse.Namespace:
 	parser.add_argument(
 		"--config",
 		default=None,
-		help="Optional path to BuildTools global config TOML.",
+		help="Optional path to BuildTools global config TOML. Also supports BUILDTOOLS_CONFIG for a shared override.",
 	)
 	parser.add_argument(
 		"--overwrite",

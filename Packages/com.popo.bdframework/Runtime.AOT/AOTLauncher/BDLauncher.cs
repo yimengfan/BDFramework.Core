@@ -9,9 +9,13 @@ namespace BDFramework
 {
 
     /// <summary>
-    ///  1.全局这里作为启动器 =>加载默认的 热更.dll。
-    ///  
+    /// 启动场景里的第一阶段运行时入口。
+    /// 该组件负责建立启动器单例、保存构建阶段写回的母包版本与配置文本，并在首场景启动后装载 AOT 元数据和热更程序集。
     /// </summary>
+    /// <remarks>
+    /// 业务真正进入框架主体前，还需要在合适时机显式调用 <c>BDLauncherBridge.Launch()</c> 或 <c>BDLauncherHotfix.Launch()</c>。
+    /// 典型时序是：启动场景挂载 <c>BDLauncher</c>，更新页完成资源校验后再调用 Bridge 或 Facade 入口。
+    /// </remarks>
     public partial class BDLauncher : MonoBehaviour
     {
         private static readonly string Tag = "Launch";
@@ -31,21 +35,37 @@ namespace BDFramework
 
         #region 对外的生命周期
 
+        /// <summary>
+        /// 供启动器转发常规帧循环的公共委托。
+        /// </summary>
         public delegate void GameLauncherDelegate();
 
+        /// <summary>
+        /// 启动器转发给业务层的 Update 生命周期回调。
+        /// </summary>
         static public GameLauncherDelegate OnUpdate { get; set; }
+
+        /// <summary>
+        /// 启动器转发给业务层的 LateUpdate 生命周期回调。
+        /// </summary>
         static public GameLauncherDelegate OnLateUpdate { get; set; }
 
         #endregion
         
+        /// <summary>
+        /// 当前启动场景中的启动器单例。
+        /// </summary>
         static public BDLauncher Inst { get; private set; }
 
-        // Use this for initialization
+        /// <summary>
+        /// 注册启动器单例并校验构建时写回的基础配置。
+        /// </summary>
         private void Awake()
         {
+            // Phase 1: 建立运行时单例并验证场景里是否挂好了配置资源。
             Inst = this;
  
-            //游戏配置
+            // 游戏配置
             if (this.ConfigText)
             {
                 Debug.Log("配置:" + this.ConfigText.name);
@@ -56,7 +76,7 @@ namespace BDFramework
             }
 
 
-            //添加不删除的组件
+            // Phase 2: 启动场景完成后保持启动器常驻，后续更新页和业务场景都复用同一个入口。
             if (Application.isPlaying)
             {
                 DontDestroyOnLoad(this);
@@ -64,27 +84,34 @@ namespace BDFramework
         }
 
         /// <summary>
-        /// 启动
+        /// 在首场景启动后装载 AOT 元数据与热更程序集。
         /// </summary>
         private void Start()
         {
+            // Phase 1: 打印启动日志，便于区分“程序集装载阶段”和“框架主体启动阶段”。
             Debug.Log("------------------AOT Start-----------------------");
-            //启动 aot 脚本
+
+            // Phase 2: 只负责把 AOT 与热更代码装进当前进程，不在这里直接启动资源和管理器系统。
             ScriptLoderAOT.Load(ClientVersion);
+
+            // Phase 3: 记录装载完成；真正的业务启动仍等待 BDLauncherBridge.Launch()。
             Debug.Log("------------------AOT Complete！ -----------------------");
-            //启动 aot 脚本
         }
 
 
         #region 生命周期
 
-        //普通帧循环
+        /// <summary>
+        /// 把普通帧循环转发给外部注册的启动器监听者。
+        /// </summary>
         private void Update()
         {
             OnUpdate?.Invoke();
         }
 
-        //更快的帧循环
+        /// <summary>
+        /// 把 LateUpdate 帧循环转发给外部注册的启动器监听者。
+        /// </summary>
         private void LateUpdate()
         {
             OnLateUpdate?.Invoke();
@@ -93,6 +120,9 @@ namespace BDFramework
 
         #endregion
 
+        /// <summary>
+        /// 在应用退出时转发框架收尾逻辑。
+        /// </summary>
         void OnApplicationQuit()
         {
             QuitFramework();
@@ -101,12 +131,13 @@ namespace BDFramework
      
 
         /// <summary>
-        /// 退出框架
+        /// 在 Editor 退出路径里转发运行时桥接层的收尾逻辑。
         /// </summary>
         [Conditional("UNITY_EDITOR")]
         public void QuitFramework()
         {
-
+            // 框架基础设施层在这里使用轻量反射查找 Bridge，
+            // 是为了兼容历史入口名与不同程序集组织方式，避免把启动器重新耦合回旧分支实现。
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblies)
             {

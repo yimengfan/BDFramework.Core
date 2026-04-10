@@ -24,10 +24,7 @@ from Common.artifact_uploader import (
     resolve_file_server_settings,
     upload_table,
 )
-
-
-REMOTE_TEST_BUILD_NUMBER = "remote-smoke-tests"
-REMOTE_TEST_FILENAME = "artifact_uploader_remote_test.txt"
+from Common.buildtools_config import load_buildtools_external_config
 
 
 def fetch_remote_json(
@@ -64,6 +61,7 @@ def fetch_remote_directory_listing(
     token: str | None,
     prefix: str,
     recursive: bool,
+    timeout_seconds: float = 20.0,
 ) -> tuple[int, dict[str, object]]:
     """Fetch a directory listing from the remote file server listing API."""
     query = urlencode(
@@ -75,6 +73,7 @@ def fetch_remote_directory_listing(
     return fetch_remote_json(
         f"{base_url.rstrip('/')}/api/files?{query}",
         token=token,
+        timeout_seconds=timeout_seconds,
     )
 
 
@@ -83,11 +82,13 @@ def fetch_remote_metadata(
     base_url: str,
     token: str | None,
     remote_path: str,
+    timeout_seconds: float = 20.0,
 ) -> tuple[int, dict[str, object]]:
     """Fetch metadata for a single remote artifact path."""
     return fetch_remote_json(
         f"{base_url.rstrip('/')}/api/files/{quote(remote_path, safe='/')}",
         token=token,
+        timeout_seconds=timeout_seconds,
     )
 
 
@@ -134,6 +135,7 @@ def wait_for_remote_list_entry(
             token=token,
             prefix=prefix,
             recursive=False,
+            timeout_seconds=timeout_seconds,
         )
         last_status = status_code
         last_payload = payload
@@ -155,19 +157,41 @@ def wait_for_remote_list_entry(
 
 
 @pytest.fixture
-def remote_file_server_settings(request):
-    """Provide configured remote file server settings for smoke tests or skip when disabled."""
+def buildtools_external_config(request):
+    """Load the shared BuildTools external-integration config for remote uploader smoke tests."""
     if not request.config.getoption("--run-remote-artifact-tests"):
         pytest.skip(
             "remote artifact integration tests are disabled by default; "
             "pass --run-remote-artifact-tests to enable real uploads"
         )
-    return resolve_file_server_settings()
+    return load_buildtools_external_config(
+        env_var_names=("ARTIFACT_FILE_SERVER_CONFIG", "ARTIFACT_SERVER_CONFIG"),
+    )
+
+
+@pytest.fixture
+def remote_artifact_test_config(buildtools_external_config):
+    """Provide typed remote smoke-test config or skip when the shared BuildTools config disables it."""
+    config = buildtools_external_config.remote_artifact_test
+    if not config.enabled:
+        pytest.skip(
+            "remote artifact integration tests require [tests.remote_artifact].enabled = true "
+            "in DevOps/CI/BuildTools/buildtools.toml"
+        )
+    return config
+
+
+@pytest.fixture
+def remote_file_server_settings(buildtools_external_config, remote_artifact_test_config):
+    """Provide configured remote file server settings after the remote test gate has been enabled."""
+    del remote_artifact_test_config
+    return resolve_file_server_settings(config_path=buildtools_external_config.config_path)
 
 
 @pytest.mark.remote_artifact
 def test_remote_upload_is_visible_in_remote_directory_listing(
     tmp_path: Path,
+    remote_artifact_test_config,
     remote_file_server_settings,
 ) -> None:
     """Verify uploaded artifacts become visible through listing, metadata, and download APIs."""
@@ -176,24 +200,25 @@ def test_remote_upload_is_visible_in_remote_directory_listing(
     health_status, health_payload = fetch_remote_json(
         f"{settings.base_url.rstrip('/')}/healthz",
         token=settings.token,
+        timeout_seconds=remote_artifact_test_config.request_timeout_seconds,
     )
     assert health_status == 200
     assert health_payload.get("status") == "ok"
 
     run_id = f"{datetime.now(timezone.utc):%Y%m%d-%H%M%S}-{uuid4().hex[:8]}"
-    remote_relative_path = f"{run_id}/{REMOTE_TEST_FILENAME}"
+    remote_relative_path = f"{run_id}/{remote_artifact_test_config.filename}"
     expected_remote_path = build_artifact_remote_path(
         ArtifactType.TABLE,
-        build_number=REMOTE_TEST_BUILD_NUMBER,
+        build_number=remote_artifact_test_config.build_number,
         remote_relative_path=remote_relative_path,
     )
     expected_list_prefix = build_artifact_remote_path(
         ArtifactType.TABLE,
-        build_number=REMOTE_TEST_BUILD_NUMBER,
+        build_number=remote_artifact_test_config.build_number,
         remote_relative_path=run_id,
     )
 
-    local_file = tmp_path / REMOTE_TEST_FILENAME
+    local_file = tmp_path / remote_artifact_test_config.filename
     content = (
         f"artifact_uploader remote smoke test\n"
         f"run_id={run_id}\n"
@@ -210,7 +235,7 @@ def test_remote_upload_is_visible_in_remote_directory_listing(
     try:
         upload_results = upload_table(
             local_file,
-            build_number=REMOTE_TEST_BUILD_NUMBER,
+            build_number=remote_artifact_test_config.build_number,
             remote_relative_path=remote_relative_path,
             settings=settings,
             overwrite=False,
@@ -235,6 +260,8 @@ def test_remote_upload_is_visible_in_remote_directory_listing(
         token=settings.token,
         prefix=expected_list_prefix,
         expected_remote_path=expected_remote_path,
+        timeout_seconds=remote_artifact_test_config.listing_timeout_seconds,
+        poll_interval_seconds=remote_artifact_test_config.poll_interval_seconds,
     )
     assert list_entry["type"] == "file"
     assert list_entry["size"] == len(content)
@@ -246,6 +273,7 @@ def test_remote_upload_is_visible_in_remote_directory_listing(
         base_url=settings.base_url,
         token=settings.token,
         remote_path=expected_remote_path,
+        timeout_seconds=remote_artifact_test_config.request_timeout_seconds,
     )
     assert metadata_status == 200
     assert metadata_payload["path"] == expected_remote_path
@@ -258,6 +286,7 @@ def test_remote_upload_is_visible_in_remote_directory_listing(
         base_url=settings.base_url,
         token=settings.token,
         remote_path=expected_remote_path,
+        timeout_seconds=remote_artifact_test_config.request_timeout_seconds,
     )
     assert downloaded_content == content
     assert hashlib.sha256(downloaded_content).hexdigest() == sha256

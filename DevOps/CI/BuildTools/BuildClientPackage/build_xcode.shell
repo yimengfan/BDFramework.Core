@@ -283,6 +283,10 @@ resolve_buildtools_config_path() {
 		raw_candidate="$config_path_override"
 	elif [[ -n "${BUILD_XCODE_CONFIG:-}" ]]; then
 		raw_candidate="${BUILD_XCODE_CONFIG}"
+	elif [[ -n "${BUILDTOOLS_CONFIG:-}" ]]; then
+		raw_candidate="${BUILDTOOLS_CONFIG}"
+	elif [[ -n "${BUILD_TOOLS_CONFIG:-}" ]]; then
+		raw_candidate="${BUILD_TOOLS_CONFIG}"
 	fi
 
 	if [[ -n "$raw_candidate" ]]; then
@@ -318,91 +322,20 @@ load_buildtools_config_pairs() {
 	fi
 	[[ -n "$python_cmd" ]] || fail "python3 or python is required to read buildtools config: ${buildtools_config_path}"
 
-	"$python_cmd" - "$buildtools_config_path" <<'PY'
+	"$python_cmd" - "$BUILD_TOOLS_ROOT" "$buildtools_config_path" <<'PY'
 import sys
 from pathlib import Path
 
+build_tools_root = Path(sys.argv[1]).resolve()
+config_path = Path(sys.argv[2]).resolve()
+if str(build_tools_root) not in sys.path:
+	sys.path.insert(0, str(build_tools_root))
 
-def parse_simple_value(raw: str):
-    raw = raw.strip()
-    if raw.startswith('"') and raw.endswith('"'):
-        return bytes(raw[1:-1], 'utf-8').decode('unicode_escape')
-    if raw.startswith("'") and raw.endswith("'"):
-        return raw[1:-1]
-    lowered = raw.lower()
-    if lowered == 'true':
-        return True
-    if lowered == 'false':
-        return False
-    try:
-        return int(raw)
-    except ValueError:
-        pass
-    try:
-        return float(raw)
-    except ValueError:
-        pass
-    return raw
+from Common.buildtools_config import iter_ios_xcode_shell_pairs, load_buildtools_external_config
 
-
-def load_toml(path: Path):
-    try:
-        import tomllib  # type: ignore
-    except ModuleNotFoundError:
-        tomllib = None
-
-    if tomllib is not None:
-        with path.open('rb') as handle:
-            data = tomllib.load(handle)
-        if not isinstance(data, dict):
-            raise SystemExit(f'buildtools config root must be a table: {path}')
-        return data
-
-    root = {}
-    current_table = root
-    for raw_line in path.read_text(encoding='utf-8').splitlines():
-        line = raw_line.split('#', 1)[0].strip()
-        if not line:
-            continue
-        if line.startswith('[') and line.endswith(']'):
-            section_name = line[1:-1].strip()
-            current_table = root.setdefault(section_name, {})
-            continue
-        if '=' not in line:
-            continue
-        key, value = line.split('=', 1)
-        if not isinstance(current_table, dict):
-            continue
-        current_table[key.strip()] = parse_simple_value(value)
-    return root
-
-
-config_path = Path(sys.argv[1])
-config_data = load_toml(config_path)
-section = config_data.get('ios_xcode', {})
-if section in (None, ''):
-    section = {}
-if not isinstance(section, dict):
-    raise SystemExit('buildtools [ios_xcode] section must be a TOML table')
-
-supported_keys = (
-	'signing_style',
-	'team_id',
-	'bundle_identifier',
-	'code_sign_identity',
-	'provisioning_profile_specifier',
-	'provisioning_profile',
-)
-
-for key in supported_keys:
-    value = section.get(key)
-    if value is None:
-        continue
-    if isinstance(value, bool):
-        value = '1' if value else '0'
-    else:
-        value = str(value)
-    sys.stdout.write(f'{key}\t{value}\n')
+config = load_buildtools_external_config(config_path=config_path)
+for key, value in iter_ios_xcode_shell_pairs(config.ios_xcode):
+	sys.stdout.write(f'{key}\t{value}\n')
 PY
 }
 

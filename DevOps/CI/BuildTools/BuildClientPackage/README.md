@@ -131,6 +131,8 @@ Unity 导出 iOS Xcode 工程后，会固定调用 `DevOps/CI/BuildTools/BuildCl
 - 环境变量
 - 命令行参数
 
+`[ios_xcode]` 现在归类为 external signing config，统一通过 `DevOps/CI/BuildTools/Common/buildtools_config.py` 读取；`build_xcode.shell` 不再维护独立的 TOML 解析逻辑。
+
 如果你们团队希望把常用签名参数固化到仓库里，推荐只把签名信息写到 `buildtools.toml` 的 `[ios_xcode]` 段；其余构建行为继续使用脚本默认值，必要时再通过环境变量或命令行覆盖。例如：
 
 ```toml
@@ -144,7 +146,7 @@ provisioning_profile_specifier = "Demo AdHoc"
 
 常用覆盖项既支持环境变量，也支持直接执行脚本时传命令行参数：
 
-- `BUILD_XCODE_CONFIG` / `--config`
+- `BUILDTOOLS_CONFIG` / `BUILD_XCODE_CONFIG` / `--config`
 - `BUILD_XCODE_PROJECT_DIR` / `--project-dir`
 - `BUILD_XCODE_SCHEME` / `--scheme`
 - `BUILD_XCODE_CONFIGURATION` / `--configuration`

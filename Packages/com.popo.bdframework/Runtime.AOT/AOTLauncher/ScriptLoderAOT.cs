@@ -8,30 +8,34 @@ using UnityEngine;
 namespace BDFramework
 {
     /// <summary>
-    /// 脚本加载器
+    /// AOT 启动阶段的程序集加载器。
+    /// 该类负责在 Player 环境先装载 HybridCLR AOT 补充元数据，再按 persistent -&gt; streaming 的顺序加载热更程序集。
     /// </summary>
+    /// <remarks>
+    /// 典型调用点是启动场景里的 <c>BDLauncher.Start()</c>；它只负责装载程序集，不负责资源和管理器初始化。
+    /// </remarks>
     static public class ScriptLoderAOT
     {
         /// <summary>
-        /// aot patch路径
+        /// HybridCLR AOT 补充元数据目录。
+        /// 该目录由构建流程写入母包，运行时启动阶段在真正加载热更程序集前消费它。
         /// </summary>
         static readonly public string HYCLR_AOT_PATCH_PATH = $"script/aot_patch";
         /// <summary>
-        /// 热更dll定义
+        /// 热更程序集目录。
+        /// 构建流程会把热更 DLL 输出到该目录；运行时优先从 persistent 读取，缺失时再回退到 StreamingAssets。
         /// </summary>
         static readonly public string HOTFIX_DLL_PATH = $"script/hotfix";
         /// <summary>
-        /// 热更代码后缀
+        /// 热更程序集在包内使用的文件扩展名。
         /// </summary>
         static readonly public string HOT_DLL_EXTENSION = ".zlua.bytes";
 
 
         /// <summary>
-        /// 脚本加载入口
+        /// AOT 启动阶段的程序集加载总入口。
         /// </summary>
-        /// <param name="loadPathType"></param>
-        /// <param name="runMode"></param>
-        /// <param name="mainProjectTypes">UPM隔离了dll,需要手动传入</param>
+        /// <param name="clientVersion">当前母包版本号，用于定位 persistent 下的热更 DLL 目录。</param>
         static public void Load(string clientVersion)
         {
             if (Application.isEditor)
@@ -47,17 +51,12 @@ namespace BDFramework
 
 
         /// <summary>
-        /// 加载热更代码
-        /// first =>  persistent/{platform}/{version_num}/xxxx
-        /// second =>  streaming/{platform}/xxx
+        /// 在 Player 环境加载 HybridCLR 元数据和热更程序集。
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="copyto"></param>
-        /// <returns></returns>
+        /// <param name="clientVersion">当前母包版本号，用于解析 persistent 目录下的热更资源根。</param>
         static public void LoadHotfixDLL(string clientVersion)
         {
-            /// first =>  persistent/{platform}/{version_num}/xxxx
-            /// second =>  streaming/{platform}/xxx
+            // Phase 1: 先计算 persistent 与 StreamingAssets 的双寻址根目录。
             var platform = GetPlatformLoadPath();
             var firstLoadDir = Path.Combine(Application.persistentDataPath, clientVersion, platform);
 #if UNITY_ANDROID
@@ -67,11 +66,10 @@ namespace BDFramework
 #endif
 
 
-            //--------------------元数据DLL加载------------------------
-            //加载AOT Patcth 一定在母包Streaming内 ,没有 version 目录
+            // Phase 2: AOT 补充元数据始终从母包 StreamingAssets 读取，不走版本目录。
             var aotPatchRoot = Path.Combine(GetPlatformLoadPath(), HYCLR_AOT_PATCH_PATH);
             Debug.Log($"---------------【AOT.Load】HYCLR执行, Dll路径:{aotPatchRoot}---------------");
-            //
+
             var aotPatchDlls = BetterStreamingAssets.GetFiles(aotPatchRoot, "*" + HOT_DLL_EXTENSION);
             foreach (var path in aotPatchDlls)
             {
@@ -82,7 +80,7 @@ namespace BDFramework
             }
 
 
-            //---------------------热更DLL加载-多寻址------------------------
+            // Phase 3: 优先加载 persistent 中已经下载完成的热更 DLL，保证版本控制生效。
             var hotfixdllRootPath = Path.Combine(firstLoadDir, HOTFIX_DLL_PATH);
             Debug.Log($"【AOT.Load】HCLR执行, Dll路径:{hotfixdllRootPath}");
             string[] hotfixDlls = null;
@@ -102,7 +100,7 @@ namespace BDFramework
             }
             else
             {
-                //streaming加载
+                // Phase 4: 若 persistent 不存在热更 DLL，则回退到母包 StreamingAssets 里的默认程序集。
 
 
 #if UNITY_ANDROID
@@ -135,10 +133,9 @@ namespace BDFramework
         }
 
         /// <summary>
-        /// 从 BApplication 复制的
+        /// 解析当前运行平台在包体资源目录里的标准路径名。
         /// </summary>
-        /// <param name="platform"></param>
-        /// <returns></returns>
+        /// <returns>例如 <c>android</c>、<c>ios</c>、<c>windows</c> 或 <c>osx</c>。</returns>
         public static string GetPlatformLoadPath()
         {
             RuntimePlatform platform = RuntimePlatform.WindowsEditor;

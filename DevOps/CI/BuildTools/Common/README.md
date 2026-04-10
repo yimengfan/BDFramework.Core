@@ -6,6 +6,7 @@
 
 ## 文件说明
 
+- `buildtools_config.py`：BuildTools 外部集成配置的统一术语、TOML 读取和 typed dataclass 入口
 - `artifact_uploader.py`：上传到 `/.test-DevOps/GameFileServer/` 的公共模块
 - `client_resource_artifacts.py`：`ClientRes_Code / ClientRes_Assetbundle / ClientRes_Table` 的隔离输出、产物筛选和上传摘要 helper
 - `client_resource_flow.py`：`ClientRes_*` 三类任务复用的 BatchMode 参数、日志和执行主流程
@@ -35,12 +36,22 @@
   - `ClientRes_Table/{buildnum}/xxx`
 2. 既支持上传单文件，也支持把整个目录递归上传。
 3. 默认优先读取 `DevOps/CI/BuildTools/buildtools.toml`，整个 BuildTools 共用同一份配置。
-4. 支持单独配置“客户端访问文件服务器的 IP”，避免把服务端 `0.0.0.0` 监听地址误当成可访问地址。
-5. 上传函数支持进度回调，方便 CI 在长时间上传目录时持续输出阶段日志。
-6. `ClientRes_*` 共享 helper 必须先清理隔离输出目录，再筛选当前类型需要的文件，避免把历史构建残留或其他类型产物重复上传。
-7. `ClientRes_*` 对应的 Unity BatchMode 命令必须显式传入 `-buildTarget` 到目标平台，不能在 Editor 内切换平台，也不能依赖 TeamCity agent 上一次残留的平台状态。
-8. `ClientRes_*` 共享 flow / artifact helper 的注释和日志规范与 `BuildClientPackage` 保持一致：文件头说明职责边界，关键函数说明为什么这样做，CI 日志按 `Step n/m` 输出宿主系统、目标平台、clientVersion、Unity 路径、executeMethod 和日志路径。
-7. `ClientRes_Code / ClientRes_Assetbundle / ClientRes_Table` 上传成功后，会同步刷新 `clientRes_{platform}/version.info`，供运行时的 DevOps 文件服务器版控协议读取三段构建号。
+4. 业务无关的 external service / signing / test config 必须先进入 `buildtools.toml`，再由 `Common/buildtools_config.py` 暴露 typed 配置结构给调用方。
+5. 支持单独配置“客户端访问文件服务器的 IP”，避免把服务端 `0.0.0.0` 监听地址误当成可访问地址。
+6. 上传函数支持进度回调，方便 CI 在长时间上传目录时持续输出阶段日志。
+7. `ClientRes_*` 共享 helper 必须先清理隔离输出目录，再筛选当前类型需要的文件，避免把历史构建残留或其他类型产物重复上传。
+8. `ClientRes_*` 对应的 Unity BatchMode 命令必须显式传入 `-buildTarget` 到目标平台，不能在 Editor 内切换平台，也不能依赖 TeamCity agent 上一次残留的平台状态。
+9. `ClientRes_*` 共享 flow / artifact helper 的注释和日志规范与 `BuildClientPackage` 保持一致：文件头说明职责边界，关键函数说明为什么这样做，CI 日志按 `Step n/m` 输出宿主系统、目标平台、clientVersion、Unity 路径、executeMethod 和日志路径。
+10. `ClientRes_Code / ClientRes_Assetbundle / ClientRes_Table` 上传成功后，会同步刷新 `clientRes_{platform}/version.info`，供运行时的 DevOps 文件服务器版控协议读取三段构建号。
+
+## 外部集成配置术语
+
+- external integration config：BuildTools 里所有业务无关的外部系统配置总称。
+- external service config：文件服务器、CI 服务器这类外部服务的地址、协议、端口、鉴权。
+- external signing config：iOS Xcode 这类外部工具链的签名/证书元数据。
+- external test config：会访问外部系统的 smoke test / 集成测试开关、命名和超时参数。
+- 这些配置统一放在 `DevOps/CI/BuildTools/buildtools.toml`，统一通过 `Common/buildtools_config.py` 读取；现有上传模块和 `build_xcode.shell` 都已经接到这套入口上。
+- `.github/hooks/buildtools-config-guard.json` 会阻止 agent 在其他 BuildTools 源文件里重新引入 `tomllib`、手写 `load_toml` 或直接读取 `[artifact_file_server]` / `[ios_xcode]` / `[ci_server]` / `[tests.remote_artifact]`。
 
 ## 模块加载规范
 
@@ -91,6 +102,14 @@ base_url = "http://192.168.0.240:20001"
 4. `ARTIFACT_FILE_SERVER_IP` / `buildtools.toml -> [artifact_file_server].ip`
 5. 回退到 `127.0.0.1:20001`
 
+全局配置路径优先级：
+
+1. 调用方显式传入 `config_path` / `--config`
+2. 环境变量 `BUILDTOOLS_CONFIG`
+3. 兼容旧入口的模块级环境变量，例如 `ARTIFACT_FILE_SERVER_CONFIG`、`BUILD_XCODE_CONFIG`
+4. `DevOps/CI/BuildTools/buildtools.toml`
+5. `DevOps/CI/BuildTools/buildtools.toml.example`
+
 ## 给其他模块调用
 
 如果调用脚本位于 `DevOps/CI/BuildTools/` 的子目录，按上面的模块加载规范导入：
@@ -118,10 +137,13 @@ upload_client_package(
 默认会读取：
 
 - `DevOps/CI/BuildTools/buildtools.toml`
+- 也支持统一环境变量覆盖：`BUILDTOOLS_CONFIG`
 - 如果正式配置还没生成，则回退到 `DevOps/CI/BuildTools/buildtools.toml.example`
 
 公共函数：
 
+- `load_buildtools_external_config()`：统一读取 external service / signing / test config dataclass
+- `iter_ios_xcode_shell_pairs()`：把 `[ios_xcode]` 的共享签名配置转换成 shell 可消费的键值对
 - `resolve_file_server_settings()`：解析服务地址、token、chunk size
 - `build_artifact_remote_root()`：只生成远端根目录
 - `build_artifact_remote_path()`：生成完整远端路径
@@ -178,11 +200,12 @@ python3 DevOps/CI/BuildTools/Common/artifact_uploader.py \
 - `--remote-relative-path`：为单文件指定远端文件名，或为目录指定额外子目录
 - `--server-url`：直接覆盖服务地址
 - `--token`：直接覆盖 Bearer Token
-- `--config`：显式指定 `fileserver.toml`
+- `--config`：显式指定 `buildtools.toml`
 - `--overwrite true|false`：控制覆盖策略
 
 环境变量补充：
 
+- `BUILDTOOLS_CONFIG`：统一覆盖 BuildTools 外部集成配置文件路径
 - `ARTIFACT_FILE_SERVER_URL`：直接指定完整 URL
 - `ARTIFACT_FILE_SERVER_IP`：只指定客户端访问 IP
 - `ARTIFACT_FILE_SERVER_PORT`
@@ -212,8 +235,9 @@ python -m pytest -q -s DevOps/CI/BuildTools/tests/test_artifact_uploader_remote.
 
 说明：
 
-- 这个测试会读取 `DevOps/CI/BuildTools/buildtools.toml`，并真实上传文件到当前配置的远端服务器。
-- 测试会把文件写到 `ClientRes_Table/remote-smoke-tests/<run-id>/artifact_uploader_remote_test.txt`。
+- 这个测试会读取 `DevOps/CI/BuildTools/buildtools.toml` 的 `[artifact_file_server]` 和 `[tests.remote_artifact]`，并真实上传文件到当前配置的远端服务器。
+- 默认只有同时满足 `pytest --run-remote-artifact-tests` 和 `[tests.remote_artifact].enabled = true` 时才会真正访问远端服务器。
+- 测试会把文件写到 `ClientRes_Table/<build_number>/<run-id>/<filename>`，其中 `build_number` 和 `filename` 都来自 `[tests.remote_artifact]`。
 - 测试会轮询 `GET /api/files?prefix=...&recursive=false`，确认远程列表里已经出现该文件，并再次下载远端文件校验内容和 SHA256。
 - 某些已部署服务可能会在文件已落盘后仍返回 500；这个 smoke test 以“远程列表可见且下载内容一致”作为最终成功依据。
 - 文件服务器默认禁用 API 删除，所以这些 smoke test 产物不会自动清理；如果要清理，只能在运维机器上手工删除。

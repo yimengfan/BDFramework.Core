@@ -17,12 +17,12 @@ using UnityEngine;
 namespace BDFramework.ResourceMgr
 {
     /// <summary>
-    /// 文件服务器资源版控扩展（DevOps 模式）。
+    /// 文件服务器资源版控扩展。
     /// 流程固定为：读取共享三段版控文件、按 Code/AssetBundle/Table 分别求差异、下载差异资源、
     /// 合并本地元数据并清理旧资源，最后沿用老入口的状态回调返回结果。
     /// </summary>
     /// <remarks>
-    /// 这套逻辑通过显式文件服务器模式入口调用，不会被旧的 <c>UpdateAssets</c> / <c>GetServerSubPackageInfos</c> 隐式访问。
+    /// 这套逻辑当前通过 <c>WithDevOps</c> 后缀的显式入口暴露，不会被旧的 <c>UpdateAssets</c> / <c>GetServerSubPackageInfos</c> 隐式访问。
     /// 因此旧协议与文件服务器协议可以隔离维护，但都沿用相同的下载回调与结果回调约定。
     /// </remarks>
     /// <example>
@@ -464,6 +464,11 @@ namespace BDFramework.ResourceMgr
             return selectedAssets.Distinct().OrderBy(item => item.Id).ToList();
         }
 
+        /// <summary>
+        /// 尝试执行文件服务器协议总入口。
+        /// 该方法会先解析共享版控文件，再根据是否请求子包把流程分发到全量或子包协调方法。
+        /// </summary>
+        /// <returns><c>false</c> 表示当前服务器未启用文件服务器协议；<c>true</c> 表示已消费该请求并返回了结果。</returns>
         private async Task<bool> TryStartFileServerVersionControl(
             UpdateMode updateMode,
             string serverUrl,
@@ -471,6 +476,7 @@ namespace BDFramework.ResourceMgr
             Action<AssetItem, List<AssetItem>> onDownloadProccess,
             Action<RetStatus, string> onTaskEndCallback)
         {
+            // Phase 1: 读取共享版控入口，并根据远端结果或本地回退版本建立本次运行时上下文。
             var resolveResult = await ResolveFileServerVersionInfo(serverUrl);
             if (!resolveResult.IsFileServerProtocol)
             {
@@ -486,6 +492,7 @@ namespace BDFramework.ResourceMgr
                 return true;
             }
 
+            // Phase 2: 共享版控解析成功后，再按“全量 / 子包”两种入口分派到各自协调流程。
             LogFileServerFlow($"文件服务器版控解析成功 version={resolveResult.VersionInfo.RawValue} fallback={resolveResult.UsedLocalFallbackVersion}",
                 resolveResult.UsedLocalFallbackVersion ? Color.yellow : Color.green);
 
@@ -503,11 +510,17 @@ namespace BDFramework.ResourceMgr
             return true;
         }
 
+        /// <summary>
+        /// 尝试读取文件服务器协议下的子包配置列表。
+        /// 它会先解析共享版控，再从 Code / AssetBundle 组件里加载缓存或远端子包配置。
+        /// </summary>
+        /// <returns><c>false</c> 表示服务器未启用文件服务器协议；<c>true</c> 表示已经返回成功或失败结果。</returns>
         private async Task<bool> TryGetFileServerSubPackageInfos(
             string serverUrl,
             Action<Dictionary<string, string>> callback,
             Action<string> onError)
         {
+            // Phase 1: 共享版控入口决定当前应该读取哪一个构建号下的子包配置。
             var resolveResult = await ResolveFileServerVersionInfo(serverUrl);
             if (!resolveResult.IsFileServerProtocol)
             {
@@ -523,6 +536,7 @@ namespace BDFramework.ResourceMgr
                 return true;
             }
 
+            // Phase 2: 从组件上下文里取出子包配置，并统一映射回旧入口仍使用的 server_assets_subpack_xxx.info 名称。
             var loadResult = await LoadFileServerSubPackageConfigs(serverUrl, resolveResult, true);
             if (!string.IsNullOrEmpty(loadResult.Item1))
             {
@@ -545,6 +559,10 @@ namespace BDFramework.ResourceMgr
             return true;
         }
 
+        /// <summary>
+        /// 执行文件服务器协议的全量资源版控流程。
+        /// 主要阶段包括：组件元数据准备、差异资源计算、下载、package_build.info 合并、旧资源清理和最终校验。
+        /// </summary>
         private async Task ExecuteFileServerFullVersionControl(
             FileServerResolveResult resolveResult,
             UpdateMode updateMode,
@@ -561,6 +579,7 @@ namespace BDFramework.ResourceMgr
             LogFileServerFlow($"开始全量文件服务器版控 local={state.InstalledVersion} remote={remoteVersionInfo.RawValue} mode={updateMode}",
                 Color.cyan);
 
+            // Phase 1: 非修复模式下，如果三段版本完全一致，就直接结束，不重复计算差异资源。
             if (updateMode != UpdateMode.RepairFull && state.InstalledVersion == remoteVersionInfo.RawValue)
             {
                 BDebug.Log(LogTag,
@@ -573,6 +592,7 @@ namespace BDFramework.ResourceMgr
                 return;
             }
 
+            // Phase 2: 为 Code / AssetBundle / Table 逐个准备远端上下文，并缓存本地元数据副本。
             var componentContexts = new Dictionary<FileServerComponentKind, FileServerComponentContext>();
             foreach (var componentKind in FileServerManagedComponents)
             {
@@ -644,6 +664,7 @@ namespace BDFramework.ResourceMgr
             }
 
             LogFileServerFlow($"差异资源计算完成 downloadCount={downloadItems.Count}", Color.green);
+            // Phase 3: 下载差异资源，随后合并 package_build.info、清理旧文件并执行最终一致性校验。
             var downloadResult = await DownloadFileServerAssets(downloadItems, onDownloadProccess);
             if (downloadResult.Item1.Count > 0)
             {
@@ -691,6 +712,10 @@ namespace BDFramework.ResourceMgr
             onTaskEndCallback?.Invoke(downloadResult.Item2 ? RetStatus.SuccessNeedRestart : RetStatus.Success, null);
         }
 
+        /// <summary>
+        /// 执行文件服务器协议的子包资源版控流程。
+        /// 它只筛选子包声明里真正需要的 Code / AssetBundle / Table 资源，并把结果落盘到旧入口仍消费的子包配置文件。
+        /// </summary>
         private async Task ExecuteFileServerSubPackageVersionControl(
             FileServerResolveResult resolveResult,
             UpdateMode updateMode,
@@ -702,6 +727,8 @@ namespace BDFramework.ResourceMgr
             var normalizedPackageName = NormalizeFileServerSubPackageName(requestSubPackageName);
             LogFileServerFlow($"开始子包文件服务器版控 request={requestSubPackageName} normalized={normalizedPackageName} mode={updateMode}",
                 Color.cyan);
+
+            // Phase 1: 先读取子包配置定义，并把请求名规范化为统一比较格式。
             var subPackageConfigsResult = await LoadFileServerSubPackageConfigs(serverUrl, resolveResult, true);
             if (!string.IsNullOrEmpty(subPackageConfigsResult.Item1))
             {
@@ -733,6 +760,7 @@ namespace BDFramework.ResourceMgr
                 return;
             }
 
+            // Phase 2: 准备三类组件上下文，再按子包声明从全量清单里筛出真正需要的资源。
             var componentContexts = new Dictionary<FileServerComponentKind, FileServerComponentContext>();
             foreach (var componentKind in FileServerManagedComponents)
             {
@@ -789,6 +817,7 @@ namespace BDFramework.ResourceMgr
 
             LogFileServerFlow($"子包差异资源计算完成 package={subPackageConfig.PackageName} downloadCount={downloadItems.Count}", Color.green);
 
+            // Phase 3: 下载子包差异资源，回写旧入口消费的子包文件，并同步本地状态缓存。
             var downloadResult = await DownloadFileServerAssets(downloadItems, onDownloadProccess);
             if (downloadResult.Item1.Count > 0)
             {
@@ -824,6 +853,9 @@ namespace BDFramework.ResourceMgr
             onTaskEndCallback?.Invoke(downloadResult.Item2 ? RetStatus.SuccessNeedRestart : RetStatus.Success, null);
         }
 
+        /// <summary>
+        /// 解析文件服务器共享版控入口，并在远端不可用时回退到本地缓存状态。
+        /// </summary>
         private async Task<FileServerResolveResult> ResolveFileServerVersionInfo(string serverUrl)
         {
             var runtimePlatform = BApplication.RuntimePlatform;
@@ -835,6 +867,7 @@ namespace BDFramework.ResourceMgr
             var state = LoadFileServerState(cacheDir);
             var versionUrl = BuildFileServerVersionManifestUrl(serverUrl, platformPath);
 
+            // Phase 1: 优先请求远端共享版控文件，确认当前服务器是否启用了文件服务器协议。
             LogFileServerFlow($"开始请求共享版控文件 url={versionUrl}", Color.cyan);
 
             var manifestDownloadResult = await DownloadTextWithRetry(versionUrl);
@@ -869,6 +902,7 @@ namespace BDFramework.ResourceMgr
                 };
             }
 
+            // Phase 2: 远端请求失败时，若本地缓存里有上次成功三段版本，就按本地临时版本回退。
             if (!string.IsNullOrEmpty(state.LastKnownRemoteVersion)
                 && TryParseFileServerVersionInfo(state.LastKnownRemoteVersion, out var localFallbackVersionInfo))
             {
@@ -886,6 +920,7 @@ namespace BDFramework.ResourceMgr
                 };
             }
 
+            // Phase 3: 既没有远端入口，也没有本地可用回退版本时，返回“当前服务器未启用新协议”或直接失败。
             if (manifestDownloadResult.Item2)
             {
                 LogFileServerFlow("共享版控文件不存在，当前服务器未启用文件服务器协议。", Color.yellow);
@@ -912,6 +947,10 @@ namespace BDFramework.ResourceMgr
             };
         }
 
+        /// <summary>
+        /// 读取文件服务器协议里的子包配置列表。
+        /// 如果远端读取失败且允许使用缓存，就回退到本地缓存的 assets_subpack.info 文本。
+        /// </summary>
         private async Task<Tuple<string, List<SubPackageConfigItem>>> LoadFileServerSubPackageConfigs(
             string serverUrl,
             FileServerResolveResult resolveResult,

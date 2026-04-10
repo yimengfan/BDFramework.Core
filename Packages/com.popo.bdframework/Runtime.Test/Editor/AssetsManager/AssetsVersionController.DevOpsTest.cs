@@ -14,6 +14,9 @@ namespace BDFramework.EditorTest.AssetsManager
     /// 对应 AssetsVersionController.DevOps.cs 的纯逻辑测试。
     /// 这里不依赖真实下载，仅验证三段版控解析、package_build.info 合并和子包资源筛选。
     /// </summary>
+    /// <remarks>
+    /// 常规情况下通过 Unity Test Runner 执行；如果项目级初始化干扰了 <c>-runTests</c>，也可以改走 <c>RunBatchVerification()</c>。
+    /// </remarks>
     public class AssetsVersionControllerDevOpsTest
     {
         /// <summary>
@@ -22,6 +25,7 @@ namespace BDFramework.EditorTest.AssetsManager
         /// </summary>
         public static void RunBatchVerification()
         {
+            // Phase 1: 在不依赖 Unity Test Runner 宿主的前提下，顺序执行这组纯逻辑断言。
             var testInstance = new AssetsVersionControllerDevOpsTest();
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
@@ -35,12 +39,14 @@ namespace BDFramework.EditorTest.AssetsManager
                 testInstance.BuildFileServerSubPackageAssetItems_CollectsConfiguredAssetsAcrossComponents,
                 reportBuilder, ref failedCount);
 
+            // Phase 2: 把批验证结果写到 Library，方便 CI 和本地 batchmode 直接收集报告。
             var outputPath = Path.Combine(Directory.GetCurrentDirectory(), "Library",
                 "AssetsVersionControllerDevOpsBatchVerification.txt");
             reportBuilder.Insert(0,
                 $"Summary: total=3 passed={3 - failedCount} failed={failedCount}{Environment.NewLine}");
             File.WriteAllText(outputPath, reportBuilder.ToString(), Encoding.UTF8);
 
+            // Phase 3: 返回显式退出码，让 batchmode 可以直接据此判断验证是否通过。
             if (failedCount > 0)
             {
                 Debug.LogError($"AssetsVersionController DevOps batch verification failed. Report: {outputPath}");
@@ -52,6 +58,9 @@ namespace BDFramework.EditorTest.AssetsManager
             EditorApplication.Exit(0);
         }
 
+        /// <summary>
+        /// 验证共享版控文本会被稳定解析为 Code / AssetBundle / Table 三段版本号。
+        /// </summary>
         [Test]
         public void TryParseFileServerVersionInfo_ParsesThreeSegments()
         {
@@ -64,6 +73,9 @@ namespace BDFramework.EditorTest.AssetsManager
             Assert.That(versionInfo.RawValue, Is.EqualTo("101.202.303"));
         }
 
+        /// <summary>
+        /// 验证三个组件各自的 package_build.info 字段会合并回统一运行时结构。
+        /// </summary>
         [Test]
         public void MergeFileServerPackageBuildInfo_MergesComponentSpecificFields()
         {
@@ -103,6 +115,9 @@ namespace BDFramework.EditorTest.AssetsManager
             Assert.That(merged.BuildTime, Is.EqualTo(30));
         }
 
+        /// <summary>
+        /// 验证子包配置可以同时挑出 AssetBundle、热更代码、表格和依赖配置文件。
+        /// </summary>
         [Test]
         public void BuildFileServerSubPackageAssetItems_CollectsConfiguredAssetsAcrossComponents()
         {
@@ -138,6 +153,9 @@ namespace BDFramework.EditorTest.AssetsManager
             Assert.That(selected.Exists(item => item.LocalPath == "art_assets/art_assets.info"), Is.True);
         }
 
+        /// <summary>
+        /// 执行单个纯逻辑断言，并把结果统一写入 batch 验证报告。
+        /// </summary>
         private static void Execute(string testName, Action testAction, StringBuilder reportBuilder, ref int failedCount)
         {
             try

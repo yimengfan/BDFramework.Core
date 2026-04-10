@@ -20,7 +20,7 @@ def pytest_addoption(parser) -> None:
         "--run-remote-artifact-tests",
         action="store_true",
         default=False,
-        help="run integration tests that upload real files to the configured remote artifact file server",
+        help="run integration tests that upload real files to the configured remote artifact file server; also requires [tests.remote_artifact].enabled = true in buildtools.toml",
     )
 
 
