@@ -493,7 +493,7 @@ def list_recent_builds(
     encoded_build_type_id = urllib.parse.quote(build_type_id, safe="")
     locator = (
         "/app/rest/builds?locator="
-        f"buildType:(id:{encoded_build_type_id}),state:any,running:any,defaultFilter:false,count:{search_count}"
+        f"buildType:(id:{encoded_build_type_id}),state:any,defaultFilter:false,count:{search_count}"
         "&fields=build(id,buildTypeId,number,state,status,statusText,branchName,webUrl,"
         "revisions(revision(version,vcsBranchName)),properties(property(name,value))),count"
     )
