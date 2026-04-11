@@ -426,6 +426,116 @@ def test_prepare_platform_ci_project_dir_recreates_platform_worktree(
     assert "ciProjectAction=create_worktree" in output
 
 
+def test_revert_and_snapshot_changes_cleans_untracked_paths_without_checkout(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys,
+) -> None:
+    """Verify untracked TeamCity leftovers are cleaned without invoking git checkout."""
+    repo_dir = tmp_path / "repo"
+    repo_dir.mkdir()
+    log_dir = tmp_path / "logs"
+    recorded_commands: list[list[str]] = []
+
+    def fake_run(command, *, cwd, check, capture_output, text, encoding, errors):
+        recorded_commands.append(command)
+        assert Path(cwd) == repo_dir
+        if command == ["git", "status", "--porcelain"]:
+            return SimpleNamespace(
+                returncode=0,
+                stdout=(
+                    "?? Packages/com.popo.bdframework/Runtime.Test/Editor/DevOps/"
+                    "DevOpsEditorTasksTest.cs.meta\n"
+                    "?? UserSettings/Search.settings\n"
+                    "?? Library/ignore-me.txt\n"
+                ),
+                stderr="",
+            )
+        if command == [
+            "git",
+            "clean",
+            "-fd",
+            "--",
+            "Packages/com.popo.bdframework/Runtime.Test/Editor/DevOps/DevOpsEditorTasksTest.cs.meta",
+            "UserSettings/Search.settings",
+        ]:
+            return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+        raise AssertionError(f"Unexpected git command: {command}")
+
+    monkeypatch.setattr(resource_flow.subprocess, "run", fake_run)
+
+    resource_flow.revert_and_snapshot_changes(
+        repo_dir=repo_dir,
+        log_prefix="[BuildCode][Android]",
+        log_dir=log_dir,
+    )
+
+    assert recorded_commands == [
+        ["git", "status", "--porcelain"],
+        [
+            "git",
+            "clean",
+            "-fd",
+            "--",
+            "Packages/com.popo.bdframework/Runtime.Test/Editor/DevOps/DevOpsEditorTasksTest.cs.meta",
+            "UserSettings/Search.settings",
+        ],
+    ]
+    assert (log_dir / "change.log").read_text(encoding="utf-8") == (
+        "?? Packages/com.popo.bdframework/Runtime.Test/Editor/DevOps/"
+        "DevOpsEditorTasksTest.cs.meta\n"
+        "?? UserSettings/Search.settings\n"
+    )
+    output = capsys.readouterr().out
+    assert "revertAndSnapshot=2 files" in output
+    assert "revert completed" in output
+
+
+def test_revert_and_snapshot_changes_splits_checkout_and_clean_targets(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    """Verify tracked changes still use git checkout while untracked paths go through git clean."""
+    repo_dir = tmp_path / "repo"
+    repo_dir.mkdir()
+    log_dir = tmp_path / "logs"
+    recorded_commands: list[list[str]] = []
+
+    def fake_run(command, *, cwd, check, capture_output, text, encoding, errors):
+        recorded_commands.append(command)
+        assert Path(cwd) == repo_dir
+        if command == ["git", "status", "--porcelain"]:
+            return SimpleNamespace(
+                returncode=0,
+                stdout=(
+                    " M Assets/Resource/version.info\n"
+                    "?? UserSettings/Search.settings\n"
+                ),
+                stderr="",
+            )
+        if command == ["git", "checkout", "--", "Assets/Resource/version.info"]:
+            return SimpleNamespace(returncode=0, stdout="", stderr="")
+        if command == ["git", "clean", "-fd", "--", "UserSettings/Search.settings"]:
+            return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+        raise AssertionError(f"Unexpected git command: {command}")
+
+    monkeypatch.setattr(resource_flow.subprocess, "run", fake_run)
+
+    resource_flow.revert_and_snapshot_changes(
+        repo_dir=repo_dir,
+        log_prefix="[BuildCode][Android]",
+        log_dir=log_dir,
+    )
+
+    assert recorded_commands == [
+        ["git", "status", "--porcelain"],
+        ["git", "checkout", "--", "Assets/Resource/version.info"],
+        ["git", "clean", "-fd", "--", "UserSettings/Search.settings"],
+    ]
+
+
 def test_run_table_resource_build_uploads_shared_dbs(
     monkeypatch: pytest.MonkeyPatch,
     capsys,

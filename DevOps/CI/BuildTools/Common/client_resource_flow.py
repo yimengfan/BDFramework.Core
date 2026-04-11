@@ -352,6 +352,22 @@ REVERT_PRESERVE_DIRS = frozenset({
 })
 
 
+def parse_porcelain_target(line: str) -> tuple[str, str] | None:
+    """Parse one porcelain status line and return its two-character status with the target path."""
+    if len(line) < 4:
+        return None
+
+    status_code = line[:2]
+    path_text = line[3:].strip()
+    if not path_text:
+        return None
+
+    if " -> " in path_text and ("R" in status_code or "C" in status_code):
+        _, path_text = path_text.split(" -> ", 1)
+
+    return status_code, path_text
+
+
 def revert_and_snapshot_changes(
     *,
     repo_dir: Path,
@@ -373,8 +389,8 @@ def revert_and_snapshot_changes(
             f"git status failed. cwd={repo_dir}, stderr={completed.stderr.strip()}"
         )
 
-    raw_status = completed.stdout.strip()
-    if not raw_status:
+    raw_status = completed.stdout.rstrip()
+    if not raw_status.strip():
         print(f"{log_prefix} revertAndSnapshot=no_local_changes")
         change_log_path = log_dir / "change.log"
         change_log_path.parent.mkdir(parents=True, exist_ok=True)
@@ -382,55 +398,62 @@ def revert_and_snapshot_changes(
         return
 
     changed_files: list[str] = []
-    revert_targets: list[str] = []
+    checkout_targets: list[str] = []
+    clean_targets: list[str] = []
     for line in raw_status.splitlines():
-        if len(line) < 4:
+        parsed_target = parse_porcelain_target(line)
+        if parsed_target is None:
             continue
-        file_path = line[3:].strip()
-        if not file_path:
-            continue
+        status_code, file_path = parsed_target
 
         top_dir_name = file_path.replace("\\", "/").split("/")[0]
         if top_dir_name in REVERT_PRESERVE_DIRS:
             continue
 
         changed_files.append(line.rstrip())
-        revert_targets.append(file_path)
+        if status_code == "??":
+            clean_targets.append(file_path)
+            continue
+
+        checkout_targets.append(file_path)
 
     change_log_path = log_dir / "change.log"
     change_log_path.parent.mkdir(parents=True, exist_ok=True)
     change_log_path.write_text("\n".join(changed_files) + "\n", encoding="utf-8")
-    print(f"{log_prefix} revertAndSnapshot={len(revert_targets)} files")
+    revert_target_count = len(checkout_targets) + len(clean_targets)
+    print(f"{log_prefix} revertAndSnapshot={revert_target_count} files")
     print(f"{log_prefix} changeLog={change_log_path}")
 
-    if not revert_targets:
+    if not checkout_targets and not clean_targets:
         return
 
-    checkout_args = ["git", "checkout", "--"] + revert_targets
-    completed = subprocess.run(
-        checkout_args,
-        cwd=repo_dir,
-        check=False,
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-    )
-    if completed.returncode != 0:
-        raise UnityBatchModeError(
-            f"git checkout -- failed. cwd={repo_dir}, stderr={completed.stderr.strip()}"
+    if checkout_targets:
+        checkout_args = ["git", "checkout", "--"] + checkout_targets
+        completed = subprocess.run(
+            checkout_args,
+            cwd=repo_dir,
+            check=False,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
         )
+        if completed.returncode != 0:
+            raise UnityBatchModeError(
+                f"git checkout -- failed. cwd={repo_dir}, stderr={completed.stderr.strip()}"
+            )
 
-    clean_args = ["git", "clean", "-fd", "--"] + revert_targets
-    subprocess.run(
-        clean_args,
-        cwd=repo_dir,
-        check=False,
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-    )
+    if clean_targets:
+        clean_args = ["git", "clean", "-fd", "--"] + clean_targets
+        subprocess.run(
+            clean_args,
+            cwd=repo_dir,
+            check=False,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
     print(f"{log_prefix} revert completed")
 
 
