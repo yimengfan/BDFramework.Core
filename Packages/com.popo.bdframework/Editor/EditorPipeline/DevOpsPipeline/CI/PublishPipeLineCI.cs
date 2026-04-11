@@ -731,37 +731,6 @@ namespace BDFramework.Editor.DevOps
         /// <summary>
         /// 清理一个可选存在的目录，并输出显式日志说明清理来源。
         /// </summary>
-        static private void DeleteDirectoryIfExists(string path, string description)
-        {
-            if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path))
-            {
-                return;
-            }
-
-            Debug.Log($"【CI】清理{description}:{path}");
-            Directory.Delete(path, true);
-        }
-
-
-        /// <summary>
-        /// 在 BatchMode AssetBundle 构建前清理 Unity 与 AssetGraph 的缓存目录。
-        /// 这样可以避免 CI 连续构建时复用到陈旧缓存，导致热更资源结果不一致。
-        /// </summary>
-        static private void PrepareBatchModeAssetbundleCaches()
-        {
-            if (!Application.isBatchMode)
-            {
-                return;
-            }
-
-            Debug.Log("【CI】准备清理Assetbundle构建缓存");
-            BuildCache.PurgeCache(false);
-            DeleteDirectoryIfExists(UnityEngine.AssetGraph.DataModel.Version2.Settings.Path.CachePath, "AssetGraph缓存");
-            DeleteDirectoryIfExists(UnityEngine.AssetGraph.DataModel.Version2.Settings.Path.BundleBuilderCachePath, "AssetGraph BundleBuilder缓存");
-            AssetDatabase.Refresh();
-        }
-
-
         /// <summary>
         /// 构建指定平台的母包。
         /// </summary>
@@ -811,11 +780,6 @@ namespace BDFramework.Editor.DevOps
                 EnsureAndroidJdkForBatchMode();
                 EnsureAndroidSdkForBatchMode();
                 EnsureAndroidNdkForBatchMode();
-            }
-
-            if (buildOption.HasFlag(BuildTools_Assets.BuildPackageOption.BuildArtAssets))
-            {
-                PrepareBatchModeAssetbundleCaches();
             }
 
             // Phase 2: 统一委托 BuildTools_Assets 输出 CI 需要消费的热更制品目录。
