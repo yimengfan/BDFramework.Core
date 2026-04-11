@@ -87,7 +87,7 @@ def test_prepare_clean_ci_output_root_recreates_existing_directory(tmp_path: Pat
 
 
 def test_prepare_code_upload_source_keeps_script_and_required_infos(tmp_path: Path) -> None:
-    """验证代码暂存保留哈希负载文件和必需的元数据（package_build.info、assets.info、subpack_info）。"""
+    """验证代码暂存同时保留显式 package_build.info、哈希负载文件和必需元数据。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "android"
     (platform_dir / SCRIPT_DIRNAME / "hotfix").mkdir(parents=True)
@@ -108,6 +108,7 @@ def test_prepare_code_upload_source_keeps_script_and_required_infos(tmp_path: Pa
         staging_dir=tmp_path / "staging",
     )
 
+    assert (prepared / PACKAGE_BUILD_INFO_FILENAME).read_text(encoding="utf-8") == "pkg"
     assert (prepared / "100").read_text(encoding="utf-8") == "pkg"
     assert (prepared / "101").read_bytes() == b"dll"
     assert not (prepared / SCRIPT_DIRNAME).exists()
@@ -162,7 +163,7 @@ def test_prepare_code_upload_source_requires_declared_script_files(tmp_path: Pat
 
 
 def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: Path) -> None:
-    """验证 AssetBundle 暂存保留哈希 art_assets 负载文件和必需元数据。"""
+    """验证 AssetBundle 暂存同时保留显式 package_build.info、哈希负载文件和必需元数据。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "windows"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
@@ -182,6 +183,7 @@ def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: 
         staging_dir=tmp_path / "staging",
     )
 
+    assert (prepared / PACKAGE_BUILD_INFO_FILENAME).read_text(encoding="utf-8") == "pkg"
     assert (prepared / "100").read_text(encoding="utf-8") == "pkg"
     assert (prepared / "101").read_bytes() == b"catalog"
     assert not (prepared / ART_ASSETS_DIRNAME).exists()
@@ -741,7 +743,7 @@ def test_upload_client_res_assetbundle_invokes_aggregate_validation(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """Verify assetbundle uploads run aggregate validation before publishing the shared version pointer."""
+    """验证 AssetBundle 上传会先做聚合校验，再发布共享版本指针。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "android"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
@@ -808,7 +810,8 @@ def test_upload_client_res_assetbundle_invokes_aggregate_validation(
         log_prefix="[BuildAssetbundle][Android]",
     )
 
-    assert len(results) == 3
+    assert len(results) == 4
+    assert any(result.remote_path.endswith(f"/{PACKAGE_BUILD_INFO_FILENAME}") for result in results)
     assert captured["settings"] == settings
     assert captured["log_prefix"] == "[BuildAssetbundle][Android]"
     assert captured["summary"].remote_root == "ClientRes_Assetbundle_android/77"

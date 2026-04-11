@@ -1,11 +1,10 @@
-"""Shared helpers for ClientRes Code / Assetbundle / Table CI scripts.
+"""ClientRes Code / Assetbundle / Table 共享产物整理与上传 helper。
 
 职责边界：
-1. 这里只处理隔离输出目录、产物筛选、临时整理与上传。
-2. Unity BatchMode 参数解析、日志和进程控制统一复用 BuildClientPackage 的共享 facade。
-3. TeamCity DSL 只调度 Python 入口脚本，真正的产物组织与上传规则放在这里收敛。
-4. Code / Assetbundle / Table 上传成功后，这里还负责刷新共享的 `global_version.info`，
-    让运行时只通过一个文件服务器入口就能拿到各平台的 version_num。
+1. 这里只处理隔离输出目录、产物筛选、临时整理与上传，不承载 Unity BatchMode 进程编排。
+2. TeamCity DSL 与各构建入口脚本只负责调度参数，真正的产物组织、远端目录协议和上传摘要统一收敛在这里。
+3. Code / Assetbundle / Table 上传成功后，这里还负责刷新共享的 `global_version.info`，让运行时只通过一个文件服务器入口就能拿到各平台的 version_num。
+4. 文件服务器协议要求组件根目录显式保留 `package_build.info`，同时保留 `assets.info` 驱动的 hash payload 布局，避免 VerifyClientRes 与运行时组件上下文读取出现协议分叉。
 """
 
 from __future__ import annotations
@@ -762,13 +761,16 @@ def copy_manifest_hash_files(
 
 
 def collect_staged_hash_names(prepared_dir: Path) -> set[str]:
-    """收集 staging 根目录下的 hash 文件名，并拒绝旧的目录式布局。"""
+    """收集 staging 根目录下的 hash 文件名，并拒绝旧的目录式布局。
+
+    显式保留在根目录的 `package_build.info` 属于组件元数据文件，不参与 hash 文件集合校验。
+    """
     staged_hash_names: set[str] = set()
     unexpected_nested_files: list[str] = []
 
     for file_path in list_source_files(prepared_dir):
         relative_path = file_path.relative_to(prepared_dir).as_posix()
-        if relative_path in {ASSETS_INFO_FILENAME, ASSETS_SUBPACK_INFO_FILENAME}:
+        if relative_path in {ASSETS_INFO_FILENAME, ASSETS_SUBPACK_INFO_FILENAME, PACKAGE_BUILD_INFO_FILENAME}:
             continue
         if "/" in relative_path:
             unexpected_nested_files.append(relative_path)
@@ -815,13 +817,33 @@ def validate_hashed_manifest_files(prepared_dir: Path, *, source_description: st
     return asset_entries
 
 
+def preserve_package_build_info(platform_dir: Path, prepared_dir: Path, *, source_description: str) -> None:
+    """把组件根目录的 package_build.info 作为显式元数据保留到 staging 根目录。
+
+    运行时组件上下文会先读取显式的 `package_build.info`，随后再结合 `assets.info` 和 hash payload 计算差异。
+    因此这里既不能只保留 hash 文件，也不能只保留显式元数据文件，两套入口都必须同时存在。
+    """
+    copy_path(
+        ensure_non_empty_file(
+            platform_dir / PACKAGE_BUILD_INFO_FILENAME,
+            description=f"{source_description} package_build.info",
+        ),
+        prepared_dir / PACKAGE_BUILD_INFO_FILENAME,
+    )
+
+
 def prepare_code_upload_source(
     platform_key: str,
     *,
     output_root: Path,
     staging_dir: Path,
 ) -> Path:
-    """整理热更代码需要上传的目录结构。"""
+    """整理热更代码需要上传的目录结构。
+
+    staging 根目录会同时保留显式 `package_build.info`、`assets.info`、可选 `assets_subpack.info`，
+    并继续按 `assets.info` 的 `HashName <- LocalPath` 关系保留 hash payload 文件，保证 VerifyClientRes
+    和运行时下载协议读取到的是同一套目录布局。
+    """
     platform_dir = ensure_existing_path(
         output_root / platform_key,
         description=f"ClientRes code platform output ({platform_key})",
@@ -837,6 +859,7 @@ def prepare_code_upload_source(
     )
 
     write_asset_info_entries(prepared_dir / ASSETS_INFO_FILENAME, asset_entries)
+    preserve_package_build_info(platform_dir, prepared_dir, source_description="ClientRes code")
 
     optional_subpack = platform_dir / ASSETS_SUBPACK_INFO_FILENAME
     if optional_subpack.exists():
@@ -860,7 +883,11 @@ def prepare_assetbundle_upload_source(
     output_root: Path,
     staging_dir: Path,
 ) -> Path:
-    """整理热更 Assetbundle 需要上传的目录结构。"""
+    """整理热更 Assetbundle 需要上传的目录结构。
+
+    与 Code 一样，Assetbundle 组件根目录需要显式保留 `package_build.info`，同时保留 `assets.info`
+    驱动的 hash payload 文件，避免 VerifyClientRes 读取组件元数据时出现 404。
+    """
     platform_dir = ensure_existing_path(
         output_root / platform_key,
         description=f"ClientRes assetbundle platform output ({platform_key})",
@@ -879,6 +906,7 @@ def prepare_assetbundle_upload_source(
     )
 
     write_asset_info_entries(prepared_dir / ASSETS_INFO_FILENAME, asset_entries)
+    preserve_package_build_info(platform_dir, prepared_dir, source_description="ClientRes assetbundle")
 
     optional_subpack = platform_dir / ASSETS_SUBPACK_INFO_FILENAME
     if optional_subpack.exists():
