@@ -586,6 +586,8 @@ namespace BDFramework.ResourceMgr
 
             // Phase 3: 对 Code / AssetBundle / Table 分别读取远端上下文，并挑出每类的代表性验证样本。
             var componentContexts = new Dictionary<FileServerComponentKind, FileServerComponentContext>();
+            var allowComponentContextCacheFallback = ShouldUseCachedFileServerComponentContextOnFailure(
+                useCacheOnFailure: true, strictRemoteVerification: true);
             foreach (var componentKind in FileServerManagedComponents)
             {
                 var remoteVersion = resolveResult.VersionInfo.GetVersion(componentKind);
@@ -595,7 +597,8 @@ namespace BDFramework.ResourceMgr
                 }
 
                 var loadContextResult = await LoadFileServerComponentContext(request.ServerUrl,
-                    resolveResult.PlatformPath, componentKind, remoteVersion, false, true);
+                    resolveResult.PlatformPath, componentKind, remoteVersion, false,
+                    allowComponentContextCacheFallback);
                 if (!string.IsNullOrEmpty(loadContextResult.Item1))
                 {
                     result.Error = loadContextResult.Item1;
@@ -2036,6 +2039,17 @@ namespace BDFramework.ResourceMgr
                 .Distinct()
                 .OrderBy(item => item.Id)
                 .ToList();
+        }
+
+        /// <summary>
+        /// 决定远端组件元数据读取失败时是否允许回退到本地缓存。
+        /// CI BatchMode 严格远端验证必须禁用该回退，避免把真实远端问题伪装成缓存命中，
+        /// 同时避免再次走到旧版 <see cref="ClientAssetsUtils"/> 初始化路径。
+        /// </summary>
+        internal static bool ShouldUseCachedFileServerComponentContextOnFailure(bool useCacheOnFailure,
+            bool strictRemoteVerification)
+        {
+            return useCacheOnFailure && !strictRemoteVerification;
         }
 
         /// <summary>

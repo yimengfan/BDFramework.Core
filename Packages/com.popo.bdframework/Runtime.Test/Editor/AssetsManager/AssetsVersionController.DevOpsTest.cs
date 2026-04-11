@@ -83,6 +83,15 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证 CI BatchMode 严格远端验证会禁用组件元数据缓存回退，避免把远端异常短路成旧缓存命中。
+        /// </summary>
+        [Test]
+        public void ShouldUseCachedFileServerComponentContextOnFailure_DisablesFallbackForStrictRemoteVerification()
+        {
+            VerifyShouldUseCachedFileServerComponentContextOnFailureDisablesFallbackForStrictRemoteVerification();
+        }
+
+        /// <summary>
         /// 验证 CI 批量验证会优先挑选真正代表 Code / AssetBundle / Table 三类 payload 的样本文件。
         /// </summary>
         [Test]
@@ -274,6 +283,19 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证严格远端验证会禁用组件元数据缓存回退，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyShouldUseCachedFileServerComponentContextOnFailureDisablesFallbackForStrictRemoteVerification()
+        {
+            EnsureTrue(!AssetsVersionController.ShouldUseCachedFileServerComponentContextOnFailure(true, true),
+                "严格远端验证时不应允许组件元数据缓存回退。");
+            EnsureTrue(AssetsVersionController.ShouldUseCachedFileServerComponentContextOnFailure(true, false),
+                "非严格远端验证时应允许组件元数据缓存回退。");
+            EnsureTrue(!AssetsVersionController.ShouldUseCachedFileServerComponentContextOnFailure(false, false),
+                "显式禁用缓存回退时不应允许组件元数据缓存回退。");
+        }
+
+        /// <summary>
         /// 以纯异常校验方式验证代表性资源挑选结果，供 batchmode 路径复用。
         /// </summary>
         internal static void VerifyFindFileServerRepresentativeAssetPicksRealPayloadAssets()
@@ -457,7 +479,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 10;
+            const int totalCheckCount = 11;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -484,6 +506,10 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.NormalizeFileServerManagedAssetItems_FiltersPackageBuildInfoAndSortsById),
                 AssetsVersionControllerDevOpsTest.VerifyNormalizeFileServerManagedAssetItemsFiltersPackageBuildInfoAndSortsById,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.ShouldUseCachedFileServerComponentContextOnFailure_DisablesFallbackForStrictRemoteVerification),
+                AssetsVersionControllerDevOpsTest.VerifyShouldUseCachedFileServerComponentContextOnFailureDisablesFallbackForStrictRemoteVerification,
                 reportBuilder, ref failedCount);
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.FindFileServerRepresentativeAsset_PicksRealPayloadAssets),
