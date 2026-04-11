@@ -1814,23 +1814,36 @@ namespace BDFramework.ResourceMgr
 
         private static string BuildFileServerVersionManifestUrl(string serverUrl)
         {
-            return CombineUrl(serverUrl, FileServerVersionManifestFileName);
+            // Artifact file server exposes downloads under /files/{path}; the manifest
+            // is uploaded by Python as global_version.info at the root of the store,
+            // so the download URL is serverUrl/files/global_version.info.
+            return CombineUrl(CombineUrl(serverUrl, "files"), FileServerVersionManifestFileName);
+        }
+
+        /// <summary>
+        /// 拼接文件服务器下载根路径。Artifact file server 所有下载走 /files/{path} 路由，
+        /// 所以统一在 serverUrl 后追加 files 前缀再接具体文件路径。
+        /// </summary>
+        private static string BuildFileServerDownloadRoot(string serverUrl)
+        {
+            return CombineUrl(serverUrl, "files");
         }
 
         private static string BuildFileServerComponentRemoteRoot(string serverUrl, string platformPath,
             FileServerComponentKind componentKind,
             string componentVersion)
         {
+            var downloadRoot = BuildFileServerDownloadRoot(serverUrl);
             switch (componentKind)
             {
                 case FileServerComponentKind.Code:
-                    return CombineUrl(serverUrl, $"ClientRes_Code_{platformPath}", componentVersion);
+                    return CombineUrl(downloadRoot, $"ClientRes_Code_{platformPath}", componentVersion);
                 case FileServerComponentKind.AssetBundle:
-                    return CombineUrl(serverUrl, $"ClientRes_Assetbundle_{platformPath}", componentVersion);
+                    return CombineUrl(downloadRoot, $"ClientRes_Assetbundle_{platformPath}", componentVersion);
                 case FileServerComponentKind.Table:
-                    return CombineUrl(serverUrl, "ClientRes_Table", componentVersion);
+                    return CombineUrl(downloadRoot, "ClientRes_Table", componentVersion);
                 default:
-                    return serverUrl;
+                    return downloadRoot;
             }
         }
 
