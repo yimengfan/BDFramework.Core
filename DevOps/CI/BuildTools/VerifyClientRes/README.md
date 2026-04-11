@@ -6,7 +6,7 @@
 
 1. TeamCity 只负责调度 `verify_android.py` / `verify_ios.py` / `verify_windows.py`，具体验证逻辑统一收敛在 BuildTools Python 与 Unity 公开入口。
 2. 三个平台脚本只保留最薄的一层入口，公共参数、日志、Unity 命令和文件服务器地址解析统一复用 `Common/client_resource_flow.py` 与 `Common/artifact_uploader.py`。
-3. 验证任务必须显式传入 `-buildTarget` 到目标平台，并在 CI 元数据存在时切到 `/{platform}/{repo-name}/` 隔离 git worktree，避免不同平台复用同一个 Unity `Library/Temp`。
+3. 验证任务必须显式传入 `-buildTarget` 到目标平台；验证链路不承担 Assetbundle 构建时的跨平台缓存隔离职责，默认直接使用传入的 `--project-dir` 或仓库根目录，不额外创建平台 worktree。
 4. 文件服务器地址必须通过 BuildTools external config 或 `--server-url` 统一解析，不能在 TeamCity DSL 里硬编码。
 5. Unity 端会强制重置本地 persistent 下载状态，再真实下载并校验 Code / AssetBundle / Table 三类代表性资源，避免历史缓存或 StreamingAssets 残留把验证变成假阳性。
 

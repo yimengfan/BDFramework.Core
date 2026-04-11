@@ -117,7 +117,9 @@ def test_run_platform_resource_verify_executes_expected_flow(
     monkeypatch.setattr(
         resource_flow,
         "prepare_platform_ci_project_dir",
-        lambda **kwargs: (events.append("prepare_platform_ci_project_dir") or project_dir),
+        lambda **kwargs: (_ for _ in ()).throw(
+            AssertionError("prepare_platform_ci_project_dir should not run for verify flows")
+        ),
     )
     monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: log_path)
 
@@ -164,14 +166,15 @@ def test_run_platform_resource_verify_executes_expected_flow(
     assert "unityBuildTarget=Android" in output
     assert "fileServerUrl=http://192.168.0.240:20001" in output
     assert "expectedVersionInfo=101.202.303" in output
+    assert "ciProjectIsolation=skipped" in output
+    assert "ciProjectIsolationReason=assetbundle_build_only" in output
     assert "baseProjectDir=/tmp/BDFramework.Core" in output
-    assert "projectDir=/tmp/android/BDFramework.Core" in output
+    assert "projectDir=/tmp/BDFramework.Core" in output
     assert "verification finished successfully" in output
     assert events == [
         "configure_live_console_output",
         "ensure_platform_allowed:android",
         "resolve_unity_executable",
-        "prepare_platform_ci_project_dir",
         "build_batchmode_command",
         "run_batchmode",
     ]
@@ -216,7 +219,9 @@ def test_run_platform_resource_verify_dry_run_uses_override_server_url(
     monkeypatch.setattr(
         resource_flow,
         "prepare_platform_ci_project_dir",
-        lambda **kwargs: Path("/tmp/windows/BDFramework.Core"),
+        lambda **kwargs: (_ for _ in ()).throw(
+            AssertionError("prepare_platform_ci_project_dir should not run for verify flows")
+        ),
     )
     monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: Path("/tmp/log.log"))
     monkeypatch.setattr(resource_flow, "build_batchmode_command", lambda **kwargs: ["Unity", "-quit"])

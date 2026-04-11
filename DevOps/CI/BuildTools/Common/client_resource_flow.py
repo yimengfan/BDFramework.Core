@@ -113,19 +113,28 @@ def prepare_platform_ci_project_dir(
     build_number: str | None,
     log_prefix: str,
 ) -> Path:
-    """CI 下把 Unity 工程切到平台隔离 worktree，彻底隔离跨平台 Library/Temp 复用。"""
+    """Assetbundle CI 下优先复用平台隔离 checkout；必要时回退到 sibling worktree 隔离跨平台 Library/Temp。"""
+    resolved_base_project_dir = base_project_dir.resolve()
+
     if not has_ci_build_metadata(build_name, build_number):
         print(f"{log_prefix} ciProjectIsolation=disabled")
-        return base_project_dir
+        return resolved_base_project_dir
 
-    if base_project_dir.parent.name.lower() == platform_key.lower():
+    if resolved_base_project_dir.parent.name.lower() == platform_key.lower():
         print(f"{log_prefix} ciProjectIsolation=already_isolated")
-        return base_project_dir
+        print(f"{log_prefix} ciProjectRoot={resolved_base_project_dir}")
+        print(f"{log_prefix} ciProjectAction=use_existing_checkout")
+        return resolved_base_project_dir
 
     repo_root = Path(
-        run_git_command(repo_dir=base_project_dir, args=["rev-parse", "--show-toplevel"])
+        run_git_command(
+            repo_dir=resolved_base_project_dir,
+            args=["rev-parse", "--show-toplevel"],
+        )
     ).resolve()
-    isolated_project_dir = (repo_root.parent / platform_key / repo_root.name).resolve()
+    isolated_project_dir = (
+        repo_root.parent / platform_key / resolved_base_project_dir.name
+    ).resolve()
     if isolated_project_dir == repo_root:
         print(f"{log_prefix} ciProjectIsolation=base_project")
         return repo_root
@@ -333,6 +342,11 @@ def insert_command_argument(command: list[str], *, flag: str, value: str) -> lis
     return resolved_command
 
 
+def should_isolate_platform_project_dir(artifact_kind: str) -> bool:
+    """只有 Assetbundle 构建需要额外的平台工程隔离，避免跨平台复用 Unity 缓存。"""
+    return artifact_kind == "assetbundle"
+
+
 def run_platform_resource_build(
     *,
     platform_key: str,
@@ -372,13 +386,18 @@ def run_platform_resource_build(
         allow_missing=args.dry_run,
     )
     base_project_dir = resolve_project_dir(args.project_dir)
-    project_dir = prepare_platform_ci_project_dir(
-        base_project_dir=base_project_dir,
-        platform_key=platform_key,
-        build_name=build_name,
-        build_number=build_number,
-        log_prefix=log_prefix,
-    )
+    if should_isolate_platform_project_dir(artifact_kind):
+        project_dir = prepare_platform_ci_project_dir(
+            base_project_dir=base_project_dir,
+            platform_key=platform_key,
+            build_name=build_name,
+            build_number=build_number,
+            log_prefix=log_prefix,
+        )
+    else:
+        project_dir = base_project_dir
+        print(f"{log_prefix} ciProjectIsolation=skipped")
+        print(f"{log_prefix} ciProjectIsolationReason=assetbundle_only")
     log_path = get_log_path(
         platform_key,
         client_version,
@@ -605,13 +624,9 @@ def run_platform_resource_verify(
         allow_missing=args.dry_run,
     )
     base_project_dir = resolve_project_dir(args.project_dir)
-    project_dir = prepare_platform_ci_project_dir(
-        base_project_dir=base_project_dir,
-        platform_key=platform_key,
-        build_name=build_name,
-        build_number=build_number,
-        log_prefix=log_prefix,
-    )
+    project_dir = base_project_dir
+    print(f"{log_prefix} ciProjectIsolation=skipped")
+    print(f"{log_prefix} ciProjectIsolationReason=assetbundle_build_only")
     log_path = get_log_path(
         platform_key,
         client_version,

@@ -52,6 +52,8 @@
 - TeamCity DSL、Jenkinsfile、shell pipeline 之类的管线层只负责调度参数、任务依赖和执行入口，不承载业务构建逻辑。
 - 具体业务实现统一落在 `DevOps/CI/BuildTools/` 下的 Python 脚本里；如果是新的构建类型，必须新建独立目录，不要继续把不同类型流程塞进旧目录。
 - 同一种构建类型允许拆成多个平台脚本，但共享逻辑要尽量下沉到 `Common/` 或该类型目录内部的共享模块，避免复制粘贴长流程。
+- 平台相关 checkout / `--project-dir` / 缓存根目录必须通过公共参数或运行时目录名推导，统一使用 `{platform}/{project-leaf}` 这类组合协议；禁止在 DSL、脚本和 README 里写死 `ios/BDFramework.Core` 这类具体项目名路径。
+- Assetbundle 构建是当前唯一要求强制平台隔离 checkout 的任务类型：当 TeamCity 之类的宿主已经把工程 checkout 到平台目录时，Assetbundle BuildTools 必须直接复用该目录作为 Unity `-projectPath`；只有上游仍给出共享 checkout 时，才允许回退到 sibling worktree 来隔离 `Library/Temp`。其他构建或验证任务只有在任务文档明确声明缓存污染风险时才允许启用同类隔离。
 - 每次真实构建前，必须清理对应的 CI 输出目录，避免旧产物混入本次上传。推荐把隔离输出写到 `Library/CIOutputs/<build_kind>/...` 或模块 README 指定的专用目录。
 - 任何上传目录命名、产物筛选规则、步骤日志或参数协议变化，都必须同步更新 README、pytest 断言和 TeamCity DSL，不能只改实现。
 
