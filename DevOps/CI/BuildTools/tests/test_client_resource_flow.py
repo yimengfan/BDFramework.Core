@@ -167,6 +167,11 @@ def test_run_platform_resource_build_executes_expected_flow(
     monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: log_path)
     monkeypatch.setattr(
         resource_flow,
+        "revert_and_snapshot_changes",
+        lambda **kwargs: events.append("revert_and_snapshot_changes"),
+    )
+    monkeypatch.setattr(
+        resource_flow,
         "prepare_clean_ci_output_root",
         lambda *args, **kwargs: expected_ci_output_root,
     )
@@ -229,6 +234,7 @@ def test_run_platform_resource_build_executes_expected_flow(
     ]
     if expect_isolation:
         expected_events.append("prepare_platform_ci_project_dir")
+    expected_events.append("revert_and_snapshot_changes")
     expected_events.extend(["build_batchmode_command", "run_batchmode", upload_attr])
     assert events == expected_events
 

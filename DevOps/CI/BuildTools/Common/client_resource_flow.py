@@ -342,6 +342,90 @@ def insert_command_argument(command: list[str], *, flag: str, value: str) -> lis
     return resolved_command
 
 
+REVERT_PRESERVE_DIRS = frozenset({
+    "Library",
+    "Temp",
+    "Obj",
+    "Logs",
+})
+
+
+def revert_and_snapshot_changes(
+    *,
+    repo_dir: Path,
+    log_prefix: str,
+    log_dir: Path,
+) -> None:
+    """Revert 本地变更（保留 Library 等大缓存目录），并将变更文件列表写入 change.log。"""
+    completed = subprocess.run(
+        ["git", "status", "--porcelain"],
+        cwd=repo_dir,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode != 0:
+        raise UnityBatchModeError(
+            f"git status failed. cwd={repo_dir}, stderr={completed.stderr.strip()}"
+        )
+
+    raw_status = completed.stdout.strip()
+    if not raw_status:
+        print(f"{log_prefix} revertAndSnapshot=no_local_changes")
+        change_log_path = log_dir / "change.log"
+        change_log_path.parent.mkdir(parents=True, exist_ok=True)
+        change_log_path.write_text("", encoding="utf-8")
+        return
+
+    changed_files: list[str] = []
+    revert_targets: list[str] = []
+    for line in raw_status.splitlines():
+        if len(line) < 4:
+            continue
+        file_path = line[3:].strip()
+        if not file_path:
+            continue
+
+        top_dir_name = file_path.replace("\\", "/").split("/")[0]
+        if top_dir_name in REVERT_PRESERVE_DIRS:
+            continue
+
+        changed_files.append(line.rstrip())
+        revert_targets.append(file_path)
+
+    change_log_path = log_dir / "change.log"
+    change_log_path.parent.mkdir(parents=True, exist_ok=True)
+    change_log_path.write_text("\n".join(changed_files) + "\n", encoding="utf-8")
+    print(f"{log_prefix} revertAndSnapshot={len(revert_targets)} files")
+    print(f"{log_prefix} changeLog={change_log_path}")
+
+    if not revert_targets:
+        return
+
+    checkout_args = ["git", "checkout", "--"] + revert_targets
+    completed = subprocess.run(
+        checkout_args,
+        cwd=repo_dir,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode != 0:
+        raise UnityBatchModeError(
+            f"git checkout -- failed. cwd={repo_dir}, stderr={completed.stderr.strip()}"
+        )
+
+    clean_args = ["git", "clean", "-fd", "--"] + revert_targets
+    subprocess.run(
+        clean_args,
+        cwd=repo_dir,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    print(f"{log_prefix} revert completed")
+
+
 def should_isolate_platform_project_dir(artifact_kind: str) -> bool:
     """只有 Assetbundle 构建需要额外的平台工程隔离，避免跨平台复用 Unity 缓存。"""
     return artifact_kind == "assetbundle"
@@ -358,13 +442,13 @@ def run_platform_resource_build(
 ) -> int:
     """执行三端 Code / Assetbundle 资源构建主流程。"""
     configure_live_console_output()
-    print(f"{log_prefix} ===== Step 1/7: parse args =====")
+    print(f"{log_prefix} ===== Step 1/8: parse args =====")
     args = parse_platform_args(description)
     client_version_prefix = validate_client_version(args.client_version)
     build_name, build_number = resolve_build_metadata(args.build_name, args.build_number)
     client_version = compose_client_version(client_version_prefix, build_number)
 
-    print(f"{log_prefix} ===== Step 2/7: validate host =====")
+    print(f"{log_prefix} ===== Step 2/8: validate host =====")
     host_os = detect_host_os()
     ensure_platform_allowed(platform_key)
     unity_build_target = UNITY_BATCHMODE_BUILD_TARGET_BY_PLATFORM.get(platform_key)
@@ -380,7 +464,7 @@ def run_platform_resource_build(
     if build_number:
         print(f"{log_prefix} buildNumber={build_number}")
 
-    print(f"{log_prefix} ===== Step 3/7: resolve Unity =====")
+    print(f"{log_prefix} ===== Step 3/8: resolve Unity =====")
     unity_path, actual_unity_version = resolve_unity_executable(
         args.unity_version,
         allow_missing=args.dry_run,
@@ -412,7 +496,17 @@ def run_platform_resource_build(
     print(f"{log_prefix} method={execute_method}")
     print(f"{log_prefix} log={log_path}")
 
-    print(f"{log_prefix} ===== Step 4/7: prepare output dir =====")
+    print(f"{log_prefix} ===== Step 4/8: revert local changes =====")
+    if not args.dry_run:
+        revert_and_snapshot_changes(
+            repo_dir=project_dir,
+            log_prefix=log_prefix,
+            log_dir=log_path.parent,
+        )
+    else:
+        print(f"{log_prefix} dry-run enabled, skip revert")
+
+    print(f"{log_prefix} ===== Step 5/8: prepare output dir =====")
     ci_output_root = prepare_clean_ci_output_root(
         project_dir,
         build_kind=build_kind,
@@ -422,7 +516,7 @@ def run_platform_resource_build(
     )
     print(f"{log_prefix} ciOutputRoot={ci_output_root}")
 
-    print(f"{log_prefix} ===== Step 5/7: build Unity command =====")
+    print(f"{log_prefix} ===== Step 6/8: build Unity command =====")
     command = insert_command_argument(
         insert_command_argument(
             build_batchmode_command(
@@ -439,7 +533,7 @@ def run_platform_resource_build(
         value=str(ci_output_root),
     )
 
-    print(f"{log_prefix} ===== Step 6/7: execute =====")
+    print(f"{log_prefix} ===== Step 7/8: execute =====")
     return_code = run_batchmode(command, dry_run=args.dry_run)
     if return_code != 0:
         print(read_log_tail(log_path))
@@ -447,7 +541,7 @@ def run_platform_resource_build(
             f"{artifact_kind} build failed. exit_code={return_code}, log={log_path}"
         )
 
-    print(f"{log_prefix} ===== Step 7/7: upload =====")
+    print(f"{log_prefix} ===== Step 8/8: upload =====")
     if args.dry_run:
         print(f"{log_prefix} dry-run enabled, skip artifact upload")
     elif artifact_kind == "code":
