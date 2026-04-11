@@ -367,7 +367,7 @@ def test_prepare_platform_ci_project_dir_recreates_platform_worktree(
     expected_project_dir = tmp_path / "ios" / "BDFramework.Core"
     recorded_commands: list[tuple[list[str], Path]] = []
 
-    def fake_run(command, *, cwd, check, capture_output, text):
+    def fake_run(command, *, cwd, check, capture_output, text, **kwargs):
         recorded_commands.append((command, Path(cwd)))
         command_args = command[1:]
         if command_args == ["rev-parse", "--show-toplevel"]:

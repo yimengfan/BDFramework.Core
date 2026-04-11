@@ -72,6 +72,8 @@ def run_git_command(*, repo_dir: Path, args: list[str]) -> str:
         check=False,
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
     )
     if completed.returncode != 0:
         command_text = " ".join(["git", *args])
@@ -363,6 +365,8 @@ def revert_and_snapshot_changes(
         check=False,
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
     )
     if completed.returncode != 0:
         raise UnityBatchModeError(
@@ -409,6 +413,8 @@ def revert_and_snapshot_changes(
         check=False,
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
     )
     if completed.returncode != 0:
         raise UnityBatchModeError(
@@ -422,6 +428,8 @@ def revert_and_snapshot_changes(
         check=False,
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
     )
     print(f"{log_prefix} revert completed")
 
