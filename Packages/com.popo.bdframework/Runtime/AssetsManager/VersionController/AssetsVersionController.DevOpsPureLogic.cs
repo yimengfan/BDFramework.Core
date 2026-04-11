@@ -177,6 +177,50 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// 规范化单个组件携带的 <c>package_build.info</c>。
+        /// 当组件根目录里的显式元数据仍保留旧默认值 <c>none</c> 时，这里用当前组件目录版本号兜底，
+        /// 避免文件服务器协议明明已经通过 <c>global_version.info</c> 和目录名确定了构建号，最终却把本地三段版本重新写回成 <c>none</c>。
+        /// </summary>
+        internal static ClientPackageBuildInfo NormalizeFileServerComponentPackageBuildInfo(
+            AssetsVersionController.FileServerComponentKind componentKind,
+            string componentVersion,
+            ClientPackageBuildInfo sourceInfo)
+        {
+            var normalizedInfo = CloneFileServerPackageBuildInfo(sourceInfo);
+            if (string.IsNullOrEmpty(componentVersion))
+            {
+                return normalizedInfo;
+            }
+
+            switch (componentKind)
+            {
+                case AssetsVersionController.FileServerComponentKind.Code:
+                    if (IsMissingFileServerComponentVersion(normalizedInfo.HotfixScriptSVCVersion))
+                    {
+                        normalizedInfo.HotfixScriptSVCVersion = componentVersion;
+                    }
+
+                    break;
+                case AssetsVersionController.FileServerComponentKind.AssetBundle:
+                    if (IsMissingFileServerComponentVersion(normalizedInfo.AssetBundleSVCVersion))
+                    {
+                        normalizedInfo.AssetBundleSVCVersion = componentVersion;
+                    }
+
+                    break;
+                case AssetsVersionController.FileServerComponentKind.Table:
+                    if (IsMissingFileServerComponentVersion(normalizedInfo.TableSVCVersion))
+                    {
+                        normalizedInfo.TableSVCVersion = componentVersion;
+                    }
+
+                    break;
+            }
+
+            return normalizedInfo;
+        }
+
+        /// <summary>
         /// 根据分包配置，从 Code / AssetBundle / Table 三类资源中筛出本次子包真正需要下载的资源。
         /// </summary>
         internal static List<AssetItem> BuildFileServerSubPackageAssetItems(
@@ -410,6 +454,36 @@ namespace BDFramework.ResourceMgr
             {
                 mergedInfo.TableSVCVersion = sourceInfo.TableSVCVersion;
             }
+        }
+
+        /// <summary>
+        /// 复制一份可安全修改的 <see cref="ClientPackageBuildInfo"/>，避免兜底逻辑直接污染调用方保存的原始对象。
+        /// </summary>
+        private static ClientPackageBuildInfo CloneFileServerPackageBuildInfo(ClientPackageBuildInfo sourceInfo)
+        {
+            if (sourceInfo == null)
+            {
+                return new ClientPackageBuildInfo();
+            }
+
+            return new ClientPackageBuildInfo()
+            {
+                BuildTime = sourceInfo.BuildTime,
+                Version = sourceInfo.Version,
+                BasePckScriptSVCVersion = sourceInfo.BasePckScriptSVCVersion,
+                HotfixScriptSVCVersion = sourceInfo.HotfixScriptSVCVersion,
+                AssetBundleSVCVersion = sourceInfo.AssetBundleSVCVersion,
+                TableSVCVersion = sourceInfo.TableSVCVersion,
+            };
+        }
+
+        /// <summary>
+        /// 判断组件版本字段是否仍然是空值或旧默认值 <c>none</c>。
+        /// </summary>
+        private static bool IsMissingFileServerComponentVersion(string version)
+        {
+            return string.IsNullOrEmpty(version)
+                   || string.Equals(version, "none", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

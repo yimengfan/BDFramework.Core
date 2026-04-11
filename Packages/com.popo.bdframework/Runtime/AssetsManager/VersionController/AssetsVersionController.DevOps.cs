@@ -470,6 +470,20 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// 规范化单个组件携带的 <c>package_build.info</c>。
+        /// 文件服务器协议的权威组件版本来自共享版控和组件目录名，因此当显式元数据仍保留旧默认值 <c>none</c> 时，
+        /// 这里会用当前组件版本兜底，避免最终回写的本地 <c>package_build.info</c> 丢失三段版本号。
+        /// </summary>
+        internal static ClientPackageBuildInfo NormalizeFileServerComponentPackageBuildInfo(
+            FileServerComponentKind componentKind,
+            string componentVersion,
+            ClientPackageBuildInfo sourceInfo)
+        {
+            return AssetsVersionControllerDevOpsPureLogic.NormalizeFileServerComponentPackageBuildInfo(componentKind,
+                componentVersion, sourceInfo);
+        }
+
+        /// <summary>
         /// 根据分包配置，从 Code / AssetBundle / Table 三类资源中筛出本次子包真正需要下载的资源。
         /// </summary>
         internal static List<AssetItem> BuildFileServerSubPackageAssetItems(
@@ -1287,8 +1301,10 @@ namespace BDFramework.ResourceMgr
             try
             {
                 context.PackageBuildContent = packageBuildDownload.Item3;
-                context.PackageBuildInfo = JsonMapper.ToObject<ClientPackageBuildInfo>(packageBuildDownload.Item3)
-                                           ?? new ClientPackageBuildInfo();
+                context.PackageBuildInfo = NormalizeFileServerComponentPackageBuildInfo(componentKind,
+                    componentVersion,
+                    JsonMapper.ToObject<ClientPackageBuildInfo>(packageBuildDownload.Item3)
+                    ?? new ClientPackageBuildInfo());
             }
             catch (Exception e)
             {
@@ -2023,8 +2039,10 @@ namespace BDFramework.ResourceMgr
                     Version = componentVersion,
                     PackageBuildContent = File.ReadAllText(GetFileServerPackageBuildCachePath(cacheDir, componentKind)),
                 };
-                context.PackageBuildInfo = JsonMapper.ToObject<ClientPackageBuildInfo>(context.PackageBuildContent)
-                                           ?? new ClientPackageBuildInfo();
+                context.PackageBuildInfo = NormalizeFileServerComponentPackageBuildInfo(componentKind,
+                    componentVersion,
+                    JsonMapper.ToObject<ClientPackageBuildInfo>(context.PackageBuildContent)
+                    ?? new ClientPackageBuildInfo());
                 if (componentKind != FileServerComponentKind.Table)
                 {
                     context.AssetsInfoContent = File.ReadAllText(GetFileServerAssetsInfoCachePath(cacheDir, componentKind));

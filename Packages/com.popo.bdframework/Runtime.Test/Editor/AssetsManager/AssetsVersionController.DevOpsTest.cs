@@ -56,6 +56,15 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证组件根 package_build.info 仍是旧默认值时，会回退使用当前组件目录版本号补齐对应的三段字段。
+        /// </summary>
+        [Test]
+        public void NormalizeFileServerComponentPackageBuildInfo_FallsBackToComponentVersionWhenSourceUsesNone()
+        {
+            VerifyNormalizeFileServerComponentPackageBuildInfoFallsBackToComponentVersionWhenSourceUsesNone();
+        }
+
+        /// <summary>
         /// 验证下载完成后本地 package_build.info 若没有回写成当前链路期望版本，会返回明确错误。
         /// </summary>
         [Test]
@@ -206,6 +215,52 @@ namespace BDFramework.EditorTest.AssetsManager
             EnsureEqual("new-ab", merged.AssetBundleSVCVersion, "AssetBundleSVCVersion 合并结果不匹配。");
             EnsureEqual("new-table", merged.TableSVCVersion, "TableSVCVersion 合并结果不匹配。");
             EnsureEqual(30L, merged.BuildTime, "BuildTime 合并结果不匹配。");
+        }
+
+        /// <summary>
+        /// 以纯异常校验方式验证组件 package_build.info 版本兜底逻辑，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyNormalizeFileServerComponentPackageBuildInfoFallsBackToComponentVersionWhenSourceUsesNone()
+        {
+            var codeInfo = new ClientPackageBuildInfo()
+            {
+                Version = "0.1.0",
+                HotfixScriptSVCVersion = "none",
+            };
+            var assetBundleInfo = new ClientPackageBuildInfo()
+            {
+                Version = "0.1.0",
+                AssetBundleSVCVersion = string.Empty,
+            };
+            var tableInfo = new ClientPackageBuildInfo()
+            {
+                Version = "0.0.2",
+                TableSVCVersion = "none",
+            };
+            var existingCodeInfo = new ClientPackageBuildInfo()
+            {
+                HotfixScriptSVCVersion = "legacy-keep",
+            };
+
+            var normalizedCodeInfo = AssetsVersionController.NormalizeFileServerComponentPackageBuildInfo(
+                AssetsVersionController.FileServerComponentKind.Code, "30", codeInfo);
+            var normalizedAssetBundleInfo = AssetsVersionController.NormalizeFileServerComponentPackageBuildInfo(
+                AssetsVersionController.FileServerComponentKind.AssetBundle, "32", assetBundleInfo);
+            var normalizedTableInfo = AssetsVersionController.NormalizeFileServerComponentPackageBuildInfo(
+                AssetsVersionController.FileServerComponentKind.Table, "27", tableInfo);
+            var preservedCodeInfo = AssetsVersionController.NormalizeFileServerComponentPackageBuildInfo(
+                AssetsVersionController.FileServerComponentKind.Code, "30", existingCodeInfo);
+
+            EnsureEqual("30", normalizedCodeInfo.HotfixScriptSVCVersion,
+                "Code 组件版本兜底结果不匹配。");
+            EnsureEqual("32", normalizedAssetBundleInfo.AssetBundleSVCVersion,
+                "AssetBundle 组件版本兜底结果不匹配。");
+            EnsureEqual("27", normalizedTableInfo.TableSVCVersion,
+                "Table 组件版本兜底结果不匹配。");
+            EnsureEqual("legacy-keep", preservedCodeInfo.HotfixScriptSVCVersion,
+                "已有非空 Code 组件版本时不应被兜底逻辑覆盖。");
+            EnsureEqual("none", codeInfo.HotfixScriptSVCVersion,
+                "组件版本兜底不应原地修改输入对象。");
         }
 
         /// <summary>
@@ -512,7 +567,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 12;
+            const int totalCheckCount = 13;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -527,6 +582,10 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.MergeFileServerPackageBuildInfo_MergesComponentSpecificFields),
                 AssetsVersionControllerDevOpsTest.VerifyMergeFileServerPackageBuildInfoMergesComponentSpecificFields,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.NormalizeFileServerComponentPackageBuildInfo_FallsBackToComponentVersionWhenSourceUsesNone),
+                AssetsVersionControllerDevOpsTest.VerifyNormalizeFileServerComponentPackageBuildInfoFallsBackToComponentVersionWhenSourceUsesNone,
                 reportBuilder, ref failedCount);
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerPackageBuildInfo_ReturnsErrorForMismatchedComponentVersions),
