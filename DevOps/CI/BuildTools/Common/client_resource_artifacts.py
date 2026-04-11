@@ -4,8 +4,8 @@
 1. 这里只处理隔离输出目录、产物筛选、临时整理与上传。
 2. Unity BatchMode 参数解析、日志和进程控制统一复用 BuildClientPackage 的共享 facade。
 3. TeamCity DSL 只调度 Python 入口脚本，真正的产物组织与上传规则放在这里收敛。
-4. Code / Assetbundle / Table 上传成功后，这里还负责刷新共享的 `clientRes_{platform}/version.info`，
-    让运行时只通过一个文件服务器入口就能拿到三段构建号。
+4. Code / Assetbundle / Table 上传成功后，这里还负责刷新共享的 `global_version.info`，
+    让运行时只通过一个文件服务器入口就能拿到各平台的 version_num。
 """
 
 from __future__ import annotations
