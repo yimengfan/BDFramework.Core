@@ -83,6 +83,24 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证 CI BatchMode 独立下载目录缺少 package_build.info 时，会返回空白结构而不是回退到旧版 ClientAssetsUtils 初始化。
+        /// </summary>
+        [Test]
+        public void LoadLocalPackageBuildInfo_ReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing()
+        {
+            VerifyLoadLocalPackageBuildInfoReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing();
+        }
+
+        /// <summary>
+        /// 验证 CI BatchMode 本地资源校验只依赖当前下载目录和 hash，不依赖 StreamingAssets 初始化。
+        /// </summary>
+        [Test]
+        public void IsFileServerDownloadedAssetValid_ValidatesOnlyDownloadedPayloadFile()
+        {
+            VerifyIsFileServerDownloadedAssetValidValidatesOnlyDownloadedPayloadFile();
+        }
+
+        /// <summary>
         /// 以纯异常校验方式验证共享版控解析结果，供 batchmode 路径复用。
         /// </summary>
         internal static void VerifyTryParseFileServerVersionInfoParsesThreeSegments()
@@ -263,6 +281,70 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证缺少本地 package_build.info 时的无回退读取结果，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyLoadLocalPackageBuildInfoReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing()
+        {
+            var tempDir = Path.Combine(Path.GetTempPath(), "BDFramework", "AssetsVersionControllerDevOpsTest",
+                Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(tempDir);
+
+            try
+            {
+                var packageBuildInfo = AssetsVersionController.LoadLocalPackageBuildInfo(tempDir, false);
+
+                EnsureEqual("0.0.0", packageBuildInfo.Version, "缺少本地 package_build.info 时 Version 默认值不匹配。");
+                EnsureEqual("none", packageBuildInfo.HotfixScriptSVCVersion,
+                    "缺少本地 package_build.info 时 HotfixScriptSVCVersion 默认值不匹配。");
+            }
+            finally
+            {
+                if (Directory.Exists(tempDir))
+                {
+                    Directory.Delete(tempDir, true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 以纯异常校验方式验证 CI 独立下载目录下的 hash 校验逻辑，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyIsFileServerDownloadedAssetValidValidatesOnlyDownloadedPayloadFile()
+        {
+            var tempDir = Path.Combine(Path.GetTempPath(), "BDFramework", "AssetsVersionControllerDevOpsTest",
+                Guid.NewGuid().ToString("N"));
+            var assetRelativePath = "script/hotfix/Game.dll.bytes";
+            var assetAbsolutePath = Path.Combine(tempDir, "script", "hotfix", "Game.dll.bytes");
+            Directory.CreateDirectory(Path.GetDirectoryName(assetAbsolutePath) ?? tempDir);
+            File.WriteAllBytes(assetAbsolutePath, Encoding.UTF8.GetBytes("verify-payload"));
+
+            try
+            {
+                var hash = FileHelper.GetMurmurHash3(assetAbsolutePath);
+                var assetItem = new AssetItem()
+                {
+                    Id = 701,
+                    LocalPath = assetRelativePath,
+                    HashName = hash,
+                };
+
+                EnsureTrue(AssetsVersionController.IsFileServerDownloadedAssetValid(tempDir, assetItem),
+                    "CI 本地下载目录 hash 校验应该通过。");
+
+                assetItem.HashName = "invalid-hash";
+                EnsureTrue(!AssetsVersionController.IsFileServerDownloadedAssetValid(tempDir, assetItem),
+                    "CI 本地下载目录 hash 校验应该拒绝错误 hash。");
+            }
+            finally
+            {
+                if (Directory.Exists(tempDir))
+                {
+                    Directory.Delete(tempDir, true);
+                }
+            }
+        }
+
+        /// <summary>
         /// 批验证私有断言：期望值不一致时抛出显式异常，避免依赖 NUnit 约束对象。
         /// </summary>
         internal static void EnsureEqual<T>(T expected, T actual, string message)
@@ -306,6 +388,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
+            const int totalCheckCount = 8;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseFileServerVersionInfo_ParsesThreeSegments),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseFileServerVersionInfoParsesThreeSegments,
@@ -330,12 +413,20 @@ namespace BDFramework.EditorTest.AssetsManager
                 nameof(AssetsVersionControllerDevOpsTest.FindFileServerRepresentativeAsset_PicksRealPayloadAssets),
                 AssetsVersionControllerDevOpsTest.VerifyFindFileServerRepresentativeAssetPicksRealPayloadAssets,
                 reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.LoadLocalPackageBuildInfo_ReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing),
+                AssetsVersionControllerDevOpsTest.VerifyLoadLocalPackageBuildInfoReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.IsFileServerDownloadedAssetValid_ValidatesOnlyDownloadedPayloadFile),
+                AssetsVersionControllerDevOpsTest.VerifyIsFileServerDownloadedAssetValidValidatesOnlyDownloadedPayloadFile,
+                reportBuilder, ref failedCount);
 
             // Phase 2: 把批验证结果写到 Library，方便 CI 和本地 batchmode 直接收集报告。
             var outputPath = Path.Combine(Directory.GetCurrentDirectory(), "Library",
                 "AssetsVersionControllerDevOpsBatchVerification.txt");
             reportBuilder.Insert(0,
-                $"Summary: total=6 passed={6 - failedCount} failed={failedCount}{Environment.NewLine}");
+                $"Summary: total={totalCheckCount} passed={totalCheckCount - failedCount} failed={failedCount}{Environment.NewLine}");
             File.WriteAllText(outputPath, reportBuilder.ToString(), Encoding.UTF8);
 
             // Phase 3: 返回显式退出码，让 batchmode 可以直接据此判断验证是否通过。

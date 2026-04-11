@@ -231,6 +231,19 @@ namespace BDFramework.ResourceMgr
         private const string FileServerCacheFolderName = "version_cache";
 
         /// <summary>
+        /// CI BatchMode 独立下载根目录。
+        /// 该目录只服务于文件服务器真实下载验证，避免为了准备旧版 FIRST/SECOND_LOAD_DIR 提前触发
+        /// <see cref="ClientAssetsUtils"/> 的 BetterStreamingAssets 初始化。
+        /// </summary>
+        private const string FileServerBatchVerificationRootFolderName = "file_server_verify";
+
+        /// <summary>
+        /// 文件服务器协议使用的 package_build.info 文件名。
+        /// 这里保持为局部常量，避免 CI 验证路径因为访问 <see cref="ClientAssetsUtils"/> 的静态字段而触发类型初始化。
+        /// </summary>
+        private const string FileServerPackageBuildInfoPath = "package_build.info";
+
+        /// <summary>
         /// 本地文件服务器状态文件。
         /// 记录已安装三段版本号、各组件版本、子包版本和受本协议管理的文件列表。
         /// </summary>
@@ -513,7 +526,7 @@ namespace BDFramework.ResourceMgr
             LogFileServerFlow($"开始 CI BatchMode 文件服务器验证 url={request.ServerUrl}", Color.cyan);
 
             // Phase 1: 先解析共享版控，并把 TeamCity 期望版本号与远端 version.info 对齐。
-            var resolveResult = await ResolveFileServerVersionInfo(request.ServerUrl);
+            var resolveResult = await ResolveFileServerVersionInfo(request.ServerUrl, useIsolatedLocalLoadDir: true);
             result.Platform = resolveResult.Platform;
             result.PlatformPath = resolveResult.PlatformPath;
             result.FirstLoadDir = resolveResult.FirstLoadDir;
@@ -628,7 +641,8 @@ namespace BDFramework.ResourceMgr
                 return result;
             }
 
-            RebuildFileServerLocalMetadata(resolveResult.FirstLoadDir, resolveResult.CacheDir, componentContexts);
+            RebuildFileServerLocalMetadata(resolveResult.FirstLoadDir, resolveResult.CacheDir, componentContexts,
+                allowBasePackageFallback: false);
             foreach (var componentPair in componentContexts)
             {
                 SetFileServerStateComponentVersion(resolveResult.State, componentPair.Key, componentPair.Value.Version);
@@ -642,7 +656,8 @@ namespace BDFramework.ResourceMgr
 
             // Phase 5: 先做全量 hash/存在性校验，再确认 package_build.info 已经落成当前链路的三段版本号。
             var validateError = await ValidateFileServerManagedAssets(resolveResult.FirstLoadDir,
-                resolveResult.Platform, componentContexts, false, null, null);
+                resolveResult.Platform, componentContexts, false, null, null,
+                preferLocalDownloadedAssetsOnly: true);
             if (!string.IsNullOrEmpty(validateError))
             {
                 result.Error = validateError;
@@ -1056,11 +1071,12 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 解析文件服务器共享版控入口，并在远端不可用时回退到本地缓存状态。
         /// </summary>
-        private async Task<FileServerResolveResult> ResolveFileServerVersionInfo(string serverUrl)
+        private async Task<FileServerResolveResult> ResolveFileServerVersionInfo(string serverUrl,
+            bool useIsolatedLocalLoadDir = false)
         {
             var runtimePlatform = BApplication.RuntimePlatform;
             var platformPath = BApplication.GetPlatformLoadPath(runtimePlatform);
-            var firstLoadDir = EnsureFileServerLocalLoadDir(runtimePlatform).Item1;
+            var firstLoadDir = EnsureFileServerLocalLoadDir(runtimePlatform, useIsolatedLocalLoadDir).Item1;
             var cacheDir = IPath.Combine(firstLoadDir, FileServerCacheFolderName);
             Directory.CreateDirectory(cacheDir);
 
@@ -1229,7 +1245,8 @@ namespace BDFramework.ResourceMgr
                 Version = componentVersion,
             };
 
-            var packageBuildDownload = await DownloadTextWithRetry(CombineUrl(remoteRoot, ClientAssetsUtils.PACKAGE_BUILD_INFO_PATH));
+            var packageBuildDownload = await DownloadTextWithRetry(CombineUrl(remoteRoot,
+                FileServerPackageBuildInfoPath));
             if (!packageBuildDownload.Item1)
             {
                 if (useCacheOnFailure)
@@ -1273,7 +1290,7 @@ namespace BDFramework.ResourceMgr
                     var assetItems = CsvSerializer.DeserializeFromString<List<AssetItem>>(assetsInfoDownload.Item3)
                                      ?? new List<AssetItem>();
                     context.AssetItems = assetItems.Where(item =>
-                            !string.Equals(item.LocalPath, ClientAssetsUtils.PACKAGE_BUILD_INFO_PATH,
+                            !string.Equals(item.LocalPath, FileServerPackageBuildInfoPath,
                                 StringComparison.OrdinalIgnoreCase))
                         .Distinct()
                         .OrderBy(item => item.Id)
@@ -1538,7 +1555,8 @@ namespace BDFramework.ResourceMgr
             Dictionary<FileServerComponentKind, FileServerComponentContext> componentContexts,
             bool isSubPackageMode,
             List<AssetItem> selectedAssets,
-            Action<RetStatus, string> onTaskEndCallback)
+            Action<RetStatus, string> onTaskEndCallback,
+            bool preferLocalDownloadedAssetsOnly = false)
         {
             var errors = new List<string>();
             IEnumerable<AssetItem> targetAssets;
@@ -1558,6 +1576,10 @@ namespace BDFramework.ResourceMgr
                 {
                     var localPath = IPath.Combine(firstLoadDir, assetItem.LocalPath);
                     isValid = File.Exists(localPath);
+                }
+                else if (preferLocalDownloadedAssetsOnly)
+                {
+                    isValid = IsFileServerDownloadedAssetValid(firstLoadDir, assetItem);
                 }
                 else
                 {
@@ -1587,13 +1609,14 @@ namespace BDFramework.ResourceMgr
 
         private void RebuildFileServerLocalMetadata(string firstLoadDir,
             string cacheDir,
-            Dictionary<FileServerComponentKind, FileServerComponentContext> componentContexts)
+            Dictionary<FileServerComponentKind, FileServerComponentContext> componentContexts,
+            bool allowBasePackageFallback = true)
         {
             var mergedAssets = componentContexts.Values
                 .Where(context => context.ComponentKind != FileServerComponentKind.Table)
                 .SelectMany(context => context.AssetItems)
                 .Where(item =>
-                    !string.Equals(item.LocalPath, ClientAssetsUtils.PACKAGE_BUILD_INFO_PATH,
+                    !string.Equals(item.LocalPath, FileServerPackageBuildInfoPath,
                         StringComparison.OrdinalIgnoreCase))
                 .Distinct()
                 .OrderBy(item => item.Id)
@@ -1604,7 +1627,7 @@ namespace BDFramework.ResourceMgr
                     CsvSerializer.SerializeToString(mergedAssets));
             }
 
-            var localPackageBuildInfo = LoadLocalPackageBuildInfo(firstLoadDir);
+            var localPackageBuildInfo = LoadLocalPackageBuildInfo(firstLoadDir, allowBasePackageFallback);
             var mergedPackageBuildInfo = MergeFileServerPackageBuildInfo(localPackageBuildInfo,
                 componentContexts.TryGetValue(FileServerComponentKind.Code, out var codeContext)
                     ? codeContext.PackageBuildInfo
@@ -1615,7 +1638,7 @@ namespace BDFramework.ResourceMgr
                 componentContexts.TryGetValue(FileServerComponentKind.Table, out var tableContext)
                     ? tableContext.PackageBuildInfo
                     : null);
-            FileHelper.WriteAllText(IPath.Combine(firstLoadDir, ClientAssetsUtils.PACKAGE_BUILD_INFO_PATH),
+            FileHelper.WriteAllText(IPath.Combine(firstLoadDir, FileServerPackageBuildInfoPath),
                 JsonMapper.ToJson(mergedPackageBuildInfo));
 
             var subPackagePath = GetFileServerSubPackageCachePath(cacheDir);
@@ -1704,8 +1727,24 @@ namespace BDFramework.ResourceMgr
             }
         }
 
-        private static Tuple<string, string> EnsureFileServerLocalLoadDir(RuntimePlatform runtimePlatform)
+        /// <summary>
+        /// 为文件服务器协议准备本地加载目录。
+        /// 常规运行沿用 <see cref="ClientAssetsUtils"/> 的版本目录语义；CI BatchMode 验证则切到独立目录，
+        /// 避免在纯下载验证前触发 BetterStreamingAssets 初始化。
+        /// </summary>
+        private static Tuple<string, string> EnsureFileServerLocalLoadDir(RuntimePlatform runtimePlatform,
+            bool useIsolatedLocalLoadDir = false)
         {
+            if (useIsolatedLocalLoadDir)
+            {
+                var platformPath = BApplication.GetPlatformLoadPath(runtimePlatform);
+                var isolatedFirstLoadDir = IPath.Combine(BApplication.persistentDataPath,
+                    FileServerBatchVerificationRootFolderName, platformPath);
+                var isolatedSecondLoadDir = IPath.Combine(BApplication.streamingAssetsPath, platformPath);
+                Directory.CreateDirectory(isolatedFirstLoadDir);
+                return new Tuple<string, string>(isolatedFirstLoadDir, isolatedSecondLoadDir);
+            }
+
             if (string.IsNullOrEmpty(ClientAssetsUtils.FIRST_LOAD_DIR)
                 || string.IsNullOrEmpty(ClientAssetsUtils.SECOND_LOAD_DIR))
             {
@@ -1737,6 +1776,32 @@ namespace BDFramework.ResourceMgr
 
             Directory.CreateDirectory(firstLoadDir);
             return new Tuple<string, string>(firstLoadDir, secondLoadDir);
+        }
+
+        /// <summary>
+        /// 校验文件服务器验证链刚刚下载到本地的单个资源。
+        /// 该 helper 只看当前验证目录下的实际文件和 hash，不访问 StreamingAssets，也不依赖 ClientAssetsUtils 初始化。
+        /// </summary>
+        internal static bool IsFileServerDownloadedAssetValid(string firstLoadDir, AssetItem assetItem)
+        {
+            if (string.IsNullOrEmpty(firstLoadDir) || assetItem == null || string.IsNullOrEmpty(assetItem.LocalPath))
+            {
+                return false;
+            }
+
+            var localPath = IPath.Combine(firstLoadDir, assetItem.LocalPath);
+            if (!File.Exists(localPath))
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(assetItem.HashName))
+            {
+                return true;
+            }
+
+            var hash = FileHelper.GetMurmurHash3(localPath);
+            return string.Equals(hash, assetItem.HashName, StringComparison.OrdinalIgnoreCase);
         }
 
         private static string BuildFileServerVersionManifestUrl(string serverUrl, string platformPath)
@@ -1943,9 +2008,14 @@ namespace BDFramework.ResourceMgr
             }
         }
 
-        private static ClientPackageBuildInfo LoadLocalPackageBuildInfo(string firstLoadDir)
+        /// <summary>
+        /// 读取当前本地下载目录里的 package_build.info。
+        /// 对于 CI BatchMode 验证，可关闭母包回退，避免只为了拿默认版本而触发 ClientAssetsUtils 的静态初始化。
+        /// </summary>
+        internal static ClientPackageBuildInfo LoadLocalPackageBuildInfo(string firstLoadDir,
+            bool allowBasePackageFallback = true)
         {
-            var localPackageBuildPath = IPath.Combine(firstLoadDir, ClientAssetsUtils.PACKAGE_BUILD_INFO_PATH);
+            var localPackageBuildPath = IPath.Combine(firstLoadDir, FileServerPackageBuildInfoPath);
             if (File.Exists(localPackageBuildPath))
             {
                 try
@@ -1958,7 +2028,19 @@ namespace BDFramework.ResourceMgr
                 }
             }
 
-            return ClientAssetsUtils.GetBasePackBuildInfo() ?? new ClientPackageBuildInfo();
+            if (!allowBasePackageFallback)
+            {
+                return new ClientPackageBuildInfo();
+            }
+
+            try
+            {
+                return ClientAssetsUtils.GetBasePackBuildInfo() ?? new ClientPackageBuildInfo();
+            }
+            catch
+            {
+                return new ClientPackageBuildInfo();
+            }
         }
 
         /// <summary>
