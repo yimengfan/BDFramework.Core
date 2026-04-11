@@ -1042,14 +1042,6 @@ def main() -> int:
     raise TestClientResError(f"Unsupported command: {args.command}")
 
 
-if __name__ == "__main__":
-    try:
-        raise SystemExit(main())
-    except TestClientResError as exc:
-        _safe_print_error(exc)
-        raise SystemExit(2)
-
-
 def _safe_print_error(exc: TestClientResError) -> None:
     """Print the error message safely even when stdout uses a limited codec (e.g. Windows GBK)."""
     raw_message = f"[TestClientRes][ERROR] {exc}"
@@ -1063,3 +1055,11 @@ def _safe_print_error(exc: TestClientResError) -> None:
             sys.stdout.buffer.flush()
         except (AttributeError, OSError):
             print(safe_message.encode("ascii", errors="replace").decode("ascii"))
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except TestClientResError as exc:
+        _safe_print_error(exc)
+        raise SystemExit(2)
