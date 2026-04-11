@@ -8,7 +8,8 @@
 2. 三个平台脚本只负责传入平台、日志前缀和 Unity `executeMethod`；公共流程统一复用 `Common/client_resource_flow.py`。
 3. 真实构建前必须清理隔离输出目录，默认写到 `Library/CIOutputs/clientres_assetbundle/<build_name>/<build_number>/<platform>/`。
 4. 上传前只保留 Assetbundle 相关目录和配置文件，不把热更代码或表格产物混进上传源。
-5. BatchMode 的 Assetbundle CI 会在 Unity 命令行里显式追加 `-buildTarget` 到目标平台，不在 Editor 内切换平台；这是当前唯一要求强制做平台工程隔离的 ClientRes 任务，因为 Assetbundle 会受跨平台 Unity 缓存复用影响。TeamCity 侧应把 `checkoutDir` 直接设为 `/{platform}/{buildTypeId}` 这类稳定目录，并显式透传 `--project-dir "%teamcity.build.checkoutDir%"`；不要再为 checkoutDir 额外定义中间参数。如果上游 CI 仍在使用共享 checkout，共享 flow 才回退到原工程同级的 `/{platform}/{repo-leaf}/` 隔离 git worktree，让每个平台拥有独立工程目录和 `Library/Temp`。
+5. BatchMode 的 Assetbundle CI 会在 Unity 命令行里显式追加 `-buildTarget` 到目标平台，不在 Editor 内切换平台；TeamCity 推荐直接把工程 checkout 到原仓库同级的 `/{platform}/{repo-name}/`，这样共享 flow 会把当前工程识别为 `already_isolated` 并直接复用该目录。若当前任务仍从默认 checkout 根启动，但带了 CI 构建元数据，共享 flow 才会回退创建同路径的隔离 git worktree，让每个平台拥有独立工程目录和 `Library/Temp`。
+6. iOS BatchMode 首次 SBP 失败时，包侧仍会做纹理重导入和 `Temp/ContentBuildData` 清理；但如果当前工程已经位于 `/{platform}/{repo-name}/` 隔离目录，就不会再额外 `BuildCache.PurgeCache(false)`，只在共享工程根回退场景保留这一步跨平台缓存兜底。
 
 ## 文件说明
 
@@ -16,29 +17,11 @@
 - `build_ios.py`
 - `build_windows.py`
 
-## 任务说明与覆盖流程
-
-- 任务说明：该模块对应 TeamCity `ClientRes_Assetbundle` 页签下的三端热更 AssetBundle 构建任务，需与 `PublishPipeLineCI.BuildAssetbundle*` 入口及其 `CI(Des)` 注释保持一致。
-- 覆盖流程：BatchMode `BuildAssetbundle*` executeMethod、`art_assets/*` payload 产出、`assets.info` / `art_assets.info` 回退逻辑、上传目录 `ClientRes_Assetbundle_{platform}/{buildnum}`、远端目录递归校验、dry-run 与真实上传。
-
-## TeamCity 页面描述
-
-- TeamCity 页签：`BDFramework.Core / ClientRes_Assetbundle`
-- 聚合任务：`ClientRes_Assetbundle`
-- 子任务：`BuildAssetbundle_android`、`BuildAssetbundle_ios`、`BuildAssetbundle_windows`
-- TeamCity 上的任务描述应该强调：这里是热更美术资源 payload 构建、整理与上传一致性任务，不是单纯 Unity 打包成功。
-
 ## 验证命令
 
 ```bash
 python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q
 ```
-
-推荐验证顺序：
-
-1. 先跑上面的 pytest。
-2. 再执行三端 dry-run，确认平台隔离 checkout/worktree、日志和上传前 staging 规则正确。
-3. 只有当前 Unity 与包版本能正常编译时，才继续 TeamCity 真实构建与上传验证。
 
 ## TeamCity 自动化映射
 

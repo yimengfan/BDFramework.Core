@@ -20,8 +20,10 @@
 
 ## Module Baseline
 
-- All touched C# classes must keep XML comments current. Key business, protocol, pipeline, and orchestration classes must describe design role and include an example or usage note.
-- All touched methods must keep XML comments current. Key workflow methods must include phase comments so the process can be read top-down.
+- **All comments and docstrings must be written in Chinese (中文).** This applies to XML comments, module docs, class docs, function docs, test docs, inline comments, and configuration file comments.
+- All touched C# classes must keep XML comments current in Chinese. Key business, protocol, pipeline, and orchestration classes must describe design role and include an example or usage note.
+- All touched methods must keep XML comments current in Chinese. Key workflow methods must include phase comments so the process can be read top-down.
+- Test files (Unity tests, etc.) are NOT exempt: every test module, test class, test method, and test helper must have a Chinese comment explaining its purpose and the scenario it validates.
 - Keep major workflows concentrated in explicit entry or coordinator methods, then bridge to helpers. Do not spread the main process across unrelated files without a clear flow anchor.
 - New or changed package code must add or update Unity automated tests. The affected tests must pass before the task is considered complete.
 - When changing startup, asset management, resource update, or editor pipeline flows, keep logs, tests, and local documentation synchronized.

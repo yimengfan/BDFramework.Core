@@ -8,16 +8,17 @@ This file is the mandatory workspace instruction set for GitHub Copilot in this 
 - Talos mirror file: `Packages/com.popo.bdframework/.talos/AGENTS.md`
 - Sync registry: `AI_RULES_INDEX.md`
 - Module instructions: `.github/instructions/ci.instructions.md`, `.github/instructions/bdframework.instructions.md`
-- Module indexes: `DevOps/CI/AI_RULES_INDEX.md`, `Packages/com.popo.bdframework/AI_RULES_INDEX.md`
 - Maintenance rule: when either file changes, update the peer file in the same change so the two rule sets stay semantically aligned.
 
 ## Baseline Code Standards
 
-- Every touched class must have a class-level comment or docstring. It must explain the design role of the type, why it exists, and include an example or usage note for key business, protocol, pipeline, or orchestration classes.
-- Every touched function or method must have a comment or docstring that explains purpose and behavior. For non-trivial helpers, document inputs, outputs, side effects, fallback rules, or failure contract rather than repeating parameter names.
+- **All comments and docstrings must be written in Chinese (中文).** This applies to module docstrings, class docstrings, function docstrings, process comments, fixture descriptions, test docstrings, inline comments, and configuration file comments. English-only docstrings do not satisfy this requirement.
+- Every touched class must have a class-level comment or docstring in Chinese. It must explain the design role of the type, why it exists, and include an example or usage note for key business, protocol, pipeline, or orchestration classes.
+- Every touched function or method must have a comment or docstring in Chinese that explains purpose and behavior. For non-trivial helpers, document inputs, outputs, side effects, fallback rules, or failure contract rather than repeating parameter names.
+- Test files (pytest, Unity tests, etc.) are NOT exempt: every test module, test class, test function, fixture, and test helper must have a Chinese docstring explaining its purpose and the scenario it validates.
 - Major workflows must stay concentrated around an explicit entry or coordinator method so the end-to-end path can be read in one place. Do not scatter the primary process across distant files or tiny helpers without a clear bridge.
-- Major workflows and critical branches must include process comments. Use phase-oriented comments so readers can follow the flow from top to bottom without reconstructing it from logs alone.
-- Critical configuration files must be documented in code comments or docstrings where they are declared, loaded, generated, or written. The comment must explain the file purpose and who produces and consumes it.
+- Major workflows and critical branches must include process comments in Chinese. Use phase-oriented comments so readers can follow the flow from top to bottom without reconstructing it from logs alone.
+- Critical configuration files must be documented in code comments or docstrings in Chinese where they are declared, loaded, generated, or written. The comment must explain the file purpose and who produces and consumes it.
 - Every new or changed code path must add or update automated tests. Prefer unit tests first; if a flow cannot be covered purely with unit tests, add the closest automated verification and explain the gap. Relevant tests must pass before the task is considered complete.
 
 ## Mandatory Conventions

@@ -4,13 +4,13 @@
 
 `DevOps/CI/` 下的公共规范、文档入口和模块索引统一维护在这里。
 
-每次实现或修改 `DevOps/CI/` 内功能时，先读本文档，再读具体模块 README；如果改动涉及 TeamCity，再继续读 `.test-DevOps/README.md` 和 `.test-DevOps/teamcityskill/README.md`。
+每次实现或修改 `DevOps/CI/` 内功能时，先读本文档，再读具体模块 README；如果改动涉及 TeamCity，再继续读 `.test-DevOps/README.md` 和 `.github/skills/teamcity/README.md`。
 
 ## 阅读顺序
 
 1. 先读本文档，确认公共规范和验证要求。
 2. 再读当前模块 README，确认模块职责、主流程、测试入口和模块补充约束。
-3. 如果改动涉及 TeamCity DSL、构建命令、参数透传、CI 日志或远端执行验证，再读 `../../.test-DevOps/README.md` 和 `../../.test-DevOps/teamcityskill/README.md`。
+3. 如果改动涉及 TeamCity DSL、构建命令、参数透传、CI 日志或远端执行验证，再读 `../../.test-DevOps/README.md` 和 `../../.github/skills/teamcity/README.md`。
 
 ## 公共规范
 
@@ -39,7 +39,7 @@
 - 如果改动模块已经接入 TeamCity，或者本次修改会影响 TeamCity DSL、构建参数、脚本入口、步骤日志、输出目录、上传逻辑，就必须执行受影响的 TeamCity 测试。
 - 验证时至少确认：任务最终状态、关键流程日志、产物路径或远端上传目录。
 - 通过 TeamCity Web API 或辅助脚本手动触发验证任务时，必须带上 `Comment` 和 `Tags`；`Comment` 至少要明确这次测试对应的目标 buildType。
-- TeamCity 执行与排查入口统一维护在 `../../.test-DevOps/README.md` 和 `../../.test-DevOps/teamcityskill/README.md`。
+- TeamCity 执行与排查入口统一维护在 `../../.test-DevOps/README.md` 和 `../../.github/skills/teamcity/README.md`。
 
 ### 5. 文档拆分原则
 

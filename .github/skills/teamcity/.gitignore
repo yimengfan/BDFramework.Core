@@ -1,0 +1,4 @@
+# TeamCity 技能本地产物
+output/
+tc_output/
+*.local.json
