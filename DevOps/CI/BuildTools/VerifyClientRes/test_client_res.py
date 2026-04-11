@@ -1046,5 +1046,20 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except TestClientResError as exc:
-        print(f"[TestClientRes][ERROR] {exc}")
+        _safe_print_error(exc)
         raise SystemExit(2)
+
+
+def _safe_print_error(exc: TestClientResError) -> None:
+    """Print the error message safely even when stdout uses a limited codec (e.g. Windows GBK)."""
+    raw_message = f"[TestClientRes][ERROR] {exc}"
+    try:
+        print(raw_message)
+    except UnicodeEncodeError:
+        safe_message = raw_message.encode("utf-8", errors="replace").decode("utf-8", errors="replace")
+        try:
+            sys.stdout.buffer.write(safe_message.encode(sys.stdout.encoding or "utf-8", errors="replace"))
+            sys.stdout.buffer.write(b"\n")
+            sys.stdout.buffer.flush()
+        except (AttributeError, OSError):
+            print(safe_message.encode("ascii", errors="replace").decode("ascii"))
