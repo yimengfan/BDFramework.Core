@@ -402,9 +402,9 @@ def run_table_resource_build(
 
     print(f"{log_prefix} ===== Step 2/7: validate host =====")
     host_os = detect_host_os()
-    local_platform_dir = TABLE_OUTPUT_PLATFORM_BY_HOST.get(host_os, host_os)
+    table_platform_hint = TABLE_OUTPUT_PLATFORM_BY_HOST.get(host_os, host_os)
     print(f"{log_prefix} host_os={host_os}")
-    print(f"{log_prefix} localDbPlatformDir={local_platform_dir}")
+    print(f"{log_prefix} tableUploadPlatformHint={table_platform_hint}")
     print(f"{log_prefix} clientVersion={client_version}")
     if build_name:
         print(f"{log_prefix} buildName={build_name}")
@@ -465,7 +465,7 @@ def run_table_resource_build(
         print(f"{log_prefix} dry-run enabled, skip artifact upload")
     else:
         upload_client_res_table(
-            local_platform_dir,
+            table_platform_hint,
             output_root=ci_output_root,
             build_number=build_number,
             fallback_build_label=client_version,

@@ -40,6 +40,7 @@ from Common.client_resource_artifacts import (  # noqa: E402
     prepare_clean_ci_output_root,
     prepare_code_upload_source,
     prepare_table_upload_source,
+    resolve_table_platform_output_dir,
     upload_client_res_code,
     upload_client_res_table,
     relativize_asset_info_entries,
@@ -305,6 +306,19 @@ def test_prepare_table_upload_source_requires_non_empty_databases(tmp_path: Path
         )
 
 
+def test_resolve_table_platform_output_dir_falls_back_to_detected_platform(tmp_path: Path) -> None:
+    """Verify table upload falls back to the only generated platform directory when the host hint is stale."""
+    output_root = tmp_path / "output"
+    detected_platform_dir = output_root / "android"
+    detected_platform_dir.mkdir(parents=True)
+    (detected_platform_dir / LOCAL_DB_FILENAME).write_bytes(b"local-db")
+    (detected_platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
+
+    resolved = resolve_table_platform_output_dir("windows", output_root=output_root)
+
+    assert resolved == detected_platform_dir
+
+
 def test_build_upload_summary_uses_new_remote_layout_names(tmp_path: Path) -> None:
     """Verify upload summaries use the new shared remote root naming rules."""
     prepared_dir = tmp_path / "prepared"
@@ -401,6 +415,10 @@ def test_upload_client_res_table_publishes_all_platform_manifests(
     captured_validate: dict[str, object] = {}
 
     monkeypatch.setattr("Common.client_resource_artifacts.resolve_file_server_settings", lambda: settings)
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.resolve_table_platform_output_dir",
+        lambda *args, **kwargs: tmp_path / "output" / "osx",
+    )
     monkeypatch.setattr(
         "Common.client_resource_artifacts.prepare_table_upload_source",
         lambda *args, **kwargs: prepared_dir,

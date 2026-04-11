@@ -418,7 +418,7 @@ def test_run_table_resource_build_uploads_shared_dbs(
     )
 
     output = capsys.readouterr().out
-    assert "localDbPlatformDir=osx" in output
+    assert "tableUploadPlatformHint=osx" in output
     assert "build finished successfully" in output
     assert events == [
         "configure_live_console_output",

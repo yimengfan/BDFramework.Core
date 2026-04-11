@@ -915,6 +915,52 @@ def validate_assetbundle_upload_source(prepared_dir: Path) -> None:
         )
 
 
+def resolve_table_platform_output_dir(
+    local_platform_dir: str | None,
+    *,
+    output_root: Path,
+) -> Path:
+    """解析本次表格任务实际生成 local.db 的平台目录。
+
+    BuildTable 在 Unity Editor 下会按当前活动 BuildTarget 生成 local.db，
+    这个平台目录不一定等于 TeamCity agent 的宿主 OS。因此优先尝试调用方传入的 hint，
+    如果目录不存在，再从当前输出根里自动发现唯一包含 local.db + package_build.info 的平台目录。
+    """
+    normalized_hint = (local_platform_dir or "").strip()
+    if normalized_hint:
+        hinted_platform_dir = output_root / normalized_hint
+        if hinted_platform_dir.exists():
+            return hinted_platform_dir
+
+    candidate_dirs = [
+        child
+        for child in output_root.iterdir()
+        if child.is_dir()
+        and child.name != SERVER_DATA_DIRNAME
+        and (child / LOCAL_DB_FILENAME).exists()
+        and (child / PACKAGE_BUILD_INFO_FILENAME).exists()
+    ] if output_root.exists() else []
+
+    if len(candidate_dirs) == 1:
+        return candidate_dirs[0]
+
+    available_dirs = sorted(
+        child.name for child in output_root.iterdir() if child.is_dir()
+    ) if output_root.exists() else []
+    hint_text = normalized_hint or "<empty>"
+
+    if not candidate_dirs:
+        raise ClientResourceArtifactsError(
+            "ClientRes table local platform output does not exist. "
+            f"hint={hint_text}, outputRoot={output_root}, availableDirs={available_dirs}"
+        )
+
+    raise ClientResourceArtifactsError(
+        "ClientRes table local platform output is ambiguous. "
+        f"hint={hint_text}, outputRoot={output_root}, candidates={sorted(path.name for path in candidate_dirs)}"
+    )
+
+
 def prepare_table_upload_source(
     local_platform_dir: str,
     *,
@@ -1079,13 +1125,25 @@ def upload_client_res_table(
     fallback_build_label: str | None,
     log_prefix: str,
 ) -> list[UploadedArtifact]:
-    """上传统一表格任务产物。"""
+    """上传统一表格任务产物。
+
+    表格 local.db 的平台目录由 Unity 当前活动 BuildTarget 决定，
+    这里不能只依赖宿主 OS 预测目录名，而要在 hint 失配时回退到输出目录自动发现。
+    """
     settings = resolve_file_server_settings()
     build_label = resolve_upload_build_label(build_number, fallback_build_label)
+    resolved_platform_dir = resolve_table_platform_output_dir(
+        local_platform_dir,
+        output_root=output_root,
+    )
+    normalized_hint = (local_platform_dir or "").strip() or "<empty>"
+    print(f"{log_prefix} tableUploadPlatformHint={normalized_hint}")
+    print(f"{log_prefix} tableUploadPlatformResolved={resolved_platform_dir.name}")
+    print(f"{log_prefix} tableUploadPlatformPath={resolved_platform_dir}")
 
     with tempfile.TemporaryDirectory(prefix="clientres_table_") as temp_dir:
         prepared_source_path = prepare_table_upload_source(
-            local_platform_dir,
+            resolved_platform_dir.name,
             output_root=output_root,
             staging_dir=Path(temp_dir),
         )

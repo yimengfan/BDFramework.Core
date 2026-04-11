@@ -8,6 +8,7 @@
 2. 表格任务只保留一个子任务 `BuildTable`，由 Python 脚本统一构建 `client.db / server.db`。
 3. 真实构建前必须清理隔离输出目录，默认写到 `Library/CIOutputs/clientres_table/<build_name>/<build_number>/`。
 4. 上传前会把 Unity 产出的 `local.db` 规范化重命名成 `client.db`，确保文件服务器目录与业务约定一致。
+5. `local.db` 在 Unity 输出根下仍然按当前活动 BuildTarget 落到平台子目录，因此上传阶段必须从实际输出里解析这一个平台目录，不能只按 TeamCity agent 宿主 OS 猜目录名。
 
 ## 文件说明
 
