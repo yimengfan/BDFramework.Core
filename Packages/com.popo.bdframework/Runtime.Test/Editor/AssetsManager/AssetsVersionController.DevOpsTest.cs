@@ -345,6 +345,47 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证 global_version.info JSON 数组可以按平台提取 version_num 并解析为三段版控。
+        /// </summary>
+        [Test]
+        public void TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum()
+        {
+            VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum();
+        }
+
+        /// <summary>
+        /// 以纯异常校验方式验证 global_version.info JSON 解析，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum()
+        {
+            var json = "[{\"key\":\"default\",\"platform\":\"android\",\"version_num\":\"20.22.17\",\"game_server_ip\":\"127.0.0.1\"}]";
+
+            var parsed = AssetsVersionControllerDevOpsPureLogic.TryParseGlobalVersionInfoJson(json, "android",
+                out var versionInfo);
+            EnsureTrue(parsed, "TryParseGlobalVersionInfoJson(android) 应返回 true。");
+            EnsureEqual("20", versionInfo?.CodeVersion, "CodeVersion 不匹配。");
+            EnsureEqual("22", versionInfo?.AssetBundleVersion, "AssetBundleVersion 不匹配。");
+            EnsureEqual("17", versionInfo?.TableVersion, "TableVersion 不匹配。");
+            EnsureEqual("20.22.17", versionInfo?.RawValue, "RawValue 不匹配。");
+
+            // 非 android 平台应返回 false
+            var parsedIos = AssetsVersionControllerDevOpsPureLogic.TryParseGlobalVersionInfoJson(json, "ios",
+                out var iosVersionInfo);
+            EnsureTrue(!parsedIos, "TryParseGlobalVersionInfoJson(ios) 在只有 android 条目时应返回 false。");
+            EnsureTrue(iosVersionInfo == null, "ios 解析失败时 versionInfo 应为 null。");
+
+            // 多条目：验证 ios 也能匹配
+            var multiJson = "[{\"key\":\"default\",\"platform\":\"android\",\"version_num\":\"20.22.17\",\"game_server_ip\":\"127.0.0.1\"},"
+                            + "{\"key\":\"default\",\"platform\":\"ios\",\"version_num\":\"30.40.50\",\"game_server_ip\":\"127.0.0.1\"}]";
+            var parsedMulti = AssetsVersionControllerDevOpsPureLogic.TryParseGlobalVersionInfoJson(multiJson, "ios",
+                out var iosMultiInfo);
+            EnsureTrue(parsedMulti, "TryParseGlobalVersionInfoJson(ios) 多条目应返回 true。");
+            EnsureEqual("30", iosMultiInfo?.CodeVersion, "ios CodeVersion 不匹配。");
+            EnsureEqual("40", iosMultiInfo?.AssetBundleVersion, "ios AssetBundleVersion 不匹配。");
+            EnsureEqual("50", iosMultiInfo?.TableVersion, "ios TableVersion 不匹配。");
+        }
+
+        /// <summary>
         /// 批验证私有断言：期望值不一致时抛出显式异常，避免依赖 NUnit 约束对象。
         /// </summary>
         internal static void EnsureEqual<T>(T expected, T actual, string message)
@@ -444,47 +485,6 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log(
                 $"AssetsVersionController DevOps standalone batch verification passed. Report: {outputPath}");
             EditorApplication.Exit(0);
-        }
-
-        /// <summary>
-        /// 验证 global_version.info JSON 数组可以按平台提取 version_num 并解析为三段版控。
-        /// </summary>
-        [Test]
-        public void TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum()
-        {
-            VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum();
-        }
-
-        /// <summary>
-        /// 以纯异常校验方式验证 global_version.info JSON 解析，供 batchmode 路径复用。
-        /// </summary>
-        internal static void VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum()
-        {
-            var json = "[{\"key\":\"default\",\"platform\":\"android\",\"version_num\":\"20.22.17\",\"game_server_ip\":\"127.0.0.1\"}]";
-
-            var parsed = AssetsVersionControllerDevOpsPureLogic.TryParseGlobalVersionInfoJson(json, "android",
-                out var versionInfo);
-            EnsureTrue(parsed, "TryParseGlobalVersionInfoJson(android) 应返回 true。");
-            EnsureEqual("20", versionInfo?.CodeVersion, "CodeVersion 不匹配。");
-            EnsureEqual("22", versionInfo?.AssetBundleVersion, "AssetBundleVersion 不匹配。");
-            EnsureEqual("17", versionInfo?.TableVersion, "TableVersion 不匹配。");
-            EnsureEqual("20.22.17", versionInfo?.RawValue, "RawValue 不匹配。");
-
-            // 非 android 平台应返回 false
-            var parsedIos = AssetsVersionControllerDevOpsPureLogic.TryParseGlobalVersionInfoJson(json, "ios",
-                out var iosVersionInfo);
-            EnsureTrue(!parsedIos, "TryParseGlobalVersionInfoJson(ios) 在只有 android 条目时应返回 false。");
-            EnsureTrue(iosVersionInfo == null, "ios 解析失败时 versionInfo 应为 null。");
-
-            // 多条目：验证 ios 也能匹配
-            var multiJson = "[{\"key\":\"default\",\"platform\":\"android\",\"version_num\":\"20.22.17\",\"game_server_ip\":\"127.0.0.1\"},"
-                            + "{\"key\":\"default\",\"platform\":\"ios\",\"version_num\":\"30.40.50\",\"game_server_ip\":\"127.0.0.1\"}]";
-            var parsedMulti = AssetsVersionControllerDevOpsPureLogic.TryParseGlobalVersionInfoJson(multiJson, "ios",
-                out var iosMultiInfo);
-            EnsureTrue(parsedMulti, "TryParseGlobalVersionInfoJson(ios) 多条目应返回 true。");
-            EnsureEqual("30", iosMultiInfo?.CodeVersion, "ios CodeVersion 不匹配。");
-            EnsureEqual("40", iosMultiInfo?.AssetBundleVersion, "ios AssetBundleVersion 不匹配。");
-            EnsureEqual("50", iosMultiInfo?.TableVersion, "ios TableVersion 不匹配。");
         }
 
         /// <summary>
