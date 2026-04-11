@@ -214,15 +214,11 @@ namespace BDFramework.ResourceMgr
 
         /// <summary>
         /// 远端共享版控入口文件。
-        /// 文件内容固定为 code.assetbundle.table，运行时先读取它，再决定三个组件分别去哪一个构建号目录下载。
+        /// 文件内容为 JSON 数组，每条记录包含 key, platform, version_num, game_server_ip。
+        /// 运行时先读取这份全局指针文件，按当前平台提取 version_num（格式为 code.assetbundle.table），
+        /// 再决定三个组件分别去哪一个构建号目录下载。
         /// </summary>
-        private const string FileServerVersionManifestFileName = "version.info";
-
-        /// <summary>
-        /// 远端共享版控入口目录模板。
-        /// 例如 iOS 平台会映射到 clientRes_ios/version.info。
-        /// </summary>
-        private const string FileServerVersionManifestRootFormat = "clientRes_{0}";
+        private const string FileServerVersionManifestFileName = "global_version.info";
 
         /// <summary>
         /// 本地文件服务器缓存目录。
@@ -376,7 +372,7 @@ namespace BDFramework.ResourceMgr
             LogFileServerFlow("当前服务器不存在文件服务器版控入口，终止新协议流程。", Color.yellow);
             await UniTask.SwitchToMainThread();
             onTaskEndCallback?.Invoke(RetStatus.Error,
-                "当前服务器未提供文件服务器版控入口: clientRes_{platform}/version.info");
+                "当前服务器未提供文件服务器版控入口: global_version.info");
         }
 
         /// <summary>
@@ -395,7 +391,7 @@ namespace BDFramework.ResourceMgr
 
             LogFileServerFlow("当前服务器不存在文件服务器子包版控入口，终止新协议查询。", Color.yellow);
             await UniTask.SwitchToMainThread();
-            onError?.Invoke("当前服务器未提供文件服务器版控入口: clientRes_{platform}/version.info");
+            onError?.Invoke("当前服务器未提供文件服务器版控入口: global_version.info");
         }
 
         /// <summary>
@@ -404,6 +400,16 @@ namespace BDFramework.ResourceMgr
         internal static bool TryParseFileServerVersionInfo(string content, out FileServerVersionInfo versionInfo)
         {
             return AssetsVersionControllerDevOpsPureLogic.TryParseFileServerVersionInfo(content, out versionInfo);
+        }
+
+        /// <summary>
+        /// 从 global_version.info JSON 中按平台提取三段版控。
+        /// </summary>
+        internal static bool TryParseGlobalVersionInfoJson(string content, string platform,
+            out FileServerVersionInfo versionInfo)
+        {
+            return AssetsVersionControllerDevOpsPureLogic.TryParseGlobalVersionInfoJson(content, platform,
+                out versionInfo);
         }
 
         /// <summary>
@@ -470,7 +476,7 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
-        /// 校验 TeamCity 当前链路期望的共享三段版本号是否与远端 <c>clientRes_{platform}/version.info</c> 一致。
+        /// 校验 TeamCity 当前链路期望的共享三段版本号是否与远端 <c>global_version.info</c> 中当前平台的 <c>version_num</c> 一致。
         /// </summary>
         internal static string ValidateExpectedFileServerVersionInfo(
             FileServerVersionInfo expectedVersionInfo,
@@ -1081,7 +1087,7 @@ namespace BDFramework.ResourceMgr
             Directory.CreateDirectory(cacheDir);
 
             var state = LoadFileServerState(cacheDir);
-            var versionUrl = BuildFileServerVersionManifestUrl(serverUrl, platformPath);
+            var versionUrl = BuildFileServerVersionManifestUrl(serverUrl);
 
             // Phase 1: 优先请求远端共享版控文件，确认当前服务器是否启用了文件服务器协议。
             LogFileServerFlow($"开始请求共享版控文件 url={versionUrl}", Color.cyan);
@@ -1089,7 +1095,9 @@ namespace BDFramework.ResourceMgr
             var manifestDownloadResult = await DownloadTextWithRetry(versionUrl);
             if (manifestDownloadResult.Item1)
             {
-                if (!TryParseFileServerVersionInfo(manifestDownloadResult.Item3, out var remoteVersionInfo))
+                // 解析 global_version.info JSON，按当前平台提取 version_num 再拆分为三段版控。
+                if (!AssetsVersionControllerDevOpsPureLogic.TryParseGlobalVersionInfoJson(
+                        manifestDownloadResult.Item3, platformPath, out var remoteVersionInfo))
                 {
                     return new FileServerResolveResult()
                     {
@@ -1804,10 +1812,9 @@ namespace BDFramework.ResourceMgr
             return string.Equals(hash, assetItem.HashName, StringComparison.OrdinalIgnoreCase);
         }
 
-        private static string BuildFileServerVersionManifestUrl(string serverUrl, string platformPath)
+        private static string BuildFileServerVersionManifestUrl(string serverUrl)
         {
-            return CombineUrl(serverUrl, string.Format(FileServerVersionManifestRootFormat, platformPath),
-                FileServerVersionManifestFileName);
+            return CombineUrl(serverUrl, FileServerVersionManifestFileName);
         }
 
         private static string BuildFileServerComponentRemoteRoot(string serverUrl, string platformPath,

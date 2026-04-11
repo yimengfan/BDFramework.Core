@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BDFramework.Asset;
+using UnityEngine;
 
 namespace BDFramework.ResourceMgr
 {
@@ -70,6 +71,82 @@ namespace BDFramework.ResourceMgr
             }
 
             return $"{versionInfo.CodeVersion}.{versionInfo.AssetBundleVersion}.{versionInfo.TableVersion}";
+        }
+
+        /// <summary>
+        /// 从 <c>global_version.info</c> JSON 数组中提取指定平台的 <c>version_num</c>，
+        /// 再解析为三段版控 <c>FileServerVersionInfo</c>。
+        /// JSON 格式：<c>[{"key":"default","platform":"android","version_num":"20.22.17","game_server_ip":"127.0.0.1"}]</c>。
+        /// 平台匹配忽略大小写；找不到或格式非法返回 false。
+        /// </summary>
+        internal static bool TryParseGlobalVersionInfoJson(
+            string content,
+            string platform,
+            out AssetsVersionController.FileServerVersionInfo versionInfo)
+        {
+            versionInfo = null;
+            var normalizedContent = (content ?? string.Empty).Trim();
+            if (string.IsNullOrEmpty(normalizedContent) || string.IsNullOrEmpty(platform))
+            {
+                return false;
+            }
+
+            // MiniJSON does not ship in this assembly; use UnityEngine.JsonUtility via a wrapper array.
+            // The root is a JSON array, so wrap it for JsonUtility which expects a top-level object.
+            var wrappedJson = "{\"entries\":" + normalizedContent + "}";
+            GlobalVersionInfoWrapper wrapper;
+            try
+            {
+                wrapper = JsonUtility.FromJson<GlobalVersionInfoWrapper>(wrappedJson);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            if (wrapper?.entries == null)
+            {
+                return false;
+            }
+
+            var normalizedPlatform = platform.Trim().ToLowerInvariant();
+            GlobalVersionInfoEntry matchedEntry = null;
+            foreach (var entry in wrapper.entries)
+            {
+                if ((entry.platform ?? "").Trim().ToLowerInvariant() == normalizedPlatform)
+                {
+                    matchedEntry = entry;
+                    break;
+                }
+            }
+
+            if (matchedEntry == null || string.IsNullOrEmpty(matchedEntry.version_num))
+            {
+                return false;
+            }
+
+            return TryParseFileServerVersionInfo(matchedEntry.version_num, out versionInfo);
+        }
+
+        /// <summary>
+        /// <c>global_version.info</c> JSON 数组的 Unity 序列化包装。
+        /// </summary>
+        [Serializable]
+        internal sealed class GlobalVersionInfoWrapper
+        {
+            public GlobalVersionInfoEntry[] entries;
+        }
+
+        /// <summary>
+        /// <c>global_version.info</c> JSON 数组中单条记录的 Unity 序列化结构。
+        /// </summary>
+        [Serializable]
+        internal sealed class GlobalVersionInfoEntry
+        {
+            public string key;
+            public string platform;
+            public string version_num;
+            public string game_server_ip;
         }
 
         /// <summary>
