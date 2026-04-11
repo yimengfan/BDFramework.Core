@@ -19,6 +19,7 @@ from typing import Any
 
 import pytest
 
+from Common.artifact_uploader import ArtifactUploadError
 from Common.client_resource_version_manifest import (
     ClientResourceVersionManifest,
     ClientResourceVersionManifestError,
@@ -696,18 +697,17 @@ class TestPublishClientResourceVersionManifest:
     """发布单组件版本更新：读取当前 manifest → 替换指定段 → 写回文件服务器。"""
 
     def test_updates_single_component(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """验证发布单个组件版本时，会在当前平台 manifest 上只替换目标组件段。"""
         captured: dict[str, object] = {}
         settings = SimpleNamespace(base_url="http://fileserver")
 
         monkeypatch.setattr(
-            "Common.client_resource_version_manifest.load_client_resource_version_manifest",
-            lambda *args, **kwargs: ClientResourceVersionManifest("100", "200", "300"),
+            "Common.client_resource_version_manifest.load_global_version_info",
+            lambda *args, **kwargs: [GlobalVersionEntry(platform="ios", version_num="100.200.300")],
         )
         monkeypatch.setattr(
-            "Common.client_resource_version_manifest.save_client_resource_version_manifest",
-            lambda platform, manifest, **kwargs: captured.update(
-                {"platform": platform, "manifest": manifest, **kwargs}
-            ),
+            "Common.client_resource_version_manifest.save_global_version_info",
+            lambda entries, **kwargs: captured.update({"entries": entries, **kwargs}),
         )
 
         updated_manifest = publish_client_resource_version_manifest(
@@ -719,23 +719,23 @@ class TestPublishClientResourceVersionManifest:
 
         assert updated_manifest == ClientResourceVersionManifest("100", "240", "300")
         assert captured == {
-            "platform": "ios",
-            "manifest": ClientResourceVersionManifest("100", "240", "300"),
+            "entries": [GlobalVersionEntry(platform="ios", version_num="100.240.300")],
             "settings": settings,
             "timeout_seconds": 600,
         }
 
     def test_updates_code_component(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """验证发布 code 组件版本时，会只覆盖 code 段并保留其他段。"""
         captured: dict[str, object] = {}
         settings = SimpleNamespace(base_url="http://fileserver")
 
         monkeypatch.setattr(
-            "Common.client_resource_version_manifest.load_client_resource_version_manifest",
-            lambda *args, **kwargs: ClientResourceVersionManifest("100", "200", "300"),
+            "Common.client_resource_version_manifest.load_global_version_info",
+            lambda *args, **kwargs: [GlobalVersionEntry(platform="android", version_num="100.200.300")],
         )
         monkeypatch.setattr(
-            "Common.client_resource_version_manifest.save_client_resource_version_manifest",
-            lambda platform, manifest, **kwargs: captured.update({"manifest": manifest}),
+            "Common.client_resource_version_manifest.save_global_version_info",
+            lambda entries, **kwargs: captured.update({"entries": entries}),
         )
 
         result = publish_client_resource_version_manifest(
@@ -745,18 +745,63 @@ class TestPublishClientResourceVersionManifest:
             settings=settings,
         )
         assert result == ClientResourceVersionManifest("999", "200", "300")
+        assert captured["entries"][0].version_num == "999.200.300"
+
+    def test_retries_with_latest_remote_manifest_when_upload_detects_concurrent_overwrite(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """验证共享版控上传命中并发覆盖时，会重新加载最新远端 manifest 再合并当前组件版本。"""
+        settings = SimpleNamespace(base_url="http://fileserver")
+        load_results = iter(
+            [
+                [GlobalVersionEntry(platform="android", version_num="10.20.30")],
+                [GlobalVersionEntry(platform="android", version_num="10.21.30")],
+            ]
+        )
+        saved_entries: list[list[GlobalVersionEntry]] = []
+
+        monkeypatch.setattr(
+            "Common.client_resource_version_manifest.load_global_version_info",
+            lambda *args, **kwargs: next(load_results),
+        )
+
+        def fake_save(entries, **kwargs):
+            saved_entries.append(entries)
+            if len(saved_entries) == 1:
+                raise ArtifactUploadError(
+                    "File upload failed. local=/tmp/global_version.info, remote=global_version.info, "
+                    "status=500, detail=Internal Server Error, recovery_check=metadata sha256_mismatch "
+                    "expected=old actual=new"
+                )
+
+        monkeypatch.setattr(
+            "Common.client_resource_version_manifest.save_global_version_info",
+            fake_save,
+        )
+
+        result = publish_client_resource_version_manifest(
+            "android",
+            component_kind="code",
+            build_label="99",
+            settings=settings,
+        )
+
+        assert [entries[0].version_num for entries in saved_entries] == ["99.20.30", "99.21.30"]
+        assert result == ClientResourceVersionManifest("99", "21", "30")
 
     def test_updates_table_component(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """验证发布 table 组件版本时，会只覆盖 table 段并保留其他段。"""
         captured: dict[str, object] = {}
         settings = SimpleNamespace(base_url="http://fileserver")
 
         monkeypatch.setattr(
-            "Common.client_resource_version_manifest.load_client_resource_version_manifest",
-            lambda *args, **kwargs: ClientResourceVersionManifest("100", "200", "300"),
+            "Common.client_resource_version_manifest.load_global_version_info",
+            lambda *args, **kwargs: [GlobalVersionEntry(platform="windows", version_num="100.200.300")],
         )
         monkeypatch.setattr(
-            "Common.client_resource_version_manifest.save_client_resource_version_manifest",
-            lambda platform, manifest, **kwargs: captured.update({"manifest": manifest}),
+            "Common.client_resource_version_manifest.save_global_version_info",
+            lambda entries, **kwargs: captured.update({"entries": entries}),
         )
 
         result = publish_client_resource_version_manifest(
@@ -766,6 +811,7 @@ class TestPublishClientResourceVersionManifest:
             settings=settings,
         )
         assert result == ClientResourceVersionManifest("100", "200", "555")
+        assert captured["entries"][0].version_num == "100.200.555"
 
     def test_rejects_dotted_build_label(self, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.setattr(

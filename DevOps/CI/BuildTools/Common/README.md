@@ -42,7 +42,7 @@
 7. `ClientRes_*` 共享 helper 必须先清理隔离输出目录，再筛选当前类型需要的文件，避免把历史构建残留或其他类型产物重复上传。
 8. `ClientRes_*` 对应的 Unity BatchMode 命令必须显式传入 `-buildTarget` 到目标平台，不能在 Editor 内切换平台，也不能依赖 TeamCity agent 上一次残留的平台状态。
 9. `ClientRes_*` 共享 flow / artifact helper 的注释和日志规范与 `BuildClientPackage` 保持一致：文件头说明职责边界，关键函数说明为什么这样做，CI 日志按 `Step n/m` 输出宿主系统、目标平台、clientVersion、Unity 路径、executeMethod 和日志路径。
-10. `ClientRes_Code / ClientRes_Assetbundle / ClientRes_Table` 上传成功后，会同步刷新 `clientRes_{platform}/version.info`，供运行时的 DevOps 文件服务器版控协议读取三段构建号。
+10. `ClientRes_Code / ClientRes_Assetbundle / ClientRes_Table` 上传成功后，会同步刷新 `clientRes_{platform}/version.info`，供运行时的 DevOps 文件服务器版控协议读取三段构建号；如果并发任务在回写 `global_version.info` 时互相覆盖，公共 helper 会重新加载最新远端 manifest，再只合并当前组件版本后重试。
 11. `ClientRes_Table` 上传阶段不能把 TeamCity agent 的宿主 OS 当成 Unity 表格输出平台；当宿主提示目录不存在时，公共 helper 必须从当前 `ciOutputRoot` 自动发现唯一包含 `local.db + package_build.info` 的平台目录。
 12. `VerifyClientRes_*` 必须通过 `Common/artifact_uploader.py -> resolve_file_server_settings()` 解析文件服务器地址，再把 `-fileServerUrl` 和三段期望 build.number 显式透传给 Unity BatchMode；不要在 DSL 或 wrapper 脚本里硬编码服务器地址或重写 TOML 解析。
 

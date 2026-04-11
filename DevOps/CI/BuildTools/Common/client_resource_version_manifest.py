@@ -1,14 +1,15 @@
 """ClientRes 共享版控指针 helper。
 
 作用：
-1. 维护文件服务器上的 ``global_version.info``。
-2. 文件内容为 JSON 数组，每条记录包含 key, platform, version_num, game_server_ip。
-3. 通过 platform 检索对应的 version_num，version_num 内部格式为 ``code.assetbundle.table`` 三段构建号。
-4. 运行时 ``AssetsVersionController.DevOps.cs`` 会读取这份指针文件，再分别下载 Code / Assetbundle / Table。
+1. 维护文件服务器上的 `global_version.info`。
+2. 文件内容为 JSON 数组，每条记录包含 `key`、`platform`、`version_num`、`game_server_ip`。
+3. 通过 `platform` 检索对应的 `version_num`，其中 `version_num` 固定为 `code.assetbundle.table` 三段构建号。
+4. 运行时 `AssetsVersionController.DevOps.cs` 会先读取这份指针文件，再分别下载 Code / Assetbundle / Table。
+5. TeamCity 中 Code / Assetbundle / Table 会并发上传，因此这里需要在回写 `global_version.info` 时处理并发覆盖，确保只更新当前组件对应的那一段版本号。
 
-Example:
-    ``global_version.info`` ->
-    ``[{"key":"default","platform":"ios","version_num":"101.202.303","game_server_ip":"127.0.0.1"}]``
+示例：
+    `global_version.info` ->
+    `[{"key":"default","platform":"ios","version_num":"101.202.303","game_server_ip":"127.0.0.1"}]`
 """
 
 from __future__ import annotations
@@ -20,6 +21,7 @@ import tempfile
 
 from Common.artifact_uploader import (
     DEFAULT_TIMEOUT_SECONDS,
+    ArtifactUploadError,
     FileServerClientSettings,
     build_authorization_headers,
     build_download_request_path,
@@ -32,6 +34,7 @@ GLOBAL_VERSION_FILENAME = "global_version.info"
 DEFAULT_VERSION_KEY = "default"
 DEFAULT_GAME_SERVER_IP = "127.0.0.1"
 KNOWN_CLIENT_RES_PLATFORMS = ("android", "ios", "windows")
+GLOBAL_VERSION_PUBLISH_MAX_ATTEMPTS = 3
 
 
 class ClientResourceVersionManifestError(RuntimeError):
@@ -325,6 +328,41 @@ def save_client_resource_version_manifest(
     save_global_version_info(updated_entries, settings=settings, timeout_seconds=timeout_seconds)
 
 
+def build_updated_global_version_entries(
+    entries: list[GlobalVersionEntry],
+    *,
+    platform: str,
+    component_kind: str,
+    build_label: str,
+) -> tuple[ClientResourceVersionManifest, list[GlobalVersionEntry]]:
+    """基于当前远端 entries 只替换指定组件的版本段，并返回新的 manifest 与 entries。"""
+    current_entry = find_entry_by_platform(entries, platform)
+    current_manifest = (
+        parse_client_resource_version_manifest(current_entry.version_num)
+        if current_entry is not None
+        else ClientResourceVersionManifest()
+    )
+    updated_manifest = current_manifest.with_component(component_kind, build_label)
+    updated_entries = upsert_global_version_entry(
+        entries,
+        platform,
+        version_num=updated_manifest.to_text(),
+    )
+    return updated_manifest, updated_entries
+
+
+def should_retry_global_version_publish(exc: Exception) -> bool:
+    """判断共享版控回写失败是否属于可通过重新加载远端后重试恢复的并发覆盖。"""
+    if not isinstance(exc, ArtifactUploadError):
+        return False
+
+    error_text = str(exc)
+    return (
+        GLOBAL_VERSION_FILENAME in error_text
+        and ("metadata sha256_mismatch" in error_text or "download sha256_mismatch" in error_text)
+    )
+
+
 def publish_client_resource_version_manifest(
     platform: str,
     *,
@@ -333,24 +371,38 @@ def publish_client_resource_version_manifest(
     settings: FileServerClientSettings,
     timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
 ) -> ClientResourceVersionManifest:
-    """Update one component version in the shared manifest and upload it back.
-
-    This is called by ``client_resource_artifacts.py`` after Code or Assetbundle uploads succeed.
-    """
+    """把单个组件的新构建号合并进共享版控，并在并发覆盖时重新加载远端后重试。"""
     normalized_build_label = normalize_manifest_version_token(build_label)
-    current_manifest = load_client_resource_version_manifest(
-        platform,
-        settings=settings,
-        timeout_seconds=timeout_seconds,
-    )
-    updated_manifest = current_manifest.with_component(component_kind, normalized_build_label)
-    save_client_resource_version_manifest(
-        platform,
-        updated_manifest,
-        settings=settings,
-        timeout_seconds=timeout_seconds,
-    )
-    return updated_manifest
+    last_error: Exception | None = None
+
+    for attempt_index in range(GLOBAL_VERSION_PUBLISH_MAX_ATTEMPTS):
+        entries = load_global_version_info(settings=settings, timeout_seconds=timeout_seconds)
+        updated_manifest, updated_entries = build_updated_global_version_entries(
+            entries,
+            platform=platform,
+            component_kind=component_kind,
+            build_label=normalized_build_label,
+        )
+
+        try:
+            save_global_version_info(
+                updated_entries,
+                settings=settings,
+                timeout_seconds=timeout_seconds,
+            )
+            return updated_manifest
+        except Exception as exc:
+            last_error = exc
+            if attempt_index >= GLOBAL_VERSION_PUBLISH_MAX_ATTEMPTS - 1 or not should_retry_global_version_publish(exc):
+                raise ClientResourceVersionManifestError(
+                    f"Publish global_version.info failed. platform={platform}, componentKind={component_kind}, "
+                    f"attempt={attempt_index + 1}, error={exc}"
+                ) from exc
+
+    raise ClientResourceVersionManifestError(
+        f"Publish global_version.info failed after {GLOBAL_VERSION_PUBLISH_MAX_ATTEMPTS} attempts. "
+        f"platform={platform}, componentKind={component_kind}, error={last_error}"
+    ) from last_error
 
 
 def publish_table_version_manifests(
