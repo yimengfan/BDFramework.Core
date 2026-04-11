@@ -174,6 +174,13 @@ namespace BDFramework.ResourceMgr
         /// </example>
         public sealed class FileServerBatchVerificationRequest
         {
+            /// <summary>
+            /// CI BatchMode 验证的目标运行时平台。
+            /// 在 Windows 编辑器下执行 -buildTarget Android 验证时，BApplication.RuntimePlatform 返回 WindowsEditor，
+            /// 而实际需要校验的目标平台由 CLI 参数或 TeamCity 任务决定，因此必须显式传入。
+            /// </summary>
+            public RuntimePlatform TargetPlatform { get; set; } = RuntimePlatform.WindowsEditor;
+
             public string ServerUrl { get; set; } = string.Empty;
 
             public FileServerVersionInfo ExpectedVersionInfo { get; set; } = new FileServerVersionInfo();
@@ -529,10 +536,11 @@ namespace BDFramework.ResourceMgr
                 return result;
             }
 
-            LogFileServerFlow($"开始 CI BatchMode 文件服务器验证 url={request.ServerUrl}", Color.cyan);
+            LogFileServerFlow($"开始 CI BatchMode 文件服务器验证 url={request.ServerUrl} targetPlatform={request.TargetPlatform}", Color.cyan);
 
             // Phase 1: 先解析共享版控，并把 TeamCity 期望版本号与远端 version.info 对齐。
-            var resolveResult = await ResolveFileServerVersionInfo(request.ServerUrl, useIsolatedLocalLoadDir: true);
+            // 使用请求中显式指定的目标平台，而不是 BApplication.RuntimePlatform（在 Windows 编辑器下不会因 -buildTarget 改变）。
+            var resolveResult = await ResolveFileServerVersionInfo(request.ServerUrl, request.TargetPlatform, useIsolatedLocalLoadDir: true);
             result.Platform = resolveResult.Platform;
             result.PlatformPath = resolveResult.PlatformPath;
             result.FirstLoadDir = resolveResult.FirstLoadDir;
@@ -1078,9 +1086,11 @@ namespace BDFramework.ResourceMgr
         /// 解析文件服务器共享版控入口，并在远端不可用时回退到本地缓存状态。
         /// </summary>
         private async Task<FileServerResolveResult> ResolveFileServerVersionInfo(string serverUrl,
+            RuntimePlatform? targetPlatform = null,
             bool useIsolatedLocalLoadDir = false)
         {
-            var runtimePlatform = BApplication.RuntimePlatform;
+            // CI BatchMode 验证需要显式传入目标平台；未指定时回退到 BApplication.RuntimePlatform（编辑器本机行为）。
+            var runtimePlatform = targetPlatform ?? BApplication.RuntimePlatform;
             var platformPath = BApplication.GetPlatformLoadPath(runtimePlatform);
             var firstLoadDir = EnsureFileServerLocalLoadDir(runtimePlatform, useIsolatedLocalLoadDir).Item1;
             var cacheDir = IPath.Combine(firstLoadDir, FileServerCacheFolderName);

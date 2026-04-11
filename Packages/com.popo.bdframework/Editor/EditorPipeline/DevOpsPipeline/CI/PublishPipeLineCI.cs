@@ -855,6 +855,9 @@ namespace BDFramework.Editor.DevOps
             // Phase 1: 先解析 TeamCity 透传的 serverUrl 与三段期望版本号，并为 Android 任务补齐 External Tools。
             var request = GetFileServerBatchVerificationRequest();
             var platform = BApplication.GetRuntimePlatform(buildTarget);
+            // CI 验证在 Windows 编辑器上通过 -buildTarget Android 执行，BApplication.RuntimePlatform 仍返回
+            // WindowsEditor，所以必须把 CLI 指定的目标平台显式注入验证请求，让运行时按正确平台匹配远端版本。
+            request.TargetPlatform = platform;
             Debug.Log(
                 $"【CI】VerifyClientRes Target:{buildTarget} Platform:{platform} ServerUrl:{request.ServerUrl} ExpectedVersion:{request.ExpectedVersionInfo.RawValue}");
 
