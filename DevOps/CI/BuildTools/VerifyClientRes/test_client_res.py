@@ -506,6 +506,73 @@ def list_recent_builds(
     return []
 
 
+def list_build_type_vcs_root_instances(
+    config: TeamCityRuntimeConfig,
+    *,
+    build_type_id: str,
+) -> list[dict[str, Any]]:
+    """List VCS root instances for one TeamCity buildType so queued revisions can reference an exact root instance."""
+    encoded_build_type_id = urllib.parse.quote(build_type_id, safe="")
+    response = api_request_json(
+        config,
+        "GET",
+        "/app/rest/buildTypes/id:{buildTypeId}/vcsRootInstances?fields="
+        "vcs-root-instance(id,default,properties(property(name,value)))".format(buildTypeId=encoded_build_type_id),
+    )
+    vcs_root_instances = response.get("vcs-root-instance", [])
+    if isinstance(vcs_root_instances, list):
+        return vcs_root_instances
+    if isinstance(vcs_root_instances, dict):
+        return [vcs_root_instances]
+    return []
+
+
+def extract_vcs_root_instance_branch(vcs_root_instance: dict[str, Any]) -> str:
+    """Read the configured branch property from one TeamCity VCS root instance payload."""
+    properties = (vcs_root_instance.get("properties") or {}).get("property", [])
+    if isinstance(properties, dict):
+        properties = [properties]
+    for item in properties:
+        if normalize_optional_value((item or {}).get("name")) != "branch":
+            continue
+        return normalize_optional_value((item or {}).get("value"))
+    return ""
+
+
+def resolve_build_type_vcs_root_instance_id(
+    config: TeamCityRuntimeConfig,
+    *,
+    build_type_id: str,
+    branch_name: str,
+) -> str:
+    """Resolve the TeamCity VCS root instance id used by queued revisions for one buildType and branch."""
+    vcs_root_instances = list_build_type_vcs_root_instances(config, build_type_id=build_type_id)
+    if not vcs_root_instances:
+        raise TestClientResError(f"No TeamCity VCS root instances found for buildTypeId={build_type_id}")
+
+    expected_vcs_branch_name = build_vcs_branch_name(branch_name) or ""
+    for vcs_root_instance in vcs_root_instances:
+        branch_value = extract_vcs_root_instance_branch(vcs_root_instance)
+        if expected_vcs_branch_name and branch_value != expected_vcs_branch_name:
+            continue
+        instance_id = normalize_optional_value(vcs_root_instance.get("id"))
+        if instance_id:
+            return instance_id
+
+    for vcs_root_instance in vcs_root_instances:
+        if not bool(vcs_root_instance.get("default", False)):
+            continue
+        instance_id = normalize_optional_value(vcs_root_instance.get("id"))
+        if instance_id:
+            return instance_id
+
+    fallback_instance_id = normalize_optional_value(vcs_root_instances[0].get("id"))
+    if fallback_instance_id:
+        return fallback_instance_id
+
+    raise TestClientResError(f"TeamCity VCS root instance id is empty for buildTypeId={build_type_id}")
+
+
 def build_queue_properties(client_version: str, build_extra_args: str) -> list[dict[str, str]]:
     """Build the property list forwarded to queued upstream TeamCity builds."""
     properties = [{"name": "build.client.version", "value": normalize_required_value(client_version, field_name="clientVersion") }]
@@ -596,11 +663,19 @@ def queue_build(
         payload["properties"] = {"property": properties}
 
     normalized_revision = normalize_required_value(vcs_revision, field_name="vcsRevision")
-    revision_payload = {"version": normalized_revision}
+    vcs_root_instance_id = resolve_build_type_vcs_root_instance_id(
+        config,
+        build_type_id=build_type_id,
+        branch_name=normalized_branch,
+    )
+    revision_payload = {
+        "version": normalized_revision,
+        "vcs-root-instance": {"id": vcs_root_instance_id},
+    }
     vcs_branch_name = build_vcs_branch_name(normalized_branch)
     if vcs_branch_name:
         revision_payload["vcsBranchName"] = vcs_branch_name
-    payload["revisions"] = {"revision": [revision_payload]}
+    payload["revisions"] = {"failOnMissingRevisions": True, "revision": [revision_payload]}
 
     response = api_request_json(config, "POST", "/app/rest/buildQueue", payload=payload)
     build_id = response.get("id")

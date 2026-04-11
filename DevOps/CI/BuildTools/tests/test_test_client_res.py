@@ -298,6 +298,86 @@ def test_command_wait_builds_exports_resolved_numbers(monkeypatch: pytest.Monkey
     assert "##teamcity[setParameter name='test.clientres.expected.version.info' value='111.222.333']" in output
 
 
+def test_queue_build_includes_vcs_root_instance_for_revision(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Verify queue_build includes the TeamCity VCS root instance context required by the buildQueue revisions payload."""
+    config = test_client_res.TeamCityRuntimeConfig(base_url="http://ci", token="token", config_path=None)
+    captured_post_payload: dict[str, object] = {}
+
+    def fake_api_request_json(config_value, method, path, *, payload=None):
+        assert config_value == config
+        if method == "GET":
+            assert path.startswith("/app/rest/buildTypes/id:BDFrameworkCore_BuildCodeAndroid/vcsRootInstances")
+            return {
+                "vcs-root-instance": [
+                    {
+                        "id": "12",
+                        "default": True,
+                        "properties": {
+                            "property": [
+                                {"name": "branch", "value": "refs/heads/v4/v-4.0.0"},
+                            ]
+                        },
+                    }
+                ]
+            }
+
+        assert method == "POST"
+        assert path == "/app/rest/buildQueue"
+        assert payload is not None
+        captured_post_payload.update(payload)
+        return {
+            "id": 901,
+            "buildType": {"id": "BDFrameworkCore_BuildCodeAndroid"},
+            "number": "77",
+            "state": "queued",
+            "status": "SUCCESS",
+            "statusText": "queued",
+            "branchName": "v4/v-4.0.0",
+            "webUrl": "http://ci/build/901",
+            "revisions": {
+                "revision": [
+                    {
+                        "version": "abc123",
+                        "vcsBranchName": "refs/heads/v4/v-4.0.0",
+                    }
+                ]
+            },
+            "properties": {
+                "property": [
+                    {"name": "build.client.version", "value": "0.1"},
+                    {"name": "build.extra.args", "value": "--dry-run"},
+                ]
+            },
+        }
+
+    monkeypatch.setattr(test_client_res, "api_request_json", fake_api_request_json)
+
+    handle = test_client_res.queue_build(
+        config,
+        build_type_id="BDFrameworkCore_BuildCodeAndroid",
+        branch_name="v4/v-4.0.0",
+        vcs_revision="abc123",
+        properties=[
+            {"name": "build.client.version", "value": "0.1"},
+            {"name": "build.extra.args", "value": "--dry-run"},
+        ],
+        comment="Triggered by TestClientRes",
+    )
+
+    assert handle.build_id == 901
+    assert captured_post_payload["branchName"] == "v4/v-4.0.0"
+    assert captured_post_payload["revisions"] == {
+        "failOnMissingRevisions": True,
+        "revision": [
+            {
+                "version": "abc123",
+                "vcs-root-instance": {"id": "12"},
+                "vcsBranchName": "refs/heads/v4/v-4.0.0",
+            }
+        ],
+    }
+
+
 def test_command_queue_verify_build_queues_platform_specific_local_check(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
