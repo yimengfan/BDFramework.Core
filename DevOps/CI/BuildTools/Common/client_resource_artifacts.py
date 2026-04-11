@@ -286,12 +286,44 @@ def build_expected_remote_files(
     return expected_files
 
 
+def normalize_remote_listing_path(
+    remote_path: str,
+    *,
+    expected_root: str,
+) -> tuple[str, str | None]:
+    """把远端 listing 的历史根目录大小写折回本次上传使用的 remote_root。
+
+    线上文件服务器可能运行在大小写不敏感但会保留原始目录大小写的文件系统上。
+    如果旧任务先创建了 `ClientRes_table/...`，后续即使本次上传请求使用
+    `ClientRes_Table/...`，目录列表依然可能返回旧大小写。这里仅在 remote_root
+    前缀大小写不同但逻辑路径相同的情况下做归一化，避免把真实缺失误判成存在。
+    """
+    normalized_remote_path = remote_path.strip()
+    if not normalized_remote_path:
+        return normalized_remote_path, None
+
+    expected_parts = PurePosixPath(expected_root).parts
+    remote_parts = PurePosixPath(normalized_remote_path).parts
+    if len(remote_parts) < len(expected_parts):
+        return normalized_remote_path, None
+
+    for actual_part, expected_part in zip(remote_parts[: len(expected_parts)], expected_parts):
+        if actual_part.casefold() != expected_part.casefold():
+            return normalized_remote_path, None
+
+    actual_root = str(PurePosixPath(*remote_parts[: len(expected_parts)]))
+    if actual_root == expected_root:
+        return normalized_remote_path, None
+
+    return str(PurePosixPath(*expected_parts, *remote_parts[len(expected_parts) :])), actual_root
+
+
 def fetch_remote_uploaded_file_entries(
     summary: ClientResourceUploadSummary,
     *,
     settings: FileServerClientSettings,
     timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
-) -> dict[str, dict[str, object]]:
+) -> tuple[dict[str, dict[str, object]], list[str]]:
     """递归读取当前上传根目录下的远端文件清单。"""
     limit = min(max(summary.file_count * 4 + 16, 128), 2000)
     status, payload, raw_body = fetch_remote_listing(
@@ -315,6 +347,7 @@ def fetch_remote_uploaded_file_entries(
         )
 
     remote_files: dict[str, dict[str, object]] = {}
+    remote_root_aliases: set[str] = set()
     for entry in entries:
         if not isinstance(entry, dict):
             continue
@@ -324,9 +357,24 @@ def fetch_remote_uploaded_file_entries(
         remote_path = str(entry.get("path") or "").strip()
         if not remote_path:
             continue
-        remote_files[remote_path] = entry
+        normalized_remote_path, remote_root_alias = normalize_remote_listing_path(
+            remote_path,
+            expected_root=summary.remote_root,
+        )
+        if remote_root_alias is not None:
+            remote_root_aliases.add(remote_root_alias)
 
-    return remote_files
+        existing_entry = remote_files.get(normalized_remote_path)
+        if existing_entry is not None and str(existing_entry.get("path") or "").strip() != remote_path:
+            raise ClientResourceArtifactsError(
+                "Remote upload listing contains conflicting paths after root normalization. "
+                f"root={summary.remote_root}, normalized={normalized_remote_path}, "
+                f"paths={[str(existing_entry.get('path') or '').strip(), remote_path]}"
+            )
+
+        remote_files[normalized_remote_path] = entry
+
+    return remote_files, sorted(remote_root_aliases)
 
 
 def validate_uploaded_artifacts(
@@ -407,7 +455,9 @@ def validate_uploaded_artifacts(
             f"expected={summary.total_bytes}, actual={uploaded_total_bytes}, root={summary.remote_root}"
         )
 
-    remote_files = fetch_remote_uploaded_file_entries(summary, settings=settings)
+    remote_files, remote_root_aliases = fetch_remote_uploaded_file_entries(summary, settings=settings)
+    if remote_root_aliases:
+        print(f"{log_prefix} uploadVerifiedRootAliases={','.join(remote_root_aliases)}")
     expected_remote_paths = {remote_path for _, remote_path in expected_files}
     missing_remote_paths = sorted(
         remote_path for remote_path in expected_remote_paths if remote_path not in remote_files

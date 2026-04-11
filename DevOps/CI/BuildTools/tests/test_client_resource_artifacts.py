@@ -40,6 +40,7 @@ from Common.client_resource_artifacts import (  # noqa: E402
     prepare_clean_ci_output_root,
     prepare_code_upload_source,
     prepare_table_upload_source,
+    normalize_remote_listing_path,
     resolve_table_platform_output_dir,
     upload_client_res_code,
     upload_client_res_table,
@@ -334,6 +335,17 @@ def test_build_upload_summary_uses_new_remote_layout_names(tmp_path: Path) -> No
     assert summary.file_count == 1
     assert summary.total_bytes == len(b"client")
     assert list_source_files(prepared_dir) == [prepared_dir / "client.db"]
+
+
+def test_normalize_remote_listing_path_maps_legacy_root_case_to_expected_root() -> None:
+    """Verify listing paths reuse the current remote root spelling when only the root case drifted."""
+    normalized_path, alias_root = normalize_remote_listing_path(
+        "ClientRes_table/501/client.db",
+        expected_root="ClientRes_Table/501",
+    )
+
+    assert normalized_path == "ClientRes_Table/501/client.db"
+    assert alias_root == "ClientRes_table/501"
 
 
 def test_upload_client_res_code_publishes_shared_version_manifest(
@@ -652,6 +664,70 @@ def test_validate_uploaded_artifacts_raises_when_remote_listing_misses_file(
             settings=FileServerClientSettings(base_url="http://fileserver", token=None, config_path=None),
             log_prefix="[TestUpload]",
         )
+
+
+def test_validate_uploaded_artifacts_accepts_remote_listing_with_legacy_root_case(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """Verify uploaded artifact validation tolerates listing roots that preserve a legacy directory case."""
+    prepared_dir = tmp_path / "prepared"
+    prepared_dir.mkdir(parents=True)
+    client_db = prepared_dir / CLIENT_DB_FILENAME
+    server_db = prepared_dir / SERVER_DB_FILENAME
+    package_info = prepared_dir / PACKAGE_BUILD_INFO_FILENAME
+    client_db.write_bytes(b"client-db")
+    server_db.write_bytes(b"server-db")
+    package_info.write_text("pkg", encoding="utf-8")
+
+    summary = build_upload_summary(
+        prepared_dir,
+        artifact_type="table",
+        build_label="501",
+    )
+    expected_files = build_expected_remote_files(prepared_dir, remote_root=summary.remote_root)
+    results = [
+        UploadedArtifact(
+            local_path=local_path,
+            remote_path=remote_path,
+            size=local_path.stat().st_size,
+            sha256=f"sha-{index}",
+            status_code=201,
+            integrity_status="verified",
+        )
+        for index, (local_path, remote_path) in enumerate(expected_files, start=1)
+    ]
+
+    def fake_fetch_remote_listing(*, prefix, settings, recursive, limit, timeout_seconds):
+        assert prefix == summary.remote_root
+        return 200, {
+            "count": len(expected_files),
+            "entries": [
+                {
+                    "path": remote_path.replace("ClientRes_Table", "ClientRes_table", 1),
+                    "type": "file",
+                    "size": local_path.stat().st_size,
+                }
+                for local_path, remote_path in expected_files
+            ],
+        }, b""
+
+    monkeypatch.setattr(
+        "Common.client_resource_artifacts.fetch_remote_listing",
+        fake_fetch_remote_listing,
+    )
+
+    validate_uploaded_artifacts(
+        summary,
+        results=results,
+        settings=FileServerClientSettings(base_url="http://fileserver", token=None, config_path=None),
+        log_prefix="[TestUpload]",
+    )
+
+    output = capsys.readouterr().out
+    assert "[TestUpload] uploadVerifiedRootAliases=ClientRes_table/501" in output
+    assert "[TestUpload] uploadVerifiedFiles=3" in output
 
 
 def test_upload_client_res_assetbundle_invokes_aggregate_validation(

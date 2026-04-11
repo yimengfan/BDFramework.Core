@@ -152,7 +152,7 @@ upload_client_package(
 - `upload_client_package()` / `upload_code()` / `upload_asset_bundle()` / `upload_table()`：四类制品快捷入口
 - `prepare_clean_ci_output_root()`：生成并清空当前 ClientRes 任务的隔离输出目录
 - `prepare_code_upload_source()` / `prepare_assetbundle_upload_source()` / `prepare_table_upload_source()`：把 Unity 输出整理成当前类型真正需要上传的 staging 目录
-- `validate_uploaded_artifacts()`：上传后递归比对远端目录，确认整批文件数量、路径、大小都符合预期
+- `validate_uploaded_artifacts()`：上传后递归比对远端目录，确认整批文件数量、路径、大小都符合预期；如果文件服务器在 Windows 上复用了历史目录并保留旧的根目录大小写，校验会把 listing 路径归一化回本次 `remote_root`，并额外打印 `uploadVerifiedRootAliases=...`
 
 ClientRes 类型专项校验：
 
