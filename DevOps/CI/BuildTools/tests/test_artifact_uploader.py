@@ -1,8 +1,11 @@
 """BuildTools 公共上传模块测试。
 
-这些测试重点覆盖两类事情：
-1. 远端目录规则和 BuildTools 全局配置解析是否符合预期。
-2. 构造一组接近真实构建产物的文件后，上传结果是否能正确返回提交元数据。
+测试重点：
+1. 远端目录规则验证：确认各类产物（母包、代码、AssetBundle、表格）的远端路径布局符合约定。
+2. BuildTools 全局配置解析：验证 TOML 配置中的文件服务器地址、Token、分块大小能被正确读取。
+3. 环境变量优先级：验证环境变量可以覆盖配置文件中的默认值。
+4. 模拟上传验证：使用本地 HTTP 服务器模拟上传流程，验证上传结果正确返回提交元数据。
+5. 错误恢复验证：模拟上传失败后的远端核验恢复流程。
 """
 
 from __future__ import annotations
@@ -35,19 +38,19 @@ BUILD_TOOLS_ROOT = Path(__file__).resolve().parents[1]
 
 
 class RecordingHTTPServer(ThreadingHTTPServer):
-	"""HTTP server that records successful upload requests for assertions."""
+	"""记录成功上传请求的 HTTP 测试服务器。用于断言上传请求的元数据。"""
 	def __init__(self, server_address: tuple[str, int]) -> None:
-		"""HTTP server that records successful upload requests for assertions."""
+		"""初始化服务器并绑定 RecordingUploadHandler。"""
 		super().__init__(server_address, RecordingUploadHandler)
 		self.requests: list[dict[str, str]] = []
 
 
 class RecordingUploadHandler(BaseHTTPRequestHandler):
-	"""Request handler that stores successful upload request metadata."""
+	"""记录成功上传请求元数据的请求处理器。存储路径、认证头、SHA256 和覆盖标志。"""
 	protocol_version = "HTTP/1.1"
 
 	def do_PUT(self) -> None:  # noqa: N802 - stdlib handler signature
-		"""Store successful upload request metadata and respond with verified file info."""
+		"""处理 PUT 请求：记录上传元数据并返回 201 和已验证文件信息。"""
 		content_length = int(self.headers.get("Content-Length", "0"))
 		body = self.rfile.read(content_length)
 		parsed = urlparse(self.path)
@@ -83,20 +86,26 @@ class RecordingUploadHandler(BaseHTTPRequestHandler):
 
 
 class ErroringHTTPServer(ThreadingHTTPServer):
-	"""HTTP server that always returns a configured upload error payload."""
+	"""始终返回指定错误状态码和错误负载的 HTTP 测试服务器。用于测试上传失败场景。"""
 	def __init__(self, server_address: tuple[str, int], status_code: int, payload: dict[str, str]) -> None:
-		"""HTTP server that always returns a configured upload error payload."""
+		"""初始化服务器并绑定 ErroringUploadHandler。
+
+		参数：
+			server_address: 服务器监听地址和端口。
+			status_code: 始终返回的 HTTP 状态码。
+			payload: 始终返回的错误响应体字典。
+		"""
 		super().__init__(server_address, ErroringUploadHandler)
 		self.status_code = status_code
 		self.payload = payload
 
 
 class ErroringUploadHandler(BaseHTTPRequestHandler):
-	"""Request handler that simulates deterministic upload failures."""
+	"""模拟确定性上传失败的请求处理器。始终返回配置的错误状态码和负载。"""
 	protocol_version = "HTTP/1.1"
 
 	def do_PUT(self) -> None:  # noqa: N802 - stdlib handler signature
-		"""Consume the upload body and return the configured error response."""
+		"""消费上传请求体并返回配置的错误响应。"""
 		content_length = int(self.headers.get("Content-Length", "0"))
 		self.rfile.read(content_length)
 		payload = json.dumps(self.server.payload).encode("utf-8")  # type: ignore[attr-defined]
@@ -111,7 +120,17 @@ class ErroringUploadHandler(BaseHTTPRequestHandler):
 
 
 class RecoveringErrorHTTPServer(ThreadingHTTPServer):
-	"""HTTP server that returns upload errors while exposing follow-up verification endpoints."""
+	"""模拟上传失败但支持后续恢复验证的 HTTP 测试服务器。
+
+	上传接口返回 500 错误，但同时暴露元数据和下载接口，
+	用于测试上传失败后的远端核验恢复流程。
+
+	参数：
+		metadata_available: 是否启用元数据查询接口。
+		metadata_returns_sha256: 元数据响应中是否包含 SHA256 字段。
+		download_available: 是否启用文件下载接口。
+		integrity_status: 返回的完整性状态值。
+	"""
 	def __init__(
 		self,
 		server_address: tuple[str, int],
@@ -121,7 +140,7 @@ class RecoveringErrorHTTPServer(ThreadingHTTPServer):
 		download_available: bool,
 		integrity_status: str,
 	) -> None:
-		"""HTTP server that returns upload errors while exposing follow-up verification endpoints."""
+		"""初始化服务器并绑定 RecoveringErrorUploadHandler。"""
 		super().__init__(server_address, RecoveringErrorUploadHandler)
 		self.metadata_available = metadata_available
 		self.metadata_returns_sha256 = metadata_returns_sha256
@@ -131,11 +150,11 @@ class RecoveringErrorHTTPServer(ThreadingHTTPServer):
 
 
 class RecoveringErrorUploadHandler(BaseHTTPRequestHandler):
-	"""Request handler that simulates partial upload success with recovery probes."""
+	"""模拟部分上传成功并支持恢复探测的请求处理器。PUT 记录文件但返回 500，GET 支持元数据和下载查询。"""
 	protocol_version = "HTTP/1.1"
 
 	def do_PUT(self) -> None:  # noqa: N802 - stdlib handler signature
-		"""Record uploaded bytes but intentionally answer with a 500 response."""
+		"""记录上传字节数据但故意返回 500 响应，模拟服务端内部错误。"""
 		content_length = int(self.headers.get("Content-Length", "0"))
 		body = self.rfile.read(content_length)
 		parsed = urlparse(self.path)
@@ -153,7 +172,7 @@ class RecoveringErrorUploadHandler(BaseHTTPRequestHandler):
 		self.wfile.write(payload)
 
 	def do_GET(self) -> None:  # noqa: N802 - stdlib handler signature
-		"""Serve metadata or file downloads so recovery checks can verify partial success."""
+		"""提供元数据或文件下载接口，使恢复检查可以验证部分上传成功的情况。"""
 		parsed = urlparse(self.path)
 		if parsed.path.startswith("/api/files/"):
 			remote_path = unquote(parsed.path.split("/api/files/", 1)[1])
@@ -208,7 +227,7 @@ class RecoveringErrorUploadHandler(BaseHTTPRequestHandler):
 
 
 def make_upload_server() -> tuple[RecordingHTTPServer, str, threading.Thread]:
-	"""Start a recording upload server and return the server, base URL, and thread."""
+	"""启动一个记录上传请求的本地 HTTP 服务器，返回服务器实例、基础 URL 和线程。"""
 	server = RecordingHTTPServer(("127.0.0.1", 0))
 	thread = threading.Thread(target=server.serve_forever, daemon=True)
 	thread.start()
@@ -221,7 +240,12 @@ def make_error_upload_server(
 	status_code: int,
 	payload: dict[str, str],
 ) -> tuple[ErroringHTTPServer, str, threading.Thread]:
-	"""Start an upload server that always responds with the configured error payload."""
+	"""启动一个始终返回错误响应的上传服务器。
+
+	参数：
+		status_code: 始终返回的 HTTP 状态码。
+		payload: 始终返回的错误响应体。
+	"""
 	server = ErroringHTTPServer(("127.0.0.1", 0), status_code, payload)
 	thread = threading.Thread(target=server.serve_forever, daemon=True)
 	thread.start()
@@ -236,7 +260,14 @@ def make_recovering_error_upload_server(
 	download_available: bool,
 	integrity_status: str,
 ) -> tuple[RecoveringErrorHTTPServer, str, threading.Thread]:
-	"""Start an upload server that supports post-failure remote verification checks."""
+	"""启动一个支持上传失败后远端验证检查的 HTTP 服务器。
+
+	参数：
+		metadata_available: 是否启用元数据查询接口。
+		metadata_returns_sha256: 元数据是否包含 SHA256 字段。
+		download_available: 是否启用文件下载接口。
+		integrity_status: 返回的完整性状态值。
+	"""
 	server = RecoveringErrorHTTPServer(
 		("127.0.0.1", 0),
 		metadata_available=metadata_available,
@@ -265,7 +296,7 @@ def create_mock_client_build_output(root_dir: Path) -> Path:
 
 
 def test_build_artifact_remote_paths_match_expected_layout() -> None:
-	"""Verify artifact remote paths follow the expected client package, code, assetbundle, and table layout."""
+	"""验证各类产物的远端路径遵循约定的布局格式：母包、代码、AssetBundle、表格。"""
 	assert (
 		build_artifact_remote_root(
 			ArtifactType.CLIENT_PACKAGE,
@@ -302,7 +333,7 @@ def test_build_artifact_remote_paths_match_expected_layout() -> None:
 
 
 def test_resolve_file_server_settings_reads_client_ip_and_chunk_values(tmp_path: Path) -> None:
-	"""Verify file server settings resolve client IP, port, token, and chunk sizes from TOML."""
+	"""验证文件服务器配置能正确解析 IP、端口、Token 和分块大小。"""
 	config_path = tmp_path / "buildtools.toml"
 	config_path.write_text(
 		"""
@@ -326,7 +357,7 @@ tokens = ["token-a", "token-b"]
 
 
 def test_load_minimal_toml_supports_buildtools_config_shape() -> None:
-	"""Verify the minimal TOML loader supports file-server and remote-test BuildTools config tables."""
+	"""验证最小化 TOML 解析器支持 BuildTools 配置中的文件服务器、CI 服务器和远程测试配置表。"""
 	parsed = load_minimal_toml(
 		"""
 [artifact_file_server]
@@ -372,7 +403,7 @@ filename = "artifact_uploader_remote_test.txt"
 
 
 def test_resolve_file_server_settings_prefers_explicit_inputs_over_buildtools_config(tmp_path: Path) -> None:
-	"""Verify explicit server URL and token inputs override BuildTools config values."""
+	"""验证显式传入的服务器 URL 和 Token 会覆盖 BuildTools 配置文件中的值。"""
 	config_path = tmp_path / "buildtools.toml"
 	config_path.write_text(
 		"""
@@ -401,7 +432,7 @@ def test_resolve_file_server_settings_prefers_env_over_buildtools_config(
 	tmp_path: Path,
 	monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-	"""Verify environment overrides take precedence over BuildTools config defaults."""
+	"""验证环境变量优先级高于 BuildTools 配置文件中的默认值。"""
 	config_path = tmp_path / "buildtools.toml"
 	config_path.write_text(
 		"""
@@ -431,14 +462,14 @@ hash_chunk_size_kb = 256
 
 
 def test_buildtools_global_config_exists_for_shared_defaults() -> None:
-	"""Verify the shared BuildTools config file exists for default artifact upload settings."""
+	"""验证 BuildTools 全局配置文件存在，用于默认的产物上传配置。"""
 	config_path = BUILD_TOOLS_ROOT / "buildtools.toml"
 	assert config_path.exists()
 	assert resolve_file_server_settings().config_path == config_path
 
 
 def test_build_artifact_remote_root_rejects_invalid_segments() -> None:
-	"""Verify remote root construction rejects invalid platform and build number segments."""
+	"""验证远端根路径构造会拒绝非法的平台名和构建号（如包含路径分隔符或特殊目录名）。"""
 	with pytest.raises(ArtifactUploadError, match="platform cannot contain path separators"):
 		build_artifact_remote_root(
 			ArtifactType.CLIENT_PACKAGE,

@@ -1,6 +1,18 @@
-"""Remote smoke tests for the artifact uploader.
+"""远程产物上传器冒烟测试。
 
-These tests talk to the configured file server and verify upload, listing, metadata, and download visibility.
+本模块包含连接到真实文件服务器的集成测试，验证上传、目录列表、元数据和下载的完整链路。
+
+测试范围：
+1. 健康检查：验证文件服务器可达且状态为 ok。
+2. 文件上传：构造测试文件并上传到远端指定路径。
+3. 目录列表轮询：等待上传文件在目录列表中可见。
+4. 元数据校验：验证文件大小、SHA256 和完整性状态。
+5. 下载验证：下载已上传文件并比对原始内容。
+
+前置条件：
+- 需要通过 --run-remote-artifact-tests CLI 参数启用。
+- buildtools.toml 中 [tests.remote_artifact].enabled 必须为 true。
+- 文件服务器必须可达且健康。
 """
 
 from __future__ import annotations
@@ -33,7 +45,19 @@ def fetch_remote_json(
     token: str | None,
     timeout_seconds: float = 20.0,
 ) -> tuple[int, dict[str, object]]:
-    """Fetch a JSON response from the remote file server and normalize error handling."""
+    """从远程文件服务器获取 JSON 响应并统一错误处理。
+
+    参数：
+        url: 请求的完整 URL。
+        token: 可选的 Bearer 认证令牌。
+        timeout_seconds: HTTP 请求超时时间（秒）。
+
+    返回：
+        (HTTP 状态码, 解析后的 JSON 字典)。
+
+    异常：
+        ArtifactUploadError: 当网络不可达时抛出。
+    """
     headers = {"Accept": "application/json"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
@@ -63,7 +87,15 @@ def fetch_remote_directory_listing(
     recursive: bool,
     timeout_seconds: float = 20.0,
 ) -> tuple[int, dict[str, object]]:
-    """Fetch a directory listing from the remote file server listing API."""
+    """从远程文件服务器列表 API 获取目录列表。
+
+    参数：
+        base_url: 文件服务器基础 URL。
+        token: 可选的 Bearer 认证令牌。
+        prefix: 列表查询前缀路径。
+        recursive: 是否递归列出子目录。
+        timeout_seconds: HTTP 请求超时时间（秒）。
+    """
     query = urlencode(
         {
             "prefix": prefix,
@@ -84,7 +116,14 @@ def fetch_remote_metadata(
     remote_path: str,
     timeout_seconds: float = 20.0,
 ) -> tuple[int, dict[str, object]]:
-    """Fetch metadata for a single remote artifact path."""
+    """获取单个远程产物的元数据（大小、SHA256、完整性状态）。
+
+    参数：
+        base_url: 文件服务器基础 URL。
+        token: 可选的 Bearer 认证令牌。
+        remote_path: 远程产物路径。
+        timeout_seconds: HTTP 请求超时时间（秒）。
+    """
     return fetch_remote_json(
         f"{base_url.rstrip('/')}/api/files/{quote(remote_path, safe='/')}",
         token=token,
@@ -99,7 +138,20 @@ def download_remote_file(
     remote_path: str,
     timeout_seconds: float = 20.0,
 ) -> bytes:
-    """Download a remote file payload for post-upload verification."""
+    """下载远程文件内容用于上传后验证。
+
+    参数：
+        base_url: 文件服务器基础 URL。
+        token: 可选的 Bearer 认证令牌。
+        remote_path: 远程产物路径。
+        timeout_seconds: HTTP 请求超时时间（秒）。
+
+    返回：
+        文件的原始字节数据。
+
+    异常：
+        ArtifactUploadError: 下载失败时抛出。
+    """
     headers: dict[str, str] = {}
     if token:
         headers["Authorization"] = f"Bearer {token}"
@@ -124,7 +176,22 @@ def wait_for_remote_list_entry(
     timeout_seconds: float = 15.0,
     poll_interval_seconds: float = 1.0,
 ) -> dict[str, object]:
-    """Poll the remote listing API until the uploaded file becomes visible or times out."""
+    """轮询远程目录列表 API，直到上传文件可见或超时。
+
+    参数：
+        base_url: 文件服务器基础 URL。
+        token: 可选的 Bearer 认证令牌。
+        prefix: 列表查询前缀路径。
+        expected_remote_path: 期望出现的远程文件路径。
+        timeout_seconds: 轮询超时时间（秒）。
+        poll_interval_seconds: 每次轮询间隔（秒）。
+
+    返回：
+        匹配到的远程列表条目字典。
+
+    异常：
+        AssertionError: 超时后文件仍未出现。
+    """
     deadline = time.monotonic() + timeout_seconds
     last_status = 0
     last_payload: dict[str, object] = {}
@@ -158,7 +225,7 @@ def wait_for_remote_list_entry(
 
 @pytest.fixture
 def buildtools_external_config(request):
-    """Load the shared BuildTools external-integration config for remote uploader smoke tests."""
+    """加载 BuildTools 外部集成配置（文件服务器、CI 服务器等）。未启用远程测试时自动跳过。"""
     if not request.config.getoption("--run-remote-artifact-tests"):
         pytest.skip(
             "remote artifact integration tests are disabled by default; "
@@ -171,7 +238,7 @@ def buildtools_external_config(request):
 
 @pytest.fixture
 def remote_artifact_test_config(buildtools_external_config):
-    """Provide typed remote smoke-test config or skip when the shared BuildTools config disables it."""
+    """提供远程测试配置对象。当 buildtools.toml 中未启用远程测试时自动跳过。"""
     config = buildtools_external_config.remote_artifact_test
     if not config.enabled:
         pytest.skip(
@@ -183,7 +250,7 @@ def remote_artifact_test_config(buildtools_external_config):
 
 @pytest.fixture
 def remote_file_server_settings(buildtools_external_config, remote_artifact_test_config):
-    """Provide configured remote file server settings after the remote test gate has been enabled."""
+    """提供已解析的远程文件服务器连接配置（URL、Token、分块大小等）。"""
     del remote_artifact_test_config
     return resolve_file_server_settings(config_path=buildtools_external_config.config_path)
 
@@ -194,7 +261,15 @@ def test_remote_upload_is_visible_in_remote_directory_listing(
     remote_artifact_test_config,
     remote_file_server_settings,
 ) -> None:
-    """Verify uploaded artifacts become visible through listing, metadata, and download APIs."""
+    """端到端验证：上传产物后通过列表、元数据和下载 API 均可查看到。
+
+    测试流程：
+    1. 检查文件服务器健康状态。
+    2. 构造唯一测试文件并上传到远端。
+    3. 轮询目录列表直到文件可见。
+    4. 通过元数据 API 验证文件大小和 SHA256。
+    5. 通过下载 API 下载文件并比对原始内容。
+    """
     settings = remote_file_server_settings
 
     health_status, health_payload = fetch_remote_json(

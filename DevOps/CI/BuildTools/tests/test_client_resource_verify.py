@@ -1,4 +1,4 @@
-"""Tests for the ClientRes file-server verification wrappers and shared verify flow."""
+"""ClientRes 文件服务器验证封装和共享验证流程测试。\n\n测试覆盖范围：\n1. 平台验证入口脚本委托：验证 Android、iOS、Windows 三个平台正确转发元数据。\n2. 平台验证构建流程：验证构建预期的 Unity 命令并解析文件服务器配置。\n3. dry-run 模式：验证使用显式 server-url 覆盖配置解析。\n"""
 
 from __future__ import annotations
 
@@ -57,7 +57,7 @@ def test_verify_wrappers_delegate_to_common_flow(
     expected_payload: dict[str, object],
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """Verify each platform wrapper forwards its metadata to the shared verification flow."""
+    """验证每个平台验证入口脚本正确转发其元数据到共享验证流程。"""
     module = importlib.import_module(module_name)
     captured: dict[str, object] = {}
 
@@ -75,7 +75,7 @@ def test_run_platform_resource_verify_executes_expected_flow(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
-    """Verify platform verification builds the expected Unity command and resolves file-server settings."""
+    """验证平台验证构建预期的 Unity 命令并正确解析文件服务器配置。"""
     events: list[str] = []
     args = SimpleNamespace(
         client_version=" 0.1 ",
@@ -183,7 +183,7 @@ def test_run_platform_resource_verify_executes_expected_flow(
 def test_run_platform_resource_verify_dry_run_uses_override_server_url(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """Verify dry-run verification forwards the explicit server-url override into config resolution."""
+    """验证 dry-run 验证将显式的 server-url 覆盖参数传递到配置解析中。"""
     args = SimpleNamespace(
         client_version="0.1",
         expected_code_version="101",

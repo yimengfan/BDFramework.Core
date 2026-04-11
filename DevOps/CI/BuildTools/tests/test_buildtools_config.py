@@ -1,4 +1,11 @@
-"""Tests for the shared BuildTools external configuration loader."""
+"""BuildTools 共享外部配置加载器测试。
+
+测试覆盖范围：
+1. 外部集成配置解析：验证文件服务器、CI 服务器、iOS 签名和远程测试配置被正确读取。
+2. 配置路径解析：验证环境变量覆盖配置路径的优先级。
+3. iOS Xcode 签名桥接：验证只导出支持的签名键并保持稳定顺序。
+4. 源码守卫扫描：验证 BuildTools 源码文件不会重新引入临时外部配置解析器。
+"""
 
 from __future__ import annotations
 
@@ -19,7 +26,7 @@ BUILD_TOOLS_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_load_buildtools_external_config_reads_external_integration_sections(tmp_path: Path) -> None:
-    """Verify the shared loader reads file-server, CI-server, signing, and remote-test sections together."""
+    """验证共享加载器能同时读取文件服务器、CI 服务器、签名和远程测试配置段。"""
     config_path = tmp_path / "buildtools.toml"
     config_path.write_text(
         """
@@ -73,7 +80,7 @@ poll_interval_seconds = 2
 
 
 def test_resolve_buildtools_config_path_prefers_shared_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
-    """Verify the shared BUILDTOOLS_CONFIG env override applies to every external config consumer."""
+    """验证 BUILDTOOLS_CONFIG 环境变量覆盖对所有外部配置消费者生效。"""
     config_path = tmp_path / "buildtools.toml"
     config_path.write_text("[artifact_file_server]\nbase_url = \"http://127.0.0.1:20001\"\n", encoding="utf-8")
 
@@ -83,7 +90,7 @@ def test_resolve_buildtools_config_path_prefers_shared_env(monkeypatch: pytest.M
 
 
 def test_iter_ios_xcode_shell_pairs_emits_supported_signing_keys() -> None:
-    """Verify the Xcode shell bridge only emits the supported shared signing keys in a stable order."""
+    """验证 Xcode shell 桥接只导出支持的签名键并保持稳定的输出顺序。"""
     signing_config = BuildToolsIosXcodeSigningConfig(
         signing_style="manual",
         team_id="ABCDE12345",
@@ -103,7 +110,7 @@ def test_iter_ios_xcode_shell_pairs_emits_supported_signing_keys() -> None:
 
 
 def test_buildtools_source_files_do_not_reintroduce_ad_hoc_external_config_parsers() -> None:
-    """Verify guarded BuildTools source files only read shared external config through Common/buildtools_config.py."""
+    """验证受保护的 BuildTools 源码文件只通过 Common/buildtools_config.py 读取共享外部配置，不会重新引入临时解析器。"""
     workspace_root = str(BUILD_TOOLS_ROOT.parents[2])
     violations = []
 

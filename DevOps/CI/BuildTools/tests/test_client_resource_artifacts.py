@@ -1,8 +1,10 @@
-"""Tests for ClientRes artifact staging and upload integration helpers.
+"""ClientRes 产物暂存与上传集成辅助函数测试。
 
-Focus:
-1. Staging directories only keep the files required by each resource type.
-2. Upload wrappers publish the shared file-server version pointer after successful uploads.
+测试重点：
+1. 暂存目录只保留每种资源类型所需的文件。
+2. 上传封装在成功上传后发布共享的文件服务器版本指针。
+3. 代码、AssetBundle、表格三种资源的暂存规则和校验逻辑。
+4. 远端列表校验和上传后验证流程。
 """
 
 from __future__ import annotations
@@ -52,14 +54,19 @@ from Common.artifact_uploader import FileServerClientSettings, UploadedArtifact 
 
 
 def write_asset_info(target_path: Path, rows: list[tuple[str, str, str, str]]) -> None:
-    """Write a minimal assets.info CSV file used by ClientRes artifact tests."""
+    """写入最小化的 assets.info CSV 文件，用于 ClientRes 产物测试。
+
+    参数：
+        target_path: 目标文件路径。
+        rows: CSV 数据行列表，每行格式为 (Id, HashName, LocalPath, FileSize)。
+    """
     content = ["Id,HashName,LocalPath,FileSize"]
     content.extend(",".join(row) for row in rows)
     target_path.write_text("\n".join(content) + "\n", encoding="utf-8")
 
 
 def test_prepare_clean_ci_output_root_recreates_existing_directory(tmp_path: Path) -> None:
-    """Verify CI output roots are recreated without stale files."""
+    """验证 CI 输出根目录被重新创建且不包含残留文件。"""
     project_dir = tmp_path / "BDFramework.Core"
     output_root = project_dir / "Library" / "CIOutputs" / "clientres_code" / "Nightly" / "18" / "android"
     output_root.mkdir(parents=True)
@@ -80,7 +87,7 @@ def test_prepare_clean_ci_output_root_recreates_existing_directory(tmp_path: Pat
 
 
 def test_prepare_code_upload_source_keeps_script_and_required_infos(tmp_path: Path) -> None:
-    """Verify code staging keeps hashed payload files and required metadata."""
+    """验证代码暂存保留哈希负载文件和必需的元数据（package_build.info、assets.info、subpack_info）。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "android"
     (platform_dir / SCRIPT_DIRNAME / "hotfix").mkdir(parents=True)
@@ -109,7 +116,7 @@ def test_prepare_code_upload_source_keeps_script_and_required_infos(tmp_path: Pa
 
 
 def test_prepare_code_upload_source_requires_package_build_info(tmp_path: Path) -> None:
-    """Verify code staging fails when package_build.info is missing."""
+    """验证代码暂存在缺少 package_build.info 文件时报错。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "ios"
     (platform_dir / SCRIPT_DIRNAME / "hotfix").mkdir(parents=True)
@@ -131,7 +138,7 @@ def test_prepare_code_upload_source_requires_package_build_info(tmp_path: Path) 
 
 
 def test_prepare_code_upload_source_requires_declared_script_files(tmp_path: Path) -> None:
-    """Verify code staging rejects script entries declared in assets.info but missing on disk."""
+    """验证代码暂存拒绝在 assets.info 中声明但磁盘上缺失的脚本文件。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "ios"
     (platform_dir / SCRIPT_DIRNAME / "hotfix").mkdir(parents=True)
@@ -155,7 +162,7 @@ def test_prepare_code_upload_source_requires_declared_script_files(tmp_path: Pat
 
 
 def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: Path) -> None:
-    """Verify assetbundle staging keeps hashed art_assets payloads and required metadata."""
+    """验证 AssetBundle 暂存保留哈希 art_assets 负载文件和必需元数据。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "windows"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
@@ -185,7 +192,7 @@ def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: 
 def test_prepare_assetbundle_upload_source_falls_back_to_art_assets_info_when_assets_info_has_no_payload(
     tmp_path: Path,
 ) -> None:
-    """Verify assetbundle staging falls back to art_assets.info when assets.info omits real payload files."""
+    """验证当 assets.info 中没有真实负载文件时，AssetBundle 暂存会回退到 art_assets.info 解析。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "android"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
@@ -220,7 +227,7 @@ def test_prepare_assetbundle_upload_source_falls_back_to_art_assets_info_when_as
 
 
 def test_prepare_assetbundle_upload_source_requires_declared_art_assets_files(tmp_path: Path) -> None:
-    """Verify assetbundle staging rejects art_assets files declared but absent on disk."""
+    """验证 AssetBundle 暂存拒绝在 assets.info 中声明但磁盘上缺失的 art_assets 文件。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "ios"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
@@ -246,7 +253,7 @@ def test_prepare_assetbundle_upload_source_requires_declared_art_assets_files(tm
 
 
 def test_prepare_assetbundle_upload_source_requires_real_payload_file(tmp_path: Path) -> None:
-    """Verify assetbundle staging rejects metadata-only art_assets outputs."""
+    """验证 AssetBundle 暂存拒绝仅包含元数据的 art_assets 输出（缺少真实负载文件）。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "android"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
@@ -269,7 +276,7 @@ def test_prepare_assetbundle_upload_source_requires_real_payload_file(tmp_path: 
 
 
 def test_prepare_table_upload_source_renames_local_db_to_client_db(tmp_path: Path) -> None:
-    """Verify table staging renames local.db to client.db and keeps server.db."""
+    """验证表格暂存将 local.db 重命名为 client.db 并保留 server.db。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "osx"
     (output_root / SERVER_DATA_DIRNAME).mkdir(parents=True)
@@ -290,7 +297,7 @@ def test_prepare_table_upload_source_renames_local_db_to_client_db(tmp_path: Pat
 
 
 def test_prepare_table_upload_source_requires_non_empty_databases(tmp_path: Path) -> None:
-    """Verify table staging rejects empty local.db payloads."""
+    """验证表格暂存拒绝空的 local.db 负载文件。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "osx"
     (output_root / SERVER_DATA_DIRNAME).mkdir(parents=True)
@@ -308,7 +315,7 @@ def test_prepare_table_upload_source_requires_non_empty_databases(tmp_path: Path
 
 
 def test_resolve_table_platform_output_dir_falls_back_to_detected_platform(tmp_path: Path) -> None:
-    """Verify table upload falls back to the only generated platform directory when the host hint is stale."""
+    """验证表格上传在主机平台提示过时时，回退到唯一已生成的平台目录。"""
     output_root = tmp_path / "output"
     detected_platform_dir = output_root / "android"
     detected_platform_dir.mkdir(parents=True)
@@ -321,7 +328,7 @@ def test_resolve_table_platform_output_dir_falls_back_to_detected_platform(tmp_p
 
 
 def test_build_upload_summary_uses_new_remote_layout_names(tmp_path: Path) -> None:
-    """Verify upload summaries use the new shared remote root naming rules."""
+    """验证上传摘要使用新的共享远端根目录命名规则。"""
     prepared_dir = tmp_path / "prepared"
     prepared_dir.mkdir()
     (prepared_dir / "client.db").write_bytes(b"client")
@@ -338,7 +345,7 @@ def test_build_upload_summary_uses_new_remote_layout_names(tmp_path: Path) -> No
 
 
 def test_normalize_remote_listing_path_maps_legacy_root_case_to_expected_root() -> None:
-    """Verify listing paths reuse the current remote root spelling when only the root case drifted."""
+    """验证列表路径在仅根目录大小写不同时，复用当前的远端根目录拼写。"""
     normalized_path, alias_root = normalize_remote_listing_path(
         "ClientRes_table/501/client.db",
         expected_root="ClientRes_Table/501",
@@ -352,7 +359,7 @@ def test_upload_client_res_code_publishes_shared_version_manifest(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
-    """Verify code uploads publish the shared version pointer after validation."""
+    """验证代码上传在验证通过后发布共享版本指针到文件服务器。"""
     settings = SimpleNamespace(base_url="http://fileserver", config_path=None)
     prepared_dir = tmp_path / "prepared_code"
     prepared_dir.mkdir(parents=True)
@@ -419,7 +426,7 @@ def test_upload_client_res_table_publishes_all_platform_manifests(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
-    """Verify table uploads publish shared version pointers for every runtime platform."""
+    """验证表格上传为所有运行时平台发布共享版本指针。"""
     settings = SimpleNamespace(base_url="http://fileserver", config_path=None)
     prepared_dir = tmp_path / "prepared_table"
     prepared_dir.mkdir(parents=True)
@@ -485,7 +492,7 @@ def test_upload_client_res_table_publishes_all_platform_manifests(
 
 
 def test_parse_assetbundle_manifest_paths_extracts_art_assets_only(tmp_path: Path) -> None:
-    """Verify assetbundle manifest parsing only returns art_assets entries."""
+    """验证 AssetBundle 清单解析只返回 art_assets 目录下的条目。"""
     info_path = tmp_path / ASSETS_INFO_FILENAME
     write_asset_info(
         info_path,
@@ -503,7 +510,7 @@ def test_parse_assetbundle_manifest_paths_extracts_art_assets_only(tmp_path: Pat
 
 
 def test_relativize_asset_info_entries_rewrites_windows_absolute_paths() -> None:
-    """Verify absolute Windows asset paths are relativized against the platform output root."""
+    """验证 Windows 绝对路径的资产条目被转换为相对于平台输出根目录的相对路径。"""
     entries = [
         AssetInfoEntry(
             asset_id="1",
@@ -522,7 +529,7 @@ def test_relativize_asset_info_entries_rewrites_windows_absolute_paths() -> None
 
 
 def test_has_real_assetbundle_payload_ignores_metadata_only_entries() -> None:
-    """Verify metadata-only assetbundle entries do not count as real payload files."""
+    """验证仅包含元数据的 AssetBundle 条目不计为真实负载文件。"""
     metadata_only = {f"art_assets/{name}" for name in ART_ASSET_METADATA_FILENAMES}
     assert has_real_assetbundle_payload(metadata_only) is False
     assert has_real_assetbundle_payload({*metadata_only, "art_assets/real.bundle"}) is True
@@ -533,7 +540,7 @@ def test_validate_uploaded_artifacts_checks_remote_listing_and_logs_success(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
-    """Verify uploaded artifact validation checks the remote listing and logs the verified file count."""
+    """验证上传产物校验会检查远端列表并记录已验证的文件数量。"""
     prepared_dir = tmp_path / "prepared"
     prepared_dir.mkdir(parents=True)
     first_file = prepared_dir / "100"
@@ -605,7 +612,7 @@ def test_validate_uploaded_artifacts_raises_when_remote_listing_misses_file(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """Verify uploaded artifact validation fails when the remote listing is missing expected files."""
+    """验证当远端列表缺少期望文件时，上传产物校验失败。"""
     prepared_dir = tmp_path / "prepared"
     prepared_dir.mkdir(parents=True)
     first_file = prepared_dir / "100"

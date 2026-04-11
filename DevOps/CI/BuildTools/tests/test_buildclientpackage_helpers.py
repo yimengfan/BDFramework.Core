@@ -1,4 +1,14 @@
-"""Tests for BuildClientPackage output preparation and upload helpers."""
+"""BuildClientPackage 产物准备与上传辅助函数测试。
+
+测试覆盖范围：
+1. CI 日志根名称：验证 TeamCity 构建默认和显式覆盖两种模式。
+2. 发布目录清理：验证清理后重新创建空的上传根目录。
+3. HybridCLR 残留清理：验证遗留生成文件和 meta 文件被一起删除。
+4. 发布摘要构建：验证使用 CI 构建号作为远端标签。
+5. iOS 产物打包：验证 iOS 发布产物被重新打包为 Xcode 项目 ZIP。
+6. Windows 产物拆分：验证运行时负载和禁止发布负载被拆分为独立 ZIP。
+7. 发布上传：验证回退到 clientVersion 并发出进度日志。
+"""
 
 from __future__ import annotations
 
@@ -34,7 +44,14 @@ def create_publish_output(
     include_do_not_publish: bool = False,
     additional_do_not_publish_dir_names: tuple[str, ...] = (),
 ) -> Path:
-    """Create a mock Windows publish output tree for helper tests."""
+    """创建模拟的 Windows 发布输出目录树，用于辅助函数测试。
+
+    参数：
+        project_dir: 项目根目录。
+        platform_key: 平台标识（默认 windows）。
+        include_do_not_publish: 是否包含 "不要发布" 目录。
+        additional_do_not_publish_dir_names: 额外的禁止发布目录名列表。
+    """
     output_dir = project_dir / "DevOps" / "PublishPackages" / platform_key
     app_dir = output_dir / APP_DIR_NAME
     (app_dir / "Game_Data").mkdir(parents=True)
@@ -64,7 +81,7 @@ def create_publish_output(
 
 
 def create_ios_publish_output(project_dir: Path) -> Path:
-    """Create a mock iOS publish output tree for helper tests."""
+    """创建模拟的 iOS 发布输出目录树（Xcode 工程和 IPA），用于辅助函数测试。"""
     output_dir = project_dir / "DevOps" / "PublishPackages" / "ios"
     xcode_dir = output_dir / APP_DIR_NAME
     (xcode_dir / "Classes").mkdir(parents=True)
@@ -78,13 +95,13 @@ def create_ios_publish_output(project_dir: Path) -> Path:
 
 
 def read_zip_entries(zip_path: Path) -> list[str]:
-    """Return the sorted entry list for a generated ZIP archive."""
+    """读取 ZIP 压缩包并返回排序后的条目列表，用于断言打包内容。"""
     with zipfile.ZipFile(zip_path) as archive:
         return sorted(archive.namelist())
 
 
 def test_get_ci_log_root_name_uses_teamcity_default(monkeypatch) -> None:
-    """Verify TeamCity builds default the shared log root to TCLog."""
+    """验证 TeamCity 构建默认将日志根目录设为 TCLog。"""
     monkeypatch.delenv("CI_LOG_ROOT_NAME", raising=False)
     monkeypatch.setenv("TEAMCITY_VERSION", "2025.11")
 
@@ -92,7 +109,7 @@ def test_get_ci_log_root_name_uses_teamcity_default(monkeypatch) -> None:
 
 
 def test_get_ci_log_root_name_prefers_explicit_value(monkeypatch) -> None:
-    """Verify an explicit CI log root overrides the TeamCity default."""
+    """验证显式设置的 CI 日志根名称会覆盖 TeamCity 默认值。"""
     monkeypatch.setenv("CI_LOG_ROOT_NAME", "CI logs")
     monkeypatch.setenv("TEAMCITY_VERSION", "2025.11")
 
@@ -100,7 +117,7 @@ def test_get_ci_log_root_name_prefers_explicit_value(monkeypatch) -> None:
 
 
 def test_clear_publish_package_dir_recreates_empty_directory(tmp_path: Path) -> None:
-    """Verify clearing a publish output directory recreates an empty upload root."""
+    """验证清理发布输出目录后会重新创建一个空的上传根目录。"""
     output_dir = create_publish_output(tmp_path)
 
     cleared_dir = clear_publish_package_dir("windows", project_dir=tmp_path)
@@ -112,7 +129,7 @@ def test_clear_publish_package_dir_recreates_empty_directory(tmp_path: Path) -> 
 
 
 def test_cleanup_stale_hybridclr_outputs_removes_legacy_generated_files(tmp_path: Path) -> None:
-    """Verify stale HybridCLR generated outputs and meta files are removed together."""
+    """验证过期的 HybridCLR 生成文件（AOTGenericReferences.cs、link.xml）及其 meta 文件被一起删除。"""
     legacy_dir = tmp_path / "Assets" / "HybridCLRGenerate"
     legacy_dir.mkdir(parents=True)
     legacy_aot_file = legacy_dir / "AOTGenericReferences.cs"
@@ -140,7 +157,7 @@ def test_cleanup_stale_hybridclr_outputs_removes_legacy_generated_files(tmp_path
 
 
 def test_build_publish_package_summary_prefers_build_number(tmp_path: Path) -> None:
-    """Verify package upload summaries prefer the CI build number as the remote label."""
+    """验证发布摘要优先使用 CI 构建号作为远端标签。"""
     output_dir = create_publish_output(tmp_path)
 
     summary = build_publish_package_summary(
@@ -165,7 +182,7 @@ def test_build_publish_package_summary_prefers_build_number(tmp_path: Path) -> N
 def test_prepare_publish_package_upload_source_for_ios_uses_xcode_project_zip(
     tmp_path: Path,
 ) -> None:
-    """Verify iOS publish outputs are repackaged as a single Xcode project ZIP."""
+    """验证 iOS 发布产物被重新打包为单个 Xcode 工程 ZIP 文件。"""
     output_dir = create_ios_publish_output(tmp_path)
 
     prepared_dir = prepare_publish_package_upload_source(
@@ -186,7 +203,7 @@ def test_prepare_publish_package_upload_source_for_ios_uses_xcode_project_zip(
 def test_prepare_publish_package_upload_source_for_windows_splits_runtime_and_do_not_publish(
     tmp_path: Path,
 ) -> None:
-    """Verify Windows publish outputs split runtime payloads and do-not-publish payloads into separate ZIPs."""
+    """验证 Windows 发布产物被拆分为运行时负载和禁止发布负载两个独立 ZIP 文件。"""
     output_dir = create_publish_output(
         tmp_path,
         include_do_not_publish=True,
@@ -228,7 +245,7 @@ def test_upload_publish_package_falls_back_to_client_version_and_logs_progress(
     monkeypatch,
     capsys,
 ) -> None:
-    """Verify package upload falls back to clientVersion and emits progress logs for each ZIP."""
+    """验证发布上传在缺少构建号时回退到 clientVersion，并为每个 ZIP 文件发出进度日志。"""
     output_dir = create_publish_output(tmp_path, include_do_not_publish=True)
     fake_settings = SimpleNamespace(
         base_url="http://127.0.0.1:20001",

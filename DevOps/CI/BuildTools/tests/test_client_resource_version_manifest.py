@@ -496,6 +496,7 @@ class TestLoadGlobalVersionInfo:
     """从文件服务器读取 global_version.info：通过 monkeypatch 模拟 HTTP 响应。"""
 
     def _make_fake_connection(self, status: int, body: bytes) -> SimpleNamespace:
+        """构造模拟的 HTTP 连接对象，用于 monkeypatch 替换真实的文件服务器连接。"""
         response = SimpleNamespace(status=status, read=lambda: body)
         connection = SimpleNamespace()
         connection.request = lambda method, path, headers=None: None
@@ -593,6 +594,7 @@ class TestLoadClientResourceVersionManifest:
     """从 global_version.info 中提取指定平台的 version_num 并解析为三段式 manifest。"""
 
     def _make_fake_load(self, entries: list[GlobalVersionEntry]):
+        """构造模拟的 load_global_version_info 函数，返回预设的 entries 列表。"""
         def fake_load(*args, **kwargs):
             return entries
         return fake_load

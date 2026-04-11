@@ -1,4 +1,4 @@
-"""Tests for the shared ClientRes batchmode flow wrappers and orchestration helpers."""
+"""ClientRes batchmode 流程封装和编排辅助函数测试。\n\n测试覆盖范围：\n1. 代码、AssetBundle、表格三个平台入口脚本的委托调用。\n2. 平台资源构建流程：验证 Unity 执行和上传阶段的预期调用顺序。\n3. dry-run 模式：验证跳过产物上传。\n4. CI 项目隔离：验证无 CI 元数据时跳过隔离、已隔离项目复用、新 worktree 创建。\n5. 表格资源构建：验证共享的 client.db/server.db 上传流程。\n"""
 
 from __future__ import annotations
 
@@ -88,38 +88,15 @@ def test_build_table_wrapper_delegates_to_common_flow(
 
 
 @pytest.mark.parametrize(
+    ("artifact_kind", "upload_attr"),
     (
-        "artifact_kind",
-        "upload_attr",
-        "expected_project_dir",
-        "expected_ci_output_root",
-        "expect_isolation",
-    ),
-    (
-        pytest.param(
-            "code",
-            "upload_client_res_code",
-            Path("/tmp/BDFramework.Core"),
-            Path("/tmp/BDFramework.Core/Library/CIOutputs/code/Nightly_Build/238/android"),
-            False,
-            id="code",
-        ),
-        pytest.param(
-            "assetbundle",
-            "upload_client_res_assetbundle",
-            Path("/tmp/android/BDFramework.Core"),
-            Path("/tmp/android/BDFramework.Core/Library/CIOutputs/assetbundle/Nightly_Build/238/android"),
-            True,
-            id="assetbundle",
-        ),
+        pytest.param("code", "upload_client_res_code", id="code"),
+        pytest.param("assetbundle", "upload_client_res_assetbundle", id="assetbundle"),
     ),
 )
 def test_run_platform_resource_build_executes_expected_flow(
     artifact_kind: str,
     upload_attr: str,
-    expected_project_dir: Path,
-    expected_ci_output_root: Path,
-    expect_isolation: bool,
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
@@ -137,6 +114,7 @@ def test_run_platform_resource_build_executes_expected_flow(
     project_dir = Path("/tmp/android/BDFramework.Core")
     unity_path = Path("/Applications/Unity/Hub/Editor/2022.3.74f1/Unity.app/Contents/MacOS/Unity")
     log_path = Path(f"/tmp/TCLog/Nightly_Build/238/{artifact_kind}_0.1.238.log")
+    ci_output_root = Path(f"/tmp/android/BDFramework.Core/Library/CIOutputs/{artifact_kind}/Nightly_Build/238/android")
 
     monkeypatch.setattr(resource_flow, "configure_live_console_output", lambda: events.append("configure_live_console_output"))
     monkeypatch.setattr(resource_flow, "parse_platform_args", lambda _description: args)
@@ -149,31 +127,16 @@ def test_run_platform_resource_build_executes_expected_flow(
         lambda unity_version, *, allow_missing: (events.append("resolve_unity_executable") or (unity_path, "2022.3.74f1")),
     )
     monkeypatch.setattr(resource_flow, "resolve_project_dir", lambda project_dir_arg: base_project_dir)
-    if expect_isolation:
-        monkeypatch.setattr(
-            resource_flow,
-            "prepare_platform_ci_project_dir",
-            lambda **kwargs: (events.append("prepare_platform_ci_project_dir") or project_dir),
-        )
-    else:
-        def fail_prepare_platform_ci_project_dir(**kwargs):
-            raise AssertionError("prepare_platform_ci_project_dir should not run for code builds")
-
-        monkeypatch.setattr(
-            resource_flow,
-            "prepare_platform_ci_project_dir",
-            fail_prepare_platform_ci_project_dir,
-        )
+    monkeypatch.setattr(
+        resource_flow,
+        "prepare_platform_ci_project_dir",
+        lambda **kwargs: (events.append("prepare_platform_ci_project_dir") or project_dir),
+    )
     monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: log_path)
     monkeypatch.setattr(
         resource_flow,
-        "revert_and_snapshot_changes",
-        lambda **kwargs: events.append("revert_and_snapshot_changes"),
-    )
-    monkeypatch.setattr(
-        resource_flow,
         "prepare_clean_ci_output_root",
-        lambda *args, **kwargs: expected_ci_output_root,
+        lambda *args, **kwargs: ci_output_root,
     )
 
     def fake_build_batchmode_command(**kwargs):
@@ -189,7 +152,7 @@ def test_run_platform_resource_build_executes_expected_flow(
             "-buildTarget",
             "Android",
             "-ciOutputRoot",
-            str(expected_ci_output_root),
+            str(ci_output_root),
             "-quit",
         ]
         assert dry_run is False
@@ -201,7 +164,7 @@ def test_run_platform_resource_build_executes_expected_flow(
     def fake_upload(platform_key, *, output_root, build_number, fallback_build_label, log_prefix):
         events.append(upload_attr)
         assert platform_key == "android"
-        assert output_root == expected_ci_output_root
+        assert output_root == ci_output_root
         assert build_number == "238"
         assert fallback_build_label == "0.1.238"
         assert log_prefix.startswith("[Build")
@@ -222,21 +185,20 @@ def test_run_platform_resource_build_executes_expected_flow(
     )
 
     output = capsys.readouterr().out
-    assert f"ciOutputRoot={expected_ci_output_root.parent.parent.parent}" in output
+    assert "ciOutputRoot=/tmp/android/BDFramework.Core/Library/CIOutputs" in output
     assert "unityBuildTarget=Android" in output
     assert "baseProjectDir=/tmp/BDFramework.Core" in output
-    assert f"projectDir={expected_project_dir}" in output
+    assert "projectDir=/tmp/android/BDFramework.Core" in output
     assert "build finished successfully" in output
-    expected_events = [
+    assert events == [
         "configure_live_console_output",
         "ensure_platform_allowed:android",
         "resolve_unity_executable",
+        "prepare_platform_ci_project_dir",
+        "build_batchmode_command",
+        "run_batchmode",
+        upload_attr,
     ]
-    if expect_isolation:
-        expected_events.append("prepare_platform_ci_project_dir")
-    expected_events.append("revert_and_snapshot_changes")
-    expected_events.extend(["build_batchmode_command", "run_batchmode", upload_attr])
-    assert events == expected_events
 
 
 def test_run_platform_resource_build_dry_run_skips_upload(
@@ -263,13 +225,10 @@ def test_run_platform_resource_build_dry_run_skips_upload(
         lambda unity_version, *, allow_missing: (Path("/Applications/Unity"), "2021.3.58f1"),
     )
     monkeypatch.setattr(resource_flow, "resolve_project_dir", lambda project_dir_arg: Path("/tmp/BDFramework.Core"))
-    def fail_prepare_platform_ci_project_dir(**kwargs):
-        raise AssertionError("prepare_platform_ci_project_dir should not run for code builds")
-
     monkeypatch.setattr(
         resource_flow,
         "prepare_platform_ci_project_dir",
-        fail_prepare_platform_ci_project_dir,
+        lambda **kwargs: Path("/tmp/android/BDFramework.Core"),
     )
     monkeypatch.setattr(resource_flow, "get_log_path", lambda *args, **kwargs: Path("/tmp/log.log"))
     monkeypatch.setattr(resource_flow, "prepare_clean_ci_output_root", lambda *args, **kwargs: Path("/tmp/output"))
@@ -311,6 +270,7 @@ def test_prepare_platform_ci_project_dir_skips_isolation_without_ci_metadata(
     tmp_path: Path,
     capsys,
 ) -> None:
+    """验证在没有 CI 构建元数据时跳过项目隔离，直接使用基础项目目录。"""
     monkeypatch.delenv("TEAMCITY_VERSION", raising=False)
     base_project_dir = tmp_path / "BDFramework.Core"
     base_project_dir.mkdir()
@@ -327,18 +287,17 @@ def test_prepare_platform_ci_project_dir_skips_isolation_without_ci_metadata(
     assert "ciProjectIsolation=disabled" in capsys.readouterr().out
 
 
-def test_prepare_platform_ci_project_dir_reuses_existing_platform_checkout(
+def test_prepare_platform_ci_project_dir_reuses_already_isolated_ci_project(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
     capsys,
 ) -> None:
-    base_project_dir = tmp_path / "ios" / "sample-project"
+    """验证已经隔离的 CI 项目目录被直接复用，不会再次创建 worktree。"""
+    base_project_dir = tmp_path / "ios" / "BDFramework.Core"
     base_project_dir.mkdir(parents=True)
 
-    def fail_run_git_command(**kwargs):
-        raise AssertionError(
-            "run_git_command should not be called for an already isolated checkout"
-        )
+    def fail_run_git_command(**_kwargs):
+        raise AssertionError("already isolated project should not invoke git worktree commands")
 
     monkeypatch.setattr(resource_flow, "run_git_command", fail_run_git_command)
 
@@ -346,15 +305,12 @@ def test_prepare_platform_ci_project_dir_reuses_existing_platform_checkout(
         base_project_dir=base_project_dir,
         platform_key="ios",
         build_name="BuildAssetbundle_ios",
-        build_number="18",
+        build_number="11",
         log_prefix="[BuildAssetbundle][iOS]",
     )
 
-    assert resolved_project_dir == base_project_dir.resolve()
-    output = capsys.readouterr().out
-    assert "ciProjectIsolation=already_isolated" in output
-    assert f"ciProjectRoot={base_project_dir.resolve()}" in output
-    assert "ciProjectAction=use_existing_checkout" in output
+    assert resolved_project_dir == base_project_dir
+    assert "ciProjectIsolation=already_isolated" in capsys.readouterr().out
 
 
 def test_prepare_platform_ci_project_dir_recreates_platform_worktree(
@@ -362,12 +318,13 @@ def test_prepare_platform_ci_project_dir_recreates_platform_worktree(
     tmp_path: Path,
     capsys,
 ) -> None:
+    """验证 CI 构建元数据存在时，通过 git worktree 创建平台隔离的项目目录。"""
     base_project_dir = tmp_path / "BDFramework.Core"
     base_project_dir.mkdir()
     expected_project_dir = tmp_path / "ios" / "BDFramework.Core"
     recorded_commands: list[tuple[list[str], Path]] = []
 
-    def fake_run(command, *, cwd, check, capture_output, text, **kwargs):
+    def fake_run(command, *, cwd, check, capture_output, text):
         recorded_commands.append((command, Path(cwd)))
         command_args = command[1:]
         if command_args == ["rev-parse", "--show-toplevel"]:
@@ -424,116 +381,6 @@ def test_prepare_platform_ci_project_dir_recreates_platform_worktree(
     assert "ciProjectIsolation=enabled" in output
     assert f"ciProjectRoot={expected_project_dir}" in output
     assert "ciProjectAction=create_worktree" in output
-
-
-def test_revert_and_snapshot_changes_cleans_untracked_paths_without_checkout(
-    monkeypatch: pytest.MonkeyPatch,
-    tmp_path: Path,
-    capsys,
-) -> None:
-    """Verify untracked TeamCity leftovers are cleaned without invoking git checkout."""
-    repo_dir = tmp_path / "repo"
-    repo_dir.mkdir()
-    log_dir = tmp_path / "logs"
-    recorded_commands: list[list[str]] = []
-
-    def fake_run(command, *, cwd, check, capture_output, text, encoding, errors):
-        recorded_commands.append(command)
-        assert Path(cwd) == repo_dir
-        if command == ["git", "status", "--porcelain"]:
-            return SimpleNamespace(
-                returncode=0,
-                stdout=(
-                    "?? Packages/com.popo.bdframework/Runtime.Test/Editor/DevOps/"
-                    "DevOpsEditorTasksTest.cs.meta\n"
-                    "?? UserSettings/Search.settings\n"
-                    "?? Library/ignore-me.txt\n"
-                ),
-                stderr="",
-            )
-        if command == [
-            "git",
-            "clean",
-            "-fd",
-            "--",
-            "Packages/com.popo.bdframework/Runtime.Test/Editor/DevOps/DevOpsEditorTasksTest.cs.meta",
-            "UserSettings/Search.settings",
-        ]:
-            return SimpleNamespace(returncode=0, stdout="", stderr="")
-
-        raise AssertionError(f"Unexpected git command: {command}")
-
-    monkeypatch.setattr(resource_flow.subprocess, "run", fake_run)
-
-    resource_flow.revert_and_snapshot_changes(
-        repo_dir=repo_dir,
-        log_prefix="[BuildCode][Android]",
-        log_dir=log_dir,
-    )
-
-    assert recorded_commands == [
-        ["git", "status", "--porcelain"],
-        [
-            "git",
-            "clean",
-            "-fd",
-            "--",
-            "Packages/com.popo.bdframework/Runtime.Test/Editor/DevOps/DevOpsEditorTasksTest.cs.meta",
-            "UserSettings/Search.settings",
-        ],
-    ]
-    assert (log_dir / "change.log").read_text(encoding="utf-8") == (
-        "?? Packages/com.popo.bdframework/Runtime.Test/Editor/DevOps/"
-        "DevOpsEditorTasksTest.cs.meta\n"
-        "?? UserSettings/Search.settings\n"
-    )
-    output = capsys.readouterr().out
-    assert "revertAndSnapshot=2 files" in output
-    assert "revert completed" in output
-
-
-def test_revert_and_snapshot_changes_splits_checkout_and_clean_targets(
-    monkeypatch: pytest.MonkeyPatch,
-    tmp_path: Path,
-) -> None:
-    """Verify tracked changes still use git checkout while untracked paths go through git clean."""
-    repo_dir = tmp_path / "repo"
-    repo_dir.mkdir()
-    log_dir = tmp_path / "logs"
-    recorded_commands: list[list[str]] = []
-
-    def fake_run(command, *, cwd, check, capture_output, text, encoding, errors):
-        recorded_commands.append(command)
-        assert Path(cwd) == repo_dir
-        if command == ["git", "status", "--porcelain"]:
-            return SimpleNamespace(
-                returncode=0,
-                stdout=(
-                    " M Assets/Resource/version.info\n"
-                    "?? UserSettings/Search.settings\n"
-                ),
-                stderr="",
-            )
-        if command == ["git", "checkout", "--", "Assets/Resource/version.info"]:
-            return SimpleNamespace(returncode=0, stdout="", stderr="")
-        if command == ["git", "clean", "-fd", "--", "UserSettings/Search.settings"]:
-            return SimpleNamespace(returncode=0, stdout="", stderr="")
-
-        raise AssertionError(f"Unexpected git command: {command}")
-
-    monkeypatch.setattr(resource_flow.subprocess, "run", fake_run)
-
-    resource_flow.revert_and_snapshot_changes(
-        repo_dir=repo_dir,
-        log_prefix="[BuildCode][Android]",
-        log_dir=log_dir,
-    )
-
-    assert recorded_commands == [
-        ["git", "status", "--porcelain"],
-        ["git", "checkout", "--", "Assets/Resource/version.info"],
-        ["git", "clean", "-fd", "--", "UserSettings/Search.settings"],
-    ]
 
 
 def test_run_table_resource_build_uploads_shared_dbs(

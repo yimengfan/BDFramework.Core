@@ -1,4 +1,11 @@
-"""Tests for the TeamCity TestClientRes orchestration helpers."""
+"""TeamCity TestClientRes 编排辅助函数测试。
+
+测试覆盖范围：
+1. 构建复用：验证优先复用同分支、同修订、同参数的成功构建。
+2. 运行中构建复用：验证无可复用成功构建时回退到正在运行的构建。
+3. resolve-builds 命令：验证复用已有构建或排队缺失的上游任务，并导出 TeamCity 参数。
+4. wait-builds 命令：验证等待每个上游构建完成并导出版本信息。
+"""
 
 from __future__ import annotations
 
@@ -28,7 +35,19 @@ def make_build(
     client_version: str,
     build_extra_args: str = "",
 ) -> dict[str, object]:
-    """Build one TeamCity-like build payload for TestClientRes unit tests."""
+    """构造一个模拟 TeamCity 构建负载的字典，用于 TestClientRes 单元测试。
+
+    参数：
+        build_id: 构建唯一 ID。
+        build_type_id: 构建类型标识（如 BDFrameworkCore_BuildCodeAndroid）。
+        number: 构建编号。
+        state: 构建状态（finished / running / queued）。
+        status: 构建结果（SUCCESS / FAILURE）。
+        branch_name: VCS 分支名。
+        revision: VCS 修订哈希。
+        client_version: 客户端版本号。
+        build_extra_args: 额外构建参数（默认为空）。
+    """
     return {
         "id": build_id,
         "buildTypeId": build_type_id,
@@ -56,7 +75,7 @@ def make_build(
 
 
 def test_find_reusable_build_prefers_finished_success_for_same_revision_and_properties() -> None:
-    """Verify TestClientRes reuses a successful build for the same branch, revision, and build parameters."""
+    """验证 TestClientRes 优先复用同分支、同修订、同构建参数的成功构建。"""
     builds = [
         make_build(
             build_id=201,
@@ -94,7 +113,7 @@ def test_find_reusable_build_prefers_finished_success_for_same_revision_and_prop
 
 
 def test_find_reusable_build_falls_back_to_running_build_when_no_success_exists() -> None:
-    """Verify TestClientRes can reuse an inflight build for the same branch and revision instead of queueing another one."""
+    """验证在没有可复用的成功构建时，TestClientRes 可以复用同分支和修订的进行中构建。"""
     builds = [
         make_build(
             build_id=301,
@@ -126,7 +145,7 @@ def test_command_resolve_builds_reuses_existing_builds_and_emits_teamcity_params
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
-    """Verify resolve-builds reuses matching upstream TeamCity builds and exports their ids/numbers."""
+    """验证 resolve-builds 命令复用匹配的上游 TeamCity 构建并导出其 ID 和编号。"""
     args = SimpleNamespace(
         platform="android",
         client_version="0.1",
@@ -186,7 +205,7 @@ def test_command_resolve_builds_queues_missing_builds_with_revision_and_properti
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
-    """Verify resolve-builds queues missing upstream tasks with the exact revision and forwarded build properties."""
+    """验证 resolve-builds 命令为缺失的上游任务排队，并传递精确的修订版本和构建属性。"""
     args = SimpleNamespace(
         platform="windows",
         client_version="0.2",
@@ -251,7 +270,7 @@ def test_command_resolve_builds_queues_missing_builds_with_revision_and_properti
 
 
 def test_command_wait_builds_exports_resolved_numbers(monkeypatch: pytest.MonkeyPatch, capsys) -> None:
-    """Verify wait-builds waits each upstream build and exports both individual numbers and the merged version.info value."""
+    """验证 wait-builds 命令等待每个上游构建完成并导出各组件编号和合并后的版本信息。"""
     args = SimpleNamespace(
         platform="ios",
         config="/tmp/buildtools.toml",

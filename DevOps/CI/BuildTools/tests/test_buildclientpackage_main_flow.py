@@ -1,4 +1,10 @@
-"""Tests for the platform-specific BuildClientPackage entry flows."""
+"""BuildClientPackage 各平台入口流程测试。
+
+通过参数化覆盖 Android、iOS、Windows 三个平台，验证：
+1. dry-run 执行跳过破坏性步骤但保留主流程顺序。
+2. 非 dry-run 执行清理输出目录并上传构建产物。
+3. batchmode 失败时输出日志尾部并抛出执行错误。
+"""
 
 from __future__ import annotations
 
@@ -30,11 +36,12 @@ BUILD_SCRIPT_CASES = (
         id="windows",
     ),
 )
+"""参数化测试用例：(模块名, 平台标识, 日志前缀)。"""
 
 
 @pytest.fixture(params=BUILD_SCRIPT_CASES)
 def build_script_module(request):
-    """Load each platform build script module covered by the shared main-flow tests."""
+    """加载每个平台的构建脚本模块，用于共享主流程测试。"""
     module_name, platform_key, log_prefix = request.param
     module = importlib.import_module(module_name)
     return module, platform_key, log_prefix
@@ -47,7 +54,20 @@ def install_flow_fakes(
     dry_run: bool,
     return_code: int = 0,
 ):
-    """Install shared fake collaborators and return the captured flow context."""
+    """安装共享的 mock 协作者并返回捕获的流程上下文。
+
+    通过 monkeypatch 替换模块内的所有外部依赖（参数解析、路径解析、Unity 执行、上传等），
+    使测试可以验证主流程的调用顺序和参数传递。
+
+    参数：
+        monkeypatch: pytest monkeypatch 实例。
+        module: 待测试的平台构建模块。
+        dry_run: 是否启用 dry-run 模式。
+        return_code: Unity batchmode 返回码（默认 0 表示成功）。
+
+    返回：
+        包含 events（事件列表）、publish_output_dir、tail_output 的字典。
+    """
     resolved_project_dir = Path("/tmp/BDFramework.Core")
     unity_path = Path(
         "/Applications/Unity/Hub/Editor/2022.3.74f1/Unity.app/Contents/MacOS/Unity"
@@ -203,7 +223,7 @@ def test_main_dry_run_executes_main_flow_without_side_effects(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
-    """Verify dry-run execution skips destructive steps while preserving the main flow order."""
+    """验证 dry-run 执行跳过破坏性步骤但保留完整的主流程调用顺序。"""
     module, platform_key, log_prefix = build_script_module
     context = install_flow_fakes(monkeypatch, module, dry_run=True)
 
@@ -238,7 +258,7 @@ def test_main_non_dry_run_clears_output_and_uploads_artifact(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
-    """Verify non-dry-run execution clears output and uploads the built client package."""
+    """验证非 dry-run 执行会清理输出目录并上传构建好的客户端母包。"""
     module, _, log_prefix = build_script_module
     context = install_flow_fakes(monkeypatch, module, dry_run=False)
 
@@ -267,7 +287,7 @@ def test_main_reads_log_tail_and_raises_on_batchmode_failure(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
-    """Verify batchmode failures surface the log tail before raising an execution error."""
+    """验证 batchmode 失败时输出日志尾部内容并抛出执行错误。"""
     module, platform_key, _ = build_script_module
     context = install_flow_fakes(monkeypatch, module, dry_run=False, return_code=17)
 
