@@ -179,6 +179,16 @@ namespace BDFramework.ResourceMgr
                 onTaskEndCallback);
         }
 
+        /// <summary>
+        /// 使用文件服务器模式执行 CI / BatchMode 下载验证。
+        /// 这套入口专门给 Editor batchmode 与 TeamCity 显式调用，不会回退到旧版资源版控协议。
+        /// </summary>
+        static public AssetsVersionController.FileServerBatchVerificationResult VerifyFileServerAssetsForBatchModeWithDevOps(
+            AssetsVersionController.FileServerBatchVerificationRequest request)
+        {
+            return AssetsVersionController.VerifyFileServerAssetsForBatchModeWithDevOps(request);
+        }
+
         #endregion
     }
 }

@@ -6,6 +6,7 @@ using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.EditorPipeline.DevOps;
 using BDFramework.Editor.Environment;
 using BDFramework.Editor.Table;
+using BDFramework.ResourceMgr;
 using UnityEditor;
 using UnityEditor.Build.Player;
 using UnityEngine;
@@ -81,6 +82,10 @@ namespace BDFramework.Editor.DevOps
         #region 发布母包
 
         const string CLIENT_VERSION_ARG = "-clientVersion";
+        const string FILE_SERVER_URL_ARG = "-fileServerUrl";
+        const string EXPECTED_CODE_VERSION_ARG = "-expectedCodeVersion";
+        const string EXPECTED_ASSETBUNDLE_VERSION_ARG = "-expectedAssetbundleVersion";
+        const string EXPECTED_TABLE_VERSION_ARG = "-expectedTableVersion";
 
         /// <summary>
         /// 从当前 Unity 进程命令行中读取指定参数值。
@@ -112,6 +117,57 @@ namespace BDFramework.Editor.DevOps
             }
 
             return BuildTools_ClientPackage.GetDefaultClientVersion();
+        }
+
+        /// <summary>
+        /// 规范化 BatchMode 必填参数值。
+        /// 当前主要给文件服务器验证入口使用，保证 TeamCity 漏传参数时能直接得到明确错误，而不是在深层流程里出现空值副作用。
+        /// </summary>
+        static internal string NormalizeRequiredBatchModeArg(string rawValue, string argName)
+        {
+            if (!string.IsNullOrWhiteSpace(rawValue))
+            {
+                return rawValue.Trim();
+            }
+
+            throw new ArgumentException($"缺少 BatchMode 参数: {argName}", argName);
+        }
+
+        /// <summary>
+        /// 构造文件服务器 BatchMode 验证请求。
+        /// 这里统一把 TeamCity 透传的 serverUrl 和三段期望版本号收敛成运行时显式请求对象，避免解析逻辑散落在多个平台入口里。
+        /// </summary>
+        static internal AssetsVersionController.FileServerBatchVerificationRequest CreateFileServerBatchVerificationRequest(
+            string serverUrl,
+            string expectedCodeVersion,
+            string expectedAssetbundleVersion,
+            string expectedTableVersion,
+            bool resetLocalStateBeforeVerify = true)
+        {
+            return new AssetsVersionController.FileServerBatchVerificationRequest()
+            {
+                ServerUrl = NormalizeRequiredBatchModeArg(serverUrl, FILE_SERVER_URL_ARG),
+                ExpectedVersionInfo = new AssetsVersionController.FileServerVersionInfo()
+                {
+                    CodeVersion = NormalizeRequiredBatchModeArg(expectedCodeVersion, EXPECTED_CODE_VERSION_ARG),
+                    AssetBundleVersion = NormalizeRequiredBatchModeArg(expectedAssetbundleVersion,
+                        EXPECTED_ASSETBUNDLE_VERSION_ARG),
+                    TableVersion = NormalizeRequiredBatchModeArg(expectedTableVersion, EXPECTED_TABLE_VERSION_ARG),
+                },
+                ResetLocalStateBeforeVerify = resetLocalStateBeforeVerify,
+            };
+        }
+
+        /// <summary>
+        /// 从当前 Unity 进程命令行读取文件服务器 BatchMode 验证请求。
+        /// </summary>
+        static private AssetsVersionController.FileServerBatchVerificationRequest GetFileServerBatchVerificationRequest()
+        {
+            return CreateFileServerBatchVerificationRequest(
+                GetCommandLineArg(FILE_SERVER_URL_ARG),
+                GetCommandLineArg(EXPECTED_CODE_VERSION_ARG),
+                GetCommandLineArg(EXPECTED_ASSETBUNDLE_VERSION_ARG),
+                GetCommandLineArg(EXPECTED_TABLE_VERSION_ARG));
         }
 
         static private bool IsValidJdkPath(string path)
@@ -791,6 +847,38 @@ namespace BDFramework.Editor.DevOps
         }
 
         /// <summary>
+        /// 执行指定平台的文件服务器 BatchMode 验证。
+        /// 该协调器只负责收敛命令行参数、补齐 Android External Tools、调用显式运行时验证入口，并把结果写成稳定日志与异常。
+        /// </summary>
+        static private void VerifyClientRes(BuildTarget buildTarget)
+        {
+            // Phase 1: 先解析 TeamCity 透传的 serverUrl 与三段期望版本号，并为 Android 任务补齐 External Tools。
+            var request = GetFileServerBatchVerificationRequest();
+            var platform = BApplication.GetRuntimePlatform(buildTarget);
+            Debug.Log(
+                $"【CI】VerifyClientRes Target:{buildTarget} Platform:{platform} ServerUrl:{request.ServerUrl} ExpectedVersion:{request.ExpectedVersionInfo.RawValue}");
+
+            if (buildTarget == BuildTarget.Android)
+            {
+                EnsureAndroidJdkForBatchMode();
+                EnsureAndroidSdkForBatchMode();
+                EnsureAndroidNdkForBatchMode();
+            }
+
+            // Phase 2: 显式执行文件服务器真实下载验证，拒绝隐式回退到旧协议或本地缓存。
+            var result = BResources.VerifyFileServerAssetsForBatchModeWithDevOps(request);
+
+            // Phase 3: 把关键验证结果和代表性样本路径显式输出，失败时直接抛异常让 batchmode 退出非零。
+            Debug.Log(
+                $"【CI】VerifyClientRes ActualVersion:{result.ActualVersion} CodeAsset:{result.CodeAssetLocalPath} AssetbundleAsset:{result.AssetBundleAssetLocalPath} TableAsset:{result.TableAssetLocalPath}");
+            if (!result.IsSuccess)
+            {
+                throw new Exception(
+                    $"【CI】文件服务器 BatchMode 验证失败! Target:{buildTarget} Expected:{result.ExpectedVersion} Actual:{result.ActualVersion} Error:{result.Error}");
+            }
+        }
+
+        /// <summary>
         /// BatchMode: 构建 Android 热更代码。
         /// </summary>
         [CI(Des = "BatchMode构建热更代码Android")]
@@ -842,6 +930,34 @@ namespace BDFramework.Editor.DevOps
         static public void BuildAssetbundleWindows()
         {
             BuildClientRes(BuildTarget.StandaloneWindows64, BuildTools_Assets.BuildPackageOption.BuildArtAssets);
+        }
+
+        /// <summary>
+        /// BatchMode: 验证 Android 文件服务器热更资源链路。
+        /// 该入口会读取 TeamCity 透传的文件服务器地址与三段期望版本号，并在 Unity 内执行真实下载与可用性校验。
+        /// </summary>
+        [CI(Des = "BatchMode验证热更资源 Android")]
+        static public void VerifyClientResAndroid()
+        {
+            VerifyClientRes(BuildTarget.Android);
+        }
+
+        /// <summary>
+        /// BatchMode: 验证 iOS 文件服务器热更资源链路。
+        /// </summary>
+        [CI(Des = "BatchMode验证热更资源 iOS")]
+        static public void VerifyClientResIOS()
+        {
+            VerifyClientRes(BuildTarget.iOS);
+        }
+
+        /// <summary>
+        /// BatchMode: 验证 Windows 文件服务器热更资源链路。
+        /// </summary>
+        [CI(Des = "BatchMode验证热更资源 Windows")]
+        static public void VerifyClientResWindows()
+        {
+            VerifyClientRes(BuildTarget.StandaloneWindows64);
         }
 
         /// <summary>

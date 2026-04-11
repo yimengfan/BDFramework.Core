@@ -64,6 +64,7 @@
 | `BuildTools/BuildClientResCode/` | 三端热更代码构建与上传入口 | `BuildTools/BuildClientResCode/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Code` 相关任务 |
 | `BuildTools/BuildClientResAssetbundle/` | 三端热更 Assetbundle 构建与上传入口 | `BuildTools/BuildClientResAssetbundle/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Assetbundle` 相关任务 |
 | `BuildTools/BuildClientResTable/` | 统一表格构建与上传入口 | `BuildTools/BuildClientResTable/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q`；若改动影响 TeamCity，再执行 `ClientRes_Table` 相关任务 |
+| `BuildTools/VerifyClientRes/` | 三端热更文件服务器下载验证入口 | `BuildTools/VerifyClientRes/README.md` | `python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_verify.py -q`；若改动影响 TeamCity，再在 `BDFramework.Core / TestPipeline / TestBuildPipeline_ClientRes` 下执行 `ClientRes_Verify` / `VerifyClientRes_*` 相关任务 |
 | `BuildTools/Common/` | 公共上传模块与配置解析 | `BuildTools/Common/README.md` | `python -m pytest -q DevOps/CI/BuildTools/tests/test_artifact_uploader.py`；若改动影响真实上传链路，再执行 remote smoke test |
 
 ## 变更检查清单

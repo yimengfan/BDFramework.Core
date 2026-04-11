@@ -9,7 +9,7 @@
 - `buildtools_config.py`：BuildTools 外部集成配置的统一术语、TOML 读取和 typed dataclass 入口
 - `artifact_uploader.py`：上传到 `/.test-DevOps/GameFileServer/` 的公共模块
 - `client_resource_artifacts.py`：`ClientRes_Code / ClientRes_Assetbundle / ClientRes_Table` 的隔离输出、产物筛选和上传摘要 helper
-- `client_resource_flow.py`：`ClientRes_*` 三类任务复用的 BatchMode 参数、日志和执行主流程
+- `client_resource_flow.py`：`ClientRes_*` 构建任务与 `VerifyClientRes_*` 验证任务复用的 BatchMode 参数、日志和执行主流程
 - `client_resource_version_manifest.py`：维护 `clientRes_{platform}/version.info` 共享版控清单，格式固定为 `code.assetbundle.table`
 - `__init__.py`：对外导出公共 API
 
@@ -44,6 +44,7 @@
 9. `ClientRes_*` 共享 flow / artifact helper 的注释和日志规范与 `BuildClientPackage` 保持一致：文件头说明职责边界，关键函数说明为什么这样做，CI 日志按 `Step n/m` 输出宿主系统、目标平台、clientVersion、Unity 路径、executeMethod 和日志路径。
 10. `ClientRes_Code / ClientRes_Assetbundle / ClientRes_Table` 上传成功后，会同步刷新 `clientRes_{platform}/version.info`，供运行时的 DevOps 文件服务器版控协议读取三段构建号。
 11. `ClientRes_Table` 上传阶段不能把 TeamCity agent 的宿主 OS 当成 Unity 表格输出平台；当宿主提示目录不存在时，公共 helper 必须从当前 `ciOutputRoot` 自动发现唯一包含 `local.db + package_build.info` 的平台目录。
+12. `VerifyClientRes_*` 必须通过 `Common/artifact_uploader.py -> resolve_file_server_settings()` 解析文件服务器地址，再把 `-fileServerUrl` 和三段期望 build.number 显式透传给 Unity BatchMode；不要在 DSL 或 wrapper 脚本里硬编码服务器地址或重写 TOML 解析。
 
 ## 外部集成配置术语
 

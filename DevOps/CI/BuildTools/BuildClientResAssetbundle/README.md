@@ -16,11 +16,29 @@
 - `build_ios.py`
 - `build_windows.py`
 
+## 任务说明与覆盖流程
+
+- 任务说明：该模块对应 TeamCity `ClientRes_Assetbundle` 页签下的三端热更 AssetBundle 构建任务，需与 `PublishPipeLineCI.BuildAssetbundle*` 入口及其 `CI(Des)` 注释保持一致。
+- 覆盖流程：BatchMode `BuildAssetbundle*` executeMethod、`art_assets/*` payload 产出、`assets.info` / `art_assets.info` 回退逻辑、上传目录 `ClientRes_Assetbundle_{platform}/{buildnum}`、远端目录递归校验、dry-run 与真实上传。
+
+## TeamCity 页面描述
+
+- TeamCity 页签：`BDFramework.Core / ClientRes_Assetbundle`
+- 聚合任务：`ClientRes_Assetbundle`
+- 子任务：`BuildAssetbundle_android`、`BuildAssetbundle_ios`、`BuildAssetbundle_windows`
+- TeamCity 上的任务描述应该强调：这里是热更美术资源 payload 构建、整理与上传一致性任务，不是单纯 Unity 打包成功。
+
 ## 验证命令
 
 ```bash
 python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q
 ```
+
+推荐验证顺序：
+
+1. 先跑上面的 pytest。
+2. 再执行三端 dry-run，确认平台隔离 checkout/worktree、日志和上传前 staging 规则正确。
+3. 只有当前 Unity 与包版本能正常编译时，才继续 TeamCity 真实构建与上传验证。
 
 ## TeamCity 自动化映射
 

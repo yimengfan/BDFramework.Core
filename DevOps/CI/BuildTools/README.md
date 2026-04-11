@@ -12,6 +12,7 @@
 | `BuildClientResCode/` | 三端热更代码构建入口 | `BuildClientResCode/README.md` |
 | `BuildClientResAssetbundle/` | 三端热更 Assetbundle 构建入口 | `BuildClientResAssetbundle/README.md` |
 | `BuildClientResTable/` | 统一表格构建入口 | `BuildClientResTable/README.md` |
+| `VerifyClientRes/` | 三端热更文件服务器验证入口 | `VerifyClientRes/README.md` |
 | `Common/` | 公共上传模块与配置解析 | `Common/README.md` |
 | `tests/` | BuildTools 对应 pytest 测试集合 | 按模块 README 中的测试命令执行 |
 

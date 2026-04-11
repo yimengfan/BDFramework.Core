@@ -1,4 +1,4 @@
-"""Shared BatchMode flow for ClientRes Code / Assetbundle / Table scripts."""
+"""Shared BatchMode flow for ClientRes build and verification scripts."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ from Common.client_resource_artifacts import (
     upload_client_res_code,
     upload_client_res_table,
 )
-from Common.artifact_uploader import ArtifactUploadError
+from Common.artifact_uploader import ArtifactUploadError, resolve_file_server_settings
 
 
 BUILD_TOOLS_ROOT = Path(__file__).resolve().parents[1]
@@ -232,18 +232,86 @@ def parse_table_args(description: str) -> argparse.Namespace:
     return parser.parse_args()
 
 
-def validate_client_version(client_version: str) -> str:
-    """校验并规范化 clientVersion。"""
-    normalized = client_version.strip()
+def parse_platform_verify_args(description: str) -> argparse.Namespace:
+    """解析 ClientRes 文件服务器验证任务的公共参数。"""
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument(
+        "--client-version",
+        required=True,
+        help="Client resource major.minor version, for example: 0.1",
+    )
+    parser.add_argument(
+        "--expected-code-version",
+        required=True,
+        help="Expected ClientRes_Code build number already published on the file server.",
+    )
+    parser.add_argument(
+        "--expected-assetbundle-version",
+        required=True,
+        help="Expected ClientRes_Assetbundle build number already published on the file server.",
+    )
+    parser.add_argument(
+        "--expected-table-version",
+        required=True,
+        help="Expected ClientRes_Table build number already published on the file server.",
+    )
+    parser.add_argument(
+        "--server-url",
+        default=None,
+        help="Optional override for the file-server base URL. If omitted, resolve from BuildTools config.",
+    )
+    parser.add_argument(
+        "--config",
+        default=None,
+        help="Optional BuildTools config path used to resolve file-server settings.",
+    )
+    parser.add_argument(
+        "--build-name",
+        dest="build_name",
+        default=None,
+        help="Optional CI build name. If omitted, try resolving from environment.",
+    )
+    parser.add_argument(
+        "--build-number",
+        dest="build_number",
+        default=None,
+        help="Optional CI build number. If provided, Unity clientVersion becomes major.minor.buildNumber.",
+    )
+    parser.add_argument(
+        "--unity-version",
+        default=None,
+        help="Optional Unity version, for example: 2021.3.58f1.",
+    )
+    parser.add_argument(
+        "--project-dir",
+        default=None,
+        help="Optional Unity project directory. If omitted, infer the current repo root.",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Only print the final Unity command, do not execute Unity.",
+    )
+    return parser.parse_args()
+
+
+def validate_required_batch_value(raw_value: str, *, field_name: str) -> str:
+    """校验并规范化 BatchMode 必填参数。"""
+    normalized = str(raw_value or "").strip()
     if not normalized:
-        raise UnityBatchModeError("clientVersion is empty")
+        raise UnityBatchModeError(f"{field_name} is empty")
 
     if any(ch in normalized for ch in ('\n', '\r', '\t')):
         raise UnityBatchModeError(
-            f"clientVersion contains unsupported whitespace characters: {normalized!r}"
+            f"{field_name} contains unsupported whitespace characters: {normalized!r}"
         )
 
     return normalized
+
+
+def validate_client_version(client_version: str) -> str:
+    """校验并规范化 clientVersion。"""
+    return validate_required_batch_value(client_version, field_name="clientVersion")
 
 
 def resolve_table_client_version_label(client_version: str | None) -> str:
@@ -473,6 +541,130 @@ def run_table_resource_build(
         )
 
     print(f"{log_prefix} build finished successfully")
+    return 0
+
+
+def run_platform_resource_verify(
+    *,
+    platform_key: str,
+    log_prefix: str,
+    description: str,
+    execute_method: str,
+) -> int:
+    """执行平台化 ClientRes 文件服务器验证主流程。"""
+    configure_live_console_output()
+    print(f"{log_prefix} ===== Step 1/5: parse args =====")
+    args = parse_platform_verify_args(description)
+    client_version_prefix = validate_client_version(args.client_version)
+    expected_code_version = validate_required_batch_value(
+        args.expected_code_version,
+        field_name="expectedCodeVersion",
+    )
+    expected_assetbundle_version = validate_required_batch_value(
+        args.expected_assetbundle_version,
+        field_name="expectedAssetbundleVersion",
+    )
+    expected_table_version = validate_required_batch_value(
+        args.expected_table_version,
+        field_name="expectedTableVersion",
+    )
+    build_name, build_number = resolve_build_metadata(args.build_name, args.build_number)
+    client_version = compose_client_version(client_version_prefix, build_number)
+
+    print(f"{log_prefix} ===== Step 2/5: validate host and resolve file server =====")
+    host_os = detect_host_os()
+    ensure_platform_allowed(platform_key)
+    unity_build_target = UNITY_BATCHMODE_BUILD_TARGET_BY_PLATFORM.get(platform_key)
+    if unity_build_target is None:
+        raise UnityBatchModeError(f"Unsupported Unity build target platform: {platform_key}")
+
+    resolved_settings = resolve_file_server_settings(
+        server_url=args.server_url,
+        config_path=args.config,
+    )
+    resolved_server_url = resolved_settings.base_url.rstrip("/")
+
+    print(f"{log_prefix} host_os={host_os}")
+    print(f"{log_prefix} unityBuildTarget={unity_build_target}")
+    print(f"{log_prefix} clientVersionPrefix={client_version_prefix}")
+    print(f"{log_prefix} clientVersion={client_version}")
+    print(f"{log_prefix} fileServerUrl={resolved_server_url}")
+    print(
+        f"{log_prefix} expectedVersionInfo={expected_code_version}.{expected_assetbundle_version}.{expected_table_version}"
+    )
+    if resolved_settings.config_path is not None:
+        print(f"{log_prefix} buildtoolsConfig={resolved_settings.config_path}")
+    if build_name:
+        print(f"{log_prefix} buildName={build_name}")
+    if build_number:
+        print(f"{log_prefix} buildNumber={build_number}")
+
+    print(f"{log_prefix} ===== Step 3/5: resolve Unity =====")
+    unity_path, actual_unity_version = resolve_unity_executable(
+        args.unity_version,
+        allow_missing=args.dry_run,
+    )
+    base_project_dir = resolve_project_dir(args.project_dir)
+    project_dir = prepare_platform_ci_project_dir(
+        base_project_dir=base_project_dir,
+        platform_key=platform_key,
+        build_name=build_name,
+        build_number=build_number,
+        log_prefix=log_prefix,
+    )
+    log_path = get_log_path(
+        platform_key,
+        client_version,
+        project_dir=project_dir,
+        build_name=build_name,
+        build_number=build_number,
+    )
+    print(f"{log_prefix} unity={unity_path}")
+    print(f"{log_prefix} unityVersion={actual_unity_version}")
+    print(f"{log_prefix} baseProjectDir={base_project_dir}")
+    print(f"{log_prefix} projectDir={project_dir}")
+    print(f"{log_prefix} method={execute_method}")
+    print(f"{log_prefix} log={log_path}")
+
+    print(f"{log_prefix} ===== Step 4/5: build Unity command =====")
+    command = insert_command_argument(
+        insert_command_argument(
+            insert_command_argument(
+                insert_command_argument(
+                    insert_command_argument(
+                        build_batchmode_command(
+                            unity_path=unity_path,
+                            project_dir=project_dir,
+                            execute_method=execute_method,
+                            client_version=client_version,
+                            log_path=log_path,
+                        ),
+                        flag="-buildTarget",
+                        value=unity_build_target,
+                    ),
+                    flag="-fileServerUrl",
+                    value=resolved_server_url,
+                ),
+                flag="-expectedCodeVersion",
+                value=expected_code_version,
+            ),
+            flag="-expectedAssetbundleVersion",
+            value=expected_assetbundle_version,
+        ),
+        flag="-expectedTableVersion",
+        value=expected_table_version,
+    )
+
+    print(f"{log_prefix} ===== Step 5/5: execute =====")
+    return_code = run_batchmode(command, dry_run=args.dry_run)
+    if return_code != 0:
+        print(read_log_tail(log_path))
+        raise UnityBatchModeError(
+            "ClientRes file-server verification failed. "
+            f"exit_code={return_code}, log={log_path}"
+        )
+
+    print(f"{log_prefix} verification finished successfully")
     return 0
 
 

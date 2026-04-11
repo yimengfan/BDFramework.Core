@@ -14,11 +14,29 @@
 
 - `build_table.py`
 
+## 任务说明与覆盖流程
+
+- 任务说明：该模块对应 TeamCity `ClientRes_Table` 页签下的共享表格构建任务，需与 `PublishPipeLineCI.BuildTable` 入口及其 `CI(Des)` 注释保持一致。
+- 覆盖流程：BatchMode `BuildTable` executeMethod、隔离输出目录清理、`client.db` / `server.db` / `package_build.info` 整理、上传目录 `ClientRes_Table/{buildnum}`、dry-run 与真实上传。
+
+## TeamCity 页面描述
+
+- TeamCity 页签：`BDFramework.Core / ClientRes_Table`
+- 聚合任务：`ClientRes_Table`
+- 子任务：`BuildTable`
+- TeamCity 上的任务描述应该强调：该任务处理的是共享表格制品链路，不按 Android/iOS/Windows 划分远端根。
+
 ## 验证命令
 
 ```bash
 python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q
 ```
+
+推荐验证顺序：
+
+1. 先跑上面的 pytest。
+2. 再执行 `build_table.py --dry-run`，确认目录发现、日志和远端路径参数正确。
+3. 本地通过后，再在 TeamCity `ClientRes_Table` 页签触发真实 smoke test。
 
 ## TeamCity 自动化映射
 

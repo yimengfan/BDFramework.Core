@@ -16,11 +16,29 @@
 - `build_ios.py`
 - `build_windows.py`
 
+## 任务说明与覆盖流程
+
+- 任务说明：该模块对应 TeamCity `ClientRes_Code` 页签下的三端热更代码构建任务，需与 `PublishPipeLineCI.BuildCode*` 入口及其 `CI(Des)` 注释保持一致。
+- 覆盖流程：BatchMode `BuildCode*` executeMethod、`-buildTarget` 透传、隔离输出目录清理、`assets.info` / `assets_subpack.info` / `script/*` hash payload 整理、上传目录 `ClientRes_Code_{platform}/{buildnum}`、dry-run 与真实上传路径。
+
+## TeamCity 页面描述
+
+- TeamCity 页签：`BDFramework.Core / ClientRes_Code`
+- 聚合任务：`ClientRes_Code`
+- 子任务：`BuildCode_android`、`BuildCode_ios`、`BuildCode_windows`
+- TeamCity 上的任务描述应该强调：这里是热更代码 payload 构建与上传任务，不覆盖 AssetBundle 或 Table 资源。
+
 ## 验证命令
 
 ```bash
 python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py DevOps/CI/BuildTools/tests/test_client_resource_flow.py -q
 ```
+
+推荐验证顺序：
+
+1. 先跑上面的 pytest。
+2. 再执行三端 dry-run，确认 `BuildCode_*` 命令行、日志和 staging 目录正确。
+3. 本地通过后，再在 TeamCity `ClientRes_Code` 页签触发平台 smoke test。
 
 ## TeamCity 自动化映射
 

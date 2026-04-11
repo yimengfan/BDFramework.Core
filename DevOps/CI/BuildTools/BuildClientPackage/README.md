@@ -23,6 +23,18 @@
 - `config/settings.py`
 - `common.py`（废弃兼容占位，不再承载流程）
 
+## 任务说明与覆盖流程
+
+- 任务说明：该模块对应 TeamCity `ClientPackage` 页签下的三端母包构建任务，需与 `PublishPipeLineCI` 里的母包 BatchMode 入口及其 `CI(Des)` 注释保持一致。
+- 覆盖流程：`--client-version` 与 CI 元数据透传、Unity `BuildClientPackage*` executeMethod 调用、Android/iOS/Windows 三端分支、iOS Xcode 后处理、上传目录 `ClientPackage_{platform}/{buildnum}`、dry-run 与真实构建/上传出口。
+
+## TeamCity 页面描述
+
+- TeamCity 页签：`BDFramework.Core / ClientPackage`
+- 聚合任务：`BuildClientPackage`
+- 子任务：`BuildClientPackage_android`、`BuildClientPackage_ios`、`BuildClientPackage_windows`
+- TeamCity 上的任务描述应该强调：聚合任务只负责三端构建编排，平台子任务才是实际的母包构建与上传执行单元。
+
 ## 共享层维护标准
 
 - `build_android.py` / `build_ios.py` / `build_windows.py` 继续作为平台流程主体，负责步骤编排、阶段日志、失败出口和上传时机。
@@ -38,6 +50,12 @@
 ```bash
 python -m pytest DevOps/CI/BuildTools/tests/test_buildclientpackage_helpers.py DevOps/CI/BuildTools/tests/test_buildclientpackage_batchmode.py DevOps/CI/BuildTools/tests/test_buildclientpackage_main_flow.py -q
 ```
+
+推荐验证顺序：
+
+1. 先跑上面的 pytest。
+2. 再执行 README 末尾的三端 dry-run，确认命令拼接、日志路径和 CI 参数正常。
+3. 本地通过后，再在 TeamCity 的 `ClientPackage` 页签触发对应平台 smoke test。
 
 ## TeamCity 自动化映射
 

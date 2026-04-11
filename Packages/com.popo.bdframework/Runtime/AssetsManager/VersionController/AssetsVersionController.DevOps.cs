@@ -49,7 +49,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 文件服务器共享版控文件的解析结果，对应 <c>code.assetbundle.table</c>。
         /// </summary>
-        internal sealed class FileServerVersionInfo
+        public sealed class FileServerVersionInfo
         {
             public string CodeVersion { get; set; } = string.Empty;
 
@@ -57,13 +57,13 @@ namespace BDFramework.ResourceMgr
 
             public string TableVersion { get; set; } = string.Empty;
 
-            public string RawValue => FormatFileServerVersionInfo(this);
+            public string RawValue => AssetsVersionControllerDevOpsPureLogic.FormatFileServerVersionInfo(this);
 
             public bool HasAnyVersion =>
                 !string.IsNullOrEmpty(CodeVersion) || !string.IsNullOrEmpty(AssetBundleVersion) ||
                 !string.IsNullOrEmpty(TableVersion);
 
-            public string GetVersion(FileServerComponentKind componentKind)
+            internal string GetVersion(FileServerComponentKind componentKind)
             {
                 switch (componentKind)
                 {
@@ -165,6 +165,54 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// CI BatchMode 文件服务器验证请求。
+        /// 该请求聚合 TeamCity 透传的文件服务器地址与三段期望版本号，供批处理入口统一校验版控与下载结果。
+        /// </summary>
+        /// <example>
+        /// TeamCity 平台验证任务会把 BuildCode / BuildAssetbundle / BuildTable 的 build.number 组装成期望值，
+        /// 再通过 PublishPipeLineCI 的批处理入口转成这个请求对象执行真实下载验证。
+        /// </example>
+        public sealed class FileServerBatchVerificationRequest
+        {
+            public string ServerUrl { get; set; } = string.Empty;
+
+            public FileServerVersionInfo ExpectedVersionInfo { get; set; } = new FileServerVersionInfo();
+
+            public bool ResetLocalStateBeforeVerify { get; set; } = true;
+        }
+
+        /// <summary>
+        /// CI BatchMode 文件服务器验证结果。
+        /// 结果会记录本次实际解析到的三段版控、代表性资源落地路径和最终失败原因，便于 TeamCity 日志直接定位问题。
+        /// </summary>
+        public sealed class FileServerBatchVerificationResult
+        {
+            public RuntimePlatform Platform { get; set; }
+
+            public string PlatformPath { get; set; } = string.Empty;
+
+            public string FirstLoadDir { get; set; } = string.Empty;
+
+            public string ExpectedVersion { get; set; } = string.Empty;
+
+            public string ActualVersion { get; set; } = string.Empty;
+
+            public bool UsedLocalFallbackVersion { get; set; }
+
+            public string CodeAssetLocalPath { get; set; } = string.Empty;
+
+            public string AssetBundleAssetLocalPath { get; set; } = string.Empty;
+
+            public string TableAssetLocalPath { get; set; } = string.Empty;
+
+            public ClientPackageBuildInfo PackageBuildInfo { get; set; } = new ClientPackageBuildInfo();
+
+            public string Error { get; set; } = string.Empty;
+
+            public bool IsSuccess => string.IsNullOrEmpty(Error);
+        }
+
+        /// <summary>
         /// 远端共享版控入口文件。
         /// 文件内容固定为 code.assetbundle.table，运行时先读取它，再决定三个组件分别去哪一个构建号目录下载。
         /// </summary>
@@ -255,6 +303,46 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// 显式文件服务器 BatchMode 验证入口（DevOps 模式）。
+        /// 该同步桥接 API 供 Editor/CI 在 batchmode 下直接调用，内部会把真实下载验证放到线程池执行，
+        /// 避免 Unity 主线程同步等待异步流程时被同步上下文卡住。
+        /// </summary>
+        /// <example>
+        /// TeamCity 的 Unity BatchMode 入口可以显式调用：
+        /// <code>
+        /// var result = BResources.VerifyFileServerAssetsForBatchModeWithDevOps(
+        ///     new AssetsVersionController.FileServerBatchVerificationRequest()
+        ///     {
+        ///         ServerUrl = serverUrl,
+        ///         ExpectedVersionInfo = new AssetsVersionController.FileServerVersionInfo()
+        ///         {
+        ///             CodeVersion = codeBuild,
+        ///             AssetBundleVersion = assetbundleBuild,
+        ///             TableVersion = tableBuild,
+        ///         },
+        ///     });
+        /// </code>
+        /// </example>
+        public FileServerBatchVerificationResult VerifyFileServerAssetsForBatchModeWithDevOps(
+            FileServerBatchVerificationRequest request)
+        {
+            BDebug.EnableLog(LogTag);
+            try
+            {
+                return Task.Run(() => VerifyFileServerAssetsForBatchMode(request)).GetAwaiter().GetResult();
+            }
+            catch (Exception exception)
+            {
+                LogFileServerFlow($"CI BatchMode 文件服务器验证异常 err={exception}", Color.red);
+                return new FileServerBatchVerificationResult()
+                {
+                    ExpectedVersion = request?.ExpectedVersionInfo?.RawValue ?? string.Empty,
+                    Error = $"文件服务器批量验证异常:{exception.Message}",
+                };
+            }
+        }
+
+        /// <summary>
         /// 文件服务器模式专用下载入口，不做旧协议回退。
         /// </summary>
         private async Task StartFileServerVersionControl(
@@ -302,32 +390,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         internal static bool TryParseFileServerVersionInfo(string content, out FileServerVersionInfo versionInfo)
         {
-            versionInfo = null;
-            var normalized = (content ?? string.Empty).Trim();
-            if (string.IsNullOrEmpty(normalized))
-            {
-                return false;
-            }
-
-            var segments = normalized.Split('.');
-            if (segments.Length != 3)
-            {
-                return false;
-            }
-
-            segments = segments.Select(item => item.Trim()).ToArray();
-            if (segments.Any(string.IsNullOrEmpty) || segments.Any(item => item.Contains(".")))
-            {
-                return false;
-            }
-
-            versionInfo = new FileServerVersionInfo()
-            {
-                CodeVersion = segments[0],
-                AssetBundleVersion = segments[1],
-                TableVersion = segments[2],
-            };
-            return true;
+            return AssetsVersionControllerDevOpsPureLogic.TryParseFileServerVersionInfo(content, out versionInfo);
         }
 
         /// <summary>
@@ -335,12 +398,7 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         internal static string FormatFileServerVersionInfo(FileServerVersionInfo versionInfo)
         {
-            if (versionInfo == null)
-            {
-                return string.Empty;
-            }
-
-            return $"{versionInfo.CodeVersion}.{versionInfo.AssetBundleVersion}.{versionInfo.TableVersion}";
+            return AssetsVersionControllerDevOpsPureLogic.FormatFileServerVersionInfo(versionInfo);
         }
 
         /// <summary>
@@ -381,22 +439,8 @@ namespace BDFramework.ResourceMgr
             ClientPackageBuildInfo assetBundleInfo,
             ClientPackageBuildInfo tableInfo)
         {
-            var mergedInfo = new ClientPackageBuildInfo();
-            if (baseInfo != null)
-            {
-                mergedInfo.BuildTime = baseInfo.BuildTime;
-                mergedInfo.Version = baseInfo.Version;
-                mergedInfo.BasePckScriptSVCVersion = baseInfo.BasePckScriptSVCVersion;
-                mergedInfo.HotfixScriptSVCVersion = baseInfo.HotfixScriptSVCVersion;
-                mergedInfo.AssetBundleSVCVersion = baseInfo.AssetBundleSVCVersion;
-                mergedInfo.TableSVCVersion = baseInfo.TableSVCVersion;
-            }
-
-            ApplyFileServerPackageBuildInfo(mergedInfo, codeInfo);
-            ApplyFileServerPackageBuildInfo(mergedInfo, assetBundleInfo);
-            ApplyFileServerPackageBuildInfo(mergedInfo, tableInfo);
-
-            return mergedInfo;
+            return AssetsVersionControllerDevOpsPureLogic.MergeFileServerPackageBuildInfo(baseInfo, codeInfo,
+                assetBundleInfo, tableInfo);
         }
 
         /// <summary>
@@ -408,60 +452,216 @@ namespace BDFramework.ResourceMgr
             List<AssetItem> codeAssets,
             List<AssetItem> tableAssets)
         {
-            var selectedAssets = new List<AssetItem>();
-            if (subPackageConfig == null)
+            return AssetsVersionControllerDevOpsPureLogic.BuildFileServerSubPackageAssetItems(subPackageConfig,
+                assetBundleAssets, codeAssets, tableAssets);
+        }
+
+        /// <summary>
+        /// 校验 TeamCity 当前链路期望的共享三段版本号是否与远端 <c>clientRes_{platform}/version.info</c> 一致。
+        /// </summary>
+        internal static string ValidateExpectedFileServerVersionInfo(
+            FileServerVersionInfo expectedVersionInfo,
+            FileServerVersionInfo actualVersionInfo)
+        {
+            return AssetsVersionControllerDevOpsPureLogic.ValidateExpectedFileServerVersionInfo(expectedVersionInfo,
+                actualVersionInfo);
+        }
+
+        /// <summary>
+        /// 校验下载完成后本地重建的 <c>package_build.info</c> 是否已经回写为当前 TeamCity 链路期望的三段版本号。
+        /// </summary>
+        internal static string ValidateFileServerPackageBuildInfo(
+            ClientPackageBuildInfo packageBuildInfo,
+            FileServerVersionInfo expectedVersionInfo)
+        {
+            return AssetsVersionControllerDevOpsPureLogic.ValidateFileServerPackageBuildInfo(packageBuildInfo,
+                expectedVersionInfo);
+        }
+
+        /// <summary>
+        /// 从单个组件的资源清单里挑出最能代表“这类资源真的可用”的验证样本。
+        /// Code 优先挑脚本热更 payload，AssetBundle 优先挑真实 art_assets bundle，Table 优先挑 local.db。
+        /// </summary>
+        internal static AssetItem FindFileServerRepresentativeAsset(
+            FileServerComponentKind componentKind,
+            List<AssetItem> assetItems)
+        {
+            return AssetsVersionControllerDevOpsPureLogic.FindFileServerRepresentativeAsset(componentKind, assetItems);
+        }
+
+        /// <summary>
+        /// CI BatchMode 的显式文件服务器下载验证入口。
+        /// 这条路径会强制读取远端共享版控、重置本地缓存、真实下载 Code/AssetBundle/Table 三类差异资源，
+        /// 再校验本地元数据和代表性样本文件，确保 TeamCity 验证不是被旧缓存或母包残留短路。
+        /// </summary>
+        internal async Task<FileServerBatchVerificationResult> VerifyFileServerAssetsForBatchMode(
+            FileServerBatchVerificationRequest request)
+        {
+            var result = new FileServerBatchVerificationResult();
+            if (request == null)
             {
-                return selectedAssets;
+                result.Error = "文件服务器批量验证请求为空。";
+                return result;
             }
 
-            if (assetBundleAssets != null)
+            if (string.IsNullOrWhiteSpace(request.ServerUrl))
             {
-                foreach (var artAssetId in subPackageConfig.ArtAssetsIdList)
+                result.Error = "文件服务器批量验证缺少 serverUrl。";
+                return result;
+            }
+
+            LogFileServerFlow($"开始 CI BatchMode 文件服务器验证 url={request.ServerUrl}", Color.cyan);
+
+            // Phase 1: 先解析共享版控，并把 TeamCity 期望版本号与远端 version.info 对齐。
+            var resolveResult = await ResolveFileServerVersionInfo(request.ServerUrl);
+            result.Platform = resolveResult.Platform;
+            result.PlatformPath = resolveResult.PlatformPath;
+            result.FirstLoadDir = resolveResult.FirstLoadDir;
+            result.ExpectedVersion = request.ExpectedVersionInfo?.RawValue ?? string.Empty;
+            result.ActualVersion = resolveResult.VersionInfo?.RawValue ?? string.Empty;
+            result.UsedLocalFallbackVersion = resolveResult.UsedLocalFallbackVersion;
+
+            if (!resolveResult.IsFileServerProtocol)
+            {
+                result.Error = "当前服务器未提供文件服务器共享版控入口。";
+                return result;
+            }
+
+            if (!string.IsNullOrEmpty(resolveResult.Error))
+            {
+                result.Error = resolveResult.Error;
+                return result;
+            }
+
+            if (resolveResult.UsedLocalFallbackVersion)
+            {
+                result.Error = "文件服务器共享版控回退到了本地缓存，本次没有执行真实远端验证。";
+                return result;
+            }
+
+            var versionError = ValidateExpectedFileServerVersionInfo(request.ExpectedVersionInfo,
+                resolveResult.VersionInfo);
+            if (!string.IsNullOrEmpty(versionError))
+            {
+                result.Error = versionError;
+                return result;
+            }
+
+            // Phase 2: 验证任务必须强制清空本地下载态，避免被历史 persistent/缓存短路成“假下载”。
+            if (request.ResetLocalStateBeforeVerify)
+            {
+                LogFileServerFlow($"重置文件服务器本地下载目录 dir={resolveResult.FirstLoadDir}", Color.yellow);
+                ResetFileServerLocalState(resolveResult.FirstLoadDir);
+                resolveResult.CacheDir = IPath.Combine(resolveResult.FirstLoadDir, FileServerCacheFolderName);
+                Directory.CreateDirectory(resolveResult.CacheDir);
+                resolveResult.State = new FileServerVersionControllerState();
+            }
+
+            // Phase 3: 对 Code / AssetBundle / Table 分别读取远端上下文，并挑出每类的代表性验证样本。
+            var componentContexts = new Dictionary<FileServerComponentKind, FileServerComponentContext>();
+            foreach (var componentKind in FileServerManagedComponents)
+            {
+                var remoteVersion = resolveResult.VersionInfo.GetVersion(componentKind);
+                if (string.IsNullOrEmpty(remoteVersion))
                 {
-                    var found = assetBundleAssets.FirstOrDefault(item => item.Id == artAssetId);
-                    if (found != null)
-                    {
-                        selectedAssets.Add(found);
-                    }
+                    continue;
                 }
-            }
 
-            if (codeAssets != null)
-            {
-                foreach (var hotfixPath in subPackageConfig.HotfixCodePathList)
+                var loadContextResult = await LoadFileServerComponentContext(request.ServerUrl,
+                    resolveResult.PlatformPath, componentKind, remoteVersion, false, true);
+                if (!string.IsNullOrEmpty(loadContextResult.Item1))
                 {
-                    var found = codeAssets.FirstOrDefault(item => item.LocalPath == hotfixPath);
-                    if (found != null)
-                    {
-                        selectedAssets.Add(found);
-                    }
+                    result.Error = loadContextResult.Item1;
+                    return result;
                 }
+
+                componentContexts[componentKind] = loadContextResult.Item2;
+                SaveFileServerComponentCache(resolveResult.CacheDir, loadContextResult.Item2);
             }
 
-            if (tableAssets != null)
+            if (!componentContexts.TryGetValue(FileServerComponentKind.Code, out var codeContext))
             {
-                foreach (var tablePath in subPackageConfig.TablePathList)
-                {
-                    var found = tableAssets.FirstOrDefault(item => item.LocalPath == tablePath);
-                    if (found != null)
-                    {
-                        selectedAssets.Add(found);
-                    }
-                }
+                result.Error = "文件服务器验证缺少热更代码组件上下文。";
+                return result;
             }
 
-            foreach (var confName in subPackageConfig.ConfAndInfoList)
+            if (!componentContexts.TryGetValue(FileServerComponentKind.AssetBundle, out var assetBundleContext))
             {
-                var found = assetBundleAssets?.FirstOrDefault(item => item.LocalPath == confName)
-                            ?? codeAssets?.FirstOrDefault(item => item.LocalPath == confName)
-                            ?? tableAssets?.FirstOrDefault(item => item.LocalPath == confName);
-                if (found != null)
-                {
-                    selectedAssets.Add(found);
-                }
+                result.Error = "文件服务器验证缺少 AssetBundle 组件上下文。";
+                return result;
             }
 
-            return selectedAssets.Distinct().OrderBy(item => item.Id).ToList();
+            if (!componentContexts.TryGetValue(FileServerComponentKind.Table, out var tableContext))
+            {
+                result.Error = "文件服务器验证缺少表格组件上下文。";
+                return result;
+            }
+
+            var codeAsset = FindFileServerRepresentativeAsset(FileServerComponentKind.Code, codeContext.AssetItems);
+            var assetBundleAsset = FindFileServerRepresentativeAsset(FileServerComponentKind.AssetBundle,
+                assetBundleContext.AssetItems);
+            var tableAsset = FindFileServerRepresentativeAsset(FileServerComponentKind.Table, tableContext.AssetItems);
+            if (codeAsset == null || assetBundleAsset == null || tableAsset == null)
+            {
+                result.Error = "文件服务器验证缺少 Code / AssetBundle / Table 的代表性资源样本。";
+                return result;
+            }
+
+            result.CodeAssetLocalPath = IPath.Combine(resolveResult.FirstLoadDir, codeAsset.LocalPath);
+            result.AssetBundleAssetLocalPath = IPath.Combine(resolveResult.FirstLoadDir, assetBundleAsset.LocalPath);
+            result.TableAssetLocalPath = IPath.Combine(resolveResult.FirstLoadDir, tableAsset.LocalPath);
+
+            // Phase 4: 强制按远端结果重建差异列表并执行真实下载，再重建本地 package_build.info / assets.info。
+            var downloadItems = new List<FileServerDownloadItem>();
+            foreach (var componentPair in componentContexts)
+            {
+                downloadItems.AddRange(BuildFileServerDownloadItems(request.ServerUrl, resolveResult.PlatformPath,
+                    resolveResult.FirstLoadDir, componentPair.Key, componentPair.Value, false, null, resolveResult,
+                    true));
+            }
+
+            LogFileServerFlow($"文件服务器批量验证开始真实下载 count={downloadItems.Count}", Color.cyan);
+            var downloadResult = await DownloadFileServerAssets(downloadItems, null);
+            if (downloadResult.Item1.Count > 0)
+            {
+                result.Error = $"文件服务器批量验证存在下载失败资源 count={downloadResult.Item1.Count}";
+                return result;
+            }
+
+            RebuildFileServerLocalMetadata(resolveResult.FirstLoadDir, resolveResult.CacheDir, componentContexts);
+            foreach (var componentPair in componentContexts)
+            {
+                SetFileServerStateComponentVersion(resolveResult.State, componentPair.Key, componentPair.Value.Version);
+                resolveResult.State.ManagedFiles[GetFileServerComponentKey(componentPair.Key)] =
+                    GetFileServerManagedFiles(componentPair.Value, false, null);
+            }
+
+            resolveResult.State.InstalledVersion = resolveResult.VersionInfo.RawValue;
+            resolveResult.State.LastKnownRemoteVersion = resolveResult.VersionInfo.RawValue;
+            SaveFileServerState(resolveResult.CacheDir, resolveResult.State);
+
+            // Phase 5: 先做全量 hash/存在性校验，再确认 package_build.info 已经落成当前链路的三段版本号。
+            var validateError = await ValidateFileServerManagedAssets(resolveResult.FirstLoadDir,
+                resolveResult.Platform, componentContexts, false, null, null);
+            if (!string.IsNullOrEmpty(validateError))
+            {
+                result.Error = validateError;
+                return result;
+            }
+
+            result.PackageBuildInfo = LoadLocalPackageBuildInfo(resolveResult.FirstLoadDir);
+            var packageBuildInfoError = ValidateFileServerPackageBuildInfo(result.PackageBuildInfo,
+                request.ExpectedVersionInfo);
+            if (!string.IsNullOrEmpty(packageBuildInfoError))
+            {
+                result.Error = packageBuildInfoError;
+                return result;
+            }
+
+            LogFileServerFlow(
+                $"CI BatchMode 文件服务器验证完成 version={result.ActualVersion} code={result.CodeAssetLocalPath} ab={result.AssetBundleAssetLocalPath} table={result.TableAssetLocalPath}",
+                Color.green);
+            return result;
         }
 
         /// <summary>
@@ -1206,9 +1406,12 @@ namespace BDFramework.ResourceMgr
                 return false;
             }
 
-            await UniTask.SwitchToMainThread();
-            onDownloadProccess?.Invoke(downloadItem.AssetItem, allDownloadAssets);
-            await UniTask.SwitchToThreadPool();
+            if (onDownloadProccess != null)
+            {
+                await UniTask.SwitchToMainThread();
+                onDownloadProccess.Invoke(downloadItem.AssetItem, allDownloadAssets);
+                await UniTask.SwitchToThreadPool();
+            }
 
             var localDir = Path.GetDirectoryName(downloadItem.FinalLocalPath);
             if (!string.IsNullOrEmpty(localDir))
@@ -1240,7 +1443,8 @@ namespace BDFramework.ResourceMgr
             FileServerComponentContext componentContext,
             bool isSubPackageMode,
             List<AssetItem> selectedAssets,
-            FileServerResolveResult resolveResult)
+            FileServerResolveResult resolveResult,
+            bool forceRemoteDownload = false)
         {
             var downloadItems = new List<FileServerDownloadItem>();
             if (componentContext == null)
@@ -1279,7 +1483,8 @@ namespace BDFramework.ResourceMgr
 
             foreach (var assetItem in targetAssets)
             {
-                if (!ClientAssetsUtils.IsExsitAssetWithCheckHash(resolveResult.Platform, assetItem.LocalPath,
+                if (forceRemoteDownload
+                    || !ClientAssetsUtils.IsExsitAssetWithCheckHash(resolveResult.Platform, assetItem.LocalPath,
                         assetItem.HashName))
                 {
                     downloadItems.Add(new FileServerDownloadItem()
@@ -1360,9 +1565,12 @@ namespace BDFramework.ResourceMgr
                         assetItem.HashName);
                 }
 
-                await UniTask.SwitchToMainThread();
-                onTaskEndCallback?.Invoke(RetStatus.Checkassets, assetItem.LocalPath);
-                await UniTask.SwitchToThreadPool();
+                if (onTaskEndCallback != null)
+                {
+                    await UniTask.SwitchToMainThread();
+                    onTaskEndCallback.Invoke(RetStatus.Checkassets, assetItem.LocalPath);
+                    await UniTask.SwitchToThreadPool();
+                }
                 if (!isValid)
                 {
                     errors.Add(assetItem.LocalPath);
@@ -1751,6 +1959,20 @@ namespace BDFramework.ResourceMgr
             }
 
             return ClientAssetsUtils.GetBasePackBuildInfo() ?? new ClientPackageBuildInfo();
+        }
+
+        /// <summary>
+        /// 重置文件服务器验证使用的 persistent 下载目录。
+        /// 只在 CI 批量验证入口使用，目的是强制触发真实下载，避免历史文件或母包残留让验证变成假阳性。
+        /// </summary>
+        private static void ResetFileServerLocalState(string firstLoadDir)
+        {
+            if (Directory.Exists(firstLoadDir))
+            {
+                Directory.Delete(firstLoadDir, true);
+            }
+
+            Directory.CreateDirectory(firstLoadDir);
         }
 
         private static string GetFileServerStateComponentVersion(FileServerVersionControllerState state,
