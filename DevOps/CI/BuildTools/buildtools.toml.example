@@ -22,10 +22,10 @@ hash_chunk_size_kb = 1024
 [ci_server]
 # external service config: 业务无关的 CI 服务器连接信息。
 # TeamCity / Jenkins / GitHub Actions 之类的接入如果需要固定地址或项目标识，统一从这里读取。
-# provider = "teamcity"
-# base_url = "https://ci.example.com"
-# project_name = "BDFramework.Core"
-# token_env = "TEAMCITY_TOKEN"
+provider = "teamcity"
+base_url = "http://192.168.0.240:20000"
+project_name = "BDFrameworkCore"
+token_env = "TEAMCITY_TOKEN"
 
 [ios_xcode]
 # external signing config: iOS Xcode 后置脚本签名配置。
