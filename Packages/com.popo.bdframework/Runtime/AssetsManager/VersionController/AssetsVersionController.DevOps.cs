@@ -1656,7 +1656,7 @@ namespace BDFramework.ResourceMgr
                     File.ReadAllText(subPackagePath));
             }
 
-            LogFileServerFlow($"本地元数据重建完成 mergedAssets={mergedAssets.Count} hasSubPackageCache={File.Exists(subPackagePath)}",
+            LogFileServerFlow($"本地元数据重建完成 mergedAssets={normalizedAssets.Count} hasSubPackageCache={File.Exists(subPackagePath)}",
                 Color.green);
         }
 
