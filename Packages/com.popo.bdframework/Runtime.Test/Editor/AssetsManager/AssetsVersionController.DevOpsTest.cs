@@ -92,6 +92,15 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证文件服务器远端下载路径对 Code / AssetBundle 优先使用 HashName，对无 hash 资源回退到 LocalPath。
+        /// </summary>
+        [Test]
+        public void BuildFileServerAssetRemoteRelativePath_PrefersHashNameForManagedAssets()
+        {
+            VerifyBuildFileServerAssetRemoteRelativePathPrefersHashNameForManagedAssets();
+        }
+
+        /// <summary>
         /// 验证 CI 批量验证会优先挑选真正代表 Code / AssetBundle / Table 三类 payload 的样本文件。
         /// </summary>
         [Test]
@@ -296,6 +305,30 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证文件服务器远端下载路径选择逻辑，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyBuildFileServerAssetRemoteRelativePathPrefersHashNameForManagedAssets()
+        {
+            var hashedAsset = new AssetItem()
+            {
+                Id = 801,
+                LocalPath = "script/hotfix/Game.dll.bytes",
+                HashName = "dll-hash",
+            };
+            var plainAsset = new AssetItem()
+            {
+                Id = 802,
+                LocalPath = "local.db",
+                HashName = string.Empty,
+            };
+
+            EnsureEqual("dll-hash", AssetsVersionController.BuildFileServerAssetRemoteRelativePath(hashedAsset),
+                "存在 HashName 时应优先使用 HashName 作为远端下载路径。");
+            EnsureEqual("local.db", AssetsVersionController.BuildFileServerAssetRemoteRelativePath(plainAsset),
+                "缺少 HashName 时应回退到 LocalPath 作为远端下载路径。");
+        }
+
+        /// <summary>
         /// 以纯异常校验方式验证代表性资源挑选结果，供 batchmode 路径复用。
         /// </summary>
         internal static void VerifyFindFileServerRepresentativeAssetPicksRealPayloadAssets()
@@ -479,7 +512,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 11;
+            const int totalCheckCount = 12;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -510,6 +543,10 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.ShouldUseCachedFileServerComponentContextOnFailure_DisablesFallbackForStrictRemoteVerification),
                 AssetsVersionControllerDevOpsTest.VerifyShouldUseCachedFileServerComponentContextOnFailureDisablesFallbackForStrictRemoteVerification,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.BuildFileServerAssetRemoteRelativePath_PrefersHashNameForManagedAssets),
+                AssetsVersionControllerDevOpsTest.VerifyBuildFileServerAssetRemoteRelativePathPrefersHashNameForManagedAssets,
                 reportBuilder, ref failedCount);
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.FindFileServerRepresentativeAsset_PicksRealPayloadAssets),

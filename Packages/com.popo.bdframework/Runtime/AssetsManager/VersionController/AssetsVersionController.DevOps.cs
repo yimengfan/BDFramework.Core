@@ -1468,6 +1468,10 @@ namespace BDFramework.ResourceMgr
             return true;
         }
 
+        /// <summary>
+        /// 根据组件上下文生成本次需要下载的文件服务器资源清单。
+        /// Code / AssetBundle 远端目录使用 hash 文件名存储 payload，所以这里要把远端下载路径和本地落盘路径显式区分开。
+        /// </summary>
         private List<FileServerDownloadItem> BuildFileServerDownloadItems(
             string serverUrl,
             string platformPath,
@@ -1525,13 +1529,32 @@ namespace BDFramework.ResourceMgr
                         ComponentKind = componentKind,
                         AssetItem = assetItem,
                         FinalLocalPath = IPath.Combine(firstLoadDir, assetItem.LocalPath),
-                        RemoteUrl = CombineUrl(remoteRoot, assetItem.LocalPath),
+                        RemoteUrl = CombineUrl(remoteRoot, BuildFileServerAssetRemoteRelativePath(assetItem)),
                         RequireHashValidation = true,
                     });
                 }
             }
 
             return downloadItems;
+        }
+
+        /// <summary>
+        /// 生成文件服务器协议里单个资源的远端相对路径。
+        /// Code / AssetBundle 上传到文件服务器时使用 <c>HashName</c> 作为远端文件名，只有没有 hash 的资源才直接使用 <c>LocalPath</c>。
+        /// </summary>
+        internal static string BuildFileServerAssetRemoteRelativePath(AssetItem assetItem)
+        {
+            if (assetItem == null)
+            {
+                return string.Empty;
+            }
+
+            if (!string.IsNullOrEmpty(assetItem.HashName))
+            {
+                return assetItem.HashName;
+            }
+
+            return assetItem.LocalPath ?? string.Empty;
         }
 
         private List<(AssetItem AssetItem, string RemoteRelativePath)> BuildFileServerTableAssetItems(string tableVersion)
