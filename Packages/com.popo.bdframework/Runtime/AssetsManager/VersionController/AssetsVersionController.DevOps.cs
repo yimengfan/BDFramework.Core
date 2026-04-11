@@ -678,7 +678,7 @@ namespace BDFramework.ResourceMgr
                 return result;
             }
 
-            result.PackageBuildInfo = LoadLocalPackageBuildInfo(resolveResult.FirstLoadDir);
+            result.PackageBuildInfo = LoadLocalPackageBuildInfo(resolveResult.FirstLoadDir, false);
             var packageBuildInfoError = ValidateFileServerPackageBuildInfo(result.PackageBuildInfo,
                 request.ExpectedVersionInfo);
             if (!string.IsNullOrEmpty(packageBuildInfoError))
@@ -1307,12 +1307,7 @@ namespace BDFramework.ResourceMgr
                     context.AssetsInfoContent = assetsInfoDownload.Item3;
                     var assetItems = CsvSerializer.DeserializeFromString<List<AssetItem>>(assetsInfoDownload.Item3)
                                      ?? new List<AssetItem>();
-                    context.AssetItems = assetItems.Where(item =>
-                            !string.Equals(item.LocalPath, FileServerPackageBuildInfoPath,
-                                StringComparison.OrdinalIgnoreCase))
-                        .Distinct()
-                        .OrderBy(item => item.Id)
-                        .ToList();
+                    context.AssetItems = NormalizeFileServerManagedAssetItems(assetItems);
                 }
                 catch (Exception e)
                 {
@@ -1632,17 +1627,12 @@ namespace BDFramework.ResourceMgr
         {
             var mergedAssets = componentContexts.Values
                 .Where(context => context.ComponentKind != FileServerComponentKind.Table)
-                .SelectMany(context => context.AssetItems)
-                .Where(item =>
-                    !string.Equals(item.LocalPath, FileServerPackageBuildInfoPath,
-                        StringComparison.OrdinalIgnoreCase))
-                .Distinct()
-                .OrderBy(item => item.Id)
-                .ToList();
-            if (mergedAssets.Count > 0)
+                .SelectMany(context => context.AssetItems);
+            var normalizedAssets = NormalizeFileServerManagedAssetItems(mergedAssets);
+            if (normalizedAssets.Count > 0)
             {
                 FileHelper.WriteAllText(IPath.Combine(firstLoadDir, BResources.ASSETS_INFO_PATH),
-                    CsvSerializer.SerializeToString(mergedAssets));
+                    CsvSerializer.SerializeToString(normalizedAssets));
             }
 
             var localPackageBuildInfo = LoadLocalPackageBuildInfo(firstLoadDir, allowBasePackageFallback);
@@ -2014,12 +2004,7 @@ namespace BDFramework.ResourceMgr
                     context.AssetsInfoContent = File.ReadAllText(GetFileServerAssetsInfoCachePath(cacheDir, componentKind));
                     var assetItems = CsvSerializer.DeserializeFromString<List<AssetItem>>(context.AssetsInfoContent)
                                      ?? new List<AssetItem>();
-                    context.AssetItems = assetItems.Where(item =>
-                            !string.Equals(item.LocalPath, ClientAssetsUtils.PACKAGE_BUILD_INFO_PATH,
-                                StringComparison.OrdinalIgnoreCase))
-                        .Distinct()
-                        .OrderBy(item => item.Id)
-                        .ToList();
+                    context.AssetItems = NormalizeFileServerManagedAssetItems(assetItems);
                     var subPackageCachePath = GetFileServerSubPackageCachePath(cacheDir);
                     if (File.Exists(subPackageCachePath))
                     {
@@ -2036,6 +2021,21 @@ namespace BDFramework.ResourceMgr
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 标准化文件服务器协议管理的资源列表。
+        /// 该 helper 统一过滤 <c>package_build.info</c> 元数据占位项，并保持既有的去重与按 Id 排序规则，
+        /// 避免不同下载/缓存入口分别维护相同逻辑。
+        /// </summary>
+        internal static List<AssetItem> NormalizeFileServerManagedAssetItems(IEnumerable<AssetItem> assetItems)
+        {
+            return (assetItems ?? Enumerable.Empty<AssetItem>())
+                .Where(item => !string.Equals(item.LocalPath, FileServerPackageBuildInfoPath,
+                    StringComparison.OrdinalIgnoreCase))
+                .Distinct()
+                .OrderBy(item => item.Id)
+                .ToList();
         }
 
         /// <summary>

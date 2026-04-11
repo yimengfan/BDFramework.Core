@@ -74,6 +74,15 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证文件服务器 assets.info 标准化时会剔除 package_build.info，并按资源 Id 稳定排序。
+        /// </summary>
+        [Test]
+        public void NormalizeFileServerManagedAssetItems_FiltersPackageBuildInfoAndSortsById()
+        {
+            VerifyNormalizeFileServerManagedAssetItemsFiltersPackageBuildInfoAndSortsById();
+        }
+
+        /// <summary>
         /// 验证 CI 批量验证会优先挑选真正代表 Code / AssetBundle / Table 三类 payload 的样本文件。
         /// </summary>
         [Test]
@@ -243,6 +252,25 @@ namespace BDFramework.EditorTest.AssetsManager
             EnsureTrue(selected.Exists(item => item.LocalPath == "local.db"), "缺少 local.db。");
             EnsureTrue(selected.Exists(item => item.LocalPath == "art_assets/art_assets.info"),
                 "缺少 art_assets/art_assets.info。");
+        }
+
+        /// <summary>
+        /// 以纯异常校验方式验证文件服务器 assets.info 标准化结果，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyNormalizeFileServerManagedAssetItemsFiltersPackageBuildInfoAndSortsById()
+        {
+            var normalized = AssetsVersionController.NormalizeFileServerManagedAssetItems(new List<AssetItem>()
+            {
+                new AssetItem() {Id = 30, LocalPath = "PACKAGE_BUILD.INFO", HashName = "pkg"},
+                new AssetItem() {Id = 20, LocalPath = "art_assets/demo.bundle", HashName = "ab"},
+                new AssetItem() {Id = 10, LocalPath = "script/hotfix/Game.dll.bytes", HashName = "dll"},
+            });
+
+            EnsureEqual(2L, normalized.Count, "标准化后资源数量不匹配。");
+            EnsureEqual("script/hotfix/Game.dll.bytes", normalized[0].LocalPath,
+                "标准化后第一个资源顺序不匹配。");
+            EnsureEqual("art_assets/demo.bundle", normalized[1].LocalPath,
+                "标准化后第二个资源顺序不匹配。");
         }
 
         /// <summary>
@@ -429,7 +457,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 9;
+            const int totalCheckCount = 10;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -452,6 +480,10 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.BuildFileServerSubPackageAssetItems_CollectsConfiguredAssetsAcrossComponents),
                 AssetsVersionControllerDevOpsTest.VerifyBuildFileServerSubPackageAssetItemsCollectsConfiguredAssetsAcrossComponents,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.NormalizeFileServerManagedAssetItems_FiltersPackageBuildInfoAndSortsById),
+                AssetsVersionControllerDevOpsTest.VerifyNormalizeFileServerManagedAssetItemsFiltersPackageBuildInfoAndSortsById,
                 reportBuilder, ref failedCount);
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.FindFileServerRepresentativeAsset_PicksRealPayloadAssets),
