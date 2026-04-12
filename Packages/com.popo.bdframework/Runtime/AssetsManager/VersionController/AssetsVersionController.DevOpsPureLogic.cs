@@ -447,6 +447,54 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// 从 <c>art_assets.info</c> 的解析结果里提取需要做逐资产本地加载校验的条目。
+        /// 这里保留每条可加载资产记录，而不是只按 <c>AssetBundlePath</c> 去重，确保 CI 能按资产列表逐条验证真实加载行为。
+        /// </summary>
+        internal static List<AssetsVersionController.FileServerAssetBundleValidationEntry>
+            CollectFileServerAssetBundleValidationEntries(IEnumerable<AssetBundleItem> assetBundleItems)
+        {
+            var validationEntries = new List<AssetsVersionController.FileServerAssetBundleValidationEntry>();
+            var seenValidationKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var assetBundleItem in assetBundleItems ?? Enumerable.Empty<AssetBundleItem>())
+            {
+                if (assetBundleItem == null || string.IsNullOrWhiteSpace(assetBundleItem.AssetBundlePath))
+                {
+                    continue;
+                }
+
+                var assetGuid = assetBundleItem.GUID?.Trim() ?? string.Empty;
+                var assetLoadPath = assetBundleItem.LoadPath?.Trim() ?? string.Empty;
+                var assetDisplayPath = !string.IsNullOrWhiteSpace(assetLoadPath) ? assetLoadPath : assetGuid;
+                if (string.IsNullOrWhiteSpace(assetDisplayPath))
+                {
+                    continue;
+                }
+
+                var relativePath = (ArtAssetRootPath + "/" + assetBundleItem.AssetBundlePath.Trim())
+                    .Replace("\\", "/");
+                var validationKey = assetBundleItem.Id > 0
+                    ? assetBundleItem.Id.ToString()
+                    : $"{relativePath}|{assetGuid}|{assetLoadPath}";
+                if (!seenValidationKeys.Add(validationKey))
+                {
+                    continue;
+                }
+
+                validationEntries.Add(new AssetsVersionController.FileServerAssetBundleValidationEntry()
+                {
+                    AssetId = assetBundleItem.Id,
+                    AssetDisplayPath = assetDisplayPath,
+                    AssetLoadPath = assetLoadPath,
+                    AssetGuid = assetGuid,
+                    AssetBundleRelativePath = relativePath,
+                });
+            }
+
+            return validationEntries;
+        }
+
+        /// <summary>
         /// 从 <c>art_assets.info</c> 的解析结果里提取需要做本地打开校验的 AssetBundle 相对路径。
         /// 这里按非空 <c>AssetBundlePath</c> 去重，避免同一个 bundle 因多个资源记录被重复 <c>LoadFromFile</c>。
         /// </summary>
@@ -473,6 +521,23 @@ namespace BDFramework.ResourceMgr
             var assetBundleItems = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(artAssetsInfoContent)
                                    ?? new List<AssetBundleItem>();
             return CollectFileServerAssetBundleValidationAssetItems(assetBundleItems);
+        }
+
+        /// <summary>
+        /// 直接从 <c>art_assets.info</c> 文本内容里提取需要做逐资产本地加载校验的条目。
+        /// 这里避免走运行时加载器，防止 CI 后台线程为了读取配置而触发 Unity 主线程限定的静态初始化。
+        /// </summary>
+        internal static List<AssetsVersionController.FileServerAssetBundleValidationEntry>
+            CollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContent(string artAssetsInfoContent)
+        {
+            if (string.IsNullOrWhiteSpace(artAssetsInfoContent))
+            {
+                return new List<AssetsVersionController.FileServerAssetBundleValidationEntry>();
+            }
+
+            var assetBundleItems = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(artAssetsInfoContent)
+                                   ?? new List<AssetBundleItem>();
+            return CollectFileServerAssetBundleValidationEntries(assetBundleItems);
         }
 
         /// <summary>

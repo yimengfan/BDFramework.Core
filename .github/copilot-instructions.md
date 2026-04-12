@@ -24,6 +24,7 @@ This file is the mandatory workspace instruction set for GitHub Copilot in this 
 ## Mandatory Conventions
 
 - Important multi-step flows must emit explicit logs at entry, key branch or fallback, and completion or error so runtime debugging does not rely on inference.
+- Automated tests, batch verification entries, and CI validation entrypoints must print Chinese start logs with explicit `测试目的=` and `实现手段=` markers, and multi-step or long-running checks must continue emitting key progress logs so the current validation stage is visible in console and TeamCity output.
 - Unity3D business-layer code must not use reflection.
 - Reflection is allowed only lightly in framework or infrastructure code when needed for compatibility, platform isolation, or controlled extension points, and the reason must be documented in code comments.
 

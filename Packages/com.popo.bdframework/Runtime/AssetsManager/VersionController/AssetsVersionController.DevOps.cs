@@ -192,6 +192,26 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// CI BatchMode AssetBundle 逐资产本地加载校验项。
+        /// 它把 <c>art_assets.info</c> 中的单条可加载资产记录扩展成“bundle 本地路径 + 资产标识”的运行态描述，
+        /// 供主线程按资产列表逐条执行真实 <c>LoadAsset</c> 校验。
+        /// </summary>
+        public sealed class FileServerAssetBundleValidationEntry
+        {
+            public int AssetId { get; set; }
+
+            public string AssetDisplayPath { get; set; } = string.Empty;
+
+            public string AssetLoadPath { get; set; } = string.Empty;
+
+            public string AssetGuid { get; set; } = string.Empty;
+
+            public string AssetBundleRelativePath { get; set; } = string.Empty;
+
+            public string AssetBundleLocalPath { get; set; } = string.Empty;
+        }
+
+        /// <summary>
         /// CI BatchMode 文件服务器验证结果。
         /// 结果会记录本次实际解析到的三段版控、代表性资源落地路径和最终失败原因，便于 TeamCity 日志直接定位问题。
         /// </summary>
@@ -214,10 +234,23 @@ namespace BDFramework.ResourceMgr
             public string AssetBundleAssetLocalPath { get; set; } = string.Empty;
 
             /// <summary>
-            /// 按 art_assets.info 解析出的去重 AssetBundle 本地校验路径集合。
-            /// 这里保留完整列表，供 CI BatchMode 在主线程上逐个执行 LoadFromFile 校验。
+            /// 按 art_assets.info 资产列表反推出来的去重 AssetBundle 本地路径集合。
+            /// 这里主要用于统计涉及的 bundle 数量与输出诊断日志，真正的主线程校验会使用 <see cref="AssetBundleValidationEntries"/> 逐资产执行加载。
             /// </summary>
             public List<string> AssetBundleAssetLocalPaths { get; set; } = new List<string>();
+
+            /// <summary>
+            /// 按 <c>art_assets.info</c> 解析出的第一个资产级加载目标。
+            /// 这里优先使用运行时 <c>LoadPath</c>，如果配置只保留 GUID，则回退为 GUID，便于 TeamCity 日志直接展示当前正在校验哪个资产。
+            /// </summary>
+            public string AssetBundleValidationFirstTarget { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 按 <c>art_assets.info</c> 逐资产解析出的本地加载校验项集合。
+            /// CI BatchMode 会在主线程按该列表顺序逐条执行 AssetBundle 资产级真实加载，而不是只验证 bundle 文件能否打开。
+            /// </summary>
+            public List<FileServerAssetBundleValidationEntry> AssetBundleValidationEntries { get; set; } =
+                new List<FileServerAssetBundleValidationEntry>();
 
             public string TableAssetLocalPath { get; set; } = string.Empty;
 
@@ -471,7 +504,7 @@ namespace BDFramework.ResourceMgr
 
             var representativeLoadError = ValidateFileServerRepresentativeLocalLoads(
                     result.CodeAssetLocalPath,
-                    result.AssetBundleAssetLocalPaths,
+                    result.AssetBundleValidationEntries,
                     result.TableAssetLocalPath)
                 .GetAwaiter()
                 .GetResult();
@@ -492,7 +525,7 @@ namespace BDFramework.ResourceMgr
             }
 
             LogFileServerFlow(
-                $"CI BatchMode 文件服务器验证完成 version={result.ActualVersion} code={result.CodeAssetLocalPath} abFirst={result.AssetBundleAssetLocalPath} abCount={result.AssetBundleAssetLocalPaths.Count} table={result.TableAssetLocalPath}",
+                $"CI BatchMode 文件服务器验证完成 version={result.ActualVersion} code={result.CodeAssetLocalPath} abFirstTarget={result.AssetBundleValidationFirstTarget} abAssetCount={result.AssetBundleValidationEntries.Count} abBundleCount={result.AssetBundleAssetLocalPaths.Count} table={result.TableAssetLocalPath}",
                 Color.green);
             return result;
         }
@@ -679,26 +712,31 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
-        /// 从当前本地下载目录的 art_assets.info 解析出需要逐个本地打开校验的 AssetBundle 绝对路径。
-        /// 这里直接读取 art_assets.info 的 CSV 内容，避免后台线程触发运行时加载器里的 Unity 主线程静态初始化。
+        /// 从当前本地下载目录的 <c>art_assets.info</c> 解析出需要逐资产本地打开校验的条目。
+        /// 这里直接读取 CSV 文本并补齐 bundle 绝对路径，避免后台线程触发运行时加载器里的 Unity 主线程静态初始化。
         /// </summary>
-        private static List<string> ResolveFileServerAssetBundleValidationLocalPaths(string firstLoadDir)
+        private static List<FileServerAssetBundleValidationEntry> ResolveFileServerAssetBundleValidationEntries(
+            string firstLoadDir)
         {
             if (string.IsNullOrEmpty(firstLoadDir) || !Directory.Exists(firstLoadDir))
             {
-                return new List<string>();
+                return new List<FileServerAssetBundleValidationEntry>();
             }
 
             var artAssetsInfoPath = IPath.Combine(firstLoadDir, BResources.ART_ASSET_INFO_PATH);
             if (!File.Exists(artAssetsInfoPath))
             {
-                return new List<string>();
+                return new List<FileServerAssetBundleValidationEntry>();
             }
 
             var artAssetsInfoContent = File.ReadAllText(artAssetsInfoPath);
             return AssetsVersionControllerDevOpsPureLogic
-                .CollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContent(artAssetsInfoContent)
-                .Select(relativePath => IPath.Combine(firstLoadDir, relativePath))
+                .CollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContent(artAssetsInfoContent)
+                .Select(entry =>
+                {
+                    entry.AssetBundleLocalPath = IPath.Combine(firstLoadDir, entry.AssetBundleRelativePath);
+                    return entry;
+                })
                 .ToList();
         }
 
@@ -1004,30 +1042,36 @@ namespace BDFramework.ResourceMgr
                 return result;
             }
 
-            var allAssetBundleAssetLocalPaths = ResolveFileServerAssetBundleValidationLocalPaths(resolveResult.FirstLoadDir);
+            var allAssetBundleValidationEntries = ResolveFileServerAssetBundleValidationEntries(
+                resolveResult.FirstLoadDir);
             var managedAssetBundleLocalPathSet = BuildFileServerManagedAssetBundleLocalPathSet(
                 resolveResult.FirstLoadDir,
                 assetBundleContext.AssetItems);
-            var assetBundleAssetLocalPaths = allAssetBundleAssetLocalPaths
-                .Where(path => managedAssetBundleLocalPathSet.Contains(path))
+            var assetBundleValidationEntries = allAssetBundleValidationEntries
+                .Where(entry => managedAssetBundleLocalPathSet.Contains(entry.AssetBundleLocalPath))
                 .ToList();
-            if (assetBundleAssetLocalPaths.Count != allAssetBundleAssetLocalPaths.Count)
+            if (assetBundleValidationEntries.Count != allAssetBundleValidationEntries.Count)
             {
                 LogFileServerFlow(
-                    $"AssetBundle 本地加载样本已按受管资源清单过滤 raw={allAssetBundleAssetLocalPaths.Count} managed={assetBundleAssetLocalPaths.Count}",
+                    $"AssetBundle 资产加载样本已按受管资源清单过滤 rawAssets={allAssetBundleValidationEntries.Count} managedAssets={assetBundleValidationEntries.Count}",
                     Color.yellow);
             }
 
-            if (assetBundleAssetLocalPaths.Count <= 0)
+            if (assetBundleValidationEntries.Count <= 0)
             {
-                result.Error = "文件服务器验证未能从 art_assets.info 解析出任何 AssetBundle 加载样本。";
+                result.Error = "文件服务器验证未能从 art_assets.info 解析出任何可加载 AssetBundle 资产样本。";
                 return result;
             }
 
-            result.AssetBundleAssetLocalPaths = assetBundleAssetLocalPaths;
-            result.AssetBundleAssetLocalPath = assetBundleAssetLocalPaths[0];
+            result.AssetBundleValidationEntries = assetBundleValidationEntries;
+            result.AssetBundleValidationFirstTarget = assetBundleValidationEntries[0].AssetDisplayPath;
+            result.AssetBundleAssetLocalPaths = assetBundleValidationEntries
+                .Select(entry => entry.AssetBundleLocalPath)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+            result.AssetBundleAssetLocalPath = result.AssetBundleAssetLocalPaths[0];
             LogFileServerFlow(
-                $"AssetBundle 本地加载样本已根据 art_assets.info 解析 count={assetBundleAssetLocalPaths.Count} first={result.AssetBundleAssetLocalPath}",
+                $"AssetBundle 资产加载样本已根据 art_assets.info 解析 assetCount={assetBundleValidationEntries.Count} bundleCount={result.AssetBundleAssetLocalPaths.Count} first={result.AssetBundleValidationFirstTarget}",
                 Color.green);
 
             LogFileServerFlow("文件服务器全量资源校验通过，等待主线程执行代表性本地加载校验。", Color.green);
@@ -2111,18 +2155,18 @@ namespace BDFramework.ResourceMgr
 
         /// <summary>
         /// 对下载完成后的三类代表性资源执行真实本地打开校验。
-        /// Code 走程序集装载探测，AssetBundle 走 <see cref="AssetBundle.LoadFromFile(string)"/>，Table 走 SQLite 只读打开，
-        /// 这样可以把“文件存在但本地无法打开”的问题和纯下载/hash 问题区分开。
+        /// Code 走程序集装载探测，AssetBundle 走基于 <c>art_assets.info</c> 资产列表的逐条 <c>LoadAsset</c>，
+        /// Table 走 SQLite 只读打开，这样可以把“文件存在但资产本身无法加载”的问题和纯下载/hash 问题区分开。
         /// </summary>
         internal async Task<string> ValidateFileServerRepresentativeLocalLoads(
             string codeAssetLocalPath,
-            IReadOnlyList<string> assetBundleAssetLocalPaths,
+            IReadOnlyList<FileServerAssetBundleValidationEntry> assetBundleValidationEntries,
             string tableAssetLocalPath)
         {
-            var firstAssetBundleLocalPath = assetBundleAssetLocalPaths != null && assetBundleAssetLocalPaths.Count > 0
-                ? assetBundleAssetLocalPaths[0]
+            var firstAssetTarget = assetBundleValidationEntries != null && assetBundleValidationEntries.Count > 0
+                ? assetBundleValidationEntries[0]?.AssetDisplayPath ?? string.Empty
                 : string.Empty;
-            var assetBundleCount = assetBundleAssetLocalPaths?.Count ?? 0;
+            var assetBundleCount = assetBundleValidationEntries?.Count ?? 0;
 
             LogFileServerBatchProgress("代表性本地加载", 1, 3, codeAssetLocalPath, Color.cyan, "component=Code");
             var codeLoadError = ValidateFileServerCodeRepresentativeLocalLoad(codeAssetLocalPath);
@@ -2133,17 +2177,20 @@ namespace BDFramework.ResourceMgr
 
             LogFileServerFlow($"代表性本地加载通过 component=Code target={codeAssetLocalPath}", Color.green);
 
-            LogFileServerBatchProgress("代表性本地加载", 2, 3, firstAssetBundleLocalPath, Color.cyan,
-                $"component=AssetBundle bundleCount={assetBundleCount}");
+            LogFileServerBatchProgress("代表性本地加载", 2, 3, firstAssetTarget, Color.cyan,
+                $"component=AssetBundle assetCount={assetBundleCount}");
+            LogFileServerFlow(
+                $"开始按 art_assets.info 资产列表执行 AssetBundle 本地加载校验 assetCount={assetBundleCount} first={firstAssetTarget}",
+                Color.cyan);
             var assetBundleLoadError =
-                await ValidateFileServerAssetBundleLocalLoadsOnUnityContext(assetBundleAssetLocalPaths);
+                await ValidateFileServerAssetBundleLocalLoadsOnUnityContext(assetBundleValidationEntries);
             if (!string.IsNullOrEmpty(assetBundleLoadError))
             {
                 return assetBundleLoadError;
             }
 
             LogFileServerFlow(
-                $"代表性本地加载通过 component=AssetBundle count={assetBundleCount} first={firstAssetBundleLocalPath}",
+                $"代表性本地加载通过 component=AssetBundle assetCount={assetBundleCount} first={firstAssetTarget}",
                 Color.green);
 
             LogFileServerBatchProgress("代表性本地加载", 3, 3, tableAssetLocalPath, Color.cyan, "component=Table");
@@ -2192,36 +2239,36 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
-        /// 在 CI batchmode 里把基于 art_assets.info 解析出的所有 AssetBundle 本地打开校验一次性投递到 Unity 同步上下文执行。
-        /// 这样可以确保 bundle 遍历顺序稳定，同时避免后台线程直接触发 UnityEngine 资源 API。
+        /// 在 CI batchmode 里把基于 <c>art_assets.info</c> 解析出的所有资产级本地加载校验一次性投递到 Unity 同步上下文执行。
+        /// 这样可以确保资产遍历顺序稳定，同时避免后台线程直接触发 UnityEngine 资源 API。
         /// </summary>
         internal static async Task<string> ValidateFileServerAssetBundleLocalLoadsOnUnityContext(
-            IReadOnlyList<string> assetBundleAssetLocalPaths)
+            IReadOnlyList<FileServerAssetBundleValidationEntry> assetBundleValidationEntries)
         {
-            var firstAssetBundleLocalPath = assetBundleAssetLocalPaths != null && assetBundleAssetLocalPaths.Count > 0
-                ? assetBundleAssetLocalPaths[0]
+            var firstAssetTarget = assetBundleValidationEntries != null && assetBundleValidationEntries.Count > 0
+                ? assetBundleValidationEntries[0]?.AssetDisplayPath ?? string.Empty
                 : string.Empty;
-            var assetBundleCount = assetBundleAssetLocalPaths?.Count ?? 0;
+            var assetBundleCount = assetBundleValidationEntries?.Count ?? 0;
 
             if (PlayerLoopHelper.IsMainThread)
             {
                 LogFileServerFlow(
-                    $"mainThreadDispatch status=already-main-thread component=AssetBundle firstTarget={firstAssetBundleLocalPath} count={assetBundleCount}",
+                    $"mainThreadDispatch status=already-main-thread component=AssetBundle firstTarget={firstAssetTarget} count={assetBundleCount}",
                     Color.cyan);
-                return ValidateFileServerAssetBundleLocalLoads(assetBundleAssetLocalPaths);
+                return ValidateFileServerAssetBundleLocalLoads(assetBundleValidationEntries);
             }
 
             var unitySynchronizationContext = PlayerLoopHelper.UnitySynchronizationContext;
             if (unitySynchronizationContext == null)
             {
                 LogFileServerFlow(
-                    $"mainThreadDispatch status=missing-sync-context component=AssetBundle firstTarget={firstAssetBundleLocalPath} count={assetBundleCount}",
+                    $"mainThreadDispatch status=missing-sync-context component=AssetBundle firstTarget={firstAssetTarget} count={assetBundleCount}",
                     Color.red);
-                return $"文件服务器 AssetBundle 本地加载校验失败 path={firstAssetBundleLocalPath} err=UnitySynchronizationContext 为空";
+                return $"文件服务器 AssetBundle 资产加载校验失败 asset={firstAssetTarget} err=UnitySynchronizationContext 为空";
             }
 
             LogFileServerFlow(
-                $"mainThreadDispatch status=queued component=AssetBundle firstTarget={firstAssetBundleLocalPath} count={assetBundleCount}",
+                $"mainThreadDispatch status=queued component=AssetBundle firstTarget={firstAssetTarget} count={assetBundleCount}",
                 Color.cyan);
 
             var resultTaskCompletionSource = new TaskCompletionSource<string>();
@@ -2230,12 +2277,12 @@ namespace BDFramework.ResourceMgr
                 try
                 {
                     resultTaskCompletionSource.TrySetResult(
-                        ValidateFileServerAssetBundleLocalLoads(assetBundleAssetLocalPaths));
+                        ValidateFileServerAssetBundleLocalLoads(assetBundleValidationEntries));
                 }
                 catch (Exception exception)
                 {
                     resultTaskCompletionSource.TrySetResult(
-                        $"文件服务器 AssetBundle 本地加载校验失败 path={firstAssetBundleLocalPath} err={exception.Message}");
+                        $"文件服务器 AssetBundle 资产加载校验失败 asset={firstAssetTarget} err={exception.Message}");
                 }
             }, null);
 
@@ -2243,51 +2290,164 @@ namespace BDFramework.ResourceMgr
             if (completedTask != resultTaskCompletionSource.Task)
             {
                 LogFileServerFlow(
-                    $"mainThreadDispatch status=timeout component=AssetBundle firstTarget={firstAssetBundleLocalPath} count={assetBundleCount} timeoutSeconds=15",
+                    $"mainThreadDispatch status=timeout component=AssetBundle firstTarget={firstAssetTarget} count={assetBundleCount} timeoutSeconds=15",
                     Color.red);
-                return $"文件服务器 AssetBundle 本地加载校验失败 path={firstAssetBundleLocalPath} err=切换 Unity 主线程超时";
+                return $"文件服务器 AssetBundle 资产加载校验失败 asset={firstAssetTarget} err=切换 Unity 主线程超时";
             }
 
             LogFileServerFlow(
-                $"mainThreadDispatch status=entered component=AssetBundle firstTarget={firstAssetBundleLocalPath} count={assetBundleCount}",
+                $"mainThreadDispatch status=entered component=AssetBundle firstTarget={firstAssetTarget} count={assetBundleCount}",
                 Color.cyan);
             return await resultTaskCompletionSource.Task;
         }
 
         /// <summary>
-        /// 按 art_assets.info 中所有非空 AssetBundlePath 去重后的顺序逐个执行本地打开校验。
-        /// 每个 bundle 都沿用单文件校验 helper，从而把错误精确定位到具体的下载文件。
+        /// 按 <c>art_assets.info</c> 中的资产列表顺序逐个执行本地加载校验。
+        /// 这里会按 bundle 分组后复用同一个 <c>AssetBundle</c> 句柄，再对组内每个资产逐条 <c>LoadAsset</c>，从而把错误精确定位到具体资产记录。
         /// </summary>
         internal static string ValidateFileServerAssetBundleLocalLoads(
-            IReadOnlyList<string> assetBundleAssetLocalPaths)
+            IReadOnlyList<FileServerAssetBundleValidationEntry> assetBundleValidationEntries)
         {
-            if (assetBundleAssetLocalPaths == null || assetBundleAssetLocalPaths.Count <= 0)
+            if (assetBundleValidationEntries == null || assetBundleValidationEntries.Count <= 0)
             {
-                return "文件服务器 AssetBundle 本地加载校验缺少基于 art_assets.info 的资源路径。";
+                return "文件服务器 AssetBundle 资产加载校验缺少基于 art_assets.info 的资产记录。";
             }
 
-            var normalizedLocalPaths = assetBundleAssetLocalPaths
-                .Where(path => !string.IsNullOrWhiteSpace(path))
-                .Distinct(StringComparer.OrdinalIgnoreCase)
+            var normalizedValidationEntries = assetBundleValidationEntries
+                .Where(entry => entry != null
+                                && !string.IsNullOrWhiteSpace(entry.AssetBundleLocalPath)
+                                && !string.IsNullOrWhiteSpace(entry.AssetDisplayPath))
                 .ToList();
-            if (normalizedLocalPaths.Count <= 0)
+            if (normalizedValidationEntries.Count <= 0)
             {
-                return "文件服务器 AssetBundle 本地加载校验缺少基于 art_assets.info 的资源路径。";
+                return "文件服务器 AssetBundle 资产加载校验缺少基于 art_assets.info 的资产记录。";
             }
 
-            for (var index = 0; index < normalizedLocalPaths.Count; index++)
+            var groupedValidationEntries = normalizedValidationEntries
+                .GroupBy(entry => entry.AssetBundleLocalPath, StringComparer.OrdinalIgnoreCase)
+                .Select(group => group.ToList())
+                .ToList();
+            var assetIndex = 0;
+
+            for (var bundleIndex = 0; bundleIndex < groupedValidationEntries.Count; bundleIndex++)
             {
-                var assetBundleAssetLocalPath = normalizedLocalPaths[index];
-                LogFileServerBatchProgress("AssetBundle逐个本地加载", index + 1, normalizedLocalPaths.Count,
-                    assetBundleAssetLocalPath, Color.cyan, "component=AssetBundle");
-                var loadError = ValidateFileServerAssetBundleRepresentativeLocalLoad(assetBundleAssetLocalPath);
-                if (!string.IsNullOrEmpty(loadError))
+                var validationEntryGroup = groupedValidationEntries[bundleIndex];
+                var firstValidationEntry = validationEntryGroup[0];
+                LogFileServerBatchProgress("AssetBundle按包打开", bundleIndex + 1, groupedValidationEntries.Count,
+                    firstValidationEntry.AssetBundleRelativePath, Color.cyan,
+                    $"component=AssetBundle assetCount={validationEntryGroup.Count}");
+
+                if (!File.Exists(firstValidationEntry.AssetBundleLocalPath))
                 {
-                    return loadError;
+                    return
+                        $"文件服务器 AssetBundle 资产加载校验缺少 bundle 文件 asset={firstValidationEntry.AssetDisplayPath} bundle={firstValidationEntry.AssetBundleLocalPath}";
+                }
+
+                AssetBundle assetBundle = null;
+                try
+                {
+                    assetBundle = AssetBundle.LoadFromFile(firstValidationEntry.AssetBundleLocalPath);
+                    if (assetBundle == null)
+                    {
+                        return
+                            $"文件服务器 AssetBundle 资产加载校验失败 asset={firstValidationEntry.AssetDisplayPath} bundle={firstValidationEntry.AssetBundleLocalPath} err=AssetBundle.LoadFromFile 返回 null";
+                    }
+
+                    var assetNames = assetBundle.GetAllAssetNames() ?? Array.Empty<string>();
+                    foreach (var validationEntry in validationEntryGroup)
+                    {
+                        assetIndex++;
+                        LogFileServerBatchProgress("AssetBundle按资产加载", assetIndex,
+                            normalizedValidationEntries.Count, validationEntry.AssetDisplayPath, Color.cyan,
+                            $"component=AssetBundle bundle={validationEntry.AssetBundleRelativePath}");
+
+                        var assetLoadName = ResolveFileServerAssetBundleValidationLoadName(assetNames,
+                            validationEntry);
+                        if (string.IsNullOrEmpty(assetLoadName))
+                        {
+                            return
+                                $"文件服务器 AssetBundle 资产加载校验失败 asset={validationEntry.AssetDisplayPath} bundle={validationEntry.AssetBundleRelativePath} err=未能根据 art_assets.info 解析出实际资产名";
+                        }
+
+                        var loadedAsset = assetBundle.LoadAsset(assetLoadName, typeof(UnityEngine.Object));
+                        if (loadedAsset == null)
+                        {
+                            return
+                                $"文件服务器 AssetBundle 资产加载校验失败 asset={validationEntry.AssetDisplayPath} bundle={validationEntry.AssetBundleRelativePath} loadName={assetLoadName} err=AssetBundle.LoadAsset 返回 null";
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
+                    return
+                        $"文件服务器 AssetBundle 资产加载校验失败 asset={firstValidationEntry.AssetDisplayPath} bundle={firstValidationEntry.AssetBundleRelativePath} err={exception.Message}";
+                }
+                finally
+                {
+                    assetBundle?.Unload(true);
                 }
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 根据 <c>art_assets.info</c> 的单条资产记录，从当前 bundle 的真实资产名列表中解析出可传给 <c>LoadAsset</c> 的目标名。
+        /// 这里优先使用 GUID，其次回退到运行时 LoadPath，兼容只保留其中一种标识的配置行。
+        /// </summary>
+        private static string ResolveFileServerAssetBundleValidationLoadName(
+            IReadOnlyList<string> assetNames,
+            FileServerAssetBundleValidationEntry validationEntry)
+        {
+            var normalizedAssetNames = assetNames?
+                                          .Where(name => !string.IsNullOrWhiteSpace(name))
+                                          .ToList()
+                                      ?? new List<string>();
+            if (normalizedAssetNames.Count <= 0 || validationEntry == null)
+            {
+                return null;
+            }
+
+            if (!string.IsNullOrWhiteSpace(validationEntry.AssetGuid))
+            {
+                var guidMatchedName = normalizedAssetNames.FirstOrDefault(name =>
+                    string.Equals(name, validationEntry.AssetGuid, StringComparison.OrdinalIgnoreCase));
+                if (!string.IsNullOrEmpty(guidMatchedName))
+                {
+                    return guidMatchedName;
+                }
+            }
+
+            var normalizedLoadPath = validationEntry.AssetLoadPath?.Replace("\\", "/").Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(normalizedLoadPath))
+            {
+                return null;
+            }
+
+            var exactMatchedName = normalizedAssetNames.FirstOrDefault(name =>
+                string.Equals(name, normalizedLoadPath, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(exactMatchedName))
+            {
+                return exactMatchedName;
+            }
+
+            var trimmedLoadPath = normalizedLoadPath.TrimStart('/');
+            var suffixMatchedName = normalizedAssetNames.FirstOrDefault(name =>
+                string.Equals(name, trimmedLoadPath, StringComparison.OrdinalIgnoreCase)
+                || name.EndsWith("/" + trimmedLoadPath, StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrEmpty(suffixMatchedName))
+            {
+                return suffixMatchedName;
+            }
+
+            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(trimmedLoadPath);
+            if (string.IsNullOrWhiteSpace(fileNameWithoutExtension))
+            {
+                return null;
+            }
+
+            return normalizedAssetNames.FirstOrDefault(name =>
+                name.IndexOf("/" + fileNameWithoutExtension + ".", StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         /// <summary>

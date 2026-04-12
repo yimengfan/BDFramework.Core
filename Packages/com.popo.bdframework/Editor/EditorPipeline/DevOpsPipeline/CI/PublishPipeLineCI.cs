@@ -859,6 +859,8 @@ namespace BDFramework.Editor.DevOps
             // WindowsEditor，所以必须把 CLI 指定的目标平台显式注入验证请求，让运行时按正确平台匹配远端版本。
             request.TargetPlatform = platform;
             Debug.Log(
+                "[CI][VerifyClientRes] 测试目的=验证文件服务器共享版控会触发真实下载，并按 art_assets.info 资产列表逐项执行本地加载校验。 实现手段=解析远端三段版控、下载差异资源、重建本地元数据，并在主线程逐条校验 Code/AssetBundle/Table 样本。");
+            Debug.Log(
                 $"[CI][VerifyClientRes] target={buildTarget} platform={platform} serverUrl={request.ServerUrl} expectedVersion={request.ExpectedVersionInfo.RawValue}");
 
             if (buildTarget == BuildTarget.Android)
@@ -873,7 +875,7 @@ namespace BDFramework.Editor.DevOps
 
             // Phase 3: 把关键验证结果和代表性样本路径显式输出，失败时直接抛异常让 batchmode 退出非零。
             Debug.Log(
-                $"[CI][VerifyClientRes] actualVersion={result.ActualVersion} codeAsset={result.CodeAssetLocalPath} assetBundleAsset={result.AssetBundleAssetLocalPath} tableAsset={result.TableAssetLocalPath}");
+                $"[CI][VerifyClientRes] actualVersion={result.ActualVersion} codeAsset={result.CodeAssetLocalPath} assetBundleFirstTarget={result.AssetBundleValidationFirstTarget} assetBundleAssetCount={result.AssetBundleValidationEntries.Count} assetBundleBundleCount={result.AssetBundleAssetLocalPaths.Count} tableAsset={result.TableAssetLocalPath}");
             if (!result.IsSuccess)
             {
                 throw new Exception(

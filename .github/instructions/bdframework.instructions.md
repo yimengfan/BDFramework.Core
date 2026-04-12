@@ -31,6 +31,7 @@ applyTo: "Packages/com.popo.bdframework/**"
 - Resource-update protocol config files and cache files must include comments or documentation in Chinese that explain the file purpose, who writes it, and who consumes it.
 - Keep major workflows concentrated in explicit entry or coordinator methods, then bridge to helpers. Do not spread the main process across unrelated files without a clear flow anchor.
 - New or changed package code must add or update Unity automated tests. The affected tests must pass before the task is considered complete.
+- Unity tests, batch verification entries, and package-scoped CI validation entrypoints must print Chinese start logs with explicit `测试目的=` and `实现手段=` markers, and multi-step checks must emit key progress logs so long-running verification can be followed directly from Unity or TeamCity output.
 - When changing startup, asset management, resource update, or editor pipeline flows, keep logs, tests, and local documentation synchronized.
 - Unity test files must follow `source-file-name + Test.cs`. Example: `AssetsVersionController.DevOps.cs` -> `AssetsVersionController.DevOpsTest.cs`.
 - Add or update Unity automated tests for every changed code path and run the affected tests before finishing.

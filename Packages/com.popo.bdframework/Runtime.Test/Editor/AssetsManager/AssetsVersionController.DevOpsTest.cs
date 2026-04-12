@@ -33,6 +33,26 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 在每个 NUnit 测试入口开始时输出统一的测试目的与实现手段日志。
+        /// 这样无论是 Unity Test Runner 还是 TeamCity 收集控制台输出，都能直接看到当前测试想验证什么、通过什么方式验证。
+        /// </summary>
+        [SetUp]
+        public void SetUp()
+        {
+            LogTestPurposeAndMeans(TestContext.CurrentContext.Test.Name,
+                $"验证 {TestContext.CurrentContext.Test.Name} 对应代码路径的行为与错误契约。",
+                "执行显式测试入口并断言关键结果、错误信息与流程进度日志。");
+        }
+
+        /// <summary>
+        /// 输出统一的测试开始日志，强制带出测试目的与实现手段。
+        /// </summary>
+        internal static void LogTestPurposeAndMeans(string testName, string purpose, string means)
+        {
+            Debug.Log($"[测试开始] name={testName} 测试目的={purpose} 实现手段={means}");
+        }
+
+        /// <summary>
         /// 验证共享版控文本会被稳定解析为 Code / AssetBundle / Table 三段版本号。
         /// </summary>
         [Test]
@@ -141,6 +161,15 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证从 art_assets.info 文本恢复资产级本地加载校验项时，会保留每条可加载资产记录而不是只按 bundle 去重。
+        /// </summary>
+        [Test]
+        public void CollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContent_KeepsLoadableAssetRows()
+        {
+            VerifyCollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContentKeepsLoadableAssetRows();
+        }
+
+        /// <summary>
         /// 验证批量校验会基于本地 art_assets.info 为缺失的 AssetBundle 生成补下载项，而不是只依赖 assets.info 里的原始清单。
         /// </summary>
         [Test]
@@ -183,6 +212,15 @@ namespace BDFramework.EditorTest.AssetsManager
         public void ValidateFileServerAssetBundleRepresentativeLocalLoad_SucceedsForBuiltBundle()
         {
             VerifyValidateFileServerAssetBundleRepresentativeLocalLoadSucceedsForBuiltBundle();
+        }
+
+        /// <summary>
+        /// 验证 AssetBundle 资产级本地加载校验会按 art_assets.info 资产记录解析 loadPath，并完成真实 LoadAsset。
+        /// </summary>
+        [Test]
+        public void ValidateFileServerAssetBundleLocalLoads_SucceedsForBuiltBundleAsset()
+        {
+            VerifyValidateFileServerAssetBundleLocalLoadsSucceedsForBuiltBundleAsset();
         }
 
         /// <summary>
@@ -576,6 +614,38 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证资产级本地加载样本恢复逻辑会保留每条可加载资产记录，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyCollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContentKeepsLoadableAssetRows()
+        {
+            var artAssetsInfoContent = string.Join("\n", new[]
+            {
+                "Id,AssetType,LoadPath,GUID,AssetBundleLoadType,AssetBundlePath,Hash,AssetsPackSourceHash,Mix,DependAssetIds",
+                "1,0,Assets/Hero.prefab,guid-hero,0,hero.bundle,hero-hash,,0,",
+                "2,0,Assets/HeroVariant.prefab,guid-hero-variant,0,hero.bundle,hero-hash,,0,",
+                "3,0,,,0,hero.bundle,hero-hash,,0,",
+                "4,0,Assets/Shared.prefab,,0,shared.bundle,shared-hash,,0,",
+            });
+
+            var validationEntries = AssetsVersionControllerDevOpsPureLogic
+                .CollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContent(artAssetsInfoContent);
+
+            EnsureEqual(3L, validationEntries.Count, "资产级加载样本数量不匹配。");
+            EnsureEqual("Assets/Hero.prefab", validationEntries[0].AssetDisplayPath,
+                "第一个资产级加载样本显示路径不匹配。");
+            EnsureEqual("guid-hero", validationEntries[0].AssetGuid,
+                "第一个资产级加载样本 GUID 不匹配。");
+            EnsureEqual("art_assets/hero.bundle", validationEntries[0].AssetBundleRelativePath,
+                "第一个资产级加载样本 bundle 相对路径不匹配。");
+            EnsureEqual("Assets/HeroVariant.prefab", validationEntries[1].AssetDisplayPath,
+                "第二个资产级加载样本显示路径不匹配。");
+            EnsureEqual("Assets/Shared.prefab", validationEntries[2].AssetDisplayPath,
+                "第三个资产级加载样本显示路径不匹配。");
+            EnsureEqual("art_assets/shared.bundle", validationEntries[2].AssetBundleRelativePath,
+                "第三个资产级加载样本 bundle 相对路径不匹配。");
+        }
+
+        /// <summary>
         /// 以纯异常校验方式验证批量校验的补下载 helper 会根据 art_assets.info 中缺失的 bundle 生成远端下载项。
         /// </summary>
         internal static void VerifyBuildMissingFileServerAssetBundleValidationDownloadItemsUsesArtAssetsInfoForMissingBundles()
@@ -788,6 +858,71 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证资产级本地加载校验会根据 art_assets.info 的单资产记录执行真实 LoadAsset，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyValidateFileServerAssetBundleLocalLoadsSucceedsForBuiltBundleAsset()
+        {
+            var assetRootRelativePath = $"Assets/__FileServerVerifyTemp/{Guid.NewGuid():N}";
+            var assetFileRelativePath = $"{assetRootRelativePath}/verify_asset.txt";
+            var assetRootAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), assetRootRelativePath);
+            var assetFileAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), assetFileRelativePath);
+            var outputRoot = Path.Combine(Path.GetTempPath(), "BDFramework", "AssetsVersionControllerDevOpsTest",
+                Guid.NewGuid().ToString("N"));
+            var bundleName = $"file-server-verify-{Guid.NewGuid():N}";
+            var bundlePath = Path.Combine(outputRoot, bundleName);
+
+            Directory.CreateDirectory(assetRootAbsolutePath);
+            Directory.CreateDirectory(outputRoot);
+            File.WriteAllText(assetFileAbsolutePath, "verify-bundle-payload", Encoding.UTF8);
+
+            try
+            {
+                AssetDatabase.ImportAsset(assetFileRelativePath, ImportAssetOptions.ForceSynchronousImport);
+                var importer = AssetImporter.GetAtPath(assetFileRelativePath);
+                if (importer == null)
+                {
+                    throw new InvalidOperationException($"无法获取测试资源导入器 path={assetFileRelativePath}");
+                }
+
+                importer.assetBundleName = bundleName;
+                importer.SaveAndReimport();
+
+                var buildManifest = BuildPipeline.BuildAssetBundles(
+                    outputRoot,
+                    BuildAssetBundleOptions.None,
+                    ResolveHostAssetBundleBuildTarget());
+                EnsureTrue(buildManifest != null, "测试 AssetBundle 构建结果不应为 null。");
+                EnsureTrue(File.Exists(bundlePath), "测试 AssetBundle 输出文件不存在。");
+
+                var validationEntries = new List<AssetsVersionController.FileServerAssetBundleValidationEntry>()
+                {
+                    new AssetsVersionController.FileServerAssetBundleValidationEntry()
+                    {
+                        AssetId = 1,
+                        AssetDisplayPath = assetFileRelativePath,
+                        AssetLoadPath = assetFileRelativePath,
+                        AssetBundleRelativePath = $"art_assets/{bundleName}",
+                        AssetBundleLocalPath = bundlePath,
+                    },
+                };
+
+                var error = AssetsVersionController.ValidateFileServerAssetBundleLocalLoads(validationEntries);
+
+                EnsureEqual<string>(null, error, "AssetBundle 资产级本地加载校验不应失败。");
+            }
+            finally
+            {
+                AssetDatabase.RemoveAssetBundleName(bundleName, true);
+                AssetDatabase.DeleteAsset(assetRootRelativePath);
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+                if (Directory.Exists(outputRoot))
+                {
+                    Directory.Delete(outputRoot, true);
+                }
+            }
+        }
+
+        /// <summary>
         /// 以纯异常校验方式验证代表性 AssetBundle 主线程投递 helper 在主线程直跑场景下不会吞掉底层错误信息。
         /// </summary>
         internal static void VerifyValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContextReturnsMissingFileErrorOnMainThread()
@@ -805,8 +940,8 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
-        /// 以主线程直接调用方式验证代表性本地加载总入口会先通过第一个真实 AssetBundle，
-        /// 再在第二个缺失路径上返回底层错误，从而证明 AssetBundle 校验会按 art_assets.info 解析结果逐个遍历。
+        /// 以主线程直接调用方式验证代表性本地加载总入口会先通过第一个真实资产记录，
+        /// 再在第二个缺失 bundle 的资产记录上返回底层错误，从而证明 AssetBundle 校验会按 art_assets.info 资产列表逐个遍历。
         /// 该校验覆盖 CI batchmode 外层同步桥接在后台阶段结束后回到主线程执行的最终路径。
         /// </summary>
         internal static void VerifyValidateFileServerRepresentativeLocalLoadsReturnsAssetBundleMissingFileErrorOnMainThread()
@@ -850,15 +985,34 @@ namespace BDFramework.EditorTest.AssetsManager
                 EnsureTrue(File.Exists(firstBundlePath), "测试 AssetBundle 输出文件不存在。");
 
                 var controller = new AssetsVersionController();
+                var validationEntries = new List<AssetsVersionController.FileServerAssetBundleValidationEntry>()
+                {
+                    new AssetsVersionController.FileServerAssetBundleValidationEntry()
+                    {
+                        AssetId = 1,
+                        AssetDisplayPath = assetFileRelativePath,
+                        AssetLoadPath = assetFileRelativePath,
+                        AssetBundleRelativePath = $"art_assets/{bundleName}",
+                        AssetBundleLocalPath = firstBundlePath,
+                    },
+                    new AssetsVersionController.FileServerAssetBundleValidationEntry()
+                    {
+                        AssetId = 2,
+                        AssetDisplayPath = "Assets/Missing.prefab",
+                        AssetLoadPath = "Assets/Missing.prefab",
+                        AssetBundleRelativePath = "art_assets/missing.bundle",
+                        AssetBundleLocalPath = missingBundlePath,
+                    },
+                };
                 var error = controller
                     .ValidateFileServerRepresentativeLocalLoads(localCodePath,
-                        new List<string>() {firstBundlePath, missingBundlePath},
+                        validationEntries,
                         Path.Combine(tempDir, "unused.db"))
                     .GetAwaiter()
                     .GetResult();
 
-                EnsureTrue(error != null && error.Contains($"path={missingBundlePath}"),
-                    "主线程收口后的代表性本地加载应保留 AssetBundle 缺文件错误。");
+                EnsureTrue(error != null && error.Contains($"bundle={missingBundlePath}"),
+                    "主线程收口后的代表性本地加载应保留 AssetBundle 缺 bundle 错误。");
                 EnsureTrue(!error.Contains("切换 Unity 主线程超时"),
                     "主线程收口后的代表性本地加载不应再返回主线程派发超时。");
             }
@@ -1072,120 +1226,87 @@ namespace BDFramework.EditorTest.AssetsManager
     {
         /// <summary>
         /// 提供给 batchmode 的显式验证入口。
-        /// 入口会顺序执行六组纯逻辑校验，生成 Library 报告并通过退出码反馈整体结果。
+        /// 入口会顺序执行所有纯逻辑校验，生成 Library 报告并通过退出码反馈整体结果。
         /// </summary>
         public static void RunBatchVerification()
         {
             // Phase 1: 顺序执行纯逻辑校验，并把每个步骤的结果写入统一报告。
-            Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
+            AssetsVersionControllerDevOpsTest.LogTestPurposeAndMeans(
+                nameof(AssetsVersionControllerDevOpsBatchVerification),
+                "验证 AssetsVersionController 文件服务器 BatchMode 纯逻辑路径在离线环境下的关键契约。",
+                "顺序执行纯逻辑验证入口、写出批验证报告，并用显式退出码反馈结果。");
+            Debug.Log("[测试进度] suite=AssetsVersionControllerDevOpsBatchVerification stage=start");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 25;
+            var checks = new (string Name, Action Action)[]
+            {
+                (nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
+                    AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum),
+                (nameof(AssetsVersionControllerDevOpsTest.TryParseFileServerVersionInfo_ParsesThreeSegments),
+                    AssetsVersionControllerDevOpsTest.VerifyTryParseFileServerVersionInfoParsesThreeSegments),
+                (nameof(AssetsVersionControllerDevOpsTest.ValidateExpectedFileServerVersionInfo_ReturnsErrorForMismatchedManifest),
+                    AssetsVersionControllerDevOpsTest.VerifyValidateExpectedFileServerVersionInfoReturnsErrorForMismatchedManifest),
+                (nameof(AssetsVersionControllerDevOpsTest.MergeFileServerPackageBuildInfo_MergesComponentSpecificFields),
+                    AssetsVersionControllerDevOpsTest.VerifyMergeFileServerPackageBuildInfoMergesComponentSpecificFields),
+                (nameof(AssetsVersionControllerDevOpsTest.NormalizeFileServerComponentPackageBuildInfo_FallsBackToComponentVersionWhenSourceUsesNone),
+                    AssetsVersionControllerDevOpsTest.VerifyNormalizeFileServerComponentPackageBuildInfoFallsBackToComponentVersionWhenSourceUsesNone),
+                (nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerPackageBuildInfo_ReturnsErrorForMismatchedComponentVersions),
+                    AssetsVersionControllerDevOpsTest.VerifyValidateFileServerPackageBuildInfoReturnsErrorForMismatchedComponentVersions),
+                (nameof(AssetsVersionControllerDevOpsTest.BuildFileServerSubPackageAssetItems_CollectsConfiguredAssetsAcrossComponents),
+                    AssetsVersionControllerDevOpsTest.VerifyBuildFileServerSubPackageAssetItemsCollectsConfiguredAssetsAcrossComponents),
+                (nameof(AssetsVersionControllerDevOpsTest.NormalizeFileServerManagedAssetItems_FiltersPackageBuildInfoAndSortsById),
+                    AssetsVersionControllerDevOpsTest.VerifyNormalizeFileServerManagedAssetItemsFiltersPackageBuildInfoAndSortsById),
+                (nameof(AssetsVersionControllerDevOpsTest.ShouldUseCachedFileServerComponentContextOnFailure_DisablesFallbackForStrictRemoteVerification),
+                    AssetsVersionControllerDevOpsTest.VerifyShouldUseCachedFileServerComponentContextOnFailureDisablesFallbackForStrictRemoteVerification),
+                (nameof(AssetsVersionControllerDevOpsTest.BuildFileServerAssetRemoteRelativePath_PrefersHashNameForManagedAssets),
+                    AssetsVersionControllerDevOpsTest.VerifyBuildFileServerAssetRemoteRelativePathPrefersHashNameForManagedAssets),
+                (nameof(AssetsVersionControllerDevOpsTest.FindFileServerRepresentativeAsset_PicksRealPayloadAssets),
+                    AssetsVersionControllerDevOpsTest.VerifyFindFileServerRepresentativeAssetPicksRealPayloadAssets),
+                (nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationRelativePaths_DeduplicatesNonEmptyBundlePaths),
+                    AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationRelativePathsDeduplicatesNonEmptyBundlePaths),
+                (nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContent_DeduplicatesNonEmptyBundlePaths),
+                    AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContentDeduplicatesNonEmptyBundlePaths),
+                (nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContent_KeepsLoadableAssetRows),
+                    AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContentKeepsLoadableAssetRows),
+                (nameof(AssetsVersionControllerDevOpsTest.BuildMissingFileServerAssetBundleValidationDownloadItems_UsesArtAssetsInfoForMissingBundles),
+                    AssetsVersionControllerDevOpsTest.VerifyBuildMissingFileServerAssetBundleValidationDownloadItemsUsesArtAssetsInfoForMissingBundles),
+                (nameof(AssetsVersionControllerDevOpsTest.LoadLocalPackageBuildInfo_ReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing),
+                    AssetsVersionControllerDevOpsTest.VerifyLoadLocalPackageBuildInfoReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing),
+                (nameof(AssetsVersionControllerDevOpsTest.IsFileServerDownloadedAssetValid_ValidatesOnlyDownloadedPayloadFile),
+                    AssetsVersionControllerDevOpsTest.VerifyIsFileServerDownloadedAssetValidValidatesOnlyDownloadedPayloadFile),
+                (nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerCodeRepresentativeLocalLoad_SucceedsForManagedAssemblyFile),
+                    AssetsVersionControllerDevOpsTest.VerifyValidateFileServerCodeRepresentativeLocalLoadSucceedsForManagedAssemblyFile),
+                (nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleRepresentativeLocalLoad_SucceedsForBuiltBundle),
+                    AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleRepresentativeLocalLoadSucceedsForBuiltBundle),
+                (nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleLocalLoads_SucceedsForBuiltBundleAsset),
+                    AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleLocalLoadsSucceedsForBuiltBundleAsset),
+                (nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContext_ReturnsMissingFileErrorOnMainThread),
+                    AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContextReturnsMissingFileErrorOnMainThread),
+                (nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerRepresentativeLocalLoads_ReturnsAssetBundleMissingFileErrorOnMainThread),
+                    AssetsVersionControllerDevOpsTest.VerifyValidateFileServerRepresentativeLocalLoadsReturnsAssetBundleMissingFileErrorOnMainThread),
+                (nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerTableRepresentativeLocalLoad_SucceedsForReadableSqlite),
+                    AssetsVersionControllerDevOpsTest.VerifyValidateFileServerTableRepresentativeLocalLoadSucceedsForReadableSqlite),
+                (nameof(AssetsVersionControllerDevOpsTest.AwaitFileServerRequestWithTimeout_ReturnsResultWhenTaskCompletesInTime),
+                    AssetsVersionControllerDevOpsTest.VerifyAwaitFileServerRequestWithTimeoutReturnsResultWhenTaskCompletesInTime),
+                (nameof(AssetsVersionControllerDevOpsTest.AwaitFileServerRequestWithTimeout_ThrowsTimeoutWhenTaskDoesNotFinish),
+                    AssetsVersionControllerDevOpsTest.VerifyAwaitFileServerRequestWithTimeoutThrowsTimeoutWhenTaskDoesNotFinish),
+                (nameof(AssetsVersionControllerDevOpsTest.FormatFileServerBatchProgressMessage_IncludesStageCountsAndTarget),
+                    AssetsVersionControllerDevOpsTest.VerifyFormatFileServerBatchProgressMessageIncludesStageCountsAndTarget),
+                (nameof(AssetsVersionControllerDevOpsTest.FormatFileServerBatchProgressMessage_UsesFallbackForMissingValues),
+                    AssetsVersionControllerDevOpsTest.VerifyFormatFileServerBatchProgressMessageUsesFallbackForMissingValues),
+            };
 
-            RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
-                AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
-                reportBuilder, ref failedCount);
-            RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseFileServerVersionInfo_ParsesThreeSegments),
-                AssetsVersionControllerDevOpsTest.VerifyTryParseFileServerVersionInfoParsesThreeSegments,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.ValidateExpectedFileServerVersionInfo_ReturnsErrorForMismatchedManifest),
-                AssetsVersionControllerDevOpsTest.VerifyValidateExpectedFileServerVersionInfoReturnsErrorForMismatchedManifest,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.MergeFileServerPackageBuildInfo_MergesComponentSpecificFields),
-                AssetsVersionControllerDevOpsTest.VerifyMergeFileServerPackageBuildInfoMergesComponentSpecificFields,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.NormalizeFileServerComponentPackageBuildInfo_FallsBackToComponentVersionWhenSourceUsesNone),
-                AssetsVersionControllerDevOpsTest.VerifyNormalizeFileServerComponentPackageBuildInfoFallsBackToComponentVersionWhenSourceUsesNone,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerPackageBuildInfo_ReturnsErrorForMismatchedComponentVersions),
-                AssetsVersionControllerDevOpsTest.VerifyValidateFileServerPackageBuildInfoReturnsErrorForMismatchedComponentVersions,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.BuildFileServerSubPackageAssetItems_CollectsConfiguredAssetsAcrossComponents),
-                AssetsVersionControllerDevOpsTest.VerifyBuildFileServerSubPackageAssetItemsCollectsConfiguredAssetsAcrossComponents,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.NormalizeFileServerManagedAssetItems_FiltersPackageBuildInfoAndSortsById),
-                AssetsVersionControllerDevOpsTest.VerifyNormalizeFileServerManagedAssetItemsFiltersPackageBuildInfoAndSortsById,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.ShouldUseCachedFileServerComponentContextOnFailure_DisablesFallbackForStrictRemoteVerification),
-                AssetsVersionControllerDevOpsTest.VerifyShouldUseCachedFileServerComponentContextOnFailureDisablesFallbackForStrictRemoteVerification,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.BuildFileServerAssetRemoteRelativePath_PrefersHashNameForManagedAssets),
-                AssetsVersionControllerDevOpsTest.VerifyBuildFileServerAssetRemoteRelativePathPrefersHashNameForManagedAssets,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.FindFileServerRepresentativeAsset_PicksRealPayloadAssets),
-                AssetsVersionControllerDevOpsTest.VerifyFindFileServerRepresentativeAssetPicksRealPayloadAssets,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationRelativePaths_DeduplicatesNonEmptyBundlePaths),
-                AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationRelativePathsDeduplicatesNonEmptyBundlePaths,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContent_DeduplicatesNonEmptyBundlePaths),
-                AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContentDeduplicatesNonEmptyBundlePaths,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.BuildMissingFileServerAssetBundleValidationDownloadItems_UsesArtAssetsInfoForMissingBundles),
-                AssetsVersionControllerDevOpsTest.VerifyBuildMissingFileServerAssetBundleValidationDownloadItemsUsesArtAssetsInfoForMissingBundles,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.LoadLocalPackageBuildInfo_ReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing),
-                AssetsVersionControllerDevOpsTest.VerifyLoadLocalPackageBuildInfoReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.IsFileServerDownloadedAssetValid_ValidatesOnlyDownloadedPayloadFile),
-                AssetsVersionControllerDevOpsTest.VerifyIsFileServerDownloadedAssetValidValidatesOnlyDownloadedPayloadFile,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerCodeRepresentativeLocalLoad_SucceedsForManagedAssemblyFile),
-                AssetsVersionControllerDevOpsTest.VerifyValidateFileServerCodeRepresentativeLocalLoadSucceedsForManagedAssemblyFile,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleRepresentativeLocalLoad_SucceedsForBuiltBundle),
-                AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleRepresentativeLocalLoadSucceedsForBuiltBundle,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContext_ReturnsMissingFileErrorOnMainThread),
-                AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContextReturnsMissingFileErrorOnMainThread,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerRepresentativeLocalLoads_ReturnsAssetBundleMissingFileErrorOnMainThread),
-                AssetsVersionControllerDevOpsTest.VerifyValidateFileServerRepresentativeLocalLoadsReturnsAssetBundleMissingFileErrorOnMainThread,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerTableRepresentativeLocalLoad_SucceedsForReadableSqlite),
-                AssetsVersionControllerDevOpsTest.VerifyValidateFileServerTableRepresentativeLocalLoadSucceedsForReadableSqlite,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.AwaitFileServerRequestWithTimeout_ReturnsResultWhenTaskCompletesInTime),
-                AssetsVersionControllerDevOpsTest.VerifyAwaitFileServerRequestWithTimeoutReturnsResultWhenTaskCompletesInTime,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.AwaitFileServerRequestWithTimeout_ThrowsTimeoutWhenTaskDoesNotFinish),
-                AssetsVersionControllerDevOpsTest.VerifyAwaitFileServerRequestWithTimeoutThrowsTimeoutWhenTaskDoesNotFinish,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.FormatFileServerBatchProgressMessage_IncludesStageCountsAndTarget),
-                AssetsVersionControllerDevOpsTest.VerifyFormatFileServerBatchProgressMessageIncludesStageCountsAndTarget,
-                reportBuilder, ref failedCount);
-            RunCheck(
-                nameof(AssetsVersionControllerDevOpsTest.FormatFileServerBatchProgressMessage_UsesFallbackForMissingValues),
-                AssetsVersionControllerDevOpsTest.VerifyFormatFileServerBatchProgressMessageUsesFallbackForMissingValues,
-                reportBuilder, ref failedCount);
+            for (var index = 0; index < checks.Length; index++)
+            {
+                var check = checks[index];
+                RunCheck(index + 1, checks.Length, check.Name, check.Action, reportBuilder, ref failedCount);
+            }
 
             // Phase 2: 把批验证结果写到 Library，方便 CI 和本地 batchmode 直接收集报告。
             var outputPath = Path.Combine(Directory.GetCurrentDirectory(), "Library",
                 "AssetsVersionControllerDevOpsBatchVerification.txt");
             reportBuilder.Insert(0,
-                $"Summary: total={totalCheckCount} passed={totalCheckCount - failedCount} failed={failedCount}{Environment.NewLine}");
+                $"Summary: total={checks.Length} passed={checks.Length - failedCount} failed={failedCount}{Environment.NewLine}");
             File.WriteAllText(outputPath, reportBuilder.ToString(), Encoding.UTF8);
 
             // Phase 3: 返回显式退出码，让 batchmode 可以直接据此判断验证是否通过。
@@ -1205,10 +1326,14 @@ namespace BDFramework.EditorTest.AssetsManager
         /// <summary>
         /// 执行单个纯逻辑校验并把结果写入 batch 验证报告。
         /// </summary>
-        private static void RunCheck(string checkName, Action checkAction, StringBuilder reportBuilder,
+        private static void RunCheck(int currentIndex, int totalCount, string checkName, Action checkAction,
+            StringBuilder reportBuilder,
             ref int failedCount)
         {
-            Debug.Log($"AssetsVersionController DevOps standalone batch verification running {checkName}");
+            AssetsVersionControllerDevOpsTest.LogTestPurposeAndMeans(checkName,
+                $"验证 {checkName} 对应代码路径的行为与错误契约。",
+                "直接调用纯逻辑验证入口并断言返回结果、错误信息与流程进度日志。");
+            Debug.Log($"[测试进度] suite=AssetsVersionControllerDevOpsBatchVerification current={currentIndex}/{totalCount} name={checkName}");
             try
             {
                 checkAction();
