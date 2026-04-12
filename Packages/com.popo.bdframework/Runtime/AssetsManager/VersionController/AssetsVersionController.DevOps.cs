@@ -1872,11 +1872,10 @@ namespace BDFramework.ResourceMgr
 
             LogFileServerFlow($"代表性本地加载通过 component=Code target={codeAssetLocalPath}", Color.green);
 
-            await UniTask.SwitchToMainThread();
             LogFileServerBatchProgress("代表性本地加载", 2, 3, assetBundleAssetLocalPath, Color.cyan,
                 "component=AssetBundle");
-            var assetBundleLoadError = ValidateFileServerAssetBundleRepresentativeLocalLoad(assetBundleAssetLocalPath);
-            await UniTask.SwitchToThreadPool();
+            var assetBundleLoadError =
+                await ValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContext(assetBundleAssetLocalPath);
             if (!string.IsNullOrEmpty(assetBundleLoadError))
             {
                 return assetBundleLoadError;
@@ -1927,6 +1926,64 @@ namespace BDFramework.ResourceMgr
             {
                 return $"文件服务器热更代码本地加载校验失败 path={codeAssetLocalPath} err={exception.Message}";
             }
+        }
+
+        /// <summary>
+        /// 在 CI batchmode 里把代表性 AssetBundle 本地打开显式投递到 Unity 同步上下文执行。
+        /// 这样即使主线程派发异常或长期无响应，也会返回明确错误，而不是在 <see cref="UniTask.SwitchToMainThread()"/> 上静默挂住。
+        /// </summary>
+        internal static async Task<string> ValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContext(
+            string assetBundleAssetLocalPath)
+        {
+            if (PlayerLoopHelper.IsMainThread)
+            {
+                LogFileServerFlow(
+                    $"mainThreadDispatch status=already-main-thread component=AssetBundle target={assetBundleAssetLocalPath}",
+                    Color.cyan);
+                return ValidateFileServerAssetBundleRepresentativeLocalLoad(assetBundleAssetLocalPath);
+            }
+
+            var unitySynchronizationContext = PlayerLoopHelper.UnitySynchronizationContext;
+            if (unitySynchronizationContext == null)
+            {
+                LogFileServerFlow(
+                    $"mainThreadDispatch status=missing-sync-context component=AssetBundle target={assetBundleAssetLocalPath}",
+                    Color.red);
+                return $"文件服务器 AssetBundle 本地加载校验失败 path={assetBundleAssetLocalPath} err=UnitySynchronizationContext 为空";
+            }
+
+            LogFileServerFlow(
+                $"mainThreadDispatch status=queued component=AssetBundle target={assetBundleAssetLocalPath}",
+                Color.cyan);
+
+            var resultTaskCompletionSource = new TaskCompletionSource<string>();
+            unitySynchronizationContext.Post(_ =>
+            {
+                try
+                {
+                    resultTaskCompletionSource.TrySetResult(
+                        ValidateFileServerAssetBundleRepresentativeLocalLoad(assetBundleAssetLocalPath));
+                }
+                catch (Exception exception)
+                {
+                    resultTaskCompletionSource.TrySetResult(
+                        $"文件服务器 AssetBundle 本地加载校验失败 path={assetBundleAssetLocalPath} err={exception.Message}");
+                }
+            }, null);
+
+            var completedTask = await Task.WhenAny(resultTaskCompletionSource.Task, Task.Delay(TimeSpan.FromSeconds(15)));
+            if (completedTask != resultTaskCompletionSource.Task)
+            {
+                LogFileServerFlow(
+                    $"mainThreadDispatch status=timeout component=AssetBundle target={assetBundleAssetLocalPath} timeoutSeconds=15",
+                    Color.red);
+                return $"文件服务器 AssetBundle 本地加载校验失败 path={assetBundleAssetLocalPath} err=切换 Unity 主线程超时";
+            }
+
+            LogFileServerFlow(
+                $"mainThreadDispatch status=entered component=AssetBundle target={assetBundleAssetLocalPath}",
+                Color.cyan);
+            return await resultTaskCompletionSource.Task;
         }
 
         /// <summary>

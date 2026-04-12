@@ -11,7 +11,7 @@
 5. Unity 端会强制重置本地 persistent 下载状态，再真实下载并校验 Code / AssetBundle / Table 三类代表性资源；除了全量 hash/存在性检查外，还会分别做一次热更程序集装载、AssetBundle 本地打开和 SQLite 只读打开，避免历史缓存或“文件存在但本地打不开”把验证变成假阳性。
 6. 当前 revision 如果已经存在成功或正在执行中的 TeamCity 资产构建，`test_client_res.py` 会直接复用 build id，而不是重复排队同一个版本。
 7. `queue-verify-build` 不再复用或排队 `VerifyClientRes_*` 子任务，而是在当前 `TestClientRes` 父构建内直接启动对应平台的 `verify_{platform}.py`；Step 3 的日志、失败码和 Unity 输出都直接留在父任务里，避免“检查任务却还依赖其他任务”的错误编排。
-8. Unity Step 3 内的运行时验证日志统一补齐为稳定的 ASCII 前缀 `[CI][VerifyClientRes]` / `[CI][FileServer]`，并在“元数据重建 -> 全量校验 -> 代表性本地加载”阶段输出明确的开始、进度和完成日志，方便直接判断当前卡在哪个资源或阶段。
+8. Unity Step 3 内的运行时验证日志统一补齐为稳定的 ASCII 前缀 `[CI][VerifyClientRes]` / `[CI][FileServer]`，并在“元数据重建 -> 全量校验 -> 代表性本地加载”阶段输出明确的开始、进度和完成日志，方便直接判断当前卡在哪个资源或阶段。代表性 AssetBundle 本地加载还会额外输出 `mainThreadDispatch status=queued|entered|timeout`，一旦主线程派发失败会直接报错而不是继续无输出悬挂。
 
 ## 文件说明
 

@@ -158,6 +158,15 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证代表性 AssetBundle 主线程投递 helper 在当前已经位于主线程时，会直接返回底层本地打开校验结果。
+        /// </summary>
+        [Test]
+        public void ValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContext_ReturnsMissingFileErrorOnMainThread()
+        {
+            VerifyValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContextReturnsMissingFileErrorOnMainThread();
+        }
+
+        /// <summary>
         /// 验证代表性的表格资源在下载落地后，会经过真实 SQLite 只读打开校验。
         /// </summary>
         [Test]
@@ -629,6 +638,23 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证代表性 AssetBundle 主线程投递 helper 在主线程直跑场景下不会吞掉底层错误信息。
+        /// </summary>
+        internal static void VerifyValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContextReturnsMissingFileErrorOnMainThread()
+        {
+            var missingBundlePath = Path.Combine(Path.GetTempPath(), "BDFramework", "AssetsVersionControllerDevOpsTest",
+                Guid.NewGuid().ToString("N"), "missing.bundle");
+
+            var error = AssetsVersionController
+                .ValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContext(missingBundlePath)
+                .GetAwaiter()
+                .GetResult();
+
+            EnsureTrue(error != null && error.Contains($"path={missingBundlePath}"),
+                "代表性 AssetBundle 主线程投递 helper 应保留原始缺文件错误。");
+        }
+
+        /// <summary>
         /// 以纯异常校验方式验证表格代表性资源的真实 SQLite 打开，供 batchmode 路径复用。
         /// </summary>
         internal static void VerifyValidateFileServerTableRepresentativeLocalLoadSucceedsForReadableSqlite()
@@ -834,7 +860,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 20;
+            const int totalCheckCount = 21;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -893,6 +919,10 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleRepresentativeLocalLoad_SucceedsForBuiltBundle),
                 AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleRepresentativeLocalLoadSucceedsForBuiltBundle,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContext_ReturnsMissingFileErrorOnMainThread),
+                AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContextReturnsMissingFileErrorOnMainThread,
                 reportBuilder, ref failedCount);
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerTableRepresentativeLocalLoad_SucceedsForReadableSqlite),
