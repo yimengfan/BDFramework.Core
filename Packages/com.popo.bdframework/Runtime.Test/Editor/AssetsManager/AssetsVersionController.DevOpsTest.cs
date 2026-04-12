@@ -592,6 +592,7 @@ namespace BDFramework.EditorTest.AssetsManager
                     "1,0,Assets/Hero.prefab,,0,hero.bundle,hero-hash,,0,",
                     "2,0,Assets/HeroVariant.prefab,,0,hero.bundle,hero-hash,,0,",
                     "3,0,,,0,shared.bundle,shared-hash,,0,",
+                    "4,0,,,0,ghost.bundle,ghost-hash,,0,",
                 });
                 File.WriteAllText(Path.Combine(tempDir, BResources.ART_ASSET_INFO_PATH), artAssetsInfoContent);
 
@@ -603,6 +604,12 @@ namespace BDFramework.EditorTest.AssetsManager
                     {
                         ComponentKind = AssetsVersionController.FileServerComponentKind.AssetBundle,
                         Version = "45",
+                        AssetItems = new List<AssetItem>()
+                        {
+                            new AssetItem() {Id = 1, LocalPath = "art_assets/hero.bundle", HashName = "hero-hash"},
+                            new AssetItem() {Id = 2, LocalPath = "art_assets/shared.bundle", HashName = "shared-hash"},
+                            new AssetItem() {Id = 3, LocalPath = "art_assets/art_assets.info", HashName = "info-hash"},
+                        },
                     });
 
                 EnsureEqual(2L, downloadItems.Count, "补下载 AssetBundle 数量不匹配。");
@@ -624,6 +631,8 @@ namespace BDFramework.EditorTest.AssetsManager
                     "第二个补下载 AssetBundle 本地落盘路径不匹配。");
                 EnsureTrue(downloadItems[0].RequireHashValidation, "第一个补下载 AssetBundle 应启用 hash 校验。");
                 EnsureTrue(downloadItems[1].RequireHashValidation, "第二个补下载 AssetBundle 应启用 hash 校验。");
+                EnsureTrue(downloadItems.TrueForAll(item => item.AssetItem.LocalPath != "art_assets/ghost.bundle"),
+                    "未出现在受管清单里的 AssetBundle 不应进入补下载列表。");
             }
             finally
             {

@@ -737,10 +737,23 @@ namespace BDFramework.ResourceMgr
                 return downloadItems;
             }
 
+            var managedAssetBundleLocalPathSet = BuildFileServerManagedAssetBundleLocalPathSet(firstLoadDir,
+                assetBundleContext.AssetItems);
+            if (managedAssetBundleLocalPathSet.Count <= 0)
+            {
+                return downloadItems;
+            }
+
             var remoteRoot = BuildFileServerComponentRemoteRoot(serverUrl, platformPath,
                 FileServerComponentKind.AssetBundle, assetBundleContext.Version);
             foreach (var assetItem in validationAssetItems)
             {
+                var finalLocalPath = IPath.Combine(firstLoadDir, assetItem.LocalPath);
+                if (!managedAssetBundleLocalPathSet.Contains(finalLocalPath))
+                {
+                    continue;
+                }
+
                 if (IsFileServerDownloadedAssetValid(firstLoadDir, assetItem))
                 {
                     continue;
@@ -750,13 +763,53 @@ namespace BDFramework.ResourceMgr
                 {
                     ComponentKind = FileServerComponentKind.AssetBundle,
                     AssetItem = assetItem,
-                    FinalLocalPath = IPath.Combine(firstLoadDir, assetItem.LocalPath),
+                    FinalLocalPath = finalLocalPath,
                     RemoteUrl = CombineUrl(remoteRoot, BuildFileServerAssetRemoteRelativePath(assetItem)),
                     RequireHashValidation = !string.IsNullOrEmpty(assetItem.HashName),
                 });
             }
 
             return downloadItems;
+        }
+
+        /// <summary>
+        /// 从 AssetBundle 受管资源清单中提取实际会被上传和下载的 bundle 本地路径集合。
+        /// 这里显式排除 art_assets.info / art_asset_type.info 等配置文件，避免把未上传的混淆源 bundle 混进补下载和 LoadFromFile 校验。
+        /// </summary>
+        internal static HashSet<string> BuildFileServerManagedAssetBundleLocalPathSet(string firstLoadDir,
+            IEnumerable<AssetItem> assetItems)
+        {
+            var managedLocalPathSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (string.IsNullOrEmpty(firstLoadDir))
+            {
+                return managedLocalPathSet;
+            }
+
+            foreach (var assetItem in assetItems ?? Enumerable.Empty<AssetItem>())
+            {
+                if (assetItem == null || string.IsNullOrWhiteSpace(assetItem.LocalPath))
+                {
+                    continue;
+                }
+
+                var normalizedLocalPath = assetItem.LocalPath.Replace("\\", "/");
+                if (!normalizedLocalPath.StartsWith(BResources.ART_ASSET_ROOT_PATH + "/",
+                        StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var fileName = Path.GetFileName(normalizedLocalPath);
+                if (string.Equals(fileName, "art_assets.info", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(fileName, "art_asset_type.info", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                managedLocalPathSet.Add(IPath.Combine(firstLoadDir, normalizedLocalPath));
+            }
+
+            return managedLocalPathSet;
         }
 
         /// <summary>
@@ -951,7 +1004,20 @@ namespace BDFramework.ResourceMgr
                 return result;
             }
 
-            var assetBundleAssetLocalPaths = ResolveFileServerAssetBundleValidationLocalPaths(resolveResult.FirstLoadDir);
+            var allAssetBundleAssetLocalPaths = ResolveFileServerAssetBundleValidationLocalPaths(resolveResult.FirstLoadDir);
+            var managedAssetBundleLocalPathSet = BuildFileServerManagedAssetBundleLocalPathSet(
+                resolveResult.FirstLoadDir,
+                assetBundleContext.AssetItems);
+            var assetBundleAssetLocalPaths = allAssetBundleAssetLocalPaths
+                .Where(path => managedAssetBundleLocalPathSet.Contains(path))
+                .ToList();
+            if (assetBundleAssetLocalPaths.Count != allAssetBundleAssetLocalPaths.Count)
+            {
+                LogFileServerFlow(
+                    $"AssetBundle 本地加载样本已按受管资源清单过滤 raw={allAssetBundleAssetLocalPaths.Count} managed={assetBundleAssetLocalPaths.Count}",
+                    Color.yellow);
+            }
+
             if (assetBundleAssetLocalPaths.Count <= 0)
             {
                 result.Error = "文件服务器验证未能从 art_assets.info 解析出任何 AssetBundle 加载样本。";
