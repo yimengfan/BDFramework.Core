@@ -455,14 +455,18 @@ namespace BDFramework.ResourceMgr
         {
             var validationEntries = new List<AssetsVersionController.FileServerAssetBundleValidationEntry>();
             var seenValidationKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var normalizedAssetBundleItems = (assetBundleItems ?? Enumerable.Empty<AssetBundleItem>())
+                .Where(item => item != null)
+                .ToList();
+            var sourceFileMap = normalizedAssetBundleItems
+                .Where(item => item.Id >= 0
+                               && item.IsAssetBundleSourceFile()
+                               && !string.IsNullOrWhiteSpace(item.AssetBundlePath))
+                .GroupBy(item => item.Id)
+                .ToDictionary(group => group.Key, group => group.First());
 
-            foreach (var assetBundleItem in assetBundleItems ?? Enumerable.Empty<AssetBundleItem>())
+            foreach (var assetBundleItem in normalizedAssetBundleItems)
             {
-                if (assetBundleItem == null || string.IsNullOrWhiteSpace(assetBundleItem.AssetBundlePath))
-                {
-                    continue;
-                }
-
                 var assetGuid = assetBundleItem.GUID?.Trim() ?? string.Empty;
                 var assetLoadPath = assetBundleItem.LoadPath?.Trim() ?? string.Empty;
                 var assetDisplayPath = !string.IsNullOrWhiteSpace(assetLoadPath) ? assetLoadPath : assetGuid;
@@ -471,7 +475,29 @@ namespace BDFramework.ResourceMgr
                     continue;
                 }
 
-                var relativePath = (ArtAssetRootPath + "/" + assetBundleItem.AssetBundlePath.Trim())
+                var assetBundlePath = assetBundleItem.AssetBundlePath?.Trim() ?? string.Empty;
+                if (string.IsNullOrWhiteSpace(assetBundlePath)
+                    && assetBundleItem.DependAssetIds != null
+                    && assetBundleItem.DependAssetIds.Length > 0)
+                {
+                    for (var dependIndex = assetBundleItem.DependAssetIds.Length - 1; dependIndex >= 0; dependIndex--)
+                    {
+                        var dependId = assetBundleItem.DependAssetIds[dependIndex];
+                        if (sourceFileMap.TryGetValue(dependId, out var sourceFileItem)
+                            && !string.IsNullOrWhiteSpace(sourceFileItem.AssetBundlePath))
+                        {
+                            assetBundlePath = sourceFileItem.AssetBundlePath.Trim();
+                            break;
+                        }
+                    }
+                }
+
+                if (string.IsNullOrWhiteSpace(assetBundlePath))
+                {
+                    continue;
+                }
+
+                var relativePath = (ArtAssetRootPath + "/" + assetBundlePath)
                     .Replace("\\", "/");
                 var validationKey = assetBundleItem.Id > 0
                     ? assetBundleItem.Id.ToString()

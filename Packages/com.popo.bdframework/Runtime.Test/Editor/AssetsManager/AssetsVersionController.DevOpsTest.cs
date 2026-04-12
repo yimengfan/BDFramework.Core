@@ -161,12 +161,13 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
-        /// 验证从 art_assets.info 文本恢复资产级本地加载校验项时，会保留每条可加载资产记录而不是只按 bundle 去重。
+        /// 验证从 art_assets.info 解析后的资产列表恢复资产级本地加载校验项时，
+        /// 会保留每条可加载资产记录并正确反查其源 bundle，而不是只按 bundle 去重。
         /// </summary>
         [Test]
-        public void CollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContent_KeepsLoadableAssetRows()
+        public void CollectFileServerAssetBundleValidationEntries_KeepsLoadableAssetRowsAndResolvesSourceBundles()
         {
-            VerifyCollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContentKeepsLoadableAssetRows();
+            VerifyCollectFileServerAssetBundleValidationEntriesKeepsLoadableAssetRowsAndResolvesSourceBundles();
         }
 
         /// <summary>
@@ -614,21 +615,24 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
-        /// 以纯异常校验方式验证资产级本地加载样本恢复逻辑会保留每条可加载资产记录，供 batchmode 路径复用。
+        /// 以纯异常校验方式验证资产级本地加载样本恢复逻辑会保留每条可加载资产记录，
+        /// 并通过 DependAssetIds 反查出真实源 bundle，供 batchmode 路径复用。
         /// </summary>
-        internal static void VerifyCollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContentKeepsLoadableAssetRows()
+        internal static void VerifyCollectFileServerAssetBundleValidationEntriesKeepsLoadableAssetRowsAndResolvesSourceBundles()
         {
-            var artAssetsInfoContent = string.Join("\n", new[]
+            var assetBundleItems = new List<AssetBundleItem>()
             {
-                "Id,AssetType,LoadPath,GUID,AssetBundleLoadType,AssetBundlePath,Hash,AssetsPackSourceHash,Mix,DependAssetIds",
-                "1,0,Assets/Hero.prefab,guid-hero,0,hero.bundle,hero-hash,,0,",
-                "2,0,Assets/HeroVariant.prefab,guid-hero-variant,0,hero.bundle,hero-hash,,0,",
-                "3,0,,,0,hero.bundle,hero-hash,,0,",
-                "4,0,Assets/Shared.prefab,,0,shared.bundle,shared-hash,,0,",
-            });
+                new AssetBundleItem(1, string.Empty, "hero.bundle", 0, string.Empty, -1, new int[] { }),
+                new AssetBundleItem(2, string.Empty, "shared.bundle", 0, string.Empty, -1, new int[] { }),
+                new AssetBundleItem(3, "Assets/Hero.prefab", string.Empty, 0, "guid-hero", 0, new[] {1}),
+                new AssetBundleItem(4, "Assets/HeroVariant.prefab", string.Empty, 0, "guid-hero-variant", 0,
+                    new[] {1}),
+                new AssetBundleItem(5, "Assets/Shared.prefab", string.Empty, 0, string.Empty, 0, new[] {2}),
+                new AssetBundleItem(6, string.Empty, string.Empty, 0, string.Empty, 0, new[] {1}),
+            };
 
             var validationEntries = AssetsVersionControllerDevOpsPureLogic
-                .CollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContent(artAssetsInfoContent);
+                .CollectFileServerAssetBundleValidationEntries(assetBundleItems);
 
             EnsureEqual(3L, validationEntries.Count, "资产级加载样本数量不匹配。");
             EnsureEqual("Assets/Hero.prefab", validationEntries[0].AssetDisplayPath,
@@ -1266,8 +1270,8 @@ namespace BDFramework.EditorTest.AssetsManager
                     AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationRelativePathsDeduplicatesNonEmptyBundlePaths),
                 (nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContent_DeduplicatesNonEmptyBundlePaths),
                     AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContentDeduplicatesNonEmptyBundlePaths),
-                (nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContent_KeepsLoadableAssetRows),
-                    AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationEntriesFromArtAssetsInfoContentKeepsLoadableAssetRows),
+                (nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationEntries_KeepsLoadableAssetRowsAndResolvesSourceBundles),
+                    AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationEntriesKeepsLoadableAssetRowsAndResolvesSourceBundles),
                 (nameof(AssetsVersionControllerDevOpsTest.BuildMissingFileServerAssetBundleValidationDownloadItems_UsesArtAssetsInfoForMissingBundles),
                     AssetsVersionControllerDevOpsTest.VerifyBuildMissingFileServerAssetBundleValidationDownloadItemsUsesArtAssetsInfoForMissingBundles),
                 (nameof(AssetsVersionControllerDevOpsTest.LoadLocalPackageBuildInfo_ReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing),
