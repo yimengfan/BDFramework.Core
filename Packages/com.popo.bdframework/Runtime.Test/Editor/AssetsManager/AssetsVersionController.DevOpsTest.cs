@@ -288,6 +288,24 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证 CI BatchMode 测试目的日志会稳定带出阶段名、测试目的、实现手段和补充信息。
+        /// </summary>
+        [Test]
+        public void FormatFileServerTestPurposeAndMeansMessage_IncludesPurposeMeansAndExtraInfo()
+        {
+            VerifyFormatFileServerTestPurposeAndMeansMessageIncludesPurposeMeansAndExtraInfo();
+        }
+
+        /// <summary>
+        /// 验证 CI BatchMode 测试目的日志在缺省输入下仍会回退成稳定占位文本。
+        /// </summary>
+        [Test]
+        public void FormatFileServerTestPurposeAndMeansMessage_UsesFallbackForMissingValues()
+        {
+            VerifyFormatFileServerTestPurposeAndMeansMessageUsesFallbackForMissingValues();
+        }
+
+        /// <summary>
         /// 以纯异常校验方式验证共享版控解析结果，供 batchmode 路径复用。
         /// </summary>
         internal static void VerifyTryParseFileServerVersionInfoParsesThreeSegments()
@@ -1135,6 +1153,34 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证 CI BatchMode 测试目的日志格式，供 TeamCity 阶段排障复用。
+        /// </summary>
+        internal static void VerifyFormatFileServerTestPurposeAndMeansMessageIncludesPurposeMeansAndExtraInfo()
+        {
+            var message = AssetsVersionController.FormatFileServerTestPurposeAndMeansMessage(
+                "AssetBundle按资产加载",
+                "验证 art_assets.info 中声明的资源都可本地加载。",
+                "按 bundle 分组打开本地文件后逐条执行 LoadAsset。",
+                "assetCount=7 first=Assets/Test/verify.prefab");
+
+            EnsureEqual(
+                "AssetBundle按资产加载 测试目的=验证 art_assets.info 中声明的资源都可本地加载。 实现手段=按 bundle 分组打开本地文件后逐条执行 LoadAsset。 assetCount=7 first=Assets/Test/verify.prefab",
+                message,
+                "测试目的日志格式应稳定输出阶段、测试目的、实现手段和补充信息。");
+        }
+
+        /// <summary>
+        /// 以纯异常校验方式验证 CI BatchMode 测试目的日志的缺省占位文案。
+        /// </summary>
+        internal static void VerifyFormatFileServerTestPurposeAndMeansMessageUsesFallbackForMissingValues()
+        {
+            var message = AssetsVersionController.FormatFileServerTestPurposeAndMeansMessage(null, null, null);
+
+            EnsureEqual("unknown 测试目的=未声明 实现手段=未声明", message,
+                "测试目的日志缺省输入时应回退成稳定占位文本。");
+        }
+
+        /// <summary>
         /// 解析当前编辑器宿主能直接本地打开的 AssetBundle 构建目标。
         /// 测试只关心 bundle 是否可被当前 Unity 进程打开，因此固定映射到宿主编辑器平台，避免用 Android/iOS 产物做本地打开校验时出现平台不匹配假失败。
         /// </summary>
@@ -1298,6 +1344,10 @@ namespace BDFramework.EditorTest.AssetsManager
                     AssetsVersionControllerDevOpsTest.VerifyFormatFileServerBatchProgressMessageIncludesStageCountsAndTarget),
                 (nameof(AssetsVersionControllerDevOpsTest.FormatFileServerBatchProgressMessage_UsesFallbackForMissingValues),
                     AssetsVersionControllerDevOpsTest.VerifyFormatFileServerBatchProgressMessageUsesFallbackForMissingValues),
+                (nameof(AssetsVersionControllerDevOpsTest.FormatFileServerTestPurposeAndMeansMessage_IncludesPurposeMeansAndExtraInfo),
+                    AssetsVersionControllerDevOpsTest.VerifyFormatFileServerTestPurposeAndMeansMessageIncludesPurposeMeansAndExtraInfo),
+                (nameof(AssetsVersionControllerDevOpsTest.FormatFileServerTestPurposeAndMeansMessage_UsesFallbackForMissingValues),
+                    AssetsVersionControllerDevOpsTest.VerifyFormatFileServerTestPurposeAndMeansMessageUsesFallbackForMissingValues),
             };
 
             for (var index = 0; index < checks.Length; index++)

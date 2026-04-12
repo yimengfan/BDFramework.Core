@@ -369,6 +369,35 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// 生成 CI BatchMode 测试入口的“测试目的 / 实现手段”日志，确保 TeamCity 上能直接看出当前阶段为什么执行、如何执行。
+        /// </summary>
+        internal static string FormatFileServerTestPurposeAndMeansMessage(string stageName,
+            string purpose,
+            string means,
+            string extraInfo = null)
+        {
+            var normalizedStageName = string.IsNullOrWhiteSpace(stageName) ? "unknown" : stageName.Trim();
+            var normalizedPurpose = string.IsNullOrWhiteSpace(purpose) ? "未声明" : purpose.Trim();
+            var normalizedMeans = string.IsNullOrWhiteSpace(means) ? "未声明" : means.Trim();
+            var normalizedExtraInfo = string.IsNullOrWhiteSpace(extraInfo) ? string.Empty : $" {extraInfo.Trim()}";
+            return $"{normalizedStageName} 测试目的={normalizedPurpose} 实现手段={normalizedMeans}{normalizedExtraInfo}";
+        }
+
+        /// <summary>
+        /// 输出 CI BatchMode 测试入口的“测试目的 / 实现手段”日志。
+        /// 这类日志和阶段进度日志一起出现时，排查者可以同时知道当前阶段要验证什么以及具体怎么验证。
+        /// </summary>
+        private static void LogFileServerTestPurposeAndMeans(string stageName,
+            string purpose,
+            string means,
+            Color color,
+            string extraInfo = null)
+        {
+            LogFileServerFlow(FormatFileServerTestPurposeAndMeansMessage(stageName, purpose, means, extraInfo),
+                color);
+        }
+
+        /// <summary>
         /// 生成 CI BatchMode 文件服务器阶段进度日志，统一输出阶段名、序号和当前目标路径，避免 TeamCity 上只看到“开始了但不知道卡在哪”。
         /// </summary>
         internal static string FormatFileServerBatchProgressMessage(string stageName,
@@ -2168,6 +2197,12 @@ namespace BDFramework.ResourceMgr
                 : string.Empty;
             var assetBundleCount = assetBundleValidationEntries?.Count ?? 0;
 
+            LogFileServerTestPurposeAndMeans("代表性本地加载",
+                "验证下载完成后的 Code、AssetBundle、Table 代表性资源不是只有文件存在，而是真的可以在本地打开。",
+                "按 Code -> AssetBundle -> Table 顺序执行程序集装载、基于 art_assets.info 的 LoadAsset，以及 SQLite 只读打开。",
+                Color.cyan,
+                $"code={codeAssetLocalPath} assetBundleFirst={firstAssetTarget} assetBundleCount={assetBundleCount} table={tableAssetLocalPath}");
+
             LogFileServerBatchProgress("代表性本地加载", 1, 3, codeAssetLocalPath, Color.cyan, "component=Code");
             var codeLoadError = ValidateFileServerCodeRepresentativeLocalLoad(codeAssetLocalPath);
             if (!string.IsNullOrEmpty(codeLoadError))
@@ -2308,6 +2343,17 @@ namespace BDFramework.ResourceMgr
         internal static string ValidateFileServerAssetBundleLocalLoads(
             IReadOnlyList<FileServerAssetBundleValidationEntry> assetBundleValidationEntries)
         {
+            var firstAssetTarget = assetBundleValidationEntries != null && assetBundleValidationEntries.Count > 0
+                ? assetBundleValidationEntries[0]?.AssetDisplayPath ?? string.Empty
+                : string.Empty;
+            var assetBundleCount = assetBundleValidationEntries?.Count ?? 0;
+
+            LogFileServerTestPurposeAndMeans("AssetBundle按资产加载",
+                "验证 art_assets.info 中声明的可加载资产都能在本地 bundle 中逐条完成 LoadAsset。",
+                "先按 bundle 分组打开本地 AssetBundle，再按资产记录顺序解析实际 loadName 并逐条执行 LoadAsset。",
+                Color.cyan,
+                $"assetCount={assetBundleCount} first={firstAssetTarget}");
+
             if (assetBundleValidationEntries == null || assetBundleValidationEntries.Count <= 0)
             {
                 return "文件服务器 AssetBundle 资产加载校验缺少基于 art_assets.info 的资产记录。";

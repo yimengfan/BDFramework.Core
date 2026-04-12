@@ -11,9 +11,10 @@
 5. Unity 端会强制重置本地 persistent 下载状态，再真实下载并校验 Code / AssetBundle / Table 三类代表性资源；除了全量 hash/存在性检查外，还会分别做一次热更程序集装载、AssetBundle 本地打开和 SQLite 只读打开，避免历史缓存或“文件存在但本地打不开”把验证变成假阳性。
 6. 当前 revision 如果已经存在成功或正在执行中的 TeamCity 资产构建，`test_client_res.py` 会直接复用 build id，而不是重复排队同一个版本。
 7. `queue-verify-build` 不再复用或排队 `VerifyClientRes_*` 子任务，而是在当前 `TestClientRes` 父构建内直接启动对应平台的 `verify_{platform}.py`；Step 3 的日志、失败码和 Unity 输出都直接留在父任务里，避免“检查任务却还依赖其他任务”的错误编排。
-8. Unity Step 3 内的运行时验证日志统一补齐为稳定的 ASCII 前缀 `[CI][VerifyClientRes]` / `[CI][FileServer]`，并在“元数据重建 -> 全量校验 -> 代表性本地加载”阶段输出明确的开始、进度和完成日志，方便直接判断当前卡在哪个资源或阶段。下载与全量校验仍在线程池里执行，但代表性本地加载会在外层 batchmode 同步桥接收口回 Unity 主线程执行，因此正常路径应看到 `mainThreadDispatch status=already-main-thread`；如果历史线程切换路径被触发，仍会输出 `mainThreadDispatch status=queued|entered|timeout` 并直接报错而不是继续无输出悬挂。Step 2 等待 TeamCity 子构建时，除了 `statusText` 之外，也会输出 TeamCity `running-info` 里的 `progress`、`hanging` 和 `stage`，便于判断当前到底卡在排队、Library 导入、Unity 执行还是其他阶段。超时错误会附带最后一次状态、`webUrl` 和子构建日志尾部，便于直接排查。
-9. `queue-verify-build` 真正启动本地校验脚本后，会先输出 `localVerifyLaunch=started waitingForUnityOutput=true`，随后按 `--poll-interval-seconds` 输出 `localVerifyHeartbeat`。从启动日志到第一条 `[CI][VerifyClientRes]` / `[CI][FileServer]` 之间，通常是 Unity 打开工程、初始化 PackageManager 和加载项目的时间，不代表还在等待子构建。
-10. `queue-verify-build` 的 `--timeout-seconds` 现在用于本地校验脚本的总运行超时；默认值仍为 5400 秒。为了避免误判，如果你希望某次排障完全不做硬超时、只保留心跳监控，可以显式传入 `--timeout-seconds 0`。
+8. Unity Step 3 内的运行时验证日志统一补齐为稳定的 ASCII 前缀 `[CI][VerifyClientRes]` / `[CI][FileServer]`，并在“元数据重建 -> 全量校验 -> 代表性本地加载 -> AssetBundle 按资产加载”阶段输出明确的开始、`测试目的=`、`实现手段=`、进度和完成日志，方便直接判断当前卡在哪个资源或阶段。下载与全量校验仍在线程池里执行，但代表性本地加载会在外层 batchmode 同步桥接收口回 Unity 主线程执行，因此正常路径应看到 `mainThreadDispatch status=already-main-thread`；如果历史线程切换路径被触发，仍会输出 `mainThreadDispatch status=queued|entered|timeout` 并直接报错而不是继续无输出悬挂。Step 2 等待 TeamCity 子构建时，除了 `statusText` 之外，也会输出 TeamCity `running-info` 里的 `progress`、`hanging` 和 `stage`，便于判断当前到底卡在排队、Library 导入、Unity 执行还是其他阶段。超时错误会附带最后一次状态、`webUrl` 和子构建日志尾部，便于直接排查。
+9. 包内 Unity 纯逻辑 batch 验证入口同样必须在 suite 开始和每个 check 开始时输出 `测试目的=` / `实现手段=`，并持续输出 `[测试进度]`，这样 TeamCity 或本地 batchmode 不需要依赖 NUnit 宿主也能直接看到当前验证目标与执行进度。
+10. `queue-verify-build` 真正启动本地校验脚本后，会先输出 `localVerifyLaunch=started waitingForUnityOutput=true`，随后按 `--poll-interval-seconds` 输出 `localVerifyHeartbeat`。从启动日志到第一条 `[CI][VerifyClientRes]` / `[CI][FileServer]` 之间，通常是 Unity 打开工程、初始化 PackageManager 和加载项目的时间，不代表还在等待子构建。
+11. `queue-verify-build` 的 `--timeout-seconds` 现在用于本地校验脚本的总运行超时；默认值仍为 5400 秒。为了避免误判，如果你希望某次排障完全不做硬超时、只保留心跳监控，可以显式传入 `--timeout-seconds 0`。
 
 ## 文件说明
 
