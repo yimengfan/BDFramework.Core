@@ -141,6 +141,15 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证批量校验会基于本地 art_assets.info 为缺失的 AssetBundle 生成补下载项，而不是只依赖 assets.info 里的原始清单。
+        /// </summary>
+        [Test]
+        public void BuildMissingFileServerAssetBundleValidationDownloadItems_UsesArtAssetsInfoForMissingBundles()
+        {
+            VerifyBuildMissingFileServerAssetBundleValidationDownloadItemsUsesArtAssetsInfoForMissingBundles();
+        }
+
+        /// <summary>
         /// 验证 CI BatchMode 独立下载目录缺少 package_build.info 时，会返回空白结构而不是回退到旧版 ClientAssetsUtils 初始化。
         /// </summary>
         [Test]
@@ -564,6 +573,65 @@ namespace BDFramework.EditorTest.AssetsManager
                 "从 art_assets.info 文本恢复的第一个 AssetBundle 本地校验路径不匹配。");
             EnsureEqual("art_assets/shared.bundle", validationRelativePaths[1],
                 "从 art_assets.info 文本恢复的第二个 AssetBundle 本地校验路径不匹配。");
+        }
+
+        /// <summary>
+        /// 以纯异常校验方式验证批量校验的补下载 helper 会根据 art_assets.info 中缺失的 bundle 生成远端下载项。
+        /// </summary>
+        internal static void VerifyBuildMissingFileServerAssetBundleValidationDownloadItemsUsesArtAssetsInfoForMissingBundles()
+        {
+            var tempDir = Path.Combine(Path.GetTempPath(), "BDFramework", "AssetsVersionControllerDevOpsTest",
+                Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(Path.Combine(tempDir, BResources.ART_ASSET_ROOT_PATH));
+
+            try
+            {
+                var artAssetsInfoContent = string.Join("\n", new[]
+                {
+                    "Id,AssetType,LoadPath,GUID,AssetBundleLoadType,AssetBundlePath,Hash,AssetsPackSourceHash,Mix,DependAssetIds",
+                    "1,0,Assets/Hero.prefab,,0,hero.bundle,hero-hash,,0,",
+                    "2,0,Assets/HeroVariant.prefab,,0,hero.bundle,hero-hash,,0,",
+                    "3,0,,,0,shared.bundle,shared-hash,,0,",
+                });
+                File.WriteAllText(Path.Combine(tempDir, BResources.ART_ASSET_INFO_PATH), artAssetsInfoContent);
+
+                var downloadItems = AssetsVersionController.BuildMissingFileServerAssetBundleValidationDownloadItems(
+                    "http://files.example.com",
+                    "android",
+                    tempDir,
+                    new AssetsVersionController.FileServerComponentContext()
+                    {
+                        ComponentKind = AssetsVersionController.FileServerComponentKind.AssetBundle,
+                        Version = "45",
+                    });
+
+                EnsureEqual(2L, downloadItems.Count, "补下载 AssetBundle 数量不匹配。");
+                EnsureEqual("art_assets/hero.bundle", downloadItems[0].AssetItem.LocalPath,
+                    "第一个补下载 AssetBundle 本地路径不匹配。");
+                EnsureEqual("hero-hash", downloadItems[0].AssetItem.HashName,
+                    "第一个补下载 AssetBundle Hash 不匹配。");
+                EnsureEqual("art_assets/shared.bundle", downloadItems[1].AssetItem.LocalPath,
+                    "第二个补下载 AssetBundle 本地路径不匹配。");
+                EnsureEqual("shared-hash", downloadItems[1].AssetItem.HashName,
+                    "第二个补下载 AssetBundle Hash 不匹配。");
+                EnsureTrue(downloadItems[0].RemoteUrl.EndsWith("/files/ClientRes_Assetbundle_android/45/hero-hash"),
+                    "第一个补下载 AssetBundle 远端路径不匹配。");
+                EnsureTrue(downloadItems[1].RemoteUrl.EndsWith("/files/ClientRes_Assetbundle_android/45/shared-hash"),
+                    "第二个补下载 AssetBundle 远端路径不匹配。");
+                EnsureTrue(downloadItems[0].FinalLocalPath.Replace("\\", "/").EndsWith("/art_assets/hero.bundle"),
+                    "第一个补下载 AssetBundle 本地落盘路径不匹配。");
+                EnsureTrue(downloadItems[1].FinalLocalPath.Replace("\\", "/").EndsWith("/art_assets/shared.bundle"),
+                    "第二个补下载 AssetBundle 本地落盘路径不匹配。");
+                EnsureTrue(downloadItems[0].RequireHashValidation, "第一个补下载 AssetBundle 应启用 hash 校验。");
+                EnsureTrue(downloadItems[1].RequireHashValidation, "第二个补下载 AssetBundle 应启用 hash 校验。");
+            }
+            finally
+            {
+                if (Directory.Exists(tempDir))
+                {
+                    Directory.Delete(tempDir, true);
+                }
+            }
         }
 
         /// <summary>
@@ -1003,7 +1071,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 24;
+            const int totalCheckCount = 25;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -1054,6 +1122,10 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContent_DeduplicatesNonEmptyBundlePaths),
                 AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContentDeduplicatesNonEmptyBundlePaths,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.BuildMissingFileServerAssetBundleValidationDownloadItems_UsesArtAssetsInfoForMissingBundles),
+                AssetsVersionControllerDevOpsTest.VerifyBuildMissingFileServerAssetBundleValidationDownloadItemsUsesArtAssetsInfoForMissingBundles,
                 reportBuilder, ref failedCount);
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.LoadLocalPackageBuildInfo_ReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing),

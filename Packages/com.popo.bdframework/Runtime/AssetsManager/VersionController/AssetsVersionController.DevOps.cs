@@ -703,6 +703,63 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// 基于第一次真实下载落地后的 <c>art_assets.info</c>，补齐后续逐个 <c>LoadFromFile</c> 校验缺失的 AssetBundle 文件。
+        /// 某些 bundle 只会出现在 <c>art_assets.info</c> 里，不一定完整出现在 <c>assets.info</c> 的受管资源清单中，
+        /// 因此这里要额外按配置里的 bundle 文件名和 Hash 生成下载项。
+        /// </summary>
+        internal static List<FileServerDownloadItem> BuildMissingFileServerAssetBundleValidationDownloadItems(
+            string serverUrl,
+            string platformPath,
+            string firstLoadDir,
+            FileServerComponentContext assetBundleContext)
+        {
+            var downloadItems = new List<FileServerDownloadItem>();
+            if (string.IsNullOrEmpty(serverUrl)
+                || string.IsNullOrEmpty(platformPath)
+                || string.IsNullOrEmpty(firstLoadDir)
+                || assetBundleContext == null
+                || string.IsNullOrEmpty(assetBundleContext.Version))
+            {
+                return downloadItems;
+            }
+
+            var artAssetsInfoPath = IPath.Combine(firstLoadDir, BResources.ART_ASSET_INFO_PATH);
+            if (!File.Exists(artAssetsInfoPath))
+            {
+                return downloadItems;
+            }
+
+            var artAssetsInfoContent = File.ReadAllText(artAssetsInfoPath);
+            var validationAssetItems = AssetsVersionControllerDevOpsPureLogic
+                .CollectFileServerAssetBundleValidationAssetItemsFromArtAssetsInfoContent(artAssetsInfoContent);
+            if (validationAssetItems.Count <= 0)
+            {
+                return downloadItems;
+            }
+
+            var remoteRoot = BuildFileServerComponentRemoteRoot(serverUrl, platformPath,
+                FileServerComponentKind.AssetBundle, assetBundleContext.Version);
+            foreach (var assetItem in validationAssetItems)
+            {
+                if (IsFileServerDownloadedAssetValid(firstLoadDir, assetItem))
+                {
+                    continue;
+                }
+
+                downloadItems.Add(new FileServerDownloadItem()
+                {
+                    ComponentKind = FileServerComponentKind.AssetBundle,
+                    AssetItem = assetItem,
+                    FinalLocalPath = IPath.Combine(firstLoadDir, assetItem.LocalPath),
+                    RemoteUrl = CombineUrl(remoteRoot, BuildFileServerAssetRemoteRelativePath(assetItem)),
+                    RequireHashValidation = !string.IsNullOrEmpty(assetItem.HashName),
+                });
+            }
+
+            return downloadItems;
+        }
+
+        /// <summary>
         /// CI BatchMode 的显式文件服务器下载验证入口。
         /// 这条路径会强制读取远端共享版控、重置本地缓存、真实下载 Code/AssetBundle/Table 三类差异资源，
         /// 再校验本地元数据和代表性样本文件，确保 TeamCity 验证不是被旧缓存或母包残留短路。
@@ -847,6 +904,25 @@ namespace BDFramework.ResourceMgr
             {
                 result.Error = $"文件服务器批量验证存在下载失败资源 count={downloadResult.Item1.Count}";
                 return result;
+            }
+
+            var supplementalAssetBundleDownloadItems = BuildMissingFileServerAssetBundleValidationDownloadItems(
+                request.ServerUrl,
+                resolveResult.PlatformPath,
+                resolveResult.FirstLoadDir,
+                assetBundleContext);
+            if (supplementalAssetBundleDownloadItems.Count > 0)
+            {
+                LogFileServerFlow(
+                    $"文件服务器批量验证补下载 art_assets.info 引用的 AssetBundle count={supplementalAssetBundleDownloadItems.Count}",
+                    Color.cyan);
+                var supplementalDownloadResult = await DownloadFileServerAssets(supplementalAssetBundleDownloadItems,
+                    null);
+                if (supplementalDownloadResult.Item1.Count > 0)
+                {
+                    result.Error = $"文件服务器批量验证补下载 AssetBundle 失败 count={supplementalDownloadResult.Item1.Count}";
+                    return result;
+                }
             }
 
             LogFileServerFlow($"开始重建文件服务器本地元数据 componentCount={componentContexts.Count}", Color.cyan);

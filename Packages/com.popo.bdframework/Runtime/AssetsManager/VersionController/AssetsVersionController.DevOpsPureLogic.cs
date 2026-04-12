@@ -412,13 +412,13 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
-        /// 从 <c>art_assets.info</c> 的解析结果里提取需要做本地打开校验的 AssetBundle 相对路径。
-        /// 这里按非空 <c>AssetBundlePath</c> 去重，避免同一个 bundle 因多个资源记录被重复 <c>LoadFromFile</c>。
+        /// 从 <c>art_assets.info</c> 的解析结果里提取需要补下载或本地打开校验的 AssetBundle 资源项。
+        /// 这里把 bundle 文件名映射回 <c>art_assets/{bundle}</c> 本地路径，并复用配置里的 Hash 作为远端 hash 文件名。
         /// </summary>
-        internal static List<string> CollectFileServerAssetBundleValidationRelativePaths(
+        internal static List<AssetItem> CollectFileServerAssetBundleValidationAssetItems(
             IEnumerable<AssetBundleItem> assetBundleItems)
         {
-            var validationRelativePaths = new List<string>();
+            var validationAssetItems = new List<AssetItem>();
             var seenRelativePaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var assetBundleItem in assetBundleItems ?? Enumerable.Empty<AssetBundleItem>())
@@ -430,13 +430,49 @@ namespace BDFramework.ResourceMgr
 
                 var relativePath = (ArtAssetRootPath + "/" + assetBundleItem.AssetBundlePath.Trim())
                     .Replace("\\", "/");
-                if (seenRelativePaths.Add(relativePath))
+                if (!seenRelativePaths.Add(relativePath))
                 {
-                    validationRelativePaths.Add(relativePath);
+                    continue;
                 }
+
+                validationAssetItems.Add(new AssetItem()
+                {
+                    Id = validationAssetItems.Count + 1,
+                    LocalPath = relativePath,
+                    HashName = assetBundleItem.Hash ?? string.Empty,
+                });
             }
 
-            return validationRelativePaths;
+            return validationAssetItems;
+        }
+
+        /// <summary>
+        /// 从 <c>art_assets.info</c> 的解析结果里提取需要做本地打开校验的 AssetBundle 相对路径。
+        /// 这里按非空 <c>AssetBundlePath</c> 去重，避免同一个 bundle 因多个资源记录被重复 <c>LoadFromFile</c>。
+        /// </summary>
+        internal static List<string> CollectFileServerAssetBundleValidationRelativePaths(
+            IEnumerable<AssetBundleItem> assetBundleItems)
+        {
+            return CollectFileServerAssetBundleValidationAssetItems(assetBundleItems)
+                .Select(item => item.LocalPath)
+                .ToList();
+        }
+
+        /// <summary>
+        /// 直接从 <c>art_assets.info</c> 文本内容里提取需要补下载或本地打开校验的 AssetBundle 资源项。
+        /// 这里避免走运行时加载器，防止 CI 后台线程为了读取配置而触发 Unity 主线程限定的静态初始化。
+        /// </summary>
+        internal static List<AssetItem> CollectFileServerAssetBundleValidationAssetItemsFromArtAssetsInfoContent(
+            string artAssetsInfoContent)
+        {
+            if (string.IsNullOrWhiteSpace(artAssetsInfoContent))
+            {
+                return new List<AssetItem>();
+            }
+
+            var assetBundleItems = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(artAssetsInfoContent)
+                                   ?? new List<AssetBundleItem>();
+            return CollectFileServerAssetBundleValidationAssetItems(assetBundleItems);
         }
 
         /// <summary>
@@ -451,9 +487,9 @@ namespace BDFramework.ResourceMgr
                 return new List<string>();
             }
 
-            var assetBundleItems = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(artAssetsInfoContent)
-                                   ?? new List<AssetBundleItem>();
-            return CollectFileServerAssetBundleValidationRelativePaths(assetBundleItems);
+            return CollectFileServerAssetBundleValidationAssetItemsFromArtAssetsInfoContent(artAssetsInfoContent)
+                .Select(item => item.LocalPath)
+                .ToList();
         }
 
         /// <summary>
