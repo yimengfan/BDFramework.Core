@@ -431,7 +431,13 @@ namespace BDFramework.ResourceMgr
             BDebug.EnableLog(LogTag);
             try
             {
-                return Task.Run(() => VerifyFileServerAssetsForBatchMode(request)).GetAwaiter().GetResult();
+                var result = Task.Run(() => VerifyFileServerAssetsForBatchMode(request)).GetAwaiter().GetResult();
+                if (!result.IsSuccess)
+                {
+                    return result;
+                }
+
+                return FinalizeFileServerBatchVerificationOnMainThread(request, result);
             }
             catch (Exception exception)
             {
@@ -442,6 +448,45 @@ namespace BDFramework.ResourceMgr
                     Error = $"文件服务器批量验证异常:{exception.Message}",
                 };
             }
+        }
+
+        /// <summary>
+        /// 在同步 batchmode 桥接入口里收口所有必须运行在 Unity 主线程上的最终校验。
+        /// 前半段真实下载和全量 hash 校验仍然保留在线程池中执行，等后台阶段完成后再回到当前主线程执行
+        /// 代表性 AssetBundle 本地打开和 package_build.info 终检，避免主线程被 <see cref="Task.Run(Func{Task})"/> 阻塞时再去反向投递导致超时。
+        /// </summary>
+        private FileServerBatchVerificationResult FinalizeFileServerBatchVerificationOnMainThread(
+            FileServerBatchVerificationRequest request,
+            FileServerBatchVerificationResult result)
+        {
+            LogFileServerFlow("文件服务器后台下载与全量校验完成，开始主线程代表性本地加载校验。", Color.green);
+
+            var representativeLoadError = ValidateFileServerRepresentativeLocalLoads(
+                    result.CodeAssetLocalPath,
+                    result.AssetBundleAssetLocalPath,
+                    result.TableAssetLocalPath)
+                .GetAwaiter()
+                .GetResult();
+            if (!string.IsNullOrEmpty(representativeLoadError))
+            {
+                result.Error = representativeLoadError;
+                return result;
+            }
+
+            result.PackageBuildInfo = LoadLocalPackageBuildInfo(result.FirstLoadDir, false);
+            var packageBuildInfoError = ValidateFileServerPackageBuildInfo(
+                result.PackageBuildInfo,
+                request?.ExpectedVersionInfo ?? new FileServerVersionInfo());
+            if (!string.IsNullOrEmpty(packageBuildInfoError))
+            {
+                result.Error = packageBuildInfoError;
+                return result;
+            }
+
+            LogFileServerFlow(
+                $"CI BatchMode 文件服务器验证完成 version={result.ActualVersion} code={result.CodeAssetLocalPath} ab={result.AssetBundleAssetLocalPath} table={result.TableAssetLocalPath}",
+                Color.green);
+            return result;
         }
 
         /// <summary>
@@ -791,31 +836,7 @@ namespace BDFramework.ResourceMgr
                 return result;
             }
 
-            LogFileServerFlow("文件服务器全量资源校验通过，开始代表性本地加载校验。", Color.green);
-
-            // Phase 6: 三类资产除了全量存在性/hash 校验外，还要各自做一次代表性 payload 的真实本地打开验证。
-            var representativeLoadError = await ValidateFileServerRepresentativeLocalLoads(
-                result.CodeAssetLocalPath,
-                result.AssetBundleAssetLocalPath,
-                result.TableAssetLocalPath);
-            if (!string.IsNullOrEmpty(representativeLoadError))
-            {
-                result.Error = representativeLoadError;
-                return result;
-            }
-
-            result.PackageBuildInfo = LoadLocalPackageBuildInfo(resolveResult.FirstLoadDir, false);
-            var packageBuildInfoError = ValidateFileServerPackageBuildInfo(result.PackageBuildInfo,
-                request.ExpectedVersionInfo);
-            if (!string.IsNullOrEmpty(packageBuildInfoError))
-            {
-                result.Error = packageBuildInfoError;
-                return result;
-            }
-
-            LogFileServerFlow(
-                $"CI BatchMode 文件服务器验证完成 version={result.ActualVersion} code={result.CodeAssetLocalPath} ab={result.AssetBundleAssetLocalPath} table={result.TableAssetLocalPath}",
-                Color.green);
+            LogFileServerFlow("文件服务器全量资源校验通过，等待主线程执行代表性本地加载校验。", Color.green);
             return result;
         }
 
@@ -1858,7 +1879,7 @@ namespace BDFramework.ResourceMgr
         /// Code 走程序集装载探测，AssetBundle 走 <see cref="AssetBundle.LoadFromFile(string)"/>，Table 走 SQLite 只读打开，
         /// 这样可以把“文件存在但本地无法打开”的问题和纯下载/hash 问题区分开。
         /// </summary>
-        internal async UniTask<string> ValidateFileServerRepresentativeLocalLoads(
+        internal async Task<string> ValidateFileServerRepresentativeLocalLoads(
             string codeAssetLocalPath,
             string assetBundleAssetLocalPath,
             string tableAssetLocalPath)

@@ -167,6 +167,15 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证代表性本地加载总入口在主线程收口后，会直接返回 AssetBundle 缺文件错误，而不是再次等待主线程派发超时。
+        /// </summary>
+        [Test]
+        public void ValidateFileServerRepresentativeLocalLoads_ReturnsAssetBundleMissingFileErrorOnMainThread()
+        {
+            VerifyValidateFileServerRepresentativeLocalLoadsReturnsAssetBundleMissingFileErrorOnMainThread();
+        }
+
+        /// <summary>
         /// 验证代表性的表格资源在下载落地后，会经过真实 SQLite 只读打开校验。
         /// </summary>
         [Test]
@@ -655,6 +664,44 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以主线程直接调用方式验证代表性本地加载总入口在 AssetBundle 文件缺失时会立即返回底层错误。
+        /// 该校验覆盖 CI batchmode 外层同步桥接在后台阶段结束后回到主线程执行的最终路径。
+        /// </summary>
+        internal static void VerifyValidateFileServerRepresentativeLocalLoadsReturnsAssetBundleMissingFileErrorOnMainThread()
+        {
+            var tempDir = Path.Combine(Path.GetTempPath(), "BDFramework", "AssetsVersionControllerDevOpsTest",
+                Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(tempDir);
+            var localCodePath = Path.Combine(tempDir, "Assembly-CSharp-firstpass.zlua.bytes");
+            var sourceAssemblyPath = typeof(AssetsVersionControllerDevOpsTest).Assembly.Location;
+            var missingBundlePath = Path.Combine(tempDir, "missing.bundle");
+
+            try
+            {
+                File.Copy(sourceAssemblyPath, localCodePath, true);
+
+                var controller = new AssetsVersionController();
+                var error = controller
+                    .ValidateFileServerRepresentativeLocalLoads(localCodePath, missingBundlePath,
+                        Path.Combine(tempDir, "unused.db"))
+                    .GetAwaiter()
+                    .GetResult();
+
+                EnsureTrue(error != null && error.Contains($"path={missingBundlePath}"),
+                    "主线程收口后的代表性本地加载应保留 AssetBundle 缺文件错误。");
+                EnsureTrue(!error.Contains("切换 Unity 主线程超时"),
+                    "主线程收口后的代表性本地加载不应再返回主线程派发超时。");
+            }
+            finally
+            {
+                if (Directory.Exists(tempDir))
+                {
+                    Directory.Delete(tempDir, true);
+                }
+            }
+        }
+
+        /// <summary>
         /// 以纯异常校验方式验证表格代表性资源的真实 SQLite 打开，供 batchmode 路径复用。
         /// </summary>
         internal static void VerifyValidateFileServerTableRepresentativeLocalLoadSucceedsForReadableSqlite()
@@ -860,7 +907,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 21;
+            const int totalCheckCount = 22;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -923,6 +970,10 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContext_ReturnsMissingFileErrorOnMainThread),
                 AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContextReturnsMissingFileErrorOnMainThread,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerRepresentativeLocalLoads_ReturnsAssetBundleMissingFileErrorOnMainThread),
+                AssetsVersionControllerDevOpsTest.VerifyValidateFileServerRepresentativeLocalLoadsReturnsAssetBundleMissingFileErrorOnMainThread,
                 reportBuilder, ref failedCount);
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerTableRepresentativeLocalLoad_SucceedsForReadableSqlite),
