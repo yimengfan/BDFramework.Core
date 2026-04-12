@@ -291,13 +291,22 @@ namespace BDFramework.ResourceMgr
         };
 
         /// <summary>
+        /// 通过进程命令行判断当前是否处于 Unity BatchMode。
+        /// 这里不能访问 <see cref="Application.isBatchMode"/>，因为文件服务器批验证会在线程池里运行。
+        /// </summary>
+        private static bool IsUnityBatchModeProcess()
+        {
+            return (Environment.CommandLine ?? string.Empty).IndexOf("-batchmode", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        /// <summary>
         /// 统一输出文件服务器流程日志。
         /// BatchMode 下会额外镜像到 Unity 控制台，确保 TeamCity 可以直接看到关键阶段、警告和错误。
         /// </summary>
         private static void LogFileServerFlow(string message, Color color)
         {
             BDebug.Log(LogTag, $"[FileServer] {message}", color);
-            if (!Application.isBatchMode)
+            if (!IsUnityBatchModeProcess())
             {
                 return;
             }
