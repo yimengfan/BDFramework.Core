@@ -680,7 +680,7 @@ namespace BDFramework.ResourceMgr
 
         /// <summary>
         /// 从当前本地下载目录的 art_assets.info 解析出需要逐个本地打开校验的 AssetBundle 绝对路径。
-        /// 这里故意依赖运行时同源的 AssetBundleConfigLoader，避免 CI 校验和正式加载路径对配置解析出现分叉。
+        /// 这里直接读取 art_assets.info 的 CSV 内容，避免后台线程触发运行时加载器里的 Unity 主线程静态初始化。
         /// </summary>
         private static List<string> ResolveFileServerAssetBundleValidationLocalPaths(string firstLoadDir)
         {
@@ -689,9 +689,15 @@ namespace BDFramework.ResourceMgr
                 return new List<string>();
             }
 
-            var configLoader = new AssetBundleConfigLoader();
-            configLoader.Load(firstLoadDir);
-            return CollectFileServerAssetBundleValidationRelativePaths(configLoader.AssetbundleItemList)
+            var artAssetsInfoPath = IPath.Combine(firstLoadDir, BResources.ART_ASSET_INFO_PATH);
+            if (!File.Exists(artAssetsInfoPath))
+            {
+                return new List<string>();
+            }
+
+            var artAssetsInfoContent = File.ReadAllText(artAssetsInfoPath);
+            return AssetsVersionControllerDevOpsPureLogic
+                .CollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContent(artAssetsInfoContent)
                 .Select(relativePath => IPath.Combine(firstLoadDir, relativePath))
                 .ToList();
         }

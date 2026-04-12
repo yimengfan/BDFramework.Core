@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BDFramework.Asset;
 using BDFramework.ResourceMgr.V2;
+using ServiceStack.Text;
 using UnityEngine;
 
 namespace BDFramework.ResourceMgr
@@ -436,6 +437,23 @@ namespace BDFramework.ResourceMgr
             }
 
             return validationRelativePaths;
+        }
+
+        /// <summary>
+        /// 直接从 <c>art_assets.info</c> 文本内容里提取需要做本地打开校验的 AssetBundle 相对路径。
+        /// 这里避免走运行时加载器，防止 CI 后台线程为了读取配置而触发 Unity 主线程限定的静态初始化。
+        /// </summary>
+        internal static List<string> CollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContent(
+            string artAssetsInfoContent)
+        {
+            if (string.IsNullOrWhiteSpace(artAssetsInfoContent))
+            {
+                return new List<string>();
+            }
+
+            var assetBundleItems = CsvSerializer.DeserializeFromString<List<AssetBundleItem>>(artAssetsInfoContent)
+                                   ?? new List<AssetBundleItem>();
+            return CollectFileServerAssetBundleValidationRelativePaths(assetBundleItems);
         }
 
         /// <summary>

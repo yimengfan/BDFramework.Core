@@ -132,6 +132,15 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证从 art_assets.info 文本直接恢复本地校验样本时，同样会按所有非空 AssetBundlePath 去重后输出。
+        /// </summary>
+        [Test]
+        public void CollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContent_DeduplicatesNonEmptyBundlePaths()
+        {
+            VerifyCollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContentDeduplicatesNonEmptyBundlePaths();
+        }
+
+        /// <summary>
         /// 验证 CI BatchMode 独立下载目录缺少 package_build.info 时，会返回空白结构而不是回退到旧版 ClientAssetsUtils 初始化。
         /// </summary>
         [Test]
@@ -531,6 +540,30 @@ namespace BDFramework.EditorTest.AssetsManager
                 "第一个 AssetBundle 本地校验路径不匹配。");
             EnsureEqual("art_assets/shared.bundle", validationRelativePaths[1],
                 "第二个 AssetBundle 本地校验路径不匹配。");
+        }
+
+        /// <summary>
+        /// 以纯异常校验方式验证从 art_assets.info 文本直接恢复 AssetBundle 本地校验路径时，也会按非空 bundle 去重。
+        /// </summary>
+        internal static void VerifyCollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContentDeduplicatesNonEmptyBundlePaths()
+        {
+            var artAssetsInfoContent = string.Join("\n", new[]
+            {
+                "Id,AssetType,LoadPath,GUID,AssetBundleLoadType,AssetBundlePath,Hash,AssetsPackSourceHash,Mix,DependAssetIds",
+                "1,0,Assets/Hero.prefab,,0,hero.bundle,,,0,",
+                "2,0,Assets/HeroVariant.prefab,,0,hero.bundle,,,0,",
+                "3,0,,,0,shared.bundle,,,0,",
+                "4,0,Assets/Config.asset,,0,,,,0,",
+            });
+
+            var validationRelativePaths = AssetsVersionControllerDevOpsPureLogic
+                .CollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContent(artAssetsInfoContent);
+
+            EnsureEqual(2L, validationRelativePaths.Count, "从 art_assets.info 文本恢复的 AssetBundle 本地校验路径数量不匹配。");
+            EnsureEqual("art_assets/hero.bundle", validationRelativePaths[0],
+                "从 art_assets.info 文本恢复的第一个 AssetBundle 本地校验路径不匹配。");
+            EnsureEqual("art_assets/shared.bundle", validationRelativePaths[1],
+                "从 art_assets.info 文本恢复的第二个 AssetBundle 本地校验路径不匹配。");
         }
 
         /// <summary>
@@ -970,7 +1003,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 23;
+            const int totalCheckCount = 24;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -1017,6 +1050,10 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationRelativePaths_DeduplicatesNonEmptyBundlePaths),
                 AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationRelativePathsDeduplicatesNonEmptyBundlePaths,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContent_DeduplicatesNonEmptyBundlePaths),
+                AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationRelativePathsFromArtAssetsInfoContentDeduplicatesNonEmptyBundlePaths,
                 reportBuilder, ref failedCount);
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.LoadLocalPackageBuildInfo_ReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing),
