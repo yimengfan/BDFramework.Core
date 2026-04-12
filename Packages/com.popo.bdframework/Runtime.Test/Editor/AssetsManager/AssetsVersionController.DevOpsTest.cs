@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using BDFramework.Asset;
 using BDFramework.ResourceMgr;
+using BDFramework.Sql;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -134,6 +136,33 @@ namespace BDFramework.EditorTest.AssetsManager
         public void IsFileServerDownloadedAssetValid_ValidatesOnlyDownloadedPayloadFile()
         {
             VerifyIsFileServerDownloadedAssetValidValidatesOnlyDownloadedPayloadFile();
+        }
+
+        /// <summary>
+        /// 验证代表性的热更代码资源在下载落地后，会经过真实程序集装载校验而不是只做 hash 检查。
+        /// </summary>
+        [Test]
+        public void ValidateFileServerCodeRepresentativeLocalLoad_SucceedsForManagedAssemblyFile()
+        {
+            VerifyValidateFileServerCodeRepresentativeLocalLoadSucceedsForManagedAssemblyFile();
+        }
+
+        /// <summary>
+        /// 验证代表性的 AssetBundle 资源在下载落地后，会经过真实本地打开校验。
+        /// </summary>
+        [Test]
+        public void ValidateFileServerAssetBundleRepresentativeLocalLoad_SucceedsForBuiltBundle()
+        {
+            VerifyValidateFileServerAssetBundleRepresentativeLocalLoadSucceedsForBuiltBundle();
+        }
+
+        /// <summary>
+        /// 验证代表性的表格资源在下载落地后，会经过真实 SQLite 只读打开校验。
+        /// </summary>
+        [Test]
+        public void ValidateFileServerTableRepresentativeLocalLoad_SucceedsForReadableSqlite()
+        {
+            VerifyValidateFileServerTableRepresentativeLocalLoadSucceedsForReadableSqlite();
         }
 
         /// <summary>
@@ -483,6 +512,138 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证热更代码代表性资源的真实本地装载，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyValidateFileServerCodeRepresentativeLocalLoadSucceedsForManagedAssemblyFile()
+        {
+            var tempDir = Path.Combine(Path.GetTempPath(), "BDFramework", "AssetsVersionControllerDevOpsTest",
+                Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(tempDir);
+            var assemblyPath = typeof(AssetsVersionControllerDevOpsTest).Assembly.Location;
+            var localCodePath = Path.Combine(tempDir, "Assembly-CSharp-firstpass.zlua.bytes");
+            File.Copy(assemblyPath, localCodePath, true);
+
+            try
+            {
+                var error = AssetsVersionController.ValidateFileServerCodeRepresentativeLocalLoad(localCodePath);
+
+                EnsureEqual<string>(null, error, "热更代码代表性资源本地装载校验不应失败。");
+            }
+            finally
+            {
+                if (Directory.Exists(tempDir))
+                {
+                    Directory.Delete(tempDir, true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 以纯异常校验方式验证 AssetBundle 代表性资源的真实本地打开，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyValidateFileServerAssetBundleRepresentativeLocalLoadSucceedsForBuiltBundle()
+        {
+            var assetRootRelativePath = $"Assets/__FileServerVerifyTemp/{Guid.NewGuid():N}";
+            var assetFileRelativePath = $"{assetRootRelativePath}/verify_asset.txt";
+            var assetRootAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), assetRootRelativePath);
+            var assetFileAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), assetFileRelativePath);
+            var outputRoot = Path.Combine(Path.GetTempPath(), "BDFramework", "AssetsVersionControllerDevOpsTest",
+                Guid.NewGuid().ToString("N"));
+            var bundleName = $"file-server-verify-{Guid.NewGuid():N}";
+            var bundlePath = Path.Combine(outputRoot, bundleName);
+
+            Directory.CreateDirectory(assetRootAbsolutePath);
+            Directory.CreateDirectory(outputRoot);
+            File.WriteAllText(assetFileAbsolutePath, "verify-bundle-payload", Encoding.UTF8);
+
+            try
+            {
+                AssetDatabase.ImportAsset(assetFileRelativePath, ImportAssetOptions.ForceSynchronousImport);
+                var importer = AssetImporter.GetAtPath(assetFileRelativePath);
+                if (importer == null)
+                {
+                    throw new InvalidOperationException($"无法获取测试资源导入器 path={assetFileRelativePath}");
+                }
+
+                importer.assetBundleName = bundleName;
+                importer.SaveAndReimport();
+
+                var buildManifest = BuildPipeline.BuildAssetBundles(
+                    outputRoot,
+                    BuildAssetBundleOptions.None,
+                    ResolveHostAssetBundleBuildTarget());
+                EnsureTrue(buildManifest != null, "测试 AssetBundle 构建结果不应为 null。");
+                EnsureTrue(File.Exists(bundlePath), "测试 AssetBundle 输出文件不存在。");
+
+                var error = AssetsVersionController.ValidateFileServerAssetBundleRepresentativeLocalLoad(bundlePath);
+
+                EnsureEqual<string>(null, error, "AssetBundle 代表性资源本地打开校验不应失败。");
+            }
+            finally
+            {
+                AssetDatabase.RemoveAssetBundleName(bundleName, true);
+                AssetDatabase.DeleteAsset(assetRootRelativePath);
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+                if (Directory.Exists(outputRoot))
+                {
+                    Directory.Delete(outputRoot, true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 以纯异常校验方式验证表格代表性资源的真实 SQLite 打开，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyValidateFileServerTableRepresentativeLocalLoadSucceedsForReadableSqlite()
+        {
+            var tempDir = Path.Combine(Path.GetTempPath(), "BDFramework", "AssetsVersionControllerDevOpsTest",
+                Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(tempDir);
+            var dbPath = Path.Combine(tempDir, "local.db");
+            var oldPassword = SqliteLoder.password;
+            SqliteLoder.Password = string.Empty;
+
+            try
+            {
+                var createConnection = SqliteLoder.LoadDBReadWriteCreate(dbPath, false);
+                EnsureTrue(createConnection != null, "测试 SQLite 数据库创建结果不应为 null。");
+                SqliteLoder.Close("local");
+
+                var error = AssetsVersionController.ValidateFileServerTableRepresentativeLocalLoad(dbPath);
+
+                EnsureEqual<string>(null, error, "表格代表性资源本地打开校验不应失败。");
+            }
+            finally
+            {
+                SqliteLoder.Close("local");
+                SqliteLoder.Password = oldPassword;
+                if (Directory.Exists(tempDir))
+                {
+                    Directory.Delete(tempDir, true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 解析当前编辑器宿主能直接本地打开的 AssetBundle 构建目标。
+        /// 测试只关心 bundle 是否可被当前 Unity 进程打开，因此固定映射到宿主编辑器平台，避免用 Android/iOS 产物做本地打开校验时出现平台不匹配假失败。
+        /// </summary>
+        private static BuildTarget ResolveHostAssetBundleBuildTarget()
+        {
+            switch (Application.platform)
+            {
+                case RuntimePlatform.OSXEditor:
+                    return BuildTarget.StandaloneOSX;
+                case RuntimePlatform.WindowsEditor:
+                    return BuildTarget.StandaloneWindows64;
+                case RuntimePlatform.LinuxEditor:
+                    return BuildTarget.StandaloneLinux64;
+                default:
+                    throw new InvalidOperationException($"不支持的编辑器宿主平台:{Application.platform}");
+            }
+        }
+
+        /// <summary>
         /// 验证 global_version.info JSON 数组可以按平台提取 version_num 并解析为三段版控。
         /// </summary>
         [Test]
@@ -567,7 +728,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 13;
+            const int totalCheckCount = 16;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -618,6 +779,18 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.IsFileServerDownloadedAssetValid_ValidatesOnlyDownloadedPayloadFile),
                 AssetsVersionControllerDevOpsTest.VerifyIsFileServerDownloadedAssetValidValidatesOnlyDownloadedPayloadFile,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerCodeRepresentativeLocalLoad_SucceedsForManagedAssemblyFile),
+                AssetsVersionControllerDevOpsTest.VerifyValidateFileServerCodeRepresentativeLocalLoadSucceedsForManagedAssemblyFile,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleRepresentativeLocalLoad_SucceedsForBuiltBundle),
+                AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleRepresentativeLocalLoadSucceedsForBuiltBundle,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerTableRepresentativeLocalLoad_SucceedsForReadableSqlite),
+                AssetsVersionControllerDevOpsTest.VerifyValidateFileServerTableRepresentativeLocalLoadSucceedsForReadableSqlite,
                 reportBuilder, ref failedCount);
 
             // Phase 2: 把批验证结果写到 Library，方便 CI 和本地 batchmode 直接收集报告。

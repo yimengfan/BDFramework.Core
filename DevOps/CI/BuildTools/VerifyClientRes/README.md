@@ -8,7 +8,7 @@
 2. 三个平台脚本只保留最薄的一层入口，公共参数、日志、Unity 命令和文件服务器地址解析统一复用 `Common/client_resource_flow.py` 与 `Common/artifact_uploader.py`。
 3. 验证任务必须显式传入 `-buildTarget` 到目标平台；验证链路不承担 Assetbundle 构建时的跨平台缓存隔离职责，默认直接使用传入的 `--project-dir` 或仓库根目录，不额外创建平台 worktree。
 4. 文件服务器地址必须通过 BuildTools external config 或 `--server-url` 统一解析，不能在 TeamCity DSL 里硬编码。
-5. Unity 端会强制重置本地 persistent 下载状态，再真实下载并校验 Code / AssetBundle / Table 三类代表性资源，避免历史缓存或 StreamingAssets 残留把验证变成假阳性。
+5. Unity 端会强制重置本地 persistent 下载状态，再真实下载并校验 Code / AssetBundle / Table 三类代表性资源；除了全量 hash/存在性检查外，还会分别做一次热更程序集装载、AssetBundle 本地打开和 SQLite 只读打开，避免历史缓存或“文件存在但本地打不开”把验证变成假阳性。
 6. 当前 revision 如果已经存在成功或正在执行中的 TeamCity 资产构建，`test_client_res.py` 会直接复用 build id，而不是重复排队同一个版本。
 
 ## 文件说明
@@ -20,8 +20,8 @@
 
 ## 测试目标与范围
 
-- 测试目标：验证 TeamCity 在拿到 Code / AssetBundle / Table 三段构建号后，Unity 端会读取远端 `version.info`、执行真实下载，并确认三类代表性资源可用。
-- 测试范围：`--expected-*` 版本号透传、文件服务器地址解析、远端 `clientRes_{platform}/version.info` 校验、本地 persistent 重置、真实下载、`package_build.info` 回写校验、Code/AssetBundle/Table 代表性 payload 可用性。
+- 测试目标：验证 TeamCity 在拿到 Code / AssetBundle / Table 三段构建号后，Unity 端会读取远端 `version.info`、执行真实下载，并确认三类代表性资源能够在本地真实打开。
+- 测试范围：`--expected-*` 版本号透传、文件服务器地址解析、远端 `clientRes_{platform}/version.info` 校验、本地 persistent 重置、真实下载、`package_build.info` 回写校验、Code 代表性程序集装载、AssetBundle 代表性 bundle 本地打开、Table 代表性 SQLite 只读打开。
 
 ## TeamCity 描述
 

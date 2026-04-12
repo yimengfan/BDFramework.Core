@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using BDFramework.Asset;
@@ -692,6 +693,17 @@ namespace BDFramework.ResourceMgr
             if (!string.IsNullOrEmpty(validateError))
             {
                 result.Error = validateError;
+                return result;
+            }
+
+            // Phase 6: 三类资产除了全量存在性/hash 校验外，还要各自做一次代表性 payload 的真实本地打开验证。
+            var representativeLoadError = await ValidateFileServerRepresentativeLocalLoads(
+                result.CodeAssetLocalPath,
+                result.AssetBundleAssetLocalPath,
+                result.TableAssetLocalPath);
+            if (!string.IsNullOrEmpty(representativeLoadError))
+            {
+                result.Error = representativeLoadError;
                 return result;
             }
 
@@ -1660,6 +1672,148 @@ namespace BDFramework.ResourceMgr
             }
 
             return "文件服务器资源校验失败:\n" + string.Join("\n", errors);
+        }
+
+        /// <summary>
+        /// 对下载完成后的三类代表性资源执行真实本地打开校验。
+        /// Code 走程序集装载探测，AssetBundle 走 <see cref="AssetBundle.LoadFromFile(string)"/>，Table 走 SQLite 只读打开，
+        /// 这样可以把“文件存在但本地无法打开”的问题和纯下载/hash 问题区分开。
+        /// </summary>
+        internal async UniTask<string> ValidateFileServerRepresentativeLocalLoads(
+            string codeAssetLocalPath,
+            string assetBundleAssetLocalPath,
+            string tableAssetLocalPath)
+        {
+            var codeLoadError = ValidateFileServerCodeRepresentativeLocalLoad(codeAssetLocalPath);
+            if (!string.IsNullOrEmpty(codeLoadError))
+            {
+                return codeLoadError;
+            }
+
+            await UniTask.SwitchToMainThread();
+            var assetBundleLoadError = ValidateFileServerAssetBundleRepresentativeLocalLoad(assetBundleAssetLocalPath);
+            await UniTask.SwitchToThreadPool();
+            if (!string.IsNullOrEmpty(assetBundleLoadError))
+            {
+                return assetBundleLoadError;
+            }
+
+            var tableLoadError = ValidateFileServerTableRepresentativeLocalLoad(tableAssetLocalPath);
+            if (!string.IsNullOrEmpty(tableLoadError))
+            {
+                return tableLoadError;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 校验代表性的热更代码 payload 是否能按运行时同源逻辑完成程序集装载。
+        /// 这里只做一次最小化 <see cref="Assembly.Load(byte[])"/> 探测，不执行任何业务入口，用于识别“下载成功但 DLL 字节不可装载”的情况。
+        /// </summary>
+        internal static string ValidateFileServerCodeRepresentativeLocalLoad(string codeAssetLocalPath)
+        {
+            if (string.IsNullOrEmpty(codeAssetLocalPath))
+            {
+                return "文件服务器热更代码本地加载校验缺少代表性资源路径。";
+            }
+
+            if (!File.Exists(codeAssetLocalPath))
+            {
+                return $"文件服务器热更代码本地加载校验缺少文件 path={codeAssetLocalPath}";
+            }
+
+            try
+            {
+                var assembly = Assembly.Load(File.ReadAllBytes(codeAssetLocalPath));
+                if (assembly == null)
+                {
+                    return $"文件服务器热更代码本地加载校验失败 path={codeAssetLocalPath} err=Assembly.Load 返回 null";
+                }
+
+                return null;
+            }
+            catch (Exception exception)
+            {
+                return $"文件服务器热更代码本地加载校验失败 path={codeAssetLocalPath} err={exception.Message}";
+            }
+        }
+
+        /// <summary>
+        /// 校验代表性的 AssetBundle payload 是否能在本地通过 <see cref="AssetBundle.LoadFromFile(string)"/> 打开。
+        /// 调用方需要确保此 helper 运行在 Unity 主线程，避免把 UnityEngine 资源打开操作放到线程池执行。
+        /// </summary>
+        internal static string ValidateFileServerAssetBundleRepresentativeLocalLoad(string assetBundleAssetLocalPath)
+        {
+            if (string.IsNullOrEmpty(assetBundleAssetLocalPath))
+            {
+                return "文件服务器 AssetBundle 本地加载校验缺少代表性资源路径。";
+            }
+
+            if (!File.Exists(assetBundleAssetLocalPath))
+            {
+                return $"文件服务器 AssetBundle 本地加载校验缺少文件 path={assetBundleAssetLocalPath}";
+            }
+
+            AssetBundle assetBundle = null;
+            try
+            {
+                assetBundle = AssetBundle.LoadFromFile(assetBundleAssetLocalPath);
+                if (assetBundle == null)
+                {
+                    return $"文件服务器 AssetBundle 本地加载校验失败 path={assetBundleAssetLocalPath} err=AssetBundle.LoadFromFile 返回 null";
+                }
+
+                return null;
+            }
+            catch (Exception exception)
+            {
+                return $"文件服务器 AssetBundle 本地加载校验失败 path={assetBundleAssetLocalPath} err={exception.Message}";
+            }
+            finally
+            {
+                assetBundle?.Unload(true);
+            }
+        }
+
+        /// <summary>
+        /// 校验代表性的 SQLite payload 是否能按运行时只读方式在本地打开。
+        /// 这里沿用 <see cref="SqliteLoder.LoadDBReadOnly(string)"/>，从而覆盖密码、驱动和文件头三类真实打开问题。
+        /// </summary>
+        internal static string ValidateFileServerTableRepresentativeLocalLoad(string tableAssetLocalPath)
+        {
+            if (string.IsNullOrEmpty(tableAssetLocalPath))
+            {
+                return "文件服务器表格本地加载校验缺少代表性资源路径。";
+            }
+
+            if (!File.Exists(tableAssetLocalPath))
+            {
+                return $"文件服务器表格本地加载校验缺少文件 path={tableAssetLocalPath}";
+            }
+
+            var dbName = Path.GetFileNameWithoutExtension(tableAssetLocalPath);
+            try
+            {
+                var connection = SqliteLoder.LoadDBReadOnly(tableAssetLocalPath);
+                if (connection == null)
+                {
+                    return $"文件服务器表格本地加载校验失败 path={tableAssetLocalPath} err=SqliteLoder.LoadDBReadOnly 返回 null";
+                }
+
+                return null;
+            }
+            catch (Exception exception)
+            {
+                return $"文件服务器表格本地加载校验失败 path={tableAssetLocalPath} err={exception.Message}";
+            }
+            finally
+            {
+                if (!string.IsNullOrEmpty(dbName))
+                {
+                    SqliteLoder.Close(dbName);
+                }
+            }
         }
 
         private void RebuildFileServerLocalMetadata(string firstLoadDir,
