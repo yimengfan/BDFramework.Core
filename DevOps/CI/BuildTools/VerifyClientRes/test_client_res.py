@@ -1,11 +1,11 @@
-"""TeamCity TestClientRes orchestration entrypoint.
+"""TeamCity TestClientRes 编排入口。
 
-This coordinator is the TeamCity-facing flow for ClientRes download verification:
-1. Resolve or queue Code / AssetBundle / Table builds for the requested platform.
-2. Wait until those upstream builds finish and export their build numbers.
-3. Queue the platform-specific VerifyClientRes local-check task with the resolved asset versions.
+该脚本负责把 ClientRes 下载校验链路收敛成 TeamCity 可复用的三段流程：
+1. 为目标平台解析或排队 Code / AssetBundle / Table 上游构建。
+2. 等待上游构建结束，并导出三段 build.number。
+3. 解析或排队平台对应的 VerifyClientRes 本地校验任务，并等待最终结果。
 
-Example:
+示例：
     python DevOps/CI/BuildTools/VerifyClientRes/test_client_res.py resolve-builds \
         --platform android \
         --client-version 0.1 \
@@ -38,6 +38,7 @@ from Common.buildtools_config import BuildToolsConfigError, load_buildtools_exte
 DEFAULT_RECENT_BUILD_COUNT = 50
 DEFAULT_WAIT_TIMEOUT_SECONDS = 5400
 DEFAULT_WAIT_POLL_INTERVAL_SECONDS = 10
+DEFAULT_WAIT_HEARTBEAT_SECONDS = 60
 DEFAULT_GET_RETRY_ATTEMPTS = 5
 DEFAULT_GET_RETRY_MAX_DELAY_SECONDS = 5
 UPSTREAM_BUILD_TYPE_ORDER = ("code", "assetbundle", "table")
@@ -62,6 +63,20 @@ EXPECTED_TABLE_VERSION_PARAM = "test.clientres.expected.table.version"
 
 class TestClientResError(RuntimeError):
     """Raised when the TestClientRes TeamCity orchestration flow fails."""
+
+
+def log_line(message: str) -> None:
+    """以 TeamCity/Windows 控制台兼容方式输出一行日志，并强制立即刷新。"""
+    try:
+        print(message, flush=True)
+    except UnicodeEncodeError:
+        safe_message = message.encode("utf-8", errors="replace").decode("utf-8", errors="replace")
+        try:
+            sys.stdout.buffer.write(safe_message.encode(sys.stdout.encoding or "utf-8", errors="replace"))
+            sys.stdout.buffer.write(b"\n")
+            sys.stdout.buffer.flush()
+        except (AttributeError, OSError):
+            print(safe_message.encode("ascii", errors="replace").decode("ascii"), flush=True)
 
 
 @dataclass(frozen=True)
@@ -610,12 +625,21 @@ def find_reusable_build(
     vcs_revision: str,
     client_version: str,
     build_extra_args: str,
+    required_properties: dict[str, str] | None = None,
 ) -> BuildHandle | None:
-    """Pick a reusable TeamCity build for the same branch, revision, and relevant build parameters."""
+    """从最近构建里挑出可复用的 TeamCity 构建。
+
+    复用条件包括：同分支、同 revision、同客户端版本、同 build.extra.args，
+    以及调用方显式要求匹配的附加属性（例如 VerifyClientRes 的三段 expected version）。
+    """
     normalized_branch = normalize_branch_name(branch_name)
     normalized_revision = normalize_required_value(vcs_revision, field_name="vcsRevision")
     normalized_client_version = normalize_required_value(client_version, field_name="clientVersion")
     normalized_build_extra_args = normalize_optional_value(build_extra_args)
+    normalized_required_properties = {
+        normalize_required_value(property_name, field_name="requiredPropertyName"): normalize_optional_value(property_value)
+        for property_name, property_value in (required_properties or {}).items()
+    }
 
     matching_finished_success: list[BuildHandle] = []
     matching_inflight: list[BuildHandle] = []
@@ -628,6 +652,11 @@ def find_reusable_build(
         if handle.client_version != normalized_client_version:
             continue
         if handle.build_extra_args != normalized_build_extra_args:
+            continue
+        if any(
+            extract_build_property(build_data, property_name) != property_value
+            for property_name, property_value in normalized_required_properties.items()
+        ):
             continue
         if handle.is_finished_success:
             matching_finished_success.append(handle)
@@ -734,20 +763,35 @@ def wait_for_build_success(
     poll_interval_seconds: int,
     log_prefix: str,
 ) -> BuildHandle:
-    """Wait for one TeamCity build to finish successfully and raise with a focused log tail on failure."""
-    deadline = time.monotonic() + timeout_seconds
+    """等待一个 TeamCity 构建成功结束，并在长时间无状态变化时持续输出心跳日志。"""
+    wait_started_at = time.monotonic()
+    deadline = wait_started_at + timeout_seconds
     last_state_key: tuple[str, str, str] | None = None
+    last_progress_log_at = wait_started_at
     while True:
         handle = get_build(config, build_id)
+        now = time.monotonic()
         state_key = (handle.state, handle.status, handle.number)
         if state_key != last_state_key:
-            print(
+            log_line(
                 f"{log_prefix} buildId={handle.build_id} buildTypeId={handle.build_type_id} "
                 f"state={handle.state or 'unknown'} status={handle.status or 'unknown'} number={handle.number or 'pending'}"
             )
             if handle.web_url:
-                print(f"{log_prefix} webUrl={handle.web_url}")
+                log_line(f"{log_prefix} webUrl={handle.web_url}")
             last_state_key = state_key
+            last_progress_log_at = now
+        elif now - last_progress_log_at >= DEFAULT_WAIT_HEARTBEAT_SECONDS:
+            elapsed_seconds = int(now - wait_started_at)
+            remaining_seconds = max(0, int(deadline - now))
+            log_line(
+                f"{log_prefix} stillWaiting buildId={handle.build_id} buildTypeId={handle.build_type_id} "
+                f"state={handle.state or 'unknown'} status={handle.status or 'unknown'} "
+                f"elapsed={elapsed_seconds}s remaining={remaining_seconds}s"
+            )
+            if handle.web_url:
+                log_line(f"{log_prefix} webUrl={handle.web_url}")
+            last_progress_log_at = now
 
         if handle.is_finished_success:
             return handle
@@ -759,7 +803,7 @@ def wait_for_build_success(
                 f"status={handle.status or 'unknown'} statusText={handle.status_text or '<empty>'}\n{log_tail}"
             )
 
-        if time.monotonic() >= deadline:
+        if now >= deadline:
             raise TestClientResError(
                 f"Timed out waiting for TeamCity build {handle.build_id} ({handle.build_type_id}) after {timeout_seconds}s"
             )
@@ -795,8 +839,8 @@ def teamcity_service_escape(value: str) -> str:
 
 
 def emit_teamcity_parameter(name: str, value: str) -> None:
-    """Publish one TeamCity parameter for a later build step inside the same TestClientRes task."""
-    print(
+    """输出一个 TeamCity service message 参数，并立即刷新到当前构建日志。"""
+    log_line(
         "##teamcity[setParameter name='{}' value='{}']".format(
             teamcity_service_escape(name),
             teamcity_service_escape(value),
@@ -957,11 +1001,11 @@ def command_wait_builds(args: argparse.Namespace) -> int:
 
 
 def command_queue_verify_build(args: argparse.Namespace) -> int:
-    """Queue the platform-specific VerifyClientRes local-check TeamCity task and wait for its result."""
+    """解析或排队平台对应的 VerifyClientRes 本地校验任务，并等待结果。"""
     matrix = resolve_platform_build_matrix(args.platform)
     log_prefix = f"[TestClientRes][{matrix.platform_label}]"
 
-    print(f"{log_prefix} ===== Step 1/4: parse args =====")
+    log_line(f"{log_prefix} ===== Step 1/4: parse args =====")
     client_version = normalize_required_value(args.client_version, field_name="clientVersion")
     branch_name = normalize_branch_name(args.branch)
     vcs_revision = normalize_required_value(args.vcs_revision, field_name="vcsRevision")
@@ -975,48 +1019,79 @@ def command_queue_verify_build(args: argparse.Namespace) -> int:
     timeout_seconds = max(1, int(args.timeout_seconds))
     poll_interval_seconds = max(1, int(args.poll_interval_seconds))
 
-    print(f"{log_prefix} ===== Step 2/4: resolve TeamCity config =====")
+    log_line(f"{log_prefix} ===== Step 2/4: resolve TeamCity config =====")
     config = resolve_teamcity_runtime_config(args.config)
-    print(f"{log_prefix} teamcityBaseUrl={config.base_url}")
+    log_line(f"{log_prefix} teamcityBaseUrl={config.base_url}")
     if config.config_path is not None:
-        print(f"{log_prefix} buildtoolsConfig={config.config_path}")
-    print(f"{log_prefix} branch={branch_name or '<default>'}")
-    print(f"{log_prefix} vcsRevision={vcs_revision}")
-    print(
+        log_line(f"{log_prefix} buildtoolsConfig={config.config_path}")
+    log_line(f"{log_prefix} branch={branch_name or '<default>'}")
+    log_line(f"{log_prefix} vcsRevision={vcs_revision}")
+    log_line(
         f"{log_prefix} expectedVersionInfo={expected_code_version}.{expected_assetbundle_version}.{expected_table_version}"
     )
-    print(f"{log_prefix} verifyBuildExtraArgs={verify_build_extra_args or '<empty>'}")
+    log_line(f"{log_prefix} verifyBuildExtraArgs={verify_build_extra_args or '<empty>'}")
 
-    print(f"{log_prefix} ===== Step 3/4: queue local verify task =====")
-    queued_verify = queue_build(
+    verify_queue_properties = build_verify_queue_properties(
+        client_version=client_version,
+        expected_code_version=expected_code_version,
+        expected_assetbundle_version=expected_assetbundle_version,
+        expected_table_version=expected_table_version,
+        verify_build_extra_args=verify_build_extra_args,
+    )
+    verify_required_properties = {
+        EXPECTED_CODE_VERSION_PARAM: expected_code_version,
+        EXPECTED_ASSETBUNDLE_VERSION_PARAM: expected_assetbundle_version,
+        EXPECTED_TABLE_VERSION_PARAM: expected_table_version,
+    }
+
+    log_line(f"{log_prefix} ===== Step 3/4: resolve or queue local verify task =====")
+    recent_verify_builds = list_recent_builds(
         config,
         build_type_id=matrix.verify_build_type_id,
+        search_count=DEFAULT_RECENT_BUILD_COUNT,
+    )
+    reusable_verify = find_reusable_build(
+        recent_verify_builds,
         branch_name=branch_name,
         vcs_revision=vcs_revision,
-        properties=build_verify_queue_properties(
-            client_version=client_version,
-            expected_code_version=expected_code_version,
-            expected_assetbundle_version=expected_assetbundle_version,
-            expected_table_version=expected_table_version,
-            verify_build_extra_args=verify_build_extra_args,
-        ),
-        comment=build_queue_comment(
-            scope_label="verify-local-check",
-            platform_label=matrix.platform_label,
-            source_build_id=args.source_build_id,
-        ),
+        client_version=client_version,
+        build_extra_args=verify_build_extra_args,
+        required_properties=verify_required_properties,
     )
-    print(
-        f"{log_prefix} queued verify buildTypeId={queued_verify.build_type_id} buildId={queued_verify.build_id} "
-        f"number={queued_verify.number or 'pending'}"
-    )
-    if queued_verify.web_url:
-        print(f"{log_prefix} queuedVerifyWebUrl={queued_verify.web_url}")
+
+    if reusable_verify is not None:
+        queued_verify = reusable_verify
+        log_line(
+            f"{log_prefix} reuse verify buildTypeId={queued_verify.build_type_id} buildId={queued_verify.build_id} "
+            f"number={queued_verify.number or 'pending'} state={queued_verify.state or 'unknown'} status={queued_verify.status or 'unknown'}"
+        )
+        if queued_verify.web_url:
+            log_line(f"{log_prefix} reuseVerifyWebUrl={queued_verify.web_url}")
+    else:
+        queued_verify = queue_build(
+            config,
+            build_type_id=matrix.verify_build_type_id,
+            branch_name=branch_name,
+            vcs_revision=vcs_revision,
+            properties=verify_queue_properties,
+            comment=build_queue_comment(
+                scope_label="verify-local-check",
+                platform_label=matrix.platform_label,
+                source_build_id=args.source_build_id,
+            ),
+        )
+        log_line(
+            f"{log_prefix} queued verify buildTypeId={queued_verify.build_type_id} buildId={queued_verify.build_id} "
+            f"number={queued_verify.number or 'pending'}"
+        )
+        if queued_verify.web_url:
+            log_line(f"{log_prefix} queuedVerifyWebUrl={queued_verify.web_url}")
+
     emit_teamcity_parameter(VERIFY_BUILD_ID_PARAM, str(queued_verify.build_id))
     if queued_verify.number:
         emit_teamcity_parameter(VERIFY_BUILD_NUMBER_PARAM, queued_verify.number)
 
-    print(f"{log_prefix} ===== Step 4/4: wait local verify task =====")
+    log_line(f"{log_prefix} ===== Step 4/4: wait local verify task =====")
     finished_verify = wait_for_build_success(
         config,
         build_id=queued_verify.build_id,
@@ -1026,7 +1101,7 @@ def command_queue_verify_build(args: argparse.Namespace) -> int:
     )
     emit_teamcity_parameter(VERIFY_BUILD_ID_PARAM, str(finished_verify.build_id))
     emit_teamcity_parameter(VERIFY_BUILD_NUMBER_PARAM, finished_verify.number)
-    print(f"{log_prefix} local verify build finished successfully")
+    log_line(f"{log_prefix} local verify build finished successfully")
     return 0
 
 
@@ -1043,18 +1118,8 @@ def main() -> int:
 
 
 def _safe_print_error(exc: TestClientResError) -> None:
-    """Print the error message safely even when stdout uses a limited codec (e.g. Windows GBK)."""
-    raw_message = f"[TestClientRes][ERROR] {exc}"
-    try:
-        print(raw_message)
-    except UnicodeEncodeError:
-        safe_message = raw_message.encode("utf-8", errors="replace").decode("utf-8", errors="replace")
-        try:
-            sys.stdout.buffer.write(safe_message.encode(sys.stdout.encoding or "utf-8", errors="replace"))
-            sys.stdout.buffer.write(b"\n")
-            sys.stdout.buffer.flush()
-        except (AttributeError, OSError):
-            print(safe_message.encode("ascii", errors="replace").decode("ascii"))
+    """以 Windows 控制台兼容方式输出 TestClientRes 异常。"""
+    log_line(f"[TestClientRes][ERROR] {exc}")
 
 
 if __name__ == "__main__":

@@ -141,6 +141,64 @@ def test_find_reusable_build_falls_back_to_running_build_when_no_success_exists(
     assert reusable.is_inflight is True
 
 
+def test_find_reusable_build_requires_matching_verify_properties() -> None:
+    """验证 VerifyClientRes 复用时会同时校验三段 expected version 属性。"""
+    mismatched_build = make_build(
+        build_id=401,
+        build_type_id="BDFrameworkCore_VerifyClientResAndroid",
+        number="17",
+        state="finished",
+        status="SUCCESS",
+        branch_name="v4/v-4.0.0",
+        revision="verify123",
+        client_version="0.1",
+        build_extra_args="--server-url http://192.168.0.240:20001",
+    )
+    mismatched_build["properties"]["property"].extend(
+        [
+            {"name": "test.clientres.expected.code.version", "value": "31"},
+            {"name": "test.clientres.expected.assetbundle.version", "value": "33"},
+            {"name": "test.clientres.expected.table.version", "value": "27"},
+        ]
+    )
+
+    matching_build = make_build(
+        build_id=402,
+        build_type_id="BDFrameworkCore_VerifyClientResAndroid",
+        number="18",
+        state="running",
+        status="SUCCESS",
+        branch_name="v4/v-4.0.0",
+        revision="verify123",
+        client_version="0.1",
+        build_extra_args="--server-url http://192.168.0.240:20001",
+    )
+    matching_build["properties"]["property"].extend(
+        [
+            {"name": "test.clientres.expected.code.version", "value": "32"},
+            {"name": "test.clientres.expected.assetbundle.version", "value": "34"},
+            {"name": "test.clientres.expected.table.version", "value": "29"},
+        ]
+    )
+
+    reusable = test_client_res.find_reusable_build(
+        [mismatched_build, matching_build],
+        branch_name="v4/v-4.0.0",
+        vcs_revision="verify123",
+        client_version="0.1",
+        build_extra_args="--server-url http://192.168.0.240:20001",
+        required_properties={
+            "test.clientres.expected.code.version": "32",
+            "test.clientres.expected.assetbundle.version": "34",
+            "test.clientres.expected.table.version": "29",
+        },
+    )
+
+    assert reusable is not None
+    assert reusable.build_id == 402
+    assert reusable.is_inflight is True
+
+
 def test_command_resolve_builds_reuses_existing_builds_and_emits_teamcity_params(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
@@ -427,6 +485,7 @@ def test_command_queue_verify_build_queues_platform_specific_local_check(
             config_path=None,
         ),
     )
+    monkeypatch.setattr(test_client_res, "list_recent_builds", lambda *args, **kwargs: [])
 
     def fake_queue_build(config, *, build_type_id, branch_name, vcs_revision, properties, comment):
         queued_calls.append(
@@ -491,3 +550,153 @@ def test_command_queue_verify_build_queues_platform_specific_local_check(
     ]
     assert "##teamcity[setParameter name='test.clientres.verify.build.id' value='901']" in output
     assert "##teamcity[setParameter name='test.clientres.verify.build.number' value='12']" in output
+
+
+def test_command_queue_verify_build_reuses_matching_inflight_verify_build(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证 queue-verify-build 会优先复用同 revision 且三段版本一致的进行中校验任务。"""
+    args = SimpleNamespace(
+        platform="android",
+        client_version="0.1",
+        branch="v4/v-4.0.0",
+        vcs_revision="abc123",
+        config=None,
+        source_build_id="904",
+        timeout_seconds=120,
+        poll_interval_seconds=10,
+        expected_code_version="32",
+        expected_assetbundle_version="34",
+        expected_table_version="29",
+        verify_build_extra_args="--server-url http://192.168.0.240:20001",
+    )
+
+    reusable_build = make_build(
+        build_id=905,
+        build_type_id="BDFrameworkCore_VerifyClientResAndroid",
+        number="18",
+        state="running",
+        status="SUCCESS",
+        branch_name="v4/v-4.0.0",
+        revision="abc123",
+        client_version="0.1",
+        build_extra_args="--server-url http://192.168.0.240:20001",
+    )
+    reusable_build["properties"]["property"].extend(
+        [
+            {"name": "test.clientres.expected.code.version", "value": "32"},
+            {"name": "test.clientres.expected.assetbundle.version", "value": "34"},
+            {"name": "test.clientres.expected.table.version", "value": "29"},
+        ]
+    )
+
+    monkeypatch.setattr(
+        test_client_res,
+        "resolve_teamcity_runtime_config",
+        lambda config_path: test_client_res.TeamCityRuntimeConfig(
+            base_url="http://ci",
+            token="token",
+            config_path=None,
+        ),
+    )
+    monkeypatch.setattr(test_client_res, "list_recent_builds", lambda *args, **kwargs: [reusable_build])
+    monkeypatch.setattr(
+        test_client_res,
+        "queue_build",
+        lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("queue_build should not be called")),
+    )
+    monkeypatch.setattr(
+        test_client_res,
+        "wait_for_build_success",
+        lambda config, *, build_id, timeout_seconds, poll_interval_seconds, log_prefix: test_client_res.BuildHandle(
+            build_id=build_id,
+            build_type_id="BDFrameworkCore_VerifyClientResAndroid",
+            number="18",
+            state="finished",
+            status="SUCCESS",
+            status_text="success",
+            branch_name="v4/v-4.0.0",
+            web_url="http://ci/build/905",
+            revision="abc123",
+            client_version="0.1",
+            build_extra_args="--server-url http://192.168.0.240:20001",
+        ),
+    )
+
+    assert test_client_res.command_queue_verify_build(args) == 0
+
+    output = capsys.readouterr().out
+    assert "reuse verify buildTypeId=BDFrameworkCore_VerifyClientResAndroid buildId=905" in output
+    assert "##teamcity[setParameter name='test.clientres.verify.build.id' value='905']" in output
+    assert "local verify build finished successfully" in output
+
+
+def test_wait_for_build_success_emits_heartbeat_when_state_does_not_change(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证等待中的 TeamCity 构建如果长时间无状态变化，会持续输出心跳日志。"""
+    config = test_client_res.TeamCityRuntimeConfig(base_url="http://ci", token="token", config_path=None)
+    handles = iter(
+        [
+            test_client_res.BuildHandle(
+                build_id=906,
+                build_type_id="BDFrameworkCore_VerifyClientResAndroid",
+                number="18",
+                state="running",
+                status="SUCCESS",
+                status_text="running",
+                branch_name="v4/v-4.0.0",
+                web_url="http://ci/build/906",
+                revision="abc123",
+                client_version="0.1",
+                build_extra_args="",
+            ),
+            test_client_res.BuildHandle(
+                build_id=906,
+                build_type_id="BDFrameworkCore_VerifyClientResAndroid",
+                number="18",
+                state="running",
+                status="SUCCESS",
+                status_text="running",
+                branch_name="v4/v-4.0.0",
+                web_url="http://ci/build/906",
+                revision="abc123",
+                client_version="0.1",
+                build_extra_args="",
+            ),
+            test_client_res.BuildHandle(
+                build_id=906,
+                build_type_id="BDFrameworkCore_VerifyClientResAndroid",
+                number="18",
+                state="finished",
+                status="SUCCESS",
+                status_text="success",
+                branch_name="v4/v-4.0.0",
+                web_url="http://ci/build/906",
+                revision="abc123",
+                client_version="0.1",
+                build_extra_args="",
+            ),
+        ]
+    )
+    monotonic_values = iter([0.0, 0.0, 61.0, 62.0])
+
+    monkeypatch.setattr(test_client_res, "get_build", lambda *args, **kwargs: next(handles))
+    monkeypatch.setattr(test_client_res, "read_build_log_tail", lambda *args, **kwargs: "")
+    monkeypatch.setattr(test_client_res.time, "sleep", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(test_client_res.time, "monotonic", lambda: next(monotonic_values))
+    monkeypatch.setattr(test_client_res, "DEFAULT_WAIT_HEARTBEAT_SECONDS", 60)
+
+    handle = test_client_res.wait_for_build_success(
+        config,
+        build_id=906,
+        timeout_seconds=300,
+        poll_interval_seconds=1,
+        log_prefix="[TestClientRes][Android]",
+    )
+
+    assert handle.build_id == 906
+    output = capsys.readouterr().out
+    assert "stillWaiting buildId=906 buildTypeId=BDFrameworkCore_VerifyClientResAndroid" in output

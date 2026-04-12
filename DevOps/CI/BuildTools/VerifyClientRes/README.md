@@ -10,6 +10,7 @@
 4. 文件服务器地址必须通过 BuildTools external config 或 `--server-url` 统一解析，不能在 TeamCity DSL 里硬编码。
 5. Unity 端会强制重置本地 persistent 下载状态，再真实下载并校验 Code / AssetBundle / Table 三类代表性资源；除了全量 hash/存在性检查外，还会分别做一次热更程序集装载、AssetBundle 本地打开和 SQLite 只读打开，避免历史缓存或“文件存在但本地打不开”把验证变成假阳性。
 6. 当前 revision 如果已经存在成功或正在执行中的 TeamCity 资产构建，`test_client_res.py` 会直接复用 build id，而不是重复排队同一个版本。
+7. `queue-verify-build` 会优先复用同分支、同 revision、同 expected version 的 VerifyClientRes 子任务；等待期间即使 TeamCity 子任务长时间停留在 queued/running，也会持续输出 buildId 和等待心跳，避免父任务在 Step 3 看起来“卡住但没有日志”。
 
 ## 文件说明
 
