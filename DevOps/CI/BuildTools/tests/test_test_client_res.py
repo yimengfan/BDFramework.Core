@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import subprocess
 import sys
 from types import SimpleNamespace
 
@@ -22,6 +23,40 @@ if str(BUILD_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(BUILD_TOOLS_ROOT))
 
 from VerifyClientRes import test_client_res  # noqa: E402
+
+
+class FakePopen:
+    """模拟本地校验脚本进程的轻量假进程，用于测试心跳与超时逻辑。"""
+
+    def __init__(self, wait_results: list[object]) -> None:
+        """按顺序返回 wait 结果；异常实例会被直接抛出。"""
+        self.wait_results = list(wait_results)
+        self.wait_calls: list[float | int | None] = []
+        self.returncode: int | None = None
+        self.terminated = False
+        self.killed = False
+
+    def wait(self, timeout: float | int | None = None) -> int:
+        """模拟 subprocess.Popen.wait，并记录每次等待超时参数。"""
+        self.wait_calls.append(timeout)
+        if not self.wait_results:
+            self.returncode = 0
+            return 0
+
+        result = self.wait_results.pop(0)
+        if isinstance(result, BaseException):
+            raise result
+
+        self.returncode = int(result)
+        return self.returncode
+
+    def terminate(self) -> None:
+        """记录超时后的 terminate 调用。"""
+        self.terminated = True
+
+    def kill(self) -> None:
+        """记录超时后的 kill 调用。"""
+        self.killed = True
 
 
 def make_build(
@@ -370,10 +405,60 @@ def test_command_wait_builds_exports_resolved_numbers(monkeypatch: pytest.Monkey
     assert test_client_res.command_wait_builds(args) == 0
 
     output = capsys.readouterr().out
+    assert "[TestClientRes][iOS] ===== Phase 3/3: wait upstream builds =====" in output
     assert "##teamcity[setParameter name='test.clientres.code.build.number' value='111']" in output
     assert "##teamcity[setParameter name='test.clientres.assetbundle.build.number' value='222']" in output
     assert "##teamcity[setParameter name='test.clientres.table.build.number' value='333']" in output
     assert "##teamcity[setParameter name='test.clientres.expected.version.info' value='111.222.333']" in output
+
+
+def test_command_wait_builds_shares_one_total_timeout_budget(monkeypatch: pytest.MonkeyPatch) -> None:
+    """验证 wait-builds 会把 timeout_seconds 作为整个等待阶段的共享预算，而不是给每个子构建单独重置。"""
+    args = SimpleNamespace(
+        platform="ios",
+        config="/tmp/buildtools.toml",
+        timeout_seconds=60,
+        poll_interval_seconds=5,
+        code_build_id="401",
+        assetbundle_build_id="402",
+        table_build_id="403",
+    )
+    current_time = {"value": 100.0}
+    timeout_history: list[tuple[int, int]] = []
+    simulated_wait_seconds = {401: 10, 402: 20, 403: 0}
+
+    monkeypatch.setattr(test_client_res.time, "monotonic", lambda: current_time["value"])
+    monkeypatch.setattr(
+        test_client_res,
+        "resolve_teamcity_runtime_config",
+        lambda config_path: test_client_res.TeamCityRuntimeConfig(
+            base_url="http://ci",
+            token="token",
+            config_path=Path("/tmp/buildtools.toml"),
+        ),
+    )
+
+    def fake_wait_for_build_success(config, *, build_id, timeout_seconds, poll_interval_seconds, log_prefix):
+        timeout_history.append((build_id, timeout_seconds))
+        current_time["value"] += simulated_wait_seconds[build_id]
+        return test_client_res.BuildHandle(
+            build_id=build_id,
+            build_type_id="fake",
+            number={401: "111", 402: "222", 403: "333"}[build_id],
+            state="finished",
+            status="SUCCESS",
+            status_text="success",
+            branch_name="v4/v-4.0.0",
+            web_url=None,
+            revision="abc",
+            client_version="0.1",
+            build_extra_args="",
+        )
+
+    monkeypatch.setattr(test_client_res, "wait_for_build_success", fake_wait_for_build_success)
+
+    assert test_client_res.command_wait_builds(args) == 0
+    assert timeout_history == [(401, 60), (402, 50), (403, 30)]
 
 
 def test_queue_build_includes_vcs_root_instance_for_revision(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -482,17 +567,18 @@ def test_command_queue_verify_build_executes_platform_specific_local_check_in_cu
     monkeypatch.setenv("TEAMCITY_BUILDCONF_NAME", "TestClientRes")
     monkeypatch.setenv("BUILD_NUMBER", "18")
 
-    def fake_subprocess_run(command, *, cwd, check):
+    fake_process = FakePopen([0])
+
+    def fake_subprocess_popen(command, *, cwd):
         executed_commands.append(
             {
                 "command": command,
                 "cwd": cwd,
-                "check": check,
             }
         )
-        return SimpleNamespace(returncode=0)
+        return fake_process
 
-    monkeypatch.setattr(test_client_res.subprocess, "run", fake_subprocess_run)
+    monkeypatch.setattr(test_client_res.subprocess, "Popen", fake_subprocess_popen)
 
     assert test_client_res.command_queue_verify_build(args) == 0
 
@@ -520,11 +606,13 @@ def test_command_queue_verify_build_executes_platform_specific_local_check_in_cu
                 "http://192.168.0.240:20001",
             ],
             "cwd": str(test_client_res.WORKSPACE_ROOT),
-            "check": False,
         }
     ]
     assert "##teamcity[setParameter name='test.clientres.verify.build.id' value='903']" in output
     assert "##teamcity[setParameter name='test.clientres.verify.build.number' value='18']" in output
+    assert "[TestClientRes][Android] ===== Phase 4/4: run local verify task in current build =====" in output
+    assert "localVerifyLaunch=started waitingForUnityOutput=true" in output
+    assert "localVerifyMonitor heartbeatSeconds=10 timeoutSeconds=120" in output
     assert "local verify finished successfully in current build" in output
 
 
@@ -547,13 +635,132 @@ def test_command_queue_verify_build_raises_when_local_verify_script_fails(
         verify_build_extra_args="--server-url http://192.168.0.240:20001",
     )
 
-    monkeypatch.setattr(test_client_res.subprocess, "run", lambda *args, **kwargs: SimpleNamespace(returncode=2))
+    monkeypatch.setattr(test_client_res.subprocess, "Popen", lambda *args, **kwargs: FakePopen([2]))
 
     with pytest.raises(
         test_client_res.TestClientResError,
         match="Local verify script failed with exit code 2",
     ):
         test_client_res.command_queue_verify_build(args)
+
+
+def test_run_local_verify_command_emits_heartbeat_while_process_is_running(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证本地校验脚本长时间运行时，父构建会持续输出心跳日志，避免 TeamCity 长时间无感知。"""
+    fake_process = FakePopen([subprocess.TimeoutExpired("verify", 5), 0])
+
+    monkeypatch.setattr(test_client_res.subprocess, "Popen", lambda *args, **kwargs: fake_process)
+
+    test_client_res.run_local_verify_command(
+        ["/tmp/python3", "verify_android.py"],
+        log_prefix="[TestClientRes][Android]",
+        timeout_seconds=120,
+        heartbeat_seconds=5,
+    )
+
+    output = capsys.readouterr().out
+    assert "localVerifyHeartbeat state=running" in output
+    assert fake_process.wait_calls[0] == 5
+
+
+def test_run_local_verify_command_allows_disabling_hard_timeout(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证 timeout_seconds=0 时只保留心跳监控，不会因为固定总时长触发误判。"""
+    fake_process = FakePopen([subprocess.TimeoutExpired("verify", 3), 0])
+
+    monkeypatch.setattr(test_client_res.subprocess, "Popen", lambda *args, **kwargs: fake_process)
+
+    test_client_res.run_local_verify_command(
+        ["/tmp/python3", "verify_android.py"],
+        log_prefix="[TestClientRes][Android]",
+        timeout_seconds=0,
+        heartbeat_seconds=3,
+    )
+
+    output = capsys.readouterr().out
+    assert "localVerifyMonitor heartbeatSeconds=3 timeoutSeconds=disabled" in output
+    assert "localVerifyHeartbeat state=running" in output
+
+
+def test_run_local_verify_command_times_out_and_terminates_process(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """验证本地校验脚本超过显式总超时后会终止进程并抛出统一错误。"""
+    fake_process = FakePopen([subprocess.TimeoutExpired("verify", 1), 0])
+    monotonic_values = iter([0.0, 0.0, 1.0, 1.0])
+
+    monkeypatch.setattr(test_client_res.subprocess, "Popen", lambda *args, **kwargs: fake_process)
+    monkeypatch.setattr(test_client_res.time, "monotonic", lambda: next(monotonic_values))
+
+    with pytest.raises(test_client_res.TestClientResError, match="timed out after 1s"):
+        test_client_res.run_local_verify_command(
+            ["/tmp/python3", "verify_android.py"],
+            log_prefix="[TestClientRes][Android]",
+            timeout_seconds=1,
+            heartbeat_seconds=1,
+        )
+
+    assert fake_process.terminated is True
+
+
+def test_wait_for_build_success_logs_teamcity_running_info(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证等待上游构建时会输出 TeamCity running-info 里的百分比和阶段文本。"""
+    config = test_client_res.TeamCityRuntimeConfig(base_url="http://ci", token="token", config_path=None)
+    handles = iter(
+        [
+            test_client_res.BuildHandle(
+                build_id=909,
+                build_type_id="BDFrameworkCore_BuildAssetbundleAndroid",
+                number="41",
+                state="running",
+                status="SUCCESS",
+                status_text="running",
+                branch_name="v4/v-4.0.0",
+                web_url="http://ci/build/909",
+                revision="abc123",
+                client_version="0.1",
+                build_extra_args="",
+                running_stage_text="Importing built-in shaders",
+                running_percentage="59",
+                probably_hanging="false",
+            ),
+            test_client_res.BuildHandle(
+                build_id=909,
+                build_type_id="BDFrameworkCore_BuildAssetbundleAndroid",
+                number="41",
+                state="finished",
+                status="SUCCESS",
+                status_text="success",
+                branch_name="v4/v-4.0.0",
+                web_url="http://ci/build/909",
+                revision="abc123",
+                client_version="0.1",
+                build_extra_args="",
+            ),
+        ]
+    )
+
+    monkeypatch.setattr(test_client_res, "get_build", lambda *args, **kwargs: next(handles))
+    monkeypatch.setattr(test_client_res.time, "sleep", lambda *_args, **_kwargs: None)
+
+    test_client_res.wait_for_build_success(
+        config,
+        build_id=909,
+        timeout_seconds=300,
+        poll_interval_seconds=1,
+        log_prefix="[TestClientRes][Android]",
+    )
+
+    output = capsys.readouterr().out
+    assert "progress=59%" in output
+    assert "stage=Importing built-in shaders" in output
 
 
 def test_wait_for_build_success_emits_heartbeat_when_state_does_not_change(
@@ -624,3 +831,131 @@ def test_wait_for_build_success_emits_heartbeat_when_state_does_not_change(
     assert handle.build_id == 906
     output = capsys.readouterr().out
     assert "stillWaiting buildId=906 buildTypeId=BDFrameworkCore_VerifyClientResAndroid" in output
+    assert "statusText=running" in output
+
+
+def test_wait_for_build_success_logs_status_text_changes_as_progress(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    """验证等待日志会把 statusText 变化当作新的可见进度，而不是只看 state/status。"""
+    config = test_client_res.TeamCityRuntimeConfig(base_url="http://ci", token="token", config_path=None)
+    handles = iter(
+        [
+            test_client_res.BuildHandle(
+                build_id=907,
+                build_type_id="BDFrameworkCore_BuildAssetbundleAndroid",
+                number="22",
+                state="running",
+                status="SUCCESS",
+                status_text="importing builtin shaders 10%",
+                branch_name="v4/v-4.0.0",
+                web_url="http://ci/build/907",
+                revision="abc123",
+                client_version="0.1",
+                build_extra_args="",
+            ),
+            test_client_res.BuildHandle(
+                build_id=907,
+                build_type_id="BDFrameworkCore_BuildAssetbundleAndroid",
+                number="22",
+                state="running",
+                status="SUCCESS",
+                status_text="importing builtin shaders 80%",
+                branch_name="v4/v-4.0.0",
+                web_url="http://ci/build/907",
+                revision="abc123",
+                client_version="0.1",
+                build_extra_args="",
+            ),
+            test_client_res.BuildHandle(
+                build_id=907,
+                build_type_id="BDFrameworkCore_BuildAssetbundleAndroid",
+                number="22",
+                state="finished",
+                status="SUCCESS",
+                status_text="success",
+                branch_name="v4/v-4.0.0",
+                web_url="http://ci/build/907",
+                revision="abc123",
+                client_version="0.1",
+                build_extra_args="",
+            ),
+        ]
+    )
+    monotonic_values = iter([0.0, 0.0, 1.0, 2.0])
+
+    monkeypatch.setattr(test_client_res, "get_build", lambda *args, **kwargs: next(handles))
+    monkeypatch.setattr(test_client_res.time, "sleep", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(test_client_res.time, "monotonic", lambda: next(monotonic_values))
+
+    handle = test_client_res.wait_for_build_success(
+        config,
+        build_id=907,
+        timeout_seconds=300,
+        poll_interval_seconds=1,
+        log_prefix="[TestClientRes][Android]",
+    )
+
+    assert handle.build_id == 907
+    output = capsys.readouterr().out
+    assert "statusText=importing builtin shaders 10%" in output
+    assert "statusText=importing builtin shaders 80%" in output
+
+
+def test_wait_for_build_success_timeout_reports_last_status_and_log_tail(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """验证等待超时会附带最后一次 statusText、webUrl 和日志尾部，便于直接判断卡死原因。"""
+    config = test_client_res.TeamCityRuntimeConfig(base_url="http://ci", token="token", config_path=None)
+    handles = iter(
+        [
+            test_client_res.BuildHandle(
+                build_id=908,
+                build_type_id="BDFrameworkCore_BuildAssetbundleAndroid",
+                number="22",
+                state="running",
+                status="SUCCESS",
+                status_text="importing builtin shaders 80%",
+                branch_name="v4/v-4.0.0",
+                web_url="http://ci/build/908",
+                revision="abc123",
+                client_version="0.1",
+                build_extra_args="",
+            ),
+            test_client_res.BuildHandle(
+                build_id=908,
+                build_type_id="BDFrameworkCore_BuildAssetbundleAndroid",
+                number="22",
+                state="running",
+                status="SUCCESS",
+                status_text="importing builtin shaders 80%",
+                branch_name="v4/v-4.0.0",
+                web_url="http://ci/build/908",
+                revision="abc123",
+                client_version="0.1",
+                build_extra_args="",
+            ),
+        ]
+    )
+    monotonic_values = iter([0.0, 0.0, 301.0])
+
+    monkeypatch.setattr(test_client_res, "get_build", lambda *args, **kwargs: next(handles))
+    monkeypatch.setattr(test_client_res, "read_build_log_tail", lambda *args, **kwargs: "last teamcity log line")
+    monkeypatch.setattr(test_client_res.time, "sleep", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(test_client_res.time, "monotonic", lambda: next(monotonic_values))
+
+    with pytest.raises(test_client_res.TestClientResError) as exc_info:
+        test_client_res.wait_for_build_success(
+            config,
+            build_id=908,
+            timeout_seconds=300,
+            poll_interval_seconds=1,
+            log_prefix="[TestClientRes][Android]",
+        )
+
+    message = str(exc_info.value)
+    assert "Timed out waiting for TeamCity build buildId=908 buildTypeId=BDFrameworkCore_BuildAssetbundleAndroid" in message
+    assert "statusText=importing builtin shaders 80%" in message
+    assert "webUrl=http://ci/build/908" in message
+    assert "last teamcity log line" in message

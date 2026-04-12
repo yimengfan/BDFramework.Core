@@ -118,6 +118,9 @@ class BuildHandle:
     revision: str
     client_version: str
     build_extra_args: str
+    running_stage_text: str = ""
+    running_percentage: str = ""
+    probably_hanging: str = ""
 
     @property
     def is_finished_success(self) -> bool:
@@ -431,21 +434,77 @@ def format_local_verify_command(command: list[str]) -> str:
     return shlex.join(command)
 
 
-def run_local_verify_command(command: list[str], *, log_prefix: str) -> None:
-    """在当前父构建进程内直接运行平台校验脚本，并把失败转换成统一异常。"""
+def terminate_local_verify_process(process: subprocess.Popen, *, log_prefix: str) -> None:
+    """在本地校验超时后尽量优雅结束子进程，必要时再强制 kill。"""
+    log_line(f"{log_prefix} localVerifyTimeoutAction=terminate")
+    try:
+        process.terminate()
+    except OSError:
+        return
+
+    try:
+        process.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        log_line(f"{log_prefix} localVerifyTimeoutAction=kill")
+        process.kill()
+        try:
+            process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            log_line(f"{log_prefix} localVerifyTimeoutAction=kill-wait-expired")
+
+
+def run_local_verify_command(
+    command: list[str],
+    *,
+    log_prefix: str,
+    timeout_seconds: int,
+    heartbeat_seconds: int,
+) -> None:
+    """在当前父构建进程内直接运行平台校验脚本，并输出心跳与超时诊断。"""
     log_line(f"{log_prefix} localVerifyCwd={WORKSPACE_ROOT}")
     log_line(f"{log_prefix} localVerifyCommand={format_local_verify_command(command)}")
+    log_line(f"{log_prefix} localVerifyLaunch=started waitingForUnityOutput=true")
+    log_line(
+        f"{log_prefix} localVerifyMonitor heartbeatSeconds={heartbeat_seconds} "
+        f"timeoutSeconds={timeout_seconds if timeout_seconds > 0 else 'disabled'}"
+    )
     try:
-        completed = subprocess.run(
+        process = subprocess.Popen(
             command,
             cwd=str(WORKSPACE_ROOT),
-            check=False,
         )
     except OSError as exc:
         raise TestClientResError(f"Failed to start local verify script: {exc}") from exc
 
-    if completed.returncode != 0:
-        raise TestClientResError(f"Local verify script failed with exit code {completed.returncode}")
+    wait_started_at = time.monotonic()
+    deadline = wait_started_at + timeout_seconds if timeout_seconds > 0 else None
+    while True:
+        current_wait_timeout = heartbeat_seconds
+        now = time.monotonic()
+        if deadline is not None:
+            remaining_seconds = deadline - now
+            if remaining_seconds <= 0:
+                terminate_local_verify_process(process, log_prefix=log_prefix)
+                raise TestClientResError(
+                    f"Local verify script timed out after {timeout_seconds}s without completing"
+                )
+            current_wait_timeout = max(1, min(heartbeat_seconds, int(remaining_seconds)))
+
+        try:
+            return_code = process.wait(timeout=current_wait_timeout)
+            break
+        except subprocess.TimeoutExpired:
+            now = time.monotonic()
+            elapsed_seconds = int(now - wait_started_at)
+            remaining_text = f"{max(0, int(deadline - now))}s" if deadline is not None else "disabled"
+            log_line(
+                f"{log_prefix} localVerifyHeartbeat state=running elapsed={elapsed_seconds}s "
+                f"remaining={remaining_text}"
+            )
+            continue
+
+    if return_code != 0:
+        raise TestClientResError(f"Local verify script failed with exit code {return_code}")
 
 
 def resolve_platform_build_matrix(platform_key: str) -> PlatformBuildMatrix:
@@ -569,6 +628,7 @@ def api_request_text(config: TeamCityRuntimeConfig, method: str, path: str) -> s
 
 def build_handle_from_response(build_data: dict[str, Any]) -> BuildHandle:
     """Normalize one TeamCity build JSON object into the BuildHandle used by orchestration steps."""
+    running_info = build_data.get("running-info") or {}
     return BuildHandle(
         build_id=int(build_data.get("id")),
         build_type_id=normalize_optional_value(
@@ -583,6 +643,9 @@ def build_handle_from_response(build_data: dict[str, Any]) -> BuildHandle:
         revision=extract_build_revision(build_data),
         client_version=extract_build_property(build_data, "build.client.version"),
         build_extra_args=extract_build_property(build_data, "build.extra.args"),
+        running_stage_text=normalize_optional_value(running_info.get("currentStageText")).replace("\n", " "),
+        running_percentage=normalize_optional_value(running_info.get("percentageComplete")),
+        probably_hanging=normalize_optional_value(running_info.get("probablyHanging")),
     )
 
 
@@ -852,7 +915,8 @@ def get_build(config: TeamCityRuntimeConfig, build_id: int) -> BuildHandle:
         "GET",
         "/app/rest/builds/id:{buildId}?fields="
         "id,buildTypeId,number,state,status,statusText,branchName,webUrl,"
-        "revisions(revision(version,vcsBranchName)),properties(property(name,value))".format(buildId=build_id),
+        "revisions(revision(version,vcsBranchName)),properties(property(name,value)),"
+        "running-info(currentStageText,percentageComplete,probablyHanging)".format(buildId=build_id),
     )
     return build_handle_from_response(response)
 
@@ -866,6 +930,35 @@ def read_build_log_tail(config: TeamCityRuntimeConfig, build_id: int, *, line_co
     return "\n".join(lines[-line_count:])
 
 
+def format_waiting_build_summary(handle: BuildHandle) -> str:
+    """格式化等待日志里使用的 TeamCity 构建状态摘要。"""
+    summary = (
+        f"buildId={handle.build_id} buildTypeId={handle.build_type_id} "
+        f"state={handle.state or 'unknown'} status={handle.status or 'unknown'} "
+        f"statusText={handle.status_text or '<empty>'} number={handle.number or 'pending'}"
+    )
+    if handle.running_percentage:
+        summary += f" progress={handle.running_percentage}%"
+    if handle.probably_hanging:
+        summary += f" hanging={handle.probably_hanging}"
+    if handle.running_stage_text:
+        summary += f" stage={handle.running_stage_text[:180]}"
+    return summary
+
+
+def read_build_log_tail_for_diagnostics(
+    config: TeamCityRuntimeConfig,
+    build_id: int,
+    *,
+    line_count: int = 40,
+) -> str:
+    """尝试读取构建日志尾部；若读取失败则返回可直接拼接到异常里的说明文本。"""
+    try:
+        return read_build_log_tail(config, build_id, line_count=line_count)
+    except TestClientResError as exc:
+        return f"<failed to read build log tail: {exc}>"
+
+
 def wait_for_build_success(
     config: TeamCityRuntimeConfig,
     *,
@@ -874,20 +967,17 @@ def wait_for_build_success(
     poll_interval_seconds: int,
     log_prefix: str,
 ) -> BuildHandle:
-    """等待一个 TeamCity 构建成功结束，并在长时间无状态变化时持续输出心跳日志。"""
+    """等待一个 TeamCity 构建成功结束，并在超时或失败时输出可直接定位问题的诊断信息。"""
     wait_started_at = time.monotonic()
     deadline = wait_started_at + timeout_seconds
-    last_state_key: tuple[str, str, str] | None = None
+    last_state_key: tuple[str, str, str, str] | None = None
     last_progress_log_at = wait_started_at
     while True:
         handle = get_build(config, build_id)
         now = time.monotonic()
-        state_key = (handle.state, handle.status, handle.number)
+        state_key = (handle.state, handle.status, handle.status_text, handle.number)
         if state_key != last_state_key:
-            log_line(
-                f"{log_prefix} buildId={handle.build_id} buildTypeId={handle.build_type_id} "
-                f"state={handle.state or 'unknown'} status={handle.status or 'unknown'} number={handle.number or 'pending'}"
-            )
+            log_line(f"{log_prefix} {format_waiting_build_summary(handle)}")
             if handle.web_url:
                 log_line(f"{log_prefix} webUrl={handle.web_url}")
             last_state_key = state_key
@@ -896,8 +986,7 @@ def wait_for_build_success(
             elapsed_seconds = int(now - wait_started_at)
             remaining_seconds = max(0, int(deadline - now))
             log_line(
-                f"{log_prefix} stillWaiting buildId={handle.build_id} buildTypeId={handle.build_type_id} "
-                f"state={handle.state or 'unknown'} status={handle.status or 'unknown'} "
+                f"{log_prefix} stillWaiting {format_waiting_build_summary(handle)} "
                 f"elapsed={elapsed_seconds}s remaining={remaining_seconds}s"
             )
             if handle.web_url:
@@ -908,18 +997,29 @@ def wait_for_build_success(
             return handle
 
         if handle.state.lower() == "finished":
-            log_tail = read_build_log_tail(config, build_id)
+            log_tail = read_build_log_tail_for_diagnostics(config, build_id)
             raise TestClientResError(
-                f"Nested TeamCity build failed. buildTypeId={handle.build_type_id} buildId={handle.build_id} "
-                f"status={handle.status or 'unknown'} statusText={handle.status_text or '<empty>'}\n{log_tail}"
+                "Nested TeamCity build failed. "
+                f"{format_waiting_build_summary(handle)}"
+                f"{f' webUrl={handle.web_url}' if handle.web_url else ''}\n{log_tail}"
             )
 
         if now >= deadline:
+            elapsed_seconds = int(now - wait_started_at)
+            log_tail = read_build_log_tail_for_diagnostics(config, build_id)
+            web_url_line = f"\nwebUrl={handle.web_url}" if handle.web_url else ""
             raise TestClientResError(
-                f"Timed out waiting for TeamCity build {handle.build_id} ({handle.build_type_id}) after {timeout_seconds}s"
+                "Timed out waiting for TeamCity build "
+                f"{format_waiting_build_summary(handle)} after {timeout_seconds}s "
+                f"elapsed={elapsed_seconds}s{web_url_line}\n{log_tail}"
             )
 
         time.sleep(poll_interval_seconds)
+
+
+def resolve_remaining_wait_timeout_seconds(wait_deadline: float) -> int:
+    """根据共享 deadline 计算当前子构建还能使用的剩余等待预算。"""
+    return max(0, int(wait_deadline - time.monotonic()))
 
 
 def build_queue_comment(
@@ -977,14 +1077,14 @@ def command_resolve_builds(args: argparse.Namespace) -> int:
     matrix = resolve_platform_build_matrix(args.platform)
     log_prefix = f"[TestClientRes][{matrix.platform_label}]"
 
-    print(f"{log_prefix} ===== Step 1/4: parse args =====")
+    print(f"{log_prefix} ===== Phase 1/4: parse args =====")
     client_version = normalize_required_value(args.client_version, field_name="clientVersion")
     branch_name = normalize_branch_name(args.branch)
     vcs_revision = normalize_required_value(args.vcs_revision, field_name="vcsRevision")
     upstream_build_extra_args = normalize_optional_value(args.upstream_build_extra_args)
     search_count = max(1, int(args.search_count))
 
-    print(f"{log_prefix} ===== Step 2/4: resolve TeamCity config =====")
+    print(f"{log_prefix} ===== Phase 2/4: resolve TeamCity config =====")
     config = resolve_teamcity_runtime_config(args.config)
     print(f"{log_prefix} teamcityBaseUrl={config.base_url}")
     if config.config_path is not None:
@@ -994,7 +1094,7 @@ def command_resolve_builds(args: argparse.Namespace) -> int:
     print(f"{log_prefix} clientVersion={client_version}")
     print(f"{log_prefix} upstreamBuildExtraArgs={upstream_build_extra_args or '<empty>'}")
 
-    print(f"{log_prefix} ===== Step 3/4: resolve or queue upstream builds =====")
+    print(f"{log_prefix} ===== Phase 3/4: resolve or queue upstream builds =====")
     requested_build_types = {
         "code": matrix.code_build_type_id,
         "assetbundle": matrix.assetbundle_build_type_id,
@@ -1045,17 +1145,17 @@ def command_resolve_builds(args: argparse.Namespace) -> int:
         if queued.number:
             emit_build_number_parameter(kind, queued.number)
 
-    print(f"{log_prefix} ===== Step 4/4: export TeamCity parameters =====")
+    print(f"{log_prefix} ===== Phase 4/4: export TeamCity parameters =====")
     print(f"{log_prefix} upstream build resolution finished")
     return 0
 
 
 def command_wait_builds(args: argparse.Namespace) -> int:
-    """Wait for the three upstream ClientRes builds to finish and export their build numbers."""
+    """等待三段上游构建共用同一个总超时预算，并导出最终版本号。"""
     matrix = resolve_platform_build_matrix(args.platform)
     log_prefix = f"[TestClientRes][{matrix.platform_label}]"
 
-    print(f"{log_prefix} ===== Step 1/3: parse args =====")
+    print(f"{log_prefix} ===== Phase 1/3: parse args =====")
     code_build_id = int(normalize_required_value(args.code_build_id, field_name="codeBuildId"))
     assetbundle_build_id = int(
         normalize_required_value(args.assetbundle_build_id, field_name="assetbundleBuildId")
@@ -1064,7 +1164,7 @@ def command_wait_builds(args: argparse.Namespace) -> int:
     timeout_seconds = max(1, int(args.timeout_seconds))
     poll_interval_seconds = max(1, int(args.poll_interval_seconds))
 
-    print(f"{log_prefix} ===== Step 2/3: resolve TeamCity config =====")
+    print(f"{log_prefix} ===== Phase 2/3: resolve TeamCity config =====")
     config = resolve_teamcity_runtime_config(args.config)
     print(f"{log_prefix} teamcityBaseUrl={config.base_url}")
     if config.config_path is not None:
@@ -1072,30 +1172,32 @@ def command_wait_builds(args: argparse.Namespace) -> int:
     print(f"{log_prefix} timeoutSeconds={timeout_seconds}")
     print(f"{log_prefix} pollIntervalSeconds={poll_interval_seconds}")
 
-    print(f"{log_prefix} ===== Step 3/3: wait upstream builds =====")
-    resolved_handles = {
-        "code": wait_for_build_success(
-            config,
-            build_id=code_build_id,
-            timeout_seconds=timeout_seconds,
-            poll_interval_seconds=poll_interval_seconds,
-            log_prefix=log_prefix,
-        ),
-        "assetbundle": wait_for_build_success(
-            config,
-            build_id=assetbundle_build_id,
-            timeout_seconds=timeout_seconds,
-            poll_interval_seconds=poll_interval_seconds,
-            log_prefix=log_prefix,
-        ),
-        "table": wait_for_build_success(
-            config,
-            build_id=table_build_id,
-            timeout_seconds=timeout_seconds,
-            poll_interval_seconds=poll_interval_seconds,
-            log_prefix=log_prefix,
-        ),
+    print(f"{log_prefix} ===== Phase 3/3: wait upstream builds =====")
+    wait_deadline = time.monotonic() + timeout_seconds
+    pending_build_ids = {
+        "code": code_build_id,
+        "assetbundle": assetbundle_build_id,
+        "table": table_build_id,
     }
+    resolved_handles: dict[str, BuildHandle] = {}
+    for kind in UPSTREAM_BUILD_TYPE_ORDER:
+        remaining_timeout_seconds = resolve_remaining_wait_timeout_seconds(wait_deadline)
+        if remaining_timeout_seconds <= 0:
+            raise TestClientResError(
+                f"Timed out waiting for upstream TeamCity builds after {timeout_seconds}s before {kind} build finished"
+            )
+        current_build_id = pending_build_ids[kind]
+        print(
+            f"{log_prefix} waitUpstream kind={kind} buildId={current_build_id} "
+            f"remainingTimeoutSeconds={remaining_timeout_seconds}"
+        )
+        resolved_handles[kind] = wait_for_build_success(
+            config,
+            build_id=current_build_id,
+            timeout_seconds=remaining_timeout_seconds,
+            poll_interval_seconds=poll_interval_seconds,
+            log_prefix=log_prefix,
+        )
 
     for kind in UPSTREAM_BUILD_TYPE_ORDER:
         emit_build_number_parameter(kind, resolved_handles[kind].number)
@@ -1116,7 +1218,7 @@ def command_queue_verify_build(args: argparse.Namespace) -> int:
     matrix = resolve_platform_build_matrix(args.platform)
     log_prefix = f"[TestClientRes][{matrix.platform_label}]"
 
-    log_line(f"{log_prefix} ===== Step 1/4: parse args =====")
+    log_line(f"{log_prefix} ===== Phase 1/4: parse args =====")
     client_version = normalize_required_value(args.client_version, field_name="clientVersion")
     branch_name = normalize_branch_name(args.branch)
     vcs_revision = normalize_required_value(args.vcs_revision, field_name="vcsRevision")
@@ -1127,10 +1229,12 @@ def command_queue_verify_build(args: argparse.Namespace) -> int:
         field_name="expectedAssetbundleVersion",
     )
     expected_table_version = normalize_required_value(args.expected_table_version, field_name="expectedTableVersion")
+    timeout_seconds = max(0, int(args.timeout_seconds))
+    heartbeat_seconds = max(1, int(args.poll_interval_seconds))
     verify_build_extra_args = normalize_optional_value(args.verify_build_extra_args)
     current_build_id, current_build_name, current_build_number = resolve_current_build_metadata(args.source_build_id)
 
-    log_line(f"{log_prefix} ===== Step 2/4: resolve local verify command =====")
+    log_line(f"{log_prefix} ===== Phase 2/4: resolve local verify command =====")
     if config_path is not None:
         log_line(f"{log_prefix} buildtoolsConfig={config_path}")
     log_line(f"{log_prefix} branch={branch_name or '<default>'}")
@@ -1138,6 +1242,8 @@ def command_queue_verify_build(args: argparse.Namespace) -> int:
     log_line(
         f"{log_prefix} expectedVersionInfo={expected_code_version}.{expected_assetbundle_version}.{expected_table_version}"
     )
+    log_line(f"{log_prefix} localVerifyTimeoutSeconds={timeout_seconds if timeout_seconds > 0 else 'disabled'}")
+    log_line(f"{log_prefix} localVerifyHeartbeatSeconds={heartbeat_seconds}")
     log_line(f"{log_prefix} verifyBuildExtraArgs={verify_build_extra_args or '<empty>'}")
     log_line(f"{log_prefix} currentBuildId={current_build_id or '<empty>'}")
     log_line(f"{log_prefix} currentBuildName={current_build_name or '<empty>'}")
@@ -1155,14 +1261,19 @@ def command_queue_verify_build(args: argparse.Namespace) -> int:
         verify_build_extra_args=verify_build_extra_args,
     )
 
-    log_line(f"{log_prefix} ===== Step 3/4: export current build parameters =====")
+    log_line(f"{log_prefix} ===== Phase 3/4: export current build parameters =====")
     if current_build_id is not None:
         emit_teamcity_parameter(VERIFY_BUILD_ID_PARAM, current_build_id)
     if current_build_number is not None:
         emit_teamcity_parameter(VERIFY_BUILD_NUMBER_PARAM, current_build_number)
 
-    log_line(f"{log_prefix} ===== Step 4/4: run local verify task in current build =====")
-    run_local_verify_command(local_verify_command, log_prefix=log_prefix)
+    log_line(f"{log_prefix} ===== Phase 4/4: run local verify task in current build =====")
+    run_local_verify_command(
+        local_verify_command,
+        log_prefix=log_prefix,
+        timeout_seconds=timeout_seconds,
+        heartbeat_seconds=heartbeat_seconds,
+    )
     log_line(f"{log_prefix} local verify finished successfully in current build")
     return 0
 
