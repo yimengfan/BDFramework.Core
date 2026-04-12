@@ -2338,7 +2338,7 @@ namespace BDFramework.ResourceMgr
 
         /// <summary>
         /// 按 <c>art_assets.info</c> 中的资产列表顺序逐个执行本地加载校验。
-        /// 这里会按 bundle 分组后复用同一个 <c>AssetBundle</c> 句柄，再对组内每个资产逐条 <c>LoadAsset</c>，从而把错误精确定位到具体资产记录。
+        /// 这里不会再按 bundle 分组重排顺序；如果相邻资产切换到了新的 bundle，就重新打开对应的本地 <c>AssetBundle</c>，确保实际执行顺序与资产列表一致。
         /// </summary>
         internal static string ValidateFileServerAssetBundleLocalLoads(
             IReadOnlyList<FileServerAssetBundleValidationEntry> assetBundleValidationEntries)
@@ -2369,69 +2369,78 @@ namespace BDFramework.ResourceMgr
                 return "文件服务器 AssetBundle 资产加载校验缺少基于 art_assets.info 的资产记录。";
             }
 
-            var groupedValidationEntries = normalizedValidationEntries
-                .GroupBy(entry => entry.AssetBundleLocalPath, StringComparer.OrdinalIgnoreCase)
-                .Select(group => group.ToList())
-                .ToList();
-            var assetIndex = 0;
+            AssetBundle currentAssetBundle = null;
+            string currentAssetBundleLocalPath = null;
+            string[] currentAssetNames = Array.Empty<string>();
+            FileServerAssetBundleValidationEntry currentValidationEntry = null;
 
-            for (var bundleIndex = 0; bundleIndex < groupedValidationEntries.Count; bundleIndex++)
+            try
             {
-                var validationEntryGroup = groupedValidationEntries[bundleIndex];
-                var firstValidationEntry = validationEntryGroup[0];
-                LogFileServerBatchProgress("AssetBundle按包打开", bundleIndex + 1, groupedValidationEntries.Count,
-                    firstValidationEntry.AssetBundleRelativePath, Color.cyan,
-                    $"component=AssetBundle assetCount={validationEntryGroup.Count}");
-
-                if (!File.Exists(firstValidationEntry.AssetBundleLocalPath))
+                for (var assetIndex = 0; assetIndex < normalizedValidationEntries.Count; assetIndex++)
                 {
-                    return
-                        $"文件服务器 AssetBundle 资产加载校验缺少 bundle 文件 asset={firstValidationEntry.AssetDisplayPath} bundle={firstValidationEntry.AssetBundleLocalPath}";
-                }
+                    var validationEntry = normalizedValidationEntries[assetIndex];
+                    currentValidationEntry = validationEntry;
+                    LogFileServerBatchProgress("AssetBundle按资产加载", assetIndex + 1,
+                        normalizedValidationEntries.Count, validationEntry.AssetDisplayPath, Color.cyan,
+                        $"component=AssetBundle bundle={validationEntry.AssetBundleRelativePath}");
 
-                AssetBundle assetBundle = null;
-                try
-                {
-                    assetBundle = AssetBundle.LoadFromFile(firstValidationEntry.AssetBundleLocalPath);
-                    if (assetBundle == null)
+                    if (!string.Equals(currentAssetBundleLocalPath, validationEntry.AssetBundleLocalPath,
+                            StringComparison.OrdinalIgnoreCase))
+                    {
+                        LogFileServerFlow(
+                            $"按资产顺序切换本地 AssetBundle bundle={validationEntry.AssetBundleRelativePath} asset={validationEntry.AssetDisplayPath}",
+                            Color.cyan);
+
+                        if (!File.Exists(validationEntry.AssetBundleLocalPath))
+                        {
+                            return
+                                $"文件服务器 AssetBundle 资产加载校验缺少 bundle 文件 asset={validationEntry.AssetDisplayPath} bundle={validationEntry.AssetBundleLocalPath}";
+                        }
+
+                        currentAssetBundle?.Unload(true);
+                        currentAssetBundle = AssetBundle.LoadFromFile(validationEntry.AssetBundleLocalPath);
+                        if (currentAssetBundle == null)
+                        {
+                            return
+                                $"文件服务器 AssetBundle 资产加载校验失败 asset={validationEntry.AssetDisplayPath} bundle={validationEntry.AssetBundleLocalPath} err=AssetBundle.LoadFromFile 返回 null";
+                        }
+
+                        currentAssetNames = currentAssetBundle.GetAllAssetNames() ?? Array.Empty<string>();
+                        currentAssetBundleLocalPath = validationEntry.AssetBundleLocalPath;
+                    }
+
+                    var assetLoadName = ResolveFileServerAssetBundleValidationLoadName(currentAssetNames,
+                        validationEntry);
+                    if (string.IsNullOrEmpty(assetLoadName))
                     {
                         return
-                            $"文件服务器 AssetBundle 资产加载校验失败 asset={firstValidationEntry.AssetDisplayPath} bundle={firstValidationEntry.AssetBundleLocalPath} err=AssetBundle.LoadFromFile 返回 null";
+                            $"文件服务器 AssetBundle 资产加载校验失败 asset={validationEntry.AssetDisplayPath} bundle={validationEntry.AssetBundleRelativePath} err=未能根据 art_assets.info 解析出实际资产名";
                     }
 
-                    var assetNames = assetBundle.GetAllAssetNames() ?? Array.Empty<string>();
-                    foreach (var validationEntry in validationEntryGroup)
+                    var loadedAsset = currentAssetBundle.LoadAsset(assetLoadName, typeof(UnityEngine.Object));
+                    if (loadedAsset == null)
                     {
-                        assetIndex++;
-                        LogFileServerBatchProgress("AssetBundle按资产加载", assetIndex,
-                            normalizedValidationEntries.Count, validationEntry.AssetDisplayPath, Color.cyan,
-                            $"component=AssetBundle bundle={validationEntry.AssetBundleRelativePath}");
-
-                        var assetLoadName = ResolveFileServerAssetBundleValidationLoadName(assetNames,
-                            validationEntry);
-                        if (string.IsNullOrEmpty(assetLoadName))
-                        {
-                            return
-                                $"文件服务器 AssetBundle 资产加载校验失败 asset={validationEntry.AssetDisplayPath} bundle={validationEntry.AssetBundleRelativePath} err=未能根据 art_assets.info 解析出实际资产名";
-                        }
-
-                        var loadedAsset = assetBundle.LoadAsset(assetLoadName, typeof(UnityEngine.Object));
-                        if (loadedAsset == null)
-                        {
-                            return
-                                $"文件服务器 AssetBundle 资产加载校验失败 asset={validationEntry.AssetDisplayPath} bundle={validationEntry.AssetBundleRelativePath} loadName={assetLoadName} err=AssetBundle.LoadAsset 返回 null";
-                        }
+                        return
+                            $"文件服务器 AssetBundle 资产加载校验失败 asset={validationEntry.AssetDisplayPath} bundle={validationEntry.AssetBundleRelativePath} loadName={assetLoadName} err=AssetBundle.LoadAsset 返回 null";
                     }
                 }
-                catch (Exception exception)
+            }
+            catch (Exception exception)
+            {
+                var failedAssetDisplayPath = currentValidationEntry?.AssetDisplayPath ?? firstAssetTarget;
+                var failedBundleRelativePath = currentValidationEntry?.AssetBundleRelativePath;
+                if (!string.IsNullOrWhiteSpace(failedBundleRelativePath))
                 {
                     return
-                        $"文件服务器 AssetBundle 资产加载校验失败 asset={firstValidationEntry.AssetDisplayPath} bundle={firstValidationEntry.AssetBundleRelativePath} err={exception.Message}";
+                        $"文件服务器 AssetBundle 资产加载校验失败 asset={failedAssetDisplayPath} bundle={failedBundleRelativePath} err={exception.Message}";
                 }
-                finally
-                {
-                    assetBundle?.Unload(true);
-                }
+
+                return
+                    $"文件服务器 AssetBundle 资产加载校验失败 asset={failedAssetDisplayPath} err={exception.Message}";
+            }
+            finally
+            {
+                currentAssetBundle?.Unload(true);
             }
 
             return null;

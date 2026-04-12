@@ -225,6 +225,15 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证 AssetBundle 资产级本地加载校验会严格按 art_assets.info 的资产记录顺序执行，而不是先按 bundle 分组重排。
+        /// </summary>
+        [Test]
+        public void ValidateFileServerAssetBundleLocalLoads_PrefersAssetListOrderOverBundleGroups()
+        {
+            VerifyValidateFileServerAssetBundleLocalLoadsPrefersAssetListOrderOverBundleGroups();
+        }
+
+        /// <summary>
         /// 验证代表性 AssetBundle 主线程投递 helper 在当前已经位于主线程时，会直接返回底层本地打开校验结果。
         /// </summary>
         [Test]
@@ -945,6 +954,110 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证资产级本地加载会保持 art_assets.info 的原始资产顺序。
+        /// 当第二条资产记录属于另一个 bundle 且本应先失败时，如果实现仍先按 bundle 分组，就会错误地在第三条记录上提前失败。
+        /// </summary>
+        internal static void VerifyValidateFileServerAssetBundleLocalLoadsPrefersAssetListOrderOverBundleGroups()
+        {
+            var assetRootRelativePath = $"Assets/__FileServerVerifyTemp/{Guid.NewGuid():N}";
+            var firstAssetRelativePath = $"{assetRootRelativePath}/first_asset.txt";
+            var secondAssetRelativePath = $"{assetRootRelativePath}/second_asset.txt";
+            var assetRootAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), assetRootRelativePath);
+            var firstAssetAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), firstAssetRelativePath);
+            var secondAssetAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), secondAssetRelativePath);
+            var outputRoot = Path.Combine(Path.GetTempPath(), "BDFramework", "AssetsVersionControllerDevOpsTest",
+                Guid.NewGuid().ToString("N"));
+            var firstBundleName = $"file-server-order-a-{Guid.NewGuid():N}";
+            var secondBundleName = $"file-server-order-b-{Guid.NewGuid():N}";
+            var firstBundlePath = Path.Combine(outputRoot, firstBundleName);
+            var secondBundlePath = Path.Combine(outputRoot, secondBundleName);
+
+            Directory.CreateDirectory(assetRootAbsolutePath);
+            Directory.CreateDirectory(outputRoot);
+            File.WriteAllText(firstAssetAbsolutePath, "order-first-payload", Encoding.UTF8);
+            File.WriteAllText(secondAssetAbsolutePath, "order-second-payload", Encoding.UTF8);
+
+            try
+            {
+                AssetDatabase.ImportAsset(firstAssetRelativePath, ImportAssetOptions.ForceSynchronousImport);
+                AssetDatabase.ImportAsset(secondAssetRelativePath, ImportAssetOptions.ForceSynchronousImport);
+
+                var firstImporter = AssetImporter.GetAtPath(firstAssetRelativePath);
+                if (firstImporter == null)
+                {
+                    throw new InvalidOperationException($"无法获取测试资源导入器 path={firstAssetRelativePath}");
+                }
+
+                var secondImporter = AssetImporter.GetAtPath(secondAssetRelativePath);
+                if (secondImporter == null)
+                {
+                    throw new InvalidOperationException($"无法获取测试资源导入器 path={secondAssetRelativePath}");
+                }
+
+                firstImporter.assetBundleName = firstBundleName;
+                firstImporter.SaveAndReimport();
+                secondImporter.assetBundleName = secondBundleName;
+                secondImporter.SaveAndReimport();
+
+                var buildManifest = BuildPipeline.BuildAssetBundles(
+                    outputRoot,
+                    BuildAssetBundleOptions.None,
+                    ResolveHostAssetBundleBuildTarget());
+                EnsureTrue(buildManifest != null, "测试 AssetBundle 构建结果不应为 null。");
+                EnsureTrue(File.Exists(firstBundlePath), "第一组测试 AssetBundle 输出文件不存在。");
+                EnsureTrue(File.Exists(secondBundlePath), "第二组测试 AssetBundle 输出文件不存在。");
+
+                var secondShouldFailPath = "Assets/__FileServerVerifyTemp/SecondShouldFail.txt";
+                var thirdShouldNotFailFirstPath = "Assets/__FileServerVerifyTemp/ThirdShouldNotFailFirst.txt";
+                var validationEntries = new List<AssetsVersionController.FileServerAssetBundleValidationEntry>()
+                {
+                    new AssetsVersionController.FileServerAssetBundleValidationEntry()
+                    {
+                        AssetId = 1,
+                        AssetDisplayPath = firstAssetRelativePath,
+                        AssetLoadPath = firstAssetRelativePath,
+                        AssetBundleRelativePath = $"art_assets/{firstBundleName}",
+                        AssetBundleLocalPath = firstBundlePath,
+                    },
+                    new AssetsVersionController.FileServerAssetBundleValidationEntry()
+                    {
+                        AssetId = 2,
+                        AssetDisplayPath = secondShouldFailPath,
+                        AssetLoadPath = secondShouldFailPath,
+                        AssetBundleRelativePath = $"art_assets/{secondBundleName}",
+                        AssetBundleLocalPath = secondBundlePath,
+                    },
+                    new AssetsVersionController.FileServerAssetBundleValidationEntry()
+                    {
+                        AssetId = 3,
+                        AssetDisplayPath = thirdShouldNotFailFirstPath,
+                        AssetLoadPath = thirdShouldNotFailFirstPath,
+                        AssetBundleRelativePath = $"art_assets/{firstBundleName}",
+                        AssetBundleLocalPath = firstBundlePath,
+                    },
+                };
+
+                var error = AssetsVersionController.ValidateFileServerAssetBundleLocalLoads(validationEntries);
+
+                EnsureTrue(error != null && error.Contains($"asset={secondShouldFailPath}"),
+                    "AssetBundle 资产级本地加载校验应按资产列表顺序先在第二条资产记录上失败。");
+                EnsureTrue(!error.Contains($"asset={thirdShouldNotFailFirstPath}"),
+                    "AssetBundle 资产级本地加载校验不应先按 bundle 分组在第三条资产记录上失败。");
+            }
+            finally
+            {
+                AssetDatabase.RemoveAssetBundleName(firstBundleName, true);
+                AssetDatabase.RemoveAssetBundleName(secondBundleName, true);
+                AssetDatabase.DeleteAsset(assetRootRelativePath);
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+                if (Directory.Exists(outputRoot))
+                {
+                    Directory.Delete(outputRoot, true);
+                }
+            }
+        }
+
+        /// <summary>
         /// 以纯异常校验方式验证代表性 AssetBundle 主线程投递 helper 在主线程直跑场景下不会吞掉底层错误信息。
         /// </summary>
         internal static void VerifyValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContextReturnsMissingFileErrorOnMainThread()
@@ -1330,6 +1443,8 @@ namespace BDFramework.EditorTest.AssetsManager
                     AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleRepresentativeLocalLoadSucceedsForBuiltBundle),
                 (nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleLocalLoads_SucceedsForBuiltBundleAsset),
                     AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleLocalLoadsSucceedsForBuiltBundleAsset),
+                (nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleLocalLoads_PrefersAssetListOrderOverBundleGroups),
+                    AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleLocalLoadsPrefersAssetListOrderOverBundleGroups),
                 (nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContext_ReturnsMissingFileErrorOnMainThread),
                     AssetsVersionControllerDevOpsTest.VerifyValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContextReturnsMissingFileErrorOnMainThread),
                 (nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerRepresentativeLocalLoads_ReturnsAssetBundleMissingFileErrorOnMainThread),
