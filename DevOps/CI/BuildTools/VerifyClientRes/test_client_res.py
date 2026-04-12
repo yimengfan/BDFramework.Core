@@ -3,7 +3,7 @@
 该脚本负责把 ClientRes 下载校验链路收敛成 TeamCity 可复用的三段流程：
 1. 为目标平台解析或排队 Code / AssetBundle / Table 上游构建。
 2. 等待上游构建结束，并导出三段 build.number。
-3. 解析或排队平台对应的 VerifyClientRes 本地校验任务，并等待最终结果。
+3. 在当前 TestClientRes 父构建内直接执行平台对应的 VerifyClientRes 本地校验脚本。
 
 示例：
     python DevOps/CI/BuildTools/VerifyClientRes/test_client_res.py resolve-builds \
@@ -20,6 +20,8 @@ import json
 import os
 from dataclasses import dataclass
 from pathlib import Path
+import shlex
+import subprocess
 import sys
 import time
 import urllib.error
@@ -29,6 +31,7 @@ from typing import Any
 
 
 BUILD_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+WORKSPACE_ROOT = BUILD_TOOLS_ROOT.parents[2]
 if str(BUILD_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(BUILD_TOOLS_ROOT))
 
@@ -156,9 +159,9 @@ PLATFORM_BUILD_MATRIX_BY_KEY = {
 
 
 def parse_args() -> argparse.Namespace:
-    """Parse the TestClientRes orchestration subcommands and shared TeamCity options."""
+    """解析 TestClientRes 编排入口的子命令与共享参数。"""
     parser = argparse.ArgumentParser(
-        description="Queue/reuse ClientRes upstream builds and trigger the local VerifyClientRes check task."
+        description="解析或排队 ClientRes 上游构建，并在当前构建内直接执行本地校验脚本。"
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -201,7 +204,7 @@ def parse_args() -> argparse.Namespace:
 
     verify_parser = subparsers.add_parser(
         "queue-verify-build",
-        help="Queue the platform-specific VerifyClientRes local-check TeamCity task and wait for completion.",
+        help="Run the platform-specific VerifyClientRes local-check script directly inside the current build.",
     )
     add_platform_arg(verify_parser)
     add_client_version_arg(verify_parser)
@@ -228,7 +231,7 @@ def parse_args() -> argparse.Namespace:
     verify_parser.add_argument(
         "--verify-build-extra-args",
         default="",
-        help="Optional build.extra.args forwarded to the VerifyClientRes local-check TeamCity task.",
+        help="Optional extra args forwarded directly to the platform VerifyClientRes local-check script.",
     )
     return parser.parse_args()
 
@@ -335,6 +338,114 @@ def build_vcs_branch_name(branch_name: str) -> str | None:
     if normalized.startswith("refs/"):
         return normalized
     return f"refs/heads/{normalized}"
+
+
+def resolve_current_build_metadata(source_build_id: str | None) -> tuple[str | None, str | None, str | None]:
+    """解析当前父构建的 id、名称和编号，供本地 step3 回写 TeamCity 参数。"""
+    resolved_build_id = normalize_optional_value(source_build_id) or None
+    if resolved_build_id is None:
+        for env_name in ("TEAMCITY_BUILD_ID", "BUILD_ID", "TC_BUILD_ID"):
+            env_value = normalize_optional_value(os.environ.get(env_name)) or None
+            if env_value is not None:
+                resolved_build_id = env_value
+                break
+
+    resolved_build_name = None
+    for env_name in ("CI_BUILD_NAME", "BUILD_NAME", "TEAMCITY_BUILDCONF_NAME", "JOB_NAME", "TC_BUILD_NAME"):
+        env_value = normalize_optional_value(os.environ.get(env_name)) or None
+        if env_value is not None:
+            resolved_build_name = env_value
+            break
+
+    resolved_build_number = None
+    for env_name in (
+        "CI_BUILD_NUMBER",
+        "BUILD_NUMBER",
+        "TEAMCITY_BUILD_NUMBER",
+        "GITHUB_RUN_NUMBER",
+        "TC_BUILD_NUMBER",
+    ):
+        env_value = normalize_optional_value(os.environ.get(env_name)) or None
+        if env_value is not None:
+            resolved_build_number = env_value
+            break
+
+    return resolved_build_id, resolved_build_name, resolved_build_number
+
+
+def split_local_verify_extra_args(raw_args: str) -> list[str]:
+    """把透传给本地校验脚本的额外参数拆成 argv，避免继续依赖 TeamCity 子任务。"""
+    normalized = normalize_optional_value(raw_args)
+    if not normalized:
+        return []
+
+    try:
+        return shlex.split(normalized, posix=os.name != "nt")
+    except ValueError as exc:
+        raise TestClientResError(f"verifyBuildExtraArgs is invalid: {exc}") from exc
+
+
+def build_local_verify_command(
+    matrix: PlatformBuildMatrix,
+    *,
+    client_version: str,
+    expected_code_version: str,
+    expected_assetbundle_version: str,
+    expected_table_version: str,
+    config_path: str | None,
+    build_name: str | None,
+    build_number: str | None,
+    verify_build_extra_args: str,
+) -> list[str]:
+    """组装当前父构建内直接执行的平台校验脚本命令。"""
+    verify_script_path = Path(__file__).resolve().with_name(f"verify_{matrix.platform_key}.py")
+    if not verify_script_path.is_file():
+        raise TestClientResError(f"Local verify script is missing: {verify_script_path}")
+
+    command = [
+        sys.executable or "python",
+        str(verify_script_path),
+        "--client-version",
+        client_version,
+        "--expected-code-version",
+        expected_code_version,
+        "--expected-assetbundle-version",
+        expected_assetbundle_version,
+        "--expected-table-version",
+        expected_table_version,
+    ]
+    if config_path:
+        command.extend(["--config", config_path])
+    if build_name:
+        command.extend(["--build-name", build_name])
+    if build_number:
+        command.extend(["--build-number", build_number])
+    command.extend(split_local_verify_extra_args(verify_build_extra_args))
+    return command
+
+
+def format_local_verify_command(command: list[str]) -> str:
+    """把本地校验命令格式化成单行日志，方便在 TeamCity 中直接复制复现。"""
+    if os.name == "nt":
+        return subprocess.list2cmdline(command)
+    return shlex.join(command)
+
+
+def run_local_verify_command(command: list[str], *, log_prefix: str) -> None:
+    """在当前父构建进程内直接运行平台校验脚本，并把失败转换成统一异常。"""
+    log_line(f"{log_prefix} localVerifyCwd={WORKSPACE_ROOT}")
+    log_line(f"{log_prefix} localVerifyCommand={format_local_verify_command(command)}")
+    try:
+        completed = subprocess.run(
+            command,
+            cwd=str(WORKSPACE_ROOT),
+            check=False,
+        )
+    except OSError as exc:
+        raise TestClientResError(f"Failed to start local verify script: {exc}") from exc
+
+    if completed.returncode != 0:
+        raise TestClientResError(f"Local verify script failed with exit code {completed.returncode}")
 
 
 def resolve_platform_build_matrix(platform_key: str) -> PlatformBuildMatrix:
@@ -1001,7 +1112,7 @@ def command_wait_builds(args: argparse.Namespace) -> int:
 
 
 def command_queue_verify_build(args: argparse.Namespace) -> int:
-    """解析或排队平台对应的 VerifyClientRes 本地校验任务，并等待结果。"""
+    """在当前 TestClientRes 父构建内直接执行平台对应的 VerifyClientRes 本地校验脚本。"""
     matrix = resolve_platform_build_matrix(args.platform)
     log_prefix = f"[TestClientRes][{matrix.platform_label}]"
 
@@ -1009,6 +1120,7 @@ def command_queue_verify_build(args: argparse.Namespace) -> int:
     client_version = normalize_required_value(args.client_version, field_name="clientVersion")
     branch_name = normalize_branch_name(args.branch)
     vcs_revision = normalize_required_value(args.vcs_revision, field_name="vcsRevision")
+    config_path = normalize_optional_value(args.config) or None
     expected_code_version = normalize_required_value(args.expected_code_version, field_name="expectedCodeVersion")
     expected_assetbundle_version = normalize_required_value(
         args.expected_assetbundle_version,
@@ -1016,92 +1128,42 @@ def command_queue_verify_build(args: argparse.Namespace) -> int:
     )
     expected_table_version = normalize_required_value(args.expected_table_version, field_name="expectedTableVersion")
     verify_build_extra_args = normalize_optional_value(args.verify_build_extra_args)
-    timeout_seconds = max(1, int(args.timeout_seconds))
-    poll_interval_seconds = max(1, int(args.poll_interval_seconds))
+    current_build_id, current_build_name, current_build_number = resolve_current_build_metadata(args.source_build_id)
 
-    log_line(f"{log_prefix} ===== Step 2/4: resolve TeamCity config =====")
-    config = resolve_teamcity_runtime_config(args.config)
-    log_line(f"{log_prefix} teamcityBaseUrl={config.base_url}")
-    if config.config_path is not None:
-        log_line(f"{log_prefix} buildtoolsConfig={config.config_path}")
+    log_line(f"{log_prefix} ===== Step 2/4: resolve local verify command =====")
+    if config_path is not None:
+        log_line(f"{log_prefix} buildtoolsConfig={config_path}")
     log_line(f"{log_prefix} branch={branch_name or '<default>'}")
     log_line(f"{log_prefix} vcsRevision={vcs_revision}")
     log_line(
         f"{log_prefix} expectedVersionInfo={expected_code_version}.{expected_assetbundle_version}.{expected_table_version}"
     )
     log_line(f"{log_prefix} verifyBuildExtraArgs={verify_build_extra_args or '<empty>'}")
+    log_line(f"{log_prefix} currentBuildId={current_build_id or '<empty>'}")
+    log_line(f"{log_prefix} currentBuildName={current_build_name or '<empty>'}")
+    log_line(f"{log_prefix} currentBuildNumber={current_build_number or '<empty>'}")
 
-    verify_queue_properties = build_verify_queue_properties(
+    local_verify_command = build_local_verify_command(
+        matrix,
         client_version=client_version,
         expected_code_version=expected_code_version,
         expected_assetbundle_version=expected_assetbundle_version,
         expected_table_version=expected_table_version,
+        config_path=config_path,
+        build_name=current_build_name,
+        build_number=current_build_number,
         verify_build_extra_args=verify_build_extra_args,
     )
-    verify_required_properties = {
-        EXPECTED_CODE_VERSION_PARAM: expected_code_version,
-        EXPECTED_ASSETBUNDLE_VERSION_PARAM: expected_assetbundle_version,
-        EXPECTED_TABLE_VERSION_PARAM: expected_table_version,
-    }
 
-    log_line(f"{log_prefix} ===== Step 3/4: resolve or queue local verify task =====")
-    recent_verify_builds = list_recent_builds(
-        config,
-        build_type_id=matrix.verify_build_type_id,
-        search_count=DEFAULT_RECENT_BUILD_COUNT,
-    )
-    reusable_verify = find_reusable_build(
-        recent_verify_builds,
-        branch_name=branch_name,
-        vcs_revision=vcs_revision,
-        client_version=client_version,
-        build_extra_args=verify_build_extra_args,
-        required_properties=verify_required_properties,
-    )
+    log_line(f"{log_prefix} ===== Step 3/4: export current build parameters =====")
+    if current_build_id is not None:
+        emit_teamcity_parameter(VERIFY_BUILD_ID_PARAM, current_build_id)
+    if current_build_number is not None:
+        emit_teamcity_parameter(VERIFY_BUILD_NUMBER_PARAM, current_build_number)
 
-    if reusable_verify is not None:
-        queued_verify = reusable_verify
-        log_line(
-            f"{log_prefix} reuse verify buildTypeId={queued_verify.build_type_id} buildId={queued_verify.build_id} "
-            f"number={queued_verify.number or 'pending'} state={queued_verify.state or 'unknown'} status={queued_verify.status or 'unknown'}"
-        )
-        if queued_verify.web_url:
-            log_line(f"{log_prefix} reuseVerifyWebUrl={queued_verify.web_url}")
-    else:
-        queued_verify = queue_build(
-            config,
-            build_type_id=matrix.verify_build_type_id,
-            branch_name=branch_name,
-            vcs_revision=vcs_revision,
-            properties=verify_queue_properties,
-            comment=build_queue_comment(
-                scope_label="verify-local-check",
-                platform_label=matrix.platform_label,
-                source_build_id=args.source_build_id,
-            ),
-        )
-        log_line(
-            f"{log_prefix} queued verify buildTypeId={queued_verify.build_type_id} buildId={queued_verify.build_id} "
-            f"number={queued_verify.number or 'pending'}"
-        )
-        if queued_verify.web_url:
-            log_line(f"{log_prefix} queuedVerifyWebUrl={queued_verify.web_url}")
-
-    emit_teamcity_parameter(VERIFY_BUILD_ID_PARAM, str(queued_verify.build_id))
-    if queued_verify.number:
-        emit_teamcity_parameter(VERIFY_BUILD_NUMBER_PARAM, queued_verify.number)
-
-    log_line(f"{log_prefix} ===== Step 4/4: wait local verify task =====")
-    finished_verify = wait_for_build_success(
-        config,
-        build_id=queued_verify.build_id,
-        timeout_seconds=timeout_seconds,
-        poll_interval_seconds=poll_interval_seconds,
-        log_prefix=log_prefix,
-    )
-    emit_teamcity_parameter(VERIFY_BUILD_ID_PARAM, str(finished_verify.build_id))
-    emit_teamcity_parameter(VERIFY_BUILD_NUMBER_PARAM, finished_verify.number)
-    log_line(f"{log_prefix} local verify build finished successfully")
+    log_line(f"{log_prefix} ===== Step 4/4: run local verify task in current build =====")
+    run_local_verify_command(local_verify_command, log_prefix=log_prefix)
+    log_line(f"{log_prefix} local verify finished successfully in current build")
     return 0
 
 
